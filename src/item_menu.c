@@ -505,7 +505,7 @@ __attribute__((naked)) void SetupBagMenu(void)
         "_081AAC60: .4byte gMain\n\t"
         "_081AAC64:\n\t"
         "	bl sub_081AB818\n\t"
-        "	bl SetPocketListPositions\n\t"
+        "	bl InitPocketListPositions\n\t"
         "	bl sub_081AB88C\n\t"
         "	b _081AAD82\n\t"
         "_081AAC72:\n\t"
@@ -2086,7 +2086,7 @@ __attribute__((naked)) void SetInitialScrollAndCursorPositions(void)
     );
 }
 
-__attribute__((naked)) void SetPocketListPositions(void)
+__attribute__((naked)) void InitPocketListPositions(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

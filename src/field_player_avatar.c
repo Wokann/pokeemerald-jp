@@ -301,13 +301,13 @@ bool8 ForcedMovement_SlideEast(void)
     return ForcedMovement_Slide(DIR_EAST, PlayerGoSpeed2);
 }
 
-bool8 ForcedMovement_0xBB(void) // JP: mat jump
+bool8 ForcedMovement_MatJump(void) // JP: mat jump
 {
     DoPlayerMatJump();
     return TRUE;
 }
 
-bool8 ForcedMovement_0xBC(void) // JP: mat spin
+bool8 ForcedMovement_MatSpin(void) // JP: mat spin
 {
     DoPlayerMatSpin();
     return TRUE;

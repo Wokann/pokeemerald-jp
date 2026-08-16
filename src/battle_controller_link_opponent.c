@@ -5615,7 +5615,7 @@ __attribute__((naked)) void LinkOpponentHandleChooseAction(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandleUnknownYesNoBox(void)
+__attribute__((naked)) void LinkOpponentHandleYesNoBox(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6193,7 +6193,7 @@ __attribute__((naked)) void LinkOpponentHandleHitAnimation(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandleCmd42(void)
+__attribute__((naked)) void LinkOpponentHandleCantSwitch(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

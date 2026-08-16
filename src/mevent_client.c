@@ -59,7 +59,7 @@ __attribute__((naked)) u32 mainseq_4(void *data)
         "adds r0, #0x24\n\t"
         "ldr r1, [r2, #4]\n\t"
         "ldr r2, [r4, #0x18]\n\t"
-        "bl mevent_srv_sub_init_recv\n\t"
+        "bl MysteryGiftLink_InitRecv\n\t"
         "movs r0, #2\n\t"
         "b _0801D60E\n\t"
         "_0801D4E4:\n\t"
@@ -71,7 +71,7 @@ __attribute__((naked)) u32 mainseq_4(void *data)
         "ldr r2, [r4, #0x14]\n\t"
         "movs r1, #0x14\n\t"
         "movs r3, #0\n\t"
-        "bl mevent_srv_sub_init_send\n\t"
+        "bl MysteryGiftLink_InitSend\n\t"
         "movs r0, #3\n\t"
         "b _0801D60E\n\t"
         "_0801D4FA:\n\t"
@@ -147,7 +147,7 @@ __attribute__((naked)) u32 mainseq_4(void *data)
         "ldr r2, [r4, #0x14]\n\t"
         "movs r1, #0x11\n\t"
         "movs r3, #0x64\n\t"
-        "bl mevent_srv_sub_init_send\n\t"
+        "bl MysteryGiftLink_InitSend\n\t"
         "b _0801D614\n\t"
         "_0801D58C:\n\t"
         "ldr r2, [r4, #4]\n\t"
@@ -188,7 +188,7 @@ __attribute__((naked)) u32 mainseq_4(void *data)
         "ldr r0, [r4, #0x18]\n\t"
         "movs r1, #0xfa\n\t"
         "lsls r1, r1, #2\n\t"
-        "bl InitRamScript_NoEventObject\n\t"
+        "bl InitRamScript_NoObjectEvent\n\t"
         "b _0801D614\n\t"
         "_0801D5E0:\n\t"
         "ldr r0, _0801D5F8\n\t"
@@ -226,7 +226,7 @@ __attribute__((naked)) u32 mainseq_4(void *data)
     );
 }
 
-__attribute__((naked)) u32 mainseq_5(void *data)
+__attribute__((naked)) u32 Client_Wait(void *data)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -17,7 +17,7 @@ __attribute__((naked)) void sub_08140300(void)
         "	cmp r0, #0\n\t"
         "	beq _08140322\n\t"
         "	adds r0, r1, #0\n\t"
-        "	bl task_tutorial_controls_fadein\n\t"
+        "	bl RouletteFlash_Run\n\t"
         "_08140322:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"

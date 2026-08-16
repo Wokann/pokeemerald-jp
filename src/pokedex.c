@@ -7497,7 +7497,7 @@ __attribute__((naked)) void sub_080BE1C8(void)
         "	movs r1, #0\n\t"
         "	movs r2, #0x7d\n\t"
         "	movs r3, #0xa\n\t"
-        "	bl PlayCry2\n\t"
+        "	bl PlayCry_NormalNoDucking\n\t"
         "	b _080BE624\n\t"
         "	.align 2, 0\n\t"
         "_080BE5D0: .4byte gPaletteFade\n\t"

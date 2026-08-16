@@ -760,7 +760,7 @@ __attribute__((naked)) void sub_0812538C(void)
         "	adds r0, r4, #0\n\t"
         "	mov r1, r8\n\t"
         "	str r3, [sp]\n\t"
-        "	bl ConvertCoolColor\n\t"
+        "	bl QuantizePixel_PersonalityColor\n\t"
         "	strh r0, [r4]\n\t"
         "	ldr r3, [sp]\n\t"
         "_081253EE:\n\t"
@@ -843,7 +843,7 @@ __attribute__((naked)) void sub_08125430(void)
         "	bne _08125488\n\t"
         "	adds r0, r4, #0\n\t"
         "	str r3, [sp]\n\t"
-        "	bl ConvertToBlackOrWhite\n\t"
+        "	bl QuantizePixel_BlackAndWhite\n\t"
         "	strh r0, [r4]\n\t"
         "	ldr r3, [sp]\n\t"
         "_08125488:\n\t"
@@ -1096,7 +1096,7 @@ __attribute__((naked)) void sub_08125618(void)
         "	bne _08125670\n\t"
         "	adds r0, r4, #0\n\t"
         "	str r3, [sp]\n\t"
-        "	bl InvertColor\n\t"
+        "	bl QuantizePixel_Invert\n\t"
         "	strh r0, [r4]\n\t"
         "	ldr r3, [sp]\n\t"
         "_08125670:\n\t"
@@ -1156,7 +1156,7 @@ __attribute__((naked)) void sub_081256B0(void)
         "	cmp r0, #0\n\t"
         "	bne _081256DA\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl InvertColor\n\t"
+        "	bl QuantizePixel_Invert\n\t"
         "	strh r0, [r4]\n\t"
         "_081256DA:\n\t"
         "	adds r0, r7, #1\n\t"
@@ -1272,7 +1272,7 @@ __attribute__((naked)) void sub_081256B0(void)
         "	cmp r0, #0\n\t"
         "	bne _081257B8\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl InvertColor\n\t"
+        "	bl QuantizePixel_Invert\n\t"
         "	strh r0, [r4]\n\t"
         "_081257B8:\n\t"
         "	adds r0, r7, #1\n\t"
@@ -1781,7 +1781,7 @@ __attribute__((naked)) void ConvertColorToGrayscale(void)
     );
 }
 
-__attribute__((naked)) void ConvertCoolColor(void)
+__attribute__((naked)) void QuantizePixel_PersonalityColor(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1932,7 +1932,7 @@ __attribute__((naked)) void GetCoolColorFromPersonality(void)
     );
 }
 
-__attribute__((naked)) void ConvertToBlackOrWhite(void)
+__attribute__((naked)) void QuantizePixel_BlackAndWhite(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2000,7 +2000,7 @@ __attribute__((naked)) void sub_08125C80(void)
     );
 }
 
-__attribute__((naked)) void InvertColor(void)
+__attribute__((naked)) void QuantizePixel_Invert(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3187,7 +3187,7 @@ __attribute__((naked)) void sub_081264E4(void)
         "_08126550: .4byte gUnknown_3005EC4\n\t"
         "_08126554:\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl ConvertToBlackOrWhite\n\t"
+        "	bl QuantizePixel_BlackAndWhite\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08126566\n\t"

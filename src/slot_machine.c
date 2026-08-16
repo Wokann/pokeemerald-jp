@@ -149,10 +149,10 @@ __attribute__((naked)) void CB2_SlotMachineSetup(void)
         "	bl SlotMachineSetup_0_1\n\t"
         "	b _0812A65C\n\t"
         "_0812A5F6:\n\t"
-        "	bl SlotMachineSetup_1_0\n\t"
+        "	bl SlotMachineSetup_InitVRAM\n\t"
         "	b _0812A65C\n\t"
         "_0812A5FC:\n\t"
-        "	bl SlotMachineSetup_2_0\n\t"
+        "	bl SlotMachineSetup_InitOAM\n\t"
         "	bl SlotMachineSetup_2_1\n\t"
         "	b _0812A65C\n\t"
         "_0812A606:\n\t"
@@ -191,8 +191,8 @@ __attribute__((naked)) void CB2_SlotMachineSetup(void)
         "	bl SlotMachineSetup_9_0\n\t"
         "	b _0812A65C\n\t"
         "_0812A654:\n\t"
-        "	bl SlotMachineSetup_10_0\n\t"
-        "	bl SlotMachineSetupGameplayTasks\n\t"
+        "	bl CreateSlotMachineSprites\n\t"
+        "	bl CreateGameplayTasks\n\t"
         "_0812A65C:\n\t"
         "	ldr r1, _0812A66C\n\t"
         "	movs r0, #0x87\n\t"
@@ -397,7 +397,7 @@ __attribute__((naked)) void SlotMachineSetup_6_0(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotMachineSetup_1_0(u8 taskId)
+__attribute__((naked)) void SlotMachineSetup_InitVRAM(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -447,7 +447,7 @@ __attribute__((naked)) void SlotMachineSetup_1_0(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotMachineSetup_2_0(u8 taskId)
+__attribute__((naked)) void SlotMachineSetup_InitOAM(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -754,7 +754,7 @@ __attribute__((naked)) void SlotMachineSetup_5_0(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotMachineSetup_10_0(u8 taskId)
+__attribute__((naked)) void CreateSlotMachineSprites(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -770,7 +770,7 @@ __attribute__((naked)) void SlotMachineSetup_10_0(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotMachineSetupGameplayTasks(void)
+__attribute__((naked)) void CreateGameplayTasks(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4793,7 +4793,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel1(void)
     );
 }
 
-__attribute__((naked)) bool8 IsBiasTag777_SwitchColor(u8 *tag)
+__attribute__((naked)) bool8 IfSymbol7_SwitchColor(u8 *tag)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4872,7 +4872,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet1(u8 taskId)
         "	mov r1, sp\n\t"
         "	strb r0, [r1]\n\t"
         "	mov r0, sp\n\t"
-        "	bl IsBiasTag777_SwitchColor\n\t"
+        "	bl IfSymbol7_SwitchColor\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812C6D4\n\t"
@@ -4943,7 +4943,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet2(u8 taskId)
         "	mov r1, sp\n\t"
         "	strb r0, [r1]\n\t"
         "	mov r0, sp\n\t"
-        "	bl IsBiasTag777_SwitchColor\n\t"
+        "	bl IfSymbol7_SwitchColor\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812C754\n\t"
@@ -5040,7 +5040,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet3(u8 taskId)
         "	mov r1, sp\n\t"
         "	strb r0, [r1]\n\t"
         "	mov r0, sp\n\t"
-        "	bl IsBiasTag777_SwitchColor\n\t"
+        "	bl IfSymbol7_SwitchColor\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812C85A\n\t"
@@ -5164,7 +5164,7 @@ __attribute__((naked)) bool8 AreTagsMixed77(u8 a, u8 b)
     );
 }
 
-__attribute__((naked)) bool8 AreTagsMixed777(u8 a, u8 b, u8 c)
+__attribute__((naked)) bool8 MismatchedSyms_777(u8 a, u8 b, u8 c)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5200,7 +5200,7 @@ __attribute__((naked)) bool8 AreTagsMixed777(u8 a, u8 b, u8 c)
     );
 }
 
-__attribute__((naked)) bool8 TagsDontMatchOrHaveAny7s(u8 a, u8 b, u8 c)
+__attribute__((naked)) bool8 NeitherMatchNor7Mismatch(u8 a, u8 b, u8 c)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5529,14 +5529,14 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet2(u8 taskId)
         "	adds r0, r7, #0\n\t"
         "	adds r1, r6, #0\n\t"
         "	adds r2, r4, #0\n\t"
-        "	bl TagsDontMatchOrHaveAny7s\n\t"
+        "	bl NeitherMatchNor7Mismatch\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _0812CB4C\n\t"
         "	adds r0, r7, #0\n\t"
         "	adds r1, r6, #0\n\t"
         "	adds r2, r4, #0\n\t"
-        "	bl AreTagsMixed777\n\t"
+        "	bl MismatchedSyms_777\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812CB38\n\t"
@@ -5725,14 +5725,14 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet3(u8 taskId)
         "	adds r0, r6, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	adds r2, r4, #0\n\t"
-        "	bl TagsDontMatchOrHaveAny7s\n\t"
+        "	bl NeitherMatchNor7Mismatch\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _0812CCC4\n\t"
         "	adds r0, r6, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	adds r2, r4, #0\n\t"
-        "	bl AreTagsMixed777\n\t"
+        "	bl MismatchedSyms_777\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812CCB4\n\t"
@@ -5786,14 +5786,14 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet3(u8 taskId)
         "	adds r0, r6, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	adds r2, r4, #0\n\t"
-        "	bl TagsDontMatchOrHaveAny7s\n\t"
+        "	bl NeitherMatchNor7Mismatch\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _0812CD44\n\t"
         "	adds r0, r6, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	adds r2, r4, #0\n\t"
-        "	bl AreTagsMixed777\n\t"
+        "	bl MismatchedSyms_777\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812CD34\n\t"

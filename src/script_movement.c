@@ -9,7 +9,7 @@
 // JP asm names for functions that still live in asm/event_object_movement.s.
 // US names: ObjectEventIsHeldMovementActive, UnfreezeObjectEvent,
 // FreezeObjectEvent.  Rename these once that module is converted to C.
-bool8 EventObjectIsHeldMovementActive(struct ObjectEvent *objectEvent);
+bool8 ObjectEventIsHeldMovementActive(struct ObjectEvent *objectEvent);
 void UnfreezeEventObject(struct ObjectEvent *objectEvent);
 bool8 FreezeEventObject(struct ObjectEvent *objectEvent);
 
@@ -216,7 +216,7 @@ static void ScriptMovement_TakeStep(u8 taskId, u8 moveScrId, u8 objEventId, cons
 {
     u8 nextMoveActionId;
 
-    if (EventObjectIsHeldMovementActive(&gObjectEvents[objEventId])
+    if (ObjectEventIsHeldMovementActive(&gObjectEvents[objEventId])
      && !ObjectEventClearHeldMovementIfFinished(&gObjectEvents[objEventId]))
         return;
 

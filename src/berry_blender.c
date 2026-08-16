@@ -4334,7 +4334,7 @@ __attribute__((naked)) void sub_08081380(void)
     );
 }
 
-__attribute__((naked)) void Blender_GetPokeblockColor(void)
+__attribute__((naked)) void CalculatePokeblockColor(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4863,7 +4863,7 @@ __attribute__((naked)) void Blender_CalculatePokeblock(void)
         "	adds r1, r4, #0\n\t"
         "	mov r2, sb\n\t"
         "	mov r3, sl\n\t"
-        "	bl Blender_GetPokeblockColor\n\t"
+        "	bl CalculatePokeblockColor\n\t"
         "	mov r5, r8\n\t"
         "	strb r0, [r5]\n\t"
         "	movs r1, #0xa\n\t"
@@ -4973,7 +4973,7 @@ __attribute__((naked)) void Blender_CalculatePokeblock(void)
     );
 }
 
-__attribute__((naked)) void BlenderDebug_CalculatePokeblock(void)
+__attribute__((naked)) void Debug_CalculatePokeblock(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8513,7 +8513,7 @@ __attribute__((naked)) void Blender_PrintMadePokeblockString(void)
     );
 }
 
-__attribute__((naked)) void Blender_SortBasedOnPoints(void)
+__attribute__((naked)) void SortBasedOnPoints(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8669,7 +8669,7 @@ __attribute__((naked)) void Blender_SortScores(void)
         "	ldrb r1, [r0]\n\t"
         "	mov r0, sp\n\t"
         "	mov r2, sl\n\t"
-        "	bl Blender_SortBasedOnPoints\n\t"
+        "	bl SortBasedOnPoints\n\t"
         "	movs r5, #0\n\t"
         "	ldr r0, [r4]\n\t"
         "	adds r0, #0x7c\n\t"

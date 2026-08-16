@@ -18038,7 +18038,7 @@ __attribute__((naked)) bool8 HandleInput_OnBox(void)
         "	beq _080CF106\n\t"
         "	movs r0, #0\n\t"
         "	bl sub_080CCA24\n\t"
-        "	bl AddBoxMenu\n\t"
+        "	bl AddBoxOptionsMenu\n\t"
         "	movs r0, #7\n\t"
         "	b _080CF14E\n\t"
         "_080CF106:\n\t"
@@ -18287,7 +18287,7 @@ __attribute__((naked)) void sub_080CF268(void)
     );
 }
 
-__attribute__((naked)) void AddBoxMenu(void)
+__attribute__((naked)) void AddBoxOptionsMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

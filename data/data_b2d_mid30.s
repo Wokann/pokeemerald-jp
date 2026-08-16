@@ -7026,7 +7026,7 @@ sForcedMovementFuncs: @ 0x846F864
 	.4byte ForcedMovement_WalkNorth + 1, ForcedMovement_WalkWest + 1, ForcedMovement_WalkEast + 1, ForcedMovement_PushedSouthByCurrent + 1
 	.4byte ForcedMovement_PushedNorthByCurrent + 1, ForcedMovement_PushedWestByCurrent + 1, ForcedMovement_PushedEastByCurrent + 1, ForcedMovement_SlideSouth + 1
 	.4byte ForcedMovement_SlideNorth + 1, ForcedMovement_SlideWest + 1, ForcedMovement_SlideEast + 1, ForcedMovement_PushedSouthByCurrent + 1
-	.4byte ForcedMovement_0xBB + 1, ForcedMovement_0xBC + 1, ForcedMovement_MuddySlope + 1
+	.4byte ForcedMovement_MatJump + 1, ForcedMovement_MatSpin + 1, ForcedMovement_MuddySlope + 1
 
 	.globl sPlayerNotOnBikeFuncs
 sPlayerNotOnBikeFuncs: @ 0x846F8B0

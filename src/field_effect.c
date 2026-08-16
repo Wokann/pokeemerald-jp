@@ -7254,7 +7254,7 @@ __attribute__((naked)) void SpriteCB_FieldMoveMonSlideOnscreen(struct Sprite *sp
         "	movs r1, #0\n\t"
         "	movs r2, #0x7d\n\t"
         "	movs r3, #0xa\n\t"
-        "	bl PlayCry2\n\t"
+        "	bl PlayCry_NormalNoDucking\n\t"
         "	b _080B8458\n\t"
         "	.align 2, 0\n\t"
         "_080B844C: .4byte SpriteCB_FieldMoveMonWaitAfterCry + 1\n\t"

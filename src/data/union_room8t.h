@@ -8,8 +8,8 @@ extern const u32 sWonderNewsGfx1[], sWonderNewsGfx2[], sWonderNewsGfx3[], sWonde
 extern const u32 sWonderNewsTilemap1[], sWonderNewsTilemap2[], sWonderNewsTilemap3[], sWonderNewsTilemap7[], sWonderNewsTilemap8[];
 extern const u16 sWonderCardBgPal2[], sWonderCardBgPal3[], sWonderCardBgPal4[], sWonderCardBgPal5[], sWonderCardBgPal6[];
 extern const u16 sWonderNewsPal1[], sWonderNewsPal7[], sWonderNewsPal8[];
-extern u32 common_mainseq_0(void *), common_mainseq_1(void *), common_mainseq_2(void *), common_mainseq_3(void *), common_mainseq_4(void *);
-extern u32 mainseq_0(void *), mainseq_1(void *), mainseq_2(void *), mainseq_3(void *), mainseq_4(void *), mainseq_5(void *), mainseq_6(void *), mainseq_7(void *);
+extern u32 Server_Init(void *), Server_Done(void *), common_mainseq_2(void *), common_mainseq_3(void *), common_mainseq_4(void *);
+extern u32 mainseq_0(void *), Client_Done(void *), Client_Recv(void *), Client_Send(void *), mainseq_4(void *), Client_Wait(void *), mainseq_6(void *), mainseq_7(void *);
 
 struct WonderGfx
 {
@@ -51,8 +51,8 @@ const char gMeventServerAssertExpr3[48] = {"cmd->flag == FALSE && cmd->parameter
 
 // 0x82C4AFC
 u32 (*const gMeventServerFuncs[])(void *) = {
-    common_mainseq_0,
-    common_mainseq_1,
+    Server_Init,
+    Server_Done,
     common_mainseq_2,
     common_mainseq_3,
     common_mainseq_4,
@@ -64,11 +64,11 @@ const char gMeventServerAssertExpr4[36] = {"svr->mainseqno < NELEMS(func_tbl)"};
 // 0x82C4B34
 u32 (*const gMeventServerClientFuncs[])(void *) = {
     mainseq_0,
-    mainseq_1,
-    mainseq_2,
-    mainseq_3,
+    Client_Done,
+    Client_Recv,
+    Client_Send,
     mainseq_4,
-    mainseq_5,
+    Client_Wait,
     mainseq_6,
     mainseq_7,
 };

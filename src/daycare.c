@@ -644,7 +644,7 @@ __attribute__((naked)) void GetDaycareCostForSelectedMon(void)
     );
 }
 
-__attribute__((naked)) void GetDaycareCostForMon(void)
+__attribute__((naked)) void PrepareDaycareCostStringForMon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -674,7 +674,7 @@ __attribute__((naked)) void GetDaycareCost(void)
         "	adds r0, r0, r1\n\t"
         "	ldr r1, _0806F954\n\t"
         "	ldrb r1, [r1]\n\t"
-        "	bl GetDaycareCostForMon\n\t"
+        "	bl PrepareDaycareCostStringForMon\n\t"
         "	ldr r1, _0806F958\n\t"
         "	strh r0, [r1]\n\t"
         "	pop {r0}\n\t"

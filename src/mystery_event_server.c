@@ -98,8 +98,8 @@ u32 mevent_send_func(struct MeventServerSub *sub);
 u32 mevent_srv_sub_recv(struct MeventServerSub *sub);
 u32 mevent_srv_sub_send(struct MeventServerSub *sub);
 void mevent_srv_sub_init(struct MeventServerSub *sub, s32 a, s32 b);
-void mevent_srv_sub_init_send(struct MeventServerSub *sub, u32 size, void *buffer, u32 size2);
-void mevent_srv_sub_init_recv(struct MeventServerSub *sub, u32 a, void *buffer);
+void MysteryGiftLink_InitSend(struct MeventServerSub *sub, u32 size, void *buffer, u32 size2);
+void MysteryGiftLink_InitRecv(struct MeventServerSub *sub, u32 a, void *buffer);
 void mevent_client_init(void *data, s32 a, s32 b);
 u32 mevent_client_exec(void *data);
 void mevent_client_free_resources(void *data);
@@ -162,17 +162,17 @@ void mevent_srv_common_init_send(void *data, u32 size, void *buffer, u32 size2)
 {
     if (size2 > ME_SEND_BUF_SIZE)
         AGBAssert(gMeventServerAssertFile, 0x101, gMeventServerAssertExpr0, TRUE);
-    mevent_srv_sub_init_send(&((struct MeventServerData *)data)->sub, size, buffer, size2);
+    MysteryGiftLink_InitSend(&((struct MeventServerData *)data)->sub, size, buffer, size2);
 }
 
-void *mevent_first_if_not_null_else_second(void *a, void *b)
+void *MysteryGiftServer_GetSendData(void *a, void *b)
 {
     if (a == NULL)
         return b;
     return a;
 }
 
-u32 mevent_compare_pointers(u32 a, u32 b)
+u32 MysteryGiftServer_Compare(u32 a, u32 b)
 {
     if (b < a)
         return 0;
@@ -181,13 +181,13 @@ u32 mevent_compare_pointers(u32 a, u32 b)
     return 2;
 }
 
-u32 common_mainseq_0(void *data)
+u32 Server_Init(void *data)
 {
     ((struct MeventServerData *)data)->mainseqno = 4;
     return 0;
 }
 
-u32 common_mainseq_1(void *data)
+u32 Server_Done(void *data)
 {
     return 3;
 }
@@ -244,7 +244,7 @@ u32 common_mainseq_4(void *data)
     case 2:
         if (cmd->parameter != NULL)
             AGBAssert(gMeventServerAssertFile, 0x16C, gMeventServerAssertExpr1, TRUE);
-        mevent_srv_sub_init_recv(&svr->sub, cmd->flag, svr->unk14);
+        MysteryGiftLink_InitRecv(&svr->sub, cmd->flag, svr->unk14);
         svr->mainseqno = 2;
         break;
     case 3:
@@ -284,7 +284,7 @@ u32 common_mainseq_4(void *data)
     case 7:
         if (cmd->flag != FALSE)
             AGBAssert(gMeventServerAssertFile, 0x192, gMeventServerAssertExpr2, TRUE);
-        buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk18);
+        buf = MysteryGiftServer_GetSendData(cmd->parameter, svr->unk18);
         svr->result = MysteryGift_CompareCardFlags(buf, svr->unk20, buf);
         break;
     case 8:
@@ -297,7 +297,7 @@ u32 common_mainseq_4(void *data)
     case 9:
         if (cmd->flag != FALSE)
             AGBAssert(gMeventServerAssertFile, 0x19E, gMeventServerAssertExpr2, TRUE);
-        buf = mevent_first_if_not_null_else_second(cmd->parameter, &svr->unk34);
+        buf = MysteryGiftServer_GetSendData(cmd->parameter, &svr->unk34);
         svr->result = MysteryGift_CheckStamps(buf, svr->unk20, buf);
         break;
     case 10:
@@ -313,24 +313,24 @@ u32 common_mainseq_4(void *data)
     case 12:
         if (cmd->flag != FALSE)
             AGBAssert(gMeventServerAssertFile, 0x1B0, gMeventServerAssertExpr2, TRUE);
-        svr->result = mevent_compare_pointers(cmd->parameter, *(u32 *)svr->unk14);
+        svr->result = MysteryGiftServer_Compare(cmd->parameter, *(u32 *)svr->unk14);
         break;
     case 14:
         if (cmd->flag != FALSE)
             AGBAssert(gMeventServerAssertFile, 0x1B6, gMeventServerAssertExpr2, TRUE);
-        buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk1C);
+        buf = MysteryGiftServer_GetSendData(cmd->parameter, svr->unk1C);
         mevent_srv_common_init_send(svr, 0x17, buf, 0xE0);
         break;
     case 13:
         if (cmd->flag != FALSE)
             AGBAssert(gMeventServerAssertFile, 0x1BC, gMeventServerAssertExpr2, TRUE);
-        buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk18);
+        buf = MysteryGiftServer_GetSendData(cmd->parameter, svr->unk18);
         mevent_srv_common_init_send(svr, 0x16, buf, 0xA4);
         break;
     case 16:
         if (cmd->flag != FALSE)
             AGBAssert(gMeventServerAssertFile, 0x1C2, gMeventServerAssertExpr2, TRUE);
-        buf = mevent_first_if_not_null_else_second(cmd->parameter, &svr->unk34);
+        buf = MysteryGiftServer_GetSendData(cmd->parameter, &svr->unk34);
         mevent_srv_common_init_send(svr, 0x18, buf, 4);
         break;
     case 15:
@@ -433,7 +433,7 @@ void mevent_srv_sub_init(struct MeventServerSub *sub, s32 a, s32 b)
     sub->recvFunc = mevent_receive_func;
 }
 
-void mevent_srv_sub_init_send(struct MeventServerSub *sub, u32 size, void *buffer, u32 size2)
+void MysteryGiftLink_InitSend(struct MeventServerSub *sub, u32 size, void *buffer, u32 size2)
 {
     sub->unk0 = 0;
     sub->unkE = size;
@@ -446,7 +446,7 @@ void mevent_srv_sub_init_send(struct MeventServerSub *sub, u32 size, void *buffe
     sub->unk1C = buffer;
 }
 
-void mevent_srv_sub_init_recv(struct MeventServerSub *sub, u32 a, void *buffer)
+void MysteryGiftLink_InitRecv(struct MeventServerSub *sub, u32 a, void *buffer)
 {
     sub->unk0 = 0;
     sub->unk6 = a;
@@ -551,7 +551,7 @@ void mevent_client_send_word(void *data, u32 a, u32 word)
 
     CpuSet(&zero, cli->unk14, 0x05000100);
     *(u32 *)cli->unk14 = word;
-    mevent_srv_sub_init_send(&cli->sub, a, cli->unk14, 4);
+    MysteryGiftLink_InitSend(&cli->sub, a, cli->unk14, 4);
 }
 
 u32 mainseq_0(void *data)
@@ -565,12 +565,12 @@ u32 mainseq_0(void *data)
     return 0;
 }
 
-u32 mainseq_1(void *data)
+u32 Client_Done(void *data)
 {
     return 6;
 }
 
-u32 mainseq_2(void *data)
+u32 Client_Recv(void *data)
 {
     struct MeventClientData *cli = data;
 
@@ -582,7 +582,7 @@ u32 mainseq_2(void *data)
     return 1;
 }
 
-u32 mainseq_3(void *data)
+u32 Client_Send(void *data)
 {
     struct MeventClientData *cli = data;
 

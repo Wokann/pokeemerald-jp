@@ -8665,7 +8665,7 @@ __attribute__((naked)) void CB2_PreInitMultiBattle(void)
         "	str r0, [r4]\n\t"
         "	movs r0, #0\n\t"
         "	bl sub_08037770\n\t"
-        "	bl bitmask_all_link_players_but_self\n\t"
+        "	bl BitmaskAllOtherLinkPlayers\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	ldr r1, [r4]\n\t"

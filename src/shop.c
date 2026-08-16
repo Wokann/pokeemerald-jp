@@ -2011,7 +2011,7 @@ __attribute__((naked)) void BuyMenuDrawEventObjects(void)
         "	mov r3, r8\n\t"
         "	ldr r0, [r3]\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl BuyMenuCheckIfEventObjectOverlapsMenuBg\n\t"
+        "	bl BuyMenuCheckIfObjectEventOverlapsMenuBg\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
@@ -2072,7 +2072,7 @@ __attribute__((naked)) void BuyMenuDrawEventObjects(void)
     );
 }
 
-__attribute__((naked)) void BuyMenuCheckIfEventObjectOverlapsMenuBg(void)
+__attribute__((naked)) void BuyMenuCheckIfObjectEventOverlapsMenuBg(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -723,7 +723,7 @@ __attribute__((naked)) void GetAvailableEventObjectId(void)
     );
 }
 
-__attribute__((naked)) void RemoveEventObject(void)
+__attribute__((naked)) void RemoveObjectEvent(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -770,7 +770,7 @@ __attribute__((naked)) void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapN
         "	lsls r0, r0, #2\n\t"
         "	ldr r1, _0808D278\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl RemoveEventObject\n\t"
+        "	bl RemoveObjectEvent\n\t"
         "_0808D272:\n\t"
         "	add sp, #4\n\t"
         "	pop {r0}\n\t"
@@ -839,7 +839,7 @@ __attribute__((naked)) void RemoveAllEventObjectsExceptPlayer(void)
         "	lsls r0, r0, #2\n\t"
         "	ldr r1, _0808D2F8\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl RemoveEventObject\n\t"
+        "	bl RemoveObjectEvent\n\t"
         "_0808D2E2:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1060,7 +1060,7 @@ __attribute__((naked)) void TrySetupEventObjectSprite(void)
         "	bl SetObjectSubpriorityByElevation\n\t"
         "	adds r0, r6, #0\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl UpdateEventObjectVisibility\n\t"
+        "	bl UpdateObjectEventVisibility\n\t"
         "	mov r0, sb\n\t"
         "_0808D49C:\n\t"
         "	add sp, #4\n\t"
@@ -1219,7 +1219,7 @@ __attribute__((naked)) void SpawnSpecialEventObject(void)
 }
 
 
-__attribute__((naked)) void SpawnSpecialEventObjectParameterized(void)
+__attribute__((naked)) void SpawnSpecialObjectEventParameterized(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1324,7 +1324,7 @@ __attribute__((naked)) u8 TrySpawnObjectEvent(u8 localId, u8 mapNum, u8 mapGroup
     );
 }
 
-__attribute__((naked)) void MakeObjectTemplateFromEventObjectGraphicsInfo(void)
+__attribute__((naked)) void CopyObjectGraphicsInfoToSpriteTemplate(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1369,7 +1369,7 @@ __attribute__((naked)) void MakeObjectTemplateFromEventObjectGraphicsInfoWithCal
         "	lsrs r1, r1, #0xe\n\t"
         "	adds r1, r1, r4\n\t"
         "	ldr r1, [r1]\n\t"
-        "	bl MakeObjectTemplateFromEventObjectGraphicsInfo\n\t"
+        "	bl CopyObjectGraphicsInfoToSpriteTemplate\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -1427,7 +1427,7 @@ __attribute__((naked)) void AddPseudoEventObject(void)
         "	adds r1, r5, #0\n\t"
         "	adds r2, r6, #0\n\t"
         "	mov r3, sp\n\t"
-        "	bl MakeObjectTemplateFromEventObjectGraphicsInfo\n\t"
+        "	bl CopyObjectGraphicsInfoToSpriteTemplate\n\t"
         "	ldrh r1, [r6, #2]\n\t"
         "	ldr r0, _0808D774\n\t"
         "	cmp r1, r0\n\t"
@@ -1518,7 +1518,7 @@ __attribute__((naked)) void sprite_new(void)
         "	add r3, sp, #0x1c\n\t"
         "	adds r0, r5, #0\n\t"
         "	mov r2, sp\n\t"
-        "	bl MakeObjectTemplateFromEventObjectGraphicsInfo\n\t"
+        "	bl CopyObjectGraphicsInfoToSpriteTemplate\n\t"
         "	mov r1, sp\n\t"
         "	ldr r2, _0808D880\n\t"
         "	adds r0, r2, #0\n\t"
@@ -1611,7 +1611,7 @@ __attribute__((naked)) void sprite_new(void)
         "	bl LoadSpecialObjectReflectionPalette\n\t"
         "	b _0808D89C\n\t"
         "	.align 2, 0\n\t"
-        "_0808D87C: .4byte UpdateEventObjectSpriteSubpriorityAndVisibility + 1\n\t"
+        "_0808D87C: .4byte SpriteCB_VirtualObject + 1\n\t"
         "_0808D880: .4byte 0x0000FFFF\n\t"
         "_0808D884: .4byte gSprites\n\t"
         "_0808D888:\n\t"
@@ -1928,7 +1928,7 @@ __attribute__((naked)) void RemoveEventObjectIfOutsideView(void)
         "	ble _0808DAD0\n\t"
         "_0808DACA:\n\t"
         "	adds r0, r3, #0\n\t"
-        "	bl RemoveEventObject\n\t"
+        "	bl RemoveObjectEvent\n\t"
         "_0808DAD0:\n\t"
         "	pop {r4, r5, r6, r7}\n\t"
         "	pop {r0}\n\t"
@@ -2765,7 +2765,7 @@ __attribute__((naked)) void npc_by_local_id_and_map_set_field_1_bit_x20(void)
     );
 }
 
-__attribute__((naked)) void EventObjectGetLocalIdAndMap(void)
+__attribute__((naked)) void ObjectEventGetLocalIdAndMap(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3001,7 +3001,7 @@ __attribute__((naked)) void LoadEventObjectPalette(void)
     );
 }
 
-__attribute__((naked)) void Unused_LoadEventObjectPaletteSet(void)
+__attribute__((naked)) void LoadObjectEventPaletteSet(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3316,7 +3316,7 @@ __attribute__((naked)) void sub_0808E420(void)
     );
 }
 
-__attribute__((naked)) void unref_sub_808EAC4(void)
+__attribute__((naked)) void IncrementObjectEventCoords(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3941,7 +3941,7 @@ __attribute__((naked)) void CameraObjectReset1(void)
     );
 }
 
-__attribute__((naked)) void CameraObjectSetFollowedObjectId(void)
+__attribute__((naked)) void CameraObjectSetFollowedSpriteId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3962,7 +3962,7 @@ __attribute__((naked)) void CameraObjectSetFollowedObjectId(void)
     );
 }
 
-__attribute__((naked)) void CameraObjectGetFollowedObjectId(void)
+__attribute__((naked)) void CameraObjectGetFollowedSpriteId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4166,7 +4166,7 @@ __attribute__((naked)) void SetEventObjectDirection(void)
     );
 }
 
-__attribute__((naked)) void GetEventObjectScriptPointerByLocalIdAndMap(void)
+__attribute__((naked)) void GetObjectEventScriptPointerByLocalIdAndMap(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4200,7 +4200,7 @@ __attribute__((naked)) void GetEventObjectScriptPointerByEventObjectId(void)
         "	ldrb r0, [r2, #8]\n\t"
         "	ldrb r1, [r2, #9]\n\t"
         "	ldrb r2, [r2, #0xa]\n\t"
-        "	bl GetEventObjectScriptPointerByLocalIdAndMap\n\t"
+        "	bl GetObjectEventScriptPointerByLocalIdAndMap\n\t"
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
@@ -4209,7 +4209,7 @@ __attribute__((naked)) void GetEventObjectScriptPointerByEventObjectId(void)
     );
 }
 
-__attribute__((naked)) void GetEventObjectFlagIdByLocalIdAndMap(void)
+__attribute__((naked)) void GetObjectEventFlagIdByLocalIdAndMap(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4243,7 +4243,7 @@ __attribute__((naked)) void GetEventObjectFlagIdByEventObjectId(void)
         "	ldrb r0, [r2, #8]\n\t"
         "	ldrb r1, [r2, #9]\n\t"
         "	ldrb r2, [r2, #0xa]\n\t"
-        "	bl GetEventObjectFlagIdByLocalIdAndMap\n\t"
+        "	bl GetObjectEventFlagIdByLocalIdAndMap\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	pop {r1}\n\t"
@@ -4510,7 +4510,7 @@ __attribute__((naked)) void GetBaseTemplateForEventObject(void)
     );
 }
 
-__attribute__((naked)) void OverrideTemplateCoordsForEventObject(void)
+__attribute__((naked)) void OverrideTemplateCoordsForObjectEvent(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4534,7 +4534,7 @@ __attribute__((naked)) void OverrideTemplateCoordsForEventObject(void)
     );
 }
 
-__attribute__((naked)) void OverrideEventObjectTemplateScript(void)
+__attribute__((naked)) void OverrideObjectEventTemplateScript(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4552,7 +4552,7 @@ __attribute__((naked)) void OverrideEventObjectTemplateScript(void)
     );
 }
 
-__attribute__((naked)) void TryOverrideTemplateCoordsForEventObject(void)
+__attribute__((naked)) void TryOverrideTemplateCoordsForObjectEvent(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4596,7 +4596,7 @@ __attribute__((naked)) void TryOverrideEventObjectTemplateCoords(void)
         "	lsls r0, r0, #2\n\t"
         "	ldr r1, _0808EBF8\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl OverrideTemplateCoordsForEventObject\n\t"
+        "	bl OverrideTemplateCoordsForObjectEvent\n\t"
         "_0808EBF2:\n\t"
         "	add sp, #4\n\t"
         "	pop {r0}\n\t"
@@ -4640,7 +4640,7 @@ __attribute__((naked)) void OverrideSecretBaseDecorationSpriteScript(u8 localId,
         "	ldr r1, _0808EC3C\n\t"
         "	adds r0, r0, r1\n\t"
         "	ldr r1, _0808EC40\n\t"
-        "	bl OverrideEventObjectTemplateScript\n\t"
+        "	bl OverrideObjectEventTemplateScript\n\t"
         "	b _0808EC58\n\t"
         "	.align 2, 0\n\t"
         "_0808EC3C: .4byte gObjectEvents\n\t"
@@ -4654,7 +4654,7 @@ __attribute__((naked)) void OverrideSecretBaseDecorationSpriteScript(u8 localId,
         "	ldr r1, _0808EC60\n\t"
         "	adds r0, r0, r1\n\t"
         "	ldr r1, _0808EC64\n\t"
-        "	bl OverrideEventObjectTemplateScript\n\t"
+        "	bl OverrideObjectEventTemplateScript\n\t"
         "_0808EC58:\n\t"
         "	add sp, #4\n\t"
         "	pop {r4}\n\t"
@@ -4922,7 +4922,7 @@ __attribute__((naked)) bool8 MovementType_WanderAround_Step1(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -5053,7 +5053,7 @@ __attribute__((naked)) bool8 MovementType_WanderAround_Step5(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
         "	orrs r0, r1\n\t"
@@ -5760,7 +5760,7 @@ __attribute__((naked)) bool8 MovementType_LookAround_Step1(struct ObjectEvent *o
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -5964,7 +5964,7 @@ __attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step1(struct ObjectEve
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -6096,7 +6096,7 @@ __attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step5(struct ObjectEve
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
         "	orrs r0, r1\n\t"
@@ -6219,7 +6219,7 @@ __attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step1(struct Object
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -6350,7 +6350,7 @@ __attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step5(struct Object
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
         "	orrs r0, r1\n\t"
@@ -6457,7 +6457,7 @@ __attribute__((naked)) bool8 MovementType_FaceDirection_Step0(struct ObjectEvent
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	pop {r4, r5}\n\t"
@@ -6654,7 +6654,7 @@ __attribute__((naked)) void MovementType_BerryTreeGrowth_Step0(void)
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	movs r2, #0x39\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	b _0808F8B2\n\t"
@@ -6740,7 +6740,7 @@ __attribute__((naked)) void MovementType_BerryTreeGrowth_Step2(void)
     );
 }
 
-__attribute__((naked)) void MovementType_BerryTreeGrowth_Step3(void)
+__attribute__((naked)) void MovementType_BerryTreeGrowth_Sparkle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6917,7 +6917,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step1(struct ObjectEvent
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -7121,7 +7121,7 @@ __attribute__((naked)) bool8 MovementType_FaceLeftAndRight_Step1(struct ObjectEv
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -7326,7 +7326,7 @@ __attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step1(struct ObjectEvent
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -7530,7 +7530,7 @@ __attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step1(struct ObjectEven
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -7735,7 +7735,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step1(struct ObjectEve
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -7939,7 +7939,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step1(struct ObjectEv
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -8143,7 +8143,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownUpAndLeft_Step1(struct ObjectE
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -8348,7 +8348,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step1(struct Object
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -8552,7 +8552,7 @@ __attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step1(struct Object
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -8757,7 +8757,7 @@ __attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step1(struct Obje
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	movs r0, #1\n\t"
@@ -8945,7 +8945,7 @@ __attribute__((naked)) bool8 MovementType_RotateCounterclockwise_Step0(struct Ob
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	pop {r4, r5}\n\t"
@@ -9114,7 +9114,7 @@ __attribute__((naked)) bool8 MovementType_RotateClockwise_Step0(struct ObjectEve
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	pop {r4, r5}\n\t"
@@ -9396,7 +9396,7 @@ __attribute__((naked)) bool8 MovementType_WalkBackAndForth_Step2(struct ObjectEv
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
         "	adds r2, r6, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
         "	orrs r0, r1\n\t"
@@ -9531,7 +9531,7 @@ __attribute__((naked)) bool8 MoveNextDirectionInSequence(struct ObjectEvent *obj
         "	adds r0, r4, #0\n\t"
         "	mov r1, r8\n\t"
         "	adds r2, r6, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
         "	orrs r0, r1\n\t"
@@ -11900,7 +11900,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_FaceDirection(struct ObjectE
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
         "	orrs r0, r1\n\t"
@@ -11955,7 +11955,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent 
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	mov r2, sp\n\t"
-        "	bl EventObjectMoveDestCoords\n\t"
+        "	bl ObjectEventMoveDestCoords\n\t"
         "	adds r0, r5, #0\n\t"
         "	bl sub_08092CA0\n\t"
         "	adds r2, r0, #0\n\t"
@@ -11963,7 +11963,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	b _080919F4\n\t"
         "	.align 2, 0\n\t"
         "_08091968: .4byte gUnknown_84DDA21\n\t"
@@ -11985,7 +11985,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent 
         "	adds r1, r5, #0\n\t"
         "	mov r2, sp\n\t"
         "	adds r3, r6, #0\n\t"
-        "	bl EventObjectMoveDestCoords\n\t"
+        "	bl ObjectEventMoveDestCoords\n\t"
         "	adds r0, r5, #0\n\t"
         "	bl sub_08092CF8\n\t"
         "	adds r2, r0, #0\n\t"
@@ -11993,7 +11993,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	mov r0, sp\n\t"
         "	movs r2, #0\n\t"
         "	ldrsh r1, [r0, r2]\n\t"
@@ -12028,7 +12028,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "_080919F4:\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
@@ -12078,7 +12078,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed1(struct ObjectEvent 
         "	adds r1, r6, #0\n\t"
         "	mov r2, sp\n\t"
         "	adds r3, r5, #0\n\t"
-        "	bl EventObjectMoveDestCoords\n\t"
+        "	bl ObjectEventMoveDestCoords\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_08092D24\n\t"
         "	adds r2, r0, #0\n\t"
@@ -12086,7 +12086,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed1(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	mov r0, sp\n\t"
         "	movs r2, #0\n\t"
         "	ldrsh r1, [r0, r2]\n\t"
@@ -12121,7 +12121,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed1(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "_08091AAE:\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
@@ -12171,7 +12171,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed2(struct ObjectEvent 
         "	adds r1, r6, #0\n\t"
         "	mov r2, sp\n\t"
         "	adds r3, r5, #0\n\t"
-        "	bl EventObjectMoveDestCoords\n\t"
+        "	bl ObjectEventMoveDestCoords\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_08092D7C\n\t"
         "	adds r2, r0, #0\n\t"
@@ -12179,7 +12179,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed2(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	mov r0, sp\n\t"
         "	movs r2, #0\n\t"
         "	ldrsh r1, [r0, r2]\n\t"
@@ -12214,7 +12214,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed2(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "_08091B66:\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
@@ -12264,7 +12264,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_Slide(struct ObjectEvent *ob
         "	adds r1, r6, #0\n\t"
         "	mov r2, sp\n\t"
         "	adds r3, r5, #0\n\t"
-        "	bl EventObjectMoveDestCoords\n\t"
+        "	bl ObjectEventMoveDestCoords\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_08092DA8\n\t"
         "	adds r2, r0, #0\n\t"
@@ -12272,7 +12272,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_Slide(struct ObjectEvent *ob
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	mov r0, sp\n\t"
         "	movs r2, #0\n\t"
         "	ldrsh r1, [r0, r2]\n\t"
@@ -12307,7 +12307,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_Slide(struct ObjectEvent *ob
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "_08091C1E:\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
@@ -12351,7 +12351,7 @@ __attribute__((naked)) bool8 cph_IM_DIFFERENT(struct ObjectEvent *objectEvent, s
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
         "	orrs r0, r1\n\t"
@@ -12397,7 +12397,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed4(struct ObjectEvent 
         "	adds r1, r6, #0\n\t"
         "	mov r2, sp\n\t"
         "	adds r3, r5, #0\n\t"
-        "	bl EventObjectMoveDestCoords\n\t"
+        "	bl ObjectEventMoveDestCoords\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_08092E84\n\t"
         "	adds r2, r0, #0\n\t"
@@ -12405,7 +12405,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed4(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	mov r0, sp\n\t"
         "	movs r2, #0\n\t"
         "	ldrsh r1, [r0, r2]\n\t"
@@ -12440,7 +12440,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed4(struct ObjectEvent 
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "_08091D1E:\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
@@ -12505,7 +12505,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_Jump(struct ObjectEvent *obj
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	add r0, sp, #4\n\t"
         "	movs r2, #0\n\t"
         "	ldrsh r1, [r0, r2]\n\t"
@@ -12540,7 +12540,7 @@ __attribute__((naked)) bool8 CopyablePlayerMovement_Jump(struct ObjectEvent *obj
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r7, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "_08091DE4:\n\t"
         "	ldrb r0, [r4]\n\t"
         "	movs r1, #2\n\t"
@@ -12694,7 +12694,7 @@ __attribute__((naked)) void MovementType_TreeDisguise(struct Sprite *sprite)
         "	adds r3, r1, #0\n\t"
         "	adds r3, #8\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	bl ObjectEventGetLocalIdAndMap\n\t"
         "	movs r0, #0x1c\n\t"
         "	bl FieldEffectStart\n\t"
         "	strb r0, [r4, #0x1a]\n\t"
@@ -12768,7 +12768,7 @@ __attribute__((naked)) void MovementType_MountainDisguise(struct Sprite *sprite)
         "	adds r3, r1, #0\n\t"
         "	adds r3, #8\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	bl ObjectEventGetLocalIdAndMap\n\t"
         "	movs r0, #0x1d\n\t"
         "	bl FieldEffectStart\n\t"
         "	strb r0, [r4, #0x1a]\n\t"
@@ -12977,7 +12977,7 @@ __attribute__((naked)) bool8 MovementType_WalkInPlace_Step0(struct ObjectEvent *
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	pop {r4, r5}\n\t"
@@ -13051,7 +13051,7 @@ __attribute__((naked)) bool8 MovementType_WalkSlowlyInPlace_Step0(struct ObjectE
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	pop {r4, r5}\n\t"
@@ -13126,7 +13126,7 @@ __attribute__((naked)) bool8 MovementType_JogInPlace_Step0(struct ObjectEvent *o
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	pop {r4, r5}\n\t"
@@ -13200,7 +13200,7 @@ __attribute__((naked)) bool8 MovementType_RunInPlace_Step0(struct ObjectEvent *o
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x30]\n\t"
         "	pop {r4, r5}\n\t"
@@ -13274,7 +13274,7 @@ __attribute__((naked)) bool8 MovementType_Invisible_Step0(struct ObjectEvent *ob
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectSetSingleMovement\n\t"
+        "	bl ObjectEventSetSingleMovement\n\t"
         "	ldrb r0, [r4, #1]\n\t"
         "	movs r1, #0x20\n\t"
         "	orrs r0, r1\n\t"
@@ -13871,7 +13871,7 @@ __attribute__((naked)) u8 GetCollisionAtCoords(struct ObjectEvent *objectEvent, 
         "	adds r0, r6, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	adds r2, r4, #0\n\t"
-        "	bl IsCoordOutsideEventObjectMovementRange\n\t"
+        "	bl IsCoordOutsideObjectEventMovementRange\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0809256E\n\t"
@@ -13976,7 +13976,7 @@ __attribute__((naked)) u8 GetCollisionFlagsAtCoords(struct ObjectEvent *objectEv
         "	adds r0, r7, #0\n\t"
         "	adds r1, r6, #0\n\t"
         "	adds r2, r5, #0\n\t"
-        "	bl IsCoordOutsideEventObjectMovementRange\n\t"
+        "	bl IsCoordOutsideObjectEventMovementRange\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	rsbs r1, r0, #0\n\t"
@@ -14059,7 +14059,7 @@ __attribute__((naked)) u8 GetCollisionFlagsAtCoords(struct ObjectEvent *objectEv
     );
 }
 
-__attribute__((naked)) bool8 IsCoordOutsideEventObjectMovementRange(struct ObjectEvent *objectEvent, s16 x, s16 y)
+__attribute__((naked)) bool8 IsCoordOutsideObjectEventMovementRange(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14227,7 +14227,7 @@ __attribute__((naked)) bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *o
         "	ldrb r1, [r2, #0xb]\n\t"
         "	lsls r1, r1, #0x1c\n\t"
         "	lsrs r1, r1, #0x1c\n\t"
-        "	bl AreZCoordsCompatible\n\t"
+        "	bl AreElevationsCompatible\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080927F8\n\t"
@@ -14684,7 +14684,7 @@ __attribute__((naked)) void GetEventObjectMovingCameraOffset(s16 *x, s16 *y)
     );
 }
 
-__attribute__((naked)) void EventObjectMoveDestCoords(struct ObjectEvent *objectEvent, u8 direction, s16 *x, s16 *y)
+__attribute__((naked)) void ObjectEventMoveDestCoords(struct ObjectEvent *objectEvent, u8 direction, s16 *x, s16 *y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14729,7 +14729,7 @@ __attribute__((naked)) bool8 ObjectEventIsMovementOverridden(struct ObjectEvent 
     );
 }
 
-__attribute__((naked)) bool8 EventObjectIsHeldMovementActive(struct ObjectEvent *objectEvent)
+__attribute__((naked)) bool8 ObjectEventIsHeldMovementActive(struct ObjectEvent *objectEvent)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14796,7 +14796,7 @@ __attribute__((naked)) bool8 ObjectEventSetHeldMovement(struct ObjectEvent *obje
     );
 }
 
-__attribute__((naked)) bool8 EventObjectForceSetHeldMovement(struct ObjectEvent *objectEvent, u8 specialAnimId)
+__attribute__((naked)) bool8 ObjectEventForceSetHeldMovement(struct ObjectEvent *objectEvent, u8 specialAnimId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14951,7 +14951,7 @@ __attribute__((naked)) void UpdateEventObjectCurrentMovement(struct ObjectEvent 
         "	adds r1, r5, #0\n\t"
         "	bl TryEnableEventObjectAnim\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsHeldMovementActive\n\t"
+        "	bl ObjectEventIsHeldMovementActive\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _08092C5A\n\t"
@@ -14983,10 +14983,10 @@ __attribute__((naked)) void UpdateEventObjectCurrentMovement(struct ObjectEvent 
         "	bl UpdateEventObjectSpriteAnimPause\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl UpdateEventObjectVisibility\n\t"
+        "	bl UpdateObjectEventVisibility\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl EventObjectUpdateSubpriority\n\t"
+        "	bl ObjectEventUpdateSubpriority\n\t"
         "	pop {r4, r5, r6}\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -15488,7 +15488,7 @@ __attribute__((naked)) u8 sub_08092F60(u8 direction)
     );
 }
 
-__attribute__((naked)) void EventObjectFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direction)
+__attribute__((naked)) void ObjectEventFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direction)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15979,7 +15979,7 @@ __attribute__((naked)) u8 sub_08093234(struct ObjectEvent *objectEvent, struct S
     );
 }
 
-__attribute__((naked)) void EventObjectSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementAction)
+__attribute__((naked)) void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementAction)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -16252,7 +16252,7 @@ __attribute__((naked)) void StartRunningAnim(struct ObjectEvent *objectEvent, st
     );
 }
 
-__attribute__((naked)) bool8 npc_obj_ministep_stop_on_arrival(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 UpdateMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -16375,7 +16375,7 @@ __attribute__((naked)) bool8 sub_080934D0(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 an_walk_any_2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 UpdateWalkSlow(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -16439,7 +16439,7 @@ __attribute__((naked)) bool8 sub_08093554(struct ObjectEvent *objectEvent, struc
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093566\n\t"
@@ -16486,7 +16486,7 @@ __attribute__((naked)) bool8 MovementAction_WalkSlowDiagonalUpRight_Step1(struct
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080935A6\n\t"
@@ -16533,7 +16533,7 @@ __attribute__((naked)) bool8 MovementAction_WalkSlowDiagonalDownLeft_Step1(struc
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080935E6\n\t"
@@ -16580,7 +16580,7 @@ __attribute__((naked)) bool8 MovementAction_WalkSlowDiagonalDownRight_Step1(stru
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093626\n\t"
@@ -16627,7 +16627,7 @@ __attribute__((naked)) bool8 MovementAction_WalkSlowDown_Step1(struct ObjectEven
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093666\n\t"
@@ -16675,7 +16675,7 @@ __attribute__((naked)) bool8 MovementAction_WalkSlowUp_Step1(struct ObjectEvent 
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080936A6\n\t"
@@ -16722,7 +16722,7 @@ __attribute__((naked)) bool8 MovementAction_WalkSlowLeft_Step1(struct ObjectEven
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080936E6\n\t"
@@ -16769,7 +16769,7 @@ __attribute__((naked)) bool8 MovementAction_WalkSlowRight_Step1(struct ObjectEve
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093726\n\t"
@@ -16816,7 +16816,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpLeft_Step1(struc
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093766\n\t"
@@ -16863,7 +16863,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpRight_Step1(stru
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080937A6\n\t"
@@ -16910,7 +16910,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownLeft_Step1(str
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080937E6\n\t"
@@ -16957,7 +16957,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownRight_Step1(st
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093826\n\t"
@@ -17004,7 +17004,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDown_Step1(struct ObjectEv
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093866\n\t"
@@ -17051,7 +17051,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalUp_Step1(struct ObjectEven
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080938A6\n\t"
@@ -17098,7 +17098,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalLeft_Step1(struct ObjectEv
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080938E6\n\t"
@@ -17146,7 +17146,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalRight_Step1(struct ObjectE
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093926\n\t"
@@ -17935,7 +17935,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastDown_Step1(struct ObjectEven
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093DF6\n\t"
@@ -17982,7 +17982,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastUp_Step1(struct ObjectEvent 
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093E36\n\t"
@@ -18029,7 +18029,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastLeft_Step1(struct ObjectEven
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093E76\n\t"
@@ -18076,7 +18076,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastRight_Step1(struct ObjectEve
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093EB6\n\t"
@@ -18602,7 +18602,7 @@ __attribute__((naked)) bool8 MovementAction_WalkInPlaceFastRight_Step0(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceFastestDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -18635,7 +18635,7 @@ __attribute__((naked)) bool8 MovementAction_WalkInPlaceFastestDown_Step0(struct 
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceFastestUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -18668,7 +18668,7 @@ __attribute__((naked)) bool8 MovementAction_WalkInPlaceFastestUp_Step0(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceFastestLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -18701,7 +18701,7 @@ __attribute__((naked)) bool8 MovementAction_WalkInPlaceFastestLeft_Step0(struct 
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceFastestRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -18762,7 +18762,7 @@ __attribute__((naked)) bool8 MovementAction_RideWaterCurrentDown_Step1(struct Ob
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094322\n\t"
@@ -18809,7 +18809,7 @@ __attribute__((naked)) bool8 MovementAction_RideWaterCurrentUp_Step1(struct Obje
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094362\n\t"
@@ -18856,7 +18856,7 @@ __attribute__((naked)) bool8 MovementAction_RideWaterCurrentLeft_Step1(struct Ob
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080943A2\n\t"
@@ -18903,7 +18903,7 @@ __attribute__((naked)) bool8 MovementAction_RideWaterCurrentRight_Step1(struct O
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080943E2\n\t"
@@ -18923,7 +18923,7 @@ __attribute__((naked)) bool8 MovementAction_RideWaterCurrentRight_Step1(struct O
 }
 
 
-__attribute__((naked)) bool8 MovementAction_WalkFastestDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkFasterDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -18935,7 +18935,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestDown_Step0(struct ObjectE
         "	bl do_go_anim\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkFastestDown_Step1\n\t"
+        "	bl MovementAction_WalkFasterDown_Step1\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	pop {r4, r5}\n\t"
@@ -18945,13 +18945,13 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestDown_Step0(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastestDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkFasterDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094422\n\t"
@@ -18970,7 +18970,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestDown_Step1(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastestUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkFasterUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -18982,7 +18982,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestUp_Step0(struct ObjectEve
         "	bl do_go_anim\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkFastestUp_Step1\n\t"
+        "	bl MovementAction_WalkFasterUp_Step1\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	pop {r4, r5}\n\t"
@@ -18992,13 +18992,13 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestUp_Step0(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastestUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkFasterUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094462\n\t"
@@ -19017,7 +19017,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestUp_Step1(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastestLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkFasterLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -19029,7 +19029,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestLeft_Step0(struct ObjectE
         "	bl do_go_anim\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkFastestLeft_Step1\n\t"
+        "	bl MovementAction_WalkFasterLeft_Step1\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	pop {r4, r5}\n\t"
@@ -19039,13 +19039,13 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestLeft_Step0(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastestLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkFasterLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080944A2\n\t"
@@ -19064,7 +19064,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestLeft_Step1(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastestRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkFasterRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -19076,7 +19076,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestRight_Step0(struct Object
         "	bl do_go_anim\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkFastestRight_Step1\n\t"
+        "	bl MovementAction_WalkFasterRight_Step1\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	pop {r4, r5}\n\t"
@@ -19086,13 +19086,13 @@ __attribute__((naked)) bool8 MovementAction_WalkFastestRight_Step0(struct Object
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastestRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080944E2\n\t"
@@ -19139,7 +19139,7 @@ __attribute__((naked)) bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094522\n\t"
@@ -19186,7 +19186,7 @@ __attribute__((naked)) bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *ob
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094562\n\t"
@@ -19233,7 +19233,7 @@ __attribute__((naked)) bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080945A2\n\t"
@@ -19280,7 +19280,7 @@ __attribute__((naked)) bool8 MovementAction_SlideRight_Step1(struct ObjectEvent 
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080945E2\n\t"
@@ -19327,7 +19327,7 @@ __attribute__((naked)) bool8 MovementAction_PlayerRunDown_Step1(struct ObjectEve
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094622\n\t"
@@ -19374,7 +19374,7 @@ __attribute__((naked)) bool8 MovementAction_PlayerRunUp_Step1(struct ObjectEvent
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094662\n\t"
@@ -19422,7 +19422,7 @@ __attribute__((naked)) bool8 MovementAction_PlayerRunLeft_Step1(struct ObjectEve
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080946A2\n\t"
@@ -19469,7 +19469,7 @@ __attribute__((naked)) bool8 MovementAction_PlayerRunRight_Step1(struct ObjectEv
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080946E2\n\t"
@@ -20795,7 +20795,7 @@ __attribute__((naked)) bool8 MovementAction_EmoteExclamationMark_Step0(struct Ob
         "	adds r2, r1, #4\n\t"
         "	adds r3, r1, #0\n\t"
         "	adds r3, #8\n\t"
-        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	bl ObjectEventGetLocalIdAndMap\n\t"
         "	movs r0, #0\n\t"
         "	bl FieldEffectStart\n\t"
         "	movs r0, #1\n\t"
@@ -20819,7 +20819,7 @@ __attribute__((naked)) bool8 MovementAction_EmoteQuestionMark_Step0(struct Objec
         "	adds r2, r1, #4\n\t"
         "	adds r3, r1, #0\n\t"
         "	adds r3, #8\n\t"
-        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	bl ObjectEventGetLocalIdAndMap\n\t"
         "	movs r0, #0x21\n\t"
         "	bl FieldEffectStart\n\t"
         "	movs r0, #1\n\t"
@@ -20843,7 +20843,7 @@ __attribute__((naked)) bool8 MovementAction_EmoteHeart_Step0(struct ObjectEvent 
         "	adds r2, r1, #4\n\t"
         "	adds r3, r1, #0\n\t"
         "	adds r3, #8\n\t"
-        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	bl ObjectEventGetLocalIdAndMap\n\t"
         "	movs r0, #0x2e\n\t"
         "	bl FieldEffectStart\n\t"
         "	movs r0, #1\n\t"
@@ -21186,7 +21186,7 @@ __attribute__((naked)) bool8 MovementAction_ClearAffineAnim_Step0(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_Unknown1_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 MovementAction_HideReflection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -21253,7 +21253,7 @@ __attribute__((naked)) bool8 MovementAction_WalkDownStartAffine_Step1(struct Obj
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080950F6\n\t"
@@ -21315,7 +21315,7 @@ __attribute__((naked)) bool8 MovementAction_WalkDownAffine_Step1(struct ObjectEv
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl an_walk_any_2\n\t"
+        "	bl UpdateWalkSlow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095156\n\t"
@@ -21377,7 +21377,7 @@ __attribute__((naked)) bool8 MovementAction_WalkLeftAffine_Step1(struct ObjectEv
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080951B6\n\t"
@@ -21439,7 +21439,7 @@ __attribute__((naked)) bool8 MovementAction_WalkRightAffine_Step1(struct ObjectE
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095216\n\t"
@@ -22893,7 +22893,7 @@ __attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct 
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095AA2\n\t"
@@ -22940,7 +22940,7 @@ __attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct Ob
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095AE2\n\t"
@@ -22987,7 +22987,7 @@ __attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct 
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095B22\n\t"
@@ -23034,7 +23034,7 @@ __attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095B62\n\t"
@@ -23110,7 +23110,7 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveDown_Step1(struct Obj
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095BD2\n\t"
@@ -23158,7 +23158,7 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveUp_Step1(struct Objec
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095C12\n\t"
@@ -23205,7 +23205,7 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct Obj
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095C52\n\t"
@@ -23252,7 +23252,7 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveRight_Step1(struct Ob
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095C92\n\t"
@@ -23331,7 +23331,7 @@ __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveDown_Step1(struct 
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095D0A\n\t"
@@ -23378,7 +23378,7 @@ __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveUp_Step1(struct Ob
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095D4A\n\t"
@@ -23425,7 +23425,7 @@ __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveLeft_Step1(struct 
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095D8A\n\t"
@@ -23472,7 +23472,7 @@ __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveRight_Step1(struct
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
-        "	bl npc_obj_ministep_stop_on_arrival\n\t"
+        "	bl UpdateMovementNormal\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095DCA\n\t"
@@ -23631,7 +23631,7 @@ __attribute__((naked)) void TryEnableEventObjectAnim(struct ObjectEvent *objectE
     );
 }
 
-__attribute__((naked)) void UpdateEventObjectVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) void UpdateObjectEventVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -25028,7 +25028,7 @@ __attribute__((naked)) void SetObjectSubpriorityByElevation(u8 elevation, struct
     );
 }
 
-__attribute__((naked)) void EventObjectUpdateSubpriority(struct ObjectEvent *objectEvent)
+__attribute__((naked)) void ObjectEventUpdateSubpriority(struct ObjectEvent *objectEvent)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -25050,7 +25050,7 @@ __attribute__((naked)) void EventObjectUpdateSubpriority(struct ObjectEvent *obj
     );
 }
 
-__attribute__((naked)) bool8 AreZCoordsCompatible(u8 a, u8 b)
+__attribute__((naked)) bool8 AreElevationsCompatible(u8 a, u8 b)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -27038,7 +27038,7 @@ __attribute__((naked)) void UpdateObjectEventSpriteInvisibility(struct ObjectEve
     );
 }
 
-__attribute__((naked)) void UpdateEventObjectSpriteSubpriorityAndVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) void SpriteCB_VirtualObject(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -27096,7 +27096,7 @@ __attribute__((naked)) void sub_08097460(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08097494: .4byte gSprites\n\t"
-        "_08097498: .4byte UpdateEventObjectSpriteSubpriorityAndVisibility + 1\n\t"
+        "_08097498: .4byte SpriteCB_VirtualObject + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27133,7 +27133,7 @@ __attribute__((naked)) int GetVirtualObjectSpriteId(u8 virtualObjId)
         "	b _080974E2\n\t"
         "	.align 2, 0\n\t"
         "_080974D0: .4byte gSprites\n\t"
-        "_080974D4: .4byte UpdateEventObjectSpriteSubpriorityAndVisibility + 1\n\t"
+        "_080974D4: .4byte SpriteCB_VirtualObject + 1\n\t"
         "_080974D8:\n\t"
         "	adds r4, #0x44\n\t"
         "	adds r3, #1\n\t"
@@ -27547,7 +27547,7 @@ __attribute__((naked)) u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, stru
         "	adds r2, r1, #4\n\t"
         "	adds r3, r1, #0\n\t"
         "	adds r3, #8\n\t"
-        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	bl ObjectEventGetLocalIdAndMap\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl FieldEffectStart\n\t"
         "	pop {r4}\n\t"

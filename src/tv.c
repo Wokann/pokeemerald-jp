@@ -14,7 +14,7 @@ enum
 extern u16 sFindThatGamerCoinsSpent;
 extern u8 sFindThatGamerWhichGame;
 extern void SetTVMetatilesOnMap(int width, int height, u16 metatileId);
-extern void ClearPokemonNews(void);
+extern void ClearPokeNews(void);
 
 __attribute__((naked)) void ClearTVShowData(void)
 {
@@ -58,7 +58,7 @@ __attribute__((naked)) void ClearTVShowData(void)
         "	lsrs r3, r0, #0x18\n\t"
         "	cmp r3, #0x18\n\t"
         "	bls _080ECA8A\n\t"
-        "	bl ClearPokemonNews\n\t"
+        "	bl ClearPokeNews\n\t"
         "	pop {r4, r5, r6, r7}\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -120,7 +120,7 @@ __attribute__((naked)) void special_0x44(void)
         "	ldr r0, _080ECB54\n\t"
         "	adds r1, r1, r0\n\t"
         "	ldrb r0, [r1]\n\t"
-        "	bl GetTVChannelByShowType\n\t"
+        "	bl GetTVGroupByShowId\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #4\n\t"
@@ -1242,7 +1242,7 @@ __attribute__((naked)) void PutPokemonTodayCaughtOnAir(void)
         "	ldr r0, [r0]\n\t"
         "	ldr r1, _080ED3B4\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r1, _080ED3B8\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1469,7 +1469,7 @@ __attribute__((naked)) void PutPokemonTodayFailedOnTheAir(void)
         "	ldr r0, [r7]\n\t"
         "	ldr r6, _080ED564\n\t"
         "	adds r0, r0, r6\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080ED568\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1713,7 +1713,7 @@ __attribute__((naked)) void PutBattleUpdateOnTheAir(u8 opponentLinkPlayerId, u16
         "	ldr r0, [r6]\n\t"
         "	ldr r5, _080ED71C\n\t"
         "	adds r0, r0, r5\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r4, _080ED720\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1839,7 +1839,7 @@ __attribute__((naked)) bool8 Put3CheersForPokeblocksOnTheAir(const u8 *partnersN
         "	ldr r0, [r0]\n\t"
         "	ldr r7, _080ED7DC\n\t"
         "	adds r0, r0, r7\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r4, _080ED7E0\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2022,7 +2022,7 @@ __attribute__((naked)) void ContestLiveUpdates_BeforeInterview_1(void)
         "	bl DeleteTVShowInArrayByIdx\n\t"
         "	ldr r0, [r5]\n\t"
         "	adds r0, r0, r4\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080ED948\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2422,7 +2422,7 @@ __attribute__((naked)) void TV_PutSecretBaseVisitOnTheAir(void)
         "	ldr r0, [r4]\n\t"
         "	ldr r1, _080EEC94\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r2, _080EEC98\n\t"
         "	strb r0, [r2]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2481,7 +2481,7 @@ __attribute__((naked)) void sub_080EECA4(void)
         "	ldr r0, [r6]\n\t"
         "	ldr r5, _080EED48\n\t"
         "	adds r0, r0, r5\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EED4C\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2649,7 +2649,7 @@ __attribute__((naked)) void sub_080EEDEC(void)
         "	ldr r0, [r6]\n\t"
         "	ldr r5, _080EEE64\n\t"
         "	adds r0, r0, r5\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EEE68\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2739,7 +2739,7 @@ __attribute__((naked)) void sub_080EEE7C(void)
         "	ldr r0, [r0]\n\t"
         "	ldr r5, _080EEF5C\n\t"
         "	adds r0, r0, r5\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EEF60\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2849,7 +2849,7 @@ __attribute__((naked)) void sub_080EEF6C(void)
         "	ldr r0, [r6]\n\t"
         "	ldr r5, _080EEFEC\n\t"
         "	adds r0, r0, r5\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EEFF0\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2921,7 +2921,7 @@ __attribute__((naked)) void TryPutSpotTheCutiesOnAir(struct Pokemon *pokemon, u8
         "	ldr r0, [r7]\n\t"
         "	ldr r6, _080EF098\n\t"
         "	adds r0, r0, r6\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EF09C\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2962,7 +2962,7 @@ __attribute__((naked)) void TryPutSpotTheCutiesOnAir(struct Pokemon *pokemon, u8
         "	bl GetRibbonCount\n\t"
         "	strb r0, [r4, #2]\n\t"
         "	mov r0, r8\n\t"
-        "	bl TV_MonDataIdxToRibbon\n\t"
+        "	bl MonDataIdxToRibbon\n\t"
         "	strb r0, [r4, #3]\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl tv_store_id_3x\n\t"
@@ -3116,7 +3116,7 @@ __attribute__((naked)) u8 GetRibbonCount(struct Pokemon *pokemon)
     );
 }
 
-__attribute__((naked)) void TV_MonDataIdxToRibbon(void)
+__attribute__((naked)) void MonDataIdxToRibbon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3223,7 +3223,7 @@ __attribute__((naked)) void sub_080EF244(void)
         "	ldr r0, [r5]\n\t"
         "	ldr r6, _080EF2C0\n\t"
         "	adds r0, r0, r6\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EF2C4\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3295,7 +3295,7 @@ __attribute__((naked)) void sub_080EF2D8(void)
         "	ldr r0, [r4]\n\t"
         "	ldr r1, _080EF318\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080EF31C\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3387,7 +3387,7 @@ __attribute__((naked)) void sub_080EF330(void)
         "	ldr r0, [r0]\n\t"
         "	ldr r1, _080EF3AC\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r1, _080EF3B0\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3442,7 +3442,7 @@ __attribute__((naked)) void sub_080EF3E0(void)
         "	ldr r0, [r5]\n\t"
         "	ldr r1, _080EF44C\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r2, _080EF450\n\t"
         "	strb r0, [r2]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3639,7 +3639,7 @@ __attribute__((naked)) void sub_080EF588(void)
         "	ldr r0, [r7]\n\t"
         "	ldr r1, _080EF648\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r2, _080EF64C\n\t"
         "	strb r0, [r2]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3816,7 +3816,7 @@ __attribute__((naked)) void sub_080EF6F8(void)
         "	ldr r0, [r4]\n\t"
         "	ldr r1, _080EF770\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r2, _080EF774\n\t"
         "	strb r0, [r2]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4151,7 +4151,7 @@ __attribute__((naked)) void sub_080EF934(void)
     );
 }
 
-__attribute__((naked)) void ClearPokemonNews(void)
+__attribute__((naked)) void ClearPokeNews(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4223,7 +4223,7 @@ __attribute__((naked)) void ContestLiveUpdates_BeforeInterview_2(void)
         "	adds r4, r0, r1\n\t"
         "	ldr r1, _080ED988\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080ED98C\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4259,7 +4259,7 @@ __attribute__((naked)) void ContestLiveUpdates_BeforeInterview_3(void)
         "	adds r4, r0, r1\n\t"
         "	ldr r1, _080ED9C8\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080ED9CC\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4295,7 +4295,7 @@ __attribute__((naked)) void ContestLiveUpdates_BeforeInterview_4(void)
         "	adds r4, r0, r1\n\t"
         "	ldr r1, _080EDA08\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080EDA0C\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4333,7 +4333,7 @@ __attribute__((naked)) void ContestLiveUpdates_BeforeInterview_5(void)
         "	adds r6, r4, r0\n\t"
         "	ldr r1, _080EDA6C\n\t"
         "	adds r0, r4, r1\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080EDA70\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4524,7 +4524,7 @@ __attribute__((naked)) void BravoTrainerPokemonProfile_BeforeInterview1(u16 move
         "	ldr r0, [r4]\n\t"
         "	ldr r1, _080EDBDC\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080EDBE0\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4570,7 +4570,7 @@ __attribute__((naked)) void BravoTrainerPokemonProfile_BeforeInterview2(u8 conte
         "	add r7, r8\n\t"
         "	ldr r0, _080EDC90\n\t"
         "	add r0, r8\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080EDC94\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4776,7 +4776,7 @@ __attribute__((naked)) void SaveRecordedItemPurchasesForTVShow(void)
         "	ldr r0, [r5]\n\t"
         "	ldr r7, _080EDE50\n\t"
         "	adds r0, r0, r7\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r6, _080EDE54\n\t"
         "	strb r0, [r6]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -5370,7 +5370,7 @@ __attribute__((naked)) void sub_080EE238(void)
         "	ldr r0, [r6]\n\t"
         "	ldr r1, _080EE314\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r4, _080EE31C\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -5697,7 +5697,7 @@ __attribute__((naked)) void PutFishingAdviceShowOnTheAir(void)
         "	ldr r0, [r6]\n\t"
         "	ldr r5, _080EE544\n\t"
         "	adds r0, r0, r5\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EE548\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -5828,7 +5828,7 @@ __attribute__((naked)) void sub_080EE5A0(void)
         "	ldr r1, _080EE654\n\t"
         "	mov r8, r1\n\t"
         "	add r0, r8\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EE658\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -5912,7 +5912,7 @@ __attribute__((naked)) void sub_080EE664(void)
         "	ldr r0, [r4]\n\t"
         "	ldr r1, _080EE6DC\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r2, _080EE6E0\n\t"
         "	strb r0, [r2]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -6049,7 +6049,7 @@ __attribute__((naked)) void sub_080EE780(void)
         "	ldr r0, [r7]\n\t"
         "	ldr r6, _080EE7F8\n\t"
         "	adds r0, r0, r6\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EE7FC\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -6117,7 +6117,7 @@ __attribute__((naked)) void sub_080EE808(void)
         "	ldr r0, [r6]\n\t"
         "	ldr r5, _080EE880\n\t"
         "	adds r0, r0, r5\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r4, _080EE884\n\t"
         "	strb r0, [r4]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -6190,7 +6190,7 @@ __attribute__((naked)) void AlertTVOfNewCoinTotal(void)
         "	ldr r0, [r0]\n\t"
         "	ldr r1, _080EE8E0\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r1, _080EE8E4\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -8002,7 +8002,7 @@ __attribute__((naked)) void sub_080F0578(void)
         "	ldr r0, [r0]\n\t"
         "	ldr r1, _080F05AC\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl FindEmptyTVSlotWithinFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyNormalTVShowSlot\n\t"
         "	ldr r1, _080F05B0\n\t"
         "	strb r0, [r1]\n\t"
         "	ldr r2, _080F05B4\n\t"
@@ -8038,7 +8038,7 @@ __attribute__((naked)) void sub_080F0578(void)
     );
 }
 
-__attribute__((naked)) void FindEmptyTVSlotWithinFirstFiveShowsOfArray(void)
+__attribute__((naked)) void FindFirstEmptyNormalTVShowSlot(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8071,7 +8071,7 @@ __attribute__((naked)) void FindEmptyTVSlotWithinFirstFiveShowsOfArray(void)
     );
 }
 
-__attribute__((naked)) void FindEmptyTVSlotBeyondFirstFiveShowsOfArray(void)
+__attribute__((naked)) void FindFirstEmptyRecordMixTVShowSlot(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8755,7 +8755,7 @@ __attribute__((naked)) void TV_CheckMonOTIDEqualsPlayerID(void)
     );
 }
 
-__attribute__((naked)) void GetTVChannelByShowType(void)
+__attribute__((naked)) void GetTVGroupByShowId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9317,7 +9317,7 @@ __attribute__((naked)) void sub_080F0E34(void)
         "	add r0, sp\n\t"
         "	ldr r0, [r0]\n\t"
         "	ldr r0, [r0]\n\t"
-        "	bl FindEmptyTVSlotBeyondFirstFiveShowsOfArray\n\t"
+        "	bl FindFirstEmptyRecordMixTVShowSlot\n\t"
         "	ldr r1, _080F0F60\n\t"
         "	strb r0, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -9412,7 +9412,7 @@ __attribute__((naked)) void sub_080F0F78(void)
         "	adds r0, r0, r6\n\t"
         "	ldrb r0, [r0]\n\t"
         "	str r2, [sp]\n\t"
-        "	bl GetTVChannelByShowType\n\t"
+        "	bl GetTVGroupByShowId\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	adds r1, r0, #0\n\t"
@@ -10341,7 +10341,7 @@ __attribute__((naked)) void sub_080F1694(void)
         "	ldr r0, _080F16D8\n\t"
         "	adds r1, r1, r0\n\t"
         "	ldrb r0, [r1]\n\t"
-        "	bl GetTVChannelByShowType\n\t"
+        "	bl GetTVGroupByShowId\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #2\n\t"

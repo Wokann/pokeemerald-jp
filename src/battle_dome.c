@@ -11874,7 +11874,7 @@ __attribute__((naked)) void Task_ShowTourneyTree(void)
         "	strh r0, [r1, #0x14]\n\t"
         "	b _0819441C\n\t"
         "	.align 2, 0\n\t"
-        "_081943D8: .4byte HblankCb_BattleDome + 1\n\t"
+        "_081943D8: .4byte HblankCb_TourneyTree + 1\n\t"
         "_081943DC: .4byte VblankCb1_BattleDome + 1\n\t"
         "_081943E0: .4byte sub_0819353C + 1\n\t"
         "_081943E4: .4byte gTasks\n\t"
@@ -12385,7 +12385,7 @@ __attribute__((naked)) void VblankCb0_BattleDome(void)
     );
 }
 
-__attribute__((naked)) void HblankCb_BattleDome(void)
+__attribute__((naked)) void HblankCb_TourneyTree(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

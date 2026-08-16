@@ -68,7 +68,7 @@ __attribute__((naked)) void BuildStartMenuActions(void)
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0809ED80\n\t"
-        "	bl BuildMultiBattleRoomStartMenu\n\t"
+        "	bl BuildMultiPartnerRoomStartMenu\n\t"
         "	b _0809ED84\n\t"
         "_0809ED80:\n\t"
         "	bl BuildNormalStartMenu\n\t"
@@ -286,7 +286,7 @@ __attribute__((naked)) void BuildBattlePyramidStartMenu(void)
     );
 }
 
-__attribute__((naked)) void BuildMultiBattleRoomStartMenu(void)
+__attribute__((naked)) void BuildMultiPartnerRoomStartMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

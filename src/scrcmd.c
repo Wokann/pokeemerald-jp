@@ -314,7 +314,7 @@ bool8 ScrCmd_returnram(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_killscript(struct ScriptContext *ctx)
+bool8 ScrCmd_endram(struct ScriptContext *ctx)
 {
     ClearRamScript();
     StopScript(ctx);
@@ -337,7 +337,7 @@ bool8 ScrCmd_loadword(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_loadbytefromaddr(struct ScriptContext *ctx)
+bool8 ScrCmd_loadbytefromptr(struct ScriptContext *ctx)
 {
     u8 index = *ctx->scriptPtr++;
     u8 *addr = (u8 *)ScriptReadWord(ctx);
@@ -346,7 +346,7 @@ bool8 ScrCmd_loadbytefromaddr(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_writebytetoaddr(struct ScriptContext *ctx)
+bool8 ScrCmd_setptr(struct ScriptContext *ctx)
 {
     u8 value = *ctx->scriptPtr++;
     u8 *addr = (u8 *)ScriptReadWord(ctx);
@@ -435,7 +435,7 @@ bool8 ScrCmd_compare_local_to_value(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_compare_local_to_addr(struct ScriptContext *ctx)
+bool8 ScrCmd_compare_local_to_ptr(struct ScriptContext *ctx)
 {
     u8 local = ctx->scriptPtr[0];
     u8 localVal = ctx->data[local];
@@ -445,7 +445,7 @@ bool8 ScrCmd_compare_local_to_addr(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_compare_addr_to_local(struct ScriptContext *ctx)
+bool8 ScrCmd_compare_ptr_to_local(struct ScriptContext *ctx)
 {
     u8 value = *(u8 *)ScriptReadWord(ctx);
     u8 local = ctx->scriptPtr[0];
@@ -456,7 +456,7 @@ bool8 ScrCmd_compare_addr_to_local(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_compare_addr_to_value(struct ScriptContext *ctx)
+bool8 ScrCmd_compare_ptr_to_value(struct ScriptContext *ctx)
 {
     u8 value = *(u8 *)ScriptReadWord(ctx);
     u8 arg = *ctx->scriptPtr++;
@@ -465,7 +465,7 @@ bool8 ScrCmd_compare_addr_to_value(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_compare_addr_to_addr(struct ScriptContext *ctx)
+bool8 ScrCmd_compare_ptr_to_ptr(struct ScriptContext *ctx)
 {
     u8 value1 = *(u8 *)ScriptReadWord(ctx);
     u8 value2 = *(u8 *)ScriptReadWord(ctx);
