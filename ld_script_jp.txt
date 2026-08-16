@@ -4548,7 +4548,7 @@ SECTIONS {
         src/event_object_movement.o(.text.MovementAction_AcroWheelieMoveLeft_Step1);
         src/event_object_movement.o(.text.MovementAction_AcroWheelieMoveRight_Step0);
         src/event_object_movement.o(.text.MovementAction_AcroWheelieMoveRight_Step1);
-        src/event_object_movement.o(.text.sub_08095CA0);
+        src/event_object_movement.o(.text.InitAcroEndWheelie);
         src/event_object_movement.o(.text.MovementAction_AcroEndWheelieMoveDown_Step0);
         src/event_object_movement.o(.text.MovementAction_AcroEndWheelieMoveDown_Step1);
         src/event_object_movement.o(.text.MovementAction_AcroEndWheelieMoveUp_Step0);

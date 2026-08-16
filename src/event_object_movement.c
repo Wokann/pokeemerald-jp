@@ -22181,7 +22181,7 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveRight_Step1(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 sub_08095CA0(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+__attribute__((naked)) bool8 InitAcroEndWheelie(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -22213,26 +22213,10 @@ __attribute__((naked)) bool8 sub_08095CA0(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095CA0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroEndWheelieMoveDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroEndWheelie(objectEvent, sprite, DIR_SOUTH, 1);
+    return MovementAction_AcroEndWheelieMoveDown_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22260,26 +22244,10 @@ __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveDown_Step1(struct 
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095CA0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroEndWheelieMoveUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroEndWheelie(objectEvent, sprite, DIR_NORTH, 1);
+    return MovementAction_AcroEndWheelieMoveUp_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22307,26 +22275,10 @@ __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveUp_Step1(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095CA0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroEndWheelieMoveLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroEndWheelie(objectEvent, sprite, DIR_WEST, 1);
+    return MovementAction_AcroEndWheelieMoveLeft_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22354,26 +22306,10 @@ __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveLeft_Step1(struct 
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095CA0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroEndWheelieMoveRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroEndWheelie(objectEvent, sprite, DIR_EAST, 1);
+    return MovementAction_AcroEndWheelieMoveRight_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
