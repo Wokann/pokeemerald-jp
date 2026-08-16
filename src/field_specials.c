@@ -1,6 +1,8 @@
 #include "global.h"
 #include "rtc.h"
 #include "field_player_avatar.h"
+#include "event_data.h"
+#include "tv.h"
 #include "field_specials.h"
 
 __attribute__((naked)) void Special_ShowDiploma(void)
@@ -2094,75 +2096,23 @@ u16 GetWeekCount(void)
     return weekCount;
 }
 
-__attribute__((naked)) void GetLeadMonFriendshipScore(void)
+u8 GetLeadMonFriendshipScore(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _08138C98\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _08138C9C\n\t"
-        "	movs r0, #6\n\t"
-        "	b _08138CEE\n\t"
-        "	.align 2, 0\n\t"
-        "_08138C98: .4byte gPlayerParty\n\t"
-        "_08138C9C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0xc7\n\t"
-        "	bls _08138CAC\n\t"
-        "	movs r0, #5\n\t"
-        "	b _08138CEE\n\t"
-        "_08138CAC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0x95\n\t"
-        "	bls _08138CBC\n\t"
-        "	movs r0, #4\n\t"
-        "	b _08138CEE\n\t"
-        "_08138CBC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0x63\n\t"
-        "	bls _08138CCC\n\t"
-        "	movs r0, #3\n\t"
-        "	b _08138CEE\n\t"
-        "_08138CCC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0x31\n\t"
-        "	bls _08138CDC\n\t"
-        "	movs r0, #2\n\t"
-        "	b _08138CEE\n\t"
-        "_08138CDC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08138CEC\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08138CEE\n\t"
-        "_08138CEC:\n\t"
-        "	movs r0, #1\n\t"
-        "_08138CEE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *pokemon = &gPlayerParty[GetLeadMonIndex()];
+    if (GetMonData3(pokemon, MON_DATA_FRIENDSHIP) == MAX_FRIENDSHIP)
+        return FRIENDSHIP_MAX;
+    if (GetMonData3(pokemon, MON_DATA_FRIENDSHIP) >= 200)
+        return FRIENDSHIP_200_TO_254;
+    if (GetMonData3(pokemon, MON_DATA_FRIENDSHIP) >= 150)
+        return FRIENDSHIP_150_TO_199;
+    if (GetMonData3(pokemon, MON_DATA_FRIENDSHIP) >= 100)
+        return FRIENDSHIP_100_TO_149;
+    if (GetMonData3(pokemon, MON_DATA_FRIENDSHIP) >= 50)
+        return FRIENDSHIP_50_TO_99;
+    if (GetMonData3(pokemon, MON_DATA_FRIENDSHIP) >= 1)
+        return FRIENDSHIP_1_TO_49;
+
+    return FRIENDSHIP_NONE;
 }
 
 __attribute__((naked)) void CB2_FieldShowRegionMap(void)
@@ -2740,69 +2690,25 @@ bool8 CheckLeadMonTough(void)
     return TRUE;
 }
 
-__attribute__((naked)) void IsGrassTypeInParty(void)
+void IsGrassTypeInParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r6, _081391A0\n\t"
-        "_08139156:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081391A4\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081391AC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081391AC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldrb r0, [r1, #6]\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	beq _08139198\n\t"
-        "	ldrb r0, [r1, #7]\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bne _081391AC\n\t"
-        "_08139198:\n\t"
-        "	ldr r1, _081391A8\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081391BA\n\t"
-        "	.align 2, 0\n\t"
-        "_081391A0: .4byte gSpeciesInfo\n\t"
-        "_081391A4: .4byte gPlayerParty\n\t"
-        "_081391A8: .4byte gSpecialVar_Result\n\t"
-        "_081391AC:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _08139156\n\t"
-        "	ldr r1, _081391C4\n\t"
-        "	movs r0, #0\n\t"
-        "_081391BA:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081391C4: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u16 species;
+    struct Pokemon *pokemon;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        pokemon = &gPlayerParty[i];
+        if (GetMonData3(pokemon, MON_DATA_SANITY_HAS_SPECIES) && !GetMonData3(pokemon, MON_DATA_IS_EGG))
+        {
+            species = GetMonData3(pokemon, MON_DATA_SPECIES);
+            if (gSpeciesInfo[species].types[0] == TYPE_GRASS || gSpeciesInfo[species].types[1] == TYPE_GRASS)
+            {
+                gSpecialVar_Result = TRUE;
+                return;
+            }
+        }
+    }
+    gSpecialVar_Result = FALSE;
 }
 
 __attribute__((naked)) void SpawnCameraObject(void)
@@ -3142,49 +3048,17 @@ __attribute__((naked)) void LeadMonHasEffortRibbon(void)
     );
 }
 
-__attribute__((naked)) void GiveLeadMonEffortRibbon(void)
+void GiveLeadMonEffortRibbon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #0x2a\n\t"
-        "	bl IncrementGameStat\n\t"
-        "	ldr r0, _08139430\n\t"
-        "	bl FlagSet\n\t"
-        "	movs r1, #1\n\t"
-        "	mov r0, sp\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _08139434\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x47\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetRibbonCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bls _08139426\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x47\n\t"
-        "	bl TryPutSpotTheCutiesOnAir\n\t"
-        "_08139426:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139430: .4byte 0x0000089B\n\t"
-        "_08139434: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 ribbonSet;
+    struct Pokemon *leadMon;
+    IncrementGameStat(GAME_STAT_RECEIVED_RIBBONS);
+    FlagSet(FLAG_SYS_RIBBON_GET);
+    ribbonSet = TRUE;
+    leadMon = &gPlayerParty[GetLeadMonIndex()];
+    SetMonData(leadMon, MON_DATA_EFFORT_RIBBON, &ribbonSet);
+    if (GetRibbonCount(leadMon) > NUM_CUTIES_RIBBONS)
+        TryPutSpotTheCutiesOnAir(leadMon, MON_DATA_EFFORT_RIBBON);
 }
 
 __attribute__((naked)) void Special_AreLeadMonEVsMaxedOut(void)
