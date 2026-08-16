@@ -8,4 +8,4 @@ const u8 gUnknown_8588627[] = _(
     "コインが　ありません\n"
     "ゲームを　しゅうりょうします");
 
-const u8 gUnknown_8588641[] = _("コインが　3まい　ありません！");
+const u8 gText_YouDontHaveThreeCoins[] = _("コインが　3まい　ありません！");

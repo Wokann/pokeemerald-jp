@@ -13,6 +13,8 @@
 #include "trig.h"
 #include "graphics.h"
 #include "palette.h"
+#include "window.h"
+#include "text.h"
 #include "util.h"
 #include "text.h"
 #include "menu.h"
@@ -843,6 +845,12 @@ enum {
     DIG_DISPLAY_BONUS_BIG,
 };
 
+// IDs for the text windows
+enum {
+    WIN_MSG,
+    WIN_INFO,
+};
+
 #define MAX_BET 3
 
 #define BIAS_REPLAY     (1 << 0)
@@ -1018,6 +1026,8 @@ __attribute__((naked)) void Task_SlotMachine(u8 taskId)
 void LoadPikaPowerMeter(u8 bolts);
 void CreateDigitalDisplayScene(u8 id);
 bool8 IsDigitalDisplayAnimFinished(void);
+bool8 IsInfoBoxClosed(void);
+extern const u8 gText_YouDontHaveThreeCoins[];
 
 static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
@@ -1206,92 +1216,30 @@ __attribute__((naked)) void SlotAction_AwaitPlayerInput(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotAction_PrintYouDontHaveThreeCoins(u8 taskId)
+static bool8 SlotTask_PrintMsg_Need3Coins(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DrawDialogueFrame\n\t"
-        "	ldr r2, _0812AD3C\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	ldr r0, _0812AD40\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #7\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AD3C: .4byte gUnknown_8588604 + 0x3D\n\t"
-        "_0812AD40: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    DrawDialogueFrame(WIN_MSG, FALSE);
+    AddTextPrinterParameterized(WIN_MSG, FONT_NORMAL, gText_YouDontHaveThreeCoins, 0, 2, 0, 0); // JP text x offset = 2
+    CopyWindowToVram(WIN_MSG, COPYWIN_FULL);
+    sSlotMachine->state = SLOTTASK_WAIT_MSG_NEED_3_COINS;
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_ExitMessage_9999Coins(u8 taskId)
+static bool8 SlotTask_WaitMsg_Need3Coins(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812AD68\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AD62\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearDialogWindowAndFrame\n\t"
-        "	ldr r0, _0812AD6C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812AD62:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AD68: .4byte gMain\n\t"
-        "_0812AD6C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(A_BUTTON | B_BUTTON))
+    {
+        ClearDialogWindowAndFrame(WIN_MSG, TRUE);
+        sSlotMachine->state = SLOTTASK_BET_INPUT;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_GivingInformation(u8 taskId)
+static bool8 SlotTask_WaitInfoBox(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsInfoBoxClosed\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AD84\n\t"
-        "	ldr r0, _0812AD8C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812AD84:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AD8C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsInfoBoxClosed())
+        sSlotMachine->state = SLOTTASK_BET_INPUT;
+    return FALSE;
 }
 
 __attribute__((naked)) void SlotAction9(u8 taskId)

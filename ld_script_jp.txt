@@ -7385,9 +7385,9 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_ReadyNewReelTimeSpin);
         src/slot_machine.o(.text.SlotTask_AskInsertBet);
         src/slot_machine.o(.text.SlotAction_AwaitPlayerInput);
-        src/slot_machine.o(.text.SlotAction_PrintYouDontHaveThreeCoins);
-        src/slot_machine.o(.text.SlotAction_ExitMessage_9999Coins);
-        src/slot_machine.o(.text.SlotAction_GivingInformation);
+        src/slot_machine.o(.text.SlotTask_PrintMsg_Need3Coins);
+        src/slot_machine.o(.text.SlotTask_WaitMsg_Need3Coins);
+        src/slot_machine.o(.text.SlotTask_WaitInfoBox);
         src/slot_machine.o(.text.SlotAction9);
         src/slot_machine.o(.text.SlotAction10);
         src/slot_machine.o(.text.SlotAction_SetLuckySpins);
