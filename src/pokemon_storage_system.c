@@ -14766,17 +14766,9 @@ __attribute__((naked)) void PlaceMon(void)
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) void sub_080CD888(void)
+void sub_080CD888(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl TryRefreshDisplayMon\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    TryRefreshDisplayMon();
 }
 
 
