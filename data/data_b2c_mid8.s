@@ -9,9 +9,9 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sMoveRelearnerMovesListTemplate
-sMoveRelearnerMovesListTemplate: @ 0x85F7C80
-	.incbin "baserom_jp.gba", 0x5f7c80, 0x2c18
+	.globl gUnknown_85F7C98
+gUnknown_85F7C98: @ 0x85F7C98
+	.incbin "baserom_jp.gba", 0x5f7c98, 0x2c00
 
 	.globl sConditionMonPicSheetDescriptor
 sConditionMonPicSheetDescriptor: @ 0x85FA898

@@ -164,8 +164,34 @@ const u8 gText_MoveRelearnerAccuracy[] = __("めいちゅう/$");
 const u8 gText_MoveRelearnerAppeal[] = __("アピール$");
 // 0x00 keeps the following sMoveRelearnerMovesListTemplate 2-byte aligned.
 const u8 gText_MoveRelearnerJam[] = {0x4A, 0x03, 0x37, 0x02, 0xFF, 0x00};
+
+// JP 0x081D200C: JP's move cursor callback only takes 2 args; the list
+// argument is unused on this build.
+void sub_081D200C(u32 chosenMove, bool8 onInit);
+
+// JP 0x085F7C80: geometry (item_X/upText_Y/fontId) differs from pokeemerald.
+const struct ListMenuTemplate sMoveRelearnerMovesListTemplate =
+{
+    .items = NULL,
+    .moveCursorFunc = (void (*)(s32, bool8, struct ListMenu *))sub_081D200C,
+    .itemPrintFunc = NULL,
+    .totalItems = 0,
+    .maxShowed = 0,
+    .windowId = RELEARNERWIN_MOVE_LIST,
+    .header_X = 0,
+    .item_X = 8,
+    .cursor_X = 0,
+    .upText_Y = 2,
+    .cursorPal = 2,
+    .fillValue = 1,
+    .cursorShadowPal = 3,
+    .lettersSpacing = 0,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
+    .fontId = 1, // JP font id
+    .cursorKind = CURSOR_BLACK_ARROW
+};
 extern void sub_08198D44(const struct WindowTemplate *template, u8 arg1, u8 arg2, u8 arg3);
-extern const struct ListMenuTemplate sMoveRelearnerMovesListTemplate;
 extern const u8 gUnknown_85E7FFC[]; // JP inline move-description table (0x38-byte entries)
 extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898
