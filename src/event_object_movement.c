@@ -18784,42 +18784,18 @@ __attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step1(struct ObjectEv
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RockSmashBreak_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r2, [r4, #1]\n\t"
-        "	lsls r1, r2, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	movs r0, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	subs r0, #0x22\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08094F8E\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "_08094F8E:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 delayEnded;
+
+    objectEvent->invisible ^= TRUE;
+    delayEnded = WaitForMovementDelay(sprite);
+    if (delayEnded)
+    {
+        objectEvent->invisible = TRUE;
+        sprite->sActionFuncId = 3;
+    }
+    return FALSE;
 }
 
 
@@ -18842,42 +18818,18 @@ bool8 MovementAction_CutTree_Step1(struct ObjectEvent *objectEvent, struct Sprit
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_CutTree_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_CutTree_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r2, [r4, #1]\n\t"
-        "	lsls r1, r2, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	movs r0, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	subs r0, #0x22\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809500A\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "_0809500A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 delayEnded;
+
+    objectEvent->invisible ^= TRUE;
+    delayEnded = WaitForMovementDelay(sprite);
+    if (delayEnded)
+    {
+        objectEvent->invisible = TRUE;
+        sprite->sActionFuncId = 3;
+    }
+    return FALSE;
 }
 
 
