@@ -14570,58 +14570,17 @@ bool8 MovementAction_FacePlayer_Step0(struct ObjectEvent *objectEvent, struct Sp
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_FaceAwayPlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_FaceAwayPlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	movs r0, #0xff\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094956\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	ldr r4, _08094964\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	lsls r3, r2, #3\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	movs r4, #0x10\n\t"
-        "	ldrsh r2, [r3, r4]\n\t"
-        "	movs r4, #0x12\n\t"
-        "	ldrsh r3, [r3, r4]\n\t"
-        "	bl GetDirectionToFace\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetOppositeDirection\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl FaceDirection\n\t"
-        "_08094956:\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08094964: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 playerObjectId;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0, &playerObjectId))
+        FaceDirection(objectEvent, sprite, GetOppositeDirection(GetDirectionToFace(objectEvent->currentCoords.x,
+                                                                                   objectEvent->currentCoords.y,
+                                                                                   gObjectEvents[playerObjectId].currentCoords.x,
+                                                                                   gObjectEvents[playerObjectId].currentCoords.y)));
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
 
@@ -15170,65 +15129,21 @@ bool8 MovementAction_ClearFixedPriority_Step0(struct ObjectEvent *objectEvent, s
 }
 
 
-__attribute__((naked)) bool8 MovementAction_InitAffineAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_InitAffineAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r4, #0x42\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+    InitSpriteAffineAnim(sprite);
+    sprite->affineAnimPaused = TRUE;
+    sprite->subspriteMode = SUBSPRITES_OFF;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_ClearAffineAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_ClearAffineAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #4\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #1]\n\t"
-        "	lsrs r1, r1, #6\n\t"
-        "	ldrb r2, [r4, #3]\n\t"
-        "	lsrs r2, r2, #6\n\t"
-        "	movs r3, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CalcCenterToCornerVec\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FreeOamMatrix(sprite->oam.matrixNum);
+    sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+    CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
+    return TRUE;
 }
 bool8 MovementAction_HideReflection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
