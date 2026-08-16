@@ -11,16 +11,17 @@
 
 	.globl gMonStillFrontPic_CircledQuestionMark
 gMonStillFrontPic_CircledQuestionMark: @ 0x8C00758
-	.incbin "baserom_jp.gba", 0xc00758, 0x248
+	.incbin "graphics/pokemon/question_mark/circled/front.4bpp.lz"
 
 	.globl gMonBackPic_CircledQuestionMark
 gMonBackPic_CircledQuestionMark: @ 0x8C009A0
-	.incbin "baserom_jp.gba", 0xc009a0, 0x248
+	.incbin "graphics/pokemon/question_mark/circled/back.4bpp.lz"
 
 	.globl gMonPalette_CircledQuestionMark
 gMonPalette_CircledQuestionMark: @ 0x8C00BE8
-	.incbin "baserom_jp.gba", 0xc00be8, 0x18
+	.incbin "graphics/pokemon/question_mark/circled/normal.gbapal.lz"
 
 	.globl gMonShinyPalette_CircledQuestionMark
 gMonShinyPalette_CircledQuestionMark: @ 0x8C00C00
-	.incbin "baserom_jp.gba", 0xc00c00, 0x1708
+	.incbin "graphics/pokemon/question_mark/circled/shiny.gbapal.lz"
+	.incbin "baserom_jp.gba", 0xc00c16, 0x16f2
