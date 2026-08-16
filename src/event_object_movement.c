@@ -22429,39 +22429,14 @@ void DoShadowFieldEffect(struct ObjectEvent *objectEvent)
     }
 }
 
-__attribute__((naked)) void DoRippleFieldEffect(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void DoRippleFieldEffect(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	ldr r2, _080977D4\n\t"
-        "	movs r3, #0x20\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	str r1, [r2]\n\t"
-        "	movs r3, #0x22\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	ldrh r0, [r0, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	subs r1, #2\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	movs r0, #0x97\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [r2, #0xc]\n\t"
-        "	movs r0, #5\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080977D4: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct ObjectEventGraphicsInfo *graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
+    gFieldEffectArguments[0] = sprite->x;
+    gFieldEffectArguments[1] = sprite->y + (graphicsInfo->height >> 1) - 2;
+    gFieldEffectArguments[2] = 151;
+    gFieldEffectArguments[3] = 3;
+    FieldEffectStart(FLDEFF_RIPPLE);
 }
 
 __attribute__((naked)) bool8 MovementAction_StoreAndLockAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
