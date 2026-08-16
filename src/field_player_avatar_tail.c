@@ -1275,7 +1275,7 @@ __attribute__((naked)) void sub_0808BBE4(void)
         "	bl ShowWarpArrowSprite\n\t"
         "	b _0808BC66\n\t"
         "	.align 2, 0\n\t"
-        "_0808BC48: .4byte gUnknown_846F940\n\t"
+        "_0808BC48: .4byte sArrowWarpMetatileBehaviorChecks2\n\t"
         "_0808BC4C:\n\t"
         "	ldrh r1, [r4]\n\t"
         "	adds r1, #1\n\t"
@@ -1733,7 +1733,7 @@ __attribute__((naked)) void sub_0808BF64(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808BF70: .4byte gUnknown_846F960\n\t"
+        "_0808BF70: .4byte sPlayerAvatarSecretBaseMatSpin\n\t"
         "_0808BF74: .4byte 0x03005B60\n\t"
         "_0808BF78: .4byte 0x02037230\n\t"
         "_0808BF7C: .4byte 0x02036FF0\n\t"
@@ -3667,4 +3667,3 @@ __attribute__((naked)) void sub_0808CCFC(void)
         ".syntax divided\n\t"
     );
 }
-

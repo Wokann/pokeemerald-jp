@@ -5877,7 +5877,7 @@ __attribute__((naked)) void sub_0812CD84(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812CDAC: .4byte gUnknown_85844C8\n\t"
+        "_0812CDAC: .4byte sReelStopButtonTasks\n\t"
         "_0812CDB0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );

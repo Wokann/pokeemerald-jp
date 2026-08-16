@@ -6650,7 +6650,7 @@ __attribute__((naked)) void SummaryScreen_MainCB2(void)
         "	.align 2, 0\n\t"
         "_081C26CC: .4byte gUnknown_203CBE8\n\t"
         "_081C26D0: .4byte 0x000040CB\n\t"
-        "_081C26D4: .4byte gUnknown_85ED2A4\n\t"
+        "_081C26D4: .4byte sTextPrinterFunctions\n\t"
         ".syntax divided\n\t"
     );
 }

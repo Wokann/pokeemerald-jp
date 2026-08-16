@@ -13,9 +13,9 @@
 gUnknown_85DBC11: @ 0x85DBC11
 	.incbin "baserom_jp.gba", 0x5dbc11, 0x13
 
-	.globl gUnknown_85DBC24
-gUnknown_85DBC24: @ 0x85DBC24
-	.incbin "baserom_jp.gba", 0x5dbc24, 0xc
+	.globl sSelect_MenuOptionFuncs
+sSelect_MenuOptionFuncs: @ 0x85DBC24
+	.4byte Select_OptionSummary + 1, Select_OptionRentDeselect + 1, Select_OptionOthers + 1
 
 	.globl gUnknown_85DBC30
 gUnknown_85DBC30: @ 0x85DBC30

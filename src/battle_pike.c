@@ -1850,7 +1850,7 @@ __attribute__((naked)) void DoStatusInflictionScreenFade(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A7B04: .4byte gUnknown_85DDEC0\n\t"
+        "_081A7B04: .4byte sStatusInflictionScreenFlashFuncs\n\t"
         "_081A7B08: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3495,4 +3495,3 @@ __attribute__((naked)) void SpeciesToPikeMonId(void)
         ".syntax divided\n\t"
     );
 }
-

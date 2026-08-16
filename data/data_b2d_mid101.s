@@ -125,9 +125,9 @@ gUnknown_85DDEA4: @ 0x85DDEA4
 gUnknown_85DDEAD: @ 0x85DDEAD
 	.incbin "baserom_jp.gba", 0x5ddead, 0x13
 
-	.globl gUnknown_85DDEC0
-gUnknown_85DDEC0: @ 0x85DDEC0
-	.incbin "baserom_jp.gba", 0x5ddec0, 0x8
+	.globl sStatusInflictionScreenFlashFuncs
+sStatusInflictionScreenFlashFuncs: @ 0x85DDEC0
+	.4byte StatusInflictionFadeOut + 1, StatusInflictionFadeIn + 1
 
 	.globl gUnknown_85DDEC8
 gUnknown_85DDEC8: @ 0x85DDEC8

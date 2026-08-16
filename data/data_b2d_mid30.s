@@ -69,20 +69,18 @@ gUnknown_830FCF8: @ 0x830FCF8
 gUnknown_830FD08: @ 0x830FD08
 	.incbin "baserom_jp.gba", 0x30fd08, 0xc
 
-	.globl gUnknown_830FD14
-gUnknown_830FD14: @ 0x830FD14
-	.incbin "baserom_jp.gba", 0x30fd14, 0xc
+	.globl sLinkPlayerMovementModes
+sLinkPlayerMovementModes: @ 0x830FD14
+	.4byte MovementEventModeCB_Normal + 1, MovementEventModeCB_Ignored + 1, MovementEventModeCB_Scripted + 1
 
 	.globl sLinkPlayerFacingHandlers
 sLinkPlayerFacingHandlers: @ 0x830FD20
 	.4byte FacingHandler_DoNothing + 1, FacingHandler_DpadMovement + 1, FacingHandler_DpadMovement + 1, FacingHandler_DpadMovement + 1, FacingHandler_DpadMovement + 1, FacingHandler_DoNothing + 1, FacingHandler_DoNothing + 1, FacingHandler_ForcedFacingChange + 1
 	.4byte FacingHandler_ForcedFacingChange + 1, FacingHandler_ForcedFacingChange + 1, FacingHandler_ForcedFacingChange + 1
 
-	.globl gUnknown_830FD4C
-gUnknown_830FD4C: @ 0x830FD4C
-	.globl gUnknown_830FD4C
-gUnknown_830FD4C: @ 0x0830FD4C
-	.incbin "baserom_jp.gba", 0x30FD4C, 0x8
+	.globl sMovementStatusHandler
+sMovementStatusHandler: @ 0x830FD4C
+	.4byte MovementStatusHandler_EnterFreeMode + 1, MovementStatusHandler_TryAdvanceScript + 1
 gTileset_PETALBURG_CITY_PRIMARY_Tiles:
 	.incbin "data/tilesets/primary/general/tiles.4bpp.lz"
 gTileset_PETALBURG_CITY_PRIMARY_Palettes:
@@ -7071,9 +7069,9 @@ gUnknown_846F92A: @ 0x846F92A
 gUnknown_846F92C: @ 0x846F92C
 	.incbin "baserom_jp.gba", 0x46f92c, 0x14
 
-	.globl gUnknown_846F940
-gUnknown_846F940: @ 0x846F940
-	.incbin "baserom_jp.gba", 0x46f940, 0x10
+	.globl sArrowWarpMetatileBehaviorChecks2
+sArrowWarpMetatileBehaviorChecks2: @ 0x846F940
+	.4byte MetatileBehavior_IsSouthArrowWarp + 1, MetatileBehavior_IsNorthArrowWarp + 1, MetatileBehavior_IsWestArrowWarp + 1, MetatileBehavior_IsEastArrowWarp + 1
 
 	.globl gUnknown_846F950
 gUnknown_846F950: @ 0x846F950
@@ -7083,9 +7081,9 @@ gUnknown_846F950: @ 0x846F950
 gUnknown_846F95C: @ 0x846F95C
 	.incbin "baserom_jp.gba", 0x46f95c, 0x4
 
-	.globl gUnknown_846F960
-gUnknown_846F960: @ 0x846F960
-	.incbin "baserom_jp.gba", 0x46f960, 0x10
+	.globl sPlayerAvatarSecretBaseMatSpin
+sPlayerAvatarSecretBaseMatSpin: @ 0x846F960
+	.4byte PlayerAvatar_SecretBaseMatSpinStep0 + 1, PlayerAvatar_SecretBaseMatSpinStep1 + 1, PlayerAvatar_SecretBaseMatSpinStep2 + 1, PlayerAvatar_SecretBaseMatSpinStep3 + 1
 
 	.globl gUnknown_846F970
 gUnknown_846F970: @ 0x846F970

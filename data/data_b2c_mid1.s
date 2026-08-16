@@ -62,9 +62,9 @@ gUnknown_85ED17C: @ 0x85ED17C
 gUnknown_85ED223: @ 0x85ED223
 	.incbin "baserom_jp.gba", 0x5ed223, 0x81
 
-	.globl gUnknown_85ED2A4
-gUnknown_85ED2A4: @ 0x85ED2A4
-	.incbin "baserom_jp.gba", 0x5ed2a4, 0x10
+	.globl sTextPrinterFunctions
+sTextPrinterFunctions: @ 0x85ED2A4
+	.4byte PrintInfoPageText + 1, PrintSkillsPageText + 1, PrintBattleMoves + 1, PrintContestMoves + 1
 
 	.globl sTextPrinterTasks
 sTextPrinterTasks: @ 0x85ED2B4

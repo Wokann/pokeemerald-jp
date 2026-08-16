@@ -3048,7 +3048,7 @@ __attribute__((naked)) void sub_0819B8C0(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0819B8C8: .4byte gUnknown_3006028\n\t"
-        "_0819B8CC: .4byte gUnknown_85DBC24\n\t"
+        "_0819B8CC: .4byte sSelect_MenuOptionFuncs\n\t"
         "_0819B8D0: .4byte gUnknown_3001278\n\t"
         ".syntax divided\n\t"
     );
@@ -11390,4 +11390,3 @@ __attribute__((naked)) void Swap_ShowMonSprite(void)
         ".syntax divided\n\t"
     );
 }
-

@@ -7626,8 +7626,8 @@ __attribute__((naked)) void SetPlayerFacingDirection(u8 a0, u8 a1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08087334: .4byte gUnknown_830FD4C\n\t"
-        "_08087338: .4byte gUnknown_830FD14\n\t"
+        "_08087334: .4byte sMovementStatusHandler\n\t"
+        "_08087338: .4byte sLinkPlayerMovementModes\n\t"
         ".syntax divided\n\t"
     );
 }
