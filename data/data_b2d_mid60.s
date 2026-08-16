@@ -985,7 +985,14 @@ sShakeDirsPattern1: @ 0x8571278
 gLightningSpriteTemplate: @ 0x5712A4
 	.hword 0x2735, 0x2735
 	.4byte 0x084FD020, 0x085712A0, 0, gDummySpriteAffineAnimTable, 0x0810A9F9
-	.incbin "baserom_jp.gba", 0x5712bc, 0x74
+sAffineAnim_UnusedSpinningFist: @ 0x5712BC
+	.hword 0x0100, 0x0100, 0x0000, 0x0000
+	.hword 0x0000, 0x0000, 0x1400, 0x0000
+	.hword 0x0000, 0x0000, 0x3CF0, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+
+gUnknown_5712DC: @ 0x5712DC
+	.incbin "baserom_jp.gba", 0x5712dc, 0x54
 
 	.globl gSparkElectricitySpriteTemplate
 gSparkElectricitySpriteTemplate: @ 0x571330
