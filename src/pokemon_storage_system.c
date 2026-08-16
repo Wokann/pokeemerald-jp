@@ -269,6 +269,8 @@ extern void sub_080CFA58(void);
 extern s8 sCursorArea;
 extern s8 sCursorPosition;
 extern bool8 sIsMonBeingMoved;
+extern void UpdateCloseBoxButtonFlash(void);
+extern void UnkUtil_Run(void);
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -2000,47 +2002,23 @@ __attribute__((naked)) void sub_080C7590(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) void VblankCb_PSS(void)
+void VBlankCB_PokeStorage(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl sub_080D2344\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	ldr r0, _080C75EC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xb3\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C75EC: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    UnkUtil_Run();
+    TransferPlttBuffer();
+    SetGpuReg(REG_OFFSET_BG2HOFS, sStorage->bg2_X);
 }
 
-__attribute__((naked)) void Cb2_PSS(void)
+void CB2_PokeStorage(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RunTasks\n\t"
-        "	bl DoScheduledBgTilemapCopiesToVram\n\t"
-        "	bl ScrollBackground\n\t"
-        "	bl sub_080CA278\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RunTasks();
+    DoScheduledBgTilemapCopiesToVram();
+    ScrollBackground();
+    UpdateCloseBoxButtonFlash();
+    AnimateSprites();
+    BuildOamBuffer();
 }
 
 __attribute__((naked)) void Cb2_EnterPSS(void)
@@ -2095,7 +2073,7 @@ __attribute__((naked)) void Cb2_EnterPSS(void)
         "_080C7678: .4byte gUnknown_20399B2\n\t"
         "_080C767C: .4byte Cb_InitPSS + 1\n\t"
         "_080C7680: .4byte gUnknown_20399B0\n\t"
-        "_080C7684: .4byte Cb2_PSS + 1\n\t"
+        "_080C7684: .4byte CB2_PokeStorage + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2144,7 +2122,7 @@ __attribute__((naked)) void Cb2_ReturnToPSS(void)
         "	.align 2, 0\n\t"
         "_080C76E0: .4byte sCurrentBoxOption\n\t"
         "_080C76E4: .4byte Cb_InitPSS + 1\n\t"
-        "_080C76E8: .4byte Cb2_PSS + 1\n\t"
+        "_080C76E8: .4byte CB2_PokeStorage + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2526,7 +2504,7 @@ __attribute__((naked)) void Cb_InitPSS(void)
         "	b _080C7A3E\n\t"
         "	.align 2, 0\n\t"
         "_080C7A2C: .4byte Cb_ReshowPSS + 1\n\t"
-        "_080C7A30: .4byte VblankCb_PSS + 1\n\t"
+        "_080C7A30: .4byte VBlankCB_PokeStorage + 1\n\t"
         "_080C7A34:\n\t"
         "	ldr r0, _080C7A44\n\t"
         "	ldr r1, [r0]\n\t"
@@ -7565,7 +7543,7 @@ __attribute__((naked)) void sub_080CA250(void)
     );
 }
 
-__attribute__((naked)) void sub_080CA278(void)
+__attribute__((naked)) void UpdateCloseBoxButtonFlash(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -24502,7 +24480,7 @@ __attribute__((naked)) void sub_080D2330(void)
     );
 }
 
-__attribute__((naked)) void sub_080D2344(void)
+__attribute__((naked)) void UnkUtil_Run(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

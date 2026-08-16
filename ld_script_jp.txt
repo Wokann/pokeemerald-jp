@@ -5405,8 +5405,8 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.sub_080C74A0);
         src/pokemon_storage_system.o(.text.sub_080C7528);
         src/pokemon_storage_system.o(.text.sub_080C7590);
-        src/pokemon_storage_system.o(.text.VblankCb_PSS);
-        src/pokemon_storage_system.o(.text.Cb2_PSS);
+        src/pokemon_storage_system.o(.text.VBlankCB_PokeStorage);
+        src/pokemon_storage_system.o(.text.CB2_PokeStorage);
         src/pokemon_storage_system.o(.text.Cb2_EnterPSS);
         src/pokemon_storage_system.o(.text.Cb2_ReturnToPSS);
         src/pokemon_storage_system.o(.text.ResetAllBgCoords);
@@ -5471,7 +5471,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.sub_080CA1E8);
         src/pokemon_storage_system.o(.text.sub_080CA224);
         src/pokemon_storage_system.o(.text.sub_080CA250);
-        src/pokemon_storage_system.o(.text.sub_080CA278);
+        src/pokemon_storage_system.o(.text.UpdateCloseBoxButtonFlash);
         src/pokemon_storage_system.o(.text.sub_080CA2D8);
         src/pokemon_storage_system.o(.text.sub_080CA30C);
         src/pokemon_storage_system.o(.text.sub_080CA384);
@@ -5751,7 +5751,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.sub_080D2200);
         src/pokemon_storage_system.o(.text.sub_080D2298);
         src/pokemon_storage_system.o(.text.sub_080D2330);
-        src/pokemon_storage_system.o(.text.sub_080D2344);
+        src/pokemon_storage_system.o(.text.UnkUtil_Run);
         src/pokemon_storage_system.o(.text.sub_080D238C);
         src/pokemon_storage_system.o(.text.sub_080D2428);
         src/pokemon_storage_system.o(.text.sub_080D2460);
