@@ -180,6 +180,7 @@ extern bool8 MovementAction_WalkSlowLeft_Step1(struct ObjectEvent *objectEvent, 
 extern bool8 MovementAction_WalkSlowRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_WalkSlowUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 GetFaceDirectionMovementAction(u32 direction);
+extern bool8 MovementType_Disguise_Callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 EventObjectCB2_BerryTree(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 GetAcroPopWheelieFaceDirectionMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 GetAcroWheelieFaceDirectionMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite);
@@ -9151,65 +9152,19 @@ __attribute__((naked)) bool8 MovementType_CopyPlayerInGrass_Step1(struct ObjectE
     );
 }
 
-__attribute__((naked)) void MovementType_TreeDisguise(struct Sprite *sprite)
+void MovementType_TreeDisguise(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _08091F10\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r6, #0x21\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08091ED4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08091EF4\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08091EF4\n\t"
-        "_08091ED4:\n\t"
-        "	ldr r1, _08091F14\n\t"
-        "	adds r2, r1, #4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventGetLocalIdAndMap\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	strb r0, [r4, #0x1a]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	ldrh r0, [r5, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "_08091EF4:\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08091F10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, _08091F18\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08091F10: .4byte gObjectEvents\n\t"
-        "_08091F14: .4byte gFieldEffectArguments\n\t"
-        "_08091F18: .4byte MovementType_Disguise_Callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+
+    objectEvent = &gObjectEvents[sprite->sObjEventId];
+    if (objectEvent->directionSequenceIndex == 0 || (objectEvent->directionSequenceIndex == 1 && !sprite->data[7]))
+    {
+        ObjectEventGetLocalIdAndMap(objectEvent, &gFieldEffectArguments[0], &gFieldEffectArguments[1], &gFieldEffectArguments[2]);
+        objectEvent->fieldEffectSpriteId = FieldEffectStart(FLDEFF_TREE_DISGUISE);
+        objectEvent->directionSequenceIndex = 1;
+        sprite->data[7]++;
+    }
+    UpdateObjectEventCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_Disguise_Callback);
 }
 bool8 MovementType_Disguise_Callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -9219,65 +9174,19 @@ bool8 MovementType_Disguise_Callback(struct ObjectEvent *objectEvent, struct Spr
 
 
 
-__attribute__((naked)) void MovementType_MountainDisguise(struct Sprite *sprite)
+void MovementType_MountainDisguise(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _08091F8C\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r6, #0x21\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08091F50\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08091F70\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08091F70\n\t"
-        "_08091F50:\n\t"
-        "	ldr r1, _08091F90\n\t"
-        "	adds r2, r1, #4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventGetLocalIdAndMap\n\t"
-        "	movs r0, #0x1d\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	strb r0, [r4, #0x1a]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	ldrh r0, [r5, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "_08091F70:\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08091F8C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, _08091F94\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08091F8C: .4byte gObjectEvents\n\t"
-        "_08091F90: .4byte gFieldEffectArguments\n\t"
-        "_08091F94: .4byte MovementType_Disguise_Callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *objectEvent;
+
+    objectEvent = &gObjectEvents[sprite->sObjEventId];
+    if (objectEvent->directionSequenceIndex == 0 || (objectEvent->directionSequenceIndex == 1 && !sprite->data[7]))
+    {
+        ObjectEventGetLocalIdAndMap(objectEvent, &gFieldEffectArguments[0], &gFieldEffectArguments[1], &gFieldEffectArguments[2]);
+        objectEvent->fieldEffectSpriteId = FieldEffectStart(FLDEFF_MOUNTAIN_DISGUISE);
+        objectEvent->directionSequenceIndex = 1;
+        sprite->data[7]++;
+    }
+    UpdateObjectEventCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_Disguise_Callback);
 }
 
 __attribute__((naked)) void MovementType_Hidden(struct Sprite *sprite)
