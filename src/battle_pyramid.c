@@ -763,7 +763,7 @@ __attribute__((naked)) void InitPyramidFacilityTrainers(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_081A9194: .4byte gFacilityTrainers\n\t"
-        "_081A9198: .4byte gUnknown_85B4A10\n\t"
+        "_081A9198: .4byte gBattleFrontierTrainers\n\t"
         ".syntax divided\n\t"
     );
 }

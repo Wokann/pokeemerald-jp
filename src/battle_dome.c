@@ -12562,7 +12562,7 @@ __attribute__((naked)) void InitDomeFacilityTrainersAndMons(void)
         "_08194958: .4byte gFacilityTrainerMons\n\t"
         "_0819495C: .4byte gBattleFrontierMons\n\t"
         "_08194960: .4byte gFacilityTrainers\n\t"
-        "_08194964: .4byte gUnknown_85B4A10\n\t"
+        "_08194964: .4byte gBattleFrontierTrainers\n\t"
         ".syntax divided\n\t"
     );
 }

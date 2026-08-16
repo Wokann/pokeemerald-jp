@@ -139,8 +139,8 @@ gBattleFrontierHeldItems: @ 0x85ADBF4
 	.hword 0xA9  @ ITEM_GANLON_BERRY
 	.incbin "baserom_jp.gba", 0x5ADC72, 0x6D9E
 
-	.globl gUnknown_85B4A10
-gUnknown_85B4A10: @ 0x85B4A10
+	.globl gBattleFrontierTrainers
+gBattleFrontierTrainers: @ 0x85B4A10
 	.incbin "baserom_jp.gba", 0x5b4a10, 0x3cf0
 
 	.globl gBattleFrontierMons
