@@ -5470,7 +5470,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.HidePartyMenu);
         src/pokemon_storage_system.o(.text.UpdateCloseBoxButtonTilemap);
         src/pokemon_storage_system.o(.text.sub_080CA224);
-        src/pokemon_storage_system.o(.text.sub_080CA250);
+        src/pokemon_storage_system.o(.text.StopFlashingCloseBoxButton);
         src/pokemon_storage_system.o(.text.UpdateCloseBoxButtonFlash);
         src/pokemon_storage_system.o(.text.sub_080CA2D8);
         src/pokemon_storage_system.o(.text.sub_080CA30C);

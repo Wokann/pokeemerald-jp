@@ -3029,7 +3029,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl sub_080CA224\n\t"
         "	b _080C7ED8\n\t"
         "_080C7ED4:\n\t"
-        "	bl sub_080CA250\n\t"
+        "	bl StopFlashingCloseBoxButton\n\t"
         "_080C7ED8:\n\t"
         "	ldr r4, _080C7EF0\n\t"
         "	ldr r0, [r4]\n\t"
@@ -7464,30 +7464,13 @@ __attribute__((naked)) void sub_080CA224(void)
     );
 }
 
-__attribute__((naked)) void sub_080CA250(void)
+void StopFlashingCloseBoxButton(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CA270\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080CA274\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA26A\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl UpdateCloseBoxButtonTilemap\n\t"
-        "_080CA26A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA270: .4byte gUnknown_20399A8\n\t"
-        "_080CA274: .4byte 0x000002C7\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->closeBoxFlashing)
+    {
+        sStorage->closeBoxFlashing = FALSE;
+        UpdateCloseBoxButtonTilemap(TRUE);
+    }
 }
 
 __attribute__((naked)) void UpdateCloseBoxButtonFlash(void)
