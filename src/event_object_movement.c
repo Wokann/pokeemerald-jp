@@ -2788,66 +2788,21 @@ __attribute__((naked)) void UpdateEventObjectCoordsForCameraUpdate(void)
     );
 }
 
-__attribute__((naked)) u8 GetObjectEventIdByPosition(u16 x, u16 y, u8 elevation)
+u8 GetObjectEventIdByPosition(u16 x, u16 y, u8 elevation)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _0808E634\n\t"
-        "	mov r8, r0\n\t"
-        "_0808E600:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E638\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, r7\n\t"
-        "	bne _0808E638\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _0808E638\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl EventObjectDoesZCoordMatch\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E638\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	b _0808E644\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E634: .4byte gObjectEvents\n\t"
-        "_0808E638:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _0808E600\n\t"
-        "	movs r0, #0x10\n\t"
-        "_0808E644:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 zCoordMatch;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if (gObjectEvents[i].active && gObjectEvents[i].currentCoords.x == x && gObjectEvents[i].currentCoords.y == y)
+        {
+            zCoordMatch = EventObjectDoesZCoordMatch(&gObjectEvents[i], elevation);
+            if (zCoordMatch)
+                return i;
+        }
+    }
+    return OBJECT_EVENTS_COUNT;
 }
 
 bool8 EventObjectDoesZCoordMatch(struct ObjectEvent *objectEvent, u8 elevation)
