@@ -37,8 +37,19 @@ static u32 LoopedTask_BuildMatchCallList(s32);
 static bool32 ShouldDoNearbyMessage(void);
 
 // JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern const u8 sMatchCallOptionsNoCheckPage[2];
-extern const u8 sMatchCallOptionsHasCheckPage[3];
+static const u8 sMatchCallOptionsNoCheckPage[] =
+{
+    MATCH_CALL_OPTION_CALL,
+    MATCH_CALL_OPTION_CANCEL
+};
+
+static const u8 sMatchCallOptionsHasCheckPage[] =
+{
+    MATCH_CALL_OPTION_CALL,
+    MATCH_CALL_OPTION_CHECK,
+    MATCH_CALL_OPTION_CANCEL
+};
+
 extern const u8 *const gMatchCallFlavorTexts[REMATCH_TABLE_ENTRIES][CHECK_PAGE_ENTRY_COUNT];
 extern void MatchCall_GetNameAndDesc(u32 headerId, const u8 **className, const u8 **trainerName);
 extern bool32 MatchCall_GetEnabled(u32 rematchIndex);

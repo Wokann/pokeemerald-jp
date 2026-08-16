@@ -123,10 +123,80 @@ extern const u16 sCallWindow_Pal[];
 extern const u16 sListWindow_Pal[];
 extern const u16 sPokeball_Pal[];
 extern const u32 sPokeball_Gfx[];
-extern const struct BgTemplate sMatchCallBgTemplates[3];
-extern const LoopedTask sMatchCallLoopTaskFuncs[];
-extern const struct WindowTemplate sMatchCallLocationWindowTemplate;
-extern const struct WindowTemplate sMatchCallInfoBoxWindowTemplate;
+
+static const struct BgTemplate sMatchCallBgTemplates[] =
+{
+    {
+        .bg = 1,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 0x1F,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 0x06,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0x80
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 0x07,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
+static const LoopedTask sMatchCallLoopTaskFuncs[] =
+{
+    [POKENAV_MC_FUNC_NONE]                = NULL,
+    [POKENAV_MC_FUNC_DOWN]                = MatchCallListCursorDown,
+    [POKENAV_MC_FUNC_UP]                  = MatchCallListCursorUp,
+    [POKENAV_MC_FUNC_PG_DOWN]             = MatchCallListPageDown,
+    [POKENAV_MC_FUNC_PG_UP]               = MatchCallListPageUp,
+    [POKENAV_MC_FUNC_SELECT]              = SelectMatchCallEntry,
+    [POKENAV_MC_FUNC_MOVE_OPTIONS_CURSOR] = MoveMatchCallOptionsCursor,
+    [POKENAV_MC_FUNC_CANCEL]              = CancelMatchCallSelection,
+    [POKENAV_MC_FUNC_CALL_MSG]            = DoMatchCallMessage,
+    [POKENAV_MC_FUNC_NEARBY_MSG]          = DoTrainerCloseByMessage,
+    [POKENAV_MC_FUNC_EXIT_CALL]           = CloseMatchCallMessage,
+    [POKENAV_MC_FUNC_SHOW_CHECK_PAGE]     = ShowCheckPage,
+    [POKENAV_MC_FUNC_CHECK_PAGE_UP]       = ShowCheckPageUp,
+    [POKENAV_MC_FUNC_CHECK_PAGE_DOWN]     = ShowCheckPageDown,
+    [POKENAV_MC_FUNC_EXIT_CHECK_PAGE]     = ExitCheckPage,
+    [POKENAV_MC_FUNC_EXIT]                = ExitMatchCall
+};
+
+static const struct WindowTemplate sMatchCallLocationWindowTemplate =
+{
+    .bg = 2,
+    .tilemapLeft = 0,
+    .tilemapTop = 5,
+    .width = 11,
+    .height = 2,
+    .paletteNum = 2,
+    .baseBlock = 16
+};
+
+static const struct WindowTemplate sMatchCallInfoBoxWindowTemplate =
+{
+    .bg = 2,
+    .tilemapLeft = 0,
+    .tilemapTop = 9,
+    .width = 11,
+    .height = 8,
+    .paletteNum = 2,
+    .baseBlock = 38
+};
+
 extern const u8 *const sMatchCallOptionTexts[MATCH_CALL_OPTION_COUNT];
 extern const u8 sText_CallingDots[];
 extern const struct WindowTemplate sCallMsgBoxWindowTemplate;
