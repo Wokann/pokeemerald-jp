@@ -5654,7 +5654,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.sub_080D0018);
         src/pokemon_storage_system.o(.text.sub_080D0050);
         src/pokemon_storage_system.o(.text.sub_080D00D4);
-        src/pokemon_storage_system.o(.text.sub_080D0124);
+        src/pokemon_storage_system.o(.text.MultiMove_InitMove);
         src/pokemon_storage_system.o(.text.sub_080D0134);
         src/pokemon_storage_system.o(.text.sub_080D016C);
         src/pokemon_storage_system.o(.text.sub_080D0244);
