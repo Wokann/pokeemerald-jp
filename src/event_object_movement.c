@@ -4735,19 +4735,6 @@ __attribute__((naked)) void MovementType_CopyPlayerInGrass_callback(void)
     );
 }
 
-__attribute__((naked)) void MovementAction_Fly_Finish(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
 bool8 MovementType_WanderAround_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     ClearEventObjectMovement(objectEvent, sprite);
