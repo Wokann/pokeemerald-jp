@@ -2048,53 +2048,22 @@ void EnterPokeStorage(u8 boxOption)
     }
 }
 
-__attribute__((naked)) void Cb2_ReturnToPSS(void)
+void CB2_ReturnToPokeStorage(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl ResetTasks\n\t"
-        "	ldr r4, _080C76A8\n\t"
-        "	ldr r0, _080C76AC\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	str r1, [r4]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080C76B4\n\t"
-        "	ldr r0, _080C76B0\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _080C76D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C76A8: .4byte gUnknown_20399A8\n\t"
-        "_080C76AC: .4byte 0x000062C4\n\t"
-        "_080C76B0: .4byte CB2_ExitPokeStorage + 1\n\t"
-        "_080C76B4:\n\t"
-        "	ldr r0, _080C76E0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #3]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r0, _080C76E4\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	strb r0, [r1, #4]\n\t"
-        "	ldr r0, _080C76E8\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_080C76D8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C76E0: .4byte sCurrentBoxOption\n\t"
-        "_080C76E4: .4byte Task_InitPokeStorage + 1\n\t"
-        "_080C76E8: .4byte CB2_PokeStorage + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetTasks();
+    sStorage = Alloc(sizeof(*sStorage));
+    if (sStorage == NULL)
+    {
+        SetMainCallback2(CB2_ExitPokeStorage);
+    }
+    else
+    {
+        sStorage->boxOption = sCurrentBoxOption;
+        sStorage->isReopening = TRUE;
+        sStorage->state = 0;
+        sStorage->taskId = CreateTask(Task_InitPokeStorage, 3);
+        SetMainCallback2(CB2_PokeStorage);
+    }
 }
 
 __attribute__((naked)) void ResetAllBgCoords(void)
@@ -6077,7 +6046,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "_080C9780: .4byte gUnknown_20399A8\n\t"
         "_080C9784: .4byte 0x0000218C\n\t"
         "_080C9788: .4byte 0x00002188\n\t"
-        "_080C978C: .4byte Cb2_ReturnToPSS + 1\n\t"
+        "_080C978C: .4byte CB2_ReturnToPokeStorage + 1\n\t"
         "_080C9790:\n\t"
         "	bl FreePSSData\n\t"
         "	bl StorageGetCurrentBox\n\t"
@@ -6095,7 +6064,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "	bl DoNamingScreen\n\t"
         "	b _080C97CA\n\t"
         "	.align 2, 0\n\t"
-        "_080C97B8: .4byte Cb2_ReturnToPSS + 1\n\t"
+        "_080C97B8: .4byte CB2_ReturnToPokeStorage + 1\n\t"
         "_080C97BC:\n\t"
         "	bl FreePSSData\n\t"
         "	ldr r2, _080C97DC\n\t"
@@ -6112,7 +6081,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C97DC: .4byte Cb2_ReturnToPSS + 1\n\t"
+        "_080C97DC: .4byte CB2_ReturnToPokeStorage + 1\n\t"
         ".syntax divided\n\t"
     );
 }
