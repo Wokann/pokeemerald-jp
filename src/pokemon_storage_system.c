@@ -1,5 +1,6 @@
 #include "global.h"
 #include "constants/rgb.h"
+#include "constants/songs.h"
 #include "malloc.h"
 #include "bg.h"
 #include "data.h"
@@ -6258,24 +6259,10 @@ __attribute__((naked)) void SetScrollingBackground(void)
     );
 }
 
-__attribute__((naked)) void ScrollBackground(void)
+void ScrollBackground(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #0x80\n\t"
-        "	movs r2, #1\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #0x80\n\t"
-        "	movs r2, #2\n\t"
-        "	bl ChangeBgY\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ChangeBgX(3, 128, BG_COORD_ADD);
+    ChangeBgY(3, 128, BG_COORD_SUB);
 }
 
 __attribute__((naked)) void LoadPSSMenuGfx(void)
@@ -7758,27 +7745,11 @@ __attribute__((naked)) void sub_080CA384(void)
     );
 }
 
-__attribute__((naked)) void SetUpDoShowPartyMenu(void)
+void SetUpDoShowPartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CA3CC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CA3D0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #6\n\t"
-        "	bl PlaySE\n\t"
-        "	bl SetUpShowPartyMenu\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA3CC: .4byte gUnknown_20399A8\n\t"
-        "_080CA3D0: .4byte 0x000002C6\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->showPartyMenuState = 0;
+    PlaySE(SE_WIN_OPEN);
+    SetUpShowPartyMenu();
 }
 
 __attribute__((naked)) void DoShowPartyMenu(void)
