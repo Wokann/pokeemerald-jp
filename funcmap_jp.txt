@@ -10095,7 +10095,7 @@ slot_machine.s
 0812ba7c slot_machine.s GetMatchFromSymbolsInRow
 0812bacc AwardPayout AwardPayout
 0812baec IsFinalTask_Task_Payout IsFinalTask_Task_Payout
-0812bb0c RunAwardPayoutActions Task_Payout
+0812bb0c Task_Payout Task_Payout
 0812bb44 PayoutTask_Init PayoutTask_Init
 0812bb78 PayoutTask_GivePayout PayoutTask_GivePayout
 0812bc30 PayoutTask_Free PayoutTask_Free

@@ -7425,10 +7425,10 @@ SECTIONS {
         src/slot_machine.o(.text.GetMatchFromSymbolsInRow);
         src/slot_machine.o(.text.AwardPayout);
         src/slot_machine.o(.text.IsFinalTask_Task_Payout);
-        src/slot_machine.o(.text.RunAwardPayoutActions);
-        src/slot_machine.o(.text.AwardPayoutAction0);
-        src/slot_machine.o(.text.AwardPayoutAction_GivePayoutToPlayer);
-        src/slot_machine.o(.text.AwardPayoutAction_FreeTask);
+        src/slot_machine.o(.text.Task_Payout);
+        src/slot_machine.o(.text.PayoutTask_Init);
+        src/slot_machine.o(.text.PayoutTask_GivePayout);
+        src/slot_machine.o(.text.PayoutTask_Free);
         src/slot_machine.o(.text.GetNearbyTag_Quantized);
         src/slot_machine.o(.text.GetNearbyTag);
         src/slot_machine.o(.text.GetNearbyReelTimeTag);
@@ -9335,6 +9335,8 @@ SECTIONS {
         data/data_b2d_mid61.o(.rodata);
         src/data/region_map_tables.o(.rodata);
         data/data_b2d_mid61.o(.rodata.857D49C);
+        src/slot_machine.o(.rodata.sSlotTasks);
+        src/slot_machine.o(.rodata.sPayoutTasks);
         src/slot_machine.o(.rodata.sReelTasks);
         src/slot_machine.o(.rodata.sDecideStop_Bias);
         src/slot_machine.o(.rodata.sDecideStop_NoBias);

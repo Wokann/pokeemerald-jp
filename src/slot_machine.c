@@ -853,6 +853,12 @@ enum {
     SLOTTASK_FREE,
 };
 
+enum {
+    PAYOUT_TASK_INIT,
+    PAYOUT_TASK_GIVE_PAYOUT,
+    PAYOUT_TASK_FREE,
+};
+
 // IDs for digital display "scenes", i.e. each of the screens it can show made up of sprites
 enum {
     DIG_DISPLAY_INSERT_BET,
@@ -968,6 +974,9 @@ extern struct SpriteSheet *sReelBackgroundSpriteSheet;
 extern struct SpriteSheet *sSlotMachineSpritesheetsPtr;
 extern struct SlotMachine *sSlotMachine;
 
+static const bool8 (*const sSlotTasks[])(struct Task *);
+static const bool8 (*const sPayoutTasks[])(struct Task *);
+
 static void Task_SlotMachine(u8 taskId);
 static void Task_Reel(u8 taskId);
 static void SpinSlotReel(u8 reelIndex);
@@ -1037,40 +1046,12 @@ static void CreateSlotMachineTasks(void)
 }
 
 
-__attribute__((naked)) void Task_SlotMachine(u8 taskId)
+static void Task_SlotMachine(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _0812AB08\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r4, r1, #3\n\t"
-        "	ldr r5, _0812AB0C\n\t"
-        "_0812AAE8:\n\t"
-        "	ldr r0, _0812AB10\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812AAE8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AB08: .4byte gUnknown_85843D4\n\t"
-        "_0812AB0C: .4byte gTasks\n\t"
-        "_0812AB10: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sSlotTasks[sSlotMachine->state](&gTasks[taskId]))
+        ;
 }
+
 
 void LoadPikaPowerMeter(u8 bolts);
 void CreateDigitalDisplayScene(u8 id);
@@ -2427,7 +2408,7 @@ __attribute__((naked)) void AwardPayout(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812BAE8: .4byte RunAwardPayoutActions + 1\n\t"
+        "_0812BAE8: .4byte Task_Payout + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2446,7 +2427,7 @@ __attribute__((naked)) bool8 IsFinalTask_Task_Payout(void)
         "	movs r0, #0\n\t"
         "	b _0812BB06\n\t"
         "	.align 2, 0\n\t"
-        "_0812BB00: .4byte RunAwardPayoutActions + 1\n\t"
+        "_0812BB00: .4byte Task_Payout + 1\n\t"
         "_0812BB04:\n\t"
         "	movs r0, #1\n\t"
         "_0812BB06:\n\t"
@@ -2457,7 +2438,7 @@ __attribute__((naked)) bool8 IsFinalTask_Task_Payout(void)
     );
 }
 
-__attribute__((naked)) void RunAwardPayoutActions(u8 taskId)
+__attribute__((naked)) void Task_Payout(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2485,13 +2466,13 @@ __attribute__((naked)) void RunAwardPayoutActions(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812BB3C: .4byte gUnknown_8584448\n\t"
+        "_0812BB3C: .4byte sPayoutTasks\n\t"
         "_0812BB40: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void AwardPayoutAction0(u8 taskId)
+__attribute__((naked)) bool8 PayoutTask_Init(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2526,7 +2507,7 @@ __attribute__((naked)) void AwardPayoutAction0(u8 taskId)
     );
 }
 
-__attribute__((naked)) void AwardPayoutAction_GivePayoutToPlayer(u8 taskId)
+__attribute__((naked)) bool8 PayoutTask_GivePayout(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2625,7 +2606,7 @@ __attribute__((naked)) void AwardPayoutAction_GivePayoutToPlayer(u8 taskId)
     );
 }
 
-__attribute__((naked)) void AwardPayoutAction_FreeTask(u8 taskId)
+__attribute__((naked)) bool8 PayoutTask_Free(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2644,10 +2625,52 @@ __attribute__((naked)) void AwardPayoutAction_FreeTask(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BC50: .4byte RunAwardPayoutActions + 1\n\t"
+        "_0812BC50: .4byte Task_Payout + 1\n\t"
         ".syntax divided\n\t"
     );
 }
+
+__attribute__((section(".rodata.sSlotTasks")))
+static const bool8 (*const sSlotTasks[])(struct Task *task) =
+{
+    [SLOTTASK_UNFADE]                 = SlotTask_UnfadeScreen,
+    [SLOTTASK_WAIT_FADE]              = SlotTask_WaitUnfade,
+    [SLOTTASK_READY_NEW_SPIN]         = SlotTask_ReadyNewSpin,
+    [SLOTTASK_READY_NEW_RT_SPIN]      = SlotTask_ReadyNewReelTimeSpin,
+    [SLOTTASK_ASK_INSERT_BET]         = SlotTask_AskInsertBet,
+    [SLOTTASK_BET_INPUT]              = SlotTask_HandleBetInput,
+    [SLOTTASK_MSG_NEED_3_COINS]       = SlotTask_PrintMsg_Need3Coins,
+    [SLOTTASK_WAIT_MSG_NEED_3_COINS]  = SlotTask_WaitMsg_Need3Coins,
+    [SLOTTASK_WAIT_INFO_BOX]          = SlotTask_WaitInfoBox,
+    [SLOTTASK_START_SPIN]             = SlotTask_StartSpin,
+    [SLOTTASK_START_RT_SPIN]          = SlotTask_StartReelTimeSpin,
+    [SLOTTASK_RESET_BIAS_FAILURE]     = SlotTask_ResetBiasFailure,
+    [SLOTTASK_WAIT_REEL_STOP]         = SlotTask_WaitReelStop,
+    [SLOTTASK_WAIT_ALL_REELS_STOP]    = SlotTask_WaitAllReelsStop,
+    [SLOTTASK_CHECK_MATCHES]          = SlotTask_CheckMatches,
+    [SLOTTASK_WAIT_PAYOUT]            = SlotTask_WaitPayout,
+    [SLOTTASK_END_PAYOUT]             = SlotTask_EndPayout,
+    [SLOTTASK_MATCHED_POWER]          = SlotTask_MatchedPower,
+    [SLOTTASK_WAIT_RT_ANIM]           = SlotTask_WaitReelTimeAnim,
+    [SLOTTASK_RESET_BET_TILES]        = SlotTask_ResetBetTiles,
+    [SLOTTASK_NO_MATCHES]             = SlotTask_NoMatches,
+    [SLOTTASK_ASK_QUIT]               = SlotTask_AskQuit,
+    [SLOTTASK_HANDLE_QUIT_INPUT]      = SlotTask_HandleQuitInput,
+    [SLOTTASK_MSG_MAX_COINS]          = SlotTask_PrintMsg_MaxCoins,
+    [SLOTTASK_WAIT_MSG_MAX_COINS]     = SlotTask_WaitMsg_MaxCoins,
+    [SLOTTASK_MSG_NO_MORE_COINS]      = SlotTask_PrintMsg_NoMoreCoins,
+    [SLOTTASK_WAIT_MSG_NO_MORE_COINS] = SlotTask_WaitMsg_NoMoreCoins,
+    [SLOTTASK_END]                    = SlotTask_EndGame,
+    [SLOTTASK_FREE]                   = SlotTask_FreeDataStructures,
+};
+
+__attribute__((section(".rodata.sPayoutTasks")))
+static const bool8 (*const sPayoutTasks[])(struct Task *task) =
+{
+    [PAYOUT_TASK_INIT]        = PayoutTask_Init,
+    [PAYOUT_TASK_GIVE_PAYOUT] = PayoutTask_GivePayout,
+    [PAYOUT_TASK_FREE]        = PayoutTask_Free,
+};
 
 __attribute__((naked)) u8 GetNearbyTag_Quantized(u8 a)
 {
