@@ -6,6 +6,78 @@
 
 extern struct EasyChatScreen *sEasyChatScreen;
 
+// State values for sEasyChatScreen->inputState
+enum {
+    INPUTSTATE_PHRASE,
+    INPUTSTATE_MAIN_SCREEN_BUTTONS,
+    INPUTSTATE_KEYBOARD,
+    INPUTSTATE_WORD_SELECT,
+    INPUTSTATE_EXIT_PROMPT,
+    INPUTSTATE_DELETE_ALL_YES_NO,
+    INPUTSTATE_CONFIRM_WORDS_YES_NO,
+    INPUTSTATE_QUIZ_QUESTION,
+    INPUTSTATE_WAIT_FOR_MSG,
+    INPUTSTATE_START_CONFIRM_LYRICS,
+    INPUTSTATE_CONFIRM_LYRICS_YES_NO,
+};
+
+// Task states for the 'main' task, Task_EasyChatScreen
+enum {
+    MAINSTATE_FADE_IN,
+    MAINSTATE_HANDLE_INPUT,
+    MAINSTATE_RUN_FUNC,
+    MAINSTATE_TO_QUIZ_LADY,
+    MAINSTATE_EXIT,
+    MAINSTATE_WAIT_FADE_IN,
+};
+
+// IDs for supplementary Easy Chat functions
+enum {
+    ECFUNC_NONE,
+    ECFUNC_REPRINT_PHRASE,
+    ECFUNC_UPDATE_MAIN_CURSOR,
+    ECFUNC_UPDATE_MAIN_CURSOR_ON_BUTTONS,
+    ECFUNC_PROMPT_DELETE_ALL,
+    ECFUNC_PROMPT_EXIT,
+    ECFUNC_PROMPT_CONFIRM,
+    ECFUNC_CLOSE_PROMPT,
+    ECFUNC_CLOSE_PROMPT_AFTER_DELETE,
+    ECFUNC_OPEN_KEYBOARD,
+    ECFUNC_CLOSE_KEYBOARD,
+    ECFUNC_OPEN_WORD_SELECT,
+    ECFUNC_CLOSE_WORD_SELECT,
+    ECFUNC_PROMPT_CONFIRM_LYRICS,
+    ECFUNC_RETURN_TO_KEYBOARD,
+    ECFUNC_UPDATE_KEYBOARD_CURSOR,
+    ECFUNC_GROUP_NAMES_SCROLL_DOWN,
+    ECFUNC_GROUP_NAMES_SCROLL_UP,
+    ECFUNC_UPDATE_WORD_SELECT_CURSOR,
+    ECFUNC_WORD_SELECT_SCROLL_UP,
+    ECFUNC_WORD_SELECT_SCROLL_DOWN,
+    ECFUNC_WORD_SELECT_PAGE_UP,
+    ECFUNC_WORD_SELECT_PAGE_DOWN,
+    ECFUNC_SWITCH_KEYBOARD_MODE,
+    ECFUNC_EXIT,
+    ECFUNC_QUIZ_QUESTION,
+    ECFUNC_QUIZ_ANSWER,
+    ECFUNC_SET_QUIZ_QUESTION,
+    ECFUNC_SET_QUIZ_ANSWER,
+    ECFUNC_MSG_CREATE_QUIZ,
+    ECFUNC_MSG_SELECT_ANSWER,
+    ECFUNC_MSG_SONG_TOO_SHORT,
+    ECFUNC_MSG_CANT_DELETE_LYRICS,
+    ECFUNC_MSG_COMBINE_TWO_WORDS,
+    ECFUNC_MSG_CANT_EXIT,
+};
+
+// Task/sprite data aliases matching the US easy_chat.c field names.
+#define tState        data[0]
+#define sAnimateCursor data[1]
+
+extern struct EasyChatScreenControl *sScreenControl;
+extern const u8 *const sEasyChatGroupNamePointers[];
+
+
 __attribute__((naked)) void DoEasyChatScreen(u8 type, u16 *words, MainCallback exitCallback, u8 displayedPersonType)
 {
     __asm__(".syntax unified\n\t"
@@ -91,25 +163,10 @@ __attribute__((naked)) void VBlankCB_EasyChatScreen(void)
     );
 }
 
-__attribute__((naked)) void StartEasyChatScreen(u8 taskId, TaskFunc taskFunc)
+void StartEasyChatScreen(u8 taskId, TaskFunc taskFunc)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r3, _0811AB0C\n\t"
-        "	lsls r2, r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	str r1, [r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811AB0C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].func = taskFunc;
+    gTasks[taskId].tState = MAINSTATE_FADE_IN;
 }
 
 __attribute__((naked)) void Task_InitEasyChatScreen(u8 taskId)
@@ -2006,20 +2063,10 @@ __attribute__((naked)) u16 HandleEasyChatInput_WaitForMsg(void)
     );
 }
 
-__attribute__((naked)) u16 HandleEasyChatInput_StartConfirmLyrics(void)
+u16 HandleEasyChatInput_StartConfirmLyrics(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811B8C4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strb r0, [r1, #4]\n\t"
-        "	movs r0, #6\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811B8C4: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    sEasyChatScreen->inputState = INPUTSTATE_CONFIRM_LYRICS_YES_NO;
+    return ECFUNC_PROMPT_CONFIRM;
 }
 
 __attribute__((naked)) u16 HandleEasyChatInput_ConfirmLyricsYesNo(void)
@@ -2359,20 +2406,10 @@ __attribute__((naked)) int SelectKeyboardGroup(void)
     );
 }
 
-__attribute__((naked)) int ExitKeyboardToMainScreen(void)
+int ExitKeyboardToMainScreen(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811BB08\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #4]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811BB08: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    sEasyChatScreen->inputState = INPUTSTATE_PHRASE;
+    return ECFUNC_CLOSE_KEYBOARD;
 }
 
 __attribute__((naked)) int StartSwitchKeyboardMode(void)
@@ -8829,23 +8866,9 @@ __attribute__((naked)) void StopMainCursorAnim(void)
     );
 }
 
-__attribute__((naked)) void StartMainCursorAnim(void)
+void StartMainCursorAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811E7D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xb6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811E7D4: .4byte gUnknown_2039DE8\n\t"
-        ".syntax divided\n\t"
-    );
+    sScreenControl->mainCursorSprite->sAnimateCursor = TRUE;
 }
 
 __attribute__((naked)) void sub_0811E7D8(void)
@@ -11471,20 +11494,9 @@ __attribute__((naked)) u8 *BufferEasyChatWordGroupName(u8 *dest, u8 groupId, u16
     );
 }
 
-__attribute__((naked)) const u8 *GetEasyChatWordGroupName(u8 groupId)
+static const u8 *GetEasyChatWordGroupName(u8 groupId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _0811F98C\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811F98C: .4byte gUnknown_8579ED8\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatGroupNamePointers[groupId];
 }
 
 __attribute__((naked)) u8 *CopyEasyChatWordPadded(u8 *dest, u16 easyChatWord, u16 length)

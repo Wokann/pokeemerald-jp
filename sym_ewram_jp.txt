@@ -1084,6 +1084,7 @@ sBgCnt = .;
 sEasyChatScreen = .;
 . += 0x4;
 gUnknown_2039DE8 = .;
+sScreenControl = .;
 . += 0x4;
 gUnknown_2039DEC = .;
 . += 0x4;

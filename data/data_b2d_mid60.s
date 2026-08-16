@@ -2694,3 +2694,5 @@ gUnknown_8579D04: @ 0x8579D04
 	.globl gUnknown_8579ED8
 gUnknown_8579ED8: @ 0x8579ED8
 	.incbin "baserom_jp.gba", 0x579ed8, 0x58
+	.globl sEasyChatGroupNamePointers
+	.set sEasyChatGroupNamePointers, gUnknown_8579ED8
