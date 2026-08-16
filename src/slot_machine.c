@@ -1193,6 +1193,10 @@ extern const u8 gText_QuitTheGame[];
 void DrawMachineBias(void);
 void DestroyDigitalDisplayScene(void);
 void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout, s16 digitMult);
+extern const struct SpriteTemplate sSpriteTemplate_ReelSymbol;
+extern const struct SpriteTemplate sSpriteTemplate_CoinNumber;
+extern const struct SpriteTemplate sSpriteTemplate_ReelBackground;
+extern const struct SubspriteTable sSubspriteTable_ReelBackground[];
 static void EndDigitalDisplayScene_StopReel(void);
 static void EndDigitalDisplayScene_Win(void);
 static void EndDigitalDisplayScene_InsertBet(void);
@@ -4858,66 +4862,22 @@ static void Task_DigitalDisplay(u8 taskId)
 static void DigitalDisplay_Idle(struct Task *task)
 {
 }
-__attribute__((naked)) void CreateReelSymbolSprites(void)
+void CreateReelSymbolSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r0, #0x30\n\t"
-        "_0812E0FA:\n\t"
-        "	movs r4, #0\n\t"
-        "	lsls r5, r0, #0x10\n\t"
-        "	lsls r7, r6, #0x10\n\t"
-        "_0812E100:\n\t"
-        "	ldr r0, _0812E158\n\t"
-        "	asrs r1, r5, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0812E15C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	strh r6, [r1, #0x2e]\n\t"
-        "	strh r4, [r1, #0x30]\n\t"
-        "	ldr r0, _0812E160\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0xd\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x77\n\t"
-        "	ble _0812E100\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r1, r7, r2\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	lsls r2, r2, #0xe\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #2\n\t"
-        "	ble _0812E0FA\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E158: .4byte gUnknown_8584C64\n\t"
-        "_0812E15C: .4byte gSprites\n\t"
-        "_0812E160: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+    s16 j;
+    s16 x;
+    for (i = 0, x = 0x30; i < 3; i++, x += 0x28)
+    {
+        for (j = 0; j < 120; j += 24)
+        {
+            struct Sprite *sprite = gSprites + CreateSprite(&sSpriteTemplate_ReelSymbol, x, 0, 14);
+            sprite->oam.priority = 3;
+            sprite->data[0] = i;
+            sprite->data[1] = j;
+            sprite->data[3] = -1;
+        }
+    }
 }
 
 static void SpriteCB_ReelSymbol(struct Sprite *sprite)
@@ -4943,69 +4903,25 @@ void CreateCreditPayoutNumberSprites(void)
         CreateCoinNumberSprite(x, 23, TRUE, i);
 }
 
-__attribute__((naked)) void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout, s16 digitMult)
+#define sIsPayout data[0]
+#define sDigitMin data[1]
+#define sDigitMax data[2]
+#define sCurNum   data[3] // Only used to determine whether the sprite has already been updated to show the correct digit
+
+void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout, s16 digitMult)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	mov r8, r2\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _0812E2AC\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	asrs r6, r6, #0x10\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _0812E2B0\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	strh r4, [r2, #0x30]\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	ldr r0, _0812E2B4\n\t"
-        "	strh r0, [r2, #0x34]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E2AC: .4byte gUnknown_8584C7C\n\t"
-        "_0812E2B0: .4byte gSprites\n\t"
-        "_0812E2B4: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite = &gSprites[CreateSprite(&sSpriteTemplate_CoinNumber, x, y, 13)];
+    sprite->oam.priority = 2;
+    sprite->sIsPayout = isPayout;
+    sprite->sDigitMin = digitMult;
+    sprite->sDigitMax = digitMult * 10;
+    sprite->sCurNum = -1;
 }
+
+#undef sIsPayout
+#undef sDigitMin
+#undef sDigitMax
+#undef sCurNum
 
 #define sIsPayout data[0]
 #define sDigitMin data[1]
@@ -5035,38 +4951,11 @@ static void SpriteCB_CoinNumber(struct Sprite *sprite)
 #undef sDigitMax
 #undef sCurNum
 
-__attribute__((naked)) void CreateReelBackgroundSprite(void)
+void CreateReelBackgroundSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812E340\n\t"
-        "	movs r1, #0x58\n\t"
-        "	movs r2, #0x48\n\t"
-        "	movs r3, #0xf\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _0812E344\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	ldr r1, _0812E348\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E340: .4byte gUnknown_8584C94\n\t"
-        "_0812E344: .4byte gSprites\n\t"
-        "_0812E348: .4byte gUnknown_8584F44\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelBackground, 88, 72, 15);
+    gSprites[spriteId].oam.priority = 3;
+    SetSubspriteTables(&gSprites[spriteId], sSubspriteTable_ReelBackground);
 }
 
 __attribute__((naked)) void CreateReelTimePikachuSprite(void)

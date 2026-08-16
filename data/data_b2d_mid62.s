@@ -74,16 +74,16 @@ gUnknown_858484C: @ 0x858484C
 gUnknown_85849C0: @ 0x85849C0
 	.incbin "baserom_jp.gba", 0x5849c0, 0x2a4
 
-	.globl gUnknown_8584C64
-gUnknown_8584C64: @ 0x8584C64
+	.globl sSpriteTemplate_ReelSymbol
+sSpriteTemplate_ReelSymbol: @ 0x8584C64
 	.incbin "baserom_jp.gba", 0x584c64, 0x18
 
-	.globl gUnknown_8584C7C
-gUnknown_8584C7C: @ 0x8584C7C
+	.globl sSpriteTemplate_CoinNumber
+sSpriteTemplate_CoinNumber: @ 0x8584C7C
 	.incbin "baserom_jp.gba", 0x584c7c, 0x18
 
-	.globl gUnknown_8584C94
-gUnknown_8584C94: @ 0x8584C94
+	.globl sSpriteTemplate_ReelBackground
+sSpriteTemplate_ReelBackground: @ 0x8584C94
 	.incbin "baserom_jp.gba", 0x584c94, 0x18
 
 	.globl gUnknown_8584CAC
@@ -138,8 +138,8 @@ gUnknown_8584DB4: @ 0x8584DB4
 gUnknown_8584F1C: @ 0x8584F1C
 	.incbin "baserom_jp.gba", 0x584f1c, 0x28
 
-	.globl gUnknown_8584F44
-gUnknown_8584F44: @ 0x8584F44
+	.globl sSubspriteTable_ReelBackground
+sSubspriteTable_ReelBackground: @ 0x8584F44
 	.incbin "baserom_jp.gba", 0x584f44, 0x20
 
 	.globl gUnknown_8584F64
