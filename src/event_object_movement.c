@@ -2501,88 +2501,22 @@ __attribute__((naked)) void EventObjectSetGraphicsIdByLocalIdAndMap(void)
     );
 }
 
-__attribute__((naked)) void EventObjectTurn(struct ObjectEvent *objectEvent, u8 direction)
+void EventObjectTurn(struct ObjectEvent *objectEvent, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	ldrb r0, [r6, #1]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0808DEFA\n\t"
-        "	ldrb r0, [r6, #4]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r5, _0808DF00\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	ldrb r0, [r6, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetJumpInPlaceMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrb r1, [r6, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SeekSpriteAnim\n\t"
-        "_0808DEFA:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DF00: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEventObjectDirection(objectEvent, direction);
+    if (!objectEvent->inanimate)
+    {
+        StartSpriteAnim(&gSprites[objectEvent->spriteId], GetJumpInPlaceMovementAction(objectEvent->facingDirection));
+        SeekSpriteAnim(&gSprites[objectEvent->spriteId], 0);
+    }
 }
 
-__attribute__((naked)) void EventObjectTurnByLocalIdAndMap(void)
+void EventObjectTurnByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r4, r3, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808DF38\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808DF40\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl EventObjectTurn\n\t"
-        "_0808DF38:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DF40: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+        EventObjectTurn(&gObjectEvents[objectEventId], direction);
 }
 
 void PlayerObjectTurn(struct PlayerAvatar *playerAvatar, u8 direction)
