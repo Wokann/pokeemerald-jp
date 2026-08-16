@@ -2,6 +2,7 @@
 #include "overworld.h"
 #include "main.h"
 #include "task.h"
+#include "link.h"
 #include "constants/map_types.h"
 #include "constants/songs.h"
 
@@ -7090,62 +7091,21 @@ static s16 UNUSED GetLinkPlayerObjectStepTimer(u8 linkPlayerId)
     return 16 - (s8)objEvent->directionSequenceIndex;
 }
 
-__attribute__((naked)) u8 GetLinkPlayerIdAt(s16 a0, s16 a1)
+u8 GetLinkPlayerIdAt(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _080872B4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r3, r1, #0x10\n\t"
-        "_0808727E:\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r1, r0, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080872BC\n\t"
-        "	ldrb r0, [r1, #3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08087292\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080872BC\n\t"
-        "_08087292:\n\t"
-        "	ldrb r1, [r1, #2]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080872B8\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	movs r6, #0x10\n\t"
-        "	ldrsh r0, [r1, r6]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _080872BC\n\t"
-        "	movs r6, #0x12\n\t"
-        "	ldrsh r0, [r1, r6]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _080872BC\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _080872C8\n\t"
-        "	.align 2, 0\n\t"
-        "_080872B4: .4byte gLinkPlayerObjectEvents\n\t"
-        "_080872B8: .4byte gObjectEvents\n\t"
-        "_080872BC:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #3\n\t"
-        "	bls _0808727E\n\t"
-        "	movs r0, #4\n\t"
-        "_080872C8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < MAX_LINK_PLAYERS; i++)
+    {
+        if (gLinkPlayerObjectEvents[i].active
+         && (gLinkPlayerObjectEvents[i].movementMode == 0 || gLinkPlayerObjectEvents[i].movementMode == 2))
+        {
+            struct ObjectEvent *objEvent = &gObjectEvents[gLinkPlayerObjectEvents[i].objEventId];
+            if (objEvent->currentCoords.x == x && objEvent->currentCoords.y == y)
+                return i;
+        }
+    }
+    return MAX_LINK_PLAYERS;
 }
 
 __attribute__((naked)) void SetPlayerFacingDirection(u8 a0, u8 a1)
