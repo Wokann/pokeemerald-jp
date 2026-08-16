@@ -22665,139 +22665,31 @@ bool8 SpriteAnimEnded(struct Sprite *sprite)
         return FALSE;
 }
 
-__attribute__((naked)) void UpdateObjectEventSpriteInvisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void UpdateObjectEventSpriteInvisibility(struct Sprite *sprite, bool8 invisible)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov ip, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r3, ip\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	movs r1, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080973AC\n\t"
-        "	mov r0, ip\n\t"
-        "	ldrh r1, [r0, #0x24]\n\t"
-        "	ldrh r2, [r0, #0x20]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	mov r4, ip\n\t"
-        "	adds r4, #0x28\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	ldr r2, _080973A4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	mov r0, ip\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	ldrh r2, [r0, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	subs r3, #0x15\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r3, r0]\n\t"
-        "	ldr r2, _080973A8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	b _080973DA\n\t"
-        "	.align 2, 0\n\t"
-        "_080973A4: .4byte gSpriteCoordOffsetX\n\t"
-        "_080973A8: .4byte gSpriteCoordOffsetY\n\t"
-        "_080973AC:\n\t"
-        "	mov r0, ip\n\t"
-        "	ldrh r1, [r0, #0x24]\n\t"
-        "	ldrh r2, [r0, #0x20]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	mov r3, ip\n\t"
-        "	adds r3, #0x28\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r3, r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	mov r0, ip\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	ldrh r2, [r0, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	mov r2, ip\n\t"
-        "	adds r2, #0x29\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r4, r3, #0\n\t"
-        "_080973DA:\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x19\n\t"
-        "	subs r0, r6, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x19\n\t"
-        "	subs r0, r5, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bgt _08097406\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _08097412\n\t"
-        "_08097406:\n\t"
-        "	mov r4, ip\n\t"
-        "	adds r4, #0x3e\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_08097412:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xaf\n\t"
-        "	bgt _08097426\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _08097432\n\t"
-        "_08097426:\n\t"
-        "	mov r0, ip\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08097432:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 x, y;
+    s16 x2, y2;
+
+    sprite->invisible = invisible;
+
+    if (sprite->coordOffsetEnabled)
+    {
+        x = sprite->x + sprite->x2 + sprite->centerToCornerVecX + gSpriteCoordOffsetX;
+        y = sprite->y + sprite->y2 + sprite->centerToCornerVecY + gSpriteCoordOffsetY;
+    }
+    else
+    {
+        x = sprite->x + sprite->x2 + sprite->centerToCornerVecX;
+        y = sprite->y + sprite->y2 + sprite->centerToCornerVecY;
+    }
+
+    x2 = x - (sprite->centerToCornerVecX >> 1);
+    y2 = y - (sprite->centerToCornerVecY >> 1);
+
+    if ((s16)x >= DISPLAY_WIDTH + 16 || x2 < -16)
+        sprite->invisible = TRUE;
+    if ((s16)y >= DISPLAY_HEIGHT + 16 || y2 < -16)
+        sprite->invisible = TRUE;
 }
 
 __attribute__((naked)) void SpriteCB_VirtualObject(struct ObjectEvent *objectEvent, struct Sprite *sprite)
