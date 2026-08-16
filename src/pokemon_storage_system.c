@@ -9747,21 +9747,9 @@ __attribute__((naked)) void sub_080CB1C4(void)
     );
 }
 
-__attribute__((naked)) u32 GetNumPartySpritesCompacting(void)
+u32 GetNumPartySpritesCompacting(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080CB23C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CB240\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB23C: .4byte gUnknown_20399A8\n\t"
-        "_080CB240: .4byte 0x00000C5E\n\t"
-        ".syntax divided\n\t"
-    );
+    return sStorage->numPartyToCompact;
 }
 
 
@@ -12784,20 +12772,9 @@ __attribute__((naked)) void sub_080CC828(void)
 }
 
 
-__attribute__((naked)) s16 GetBoxTitleBaseX(u16 len)
+s16 GetBoxTitleBaseX(u16 len)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return (s16)(0xB0 - (len << 2));
 }
 
 __attribute__((naked)) void sub_080CC8A8(void)
