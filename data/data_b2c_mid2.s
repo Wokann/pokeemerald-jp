@@ -128,7 +128,7 @@ sPokenavCheckPageColors: @ 0x85F15A8
 
 	.globl sPokenavMatchCallFieldNames
 sPokenavMatchCallFieldNames: @ 0x85F15AC
-	.incbin "baserom_jp.gba", 0x5f15ac, 0xc
+	.4byte 0x085CB6EC, 0x085CB6F1, 0x085CB6FB
 
 	.globl sPokenavFieldNameColors
 sPokenavFieldNameColors: @ 0x85F15B8
