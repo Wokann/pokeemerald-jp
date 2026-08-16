@@ -5600,8 +5600,8 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.SetMonMarkings);
         src/pokemon_storage_system.o(.text.CanMovePartyMon);
         src/pokemon_storage_system.o(.text.CanShiftMon);
-        src/pokemon_storage_system.o(.text.GetBoxCursorPosition);
-        src/pokemon_storage_system.o(.text.IsCursorOnBox);
+        src/pokemon_storage_system.o(.text.IsMonBeingMoved);
+        src/pokemon_storage_system.o(.text.IsCursorOnBoxTitle);
         src/pokemon_storage_system.o(.text.IsCursorOnCloseBox);
         src/pokemon_storage_system.o(.text.IsCursorInBox);
         src/pokemon_storage_system.o(.text.sub_080CE3BC);

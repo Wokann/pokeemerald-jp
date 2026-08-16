@@ -94,6 +94,14 @@ struct ItemIcon
 #define MAX_ITEM_ICONS 3
 #define STORAGE_MON_NAME_LENGTH 11 // Fixed US-style display buffer; JP kana names are shorter.
 
+enum
+{
+    CURSOR_AREA_IN_BOX,
+    CURSOR_AREA_IN_PARTY,
+    CURSOR_AREA_BOX_TITLE,
+    CURSOR_AREA_BUTTONS, // Party Pokemon and Close Box
+};
+
 struct PokemonStorageSystemData
 {
     u8 state;
@@ -257,6 +265,9 @@ extern bool8 (*const sPlaceChangeFuncs[])(void);
 extern const u8 *ItemId_GetName(u16 itemId);
 extern void sub_080D1E90(void);
 extern void sub_080CFA58(void);
+extern s8 sCursorArea;
+extern s8 sCursorPosition;
+extern bool8 sIsMonBeingMoved;
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -2787,7 +2798,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	ldrb r0, [r0, #1]\n\t"
         "	cmp r0, #2\n\t"
         "	bne _080C7C9C\n\t"
-        "	bl GetBoxCursorPosition\n\t"
+        "	bl IsMonBeingMoved\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080C7CA2\n\t"
@@ -3098,7 +3109,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	ldrb r0, [r0]\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080C7F2C\n\t"
-        "	bl GetBoxCursorPosition\n\t"
+        "	bl IsMonBeingMoved\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080C7F2C\n\t"
@@ -5775,7 +5786,7 @@ __attribute__((naked)) void Cb_OnCloseBoxPressed(void)
         "	.4byte _080C9564 @ case 3\n\t"
         "	.4byte _080C9580 @ case 4\n\t"
         "_080C94B8:\n\t"
-        "	bl GetBoxCursorPosition\n\t"
+        "	bl IsMonBeingMoved\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080C94DC\n\t"
@@ -5920,7 +5931,7 @@ __attribute__((naked)) void Cb_OnBPressed(void)
         "	.4byte _080C9698 @ case 3\n\t"
         "	.4byte _080C96B4 @ case 4\n\t"
         "_080C95EC:\n\t"
-        "	bl GetBoxCursorPosition\n\t"
+        "	bl IsMonBeingMoved\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080C9610\n\t"
@@ -8198,7 +8209,7 @@ __attribute__((naked)) void sub_080CA720(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl IsCursorOnBox\n\t"
+        "	bl IsCursorOnBoxTitle\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080CA75C\n\t"
@@ -12794,7 +12805,7 @@ __attribute__((naked)) void sub_080CC8A8(void)
         "	lsrs r5, r0, #0x10\n\t"
         "	cmp r5, #1\n\t"
         "	bls _080CC8B2\n\t"
-        "	bl IsCursorOnBox\n\t"
+        "	bl IsCursorOnBoxTitle\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080CC91E\n\t"
@@ -16352,94 +16363,24 @@ __attribute__((naked)) bool8 CanShiftMon(void)
     );
 }
 
-__attribute__((naked)) u8 GetBoxCursorPosition(void)
+bool8 IsMonBeingMoved(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080CE354\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE354: .4byte gUnknown_2039A1A\n\t"
-        ".syntax divided\n\t"
-    );
+    return sIsMonBeingMoved;
 }
 
-__attribute__((naked)) bool8 IsCursorOnBox(void)
+bool8 IsCursorOnBoxTitle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r0, _080CE370\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080CE36A\n\t"
-        "	movs r1, #1\n\t"
-        "_080CE36A:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE370: .4byte gUnknown_2039A18\n\t"
-        ".syntax divided\n\t"
-    );
+    return sCursorArea == CURSOR_AREA_BOX_TITLE;
 }
 
-__attribute__((naked)) bool8 IsCursorOnCloseBox(void)
+bool8 IsCursorOnCloseBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r0, _080CE398\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080CE392\n\t"
-        "	ldr r0, _080CE39C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CE392\n\t"
-        "	movs r1, #1\n\t"
-        "_080CE392:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE398: .4byte gUnknown_2039A18\n\t"
-        "_080CE39C: .4byte gUnknown_2039A19\n\t"
-        ".syntax divided\n\t"
-    );
+    return sCursorArea == CURSOR_AREA_BUTTONS && sCursorPosition == 1;
 }
 
-
-__attribute__((naked)) bool8 IsCursorInBox(void)
+bool8 IsCursorInBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r0, _080CE3B8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE3B2\n\t"
-        "	movs r1, #1\n\t"
-        "_080CE3B2:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE3B8: .4byte gUnknown_2039A18\n\t"
-        ".syntax divided\n\t"
-    );
+    return sCursorArea == CURSOR_AREA_IN_BOX;
 }
 
 __attribute__((naked)) void sub_080CE3BC(void)
