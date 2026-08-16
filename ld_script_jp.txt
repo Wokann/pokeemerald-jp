@@ -9231,6 +9231,9 @@ SECTIONS {
         data/data_b_mid2b4.o(.rodata);
         src/data/back_pic_coordinates.o(.rodata);
         data/data_b_mid2b2.o(.rodata);
+        src/data/trainer_front_anims.o(.rodata);
+        src/data/trainer_front_pic_coords.o(.rodata);
+        data/data_b_mid2b5.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
         src/data/text/species_names.o(.rodata);
