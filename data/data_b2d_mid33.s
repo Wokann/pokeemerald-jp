@@ -64,7 +64,22 @@ sSpriteTemplate_MinuteHand: @ 0x8591C9C
 
 	.globl sSpriteTemplate_HourHand
 sSpriteTemplate_HourHand: @ 0x8591CB4
-	.incbin "baserom_jp.gba", 0x591cb4, 0x38
+	.hword 0x1000, 0x1000
+	.4byte sOamData_MinuteHand, 0x08591C98
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08135299
+
+sOam_PeriodIndicator: @ 0x8591CCC
+	.byte 0xA0, 0x00, 0x00, 0x40, 0x00, 0x0C, 0x00, 0x00
+
+sAnim_PM: @ 0x8591CD4
+	.hword 0x0084, 0x001E, 0xFFFF, 0x0000
+sAnim_AM: @ 0x8591CDC
+	.hword 0x0080, 0x001E, 0xFFFF, 0x0000
+
+sAnims_PM: @ 0x8591CE4
+	.4byte sAnim_PM
+sAnims_AM: @ 0x8591CE8
+	.4byte sAnim_AM
 
 	.globl sSpriteTemplate_PM
 sSpriteTemplate_PM: @ 0x8591CEC
