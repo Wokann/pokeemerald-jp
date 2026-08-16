@@ -3217,34 +3217,12 @@ __attribute__((naked)) u8 GetObjectEventIdByPosition(u16 x, u16 y, u8 elevation)
     );
 }
 
-__attribute__((naked)) void EventObjectDoesZCoordMatch(void)
+bool8 EventObjectDoesZCoordMatch(struct ObjectEvent *objectEvent, u8 elevation)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r0, #0xb]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E670\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0808E670\n\t"
-        "	lsls r0, r2, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0808E670\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808E672\n\t"
-        "_0808E670:\n\t"
-        "	movs r0, #1\n\t"
-        "_0808E672:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->currentElevation != ELEVATION_TRANSITION && elevation != ELEVATION_TRANSITION && objectEvent->currentElevation != elevation)
+        return FALSE;
+
+    return TRUE;
 }
 
 __attribute__((naked)) void UpdateObjectEventsForCameraUpdate(s16 x, s16 y)
