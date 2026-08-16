@@ -295,6 +295,7 @@ extern void TilemapUtil_Free(void);
 extern void MultiMove_Free(void);
 extern struct MultiMove *sMultiMove;
 extern void *sTilemapUtil;
+extern struct UnkUtil *sUnkUtil;
 extern struct Pokemon sSavedMovingMon;
 extern s8 sCursorArea;
 extern s8 sCursorPosition;
@@ -2157,7 +2158,7 @@ __attribute__((naked)) void sub_080C7734(void)
         "	adds r0, #8\n\t"
         "	adds r1, #0x10\n\t"
         "	movs r2, #8\n\t"
-        "	bl sub_080D2330\n\t"
+        "	bl UnkUtil_Init\n\t"
         "	ldr r1, _080C77AC\n\t"
         "	movs r0, #0x14\n\t"
         "	strh r0, [r1]\n\t"
@@ -24227,21 +24228,12 @@ __attribute__((naked)) void sub_080D2298(void)
     );
 }
 
-__attribute__((naked)) void sub_080D2330(void)
+void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u32 max)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r3, _080D2340\n\t"
-        "	str r0, [r3]\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r2, [r0, #5]\n\t"
-        "	strb r1, [r0, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2340: .4byte gUnknown_2039A2C\n\t"
-        ".syntax divided\n\t"
-    );
+    sUnkUtil = util;
+    util->data = data;
+    util->max = max;
+    util->numActive = 0;
 }
 
 __attribute__((naked)) void UnkUtil_Run(void)

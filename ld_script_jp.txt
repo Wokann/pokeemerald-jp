@@ -5750,7 +5750,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.sub_080D21B8);
         src/pokemon_storage_system.o(.text.sub_080D2200);
         src/pokemon_storage_system.o(.text.sub_080D2298);
-        src/pokemon_storage_system.o(.text.sub_080D2330);
+        src/pokemon_storage_system.o(.text.UnkUtil_Init);
         src/pokemon_storage_system.o(.text.UnkUtil_Run);
         src/pokemon_storage_system.o(.text.sub_080D238C);
         src/pokemon_storage_system.o(.text.sub_080D2428);

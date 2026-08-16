@@ -947,6 +947,7 @@ sTilemapUtil = .;
 gUnknown_2039A28 = .;
 . += 0x4;
 gUnknown_2039A2C = .;
+sUnkUtil = .;
 . += 0x4;
 sMovementScripts = .;
 . += 0x40;
