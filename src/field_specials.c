@@ -3066,54 +3066,17 @@ __attribute__((naked)) void PutZigzagoonInPlayerParty(void)
     );
 }
 
-__attribute__((naked)) void IsStarterInParty(void)
+bool8 IsStarterInParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _08139584\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl GetStarterPokemon\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bhs _08139596\n\t"
-        "_0813956A:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _08139588\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x41\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _0813958C\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08139598\n\t"
-        "	.align 2, 0\n\t"
-        "_08139584: .4byte 0x00004023\n\t"
-        "_08139588: .4byte gPlayerParty\n\t"
-        "_0813958C:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r5\n\t"
-        "	blo _0813956A\n\t"
-        "_08139596:\n\t"
-        "	movs r0, #0\n\t"
-        "_08139598:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u16 starter = GetStarterPokemon(VarGet(VAR_STARTER_MON));
+    u8 partyCount = CalculatePlayerPartyCount();
+    for (i = 0; i < partyCount; i++)
+    {
+        if (GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) == starter)
+            return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void ScriptCheckFreePokemonStorageSpace(void)
@@ -3131,29 +3094,12 @@ __attribute__((naked)) void ScriptCheckFreePokemonStorageSpace(void)
     );
 }
 
-__attribute__((naked)) void IsPokerusInParty(void)
+bool8 IsPokerusInParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081395C4\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	bl CheckPartyPokerus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081395C8\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081395CA\n\t"
-        "	.align 2, 0\n\t"
-        "_081395C4: .4byte gPlayerParty\n\t"
-        "_081395C8:\n\t"
-        "	movs r0, #0\n\t"
-        "_081395CA:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!CheckPartyPokerus(gPlayerParty, (1 << PARTY_SIZE) - 1))
+        return FALSE;
+
+    return TRUE;
 }
 
 __attribute__((naked)) void sub_081395D0(void)
