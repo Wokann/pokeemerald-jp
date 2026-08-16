@@ -1097,6 +1097,8 @@ bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2);
 static bool8 BiasedTowardCherryOr7s(void);
 static bool8 DecideStop_Bias_Reel2_Bet1or2(void);
 static bool8 DecideStop_Bias_Reel2_Bet3(void);
+static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 biasSymbol);
+static bool8 DecideStop_Bias_Reel3_Bet3(u8 biasSymbol);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -2809,174 +2811,84 @@ static bool8 DecideStop_Bias_Reel2_Bet3(void)
 
 
 
-__attribute__((naked)) bool8 DecideStop_Bias_Reel3(void)
+
+__attribute__((section(".rodata.sDecideStop_Bias_Reel3_Bets")))
+static bool8 (*const sDecideStop_Bias_Reel3_Bets[MAX_BET])(u8 biasSymbol) =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r2, _0812C508\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrb r3, [r0, #7]\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C4E8\n\t"
-        "	movs r3, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0812C4E8\n\t"
-        "	movs r3, #1\n\t"
-        "_0812C4E8:\n\t"
-        "	ldr r1, _0812C50C\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C508: .4byte sSlotMachine\n\t"
-        "_0812C50C: .4byte gUnknown_85844A4\n\t"
-        ".syntax divided\n\t"
-    );
+    DecideStop_Bias_Reel3_Bet1or2,
+    DecideStop_Bias_Reel3_Bet1or2,
+    DecideStop_Bias_Reel3_Bet3,
+};
+
+// If the machine is biased toward mixed 7's, swap the color of the bias symbol
+// from red 7 to blue 7, or vice versa.
+bool8 DecideStop_Bias_Reel3(void)
+{
+    u8 biasSymbol = sSlotMachine->biasSymbol;
+    if (sSlotMachine->machineBias & BIAS_MIXED_7)
+    {
+        biasSymbol = SYMBOL_7_RED;
+        if (sSlotMachine->biasSymbol == SYMBOL_7_RED)
+        {
+            biasSymbol = SYMBOL_7_BLUE;
+        }
+    }
+    return sDecideStop_Bias_Reel3_Bets[sSlotMachine->bet - 1](biasSymbol);
 }
 
-__attribute__((naked)) bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a)
+// Turn at most 4 extra turns to try to line up the bias symbol in the same
+// row as reel 2.
+static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 biasSymbol)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _0812C550\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrh r1, [r0, #0x36]\n\t"
-        "	mov r8, r1\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r6, [r0, r1]\n\t"
-        "_0812C528:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	subs r1, r6, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, r7\n\t"
-        "	bne _0812C554\n\t"
-        "	ldr r0, _0812C550\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r1, [r0, #0x38]\n\t"
-        "	strh r5, [r0, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C562\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C550: .4byte sSlotMachine\n\t"
-        "_0812C554:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812C528\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C562:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+    s16 reel2BiasRow = sSlotMachine->winnerRows[1];
+
+    for (i = 0; i <= MAX_EXTRA_TURNS; i++)
+    {
+        if (GetSymbol(RIGHT_REEL, reel2BiasRow - i) == biasSymbol)
+        {
+            sSlotMachine->winnerRows[2] = reel2BiasRow;
+            sSlotMachine->reelExtraTurns[2] = i;
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 DecideStop_Bias_Reel3_Bet3(u8 a)
+// Try to complete a match in reel 3 by lining up a bias symbol with the bias
+// symbols from the first two reels.
+static bool8 DecideStop_Bias_Reel3_Bet3(u8 biasSymbol)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, _0812C594\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0812C5AC\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DecideStop_Bias_Reel3_Bet1or2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _0812C5E2\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C594: .4byte sSlotMachine\n\t"
-        "_0812C598:\n\t"
-        "	ldr r0, _0812C5A8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strh r5, [r0, #0x32]\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r1, [r0, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C5E2\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C5A8: .4byte sSlotMachine\n\t"
-        "_0812C5AC:\n\t"
-        "	movs r2, #1\n\t"
-        "	mov r8, r2\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _0812C5B8\n\t"
-        "	movs r0, #3\n\t"
-        "	mov r8, r0\n\t"
-        "_0812C5B8:\n\t"
-        "	movs r5, #0\n\t"
-        "	mov r7, r8\n\t"
-        "_0812C5BC:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	subs r1, r7, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, r6\n\t"
-        "	beq _0812C598\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812C5BC\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C5E2:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+    s16 biasRow;
+
+    // First two bias symbols in the same row. Try to line up bias symbol in
+    // same the row here too
+    if (sSlotMachine->winnerRows[0] == sSlotMachine->winnerRows[1])
+        return DecideStop_Bias_Reel3_Bet1or2(biasSymbol);
+
+    // Otherwise, try to line up the bias symbol diagonally
+    if (sSlotMachine->winnerRows[0] == 1)
+        biasRow = 3;
+    else
+        biasRow = 1;
+    for (i = 0; i <= MAX_EXTRA_TURNS; i++)
+    {
+        if (GetSymbol(RIGHT_REEL, biasRow - i) == biasSymbol)
+        {
+            sSlotMachine->reelExtraTurns[2] = i;
+            sSlotMachine->winnerRows[2] = biasRow;
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
+
+
+
+
+
+
 
 __attribute__((naked)) void DecideStop_NoBias_Reel1(void)
 {
