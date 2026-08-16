@@ -16280,29 +16280,14 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpLeft_Step0(struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkNormalDiagonalUpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093766\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809376C\n\t"
-        "_08093766:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809376C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -16327,29 +16312,14 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpRight_Step0(stru
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkNormalDiagonalUpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080937A6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080937AC\n\t"
-        "_080937A6:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080937AC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -16374,29 +16344,14 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownLeft_Step0(str
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkNormalDiagonalDownLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080937E6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080937EC\n\t"
-        "_080937E6:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080937EC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -16421,29 +16376,14 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownRight_Step0(st
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkNormalDiagonalDownRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093826\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809382C\n\t"
-        "_08093826:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809382C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkNormalDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -16468,29 +16408,14 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDown_Step0(struct ObjectEv
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkNormalDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkNormalDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093866\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809386C\n\t"
-        "_08093866:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809386C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkNormalUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -16515,29 +16440,14 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalUp_Step0(struct ObjectEven
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkNormalUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkNormalUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080938A6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080938AC\n\t"
-        "_080938A6:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080938AC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkNormalLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -16562,29 +16472,14 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalLeft_Step0(struct ObjectEv
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkNormalLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkNormalLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080938E6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080938EC\n\t"
-        "_080938E6:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080938EC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -16610,29 +16505,14 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalRight_Step0(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkNormalRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkNormalRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093926\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809392C\n\t"
-        "_08093926:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809392C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 sub_08093934(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -17234,29 +17114,14 @@ __attribute__((naked)) bool8 MovementAction_WalkFastDown_Step0(struct ObjectEven
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFastDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093DF6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093DFC\n\t"
-        "_08093DF6:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093DFC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkFastUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -17281,29 +17146,14 @@ __attribute__((naked)) bool8 MovementAction_WalkFastUp_Step0(struct ObjectEvent 
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFastUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093E36\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093E3C\n\t"
-        "_08093E36:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093E3C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkFastLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -17328,29 +17178,14 @@ __attribute__((naked)) bool8 MovementAction_WalkFastLeft_Step0(struct ObjectEven
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFastLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093E76\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093E7C\n\t"
-        "_08093E76:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093E7C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkFastRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -17375,29 +17210,14 @@ __attribute__((naked)) bool8 MovementAction_WalkFastRight_Step0(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFastRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFastRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093EB6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093EBC\n\t"
-        "_08093EB6:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093EBC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
@@ -18045,29 +17865,14 @@ bool8 MovementAction_RideWaterCurrentDown_Step0(struct ObjectEvent *objectEvent,
     return MovementAction_RideWaterCurrentDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_RideWaterCurrentDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RideWaterCurrentDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094322\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094328\n\t"
-        "_08094322:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094328:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_RideWaterCurrentUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18076,29 +17881,14 @@ bool8 MovementAction_RideWaterCurrentUp_Step0(struct ObjectEvent *objectEvent, s
     return MovementAction_RideWaterCurrentUp_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_RideWaterCurrentUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RideWaterCurrentUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094362\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094368\n\t"
-        "_08094362:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094368:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_RideWaterCurrentLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18107,29 +17897,14 @@ bool8 MovementAction_RideWaterCurrentLeft_Step0(struct ObjectEvent *objectEvent,
     return MovementAction_RideWaterCurrentLeft_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_RideWaterCurrentLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RideWaterCurrentLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080943A2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080943A8\n\t"
-        "_080943A2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080943A8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_RideWaterCurrentRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18138,29 +17913,14 @@ bool8 MovementAction_RideWaterCurrentRight_Step0(struct ObjectEvent *objectEvent
     return MovementAction_RideWaterCurrentRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_RideWaterCurrentRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RideWaterCurrentRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080943E2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080943E8\n\t"
-        "_080943E2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080943E8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -18186,29 +17946,14 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterDown_Step0(struct ObjectEv
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFasterDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094422\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094428\n\t"
-        "_08094422:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094428:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkFasterUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18233,29 +17978,14 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterUp_Step0(struct ObjectEven
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFasterUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094462\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094468\n\t"
-        "_08094462:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094468:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkFasterLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18280,29 +18010,14 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterLeft_Step0(struct ObjectEv
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFasterLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080944A2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080944A8\n\t"
-        "_080944A2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080944A8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkFasterRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18327,29 +18042,14 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterRight_Step0(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080944E2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080944E8\n\t"
-        "_080944E2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080944E8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_SlideDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18358,29 +18058,14 @@ bool8 MovementAction_SlideDown_Step0(struct ObjectEvent *objectEvent, struct Spr
     return MovementAction_SlideDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094522\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094528\n\t"
-        "_08094522:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094528:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_SlideUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18389,29 +18074,14 @@ bool8 MovementAction_SlideUp_Step0(struct ObjectEvent *objectEvent, struct Sprit
     return MovementAction_SlideUp_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094562\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094568\n\t"
-        "_08094562:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094568:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_SlideLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18420,29 +18090,14 @@ bool8 MovementAction_SlideLeft_Step0(struct ObjectEvent *objectEvent, struct Spr
     return MovementAction_SlideLeft_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080945A2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080945A8\n\t"
-        "_080945A2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080945A8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_SlideRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18451,29 +18106,14 @@ bool8 MovementAction_SlideRight_Step0(struct ObjectEvent *objectEvent, struct Sp
     return MovementAction_SlideRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_SlideRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_SlideRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080945E2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080945E8\n\t"
-        "_080945E2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080945E8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_PlayerRunDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18482,29 +18122,14 @@ bool8 MovementAction_PlayerRunDown_Step0(struct ObjectEvent *objectEvent, struct
     return MovementAction_PlayerRunDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_PlayerRunDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_PlayerRunDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094622\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094628\n\t"
-        "_08094622:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094628:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_PlayerRunUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18513,29 +18138,14 @@ bool8 MovementAction_PlayerRunUp_Step0(struct ObjectEvent *objectEvent, struct S
     return MovementAction_PlayerRunUp_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_PlayerRunUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_PlayerRunUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094662\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094668\n\t"
-        "_08094662:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094668:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -18545,29 +18155,14 @@ bool8 MovementAction_PlayerRunLeft_Step0(struct ObjectEvent *objectEvent, struct
     return MovementAction_PlayerRunLeft_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_PlayerRunLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_PlayerRunLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080946A2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080946A8\n\t"
-        "_080946A2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080946A8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_PlayerRunRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18576,29 +18171,14 @@ bool8 MovementAction_PlayerRunRight_Step0(struct ObjectEvent *objectEvent, struc
     return MovementAction_PlayerRunRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_PlayerRunRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_PlayerRunRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080946E2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080946E8\n\t"
-        "_080946E2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080946E8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void StartSpriteAnimInDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum)
@@ -21741,29 +21321,14 @@ __attribute__((naked)) bool8 sub_08095A70(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095AA2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095AA8\n\t"
-        "_08095AA2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095AA8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 sub_08095AB0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -21788,29 +21353,14 @@ __attribute__((naked)) bool8 sub_08095AB0(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095AE2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095AE8\n\t"
-        "_08095AE2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095AE8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 sub_08095AF0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -21835,29 +21385,14 @@ __attribute__((naked)) bool8 sub_08095AF0(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095B22\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095B28\n\t"
-        "_08095B22:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095B28:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -21885,29 +21420,14 @@ __attribute__((naked)) bool8 sub_08095B30(struct ObjectEvent *objectEvent, struc
 
 
 
-__attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095B62\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095B68\n\t"
-        "_08095B62:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095B68:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 InitAcroWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
@@ -21945,29 +21465,14 @@ bool8 MovementAction_AcroWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, 
     return MovementAction_AcroWheelieMoveDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095BD2\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095BD8\n\t"
-        "_08095BD2:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095BD8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -21977,29 +21482,14 @@ bool8 MovementAction_AcroWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, st
 }
 
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095C12\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095C18\n\t"
-        "_08095C12:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095C18:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22008,29 +21498,14 @@ bool8 MovementAction_AcroWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, 
     return MovementAction_AcroWheelieMoveLeft_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095C52\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095C58\n\t"
-        "_08095C52:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095C58:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22039,29 +21514,14 @@ bool8 MovementAction_AcroWheelieMoveRight_Step0(struct ObjectEvent *objectEvent,
     return MovementAction_AcroWheelieMoveRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095C92\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095C98\n\t"
-        "_08095C92:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095C98:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 InitAcroEndWheelie(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
@@ -22102,29 +21562,14 @@ bool8 MovementAction_AcroEndWheelieMoveDown_Step0(struct ObjectEvent *objectEven
     return MovementAction_AcroEndWheelieMoveDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095D0A\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095D10\n\t"
-        "_08095D0A:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095D10:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroEndWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22133,29 +21578,14 @@ bool8 MovementAction_AcroEndWheelieMoveUp_Step0(struct ObjectEvent *objectEvent,
     return MovementAction_AcroEndWheelieMoveUp_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095D4A\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095D50\n\t"
-        "_08095D4A:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095D50:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroEndWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22164,29 +21594,14 @@ bool8 MovementAction_AcroEndWheelieMoveLeft_Step0(struct ObjectEvent *objectEven
     return MovementAction_AcroEndWheelieMoveLeft_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095D8A\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095D90\n\t"
-        "_08095D8A:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095D90:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_AcroEndWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22195,29 +21610,14 @@ bool8 MovementAction_AcroEndWheelieMoveRight_Step0(struct ObjectEvent *objectEve
     return MovementAction_AcroEndWheelieMoveRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095DCA\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095DD0\n\t"
-        "_08095DCA:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095DD0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_Levitate_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
