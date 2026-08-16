@@ -4832,29 +4832,16 @@ __attribute__((naked)) bool8 MovementType_WanderAround_Step2(struct ObjectEvent 
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WanderAround_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderAround_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808EE4C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808EE52\n\t"
-        "_0808EE4C:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "_0808EE52:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 delayEnded = WaitForMovementDelay(sprite);
+
+    if (delayEnded)
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_WanderAround_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5800,29 +5787,16 @@ __attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step2(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderUpAndDown_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808F4C8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808F4CE\n\t"
-        "_0808F4C8:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "_0808F4CE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 delayEnded = WaitForMovementDelay(sprite);
+
+    if (delayEnded)
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6024,29 +5998,16 @@ __attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step2(struct Object
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808F64C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808F652\n\t"
-        "_0808F64C:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "_0808F652:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 delayEnded = WaitForMovementDelay(sprite);
+
+    if (delayEnded)
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
