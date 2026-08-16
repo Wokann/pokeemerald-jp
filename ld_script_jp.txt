@@ -9237,6 +9237,7 @@ SECTIONS {
         src/data/enemy_mon_elevation.o(.rodata);
         src/data/front_pic_anims.o(.rodata);
         src/data/front_pic_table.o(.rodata);
+        src/data/unknown_table.o(.rodata);
         data/data_b_mid2b7.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
