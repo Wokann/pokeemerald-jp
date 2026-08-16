@@ -9,12 +9,9 @@ extern IWRAM_DATA struct SiiRtcInfo sRtc;
 extern IWRAM_DATA u8 sProbeResult;
 extern IWRAM_DATA u16 sRtcSavedIme;
 
-// JP const data lives in data.s.
-extern const struct SiiRtcInfo gUnknown_82D254C;
-extern const s32 gUnknown_82D2558[MONTH_COUNT];
-
-#define sRtcDummy gUnknown_82D254C
-#define sNumDaysInMonths gUnknown_82D2558
+// JP const data lives in src/data/rtc_data.
+extern const struct SiiRtcInfo sRtcDummy;
+extern const s32 sNumDaysInMonths[MONTH_COUNT];
 
 void RtcDisableInterrupts(void)
 {

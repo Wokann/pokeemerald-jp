@@ -8,49 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.globl gUnknown_82D254C
-gUnknown_82D254C: @ 0x82D254C
-	.incbin "baserom_jp.gba", 0x2d254c, 0xc
-
-	.globl gUnknown_82D2558
-gUnknown_82D2558: @ 0x82D2558
-	.4byte 0x0000001F, 0x0000001C, 0x0000001F, 0x0000001E, 0x0000001F, 0x0000001E, 0x0000001F, 0x0000001F, 0x0000001E, 0x0000001F, 0x0000001E, 0x0000001F
-
-	.globl sBirchSpeechBgPals
-sBirchSpeechBgPals: @ 0x82D2588
-	.hword 0x0000 @ pal 0, color 0
-	.hword 0x53FF @ pal 0, color 1
-	.hword 0x37FF @ pal 0, color 2
-	.hword 0x2F7B @ pal 0, color 3
-	.hword 0x26F7 @ pal 0, color 4
-	.hword 0x1E73 @ pal 0, color 5
-	.hword 0x19EF @ pal 0, color 6
-	.hword 0x116B @ pal 0, color 7
-	.hword 0x08E7 @ pal 0, color 8
-	.hword 0x67F8 @ pal 0, color 9
-	.hword 0x43EF @ pal 0, color 10
-	.hword 0x376E @ pal 0, color 11
-	.hword 0x2EED @ pal 0, color 12
-	.hword 0x226C @ pal 0, color 13
-	.hword 0x19EB @ pal 0, color 14
-	.hword 0x0000 @ pal 0, color 15
-	.hword 0x0000 @ pal 1, color 0
-	.hword 0x53FF @ pal 1, color 1
-	.hword 0x37FF @ pal 1, color 2
-	.hword 0x2F7B @ pal 1, color 3
-	.hword 0x26F7 @ pal 1, color 4
-	.hword 0x1E73 @ pal 1, color 5
-	.hword 0x19EF @ pal 1, color 6
-	.hword 0x116B @ pal 1, color 7
-	.hword 0x08E7 @ pal 1, color 8
-	.hword 0x67F8 @ pal 1, color 9
-	.hword 0x43EF @ pal 1, color 10
-	.hword 0x376E @ pal 1, color 11
-	.hword 0x2EED @ pal 1, color 12
-	.hword 0x226C @ pal 1, color 13
-	.hword 0x19EB @ pal 1, color 14
-	.hword 0x0000 @ pal 1, color 15
-
 	.globl gUnknown_82D25C8
 gUnknown_82D25C8: @ 0x82D25C8
 	.incbin "baserom_jp.gba", 0x2d25c8, 0x1b4
