@@ -1,225 +1,67 @@
 #include "global.h"
+#include "battle.h"
+#include "battle_controllers.h"
+#include "battle_message.h"
+#include "data.h"
 
-// JP byte-exact battle-controller print-string emitters (naked asm:
-// agbcc uses r8/r9/sl for the buffer-id/loops, the JP ROM only uses r8).
+extern u8 sBattleBuffersTransferData[0x100];
+extern void PrepareBufferDataTransfer(u8 bufferId, u8 *data, u16 size);
 
-__attribute__((naked)) void BtlController_EmitPrintString(u8 bufferId, u16 stringId)
+void BtlController_EmitPrintString(u8 bufferId, u16 stringId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, r6, r7, lr}\n\t"
-        "mov r7, r8\n\t"
-        "push {r7}\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "mov r8, r0\n\t"
-        "lsls r1, r1, #0x10\n\t"
-        "lsrs r1, r1, #0x10\n\t"
-        "ldr r2, _08033B40\n\t"
-        "movs r0, #0x10\n\t"
-        "strb r0, [r2]\n\t"
-        "ldr r0, _08033B44\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r2, #1]\n\t"
-        "strb r1, [r2, #2]\n\t"
-        "lsrs r1, r1, #8\n\t"
-        "strb r1, [r2, #3]\n\t"
-        "adds r0, r2, #4\n\t"
-        "mov ip, r0\n\t"
-        "ldr r4, _08033B48\n\t"
-        "ldrh r0, [r4]\n\t"
-        "strh r0, [r2, #4]\n\t"
-        "ldr r0, _08033B4C\n\t"
-        "ldrh r0, [r0]\n\t"
-        "mov r1, ip\n\t"
-        "strh r0, [r1, #2]\n\t"
-        "ldr r0, _08033B50\n\t"
-        "ldrh r0, [r0]\n\t"
-        "strh r0, [r1, #4]\n\t"
-        "ldr r0, _08033B54\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r1, #6]\n\t"
-        "ldr r0, _08033B58\n\t"
-        "ldrb r0, [r0, #0x17]\n\t"
-        "strb r0, [r1, #7]\n\t"
-        "ldr r0, _08033B5C\n\t"
-        "ldr r0, [r0]\n\t"
-        "adds r1, r0, #0\n\t"
-        "adds r1, #0x52\n\t"
-        "ldrb r1, [r1]\n\t"
-        "mov r3, ip\n\t"
-        "strb r1, [r3, #8]\n\t"
-        "adds r0, #0xb1\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r3, #9]\n\t"
-        "ldr r0, _08033B60\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r3, #0xa]\n\t"
-        "ldr r3, _08033B64\n\t"
-        "ldrh r1, [r4]\n\t"
-        "lsls r0, r1, #1\n\t"
-        "adds r0, r0, r1\n\t"
-        "lsls r0, r0, #2\n\t"
-        "adds r0, r0, r3\n\t"
-        "ldrb r0, [r0, #2]\n\t"
-        "mov r1, ip\n\t"
-        "strb r0, [r1, #0xb]\n\t"
-        "movs r3, #0\n\t"
-        "adds r7, r2, #0\n\t"
-        "adds r2, #0x10\n\t"
-        "ldr r0, _08033B68\n\t"
-        "adds r4, r0, #0\n\t"
-        "adds r4, #0x20\n\t"
-        "_08033AFA:\n\t"
-        "adds r1, r2, r3\n\t"
-        "ldrb r0, [r4]\n\t"
-        "strb r0, [r1]\n\t"
-        "adds r4, #0x58\n\t"
-        "adds r3, #1\n\t"
-        "cmp r3, #3\n\t"
-        "ble _08033AFA\n\t"
-        "movs r3, #0\n\t"
-        "mov r4, ip\n\t"
-        "adds r4, #0x10\n\t"
-        "ldr r6, _08033B6C\n\t"
-        "mov r2, ip\n\t"
-        "adds r2, #0x20\n\t"
-        "ldr r5, _08033B70\n\t"
-        "_08033B16:\n\t"
-        "adds r1, r4, r3\n\t"
-        "adds r0, r3, r6\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r1]\n\t"
-        "adds r1, r2, r3\n\t"
-        "adds r0, r3, r5\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r1]\n\t"
-        "adds r3, #1\n\t"
-        "cmp r3, #0xf\n\t"
-        "ble _08033B16\n\t"
-        "mov r0, r8\n\t"
-        "adds r1, r7, #0\n\t"
-        "movs r2, #0x34\n\t"
-        "bl PrepareBufferDataTransfer\n\t"
-        "pop {r3}\n\t"
-        "mov r8, r3\n\t"
-        "pop {r4, r5, r6, r7}\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".align 2, 0\n\t"
-        "_08033B40: .4byte sBattleBuffersTransferData\n\t"
-        "_08033B44: .4byte gBattleOutcome\n\t"
-        "_08033B48: .4byte gCurrentMove\n\t"
-        "_08033B4C: .4byte gChosenMove\n\t"
-        "_08033B50: .4byte gLastUsedItem\n\t"
-        "_08033B54: .4byte gLastUsedAbility\n\t"
-        "_08033B58: .4byte gBattleScripting\n\t"
-        "_08033B5C: .4byte gBattleStruct\n\t"
-        "_08033B60: .4byte gPotentialItemEffectBattler\n\t"
-        "_08033B64: .4byte gBattleMoves\n\t"
-        "_08033B68: .4byte gBattleMons\n\t"
-        "_08033B6C: .4byte gBattleTextBuff1\n\t"
-        "_08033B70: .4byte gBattleTextBuff2\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    struct BattleMsgData *stringInfo;
+
+    sBattleBuffersTransferData[0] = CONTROLLER_PRINTSTRING;
+    sBattleBuffersTransferData[1] = gBattleOutcome;
+    sBattleBuffersTransferData[2] = stringId;
+    sBattleBuffersTransferData[3] = (stringId & 0xFF00) >> 8;
+
+    stringInfo = (struct BattleMsgData *)(&sBattleBuffersTransferData[4]);
+    stringInfo->currentMove = gCurrentMove;
+    stringInfo->originallyUsedMove = gChosenMove;
+    stringInfo->lastItem = gLastUsedItem;
+    stringInfo->lastAbility = gLastUsedAbility;
+    stringInfo->scrActive = gBattleScripting.battler;
+    stringInfo->bakScriptPartyIdx = gBattleStruct->scriptPartyIdx;
+    stringInfo->hpScale = gBattleStruct->hpScale;
+    stringInfo->itemEffectBattler = gPotentialItemEffectBattler;
+    stringInfo->moveType = gBattleMoves[gCurrentMove].type;
+
+    for (i = 0; i < MAX_BATTLERS_COUNT; i++)
+        stringInfo->abilities[i] = gBattleMons[i].ability;
+    for (i = 0; i < TEXT_BUFF_ARRAY_COUNT; i++)
+    {
+        stringInfo->textBuffs[0][i] = gBattleTextBuff1[i];
+        stringInfo->textBuffs[1][i] = gBattleTextBuff2[i];
+    }
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, sizeof(struct BattleMsgData) + 4);
 }
 
-__attribute__((naked)) void BtlController_EmitPrintSelectionString(u8 bufferId, u16 stringId)
+void BtlController_EmitPrintSelectionString(u8 bufferId, u16 stringId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, r6, r7, lr}\n\t"
-        "mov r7, r8\n\t"
-        "push {r7}\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "mov r8, r0\n\t"
-        "lsls r1, r1, #0x10\n\t"
-        "lsrs r1, r1, #0x10\n\t"
-        "ldr r2, _08033C14\n\t"
-        "movs r0, #0x11\n\t"
-        "strb r0, [r2]\n\t"
-        "strb r0, [r2, #1]\n\t"
-        "strb r1, [r2, #2]\n\t"
-        "lsrs r1, r1, #8\n\t"
-        "strb r1, [r2, #3]\n\t"
-        "adds r0, r2, #4\n\t"
-        "mov ip, r0\n\t"
-        "ldr r0, _08033C18\n\t"
-        "ldrh r0, [r0]\n\t"
-        "strh r0, [r2, #4]\n\t"
-        "ldr r0, _08033C1C\n\t"
-        "ldrh r0, [r0]\n\t"
-        "mov r1, ip\n\t"
-        "strh r0, [r1, #2]\n\t"
-        "ldr r0, _08033C20\n\t"
-        "ldrh r0, [r0]\n\t"
-        "strh r0, [r1, #4]\n\t"
-        "ldr r0, _08033C24\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r1, #6]\n\t"
-        "ldr r0, _08033C28\n\t"
-        "ldrb r0, [r0, #0x17]\n\t"
-        "strb r0, [r1, #7]\n\t"
-        "ldr r0, _08033C2C\n\t"
-        "ldr r0, [r0]\n\t"
-        "adds r0, #0x52\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r1, #8]\n\t"
-        "movs r3, #0\n\t"
-        "adds r7, r2, #0\n\t"
-        "adds r4, r7, #0\n\t"
-        "adds r4, #0x10\n\t"
-        "ldr r0, _08033C30\n\t"
-        "adds r2, r0, #0\n\t"
-        "adds r2, #0x20\n\t"
-        "_08033BCE:\n\t"
-        "adds r1, r4, r3\n\t"
-        "ldrb r0, [r2]\n\t"
-        "strb r0, [r1]\n\t"
-        "adds r2, #0x58\n\t"
-        "adds r3, #1\n\t"
-        "cmp r3, #3\n\t"
-        "ble _08033BCE\n\t"
-        "movs r3, #0\n\t"
-        "mov r4, ip\n\t"
-        "adds r4, #0x10\n\t"
-        "ldr r6, _08033C34\n\t"
-        "mov r2, ip\n\t"
-        "adds r2, #0x20\n\t"
-        "ldr r5, _08033C38\n\t"
-        "_08033BEA:\n\t"
-        "adds r1, r4, r3\n\t"
-        "adds r0, r3, r6\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r1]\n\t"
-        "adds r1, r2, r3\n\t"
-        "adds r0, r3, r5\n\t"
-        "ldrb r0, [r0]\n\t"
-        "strb r0, [r1]\n\t"
-        "adds r3, #1\n\t"
-        "cmp r3, #0xf\n\t"
-        "ble _08033BEA\n\t"
-        "mov r0, r8\n\t"
-        "adds r1, r7, #0\n\t"
-        "movs r2, #0x34\n\t"
-        "bl PrepareBufferDataTransfer\n\t"
-        "pop {r3}\n\t"
-        "mov r8, r3\n\t"
-        "pop {r4, r5, r6, r7}\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".align 2, 0\n\t"
-        "_08033C14: .4byte sBattleBuffersTransferData\n\t"
-        "_08033C18: .4byte gCurrentMove\n\t"
-        "_08033C1C: .4byte gChosenMove\n\t"
-        "_08033C20: .4byte gLastUsedItem\n\t"
-        "_08033C24: .4byte gLastUsedAbility\n\t"
-        "_08033C28: .4byte gBattleScripting\n\t"
-        "_08033C2C: .4byte gBattleStruct\n\t"
-        "_08033C30: .4byte gBattleMons\n\t"
-        "_08033C34: .4byte gBattleTextBuff1\n\t"
-        "_08033C38: .4byte gBattleTextBuff2\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    struct BattleMsgData *stringInfo;
+
+    sBattleBuffersTransferData[0] = CONTROLLER_PRINTSTRINGPLAYERONLY;
+    sBattleBuffersTransferData[1] = CONTROLLER_PRINTSTRINGPLAYERONLY;
+    sBattleBuffersTransferData[2] = stringId;
+    sBattleBuffersTransferData[3] = (stringId & 0xFF00) >> 8;
+
+    stringInfo = (struct BattleMsgData *)(&sBattleBuffersTransferData[4]);
+    stringInfo->currentMove = gCurrentMove;
+    stringInfo->originallyUsedMove = gChosenMove;
+    stringInfo->lastItem = gLastUsedItem;
+    stringInfo->lastAbility = gLastUsedAbility;
+    stringInfo->scrActive = gBattleScripting.battler;
+    stringInfo->bakScriptPartyIdx = gBattleStruct->scriptPartyIdx;
+
+    for (i = 0; i < MAX_BATTLERS_COUNT; i++)
+        stringInfo->abilities[i] = gBattleMons[i].ability;
+    for (i = 0; i < TEXT_BUFF_ARRAY_COUNT; i++)
+    {
+        stringInfo->textBuffs[0][i] = gBattleTextBuff1[i];
+        stringInfo->textBuffs[1][i] = gBattleTextBuff2[i];
+    }
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, sizeof(struct BattleMsgData) + 4);
 }

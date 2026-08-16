@@ -211,7 +211,7 @@ struct BattleMsgData
     u8 itemEffectBattler;
     u8 moveType;
     u8 abilities[MAX_BATTLERS_COUNT];
-    u8 textBuffs[3][TEXT_BUFF_ARRAY_COUNT];
+    u8 textBuffs[2][TEXT_BUFF_ARRAY_COUNT];
 };
 
 void BufferStringBattle(u16 stringID);
