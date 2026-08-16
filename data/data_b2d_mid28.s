@@ -620,6 +620,8 @@ gOppositeDirectionBlockedMetatileFuncs: @ 0x84E5FC0
 	.globl gUnknown_84E5FD0
 gUnknown_84E5FD0: @ 0x84E5FD0
 	.incbin "baserom_jp.gba", 0x4E5FD0, 0x24
+	.globl sDirectionToVectors
+	.set sDirectionToVectors, gUnknown_84E5FD0
 	.globl gUnknown_84E5FF4
 gUnknown_84E5FF4: @ 0x84E5FF4
 	.incbin "baserom_jp.gba", 0x4e5ff4, 0x5

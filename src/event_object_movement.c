@@ -21,6 +21,7 @@ extern const u8 sElevationToPriority[];
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
+extern const struct Coords16 sDirectionToVectors[];
 extern const s8 sFigure8YOffsets[];
 struct ObjectEvent;
 struct Sprite;
@@ -25724,104 +25725,28 @@ __attribute__((naked)) void UnfreezeObjectEvents(void)
     );
 }
 
-__attribute__((naked)) void Step1(struct Sprite *sprite, u8 direction)
+static void Step1(struct Sprite *sprite, u8 dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r2, _08096F38\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	ldrh r3, [r0, #0x20]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strh r2, [r0, #0x20]\n\t"
-        "	ldrh r1, [r1, #2]\n\t"
-        "	ldrh r2, [r0, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08096F38: .4byte gUnknown_84E5FD0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x += sDirectionToVectors[dir].x;
+    sprite->y += sDirectionToVectors[dir].y;
 }
 
-__attribute__((naked)) void Step2(struct Sprite *sprite, u8 direction)
+static void Step2(struct Sprite *sprite, u8 dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r2, _08096F5C\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r0, #0x20]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strh r2, [r0, #0x20]\n\t"
-        "	ldrh r1, [r1, #2]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldrh r2, [r0, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08096F5C: .4byte gUnknown_84E5FD0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x += 2 * (u16) sDirectionToVectors[dir].x;
+    sprite->y += 2 * (u16) sDirectionToVectors[dir].y;
 }
 
-__attribute__((naked)) void Step3(struct Sprite *sprite, u8 direction)
+static void Step3(struct Sprite *sprite, u8 dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r2, _08096F84\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	lsls r3, r2, #1\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r3, [r0, #0x20]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strh r2, [r0, #0x20]\n\t"
-        "	ldrh r1, [r1, #2]\n\t"
-        "	lsls r2, r1, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r0, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08096F84: .4byte gUnknown_84E5FD0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x += 2 * (u16) sDirectionToVectors[dir].x + (u16) sDirectionToVectors[dir].x;
+    sprite->y += 2 * (u16) sDirectionToVectors[dir].y + (u16) sDirectionToVectors[dir].y;
 }
 
-__attribute__((naked)) void Step4(struct Sprite *sprite, u8 direction)
+static void Step4(struct Sprite *sprite, u8 dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r2, _08096FA8\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrh r3, [r0, #0x20]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strh r2, [r0, #0x20]\n\t"
-        "	ldrh r1, [r1, #2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrh r2, [r0, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08096FA8: .4byte gUnknown_84E5FD0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x += 4 * (u16) sDirectionToVectors[dir].x;
+    sprite->y += 4 * (u16) sDirectionToVectors[dir].y;
 }
 
 __attribute__((naked)) void Step8(struct Sprite *sprite, u8 direction)
