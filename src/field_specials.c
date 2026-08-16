@@ -2700,34 +2700,12 @@ __attribute__((naked)) void SetTrickHouseEndRoomFlag(void)
     );
 }
 
-__attribute__((naked)) void CheckLeadMonCool(void)
+bool8 CheckLeadMonCool(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08139094\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x16\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0xc7\n\t"
-        "	bls _08139098\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813909A\n\t"
-        "	.align 2, 0\n\t"
-        "_08139094: .4byte gPlayerParty\n\t"
-        "_08139098:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813909A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData3(&gPlayerParty[GetLeadMonIndex()], MON_DATA_COOL) < 200)
+        return FALSE;
+
+    return TRUE;
 }
 
 bool8 CheckLeadMonBeauty(void)
@@ -2738,94 +2716,28 @@ bool8 CheckLeadMonBeauty(void)
     return TRUE;
 }
 
-__attribute__((naked)) void CheckLeadMonCute(void)
+bool8 CheckLeadMonCute(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081390EC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0xc7\n\t"
-        "	bls _081390F0\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081390F2\n\t"
-        "	.align 2, 0\n\t"
-        "_081390EC: .4byte gPlayerParty\n\t"
-        "_081390F0:\n\t"
-        "	movs r0, #0\n\t"
-        "_081390F2:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData3(&gPlayerParty[GetLeadMonIndex()], MON_DATA_CUTE) < 200)
+        return FALSE;
+
+    return TRUE;
 }
 
-__attribute__((naked)) void CheckLeadMonSmart(void)
+bool8 CheckLeadMonSmart(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08139118\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x21\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0xc7\n\t"
-        "	bls _0813911C\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813911E\n\t"
-        "	.align 2, 0\n\t"
-        "_08139118: .4byte gPlayerParty\n\t"
-        "_0813911C:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813911E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData3(&gPlayerParty[GetLeadMonIndex()], MON_DATA_SMART) < 200)
+        return FALSE;
+
+    return TRUE;
 }
 
-__attribute__((naked)) void CheckLeadMonTough(void)
+bool8 CheckLeadMonTough(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08139144\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x2f\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0xc7\n\t"
-        "	bls _08139148\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813914A\n\t"
-        "	.align 2, 0\n\t"
-        "_08139144: .4byte gPlayerParty\n\t"
-        "_08139148:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813914A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData3(&gPlayerParty[GetLeadMonIndex()], MON_DATA_TOUGH) < 200)
+        return FALSE;
+
+    return TRUE;
 }
 
 __attribute__((naked)) void IsGrassTypeInParty(void)
@@ -3698,56 +3610,17 @@ __attribute__((naked)) void SetRoute123Weather(void)
     );
 }
 
-__attribute__((naked)) u8 GetLeadMonIndex()
+u8 GetLeadMonIndex(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	cmp r5, r6\n\t"
-        "	bhs _08139746\n\t"
-        "_08139708:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _08139738\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	movs r1, #0xce\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0813973C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813973C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	b _08139748\n\t"
-        "	.align 2, 0\n\t"
-        "_08139738: .4byte gPlayerParty\n\t"
-        "_0813973C:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, r6\n\t"
-        "	blo _08139708\n\t"
-        "_08139746:\n\t"
-        "	movs r0, #0\n\t"
-        "_08139748:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 partyCount = CalculatePlayerPartyCount();
+    for (i = 0; i < partyCount; i++)
+    {
+        if (GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG
+         && GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != 0)
+            return i;
+    }
+    return 0; // Shouldn't happen
 }
 
 __attribute__((naked)) void ScriptGetPartyMonSpecies(void)
