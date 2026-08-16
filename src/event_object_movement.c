@@ -1,6 +1,23 @@
 #include "global.h"
 #include "constants/event_object_movement.h"
 
+// Movement action tables (defined in data/data_b2d_mid28.s).
+extern const u8 gJumpInPlaceMovementActions[];
+extern const u8 gJumpInPlaceTurnAroundMovementActions[];
+extern const u8 gJumpMovementActions[];
+extern const u8 gJumpSpecialMovementActions[];
+extern const u8 gPlayerRunMovementActions[];
+extern const u8 gRideWaterCurrentMovementActions[];
+extern const u8 gSlideMovementActions[];
+extern const u8 gWalkFastMovementActions[];
+extern const u8 gWalkFasterMovementActions[];
+extern const u8 gWalkInPlaceFastMovementActions[];
+extern const u8 gWalkInPlaceFasterMovementActions[];
+extern const u8 gWalkInPlaceNormalMovementActions[];
+extern const u8 gWalkInPlaceSlowMovementActions[];
+extern const u8 gWalkNormalMovementActions[];
+extern const u8 gWalkSlowMovementActions[];
+extern const u8 sElevationToPriority[];
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
@@ -13290,245 +13307,95 @@ __attribute__((naked)) bool8 ClearEventObjectMovement(struct ObjectEvent *object
     );
 }
 
-__attribute__((naked)) u8 GetJumpInPlaceMovementAction(u32 direction)
+u8 GetJumpInPlaceMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080922D8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080922D8: .4byte gUnknown_84E5F20\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gJumpInPlaceMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetJumpInPlaceTurnAroundMovementAction(u32 direction)
+u8 GetJumpInPlaceTurnAroundMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080922E8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080922E8: .4byte gUnknown_84E5F29\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gJumpInPlaceTurnAroundMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetJumpMovementAction(u32 direction)
+u8 GetJumpMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080922F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080922F8: .4byte gUnknown_84E5F32\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gJumpMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetJumpSpecialMovementAction(u32 direction)
+u8 GetJumpSpecialMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092308\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092308: .4byte gUnknown_84E5F3B\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gJumpSpecialMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetPlayerRunMovementAction(u32 direction)
+u8 GetPlayerRunMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092318\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092318: .4byte gUnknown_84E5F44\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gPlayerRunMovementActions[dir];
 }
 
 
-__attribute__((naked)) u8 GetRideWaterCurrentMovementAction(u32 direction)
+u8 GetRideWaterCurrentMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092328\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092328: .4byte gUnknown_84E5F4D\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gRideWaterCurrentMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetSlideMovementAction(u32 direction)
+u8 GetSlideMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092338\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092338: .4byte gUnknown_84E5F56\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gSlideMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetWalkFastMovementAction(u32 direction)
+u8 GetWalkFastMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092348\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092348: .4byte gUnknown_84E5F5F\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gWalkFastMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetWalkFastestMovementAction(u32 direction)
+u8 GetWalkFastestMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092358\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092358: .4byte gUnknown_84E5F68\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gWalkFasterMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetWalkInPlaceFastMovementAction(u32 direction)
+u8 GetWalkInPlaceFastMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092368\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092368: .4byte gUnknown_84E5F71\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gWalkInPlaceFastMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetWalkInPlaceFastestMovementAction(u32 direction)
+u8 GetWalkInPlaceFastestMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092378\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092378: .4byte gUnknown_84E5F7A\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gWalkInPlaceFasterMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetWalkInPlaceNormalMovementAction(u32 direction)
+u8 GetWalkInPlaceNormalMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092388\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092388: .4byte gUnknown_84E5F83\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gWalkInPlaceNormalMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetWalkInPlaceSlowMovementAction(u32 direction)
+u8 GetWalkInPlaceSlowMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08092398\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08092398: .4byte gUnknown_84E5F8C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gWalkInPlaceSlowMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetWalkNormalMovementAction(u32 direction)
+u8 GetWalkNormalMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080923A8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080923A8: .4byte gUnknown_84E5F95\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gWalkNormalMovementActions[dir];
 }
 
-__attribute__((naked)) u8 GetWalkSlowMovementAction(u32 direction)
+u8 GetWalkSlowMovementAction(u32 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080923B8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080923B8: .4byte gUnknown_84E5F9E\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)direction;
+    return gWalkSlowMovementActions[dir];
 }
 
 __attribute__((naked)) void *sub_080923BC(u32 id)
@@ -24618,20 +24485,9 @@ __attribute__((naked)) void InitObjectPriorityByZCoord(struct ObjectEvent *objec
     );
 }
 
-__attribute__((naked)) u8 ElevationToPriority(u8 elevation)
+u8 ElevationToPriority(u8 elevation)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _08096724\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08096724: .4byte gUnknown_84E6A88\n\t"
-        ".syntax divided\n\t"
-    );
+    return sElevationToPriority[elevation];
 }
 
 __attribute__((naked)) void EventObjectUpdateZCoord(struct ObjectEvent *objectEvent)

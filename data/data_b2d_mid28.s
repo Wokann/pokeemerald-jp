@@ -518,62 +518,92 @@ gMovementTypeFuncs_Invisible: @ 0x84E5F14
 	.globl gUnknown_84E5F20
 gUnknown_84E5F20: @ 0x84E5F20
 	.incbin "baserom_jp.gba", 0x4e5f20, 0x9
+	.globl gJumpInPlaceMovementActions
+	.set gJumpInPlaceMovementActions, gUnknown_84E5F20
 
 	.globl gUnknown_84E5F29
 gUnknown_84E5F29: @ 0x84E5F29
 	.incbin "baserom_jp.gba", 0x4e5f29, 0x9
+	.globl gJumpInPlaceTurnAroundMovementActions
+	.set gJumpInPlaceTurnAroundMovementActions, gUnknown_84E5F29
 
 	.globl gUnknown_84E5F32
 gUnknown_84E5F32: @ 0x84E5F32
 	.incbin "baserom_jp.gba", 0x4e5f32, 0x9
+	.globl gJumpMovementActions
+	.set gJumpMovementActions, gUnknown_84E5F32
 
 	.globl gUnknown_84E5F3B
 gUnknown_84E5F3B: @ 0x84E5F3B
 	.incbin "baserom_jp.gba", 0x4e5f3b, 0x9
+	.globl gJumpSpecialMovementActions
+	.set gJumpSpecialMovementActions, gUnknown_84E5F3B
 
 	.globl gUnknown_84E5F44
 gUnknown_84E5F44: @ 0x84E5F44
 	.incbin "baserom_jp.gba", 0x4e5f44, 0x9
+	.globl gPlayerRunMovementActions
+	.set gPlayerRunMovementActions, gUnknown_84E5F44
 
 	.globl gUnknown_84E5F4D
 gUnknown_84E5F4D: @ 0x84E5F4D
 	.incbin "baserom_jp.gba", 0x4e5f4d, 0x9
+	.globl gRideWaterCurrentMovementActions
+	.set gRideWaterCurrentMovementActions, gUnknown_84E5F4D
 
 	.globl gUnknown_84E5F56
 gUnknown_84E5F56: @ 0x84E5F56
 	.incbin "baserom_jp.gba", 0x4e5f56, 0x9
+	.globl gSlideMovementActions
+	.set gSlideMovementActions, gUnknown_84E5F56
 
 	.globl gUnknown_84E5F5F
 gUnknown_84E5F5F: @ 0x84E5F5F
 	.incbin "baserom_jp.gba", 0x4e5f5f, 0x9
+	.globl gWalkFastMovementActions
+	.set gWalkFastMovementActions, gUnknown_84E5F5F
 
 	.globl gUnknown_84E5F68
 gUnknown_84E5F68: @ 0x84E5F68
 	.incbin "baserom_jp.gba", 0x4e5f68, 0x9
+	.globl gWalkFasterMovementActions
+	.set gWalkFasterMovementActions, gUnknown_84E5F68
 
 	.globl gUnknown_84E5F71
 gUnknown_84E5F71: @ 0x84E5F71
 	.incbin "baserom_jp.gba", 0x4e5f71, 0x9
+	.globl gWalkInPlaceFastMovementActions
+	.set gWalkInPlaceFastMovementActions, gUnknown_84E5F71
 
 	.globl gUnknown_84E5F7A
 gUnknown_84E5F7A: @ 0x84E5F7A
 	.incbin "baserom_jp.gba", 0x4e5f7a, 0x9
+	.globl gWalkInPlaceFasterMovementActions
+	.set gWalkInPlaceFasterMovementActions, gUnknown_84E5F7A
 
 	.globl gUnknown_84E5F83
 gUnknown_84E5F83: @ 0x84E5F83
 	.incbin "baserom_jp.gba", 0x4e5f83, 0x9
+	.globl gWalkInPlaceNormalMovementActions
+	.set gWalkInPlaceNormalMovementActions, gUnknown_84E5F83
 
 	.globl gUnknown_84E5F8C
 gUnknown_84E5F8C: @ 0x84E5F8C
 	.incbin "baserom_jp.gba", 0x4e5f8c, 0x9
+	.globl gWalkInPlaceSlowMovementActions
+	.set gWalkInPlaceSlowMovementActions, gUnknown_84E5F8C
 
 	.globl gUnknown_84E5F95
 gUnknown_84E5F95: @ 0x84E5F95
 	.incbin "baserom_jp.gba", 0x4e5f95, 0x9
+	.globl gWalkNormalMovementActions
+	.set gWalkNormalMovementActions, gUnknown_84E5F95
 
 	.globl gUnknown_84E5F9E
 gUnknown_84E5F9E: @ 0x84E5F9E
 	.incbin "baserom_jp.gba", 0x4e5f9e, 0x9
+	.globl gWalkSlowMovementActions
+	.set gWalkSlowMovementActions, gUnknown_84E5F9E
 
 	.globl gUnknown_84E5FA7
 gUnknown_84E5FA7: @ 0x84E5FA7
@@ -749,6 +779,8 @@ gUnknown_84E6A78: @ 0x84E6A78
 	.globl gUnknown_84E6A88
 gUnknown_84E6A88: @ 0x84E6A88
 	.incbin "baserom_jp.gba", 0x4e6a88, 0x10
+	.globl sElevationToPriority
+	.set sElevationToPriority, gUnknown_84E6A88
 
 	.globl gUnknown_84E6A98
 gUnknown_84E6A98: @ 0x84E6A98
