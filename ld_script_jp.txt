@@ -9333,6 +9333,8 @@ SECTIONS {
         data/data_b2d_mid60.o(.rodata);
         src/data/text/region_texts61.o(.rodata);
         data/data_b2d_mid61.o(.rodata);
+        src/data/region_map_tables.o(.rodata);
+        data/data_b2d_mid61.o(.rodata.857D49C);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/data/text/region_texts38.o(.rodata);

@@ -1,5 +1,8 @@
 #include "global.h"
 #include "region_map.h"
+#include "event_data.h"
+#include "constants/region_map_sections.h"
+#include "constants/weather.h"
 
 __attribute__((naked)) void InitRegionMap(struct RegionMap *regionMap, bool8 zoomed)
 {
@@ -2459,84 +2462,43 @@ __attribute__((naked)) void GetRegionMapSectionIdAt(void)
     );
 }
 
-__attribute__((naked)) void CorrectSpecialMapSecId_Internal(void)
+extern const mapsec_u16_t sRegionMap_SpecialPlaceLocations[][2];
+extern const mapsec_u16_t sMarineCaveMapSecIds[3];
+extern const mapsec_u16_t sTerraOrMarineCaveMapSecIds[];
+
+static mapsec_u16_t GetTerraOrMarineCaveMapSecId(void);
+
+static mapsec_u16_t CorrectSpecialMapSecId_Internal(mapsec_u16_t mapSecId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _08123EDC\n\t"
-        "_08123ECA:\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _08123EE0\n\t"
-        "	bl RegionMap_GetTerraCaveMapSecId\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	b _08123F0C\n\t"
-        "	.align 2, 0\n\t"
-        "_08123EDC: .4byte gUnknown_857D474\n\t"
-        "_08123EE0:\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #2\n\t"
-        "	bls _08123ECA\n\t"
-        "	ldr r1, _08123EFC\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0xd5\n\t"
-        "	beq _08123F0A\n\t"
-        "	adds r2, r1, #0\n\t"
-        "_08123EF2:\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _08123F00\n\t"
-        "	ldrh r0, [r1, #2]\n\t"
-        "	b _08123F0C\n\t"
-        "	.align 2, 0\n\t"
-        "_08123EFC: .4byte gUnknown_857D414\n\t"
-        "_08123F00:\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r2, #4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0xd5\n\t"
-        "	bne _08123EF2\n\t"
-        "_08123F0A:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "_08123F0C:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(sMarineCaveMapSecIds); i++)
+    {
+        if (sMarineCaveMapSecIds[i] == mapSecId)
+        {
+            return GetTerraOrMarineCaveMapSecId();
+        }
+    }
+    for (i = 0; sRegionMap_SpecialPlaceLocations[i][0] != MAPSEC_NONE; i++)
+    {
+        if (sRegionMap_SpecialPlaceLocations[i][0] == mapSecId)
+        {
+            return sRegionMap_SpecialPlaceLocations[i][1];
+        }
+    }
+    return mapSecId;
 }
 
-__attribute__((naked)) void RegionMap_GetTerraCaveMapSecId(void)
+static mapsec_u16_t GetTerraOrMarineCaveMapSecId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08123F34\n\t"
-        "	bl VarGet\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	bls _08123F24\n\t"
-        "	movs r1, #0\n\t"
-        "_08123F24:\n\t"
-        "	ldr r0, _08123F38\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0xf\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08123F34: .4byte 0x00004037\n\t"
-        "_08123F38: .4byte gUnknown_857D47A\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 idx;
+
+    idx = VarGet(VAR_ABNORMAL_WEATHER_LOCATION) - 1;
+
+    if (idx < 0 || idx > ABNORMAL_WEATHER_LOCATIONS - 1)
+        idx = 0;
+
+    return sTerraOrMarineCaveMapSecIds[idx];
 }
 
 __attribute__((naked)) void RegionMap_GetMarineCaveCoords(void)
