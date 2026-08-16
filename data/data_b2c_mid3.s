@@ -23,7 +23,7 @@ gUnknown_85F27AC: @ 0x85F27AC
 
 	.globl sOptionDescWindowTemplate
 sOptionDescWindowTemplate: @ 0x85F2834
-	.incbin "baserom_jp.gba", 0x5f2834, 0x8
+	.byte 0x01, 0x04, 0x11, 0x16, 0x02, 0x01, 0x08, 0x00
 
 	.globl sPageDescriptions
 sPageDescriptions: @ 0x85F283C
@@ -39,11 +39,18 @@ sOptionDescTextColors2: @ 0x85F2877
 
 	.globl sMenuOptionSpriteTemplate
 sMenuOptionSpriteTemplate: @ 0x85F28B4
-	.incbin "baserom_jp.gba", 0x5f28b4, 0x20
+	.hword 0x0003, 0x0004
+	.4byte 0x085F287C, gDummySpriteAnimTable
+	.4byte 0, 0x085F28AC, 0x08007141
+
+sOamData_MatchCallBlueLight: @ 0x85F28CC
+	.byte 0x00, 0x40, 0x00, 0x80, 0x00, 0x08, 0x00, 0x00
 
 	.globl sMatchCallBlueLightSpriteTemplate
 sMatchCallBlueLightSpriteTemplate: @ 0x85F28D4
-	.incbin "baserom_jp.gba", 0x5f28d4, 0x18
+	.hword 0x0001, 0x0003
+	.4byte sOamData_MatchCallBlueLight, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl sPokenavMainMenuScanlineEffectParams
 sPokenavMainMenuScanlineEffectParams: @ 0x85F28EC
