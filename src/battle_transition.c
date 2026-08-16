@@ -1,4 +1,5 @@
 #include "global.h"
+#include "scanline_effect.h"
 #include "battle_transition.h"
 #include "main.h"
 #include "task.h"
@@ -733,32 +734,12 @@ __attribute__((naked)) void VBlankCB_Swirl(void)
 }
 
 
-__attribute__((naked)) void HBlankCB_Shuffle(void)
+static void HBlankCB_Shuffle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _08146438\n\t"
-        "	ldr r0, _0814643C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _08146440\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08146438: .4byte gScanlineEffectRegBuffers\n\t"
-        "_0814643C: .4byte 0x04000006\n\t"
-        "_08146440: .4byte 0x04000014\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 var = gScanlineEffectRegBuffers[1][REG_VCOUNT];
+    REG_BG1HOFS = var;
+    REG_BG2HOFS = var;
+    REG_BG3HOFS = var;
 }
 
 __attribute__((naked)) void Task_Shuffle(u8 taskId)
@@ -952,32 +933,12 @@ __attribute__((naked)) void VBlankCB_Shuffle(void)
     );
 }
 
-__attribute__((naked)) void HBlankCB_Swirl(void)
+static void HBlankCB_Swirl(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _081465C8\n\t"
-        "	ldr r0, _081465CC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _081465D0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081465C8: .4byte gScanlineEffectRegBuffers\n\t"
-        "_081465CC: .4byte 0x04000006\n\t"
-        "_081465D0: .4byte 0x04000016\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 var = gScanlineEffectRegBuffers[1][REG_VCOUNT];
+    REG_BG1VOFS = var;
+    REG_BG2VOFS = var;
+    REG_BG3VOFS = var;
 }
 
 __attribute__((naked)) void Task_BigPokeball(u8 taskId)
@@ -3726,32 +3687,12 @@ __attribute__((naked)) void VBlankCB_Ripple(void)
     );
 }
 
-__attribute__((naked)) void HBlankCB_Ripple(void)
+static void HBlankCB_Ripple(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _081479A0\n\t"
-        "	ldr r0, _081479A4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _081479A8\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081479A0: .4byte gScanlineEffectRegBuffers\n\t"
-        "_081479A4: .4byte 0x04000006\n\t"
-        "_081479A8: .4byte 0x04000016\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 var = gScanlineEffectRegBuffers[1][REG_VCOUNT];
+    REG_BG1VOFS = var;
+    REG_BG2VOFS = var;
+    REG_BG3VOFS = var;
 }
 
 __attribute__((naked)) void Task_Wave(u8 taskId)
@@ -8121,28 +8062,9 @@ __attribute__((naked)) void VBlankCB_WhiteBarsFade_Blend(void)
 }
 
 
-__attribute__((naked)) void HBlankCB_WhiteBarsFade(void)
+static void HBlankCB_WhiteBarsFade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _08149918\n\t"
-        "	ldr r1, _0814991C\n\t"
-        "	ldr r0, _08149920\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r3, #0xf0\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08149918: .4byte 0x04000054\n\t"
-        "_0814991C: .4byte gScanlineEffectRegBuffers\n\t"
-        "_08149920: .4byte 0x04000006\n\t"
-        ".syntax divided\n\t"
-    );
+    REG_BLDY = gScanlineEffectRegBuffers[1][REG_VCOUNT];
 }
 
 __attribute__((naked)) void SpriteCB_WhiteBarFade(struct Sprite *sprite)
