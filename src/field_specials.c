@@ -2009,42 +2009,12 @@ u8 GetBattleOutcome(void)
     return gBattleOutcome;
 }
 
-__attribute__((naked)) void CableCarWarp(void)
+void CableCarWarp(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _08138C1C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08138C20\n\t"
-        "	movs r2, #1\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x13\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r3, #6\n\t"
-        "	bl SetWarpDestination\n\t"
-        "	b _08138C32\n\t"
-        "	.align 2, 0\n\t"
-        "_08138C1C: .4byte gSpecialVar_0x8004\n\t"
-        "_08138C20:\n\t"
-        "	movs r2, #1\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x13\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #6\n\t"
-        "	bl SetWarpDestination\n\t"
-        "_08138C32:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSpecialVar_0x8004 != 0)
+        SetWarpDestination(MAP_GROUP(MAP_ROUTE112_CABLE_CAR_STATION), MAP_NUM(MAP_ROUTE112_CABLE_CAR_STATION), WARP_ID_NONE, 6, 4);
+    else
+        SetWarpDestination(MAP_GROUP(MAP_MT_CHIMNEY_CABLE_CAR_STATION), MAP_NUM(MAP_MT_CHIMNEY_CABLE_CAR_STATION), WARP_ID_NONE, 6, 4);
 }
 
 __attribute__((naked)) void SetFlagInVar(void)
@@ -2858,112 +2828,48 @@ __attribute__((naked)) void GetSlotMachineId(void)
     );
 }
 
-__attribute__((naked)) void FoundAbandonedShipRoom1Key(void)
+bool8 FoundAbandonedShipRoom1Key(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _08139334\n\t"
-        "	ldr r0, _08139338\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0813933C\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813933E\n\t"
-        "	.align 2, 0\n\t"
-        "_08139334: .4byte gSpecialVar_0x8004\n\t"
-        "_08139338: .4byte 0x00000213\n\t"
-        "_0813933C:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813933E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *specVar = &gSpecialVar_0x8004;
+    u16 flag = FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_1_KEY;
+    *specVar = flag;
+    if (!FlagGet(flag))
+        return FALSE;
+
+    return TRUE;
 }
 
-__attribute__((naked)) void FoundAbandonedShipRoom2Key(void)
+bool8 FoundAbandonedShipRoom2Key(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0813935C\n\t"
-        "	movs r0, #0x85\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08139360\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08139362\n\t"
-        "	.align 2, 0\n\t"
-        "_0813935C: .4byte gSpecialVar_0x8004\n\t"
-        "_08139360:\n\t"
-        "	movs r0, #0\n\t"
-        "_08139362:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *specVar = &gSpecialVar_0x8004;
+    u16 flag = FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_2_KEY;
+    *specVar = flag;
+    if (!FlagGet(flag))
+        return FALSE;
+
+    return TRUE;
 }
 
-__attribute__((naked)) void FoundAbandonedShipRoom4Key(void)
+bool8 FoundAbandonedShipRoom4Key(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _08139380\n\t"
-        "	ldr r0, _08139384\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08139388\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813938A\n\t"
-        "	.align 2, 0\n\t"
-        "_08139380: .4byte gSpecialVar_0x8004\n\t"
-        "_08139384: .4byte 0x00000215\n\t"
-        "_08139388:\n\t"
-        "	movs r0, #0\n\t"
-        "_0813938A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *specVar = &gSpecialVar_0x8004;
+    u16 flag = FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_4_KEY;
+    *specVar = flag;
+    if (!FlagGet(flag))
+        return FALSE;
+
+    return TRUE;
 }
 
-__attribute__((naked)) void FoundAbandonedShipRoom6Key(void)
+bool8 FoundAbandonedShipRoom6Key(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _081393A8\n\t"
-        "	ldr r0, _081393AC\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081393B0\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081393B2\n\t"
-        "	.align 2, 0\n\t"
-        "_081393A8: .4byte gSpecialVar_0x8004\n\t"
-        "_081393AC: .4byte 0x00000216\n\t"
-        "_081393B0:\n\t"
-        "	movs r0, #0\n\t"
-        "_081393B2:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *specVar = &gSpecialVar_0x8004;
+    u16 flag = FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_6_KEY;
+    *specVar = flag;
+    if (!FlagGet(flag))
+        return FALSE;
+
+    return TRUE;
 }
 
 __attribute__((naked)) void LeadMonHasEffortRibbon(void)
@@ -7022,46 +6928,16 @@ __attribute__((naked)) void WaitForDeoxysRockMovement(void)
     );
 }
 
-__attribute__((naked)) void IncrementBirthIslandRockStepCount()
+void IncrementBirthIslandRockStepCount(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0813B1EC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldr r0, _0813B1F0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r0, #4]\n\t"
-        "	ldr r0, _0813B1F4\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0813B200\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0x63\n\t"
-        "	bls _0813B1F8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl VarSet\n\t"
-        "	b _0813B200\n\t"
-        "	.align 2, 0\n\t"
-        "_0813B1EC: .4byte 0x00004034\n\t"
-        "_0813B1F0: .4byte gSaveBlock1Ptr\n\t"
-        "_0813B1F4: .4byte 0x00003A1A\n\t"
-        "_0813B1F8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl VarSet\n\t"
-        "_0813B200:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 stepCount = VarGet(VAR_DEOXYS_ROCK_STEP_COUNT);
+    if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_BIRTH_ISLAND_EXTERIOR) && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_BIRTH_ISLAND_EXTERIOR))
+    {
+        if (++stepCount > 99)
+            VarSet(VAR_DEOXYS_ROCK_STEP_COUNT, 0);
+        else
+            VarSet(VAR_DEOXYS_ROCK_STEP_COUNT, stepCount);
+    }
 }
 
 __attribute__((naked)) void sub_0813B208(void)
