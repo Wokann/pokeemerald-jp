@@ -293,7 +293,7 @@ sMonIconAnims: @ 0x8557110
 
 	.globl sMonIconAffineAnims
 sMonIconAffineAnims: @ 0x8557144
-	.incbin "graphics/misc/sMonIconAffineAnims.bin"
+	.4byte 0x08557124, 0x08557134
 
 	.globl sSpriteImageSizes
 sSpriteImageSizes: @ 0x855714C
@@ -309,7 +309,8 @@ gUnknown_8557166: @ 0x8557166
 
 	.globl sSpriteTemplate_CutGrass
 sSpriteTemplate_CutGrass: @ 0x85571C8
-	.incbin "baserom_jp.gba", 0x5571c8, 0x18
+	.hword 0xFFFF, 0x1000
+	.4byte 0x085571A4, 0x085571B4, 0x085571B8, gDummySpriteAffineAnimTable, 0x080D3A01
 
 	.globl sMapPopUp_Table
 sMapPopUp_Table: @ 0x85571E0
@@ -1283,7 +1284,8 @@ sMapPopUp_PaletteTable: @ 0x8559EE0
 
 	.globl sMapPopUp_Palette_Underwater
 sMapPopUp_Palette_Underwater: @ 0x8559FA0
-	.incbin "graphics/misc/sMapPopUp_Palette_Underwater.bin"
+	.hword 0x530E, 0x0000, 0x7FFD, 0x3D08, 0x7FFF, 0x7F76, 0x6AB1, 0x55EC
+	.hword 0x4127, 0x2C62, 0x7F76, 0x6AB1, 0x55EC, 0x4127, 0x2C62, 0x7FFF
 
 	.globl sMapSectionToThemeId
 sMapSectionToThemeId: @ 0x8559FC0
@@ -1353,8 +1355,16 @@ gUnknown_855A7C4: @ 0x855A7C4
 
 	.globl gBerryCheckCircleSpriteSheet
 gBerryCheckCircleSpriteSheet: @ 0x855A91C
-	.incbin "baserom_jp.gba", 0x55a91c, 0x8
+	.4byte 0x08D9C4F4
+	.hword 0x0800, 0x2710
 
 	.globl gBerryCheckCirclePaletteTable
 gBerryCheckCirclePaletteTable: @ 0x855A924
-	.incbin "baserom_jp.gba", 0x55a924, 0x1c
+	.4byte 0x08D9C1AC
+	.hword 0x2710, 0x0000
+	.4byte 0x80000000
+	.hword 0x0400, 0x0000
+	.hword 0x0000, 0x0000
+	.hword 0xFFFF, 0x0000
+	.4byte 0x0855A934
+
