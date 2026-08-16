@@ -53,6 +53,8 @@ extern u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *
 extern bool8 ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 MovementType_None_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern void RemoveEventObjectInternal(struct ObjectEvent *objectEvent);
+extern void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern void UpdateEventObjSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -22914,25 +22916,13 @@ __attribute__((naked)) void TryEnableEventObjectAnim(struct ObjectEvent *objectE
     );
 }
 
-__attribute__((naked)) void UpdateObjectEventVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void UpdateObjectEventVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl sub_08095EA0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl UpdateEventObjSpriteVisibility\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateObjectEventOffscreen(objectEvent, sprite);
+    UpdateEventObjSpriteVisibility(objectEvent, sprite);
 }
 
-__attribute__((naked)) void sub_08095EA0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

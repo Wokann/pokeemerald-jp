@@ -4565,7 +4565,7 @@ SECTIONS {
         src/event_object_movement.o(.text.UpdateEventObjectSpriteAnimPause);
         src/event_object_movement.o(.text.TryEnableEventObjectAnim);
         src/event_object_movement.o(.text.UpdateObjectEventVisibility);
-        src/event_object_movement.o(.text.sub_08095EA0);
+        src/event_object_movement.o(.text.UpdateObjectEventOffscreen);
         src/event_object_movement.o(.text.UpdateEventObjSpriteVisibility);
         src/event_object_movement.o(.text.GetAllGroundEffectFlags_OnSpawn);
         src/event_object_movement.o(.text.GetAllGroundEffectFlags_OnBeginStep);
