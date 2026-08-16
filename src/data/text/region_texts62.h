@@ -1,9 +1,3 @@
-const u8 gUnknown_85845C2[] = _("l");
-
-const u8 gUnknown_85845C2_sub1[] = _("　　l");
-
-const u8 gUnknown_85845C2_sub2[] = _("V");
-
-const u8 gUnknown_85845C2_sub3[] = _("　　V");
-
-const u8 gUnknown_85845C2_sub4[] = _("　　V");
+// 0x85845C2-0x85845D1 was previously misidentified as text ("l", "V", ...);
+// it is actually the letterYOffset table for SpriteCB_DigitalDisplay_RegBonus,
+// now expressed as sDigitalDisplayRegBonusYOffsets in data_b2d_mid61.s.

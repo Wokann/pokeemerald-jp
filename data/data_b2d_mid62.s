@@ -9,12 +9,12 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85845D2
-gUnknown_85845D2: @ 0x85845D2
+	.globl sDigitalDisplayRegBonusDelays
+sDigitalDisplayRegBonusDelays: @ 0x85845D2
 	.incbin "baserom_jp.gba", 0x5845d2, 0x10
 
-	.globl gUnknown_85845E2
-gUnknown_85845E2: @ 0x85845E2
+	.globl sDigitalDisplayBigBonusOffsets
+sDigitalDisplayBigBonusOffsets: @ 0x85845E2
 	.incbin "baserom_jp.gba", 0x5845e2, 0x10
 
 	.section .rodata.8584638
@@ -197,8 +197,8 @@ gUnknown_8585542: @ 0x8585542
 gUnknown_85855B4: @ 0x85855B4
 	.incbin "baserom_jp.gba", 0x5855b4, 0x60
 
-	.globl gUnknown_8585614
-gUnknown_8585614: @ 0x8585614
+	.globl sPokeballShiningPalTable
+sPokeballShiningPalTable: @ 0x8585614
 	.incbin "baserom_jp.gba", 0x585614, 0x10
 
 	.globl gUnknown_8585624

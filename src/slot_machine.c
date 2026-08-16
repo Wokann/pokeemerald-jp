@@ -2,6 +2,7 @@
 #include "overworld.h"
 #include "field_effect.h"
 #include "random.h"
+#include "gpu_regs.h"
 #include "sound.h"
 #include "main.h"
 #include "task.h"
@@ -1233,6 +1234,11 @@ extern const struct SubspriteTable *const sSubspriteTables_DigitalDisplay[];
 // JP ROM keeps the smoke offset tables as data symbols (US has them inline).
 extern const s16 sDigitalDisplaySmokeXOffsets[];
 extern const s16 sDigitalDisplaySmokeYOffsets[];
+extern const u16 *const sPokeballShiningPalTable[];
+extern const s16 sDigitalDisplayRegBonusXOffsets[];
+extern const s16 sDigitalDisplayRegBonusYOffsets[];
+extern const s16 sDigitalDisplayRegBonusDelays[];
+extern const s16 sDigitalDisplayBigBonusOffsets[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeShadow[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[];
 // JP ROM keeps the aura flash colors / duck offsets as data symbols (US has them inline).
@@ -5613,684 +5619,239 @@ static void SpriteCB_DigitalDisplay_ReelTimeNumber(struct Sprite *sprite)
     }
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_PokeballRocking(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_PokeballRocking(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812F30A\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _0812F2F2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F2F8\n\t"
-        "	b _0812F378\n\t"
-        "_0812F2F2:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0812F328\n\t"
-        "	b _0812F378\n\t"
-        "_0812F2F8:\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r3, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x2e]\n\t"
-        "_0812F30A:\n\t"
-        "	ldrh r0, [r3, #0x22]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r3, #0x22]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x6f\n\t"
-        "	ble _0812F378\n\t"
-        "	movs r0, #0x70\n\t"
-        "	strh r0, [r3, #0x22]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r3, #0x30]\n\t"
-        "	ldrh r0, [r3, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x2e]\n\t"
-        "	b _0812F378\n\t"
-        "_0812F328:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r3, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _0812F36E\n\t"
-        "	ldrh r0, [r3, #0x22]\n\t"
-        "	ldrh r1, [r3, #0x30]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r3, #0x22]\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	strh r1, [r3, #0x30]\n\t"
-        "	ldrh r0, [r3, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _0812F36E\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x12\n\t"
-        "	strh r0, [r3, #0x30]\n\t"
-        "	strh r2, [r3, #0x34]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812F36E\n\t"
-        "	ldrh r0, [r3, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x2e]\n\t"
-        "	strh r1, [r3, #0x3c]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_0812F36E:\n\t"
-        "	ldrh r0, [r3, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #7\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "_0812F378:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sState)
+    {
+    case 0:
+        sprite->animPaused = TRUE;
+        sprite->sState++;
+        // fallthrough
+    case 1:
+        sprite->y += 8;
+        if (sprite->y >= 0x70)
+        {
+            sprite->y = 0x70;
+            sprite->sCounter = 16;
+            sprite->sState++;
+        }
+        break;
+    case 2:
+        if (sprite->data[2] == 0)
+        {
+            sprite->y -= sprite->sCounter;
+            sprite->sCounter = -sprite->sCounter;
+            if (++sprite->data[3] >= 2)
+            {
+                sprite->sCounter >>= 2;
+                sprite->data[3] = 0;
+                if (sprite->sCounter == 0)
+                {
+                    sprite->sState++;
+                    sprite->sWaitForAnim = FALSE;
+                    sprite->animPaused = FALSE;
+                }
+            }
+        }
+        sprite->data[2]++;
+        sprite->data[2] &= 0x07;
+        break;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_Stop(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_Stop(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F38E\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812F3A4\n\t"
-        "	b _0812F3C0\n\t"
-        "_0812F38E:\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #8\n\t"
-        "	ble _0812F3C0\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	b _0812F3C0\n\t"
-        "_0812F3A4:\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x2f\n\t"
-        "	ble _0812F3C0\n\t"
-        "	movs r0, #0x30\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_0812F3C0:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sState)
+    {
+    case 0:
+        if (++sprite->sCounter > 8)
+            sprite->sState++;
+        break;
+    case 1:
+        sprite->y += 2;
+        if (sprite->y >= 0x30)
+        {
+            sprite->y = 0x30;
+            sprite->sState++;
+            sprite->sWaitForAnim = FALSE;
+        }
+        break;
+    }
 }
 
-
-__attribute__((naked)) void SpriteCB_DigitalDisplay_AButtonStop(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_AButtonStop(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F3D6\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812F426\n\t"
-        "	b _0812F478\n\t"
-        "_0812F3D6:\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	ble _0812F478\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _0812F478\n\t"
-        "_0812F426:\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0812F43C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_0812F43C:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	adds r0, #0x80\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0x30\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812F478\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_0812F478:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sState)
+    {
+    case 0:
+        sprite->invisible = TRUE;
+        if (++sprite->sCounter > 0x20)
+        {
+            sprite->sState++;
+            sprite->sCounter = 5;
+            sprite->oam.mosaic = TRUE;
+            sprite->invisible = FALSE;
+            StartSpriteAnim(sprite, 1);
+            SetGpuReg(REG_OFFSET_MOSAIC, ((sprite->sCounter << 4) | sprite->sCounter) << 8);
+        }
+        break;
+    case 1:
+        sprite->sCounter -= (sprite->data[2] >> 8);
+        if (sprite->sCounter < 0)
+            sprite->sCounter = 0;
+        SetGpuReg(REG_OFFSET_MOSAIC, ((sprite->sCounter << 4) | sprite->sCounter) << 8);
+        sprite->data[2] &= 0xff;
+        sprite->data[2] += 0x80;
+        if (sprite->sCounter == 0)
+        {
+            sprite->sState++;
+            sprite->sWaitForAnim = FALSE;
+            sprite->oam.mosaic = FALSE;
+            StartSpriteAnim(sprite, 0);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_PokeballShining(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_PokeballShining(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _0812F4D0\n\t"
-        "	ldr r1, _0812F4CC\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	movs r0, #6\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _0812F50C\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	b _0812F50C\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F4CC: .4byte gUnknown_8585614\n\t"
-        "_0812F4D0:\n\t"
-        "	ldr r1, _0812F520\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	movs r0, #6\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x18\n\t"
-        "	ble _0812F50C\n\t"
-        "	strh r1, [r5, #0x30]\n\t"
-        "	strh r1, [r5, #0x32]\n\t"
-        "_0812F50C:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnimIfDifferent\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F520: .4byte gUnknown_8585614\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->sCounter < 3)
+    {
+        LoadPalette(sPokeballShiningPalTable[sprite->sCounter], OBJ_PLTT_ID(IndexOfSpritePaletteTag(PALTAG_DIG_DISPLAY)), PLTT_SIZE_4BPP);
+        if (++sprite->data[2] >= 4)
+        {
+            sprite->data[1]++;
+            sprite->data[2] = 0;
+        }
+    }
+    else
+    {
+        LoadPalette(sPokeballShiningPalTable[sprite->sCounter], OBJ_PLTT_ID(IndexOfSpritePaletteTag(PALTAG_DIG_DISPLAY)), PLTT_SIZE_4BPP);
+        if (++sprite->data[2] >= 25)
+        {
+            sprite->sCounter = 0;
+            sprite->data[2] = 0;
+        }
+    }
+    StartSpriteAnimIfDifferent(sprite, 1);
+    sprite->sWaitForAnim = FALSE;
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_RegBonus(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_RegBonus(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x30\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812F560\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl memcpy\n\t"
-        "	add r6, sp, #0x10\n\t"
-        "	ldr r1, _0812F564\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl memcpy\n\t"
-        "	add r5, sp, #0x20\n\t"
-        "	ldr r1, _0812F568\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl memcpy\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812F59C\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _0812F56C\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F572\n\t"
-        "	b _0812F5E8\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F560: .4byte gUnknown_85845B2\n\t"
-        "_0812F564: .4byte gUnknown_85845B2 + 0x10\n\t"
-        "_0812F568: .4byte gUnknown_85845D2\n\t"
-        "_0812F56C:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0812F5B0\n\t"
-        "	b _0812F5E8\n\t"
-        "_0812F572:\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_0812F59C:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0812F5E8\n\t"
-        "	b _0812F5E2\n\t"
-        "_0812F5B0:\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x24\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	cmp r1, #0\n\t"
-        "	ble _0812F5BE\n\t"
-        "	subs r0, #4\n\t"
-        "	b _0812F5C4\n\t"
-        "_0812F5BE:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0812F5C6\n\t"
-        "	adds r0, #4\n\t"
-        "_0812F5C4:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_0812F5C6:\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	cmp r1, #0\n\t"
-        "	ble _0812F5D4\n\t"
-        "	subs r0, #4\n\t"
-        "	b _0812F5DA\n\t"
-        "_0812F5D4:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0812F5DC\n\t"
-        "	adds r0, #4\n\t"
-        "_0812F5DA:\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0812F5DC:\n\t"
-        "	ldr r0, [r4, #0x24]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812F5E8\n\t"
-        "_0812F5E2:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_0812F5E8:\n\t"
-        "	add sp, #0x30\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    // Elements in array correspond to R E G B O N U S
+    s16 letterXOffset[8];
+    s16 letterYOffset[8];
+    s16 letterDelay[8];
+    memcpy(letterXOffset, sDigitalDisplayRegBonusXOffsets, sizeof(letterXOffset));
+    memcpy(letterYOffset, sDigitalDisplayRegBonusYOffsets, sizeof(letterYOffset));
+    memcpy(letterDelay, sDigitalDisplayRegBonusDelays, sizeof(letterDelay));
+
+    switch (sprite->sState)
+    {
+    case 0:
+        sprite->x2 = letterXOffset[sprite->sSpriteId];
+        sprite->y2 = letterYOffset[sprite->sSpriteId];
+        sprite->sCounter = letterDelay[sprite->sSpriteId];
+        sprite->sState++;
+        // fallthrough
+    case 1:
+        if (sprite->sCounter-- == 0)
+            sprite->sState++;
+        break;
+    case 2:
+        if (sprite->x2 > 0)
+            sprite->x2 -= 4;
+        else if (sprite->x2 < 0)
+            sprite->x2 += 4;
+
+        if (sprite->y2 > 0)
+            sprite->y2 -= 4;
+        else if (sprite->y2 < 0)
+            sprite->y2 += 4;
+
+        if (sprite->x2 == 0 && sprite->y2 == 0)
+            sprite->sState++;
+        break;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_BigBonus(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_BigBonus(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812F654\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl memcpy\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812F612\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_0812F612:\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F64C\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_0812F64C:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F654: .4byte gUnknown_85845E2\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 sp0[8];
+    memcpy(sp0, sDigitalDisplayBigBonusOffsets, sizeof(sp0));
+
+    if (sprite->sState == 0)
+    {
+        sprite->sState++;
+        sprite->sCounter = 12;
+    }
+    sprite->x2 = Cos(sp0[sprite->sSpriteId], sprite->sCounter);
+    sprite->y2 = Sin(sp0[sprite->sSpriteId], sprite->sCounter);
+    if (sprite->sCounter != 0)
+        sprite->sCounter--;
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *sprite)
+// For the A Button prompt when inserting bet
+// Initially no sprite until after the first bet
+static void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812F6A4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _0812F670\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F67A\n\t"
-        "	b _0812F77C\n\t"
-        "_0812F670:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0812F6F0\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _0812F72C\n\t"
-        "	b _0812F77C\n\t"
-        "_0812F67A:\n\t"
-        "	ldr r0, _0812F6E8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x5c\n\t"
-        "	movs r0, #0x2f\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	strh r0, [r1]\n\t"
-        "	subs r1, #4\n\t"
-        "	ldr r0, _0812F6EC\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "_0812F6A4:\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	adds r2, r0, #2\n\t"
-        "	strh r2, [r5, #0x30]\n\t"
-        "	adds r0, #0xb2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	strh r1, [r5, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xd0\n\t"
-        "	ble _0812F6C0\n\t"
-        "	movs r0, #0xd0\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "_0812F6C0:\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0xcf\n\t"
-        "	bgt _0812F6CC\n\t"
-        "	movs r0, #0xd0\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "_0812F6CC:\n\t"
-        "	ldr r0, _0812F6E8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ldrh r1, [r5, #0x34]\n\t"
-        "	orrs r0, r1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x58\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0x33\n\t"
-        "	ble _0812F77C\n\t"
-        "	b _0812F76E\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F6E8: .4byte sSlotMachine\n\t"
-        "_0812F6EC: .4byte 0x00002088\n\t"
-        "_0812F6F0:\n\t"
-        "	ldr r6, _0812F784\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F77C\n\t"
-        "	ldr r1, _0812F788\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r2, #0xd0\n\t"
-        "	movs r3, #0x74\n\t"
-        "	bl sub_0812DF78\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x58\n\t"
-        "	ldr r0, _0812F78C\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0xd1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x2f\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	strh r4, [r5, #0x30]\n\t"
-        "_0812F72C:\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	adds r2, r0, #2\n\t"
-        "	strh r2, [r5, #0x30]\n\t"
-        "	adds r0, #0xc2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	strh r1, [r5, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xd0\n\t"
-        "	ble _0812F748\n\t"
-        "	movs r0, #0xd0\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "_0812F748:\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0xcf\n\t"
-        "	bgt _0812F754\n\t"
-        "	movs r0, #0xd0\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "_0812F754:\n\t"
-        "	ldr r0, _0812F784\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ldrh r1, [r5, #0x34]\n\t"
-        "	orrs r0, r1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x58\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	ble _0812F77C\n\t"
-        "_0812F76E:\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x5c\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0812F77C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F784: .4byte sSlotMachine\n\t"
-        "_0812F788: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0812F78C: .4byte 0x0000C0E0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sState)
+    {
+        case 0:
+            sSlotMachine->winIn = WININ_WIN0_BG_ALL | WININ_WIN0_CLR;
+            sSlotMachine->winOut = WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR;
+            sSlotMachine->win0v = WIN_RANGE(32, 136);
+            sprite->invisible = TRUE;
+            sprite->sState++;
+            // fallthrough
+        case 1:
+            sprite->sCounter += 2;
+            sprite->data[2] = sprite->sCounter + 176;
+            sprite->data[3] = DISPLAY_WIDTH - sprite->sCounter;
+            if (sprite->data[2] > 208)
+                sprite->data[2] = 208;
+            if (sprite->data[3] < 208)
+                sprite->data[3] = 208;
+            sSlotMachine->win0h = (sprite->data[2] << 8) | sprite->data[3];
+            if (sprite->sCounter > 51)
+            {
+                sprite->sState++;
+                sSlotMachine->winIn = WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR;
+            }
+            break;
+        case 2:
+            if (sSlotMachine->bet == 0)
+                break;
+            AddDigitalDisplaySprite(DIG_SPRITE_A_BUTTON, SpriteCallbackDummy, 208, 116, 0);
+            sSlotMachine->win0h = WIN_RANGE(192, 224);
+            sSlotMachine->win0v = WIN_RANGE(104, 128);
+            sSlotMachine->winIn = WININ_WIN0_BG_ALL | WININ_WIN0_CLR;
+            sprite->sState++;
+            sprite->sCounter = 0;
+            // fallthrough
+        case 3:
+            sprite->sCounter += 2;
+            sprite->data[2] = sprite->sCounter + 192;
+            sprite->data[3] = DISPLAY_WIDTH - 16 - sprite->sCounter;
+            if (sprite->data[2] > 208)
+                sprite->data[2] = 208;
+            if (sprite->data[3] < 208)
+                sprite->data[3] = 208;
+            sSlotMachine->win0h = (sprite->data[2] << 8) | sprite->data[3];
+            if (sprite->sCounter > 15)
+            {
+                sprite->sState++;
+                sSlotMachine->winIn = WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR;
+            }
+            break;
+    }
 }
 
 static void EndDigitalDisplayScene_Dummy(void)
 {
 }
+
 __attribute__((naked)) void EndDigitalDisplayScene_StopReel(void)
 {
     __asm__(".syntax unified\n\t"

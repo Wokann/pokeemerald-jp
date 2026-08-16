@@ -537,6 +537,10 @@ sDigitalDisplaySmokeXOffsets: @ 0x85845A2
 sDigitalDisplaySmokeYOffsets: @ 0x85845AA
 	.incbin "baserom_jp.gba", 0x5845aa, 0x8
 
-	.globl gUnknown_85845B2
-gUnknown_85845B2: @ 0x85845B2
+	.globl sDigitalDisplayRegBonusXOffsets
+sDigitalDisplayRegBonusXOffsets: @ 0x85845B2
 	.incbin "baserom_jp.gba", 0x5845b2, 0x10
+
+	.globl sDigitalDisplayRegBonusYOffsets
+sDigitalDisplayRegBonusYOffsets: @ 0x85845C2
+	.incbin "baserom_jp.gba", 0x5845c2, 0x10
