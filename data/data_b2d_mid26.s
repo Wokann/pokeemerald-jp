@@ -6717,7 +6717,9 @@ sSpriteTemplate_ExclamationQuestionMark: @ 0x852B460
 	.4byte 0x0852B428, 0x0852B458, 0x0852B430, gDummySpriteAffineAnimTable, 0x080B3E7D
 	.globl sSpriteTemplate_HeartIcon
 sSpriteTemplate_HeartIcon: @ 0x852B478
-	.incbin "baserom_jp.gba", 0x52b478, 0x257c
+	.hword 0xFFFF, 0x1004
+	.4byte 0x0852B428, 0x0852B458, 0x0852B440, gDummySpriteAffineAnimTable, 0x080B3E7D
+	.incbin "baserom_jp.gba", 0x52b490, 0x2564
 
 	.globl gUnknown_852D9F4
 gUnknown_852D9F4: @ 0x852D9F4
