@@ -1,5 +1,6 @@
 #include "global.h"
 #include "constants/event_object_movement.h"
+#include "constants/event_objects.h"
 #include "constants/field_effects.h"
 
 // Movement action tables (defined in data/data_b2d_mid28.s).
@@ -2807,26 +2808,11 @@ __attribute__((naked)) const struct ObjectEventGraphicsInfo *GetObjectEventGraph
     );
 }
 
-__attribute__((naked)) void SetEventObjectDynamicGraphicsId(void)
+void SetEventObjectDynamicGraphicsId(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	cmp r0, #0xef\n\t"
-        "	bls _0808E062\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl VarGetObjectEventGraphicsId\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "_0808E062:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->graphicsId >= OBJ_EVENT_GFX_VARS)
+        // JP 原版用 u8 回绕的 +0x10 计算 var 索引（等价于 - OBJ_EVENT_GFX_VARS 模 256）。
+        objectEvent->graphicsId = VarGetObjectEventGraphicsId((u8)(objectEvent->graphicsId + 0x10));
 }
 
 __attribute__((naked)) void npc_by_local_id_and_map_set_field_1_bit_x20(void)
@@ -4458,24 +4444,13 @@ void OverrideObjectEventTemplateScript(const struct ObjectEvent *objectEvent, co
 
 
 
-__attribute__((naked)) void TryOverrideTemplateCoordsForObjectEvent(void)
+void TryOverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEvent, u8 movementType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	bl GetBaseTemplateForObjectEvent\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808EBBC\n\t"
-        "	strb r4, [r0, #9]\n\t"
-        "_0808EBBC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEventTemplate *objectEventTemplate;
+
+    objectEventTemplate = GetBaseTemplateForObjectEvent(objectEvent);
+    if (objectEventTemplate != NULL)
+        objectEventTemplate->movementType = movementType;
 }
 
 __attribute__((naked)) void TryOverrideEventObjectTemplateCoords(void)
@@ -13667,26 +13642,12 @@ void ObjectEventMoveDestCoords(struct ObjectEvent *objectEvent, u32 direction, s
     MoveCoords(newDirn, x, y);
 }
 
-__attribute__((naked)) bool8 ObjectEventIsMovementOverridden(struct ObjectEvent *objectEvent)
+bool8 ObjectEventIsMovementOverridden(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x42\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08092B0C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08092B0E\n\t"
-        "_08092B0C:\n\t"
-        "	movs r0, #1\n\t"
-        "_08092B0E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->singleMovementActive || objectEvent->heldMovementActive)
+        return TRUE;
+
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 ObjectEventIsHeldMovementActive(struct ObjectEvent *objectEvent)
@@ -21785,53 +21746,23 @@ __attribute__((naked)) void SetObjectSubpriorityByElevation(u8 elevation, struct
     );
 }
 
-__attribute__((naked)) void ObjectEventUpdateSubpriority(struct ObjectEvent *objectEvent)
+void ObjectEventUpdateSubpriority(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrb r0, [r2, #3]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _080967DA\n\t"
-        "	ldrb r0, [r2, #0xb]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetObjectSubpriorityByElevation\n\t"
-        "_080967DA:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->fixedPriority)
+        return;
+
+    SetObjectSubpriorityByElevation(objectEvent->previousElevation, sprite, 1);
 }
 
-__attribute__((naked)) bool8 AreElevationsCompatible(u8 a, u8 b)
+bool8 AreElevationsCompatible(u8 a, u8 b)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080967F6\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080967F6\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080967FA\n\t"
-        "_080967F6:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080967FC\n\t"
-        "_080967FA:\n\t"
-        "	movs r0, #0\n\t"
-        "_080967FC:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (a == ELEVATION_TRANSITION || b == ELEVATION_TRANSITION)
+        return TRUE;
+
+    if (a != b)
+        return FALSE;
+
+    return TRUE;
 }
 
 __attribute__((naked)) void GroundEffect_SpawnOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -22483,27 +22414,10 @@ __attribute__((naked)) void filters_out_some_ground_effects(struct ObjectEvent *
     );
 }
 
-__attribute__((naked)) void FilterOutStepOnPuddleGroundEffectIfJumping(struct ObjectEvent *objEvent, u32 *flags)
+void FilterOutStepOnPuddleGroundEffectIfJumping(struct ObjectEvent *objEvent, u32 *flags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08096C78\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _08096C7C\n\t"
-        "	ands r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "_08096C78:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096C7C: .4byte 0xFFFFFBFF\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objEvent->landingJump)
+        *flags &= ~GROUND_EFFECT_FLAG_PUDDLE;
 }
 
 
