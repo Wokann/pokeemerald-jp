@@ -5390,7 +5390,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.ShowPokemonStorageSystemPC);
         src/pokemon_storage_system.o(.text.FieldCb_ReturnToPcMenu);
         src/pokemon_storage_system.o(.text.sub_080C6E88);
-        src/pokemon_storage_system.o(.text.Cb2_ExitPSS);
+        src/pokemon_storage_system.o(.text.CB2_ExitPokeStorage);
         src/pokemon_storage_system.o(.text.StorageSystemGetNextMonIndex);
         src/pokemon_storage_system.o(.text.ResetPokemonStorageSystem);
         src/pokemon_storage_system.o(.text.sub_080C7080);

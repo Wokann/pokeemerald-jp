@@ -1060,7 +1060,7 @@ __attribute__((naked)) void sub_080C6E88(void)
     );
 }
 
-__attribute__((naked)) void Cb2_ExitPSS(void)
+__attribute__((naked)) void CB2_ExitPokeStorage(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2046,7 +2046,7 @@ __attribute__((naked)) void Cb2_EnterPSS(void)
         "_080C7634: .4byte sCurrentBoxOption\n\t"
         "_080C7638: .4byte gUnknown_20399A8\n\t"
         "_080C763C: .4byte 0x000062C4\n\t"
-        "_080C7640: .4byte Cb2_ExitPSS + 1\n\t"
+        "_080C7640: .4byte CB2_ExitPokeStorage + 1\n\t"
         "_080C7644:\n\t"
         "	movs r2, #0\n\t"
         "	strb r5, [r0, #1]\n\t"
@@ -2099,7 +2099,7 @@ __attribute__((naked)) void Cb2_ReturnToPSS(void)
         "	.align 2, 0\n\t"
         "_080C76A8: .4byte gUnknown_20399A8\n\t"
         "_080C76AC: .4byte 0x000062C4\n\t"
-        "_080C76B0: .4byte Cb2_ExitPSS + 1\n\t"
+        "_080C76B0: .4byte CB2_ExitPokeStorage + 1\n\t"
         "_080C76B4:\n\t"
         "	ldr r0, _080C76E0\n\t"
         "	ldrb r0, [r0]\n\t"
@@ -6079,7 +6079,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "	b _080C97CA\n\t"
         "	.align 2, 0\n\t"
         "_080C9744: .4byte gUnknown_20399B2\n\t"
-        "_080C9748: .4byte Cb2_ExitPSS + 1\n\t"
+        "_080C9748: .4byte CB2_ExitPokeStorage + 1\n\t"
         "_080C974C:\n\t"
         "	ldr r0, _080C9780\n\t"
         "	ldr r1, [r0]\n\t"
