@@ -4642,7 +4642,7 @@ SECTIONS {
         src/event_object_movement.o(.text.UpdateWalkSlowAnim);
         src/event_object_movement.o(.text.GetFigure8YOffset);
         src/event_object_movement.o(.text.GetFigure8XOffset);
-        src/event_object_movement.o(.text.sub_080970C0);
+        src/event_object_movement.o(.text.InitSpriteForFigure8Anim);
         src/event_object_movement.o(.text.AnimateSpriteInFigure8);
         src/event_object_movement.o(.text.sub_08097190);
         src/event_object_movement.o(.text.sub_080971AC);

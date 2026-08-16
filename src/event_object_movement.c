@@ -21131,7 +21131,7 @@ __attribute__((naked)) bool8 sub_08095460(struct ObjectEvent *objectEvent, struc
         "	push {r4, lr}\n\t"
         "	adds r4, r1, #0\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080970C0\n\t"
+        "	bl InitSpriteForFigure8Anim\n\t"
         "	adds r4, #0x2c\n\t"
         "	ldrb r1, [r4]\n\t"
         "	movs r0, #0x41\n\t"
@@ -25493,20 +25493,11 @@ __attribute__((naked)) bool8 obj_npc_ministep(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) void sub_0809704C(struct Sprite *sprite, u8 a)
+void sub_0809704C(struct Sprite *sprite, u8 a)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	strh r2, [r0, #0x36]\n\t"
-        "	strh r2, [r0, #0x38]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[3] = a;
+    sprite->data[4] = 0;
+    sprite->data[5] = 0;
 }
 
 #define sTimer     data[4]
@@ -25542,16 +25533,10 @@ s16 GetFigure8XOffset(s16 idx)
     return sFigure8XOffsets[idx];
 }
 
-__attribute__((naked)) void sub_080970C0(struct Sprite *sprite)
+void InitSpriteForFigure8Anim(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x3a]\n\t"
-        "	strh r1, [r0, #0x3c]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[6] = 0;
+    sprite->data[7] = 0;
 }
 
 bool8 AnimateSpriteInFigure8(struct Sprite *sprite)
