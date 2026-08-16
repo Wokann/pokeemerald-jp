@@ -2573,7 +2573,7 @@ __attribute__((naked)) void EventObjectSetGraphicsIdByLocalIdAndMap(void)
     );
 }
 
-__attribute__((naked)) void EventObjectTurn(void)
+__attribute__((naked)) void EventObjectTurn(struct ObjectEvent *objectEvent, u8 direction)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2657,26 +2657,9 @@ __attribute__((naked)) void EventObjectTurnByLocalIdAndMap(void)
     );
 }
 
-__attribute__((naked)) void PlayerObjectTurn(void)
+void PlayerObjectTurn(struct PlayerAvatar *playerAvatar, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808DF60\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	bl EventObjectTurn\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DF60: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    EventObjectTurn(&gObjectEvents[playerAvatar->objectEventId], direction);
 }
 
 __attribute__((naked)) void get_berry_tree_graphics(void)
@@ -23213,26 +23196,12 @@ void SetMovementDelay(struct Sprite *sprite, s16 timer)
 }
 
 
-__attribute__((naked)) bool8 WaitForMovementDelay(struct Sprite *sprite)
+bool8 WaitForMovementDelay(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrh r1, [r0, #0x34]\n\t"
-        "	subs r1, #1\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080972FE\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08097300\n\t"
-        "_080972FE:\n\t"
-        "	movs r0, #1\n\t"
-        "_08097300:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (--sprite->data[3] == 0)
+        return TRUE;
+    else
+        return FALSE;
 }
 
 __attribute__((naked)) void SetAndStartSpriteAnim(struct Sprite *sprite, u8 animNum, u8 a)
@@ -23262,26 +23231,12 @@ __attribute__((naked)) void SetAndStartSpriteAnim(struct Sprite *sprite, u8 anim
     );
 }
 
-__attribute__((naked)) bool8 SpriteAnimEnded(struct Sprite *sprite)
+bool8 SpriteAnimEnded(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809733E\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08097340\n\t"
-        "_0809733E:\n\t"
-        "	movs r0, #1\n\t"
-        "_08097340:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->animEnded)
+        return TRUE;
+    else
+        return FALSE;
 }
 
 __attribute__((naked)) void UpdateObjectEventSpriteInvisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite)
