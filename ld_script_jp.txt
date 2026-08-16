@@ -7435,7 +7435,7 @@ SECTIONS {
         src/slot_machine.o(.text.AdvanceSlotReel);
         src/slot_machine.o(.text.AdvanceSlotReelToNextSymbol);
         src/slot_machine.o(.text.AdvanceReeltimeReel);
-        src/slot_machine.o(.text.AdvanceReeltimeReelToNextTag);
+        src/slot_machine.o(.text.AdvanceReeltimeReelToNextSymbol);
         src/slot_machine.o(.text.CreateReelTasks);
         src/slot_machine.o(.text.SpinSlotReel);
         src/slot_machine.o(.text.StopSlotReel);

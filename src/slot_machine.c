@@ -996,7 +996,12 @@ enum {
     REEL_TASK_STOP_SHAKE,
 };
 
+#define SYMBOLS_PER_REEL   21
 #define REEL_SYMBOL_HEIGHT 24
+#define REEL_HEIGHT        (SYMBOLS_PER_REEL * REEL_SYMBOL_HEIGHT)
+#define REELTIME_SYMBOLS       6
+#define REELTIME_SYMBOL_HEIGHT 20
+#define REELTIME_REEL_HEIGHT   (REELTIME_SYMBOLS * REELTIME_SYMBOL_HEIGHT)
 
 #define tState data[0]
 #define tMoving data[14]
@@ -2459,183 +2464,58 @@ __attribute__((naked)) u8 GetNearbyReelTimeTag(u8 a)
     );
 }
 
-__attribute__((naked)) void AdvanceSlotReel(u8 reelIndex, s16 value)
+
+static void AdvanceSlotReel(u8 reelIndex, s16 value)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	ldr r0, _0812BD7C\n\t"
-        "	ldr r6, [r0]\n\t"
-        "	lsrs r5, r5, #0x17\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r4]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0xfc\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	bl __modsi3\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r6, #0x28\n\t"
-        "	adds r6, r6, r5\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl __divsi3\n\t"
-        "	movs r1, #0x15\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r6]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BD7C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->reelPixelOffsets[reelIndex] += value;
+    sSlotMachine->reelPixelOffsets[reelIndex] %= REEL_HEIGHT;
+    sSlotMachine->reelPositions[reelIndex] = SYMBOLS_PER_REEL - sSlotMachine->reelPixelOffsets[reelIndex] / REEL_SYMBOL_HEIGHT;
 }
 
-__attribute__((naked)) s16 AdvanceSlotReelToNextSymbol(u8 reelIndex, s16 value)
+// Advances the reel no further than the next symbol. Returns the remaining
+// pixels until the next symbol.
+s16 AdvanceSlotReelToNextSymbol(u8 reelIndex, s16 value)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	ldr r7, _0812BDE0\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	lsls r6, r5, #1\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r2, r0, #0x10\n\t"
-        "	asrs r1, r2, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0812BDD4\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _0812BDB6\n\t"
-        "	lsrs r4, r2, #0x10\n\t"
-        "_0812BDB6:\n\t"
-        "	lsls r1, r4, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl AdvanceSlotReel\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "_0812BDD4:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BDE0: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 offset = sSlotMachine->reelPixelOffsets[reelIndex] % REEL_SYMBOL_HEIGHT;
+    if (offset != 0)
+    {
+        if (offset < value)
+            value = offset;
+        AdvanceSlotReel(reelIndex, value);
+        offset = sSlotMachine->reelPixelOffsets[reelIndex] % REEL_SYMBOL_HEIGHT;
+    }
+    return offset;
 }
 
-__attribute__((naked)) void AdvanceReeltimeReel(u8 a)
+static void AdvanceReeltimeReel(s16 value)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _0812BE18\n\t"
-        "	ldr r4, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldrh r1, [r4, #0x14]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	bl __modsi3\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl __divsi3\n\t"
-        "	movs r1, #6\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x16]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BE18: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->reeltimePixelOffset += value;
+    sSlotMachine->reeltimePixelOffset %= REELTIME_REEL_HEIGHT;
+    sSlotMachine->reeltimePosition = REELTIME_SYMBOLS - sSlotMachine->reeltimePixelOffset / REELTIME_SYMBOL_HEIGHT;
 }
 
-__attribute__((naked)) void AdvanceReeltimeReelToNextTag(u8 a)
+// Advances the reel no further than the next symbol. Returns the remaining
+// pixels until the next symbol.
+s16 AdvanceReeltimeReelToNextSymbol(s16 value)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r5, _0812BE68\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r2, r0, #0x10\n\t"
-        "	asrs r1, r2, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0812BE5E\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _0812BE46\n\t"
-        "	lsrs r4, r2, #0x10\n\t"
-        "_0812BE46:\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	bl AdvanceReeltimeReel\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "_0812BE5E:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BE68: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 offset = sSlotMachine->reeltimePixelOffset % REELTIME_SYMBOL_HEIGHT;
+    if (offset != 0)
+    {
+        if (offset < value)
+            value = offset;
+        AdvanceReeltimeReel(value);
+        offset = sSlotMachine->reeltimePixelOffset % REELTIME_SYMBOL_HEIGHT;
+    }
+    return offset;
 }
+
+
+
+
+
+
+
+
 
 #define tReelId data[15]
 
@@ -6124,7 +6004,7 @@ __attribute__((naked)) void ReelTime_LandOnOutcome(struct Task *task)
         "	ldrh r0, [r4, #0x10]\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReelToNextTag\n\t"
+        "	bl AdvanceReeltimeReelToNextSymbol\n\t"
         "	b _0812D848\n\t"
         "	.align 2, 0\n\t"
         "_0812D81C: .4byte sSlotMachine\n\t"
