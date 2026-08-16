@@ -15,62 +15,6 @@ bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng);
 bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent);
 bool8 ShouldUseItem(void);
 
-#ifndef NONMATCHING
-__attribute__((naked)) bool8 ShouldSwitchIfPerishSong(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _08062824\n\t"
-        "	ldr r0, _08062828\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062834\n\t"
-        "	ldr r0, _0806282C\n\t"
-        "	lsls r1, r2, #3\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1, #0xf]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062834\n\t"
-        "	ldr r0, _08062830\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	movs r1, #0xa5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #6\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BtlController_EmitTwoReturnValues\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08062836\n\t"
-        "	.align 2, 0\n\t"
-        "_08062824: .4byte gStatuses3\n\t"
-        "_08062828: .4byte gActiveBattler\n\t"
-        "_0806282C: .4byte gDisableStructs\n\t"
-        "_08062830: .4byte gBattleStruct\n\t"
-        "_08062834:\n\t"
-        "	movs r0, #0\n\t"
-        "_08062836:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
-// 可读的 C 版本（NONMATCHING）：语义与汇编版相同，但不保证逐字节一致。
-// 启用方式见 include/config.h 的 NONMATCHING。
 bool8 ShouldSwitchIfPerishSong(void)
 {
     if (gStatuses3[gActiveBattler] & STATUS3_PERISH_SONG
@@ -82,7 +26,6 @@ bool8 ShouldSwitchIfPerishSong(void)
     }
     return FALSE;
 }
-#endif
 
 #ifndef NONMATCHING
 __attribute__((naked)) bool8 ShouldSwitchIfWonderGuard(void)
@@ -835,135 +778,6 @@ bool8 FindMonThatAbsorbsOpponentsMove(void)
 #endif
 
 
-#ifndef NONMATCHING
-__attribute__((naked)) bool8 ShouldSwitchIfNaturalCure(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r3, _08062CFC\n\t"
-        "	ldr r5, _08062D00\n\t"
-        "	ldrb r4, [r5]\n\t"
-        "	movs r0, #0x58\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	muls r2, r0, r2\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x4c\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #7\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062D6C\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x20\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	bne _08062D6C\n\t"
-        "	ldrh r0, [r1, #0x2c]\n\t"
-        "	ldrh r1, [r1, #0x28]\n\t"
-        "	lsrs r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	blo _08062D6C\n\t"
-        "	ldr r1, _08062D04\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08062CEA\n\t"
-        "	ldr r0, _08062D08\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08062D0C\n\t"
-        "_08062CEA:\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08062D0C\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	b _08062D74\n\t"
-        "	.align 2, 0\n\t"
-        "_08062CFC: .4byte gBattleMons\n\t"
-        "_08062D00: .4byte gActiveBattler\n\t"
-        "_08062D04: .4byte gLastLandedMoves\n\t"
-        "_08062D08: .4byte 0x0000FFFF\n\t"
-        "_08062D0C:\n\t"
-        "	ldr r2, _08062D38\n\t"
-        "	ldr r1, _08062D3C\n\t"
-        "	ldr r4, _08062D40\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062D44\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08062D44\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	b _08062D74\n\t"
-        "	.align 2, 0\n\t"
-        "_08062D38: .4byte gBattleMoves\n\t"
-        "_08062D3C: .4byte gLastLandedMoves\n\t"
-        "_08062D40: .4byte gActiveBattler\n\t"
-        "_08062D44:\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #1\n\t"
-        "	bl FindMonWithFlagsAndSuperEffective\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062D8E\n\t"
-        "	movs r0, #4\n\t"
-        "	movs r1, #1\n\t"
-        "	bl FindMonWithFlagsAndSuperEffective\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062D8E\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08062D70\n\t"
-        "_08062D6C:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08062D90\n\t"
-        "_08062D70:\n\t"
-        "	ldr r0, _08062D98\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "_08062D74:\n\t"
-        "	ldr r1, _08062D9C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xa5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #6\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BtlController_EmitTwoReturnValues\n\t"
-        "_08062D8E:\n\t"
-        "	movs r0, #1\n\t"
-        "_08062D90:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08062D98: .4byte gActiveBattler\n\t"
-        "_08062D9C: .4byte gBattleStruct\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
 bool8 ShouldSwitchIfNaturalCure(void)
 {
     if (!(gBattleMons[gActiveBattler].status1 & STATUS1_SLEEP))
@@ -1003,186 +817,8 @@ bool8 ShouldSwitchIfNaturalCure(void)
 
     return FALSE;
 }
-#endif
 
 
-#ifndef NONMATCHING
-__attribute__((naked)) bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, _08062E48\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBattlerPosition\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r0, _08062E4C\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, _08062E50\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08062E3A\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r6, _08062E54\n\t"
-        "	movs r7, #0x58\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	adds r5, r0, r6\n\t"
-        "	movs r0, #0x20\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r8, r0\n\t"
-        "_08062DEE:\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	ldr r0, _08062E48\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0xc\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062E34\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	mov r3, r8\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	bl AI_TypeCalc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08062E34\n\t"
-        "	mov r0, sb\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062E5C\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062E5C\n\t"
-        "_08062E34:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #3\n\t"
-        "	ble _08062DEE\n\t"
-        "_08062E3A:\n\t"
-        "	ldr r0, _08062E58\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062E60\n\t"
-        "	b _08062EDE\n\t"
-        "	.align 2, 0\n\t"
-        "_08062E48: .4byte gActiveBattler\n\t"
-        "_08062E4C: .4byte gAbsentBattlerFlags\n\t"
-        "_08062E50: .4byte gBitTable\n\t"
-        "_08062E54: .4byte gBattleMons\n\t"
-        "_08062E58: .4byte gBattleTypeFlags\n\t"
-        "_08062E5C:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08062EE0\n\t"
-        "_08062E60:\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r0, sl\n\t"
-        "	eors r0, r1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r0, _08062EF0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldr r2, _08062EF4\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08062EDE\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r6, _08062EF8\n\t"
-        "	movs r7, #0x58\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	adds r5, r0, r6\n\t"
-        "	movs r3, #0x20\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	mov r8, r3\n\t"
-        "_08062E92:\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	ldr r0, _08062EFC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r0, #0xc\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062ED8\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	mov r3, r8\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	bl AI_TypeCalc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08062ED8\n\t"
-        "	mov r0, sb\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062E5C\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062E5C\n\t"
-        "_08062ED8:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #3\n\t"
-        "	ble _08062E92\n\t"
-        "_08062EDE:\n\t"
-        "	movs r0, #0\n\t"
-        "_08062EE0:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08062EF0: .4byte gAbsentBattlerFlags\n\t"
-        "_08062EF4: .4byte gBitTable\n\t"
-        "_08062EF8: .4byte gBattleMons\n\t"
-        "_08062EFC: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
 bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng)
 {
     u8 opposingPosition;
@@ -1238,56 +874,8 @@ bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng)
 
     return FALSE;
 }
-#endif
 
 
-#ifndef NONMATCHING
-__attribute__((naked)) bool8 AreStatsRaised(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r1, _08062F40\n\t"
-        "	ldr r0, _08062F44\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r0, #0x58\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	adds r1, #0x18\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	movs r3, #7\n\t"
-        "_08062F14:\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	ble _08062F2A\n\t"
-        "	subs r1, #6\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_08062F2A:\n\t"
-        "	adds r2, #1\n\t"
-        "	subs r3, #1\n\t"
-        "	cmp r3, #0\n\t"
-        "	bge _08062F14\n\t"
-        "	movs r0, #0\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _08062F3A\n\t"
-        "	movs r0, #1\n\t"
-        "_08062F3A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08062F40: .4byte gBattleMons\n\t"
-        "_08062F44: .4byte gActiveBattler\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
 bool8 AreStatsRaised(void)
 {
     u8 buffedStatsValue = 0;
@@ -1301,7 +889,6 @@ bool8 AreStatsRaised(void)
 
     return (buffedStatsValue > 3);
 }
-#endif
 
 
 #ifndef NONMATCHING
@@ -2433,84 +2020,6 @@ void AI_TrySwitchOrUseItem(void)
 #endif
 
 
-#ifndef NONMATCHING
-__attribute__((naked)) void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8 *var)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r8, r2\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r0, _08063670\n\t"
-        "	mov sl, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _0806365E\n\t"
-        "	mov r5, sl\n\t"
-        "_0806361A:\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	cmp r0, #0xfe\n\t"
-        "	beq _08063650\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _08063650\n\t"
-        "	ldrb r4, [r5, #1]\n\t"
-        "	cmp r4, sb\n\t"
-        "	bne _0806363A\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __divsi3\n\t"
-        "	strb r0, [r6]\n\t"
-        "_0806363A:\n\t"
-        "	cmp r4, r8\n\t"
-        "	bne _08063650\n\t"
-        "	cmp sb, r8\n\t"
-        "	beq _08063650\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __divsi3\n\t"
-        "	strb r0, [r6]\n\t"
-        "_08063650:\n\t"
-        "	adds r5, #3\n\t"
-        "	adds r7, #3\n\t"
-        "	mov r1, sl\n\t"
-        "	adds r0, r7, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _0806361A\n\t"
-        "_0806365E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08063670: .4byte gTypeEffectiveness\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
 void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8 *var)
 {
     s32 i = 0;
@@ -2524,17 +2033,14 @@ void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8 *var)
         }
         else if (TYPE_EFFECT_ATK_TYPE(i) == atkType)
         {
-            // Check type1.
             if (TYPE_EFFECT_DEF_TYPE(i) == defType1)
                 *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / TYPE_MUL_NORMAL;
-            // Check type2.
             if (TYPE_EFFECT_DEF_TYPE(i) == defType2 && defType1 != defType2)
                 *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / TYPE_MUL_NORMAL;
         }
         i += 3;
     }
 }
-#endif
 
 
 #ifndef NONMATCHING
@@ -3203,68 +2709,6 @@ u8 GetMostSuitableMonToSwitchInto(void)
 #endif
 
 
-#ifndef NONMATCHING
-__attribute__((naked)) u8 GetAI_ItemType(u8 itemId, const u8 *itemEffect)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x13\n\t"
-        "	bne _08063A78\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08063ABE\n\t"
-        "_08063A78:\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08063A86\n\t"
-        "	movs r0, #2\n\t"
-        "	b _08063ABE\n\t"
-        "_08063A86:\n\t"
-        "	ldrb r4, [r2, #3]\n\t"
-        "	movs r3, #0x3f\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08063A96\n\t"
-        "	movs r0, #3\n\t"
-        "	b _08063ABE\n\t"
-        "_08063A96:\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08063AAC\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08063AAC\n\t"
-        "	ldrb r0, [r2, #2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08063AB0\n\t"
-        "_08063AAC:\n\t"
-        "	movs r0, #4\n\t"
-        "	b _08063ABE\n\t"
-        "_08063AB0:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08063ABC\n\t"
-        "	movs r0, #6\n\t"
-        "	b _08063ABE\n\t"
-        "_08063ABC:\n\t"
-        "	movs r0, #5\n\t"
-        "_08063ABE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
 u8 GetAI_ItemType(u8 itemId, const u8 *itemEffect) // NOTE: should take u16 as item Id argument
 {
     if (itemId == ITEM_FULL_RESTORE)
@@ -3280,7 +2724,6 @@ u8 GetAI_ItemType(u8 itemId, const u8 *itemEffect) // NOTE: should take u16 as i
     else
         return AI_ITEM_NOT_RECOGNIZABLE;
 }
-#endif
 
 
 #ifndef NONMATCHING
