@@ -1171,7 +1171,6 @@ gText_SpaceTimes3 = gUnknown_85CCDFB;
 gText_PkmnJumpRecords = gUnknown_85CCDFE;
 gOamData_AffineOff_ObjNormal_32x32 = gUnknown_84FD010 + 0x10;
 gText_CommunicationStandby4 = gUnknown_85CCE99;
-gMonStillFrontPicTable = gUnknown_82D4CA8;
 sub_0802A788 = ResetForNewGame;
 sub_0802A814 = InitPlayerAndJumpTypes;
 sub_0802A88C = ResetPlayersForNewGame;
@@ -1307,6 +1306,8 @@ ChooseMonForTradingBoard = sub_081B85A4;
 Debug_PrintString = nullsub_13;
 Debug_PrintNum = nullsub_5;
 
+gUnknown_8C40000 = 0x8C40000;
+gUnknown_8C50000 = 0x8C50000;
 SECTIONS {
     . = 0x2000000;
     ewram (NOLOAD) :
@@ -9226,9 +9227,11 @@ SECTIONS {
         src/data/unused_anims.o(.rodata);
         data/data_b_mid2b3.o(.rodata);
         src/data/front_pic_coordinates.o(.rodata);
-        data/data_b_mid2b4.o(.rodata);
+        src/data/still_front_pic_table.o(.rodata);
         src/data/back_pic_coordinates.o(.rodata);
-        data/data_b_mid2b2.o(.rodata);
+        src/data/back_pic_table.o(.rodata);
+        src/data/palette_table.o(.rodata);
+        src/data/shiny_palette_table.o(.rodata);
         src/data/trainer_front_anims.o(.rodata);
         src/data/trainer_front_pic_coords.o(.rodata);
         data/data_b_mid2b5.o(.rodata);
@@ -9452,6 +9455,10 @@ SECTIONS {
         data/data_rest.o(.rodata);
         data/data_b2d_gfx_front.o(.rodata);
         data/data_rest2.o(.rodata);
+        data/data_b2d_gfx_pokemon_none.o(.rodata);
+        data/data_rest2b.o(.rodata);
+        data/data_b2d_gfx_pokemon_main.o(.rodata);
+        data/data_rest2c.o(.rodata);
     } =0
     /* DWARF debug sections.
     Symbols in the DWARF debugging sections are relative to the beginning
