@@ -20789,20 +20789,10 @@ bool8 MovementAction_HideReflection_Step0(struct ObjectEvent *objectEvent, struc
 
 
 
-__attribute__((naked)) bool8 MovementAction_Unknown2_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Unknown2_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r2, [r0, #3]\n\t"
-        "	movs r1, #9\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0, #3]\n\t"
-        "	movs r0, #1\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->hideReflection = FALSE;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkDownStartAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
