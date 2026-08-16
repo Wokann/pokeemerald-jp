@@ -20039,7 +20039,7 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieInPlaceRight_Step0(struct
     );
 }
 
-__attribute__((naked)) bool8 sub_08095A38(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+__attribute__((naked)) bool8 InitAcroPopWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -20071,26 +20071,10 @@ __attribute__((naked)) bool8 sub_08095A38(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 sub_08095A70(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095A38\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroPopWheelieMoveDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroPopWheelieMove(objectEvent, sprite, DIR_SOUTH, 1);
+    return MovementAction_AcroPopWheelieMoveDown_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -20103,26 +20087,10 @@ bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEven
     return FALSE;
 }
 
-__attribute__((naked)) bool8 sub_08095AB0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095A38\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroPopWheelieMoveUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroPopWheelieMove(objectEvent, sprite, DIR_NORTH, 1);
+    return MovementAction_AcroPopWheelieMoveUp_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -20135,26 +20103,10 @@ bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent,
     return FALSE;
 }
 
-__attribute__((naked)) bool8 sub_08095AF0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095A38\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroPopWheelieMoveLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroPopWheelieMove(objectEvent, sprite, DIR_WEST, 1);
+    return MovementAction_AcroPopWheelieMoveLeft_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -20177,7 +20129,7 @@ __attribute__((naked)) bool8 sub_08095B30(struct ObjectEvent *objectEvent, struc
         "	adds r5, r1, #0\n\t"
         "	movs r2, #4\n\t"
         "	movs r3, #1\n\t"
-        "	bl sub_08095A38\n\t"
+        "	bl InitAcroPopWheelieMove\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_AcroPopWheelieMoveRight_Step1\n\t"

@@ -4530,12 +4530,12 @@ SECTIONS {
         src/event_object_movement.o(.text.MovementAction_AcroWheelieInPlaceUp_Step0);
         src/event_object_movement.o(.text.MovementAction_AcroWheelieInPlaceLeft_Step0);
         src/event_object_movement.o(.text.MovementAction_AcroWheelieInPlaceRight_Step0);
-        src/event_object_movement.o(.text.sub_08095A38);
-        src/event_object_movement.o(.text.sub_08095A70);
+        src/event_object_movement.o(.text.InitAcroPopWheelieMove);
+        src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveDown_Step0);
         src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveDown_Step1);
-        src/event_object_movement.o(.text.sub_08095AB0);
+        src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveUp_Step0);
         src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveUp_Step1);
-        src/event_object_movement.o(.text.sub_08095AF0);
+        src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveLeft_Step0);
         src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveLeft_Step1);
         src/event_object_movement.o(.text.sub_08095B30);
         src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveRight_Step1);
