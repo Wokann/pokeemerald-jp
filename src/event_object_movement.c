@@ -26,6 +26,7 @@ extern const u8 gWalkNormalMovementActions[];
 extern const u8 gWalkSlowMovementActions[];
 extern const u8 sElevationToPriority[];
 extern const s16 sMovementDelaysMedium[];
+extern const u8 gStandardDirections[];
 extern const u8 gUpAndDownDirections[];
 extern const u8 gLeftAndRightDirections[];
 extern const u8 gUpAndLeftDirections[];
@@ -43,6 +44,7 @@ extern const struct PairedPalettes sPlayerReflectionPaletteSets[];
 extern const struct PairedPalettes sSpecialObjectReflectionPaletteSets[];
 extern u8 gUnknown_2037254; // sCurrentReflectionType
 extern u16 gUnknown_2037256; // sCurrentSpecialObjectPaletteTag
+static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
 extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);
@@ -3711,47 +3713,19 @@ bool8 MovementType_WanderAround_Step3(struct ObjectEvent *objectEvent, struct Sp
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementType_WanderAround_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderAround_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldr r1, _0808EEA0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r1, r0\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r6, #0x30]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetCollisionInDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808EE96\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r6, #0x30]\n\t"
-        "_0808EE96:\n\t"
-        "	movs r0, #1\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EEA0: .4byte gUnknown_84E5B64\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    u8 chosenDirection;
+
+    memcpy(directions, gStandardDirections, sizeof directions);
+    chosenDirection = directions[Random() & 3];
+    SetEventObjectDirection(objectEvent, chosenDirection);
+    sprite->sTypeFuncId = 5;
+    if (GetCollisionInDirection(objectEvent, chosenDirection))
+        sprite->sTypeFuncId = 1;
+
+    return TRUE;
 }
 
 bool8 MovementType_WanderAround_Step5(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -4120,44 +4094,18 @@ bool8 MovementType_LookAround_Step3(struct ObjectEvent *objectEvent, struct Spri
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementType_LookAround_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_LookAround_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _0808F3F0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl TryGetTrainerEncounterDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0808F3DC\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r1, r0\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "_0808F3DC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F3F0: .4byte gUnknown_84E5B64\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+    u8 directions[4];
+    memcpy(directions, gStandardDirections, sizeof directions);
+    direction = TryGetTrainerEncounterDirection(objectEvent, RUNFOLLOW_ANY);
+    if (direction == DIR_NONE)
+        direction = directions[Random() & 3];
+
+    SetEventObjectDirection(objectEvent, direction);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 void MovementType_WanderUpAndDown(struct Sprite *sprite)

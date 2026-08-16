@@ -253,6 +253,8 @@ gMovementTypeFuncs_FaceDownLeftAndRight: @ 0x84E5CD8
 gUnknown_84E5CEC: @ 0x84E5CEC
 	.incbin "baserom_jp.gba", 0x4e5cec, 0x4
 
+	.globl gStandardDirections
+	.set gStandardDirections, gUnknown_84E5B64
 	.globl gUpAndDownDirections
 	.set gUpAndDownDirections, gUnknown_84E5BC4
 	.globl gLeftAndRightDirections
