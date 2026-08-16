@@ -1,4 +1,5 @@
 #include "global.h"
+#include "event_object_movement.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
@@ -1259,7 +1260,7 @@ __attribute__((naked)) void SpawnSpecialEventObject(void)
 }
 
 
-__attribute__((naked)) void SpawnSpecialObjectEventParameterized(void)
+__attribute__((naked)) u8 SpawnSpecialObjectEventParameterized(u8 graphicsId, u8 movementBehavior, u8 localId, s16 x, s16 y, u8 elevation)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2323,182 +2324,51 @@ __attribute__((naked)) void SetPlayerAvatarEventObjectIdAndObjectId(void)
     );
 }
 
-__attribute__((naked)) void ObjectEventSetGraphicsId(struct ObjectEvent *objectEvent, u8 graphicsId)
+void ObjectEventSetGraphicsId(struct ObjectEvent *objectEvent, u8 graphicsId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldrb r1, [r7, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808DDA0\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrb r0, [r6, #0xc]\n\t"
-        "	lsls r1, r0, #0x1c\n\t"
-        "	lsrs r5, r1, #0x1c\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0808DDA4\n\t"
-        "	ldrh r0, [r6, #2]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl PatchObjectPalette\n\t"
-        "	b _0808DDC6\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DDA0: .4byte gSprites\n\t"
-        "_0808DDA4:\n\t"
-        "	cmp r5, #0xa\n\t"
-        "	bne _0808DDB2\n\t"
-        "	ldrh r0, [r6, #2]\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	bl LoadSpecialObjectReflectionPalette\n\t"
-        "	b _0808DDC6\n\t"
-        "_0808DDB2:\n\t"
-        "	cmp r5, #0xf\n\t"
-        "	bls _0808DDC6\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	subs r0, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrh r0, [r6, #2]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl _PatchObjectPalette\n\t"
-        "_0808DDC6:\n\t"
-        "	ldr r0, [r6, #0x10]\n\t"
-        "	ldrb r2, [r0, #1]\n\t"
-        "	lsrs r2, r2, #6\n\t"
-        "	lsls r2, r2, #6\n\t"
-        "	ldrb r3, [r4, #1]\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldr r0, [r6, #0x10]\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	lsrs r0, r0, #6\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	ldrb r2, [r4, #3]\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r4, #3]\n\t"
-        "	ldr r0, [r6, #0x1c]\n\t"
-        "	str r0, [r4, #0xc]\n\t"
-        "	ldr r0, [r6, #0x18]\n\t"
-        "	str r0, [r4, #8]\n\t"
-        "	ldr r0, [r6, #0x14]\n\t"
-        "	str r0, [r4, #0x18]\n\t"
-        "	lsls r2, r5, #4\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "	ldrb r1, [r6, #0xc]\n\t"
-        "	lsls r1, r1, #0x19\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r7, #1]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r7, #1]\n\t"
-        "	mov r0, r8\n\t"
-        "	strb r0, [r7, #5]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r7, r2]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x20\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x22\n\t"
-        "	bl SetSpritePosToMapCoords\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x28\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrh r0, [r6, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x29\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r1, [r4, #0x22]\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	ldrb r0, [r7, #1]\n\t"
-        "	lsrs r0, r0, #7\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808DE68\n\t"
-        "	bl CameraObjectReset\n\t"
-        "_0808DE68:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct ObjectEventGraphicsInfo *graphicsInfo;
+    struct Sprite *sprite;
+    u8 paletteSlot;
+
+    graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
+    sprite = &gSprites[objectEvent->spriteId];
+    paletteSlot = graphicsInfo->paletteSlot;
+    if (paletteSlot == PALSLOT_PLAYER)
+    {
+        PatchObjectPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
+    }
+    else if (paletteSlot == PALSLOT_NPC_SPECIAL)
+    {
+        LoadSpecialObjectReflectionPalette(graphicsInfo->paletteTag, graphicsInfo->paletteSlot);
+    }
+    else if (paletteSlot >= 16)
+    {
+        paletteSlot -= 16;
+        _PatchObjectPalette(graphicsInfo->paletteTag, paletteSlot);
+    }
+    sprite->oam.shape = graphicsInfo->oam->shape;
+    sprite->oam.size = graphicsInfo->oam->size;
+    sprite->images = graphicsInfo->images;
+    sprite->anims = graphicsInfo->anims;
+    sprite->subspriteTables = graphicsInfo->subspriteTables;
+    sprite->oam.paletteNum = paletteSlot;
+    objectEvent->inanimate = graphicsInfo->inanimate;
+    objectEvent->graphicsId = graphicsId;
+    SetSpritePosToMapCoords(objectEvent->currentCoords.x, objectEvent->currentCoords.y, &sprite->x, &sprite->y);
+    sprite->centerToCornerVecX = -(graphicsInfo->width >> 1);
+    sprite->centerToCornerVecY = -(graphicsInfo->height >> 1);
+    sprite->x += 8;
+    sprite->y += 16 + sprite->centerToCornerVecY;
+    if (objectEvent->trackedByCamera)
+        CameraObjectReset();
 }
 
-__attribute__((naked)) void EventObjectSetGraphicsIdByLocalIdAndMap(void)
+void EventObjectSetGraphicsIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup, u8 graphicsId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r4, r3, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808DEA8\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808DEB0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl ObjectEventSetGraphicsId\n\t"
-        "_0808DEA8:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DEB0: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+        ObjectEventSetGraphicsId(&gObjectEvents[objectEventId], graphicsId);
 }
 
 void EventObjectTurn(struct ObjectEvent *objectEvent, u8 direction)
@@ -4170,7 +4040,7 @@ struct ObjectEventTemplate *GetBaseTemplateForObjectEvent(const struct ObjectEve
 }
 
 
-__attribute__((naked)) void OverrideTemplateCoordsForObjectEvent(void)
+__attribute__((naked)) void OverrideTemplateCoordsForObjectEvent(const struct ObjectEvent *objectEvent)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5866,7 +5736,7 @@ __attribute__((naked)) void MovementType_BerryTreeGrowth_Step2(void)
     );
 }
 
-__attribute__((naked)) void MovementType_BerryTreeGrowth_Sparkle(void)
+__attribute__((naked)) bool8 MovementType_BerryTreeGrowth_Sparkle(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -13717,7 +13587,7 @@ __attribute__((naked)) u8 sub_08092F60(u8 direction)
     );
 }
 
-__attribute__((naked)) void ObjectEventFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direction)
+__attribute__((naked)) bool8 ObjectEventFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direction)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
