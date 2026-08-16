@@ -4,6 +4,7 @@
 #include "random.h"
 #include "sound.h"
 #include "main.h"
+#include "task.h"
 #include "slot_machine.h"
 #include "string_util.h"
 #include "decompress.h"
@@ -114,7 +115,7 @@ __attribute__((naked)) void PlaySlotMachine(u8 machineId, MainCallback exitCallb
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A58C: .4byte gUnknown_203A800\n\t"
+        "_0812A58C: .4byte sSlotMachine\n\t"
         "_0812A590: .4byte Task_FadeToSlotMachine + 1\n\t"
         "_0812A594: .4byte gTasks\n\t"
         ".syntax divided\n\t"
@@ -277,7 +278,7 @@ __attribute__((naked)) void SlotMachine_VBlankCallback(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A6E0: .4byte gUnknown_203A800\n\t"
+        "_0812A6E0: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -344,7 +345,7 @@ __attribute__((naked)) void sub_0812A720(void)
         "	.align 2, 0\n\t"
         "_0812A750: .4byte SlotMachineDummyTask + 1\n\t"
         "_0812A754: .4byte gTasks\n\t"
-        "_0812A758: .4byte gUnknown_203A800\n\t"
+        "_0812A758: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -655,7 +656,7 @@ __attribute__((naked)) void SlotMachineSetup_0_1(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A9B4: .4byte gUnknown_203A800\n\t"
+        "_0812A9B4: .4byte sSlotMachine\n\t"
         "_0812A9B8: .4byte gUnknown_8584638\n\t"
         ".syntax divided\n\t"
     );
@@ -778,9 +779,9 @@ __attribute__((naked)) void CreateGameplayTasks(void)
         ".code 16\n\t"
         "	push {lr}\n\t"
         "	bl GameplayTask_PikaPower\n\t"
-        "	bl GameplayTask_StopSlotReel\n\t"
+        "	bl CreateReelTasks\n\t"
         "	bl sub_0812DEA4\n\t"
-        "	bl GameplayTasks_Slots\n\t"
+        "	bl CreateSlotMachineTasks\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -788,31 +789,83 @@ __attribute__((naked)) void CreateGameplayTasks(void)
     );
 }
 
+enum {
+    MATCH_MIDDLE_ROW,
+    MATCH_TOP_ROW,
+    MATCH_BOTTOM_ROW,
+    MATCH_NWSE_DIAG,
+    MATCH_NESW_DIAG,
+    NUM_MATCH_LINES,
+};
 
+enum {
+    LEFT_REEL,
+    MIDDLE_REEL,
+    RIGHT_REEL,
+    NUM_REELS,
+};
 
-__attribute__((naked)) void GameplayTasks_Slots(void)
+struct SlotMachine
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812AAD4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl _call_via_r4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AAD4: .4byte RunSlotActions + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    /*0x00*/ u8 state;
+    /*0x01*/ u8 machineId;
+    /*0x02*/ u8 pikaPowerBolts;
+    /*0x03*/ bool8 luckyGame;
+    /*0x04*/ u8 machineBias;
+    /*0x05*/ u8 reelTimeDraw;
+    /*0x06*/ bool8 didNotFailBias;
+    /*0x07*/ u8 biasSymbol;
+    /*0x08*/ u16 matches;
+    /*0x0A*/ u8 reelTimeSpinsLeft;
+    /*0x0B*/ u8 reelTimeSpinsUsed;
+    /*0x0C*/ s16 coins;
+    /*0x0E*/ s16 payout;
+    /*0x10*/ s16 netCoinLoss; // never negative
+    /*0x12*/ s16 bet;
+    /*0x14*/ s16 reeltimePixelOffset;
+    /*0x16*/ s16 reeltimePosition;
+    /*0x18*/ s16 currentReel;
+    /*0x1A*/ s16 reelSpeed;
+    /*0x1C*/ s16 reelPixelOffsets[NUM_REELS];
+    /*0x22*/ u16 reelShockOffsets[NUM_REELS];
+    /*0x28*/ s16 reelPositions[NUM_REELS];
+    /*0x2E*/ s16 reelExtraTurns[NUM_REELS];
+    /*0x34*/ s16 winnerRows[NUM_REELS];
+    /*0x3A*/ u8 slotReelTasks[NUM_REELS];
+    /*0x3D*/ u8 digDisplayTaskId;
+    /*0x3E*/ u8 pikaPowerBoltTaskId;
+    /*0x3F*/ u8 reelTimePikachuSpriteId;
+    /*0x40*/ u8 reelTimeNumberGapSpriteId;
+    /*0x41*/ u8 reelTimeExplosionSpriteId;
+    /*0x42*/ u8 reelTimeBrokenMachineSpriteId;
+    /*0x43*/ u8 reelTimeSmokeSpriteId;
+    /*0x44*/ u8 flashMatchLineSpriteIds[NUM_MATCH_LINES];
+    /*0x49*/ u8 reelTimeMachineSpriteIds[2];
+    /*0x49*/ u8 reelTimeNumberSpriteIds[3];
+    /*0x4E*/ u8 reelTimeShadowSpriteIds[2];
+    /*0x50*/ u8 reelTimeBoltSpriteIds[2];
+    /*0x52*/ u8 reelTimePikachuAuraSpriteIds[2];
+    /*0x54*/ u8 reelTimeDuckSpriteIds[4];
+    /*0x58*/ u16 win0h;
+    /*0x5A*/ u16 win0v;
+    /*0x5C*/ u16 winIn;
+    /*0x5E*/ u16 winOut;
+    /*0x60*/ u16 backupMapMusic;
+    /*0x64*/ MainCallback prevMainCb;
+};
+
+extern struct SlotMachine *sSlotMachine;
+
+static void Task_SlotMachine(u8 taskId);
+static void Task_Reel(u8 taskId);
+
+static void CreateSlotMachineTasks(void)
+{
+    Task_SlotMachine(CreateTask(Task_SlotMachine, 0));
 }
 
 
-__attribute__((naked)) void RunSlotActions(u8 taskId)
+__attribute__((naked)) void Task_SlotMachine(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -842,7 +895,7 @@ __attribute__((naked)) void RunSlotActions(u8 taskId)
         "	.align 2, 0\n\t"
         "_0812AB08: .4byte gUnknown_85843D4\n\t"
         "_0812AB0C: .4byte gTasks\n\t"
-        "_0812AB10: .4byte gUnknown_203A800\n\t"
+        "_0812AB10: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -874,7 +927,7 @@ __attribute__((naked)) void SlotAction_UnfadeScreen(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812AB44: .4byte gUnknown_203A800\n\t"
+        "_0812AB44: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -901,7 +954,7 @@ __attribute__((naked)) void SlotAction_WaitForUnfade(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812AB68: .4byte gPaletteFade\n\t"
-        "_0812AB6C: .4byte gUnknown_203A800\n\t"
+        "_0812AB6C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -933,7 +986,7 @@ __attribute__((naked)) void SlotAction_SetSlotMachineVars(u8 taskId)
         "	strb r0, [r3]\n\t"
         "	b _0812ABB0\n\t"
         "	.align 2, 0\n\t"
-        "_0812AB9C: .4byte gUnknown_203A800\n\t"
+        "_0812AB9C: .4byte sSlotMachine\n\t"
         "_0812ABA0:\n\t"
         "	ldrb r0, [r3, #0xa]\n\t"
         "	cmp r0, #0\n\t"
@@ -969,7 +1022,7 @@ __attribute__((naked)) void SlotAction3(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812ABD4: .4byte gUnknown_203A800\n\t"
+        "_0812ABD4: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -998,7 +1051,7 @@ __attribute__((naked)) void SlotAction4(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812AC00: .4byte gUnknown_203A800\n\t"
+        "_0812AC00: .4byte sSlotMachine\n\t"
         "_0812AC04: .4byte 0x0000270E\n\t"
         ".syntax divided\n\t"
     );
@@ -1023,7 +1076,7 @@ __attribute__((naked)) void SlotAction_AwaitPlayerInput(u8 taskId)
         "	b _0812ACF2\n\t"
         "	.align 2, 0\n\t"
         "_0812AC24: .4byte gMain\n\t"
-        "_0812AC28: .4byte gUnknown_203A800\n\t"
+        "_0812AC28: .4byte sSlotMachine\n\t"
         "_0812AC2C:\n\t"
         "	movs r0, #0x80\n\t"
         "	lsls r0, r0, #1\n\t"
@@ -1072,7 +1125,7 @@ __attribute__((naked)) void SlotAction_AwaitPlayerInput(u8 taskId)
         "	bl PlaySE\n\t"
         "	b _0812ACF4\n\t"
         "	.align 2, 0\n\t"
-        "_0812AC88: .4byte gUnknown_203A800\n\t"
+        "_0812AC88: .4byte sSlotMachine\n\t"
         "_0812AC8C:\n\t"
         "	movs r0, #6\n\t"
         "	strb r0, [r2]\n\t"
@@ -1135,7 +1188,7 @@ __attribute__((naked)) void SlotAction_AwaitPlayerInput(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812ACFC: .4byte gUnknown_203A800\n\t"
+        "_0812ACFC: .4byte sSlotMachine\n\t"
         "_0812AD00: .4byte gMain\n\t"
         ".syntax divided\n\t"
     );
@@ -1172,7 +1225,7 @@ __attribute__((naked)) void SlotAction_PrintYouDontHaveThreeCoins(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812AD3C: .4byte gUnknown_8588604 + 0x3D\n\t"
-        "_0812AD40: .4byte gUnknown_203A800\n\t"
+        "_0812AD40: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1201,7 +1254,7 @@ __attribute__((naked)) void SlotAction_ExitMessage_9999Coins(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812AD68: .4byte gMain\n\t"
-        "_0812AD6C: .4byte gUnknown_203A800\n\t"
+        "_0812AD6C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1224,7 +1277,7 @@ __attribute__((naked)) void SlotAction_GivingInformation(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812AD8C: .4byte gUnknown_203A800\n\t"
+        "_0812AD8C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1258,7 +1311,7 @@ __attribute__((naked)) void SlotAction9(u8 taskId)
         "	movs r0, #0xa\n\t"
         "	b _0812ADDE\n\t"
         "	.align 2, 0\n\t"
-        "_0812ADD0: .4byte gUnknown_203A800\n\t"
+        "_0812ADD0: .4byte sSlotMachine\n\t"
         "_0812ADD4:\n\t"
         "	movs r0, #1\n\t"
         "	bl sub_0812DEF4\n\t"
@@ -1282,7 +1335,7 @@ __attribute__((naked)) void SlotAction9(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812AE00: .4byte gUnknown_203A800\n\t"
+        "_0812AE00: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1312,7 +1365,7 @@ __attribute__((naked)) void SlotAction10(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812AE30: .4byte gUnknown_203A800\n\t"
+        "_0812AE30: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1339,7 +1392,7 @@ __attribute__((naked)) void SlotAction_SetLuckySpins(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812AE58: .4byte gUnknown_203A800\n\t"
+        "_0812AE58: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1374,7 +1427,7 @@ __attribute__((naked)) void SlotAction_AwaitReelStop(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812AE90: .4byte gMain\n\t"
-        "_0812AE94: .4byte gUnknown_203A800\n\t"
+        "_0812AE94: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1408,7 +1461,7 @@ __attribute__((naked)) void SlotAction_WaitForAllReelsToStop(u8 taskId)
         "	movs r0, #1\n\t"
         "	b _0812AECE\n\t"
         "	.align 2, 0\n\t"
-        "_0812AEC8: .4byte gUnknown_203A800\n\t"
+        "_0812AEC8: .4byte sSlotMachine\n\t"
         "_0812AECC:\n\t"
         "	movs r0, #0\n\t"
         "_0812AECE:\n\t"
@@ -1474,7 +1527,7 @@ __attribute__((naked)) void SlotAction_CheckMatches(u8 taskId)
         "	bl sub_0812DEF4\n\t"
         "	b _0812AF72\n\t"
         "	.align 2, 0\n\t"
-        "_0812AF40: .4byte gUnknown_203A800\n\t"
+        "_0812AF40: .4byte sSlotMachine\n\t"
         "_0812AF44: .4byte SPECIAL_sub_081398CC\n\t"
         "_0812AF48:\n\t"
         "	movs r0, #0x40\n\t"
@@ -1546,7 +1599,7 @@ __attribute__((naked)) void SlotAction_CheckMatches(u8 taskId)
         "	bl DisplayPikaPower\n\t"
         "	b _0812AFFE\n\t"
         "	.align 2, 0\n\t"
-        "_0812AFD8: .4byte gUnknown_203A800\n\t"
+        "_0812AFD8: .4byte sSlotMachine\n\t"
         "_0812AFDC:\n\t"
         "	movs r0, #3\n\t"
         "	bl sub_0812DEF4\n\t"
@@ -1593,7 +1646,7 @@ __attribute__((naked)) void SlotAction_WaitForPayoutToBeAwarded(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B028: .4byte gUnknown_203A800\n\t"
+        "_0812B028: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1662,7 +1715,7 @@ __attribute__((naked)) void SlotAction_EndOfRoll(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B0A0: .4byte gUnknown_203A800\n\t"
+        "_0812B0A0: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1703,7 +1756,7 @@ __attribute__((naked)) void SlotAction_MatchedPower(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B0E4: .4byte gUnknown_203A800\n\t"
+        "_0812B0E4: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1734,7 +1787,7 @@ __attribute__((naked)) void SlotAction18(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B114: .4byte gUnknown_203A800\n\t"
+        "_0812B114: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1759,7 +1812,7 @@ __attribute__((naked)) void SlotAction_Loop(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B13C: .4byte gUnknown_203A800\n\t"
+        "_0812B13C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1788,7 +1841,7 @@ __attribute__((naked)) void SlotAction_NoMatches(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B164: .4byte gUnknown_203A800\n\t"
+        "_0812B164: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1835,7 +1888,7 @@ __attribute__((naked)) void SlotAction_PrintQuitTheGame(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812B1B8: .4byte gUnknown_8588604 + 0x2\n\t"
-        "_0812B1BC: .4byte gUnknown_203A800\n\t"
+        "_0812B1BC: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1868,7 +1921,7 @@ __attribute__((naked)) void SlotAction_SeeIfPlayerQuits(u8 taskId)
         "	movs r0, #0x1b\n\t"
         "	b _0812B216\n\t"
         "	.align 2, 0\n\t"
-        "_0812B1F8: .4byte gUnknown_203A800\n\t"
+        "_0812B1F8: .4byte sSlotMachine\n\t"
         "_0812B1FC:\n\t"
         "	cmp r1, #1\n\t"
         "	beq _0812B208\n\t"
@@ -1890,7 +1943,7 @@ __attribute__((naked)) void SlotAction_SeeIfPlayerQuits(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B220: .4byte gUnknown_203A800\n\t"
+        "_0812B220: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1926,7 +1979,7 @@ __attribute__((naked)) void SlotAction_PrintMessage_9999Coins(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812B25C: .4byte gUnknown_8588604 + 0xE\n\t"
-        "_0812B260: .4byte gUnknown_203A800\n\t"
+        "_0812B260: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1955,7 +2008,7 @@ __attribute__((naked)) void SlotAction_ExitYouDontHaveThreeCoinsMessage(u8 taskI
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812B288: .4byte gMain\n\t"
-        "_0812B28C: .4byte gUnknown_203A800\n\t"
+        "_0812B28C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1991,7 +2044,7 @@ __attribute__((naked)) void SlotAction_PrintMessage_NoMoreCoins(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812B2C8: .4byte gUnknown_8588604 + 0x23\n\t"
-        "_0812B2CC: .4byte gUnknown_203A800\n\t"
+        "_0812B2CC: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2020,7 +2073,7 @@ __attribute__((naked)) void SlotAction_ExitMessage_NoMoreCoins(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812B2F4: .4byte gMain\n\t"
-        "_0812B2F8: .4byte gUnknown_203A800\n\t"
+        "_0812B2F8: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2056,7 +2109,7 @@ __attribute__((naked)) void SlotAction_EndGame(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B338: .4byte gUnknown_203A800\n\t"
+        "_0812B338: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2210,7 +2263,7 @@ __attribute__((naked)) void SlotAction_FreeDataStructures(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812B488: .4byte gPaletteFade\n\t"
-        "_0812B48C: .4byte gUnknown_203A800\n\t"
+        "_0812B48C: .4byte sSlotMachine\n\t"
         "_0812B490: .4byte gUnknown_203A7C0\n\t"
         "_0812B494: .4byte gUnknown_203A7C4\n\t"
         "_0812B498: .4byte gUnknown_203A7C8\n\t"
@@ -2296,7 +2349,7 @@ __attribute__((naked)) void DrawLuckyFlags(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812B560: .4byte gUnknown_203A800\n\t"
+        "_0812B560: .4byte sSlotMachine\n\t"
         "_0812B564: .4byte gUnknown_8584782\n\t"
         "_0812B568: .4byte gUnknown_8584788\n\t"
         ".syntax divided\n\t"
@@ -2322,7 +2375,7 @@ __attribute__((naked)) void SetLuckySpins(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812B588: .4byte gUnknown_203A800\n\t"
+        "_0812B588: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2389,7 +2442,7 @@ __attribute__((naked)) bool8 IsThisRoundLucky(void)
         "	b _0812B5F6\n\t"
         "	.align 2, 0\n\t"
         "_0812B5EC: .4byte gUnknown_8584644\n\t"
-        "_0812B5F0: .4byte gUnknown_203A800\n\t"
+        "_0812B5F0: .4byte sSlotMachine\n\t"
         "_0812B5F4:\n\t"
         "	movs r0, #1\n\t"
         "_0812B5F6:\n\t"
@@ -2438,7 +2491,7 @@ __attribute__((naked)) void AttemptsAtLuckyFlags_Top3(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812B63C: .4byte gUnknown_8584656\n\t"
-        "_0812B640: .4byte gUnknown_203A800\n\t"
+        "_0812B640: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2483,7 +2536,7 @@ __attribute__((naked)) void AttemptsAtLuckyFlags_NotTop3(void)
         "	b _0812B6AE\n\t"
         "	.align 2, 0\n\t"
         "_0812B688: .4byte gUnknown_8584668\n\t"
-        "_0812B68C: .4byte gUnknown_203A800\n\t"
+        "_0812B68C: .4byte sSlotMachine\n\t"
         "_0812B690:\n\t"
         "	asrs r0, r2, #0x10\n\t"
         "	cmp r0, #4\n\t"
@@ -2521,7 +2574,7 @@ __attribute__((naked)) void AttemptsAtLuckyFlags_NotTop3(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B6D4: .4byte gUnknown_203A800\n\t"
+        "_0812B6D4: .4byte sSlotMachine\n\t"
         "_0812B6D8: .4byte 0xFFF60000\n\t"
         ".syntax divided\n\t"
     );
@@ -2542,7 +2595,7 @@ __attribute__((naked)) u8 GetReelTimeProbability(u8 a)
         "	ldr r0, _0812B6F4\n\t"
         "	b _0812B6FA\n\t"
         "	.align 2, 0\n\t"
-        "_0812B6F0: .4byte gUnknown_203A800\n\t"
+        "_0812B6F0: .4byte sSlotMachine\n\t"
         "_0812B6F4: .4byte gUnknown_85846EC\n\t"
         "_0812B6F8:\n\t"
         "	ldr r0, _0812B70C\n\t"
@@ -2582,7 +2635,7 @@ __attribute__((naked)) void GetReeltimeDraw(void)
         "	movs r6, #5\n\t"
         "	b _0812B73E\n\t"
         "	.align 2, 0\n\t"
-        "_0812B734: .4byte gUnknown_203A800\n\t"
+        "_0812B734: .4byte sSlotMachine\n\t"
         "_0812B738:\n\t"
         "	subs r0, r5, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -2611,7 +2664,7 @@ __attribute__((naked)) void GetReeltimeDraw(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812B76C: .4byte gUnknown_203A800\n\t"
+        "_0812B76C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2663,7 +2716,7 @@ __attribute__((naked)) void SlowReelSpeed(void)
         "	movs r4, #4\n\t"
         "	b _0812B7D2\n\t"
         "	.align 2, 0\n\t"
-        "_0812B7B4: .4byte gUnknown_203A800\n\t"
+        "_0812B7B4: .4byte sSlotMachine\n\t"
         "_0812B7B8: .4byte SPECIAL_DoContestHallWarp\n\t"
         "_0812B7BC:\n\t"
         "	cmp r1, #0xf9\n\t"
@@ -2722,7 +2775,7 @@ __attribute__((naked)) void SlowReelSpeed(void)
         "	b _0812B832\n\t"
         "	.align 2, 0\n\t"
         "_0812B828: .4byte gUnknown_8584770\n\t"
-        "_0812B82C: .4byte gUnknown_203A800\n\t"
+        "_0812B82C: .4byte sSlotMachine\n\t"
         "_0812B830:\n\t"
         "	movs r0, #2\n\t"
         "_0812B832:\n\t"
@@ -2762,7 +2815,7 @@ __attribute__((naked)) void CheckMatch(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812B868: .4byte gUnknown_203A800\n\t"
+        "_0812B868: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2819,7 +2872,7 @@ __attribute__((naked)) void CheckMatch_CenterRow(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812B8D4: .4byte gUnknown_203A800\n\t"
+        "_0812B8D4: .4byte sSlotMachine\n\t"
         "_0812B8D8: .4byte gUnknown_85847AC\n\t"
         "_0812B8DC: .4byte gUnknown_858479A\n\t"
         ".syntax divided\n\t"
@@ -2923,7 +2976,7 @@ __attribute__((naked)) void CheckMatch_TopAndBottom(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812B9A4: .4byte gUnknown_203A800\n\t"
+        "_0812B9A4: .4byte sSlotMachine\n\t"
         "_0812B9A8: .4byte gUnknown_85847AC\n\t"
         "_0812B9AC: .4byte gUnknown_858479A\n\t"
         ".syntax divided\n\t"
@@ -3025,7 +3078,7 @@ __attribute__((naked)) void CheckMatch_Diagonals(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812BA70: .4byte gUnknown_203A800\n\t"
+        "_0812BA70: .4byte sSlotMachine\n\t"
         "_0812BA74: .4byte gUnknown_85847AC\n\t"
         "_0812BA78: .4byte gUnknown_858479A\n\t"
         ".syntax divided\n\t"
@@ -3189,7 +3242,7 @@ __attribute__((naked)) void AwardPayoutAction0(u8 taskId)
         "	movs r0, #1\n\t"
         "	b _0812BB72\n\t"
         "	.align 2, 0\n\t"
-        "_0812BB6C: .4byte gUnknown_203A800\n\t"
+        "_0812BB6C: .4byte sSlotMachine\n\t"
         "_0812BB70:\n\t"
         "	movs r0, #0\n\t"
         "_0812BB72:\n\t"
@@ -3291,7 +3344,7 @@ __attribute__((naked)) void AwardPayoutAction_GivePayoutToPlayer(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BC20: .4byte gUnknown_203A800\n\t"
+        "_0812BC20: .4byte sSlotMachine\n\t"
         "_0812BC24: .4byte 0x0000270E\n\t"
         "_0812BC28: .4byte gMain\n\t"
         "_0812BC2C: .4byte 0x0000270F\n\t"
@@ -3366,7 +3419,7 @@ __attribute__((naked)) u8 GetNearbyTag_Quantized(u8 a)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BCA0: .4byte gUnknown_203A800\n\t"
+        "_0812BCA0: .4byte sSlotMachine\n\t"
         "_0812BCA4: .4byte gUnknown_85845F2\n\t"
         ".syntax divided\n\t"
     );
@@ -3412,7 +3465,7 @@ __attribute__((naked)) u8 GetNearbyTag(u8 a)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BCF0: .4byte gUnknown_203A800\n\t"
+        "_0812BCF0: .4byte sSlotMachine\n\t"
         "_0812BCF4: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -3450,7 +3503,7 @@ __attribute__((naked)) u8 GetNearbyReelTimeTag(u8 a)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BD30: .4byte gUnknown_203A800\n\t"
+        "_0812BD30: .4byte sSlotMachine\n\t"
         "_0812BD34: .4byte gUnknown_8584631\n\t"
         ".syntax divided\n\t"
     );
@@ -3493,7 +3546,7 @@ __attribute__((naked)) void AdvanceSlotReel(u8 a)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812BD7C: .4byte gUnknown_203A800\n\t"
+        "_0812BD7C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3549,7 +3602,7 @@ __attribute__((naked)) void AdvanceSlotReelToNextTag(u8 a)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BDE0: .4byte gUnknown_203A800\n\t"
+        "_0812BDE0: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3582,7 +3635,7 @@ __attribute__((naked)) void AdvanceReeltimeReel(u8 a)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812BE18: .4byte gUnknown_203A800\n\t"
+        "_0812BE18: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3629,50 +3682,23 @@ __attribute__((naked)) void AdvanceReeltimeReelToNextTag(u8 a)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BE68: .4byte gUnknown_203A800\n\t"
+        "_0812BE68: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void GameplayTask_StopSlotReel(u8 taskId)
+#define tReelId data[15]
+
+static void CreateReelTasks(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _0812BEA8\n\t"
-        "	ldr r6, _0812BEAC\n\t"
-        "_0812BE74:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strh r4, [r1, #0x26]\n\t"
-        "	ldr r1, _0812BEB0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x3a\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl _call_via_r5\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #2\n\t"
-        "	bls _0812BE74\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BEA8: .4byte RunSlotReelActions + 1\n\t"
-        "_0812BEAC: .4byte gTasks\n\t"
-        "_0812BEB0: .4byte gUnknown_203A800\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < NUM_REELS; i++)
+    {
+        u8 taskId = CreateTask(Task_Reel, 2);
+        gTasks[taskId].tReelId = i;
+        sSlotMachine->slotReelTasks[i] = taskId;
+        Task_Reel(taskId);
+    }
 }
 
 __attribute__((naked)) void ReelTasks_SetUnkTaskData(u8 taskId)
@@ -3705,7 +3731,7 @@ __attribute__((naked)) void ReelTasks_SetUnkTaskData(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812BEE4: .4byte gTasks\n\t"
-        "_0812BEE8: .4byte gUnknown_203A800\n\t"
+        "_0812BEE8: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3732,7 +3758,7 @@ __attribute__((naked)) void sub_0812BEEC(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0812BF0C: .4byte gTasks\n\t"
-        "_0812BF10: .4byte gUnknown_203A800\n\t"
+        "_0812BF10: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3759,12 +3785,12 @@ __attribute__((naked)) bool8 IsSlotReelMoving(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0812BF34: .4byte gTasks\n\t"
-        "_0812BF38: .4byte gUnknown_203A800\n\t"
+        "_0812BF38: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void RunSlotReelActions(u8 taskId)
+__attribute__((naked)) void Task_Reel(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3825,7 +3851,7 @@ __attribute__((naked)) void SlotReelAction_Spin(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BF94: .4byte gUnknown_203A800\n\t"
+        "_0812BF94: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3902,7 +3928,7 @@ __attribute__((naked)) void SlotReelAction_DecideWhereToStop(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812C020: .4byte gUnknown_203A800\n\t"
+        "_0812C020: .4byte sSlotMachine\n\t"
         "_0812C024: .4byte gUnknown_8584468\n\t"
         "_0812C028: .4byte gUnknown_8584474\n\t"
         ".syntax divided\n\t"
@@ -3945,7 +3971,7 @@ __attribute__((naked)) void SlotReelAction_MoveToStop(u8 taskId)
         "	b _0812C0B0\n\t"
         "	.align 2, 0\n\t"
         "_0812C070: .4byte gUnknown_8584480\n\t"
-        "_0812C074: .4byte gUnknown_203A800\n\t"
+        "_0812C074: .4byte sSlotMachine\n\t"
         "_0812C078:\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r0, #0x2e\n\t"
@@ -4007,7 +4033,7 @@ __attribute__((naked)) void SlotReelAction_MoveToStop(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812C0EC: .4byte gUnknown_203A800\n\t"
+        "_0812C0EC: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4060,7 +4086,7 @@ __attribute__((naked)) void SlotReelAction_OscillatingStop(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812C144: .4byte gUnknown_203A800\n\t"
+        "_0812C144: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4102,7 +4128,7 @@ __attribute__((naked)) void DecideReelTurns_BiasTag_Reel1(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812C18C: .4byte gUnknown_203A800\n\t"
+        "_0812C18C: .4byte sSlotMachine\n\t"
         "_0812C190: .4byte gUnknown_858448C\n\t"
         ".syntax divided\n\t"
     );
@@ -4138,7 +4164,7 @@ __attribute__((naked)) bool8 AreTagsAtPosition_Reel1(u8 a, u8 b)
         "	movs r0, #1\n\t"
         "	b _0812C1CE\n\t"
         "	.align 2, 0\n\t"
-        "_0812C1C8: .4byte gUnknown_203A800\n\t"
+        "_0812C1C8: .4byte sSlotMachine\n\t"
         "_0812C1CC:\n\t"
         "	movs r0, #0\n\t"
         "_0812C1CE:\n\t"
@@ -4214,7 +4240,7 @@ __attribute__((naked)) bool8 IsBiasTowardsCherryOr7s(void)
         "	movs r0, #0\n\t"
         "	b _0812C242\n\t"
         "	.align 2, 0\n\t"
-        "_0812C23C: .4byte gUnknown_203A800\n\t"
+        "_0812C23C: .4byte sSlotMachine\n\t"
         "_0812C240:\n\t"
         "	movs r0, #1\n\t"
         "_0812C242:\n\t"
@@ -4260,7 +4286,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel1_Bet1(u8 a, u8 b)
         "	movs r0, #1\n\t"
         "	b _0812C296\n\t"
         "	.align 2, 0\n\t"
-        "_0812C284: .4byte gUnknown_203A800\n\t"
+        "_0812C284: .4byte sSlotMachine\n\t"
         "_0812C288:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -4324,7 +4350,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel1_Bet2or3(u8 a, u8 b)
         "	movs r0, #1\n\t"
         "	b _0812C3A0\n\t"
         "	.align 2, 0\n\t"
-        "_0812C2F4: .4byte gUnknown_203A800\n\t"
+        "_0812C2F4: .4byte sSlotMachine\n\t"
         "_0812C2F8:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -4376,7 +4402,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel1_Bet2or3(u8 a, u8 b)
         "	movs r0, #1\n\t"
         "	b _0812C3A0\n\t"
         "	.align 2, 0\n\t"
-        "_0812C358: .4byte gUnknown_203A800\n\t"
+        "_0812C358: .4byte sSlotMachine\n\t"
         "_0812C35C:\n\t"
         "	asrs r0, r5, #0x10\n\t"
         "	cmp r0, #3\n\t"
@@ -4448,7 +4474,7 @@ __attribute__((naked)) void DecideReelTurns_BiasTag_Reel2(u8 taskId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0812C3D0: .4byte gUnknown_8584498\n\t"
-        "_0812C3D4: .4byte gUnknown_203A800\n\t"
+        "_0812C3D4: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4484,7 +4510,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel2_Bet1or2(void)
         "	movs r0, #1\n\t"
         "	b _0812C41E\n\t"
         "	.align 2, 0\n\t"
-        "_0812C40C: .4byte gUnknown_203A800\n\t"
+        "_0812C40C: .4byte sSlotMachine\n\t"
         "_0812C410:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -4547,7 +4573,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel2_Bet3(void)
         "	ble _0812C44C\n\t"
         "	b _0812C482\n\t"
         "	.align 2, 0\n\t"
-        "_0812C478: .4byte gUnknown_203A800\n\t"
+        "_0812C478: .4byte sSlotMachine\n\t"
         "_0812C47C:\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r1, #0x36]\n\t"
@@ -4592,7 +4618,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel2_Bet3(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812C4C8: .4byte gUnknown_203A800\n\t"
+        "_0812C4C8: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4632,7 +4658,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3(u8 a)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812C508: .4byte gUnknown_203A800\n\t"
+        "_0812C508: .4byte sSlotMachine\n\t"
         "_0812C50C: .4byte gUnknown_85844A4\n\t"
         ".syntax divided\n\t"
     );
@@ -4674,7 +4700,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3_Bet1or2(u8 a)
         "	movs r0, #1\n\t"
         "	b _0812C562\n\t"
         "	.align 2, 0\n\t"
-        "_0812C550: .4byte gUnknown_203A800\n\t"
+        "_0812C550: .4byte sSlotMachine\n\t"
         "_0812C554:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -4716,7 +4742,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3_Bet3(u8 a)
         "	lsrs r0, r0, #0x18\n\t"
         "	b _0812C5E2\n\t"
         "	.align 2, 0\n\t"
-        "_0812C594: .4byte gUnknown_203A800\n\t"
+        "_0812C594: .4byte sSlotMachine\n\t"
         "_0812C598:\n\t"
         "	ldr r0, _0812C5A8\n\t"
         "	ldr r0, [r0]\n\t"
@@ -4726,7 +4752,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3_Bet3(u8 a)
         "	movs r0, #1\n\t"
         "	b _0812C5E2\n\t"
         "	.align 2, 0\n\t"
-        "_0812C5A8: .4byte gUnknown_203A800\n\t"
+        "_0812C5A8: .4byte sSlotMachine\n\t"
         "_0812C5AC:\n\t"
         "	movs r2, #1\n\t"
         "	mov r8, r2\n\t"
@@ -4792,7 +4818,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812C614: .4byte gUnknown_203A800\n\t"
+        "_0812C614: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4832,7 +4858,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812C654: .4byte gUnknown_85844B0\n\t"
-        "_0812C658: .4byte gUnknown_203A800\n\t"
+        "_0812C658: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4891,7 +4917,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet1(u8 taskId)
         "	strh r5, [r1, #0x30]\n\t"
         "	b _0812C6D4\n\t"
         "	.align 2, 0\n\t"
-        "_0812C6C4: .4byte gUnknown_203A800\n\t"
+        "_0812C6C4: .4byte sSlotMachine\n\t"
         "_0812C6C8:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -4963,7 +4989,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet2(u8 taskId)
         "	strh r5, [r0, #0x30]\n\t"
         "	b _0812C754\n\t"
         "	.align 2, 0\n\t"
-        "_0812C744: .4byte gUnknown_203A800\n\t"
+        "_0812C744: .4byte sSlotMachine\n\t"
         "_0812C748:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -5003,7 +5029,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet3(u8 taskId)
         "	bl DecideReelTurns_NoBiasTag_Reel2_Bet2\n\t"
         "	b _0812C85A\n\t"
         "	.align 2, 0\n\t"
-        "_0812C784: .4byte gUnknown_203A800\n\t"
+        "_0812C784: .4byte sSlotMachine\n\t"
         "_0812C788:\n\t"
         "	ldr r0, _0812C794\n\t"
         "	ldr r0, [r0]\n\t"
@@ -5012,7 +5038,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet3(u8 taskId)
         "	strh r1, [r0, #0x30]\n\t"
         "	b _0812C85A\n\t"
         "	.align 2, 0\n\t"
-        "_0812C794: .4byte gUnknown_203A800\n\t"
+        "_0812C794: .4byte sSlotMachine\n\t"
         "_0812C798:\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r1, #0x36]\n\t"
@@ -5098,7 +5124,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet3(u8 taskId)
         "	strh r5, [r1, #0x30]\n\t"
         "	b _0812C85A\n\t"
         "	.align 2, 0\n\t"
-        "_0812C83C: .4byte gUnknown_203A800\n\t"
+        "_0812C83C: .4byte sSlotMachine\n\t"
         "_0812C840:\n\t"
         "	cmp r4, #2\n\t"
         "	ble _0812C7A2\n\t"
@@ -5266,7 +5292,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812C928: .4byte gUnknown_85844BC\n\t"
-        "_0812C92C: .4byte gUnknown_203A800\n\t"
+        "_0812C92C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5303,7 +5329,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet1(u8 taskId)
         "	movs r4, #2\n\t"
         "	b _0812C97A\n\t"
         "	.align 2, 0\n\t"
-        "_0812C96C: .4byte gUnknown_203A800\n\t"
+        "_0812C96C: .4byte sSlotMachine\n\t"
         "_0812C970:\n\t"
         "	lsls r0, r6, #0x10\n\t"
         "	movs r1, #0x80\n\t"
@@ -5391,7 +5417,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet1(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812CA14: .4byte gUnknown_203A800\n\t"
+        "_0812CA14: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5451,7 +5477,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet2(u8 taskId)
         "	movs r5, #0\n\t"
         "	b _0812CA8E\n\t"
         "	.align 2, 0\n\t"
-        "_0812CA84: .4byte gUnknown_203A800\n\t"
+        "_0812CA84: .4byte sSlotMachine\n\t"
         "_0812CA88:\n\t"
         "	adds r0, r5, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -5549,7 +5575,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet2(u8 taskId)
         "	mov r8, r0\n\t"
         "	b _0812CB5A\n\t"
         "	.align 2, 0\n\t"
-        "_0812CB48: .4byte gUnknown_203A800\n\t"
+        "_0812CB48: .4byte sSlotMachine\n\t"
         "_0812CB4C:\n\t"
         "	movs r2, #0x80\n\t"
         "	lsls r2, r2, #9\n\t"
@@ -5585,7 +5611,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet2(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812CB8C: .4byte gUnknown_203A800\n\t"
+        "_0812CB8C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5673,7 +5699,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet3(u8 taskId)
         "	strh r0, [r1, #0x32]\n\t"
         "	b _0812CC44\n\t"
         "	.align 2, 0\n\t"
-        "_0812CC34: .4byte gUnknown_203A800\n\t"
+        "_0812CC34: .4byte sSlotMachine\n\t"
         "_0812CC38:\n\t"
         "	adds r0, r5, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -5741,7 +5767,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet3(u8 taskId)
         "	strh r0, [r1, #0x32]\n\t"
         "	b _0812CC46\n\t"
         "	.align 2, 0\n\t"
-        "_0812CCC0: .4byte gUnknown_203A800\n\t"
+        "_0812CCC0: .4byte sSlotMachine\n\t"
         "_0812CCC4:\n\t"
         "	ldr r7, _0812CD40\n\t"
         "_0812CCC6:\n\t"
@@ -5802,7 +5828,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet3(u8 taskId)
         "	strh r0, [r1, #0x32]\n\t"
         "	b _0812CCC6\n\t"
         "	.align 2, 0\n\t"
-        "_0812CD40: .4byte gUnknown_203A800\n\t"
+        "_0812CD40: .4byte sSlotMachine\n\t"
         "_0812CD44:\n\t"
         "	pop {r3}\n\t"
         "	mov r8, r3\n\t"
@@ -6124,7 +6150,7 @@ __attribute__((naked)) void CreateInvisibleFlashMatchLineSprites(void)
         "	.align 2, 0\n\t"
         "_0812CF38: .4byte gSprites\n\t"
         "_0812CF3C: .4byte SpriteCB_FlashMatchingLines + 1\n\t"
-        "_0812CF40: .4byte gUnknown_203A800\n\t"
+        "_0812CF40: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6157,7 +6183,7 @@ __attribute__((naked)) void FlashMatchLine(u8 spriteId)
         "	strh r2, [r0, #0x3c]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0812CF74: .4byte gUnknown_203A800\n\t"
+        "_0812CF74: .4byte sSlotMachine\n\t"
         "_0812CF78: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -6192,7 +6218,7 @@ __attribute__((naked)) bool8 sub_0812CF7C(void)
         "	movs r0, #0\n\t"
         "	b _0812CFC0\n\t"
         "	.align 2, 0\n\t"
-        "_0812CFAC: .4byte gUnknown_203A800\n\t"
+        "_0812CFAC: .4byte sSlotMachine\n\t"
         "_0812CFB0: .4byte gSprites\n\t"
         "_0812CFB4:\n\t"
         "	adds r0, r2, #1\n\t"
@@ -6229,7 +6255,7 @@ __attribute__((naked)) bool8 sub_0812CFC8(void)
         "	movs r0, #0\n\t"
         "	b _0812CFF4\n\t"
         "	.align 2, 0\n\t"
-        "_0812CFE4: .4byte gUnknown_203A800\n\t"
+        "_0812CFE4: .4byte sSlotMachine\n\t"
         "_0812CFE8:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -6508,7 +6534,7 @@ __attribute__((naked)) void GameplayTask_PikaPower(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812D1B0: .4byte Task_CreatePikaPowerBolt + 1\n\t"
-        "_0812D1B4: .4byte gUnknown_203A800\n\t"
+        "_0812D1B4: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6539,7 +6565,7 @@ __attribute__((naked)) void DisplayPikaPower(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D1E4: .4byte gUnknown_203A800\n\t"
+        "_0812D1E4: .4byte sSlotMachine\n\t"
         "_0812D1E8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6569,7 +6595,7 @@ __attribute__((naked)) void ResetPikaPowerBolts(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D214: .4byte gUnknown_203A800\n\t"
+        "_0812D214: .4byte sSlotMachine\n\t"
         "_0812D218: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6594,7 +6620,7 @@ __attribute__((naked)) bool8 IsPikaPowerBoltAnimating(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0812D238: .4byte gTasks\n\t"
-        "_0812D23C: .4byte gUnknown_203A800\n\t"
+        "_0812D23C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6959,7 +6985,7 @@ __attribute__((naked)) void LoadPikaPowerMeter(u8 bolts)
         "	.align 2, 0\n\t"
         "_0812D4B0: .4byte gUnknown_203A798\n\t"
         "_0812D4B4: .4byte gTasks\n\t"
-        "_0812D4B8: .4byte gUnknown_203A800\n\t"
+        "_0812D4B8: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7086,7 +7112,7 @@ __attribute__((naked)) void ReelTime_Init(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D598: .4byte gUnknown_203A800\n\t"
+        "_0812D598: .4byte sSlotMachine\n\t"
         "_0812D59C: .4byte gSpriteCoordOffsetX\n\t"
         "_0812D5A0: .4byte gSpriteCoordOffsetY\n\t"
         ".syntax divided\n\t"
@@ -7269,7 +7295,7 @@ __attribute__((naked)) void ReelTime_PikachuSpeedUp1(struct Task *task)
         "_0812D6E8: .4byte gUnknown_8584544\n\t"
         "_0812D6EC: .4byte gUnknown_8584548\n\t"
         "_0812D6F0: .4byte gUnknown_8584550\n\t"
-        "_0812D6F4: .4byte gUnknown_203A800\n\t"
+        "_0812D6F4: .4byte sSlotMachine\n\t"
         "_0812D6F8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -7315,7 +7341,7 @@ __attribute__((naked)) void ReelTime_PikachuSpeedUp2(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D748: .4byte gUnknown_203A800\n\t"
+        "_0812D748: .4byte sSlotMachine\n\t"
         "_0812D74C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -7391,7 +7417,7 @@ __attribute__((naked)) void ReelTime_CheckExplode(struct Task *task)
         "	adds r0, #1\n\t"
         "	b _0812D7E4\n\t"
         "	.align 2, 0\n\t"
-        "_0812D7C4: .4byte gUnknown_203A800\n\t"
+        "_0812D7C4: .4byte sSlotMachine\n\t"
         "_0812D7C8:\n\t"
         "	movs r1, #0x14\n\t"
         "	ldrsh r0, [r4, r1]\n\t"
@@ -7444,7 +7470,7 @@ __attribute__((naked)) void ReelTime_LandOnOutcome(struct Task *task)
         "	bl AdvanceReeltimeReelToNextTag\n\t"
         "	b _0812D848\n\t"
         "	.align 2, 0\n\t"
-        "_0812D81C: .4byte gUnknown_203A800\n\t"
+        "_0812D81C: .4byte sSlotMachine\n\t"
         "_0812D820:\n\t"
         "	movs r0, #1\n\t"
         "	bl GetNearbyReelTimeTag\n\t"
@@ -7492,7 +7518,7 @@ __attribute__((naked)) void ReelTime_LandOnOutcome(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D87C: .4byte gUnknown_203A800\n\t"
+        "_0812D87C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7538,7 +7564,7 @@ __attribute__((naked)) void ReelTime_PikachuReact(struct Task *task)
         "	bl PlayFanfare\n\t"
         "	b _0812D924\n\t"
         "	.align 2, 0\n\t"
-        "_0812D8D4: .4byte gUnknown_203A800\n\t"
+        "_0812D8D4: .4byte sSlotMachine\n\t"
         "_0812D8D8: .4byte gSprites\n\t"
         "_0812D8DC: .4byte SPECIAL_sub_0818E16C\n\t"
         "_0812D8E0:\n\t"
@@ -7706,7 +7732,7 @@ __attribute__((naked)) void ReelTime_DestroySprites(struct Task *task)
         "	bl DestroyTask\n\t"
         "	b _0812DA2A\n\t"
         "	.align 2, 0\n\t"
-        "_0812DA08: .4byte gUnknown_203A800\n\t"
+        "_0812DA08: .4byte sSlotMachine\n\t"
         "_0812DA0C: .4byte gSpriteCoordOffsetX\n\t"
         "_0812DA10: .4byte Task_ReelTime + 1\n\t"
         "_0812DA14:\n\t"
@@ -7746,7 +7772,7 @@ __attribute__((naked)) void ReelTime_SetReelSpeed(struct Task *task)
         "	strh r0, [r4, #8]\n\t"
         "	b _0812DA76\n\t"
         "	.align 2, 0\n\t"
-        "_0812DA4C: .4byte gUnknown_203A800\n\t"
+        "_0812DA4C: .4byte sSlotMachine\n\t"
         "_0812DA50:\n\t"
         "	movs r1, #0x1c\n\t"
         "	ldrsh r0, [r5, r1]\n\t"
@@ -7847,7 +7873,7 @@ __attribute__((naked)) void ReelTime_ExplodeMachine(struct Task *task)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812DB08: .4byte gSprites\n\t"
-        "_0812DB0C: .4byte gUnknown_203A800\n\t"
+        "_0812DB0C: .4byte sSlotMachine\n\t"
         "_0812DB10: .4byte SPECIAL_sub_0818E16C\n\t"
         ".syntax divided\n\t"
     );
@@ -7920,7 +7946,7 @@ __attribute__((naked)) void ReelTime_WaitExplode(struct Task *task)
         "	.align 2, 0\n\t"
         "_0812DB90: .4byte gSpriteCoordOffsetY\n\t"
         "_0812DB94: .4byte gSprites\n\t"
-        "_0812DB98: .4byte gUnknown_203A800\n\t"
+        "_0812DB98: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7984,7 +8010,7 @@ __attribute__((naked)) void ReelTime_EndFailure(struct Task *task)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812DC0C: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812DC10: .4byte gUnknown_203A800\n\t"
+        "_0812DC10: .4byte sSlotMachine\n\t"
         "_0812DC14: .4byte Task_ReelTime + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -8377,7 +8403,7 @@ __attribute__((naked)) void InfoBox_LoadPikaPowerMeter(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812DE88: .4byte gUnknown_203A800\n\t"
+        "_0812DE88: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8438,7 +8464,7 @@ __attribute__((naked)) void CreateDigitalDisplayTask(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812DEE4: .4byte sub_0812E0C0 + 1\n\t"
-        "_0812DEE8: .4byte gUnknown_203A800\n\t"
+        "_0812DEE8: .4byte sSlotMachine\n\t"
         "_0812DEEC: .4byte gTasks\n\t"
         "_0812DEF0: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
@@ -8510,7 +8536,7 @@ __attribute__((naked)) void CreateDigitalDisplayScene(u8 id)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812DF6C: .4byte gUnknown_203A800\n\t"
+        "_0812DF6C: .4byte sSlotMachine\n\t"
         "_0812DF70: .4byte gTasks\n\t"
         "_0812DF74: .4byte gUnknown_8584988\n\t"
         ".syntax divided\n\t"
@@ -8564,7 +8590,7 @@ __attribute__((naked)) void AddDigitalDisplaySprite(u8 templateIdx, SpriteCallba
         "	strh r0, [r4]\n\t"
         "	b _0812DFDE\n\t"
         "	.align 2, 0\n\t"
-        "_0812DFCC: .4byte gUnknown_203A800\n\t"
+        "_0812DFCC: .4byte sSlotMachine\n\t"
         "_0812DFD0: .4byte gTasks\n\t"
         "_0812DFD4:\n\t"
         "	adds r0, r5, #1\n\t"
@@ -8639,7 +8665,7 @@ __attribute__((naked)) void DestroyDigitalDisplayScene(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E050: .4byte gUnknown_203A800\n\t"
+        "_0812E050: .4byte sSlotMachine\n\t"
         "_0812E054: .4byte gTasks\n\t"
         "_0812E058: .4byte 0x0000FFFF\n\t"
         "_0812E05C: .4byte gUnknown_85849A4\n\t"
@@ -8684,7 +8710,7 @@ __attribute__((naked)) void sub_0812E064(void)
         "	movs r0, #0\n\t"
         "	b _0812E0B8\n\t"
         "	.align 2, 0\n\t"
-        "_0812E0A0: .4byte gUnknown_203A800\n\t"
+        "_0812E0A0: .4byte sSlotMachine\n\t"
         "_0812E0A4: .4byte gTasks\n\t"
         "_0812E0A8: .4byte gSprites\n\t"
         "_0812E0AC:\n\t"
@@ -8851,7 +8877,7 @@ __attribute__((naked)) void SpriteCB_ReelSymbol(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E1D4: .4byte gUnknown_203A800\n\t"
+        "_0812E1D4: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9025,7 +9051,7 @@ __attribute__((naked)) void SpriteCB_CoinNumber(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E30C: .4byte gUnknown_203A800\n\t"
+        "_0812E30C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9148,7 +9174,7 @@ __attribute__((naked)) void CreateReelTimePikachuSprite(void)
         "_0812E3E8: .4byte gUnknown_203A7A4\n\t"
         "_0812E3EC: .4byte gUnknown_8584CAC\n\t"
         "_0812E3F0: .4byte gSprites\n\t"
-        "_0812E3F4: .4byte gUnknown_203A800\n\t"
+        "_0812E3F4: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9180,7 +9206,7 @@ __attribute__((naked)) void DestroyReelTimePikachuSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E428: .4byte gUnknown_203A800\n\t"
+        "_0812E428: .4byte sSlotMachine\n\t"
         "_0812E42C: .4byte gSprites\n\t"
         "_0812E430: .4byte gUnknown_203A7B0\n\t"
         ".syntax divided\n\t"
@@ -9378,7 +9404,7 @@ __attribute__((naked)) void CreateReelTimeMachineSprites(void)
         "_0812E59C: .4byte gUnknown_8584CC4\n\t"
         "_0812E5A0: .4byte gSprites\n\t"
         "_0812E5A4: .4byte gUnknown_8584F64\n\t"
-        "_0812E5A8: .4byte gUnknown_203A800\n\t"
+        "_0812E5A8: .4byte sSlotMachine\n\t"
         "_0812E5AC: .4byte gUnknown_203A7B8\n\t"
         "_0812E5B0: .4byte gUnknown_8584CDC\n\t"
         "_0812E5B4: .4byte gUnknown_8584F78\n\t"
@@ -9465,7 +9491,7 @@ __attribute__((naked)) void CreateBrokenReelTimeMachineSprite(void)
         "_0812E650: .4byte gSpriteCoordOffsetX\n\t"
         "_0812E654: .4byte gSprites\n\t"
         "_0812E658: .4byte gUnknown_8584F94\n\t"
-        "_0812E65C: .4byte gUnknown_203A800\n\t"
+        "_0812E65C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9530,7 +9556,7 @@ __attribute__((naked)) void CreateReelTimeNumberSprites(void)
         "	.align 2, 0\n\t"
         "_0812E6C8: .4byte gUnknown_8584D0C\n\t"
         "_0812E6CC: .4byte gSprites\n\t"
-        "_0812E6D0: .4byte gUnknown_203A800\n\t"
+        "_0812E6D0: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9569,7 +9595,7 @@ __attribute__((naked)) void SpriteCB_ReelTimeNumbers(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E718: .4byte gUnknown_203A800\n\t"
+        "_0812E718: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9665,7 +9691,7 @@ __attribute__((naked)) void CreateReelTimeShadowSprites(void)
         "_0812E7CC: .4byte gUnknown_8584D24\n\t"
         "_0812E7D0: .4byte gSprites\n\t"
         "_0812E7D4: .4byte gUnknown_8584FAC\n\t"
-        "_0812E7D8: .4byte gUnknown_203A800\n\t"
+        "_0812E7D8: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9715,7 +9741,7 @@ __attribute__((naked)) void CreateReelTimeNumberGapSprite(void)
         "_0812E82C: .4byte gUnknown_8584D3C\n\t"
         "_0812E830: .4byte gSprites\n\t"
         "_0812E834: .4byte gUnknown_8584FC0\n\t"
-        "_0812E838: .4byte gUnknown_203A800\n\t"
+        "_0812E838: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9791,7 +9817,7 @@ __attribute__((naked)) void DestroyReelTimeMachineSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E8C4: .4byte gUnknown_203A800\n\t"
+        "_0812E8C4: .4byte sSlotMachine\n\t"
         "_0812E8C8: .4byte gSprites\n\t"
         "_0812E8CC: .4byte gUnknown_203A7B4\n\t"
         "_0812E8D0: .4byte gUnknown_203A7B8\n\t"
@@ -9826,7 +9852,7 @@ __attribute__((naked)) void DestroyReelTimeShadowSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E900: .4byte gUnknown_203A800\n\t"
+        "_0812E900: .4byte sSlotMachine\n\t"
         "_0812E904: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -9859,7 +9885,7 @@ __attribute__((naked)) void DestroyBrokenReelTimeMachineSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E938: .4byte gUnknown_203A800\n\t"
+        "_0812E938: .4byte sSlotMachine\n\t"
         "_0812E93C: .4byte gSprites\n\t"
         "_0812E940: .4byte gUnknown_203A7BC\n\t"
         ".syntax divided\n\t"
@@ -9953,7 +9979,7 @@ __attribute__((naked)) void CreateReelTimeBoltSprites(void)
         "	.align 2, 0\n\t"
         "_0812E9E8: .4byte gUnknown_8584D54\n\t"
         "_0812E9EC: .4byte gSprites\n\t"
-        "_0812E9F0: .4byte gUnknown_203A800\n\t"
+        "_0812E9F0: .4byte sSlotMachine\n\t"
         "_0812E9F4: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -10045,7 +10071,7 @@ __attribute__((naked)) void SetReelTimeBoltDelay(s16 delay)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812EA84: .4byte gSprites\n\t"
-        "_0812EA88: .4byte gUnknown_203A800\n\t"
+        "_0812EA88: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10077,7 +10103,7 @@ __attribute__((naked)) void DestroyReelTimeBoltSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812EAB8: .4byte gUnknown_203A800\n\t"
+        "_0812EAB8: .4byte sSlotMachine\n\t"
         "_0812EABC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -10157,7 +10183,7 @@ __attribute__((naked)) void CreateReelTimePikachuAuraSprites(void)
         "	.align 2, 0\n\t"
         "_0812EB4C: .4byte gUnknown_8584D6C\n\t"
         "_0812EB50: .4byte gSprites\n\t"
-        "_0812EB54: .4byte gUnknown_203A800\n\t"
+        "_0812EB54: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10233,7 +10259,7 @@ __attribute__((naked)) void SetReelTimePikachuAuraFlashDelay(s16 delay)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0812EBD4: .4byte gSprites\n\t"
-        "_0812EBD8: .4byte gUnknown_203A800\n\t"
+        "_0812EBD8: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10277,7 +10303,7 @@ __attribute__((naked)) void DestroyReelTimePikachuAuraSprites(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812EC24: .4byte 0x01030000\n\t"
-        "_0812EC28: .4byte gUnknown_203A800\n\t"
+        "_0812EC28: .4byte sSlotMachine\n\t"
         "_0812EC2C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -10316,7 +10342,7 @@ __attribute__((naked)) void CreateReelTimeExplosionSprite(void)
         "	.align 2, 0\n\t"
         "_0812EC68: .4byte gUnknown_8584D84\n\t"
         "_0812EC6C: .4byte gSprites\n\t"
-        "_0812EC70: .4byte gUnknown_203A800\n\t"
+        "_0812EC70: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10353,7 +10379,7 @@ __attribute__((naked)) void DestroyReelTimeExplosionSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812EC9C: .4byte gUnknown_203A800\n\t"
+        "_0812EC9C: .4byte sSlotMachine\n\t"
         "_0812ECA0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -10427,7 +10453,7 @@ __attribute__((naked)) void CreateReelTimeDuckSprites(void)
         "_0812ED20: .4byte gSpriteCoordOffsetX\n\t"
         "_0812ED24: .4byte gUnknown_8584D9C\n\t"
         "_0812ED28: .4byte gSprites\n\t"
-        "_0812ED2C: .4byte gUnknown_203A800\n\t"
+        "_0812ED2C: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10522,7 +10548,7 @@ __attribute__((naked)) void DestroyReelTimeDuckSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812EDC8: .4byte gUnknown_203A800\n\t"
+        "_0812EDC8: .4byte sSlotMachine\n\t"
         "_0812EDCC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -10568,7 +10594,7 @@ __attribute__((naked)) void CreateReelTimeSmokeSprite(void)
         "	.align 2, 0\n\t"
         "_0812EE18: .4byte gUnknown_8584DB4\n\t"
         "_0812EE1C: .4byte gSprites\n\t"
-        "_0812EE20: .4byte gUnknown_203A800\n\t"
+        "_0812EE20: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10677,7 +10703,7 @@ __attribute__((naked)) bool8 IsReelTimeSmokeAnimFinished(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0812EED4: .4byte gSprites\n\t"
-        "_0812EED8: .4byte gUnknown_203A800\n\t"
+        "_0812EED8: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10706,7 +10732,7 @@ __attribute__((naked)) void DestroyReelTimeSmokeSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812EF08: .4byte gUnknown_203A800\n\t"
+        "_0812EF08: .4byte sSlotMachine\n\t"
         "_0812EF0C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -11252,7 +11278,7 @@ __attribute__((naked)) void SpriteCB_DigitalDisplay_ReelTimeNumber(struct Sprite
         "	strh r0, [r4, #0x30]\n\t"
         "	b _0812F2D6\n\t"
         "	.align 2, 0\n\t"
-        "_0812F294: .4byte gUnknown_203A800\n\t"
+        "_0812F294: .4byte sSlotMachine\n\t"
         "_0812F298:\n\t"
         "	ldrh r0, [r4, #0x20]\n\t"
         "	adds r0, #4\n\t"
@@ -11883,7 +11909,7 @@ __attribute__((naked)) void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *
         "	ble _0812F77C\n\t"
         "	b _0812F76E\n\t"
         "	.align 2, 0\n\t"
-        "_0812F6E8: .4byte gUnknown_203A800\n\t"
+        "_0812F6E8: .4byte sSlotMachine\n\t"
         "_0812F6EC: .4byte 0x00002088\n\t"
         "_0812F6F0:\n\t"
         "	ldr r6, _0812F784\n\t"
@@ -11965,7 +11991,7 @@ __attribute__((naked)) void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812F784: .4byte gUnknown_203A800\n\t"
+        "_0812F784: .4byte sSlotMachine\n\t"
         "_0812F788: .4byte SpriteCallbackDummy + 1\n\t"
         "_0812F78C: .4byte 0x0000C0E0\n\t"
         ".syntax divided\n\t"
@@ -12037,7 +12063,7 @@ __attribute__((naked)) void EndDigitalDisplayScene_InsertBet(void)
         "	strh r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0812F7F0: .4byte gUnknown_203A800\n\t"
+        "_0812F7F0: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -10047,7 +10047,7 @@ slot_machine.s
 0812aa58 SlotMachineSetup_LoadGfxAndTilemaps SlotMachineSetup_LoadGfxAndTilemaps
 0812aa88 SlotMachineSetup_10_0 CreateSlotMachineSprites
 0812aaa0 SlotMachineSetupGameplayTasks CreateGameplayTasks
-0812aab8 GameplayTasks_Slots CreateSlotMachineTasks
+0812aab8 CreateSlotMachineTasks CreateSlotMachineTasks
 0812aad8 Task_SlotMachine Task_SlotMachine
 0812ab14 SlotTask_UnfadeScreen SlotTask_UnfadeScreen
 0812ab48 SlotTask_WaitUnfade SlotTask_WaitUnfade
@@ -10110,7 +10110,7 @@ slot_machine.s
 0812beb4 SpinSlotReel SpinSlotReel
 0812beec StopSlotReel StopSlotReel
 0812bf14 IsSlotReelMoving IsSlotReelMoving
-0812bf3c RunSlotReelActions Task_Reel
+0812bf3c Task_Reel Task_Reel
 0812bf74 slot_machine.s SlotReelAction_StayStill
 0812bf78 ReelTask_Spin ReelTask_Spin
 0812bf98 ReelTask_DecideStop ReelTask_DecideStop

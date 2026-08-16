@@ -7377,8 +7377,8 @@ SECTIONS {
         src/slot_machine.o(.text.SlotMachineSetup_5_0);
         src/slot_machine.o(.text.CreateSlotMachineSprites);
         src/slot_machine.o(.text.CreateGameplayTasks);
-        src/slot_machine.o(.text.GameplayTasks_Slots);
-        src/slot_machine.o(.text.RunSlotActions);
+        src/slot_machine.o(.text.CreateSlotMachineTasks);
+        src/slot_machine.o(.text.Task_SlotMachine);
         src/slot_machine.o(.text.SlotAction_UnfadeScreen);
         src/slot_machine.o(.text.SlotAction_WaitForUnfade);
         src/slot_machine.o(.text.SlotAction_SetSlotMachineVars);
@@ -7436,11 +7436,11 @@ SECTIONS {
         src/slot_machine.o(.text.AdvanceSlotReelToNextTag);
         src/slot_machine.o(.text.AdvanceReeltimeReel);
         src/slot_machine.o(.text.AdvanceReeltimeReelToNextTag);
-        src/slot_machine.o(.text.GameplayTask_StopSlotReel);
+        src/slot_machine.o(.text.CreateReelTasks);
         src/slot_machine.o(.text.ReelTasks_SetUnkTaskData);
         src/slot_machine.o(.text.sub_0812BEEC);
         src/slot_machine.o(.text.IsSlotReelMoving);
-        src/slot_machine.o(.text.RunSlotReelActions);
+        src/slot_machine.o(.text.Task_Reel);
         src/slot_machine.o(.text.SlotReelAction_StayStill);
         src/slot_machine.o(.text.SlotReelAction_Spin);
         src/slot_machine.o(.text.SlotReelAction_DecideWhereToStop);
