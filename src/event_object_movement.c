@@ -15159,128 +15159,42 @@ bool8 MovementAction_Unknown2_Step0(struct ObjectEvent *objectEvent, struct Spri
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkDownStartAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkDownStartAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl InitWalkSlow\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnimIfDifferent\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl MovementAction_WalkDownStartAffine_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitWalkSlow(objectEvent, sprite, DIR_SOUTH);
+    sprite->affineAnimPaused = FALSE;
+    StartSpriteAffineAnimIfDifferent(sprite, 0);
+    return MovementAction_WalkDownStartAffine_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkDownStartAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkDownStartAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateWalkSlow\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080950F6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095108\n\t"
-        "_080950F6:\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095108:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateWalkSlow(objectEvent, sprite))
+    {
+        sprite->affineAnimPaused = TRUE;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkDownAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkDownAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl InitWalkSlow\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ChangeSpriteAffineAnimIfDifferent\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl MovementAction_WalkDownAffine_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitWalkSlow(objectEvent, sprite, DIR_SOUTH);
+    sprite->affineAnimPaused = FALSE;
+    ChangeSpriteAffineAnimIfDifferent(sprite, 1);
+    return MovementAction_WalkDownAffine_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkDownAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkDownAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateWalkSlow\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095156\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095168\n\t"
-        "_08095156:\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095168:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateWalkSlow(objectEvent, sprite))
+    {
+        sprite->affineAnimPaused = TRUE;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkLeftAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
