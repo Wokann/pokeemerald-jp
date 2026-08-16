@@ -20,6 +20,7 @@ extern const u8 gWalkInPlaceSlowMovementActions[];
 extern const u8 gWalkNormalMovementActions[];
 extern const u8 gWalkSlowMovementActions[];
 extern const u8 sElevationToPriority[];
+extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
@@ -5049,81 +5050,26 @@ u8 GetLimitedVectorDirection_SouthWestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
     return direction;
 }
 
-__attribute__((naked)) void TryGetTrainerEncounterDirection(void)
+u8 TryGetTrainerEncounterDirection(struct ObjectEvent *objectEvent, u8 movementType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808F244\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808F2A8\n\t"
-        "_0808F244:\n\t"
-        "	mov r5, sp\n\t"
-        "	adds r5, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl PlayerGetDestCoords\n\t"
-        "	mov r2, sp\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r1, [r4, #0x10]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	ldrh r1, [r4, #0x12]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r3, [r5]\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0808F278\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "_0808F278:\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0808F286\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "_0808F286:\n\t"
-        "	ldr r0, _0808F2B0\n\t"
-        "	lsls r4, r6, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsh r0, [r0, r6]\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsh r1, [r5, r6]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	bl _call_via_r4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0808F2A8:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F2B0: .4byte gGetVectorDirectionFuncs\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 dx, dy;
+    s16 absdx, absdy;
+
+    if (!EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+        return DIR_NONE;
+
+    PlayerGetDestCoords(&dx, &dy);
+    dx -= objectEvent->currentCoords.x;
+    dy -= objectEvent->currentCoords.y;
+    absdx = dx;
+    absdy = dy;
+
+    if (absdx < 0)
+        absdx = -absdx;
+    if (absdy < 0)
+        absdy = -absdy;
+
+    return gGetVectorDirectionFuncs[movementType](dx, dy, absdx, absdy);
 }
 
 __attribute__((naked)) void MovementType_LookAround(struct Sprite *sprite)
