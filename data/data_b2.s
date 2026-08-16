@@ -11,19 +11,37 @@
 
 
 gUnknown_82EB7DC: @ 0x82EB7DC
-	.incbin "baserom_jp.gba", 0x2eb7dc, 0x4c
+	.byte 0x00, 0x03, 0x00, 0x00
+
+sVsLetter_V_OamData: @ 0x82EB7E0
+	.byte 0x00, 0x03, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00
+sVsLetter_S_OamData: @ 0x82EB7E8
+	.byte 0x00, 0x03, 0x00, 0xC0, 0x40, 0x00, 0x00, 0x00
+
+sVsLetterAffineAnimCmds0: @ 0x82EB7F0
+	.hword 0x0080, 0x0080, 0x0000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+
+sVsLetterAffineAnimCmds1: @ 0x82EB800
+	.hword 0x0080, 0x0080, 0x0000, 0x0000
+	.hword 0x0018, 0x0018, 0x8000, 0x0000
+	.hword 0x0018, 0x0018, 0x8000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+
+sVsLetterAffineAnimTable: @ 0x82EB820
+	.4byte sVsLetterAffineAnimCmds0, sVsLetterAffineAnimCmds1
 
 	.globl sVsLetter_V_SpriteTemplate
 sVsLetter_V_SpriteTemplate: @ 0x82EB828
 	.hword 0x2710, 0x2710
-	.4byte 0x082EB7E0, gDummySpriteAnimTable
-	.4byte 0, 0x082EB820, 0x080387B5
+	.4byte sVsLetter_V_OamData, gDummySpriteAnimTable
+	.4byte 0, sVsLetterAffineAnimTable, 0x080387B5
 
 	.globl sVsLetter_S_SpriteTemplate
 sVsLetter_S_SpriteTemplate: @ 0x82EB840
 	.hword 0x2710, 0x2710
-	.4byte 0x082EB7E8, gDummySpriteAnimTable
-	.4byte 0, 0x082EB820, 0x080387B5
+	.4byte sVsLetter_S_OamData, gDummySpriteAnimTable
+	.4byte 0, sVsLetterAffineAnimTable, 0x080387B5
 
 	.globl sVsLettersSpriteSheet
 sVsLettersSpriteSheet: @ 0x82EB858
