@@ -136,54 +136,21 @@ extern bool8 sub_080954D4(struct ObjectEvent *objectEvent, struct Sprite *sprite
 extern bool8 sub_08093554(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern struct ObjectEventTemplate *GetEventObjectTemplateByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup);
 
-__attribute__((naked)) void ClearEventObject(void)
+void ClearEventObject(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x24\n\t"
-        "	bl memset\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strb r0, [r4, #9]\n\t"
-        "	strb r0, [r4, #0xa]\n\t"
-        "	strb r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    *objectEvent = (struct ObjectEvent){};
+    objectEvent->localId = LOCALID_PLAYER;
+    objectEvent->mapNum = MAP_NUM(MAP_UNDEFINED);
+    objectEvent->mapGroup = MAP_GROUP(MAP_UNDEFINED);
+    objectEvent->movementActionId = MOVEMENT_ACTION_NONE;
 }
 
-__attribute__((naked)) void ClearAllEventObjects(void)
+void ClearAllEventObjects(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _0808CDA4\n\t"
-        "_0808CD86:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl ClearEventObject\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _0808CD86\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CDA4: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+        ClearEventObject(&gObjectEvents[i]);
 }
 
 void ResetEventObjects(void)
@@ -311,61 +278,21 @@ __attribute__((naked)) void GetFirstInactiveEventObjectId(void)
     );
 }
 
-__attribute__((naked)) u8 GetObjectEventIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroupId)
+u8 GetObjectEventIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroupId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r0, #0xfe\n\t"
-        "	bls _0808CEAC\n\t"
-        "	bl GetEventObjectIdByLocalId\n\t"
-        "	b _0808CEB0\n\t"
-        "_0808CEAC:\n\t"
-        "	bl GetEventObjectIdByLocalIdAndMapInternal\n\t"
-        "_0808CEB0:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (localId < LOCALID_PLAYER)
+        return GetEventObjectIdByLocalIdAndMapInternal(localId, mapNum, mapGroupId);
+
+    return GetEventObjectIdByLocalId(localId);
 }
 
-__attribute__((naked)) bool8 TryGetObjectEventIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroupId, u8 *objectEventId)
+bool8 TryGetObjectEventIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroupId, u8 *objectEventId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl GetObjectEventIdByLocalIdAndMap\n\t"
-        "	strb r0, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	beq _0808CEDA\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808CEDC\n\t"
-        "_0808CEDA:\n\t"
-        "	movs r0, #1\n\t"
-        "_0808CEDC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    *objectEventId = GetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroupId);
+    if (*objectEventId == OBJECT_EVENTS_COUNT)
+        return TRUE;
+    else
+        return FALSE;
 }
 
 __attribute__((naked)) u8 GetEventObjectIdByXY(s16 x, s16 y)
@@ -413,7 +340,7 @@ __attribute__((naked)) u8 GetEventObjectIdByXY(s16 x, s16 y)
     );
 }
 
-__attribute__((naked)) void GetEventObjectIdByLocalIdAndMapInternal(void)
+__attribute__((naked)) u8 GetEventObjectIdByLocalIdAndMapInternal(u8 localId, u8 mapNum, u8 mapGroupId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -464,7 +391,7 @@ __attribute__((naked)) void GetEventObjectIdByLocalIdAndMapInternal(void)
     );
 }
 
-__attribute__((naked)) void GetEventObjectIdByLocalId(void)
+__attribute__((naked)) u8 GetEventObjectIdByLocalId(u8 localId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
