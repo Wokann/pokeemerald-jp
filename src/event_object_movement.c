@@ -104,20 +104,12 @@ __attribute__((naked)) void ClearAllEventObjects(void)
     );
 }
 
-__attribute__((naked)) void ResetEventObjects(void)
+void ResetEventObjects(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ClearLinkPlayerEventObjects\n\t"
-        "	bl ClearAllEventObjects\n\t"
-        "	bl ClearPlayerAvatarInfo\n\t"
-        "	bl CreateReflectionEffectSprites\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearLinkPlayerEventObjects();
+    ClearAllEventObjects();
+    ClearPlayerAvatarInfo();
+    CreateReflectionEffectSprites();
 }
 
 __attribute__((naked)) void CreateReflectionEffectSprites(void)
@@ -2987,21 +2979,10 @@ __attribute__((naked)) void sub_0808E19C(void)
     );
 }
 
-__attribute__((naked)) void FreeAndReserveObjectSpritePalettes(void)
+void FreeAndReserveObjectSpritePalettes(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	ldr r1, _0808E200\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strb r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E200: .4byte gReservedSpritePaletteCount\n\t"
-        ".syntax divided\n\t"
-    );
+    FreeAllSpritePalettes();
+    gReservedSpritePaletteCount = 12; // OBJ_PALSLOT_COUNT
 }
 
 __attribute__((naked)) void LoadEventObjectPalette(void)
