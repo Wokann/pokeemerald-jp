@@ -52,6 +52,8 @@ gUnknown_84DD9D0: @ 0x84DD9D0
 	.globl gUnknown_84DDA21
 gUnknown_84DDA21: @ 0x84DDA21
 	.incbin "baserom_jp.gba", 0x4dda21, 0x53
+	.globl gInitialMovementTypeFacingDirections
+	.set gInitialMovementTypeFacingDirections, gUnknown_84DDA21
 
 	.globl gUnknown_84DDA74
 gUnknown_84DDA74: @ 0x84DDA74

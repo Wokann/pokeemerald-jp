@@ -85,6 +85,10 @@ extern void RemoveEventObjectInternal(struct ObjectEvent *objectEvent);
 extern void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern void UpdateEventObjSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern void CreateLevitateMovementTask(struct ObjectEvent *objectEvent);
+extern void DestroyExtraMovementTask(u8 taskId);
+extern void StartSpriteAnimInDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum);
+extern void SetAndStartSpriteAnim(struct Sprite *sprite, u8 animNum, u8 a);
+extern const u8 gInitialMovementTypeFacingDirections[];
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -18692,23 +18696,10 @@ __attribute__((naked)) void StartSpriteAnimInDirection(struct ObjectEvent *objec
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_StartAnimInDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_StartAnimInDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrb r2, [r0, #0x18]\n\t"
-        "	lsrs r2, r2, #4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0x2a\n\t"
-        "	ldrb r3, [r3]\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, objectEvent->movementDirection, sprite->animNum);
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_WaitSpriteAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -19740,23 +19731,10 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceRightLeft_Step1(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_FaceOriginalDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_FaceOriginalDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _08094DBC\n\t"
-        "	ldrb r2, [r0, #6]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	bl FaceDirection\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08094DBC: .4byte gUnknown_84DDA21\n\t"
-        ".syntax divided\n\t"
-    );
+    FaceDirection(objectEvent, sprite, gInitialMovementTypeFacingDirections[objectEvent->movementType]);
+    return TRUE;
 }
 
 
@@ -19980,25 +19958,11 @@ __attribute__((naked)) bool8 MovementAction_RevealTrainer_Step1(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RockSmashBreak_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetAndStartSpriteAnim\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetAndStartSpriteAnim(sprite, 1, 0);
+    sprite->sActionFuncId = 1;
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -20065,25 +20029,11 @@ __attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step2(struct ObjectEv
 }
 
 
-__attribute__((naked)) bool8 MovementAction_CutTree_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_CutTree_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetAndStartSpriteAnim\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetAndStartSpriteAnim(sprite, 1, 0);
+    sprite->sActionFuncId = 1;
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_CutTree_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22344,23 +22294,12 @@ bool8 MovementAction_Levitate_Step0(struct ObjectEvent *objectEvent, struct Spri
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_StopLevitate_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_StopLevitate_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrb r0, [r0, #0x1b]\n\t"
-        "	bl DestroyExtraMovementTask\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    DestroyExtraMovementTask(objectEvent->warpArrowSpriteId);
+    sprite->y2 = 0;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementAction_DestroyExtraTaskIfAtTop_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
