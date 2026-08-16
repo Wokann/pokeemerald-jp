@@ -13,6 +13,7 @@
 #include "constants/game_stat.h"
 #include "menu.h"
 #include "main_menu.h"
+#include "malloc.h"
 #include "string_util.h"
 #include "decompress.h"
 #include "trig.h"
@@ -735,9 +736,9 @@ __attribute__((naked)) void SlotMachineSetup_4_0(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812AA30: .4byte gUnknown_203A798\n\t"
-        "_0812AA34: .4byte gUnknown_203A79C\n\t"
-        "_0812AA38: .4byte gUnknown_203A7A8\n\t"
+        "_0812AA30: .4byte sSelectedPikaPowerTile\n\t"
+        "_0812AA34: .4byte sReelOverlay_Tilemap\n\t"
+        "_0812AA38: .4byte sReelButtonPress_Tilemap\n\t"
         "_0812AA3C: .4byte 0x00002051\n\t"
         "_0812AA40: .4byte 0x00002851\n\t"
         "_0812AA44: .4byte 0x00002061\n\t"
@@ -938,6 +939,33 @@ struct SlotMachine
     /*0x64*/ MainCallback prevMainCb;
 };
 
+extern u16 *sMenuGfx;
+extern u16 *sSelectedPikaPowerTile;
+extern u16 *sReelOverlay_Tilemap;
+extern u8 *sDigitalDisplayGfxPtr;
+extern u8 *sReelTimeGfxPtr;
+extern u16 *sReelButtonPress_Tilemap;
+extern u8 *sReelBackground_Gfx;
+extern struct SpriteFrameImage *sImageTable_ReelTimePikachu;
+extern struct SpriteFrameImage *sImageTable_ReelTimeMachineAntennae;
+extern struct SpriteFrameImage *sImageTable_ReelTimeMachine;
+extern struct SpriteFrameImage *sImageTable_BrokenReelTimeMachine;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Reel;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Time;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Insert;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Stop;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Win;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Lose;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Bonus;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Big;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Reg;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_AButton;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Smoke;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Number;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_Pokeball;
+extern struct SpriteFrameImage *sImageTable_DigitalDisplay_DPad;
+extern struct SpriteSheet *sReelBackgroundSpriteSheet;
+extern struct SpriteSheet *sSlotMachineSpritesheetsPtr;
 extern struct SlotMachine *sSlotMachine;
 
 static void Task_SlotMachine(u8 taskId);
@@ -1675,186 +1703,43 @@ static bool8 SlotTask_EndGame(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_FreeDataStructures(u8 taskId)
+static bool8 SlotTask_FreeDataStructures(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _0812B488\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _0812B350\n\t"
-        "	b _0812B480\n\t"
-        "_0812B350:\n\t"
-        "	ldr r6, _0812B48C\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r0, [r0, #0x64]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r4, _0812B490\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B494\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B498\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B49C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4A0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4A4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4A8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4AC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4B0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4B4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4B8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4BC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4C0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4C4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4C8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B3F4\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "_0812B3F4:\n\t"
-        "	ldr r4, _0812B4CC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B402\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "_0812B402:\n\t"
-        "	ldr r4, _0812B4D0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B410\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "_0812B410:\n\t"
-        "	ldr r4, _0812B4D4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B41E\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "_0812B41E:\n\t"
-        "	ldr r4, _0812B4D8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4DC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4E0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4E4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4E8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4EC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4F0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4F4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r4, _0812B4F8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r6]\n\t"
-        "_0812B480:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B488: .4byte gPaletteFade\n\t"
-        "_0812B48C: .4byte sSlotMachine\n\t"
-        "_0812B490: .4byte gUnknown_203A7C0\n\t"
-        "_0812B494: .4byte gUnknown_203A7C4\n\t"
-        "_0812B498: .4byte gUnknown_203A7C8\n\t"
-        "_0812B49C: .4byte gUnknown_203A7CC\n\t"
-        "_0812B4A0: .4byte gUnknown_203A7D0\n\t"
-        "_0812B4A4: .4byte gUnknown_203A7D4\n\t"
-        "_0812B4A8: .4byte gUnknown_203A7D8\n\t"
-        "_0812B4AC: .4byte gUnknown_203A7DC\n\t"
-        "_0812B4B0: .4byte gUnknown_203A7E0\n\t"
-        "_0812B4B4: .4byte gUnknown_203A7E4\n\t"
-        "_0812B4B8: .4byte gUnknown_203A7E8\n\t"
-        "_0812B4BC: .4byte gUnknown_203A7EC\n\t"
-        "_0812B4C0: .4byte gUnknown_203A7F0\n\t"
-        "_0812B4C4: .4byte gUnknown_203A7F4\n\t"
-        "_0812B4C8: .4byte gUnknown_203A7B0\n\t"
-        "_0812B4CC: .4byte gUnknown_203A7B4\n\t"
-        "_0812B4D0: .4byte gUnknown_203A7B8\n\t"
-        "_0812B4D4: .4byte gUnknown_203A7BC\n\t"
-        "_0812B4D8: .4byte gUnknown_203A794\n\t"
-        "_0812B4DC: .4byte gUnknown_203A798\n\t"
-        "_0812B4E0: .4byte gUnknown_203A79C\n\t"
-        "_0812B4E4: .4byte gUnknown_203A7A0\n\t"
-        "_0812B4E8: .4byte gUnknown_203A7A4\n\t"
-        "_0812B4EC: .4byte gUnknown_203A7A8\n\t"
-        "_0812B4F0: .4byte gUnknown_203A7AC\n\t"
-        "_0812B4F4: .4byte gUnknown_203A7F8\n\t"
-        "_0812B4F8: .4byte gUnknown_203A7FC\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        SetMainCallback2(sSlotMachine->prevMainCb);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Reel);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Time);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Insert);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Stop);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Win);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Lose);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Bonus);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Big);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Reg);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_AButton);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Smoke);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Number);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_Pokeball);
+        FREE_AND_SET_NULL(sImageTable_DigitalDisplay_DPad);
+        TRY_FREE_AND_SET_NULL(sImageTable_ReelTimePikachu);
+        TRY_FREE_AND_SET_NULL(sImageTable_ReelTimeMachineAntennae);
+        TRY_FREE_AND_SET_NULL(sImageTable_ReelTimeMachine);
+        TRY_FREE_AND_SET_NULL(sImageTable_BrokenReelTimeMachine);
+        FREE_AND_SET_NULL(sMenuGfx);
+        FREE_AND_SET_NULL(sSelectedPikaPowerTile);
+        FREE_AND_SET_NULL(sReelOverlay_Tilemap);
+        FREE_AND_SET_NULL(sDigitalDisplayGfxPtr);
+        FREE_AND_SET_NULL(sReelTimeGfxPtr);
+        FREE_AND_SET_NULL(sReelButtonPress_Tilemap);
+        FREE_AND_SET_NULL(sReelBackground_Gfx);
+        FREE_AND_SET_NULL(sReelBackgroundSpriteSheet);
+        FREE_AND_SET_NULL(sSlotMachineSpritesheetsPtr);
+        FREE_AND_SET_NULL(sSlotMachine);
+    }
+    return FALSE;
 }
+
 
 __attribute__((naked)) void DrawMachineBias(void)
 {
@@ -6016,7 +5901,7 @@ __attribute__((naked)) void PikaPowerBolt_WaitAnim(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D314: .4byte gUnknown_203A798\n\t"
+        "_0812D314: .4byte sSelectedPikaPowerTile\n\t"
         "_0812D318: .4byte gUnknown_85844EC\n\t"
         ".syntax divided\n\t"
     );
@@ -6094,7 +5979,7 @@ __attribute__((naked)) void PikaPowerBolt_ClearAll(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D39C: .4byte gUnknown_203A798\n\t"
+        "_0812D39C: .4byte sSelectedPikaPowerTile\n\t"
         "_0812D3A0: .4byte gUnknown_85844EC\n\t"
         ".syntax divided\n\t"
     );
@@ -6199,7 +6084,7 @@ __attribute__((naked)) void LoadPikaPowerMeter(u8 bolts)
         "	movs r1, #1\n\t"
         "	b _0812D458\n\t"
         "	.align 2, 0\n\t"
-        "_0812D448: .4byte gUnknown_203A798\n\t"
+        "_0812D448: .4byte sSelectedPikaPowerTile\n\t"
         "_0812D44C: .4byte gUnknown_85844EE\n\t"
         "_0812D450:\n\t"
         "	cmp r0, #0xf\n\t"
@@ -6251,7 +6136,7 @@ __attribute__((naked)) void LoadPikaPowerMeter(u8 bolts)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D4B0: .4byte gUnknown_203A798\n\t"
+        "_0812D4B0: .4byte sSelectedPikaPowerTile\n\t"
         "_0812D4B4: .4byte gTasks\n\t"
         "_0812D4B8: .4byte sSlotMachine\n\t"
         ".syntax divided\n\t"
@@ -8438,8 +8323,8 @@ __attribute__((naked)) void CreateReelTimePikachuSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E3E4: .4byte gUnknown_203A7B0\n\t"
-        "_0812E3E8: .4byte gUnknown_203A7A4\n\t"
+        "_0812E3E4: .4byte sImageTable_ReelTimePikachu\n\t"
+        "_0812E3E8: .4byte sReelTimeGfxPtr\n\t"
         "_0812E3EC: .4byte gUnknown_8584CAC\n\t"
         "_0812E3F0: .4byte gSprites\n\t"
         "_0812E3F4: .4byte sSlotMachine\n\t"
@@ -8476,7 +8361,7 @@ __attribute__((naked)) void DestroyReelTimePikachuSprite(void)
         "	.align 2, 0\n\t"
         "_0812E428: .4byte sSlotMachine\n\t"
         "_0812E42C: .4byte gSprites\n\t"
-        "_0812E430: .4byte gUnknown_203A7B0\n\t"
+        "_0812E430: .4byte sImageTable_ReelTimePikachu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8667,13 +8552,13 @@ __attribute__((naked)) void CreateReelTimeMachineSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E594: .4byte gUnknown_203A7B4\n\t"
-        "_0812E598: .4byte gUnknown_203A7A4\n\t"
+        "_0812E594: .4byte sImageTable_ReelTimeMachineAntennae\n\t"
+        "_0812E598: .4byte sReelTimeGfxPtr\n\t"
         "_0812E59C: .4byte gUnknown_8584CC4\n\t"
         "_0812E5A0: .4byte gSprites\n\t"
         "_0812E5A4: .4byte gUnknown_8584F64\n\t"
         "_0812E5A8: .4byte sSlotMachine\n\t"
-        "_0812E5AC: .4byte gUnknown_203A7B8\n\t"
+        "_0812E5AC: .4byte sImageTable_ReelTimeMachine\n\t"
         "_0812E5B0: .4byte gUnknown_8584CDC\n\t"
         "_0812E5B4: .4byte gUnknown_8584F78\n\t"
         ".syntax divided\n\t"
@@ -8753,8 +8638,8 @@ __attribute__((naked)) void CreateBrokenReelTimeMachineSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812E644: .4byte gUnknown_203A7BC\n\t"
-        "_0812E648: .4byte gUnknown_203A7A4\n\t"
+        "_0812E644: .4byte sImageTable_BrokenReelTimeMachine\n\t"
+        "_0812E648: .4byte sReelTimeGfxPtr\n\t"
         "_0812E64C: .4byte gUnknown_8584CF4\n\t"
         "_0812E650: .4byte gSpriteCoordOffsetX\n\t"
         "_0812E654: .4byte gSprites\n\t"
@@ -9087,8 +8972,8 @@ __attribute__((naked)) void DestroyReelTimeMachineSprites(void)
         "	.align 2, 0\n\t"
         "_0812E8C4: .4byte sSlotMachine\n\t"
         "_0812E8C8: .4byte gSprites\n\t"
-        "_0812E8CC: .4byte gUnknown_203A7B4\n\t"
-        "_0812E8D0: .4byte gUnknown_203A7B8\n\t"
+        "_0812E8CC: .4byte sImageTable_ReelTimeMachineAntennae\n\t"
+        "_0812E8D0: .4byte sImageTable_ReelTimeMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9155,7 +9040,7 @@ __attribute__((naked)) void DestroyBrokenReelTimeMachineSprite(void)
         "	.align 2, 0\n\t"
         "_0812E938: .4byte sSlotMachine\n\t"
         "_0812E93C: .4byte gSprites\n\t"
-        "_0812E940: .4byte gUnknown_203A7BC\n\t"
+        "_0812E940: .4byte sImageTable_BrokenReelTimeMachine\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11414,11 +11299,11 @@ __attribute__((naked)) void LoadSlotMachineGfx(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812F894: .4byte gUnknown_203A7A0\n\t"
+        "_0812F894: .4byte sDigitalDisplayGfxPtr\n\t"
         "_0812F898: .4byte gUnknown_8585690\n\t"
-        "_0812F89C: .4byte gUnknown_203A7A4\n\t"
+        "_0812F89C: .4byte sReelTimeGfxPtr\n\t"
         "_0812F8A0: .4byte gUnknown_8585DF8\n\t"
-        "_0812F8A4: .4byte gUnknown_203A7FC\n\t"
+        "_0812F8A4: .4byte sSlotMachineSpritesheetsPtr\n\t"
         "_0812F8A8: .4byte gUnknown_85852B8\n\t"
         "_0812F8AC: .4byte gUnknown_8585648\n\t"
         ".syntax divided\n\t"
@@ -11474,8 +11359,8 @@ __attribute__((naked)) void LoadReelBackground(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812F90C: .4byte gUnknown_203A7F8\n\t"
-        "_0812F910: .4byte gUnknown_203A7AC\n\t"
+        "_0812F90C: .4byte sReelBackgroundSpriteSheet\n\t"
+        "_0812F910: .4byte sReelBackground_Gfx\n\t"
         "_0812F914: .4byte gUnknown_8585368\n\t"
         ".syntax divided\n\t"
     );
@@ -11512,7 +11397,7 @@ __attribute__((naked)) void LoadMenuGfx(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812F958: .4byte gUnknown_203A794\n\t"
+        "_0812F958: .4byte sMenuGfx\n\t"
         "_0812F95C: .4byte gUnknown_8586F4C\n\t"
         "_0812F960: .4byte gUnknown_858544C\n\t"
         "_0812F964: .4byte gUnknown_8585628\n\t"
@@ -11687,7 +11572,7 @@ __attribute__((naked)) void LoadSlotMachineReelOverlay(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812FA98: .4byte gUnknown_203A79C\n\t"
+        "_0812FA98: .4byte sReelOverlay_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11749,7 +11634,7 @@ __attribute__((naked)) void SetReelButtonTilemap(s16 a0, u16 a1, u16 a2, u16 a3,
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812FB0C: .4byte gUnknown_203A7A8\n\t"
+        "_0812FB0C: .4byte sReelButtonPress_Tilemap\n\t"
         "_0812FB10: .4byte SPECIAL_StartMirageTowerFossilFallAndSink\n\t"
         "_0812FB14: .4byte SPECIAL_sub_0813B9A0\n\t"
         ".syntax divided\n\t"
@@ -11851,20 +11736,20 @@ __attribute__((naked)) void SetDigitalDisplayImagePtrs(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0812FBC0: .4byte gUnknown_3001188\n\t"
-        "_0812FBC4: .4byte gUnknown_203A7C0\n\t"
-        "_0812FBC8: .4byte gUnknown_203A7C4\n\t"
-        "_0812FBCC: .4byte gUnknown_203A7C8\n\t"
-        "_0812FBD0: .4byte gUnknown_203A7D0\n\t"
-        "_0812FBD4: .4byte gUnknown_203A7D4\n\t"
-        "_0812FBD8: .4byte gUnknown_203A7E4\n\t"
-        "_0812FBDC: .4byte gUnknown_203A7E8\n\t"
-        "_0812FBE0: .4byte gUnknown_203A7EC\n\t"
-        "_0812FBE4: .4byte gUnknown_203A7F0\n\t"
-        "_0812FBE8: .4byte gUnknown_203A7F4\n\t"
-        "_0812FBEC: .4byte gUnknown_203A7CC\n\t"
-        "_0812FBF0: .4byte gUnknown_203A7D8\n\t"
-        "_0812FBF4: .4byte gUnknown_203A7DC\n\t"
-        "_0812FBF8: .4byte gUnknown_203A7E0\n\t"
+        "_0812FBC4: .4byte sImageTable_DigitalDisplay_Reel\n\t"
+        "_0812FBC8: .4byte sImageTable_DigitalDisplay_Time\n\t"
+        "_0812FBCC: .4byte sImageTable_DigitalDisplay_Insert\n\t"
+        "_0812FBD0: .4byte sImageTable_DigitalDisplay_Win\n\t"
+        "_0812FBD4: .4byte sImageTable_DigitalDisplay_Lose\n\t"
+        "_0812FBD8: .4byte sImageTable_DigitalDisplay_AButton\n\t"
+        "_0812FBDC: .4byte sImageTable_DigitalDisplay_Smoke\n\t"
+        "_0812FBE0: .4byte sImageTable_DigitalDisplay_Number\n\t"
+        "_0812FBE4: .4byte sImageTable_DigitalDisplay_Pokeball\n\t"
+        "_0812FBE8: .4byte sImageTable_DigitalDisplay_DPad\n\t"
+        "_0812FBEC: .4byte sImageTable_DigitalDisplay_Stop\n\t"
+        "_0812FBF0: .4byte sImageTable_DigitalDisplay_Bonus\n\t"
+        "_0812FBF4: .4byte sImageTable_DigitalDisplay_Big\n\t"
+        "_0812FBF8: .4byte sImageTable_DigitalDisplay_Reg\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12072,21 +11957,21 @@ __attribute__((naked)) void AllocDigitalDisplayGfx(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812FDA4: .4byte gUnknown_203A7C0\n\t"
-        "_0812FDA8: .4byte gUnknown_203A7A0\n\t"
-        "_0812FDAC: .4byte gUnknown_203A7C4\n\t"
-        "_0812FDB0: .4byte gUnknown_203A7C8\n\t"
-        "_0812FDB4: .4byte gUnknown_203A7CC\n\t"
-        "_0812FDB8: .4byte gUnknown_203A7D0\n\t"
-        "_0812FDBC: .4byte gUnknown_203A7D4\n\t"
-        "_0812FDC0: .4byte gUnknown_203A7D8\n\t"
-        "_0812FDC4: .4byte gUnknown_203A7DC\n\t"
-        "_0812FDC8: .4byte gUnknown_203A7E0\n\t"
-        "_0812FDCC: .4byte gUnknown_203A7E4\n\t"
-        "_0812FDD0: .4byte gUnknown_203A7E8\n\t"
-        "_0812FDD4: .4byte gUnknown_203A7EC\n\t"
-        "_0812FDD8: .4byte gUnknown_203A7F0\n\t"
-        "_0812FDDC: .4byte gUnknown_203A7F4\n\t"
+        "_0812FDA4: .4byte sImageTable_DigitalDisplay_Reel\n\t"
+        "_0812FDA8: .4byte sDigitalDisplayGfxPtr\n\t"
+        "_0812FDAC: .4byte sImageTable_DigitalDisplay_Time\n\t"
+        "_0812FDB0: .4byte sImageTable_DigitalDisplay_Insert\n\t"
+        "_0812FDB4: .4byte sImageTable_DigitalDisplay_Stop\n\t"
+        "_0812FDB8: .4byte sImageTable_DigitalDisplay_Win\n\t"
+        "_0812FDBC: .4byte sImageTable_DigitalDisplay_Lose\n\t"
+        "_0812FDC0: .4byte sImageTable_DigitalDisplay_Bonus\n\t"
+        "_0812FDC4: .4byte sImageTable_DigitalDisplay_Big\n\t"
+        "_0812FDC8: .4byte sImageTable_DigitalDisplay_Reg\n\t"
+        "_0812FDCC: .4byte sImageTable_DigitalDisplay_AButton\n\t"
+        "_0812FDD0: .4byte sImageTable_DigitalDisplay_Smoke\n\t"
+        "_0812FDD4: .4byte sImageTable_DigitalDisplay_Number\n\t"
+        "_0812FDD8: .4byte sImageTable_DigitalDisplay_Pokeball\n\t"
+        "_0812FDDC: .4byte sImageTable_DigitalDisplay_DPad\n\t"
         ".syntax divided\n\t"
     );
 }

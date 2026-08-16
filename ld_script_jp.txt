@@ -7407,7 +7407,7 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_PrintMsg_NoMoreCoins);
         src/slot_machine.o(.text.SlotTask_WaitMsg_NoMoreCoins);
         src/slot_machine.o(.text.SlotTask_EndGame);
-        src/slot_machine.o(.text.SlotAction_FreeDataStructures);
+        src/slot_machine.o(.text.SlotTask_FreeDataStructures);
         src/slot_machine.o(.text.DrawMachineBias);
         src/slot_machine.o(.text.ResetBiasFailure);
         src/slot_machine.o(.text.GetBiasTag);
