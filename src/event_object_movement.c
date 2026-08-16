@@ -2448,67 +2448,119 @@ void FreeAndReserveObjectSpritePalettes(void)
 
 __attribute__((naked)) void LoadEventObjectPalette(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl FindEventObjectPaletteIndexByTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r0, _0808E228\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0808E222\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	ldr r1, _0808E22C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl sub_0808E264\n\t"
-        "_0808E222:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E228: .4byte 0x000011FF\n\t"
-        "_0808E22C: .4byte gUnknown_84E401C\n\t"
-        ".syntax divided\n\t"
+    __asm__(".syntax unified
+	"
+        ".code 16
+	"
+        "	push {lr}
+	"
+        "	lsls r0, r0, #0x10
+	"
+        "	lsrs r0, r0, #0x10
+	"
+        "	bl FindEventObjectPaletteIndexByTag
+	"
+        "	lsls r0, r0, #0x18
+	"
+        "	lsrs r1, r0, #0x18
+	"
+        "	ldr r0, _0808E228
+	"
+        "	cmp r1, r0
+	"
+        "	beq _0808E222
+	"
+        "	lsls r0, r1, #3
+	"
+        "	ldr r1, _0808E22C
+	"
+        "	adds r0, r0, r1
+	"
+        "	bl sub_0808E264
+	"
+        "_0808E222:
+	"
+        "	pop {r0}
+	"
+        "	bx r0
+	"
+        "	.align 2, 0
+	"
+        "_0808E228: .4byte 0x000011FF
+	"
+        "_0808E22C: .4byte gUnknown_84E401C
+	"
+        ".syntax divided
+	"
     );
 }
 
 __attribute__((naked)) void LoadObjectEventPaletteSet(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	ldr r1, _0808E260\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0808E25A\n\t"
-        "	adds r6, r1, #0\n\t"
-        "_0808E240:\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl LoadEventObjectPalette\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _0808E240\n\t"
-        "_0808E25A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E260: .4byte 0x000011FF\n\t"
-        ".syntax divided\n\t"
+    __asm__(".syntax unified
+	"
+        ".code 16
+	"
+        "	push {r4, r5, r6, lr}
+	"
+        "	adds r5, r0, #0
+	"
+        "	movs r4, #0
+	"
+        "	ldrh r0, [r5]
+	"
+        "	ldr r1, _0808E260
+	"
+        "	cmp r0, r1
+	"
+        "	beq _0808E25A
+	"
+        "	adds r6, r1, #0
+	"
+        "_0808E240:
+	"
+        "	lsls r0, r4, #1
+	"
+        "	adds r0, r0, r5
+	"
+        "	ldrh r0, [r0]
+	"
+        "	bl LoadEventObjectPalette
+	"
+        "	adds r0, r4, #1
+	"
+        "	lsls r0, r0, #0x18
+	"
+        "	lsrs r4, r0, #0x18
+	"
+        "	lsls r0, r4, #1
+	"
+        "	adds r0, r0, r5
+	"
+        "	ldrh r0, [r0]
+	"
+        "	cmp r0, r6
+	"
+        "	bne _0808E240
+	"
+        "_0808E25A:
+	"
+        "	pop {r4, r5, r6}
+	"
+        "	pop {r0}
+	"
+        "	bx r0
+	"
+        "	.align 2, 0
+	"
+        "_0808E260: .4byte 0x000011FF
+	"
+        ".syntax divided
+	"
     );
 }
 
-__attribute__((naked)) void sub_0808E264(void)
+__attribute__((naked)) u8 sub_0808E264(const struct SpritePalette *palette)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
