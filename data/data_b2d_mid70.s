@@ -21,7 +21,8 @@ gText_MoveRelearnerWhichMoveToForget: @ 0x85ADAC9
 
 	.globl sMoveRelearnerSpriteSheet
 sMoveRelearnerSpriteSheet: @ 0x85ADAF4
-	.incbin "baserom_jp.gba", 0x5adaf4, 0x8
+	.4byte 0x085AD820
+	.hword 0x0180, 0x1595
 
 	.globl sMoveRelearnerPalette
 sMoveRelearnerPalette: @ 0x85ADAFC
@@ -29,7 +30,8 @@ sMoveRelearnerPalette: @ 0x85ADAFC
 
 	.globl sDisplayModeArrowsTemplate
 sDisplayModeArrowsTemplate: @ 0x85ADB04
-	.incbin "baserom_jp.gba", 0x5adb04, 0x10
+	.byte 0x00, 0x30, 0x10, 0x01, 0x70, 0x10, 0xFF, 0xFF
+	.byte 0xFF, 0xFF, 0xCD, 0x14, 0xCD, 0x14, 0x00, 0x00
 
 	.globl sMoveListScrollArrowsTemplate
 sMoveListScrollArrowsTemplate: @ 0x85ADB14
@@ -37,11 +39,13 @@ sMoveListScrollArrowsTemplate: @ 0x85ADB14
 
 	.globl sConstestMoveHeartSprite
 sConstestMoveHeartSprite: @ 0x85ADB54
-	.incbin "baserom_jp.gba", 0x5adb54, 0x18
+	.hword 0x1595, 0x1596
+	.4byte 0x085ADADC, 0x085ADB44
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl sMoveRelearnerMenuBackgroundTemplates
 sMoveRelearnerMenuBackgroundTemplates: @ 0x85ADB6C
-	.incbin "baserom_jp.gba", 0x5adb6c, 0x8
+	.byte 0xF0, 0x01, 0x00, 0x00, 0xE1, 0x11, 0x00, 0x00
 
 	.globl sRoamerLocations
 sRoamerLocations: @ 0x85ADB74
@@ -495,11 +499,13 @@ gText_Hoenn: @ 0x85C611C
 	.string "ホウエンちほう$"
 	.globl sFieldRegionMapBgTemplates
 sFieldRegionMapBgTemplates: @ 0x85C6124
-	.incbin "baserom_jp.gba", 0x5c6124, 0x8
+	.byte 0xF0, 0x01, 0x00, 0x00, 0xCA, 0x2D, 0x00, 0x00
 
 	.globl sFieldRegionMapWindowTemplates
 sFieldRegionMapWindowTemplates: @ 0x85C612C
-	.incbin "baserom_jp.gba", 0x5c612c, 0x18
+	.byte 0x00, 0x13, 0x11, 0x0A, 0x02, 0x0F, 0x01, 0x00
+	.byte 0x00, 0x16, 0x01, 0x07, 0x02, 0x0F, 0x15, 0x00
+	.byte 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 
 	.globl gUnknown_85C6144
 gUnknown_85C6144: @ 0x85C6144
