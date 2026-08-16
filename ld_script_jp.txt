@@ -5616,9 +5616,9 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.HandleInput_OnButtons);
         src/pokemon_storage_system.o(.text.sub_080CF268);
         src/pokemon_storage_system.o(.text.AddBoxOptionsMenu);
-        src/pokemon_storage_system.o(.text.sub_080CF2D8);
-        src/pokemon_storage_system.o(.text.sub_080CF300);
-        src/pokemon_storage_system.o(.text.sub_080CF3C0);
+        src/pokemon_storage_system.o(.text.SetSelectionMenuTexts);
+        src/pokemon_storage_system.o(.text.SetMenuTexts_Mon);
+        src/pokemon_storage_system.o(.text.SetMenuTexts_Item);
         src/pokemon_storage_system.o(.text.sub_080CF470);
         src/pokemon_storage_system.o(.text.sub_080CF490);
         src/pokemon_storage_system.o(.text.sub_080CF640);

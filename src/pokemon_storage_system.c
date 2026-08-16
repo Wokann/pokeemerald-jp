@@ -110,6 +110,16 @@ enum
     MODE_MOVE,
 };
 
+// PC main menu options
+enum {
+    OPTION_WITHDRAW,
+    OPTION_DEPOSIT,
+    OPTION_MOVE_MONS,
+    OPTION_MOVE_ITEMS,
+    OPTION_EXIT,
+    OPTIONS_COUNT
+};
+
 struct PokemonStorageSystemData
 {
     u8 state;
@@ -312,6 +322,8 @@ extern void Task_InitPokeStorage(void);
 extern const struct WindowTemplate sPSSWindowTemplates[];
 extern const struct SpritePalette sWaveformSpritePalette;
 extern void SetCursorMonData(const void *data, u8 mode);
+extern u8 SetMenuTexts_Mon(void);
+extern u8 SetMenuTexts_Item(void);
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -16968,7 +16980,7 @@ __attribute__((naked)) bool8 InBoxInput_Normal(void)
         "	ands r0, r1\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080CEB60\n\t"
-        "	bl sub_080CF2D8\n\t"
+        "	bl SetSelectionMenuTexts\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080CEB60\n\t"
@@ -17578,7 +17590,7 @@ __attribute__((naked)) bool8 HandleInput_InParty(void)
         "	mov r8, r0\n\t"
         "	b _080CEFD8\n\t"
         "_080CEF40:\n\t"
-        "	bl sub_080CF2D8\n\t"
+        "	bl SetSelectionMenuTexts\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080CEFD8\n\t"
@@ -18075,33 +18087,16 @@ __attribute__((naked)) void AddBoxOptionsMenu(void)
     );
 }
 
-__attribute__((naked)) void sub_080CF2D8(void)
+u8 SetSelectionMenuTexts(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl InitMenu\n\t"
-        "	ldr r0, _080CF2F0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080CF2F4\n\t"
-        "	bl sub_080CF3C0\n\t"
-        "	b _080CF2F8\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF2F0: .4byte gUnknown_20399A8\n\t"
-        "_080CF2F4:\n\t"
-        "	bl sub_080CF300\n\t"
-        "_080CF2F8:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMenu();
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        return SetMenuTexts_Mon();
+    else
+        return SetMenuTexts_Item();
 }
 
-__attribute__((naked)) void sub_080CF300(void)
+__attribute__((naked)) u8 SetMenuTexts_Mon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -18201,7 +18196,7 @@ __attribute__((naked)) void sub_080CF300(void)
     );
 }
 
-__attribute__((naked)) void sub_080CF3C0(void)
+__attribute__((naked)) u8 SetMenuTexts_Item(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
