@@ -2456,7 +2456,7 @@ __attribute__((naked)) u16 GetCurrLocationDefaultMusic(void)
         "	lsls r0, r0, #5\n\t"
         "	cmp r1, r0\n\t"
         "	bne _08085064\n\t"
-        "	bl GetSav1Weather\n\t"
+        "	bl GetSavedWeather\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #8\n\t"

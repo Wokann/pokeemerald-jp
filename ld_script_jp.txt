@@ -28,6 +28,7 @@ gBerryCheck_Pal = gUnknown_8D9C1AC;
 
 sub_080A5DB4 = ConvertPosDataToTranslateLinearData;
 SetSavedWeather = SetSav1Weather;
+GetSavedWeather = GetSavedWeather;
 SetSavedWeatherFromCurrMapHeader = DoCurrentWeather;
 sub_08076320 = StartHealthboxSlideIn;
 sub_08076124 = CreateTradePokeballSprite;

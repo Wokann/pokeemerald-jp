@@ -5739,20 +5739,11 @@ __attribute__((naked)) void SetSav1Weather(void)
     );
 }
 
-__attribute__((naked)) u8 GetSav1Weather()
+u8 GetSavedWeather(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080AE6B4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x2e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080AE6B4: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->weather;
 }
+
 
 __attribute__((naked)) void SetSav1WeatherFromCurrMapHeader(void)
 {
@@ -5783,38 +5774,20 @@ __attribute__((naked)) void SetSav1WeatherFromCurrMapHeader(void)
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) void SetWeather(u32 weather)
+
+void SetWeather(u32 weather)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SetSav1Weather\n\t"
-        "	bl GetSav1Weather\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl SetNextWeather\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetSavedWeather(weather);
+    SetNextWeather(GetSavedWeather());
 }
-__attribute__((naked)) void SetWeather_Unused(void)
+
+
+void SetWeather_Unused(u32 weather)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SetSav1Weather\n\t"
-        "	bl GetSav1Weather\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl SetCurrentAndNextWeather\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetSavedWeather(weather);
+    SetCurrentAndNextWeather(GetSavedWeather());
 }
+
 
 
 
@@ -5823,7 +5796,7 @@ __attribute__((naked)) void DoCurrentWeather()
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, r5, lr}\n\t"
-        "	bl GetSav1Weather\n\t"
+        "	bl GetSavedWeather\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	cmp r4, #0xf\n\t"
@@ -5875,7 +5848,7 @@ __attribute__((naked)) void ResumePausedWeather()
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, r5, lr}\n\t"
-        "	bl GetSav1Weather\n\t"
+        "	bl GetSavedWeather\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	cmp r4, #0xf\n\t"

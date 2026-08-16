@@ -571,7 +571,7 @@ u8 BattleSetup_GetEnvironmentId(void)
     }
     if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE113) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE113))
         return BATTLE_ENVIRONMENT_SAND;
-    if (GetSav1Weather() == WEATHER_SANDSTORM) // JP: GetSav1Weather
+    if (GetSavedWeather() == WEATHER_SANDSTORM) // JP: GetSavedWeather
         return BATTLE_ENVIRONMENT_SAND;
 
     return BATTLE_ENVIRONMENT_PLAIN;
