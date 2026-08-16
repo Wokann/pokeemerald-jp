@@ -1,6 +1,10 @@
 #include "global.h"
 #include "constants/event_object_movement.h"
 
+
+// Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
+extern const s8 sFigure8XOffsets[];
+extern const s8 sFigure8YOffsets[];
 struct ObjectEvent;
 struct Sprite;
 
@@ -26141,40 +26145,14 @@ bool8 UpdateWalkSlowAnim(struct Sprite *sprite)
 #undef sNumSteps
 
 
-__attribute__((naked)) s16 GetFigure8YOffset(s16 idx)
+s16 GetFigure8YOffset(s16 idx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080970A8\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080970A8: .4byte sFigure8YOffsets\n\t"
-        ".syntax divided\n\t"
-    );
+    return sFigure8YOffsets[idx];
 }
 
-__attribute__((naked)) s16 GetFigure8XOffset(s16 idx)
+s16 GetFigure8XOffset(s16 idx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080970BC\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080970BC: .4byte sFigure8XOffsets\n\t"
-        ".syntax divided\n\t"
-    );
+    return sFigure8XOffsets[idx];
 }
 
 __attribute__((naked)) void sub_080970C0(struct Sprite *sprite)
