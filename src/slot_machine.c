@@ -1155,6 +1155,22 @@ void CreateReelTimeNumberSprites(void);
 void CreateReelTimeShadowSprites(void);
 void CreateReelTimeNumberGapSprite(void);
 void GetReeltimeDraw(void);
+static bool8 ShouldReelTimeMachineExplode(u16 check);
+void ClearReelTimeWindowTilemap(s16 a0);
+void DestroyReelTimePikachuSprite(void);
+void DestroyReelTimeMachineSprites(void);
+void DestroyReelTimeShadowSprites(void);
+void DestroyReelTimeBoltSprites(void);
+void DestroyReelTimePikachuAuraSprites(void);
+void DestroyReelTimeExplosionSprite(void);
+void CreateReelTimeDuckSprites(void);
+void CreateBrokenReelTimeMachineSprite(void);
+void CreateReelTimeSmokeSprite(void);
+bool8 IsReelTimeSmokeAnimFinished(void);
+void DestroyReelTimeSmokeSprite(void);
+void DestroyBrokenReelTimeMachineSprite(void);
+void DestroyReelTimeDuckSprites(void);
+void CreateReelTimeExplosionSprite(void);
 void CreateReelTimeBoltSprites(void);
 void CreateReelTimePikachuAuraSprites(void);
 void SetReelTimeBoltDelay(s16 delay);
@@ -1997,35 +2013,20 @@ __attribute__((naked)) void GetReeltimeDraw(void)
     );
 }
 
-__attribute__((naked)) void SkipToReeltimeAction14(void)
+__attribute__((section(".rodata.sReelTimeExplodeProbability")))
+static const u16 sReelTimeExplodeProbability[] = {
+    128, 175, 200, 225, 256
+};
+
+// Returns true if the ReelTime machine should explode. Each time we check,
+// the odds of explosion increase.
+static bool8 ShouldReelTimeMachineExplode(u16 check)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	bl Random\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	ldr r0, _0812B790\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r4, [r4]\n\t"
-        "	cmp r1, r4\n\t"
-        "	blo _0812B794\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812B796\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B790: .4byte gUnknown_8584752\n\t"
-        "_0812B794:\n\t"
-        "	movs r0, #1\n\t"
-        "_0812B796:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 rval = Random() & 0xff;
+    if (rval < sReelTimeExplodeProbability[check])
+        return TRUE;
+    else
+        return FALSE;
 }
 
 __attribute__((naked)) u16 ReelTimeSpeed(void)
@@ -4159,640 +4160,230 @@ static void ReelTime_WaitReel(struct Task *task)
 #undef tTimer1
 #undef tExplodeChecks
 
-__attribute__((naked)) void ReelTime_CheckExplode(struct Task *task)
+#define tState         data[0]
+#define tReelSpeed     data[1]
+#define tTimer3        data[2]
+#define tRtReelSpeed   data[4]
+#define tTimer2        data[4]
+#define tTimer1        data[5]
+#define tExplodeChecks data[6]
+
+// Check whether the ReelTime machine should explode.
+//
+// The ReelTime machine displays 0 when this task starts. If there is a positive
+// ReelTime draw, the machine keeps spinning until it lands on that number.
+//
+// Otherwise, it checks every 40 frames whether it should explode. If so, it
+// explodes immediately. After 4 checks, the machine won't explode but continues
+// to spin until it lands on 0.
+static void ReelTime_CheckExplode(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReel\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	adds r0, #0x40\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x27\n\t"
-        "	ble _0812D7EC\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	ldr r0, _0812D7C4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D7C8\n\t"
-        "	ldrb r1, [r1, #0xa]\n\t"
-        "	movs r2, #0x14\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _0812D7E6\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _0812D7E4\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D7C4: .4byte sSlotMachine\n\t"
-        "_0812D7C8:\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _0812D7D6\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _0812D7E4\n\t"
-        "_0812D7D6:\n\t"
-        "	ldrh r0, [r4, #0x14]\n\t"
-        "	bl SkipToReeltimeAction14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D7E6\n\t"
-        "	movs r0, #0xe\n\t"
-        "_0812D7E4:\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0812D7E6:\n\t"
-        "	ldrh r0, [r4, #0x14]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "_0812D7EC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    AdvanceReeltimeReel(task->tRtReelSpeed >> 8);
+    task->tRtReelSpeed = (u8)task->tRtReelSpeed + 0x40;
+    if (++task->tTimer1 >= 40)
+    {
+        task->tTimer1 = 0;
+        if (sSlotMachine->reelTimeDraw)
+        {
+            if (sSlotMachine->reelTimeSpinsLeft <= task->tExplodeChecks)
+                task->tState++; // RT_TASK_LAND
+        }
+        else if (task->tExplodeChecks > 3)
+        {
+            task->tState++; // RT_TASK_LAND
+        }
+        else if (ShouldReelTimeMachineExplode(task->tExplodeChecks))
+        {
+            task->tState = RT_TASK_EXPLODE;
+        }
+        task->tExplodeChecks++;
+    }
 }
 
-__attribute__((naked)) void ReelTime_LandOnOutcome(struct Task *task)
+// Reel spins until it lands on the selected outcome.
+static void ReelTime_LandOnOutcome(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r6, _0812D81C\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D820\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReelToNextSymbol\n\t"
-        "	b _0812D848\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D81C: .4byte sSlotMachine\n\t"
-        "_0812D820:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetReelTimeSymbol\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0812D852\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReel\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl __modsi3\n\t"
-        "_0812D848:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	adds r0, #0x40\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "_0812D852:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0812D876\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetReelTimeSymbol\n\t"
-        "	ldr r1, _0812D87C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0812D876\n\t"
-        "	strh r5, [r4, #0x10]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0812D876:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D87C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 reeltimePixelOffset = sSlotMachine->reeltimePixelOffset % 20;
+    if (reeltimePixelOffset)
+    {
+        reeltimePixelOffset = AdvanceReeltimeReelToNextSymbol(task->tRtReelSpeed >> 8);
+        task->tRtReelSpeed = (u8)task->tRtReelSpeed + 0x40;
+    }
+    else if (GetReelTimeSymbol(1) != sSlotMachine->reelTimeDraw)
+    {
+        AdvanceReeltimeReel(task->tRtReelSpeed >> 8);
+        reeltimePixelOffset = sSlotMachine->reeltimePixelOffset % 20;
+        task->tRtReelSpeed = (u8)task->tRtReelSpeed + 0x40;
+    }
+    if (reeltimePixelOffset == 0 && GetReelTimeSymbol(1) == sSlotMachine->reelTimeDraw)
+    {
+        task->tRtReelSpeed = 0; // Also initializes task->tTimer2
+        task->tState++; // RT_TASK_PIKA_REACT
+    }
 }
 
-__attribute__((naked)) void ReelTime_PikachuReact(struct Task *task)
+// Animate Pikachu reaction. Clear any power bolts the player may have won if
+// they got a positive ReelTime draw.
+static void ReelTime_PikachuReact(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r6, #0\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	ble _0812D924\n\t"
-        "	bl StopMapMusic\n\t"
-        "	bl sub_0812EA8C\n\t"
-        "	bl sub_0812EBDC\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldr r5, _0812D8D4\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812D8E0\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812D8D8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #5\n\t"
-        "	bl StartSpriteAnimIfDifferent\n\t"
-        "	ldr r0, _0812D8DC\n\t"
-        "	bl PlayFanfare\n\t"
-        "	b _0812D924\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D8D4: .4byte sSlotMachine\n\t"
-        "_0812D8D8: .4byte gSprites\n\t"
-        "_0812D8DC: .4byte SPECIAL_sub_0818E16C\n\t"
-        "_0812D8E0:\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _0812D92C\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #4\n\t"
-        "	bl StartSpriteAnimIfDifferent\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	strb r6, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D91C\n\t"
-        "	bl sub_0812D1EC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	strb r6, [r0, #2]\n\t"
-        "_0812D91C:\n\t"
-        "	movs r0, #0xc3\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl PlayFanfare\n\t"
-        "_0812D924:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D92C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++task->tTimer2 >= 60)
+    {
+        StopMapMusic();
+        DestroyReelTimeBoltSprites();
+        DestroyReelTimePikachuAuraSprites();
+        task->tState++; // RT_TASK_WAIT_CLEAR_POWER
+        if(sSlotMachine->reelTimeDraw == 0)
+        {
+            task->tTimer2 = 0xa0;
+            StartSpriteAnimIfDifferent(&gSprites[sSlotMachine->reelTimePikachuSpriteId], 5);
+            PlayFanfare(MUS_TOO_BAD);
+        }
+        else
+        {
+            task->tTimer2 = 0xc0;
+            StartSpriteAnimIfDifferent(&gSprites[sSlotMachine->reelTimePikachuSpriteId], 4);
+            gSprites[sSlotMachine->reelTimePikachuSpriteId].animCmdIndex = 0;
+            if (sSlotMachine->pikaPowerBolts)
+            {
+                ResetPikaPowerBolts();
+                sSlotMachine->pikaPowerBolts = 0;
+            }
+            PlayFanfare(MUS_SLOTS_WIN);
+        }
+    }
 }
 
-__attribute__((naked)) void ReelTime_WaitClearPikaPower(struct Task *task)
+static void ReelTime_WaitClearPikaPower(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x10]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D948\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812D958\n\t"
-        "_0812D948:\n\t"
-        "	bl sub_0812D21C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812D958\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0812D958:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((task->tTimer2 == 0 || --task->tTimer2 == 0) && !IsPikaPowerBoltAnimating())
+        task->tState++; // RT_TASK_CLOSE_WINDOW_SUCCESS
 }
 
 
-__attribute__((naked)) void ReelTime_CloseWindow(struct Task *task)
+static void ReelTime_CloseWindow(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812D9A0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	adds r1, #8\n\t"
-        "	strh r1, [r4, #0xa]\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	subs r0, #8\n\t"
-        "	movs r2, #0xff\n\t"
-        "	ands r0, r2\n\t"
-        "	lsrs r5, r0, #3\n\t"
-        "	ldr r0, _0812D9A4\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x13\n\t"
-        "	cmp r0, #0x19\n\t"
-        "	bgt _0812D9A8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0812DC60\n\t"
-        "	b _0812D9AE\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D9A0: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812D9A4: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_0812D9A8:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0812D9AE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 r4;
+    gSpriteCoordOffsetX -= 8;
+    task->data[1] += 8;
+    task->data[3] += 8;
+    r4 = ((task->data[1] - 8) & 0xff) >> 3;
+    SetGpuReg(REG_OFFSET_BG1HOFS, task->data[1] & 0x1ff);
+    if (task->data[3] >> 3 <= 25)
+        ClearReelTimeWindowTilemap(r4);
+    else
+        task->tState++; // RT_TASK_DESTROY_SPRITES
 }
 
-__attribute__((naked)) void ReelTime_DestroySprites(struct Task *task)
+// Destroy sprites and wrap up the ReelTime task.
+//
+// If the player got a positive ReelTime draw, select the speed that the slot
+// reels will initially move at.
+static void ReelTime_DestroySprites(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r4, _0812DA08\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r6, #0\n\t"
-        "	strb r6, [r0, #0xb]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	strb r0, [r1, #0xa]\n\t"
-        "	ldr r0, _0812DA0C\n\t"
-        "	strh r6, [r0]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r1, #0x1a]\n\t"
-        "	bl sub_0812E3F8\n\t"
-        "	bl sub_0812E83C\n\t"
-        "	bl sub_0812E8D4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x60\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl PlayNewMapMusic\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812DA14\n\t"
-        "	ldr r0, _0812DA10\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _0812DA2A\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DA08: .4byte sSlotMachine\n\t"
-        "_0812DA0C: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812DA10: .4byte Task_ReelTime + 1\n\t"
-        "_0812DA14:\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	bl ReelTimeSpeed\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	strh r6, [r5, #0xc]\n\t"
-        "	strh r6, [r5, #0xe]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "_0812DA2A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->reelTimeSpinsUsed = 0;
+    sSlotMachine->reelTimeSpinsLeft = sSlotMachine->reelTimeDraw;
+    gSpriteCoordOffsetX = 0;
+    SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+    sSlotMachine->reelSpeed = REEL_NORMAL_SPEED;
+    DestroyReelTimePikachuSprite();
+    DestroyReelTimeMachineSprites();
+    DestroyReelTimeShadowSprites();
+    PlayNewMapMusic(sSlotMachine->backupMapMusic);
+    if (sSlotMachine->reelTimeSpinsLeft == 0)
+    {
+        DestroyTask(FindTaskIdByFunc(Task_ReelTime));
+    }
+    else
+    {
+        CreateDigitalDisplayScene(DIG_DISPLAY_REEL_TIME);
+        task->tReelSpeed = ReelTimeSpeed();
+        task->tTimer3 = 0;
+        task->data[3] = 0;
+        task->tState++; // RT_TASK_SET_REEL_SPEED
+    }
 }
 
-__attribute__((naked)) void ReelTime_SetReelSpeed(struct Task *task)
+// Slow the slot reels down until they match the selected speed.
+static void ReelTime_SetReelSpeed(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _0812DA4C\n\t"
-        "	ldr r5, [r0]\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0812DA50\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	b _0812DA76\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DA4C: .4byte sSlotMachine\n\t"
-        "_0812DA50:\n\t"
-        "	movs r1, #0x1c\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812DA76\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	movs r1, #7\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812DA76\n\t"
-        "	ldrh r0, [r5, #0x1a]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	strh r0, [r5, #0x1a]\n\t"
-        "_0812DA76:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sSlotMachine->reelSpeed == task->tReelSpeed)
+        task->tState++; // RT_TASK_END_SUCCESS
+    else if (sSlotMachine->reelPixelOffsets[0] % REEL_SYMBOL_HEIGHT == 0 && (++task->tTimer3 & 0x07) == 0)
+        sSlotMachine->reelSpeed >>= 1;
 }
 
-__attribute__((naked)) void ReelTime_EndSuccess(struct Task *task)
+static void ReelTime_EndSuccess(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsDigitalDisplayAnimFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812DA96\n\t"
-        "	ldr r0, _0812DA9C\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_0812DA96:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DA9C: .4byte Task_ReelTime + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsDigitalDisplayAnimFinished())
+        DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
 
-__attribute__((naked)) void ReelTime_ExplodeMachine(struct Task *task)
+static void ReelTime_ExplodeMachine(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0812E83C\n\t"
-        "	bl sub_0812EA8C\n\t"
-        "	bl sub_0812EBDC\n\t"
-        "	bl sub_0812EC30\n\t"
-        "	ldr r5, _0812DB08\n\t"
-        "	ldr r3, _0812DB0C\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x4e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #5\n\t"
-        "	bl StartSpriteAnimIfDifferent\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	strh r1, [r4, #0x12]\n\t"
-        "	bl StopMapMusic\n\t"
-        "	ldr r0, _0812DB10\n\t"
-        "	bl PlayFanfare\n\t"
-        "	movs r0, #0xb2\n\t"
-        "	bl PlaySE\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DB08: .4byte gSprites\n\t"
-        "_0812DB0C: .4byte sSlotMachine\n\t"
-        "_0812DB10: .4byte SPECIAL_sub_0818E16C\n\t"
-        ".syntax divided\n\t"
-    );
+    DestroyReelTimeMachineSprites();
+    DestroyReelTimeBoltSprites();
+    DestroyReelTimePikachuAuraSprites();
+    CreateReelTimeExplosionSprite();
+    gSprites[sSlotMachine->reelTimeShadowSpriteIds[0]].invisible = TRUE;
+    StartSpriteAnimIfDifferent(&gSprites[sSlotMachine->reelTimePikachuSpriteId], 5);
+    task->tState++; // RT_TASK_WAIT_EXPLODE
+    task->data[4] = 4;
+    task->tTimer1 = 0;
+    StopMapMusic();
+    PlayFanfare(MUS_TOO_BAD);
+    PlaySE(SE_M_EXPLOSION);
 }
 
-__attribute__((naked)) void ReelTime_WaitExplode(struct Task *task)
+static void ReelTime_WaitExplode(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812DB90\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r1, [r4, #0x10]\n\t"
-        "	movs r0, #0x16\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x12]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812DB36\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "_0812DB36:\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	movs r1, #0x1f\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812DB4C\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "_0812DB4C:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0812DB8A\n\t"
-        "	bl sub_0812EC80\n\t"
-        "	bl sub_0812ECA4\n\t"
-        "	bl sub_0812E5B8\n\t"
-        "	bl sub_0812EDD0\n\t"
-        "	ldr r2, _0812DB94\n\t"
-        "	ldr r0, _0812DB98\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x4e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	strh r5, [r4, #0x12]\n\t"
-        "_0812DB8A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DB90: .4byte gSpriteCoordOffsetY\n\t"
-        "_0812DB94: .4byte gSprites\n\t"
-        "_0812DB98: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpriteCoordOffsetY = task->data[4];
+    SetGpuReg(REG_OFFSET_BG1VOFS, (u16)task->data[4]);
+    if (task->tTimer1 & 0x01)
+        task->data[4] = -task->data[4];
+    if ((++task->tTimer1 & 0x1f) == 0)
+        task->data[4] >>= 1;
+    if (task->data[4] == 0)
+    {
+        DestroyReelTimeExplosionSprite();
+        CreateReelTimeDuckSprites();
+        CreateBrokenReelTimeMachineSprite();
+        CreateReelTimeSmokeSprite();
+        gSprites[sSlotMachine->reelTimeShadowSpriteIds[0]].invisible = FALSE;
+        task->tState++; // RT_TASK_WAIT_SMOKE
+        task->tTimer1 = 0;
+    }
 }
 
-__attribute__((naked)) void ReelTime_WaitSmoke(struct Task *task)
+static void ReelTime_WaitSmoke(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812DBC8\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0x16\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl sub_0812EEB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812DBC2\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	bl sub_0812EEDC\n\t"
-        "_0812DBC2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DBC8: .4byte gSpriteCoordOffsetY\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpriteCoordOffsetY = 0;
+    SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+    if (IsReelTimeSmokeAnimFinished())
+    {
+        task->tState++; // RT_TASK_CLOSE_WINDOW_FAILURE
+        DestroyReelTimeSmokeSprite();
+    }
 }
 
-__attribute__((naked)) void ReelTime_EndFailure(struct Task *task)
+static void ReelTime_EndFailure(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0812DC0C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0812DC10\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x60\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl PlayNewMapMusic\n\t"
-        "	bl sub_0812E3F8\n\t"
-        "	bl sub_0812E908\n\t"
-        "	bl sub_0812E8D4\n\t"
-        "	bl sub_0812ED9C\n\t"
-        "	ldr r0, _0812DC14\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DC0C: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812DC10: .4byte sSlotMachine\n\t"
-        "_0812DC14: .4byte Task_ReelTime + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpriteCoordOffsetX = 0;
+    SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+    PlayNewMapMusic(sSlotMachine->backupMapMusic);
+    DestroyReelTimePikachuSprite();
+    DestroyBrokenReelTimeMachineSprite();
+    DestroyReelTimeShadowSprites();
+    DestroyReelTimeDuckSprites();
+    DestroyTask(FindTaskIdByFunc(Task_ReelTime));
 }
+
+#undef tState
+#undef tReelSpeed
+#undef tTimer3
+#undef tRtReelSpeed
+#undef tTimer2
+#undef tTimer1
+#undef tExplodeChecks
 
 __attribute__((naked)) void LoadReelTimeWindowTilemap(s16 a0, s16 a1)
 {

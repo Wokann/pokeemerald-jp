@@ -7416,7 +7416,7 @@ SECTIONS {
         src/slot_machine.o(.text.AttemptsAtLuckyFlags_NotTop3);
         src/slot_machine.o(.text.GetReelTimeProbability);
         src/slot_machine.o(.text.GetReeltimeDraw);
-        src/slot_machine.o(.text.SkipToReeltimeAction14);
+        src/slot_machine.o(.text.ShouldReelTimeMachineExplode);
         src/slot_machine.o(.text.ReelTimeSpeed);
         src/slot_machine.o(.text.CheckMatch);
         src/slot_machine.o(.text.CheckMatch_CenterRow);
@@ -9360,6 +9360,8 @@ SECTIONS {
         src/slot_machine.o(.rodata.sReelSymbols);
         src/slot_machine.o(.rodata.sReelTimeSymbols);
         data/data_b2d_mid62.o(.rodata.8584638);
+        src/slot_machine.o(.rodata.sReelTimeExplodeProbability);
+        data/data_b2d_mid62.o(.rodata.858475C);
         src/slot_machine.o(.rodata.sBiasSymbols);
         data/data_b2d_mid62.o(.rodata.8584782);
         src/slot_machine.o(.rodata.sSymbolToMatch);
