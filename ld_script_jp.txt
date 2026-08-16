@@ -5468,7 +5468,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.ShowPartyMenu);
         src/pokemon_storage_system.o(.text.SetUpHidePartyMenu);
         src/pokemon_storage_system.o(.text.HidePartyMenu);
-        src/pokemon_storage_system.o(.text.sub_080CA1E8);
+        src/pokemon_storage_system.o(.text.UpdateCloseBoxButtonTilemap);
         src/pokemon_storage_system.o(.text.sub_080CA224);
         src/pokemon_storage_system.o(.text.sub_080CA250);
         src/pokemon_storage_system.o(.text.UpdateCloseBoxButtonFlash);

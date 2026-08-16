@@ -272,6 +272,7 @@ extern bool8 sIsMonBeingMoved;
 extern u8 sLastUsedBox;
 extern u16 sMovingItemId;
 extern void UpdateCloseBoxButtonFlash(void);
+extern void UpdateCloseBoxButtonTilemap(bool8 state);
 extern void UnkUtil_Run(void);
 extern void ScrollBackground(void);
 extern void Task_InitPokeStorage(void);
@@ -7090,7 +7091,7 @@ __attribute__((naked)) void sub_080C9F68(void)
         "	cmp r0, #0\n\t"
         "	beq _080C9FF4\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_080CA1E8\n\t"
+        "	bl UpdateCloseBoxButtonTilemap\n\t"
         "	movs r0, #1\n\t"
         "	bl CreatePartyMonsSprites\n\t"
         "	movs r0, #2\n\t"
@@ -7113,7 +7114,7 @@ __attribute__((naked)) void sub_080C9F68(void)
         "	movs r3, #0xc\n\t"
         "	bl sub_080D204C\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_080CA1E8\n\t"
+        "	bl UpdateCloseBoxButtonTilemap\n\t"
         "	movs r0, #1\n\t"
         "	bl sub_080D21B8\n\t"
         "	movs r0, #2\n\t"
@@ -7365,7 +7366,7 @@ __attribute__((naked)) void HidePartyMenu(void)
     );
 }
 
-__attribute__((naked)) void sub_080CA1E8(void)
+__attribute__((naked)) void UpdateCloseBoxButtonTilemap(bool8 state)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7444,7 +7445,7 @@ __attribute__((naked)) void sub_080CA250(void)
         "	movs r0, #0\n\t"
         "	strb r0, [r1]\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_080CA1E8\n\t"
+        "	bl UpdateCloseBoxButtonTilemap\n\t"
         "_080CA26A:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -7496,7 +7497,7 @@ __attribute__((naked)) void UpdateCloseBoxButtonFlash(void)
         "	ldr r0, [r3]\n\t"
         "	adds r0, r0, r4\n\t"
         "	ldrb r0, [r0]\n\t"
-        "	bl sub_080CA1E8\n\t"
+        "	bl UpdateCloseBoxButtonTilemap\n\t"
         "_080CA2C4:\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
