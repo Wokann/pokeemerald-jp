@@ -998,7 +998,17 @@ gUnknown_5712DC: @ 0x5712DC
 gSparkElectricitySpriteTemplate: @ 0x571330
 	.hword 0x271B, 0x271B
 	.4byte 0x084FD078, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x0810AB59
-	.incbin "baserom_jp.gba", 0x571348, 0x2c
+gZapCannonBallSpriteTemplate: @ 0x571348
+	.hword 0x27BB, 0x27BB
+	.4byte 0x084FD018, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x080A70E9
+
+sAffineAnim_FlashingSpark: @ 0x571360
+	.hword 0x0000, 0x0000, 0x0114, 0x0000
+	.hword 0x7FFE, 0x0000, 0x0000, 0x0000
+
+sAffineAnims_FlashingSpark: @ 0x571370
+	.4byte sAffineAnim_FlashingSpark
 
 	.globl gZapCannonSparkSpriteTemplate
 gZapCannonSparkSpriteTemplate: @ 0x571374
