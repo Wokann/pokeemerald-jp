@@ -23,6 +23,7 @@ extern const u8 gWalkSlowMovementActions[];
 extern const u8 sElevationToPriority[];
 extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 extern const struct SpriteTemplate gUnknown_846FA28;
+extern void (*const gUnknown_846FA40[])(struct Sprite *);
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
@@ -37,6 +38,15 @@ struct Sprite;
 #define sActionFuncId data[2] // Index into corresponding gMovementActionFuncs_* table
 #define sDirection    data[3]
 #define sCamera_FollowSpriteId data[0]
+#define sCamera_State         data[1]
+#define sCamera_MoveX         data[2]
+#define sCamera_MoveY         data[3]
+
+enum {
+    CAMERA_STATE_INIT,
+    CAMERA_STATE_MOVE,
+    CAMERA_STATE_FROZEN,
+};
 
 #define GROUND_EFFECT_FLAG_PUDDLE (1 << 10)
 
@@ -3263,134 +3273,40 @@ u8 AddCameraObject(u8 followSpriteId)
     return spriteId;
 }
 
-__attribute__((naked)) void ObjectCB_CameraObject(void)
+void ObjectCB_CameraObject(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	ldr r1, _0808E70C\n\t"
-        "	ldm r1!, {r3, r4, r5}\n\t"
-        "	stm r2!, {r3, r4, r5}\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	add r1, sp\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E70C: .4byte gUnknown_846FA40\n\t"
-        ".syntax divided\n\t"
-    );
+    void (*callbacks[3])(struct Sprite *);
+
+    memcpy(callbacks, gUnknown_846FA40, sizeof callbacks);
+    callbacks[sprite->sCamera_State](sprite);
 }
 
-__attribute__((naked)) void CameraObject_0(void)
+void CameraObject_0(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _0808E748\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r2, [r0, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r1, [r1, #0x20]\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r1, [r1, #0x22]\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	bl CameraObject_1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E748: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x = gSprites[sprite->sCamera_FollowSpriteId].x;
+    sprite->y = gSprites[sprite->sCamera_FollowSpriteId].y;
+    sprite->invisible = TRUE;
+    sprite->sCamera_State = CAMERA_STATE_MOVE;
+    CameraObject_1(sprite);
 }
 
-__attribute__((naked)) void CameraObject_1(void)
+void CameraObject_1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r3, _0808E780\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r2, [r0, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r3, [r1, #0x22]\n\t"
-        "	ldrh r2, [r0, #0x20]\n\t"
-        "	ldrh r4, [r1, #0x20]\n\t"
-        "	movs r5, #0x20\n\t"
-        "	ldrsh r1, [r1, r5]\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	strh r1, [r0, #0x32]\n\t"
-        "	ldrh r2, [r0, #0x22]\n\t"
-        "	lsls r1, r3, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	strh r4, [r0, #0x20]\n\t"
-        "	strh r3, [r0, #0x22]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E780: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x = gSprites[sprite->sCamera_FollowSpriteId].x;
+    s16 y = gSprites[sprite->sCamera_FollowSpriteId].y;
+
+    sprite->sCamera_MoveX = x - sprite->x;
+    sprite->sCamera_MoveY = y - sprite->y;
+    sprite->x = x;
+    sprite->y = y;
 }
 
-__attribute__((naked)) void CameraObject_2(void)
+void CameraObject_2(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0808E7B0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r2, [r0, r1]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r1, [r1, #0x20]\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r1, [r1, #0x22]\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	strh r3, [r0, #0x32]\n\t"
-        "	strh r3, [r0, #0x34]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E7B0: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x = gSprites[sprite->sCamera_FollowSpriteId].x;
+    sprite->y = gSprites[sprite->sCamera_FollowSpriteId].y;
+    sprite->sCamera_MoveX = 0;
+    sprite->sCamera_MoveY = 0;
 }
 
 __attribute__((naked)) struct Sprite *FindCameraObject(void)
