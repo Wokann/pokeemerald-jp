@@ -2,6 +2,8 @@
 #include "pokemon.h"
 #include "constants/trainers.h"
 
+extern const u16 *const gUnknown_82F9D04[];
+
 __attribute__((naked)) void ZeroBoxMonData(struct BoxPokemon *boxMon)
 {
     __asm__(".syntax unified\n\t"
@@ -2846,7 +2848,7 @@ u16 GiveMoveToMon(struct Pokemon *mon, u16 move)
 }
 
 
-__attribute__((naked)) void GiveMoveToBoxMon(void)
+__attribute__((naked)) u16 GiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3039,94 +3041,27 @@ __attribute__((naked)) void MonRestorePP(struct Pokemon *mon)
 
 
 
-__attribute__((naked)) void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
+void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetLevelFromBoxMonExp\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r0, _08068E4C\n\t"
-        "	lsls r6, r4, #2\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r2, _08068E50\n\t"
-        "	lsrs r0, r2, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08068E3C\n\t"
-        "	mov sb, r2\n\t"
-        "	movs r3, #0\n\t"
-        "_08068DEE:\n\t"
-        "	ldr r0, _08068E4C\n\t"
-        "	adds r7, r6, r0\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	movs r1, #0xfe\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	mov r4, sl\n\t"
-        "	lsls r1, r4, #9\n\t"
-        "	cmp r0, r1\n\t"
-        "	bgt _08068E3C\n\t"
-        "	ldr r1, _08068E54\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ands r4, r2\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	str r3, [sp]\n\t"
-        "	bl GiveMoveToBoxMon\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	mov r1, sb\n\t"
-        "	lsrs r5, r1, #0x10\n\t"
-        "	ldr r3, [sp]\n\t"
-        "	cmp r0, sb\n\t"
-        "	bne _08068E30\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl DeleteFirstMoveAndGiveMoveToBoxMon\n\t"
-        "	ldr r3, [sp]\n\t"
-        "_08068E30:\n\t"
-        "	adds r3, #2\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _08068DEE\n\t"
-        "_08068E3C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08068E4C: .4byte gUnknown_82F9D04\n\t"
-        "_08068E50: .4byte 0xFFFF0000\n\t"
-        "_08068E54: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species = GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL);
+    s32 level = GetLevelFromBoxMonExp(boxMon);
+    s32 i;
+
+    for (i = 0; gUnknown_82F9D04[species][i] != LEVEL_UP_END; i++)
+    {
+        u16 moveLevel;
+        u16 move;
+
+        moveLevel = gUnknown_82F9D04[species][i] & LEVEL_UP_MOVE_LV;
+        if (moveLevel > (level << 9))
+            break;
+
+        move = gUnknown_82F9D04[species][i] & LEVEL_UP_MOVE_ID;
+        if (GiveMoveToBoxMon(boxMon, move) == MON_HAS_MAX_MOVES)
+            DeleteFirstMoveAndGiveMoveToBoxMon(boxMon, move);
+    }
 }
+
 
 __attribute__((naked)) u16 MonTryLearningNewMove(struct Pokemon *mon, bool8 firstMove)
 {
@@ -14641,6 +14576,8 @@ __attribute__((naked)) void GiveMonInitialMoveset(struct Pokemon *mon)
         ".syntax divided\n\t"
     );
 }
+
+
 
 
 
