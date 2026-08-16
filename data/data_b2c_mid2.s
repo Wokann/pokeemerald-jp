@@ -75,19 +75,52 @@ sMenuLeftHeaderSpriteSheets: @ 0x85F1430
 
 	.globl sPokenavSubMenuLeftHeaderSpriteSheets
 sPokenavSubMenuLeftHeaderSpriteSheets: @ 0x85F1460
-	.incbin "baserom_jp.gba", 0x5f1460, 0x68
+	.4byte 0x085F0B24, 0x00000001
+	.4byte 0x085F0C8C, 0x00000001
+	.4byte 0x085F0DEC, 0x00000004
+	.4byte 0x085F0F00, 0x00000001
+	.4byte 0x085F1034, 0x00000002
+	.4byte 0x085F116C, 0x00000000
+	.4byte 0x085F1288, 0x00000000
+
+sSpinningPokenavSpriteOam: @ 0x85F1498
+	.byte 0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00
+
+sSpinningPokenavAnims: @ 0x85F14A0
+	.hword 0x0000, 0x0008, 0x0010, 0x0008
+	.hword 0x0020, 0x0008, 0x0030, 0x0008
+	.hword 0x0040, 0x0008, 0x0050, 0x0008
+	.hword 0x0060, 0x0008, 0x0070, 0x0008
+	.hword 0xFFFE, 0x0000
+
+sSpinningPokenavAnimTable: @ 0x85F14C4
+	.4byte sSpinningPokenavAnims
 
 	.globl sSpinningPokenavSpriteTemplate
 sSpinningPokenavSpriteTemplate: @ 0x85F14C8
-	.incbin "baserom_jp.gba", 0x5f14c8, 0x28
+	.hword 0, 0
+	.4byte sSpinningPokenavSpriteOam, sSpinningPokenavAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x081C7475
+
+sOamData_LeftHeader: @ 0x85F14E0
+	.byte 0x00, 0x40, 0x00, 0xC0, 0x00, 0x04, 0x00, 0x00
+sOamData_SubmenuLeftHeader: @ 0x85F14E8
+	.byte 0x00, 0x40, 0x00, 0x80, 0x00, 0x04, 0x00, 0x00
 
 	.globl sLeftHeaderSpriteTemplate
 sLeftHeaderSpriteTemplate: @ 0x85F14F0
-	.incbin "baserom_jp.gba", 0x5f14f0, 0x18
+	.hword 0x0002, 0x0001
+	.4byte sOamData_LeftHeader, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl sSubmenuLeftHeaderSpriteTemplate
 sSubmenuLeftHeaderSpriteTemplate: @ 0x85F1508
-	.incbin "baserom_jp.gba", 0x5f1508, 0xa0
+	.hword 0x0002, 0x0002
+	.4byte sOamData_SubmenuLeftHeader, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
+
+gUnknown_85F1520: @ 0x85F1520
+	.incbin "baserom_jp.gba", 0x5f1520, 0x88
 
 	.globl sPokenavCheckPageColors
 sPokenavCheckPageColors: @ 0x85F15A8
