@@ -9,34 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sRibbonsSummaryBgTemplates
-sRibbonsSummaryBgTemplates: @ 0x85F7214
-	.incbin "baserom_jp.gba", 0x5f7214, 0x8
-
-	.globl sRibbonsSummaryMenuLoopTaskFuncs
-sRibbonsSummaryMenuLoopTaskFuncs: @ 0x85F721C
-	.incbin "baserom_jp.gba", 0x5f721c, 0x18
-
-	.globl sRibbonCountWindowTemplate
-sRibbonCountWindowTemplate: @ 0x85F7234
-	.incbin "baserom_jp.gba", 0x5f7234, 0x8
-
-	.globl sPlayerNameTextColors
-sPlayerNameTextColors: @ 0x85F723C
-	.incbin "baserom_jp.gba", 0x5f723c, 0x4
-
-	.globl sRibbonSummaryMonNameWindowTemplate
-sRibbonSummaryMonNameWindowTemplate: @ 0x85F7240
-	.incbin "baserom_jp.gba", 0x5f7240, 0x8
-
-	.globl sRibbonMonListIndexWindowTemplate
-sRibbonMonListIndexWindowTemplate: @ 0x85F7248
-	.incbin "baserom_jp.gba", 0x5f7248, 0x10
-
-	.globl sRibbonGfxData
-sRibbonGfxData: @ 0x85F7258
-	.incbin "graphics/ribbons/sRibbonGfxData.bin"
-
 	.globl sSpriteSheet_RibbonIconsBig
 sSpriteSheet_RibbonIconsBig: @ 0x85F72D8
 	.incbin "graphics/misc/sSpriteSheet_RibbonIconsBig.bin"

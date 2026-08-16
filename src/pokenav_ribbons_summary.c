@@ -30,16 +30,10 @@ static const u32 sRibbonIconsSmall_Gfx[] = INCBIN_U32("graphics/ribbons/sRibbonI
 static const u32 sRibbonIconsBig_Gfx[] = INCBIN_U32("graphics/ribbons/sRibbonIconsBig_Gfx.bin");
 
 struct RibbonGfxData { u16 tileNumOffset; u16 palNumOffset; };
-extern const struct RibbonGfxData sRibbonGfxData[];
 struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; };
 extern const struct RibbonData sRibbonData[16]; // ROM 0x085F5E14, 17 entries (loop runs i<=16)
 extern u32 sRibbonDraw_Total;
 extern u32 sRibbonDraw_Current;
-extern const struct BgTemplate sRibbonsSummaryBgTemplates[2]; // ROM 0x085F7214
-extern const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[];
-extern const struct WindowTemplate sRibbonCountWindowTemplate;
-extern const struct WindowTemplate sRibbonSummaryMonNameWindowTemplate;
-extern const struct WindowTemplate sRibbonMonListIndexWindowTemplate[];
 extern const struct CompressedSpriteSheet sSpriteSheet_RibbonIconsBig;
 extern const struct SpritePalette sSpritePalettes_RibbonIcons[];
 extern const struct OamData sOamData_RibbonIconBig;
@@ -72,7 +66,6 @@ extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const s16 sConditionSparkleCoords[];
 extern const u8 *const sLvlUpStatStrings;
 extern const struct WindowTemplate sWindowTemplates_MailboxMenu[];
-extern const u8 sPlayerNameTextColors[];
 extern const u8 sEmptyItemName[];
 extern const struct WindowTemplate sMoveRelearnerWindowTemplates[];
 extern const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate;
@@ -87,6 +80,128 @@ enum
     RIBBONS_SUMMARY_FUNC_EXPANDED_CURSOR_MOVE,
     RIBBONS_SUMMARY_FUNC_EXPANDED_CANCEL,
     RIBBONS_SUMMARY_FUNC_EXIT,
+};
+
+u32 LoopedTask_SwitchRibbonsSummaryMon(s32);
+u32 LoopedTask_ExpandSelectedRibbon(s32);
+u32 LoopedTask_MoveRibbonsCursorExpanded(s32);
+u32 LoopedTask_ShrinkExpandedRibbon(s32);
+u32 LoopedTask_ExitRibbonsSummaryMenu(s32);
+
+const struct BgTemplate sRibbonsSummaryBgTemplates[] =
+{
+    {
+        .bg = 1,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 7,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 6,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+};
+
+const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[] =
+{
+    [RIBBONS_SUMMARY_FUNC_NONE]                 = NULL,
+    [RIBBONS_SUMMARY_FUNC_SWITCH_MONS]          = LoopedTask_SwitchRibbonsSummaryMon,
+    [RIBBONS_SUMMARY_FUNC_SELECT_RIBBON]        = LoopedTask_ExpandSelectedRibbon,
+    [RIBBONS_SUMMARY_FUNC_EXPANDED_CURSOR_MOVE] = LoopedTask_MoveRibbonsCursorExpanded,
+    [RIBBONS_SUMMARY_FUNC_EXPANDED_CANCEL]      = LoopedTask_ShrinkExpandedRibbon,
+    [RIBBONS_SUMMARY_FUNC_EXIT]                 = LoopedTask_ExitRibbonsSummaryMenu
+};
+
+const struct WindowTemplate sRibbonCountWindowTemplate =
+{
+    .bg = 2,
+    .tilemapLeft = 12,
+    .tilemapTop = 13,
+    .width = 16,
+    .height = 4,
+    .paletteNum = 1,
+    .baseBlock = 0x14,
+};
+
+const u8 sPlayerNameTextColors[] = {4, 2, 3};
+
+// JP window layout differs from pokeemerald (width 12, baseBlock 0x54).
+const struct WindowTemplate sRibbonSummaryMonNameWindowTemplate =
+{
+    .bg = 2,
+    .tilemapLeft = 14,
+    .tilemapTop = 1,
+    .width = 12,
+    .height = 2,
+    .paletteNum = 10,
+    .baseBlock = 0x54,
+};
+
+// JP has two actual list index windows (pokeemerald has one + sentinel).
+const struct WindowTemplate sRibbonMonListIndexWindowTemplate[] =
+{
+    {
+        .bg = 2,
+        .tilemapLeft = 1,
+        .tilemapTop = 5,
+        .width = 3,
+        .height = 2,
+        .paletteNum = 1,
+        .baseBlock = 0x6C,
+    },
+    {
+        .bg = 2,
+        .tilemapLeft = 4,
+        .tilemapTop = 5,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 1,
+        .baseBlock = 0x72,
+    },
+};
+
+const struct RibbonGfxData sRibbonGfxData[] =
+{
+    {0, 0},
+    {1, 0},
+    {2, 0},
+    {3, 0},
+    {4, 0},
+    {1, 1},
+    {2, 1},
+    {3, 1},
+    {4, 1},
+    {1, 2},
+    {2, 2},
+    {3, 2},
+    {4, 2},
+    {1, 3},
+    {2, 3},
+    {3, 3},
+    {4, 3},
+    {1, 4},
+    {2, 4},
+    {3, 4},
+    {4, 4},
+    {5, 0},
+    {6, 0},
+    {7, 1},
+    {8, 2},
+    {9, 1},
+    {9, 3},
+    {9, 4},
+    {10, 3},
+    {10, 4},
+    {11, 0},
+    {11, 1},
 };
 
 #define GFXTAG_RIBBON_ICONS_BIG 9
