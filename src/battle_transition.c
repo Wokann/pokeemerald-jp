@@ -218,7 +218,7 @@ __attribute__((naked)) void Task_BattleTransition(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08146098: .4byte gUnknown_85A8548\n\t"
+        "_08146098: .4byte sTaskHandlers\n\t"
         "_0814609C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -436,7 +436,7 @@ __attribute__((naked)) void Task_Blur(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081461FC: .4byte gUnknown_85A8558\n\t"
+        "_081461FC: .4byte sBlur_Funcs\n\t"
         "_08146200: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -584,7 +584,7 @@ __attribute__((naked)) void Task_Swirl(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081462F4: .4byte gUnknown_85A8564\n\t"
+        "_081462F4: .4byte sSwirl_Funcs\n\t"
         "_081462F8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -793,7 +793,7 @@ __attribute__((naked)) void Task_Shuffle(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08146474: .4byte gUnknown_85A856C\n\t"
+        "_08146474: .4byte sShuffle_Funcs\n\t"
         "_08146478: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1012,7 +1012,7 @@ __attribute__((naked)) void Task_BigPokeball(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08146604: .4byte gUnknown_85A85AC\n\t"
+        "_08146604: .4byte sBigPokeball_Funcs\n\t"
         "_08146608: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1046,7 +1046,7 @@ __attribute__((naked)) void Task_Aqua(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814663C: .4byte gUnknown_85A8574\n\t"
+        "_0814663C: .4byte sAqua_Funcs\n\t"
         "_08146640: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1080,7 +1080,7 @@ __attribute__((naked)) void Task_Magma(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08146674: .4byte gUnknown_85A8590\n\t"
+        "_08146674: .4byte sMagma_Funcs\n\t"
         "_08146678: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1114,7 +1114,7 @@ __attribute__((naked)) void Task_Regice(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081466AC: .4byte gUnknown_85A85C4\n\t"
+        "_081466AC: .4byte sRegice_Funcs\n\t"
         "_081466B0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1148,7 +1148,7 @@ __attribute__((naked)) void Task_Registeel(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081466E4: .4byte gUnknown_85A85DC\n\t"
+        "_081466E4: .4byte sRegisteel_Funcs\n\t"
         "_081466E8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1182,7 +1182,7 @@ __attribute__((naked)) void Task_Regirock(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814671C: .4byte gUnknown_85A85F4\n\t"
+        "_0814671C: .4byte sRegirock_Funcs\n\t"
         "_08146720: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1216,7 +1216,7 @@ __attribute__((naked)) void Task_Kyogre(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08146754: .4byte gUnknown_85A860C\n\t"
+        "_08146754: .4byte sKyogre_Funcs\n\t"
         "_08146758: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -2498,7 +2498,7 @@ __attribute__((naked)) void Task_PokeballsTrail(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147084: .4byte gUnknown_85A862C\n\t"
+        "_08147084: .4byte sPokeballsTrail_Funcs\n\t"
         "_08147088: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );

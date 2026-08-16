@@ -656,53 +656,53 @@ gUnknown_85A83F8: @ 0x85A83F8
 gUnknown_85A84A0: @ 0x85A84A0
 	.incbin "baserom_jp.gba", 0x5a84a0, 0xa8
 
-	.globl gUnknown_85A8548
-gUnknown_85A8548: @ 0x85A8548
-	.incbin "baserom_jp.gba", 0x5a8548, 0x10
+	.globl sTaskHandlers
+sTaskHandlers: @ 0x85A8548
+	.4byte Transition_StartIntro + 1, Transition_WaitForIntro + 1, Transition_StartMain + 1, Transition_WaitForMain + 1
 
-	.globl gUnknown_85A8558
-gUnknown_85A8558: @ 0x85A8558
-	.incbin "baserom_jp.gba", 0x5a8558, 0xc
+	.globl sBlur_Funcs
+sBlur_Funcs: @ 0x85A8558
+	.4byte Blur_Init + 1, Blur_Main + 1, Blur_End + 1
 
-	.globl gUnknown_85A8564
-gUnknown_85A8564: @ 0x85A8564
-	.incbin "baserom_jp.gba", 0x5a8564, 0x8
+	.globl sSwirl_Funcs
+sSwirl_Funcs: @ 0x85A8564
+	.4byte Swirl_Init + 1, Swirl_End + 1
 
-	.globl gUnknown_85A856C
-gUnknown_85A856C: @ 0x85A856C
-	.incbin "baserom_jp.gba", 0x5a856c, 0x8
+	.globl sShuffle_Funcs
+sShuffle_Funcs: @ 0x85A856C
+	.4byte Shuffle_Init + 1, Shuffle_End + 1
 
-	.globl gUnknown_85A8574
-gUnknown_85A8574: @ 0x85A8574
-	.incbin "baserom_jp.gba", 0x5a8574, 0x1c
+	.globl sAqua_Funcs
+sAqua_Funcs: @ 0x85A8574
+	.4byte Aqua_Init + 1, Aqua_SetGfx + 1, PatternWeave_Blend1 + 1, PatternWeave_Blend2 + 1, PatternWeave_FinishAppear + 1, FramesCountdown + 1, PatternWeave_CircularMask + 1
 
-	.globl gUnknown_85A8590
-gUnknown_85A8590: @ 0x85A8590
-	.incbin "baserom_jp.gba", 0x5a8590, 0x1c
+	.globl sMagma_Funcs
+sMagma_Funcs: @ 0x85A8590
+	.4byte Magma_Init + 1, Magma_SetGfx + 1, PatternWeave_Blend1 + 1, PatternWeave_Blend2 + 1, PatternWeave_FinishAppear + 1, FramesCountdown + 1, PatternWeave_CircularMask + 1
 
-	.globl gUnknown_85A85AC
-gUnknown_85A85AC: @ 0x85A85AC
-	.incbin "baserom_jp.gba", 0x5a85ac, 0x18
+	.globl sBigPokeball_Funcs
+sBigPokeball_Funcs: @ 0x85A85AC
+	.4byte BigPokeball_Init + 1, BigPokeball_SetGfx + 1, PatternWeave_Blend1 + 1, PatternWeave_Blend2 + 1, PatternWeave_FinishAppear + 1, PatternWeave_CircularMask + 1
 
-	.globl gUnknown_85A85C4
-gUnknown_85A85C4: @ 0x85A85C4
-	.incbin "baserom_jp.gba", 0x5a85c4, 0x18
+	.globl sRegice_Funcs
+sRegice_Funcs: @ 0x85A85C4
+	.4byte Regi_Init + 1, Regice_SetGfx + 1, PatternWeave_Blend1 + 1, PatternWeave_Blend2 + 1, PatternWeave_FinishAppear + 1, PatternWeave_CircularMask + 1
 
-	.globl gUnknown_85A85DC
-gUnknown_85A85DC: @ 0x85A85DC
-	.incbin "baserom_jp.gba", 0x5a85dc, 0x18
+	.globl sRegisteel_Funcs
+sRegisteel_Funcs: @ 0x85A85DC
+	.4byte Regi_Init + 1, Registeel_SetGfx + 1, PatternWeave_Blend1 + 1, PatternWeave_Blend2 + 1, PatternWeave_FinishAppear + 1, PatternWeave_CircularMask + 1
 
-	.globl gUnknown_85A85F4
-gUnknown_85A85F4: @ 0x85A85F4
-	.incbin "baserom_jp.gba", 0x5a85f4, 0x18
+	.globl sRegirock_Funcs
+sRegirock_Funcs: @ 0x85A85F4
+	.4byte Regi_Init + 1, Regirock_SetGfx + 1, PatternWeave_Blend1 + 1, PatternWeave_Blend2 + 1, PatternWeave_FinishAppear + 1, PatternWeave_CircularMask + 1
 
-	.globl gUnknown_85A860C
-gUnknown_85A860C: @ 0x85A860C
-	.incbin "baserom_jp.gba", 0x5a860c, 0x20
+	.globl sKyogre_Funcs
+sKyogre_Funcs: @ 0x85A860C
+	.4byte WeatherTrio_BgFadeBlack + 1, WeatherTrio_WaitFade + 1, Kyogre_Init + 1, Kyogre_PaletteFlash + 1, Kyogre_PaletteBrighten + 1, FramesCountdown + 1, WeatherDuo_FadeOut + 1, WeatherDuo_End + 1
 
-	.globl gUnknown_85A862C
-gUnknown_85A862C: @ 0x85A862C
-	.incbin "baserom_jp.gba", 0x5a862c, 0xc
+	.globl sPokeballsTrail_Funcs
+sPokeballsTrail_Funcs: @ 0x85A862C
+	.4byte PokeballsTrail_Init + 1, PokeballsTrail_Main + 1, PokeballsTrail_End + 1
 
 	.globl gUnknown_85A8638
 gUnknown_85A8638: @ 0x85A8638
