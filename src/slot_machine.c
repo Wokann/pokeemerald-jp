@@ -1384,7 +1384,7 @@ static bool8 IsMatchLineDoneFlashingBeforePayout(void);
 static bool8 TryStopMatchLinesFlashing(void);
 static bool8 DecideStop_Bias_Reel1_Bet1(u8 sym1, u8 sym2);
 static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 sym1, u8 sym2);
-bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2);
+static bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2);
 static bool8 BiasedTowardCherryOr7s(void);
 static bool8 DecideStop_Bias_Reel2_Bet1or2(void);
 static bool8 DecideStop_Bias_Reel2_Bet3(void);
@@ -2435,48 +2435,6 @@ bool8 DecideStop_Bias_Reel1(void)
 
 
 
-__attribute__((naked)) bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _0812C1BC\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _0812C1CC\n\t"
-        "_0812C1BC:\n\t"
-        "	ldr r0, _0812C1C8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strb r1, [r0, #7]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C1CE\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C1C8: .4byte sSlotMachine\n\t"
-        "_0812C1CC:\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C1CE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
 static bool8 AreCherriesOnScreen_Reel1(s16 turns)
 {
     if (GetSymbol(LEFT_REEL, 1 - turns) == SYMBOL_CHERRY
@@ -2870,151 +2828,6 @@ bool8 IfSymbol7_SwitchColor(u8 *symbol)
 
 
 
-
-
-__attribute__((naked)) void DecideStop_NoBias_Reel2_Bet3(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r6, _0812C784\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrh r4, [r2, #0x34]\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r3, [r2, r0]\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _0812C85A\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C85A\n\t"
-        "	cmp r3, #2\n\t"
-        "	bne _0812C7A6\n\t"
-        "	bl DecideStop_NoBias_Reel2_Bet2\n\t"
-        "	b _0812C85A\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C784: .4byte sSlotMachine\n\t"
-        "_0812C788:\n\t"
-        "	ldr r0, _0812C794\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r5, [r0, #0x36]\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	b _0812C85A\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C794: .4byte sSlotMachine\n\t"
-        "_0812C798:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	b _0812C85A\n\t"
-        "_0812C7A2:\n\t"
-        "	movs r0, #3\n\t"
-        "	b _0812C834\n\t"
-        "_0812C7A6:\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	subs r1, r4, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	mov r1, sp\n\t"
-        "	strb r0, [r1]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl IfSymbol7_SwitchColor\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C85A\n\t"
-        "	movs r5, #2\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0812C7D2\n\t"
-        "	movs r5, #3\n\t"
-        "_0812C7D2:\n\t"
-        "	movs r6, #0\n\t"
-        "	mov r7, sp\n\t"
-        "_0812C7D6:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	ldrb r1, [r7]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0812C788\n\t"
-        "	lsls r1, r6, #0x10\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	subs r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #1\n\t"
-        "	ble _0812C7D6\n\t"
-        "	movs r5, #1\n\t"
-        "	mov r7, sp\n\t"
-        "	ldr r6, _0812C83C\n\t"
-        "_0812C808:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrh r1, [r0, #0x34]\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	subs r1, r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSymbol\n\t"
-        "	ldrb r1, [r7]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0812C84E\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812C840\n\t"
-        "	cmp r4, #2\n\t"
-        "	ble _0812C798\n\t"
-        "_0812C834:\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	strh r5, [r1, #0x30]\n\t"
-        "	b _0812C85A\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C83C: .4byte sSlotMachine\n\t"
-        "_0812C840:\n\t"
-        "	cmp r4, #2\n\t"
-        "	ble _0812C7A2\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	subs r0, r4, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	b _0812C85A\n\t"
-        "_0812C84E:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812C808\n\t"
-        "_0812C85A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
 
 
 __attribute__((section(".rodata.sDecideStop_NoBias_Reel3_Bets")))
@@ -5849,5 +5662,93 @@ static u16 ReelTimeSpeed(void)
         return REEL_QUARTER_SPEED;
 
     return REEL_NORMAL_SPEED;
+}
+
+// NOTE: kept at the end of the file (same agbcc position quirk as the
+// ReelTime bias/draw helpers): C code before LoadReelBackground changes its
+// register allocation and breaks byte-matching.
+static bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2)
+{
+    u8 sym = GetSymbol(LEFT_REEL, pos);
+    if (sym == sym1 || sym == sym2)
+    {
+        sSlotMachine->biasSymbol = sym;
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static void DecideStop_NoBias_Reel2_Bet3(void)
+{
+    s16 i;
+    s16 j;
+    u8 reel1BiasSym;
+
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & BIAS_STRAIGHT_7)
+    {
+        // Lined up 7 in middle of reel 1
+        if (sSlotMachine->winnerRows[0] == 2)
+        {
+            DecideStop_NoBias_Reel2_Bet2();
+            return;
+        }
+
+        reel1BiasSym = GetSymbol(LEFT_REEL, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        if (IfSymbol7_SwitchColor(&reel1BiasSym))
+        {
+            // Check current screen to see if there is already an opposite-color
+            // 7 lined up for a match.
+            j = 2;
+            if (sSlotMachine->winnerRows[0] == 3)
+                j = 3;
+            for (i = 0; i < 2; i++, j--)
+            {
+                if (reel1BiasSym == GetSymbol(MIDDLE_REEL, j))
+                {
+                    sSlotMachine->winnerRows[1] = j;
+                    sSlotMachine->reelExtraTurns[1] = 0;
+                    return;
+                }
+            }
+
+            // Check if opposite-color 7 will appear in same row as reel 1 in
+            // over the next 4 turns
+            for (j = 1; j <= MAX_EXTRA_TURNS; j++)
+            {
+                if (reel1BiasSym == GetSymbol(MIDDLE_REEL, sSlotMachine->winnerRows[0] - j))
+                {
+                    // If 7 appeared in top row of reel 1
+                    if (sSlotMachine->winnerRows[0] == 1)
+                    {
+                        if (j <= 2)
+                        {
+                            sSlotMachine->winnerRows[1] = 2;
+                            sSlotMachine->reelExtraTurns[1] = j + 1;
+                        }
+                        else
+                        {
+                            sSlotMachine->winnerRows[1] = 1;
+                            sSlotMachine->reelExtraTurns[1] = j;
+                        }
+                    }
+                    // If 7 appeared in bottom row of reel 1
+                    else
+                    {
+                        if (j <= 2)
+                        {
+                            sSlotMachine->winnerRows[1] = 3;
+                            sSlotMachine->reelExtraTurns[1] = j;
+                        }
+                        else
+                        {
+                            sSlotMachine->winnerRows[1] = 2;
+                            sSlotMachine->reelExtraTurns[1] = j - 1;
+                        }
+                    }
+                    return;
+                }
+            }
+        }
+    }
 }
 
