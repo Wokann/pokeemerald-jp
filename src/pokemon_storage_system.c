@@ -37,6 +37,9 @@
 
 extern u8 sCurrentBoxOption;
 
+#define WALDA_WALLPAPERS_COUNT 16
+#define WALDA_WALLPAPER_ICONS_COUNT 30
+
 u8 CountMonsInBox(u8 boxId)
 {
     u16 i, count;
@@ -3858,7 +3861,7 @@ __attribute__((naked)) void Cb_DepositMenu(void)
         "	.align 2, 0\n\t"
         "_080C86FC: .4byte gUnknown_20399A8\n\t"
         "_080C8700:\n\t"
-        "	bl GetWaldaWallpaperPatternId\n\t"
+        "	bl GetNumPartySpritesCompacting\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080C873E\n\t"
@@ -4034,7 +4037,7 @@ __attribute__((naked)) void Cb_ReleaseMon(void)
         "	.align 2, 0\n\t"
         "_080C8878: .4byte gUnknown_20399A8\n\t"
         "_080C887C:\n\t"
-        "	bl GetWaldaWallpaperPatternId\n\t"
+        "	bl GetNumPartySpritesCompacting\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080C8932\n\t"
@@ -4869,7 +4872,7 @@ __attribute__((naked)) void sub_080C8F0C(void)
         "	strb r0, [r1]\n\t"
         "	b _080C8F4A\n\t"
         "_080C8F36:\n\t"
-        "	bl GetWaldaWallpaperPatternId\n\t"
+        "	bl GetNumPartySpritesCompacting\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080C8F4A\n\t"
@@ -9531,7 +9534,7 @@ __attribute__((naked)) void sub_080CB1C4(void)
     );
 }
 
-__attribute__((naked)) u32 GetWaldaWallpaperPatternId(void)
+__attribute__((naked)) u32 GetNumPartySpritesCompacting(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -11637,7 +11640,7 @@ __attribute__((naked)) void LoadWallpaperGfx(void)
         "_080CC130: .4byte gUnknown_20399A8\n\t"
         "_080CC134: .4byte 0x00000A68\n\t"
         "_080CC138:\n\t"
-        "	bl sub_080D1D48\n\t"
+        "	bl GetWaldaWallpaperPatternId\n\t"
         "	lsls r1, r0, #1\n\t"
         "	adds r1, r1, r0\n\t"
         "	lsls r1, r1, #2\n\t"
@@ -11664,13 +11667,13 @@ __attribute__((naked)) void LoadWallpaperGfx(void)
         "	adds r1, r1, r4\n\t"
         "	movs r2, #0x20\n\t"
         "	bl CpuSet\n\t"
-        "	bl sub_080D1DB0\n\t"
+        "	bl GetWaldaWallpaperColorsPtr\n\t"
         "	ldr r1, [r7]\n\t"
         "	ldr r2, _080CC1CC\n\t"
         "	adds r1, r1, r2\n\t"
         "	movs r2, #2\n\t"
         "	bl CpuSet\n\t"
-        "	bl sub_080D1DB0\n\t"
+        "	bl GetWaldaWallpaperColorsPtr\n\t"
         "	ldr r1, [r7]\n\t"
         "	ldr r3, _080CC1D0\n\t"
         "	adds r1, r1, r3\n\t"
@@ -12108,7 +12111,7 @@ __attribute__((naked)) void sub_080CC3C4(void)
         "	bl StringLength\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
-        "	bl GetWaldaWallpaperColorsPtr\n\t"
+        "	bl GetBoxTitleBaseX\n\t"
         "	movs r4, #0\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	asrs r6, r0, #0x10\n\t"
@@ -12308,7 +12311,7 @@ __attribute__((naked)) void sub_080CC57C(void)
         "	bl StringLength\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
-        "	bl GetWaldaWallpaperColorsPtr\n\t"
+        "	bl GetBoxTitleBaseX\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	mov r3, sl\n\t"
         "	lsls r2, r3, #0x18\n\t"
@@ -12591,7 +12594,7 @@ __attribute__((naked)) void sub_080CC828(void)
 }
 
 
-__attribute__((naked)) u16 *GetWaldaWallpaperColorsPtr(void)
+__attribute__((naked)) s16 GetBoxTitleBaseX(u16 len)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -23753,126 +23756,37 @@ bool32 IsWaldaWallpaperUnlocked(void)
     return gSaveBlock1Ptr->waldaPhrase.patternUnlocked;
 }
 
-__attribute__((naked)) void sub_080D1D48(void)
+u32 GetWaldaWallpaperPatternId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080D1D54\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D1D58\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1D54: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1D58: .4byte 0x00003D85\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->waldaPhrase.patternId;
 }
 
-__attribute__((naked)) void SetWaldaWallpaperPatternId(u8 id)
+void SetWaldaWallpaperPatternId(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	bhi _080D1D70\n\t"
-        "	ldr r0, _080D1D74\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D1D78\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080D1D70:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1D74: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1D78: .4byte 0x00003D85\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id < WALDA_WALLPAPERS_COUNT)
+        gSaveBlock1Ptr->waldaPhrase.patternId = id;
 }
 
-__attribute__((naked)) u32 GetWaldaWallpaperIconId(void)
+u32 GetWaldaWallpaperIconId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080D1D88\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D1D8C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1D88: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1D8C: .4byte 0x00003D84\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->waldaPhrase.iconId;
 }
 
-__attribute__((naked)) void SetWaldaWallpaperIconId(u8 id)
+void SetWaldaWallpaperIconId(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x1d\n\t"
-        "	bhi _080D1DA4\n\t"
-        "	ldr r0, _080D1DA8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D1DAC\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080D1DA4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1DA8: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1DAC: .4byte 0x00003D84\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id < WALDA_WALLPAPER_ICONS_COUNT)
+        gSaveBlock1Ptr->waldaPhrase.iconId = id;
 }
 
-__attribute__((naked)) void sub_080D1DB0(void)
+u16 *GetWaldaWallpaperColorsPtr(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080D1DBC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D1DC0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1DBC: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1DC0: .4byte 0x00003D70\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->waldaPhrase.colors;
 }
 
-__attribute__((naked)) void SetWaldaWallpaperColors(u16 color1, u16 color2)
+void SetWaldaWallpaperColors(u16 color1, u16 color2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r2, _080D1DDC\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	ldr r4, _080D1DE0\n\t"
-        "	adds r3, r2, r4\n\t"
-        "	strh r0, [r3]\n\t"
-        "	ldr r0, _080D1DE4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	strh r1, [r2]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1DDC: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1DE0: .4byte 0x00003D70\n\t"
-        "_080D1DE4: .4byte 0x00003D72\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->waldaPhrase.colors[0] = color1;
+    gSaveBlock1Ptr->waldaPhrase.colors[1] = color2;
 }
 
 u8 *GetWaldaPhrasePtr(void)
@@ -24985,4 +24899,3 @@ __attribute__((naked)) void sub_080D24BC(void)
         ".syntax divided\n\t"
     );
 }
-
