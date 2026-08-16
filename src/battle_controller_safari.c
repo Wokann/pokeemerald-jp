@@ -602,96 +602,47 @@ __attribute__((naked)) void SafariHandleBallThrowAnim(void)
     );
 }
 
-__attribute__((naked)) void SafariHandleGetMonData(void)
+void SafariHandleGetMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleGetRawMonData(void)
+
+void SafariHandleGetRawMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleSetMonData(void)
+
+void SafariHandleSetMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleSetRawMonData(void)
+
+void SafariHandleSetRawMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleLoadMonSprite(void)
+
+void SafariHandleLoadMonSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleSwitchInAnim(void)
+
+void SafariHandleSwitchInAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleReturnMonToBall(void)
+
+void SafariHandleReturnMonToBall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void SafariHandleDrawTrainerPic(void)
 {
@@ -800,57 +751,29 @@ __attribute__((naked)) void SafariHandleDrawTrainerPic(void)
     );
 }
 
-__attribute__((naked)) void SafariHandleTrainerSlide(void)
+void SafariHandleTrainerSlide(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleTrainerSlideBack(void)
+
+void SafariHandleTrainerSlideBack(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleFaintAnimation(void)
+
+void SafariHandleFaintAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandlePaletteFade(void)
+
+void SafariHandlePaletteFade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void sub_0815984C(void)
 {
@@ -944,31 +867,17 @@ __attribute__((naked)) void sub_081598A0(void)
     );
 }
 
-__attribute__((naked)) void SafariHandlePause(void)
+void SafariHandlePause(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleMoveAnimation(void)
+
+void SafariHandleMoveAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void SafariHandlePrintString(void)
 {
@@ -1133,18 +1042,11 @@ __attribute__((naked)) void SafariHandleUnknownYesNoBox(void)
     );
 }
 
-__attribute__((naked)) void SafariHandleChooseMove(void)
+void SafariHandleChooseMove(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void SafariHandleChooseItem(void)
 {
@@ -1181,57 +1083,29 @@ __attribute__((naked)) void SafariHandleChooseItem(void)
     );
 }
 
-__attribute__((naked)) void SafariHandleChoosePokemon(void)
+void SafariHandleChoosePokemon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleCmd23(void)
+
+void SafariHandleCmd23(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleHealthBarUpdate(void)
+
+void SafariHandleHealthBarUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleExpUpdate(void)
+
+void SafariHandleExpUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void SafariHandleStatusIconUpdate(void)
 {
@@ -1265,135 +1139,65 @@ __attribute__((naked)) void SafariHandleStatusIconUpdate(void)
     );
 }
 
-__attribute__((naked)) void SafariHandleStatusAnimation(void)
+void SafariHandleStatusAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleStatusXor(void)
+
+void SafariHandleStatusXor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleDataTransfer(void)
+
+void SafariHandleDataTransfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleDMA3Transfer(void)
+
+void SafariHandleDMA3Transfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandlePlayBGM(void)
+
+void SafariHandlePlayBGM(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleCmd32(void)
+
+void SafariHandleCmd32(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleTwoReturnValues(void)
+
+void SafariHandleTwoReturnValues(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleChosenMonReturnValue(void)
+
+void SafariHandleChosenMonReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleOneReturnValue(void)
+
+void SafariHandleOneReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleOneReturnValue_Duplicate(void)
+
+void SafariHandleOneReturnValue_Duplicate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void SafariHandleCmd37(void)
 {
@@ -1447,18 +1251,11 @@ __attribute__((naked)) void SafariHandleCmd40(void)
     );
 }
 
-__attribute__((naked)) void SafariHandleHitAnimation(void)
+void SafariHandleHitAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void SafariHandleCmd42(void)
 {
@@ -1669,44 +1466,23 @@ __attribute__((naked)) void SafariHandleIntroTrainerBallThrow(void)
     );
 }
 
-__attribute__((naked)) void SafariHandleDrawPartyStatusSummary(void)
+void SafariHandleDrawPartyStatusSummary(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleHidePartyStatusSummary(void)
+
+void SafariHandleHidePartyStatusSummary(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
 
-__attribute__((naked)) void SafariHandleEndBounceEffect(void)
+
+void SafariHandleEndBounceEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SafariBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SafariBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void SafariHandleSpriteInvisibility(void)
 {

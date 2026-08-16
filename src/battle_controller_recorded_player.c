@@ -5824,44 +5824,23 @@ void RecordedPlayerHandleDataTransfer(void)
 }
 
 
-__attribute__((naked)) void RecordedPlayerHandleDMA3Transfer(void)
+void RecordedPlayerHandleDMA3Transfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedPlayerHandlePlayBGM(void)
+
+void RecordedPlayerHandlePlayBGM(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedPlayerHandleCmd32(void)
+
+void RecordedPlayerHandleCmd32(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void sub_0818C53C(void)
 {
@@ -5902,18 +5881,11 @@ __attribute__((naked)) void sub_0818C554(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandleOneReturnValue_Duplicate(void)
+void RecordedPlayerHandleOneReturnValue_Duplicate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleCmd37(void)
 {
@@ -6758,18 +6730,11 @@ __attribute__((naked)) void RecordedPlayerHandleHidePartyStatusSummary(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandleEndBounceEffect(void)
+void RecordedPlayerHandleEndBounceEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleSpriteInvisibility(void)
 {
@@ -6879,31 +6844,17 @@ __attribute__((naked)) void RecordedPlayerHandleBattleAnimation(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandleLinkStandbyMsg(void)
+void RecordedPlayerHandleLinkStandbyMsg(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedPlayerHandleResetActionMoveSelection(void)
+
+void RecordedPlayerHandleResetActionMoveSelection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleCmd55(void)
 {
