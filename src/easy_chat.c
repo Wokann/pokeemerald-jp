@@ -1,6 +1,7 @@
 #include "global.h"
 #include "easy_chat.h"
 #include "main.h"
+#include "strings.h"
 #include "task.h"
 
 extern struct EasyChatScreen *sEasyChatScreen;
@@ -3735,20 +3736,10 @@ __attribute__((naked)) void GetEasyChatConfirmExitText(const u8 **str1, const u8
     );
 }
 
-__attribute__((naked)) void GetEasyChatConfirmDeletionText(const u8 **str1, const u8 **str2)
+static void GetEasyChatConfirmDeletionText(const u8 **str1, const u8 **str2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0811C398\n\t"
-        "	str r2, [r0]\n\t"
-        "	ldr r0, _0811C39C\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C398: .4byte gUnknown_85CBAA7\n\t"
-        "_0811C39C: .4byte gUnknown_85CBAB6\n\t"
-        ".syntax divided\n\t"
-    );
+    *str1 = gText_AllTextBeingEditedWill;
+    *str2 = gText_BeDeletedThatOkay;
 }
 
 __attribute__((naked)) void GetKeyboardCursorColAndRow(s8 *column, s8 *row)

@@ -25,9 +25,13 @@ gUnknown_85CBA71: @ 0x85CBA71
 	.globl gUnknown_85CBAA7
 gUnknown_85CBAA7: @ 0x85CBAA7
 	.string "へんしゅうちゅうの　ことばを$"
+	.globl gText_AllTextBeingEditedWill
+	.set gText_AllTextBeingEditedWill, gUnknown_85CBAA7
 	.globl gUnknown_85CBAB6
 gUnknown_85CBAB6: @ 0x85CBAB6
 	.string "ぜんぶ　けしても　いいですか？$へんしゅうを　やめますか？$へんしゅうした　ことばは　ほぞん$されませんが　いいですか？$なにか　ことばを　いれてください！$ことばを　ぜんぶ　けすことは　できません！$"
+	.globl gText_BeDeletedThatOkay
+	.set gText_BeDeletedThatOkay, gUnknown_85CBAB6
 	.globl gUnknown_85CBB1B
 gUnknown_85CBB1B: @ 0x85CBB1B
 	.string "かえられる　ことばは　1つ　までです！$"
