@@ -9,14 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sSearchMonDataIds
-sSearchMonDataIds: @ 0x85F59AC
-	.4byte 0x00000016, 0x00000017, 0x00000018, 0x00000021, 0x0000002F
-
-	.globl sConditionSearchLoopedTaskFuncs
-sConditionSearchLoopedTaskFuncs: @ 0x85F59C0
-	.incbin "baserom_jp.gba", 0x5f59c0, 0x10
-
 	.globl sConditionSearchResultFramePal
 sConditionSearchResultFramePal: @ 0x85F59D0
 	.hword 0x0300, 0x72AC, 0x7FFF, 0x3DCD, 0x0000, 0x51EB, 0x2506, 0x7F78, 0x6672, 0x6693, 0x6318, 0x7FFF

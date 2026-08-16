@@ -99,3 +99,19 @@ const LoopedTask sLoopedTaskFuncs[] =
     [CONDITION_FUNC_ADD_MARKINGS]   = LoopedTask_OpenMonMarkingsWindow,
     [CONDITION_FUNC_CLOSE_MARKINGS] = LoopedTask_CloseMonMarkingsWindow,
 };
+
+// Condition search results
+u32 BuildPartyMonSearchResults(s32);
+u32 InitBoxMonSearchResults(s32);
+u32 BuildBoxMonSearchResults(s32);
+u32 ConvertConditionsToListRanks(s32);
+
+const u32 sSearchMonDataIds[] = {MON_DATA_COOL, MON_DATA_BEAUTY, MON_DATA_CUTE, MON_DATA_SMART, MON_DATA_TOUGH};
+
+const LoopedTask sConditionSearchLoopedTaskFuncs[] =
+{
+    BuildPartyMonSearchResults,
+    InitBoxMonSearchResults,
+    BuildBoxMonSearchResults,
+    ConvertConditionsToListRanks
+};
