@@ -102,32 +102,32 @@ sSpriteTemplate_ReelTimeMachine: @ 0x8584CDC
 sSpriteTemplate_BrokenReelTimeMachine: @ 0x8584CF4
 	.incbin "baserom_jp.gba", 0x584cf4, 0x18
 
-	.globl gUnknown_8584D0C
-gUnknown_8584D0C: @ 0x8584D0C
+	.globl sSpriteTemplate_ReelTimeNumbers
+sSpriteTemplate_ReelTimeNumbers: @ 0x8584D0C
 	.incbin "baserom_jp.gba", 0x584d0c, 0x18
 
-	.globl gUnknown_8584D24
-gUnknown_8584D24: @ 0x8584D24
+	.globl sSpriteTemplate_ReelTimeShadow
+sSpriteTemplate_ReelTimeShadow: @ 0x8584D24
 	.incbin "baserom_jp.gba", 0x584d24, 0x18
 
-	.globl gUnknown_8584D3C
-gUnknown_8584D3C: @ 0x8584D3C
+	.globl sSpriteTemplate_ReelTimeNumberGap
+sSpriteTemplate_ReelTimeNumberGap: @ 0x8584D3C
 	.incbin "baserom_jp.gba", 0x584d3c, 0x18
 
-	.globl gUnknown_8584D54
-gUnknown_8584D54: @ 0x8584D54
+	.globl sSpriteTemplate_ReelTimeBolt
+sSpriteTemplate_ReelTimeBolt: @ 0x8584D54
 	.incbin "baserom_jp.gba", 0x584d54, 0x18
 
-	.globl gUnknown_8584D6C
-gUnknown_8584D6C: @ 0x8584D6C
+	.globl sSpriteTemplate_ReelTimePikachuAura
+sSpriteTemplate_ReelTimePikachuAura: @ 0x8584D6C
 	.incbin "baserom_jp.gba", 0x584d6c, 0x18
 
-	.globl gUnknown_8584D84
-gUnknown_8584D84: @ 0x8584D84
+	.globl sSpriteTemplate_ReelTimeExplosion
+sSpriteTemplate_ReelTimeExplosion: @ 0x8584D84
 	.incbin "baserom_jp.gba", 0x584d84, 0x18
 
-	.globl gUnknown_8584D9C
-gUnknown_8584D9C: @ 0x8584D9C
+	.globl sSpriteTemplate_ReelTimeDuck
+sSpriteTemplate_ReelTimeDuck: @ 0x8584D9C
 	.incbin "baserom_jp.gba", 0x584d9c, 0x18
 
 	.globl gUnknown_8584DB4
@@ -154,12 +154,12 @@ sSubspriteTable_ReelTimeMachine: @ 0x8584F78
 sSubspriteTable_BrokenReelTimeMachine: @ 0x8584F94
 	.incbin "baserom_jp.gba", 0x584f94, 0x18
 
-	.globl gUnknown_8584FAC
-gUnknown_8584FAC: @ 0x8584FAC
+	.globl sSubspriteTable_ReelTimeShadow
+sSubspriteTable_ReelTimeShadow: @ 0x8584FAC
 	.incbin "baserom_jp.gba", 0x584fac, 0x14
 
-	.globl gUnknown_8584FC0
-gUnknown_8584FC0: @ 0x8584FC0
+	.globl sSubspriteTable_ReelTimeNumberGap
+sSubspriteTable_ReelTimeNumberGap: @ 0x8584FC0
 	.incbin "baserom_jp.gba", 0x584fc0, 0x228
 
 	.globl gUnknown_85851E8
@@ -233,4 +233,3 @@ gUnknown_8587AEC: @ 0x8587AEC
 	.globl gUnknown_8588154
 gUnknown_8588154: @ 0x8588154
 	.incbin "baserom_jp.gba", 0x588154, 0x4b0
-
