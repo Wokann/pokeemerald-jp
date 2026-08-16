@@ -34,8 +34,6 @@ struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; 
 extern const struct RibbonData sRibbonData[16]; // ROM 0x085F5E14, 17 entries (loop runs i<=16)
 extern u32 sRibbonDraw_Total;
 extern u32 sRibbonDraw_Current;
-extern const struct CompressedSpriteSheet sSpriteSheet_RibbonIconsBig;
-extern const struct SpritePalette sSpritePalettes_RibbonIcons[];
 extern const struct OamData sOamData_RibbonIconBig;
 extern const union AffineAnimCmd sAffineAnim_RibbonIconBig_Normal[];
 extern const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomIn[];
@@ -211,6 +209,21 @@ const struct RibbonGfxData sRibbonGfxData[] =
 #define PALTAG_RIBBON_ICONS_3 17
 #define PALTAG_RIBBON_ICONS_4 18
 #define PALTAG_RIBBON_ICONS_5 19
+
+const struct CompressedSpriteSheet sSpriteSheet_RibbonIconsBig =
+{
+    sRibbonIconsBig_Gfx, 0x1800, GFXTAG_RIBBON_ICONS_BIG
+};
+
+const struct SpritePalette sSpritePalettes_RibbonIcons[] =
+{
+    {sRibbonIcons1_Pal, PALTAG_RIBBON_ICONS_1},
+    {sRibbonIcons2_Pal, PALTAG_RIBBON_ICONS_2},
+    {sRibbonIcons3_Pal, PALTAG_RIBBON_ICONS_3},
+    {sRibbonIcons4_Pal, PALTAG_RIBBON_ICONS_4},
+    {sRibbonIcons5_Pal, PALTAG_RIBBON_ICONS_5},
+    {},
+};
 
 #define RIBBONS_PER_ROW 9
 #define GIFT_RIBBON_ROW (1 + (FIRST_GIFT_RIBBON / RIBBONS_PER_ROW)) // Gift ribbons start on a new row after the normal ribbons.

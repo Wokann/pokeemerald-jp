@@ -9,13 +9,13 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sSpriteSheet_RibbonIconsBig
-sSpriteSheet_RibbonIconsBig: @ 0x85F72D8
-	.incbin "graphics/misc/sSpriteSheet_RibbonIconsBig.bin"
+	.globl gUnknown_85F7310
+gUnknown_85F7310: @ 0x85F7310
+	.incbin "baserom_jp.gba", 0x5f7310, 0x8
 
-	.globl sSpritePalettes_RibbonIcons
-sSpritePalettes_RibbonIcons: @ 0x85F72E0
-	.incbin "graphics/misc/sSpritePalettes_RibbonIcons.bin"
+	.globl gUnknown_85F7318
+gUnknown_85F7318: @ 0x85F7318
+	.incbin "baserom_jp.gba", 0x5f7318, 0x4c
 
 	.globl sSpriteTemplate_RibbonIconBig
 sSpriteTemplate_RibbonIconBig: @ 0x85F7364
