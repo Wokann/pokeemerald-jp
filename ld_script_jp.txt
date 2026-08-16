@@ -7489,7 +7489,7 @@ SECTIONS {
         src/slot_machine.o(.text.FlashSlotMachineLights);
         src/slot_machine.o(.text.TryStopSlotMachineLights);
         src/slot_machine.o(.text.Task_FlashSlotMachineLights);
-        src/slot_machine.o(.text.GameplayTask_PikaPower);
+        src/slot_machine.o(.text.CreatePikaPowerBoltTask);
         src/slot_machine.o(.text.AddPikaPowerBolt);
         src/slot_machine.o(.text.ResetPikaPowerBolts);
         src/slot_machine.o(.text.IsPikaPowerBoltAnimating);
@@ -7498,7 +7498,7 @@ SECTIONS {
         src/slot_machine.o(.text.PikaPowerBolt_AddBolt);
         src/slot_machine.o(.text.PikaPowerBolt_WaitAnim);
         src/slot_machine.o(.text.PikaPowerBolt_ClearAll);
-        src/slot_machine.o(.text.ClearTaskDataFields_2orHigher);
+        src/slot_machine.o(.text.ResetPikaPowerBoltTask);
         src/slot_machine.o(.text.LoadPikaPowerMeter);
         src/slot_machine.o(.text.BeginReelTime);
         src/slot_machine.o(.text.IsReelTimeTaskDone);
@@ -9348,7 +9348,9 @@ SECTIONS {
         src/slot_machine.o(.rodata.sDecideStop_NoBias_Reel3_Bets);
         src/slot_machine.o(.rodata.sReelStopButtonTasks);
         src/slot_machine.o(.rodata.sReelButtonOffsets);
-        data/data_b2d_mid61.o(.rodata.85844DC);
+        src/slot_machine.o(.rodata.sPikaPowerBoltTasks);
+        src/slot_machine.o(.rodata.sPikaPowerTileTable);
+        data/data_b2d_mid61.o(.rodata.85844F8);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/slot_machine.o(.rodata.sReelSymbols);

@@ -788,7 +788,7 @@ __attribute__((naked)) void CreateGameplayTasks(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl GameplayTask_PikaPower\n\t"
+        "	bl CreatePikaPowerBoltTask\n\t"
         "	bl CreateReelTasks\n\t"
         "	bl sub_0812DEA4\n\t"
         "	bl CreateSlotMachineTasks\n\t"
@@ -806,6 +806,13 @@ enum {
     MATCH_NWSE_DIAG,
     MATCH_NESW_DIAG,
     NUM_MATCH_LINES,
+};
+
+enum {
+    PIKABOLT_TASK_IDLE,
+    PIKABOLT_TASK_ADD_BOLT,
+    PIKABOLT_TASK_WAIT_ANIM,
+    PIKABOLT_TASK_CLEAR_ALL,
 };
 
 enum {
@@ -1090,6 +1097,16 @@ void AwardPayout(void);
 void FlashSlotMachineLights(void);
 static void Task_FlashSlotMachineLights(u8 taskId);
 void AddPikaPowerBolt(u8 bolts);
+static void CreatePikaPowerBoltTask(void);
+void ResetPikaPowerBolts(void);
+static void Task_CreatePikaPowerBolt(u8 taskId);
+static void PikaPowerBolt_Idle(struct Task *task);
+static void PikaPowerBolt_AddBolt(struct Task *task);
+static void PikaPowerBolt_WaitAnim(struct Task *task);
+static void PikaPowerBolt_ClearAll(struct Task *task);
+static void ResetPikaPowerBoltTask(struct Task *task);
+u8 CreatePikaPowerBoltSprite(s16 x, s16 y);
+void DestroyPikaPowerBoltSprite(u8 spriteId);
 void FlashMatchLine(u8 spriteId);
 void CreateInvisibleFlashMatchLineSprites(void);
 static bool8 TryStopMatchLineFlashing(u8 spriteId);
@@ -3749,477 +3766,157 @@ static void Task_FlashSlotMachineLights(u8 taskId)
 #undef sFlashState
 #undef sFlashDir
 
-__attribute__((naked)) void GameplayTask_PikaPower(void)
+#define tState     data[0]
+#define tNumBolts  data[1]
+#define tSpriteId  data[2]
+#define tTimer     data[2] // re-used
+#define tAnimating data[15]
+
+__attribute__((section(".rodata.sPikaPowerBoltTasks")))
+static void (*const sPikaPowerBoltTasks[])(struct Task *task) =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812D1B0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r1, _0812D1B4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	strb r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D1B0: .4byte Task_CreatePikaPowerBolt + 1\n\t"
-        "_0812D1B4: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    PikaPowerBolt_Idle,
+    PikaPowerBolt_AddBolt,
+    PikaPowerBolt_WaitAnim,
+    PikaPowerBolt_ClearAll,
+};
+
+__attribute__((section(".rodata.sPikaPowerTileTable")))
+static const u16 sPikaPowerTileTable[][2] =
+{
+    {0x9e, 0x6e},
+    {0x9f, 0x6f},
+    {0xaf, 0x7f},
+};
+
+static void CreatePikaPowerBoltTask(void)
+{
+    sSlotMachine->pikaPowerBoltTaskId = CreateTask(Task_CreatePikaPowerBolt, 8);
 }
 
-__attribute__((naked)) void AddPikaPowerBolt(u8 bolts)
+static void AddPikaPowerBolt(u8 bolts)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0812D1E4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _0812D1E8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ClearTaskDataFields_2orHigher\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r4, #8]\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D1E4: .4byte sSlotMachine\n\t"
-        "_0812D1E8: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[sSlotMachine->pikaPowerBoltTaskId];
+    ResetPikaPowerBoltTask(task);
+    task->tState = PIKABOLT_TASK_ADD_BOLT;
+    task->tNumBolts++;
+    task->tAnimating = TRUE;
 }
 
-__attribute__((naked)) void ResetPikaPowerBolts(void)
+void ResetPikaPowerBolts(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0812D214\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _0812D218\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ClearTaskDataFields_2orHigher\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D214: .4byte sSlotMachine\n\t"
-        "_0812D218: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[sSlotMachine->pikaPowerBoltTaskId];
+    ResetPikaPowerBoltTask(task);
+    task->tState = PIKABOLT_TASK_CLEAR_ALL;
+    task->tAnimating = TRUE;
 }
 
-__attribute__((naked)) bool8 IsPikaPowerBoltAnimating(void)
+bool8 IsPikaPowerBoltAnimating(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0812D238\n\t"
-        "	ldr r0, _0812D23C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D238: .4byte gTasks\n\t"
-        "_0812D23C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    return gTasks[sSlotMachine->pikaPowerBoltTaskId].tAnimating;
 }
 
 
-__attribute__((naked)) void Task_CreatePikaPowerBolt(u8 taskId)
+static void Task_CreatePikaPowerBolt(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _0812D268\n\t"
-        "	ldr r2, _0812D26C\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D268: .4byte gUnknown_85844DC\n\t"
-        "_0812D26C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    sPikaPowerBoltTasks[gTasks[taskId].tState](&gTasks[taskId]);
 }
 
-void PikaPowerBolt_Idle(struct Task *task) {}
-__attribute__((naked)) void PikaPowerBolt_AddBolt(struct Task *task)
+static void PikaPowerBolt_Idle(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x13\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0xd\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl sub_0812EF10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+}
+static void PikaPowerBolt_AddBolt(struct Task *task)
+{
+    task->tSpriteId = CreatePikaPowerBoltSprite((task->tNumBolts << 3) + 20, 20);
+    task->tState++; // PIKABOLT_TASK_WAIT_ANIM
 }
 
-__attribute__((naked)) void PikaPowerBolt_WaitAnim(struct Task *task)
+// The bolt sprite spins around as it appears
+// Once the anim is done, destroy the sprite and set the bolt in the tilemap instead
+static void PikaPowerBolt_WaitAnim(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r2, _0812D2D0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D30C\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	adds r0, r1, #2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _0812D2D4\n\t"
-        "	movs r3, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	b _0812D2DC\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D2D0: .4byte gSprites\n\t"
-        "_0812D2D4:\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	bne _0812D2DC\n\t"
-        "	movs r3, #2\n\t"
-        "	movs r2, #2\n\t"
-        "_0812D2DC:\n\t"
-        "	ldr r0, _0812D314\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, _0812D318\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r3, r5, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0xf\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	bl sub_0812EF7C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0812D30C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D314: .4byte sSelectedPikaPowerTile\n\t"
-        "_0812D318: .4byte gUnknown_85844EC\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSprites[task->tSpriteId].data[7])
+    {
+        s16 r5 = task->tNumBolts + 2;
+        s16 r3 = 0;
+        s16 r2 = 0;
+        if (task->tNumBolts == 1)
+            r3 = 1, r2 = 1;
+        else if (task->tNumBolts == 16)
+            r3 = 2, r2 = 2;
+        sSelectedPikaPowerTile[r2] = sPikaPowerTileTable[r3][0];
+        LoadBgTilemap(2, &sSelectedPikaPowerTile[r2], 2, (u16)(r5 + 0x40));
+        DestroyPikaPowerBoltSprite(task->tSpriteId);
+        task->tState = PIKABOLT_TASK_IDLE;
+        task->tAnimating = 0;
+    }
 }
 
-__attribute__((naked)) void PikaPowerBolt_ClearAll(struct Task *task)
+static void PikaPowerBolt_ClearAll(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	adds r0, r1, #2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _0812D33A\n\t"
-        "	movs r3, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	b _0812D342\n\t"
-        "_0812D33A:\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	bne _0812D342\n\t"
-        "	movs r3, #2\n\t"
-        "	movs r2, #2\n\t"
-        "_0812D342:\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812D376\n\t"
-        "	ldr r0, _0812D39C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _0812D3A0\n\t"
-        "	lsls r2, r3, #2\n\t"
-        "	adds r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r3, r5, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0xf\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_0812D376:\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x13\n\t"
-        "	ble _0812D388\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0xc]\n\t"
-        "_0812D388:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812D394\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0812D394:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D39C: .4byte sSelectedPikaPowerTile\n\t"
-        "_0812D3A0: .4byte gUnknown_85844EC\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 r5 = task->tNumBolts + 2;
+    s16 r3 = 0;
+    s16 r2 = 3;
+    if (task->tNumBolts == 1)
+        r3 = 1, r2 = 1;
+    else if (task->tNumBolts == 16)
+        r3 = 2, r2 = 2;
+    if (task->tTimer == 0)
+    {
+        sSelectedPikaPowerTile[r2] = sPikaPowerTileTable[r3][1];
+        LoadBgTilemap(2, &sSelectedPikaPowerTile[r2], 2, (u16)(r5 + 0x40));
+        task->tNumBolts--;
+    }
+    if (++task->tTimer >= 20)
+        task->tTimer = 0;
+    if (task->tNumBolts == 0)
+    {
+        task->tState = PIKABOLT_TASK_IDLE;
+        task->tAnimating = 0;
+    }
 }
 
-__attribute__((naked)) void ClearTaskDataFields_2orHigher(struct Task *task)
+static void ResetPikaPowerBoltTask(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #2\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #8\n\t"
-        "	movs r3, #0\n\t"
-        "_0812D3AE:\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	strh r3, [r0]\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	bls _0812D3AE\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 2; i < NUM_TASK_DATA; i++)
+        task->data[i] = 0;
 }
 
-__attribute__((naked)) void LoadPikaPowerMeter(u8 bolts)
+void LoadPikaPowerMeter(u8 bolts)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r4, #3\n\t"
-        "	movs r5, #0\n\t"
-        "	cmp r5, r6\n\t"
-        "	bge _0812D42E\n\t"
-        "	ldr r7, _0812D3E8\n\t"
-        "_0812D3D4:\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812D3EC\n\t"
-        "	movs r3, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	b _0812D3F4\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D3E8: .4byte gUnknown_85844EC\n\t"
-        "_0812D3EC:\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bne _0812D3F4\n\t"
-        "	movs r3, #2\n\t"
-        "	movs r1, #2\n\t"
-        "_0812D3F4:\n\t"
-        "	ldr r0, _0812D448\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r3, r4, #0x10\n\t"
-        "	asrs r4, r3, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0xf\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r4, #1\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r6\n\t"
-        "	blt _0812D3D4\n\t"
-        "_0812D42E:\n\t"
-        "	lsls r2, r5, #0x10\n\t"
-        "	asrs r0, r2, #0x10\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bgt _0812D494\n\t"
-        "	ldr r7, _0812D44C\n\t"
-        "_0812D438:\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	asrs r0, r2, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812D450\n\t"
-        "	movs r3, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	b _0812D458\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D448: .4byte sSelectedPikaPowerTile\n\t"
-        "_0812D44C: .4byte gUnknown_85844EE\n\t"
-        "_0812D450:\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bne _0812D458\n\t"
-        "	movs r3, #2\n\t"
-        "	movs r1, #2\n\t"
-        "_0812D458:\n\t"
-        "	ldr r0, _0812D4B0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r3, r4, #0x10\n\t"
-        "	asrs r4, r3, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0xf\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r4, #1\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r2, r5, #0x10\n\t"
-        "	asrs r0, r2, #0x10\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	ble _0812D438\n\t"
-        "_0812D494:\n\t"
-        "	ldr r2, _0812D4B4\n\t"
-        "	ldr r0, _0812D4B8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r6, [r0, #0xa]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D4B0: .4byte sSelectedPikaPowerTile\n\t"
-        "_0812D4B4: .4byte gTasks\n\t"
-        "_0812D4B8: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+    s16 r3 = 0, r1 = 0;
+    s16 r4 = 3;
+    for (i = 0; i < bolts; i++, r4++)
+    {
+        r3 = 0, r1 = 0;
+        if (i == 0)
+            r3 = 1, r1 = 1;
+        else if (i == 15) // meter is full
+            r3 = 2, r1 = 2;
+        sSelectedPikaPowerTile[r1] = sPikaPowerTileTable[r3][0];
+        LoadBgTilemap(2, &sSelectedPikaPowerTile[r1], 2, (u16)(r4 + 0x40));
+    }
+    for (; i < 16; i++, r4++)
+    {
+        r3 = 0, r1 = 3;
+        if (i == 0)
+            r3 = 1, r1 = 1;
+        else if (i == 15)
+            r3 = 2, r1 = 2;
+        sSelectedPikaPowerTile[r1] = sPikaPowerTileTable[r3][1];
+        LoadBgTilemap(2, &sSelectedPikaPowerTile[r1], 2, (u16)(r4 + 0x40));
+    }
+    gTasks[sSlotMachine->pikaPowerBoltTaskId].data[1] = bolts;
 }
+
+#undef tState
+#undef tNumBolts
+#undef tSpriteId
+#undef tTimer
+#undef tAnimating
 
 __attribute__((naked)) void BeginReelTime(void)
 {

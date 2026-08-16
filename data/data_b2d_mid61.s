@@ -528,19 +528,7 @@ gUnknown_85843C8: @ 0x85843C8
 gUnknown_85843D0: @ 0x85843D0
 	.incbin "baserom_jp.gba", 0x5843d0, 0x4
 
-	.section .rodata.85844DC
-	.globl gUnknown_85844DC
-gUnknown_85844DC: @ 0x85844DC
-	.incbin "baserom_jp.gba", 0x5844dc, 0x10
-
-	.globl gUnknown_85844EC
-gUnknown_85844EC: @ 0x85844EC
-	.incbin "baserom_jp.gba", 0x5844ec, 0x2
-
-	.globl gUnknown_85844EE
-gUnknown_85844EE: @ 0x85844EE
-	.incbin "baserom_jp.gba", 0x5844ee, 0xa
-
+	.section .rodata.85844F8
 	.globl sReelTimeTasks
 sReelTimeTasks: @ 0x85844F8
 	.4byte ReelTime_Init + 1, ReelTime_WindowEnter + 1, ReelTime_WaitStartPikachu + 1, ReelTime_PikachuSpeedUp1 + 1, ReelTime_PikachuSpeedUp2 + 1, ReelTime_WaitReel + 1, ReelTime_CheckExplode + 1, ReelTime_LandOnOutcome + 1
