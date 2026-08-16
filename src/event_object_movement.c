@@ -629,99 +629,24 @@ __attribute__((naked)) void Unref_TryInitLocalEventObject(void)
     );
 }
 
-__attribute__((naked)) void GetAvailableEventObjectId(void)
+bool8 GetAvailableEventObjectId(u16 localId, u8 mapNum, u8 mapGroup, u8 *objectEventId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov ip, r3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _0808D1DC\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D1D4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "_0808D1A0:\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r3\n\t"
-        "	ldrb r0, [r1, #8]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _0808D1BA\n\t"
-        "	ldrb r0, [r1, #9]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _0808D1BA\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _0808D1D8\n\t"
-        "_0808D1BA:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0xf\n\t"
-        "	bhi _0808D1D8\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808D1A0\n\t"
-        "_0808D1D4:\n\t"
-        "	cmp r2, #0xf\n\t"
-        "	bls _0808D1E0\n\t"
-        "_0808D1D8:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808D214\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D1DC: .4byte gObjectEvents\n\t"
-        "_0808D1E0:\n\t"
-        "	mov r0, ip\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r1, _0808D21C\n\t"
-        "_0808D1E6:\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808D208\n\t"
-        "	ldrb r0, [r3, #8]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _0808D208\n\t"
-        "	ldrb r0, [r3, #9]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _0808D208\n\t"
-        "	ldrb r0, [r3, #0xa]\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _0808D1D8\n\t"
-        "_0808D208:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0xf\n\t"
-        "	bls _0808D1E6\n\t"
-        "	movs r0, #0\n\t"
-        "_0808D214:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D21C: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i = 0;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT && gObjectEvents[i].active; i++)
+    {
+        if (gObjectEvents[i].localId == localId && gObjectEvents[i].mapNum == mapNum && gObjectEvents[i].mapGroup == mapGroup)
+            return TRUE;
+    }
+    if (i >= OBJECT_EVENTS_COUNT)
+        return TRUE;
+    *objectEventId = i;
+    for (; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if (gObjectEvents[i].active && gObjectEvents[i].localId == localId && gObjectEvents[i].mapNum == mapNum && gObjectEvents[i].mapGroup == mapGroup)
+            return TRUE;
+    }
+    return FALSE;
 }
 void RemoveObjectEvent(struct ObjectEvent *objectEvent)
 {
