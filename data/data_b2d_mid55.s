@@ -46,8 +46,8 @@ gUnknown_85443B0: @ 0x85443B0
 gUnknown_85443B2: @ 0x85443B2
 	.incbin "baserom_jp.gba", 0x5443b2, 0x6
 
-	.globl gUnknown_85443B8
-gUnknown_85443B8: @ 0x85443B8
+	.globl sDexSearchTypeIds
+sDexSearchTypeIds: @ 0x85443B8
 	.incbin "baserom_jp.gba", 0x5443b8, 0x14
 
 	.globl gUnknown_85443CC

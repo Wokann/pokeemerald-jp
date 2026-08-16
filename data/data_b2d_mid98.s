@@ -592,8 +592,8 @@ gUnknown_85D5ACC: @ 0x85D5ACC
 gUnknown_85D5AE4: @ 0x85D5AE4
 	.incbin "baserom_jp.gba", 0x5d5ae4, 0x18
 
-	.globl gUnknown_85D5AFC
-gUnknown_85D5AFC: @ 0x85D5AFC
+	.globl sTourneyTreeTrainerIds
+sTourneyTreeTrainerIds: @ 0x85D5AFC
 	.incbin "baserom_jp.gba", 0x5d5afc, 0x10
 
 	.globl gUnknown_85D5B0C
@@ -611,8 +611,8 @@ gUnknown_85D5B78: @ 0x85D5B78
 gUnknown_85D5B88: @ 0x85D5B88
 	.incbin "baserom_jp.gba", 0x5d5b88, 0x40
 
-	.globl gUnknown_85D5BC8
-gUnknown_85D5BC8: @ 0x85D5BC8
+	.globl sTourneyTreeTrainerOpponentIds
+sTourneyTreeTrainerOpponentIds: @ 0x85D5BC8
 	.incbin "baserom_jp.gba", 0x5d5bc8, 0x10
 
 	.globl gUnknown_85D5BD8
@@ -627,8 +627,8 @@ gUnknown_85D5C18: @ 0x85D5C18
 gUnknown_85D5C1C: @ 0x85D5C1C
 	.incbin "baserom_jp.gba", 0x5d5c1c, 0x20
 
-	.globl gUnknown_85D5C3C
-gUnknown_85D5C3C: @ 0x85D5C3C
+	.globl sTournamentIdToPairedTrainerIds
+sTournamentIdToPairedTrainerIds: @ 0x85D5C3C
 	.incbin "baserom_jp.gba", 0x5d5c3c, 0x10
 
 	.globl gUnknown_85D5C4C
@@ -683,8 +683,8 @@ gUnknown_85D5E2A: @ 0x85D5E2A
 gUnknown_85D5E2D: @ 0x85D5E2D
 	.incbin "baserom_jp.gba", 0x5d5e2d, 0x3
 
-	.globl gUnknown_85D5E30
-gUnknown_85D5E30: @ 0x85D5E30
+	.globl sTourneyTreeTrainerIds2
+sTourneyTreeTrainerIds2: @ 0x85D5E30
 	.incbin "baserom_jp.gba", 0x5d5e30, 0x10
 
 	.globl gUnknown_85D5E40

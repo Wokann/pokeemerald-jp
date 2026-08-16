@@ -14297,7 +14297,7 @@ __attribute__((naked)) void sub_080C19BC(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080C1A58: .4byte gUnknown_85443B8\n\t"
+        "_080C1A58: .4byte sDexSearchTypeIds\n\t"
         ".syntax divided\n\t"
     );
 }
