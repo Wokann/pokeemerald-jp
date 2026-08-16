@@ -40,6 +40,8 @@ sContestWinnerPicDummy: @ 0x830FC68
 	.globl gUnknown_830FC88
 gUnknown_830FC88: @ 0x830FC88
 	.incbin "baserom_jp.gba", 0x30fc88, 0x28
+	.globl sDummyWarpData
+	.set sDummyWarpData, gUnknown_830FC88
 
 	.globl gDirectionToVectors
 gDirectionToVectors: @ 0x830FCB0

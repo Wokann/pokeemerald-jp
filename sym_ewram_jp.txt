@@ -558,6 +558,7 @@ gUnknown_2031F78 = .;
 sObjectEventLoadFlag = .;
 . += 0x4;
 gUnknown_2031F7C = .;
+gLastUsedWarp = .;
 . += 0x8;
 gUnknown_2031F84 = .;
 sWarpDestination = .;

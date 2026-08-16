@@ -12,6 +12,8 @@ extern void *sUnusedOverworldCallback;
 extern struct InitialPlayerAvatarState sInitialPlayerAvatarState;
 extern struct WarpData sWarpDestination;
 extern struct WarpData sFixedDiveWarp;
+extern struct WarpData sFixedHoleWarp;
+extern const struct WarpData sDummyWarpData;
 extern struct MapHeader *const *const gMapGroups[];
 extern u8 sObjectEventLoadFlag;
 
@@ -542,41 +544,12 @@ __attribute__((naked)) const struct MapLayout *GetMapLayout(void)
     );
 }
 
-__attribute__((naked)) void ApplyCurrentWarp(void)
+void ApplyCurrentWarp(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r3, _08084384\n\t"
-        "	ldr r0, _08084388\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, [r2, #4]\n\t"
-        "	ldr r1, [r2, #8]\n\t"
-        "	str r0, [r3]\n\t"
-        "	str r1, [r3, #4]\n\t"
-        "	ldr r0, _0808438C\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	str r1, [r2, #8]\n\t"
-        "	ldr r2, _08084390\n\t"
-        "	ldr r0, _08084394\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	ldr r2, _08084398\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08084384: .4byte gUnknown_2031F7C\n\t"
-        "_08084388: .4byte gSaveBlock1Ptr\n\t"
-        "_0808438C: .4byte gUnknown_2031F84\n\t"
-        "_08084390: .4byte gUnknown_2031F8C\n\t"
-        "_08084394: .4byte gUnknown_830FC88\n\t"
-        "_08084398: .4byte gUnknown_2031F94\n\t"
-        ".syntax divided\n\t"
-    );
+    gLastUsedWarp = gSaveBlock1Ptr->location;
+    gSaveBlock1Ptr->location = sWarpDestination;
+    sFixedDiveWarp = sDummyWarpData;
+    sFixedHoleWarp = sDummyWarpData;
 }
 
 void SetWarpData(struct WarpData *warp, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
