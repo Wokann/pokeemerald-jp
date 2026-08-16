@@ -29,6 +29,8 @@ extern const s16 sMovementDelaysMedium[];
 extern const s16 sMovementDelaysLong[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
 extern void (*const gUnknown_84DD88C[])(struct Sprite *);
+extern const struct PairedPalettes sPlayerReflectionPaletteSets[];
+extern u8 gUnknown_2037254; // sCurrentReflectionType
 extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);
@@ -2522,65 +2524,19 @@ u8 FindEventObjectPaletteIndexByTag(u16 tag)
     return 0xFF;
 }
 
-__attribute__((naked)) void LoadPlayerObjectReflectionPalette(u16 tag, u8 slot)
+void LoadPlayerObjectReflectionPalette(u16 tag, u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl PatchObjectPalette\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r1, _0808E380\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	ldr r2, _0808E384\n\t"
-        "	cmp r0, r2\n\t"
-        "	beq _0808E3A0\n\t"
-        "	ldr r0, _0808E388\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "_0808E35C:\n\t"
-        "	lsls r2, r3, #3\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _0808E390\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldr r0, _0808E38C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	bl PatchObjectPalette\n\t"
-        "	b _0808E3A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E380: .4byte gUnknown_84E4154\n\t"
-        "_0808E384: .4byte 0x000011FF\n\t"
-        "_0808E388: .4byte gReflectionEffectPaletteMap\n\t"
-        "_0808E38C: .4byte gUnknown_2037254\n\t"
-        "_0808E390:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _0808E35C\n\t"
-        "_0808E3A0:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    PatchObjectPalette(tag, slot);
+    for (i = 0; sPlayerReflectionPaletteSets[i].tag != OBJ_EVENT_PAL_TAG_NONE; i++)
+    {
+        if (sPlayerReflectionPaletteSets[i].tag == tag)
+        {
+            PatchObjectPalette(sPlayerReflectionPaletteSets[i].data[gUnknown_2037254], gReflectionEffectPaletteMap[slot]);
+            return;
+        }
+    }
 }
 
 __attribute__((naked)) void LoadSpecialObjectReflectionPalette(u16 tag, u8 slot)

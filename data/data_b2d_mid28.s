@@ -82,6 +82,9 @@ gUnknown_84E401C: @ 0x84E401C
 gUnknown_84E4154: @ 0x84E4154
 	.incbin "baserom_jp.gba", 0x4e4154, 0x78
 
+	.globl sPlayerReflectionPaletteSets
+	.set sPlayerReflectionPaletteSets, gUnknown_84E4154
+
 	.globl gUnknown_84E41CC
 gUnknown_84E41CC: @ 0x84E41CC
 	.incbin "baserom_jp.gba", 0x4e41cc, 0xc0
