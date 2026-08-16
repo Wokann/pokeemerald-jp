@@ -258,7 +258,18 @@ sAffineAnimCmdFuncs: @ 0x82BF34C
 
 	.globl sOamDimensions32
 sOamDimensions32: @ 0x82BF35C
-	.incbin "baserom_jp.gba", 0x2bf35c, 0x60
+	.4byte 8, 8
+	.4byte 16, 16
+	.4byte 32, 32
+	.4byte 64, 64
+	.4byte 16, 8
+	.4byte 32, 8
+	.4byte 32, 16
+	.4byte 64, 32
+	.4byte 8, 16
+	.4byte 8, 32
+	.4byte 16, 32
+	.4byte 32, 64
 
 	.globl sOamDimensions
 sOamDimensions: @ 0x82BF3BC
