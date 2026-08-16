@@ -530,7 +530,7 @@ gUnknown_85C2468: @ 0x85C2468
 
 	.globl gUnknown_85C45D8
 gUnknown_85C45D8: @ 0x85C45D8
-	.incbin "baserom_jp.gba", 0x5c45d8, 0x200
+	.incbin "graphics/battle_frontier/gUnknown_85C45D8.gbapal"
 
 	.globl gUnknown_85C47D8
 gUnknown_85C47D8: @ 0x85C47D8
