@@ -725,6 +725,8 @@ gUnknown_82EEC7A: @ 0x82EEC7A
 	.globl gUnknown_82EEF14
 gUnknown_82EEF14: @ 0x82EEF14
 	.incbin "baserom_jp.gba", 0x2eef14, 0x28c
+	.globl gItemEffectTable
+	.set gItemEffectTable, gUnknown_82EEF14
 
 	.globl gUnknown_82EF1A0
 gUnknown_82EF1A0: @ 0x82EF1A0
