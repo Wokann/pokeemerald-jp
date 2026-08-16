@@ -3205,47 +3205,16 @@ __attribute__((naked)) u8 CreateCopySpriteAt(struct Sprite *sprite, s16 x, s16 y
 }
 
 
-__attribute__((naked)) void SetEventObjectDirection(struct ObjectEvent *objectEvent, u8 direction)
+void SetEventObjectDirection(struct ObjectEvent *objectEvent, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r2, r1, #0x18\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	ldrb r0, [r3, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x20\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r3, #1]\n\t"
-        "	lsls r0, r0, #0x1e\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0808E960\n\t"
-        "	movs r0, #0xf\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	ldrb r2, [r3, #0x18]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #0x18]\n\t"
-        "_0808E960:\n\t"
-        "	lsls r2, r4, #4\n\t"
-        "	ldrb r1, [r3, #0x18]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r3, #0x18]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 d2;
+    objectEvent->previousMovementDirection = objectEvent->facingDirection;
+    if (!objectEvent->facingDirectionLocked)
+    {
+        d2 = direction;
+        objectEvent->facingDirection = d2;
+    }
+    objectEvent->movementDirection = direction;
 }
 
 const u8 *GetObjectEventScriptPointerByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
