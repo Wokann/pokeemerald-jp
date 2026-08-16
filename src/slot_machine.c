@@ -984,6 +984,9 @@ enum {
     WIN_INFO,
 };
 
+// JP tag scheme for the coin number sprites (differs from the US GFXTAG enum).
+#define GFXTAG_NUM_0 0x70000
+
 #define MAX_BET 3
 #define REEL_NORMAL_SPEED 8
 #define MAX_EXTRA_TURNS 4
@@ -1189,6 +1192,7 @@ extern const u8 gText_YouveRunOutOfCoins[];
 extern const u8 gText_QuitTheGame[];
 void DrawMachineBias(void);
 void DestroyDigitalDisplayScene(void);
+void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout, s16 digitMult);
 static void EndDigitalDisplayScene_StopReel(void);
 static void EndDigitalDisplayScene_Win(void);
 static void EndDigitalDisplayScene_InsertBet(void);
@@ -4916,125 +4920,27 @@ __attribute__((naked)) void CreateReelSymbolSprites(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_ReelSymbol(struct Sprite *sprite)
+static void SpriteCB_ReelSymbol(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _0812E1D4\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	movs r1, #0x78\n\t"
-        "	bl __modsi3\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r4, #0x22\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x22]\n\t"
-        "	ldrh r4, [r5, #0x2e]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetSymbolAtRest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x40\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetSpriteSheetFrameTileNum\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E1D4: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[2] = sSlotMachine->reelPixelOffsets[sprite->data[0]] + sprite->data[1];
+    sprite->data[2] %= 120;
+    sprite->y = sSlotMachine->reelShockOffsets[sprite->data[0]] + 28 + sprite->data[2];
+    sprite->sheetTileStart = GetSpriteTileStartByTag(GetSymbolAtRest(sprite->data[0], sprite->data[2] / 24));
+    SetSpriteSheetFrameTileNum(sprite);
 }
 
-__attribute__((naked)) void CreateCreditPayoutNumberSprites(void)
+void CreateCreditPayoutNumberSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r4, #0xcb\n\t"
-        "	movs r5, #1\n\t"
-        "	ldr r6, _0812E23C\n\t"
-        "_0812E1E0:\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x17\n\t"
-        "	movs r2, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_0812E240\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	subs r4, #7\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r6\n\t"
-        "	ble _0812E1E0\n\t"
-        "	movs r4, #0xeb\n\t"
-        "	movs r5, #1\n\t"
-        "	ldr r6, _0812E23C\n\t"
-        "_0812E20E:\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x17\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_0812E240\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	subs r4, #7\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r6\n\t"
-        "	ble _0812E20E\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E23C: .4byte 0x0000270F\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+    s16 x;
+
+    // Credit number sprite
+    for (x = 203, i = 1; i <= MAX_COINS; i *= 10, x -= 7)
+        CreateCoinNumberSprite(x, 23, FALSE, i);
+
+    // Payout number sprite
+    for (x = 235, i = 1; i <= MAX_COINS; i *= 10, x -= 7)
+        CreateCoinNumberSprite(x, 23, TRUE, i);
 }
 
 __attribute__((naked)) void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout, s16 digitMult)
@@ -5101,55 +5007,33 @@ __attribute__((naked)) void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout,
     );
 }
 
-__attribute__((naked)) void SpriteCB_CoinNumber(struct Sprite *sprite)
+#define sIsPayout data[0]
+#define sDigitMin data[1]
+#define sDigitMax data[2]
+#define sCurNum   data[3] // Only used to determine whether the sprite has already been updated to show the correct digit
+
+static void SpriteCB_CoinNumber(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _0812E30C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrh r2, [r1, #0xc]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812E2CC\n\t"
-        "	ldrh r2, [r1, #0xe]\n\t"
-        "_0812E2CC:\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, r2\n\t"
-        "	beq _0812E306\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r3, #0xe0\n\t"
-        "	lsls r3, r3, #0xb\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x40\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetSpriteSheetFrameTileNum\n\t"
-        "_0812E306:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E30C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 tag = sSlotMachine->coins;
+    if (sprite->sIsPayout)
+        tag = sSlotMachine->payout;
+    if (sprite->sCurNum != tag)
+    {
+        // Convert total to current digit
+        sprite->sCurNum = tag;
+        tag %= (u16)sprite->sDigitMax;
+        tag /= (u16)sprite->sDigitMin;
+
+        tag = (u16)((((u32)tag << 16) + GFXTAG_NUM_0) >> 16);
+        sprite->sheetTileStart = GetSpriteTileStartByTag(tag);
+        SetSpriteSheetFrameTileNum(sprite);
+    }
 }
+
+#undef sIsPayout
+#undef sDigitMin
+#undef sDigitMax
+#undef sCurNum
 
 __attribute__((naked)) void CreateReelBackgroundSprite(void)
 {
