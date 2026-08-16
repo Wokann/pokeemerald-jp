@@ -539,7 +539,147 @@ gUnknown_856DCCC: @ 0x856DCCC
 
 	.globl gSolarBeamSmallOrbSpriteTemplate
 gSolarBeamSmallOrbSpriteTemplate: @ 0x856DDF4
-	.incbin "baserom_jp.gba", 0x56ddf4, 0x4f0
+gSolarBeamSmallOrbSpriteTemplate: @ 0x856DDF4
+	.hword 0x27A3, 0x27A3
+	.4byte 0x084FD010, 0x0856DDA8
+	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FF1D9
+
+gStockpileAbsorptionOrbAffineCmds: @ 0x856DE0C
+	.hword 0x0140, 0x0140, 0x0000, 0x0000
+	.hword 0xFFF2, 0xFFF2, 0x0100, 0x0000
+	.hword 0x7FFE, 0x0001, 0x0000, 0x0000
+
+gStockpileAbsorptionOrbAffineAnimTable: @ 0x856DE24
+	.4byte 0x0856DE0C
+
+gStockpileAbsorptionOrbSpriteTemplate: @ 0x856DE28
+	.hword 0x27FB, 0x27FB
+	.4byte 0x084FD0D0, gDummySpriteAnimTable
+	.4byte 0x00000000, 0x0856DE24, 0x080FF131
+
+gAbsorptionOrbAffineAnimCmds: @ 0x856DE40
+	.hword 0xFFFB, 0xFFFB, 0x0100, 0x0000
+	.hword 0x7FFE, 0x0000, 0x0000, 0x0000
+
+gAbsorptionOrbAffineAnimTable: @ 0x856DE50
+	.4byte 0x0856DE40
+
+gAbsorptionOrbSpriteTemplate: @ 0x856DE54
+	.hword 0x27A3, 0x27A3
+	.4byte 0x084FD198, 0x0856DDAC
+	.4byte 0x00000000, 0x0856DE50, 0x080FF329
+
+gHyperBeamOrbSpriteTemplate: @ 0x856DE6C
+	.hword 0x27A3, 0x27A3
+	.4byte 0x084FD010, 0x0856DD8C
+	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FF395
+
+gLeechSeedAnimCmds1: @ 0x856DE84
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+
+gLeechSeedAnimCmds2: @ 0x856DE8C
+	.hword 0x0004, 0x0007
+	.hword 0x0008, 0x0007
+	.hword 0xFFFE, 0x0000
+
+gLeechSeedAnimTable: @ 0x856DE98
+	.4byte 0x0856DE84, 0x0856DE8C
+
+gLeechSeedSpriteTemplate: @ 0x856DEA0
+	.hword 0x2716, 0x2716
+	.4byte 0x084FD018, 0x0856DE98
+	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FF499
+
+gSporeParticleAnimCmds1: @ 0x856DEB8
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+
+gSporeParticleAnimCmds2: @ 0x856DEC0
+	.hword 0x0004, 0x0007
+	.hword 0xFFFF, 0x0000
+
+gSporeParticleAnimTable: @ 0x856DEC8
+	.4byte 0x0856DEB8, 0x0856DEC0
+
+gSporeParticleSpriteTemplate: @ 0x856DED0
+	.hword 0x27AE, 0x27AE
+	.4byte 0x084FD018, 0x0856DEC8
+	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FF579
+
+gPetalDanceBigFlowerAnimCmds: @ 0x856DEE8
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+
+gPetalDanceSmallFlowerAnimCmds: @ 0x856DEF0
+	.hword 0x0004, 0x0001
+	.hword 0xFFFF, 0x0000
+
+gPetalDanceBigFlowerAnimTable: @ 0x856DEF8
+	.4byte 0x0856DEE8
+
+gPetalDanceSmallFlowerAnimTable: @ 0x856DEFC
+	.4byte 0x0856DEF0
+
+gPetalDanceBigFlowerSpriteTemplate: @ 0x856DF00
+	.hword 0x27AF, 0x27AF
+	.4byte 0x084FD018, 0x0856DEF8
+	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FF6C9
+
+gPetalDanceSmallFlowerSpriteTemplate: @ 0x856DF18
+	.hword 0x27AF, 0x27AF
+	.4byte 0x084FD010, 0x0856DEFC
+	.4byte 0x00000000, gDummySpriteAffineAnimTable, 0x080FF795
+
+gRazorLeafParticleAnimCmds1: @ 0x856DF30
+	.hword 0x0000, 0x0005
+	.hword 0x0004, 0x0005
+	.hword 0x0008, 0x0005
+	.hword 0x000C, 0x0005
+	.hword 0x0010, 0x0005
+	.hword 0x0014, 0x0005
+	.hword 0x0010, 0x0005
+	.hword 0x000C, 0x0005
+	.hword 0x0008, 0x0005
+	.hword 0x0004, 0x0005
+
+gRazorLeafParticleAnimCmds2: @ 0x856DF58
+	.hword 0xFFFE, 0x0000
+	.hword 0x0018, 0x0005
+	.hword 0x001C, 0x0005
+
+gRazorLeafParticleAnimTable: @ 0x856DF64
+	.4byte 0x00050020, 0x0000FFFF
+
+gRazorLeafParticleSpriteTemplate: @ 0x856DF6C
+	.hword 0xDF30, 0x0856
+	.4byte 0x0856DF5C, 0x274F274F
+	.4byte 0x084FD018, 0x0856DF6C, 0x00000000
+
+gTwisterLeafSpriteTemplate: @ 0x856DF84
+	.hword 0xF310, 0x082B
+	.4byte 0x080FF84D, 0x274F274F
+	.4byte 0x084FD018, 0x0856DF6C, 0x00000000
+
+gRazorLeafCutterAnimCmds: @ 0x856DF9C
+	.hword 0xF310, 0x082B
+	.hword 0xFAB9, 0x080F
+	.hword 0x0000, 0x0003
+	.hword 0x0000, 0x0043
+	.hword 0x0000, 0x00C3
+	.hword 0x0000, 0x0083
+
+gRazorLeafCutterAnimTable: @ 0x856DFB4
+	.4byte 0x0000FFFE
+
+gRazorLeafCutterSpriteTemplate: @ 0x856DFB8
+	.hword 0xDFA4, 0x0856
+	.4byte 0x27B027B0, 0x084FD040
+	.4byte 0x0856DFB8, 0x00000000, gDummySpriteAffineAnimTable
+
+gUnknown_56DFD0: @ 0x56DFD0
+	.incbin "baserom_jp.gba", 0x56dfd0, 0x314
+
 
 	.globl gTrickBagCoordinates
 gTrickBagCoordinates: @ 0x856E2E4
