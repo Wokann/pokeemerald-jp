@@ -4453,10 +4453,10 @@ event_object_movement.s
 08093934 InitJump InitJump
 080939f0 InitJumpRegular InitJumpRegular
 08093a34 sub_08093A34 UpdateJumpAnim
-08093af8 sub_08093AF8_jp DoJumpAnimStep
-08093b0c sub_08093B0C_jp DoJumpSpecialAnimStep
-08093b20 sub_08093B20_jp DoJumpAnim
-08093b38 sub_08093B38_jp DoJumpSpecialAnim
+08093af8 DoJumpAnimStep DoJumpAnimStep
+08093b0c DoJumpSpecialAnimStep DoJumpSpecialAnimStep
+08093b20 DoJumpAnim DoJumpAnim
+08093b38 DoJumpSpecialAnim DoJumpSpecialAnim
 08093b50 sub_08093B50 DoJumpInPlaceAnim
 08093ba0 MovementAction_Jump2Down_Step0 MovementAction_Jump2Down_Step0
 08093bcc MovementAction_Jump2Down_Step1 MovementAction_Jump2Down_Step1

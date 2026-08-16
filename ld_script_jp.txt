@@ -4325,10 +4325,10 @@ SECTIONS {
         src/event_object_movement.o(.text.sub_08093934);
         src/event_object_movement.o(.text.maybe_shadow_1);
         src/event_object_movement.o(.text.sub_08093A34);
-        src/event_object_movement.o(.text.sub_08093AF8);
-        src/event_object_movement.o(.text.sub_08093B0C);
-        src/event_object_movement.o(.text.sub_08093B20);
-        src/event_object_movement.o(.text.sub_08093B38);
+        src/event_object_movement.o(.text.DoJumpAnimStep);
+        src/event_object_movement.o(.text.DoJumpSpecialAnimStep);
+        src/event_object_movement.o(.text.DoJumpAnim);
+        src/event_object_movement.o(.text.DoJumpSpecialAnim);
         src/event_object_movement.o(.text.sub_08093B50);
         src/event_object_movement.o(.text.MovementAction_Jump2Down_Step0);
         src/event_object_movement.o(.text.MovementAction_Jump2Down_Step1);
