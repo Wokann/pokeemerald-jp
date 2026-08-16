@@ -7540,8 +7540,8 @@ SECTIONS {
         src/slot_machine.o(.text.AddDigitalDisplaySprite);
         src/slot_machine.o(.text.DestroyDigitalDisplayScene);
         src/slot_machine.o(.text.IsDigitalDisplayAnimFinished);
-        src/slot_machine.o(.text.sub_0812E0C0);
-        src/slot_machine.o(.text.sub_0812E0F0);
+        src/slot_machine.o(.text.Task_DigitalDisplay);
+        src/slot_machine.o(.text.DigitalDisplay_Idle);
         src/slot_machine.o(.text.CreateReelSymbolSprites);
         src/slot_machine.o(.text.SpriteCB_ReelSymbol);
         src/slot_machine.o(.text.CreateCreditPayoutNumberSprites);
@@ -9357,7 +9357,8 @@ SECTIONS {
         src/slot_machine.o(.rodata.sReelTimeBoltDelays);
         src/slot_machine.o(.rodata.sPikachuAuraFlashDelays);
         src/slot_machine.o(.rodata.sInfoBoxTasks);
-        data/data_b2d_mid61.o(.rodata.8584594);
+        src/slot_machine.o(.rodata.sDigitalDisplayTasks);
+        data/data_b2d_mid61.o(.rodata.8584598);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/slot_machine.o(.rodata.sReelSymbols);

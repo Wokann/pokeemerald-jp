@@ -1167,6 +1167,9 @@ void CreateReelTimeNumberSprites(void);
 void CreateReelTimeShadowSprites(void);
 void CreateReelTimeNumberGapSprite(void);
 void GetReeltimeDraw(void);
+static void Task_DigitalDisplay(u8 taskId);
+static void DigitalDisplay_Idle(struct Task *task);
+u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 spriteId);
 void LoadInfoBoxTilemap(void);
 void LoadSlotMachineMenuTilemap(void);
 static bool8 ShouldReelTimeMachineExplode(u16 check);
@@ -4570,49 +4573,24 @@ static void InfoBox_FreeTask(struct Task *task)
 
 #undef tState
 
-__attribute__((naked)) void CreateDigitalDisplayTask(void)
+#define sWaitForAnim data[7]
+
+__attribute__((section(".rodata.sDigitalDisplayTasks")))
+static void (*const sDigitalDisplayTasks[])(struct Task *task) =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812DEE4\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r0, _0812DEE8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3d\n\t"
-        "	strb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0812DEEC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0812DEF0\n\t"
-        "	strh r1, [r0, #0xa]\n\t"
-        "	movs r1, #4\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #8\n\t"
-        "	movs r3, #0x40\n\t"
-        "_0812DED0:\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	strh r3, [r0]\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	bls _0812DED0\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DEE4: .4byte sub_0812E0C0 + 1\n\t"
-        "_0812DEE8: .4byte sSlotMachine\n\t"
-        "_0812DEEC: .4byte gTasks\n\t"
-        "_0812DEF0: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    DigitalDisplay_Idle,
+};
+
+void CreateDigitalDisplayTask(void)
+{
+    u8 i;
+    struct Task *task;
+    i = CreateTask(Task_DigitalDisplay, 3);
+    sSlotMachine->digDisplayTaskId = i;
+    task = &gTasks[i];
+    task->data[1] = -1;
+    for (i = 4; i < NUM_TASK_DATA; i++)
+        task->data[i] = MAX_SPRITES;
 }
 
 __attribute__((naked)) void CreateDigitalDisplayScene(u8 id)
@@ -4687,71 +4665,18 @@ __attribute__((naked)) void CreateDigitalDisplayScene(u8 id)
     );
 }
 
-__attribute__((naked)) void AddDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 spriteId)
+void AddDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r8, r1\n\t"
-        "	ldr r4, [sp, #0x1c]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _0812DFCC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3d\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0812DFD0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov ip, r0\n\t"
-        "	movs r5, #4\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r6, r4, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "_0812DFA6:\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #8\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	bne _0812DFD4\n\t"
-        "	str r6, [sp]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	bl sub_0812EFEC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _0812DFDE\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DFCC: .4byte sSlotMachine\n\t"
-        "_0812DFD0: .4byte gTasks\n\t"
-        "_0812DFD4:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0xf\n\t"
-        "	bls _0812DFA6\n\t"
-        "_0812DFDE:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    struct Task *task = &gTasks[sSlotMachine->digDisplayTaskId];
+    for (i = 4; i < NUM_TASK_DATA; i++)
+    {
+        if (task->data[i] == MAX_SPRITES)
+        {
+            task->data[i] = CreateDigitalDisplaySprite(templateIdx, callback, x, y, spriteId);
+            break;
+        }
+    }
 }
 
 __attribute__((naked)) void DestroyDigitalDisplayScene(void)
@@ -4818,91 +4743,31 @@ __attribute__((naked)) void DestroyDigitalDisplayScene(void)
     );
 }
 
-__attribute__((naked)) bool8 IsDigitalDisplayAnimFinished(void)
+static bool8 IsDigitalDisplayAnimFinished(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _0812E0A0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3d\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0812E0A4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #4\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #8\n\t"
-        "	ldr r4, _0812E0A8\n\t"
-        "_0812E080:\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r1, r3, r0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsh r0, [r1, r5]\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _0812E0AC\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r5, #0x3c\n\t"
-        "	ldrsh r0, [r1, r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812E0AC\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812E0B8\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E0A0: .4byte sSlotMachine\n\t"
-        "_0812E0A4: .4byte gTasks\n\t"
-        "_0812E0A8: .4byte gSprites\n\t"
-        "_0812E0AC:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0xf\n\t"
-        "	bls _0812E080\n\t"
-        "	movs r0, #1\n\t"
-        "_0812E0B8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    struct Task *task = &gTasks[sSlotMachine->digDisplayTaskId];
+    for (i = 4; i < NUM_TASK_DATA; i++)
+    {
+        if (task->data[i] != MAX_SPRITES)
+        {
+            if (gSprites[task->data[i]].sWaitForAnim)
+                return FALSE;
+        }
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_0812E0C0(void)
+#undef sWaitForAnim
+
+static void Task_DigitalDisplay(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _0812E0E8\n\t"
-        "	ldr r2, _0812E0EC\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E0E8: .4byte gUnknown_8584594\n\t"
-        "_0812E0EC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    sDigitalDisplayTasks[gTasks[taskId].data[0]](&gTasks[taskId]);
 }
 
-void sub_0812E0F0(void) {}
+static void DigitalDisplay_Idle(struct Task *task)
+{
+}
 __attribute__((naked)) void CreateReelSymbolSprites(void)
 {
     __asm__(".syntax unified\n\t"
