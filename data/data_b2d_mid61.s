@@ -528,15 +528,7 @@ gUnknown_85843C8: @ 0x85843C8
 gUnknown_85843D0: @ 0x85843D0
 	.incbin "baserom_jp.gba", 0x5843d0, 0x4
 
-	.section .rodata.85844C8
-	.globl sReelStopButtonTasks
-sReelStopButtonTasks: @ 0x85844C8
-	.4byte StopReelButton_Press + 1, StopReelButton_Wait + 1, StopReelButton_Unpress + 1
-
-	.globl gUnknown_85844D4
-gUnknown_85844D4: @ 0x85844D4
-	.incbin "baserom_jp.gba", 0x5844d4, 0x8
-
+	.section .rodata.85844DC
 	.globl gUnknown_85844DC
 gUnknown_85844DC: @ 0x85844DC
 	.incbin "baserom_jp.gba", 0x5844dc, 0x10

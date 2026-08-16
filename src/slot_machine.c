@@ -1074,7 +1074,11 @@ void BeginReelTime(void);
 u16 ReelTimeSpeed(void);
 bool8 IsReelTimeTaskDone(void);
 void ResetBiasFailure(void);
-void PressStopReelButton(u8 reelIndex);
+static void PressStopReelButton(u8 reelIndex);
+void Task_PressStopReelButton(u8 taskId);
+static void StopReelButton_Press(struct Task *task, u8 taskId);
+static void StopReelButton_Wait(struct Task *task, u8 taskId);
+static void StopReelButton_Unpress(struct Task *task, u8 taskId);
 void TryPutFindThatGamerOnAir(u16 nCoinsPaidOut);
 bool8 IsFinalTask_Task_Payout(void);
 bool8 TryStopSlotMachineLights(void);
@@ -1086,11 +1090,15 @@ void AwardPayout(void);
 void FlashSlotMachineLights(void);
 void AddPikaPowerBolt(u8 bolts);
 void FlashMatchLine(u8 spriteId);
+void CreateInvisibleFlashMatchLineSprites(void);
+static bool8 TryStopMatchLineFlashing(u8 spriteId);
+static void SpriteCB_FlashMatchingLines(struct Sprite *sprite);
+void SetReelButtonTilemap(s16 a0, u16 a1, u16 a2, u16 a3, u16 a4);
 static u8 GetSymbolAtRest(u8 reelIndex, s16 row);
 u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3);
 void Task_Payout(u8 taskId);
-bool8 IsMatchLineDoneFlashingBeforePayout(void);
-bool8 TryStopMatchLinesFlashing(void);
+static bool8 IsMatchLineDoneFlashingBeforePayout(void);
+static bool8 TryStopMatchLinesFlashing(void);
 static bool8 DecideStop_Bias_Reel1_Bet1(u8 sym1, u8 sym2);
 static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 sym1, u8 sym2);
 bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2);
@@ -3446,155 +3454,56 @@ static void DecideStop_NoBias_Reel3_Bet3(void)
     }
 }
 
-__attribute__((naked)) void PressStopReelButton(u8 reelIndex)
+__attribute__((section(".rodata.sReelStopButtonTasks")))
+static void (*const sReelStopButtonTasks[])(struct Task *task, u8 taskId) =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _0812CD7C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0812CD80\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0x26]\n\t"
-        "	bl _call_via_r5\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CD7C: .4byte sub_0812CD84 + 1\n\t"
-        "_0812CD80: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    StopReelButton_Press,
+    StopReelButton_Wait,
+    StopReelButton_Unpress,
+};
+
+// The 4th entry is alignment padding in the JP ROM before the next pointer table.
+__attribute__((section(".rodata.sReelButtonOffsets")))
+static const s16 sReelButtonOffsets[] = {5, 10, 15, 0};
+
+__attribute__((section(".rodata.sMatchLinePalOffsets")))
+static const u8 sMatchLinePalOffsets[NUM_MATCH_LINES] =
+{
+    [MATCH_MIDDLE_ROW] = BG_PLTT_ID(4) + 10,
+    [MATCH_TOP_ROW]    = BG_PLTT_ID(4) + 11,
+    [MATCH_BOTTOM_ROW] = BG_PLTT_ID(4) + 12,
+    [MATCH_NWSE_DIAG]  = BG_PLTT_ID(4) + 14, // Diag colors flipped for some reason
+    [MATCH_NESW_DIAG]  = BG_PLTT_ID(4) + 13  // Doesn't matter as both are identical
+};
+
+static void PressStopReelButton(u8 reelNum)
+{
+    u8 taskId = CreateTask(Task_PressStopReelButton, 5);
+    gTasks[taskId].data[15] = reelNum;
+    Task_PressStopReelButton(taskId);
 }
 
-__attribute__((naked)) void sub_0812CD84(u8 taskId)
+void Task_PressStopReelButton(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _0812CDAC\n\t"
-        "	ldr r2, _0812CDB0\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r4, #8\n\t"
-        "	ldrsh r2, [r0, r4]\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	bl _call_via_r2\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CDAC: .4byte sReelStopButtonTasks\n\t"
-        "_0812CDB0: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    sReelStopButtonTasks[gTasks[taskId].data[0]](&gTasks[taskId], taskId);
 }
 
-
-__attribute__((naked)) void StopReelButton_Press(struct Task *task, u8 input)
+static void StopReelButton_Press(struct Task *task, u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812CDE4\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x73\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0x62\n\t"
-        "	movs r2, #0x63\n\t"
-        "	movs r3, #0x72\n\t"
-        "	bl sub_0812FA9C\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CDE4: .4byte gUnknown_85844D4\n\t"
-        ".syntax divided\n\t"
-    );
+    SetReelButtonTilemap(sReelButtonOffsets[task->data[15]], 0x62, 0x63, 0x72, 0x73);
+    task->data[0]++;
 }
 
-__attribute__((naked)) void StopReelButton_Wait(struct Task *task, u8 input)
+static void StopReelButton_Wait(struct Task *task, u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	ble _0812CE00\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "_0812CE00:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++task->data[1] > 11)
+        task->data[0]++;
 }
 
-__attribute__((naked)) void StopReelButton_Unpress(struct Task *task, u8 input)
+static void StopReelButton_Unpress(struct Task *task, u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r4, r1, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r1, _0812CE38\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x53\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0x42\n\t"
-        "	movs r2, #0x43\n\t"
-        "	movs r3, #0x52\n\t"
-        "	bl sub_0812FA9C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CE38: .4byte gUnknown_85844D4\n\t"
-        ".syntax divided\n\t"
-    );
+    SetReelButtonTilemap(sReelButtonOffsets[task->data[15]], 0x42, 0x43, 0x52, 0x53);
+    DestroyTask(taskId);
 }
 
 __attribute__((naked)) void LightenMatchLine(u8 matchLineId)
@@ -3618,7 +3527,7 @@ __attribute__((naked)) void LightenMatchLine(u8 matchLineId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812CE5C: .4byte gUnknown_858550C\n\t"
-        "_0812CE60: .4byte gUnknown_8585534\n\t"
+        "_0812CE60: .4byte sMatchLinePalOffsets\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3644,7 +3553,7 @@ __attribute__((naked)) void DarkenMatchLine(u8 matchLineId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812CE84: .4byte gUnknown_8585520\n\t"
-        "_0812CE88: .4byte gUnknown_8585534\n\t"
+        "_0812CE88: .4byte sMatchLinePalOffsets\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3723,281 +3632,115 @@ __attribute__((naked)) void DarkenBetTiles(u8 betLevel)
     );
 }
 
-__attribute__((naked)) void CreateInvisibleFlashMatchLineSprites(void)
+#define sMatchLineId     data[0]
+#define sFlashing        data[1]
+#define sNumFullFlashes  data[2]
+#define sDelayTimer      data[3]
+#define sColor           data[4]
+#define sColorIncr       data[5]
+#define sAtOriginalColor data[7]
+
+// Creates invisible sprites that flash the bet lines/numbers where a match occurs
+// 5 are created, 1 for each possible match line (3 rows, 2 diagonals)
+void CreateInvisibleFlashMatchLineSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _0812CF38\n\t"
-        "_0812CF0A:\n\t"
-        "	ldr r0, _0812CF3C\n\t"
-        "	bl CreateInvisibleSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	strh r4, [r1, #0x2e]\n\t"
-        "	ldr r1, _0812CF40\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x44\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _0812CF0A\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CF38: .4byte gSprites\n\t"
-        "_0812CF3C: .4byte SpriteCB_FlashMatchingLines + 1\n\t"
-        "_0812CF40: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < ARRAY_COUNT(sSlotMachine->flashMatchLineSpriteIds); i++)
+    {
+        u8 spriteId = CreateInvisibleSprite(SpriteCB_FlashMatchingLines);
+        gSprites[spriteId].sMatchLineId = i;
+        sSlotMachine->flashMatchLineSpriteIds[i] = spriteId;
+    }
 }
 
-__attribute__((naked)) void FlashMatchLine(u8 spriteId)
+void FlashMatchLine(u8 matchLineId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0812CF74\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x44\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812CF78\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	movs r1, #4\n\t"
-        "	strh r1, [r0, #0x32]\n\t"
-        "	strh r2, [r0, #0x34]\n\t"
-        "	strh r2, [r0, #0x36]\n\t"
-        "	movs r1, #2\n\t"
-        "	strh r1, [r0, #0x38]\n\t"
-        "	strh r2, [r0, #0x3c]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CF74: .4byte sSlotMachine\n\t"
-        "_0812CF78: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite = &gSprites[sSlotMachine->flashMatchLineSpriteIds[matchLineId]];
+    sprite->sFlashing = TRUE;
+    sprite->sNumFullFlashes = 4;
+    sprite->sDelayTimer = 0;
+    sprite->sColor = 0;
+    sprite->sColorIncr = 2;
+    sprite->sAtOriginalColor = FALSE;
 }
 
-__attribute__((naked)) bool8 IsMatchLineDoneFlashingBeforePayout(void)
+// Match line flashes 4 times before the payout begins
+// After this it does half-brightness flashes until the payout finishes
+static bool8 IsMatchLineDoneFlashingBeforePayout(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _0812CFAC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x44\n\t"
-        "	ldr r4, _0812CFB0\n\t"
-        "_0812CF8A:\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	movs r5, #0x30\n\t"
-        "	ldrsh r0, [r1, r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CFB4\n\t"
-        "	movs r5, #0x32\n\t"
-        "	ldrsh r0, [r1, r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CFB4\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812CFC0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CFAC: .4byte sSlotMachine\n\t"
-        "_0812CFB0: .4byte gSprites\n\t"
-        "_0812CFB4:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #4\n\t"
-        "	bls _0812CF8A\n\t"
-        "	movs r0, #1\n\t"
-        "_0812CFC0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < ARRAY_COUNT(sSlotMachine->flashMatchLineSpriteIds); i++)
+    {
+        struct Sprite *sprite = &gSprites[sSlotMachine->flashMatchLineSpriteIds[i]];
+        if (sprite->sFlashing && sprite->sNumFullFlashes)
+            return FALSE;
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 TryStopMatchLinesFlashing(void)
+// When payout is finished, stop lines flashing (but not if they're in the middle of a flash)
+static bool8 TryStopMatchLinesFlashing(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "_0812CFCC:\n\t"
-        "	ldr r0, _0812CFE4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x44\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl sub_0812CFFC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812CFE8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812CFF4\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CFE4: .4byte sSlotMachine\n\t"
-        "_0812CFE8:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _0812CFCC\n\t"
-        "	movs r0, #1\n\t"
-        "_0812CFF4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < ARRAY_COUNT(sSlotMachine->flashMatchLineSpriteIds); i++)
+    {
+        if (!TryStopMatchLineFlashing(sSlotMachine->flashMatchLineSpriteIds[i]))
+            return FALSE;
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 sub_0812CFFC(u8 spriteId)
+static bool8 TryStopMatchLineFlashing(u8 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0812D018\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812D01C\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812D02E\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D018: .4byte gSprites\n\t"
-        "_0812D01C:\n\t"
-        "	ldrh r2, [r1, #0x3c]\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D02A\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "_0812D02A:\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0812D02E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite = &gSprites[spriteId];
+    if (!sprite->sFlashing)
+        return TRUE;
+    if (sprite->sAtOriginalColor)
+        sprite->sFlashing = FALSE;
+
+    return sprite->sAtOriginalColor;
 }
 
-__attribute__((naked)) void SpriteCB_FlashMatchingLines(struct Sprite *sprite)
+static void SpriteCB_FlashMatchingLines(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D0B6\n\t"
-        "	ldrh r0, [r2, #0x34]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r2, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0812D09E\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "	movs r6, #1\n\t"
-        "	strh r6, [r2, #0x34]\n\t"
-        "	ldrh r1, [r2, #0x38]\n\t"
-        "	ldrh r3, [r2, #0x36]\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strh r0, [r2, #0x36]\n\t"
-        "	movs r4, #4\n\t"
-        "	ldrh r5, [r2, #0x32]\n\t"
-        "	movs r7, #0x32\n\t"
-        "	ldrsh r3, [r2, r7]\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _0812D070\n\t"
-        "	movs r4, #8\n\t"
-        "_0812D070:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _0812D088\n\t"
-        "	strh r6, [r2, #0x3c]\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _0812D09E\n\t"
-        "	subs r0, r5, #1\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	b _0812D090\n\t"
-        "_0812D088:\n\t"
-        "	cmp r0, r4\n\t"
-        "	blt _0812D090\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "_0812D090:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D09E\n\t"
-        "	ldrh r0, [r2, #0x34]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	strh r0, [r2, #0x34]\n\t"
-        "_0812D09E:\n\t"
-        "	ldr r1, _0812D0BC\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrh r3, [r2, #0x36]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	bl MultiplyPaletteRGBComponents\n\t"
-        "_0812D0B6:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D0BC: .4byte gUnknown_8585534\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 maxColorChange;
+    if (sprite->sFlashing)
+    {
+        if (!sprite->sDelayTimer--)
+        {
+            sprite->sAtOriginalColor = FALSE;
+            sprite->sDelayTimer = 1;
+            sprite->sColor += sprite->sColorIncr;
+            maxColorChange = 4;
+            if (sprite->sNumFullFlashes)
+                maxColorChange = 8;
+            if (sprite->sColor <= 0)
+            {
+                // Returned to original color, reverse
+                sprite->sAtOriginalColor = TRUE;
+                sprite->sColorIncr = -sprite->sColorIncr;
+                if (sprite->sNumFullFlashes)
+                    sprite->sNumFullFlashes--;
+            }
+            else if (sprite->sColor >= maxColorChange)
+            {
+                // Reached peak darkness, reverse
+                sprite->sColorIncr = -sprite->sColorIncr;
+            }
+            if (sprite->sNumFullFlashes)
+                sprite->sDelayTimer <<= 1;
+        }
+        MultiplyPaletteRGBComponents(sMatchLinePalOffsets[sprite->sMatchLineId], sprite->sColor, sprite->sColor, sprite->sColor);
+    }
 }
+
+#undef sMatchLineId
+#undef sFlashing
+#undef sNumFullFlashes
+#undef sDelayTimer
+#undef sColor
+#undef sColorIncr
+#undef sAtOriginalColor
 
 __attribute__((naked)) void FlashSlotMachineLights(void)
 {

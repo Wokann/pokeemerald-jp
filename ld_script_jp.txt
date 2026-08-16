@@ -86,7 +86,7 @@ nullsub_68 = DecideStop_Bias_Reel1 + 0x38;
 nullsub_69 = DecideStop_Bias_Reel2 + 0x18;
 sub_0812C650 = DecideStop_NoBias_Reel2 + 0x18;
 sub_0812C924 = DecideStop_NoBias_Reel3 + 0x18;
-sub_0812CDA8 = sub_0812CD84 + 0x24;
+sub_0812CDA8 = Task_PressStopReelButton + 0x24;
 LoadLitTile = LightenMatchLine;
 sub_0812CE64 = DarkenMatchLine;
 LoadBetTiles = LightenBetTiles;
@@ -7472,7 +7472,7 @@ SECTIONS {
         src/slot_machine.o(.text.DecideStop_NoBias_Reel3_Bet2);
         src/slot_machine.o(.text.DecideStop_NoBias_Reel3_Bet3);
         src/slot_machine.o(.text.PressStopReelButton);
-        src/slot_machine.o(.text.sub_0812CD84);
+        src/slot_machine.o(.text.Task_PressStopReelButton);
         src/slot_machine.o(.text.StopReelButton_Press);
         src/slot_machine.o(.text.StopReelButton_Wait);
         src/slot_machine.o(.text.StopReelButton_Unpress);
@@ -7484,7 +7484,7 @@ SECTIONS {
         src/slot_machine.o(.text.FlashMatchLine);
         src/slot_machine.o(.text.IsMatchLineDoneFlashingBeforePayout);
         src/slot_machine.o(.text.TryStopMatchLinesFlashing);
-        src/slot_machine.o(.text.sub_0812CFFC);
+        src/slot_machine.o(.text.TryStopMatchLineFlashing);
         src/slot_machine.o(.text.SpriteCB_FlashMatchingLines);
         src/slot_machine.o(.text.FlashSlotMachineLights);
         src/slot_machine.o(.text.TryStopSlotMachineLights);
@@ -9346,7 +9346,9 @@ SECTIONS {
         src/slot_machine.o(.rodata.sDecideStop_Bias_Reel3_Bets);
         src/slot_machine.o(.rodata.sDecideStop_NoBias_Reel2_Bets);
         src/slot_machine.o(.rodata.sDecideStop_NoBias_Reel3_Bets);
-        data/data_b2d_mid61.o(.rodata.85844C8);
+        src/slot_machine.o(.rodata.sReelStopButtonTasks);
+        src/slot_machine.o(.rodata.sReelButtonOffsets);
+        data/data_b2d_mid61.o(.rodata.85844DC);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/slot_machine.o(.rodata.sReelSymbols);
@@ -9358,6 +9360,8 @@ SECTIONS {
         src/slot_machine.o(.rodata.sSlotMatchFlags);
         src/slot_machine.o(.rodata.sSlotPayouts);
         data/data_b2d_mid62.o(.rodata.85847BE);
+        src/slot_machine.o(.rodata.sMatchLinePalOffsets);
+        data/data_b2d_mid62.o(.rodata.8585539);
         src/data/text/region_texts38.o(.rodata);
         data/data_b2d_mid38.o(.rodata);
         src/data/text/region_texts33.o(.rodata);
