@@ -9,7 +9,8 @@
 
 // Pokemon-jump sprites, palettes, gfx and templates (0x82CF744..0x82D1A80)
 
-extern const u8 gUnknown_82D2A68[]; // digit palette/gfx data (next region)
+extern const u16 sDigitPalette[]; // 0x82D2A68 (battle_affine)
+extern const u32 sDigitGfx[];  // 0x82D2A88 (battle_affine)
 
 bool32 sub_0802CE44(void);
 bool32 sub_0802CFD8(void);
@@ -654,17 +655,17 @@ const u8 sVenusaurStates[] =
     2, 2, 0, 0, 1, 1, 1, 0, 0, 2, 0, 0, 0,
 };
 
-// 0x82D1A78 / 0x82D1A80 - digit gfx/pal data lives at 0x82D2A68.
+// 0x82D1A78 / 0x82D1A80 - digit gfx/pal data lives at 0x82D2A68 (battle_affine).
 const struct SpriteSheet sSpriteSheet_Digits =
 {
-    .data = gUnknown_82D2A68 + 0x20,
+    .data = sDigitGfx,
     .size = 0,
     .tag = 0x0320,
 };
 
 const struct SpritePalette sSpritePalette_Digits =
 {
-    .data = (const u16 *)gUnknown_82D2A68,
+    .data = sDigitPalette,
     .tag = 0x0320,
 };
 

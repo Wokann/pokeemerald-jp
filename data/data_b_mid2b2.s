@@ -8,43 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.globl gUnknown_82D2A68
-gUnknown_82D2A68: @ 0x82D2A68
-	.incbin "baserom_jp.gba", 0x2d2a68, 0x440
-
-	.globl gAffineAnims_BattleSpritePlayerSide
-gAffineAnims_BattleSpritePlayerSide: @ 0x82D2EA8
-	.4byte 0x082D2DD8 @ BATTLER_AFFINE_NORMAL
-	.4byte 0x082D2DF8 @ BATTLER_AFFINE_EMERGE
-	.4byte 0x082D2E10 @ BATTLER_AFFINE_RETURN
-	.4byte 0x082D2E28 @ sAffineAnim_Battler_HorizontalSquishLoop
-	.4byte 0x082D2E48 @ sAffineAnim_Battler_Grow
-	.4byte 0x082D2E58 @ sAffineAnim_Battler_Shrink
-	.4byte 0x082D2E80 @ sAffineAnim_Battler_GrowLarge
-	.4byte 0x082D2E90 @ sAffineAnim_Battler_TipRight
-	.4byte 0x082D2E68 @ sAffineAnim_Battler_BigToSmall
-	.globl gUnknown_82D2ECC
-gUnknown_82D2ECC: @ 0x82D2ECC
-	.incbin "baserom_jp.gba", 0x2d2ecc, 0x58
-
-	.globl gAffineAnims_BattleSpriteOpponentSide
-gAffineAnims_BattleSpriteOpponentSide: @ 0x82D2F24
-	.4byte 0x082D2DD8 @ BATTLER_AFFINE_NORMAL
-	.4byte 0x082D2DF8 @ BATTLER_AFFINE_EMERGE
-	.4byte 0x082D2E10 @ BATTLER_AFFINE_RETURN
-	.4byte 0x082D2E28 @ sAffineAnim_Battler_HorizontalSquishLoop
-	.4byte 0x082D2E48 @ sAffineAnim_Battler_Grow
-	.4byte 0x082D2E58 @ sAffineAnim_Battler_Shrink
-	.4byte 0x082D2ECC @ sAffineAnim_Battler_SpinShrink
-	.4byte 0x082D2EDC @ sAffineAnim_Battler_TipLeft
-	.4byte 0x082D2EF4 @ sAffineAnim_Battler_RotateUpAndBack
-	.4byte 0x082D2E68 @ sAffineAnim_Battler_BigToSmall
-	.4byte 0x082D2F14 @ sAffineAnim_Battler_Spin
-
-	.globl gAffineAnims_BattleSpriteContest
-gAffineAnims_BattleSpriteContest: @ 0x82D2F50
-	.incbin "baserom_jp.gba", 0x2d2f50, 0x4c
-
 	.globl gUnknown_82D2F9C
 gUnknown_82D2F9C: @ 0x82D2F9C
 	.incbin "baserom_jp.gba", 0x2d2f9c, 0x162c
