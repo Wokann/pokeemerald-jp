@@ -296,49 +296,17 @@ bool8 TryGetObjectEventIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroupId, u
         return FALSE;
 }
 
-__attribute__((naked)) u8 GetEventObjectIdByXY(s16 x, s16 y)
+u8 GetEventObjectIdByXY(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r5, _0808CF24\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "_0808CEF2:\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r0, r5\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808CF12\n\t"
-        "	movs r6, #0x10\n\t"
-        "	ldrsh r0, [r2, r6]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _0808CF12\n\t"
-        "	movs r6, #0x12\n\t"
-        "	ldrsh r0, [r2, r6]\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0808CF1C\n\t"
-        "_0808CF12:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0xf\n\t"
-        "	bls _0808CEF2\n\t"
-        "_0808CF1C:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CF24: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if (gObjectEvents[i].active && gObjectEvents[i].currentCoords.x == x && gObjectEvents[i].currentCoords.y == y)
+            break;
+    }
+
+    return i;
 }
 
 __attribute__((naked)) u8 GetEventObjectIdByLocalIdAndMapInternal(u8 localId, u8 mapNum, u8 mapGroupId)
