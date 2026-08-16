@@ -83,11 +83,15 @@ sAnims_AM: @ 0x8591CE8
 
 	.globl sSpriteTemplate_PM
 sSpriteTemplate_PM: @ 0x8591CEC
-	.incbin "baserom_jp.gba", 0x591cec, 0x18
+	.hword 0x1000, 0x1000
+	.4byte sOam_PeriodIndicator, sAnims_PM
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08135331
 
 	.globl sSpriteTemplate_AM
 sSpriteTemplate_AM: @ 0x8591D04
-	.incbin "baserom_jp.gba", 0x591d04, 0x18
+	.hword 0x1000, 0x1000
+	.4byte sOam_PeriodIndicator, sAnims_AM
+	.4byte 0, gDummySpriteAffineAnimTable, 0x081353D5
 
 	.globl sClockHandCoords
 sClockHandCoords: @ 0x8591D1C

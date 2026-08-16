@@ -149,11 +149,18 @@ sListArrowPalettes: @ 0x85F15C8
 
 	.globl sSpriteTemplate_RightArrow
 sSpriteTemplate_RightArrow: @ 0x85F15E0
-	.incbin "baserom_jp.gba", 0x5f15e0, 0x20
+	.hword 0x000A, 0x0014
+	.4byte 0x085F15D8, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x081C8835
+
+sOamData_RightArrow: @ 0x85F15F8
+	.byte 0x00, 0x40, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00
 
 	.globl sSpriteTemplate_UpDownArrow
 sSpriteTemplate_UpDownArrow: @ 0x85F1600
-	.incbin "baserom_jp.gba", 0x5f1600, 0x18
+	.hword 0x000A, 0x0014
+	.4byte 0x085F15F8, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl sLastCursorPositions
 sLastCursorPositions: @ 0x85F1618
