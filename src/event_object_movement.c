@@ -14776,136 +14776,28 @@ bool8 MovementAction_WalkInPlaceFastRight_Step0(struct ObjectEvent *objectEvent,
     return MovementAction_WalkInPlace_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkInPlaceFasterDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetJumpSpecialMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl sub_08093EC4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkInPlace_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093EC4(objectEvent, sprite, DIR_SOUTH, GetJumpSpecialMovementAction(DIR_SOUTH), 4);
+    return MovementAction_WalkInPlace_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkInPlaceFasterUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetJumpSpecialMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl sub_08093EC4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkInPlace_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093EC4(objectEvent, sprite, DIR_NORTH, GetJumpSpecialMovementAction(DIR_NORTH), 4);
+    return MovementAction_WalkInPlace_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkInPlaceFasterLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetJumpSpecialMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl sub_08093EC4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkInPlace_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093EC4(objectEvent, sprite, DIR_WEST, GetJumpSpecialMovementAction(DIR_WEST), 4);
+    return MovementAction_WalkInPlace_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkInPlaceFasterRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #4\n\t"
-        "	bl GetJumpSpecialMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl sub_08093EC4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkInPlace_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093EC4(objectEvent, sprite, DIR_EAST, GetJumpSpecialMovementAction(DIR_EAST), 4);
+    return MovementAction_WalkInPlace_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_RideWaterCurrentDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
