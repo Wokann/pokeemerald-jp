@@ -9246,6 +9246,7 @@ SECTIONS {
         data/data_b_mid2a.o(.rodata);
         src/data/berry_crush2.o(.rodata);
         src/data/berry_crush3.o(.rodata);
+        src/data/berry_crush4.o(.rodata);
         data/data_b_mid2b.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
