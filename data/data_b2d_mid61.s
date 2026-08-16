@@ -31,27 +31,91 @@ sMonMarkings_Gfx: @ 0x857A298
 
 	.globl sOamData_MenuWindow
 sOamData_MenuWindow: @ 0x857AAA0
-	.incbin "baserom_jp.gba", 0x57aaa0, 0x8
+	.byte 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00
 
 	.globl sOamData_8x8
 sOamData_8x8: @ 0x857AAA8
-	.incbin "baserom_jp.gba", 0x57aaa8, 0x58
+	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+sAnim_Marking_CircleOff: @ 0x857AAB0
+	.hword 0x0000, 0x0005, 0xFFFF, 0x0000
+sAnim_Marking_CircleOn: @ 0x857AAB8
+	.hword 0x0001, 0x0005, 0xFFFF, 0x0000
+sAnim_Marking_SquareOff: @ 0x857AAC0
+	.hword 0x0002, 0x0005, 0xFFFF, 0x0000
+sAnim_Marking_SquareOn: @ 0x857AAC8
+	.hword 0x0003, 0x0005, 0xFFFF, 0x0000
+sAnim_Marking_TriangleOff: @ 0x857AAD0
+	.hword 0x0004, 0x0005, 0xFFFF, 0x0000
+sAnim_Marking_TriangleOn: @ 0x857AAD8
+	.hword 0x0005, 0x0005, 0xFFFF, 0x0000
+sAnim_Marking_HeartOff: @ 0x857AAE0
+	.hword 0x0006, 0x0005, 0xFFFF, 0x0000
+sAnim_Marking_HeartOn: @ 0x857AAE8
+	.hword 0x0007, 0x0005, 0xFFFF, 0x0000
+sAnim_Cursor: @ 0x857AAF0
+	.hword 0x0008, 0x0005, 0xFFFF, 0x0000
+sAnim_OKCancelText: @ 0x857AAF8
+	.hword 0x0009, 0x0005, 0xFFFF, 0x0000
 
 	.globl sAnims_MenuSprite
 sAnims_MenuSprite: @ 0x857AB00
-	.incbin "baserom_jp.gba", 0x57ab00, 0x38
+	.4byte sAnim_Marking_CircleOff, sAnim_Marking_CircleOn, sAnim_Marking_SquareOff, sAnim_Marking_SquareOn
+	.4byte sAnim_Marking_TriangleOff, sAnim_Marking_TriangleOn, sAnim_Marking_HeartOff, sAnim_Marking_HeartOn
+	.4byte sAnim_Cursor, sAnim_OKCancelText
+
+sAnim_MenuWindow_UpperHalf: @ 0x857AB28
+	.hword 0x0000, 0x0005, 0xFFFF, 0x0000
+sAnim_MenuWindow_LowerHalf: @ 0x857AB30
+	.hword 0x0040, 0x0005, 0xFFFF, 0x0000
 
 	.globl sAnims_MenuWindow
 sAnims_MenuWindow: @ 0x857AB38
-	.incbin "graphics/battle_anims/sAnims_MenuWindow.bin"
+	.4byte sAnim_MenuWindow_UpperHalf, sAnim_MenuWindow_LowerHalf
 
 	.globl sOamData_MarkingCombo
 sOamData_MarkingCombo: @ 0x857AB40
-	.incbin "baserom_jp.gba", 0x57ab40, 0x88
+	.byte 0x00, 0x40, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00
+
+sAnim_MarkingCombo_AllOff: @ 0x857AB48
+	.hword 0x0000, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_Circle: @ 0x857AB50
+	.hword 0x0004, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_Square: @ 0x857AB58
+	.hword 0x0008, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_CircleSquare: @ 0x857AB60
+	.hword 0x000C, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_Triangle: @ 0x857AB68
+	.hword 0x0010, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_CircleTriangle: @ 0x857AB70
+	.hword 0x0014, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_SquareTriangle: @ 0x857AB78
+	.hword 0x0018, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_CircleSquareTriangle: @ 0x857AB80
+	.hword 0x001C, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_Heart: @ 0x857AB88
+	.hword 0x0020, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_CircleHeart: @ 0x857AB90
+	.hword 0x0024, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_SquareHeart: @ 0x857AB98
+	.hword 0x0028, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_CircleSquareHeart: @ 0x857ABA0
+	.hword 0x002C, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_TriangleHeart: @ 0x857ABA8
+	.hword 0x0030, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_CircleTriangleHeart: @ 0x857ABB0
+	.hword 0x0034, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_SquareTriangleHeart: @ 0x857ABB8
+	.hword 0x0038, 0x0005, 0xFFFF, 0x0000
+sAnim_MarkingCombo_AllOn: @ 0x857ABC0
+	.hword 0x003C, 0x0005, 0xFFFF, 0x0000
 
 	.globl sAnims_MarkingCombo
 sAnims_MarkingCombo: @ 0x857ABC8
-	.incbin "baserom_jp.gba", 0x57abc8, 0x40
+	.4byte sAnim_MarkingCombo_AllOff, sAnim_MarkingCombo_Circle, sAnim_MarkingCombo_Square, sAnim_MarkingCombo_CircleSquare
+	.4byte sAnim_MarkingCombo_Triangle, sAnim_MarkingCombo_CircleTriangle, sAnim_MarkingCombo_SquareTriangle, sAnim_MarkingCombo_CircleSquareTriangle
+	.4byte sAnim_MarkingCombo_Heart, sAnim_MarkingCombo_CircleHeart, sAnim_MarkingCombo_SquareHeart, sAnim_MarkingCombo_CircleSquareHeart
+	.4byte sAnim_MarkingCombo_TriangleHeart, sAnim_MarkingCombo_CircleTriangleHeart, sAnim_MarkingCombo_SquareTriangleHeart, sAnim_MarkingCombo_AllOn
 
 	.globl gUnknown_857AC08
 gUnknown_857AC08: @ 0x857AC08
