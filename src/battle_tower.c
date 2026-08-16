@@ -7840,7 +7840,7 @@ __attribute__((naked)) u8 SetFacilityPtrsGetLevel()
         "_08165A80: .4byte gFacilityTrainers\n\t"
         "_08165A84: .4byte gUnknown_85B4A10\n\t"
         "_08165A88: .4byte gFacilityTrainerMons\n\t"
-        "_08165A8C: .4byte gUnknown_85B8700\n\t"
+        "_08165A8C: .4byte gBattleFrontierMons\n\t"
         "_08165A90:\n\t"
         "	bl SetTentPtrsGetLevel\n\t"
         "_08165A94:\n\t"
@@ -8073,7 +8073,7 @@ __attribute__((naked)) void SetTentPtrsGetLevel(void)
         "_08165C14: .4byte gFacilityTrainers\n\t"
         "_08165C18: .4byte gUnknown_85B4A10\n\t"
         "_08165C1C: .4byte gFacilityTrainerMons\n\t"
-        "_08165C20: .4byte gUnknown_85B8700\n\t"
+        "_08165C20: .4byte gBattleFrontierMons\n\t"
         ".syntax divided\n\t"
     );
 }

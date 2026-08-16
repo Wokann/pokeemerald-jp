@@ -143,8 +143,8 @@ gBattleFrontierHeldItems: @ 0x85ADBF4
 gUnknown_85B4A10: @ 0x85B4A10
 	.incbin "baserom_jp.gba", 0x5b4a10, 0x3cf0
 
-	.globl gUnknown_85B8700
-gUnknown_85B8700: @ 0x85B8700
+	.globl gBattleFrontierMons
+gBattleFrontierMons: @ 0x85B8700
 	.incbin "baserom_jp.gba", 0x5b8700, 0x3720
 
 	.globl gTowerMaleFacilityClasses

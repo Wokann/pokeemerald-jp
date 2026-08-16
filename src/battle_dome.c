@@ -12560,7 +12560,7 @@ __attribute__((naked)) void InitDomeFacilityTrainersAndMons(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_08194958: .4byte gFacilityTrainerMons\n\t"
-        "_0819495C: .4byte gUnknown_85B8700\n\t"
+        "_0819495C: .4byte gBattleFrontierMons\n\t"
         "_08194960: .4byte gFacilityTrainers\n\t"
         "_08194964: .4byte gUnknown_85B4A10\n\t"
         ".syntax divided\n\t"

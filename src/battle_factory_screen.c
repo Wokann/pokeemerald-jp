@@ -2145,7 +2145,7 @@ __attribute__((naked)) void CreateFrontierFactorySelectableMons(void)
         "_0819B1FC: .4byte 0x00000CA9\n\t"
         "_0819B200: .4byte 0x00000DE2\n\t"
         "_0819B204: .4byte gFacilityTrainerMons\n\t"
-        "_0819B208: .4byte gUnknown_85B8700\n\t"
+        "_0819B208: .4byte gBattleFrontierMons\n\t"
         "_0819B20C: .4byte gUnknown_3001278\n\t"
         "_0819B210:\n\t"
         "	ldr r0, [sp, #0x18]\n\t"
