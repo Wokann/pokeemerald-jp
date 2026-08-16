@@ -9247,6 +9247,8 @@ SECTIONS {
         src/data/berry_crush4.o(.rodata);
         src/data/dodrio1.o(.rodata);
         data/data_b_mid2b.o(.rodata);
+        src/data/dodrio2.o(.rodata);
+        data/data_b_mid2b2.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
         src/data/text/species_names.o(.rodata);

@@ -39,10 +39,8 @@
 #define MAX_FALL_DIST 10 // The number of times a berry needs to fall before hitting the ground
 #define EAT_FALL_DIST 7 // The number of times a berry needs to fall to be available to eat
 
-#define NUM_BERRY_TYPES  4 // Blue, Green, Gold, and 'missed'
 #define NUM_BERRY_COLUMNS 11
 #define NUM_STATUS_SQUARES 10
-#define NUM_CLOUDS 2
 
 enum {
     BERRY_BLUE,
@@ -52,19 +50,6 @@ enum {
     BERRY_PRIZE,
     BERRY_IN_ROW,
     NUM_BERRY_IDS
-};
-
-enum {
-    GFXFUNC_LOAD,
-    GFXFUNC_SHOW_NAMES,
-    GFXFUNC_SHOW_RESULTS,
-    GFXFUNC_MSG_PLAY_AGAIN,
-    GFXFUNC_MSG_SAVING,
-    GFXFUNC_MSG_COMM_STANDBY,
-    GFXFUNC_ERASE_MSG,
-    GFXFUNC_MSG_PLAYER_DROPPED,
-    GFXFUNC_STOP,
-    GFXFUNC_IDLE,
 };
 
 enum {
@@ -205,19 +190,7 @@ enum {
 
 #define tState data[0]
 
-struct GfxFunc
-{
-    u8 id;
-    void (*func)(void);
-};
-
 #define NUM_GFX_FUNCS 10
-
-struct WinCoords
-{
-    u8 left;
-    u8 top;
-};
 
 enum
 {
