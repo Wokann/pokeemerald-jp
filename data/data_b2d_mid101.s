@@ -568,11 +568,22 @@ sEmptyMapList: @ 0x85DFCC6
 
 	.globl gItemIconTable
 gItemIconTable: @ 0x85DFCC8
-	.incbin "baserom_jp.gba", 0x5dfcc8, 0xbe4
+	.incbin "baserom_jp.gba", 0x5dfcc8, 0xbd0
+
+sOamData_ItemIcon: @ 0x85E0898
+	.byte 0x00, 0x00, 0x00, 0x80, 0x00, 0x24, 0x00, 0x00
+
+sSpriteAnim_ItemIcon: @ 0x85E08A0
+	.hword 0x0000, 0x0000, 0xFFFF, 0x0000
+
+sSpriteAnimTable_ItemIcon: @ 0x85E08A8
+	.4byte sSpriteAnim_ItemIcon
 
 	.globl gItemIconSpriteTemplate
 gItemIconSpriteTemplate: @ 0x85E08AC
-	.incbin "baserom_jp.gba", 0x5e08ac, 0x18
+	.hword 0, 0
+	.4byte sOamData_ItemIcon, sSpriteAnimTable_ItemIcon
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl gUnknown_85E08C4
 gUnknown_85E08C4: @ 0x85E08C4
