@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/field_specials.h"
 #include "rtc.h"
 #include "field_player_avatar.h"
 #include "event_data.h"
@@ -470,122 +471,61 @@ __attribute__((naked)) bool32 CountSSTidalStep(u16 delta)
     );
 }
 
-__attribute__((naked)) u8 GetSSTidalLocation(s8 *mapGroup, s8 *mapNum, s16 *x, s16 *y)
+u8 GetSSTidalLocation(s8 *mapGroup, s8 *mapNum, s16 *x, s16 *y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	adds r7, r3, #0\n\t"
-        "	ldr r0, _0813809C\n\t"
-        "	bl GetVarPointer\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _081380A0\n\t"
-        "	bl GetVarPointer\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r0, #9\n\t"
-        "	bhi _08138132\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081380A4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813809C: .4byte 0x0000404A\n\t"
-        "_081380A0: .4byte 0x000040B4\n\t"
-        "_081380A4: .4byte _081380A8\n\t"
-        "_081380A8:\n\t"
-        "	.4byte _081380D0\n\t"
-        "	.4byte _081380E0\n\t"
-        "	.4byte _081380D4\n\t"
-        "	.4byte _081380D8\n\t"
-        "	.4byte _081380D8\n\t"
-        "	.4byte _081380DC\n\t"
-        "	.4byte _08138108\n\t"
-        "	.4byte _081380D0\n\t"
-        "	.4byte _081380D4\n\t"
-        "	.4byte _081380DC\n\t"
-        "_081380D0:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0813813E\n\t"
-        "_081380D4:\n\t"
-        "	movs r0, #4\n\t"
-        "	b _0813813E\n\t"
-        "_081380D8:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _0813813E\n\t"
-        "_081380DC:\n\t"
-        "	movs r0, #3\n\t"
-        "	b _0813813E\n\t"
-        "_081380E0:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	bhi _081380F0\n\t"
-        "	movs r0, #0x31\n\t"
-        "	strb r0, [r5]\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #0x13\n\t"
-        "	b _08138130\n\t"
-        "_081380F0:\n\t"
-        "	cmp r0, #0x8b\n\t"
-        "	bhi _081380FE\n\t"
-        "	movs r0, #0x30\n\t"
-        "	strb r0, [r5]\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	subs r0, #0x3c\n\t"
-        "	b _08138130\n\t"
-        "_081380FE:\n\t"
-        "	movs r0, #0x2f\n\t"
-        "	strb r0, [r5]\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	subs r0, #0x8c\n\t"
-        "	b _08138130\n\t"
-        "_08138108:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	cmp r0, #0x41\n\t"
-        "	bhi _08138118\n\t"
-        "	movs r0, #0x2f\n\t"
-        "	strb r0, [r5]\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	movs r0, #0x41\n\t"
-        "	b _0813812E\n\t"
-        "_08138118:\n\t"
-        "	cmp r0, #0x91\n\t"
-        "	bhi _08138126\n\t"
-        "	movs r0, #0x30\n\t"
-        "	strb r0, [r5]\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	movs r0, #0x91\n\t"
-        "	b _0813812E\n\t"
-        "_08138126:\n\t"
-        "	movs r0, #0x31\n\t"
-        "	strb r0, [r5]\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	movs r0, #0xe0\n\t"
-        "_0813812E:\n\t"
-        "	subs r0, r0, r1\n\t"
-        "_08138130:\n\t"
-        "	strh r0, [r6]\n\t"
-        "_08138132:\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r7]\n\t"
-        "	movs r0, #0\n\t"
-        "_0813813E:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *varCruiseStepCount = GetVarPointer(VAR_CRUISE_STEP_COUNT);
+    switch (*GetVarPointer(VAR_SS_TIDAL_STATE))
+    {
+    case SS_TIDAL_BOARD_SLATEPORT:
+    case SS_TIDAL_LAND_SLATEPORT:
+        return SS_TIDAL_LOCATION_SLATEPORT;
+    case SS_TIDAL_HALFWAY_LILYCOVE:
+    case SS_TIDAL_EXIT_CURRENTS_RIGHT:
+        return SS_TIDAL_LOCATION_ROUTE131;
+    case SS_TIDAL_LAND_LILYCOVE:
+    case SS_TIDAL_BOARD_LILYCOVE:
+        return SS_TIDAL_LOCATION_LILYCOVE;
+    case SS_TIDAL_DEPART_LILYCOVE:
+    case SS_TIDAL_EXIT_CURRENTS_LEFT:
+        return SS_TIDAL_LOCATION_ROUTE124;
+    case SS_TIDAL_DEPART_SLATEPORT:
+        if (*varCruiseStepCount < 60)
+        {
+            *mapNum = MAP_NUM(MAP_ROUTE134);
+            *x = *varCruiseStepCount + 19;
+        }
+        else if (*varCruiseStepCount < 140)
+        {
+            *mapNum = MAP_NUM(MAP_ROUTE133);
+            *x = *varCruiseStepCount - 60;
+        }
+        else
+        {
+            *mapNum = MAP_NUM(MAP_ROUTE132);
+            *x = *varCruiseStepCount - 140;
+        }
+        break;
+    case SS_TIDAL_HALFWAY_SLATEPORT:
+        if (*varCruiseStepCount < 66)
+        {
+            *mapNum = MAP_NUM(MAP_ROUTE132);
+            *x = 65 - *varCruiseStepCount;
+        }
+        else if (*varCruiseStepCount < 146)
+        {
+            *mapNum = MAP_NUM(MAP_ROUTE133);
+            *x = 145 - *varCruiseStepCount;
+        }
+        else
+        {
+            *mapNum = MAP_NUM(MAP_ROUTE134);
+            *x = 224 - *varCruiseStepCount;
+        }
+        break;
+    }
+    *mapGroup = MAP_GROUP(MAP_ROUTE132);
+    *y = 20;
+    return SS_TIDAL_LOCATION_CURRENTS;
 }
 
 __attribute__((naked)) bool32 ShouldDoWallyCall()
