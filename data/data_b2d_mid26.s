@@ -6179,23 +6179,91 @@ gTitleScreenCloudsTilemap: @ 0x851A9CC
 
 	.globl gTitleScreenAlphaBlend
 gTitleScreenAlphaBlend: @ 0x851AC0C
-	.incbin "baserom_jp.gba", 0x51ac0c, 0xa8
+	.4byte 0x01100010, 0x03100210, 0x05100410, 0x07100610
+	.4byte 0x09100810, 0x0B100A10, 0x0D100C10, 0x0F100E10
+	.4byte 0x100E100F, 0x100C100D, 0x100A100B, 0x10081009
+	.4byte 0x10061007, 0x10041005, 0x10021003, 0x10001001
+	.4byte 0x10001000, 0x10001000, 0x10001000, 0x10001000
+	.4byte 0x10001000, 0x10001000, 0x10001000, 0x10001000
+	.4byte 0x10001000, 0x10001000, 0x10001000, 0x10001000
+	.4byte 0x10001000, 0x10001000, 0x10001000, 0x10001000
+
+	.globl sOam_VersionBannerLeft
+sOam_VersionBannerLeft: @ 0x851AC8C
+	.4byte 0xC00060A0
+	.hword 0x0000, 0x0000
+
+	.globl sOam_VersionBannerRight
+sOam_VersionBannerRight: @ 0x851AC94
+	.4byte 0x800020A0
+	.hword 0x0000, 0x0000
+
+	.globl sAnim_VersionBanner
+sAnim_VersionBanner: @ 0x851AC9C
+	.hword 0x0000, 0x001E
+	.hword 0xFFFF, 0x0000
+sAnim_VersionBanner_1: @ 0x851ACA4
+	.hword 0x0040, 0x001E
+	.hword 0xFFFF, 0x0000
+
+	.globl sAnims_VersionBanner
+sAnims_VersionBanner: @ 0x851ACAC
+	.4byte sAnim_VersionBanner, sAnim_VersionBanner_1
 
 	.globl sVersionBannerLeftSpriteTemplate
 sVersionBannerLeftSpriteTemplate: @ 0x851ACB4
-	.incbin "baserom_jp.gba", 0x51acb4, 0x18
+	.hword 0x03E8, 0x03E8
+	.4byte sOam_VersionBannerLeft, sAnims_VersionBanner, 0, gDummySpriteAffineAnimTable, 0x080A9CD5
 
 	.globl sVersionBannerRightSpriteTemplate
 sVersionBannerRightSpriteTemplate: @ 0x851ACCC
-	.incbin "baserom_jp.gba", 0x51accc, 0x18
+	.hword 0x03E8, 0x03E8
+	.4byte sOam_VersionBannerRight, sAnims_VersionBanner + 4, 0, gDummySpriteAffineAnimTable, 0x080A9D3D
 
 	.globl sSpriteSheet_EmeraldVersion
 sSpriteSheet_EmeraldVersion: @ 0x851ACE4
-	.incbin "baserom_jp.gba", 0x51ace4, 0x90
+	.4byte 0x0851938C
+	.hword 0x1000, 0x03E8
+	.4byte 0x00000000, 0x00000000
+
+	.globl sOam_EmeraldVersion
+sOam_EmeraldVersion: @ 0x851ACF4
+	.4byte 0x400040A0
+	.hword 0x0000, 0x0000
+
+	.globl sAnim_EmeraldVersion
+sAnim_EmeraldVersion: @ 0x851ACFC
+	.hword 0x0001, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x0005, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x0009, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x000D, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x0011, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x0015, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x0019, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x001D, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x0021, 0x0004
+	.hword 0xFFFF, 0x0000
+	.hword 0x0025, 0x0004
+	.hword 0xFFFF, 0x0000
+
+	.globl sAnims_EmeraldVersion
+sAnims_EmeraldVersion: @ 0x851AD4C
+	.4byte sAnim_EmeraldVersion + 0x0, sAnim_EmeraldVersion + 0x8, sAnim_EmeraldVersion + 0x10, sAnim_EmeraldVersion + 0x18
+	.4byte sAnim_EmeraldVersion + 0x20, sAnim_EmeraldVersion + 0x28, sAnim_EmeraldVersion + 0x30, sAnim_EmeraldVersion + 0x38
+	.4byte sAnim_EmeraldVersion + 0x40, sAnim_EmeraldVersion + 0x48
 
 	.globl sStartCopyrightBannerSpriteTemplate
 sStartCopyrightBannerSpriteTemplate: @ 0x851AD74
-	.incbin "baserom_jp.gba", 0x51ad74, 0x18
+	.hword 0x03E9, 0x03E9
+	.4byte sOam_EmeraldVersion, sAnims_EmeraldVersion, 0, gDummySpriteAffineAnimTable, 0x080A9D7D
 
 	.globl sSpriteSheet_PressStart
 sSpriteSheet_PressStart: @ 0x851AD8C
