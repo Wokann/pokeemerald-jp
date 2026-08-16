@@ -4886,38 +4886,23 @@ __attribute__((naked)) bool8 EventObjectIsTrainerAndCloseToPlayer(struct ObjectE
     );
 }
 
-__attribute__((naked)) u8 GetVectorDirection(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetVectorDirection(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r0, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	cmp r2, r3\n\t"
-        "	ble _0808EF96\n\t"
-        "	movs r2, #4\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0808EFA0\n\t"
-        "	movs r2, #3\n\t"
-        "	b _0808EFA0\n\t"
-        "_0808EF96:\n\t"
-        "	movs r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0808EFA0\n\t"
-        "	movs r2, #2\n\t"
-        "_0808EFA0:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    if (absdx > absdy)
+    {
+        direction = DIR_EAST;
+        if (dx < 0)
+            direction = DIR_WEST;
+    }
+    else
+    {
+        direction = DIR_SOUTH;
+        if (dy < 0)
+            direction = DIR_NORTH;
+    }
+    return direction;
 }
 
 
@@ -12546,42 +12531,18 @@ __attribute__((naked)) void obj_npc_animation_step(struct ObjectEvent *objectEve
     );
 }
 
-__attribute__((naked)) u8 GetDirectionToFace(s16 x, s16 y, s16 targetX, s16 targetY)
+u8 GetDirectionToFace(s16 x, s16 y, s16 targetX, s16 targetY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	cmp r0, r2\n\t"
-        "	ble _08092482\n\t"
-        "	movs r0, #3\n\t"
-        "	b _08092498\n\t"
-        "_08092482:\n\t"
-        "	cmp r0, r2\n\t"
-        "	bge _0809248A\n\t"
-        "	movs r0, #4\n\t"
-        "	b _08092498\n\t"
-        "_0809248A:\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _08092496\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08092498\n\t"
-        "_08092496:\n\t"
-        "	movs r0, #2\n\t"
-        "_08092498:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (x > targetX)
+        return DIR_WEST;
+
+    if (x < targetX)
+        return DIR_EAST;
+
+    if (y > targetY)
+        return DIR_NORTH;
+
+    return DIR_SOUTH;
 }
 
 __attribute__((naked)) void SetTrainerMovementType(struct ObjectEvent *objectEvent, u8 movementType)
