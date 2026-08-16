@@ -4,6 +4,7 @@
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
+#include "constants/union_room.h"
 
 // Movement action tables (defined in data/data_b2d_mid28.s).
 extern const u8 gJumpInPlaceMovementActions[];
@@ -25,6 +26,8 @@ extern const u8 sElevationToPriority[];
 extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);
+extern const char gUnknown_84E6CA8[];
+extern const char gUnknown_84E6CB4[];
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
@@ -22203,51 +22206,17 @@ __attribute__((naked)) void sub_08097460(void)
     );
 }
 
-__attribute__((naked)) int GetVirtualObjectSpriteId(u8 virtualObjId)
+int GetVirtualObjectSpriteId(u8 virtualObjId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r6, _080974D0\n\t"
-        "	movs r4, #0\n\t"
-        "_080974A8:\n\t"
-        "	adds r2, r4, r6\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080974D8\n\t"
-        "	ldr r1, [r2, #0x1c]\n\t"
-        "	ldr r0, _080974D4\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080974D8\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _080974D8\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	b _080974E2\n\t"
-        "	.align 2, 0\n\t"
-        "_080974D0: .4byte gSprites\n\t"
-        "_080974D4: .4byte SpriteCB_VirtualObject + 1\n\t"
-        "_080974D8:\n\t"
-        "	adds r4, #0x44\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, #0x3f\n\t"
-        "	ble _080974A8\n\t"
-        "	movs r0, #0x40\n\t"
-        "_080974E2:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        struct Sprite *sprite = &gSprites[i];
+        if (sprite->inUse && sprite->callback == SpriteCB_VirtualObject && (u8)sprite->sVirtualObjId == virtualObjId)
+            return i;
+    }
+    return MAX_SPRITES;
 }
 
 void TurnVirtualObject(u8 virtualObjId, u8 direction)
@@ -22474,40 +22443,17 @@ __attribute__((naked)) bool8 sub_080976D8(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) bool32 IsVirtualObjectAnimating(u8 virtualObjId)
+bool32 IsVirtualObjectAnimating(u8 virtualObjId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_0809749C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x40\n\t"
-        "	beq _08097748\n\t"
-        "	ldr r0, _0809774C\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08097750\n\t"
-        "_08097748:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08097752\n\t"
-        "	.align 2, 0\n\t"
-        "_0809774C: .4byte gSprites\n\t"
-        "_08097750:\n\t"
-        "	movs r0, #1\n\t"
-        "_08097752:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = GetVirtualObjectSpriteId(virtualObjId);
+
+    if (spriteId == MAX_SPRITES)
+        return FALSE;
+
+    if (gSprites[spriteId].sAnimNum != 0)
+        return TRUE;
+
+    return FALSE;
 }
 
 __attribute__((naked)) u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent)
