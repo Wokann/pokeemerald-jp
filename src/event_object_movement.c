@@ -22318,83 +22318,40 @@ void SetVirtualObjectSpriteAnim(u8 virtualObjId, u8 animNum)
     }
 }
 
-__attribute__((naked)) void MoveUnionRoomObjectUp(struct Sprite *sprite)
+void MoveUnionRoomObjectUp(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08097676\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0809767E\n\t"
-        "	b _0809769C\n\t"
-        "_08097676:\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	ldrh r0, [r2, #0x36]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0x36]\n\t"
-        "_0809767E:\n\t"
-        "	ldrh r0, [r2, #0x26]\n\t"
-        "	subs r0, #8\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0809769C\n\t"
-        "	strh r3, [r2, #0x26]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	strh r3, [r2, #0x34]\n\t"
-        "	strh r3, [r2, #0x36]\n\t"
-        "_0809769C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sAnimState)
+    {
+    case 0:
+        sprite->y2 = 0;
+        sprite->sAnimState++;
+    case 1:
+        sprite->y2 -= 8;
+        if (sprite->y2 == -DISPLAY_HEIGHT)
+        {
+            sprite->y2 = 0;
+            sprite->sInvisible = TRUE;
+            sprite->sAnimNum = 0;
+            sprite->sAnimState = 0;
+        }
+    }
 }
 
-__attribute__((naked)) void MoveUnionRoomObjectDown(struct Sprite *sprite)
+void MoveUnionRoomObjectDown(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080976B2\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080976BC\n\t"
-        "	b _080976CE\n\t"
-        "_080976B2:\n\t"
-        "	ldr r0, _080976D4\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	ldrh r0, [r1, #0x36]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "_080976BC:\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080976CE\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "_080976CE:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080976D4: .4byte 0x0000FF60\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sAnimState)
+    {
+    case 0:
+        sprite->y2 = -DISPLAY_HEIGHT;
+        sprite->sAnimState++;
+    case 1:
+        sprite->y2 += 8;
+        if (sprite->y2 == 0)
+        {
+            sprite->sAnimNum = 0;
+            sprite->sAnimState = 0;
+        }
+    }
 }
 
 __attribute__((naked)) bool8 sub_080976D8(struct Sprite *sprite)
