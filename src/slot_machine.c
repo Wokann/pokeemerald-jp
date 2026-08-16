@@ -1093,6 +1093,7 @@ bool8 IsFinalTask_Task_Payout(void);
 bool8 TryStopSlotMachineLights(void);
 bool8 IsPikaPowerBoltAnimating(void);
 void DarkenBetTiles(u8 betLevel);
+void LightenBetTiles(u8 betLevel);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -1147,142 +1148,55 @@ static bool8 SlotTask_AskInsertBet(struct Task *task)
     return TRUE;
 }
 
-__attribute__((naked)) void SlotAction_AwaitPlayerInput(u8 taskId)
+static bool8 SlotTask_HandleBetInput(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _0812AC24\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AC2C\n\t"
-        "	movs r0, #0\n\t"
-        "	bl OpenInfoBox\n\t"
-        "	ldr r0, _0812AC28\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #8\n\t"
-        "	b _0812ACF2\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AC24: .4byte gMain\n\t"
-        "_0812AC28: .4byte sSlotMachine\n\t"
-        "_0812AC2C:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AC92\n\t"
-        "	ldr r0, _0812AC88\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	subs r0, #3\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0812AC8C\n\t"
-        "	ldrh r4, [r2, #0x12]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _0812AC6A\n\t"
-        "_0812AC52:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl LoadBetTiles\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	ble _0812AC52\n\t"
-        "_0812AC6A:\n\t"
-        "	ldr r0, _0812AC88\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrh r0, [r1, #0xc]\n\t"
-        "	subs r0, #3\n\t"
-        "	ldrh r3, [r1, #0x12]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	movs r0, #9\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0x5f\n\t"
-        "	bl PlaySE\n\t"
-        "	b _0812ACF4\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AC88: .4byte sSlotMachine\n\t"
-        "_0812AC8C:\n\t"
-        "	movs r0, #6\n\t"
-        "	strb r0, [r2]\n\t"
-        "	b _0812ACF4\n\t"
-        "_0812AC92:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812ACC2\n\t"
-        "	ldr r4, _0812ACFC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812ACC2\n\t"
-        "	movs r0, #0x5f\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0x12]\n\t"
-        "	bl LoadBetTiles\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrh r0, [r1, #0xc]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	ldrh r0, [r1, #0x12]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "_0812ACC2:\n\t"
-        "	ldr r0, _0812ACFC\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r2, [r3, r1]\n\t"
-        "	ldr r4, _0812AD00\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	cmp r2, #2\n\t"
-        "	bgt _0812ACE0\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0812ACE4\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812ACE4\n\t"
-        "_0812ACE0:\n\t"
-        "	movs r0, #9\n\t"
-        "	strb r0, [r3]\n\t"
-        "_0812ACE4:\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812ACF4\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r0, #0x15\n\t"
-        "_0812ACF2:\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812ACF4:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812ACFC: .4byte sSlotMachine\n\t"
-        "_0812AD00: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+
+    if (JOY_NEW(SELECT_BUTTON))
+    {
+        OpenInfoBox(DIG_DISPLAY_INSERT_BET);
+        sSlotMachine->state = SLOTTASK_WAIT_INFO_BOX;
+    }
+    // Try to bet the max amount
+    else if (JOY_NEW(R_BUTTON))
+    {
+        if (sSlotMachine->coins - (MAX_BET - sSlotMachine->bet) >= 0)
+        {
+            for (i = sSlotMachine->bet; i < MAX_BET; i++)
+                LightenBetTiles(i);
+            sSlotMachine->coins -= (MAX_BET - sSlotMachine->bet);
+            sSlotMachine->bet = MAX_BET;
+            sSlotMachine->state = SLOTTASK_START_SPIN;
+            PlaySE(SE_SHOP);
+        }
+        // Not enough coins
+        else
+        {
+            sSlotMachine->state = SLOTTASK_MSG_NEED_3_COINS;
+        }
+    }
+    else
+    {
+        // Increase bet
+        if (JOY_NEW(DPAD_DOWN) && sSlotMachine->coins != 0)
+        {
+            PlaySE(SE_SHOP);
+            LightenBetTiles(sSlotMachine->bet);
+            sSlotMachine->coins--;
+            sSlotMachine->bet++;
+        }
+
+        // Maxed bet or finished betting
+        if (sSlotMachine->bet >= MAX_BET || (sSlotMachine->bet != 0 && JOY_NEW(A_BUTTON)))
+            sSlotMachine->state = SLOTTASK_START_SPIN;
+
+        // Quit prompt
+        if (JOY_NEW(B_BUTTON))
+            sSlotMachine->state = SLOTTASK_ASK_QUIT;
+    }
+    return FALSE;
 }
+
 
 static bool8 SlotTask_PrintMsg_Need3Coins(struct Task *task)
 {
