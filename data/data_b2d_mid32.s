@@ -648,9 +648,13 @@ gUnknown_85A8354: @ 0x85A8354
 gUnknown_85A83D8: @ 0x85A83D8
 	.incbin "baserom_jp.gba", 0x5a83d8, 0x20
 
-	.globl gUnknown_85A83F8
-gUnknown_85A83F8: @ 0x85A83F8
-	.incbin "baserom_jp.gba", 0x5a83f8, 0xa8
+	.globl sTasks_Intro
+sTasks_Intro: @ 0x85A83F8
+	.4byte Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1
+	.4byte Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1
+	.4byte Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1
+	.4byte Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1, Task_Intro + 1
+	.4byte Task_Intro + 1, Task_Intro + 1
 
 	.globl gUnknown_85A84A0
 gUnknown_85A84A0: @ 0x85A84A0
@@ -716,21 +720,21 @@ gUnknown_85A863C: @ 0x85A863C
 gUnknown_85A8646: @ 0x85A8646
 	.incbin "baserom_jp.gba", 0x5a8646, 0x6
 
-	.globl gUnknown_85A864C
-gUnknown_85A864C: @ 0x85A864C
-	.incbin "baserom_jp.gba", 0x5a864c, 0x1c
+	.globl sClockwiseWipe_Funcs
+sClockwiseWipe_Funcs: @ 0x85A864C
+	.4byte ClockwiseWipe_Init + 1, ClockwiseWipe_TopRight + 1, ClockwiseWipe_Right + 1, ClockwiseWipe_Bottom + 1, ClockwiseWipe_Left + 1, ClockwiseWipe_TopLeft + 1, ClockwiseWipe_End + 1
 
-	.globl gUnknown_85A8668
-gUnknown_85A8668: @ 0x85A8668
-	.incbin "baserom_jp.gba", 0x5a8668, 0x8
+	.globl sRipple_Funcs
+sRipple_Funcs: @ 0x85A8668
+	.4byte Ripple_Init + 1, Ripple_Main + 1
 
-	.globl gUnknown_85A8670
-gUnknown_85A8670: @ 0x85A8670
-	.incbin "baserom_jp.gba", 0x5a8670, 0xc
+	.globl sWave_Funcs
+sWave_Funcs: @ 0x85A8670
+	.4byte Wave_Init + 1, Wave_Main + 1, Wave_End + 1
 
-	.globl gUnknown_85A867C
-gUnknown_85A867C: @ 0x85A867C
-	.incbin "baserom_jp.gba", 0x5a867c, 0x28
+	.globl sMugshot_Funcs
+sMugshot_Funcs: @ 0x85A867C
+	.4byte Mugshot_Init + 1, Mugshot_SetGfx + 1, Mugshot_ShowBanner + 1, Mugshot_StartOpponentSlide + 1, Mugshot_WaitStartPlayerSlide + 1, Mugshot_WaitPlayerSlide + 1, Mugshot_GradualWhiteFade + 1, Mugshot_InitFadeWhiteToBlack + 1, Mugshot_FadeToBlack + 1, Mugshot_End + 1
 
 	.globl gUnknown_85A86A4
 gUnknown_85A86A4: @ 0x85A86A4

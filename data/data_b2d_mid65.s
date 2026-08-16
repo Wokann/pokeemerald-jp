@@ -13,13 +13,13 @@
 gUnknown_85A86F4: @ 0x85A86F4
 	.incbin "baserom_jp.gba", 0x5a86f4, 0x4
 
-	.globl gUnknown_85A86F8
-gUnknown_85A86F8: @ 0x85A86F8
-	.incbin "baserom_jp.gba", 0x5a86f8, 0xc
+	.globl sSlice_Funcs
+sSlice_Funcs: @ 0x85A86F8
+	.4byte Slice_Init + 1, Slice_Main + 1, Slice_End + 1
 
-	.globl gUnknown_85A8704
-gUnknown_85A8704: @ 0x85A8704
-	.incbin "baserom_jp.gba", 0x5a8704, 0x10
+	.globl sShredSplit_Funcs
+sShredSplit_Funcs: @ 0x85A8704
+	.4byte ShredSplit_Init + 1, ShredSplit_Main + 1, ShredSplit_BrokenCheck + 1, ShredSplit_End + 1
 
 	.globl gUnknown_85A8714
 gUnknown_85A8714: @ 0x85A8714
@@ -29,13 +29,13 @@ gUnknown_85A8714: @ 0x85A8714
 gUnknown_85A8716: @ 0x85A8716
 	.incbin "baserom_jp.gba", 0x5a8716, 0x6
 
-	.globl gUnknown_85A871C
-gUnknown_85A871C: @ 0x85A871C
-	.incbin "baserom_jp.gba", 0x5a871c, 0xc
+	.globl sBlackhole_Funcs
+sBlackhole_Funcs: @ 0x85A871C
+	.4byte Blackhole_Init + 1, Blackhole_Vibrate + 1, Blackhole_GrowEnd + 1
 
-	.globl gUnknown_85A8728
-gUnknown_85A8728: @ 0x85A8728
-	.incbin "baserom_jp.gba", 0x5a8728, 0x8
+	.globl sBlackholePulsate_Funcs
+sBlackholePulsate_Funcs: @ 0x85A8728
+	.4byte Blackhole_Init + 1, BlackholePulsate_Main + 1
 
 	.globl gUnknown_85A8730
 gUnknown_85A8730: @ 0x85A8730
@@ -49,29 +49,29 @@ gUnknown_85A8734: @ 0x85A8734
 gUnknown_85A87E8: @ 0x85A87E8
 	.incbin "baserom_jp.gba", 0x5a87e8, 0x8
 
-	.globl gUnknown_85A87F0
-gUnknown_85A87F0: @ 0x85A87F0
-	.incbin "baserom_jp.gba", 0x5a87f0, 0x20
+	.globl sGroudon_Funcs
+sGroudon_Funcs: @ 0x85A87F0
+	.4byte WeatherTrio_BgFadeBlack + 1, WeatherTrio_WaitFade + 1, Groudon_Init + 1, Groudon_PaletteFlash + 1, Groudon_PaletteBrighten + 1, FramesCountdown + 1, WeatherDuo_FadeOut + 1, WeatherDuo_End + 1
 
-	.globl gUnknown_85A8810
-gUnknown_85A8810: @ 0x85A8810
-	.incbin "baserom_jp.gba", 0x5a8810, 0x2c
+	.globl sRayquaza_Funcs
+sRayquaza_Funcs: @ 0x85A8810
+	.4byte WeatherTrio_BgFadeBlack + 1, WeatherTrio_WaitFade + 1, Rayquaza_Init + 1, Rayquaza_SetGfx + 1, Rayquaza_PaletteFlash + 1, Rayquaza_FadeToBlack + 1, Rayquaza_WaitFade + 1, Rayquaza_SetBlack + 1, Rayquaza_TriRing + 1, Blackhole_Vibrate + 1, Blackhole_GrowEnd + 1
 
-	.globl gUnknown_85A883C
-gUnknown_85A883C: @ 0x85A883C
-	.incbin "baserom_jp.gba", 0x5a883c, 0x14
+	.globl sWhiteBarsFade_Funcs
+sWhiteBarsFade_Funcs: @ 0x85A883C
+	.4byte WhiteBarsFade_Init + 1, WhiteBarsFade_StartBars + 1, WhiteBarsFade_WaitBars + 1, WhiteBarsFade_BlendToBlack + 1, WhiteBarsFade_End + 1
 
 	.globl gUnknown_85A8850
 gUnknown_85A8850: @ 0x85A8850
 	.incbin "baserom_jp.gba", 0x5a8850, 0x10
 
-	.globl gUnknown_85A8860
-gUnknown_85A8860: @ 0x85A8860
-	.incbin "baserom_jp.gba", 0x5a8860, 0xc
+	.globl sGridSquares_Funcs
+sGridSquares_Funcs: @ 0x85A8860
+	.4byte GridSquares_Init + 1, GridSquares_Main + 1, GridSquares_End + 1
 
-	.globl gUnknown_85A886C
-gUnknown_85A886C: @ 0x85A886C
-	.incbin "baserom_jp.gba", 0x5a886c, 0x14
+	.globl sAngledWipes_Funcs
+sAngledWipes_Funcs: @ 0x85A886C
+	.4byte AngledWipes_Init + 1, AngledWipes_SetWipeData + 1, AngledWipes_DoWipe + 1, AngledWipes_TryEnd + 1, AngledWipes_StartNext + 1
 
 	.globl gUnknown_85A8880
 gUnknown_85A8880: @ 0x85A8880

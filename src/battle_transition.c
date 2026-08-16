@@ -251,7 +251,7 @@ __attribute__((naked)) bool8 Transition_StartIntro(struct Task *task)
         "_081460CC: .4byte gPlttBufferFaded\n\t"
         "_081460D0: .4byte gPlttBufferUnfaded\n\t"
         "_081460D4: .4byte 0x04000100\n\t"
-        "_081460D8: .4byte gUnknown_85A83F8\n\t"
+        "_081460D8: .4byte sTasks_Intro\n\t"
         "_081460DC:\n\t"
         "	movs r1, #4\n\t"
         "	bl CreateTask\n\t"
@@ -287,7 +287,7 @@ __attribute__((naked)) bool8 Transition_WaitForIntro(struct Task *task)
         "	movs r0, #0\n\t"
         "	b _0814611C\n\t"
         "	.align 2, 0\n\t"
-        "_08146110: .4byte gUnknown_85A83F8\n\t"
+        "_08146110: .4byte sTasks_Intro\n\t"
         "_08146114:\n\t"
         "	ldrh r0, [r4, #8]\n\t"
         "	adds r0, #1\n\t"
@@ -2835,7 +2835,7 @@ __attribute__((naked)) void Task_ClockwiseWipe(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081472F4: .4byte gUnknown_85A864C\n\t"
+        "_081472F4: .4byte sClockwiseWipe_Funcs\n\t"
         "_081472F8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3531,7 +3531,7 @@ __attribute__((naked)) void Task_Ripple(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147808: .4byte gUnknown_85A8668\n\t"
+        "_08147808: .4byte sRipple_Funcs\n\t"
         "_0814780C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3786,7 +3786,7 @@ __attribute__((naked)) void Task_Wave(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081479DC: .4byte gUnknown_85A8670\n\t"
+        "_081479DC: .4byte sWave_Funcs\n\t"
         "_081479E0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -4172,7 +4172,7 @@ __attribute__((naked)) void DoMugshotTransition(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147C74: .4byte gUnknown_85A867C\n\t"
+        "_08147C74: .4byte sMugshot_Funcs\n\t"
         "_08147C78: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -5481,7 +5481,7 @@ __attribute__((naked)) void Task_Slice(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081485C0: .4byte gUnknown_85A86F8\n\t"
+        "_081485C0: .4byte sSlice_Funcs\n\t"
         "_081485C4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -5831,7 +5831,7 @@ __attribute__((naked)) void Task_ShredSplit(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08148850: .4byte gUnknown_85A8704\n\t"
+        "_08148850: .4byte sShredSplit_Funcs\n\t"
         "_08148854: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6372,7 +6372,7 @@ __attribute__((naked)) void Task_Blackhole(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08148C44: .4byte gUnknown_85A871C\n\t"
+        "_08148C44: .4byte sBlackhole_Funcs\n\t"
         "_08148C48: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6407,7 +6407,7 @@ __attribute__((naked)) void Task_BlackholePulsate(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08148C7C: .4byte gUnknown_85A8728\n\t"
+        "_08148C7C: .4byte sBlackholePulsate_Funcs\n\t"
         "_08148C80: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -7058,7 +7058,7 @@ __attribute__((naked)) void Task_Groudon(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08149230: .4byte gUnknown_85A87F0\n\t"
+        "_08149230: .4byte sGroudon_Funcs\n\t"
         "_08149234: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -7239,7 +7239,7 @@ __attribute__((naked)) void Task_Rayquaza(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814936C: .4byte gUnknown_85A8810\n\t"
+        "_0814936C: .4byte sRayquaza_Funcs\n\t"
         "_08149370: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -7810,7 +7810,7 @@ __attribute__((naked)) void Task_WhiteBarsFade(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08149668: .4byte gUnknown_85A883C\n\t"
+        "_08149668: .4byte sWhiteBarsFade_Funcs\n\t"
         "_0814966C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -8359,7 +8359,7 @@ __attribute__((naked)) void Task_GridSquares(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08149A4C: .4byte gUnknown_85A8860\n\t"
+        "_08149A4C: .4byte sGridSquares_Funcs\n\t"
         "_08149A50: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -8517,7 +8517,7 @@ __attribute__((naked)) void Task_AngledWipes(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08149B5C: .4byte gUnknown_85A886C\n\t"
+        "_08149B5C: .4byte sAngledWipes_Funcs\n\t"
         "_08149B60: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
