@@ -887,7 +887,8 @@ gUnknown_85E18F8: @ 0x85E18F8
 
 	.globl sVerdanturfTentFuncs
 sVerdanturfTentFuncs: @ 0x85E196C
-	.incbin "baserom_jp.gba", 0x5e196c, 0x20
+	.4byte 0x081B9675, 0x081B96C9, 0x081B96E5, 0x081B9701
+	.4byte 0x081B9731, 0x081B975D, 0x081B97A1, 0x081B97C9
 
 	.globl sVerdanturfTentRewards
 sVerdanturfTentRewards: @ 0x85E198C
@@ -895,7 +896,8 @@ sVerdanturfTentRewards: @ 0x85E198C
 
 	.globl sFallarborTentFuncs
 sFallarborTentFuncs: @ 0x85E1990
-	.incbin "baserom_jp.gba", 0x5e1990, 0x1c
+	.4byte 0x081B9841, 0x081B9895, 0x081B98B1, 0x081B98CD
+	.4byte 0x081B9911, 0x081B9939, 0x081B9991
 
 	.globl sFallarborTentRewards
 sFallarborTentRewards: @ 0x85E19AC
@@ -984,7 +986,11 @@ sSpriteTemplate_FallingFossil: @ 0x85E7FBC
 
 	.globl gMirageTowerPulseBlendSettings
 gMirageTowerPulseBlendSettings: @ 0x85E7FD4
-	.incbin "baserom_jp.gba", 0x5e7fd4, 0x1c
+	.hword 0x433B, 0x0061
+	.byte 0x0F, 0x05, 0xFF, 0x9B
+
+gUnknown_85E7FDC: @ 0x85E7FDC
+	.incbin "baserom_jp.gba", 0x5e7fdc, 0x14
 
 	.globl sSpriteTemplate_CeilingCrumbleSmall
 sSpriteTemplate_CeilingCrumbleSmall: @ 0x85E7FF0

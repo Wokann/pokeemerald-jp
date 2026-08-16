@@ -232,11 +232,11 @@ gShadowVerticalOffsets: @ 0x85ACA4A
 
 	.globl gFadeFootprintsTireTracksFuncs
 gFadeFootprintsTireTracksFuncs: @ 0x85ACA54
-	.incbin "baserom_jp.gba", 0x5aca54, 0x8
+	.4byte 0x08154BB9, 0x08154BDD
 
 	.globl gAshFieldEffectFuncs
 gAshFieldEffectFuncs: @ 0x85ACA5C
-	.incbin "baserom_jp.gba", 0x5aca5c, 0xc
+	.4byte 0x081553B9, 0x081553E9, 0x08155449
 
 	.globl sSurfBlobDirectionAnims
 sSurfBlobDirectionAnims: @ 0x85ACA68

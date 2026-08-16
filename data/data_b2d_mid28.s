@@ -805,7 +805,7 @@ sWindowFrames: @ 0x84E8860
 
 	.globl gNullScriptPtr
 gNullScriptPtr: @ 0x84E8900
-	.incbin "baserom_jp.gba", 0x4e8900, 0x4
+	.4byte 0
 
 	.globl sScriptConditionTable
 sScriptConditionTable: @ 0x84E8904
