@@ -4404,28 +4404,15 @@ __attribute__((naked)) void sub_08198D44(void)
     );
 }
 
-__attribute__((naked)) s8 Menu_ProcessInputNoWrapClearOnChoose()
+
+s8 Menu_ProcessInputNoWrapClearOnChoose(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl Menu_ProcessInputNoWrap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r4, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _08198D7E\n\t"
-        "	bl sub_08198D88\n\t"
-        "_08198D7E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 result = Menu_ProcessInputNoWrap();
+    if (result != MENU_NOTHING_CHOSEN)
+        EraseYesNoWindow();
+    return result;
 }
+
 
 __attribute__((naked)) void sub_08198D88(void)
 {

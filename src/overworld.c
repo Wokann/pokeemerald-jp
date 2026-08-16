@@ -2,6 +2,7 @@
 #include "overworld.h"
 #include "main.h"
 #include "task.h"
+#include "constants/map_types.h"
 
 extern void *sUnusedOverworldCallback;
 
@@ -190,27 +191,15 @@ __attribute__((naked)) void UpdateMiscOverworldStates(void)
     );
 }
 
-__attribute__((naked)) void ResetGameStats(void)
+
+void ResetGameStats(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "_08084134:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGameStat\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #0x3f\n\t"
-        "	ble _08084134\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    for (i = 0; i < NUM_GAME_STATS; i++)
+        SetGameStat(i, 0);
 }
+
 
 __attribute__((naked)) void IncrementGameStat(u8 index)
 {
@@ -583,29 +572,15 @@ __attribute__((naked)) void ApplyCurrentWarp(void)
     );
 }
 
-__attribute__((naked)) void SetWarpData(struct WarpData *warp, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetWarpData(struct WarpData *warp, s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, [sp, #0xc]\n\t"
-        "	ldr r5, [sp, #0x10]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	strb r2, [r0, #1]\n\t"
-        "	strb r3, [r0, #2]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	strh r4, [r0, #4]\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	asrs r5, r5, #0x18\n\t"
-        "	strh r5, [r0, #6]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    warp->mapGroup = mapGroup;
+    warp->mapNum = mapNum;
+    warp->warpId = warpId;
+    warp->x = x;
+    warp->y = y;
 }
+
 
 __attribute__((naked)) bool32 IsDummyWarp(struct WarpData *warp)
 {
@@ -896,28 +871,12 @@ __attribute__((naked)) void SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId
     );
 }
 
-__attribute__((naked)) void SetWarpDestinationToMapWarp(s8 mapGroup, s8 mapNum, s8 warpId)
+
+void SetWarpDestinationToMapWarp(s8 mapGroup, s8 mapNum, s8 warpId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	movs r3, #1\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	str r3, [sp]\n\t"
-        "	bl SetWarpDestination\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetWarpDestination(mapGroup, mapNum, warpId, -1, -1);
 }
+
 
 __attribute__((naked)) void SetDynamicWarp(s32 unused, s8 mapGroup, s8 mapNum, s8 warpId)
 {
@@ -1570,51 +1529,19 @@ __attribute__((naked)) bool8 SetDiveWarp(u8 dir, u16 x, u16 y)
     );
 }
 
-__attribute__((naked)) bool8 SetDiveWarpEmerge(u16 x, u16 y)
+
+bool8 SetDiveWarpEmerge(u16 x, u16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	movs r0, #6\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl SetDiveWarp\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return SetDiveWarp(CONNECTION_EMERGE, x, y);
 }
 
-__attribute__((naked)) bool8 SetDiveWarpDive(u16 x, u16 y)
+
+
+bool8 SetDiveWarpDive(u16 x, u16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	movs r0, #5\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl SetDiveWarp\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return SetDiveWarp(CONNECTION_DIVE, x, y);
 }
+
 
 __attribute__((naked)) void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
 {
@@ -2838,29 +2765,16 @@ __attribute__((naked)) void Overworld_ChangeMusicTo(u16 newMusic)
     );
 }
 
-__attribute__((naked)) u8 GetMapMusicFadeoutSpeed(void)
+
+u8 GetMapMusicFadeoutSpeed(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetDestinationWarpMapHeader\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	bl IsMapTypeIndoors\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08085270\n\t"
-        "	movs r0, #4\n\t"
-        "	b _08085272\n\t"
-        "_08085270:\n\t"
-        "	movs r0, #2\n\t"
-        "_08085272:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct MapHeader *mapHeader = GetDestinationWarpMapHeader();
+    if (IsMapTypeIndoors(mapHeader->mapType) == TRUE)
+        return 2;
+    else
+        return 4;
 }
+
 
 __attribute__((naked)) void TryFadeOutOldMapMusic(void)
 {
@@ -3268,56 +3182,29 @@ __attribute__((naked)) bool8 IsMapTypeOutdoors(u8 mapType)
     );
 }
 
-__attribute__((naked)) bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType)
+
+bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08085572\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08085572\n\t"
-        "	cmp r0, #6\n\t"
-        "	beq _08085572\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08085576\n\t"
-        "_08085572:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08085578\n\t"
-        "_08085576:\n\t"
-        "	movs r0, #0\n\t"
-        "_08085578:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (mapType == MAP_TYPE_ROUTE
+     || mapType == MAP_TYPE_TOWN
+     || mapType == MAP_TYPE_OCEAN_ROUTE
+     || mapType == MAP_TYPE_CITY)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) bool8 IsMapTypeIndoors(u8 mapType)
+
+
+bool8 IsMapTypeIndoors(u8 mapType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0xf8\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _08085590\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08085592\n\t"
-        "_08085590:\n\t"
-        "	movs r0, #1\n\t"
-        "_08085592:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (mapType == MAP_TYPE_INDOOR
+     || mapType == MAP_TYPE_SECRET_BASE)
+        return TRUE;
+    else
+        return FALSE;
 }
+
 
 __attribute__((naked)) mapsec_u8_t GetSavedWarpRegionMapSectionId(void)
 {

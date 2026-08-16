@@ -1313,8 +1313,6 @@ void TilesetAnim_Sootopolis(u16 timer)
     if (timer % 16 == 0)
         QueueAnimTiles_Sootopolis_StormyWater(timer / 16);
 }
-
-
 __attribute__((naked)) void TilesetAnim_Underwater(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1336,7 +1334,6 @@ __attribute__((naked)) void TilesetAnim_Underwater(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void TilesetAnim_Cave(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1358,6 +1355,8 @@ __attribute__((naked)) void TilesetAnim_Cave(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 void TilesetAnim_BattleFrontierOutsideWest(u16 timer)
 {

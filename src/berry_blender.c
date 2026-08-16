@@ -4972,7 +4972,6 @@ __attribute__((naked)) void Blender_CalculatePokeblock(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void Debug_CalculatePokeblock(void)
 {
     __asm__(".syntax unified\n\t"
@@ -4993,6 +4992,8 @@ __attribute__((naked)) void Debug_CalculatePokeblock(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void sub_0808183C(void)
 {

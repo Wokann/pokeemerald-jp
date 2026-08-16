@@ -1,5 +1,6 @@
 #include "global.h"
 #include "pokemon.h"
+#include "constants/trainers.h"
 
 __attribute__((naked)) void ZeroBoxMonData(struct BoxPokemon *boxMon)
 {
@@ -15608,28 +15609,15 @@ __attribute__((naked)) u16 FacilityClassToPicIndex(u16 facilityClass)
     );
 }
 
-__attribute__((naked)) u16 PlayerGenderToFrontTrainerPicId(u8 playerGender)
+
+u16 PlayerGenderToFrontTrainerPicId(u8 playerGender)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0806EA98\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	b _0806EA9A\n\t"
-        "_0806EA98:\n\t"
-        "	movs r0, #0x3f\n\t"
-        "_0806EA9A:\n\t"
-        "	bl FacilityClassToPicIndex\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (playerGender != MALE)
+        return FacilityClassToPicIndex(FACILITY_CLASS_MAY);
+    else
+        return FacilityClassToPicIndex(FACILITY_CLASS_BRENDAN);
 }
+
 
 __attribute__((naked)) void HandleSetPokedexFlag(u16 nationalNum, u8 caseId, u32 personality)
 {

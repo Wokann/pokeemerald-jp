@@ -2,6 +2,32 @@
 #include "constants/songs.h"
 #include "start_menu.h"
 
+enum
+{
+    MENU_ACTION_POKEDEX,
+    MENU_ACTION_POKEMON,
+    MENU_ACTION_BAG,
+    MENU_ACTION_POKENAV,
+    MENU_ACTION_PLAYER,
+    MENU_ACTION_SAVE,
+    MENU_ACTION_OPTION,
+    MENU_ACTION_EXIT,
+    MENU_ACTION_RETIRE_SAFARI,
+    MENU_ACTION_PLAYER_LINK,
+    MENU_ACTION_REST_FRONTIER,
+    MENU_ACTION_RETIRE_FRONTIER,
+    MENU_ACTION_PYRAMID_BAG
+};
+
+// Save status
+enum
+{
+    SAVE_IN_PROGRESS,
+    SAVE_SUCCESS,
+    SAVE_CANCELED,
+    SAVE_ERROR
+};
+
 __attribute__((naked)) void SetDexPokemonPokenavFlags(void)
 {
     __asm__(".syntax unified\n\t"
@@ -286,7 +312,6 @@ __attribute__((naked)) void BuildBattlePyramidStartMenu(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void BuildMultiPartnerRoomStartMenu(void)
 {
     __asm__(".syntax unified\n\t"
@@ -306,6 +331,8 @@ __attribute__((naked)) void BuildMultiPartnerRoomStartMenu(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void ShowSafariBallsWindow(void)
 {
@@ -2183,7 +2210,6 @@ __attribute__((naked)) void SaveErrorCallback(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void SaveReturnErrorCallback(void)
 {
     __asm__(".syntax unified\n\t"
@@ -2205,6 +2231,8 @@ __attribute__((naked)) void SaveReturnErrorCallback(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void InitBattlePyramidRetire(void)
 {
@@ -2998,4 +3026,3 @@ void AppendToList(u8 *list, u8 *pos, u8 newEntry)
     list[*pos] = newEntry;
     (*pos)++;
 }
-

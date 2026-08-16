@@ -57,28 +57,20 @@ __attribute__((naked)) void SetEnigmaBerry(u8 *src)
     );
 }
 
-__attribute__((naked)) void GetEnigmaBerryChecksum(void)
+u32 GetEnigmaBerryChecksum(struct EnigmaBerry *enigmaBerry)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #0\n\t"
-        "_080E0B64:\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r1, #1\n\t"
-        "	cmp r1, #0x2f\n\t"
-        "	bls _080E0B64\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 i;
+    u32 checksum;
+    u8 *dest;
+
+    dest = (u8 *)enigmaBerry;
+    checksum = 0;
+    for (i = 0; i < sizeof(gSaveBlock1Ptr->enigmaBerry) - sizeof(gSaveBlock1Ptr->enigmaBerry.checksum); i++)
+        checksum += dest[i];
+
+    return checksum;
 }
+
 
 __attribute__((naked)) bool32 IsEnigmaBerryValid()
 {

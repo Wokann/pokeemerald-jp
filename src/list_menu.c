@@ -1,6 +1,10 @@
 #include "global.h"
 #include "list_menu.h"
 
+// Cursors after this point are created using a sprite with their own task.
+// This allows them to have idle animations. Cursors prior to this are simply printed text.
+#define CURSOR_OBJECT_START CURSOR_RED_OUTLINE
+
 void Task_RedArrowCursor(void) {}
 __attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 drawMode, u16 tileNum, u16 palOffset)
 {
@@ -2566,28 +2570,18 @@ __attribute__((naked)) void RemoveScrollIndicatorArrowPair(u8 taskId)
     );
 }
 
-__attribute__((naked)) void ListMenuAddCursorObjectInternal(void)
+u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081AF362\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _081AF368\n\t"
-        "_081AF362:\n\t"
-        "	bl ListMenuAddRedOutlineCursorObject\n\t"
-        "	b _081AF36C\n\t"
-        "_081AF368:\n\t"
-        "	bl ListMenuAddRedArrowCursorObject\n\t"
-        "_081AF36C:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (cursorObjId)
+    {
+    case CURSOR_RED_OUTLINE - CURSOR_OBJECT_START:
+    default:
+        return ListMenuAddRedOutlineCursorObject(cursor);
+    case CURSOR_RED_ARROW - CURSOR_OBJECT_START:
+        return ListMenuAddRedArrowCursorObject(cursor);
+    }
 }
+
 
 __attribute__((naked)) void ListMenuUpdateCursorObject(void)
 {
@@ -2618,30 +2612,19 @@ __attribute__((naked)) void ListMenuUpdateCursorObject(void)
     );
 }
 
-__attribute__((naked)) void ListMenuRemoveCursorObject(void)
+void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081AF3AC\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _081AF3B2\n\t"
-        "	b _081AF3B6\n\t"
-        "_081AF3AC:\n\t"
-        "	bl ListMenuRemoveRedOutlineCursorObject\n\t"
-        "	b _081AF3B6\n\t"
-        "_081AF3B2:\n\t"
-        "	bl ListMenuRemoveRedArrowCursorObject\n\t"
-        "_081AF3B6:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (cursorObjId)
+    {
+    case CURSOR_RED_OUTLINE - CURSOR_OBJECT_START:
+        ListMenuRemoveRedOutlineCursorObject(taskId);
+        break;
+    case CURSOR_RED_ARROW - CURSOR_OBJECT_START:
+        ListMenuRemoveRedArrowCursorObject(taskId);
+        break;
+    }
 }
+
 
 void Task_RedOutlineCursor(void) {}
 __attribute__((naked)) void ListMenuGetRedOutlineCursorSpriteCount(void)
@@ -3320,4 +3303,3 @@ __attribute__((naked)) void ListMenuRemoveRedArrowCursorObject(void)
         ".syntax divided\n\t"
     );
 }
-

@@ -7614,30 +7614,16 @@ __attribute__((naked)) bool32 EmeraldBattleTowerRecordToRuby(struct EmeraldBattl
     );
 }
 
-__attribute__((naked)) void CalcApprenticeChecksum(struct Apprentice *apprentice)
+
+void CalcApprenticeChecksum(struct Apprentice *apprentice)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r2, #0x40]\n\t"
-        "	movs r3, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "_08165930:\n\t"
-        "	ldr r0, [r2, #0x40]\n\t"
-        "	ldm r4!, {r1}\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r2, #0x40]\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, #0xf\n\t"
-        "	bls _08165930\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    apprentice->checksum = 0;
+    for (i = 0; i < offsetof(struct Apprentice, checksum) / sizeof(u32); i++)
+        apprentice->checksum += ((u32 *)apprentice)[i];
 }
+
 
 __attribute__((naked)) void ClearApprentice(void)
 {

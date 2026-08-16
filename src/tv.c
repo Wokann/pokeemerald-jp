@@ -4150,7 +4150,6 @@ __attribute__((naked)) void sub_080EF934(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void ClearPokeNews(void)
 {
     __asm__(".syntax unified\n\t"
@@ -4172,6 +4171,8 @@ __attribute__((naked)) void ClearPokeNews(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void ClearPokemonNewsI(void)
 {

@@ -2085,7 +2085,6 @@ __attribute__((naked)) void SetInitialScrollAndCursorPositions(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void InitPocketListPositions(void)
 {
     __asm__(".syntax unified\n\t"
@@ -2107,6 +2106,8 @@ __attribute__((naked)) void InitPocketListPositions(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void sub_081AB88C(void)
 {

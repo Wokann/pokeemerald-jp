@@ -360,28 +360,14 @@ __attribute__((naked)) void DestroyCloudSprites(void)
     );
 }
 
-__attribute__((naked)) void UpdateCloudSprite(void)
+void UpdateCloudSprite(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080ABFC8\n\t"
-        "	ldrh r0, [r2, #0x20]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "_080ABFC8:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    // Move 1 pixel left every 2 frames.
+    sprite->data[0] = (sprite->data[0] + 1) & 1;
+    if (sprite->data[0])
+        sprite->x--;
 }
+
 
 __attribute__((naked)) void Drought_InitVars()
 {
@@ -5379,7 +5365,6 @@ __attribute__((naked)) void Bubbles_Main()
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 Bubbles_Finish()
 {
     __asm__(".syntax unified\n\t"
@@ -5401,6 +5386,8 @@ __attribute__((naked)) bool8 Bubbles_Finish()
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void CreateBubbleSprite(void)
 {

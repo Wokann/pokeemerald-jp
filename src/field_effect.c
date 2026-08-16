@@ -289,23 +289,13 @@ __attribute__((naked)) void FieldEffectFreeGraphicsResources(struct Sprite *spri
     );
 }
 
-__attribute__((naked)) void FieldEffectStop(struct Sprite *sprite, u8 id)
+
+void FieldEffectStop(struct Sprite *sprite, u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r4, r1, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl FieldEffectFreeGraphicsResources\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldEffectFreeGraphicsResources(sprite);
+    FieldEffectActiveListRemove(id);
 }
+
 
 __attribute__((naked)) void FieldEffectFreeTilesIfUnused(u16 tileStart)
 {

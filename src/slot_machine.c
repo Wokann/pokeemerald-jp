@@ -14,6 +14,17 @@
 #include "text.h"
 #include "menu.h"
 
+enum
+{
+    SYMBOL_7_RED,
+    SYMBOL_7_BLUE,
+    SYMBOL_AZURILL,
+    SYMBOL_LOTAD,
+    SYMBOL_CHERRY,
+    SYMBOL_POWER,
+    SYMBOL_REPLAY,
+};
+
 __attribute__((naked)) void Task_FadeToSlotMachine(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
@@ -4786,33 +4797,21 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel1(void)
     );
 }
 
-__attribute__((naked)) bool8 IfSymbol7_SwitchColor(u8 *tag)
+bool8 IfSymbol7_SwitchColor(u8 *symbol)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C626\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C630\n\t"
-        "_0812C626:\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812C62E\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812C634\n\t"
-        "_0812C62E:\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C630:\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "_0812C634:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (*symbol == SYMBOL_7_RED)
+    {
+        *symbol = SYMBOL_7_BLUE;
+        return TRUE;
+    }
+    if (*symbol == SYMBOL_7_BLUE)
+    {
+        *symbol = SYMBOL_7_RED;
+        return TRUE;
+    }
+    return FALSE;
 }
+
 
 __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2(u8 taskId)
 {
