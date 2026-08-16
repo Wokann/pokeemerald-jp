@@ -5,9 +5,10 @@
 
 struct TrainerHillTrainer
 {
-    u8 name[TRAINER_NAME_LENGTH + 1];
+    u8 name[PLAYER_NAME_LENGTH + 1]; // JP: 8 bytes (US uses TRAINER_NAME_LENGTH + 1)
     u8 facilityClass;
-    bool32 unused; // Set to TRUE on JP trainers
+    u8 unused; // JP: bool8 (US uses bool32)
+    u8 pad[2]; // aligns speech arrays to u16
     u16 speechBefore[EASY_CHAT_BATTLE_WORDS_COUNT];
     u16 speechWin[EASY_CHAT_BATTLE_WORDS_COUNT];
     u16 speechLose[EASY_CHAT_BATTLE_WORDS_COUNT];

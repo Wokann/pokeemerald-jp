@@ -38,6 +38,9 @@ struct EReaderTrainerHillTrainer
     struct TrainerHillTrainer trainer;
     u8 mapMetatileData[HILL_FLOOR_WIDTH * HILL_FLOOR_HEIGHT_MAIN];
     u16 mapCollisionData[HILL_FLOOR_WIDTH];
+    u8 mapTrainerCoords[HILL_TRAINERS_PER_FLOOR];
+    u8 mapTrainerDirections;
+    u8 mapTrainerRanges;
     u32 checksum;
 }; // size = 0x270 (JP e-reader layout: checksum at 0x26C, no trainerCoords)
 

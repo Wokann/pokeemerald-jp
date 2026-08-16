@@ -9469,6 +9469,8 @@ SECTIONS {
         data/data_b2c_mid7.o(.rodata);
         src/menu_specialized.o(.rodata);
         data/data_b2c_mid8.o(.rodata);
+        src/data/trainer_hill_templates.o(.rodata);
+        data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
         data/data_rest.o(.rodata);
