@@ -6112,7 +6112,7 @@ SECTIONS {
         src/tv.o(.text.sub_080EE664);
         src/tv.o(.text.sub_080EE780);
         src/tv.o(.text.sub_080EE808);
-        src/tv.o(.text.AlertTVOfNewCoinTotal);
+        src/tv.o(.text.TryPutFindThatGamerOnAir);
         src/tv.o(.text.AlertTVThatPlayerPlayedSlotMachine);
         src/tv.o(.text.AlertTVThatPlayerPlayedRoulette);
         src/tv.o(.text.sub_080EE9B8);
@@ -7399,14 +7399,14 @@ SECTIONS {
         src/slot_machine.o(.text.SlotAction_MatchedPower);
         src/slot_machine.o(.text.SlotAction18);
         src/slot_machine.o(.text.SlotAction_Loop);
-        src/slot_machine.o(.text.SlotAction_NoMatches);
+        src/slot_machine.o(.text.SlotTask_NoMatches);
         src/slot_machine.o(.text.SlotAction_PrintQuitTheGame);
         src/slot_machine.o(.text.SlotAction_SeeIfPlayerQuits);
         src/slot_machine.o(.text.SlotAction_PrintMessage_9999Coins);
         src/slot_machine.o(.text.SlotAction_ExitYouDontHaveThreeCoinsMessage);
         src/slot_machine.o(.text.SlotAction_PrintMessage_NoMoreCoins);
-        src/slot_machine.o(.text.SlotAction_ExitMessage_NoMoreCoins);
-        src/slot_machine.o(.text.SlotAction_EndGame);
+        src/slot_machine.o(.text.SlotTask_WaitMsg_NoMoreCoins);
+        src/slot_machine.o(.text.SlotTask_EndGame);
         src/slot_machine.o(.text.SlotAction_FreeDataStructures);
         src/slot_machine.o(.text.DrawMachineBias);
         src/slot_machine.o(.text.ResetBiasFailure);

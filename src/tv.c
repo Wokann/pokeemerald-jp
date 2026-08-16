@@ -6182,7 +6182,7 @@ __attribute__((naked)) void sub_080EE808(void)
     );
 }
 
-__attribute__((naked)) void AlertTVOfNewCoinTotal(void)
+__attribute__((naked)) void TryPutFindThatGamerOnAir(u16 nCoinsPaidOut)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

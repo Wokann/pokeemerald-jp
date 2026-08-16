@@ -9,6 +9,7 @@
 #include "constants/rgb.h"
 #include "constants/coins.h"
 #include "constants/songs.h"
+#include "coins.h"
 #include "string_util.h"
 #include "decompress.h"
 #include "trig.h"
@@ -1040,8 +1041,10 @@ u16 ReelTimeSpeed(void);
 bool8 IsReelTimeTaskDone(void);
 void ResetBiasFailure(void);
 void PressStopReelButton(u8 reelIndex);
+void TryPutFindThatGamerOnAir(u16 nCoinsPaidOut);
 
 #define tTimer data[0]
+#define tTimer2 data[1]
 
 static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
@@ -1677,33 +1680,14 @@ __attribute__((naked)) void SlotAction_Loop(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotAction_NoMatches(u8 taskId)
+static bool8 SlotTask_NoMatches(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	ble _0812B15E\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	ldr r0, _0812B164\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x13\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812B15E:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B164: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++task->tTimer2 > 64)
+    {
+        task->tTimer2 = 0;
+        sSlotMachine->state = SLOTTASK_RESET_BET_TILES;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void SlotAction_PrintQuitTheGame(u8 taskId)
@@ -1909,69 +1893,23 @@ __attribute__((naked)) void SlotAction_PrintMessage_NoMoreCoins(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotAction_ExitMessage_NoMoreCoins(u8 taskId)
+static bool8 SlotTask_WaitMsg_NoMoreCoins(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812B2F4\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B2EE\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearDialogWindowAndFrame\n\t"
-        "	ldr r0, _0812B2F8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x1b\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812B2EE:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B2F4: .4byte gMain\n\t"
-        "_0812B2F8: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(A_BUTTON | B_BUTTON))
+    {
+        ClearDialogWindowAndFrame(WIN_MSG, TRUE);
+        sSlotMachine->state = SLOTTASK_END;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_EndGame(u8 taskId)
+static bool8 SlotTask_EndGame(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, _0812B338\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrh r0, [r0, #0xc]\n\t"
-        "	bl SetCoins\n\t"
-        "	bl GetCoins\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl AlertTVOfNewCoinTotal\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B338: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    SetCoins(sSlotMachine->coins);
+    TryPutFindThatGamerOnAir(GetCoins());
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    sSlotMachine->state++; // SLOTTASK_FREE
+    return FALSE;
 }
 
 __attribute__((naked)) void SlotAction_FreeDataStructures(u8 taskId)

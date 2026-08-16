@@ -3560,7 +3560,7 @@ __attribute__((naked)) void sub_08141EAC(void)
         "	bl GetCoins\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
-        "	bl AlertTVOfNewCoinTotal\n\t"
+        "	bl TryPutFindThatGamerOnAir\n\t"
         "	movs r0, #0\n\t"
         "	str r0, [sp]\n\t"
         "	movs r0, #0xff\n\t"
