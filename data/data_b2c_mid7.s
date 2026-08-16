@@ -9,39 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sConditionSearchResultFramePal
-sConditionSearchResultFramePal: @ 0x85F59D0
-	.hword 0x0300, 0x72AC, 0x7FFF, 0x3DCD, 0x0000, 0x51EB, 0x2506, 0x7F78, 0x6672, 0x6693, 0x6318, 0x7FFF
-	.hword 0x0000, 0x0000, 0x0000, 0x0000
-
-	.globl sConditionSearchResultTiles
-sConditionSearchResultTiles: @ 0x85F59F0
-	.incbin "graphics/pokenav_conditions/sConditionSearchResultTiles.bin"
-
-	.globl sConditionSearchResultTilemap
-sConditionSearchResultTilemap: @ 0x85F5AB8
-	.incbin "graphics/pokenav_conditions/sConditionSearchResultTilemap.bin"
-
-	.globl sListBg_Pal
-sListBg_Pal: @ 0x85F5B7C
-	.incbin "graphics/list_ui/sListBg_Pal.bin"
-
-	.globl sConditionSearchResultBgTemplates
-sConditionSearchResultBgTemplates: @ 0x85F5B9C
-	.incbin "baserom_jp.gba", 0x5f5b9c, 0x4
-
-	.globl sSearchResultsBgTemplates
-sSearchResultsBgTemplates: @ 0x85F5BA0
-	.incbin "baserom_jp.gba", 0x5f5ba0, 0x4
-
-	.globl sSearchResultLoopTaskFuncs
-sSearchResultLoopTaskFuncs: @ 0x85F5BA4
-	.incbin "baserom_jp.gba", 0x5f5ba4, 0x1c
-
-	.globl sSearchResultListMenuWindowTemplate
-sSearchResultListMenuWindowTemplate: @ 0x85F5BC0
-	.incbin "baserom_jp.gba", 0x5f5bc0, 0x8
-
 	.globl sMonRibbonListLoopTaskFuncs
 sMonRibbonListLoopTaskFuncs: @ 0x85F5BC8
 	.incbin "baserom_jp.gba", 0x5f5bc8, 0xc

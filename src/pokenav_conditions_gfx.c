@@ -115,3 +115,71 @@ const LoopedTask sConditionSearchLoopedTaskFuncs[] =
     BuildBoxMonSearchResults,
     ConvertConditionsToListRanks
 };
+
+// Condition search result screen.
+const u16 sConditionSearchResultFramePal[] = INCBIN_U16("graphics/pokenav_conditions/sConditionSearchResultFramePal.bin");
+const u32 sConditionSearchResultTiles[] = INCBIN_U32("graphics/pokenav_conditions/sConditionSearchResultTiles.bin");
+const u32 sConditionSearchResultTilemap[] = INCBIN_U32("graphics/pokenav_conditions/sConditionSearchResultTilemap.bin");
+const u16 sListBg_Pal[] = INCBIN_U16("graphics/list_ui/sListBg_Pal.bin");
+
+const struct BgTemplate sConditionSearchResultBgTemplates[] =
+{
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 0x06,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    }, {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 0x07,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
+u32 LoopedTask_MoveSearchListCursorUp(s32);
+u32 LoopedTask_MoveSearchListCursorDown(s32);
+u32 LoopedTask_MoveSearchListPageUp(s32);
+u32 LoopedTask_MoveSearchListPageDown(s32);
+u32 LoopedTask_ExitConditionSearchMenu(s32);
+u32 LoopedTask_SelectSearchResult(s32);
+
+// Indices into sSearchResultLoopTaskFuncs, matching JP conditions_tail.c.
+enum
+{
+    CONDITION_SEARCH_FUNC_NONE,
+    CONDITION_SEARCH_FUNC_MOVE_UP,
+    CONDITION_SEARCH_FUNC_MOVE_DOWN,
+    CONDITION_SEARCH_FUNC_PAGE_UP,
+    CONDITION_SEARCH_FUNC_PAGE_DOWN,
+    CONDITION_SEARCH_FUNC_EXIT,
+    CONDITION_SEARCH_FUNC_SELECT_MON
+};
+
+const LoopedTask sSearchResultLoopTaskFuncs[] =
+{
+    [CONDITION_SEARCH_FUNC_NONE]       = NULL,
+    [CONDITION_SEARCH_FUNC_MOVE_UP]    = LoopedTask_MoveSearchListCursorUp,
+    [CONDITION_SEARCH_FUNC_MOVE_DOWN]  = LoopedTask_MoveSearchListCursorDown,
+    [CONDITION_SEARCH_FUNC_PAGE_UP]    = LoopedTask_MoveSearchListPageUp,
+    [CONDITION_SEARCH_FUNC_PAGE_DOWN]  = LoopedTask_MoveSearchListPageDown,
+    [CONDITION_SEARCH_FUNC_EXIT]       = LoopedTask_ExitConditionSearchMenu,
+    [CONDITION_SEARCH_FUNC_SELECT_MON] = LoopedTask_SelectSearchResult
+};
+
+const struct WindowTemplate sSearchResultListMenuWindowTemplate =
+{
+    .bg = 1,
+    .tilemapLeft = 1,
+    .tilemapTop = 6,
+    .width = 7,
+    .height = 2,
+    .paletteNum = 1,
+    .baseBlock = 20
+};
