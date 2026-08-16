@@ -3,10 +3,14 @@
 #include "main.h"
 #include "task.h"
 #include "constants/map_types.h"
+#include "constants/songs.h"
 
 extern void *sUnusedOverworldCallback;
 
 #define linkDirection(obj) ((u8 *)obj)[offsetof(typeof(*obj), range)] // -> rangeX
+
+extern struct InitialPlayerAvatarState sInitialPlayerAvatarState;
+extern u8 sObjectEventLoadFlag;
 
 __attribute__((naked)) void DoWhiteOut(void)
 {
@@ -1743,19 +1747,10 @@ __attribute__((naked)) void LoadMapFromWarp(bool32 a1)
     );
 }
 
-__attribute__((naked)) void ResetInitialPlayerAvatarState(void)
+void ResetInitialPlayerAvatarState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _08084BDC\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08084BDC: .4byte gUnknown_2031FA0\n\t"
-        ".syntax divided\n\t"
-    );
+    sInitialPlayerAvatarState.direction = DIR_SOUTH;
+    sInitialPlayerAvatarState.transitionFlags = PLAYER_AVATAR_FLAG_ON_FOOT;
 }
 
 __attribute__((naked)) void StoreInitialPlayerAvatarState(void)
@@ -2152,19 +2147,9 @@ __attribute__((naked)) void SetFlashLevel(s32 flashLevel)
 }
 
 
-__attribute__((naked)) u8 GetFlashLevel(void)
+u8 GetFlashLevel(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _08084E88\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x30\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08084E88: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->flashLevel;
 }
 
 __attribute__((naked)) void SetCurrentMapLayout(u16 mapLayoutId)
@@ -2187,30 +2172,14 @@ __attribute__((naked)) void SetCurrentMapLayout(u16 mapLayoutId)
     );
 }
 
-__attribute__((naked)) void SetObjectEventLoadFlag(u8 flag)
+void SetObjectEventLoadFlag(u8 flag)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _08084EB0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08084EB0: .4byte gUnknown_2031F78\n\t"
-        ".syntax divided\n\t"
-    );
+    sObjectEventLoadFlag = flag;
 }
 
-__attribute__((naked)) u8 GetObjectEventLoadFlag(void)
+u8 GetObjectEventLoadFlag(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _08084EBC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08084EBC: .4byte gUnknown_2031F78\n\t"
-        ".syntax divided\n\t"
-    );
+    return sObjectEventLoadFlag;
 }
 
 __attribute__((naked)) bool16 ShouldLegendaryMusicPlayAtLocation(struct WarpData *warp)
@@ -2614,33 +2583,14 @@ __attribute__((naked)) void Overworld_PlaySpecialMapMusic(void)
     );
 }
 
-__attribute__((naked)) void Overworld_SetSavedMusic(u16 songNum)
+void Overworld_SetSavedMusic(u16 songNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _08085164\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	strh r0, [r1, #0x2c]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08085164: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->savedMusic = songNum;
 }
 
-__attribute__((naked)) void Overworld_ClearSavedMusic(void)
+void Overworld_ClearSavedMusic(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _08085174\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x2c]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08085174: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->savedMusic = MUS_DUMMY;
 }
 
 __attribute__((naked)) void TransitionMapMusic(void)
@@ -6985,17 +6935,9 @@ __attribute__((naked)) u32 GetLinkSendQueueLength(void)
     );
 }
 
-__attribute__((naked)) void ZeroLinkPlayerObjectEvent(struct LinkPlayerObjectEvent *a0)
+void ZeroLinkPlayerObjectEvent(struct LinkPlayerObjectEvent *linkPlayerObjEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/overworld.c (ZeroLinkPlayerObjectEvent)\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    memset(linkPlayerObjEvent, 0, sizeof(struct LinkPlayerObjectEvent));
 }
 
 __attribute__((naked)) void ClearLinkPlayerObjectEvents(void)

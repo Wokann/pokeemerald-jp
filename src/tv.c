@@ -15,6 +15,8 @@ enum
 // EWRAM @ 0x02039CF4 / 0x02039CF6 (see sym_ewram_jp.txt)
 extern u16 sFindThatGamerCoinsSpent;
 extern u8 sFindThatGamerWhichGame;
+extern u16 sPokemonAnglerSpecies;
+extern u8 sTVShowState;
 extern void SetTVMetatilesOnMap(int width, int height, u16 metatileId);
 extern void ClearPokeNews(void);
 
@@ -2052,40 +2054,16 @@ __attribute__((naked)) void ContestLiveUpdates_BeforeInterview_1(void)
     );
 }
 
-__attribute__((naked)) void AlertTVThatPlayerPlayedSlotMachine(u16 nCoinsSpent)
+void AlertTVThatPlayerPlayedSlotMachine(u16 nCoinsSpent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/tv.c\n\t"
-        "	ldr r2, _080EE99C\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r2]\n\t"
-        "	ldr r1, _080EE9A0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080EE99C: .4byte sFindThatGamerWhichGame\n\t"
-        "_080EE9A0: .4byte sFindThatGamerCoinsSpent\n\t"
-        ".syntax divided\n\t"
-    );
+    sFindThatGamerWhichGame = SLOT_MACHINE;
+    sFindThatGamerCoinsSpent = nCoinsSpent;
 }
 
-__attribute__((naked)) void AlertTVThatPlayerPlayedRoulette(u16 nCoinsSpent)
+void AlertTVThatPlayerPlayedRoulette(u16 nCoinsSpent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/tv.c\n\t"
-        "	ldr r2, _080EE9B0\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r2]\n\t"
-        "	ldr r1, _080EE9B4\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080EE9B0: .4byte sFindThatGamerWhichGame\n\t"
-        "_080EE9B4: .4byte sFindThatGamerCoinsSpent\n\t"
-        ".syntax divided\n\t"
-    );
+    sFindThatGamerWhichGame = ROULETTE;
+    sFindThatGamerCoinsSpent = nCoinsSpent;
 }
 
 __attribute__((naked)) void sub_080EE9B8(void)
@@ -5763,17 +5741,9 @@ __attribute__((naked)) void PutFishingAdviceShowOnTheAir(void)
     );
 }
 
-__attribute__((naked)) void SetPokemonAnglerSpecies(u16 species)
+void SetPokemonAnglerSpecies(u16 species)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080EE564\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080EE564: .4byte gUnknown_2039CF0\n\t"
-        ".syntax divided\n\t"
-    );
+    sPokemonAnglerSpecies = species;
 }
 
 __attribute__((naked)) void sub_080EE568(void)
@@ -18813,16 +18783,7 @@ __attribute__((naked)) void TVShowDone(void)
     );
 }
 
-__attribute__((naked)) void ResetTVShowState(void)
+void ResetTVShowState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080F5FB8\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080F5FB8: .4byte gUnknown_2039CFC\n\t"
-        ".syntax divided\n\t"
-    );
+    sTVShowState = 0;
 }
