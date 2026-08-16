@@ -4155,62 +4155,22 @@ __attribute__((naked)) bool8 MovementType_WanderAround_Step4(struct ObjectEvent 
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WanderAround_Step5(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderAround_Step5(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl sub_08092CF8\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ObjectEventSetSingleMovement\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventSetSingleMovement(objectEvent, sprite, sub_08092CF8(objectEvent->movementDirection));
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = 6;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_WanderAround_Step6(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderAround_Step6(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808EEF2\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #3\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "_0808EEF2:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 1;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 EventObjectIsTrainerAndCloseToPlayer(struct ObjectEvent *objectEvent)
@@ -4943,62 +4903,22 @@ __attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step4(struct Object
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step5(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderLeftAndRight_Step5(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl sub_08092CF8\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ObjectEventSetSingleMovement\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventSetSingleMovement(objectEvent, sprite, sub_08092CF8(objectEvent->movementDirection));
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = 6;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step6(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderLeftAndRight_Step6(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808F6F2\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #3\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "_0808F6F2:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 1;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void MovementType_FaceDirection(struct Sprite *sprite)
