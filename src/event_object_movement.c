@@ -4929,369 +4929,124 @@ u8 GetLimitedVectorDirection_WestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 }
 
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_WestNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetLimitedVectorDirection_WestNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r5, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r6, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r7, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetVectorDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0808F008\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetLimitedVectorDirection_WestEast\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0808F022\n\t"
-        "	b _0808F020\n\t"
-        "_0808F008:\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0808F022\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetLimitedVectorDirection_SouthNorth\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0808F022\n\t"
-        "_0808F020:\n\t"
-        "	movs r0, #2\n\t"
-        "_0808F022:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
+    if (direction == DIR_SOUTH)
+    {
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
+        if (direction == DIR_EAST)
+            direction = DIR_NORTH;
+    }
+    else if (direction == DIR_EAST)
+    {
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
+        if (direction == DIR_SOUTH)
+            direction = DIR_NORTH;
+    }
+    return direction;
 }
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_EastNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetLimitedVectorDirection_EastNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r5, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r6, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r7, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetVectorDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0808F064\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetLimitedVectorDirection_WestEast\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808F07E\n\t"
-        "	b _0808F07C\n\t"
-        "_0808F064:\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808F07E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetLimitedVectorDirection_SouthNorth\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0808F07E\n\t"
-        "_0808F07C:\n\t"
-        "	movs r0, #2\n\t"
-        "_0808F07E:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
+    if (direction == DIR_SOUTH)
+    {
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
+        if (direction == DIR_WEST)
+            direction = DIR_NORTH;
+    }
+    else if (direction == DIR_WEST)
+    {
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
+        if (direction == DIR_SOUTH)
+            direction = DIR_NORTH;
+    }
+    return direction;
 }
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_WestSouth(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetLimitedVectorDirection_WestSouth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r5, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r6, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r7, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetVectorDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0808F0C0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetLimitedVectorDirection_WestEast\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0808F0DA\n\t"
-        "	b _0808F0D8\n\t"
-        "_0808F0C0:\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0808F0DA\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetLimitedVectorDirection_SouthNorth\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0808F0DA\n\t"
-        "_0808F0D8:\n\t"
-        "	movs r0, #1\n\t"
-        "_0808F0DA:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
+    if (direction == DIR_NORTH)
+    {
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
+        if (direction == DIR_EAST)
+            direction = DIR_SOUTH;
+    }
+    else if (direction == DIR_EAST)
+    {
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
+        if (direction == DIR_NORTH)
+            direction = DIR_SOUTH;
+    }
+    return direction;
 }
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_EastSouth(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetLimitedVectorDirection_EastSouth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r5, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r6, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r7, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetVectorDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0808F11C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetLimitedVectorDirection_WestEast\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808F136\n\t"
-        "	b _0808F134\n\t"
-        "_0808F11C:\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808F136\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl GetLimitedVectorDirection_SouthNorth\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0808F136\n\t"
-        "_0808F134:\n\t"
-        "	movs r0, #1\n\t"
-        "_0808F136:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
+    if (direction == DIR_NORTH)
+    {
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
+        if (direction == DIR_WEST)
+            direction = DIR_SOUTH;
+    }
+    else if (direction == DIR_WEST)
+    {
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
+        if (direction == DIR_NORTH)
+            direction = DIR_SOUTH;
+    }
+    return direction;
 }
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_SouthNorthWest(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetLimitedVectorDirection_SouthNorthWest(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r7, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r6, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r5, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r4, r3, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl GetVectorDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0808F172\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl GetLimitedVectorDirection_SouthNorth\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0808F172:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
+    if (direction == DIR_EAST)
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
+    return direction;
 }
 
-
-__attribute__((naked)) u8 GetLimitedVectorDirection_SouthNorthEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetLimitedVectorDirection_SouthNorthEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r7, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r6, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r5, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r4, r3, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl GetVectorDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0808F1AE\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl GetLimitedVectorDirection_SouthNorth\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0808F1AE:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
+    if (direction == DIR_WEST)
+        direction = GetLimitedVectorDirection_SouthNorth(dx, dy, absdx, absdy);
+    return direction;
 }
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_NorthWestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetLimitedVectorDirection_NorthWestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r7, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r6, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r5, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r4, r3, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl GetVectorDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0808F1EA\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl GetLimitedVectorDirection_WestEast\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0808F1EA:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
+    if (direction == DIR_SOUTH)
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
+    return direction;
 }
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_SouthWestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
+u8 GetLimitedVectorDirection_SouthWestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r7, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r6, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r5, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r4, r3, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl GetVectorDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0808F226\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl GetLimitedVectorDirection_WestEast\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0808F226:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = GetVectorDirection(dx, dy, absdx, absdy);
+    if (direction == DIR_NORTH)
+        direction = GetLimitedVectorDirection_WestEast(dx, dy, absdx, absdy);
+    return direction;
 }
 
 __attribute__((naked)) void TryGetTrainerEncounterDirection(void)
