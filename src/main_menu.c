@@ -54,7 +54,7 @@ extern const u8 gUnknown_85C8CC7[];
 extern const u8 gUnknown_85C8CEB[];
 extern const struct BgTemplate sBirchBgTemplate;
 extern const u32 sBirchSpeechShadowGfx[];
-extern const u32 sBirchSpeechBgMap[];
+extern const u8 sBirchSpeechBgMap[]; // 0x12A bytes (not 4-aligned in JP ROM)
 extern const u16 sBirchSpeechBgPals[][16];
 extern const u16 sBirchSpeechBgGradientPal[];
 extern const struct WindowTemplate sNewGameBirchSpeechTextWindows[];
@@ -901,7 +901,7 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     SetGpuReg(REG_OFFSET_BLDY, 0);
 
     LZ77UnCompVram(sBirchSpeechShadowGfx, (void *)VRAM);
-    LZ77UnCompVram(sBirchSpeechBgMap, (void *)(BG_SCREEN_ADDR(7)));
+    LZ77UnCompVram((const u32 *)sBirchSpeechBgMap, (void *)(BG_SCREEN_ADDR(7)));
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
     ScanlineEffect_Stop();
@@ -1440,7 +1440,7 @@ static void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void)
     DmaFill16(3, 0, PLTT, PLTT_SIZE);
     ResetPaletteFade();
     LZ77UnCompVram(sBirchSpeechShadowGfx, (u8 *)VRAM);
-    LZ77UnCompVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
+    LZ77UnCompVram((const u32 *)sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadPalette(&sBirchSpeechBgGradientPal[1], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
     ResetTasks();
