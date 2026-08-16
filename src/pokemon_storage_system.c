@@ -103,6 +103,13 @@ enum
     CURSOR_AREA_BUTTONS, // Party Pokemon and Close Box
 };
 
+enum
+{
+    MODE_PARTY,
+    MODE_BOX,
+    MODE_MOVE,
+};
+
 struct PokemonStorageSystemData
 {
     u8 state;
@@ -281,6 +288,7 @@ extern void ScrollBackground(void);
 extern void Task_InitPokeStorage(void);
 extern const struct WindowTemplate sPSSWindowTemplates[];
 extern const struct SpritePalette sWaveformSpritePalette;
+extern void SetCursorMonData(const void *data, u8 mode);
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -13121,7 +13129,7 @@ __attribute__((naked)) void sub_080CCBE8(void)
         "	ldr r1, _080CCC64\n\t"
         "	adds r0, r0, r1\n\t"
         "	strb r3, [r0]\n\t"
-        "	bl sub_080CE3BC\n\t"
+        "	bl TryRefreshDisplayMon\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -14042,7 +14050,7 @@ __attribute__((naked)) void sub_080CD2E4(void)
         "	movs r1, #0\n\t"
         "	bl StartSpriteAnim\n\t"
         "_080CD354:\n\t"
-        "	bl sub_080CE3BC\n\t"
+        "	bl TryRefreshDisplayMon\n\t"
         "	ldr r0, _080CD374\n\t"
         "	ldrb r0, [r0]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -14754,7 +14762,7 @@ __attribute__((naked)) void sub_080CD888(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_080CE3BC\n\t"
+        "	bl TryRefreshDisplayMon\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -15051,7 +15059,7 @@ __attribute__((naked)) void sub_080CDAA8(void)
         "	ldr r0, [r0]\n\t"
         "	movs r1, #0\n\t"
         "	bl StartSpriteAnim\n\t"
-        "	bl sub_080CE3BC\n\t"
+        "	bl TryRefreshDisplayMon\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -15173,7 +15181,7 @@ __attribute__((naked)) void ReleaseMon(void)
         "	adds r0, r2, #0\n\t"
         "	bl PurgeMonOrBoxMon\n\t"
         "_080CDB92:\n\t"
-        "	bl sub_080CE3BC\n\t"
+        "	bl TryRefreshDisplayMon\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -16219,85 +16227,33 @@ bool8 IsCursorInBox(void)
     return sCursorArea == CURSOR_AREA_IN_BOX;
 }
 
-__attribute__((naked)) void sub_080CE3BC(void)
+void TryRefreshDisplayMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080CE3F0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r3, _080CE3F4\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE3CE\n\t"
-        "	movs r2, #1\n\t"
-        "_080CE3CE:\n\t"
-        "	ldr r4, _080CE3F8\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE44C\n\t"
-        "	ldr r0, _080CE3FC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CE406\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CE400\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE436\n\t"
-        "	b _080CE44C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE3F0: .4byte gUnknown_20399A8\n\t"
-        "_080CE3F4: .4byte gUnknown_2039A1A\n\t"
-        "_080CE3F8: .4byte 0x00000CEA\n\t"
-        "_080CE3FC: .4byte gUnknown_2039A18\n\t"
-        "_080CE400:\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _080CE44C\n\t"
-        "	b _080CE42C\n\t"
-        "_080CE406:\n\t"
-        "	ldr r1, _080CE424\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bgt _080CE42C\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080CE428\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCursorMonData\n\t"
-        "	b _080CE44C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE424: .4byte gUnknown_2039A19\n\t"
-        "_080CE428: .4byte gPlayerParty\n\t"
-        "_080CE42C:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl SetCursorMonData\n\t"
-        "	b _080CE44C\n\t"
-        "_080CE436:\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080CE454\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl GetBoxedMonPtr\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetCursorMonData\n\t"
-        "_080CE44C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE454: .4byte gUnknown_2039A19\n\t"
-        ".syntax divided\n\t"
-    );
+    // If a Pokemon is currently being moved, don't start
+    // mosaic or update display. Keep displaying the
+    // currently held Pokemon.
+    sStorage->setMosaic = (sIsMonBeingMoved == FALSE);
+    if (!sIsMonBeingMoved)
+    {
+        // Update display Pokemon
+        switch (sCursorArea)
+        {
+        case CURSOR_AREA_IN_PARTY:
+            if (sCursorPosition < PARTY_SIZE)
+            {
+                SetCursorMonData(&gPlayerParty[sCursorPosition], MODE_PARTY);
+                break;
+            }
+            // fallthrough
+        case CURSOR_AREA_BUTTONS:
+        case CURSOR_AREA_BOX_TITLE:
+            SetCursorMonData(NULL, MODE_MOVE);
+            break;
+        case CURSOR_AREA_IN_BOX:
+            SetCursorMonData(GetBoxedMonPtr(StorageGetCurrentBox(), sCursorPosition), MODE_BOX);
+            break;
+        }
+    }
 }
 
 __attribute__((naked)) void sub_080CE458(void)
@@ -16317,7 +16273,7 @@ __attribute__((naked)) void sub_080CE458(void)
         "_080CE46C: .4byte gUnknown_2039A1A\n\t"
         "_080CE470: .4byte gUnknown_20399B4\n\t"
         "_080CE474:\n\t"
-        "	bl sub_080CE3BC\n\t"
+        "	bl TryRefreshDisplayMon\n\t"
         "_080CE478:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -16325,7 +16281,7 @@ __attribute__((naked)) void sub_080CE458(void)
     );
 }
 
-__attribute__((naked)) void SetCursorMonData(void)
+__attribute__((naked)) void SetCursorMonData(const void *data, u8 mode)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
