@@ -3506,130 +3506,75 @@ static void StopReelButton_Unpress(struct Task *task, u8 taskId)
     DestroyTask(taskId);
 }
 
-__attribute__((naked)) void LightenMatchLine(u8 matchLineId)
+// JP packs the 5 match-line colors into a single array; the palette table
+// entries point 2 bytes deeper (a one-color palette), ending with a 0x0000
+// terminator. The color values are JP-specific (differ from the US ROM).
+__attribute__((section(".rodata.sDarkMatchLinePaletteColors")))
+static const u16 sDarkMatchLinePaletteColors[] =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0812CE5C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r1, _0812CE60\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CE5C: .4byte gUnknown_858550C\n\t"
-        "_0812CE60: .4byte sMatchLinePalOffsets\n\t"
-        ".syntax divided\n\t"
-    );
+    0x7A6D, 0x0339, 0x0339, 0x25BE, 0x25BE, 0x0000,
+};
+
+__attribute__((section(".rodata.sLitMatchLinePaletteColors")))
+static const u16 sLitMatchLinePaletteColors[] =
+{
+    0x7F91, 0x43BF, 0x43BF, 0x4ABF, 0x4ABF, 0x0000,
+};
+
+__attribute__((section(".rodata.sLitMatchLinePalTable")))
+static const u16 *const sLitMatchLinePalTable[NUM_MATCH_LINES] =
+{
+    [MATCH_MIDDLE_ROW] = &sLitMatchLinePaletteColors[0],
+    [MATCH_TOP_ROW]    = &sLitMatchLinePaletteColors[1],
+    [MATCH_BOTTOM_ROW] = &sLitMatchLinePaletteColors[2],
+    [MATCH_NWSE_DIAG]  = &sLitMatchLinePaletteColors[3],
+    [MATCH_NESW_DIAG]  = &sLitMatchLinePaletteColors[4],
+};
+
+__attribute__((section(".rodata.sDarkMatchLinePalTable")))
+static const u16 *const sDarkMatchLinePalTable[NUM_MATCH_LINES] =
+{
+    [MATCH_MIDDLE_ROW] = &sDarkMatchLinePaletteColors[0],
+    [MATCH_TOP_ROW]    = &sDarkMatchLinePaletteColors[1],
+    [MATCH_BOTTOM_ROW] = &sDarkMatchLinePaletteColors[2],
+    [MATCH_NWSE_DIAG]  = &sDarkMatchLinePaletteColors[3],
+    [MATCH_NESW_DIAG]  = &sDarkMatchLinePaletteColors[4],
+};
+
+__attribute__((section(".rodata.sBetToMatchLineIds")))
+static const u8 sBetToMatchLineIds[MAX_BET][2] =
+{
+    {MATCH_MIDDLE_ROW, MATCH_MIDDLE_ROW}, // Bet 1
+    {MATCH_TOP_ROW,    MATCH_BOTTOM_ROW}, // Bet 2
+    {MATCH_NWSE_DIAG,  MATCH_NESW_DIAG},  // Bet 3
+};
+
+__attribute__((section(".rodata.sMatchLinesPerBet")))
+static const u8 sMatchLinesPerBet[MAX_BET] = { 1, 2, 2 };
+
+void LightenMatchLine(u8 matchLineId)
+{
+    LoadPalette(sLitMatchLinePalTable[matchLineId], sMatchLinePalOffsets[matchLineId], PLTT_SIZEOF(1));
 }
 
-__attribute__((naked)) void DarkenMatchLine(u8 matchLineId)
+void DarkenMatchLine(u8 matchLineId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0812CE84\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r1, _0812CE88\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CE84: .4byte gUnknown_8585520\n\t"
-        "_0812CE88: .4byte sMatchLinePalOffsets\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadPalette(sDarkMatchLinePalTable[matchLineId], sMatchLinePalOffsets[matchLineId], PLTT_SIZEOF(1));
 }
 
-__attribute__((naked)) void LightenBetTiles(u8 betLevel)
+// light up the match line for each bet by the player
+void LightenBetTiles(u8 betVal)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _0812CEC0\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	bhs _0812CEB8\n\t"
-        "	ldr r7, _0812CEC4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r5, r1, #1\n\t"
-        "_0812CEA4:\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl LoadLitTile\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r6\n\t"
-        "	blo _0812CEA4\n\t"
-        "_0812CEB8:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CEC0: .4byte gUnknown_858553F\n\t"
-        "_0812CEC4: .4byte gUnknown_8585539\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < sMatchLinesPerBet[betVal]; i++)
+        LightenMatchLine(sBetToMatchLineIds[betVal][i]);
 }
 
-__attribute__((naked)) void DarkenBetTiles(u8 betLevel)
+void DarkenBetTiles(u8 betVal)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _0812CEFC\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	bhs _0812CEF4\n\t"
-        "	ldr r7, _0812CF00\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r5, r1, #1\n\t"
-        "_0812CEE0:\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl sub_0812CE64\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r6\n\t"
-        "	blo _0812CEE0\n\t"
-        "_0812CEF4:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CEFC: .4byte gUnknown_858553F\n\t"
-        "_0812CF00: .4byte gUnknown_8585539\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < sMatchLinesPerBet[betVal]; i++)
+        DarkenMatchLine(sBetToMatchLineIds[betVal][i]);
 }
 
 #define sMatchLineId     data[0]

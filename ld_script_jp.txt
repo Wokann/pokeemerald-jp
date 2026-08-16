@@ -9360,8 +9360,15 @@ SECTIONS {
         src/slot_machine.o(.rodata.sSlotMatchFlags);
         src/slot_machine.o(.rodata.sSlotPayouts);
         data/data_b2d_mid62.o(.rodata.85847BE);
+        src/slot_machine.o(.rodata.sDarkMatchLinePaletteColors);
+        data/data_b2d_mid62.o(.rodata.85854EC);
+        src/slot_machine.o(.rodata.sLitMatchLinePaletteColors);
+        src/slot_machine.o(.rodata.sLitMatchLinePalTable);
+        src/slot_machine.o(.rodata.sDarkMatchLinePalTable);
         src/slot_machine.o(.rodata.sMatchLinePalOffsets);
-        data/data_b2d_mid62.o(.rodata.8585539);
+        src/slot_machine.o(.rodata.sBetToMatchLineIds);
+        src/slot_machine.o(.rodata.sMatchLinesPerBet);
+        data/data_b2d_mid62.o(.rodata.8585542);
         src/data/text/region_texts38.o(.rodata);
         data/data_b2d_mid38.o(.rodata);
         src/data/text/region_texts33.o(.rodata);
