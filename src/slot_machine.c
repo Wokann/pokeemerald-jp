@@ -1102,7 +1102,13 @@ static bool8 DecideStop_Bias_Reel3_Bet3(u8 biasSymbol);
 static void DecideStop_NoBias_Reel2_Bet1(void);
 static void DecideStop_NoBias_Reel2_Bet2(void);
 static void DecideStop_NoBias_Reel2_Bet3(void);
+static void DecideStop_NoBias_Reel3_Bet1(void);
+static void DecideStop_NoBias_Reel3_Bet2(void);
+static void DecideStop_NoBias_Reel3_Bet3(void);
 bool8 IfSymbol7_SwitchColor(u8 *symbol);
+static bool8 MismatchedSyms_77(u8 sym1, u8 sym2);
+static bool8 MismatchedSyms_777(u8 sym1, u8 sym2, u8 sym3);
+static bool8 NeitherMatchNor7Mismatch(u8 sym1, u8 sym2, u8 sym3);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -3162,694 +3168,282 @@ __attribute__((naked)) void DecideStop_NoBias_Reel2_Bet3(void)
     );
 }
 
-__attribute__((naked)) bool8 AreTagsMixed77(u8 a, u8 b)
+
+__attribute__((section(".rodata.sDecideStop_NoBias_Reel3_Bets")))
+static void (*const sDecideStop_NoBias_Reel3_Bets[MAX_BET])(void) =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C878\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _0812C880\n\t"
-        "_0812C878:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812C884\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _0812C884\n\t"
-        "_0812C880:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C886\n\t"
-        "_0812C884:\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C886:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    DecideStop_NoBias_Reel3_Bet1,
+    DecideStop_NoBias_Reel3_Bet2,
+    DecideStop_NoBias_Reel3_Bet3,
+};
+
+// Returns true if the reel 1 and reel 2 symbols are opposite-color 7's.
+//
+// Note that if true, this does not constitue a MATCH_MIXED_7, as the first two
+// reels are not the same color.
+static bool8 MismatchedSyms_77(u8 sym1, u8 sym2)
+{
+    if ((sym1 == SYMBOL_7_RED && sym2 == SYMBOL_7_BLUE) || (sym1 == SYMBOL_7_BLUE && sym2 == SYMBOL_7_RED))
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) bool8 MismatchedSyms_777(u8 a, u8 b, u8 c)
+// Returns true if the reel 1, reel 2 and reel 3 symbolss form a 7 mismatch,
+// i.e. {7R, 7B, 7R} or {7B, 7R, 7B}.
+static bool8 MismatchedSyms_777(u8 sym1, u8 sym2, u8 sym3)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C8A6\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _0812C8A6\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0812C8B2\n\t"
-        "_0812C8A6:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812C8B6\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812C8B6\n\t"
-        "	cmp r2, #1\n\t"
-        "	bne _0812C8B6\n\t"
-        "_0812C8B2:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C8B8\n\t"
-        "_0812C8B6:\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C8B8:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((sym1 == SYMBOL_7_RED && sym2 == SYMBOL_7_BLUE && sym3 == SYMBOL_7_RED) ||
+        (sym1 == SYMBOL_7_BLUE && sym2 == SYMBOL_7_RED && sym3 == SYMBOL_7_BLUE))
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) bool8 NeitherMatchNor7Mismatch(u8 a, u8 b, u8 c)
+// Returns false if either:
+//  - The symbols form a match (including MATCH_MIXED_7)
+//  - Or, the symbols form a 7 mismatch (i.e., {7R, 7B, 7R} or {7B, 7R, 7B})
+//
+// Note, this does not account for cherry matches.
+static bool8 NeitherMatchNor7Mismatch(u8 sym1, u8 sym2, u8 sym3)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C8D6\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _0812C8D6\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0812C902\n\t"
-        "_0812C8D6:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812C8E2\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812C8E2\n\t"
-        "	cmp r2, #1\n\t"
-        "	beq _0812C902\n\t"
-        "_0812C8E2:\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C8EE\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812C8EE\n\t"
-        "	cmp r2, #1\n\t"
-        "	beq _0812C902\n\t"
-        "_0812C8EE:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812C8FA\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _0812C8FA\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0812C902\n\t"
-        "_0812C8FA:\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0812C906\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _0812C906\n\t"
-        "_0812C902:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812C908\n\t"
-        "_0812C906:\n\t"
-        "	movs r0, #1\n\t"
-        "_0812C908:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((sym1 == SYMBOL_7_RED && sym2 == SYMBOL_7_BLUE && sym3 == SYMBOL_7_RED)
+        || (sym1 == SYMBOL_7_BLUE && sym2 == SYMBOL_7_RED && sym3 == SYMBOL_7_BLUE)
+        || (sym1 == SYMBOL_7_RED && sym2 == SYMBOL_7_RED && sym3 == SYMBOL_7_BLUE)
+        || (sym1 == SYMBOL_7_BLUE && sym2 == SYMBOL_7_BLUE && sym3 == SYMBOL_7_RED)
+        || (sym1 == sym2 && sym1 == sym3))
+    {
+        return FALSE;
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) void DecideStop_NoBias_Reel3(void)
+// Spin until there's no match, or try to taunt the player with a 7 mismatch if
+// they failed the straight 7 bias.
+void DecideStop_NoBias_Reel3(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0812C928\n\t"
-        "	ldr r0, _0812C92C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C928: .4byte gUnknown_85844BC\n\t"
-        "_0812C92C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    sDecideStop_NoBias_Reel3_Bets[sSlotMachine->bet - 1]();
 }
 
-__attribute__((naked)) void DecideStop_NoBias_Reel3_Bet1(u8 taskId)
+// Spin until there is no match in reel 3. Additionally, if the player failed a
+// straight 7 bias, try to taunt them with a 7 mismatch.
+static void DecideStop_NoBias_Reel3_Bet1(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r7, _0812C96C\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r4, #2\n\t"
-        "	subs r1, r4, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r0, [r0, #0x30]\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r5, r1\n\t"
-        "	bne _0812C9A4\n\t"
-        "	movs r4, #2\n\t"
-        "	b _0812C97A\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C96C: .4byte sSlotMachine\n\t"
-        "_0812C970:\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "_0812C97A:\n\t"
-        "	lsls r1, r6, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	subs r1, r4, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _0812C970\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0812C99A\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812C970\n\t"
-        "_0812C99A:\n\t"
-        "	cmp r5, #1\n\t"
-        "	bne _0812CA06\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C970\n\t"
-        "	b _0812CA06\n\t"
-        "_0812C9A4:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl AreTagsMixed77\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CA06\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C9E2\n\t"
-        "	movs r7, #2\n\t"
-        "_0812C9BE:\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	subs r1, r7, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _0812CA06\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812C9BE\n\t"
-        "_0812C9E2:\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r7, #2\n\t"
-        "	b _0812C9EE\n\t"
-        "_0812C9E8:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "_0812C9EE:\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	subs r1, r7, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _0812C9E8\n\t"
-        "_0812CA06:\n\t"
-        "	ldr r0, _0812CA14\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strh r6, [r0, #0x32]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CA14: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i = 0;
+    u8 sym1 = GetSymbol(LEFT_REEL, 2 - sSlotMachine->reelExtraTurns[0]);
+    u8 sym2 = GetSymbol(MIDDLE_REEL, 2 - sSlotMachine->reelExtraTurns[1]);
+
+    // If first two symbols match, spin until you get a non-matching symbol
+    if (sym1 == sym2)
+    {
+        while (TRUE)
+        {
+            u8 sym3;
+            if (!((sym1 == (sym3 = GetSymbol(RIGHT_REEL, 2 - i)))
+                  || (sym1 == SYMBOL_7_RED && sym3 == SYMBOL_7_BLUE)
+                  || (sym1 == SYMBOL_7_BLUE && sym3 == SYMBOL_7_RED)))
+                break;
+            i++;
+        }
+    }
+    // First two symbols are opposite-color 7's
+    else if (MismatchedSyms_77(sym1, sym2))
+    {
+        // If biased toward straight 7's, try to complete the 7 mismatch in 4
+        // turns
+        if (sSlotMachine->machineBias & BIAS_STRAIGHT_7)
+        {
+            for (i = 0; i <= MAX_EXTRA_TURNS; i++)
+            {
+                if (sym1 == GetSymbol(RIGHT_REEL, 2 - i))
+                {
+                    sSlotMachine->reelExtraTurns[2] = i;
+                    return;
+                }
+            }
+        }
+
+        // Otherwise, just spin until you get a non-matching symbol
+        i = 0;
+        while (TRUE)
+        {
+            if (sym1 != GetSymbol(RIGHT_REEL, 2 - i))
+                break;
+            i++;
+        }
+    }
+    sSlotMachine->reelExtraTurns[2] = i;
 }
 
-__attribute__((naked)) void DecideStop_NoBias_Reel3_Bet2(u8 taskId)
+// Try to spin until there is no match in reel 3. Additionally, if the player
+// failed a straight 7 bias, try to taunt them with a 7 mismatch.
+//
+// There are up to two stages:
+//
+// 1. Advance the reel as if 2 coins were bet: to mildly oversimplify, spin
+//    until there's no matches straight across in any rows.
+//
+// 2. [Optional] If you've lined up two opposite-color 7's in the same row and
+//    the machine is biased toward straight 7's, try to line up a 7 mismatch in
+//    that row within 4 turns.
+static void DecideStop_NoBias_Reel3_Bet2(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r4, _0812CA84\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	movs r5, #0x36\n\t"
-        "	ldrsh r1, [r2, r5]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0812CAB4\n\t"
-        "	ldrh r3, [r2, #0x34]\n\t"
-        "	movs r5, #0x34\n\t"
-        "	ldrsh r0, [r2, r5]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0812CAB4\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CAB4\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	subs r1, r3, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrh r1, [r0, #0x36]\n\t"
-        "	ldrh r0, [r0, #0x30]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl AreTagsMixed77\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CAB4\n\t"
-        "	movs r5, #0\n\t"
-        "	b _0812CA8E\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CA84: .4byte sSlotMachine\n\t"
-        "_0812CA88:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "_0812CA8E:\n\t"
-        "	lsls r6, r5, #0x10\n\t"
-        "	asrs r5, r6, #0x10\n\t"
-        "	cmp r5, #4\n\t"
-        "	bgt _0812CAB4\n\t"
-        "	ldr r0, _0812CB48\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r0, #0x36]\n\t"
-        "	subs r1, r1, r5\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r7, r4\n\t"
-        "	bne _0812CA88\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	str r6, [sp]\n\t"
-        "_0812CAB4:\n\t"
-        "	ldr r0, _0812CB48\n\t"
-        "	mov sb, r0\n\t"
-        "_0812CAB8:\n\t"
-        "	movs r5, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	mov sl, r2\n\t"
-        "_0812CAC4:\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r4, r5, #0x10\n\t"
-        "	subs r1, r4, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrh r1, [r0, #0x30]\n\t"
-        "	subs r1, r4, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	mov r1, sl\n\t"
-        "	asrs r0, r1, #0x10\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl NeitherMatchNor7Mismatch\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812CB4C\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl MismatchedSyms_777\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CB38\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812CB4C\n\t"
-        "_0812CB38:\n\t"
-        "	mov r5, r8\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	b _0812CB5A\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CB48: .4byte sSlotMachine\n\t"
-        "_0812CB4C:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _0812CAC4\n\t"
-        "_0812CB5A:\n\t"
-        "	mov r5, r8\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _0812CB70\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	str r0, [sp]\n\t"
-        "	b _0812CAB8\n\t"
-        "_0812CB70:\n\t"
-        "	ldr r0, _0812CB8C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov r5, sp\n\t"
-        "	ldrh r5, [r5]\n\t"
-        "	strh r5, [r0, #0x32]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CB8C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 extraTurns = 0;
+    s16 i;
+    u8 sym1;
+    u8 sym2;
+    u8 sym3;
+
+    // Effectively, if you lined up two 7's in the same row
+    if (sSlotMachine->winnerRows[1] != 0 &&
+        sSlotMachine->winnerRows[0] == sSlotMachine->winnerRows[1] &&
+        sSlotMachine->machineBias & BIAS_STRAIGHT_7)
+    {
+        sym1 = GetSymbol(LEFT_REEL, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        sym2 = GetSymbol(MIDDLE_REEL, sSlotMachine->winnerRows[1] - sSlotMachine->reelExtraTurns[1]);
+
+        // If the first two 7's are opposite colors, see if you can line up a 7
+        // mismatch in the same row. If so, advance initially to that position.
+        // More turns may be added further below.
+        if (MismatchedSyms_77(sym1, sym2))
+        {
+            // Iterate over the next 4 turns
+            for (i = 0; i <= MAX_EXTRA_TURNS; i++)
+            {
+                sym3 = GetSymbol(RIGHT_REEL, sSlotMachine->winnerRows[1] - i);
+                if (sym1 == sym3)
+                {
+                    extraTurns = i;
+                    break;
+                }
+            }
+        }
+    }
+
+    while (TRUE)
+    {
+        s16 numMatches;
+        // Iterate over the rows of the screen after `extraTurns` turns
+        for (i = 1, numMatches = 0; i <= 3; i++)
+        {
+            sym1 = GetSymbol(LEFT_REEL, i - sSlotMachine->reelExtraTurns[0]);
+            sym2 = GetSymbol(MIDDLE_REEL, i - sSlotMachine->reelExtraTurns[1]);
+            sym3 = GetSymbol(RIGHT_REEL, i - extraTurns);
+
+            // This boils down to:
+            //   If there's a match on screen, keep spinning. Otherwise, if
+            //   there's a 7 mismatch on screen, keep spinning if the machine
+            //   isn't biased toward straight 7's.
+            if (!NeitherMatchNor7Mismatch(sym1, sym2, sym3) &&
+                !(MismatchedSyms_777(sym1, sym2, sym3) && (sSlotMachine->machineBias & BIAS_STRAIGHT_7)))
+            {
+                numMatches++;
+                break;
+            }
+        }
+
+        // If no matches were found, stop here. Otherwise, add an extra spin and
+        // check again.
+        if (numMatches == 0)
+            break;
+        extraTurns++;
+    }
+    sSlotMachine->reelExtraTurns[2] = extraTurns;
 }
 
-__attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
+// Try to spin until there is no match in reel 3. Additionally, if the player
+// failed a straight 7 bias, try to taunt them with a 7 mismatch.
+//
+// There are up to four stages:
+//
+// 1. Advance the reel as if 2 coins were bet: to mildly oversimplify, spin
+//    until there's no matches straight across in any rows.
+//
+// 2. [Optional] If you've lined up two opposite-color 7's diagonally and the
+//    machine is biased toward straight 7's:
+//      Check if a 7 with the same color as reel 1 appears in the final diagonal
+//      position within 4 turns. If so, advance to that position.
+//
+// 3. Check NWSE diagonal. Keep advancing the reel a turn at a time as long as:
+//     - There is a match in the diagonal
+//     - Or, there is a 7 mismatch in the diagonal and the machine isn't
+//       biased toward straight 7's
+//
+// 4. Check NESW diagonal. Keep advancing the reel a turn at a time as long as:
+//     - There is a match in the diagonal
+//     - Or, there is a 7 mismatch in the diagonal and the machine isn't
+//       biased toward straight 7's
+//
+// Note that stages 3 and 4 are not limited to 4 turns.
+//
+// Also, note that it actually is possible to win a match here. After stage 1,
+// the game never again checks whether it will be matching any rows straight
+// across. So any extra turns added in stages 2-4 could result in a match
+// occurring straight across.
+static void DecideStop_NoBias_Reel3_Bet3(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	bl DecideStop_NoBias_Reel3_Bet2\n\t"
-        "	ldr r4, _0812CC34\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0812CC44\n\t"
-        "	ldrh r3, [r2, #0x34]\n\t"
-        "	movs r5, #0x34\n\t"
-        "	ldrsh r0, [r2, r5]\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0812CC44\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CC44\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	subs r1, r3, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrh r1, [r0, #0x36]\n\t"
-        "	ldrh r0, [r0, #0x30]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl AreTagsMixed77\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CC44\n\t"
-        "	movs r1, #1\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812CBFE\n\t"
-        "	movs r1, #3\n\t"
-        "_0812CBFE:\n\t"
-        "	movs r3, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r7, r4, #0\n\t"
-        "_0812CC06:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r2, [r0, #0x32]\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r5, r0, #0x10\n\t"
-        "	adds r2, r5, r2\n\t"
-        "	mov r0, r8\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r6, r4\n\t"
-        "	bne _0812CC38\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldrh r0, [r1, #0x32]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	b _0812CC44\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CC34: .4byte sSlotMachine\n\t"
-        "_0812CC38:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812CC06\n\t"
-        "_0812CC44:\n\t"
-        "	ldr r7, _0812CCC0\n\t"
-        "_0812CC46:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r0, [r0, #0x2e]\n\t"
-        "	movs r1, #1\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r0, [r0, #0x30]\n\t"
-        "	movs r1, #2\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r0, [r0, #0x32]\n\t"
-        "	movs r1, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl NeitherMatchNor7Mismatch\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812CCC4\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl MismatchedSyms_777\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CCB4\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812CCC4\n\t"
-        "_0812CCB4:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldrh r0, [r1, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	b _0812CC46\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CCC0: .4byte sSlotMachine\n\t"
-        "_0812CCC4:\n\t"
-        "	ldr r7, _0812CD40\n\t"
-        "_0812CCC6:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r0, [r0, #0x2e]\n\t"
-        "	movs r1, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r0, [r0, #0x30]\n\t"
-        "	movs r1, #2\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrh r0, [r0, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl NeitherMatchNor7Mismatch\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812CD44\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl MismatchedSyms_777\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812CD34\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812CD44\n\t"
-        "_0812CD34:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldrh r0, [r1, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	b _0812CCC6\n\t"
-        "	.align 2, 0\n\t"
-        "_0812CD40: .4byte sSlotMachine\n\t"
-        "_0812CD44:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 sym1;
+    u8 sym2;
+    u8 sym3;
+    s16 row;
+    s16 i;
+
+    // Spin until there's no matches in any row straight across, potentially
+    // skewing toward a 7 mismatch. Consider this the new starting position for
+    // this function.
+    DecideStop_NoBias_Reel3_Bet2();
+
+    // Essentially, if you lined up two 7's diagonally
+    if (sSlotMachine->winnerRows[1] != 0 &&
+        sSlotMachine->winnerRows[0] != sSlotMachine->winnerRows[1] &&
+        sSlotMachine->machineBias & BIAS_STRAIGHT_7)
+    {
+        sym1 = GetSymbol(LEFT_REEL, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        sym2 = GetSymbol(MIDDLE_REEL, sSlotMachine->winnerRows[1] - sSlotMachine->reelExtraTurns[1]);
+
+        // If the first two 7's are opposite colors, try advancing up to 4
+        // additional turns to line up a diagonal 7 mismatch. More turns may be
+        // added further below.
+        if (MismatchedSyms_77(sym1, sym2))
+        {
+            row = 1;
+            if (sSlotMachine->winnerRows[0] == 1)
+                row = 3;
+            for (i = 0; i <= MAX_EXTRA_TURNS; i++)
+            {
+                sym3 = GetSymbol(RIGHT_REEL, row - (sSlotMachine->reelExtraTurns[2] + i));
+                if (sym1 == sym3)
+                {
+                    sSlotMachine->reelExtraTurns[2] += i;
+                    break;
+                }
+            }
+        }
+    }
+
+    while (TRUE)
+    {
+        // Check NWSE diagonal
+        sym1 = GetSymbol(LEFT_REEL, 1 - sSlotMachine->reelExtraTurns[0]);
+        sym2 = GetSymbol(MIDDLE_REEL, 2 - sSlotMachine->reelExtraTurns[1]);
+        sym3 = GetSymbol(RIGHT_REEL, 3 - sSlotMachine->reelExtraTurns[2]);
+        if (NeitherMatchNor7Mismatch(sym1, sym2, sym3)
+            || (MismatchedSyms_777(sym1, sym2, sym3) && sSlotMachine->machineBias & BIAS_STRAIGHT_7))
+            break;
+        sSlotMachine->reelExtraTurns[2]++;
+    }
+
+    while (TRUE)
+    {
+        // Check NESW diagonal
+        sym1 = GetSymbol(LEFT_REEL, 3 - sSlotMachine->reelExtraTurns[0]);
+        sym2 = GetSymbol(MIDDLE_REEL, 2 - sSlotMachine->reelExtraTurns[1]);
+        sym3 = GetSymbol(RIGHT_REEL, 1 - sSlotMachine->reelExtraTurns[2]);
+        if (NeitherMatchNor7Mismatch(sym1, sym2, sym3)
+            || (MismatchedSyms_777(sym1, sym2, sym3) && sSlotMachine->machineBias & BIAS_STRAIGHT_7))
+            break;
+        sSlotMachine->reelExtraTurns[2]++;
+    }
 }
 
 __attribute__((naked)) void PressStopReelButton(u8 reelIndex)

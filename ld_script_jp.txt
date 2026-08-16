@@ -7464,7 +7464,7 @@ SECTIONS {
         src/slot_machine.o(.text.DecideStop_NoBias_Reel2_Bet1);
         src/slot_machine.o(.text.DecideStop_NoBias_Reel2_Bet2);
         src/slot_machine.o(.text.DecideStop_NoBias_Reel2_Bet3);
-        src/slot_machine.o(.text.AreTagsMixed77);
+        src/slot_machine.o(.text.MismatchedSyms_77);
         src/slot_machine.o(.text.MismatchedSyms_777);
         src/slot_machine.o(.text.NeitherMatchNor7Mismatch);
         src/slot_machine.o(.text.DecideStop_NoBias_Reel3);
@@ -9345,7 +9345,8 @@ SECTIONS {
         src/slot_machine.o(.rodata.sDecideStop_Bias_Reel2_Bets);
         src/slot_machine.o(.rodata.sDecideStop_Bias_Reel3_Bets);
         src/slot_machine.o(.rodata.sDecideStop_NoBias_Reel2_Bets);
-        data/data_b2d_mid61.o(.rodata.85844BC);
+        src/slot_machine.o(.rodata.sDecideStop_NoBias_Reel3_Bets);
+        data/data_b2d_mid61.o(.rodata.85844C8);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/slot_machine.o(.rodata.sReelSymbols);
