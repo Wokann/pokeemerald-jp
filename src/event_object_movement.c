@@ -17185,16 +17185,10 @@ __attribute__((naked)) bool8 MovementAction_Jump2Right_Step1(struct ObjectEvent 
     );
 }
 
-__attribute__((naked)) void sub_08093D00(struct Sprite *sprite, u16 value)
+void InitMovementDelay(struct Sprite *sprite, u16 delay)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r2, #1\n\t"
-        "	strh r2, [r0, #0x32]\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->sActionFuncId = 1;
+    sprite->data[3] = delay;
 }
 
 __attribute__((naked)) bool8 MovementAction_Delay_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -17231,7 +17225,7 @@ __attribute__((naked)) bool8 MovementAction_Delay1_Step0(struct ObjectEvent *obj
         "	adds r4, r1, #0\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #1\n\t"
-        "	bl sub_08093D00\n\t"
+        "	bl InitMovementDelay\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	bl MovementAction_Delay_Step1\n\t"
@@ -17253,7 +17247,7 @@ __attribute__((naked)) bool8 MovementAction_Delay2_Step0(struct ObjectEvent *obj
         "	adds r4, r1, #0\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #2\n\t"
-        "	bl sub_08093D00\n\t"
+        "	bl InitMovementDelay\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	bl MovementAction_Delay_Step1\n\t"
@@ -17275,7 +17269,7 @@ __attribute__((naked)) bool8 MovementAction_Delay4_Step0(struct ObjectEvent *obj
         "	adds r4, r1, #0\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #4\n\t"
-        "	bl sub_08093D00\n\t"
+        "	bl InitMovementDelay\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	bl MovementAction_Delay_Step1\n\t"
@@ -17297,7 +17291,7 @@ __attribute__((naked)) bool8 MovementAction_Delay8_Step0(struct ObjectEvent *obj
         "	adds r4, r1, #0\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #8\n\t"
-        "	bl sub_08093D00\n\t"
+        "	bl InitMovementDelay\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	bl MovementAction_Delay_Step1\n\t"
@@ -17319,7 +17313,7 @@ __attribute__((naked)) bool8 MovementAction_Delay16_Step0(struct ObjectEvent *ob
         "	adds r4, r1, #0\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #0x10\n\t"
-        "	bl sub_08093D00\n\t"
+        "	bl InitMovementDelay\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	bl MovementAction_Delay_Step1\n\t"
