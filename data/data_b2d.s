@@ -696,7 +696,7 @@ gUnknown_82ED13C: @ 0x82ED13C
 
 	.globl gBattleMoves
 gBattleMoves: @ 0x82ED220
-	.incbin "baserom_jp.gba", 0x2ed220, 0x4
+	.byte 0x00, 0x00, 0x00, 0x00
 
 	.globl gUnknown_82ED224
 gUnknown_82ED224: @ 0x82ED224
@@ -833,7 +833,7 @@ gExperienceTables: @ 0x82F00B4
 
 	.globl gSpeciesInfo
 gSpeciesInfo: @ 0x82F0D54
-	.incbin "baserom_jp.gba", 0x2f0d54, 0xc
+	.4byte 0, 0, 0
 
 	.globl gUnknown_82F0D60
 gUnknown_82F0D60: @ 0x82F0D60

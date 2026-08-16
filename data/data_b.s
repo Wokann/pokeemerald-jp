@@ -69,7 +69,8 @@ sWirelessStatusIndicatorOamData: @ 0x82C02C0
 
 	.globl sWirelessStatusIndicatorSpriteSheet
 sWirelessStatusIndicatorSpriteSheet: @ 0x82C0330
-	.incbin "baserom_jp.gba", 0x2c0330, 0x8
+	.4byte 0x082BFF9C
+	.hword 0x0380, 0xD431
 
 	.globl sWirelessStatusIndicatorSpritePalette
 sWirelessStatusIndicatorSpritePalette: @ 0x82C0338
@@ -77,11 +78,14 @@ sWirelessStatusIndicatorSpritePalette: @ 0x82C0338
 
 	.globl sWirelessStatusIndicatorSpriteTemplate
 sWirelessStatusIndicatorSpriteTemplate: @ 0x82C0340
-	.incbin "baserom_jp.gba", 0x2c0340, 0x18
+	.hword 0xD431, 0xD432
+	.4byte 0x082C02C0, 0x082C031C
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl sRfuReqConfigTemplate
 sRfuReqConfigTemplate: @ 0x82C0358
-	.incbin "baserom_jp.gba", 0x2c0358, 0x18
+	.byte 0x04, 0x20, 0x00, 0x00, 0x00, 0x00, 0x02, 0x00, 0xCC, 0x27, 0x02, 0x02
+	.byte 0xDA, 0x27, 0x02, 0x02, 0x01, 0x00, 0x58, 0x02, 0x2C, 0x01, 0x00, 0x00
 
 	.globl sAvailSlots
 sAvailSlots: @ 0x82C0370
@@ -136,5 +140,5 @@ sAcceptedSerialNos: @ 0x82C0430
 
 	.globl sShutdownTasks
 sShutdownTasks: @ 0x82C0530
-	.incbin "baserom_jp.gba", 0x2c0530, 0xc
+	.4byte 0x0801034D, 0x080105A5, 0x080107FD
 
