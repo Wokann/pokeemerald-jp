@@ -264,8 +264,10 @@ extern struct PokemonStorageSystemData *sStorage;
 
 extern bool8 (*const sPlaceChangeFuncs[])(void);
 extern const u8 *ItemId_GetName(u16 itemId);
-extern void sub_080D1E90(void);
-extern void sub_080CFA58(void);
+extern void TilemapUtil_Free(void);
+extern void MultiMove_Free(void);
+extern void *sMultiMove;
+extern void *sTilemapUtil;
 extern s8 sCursorArea;
 extern s8 sCursorPosition;
 extern bool8 sIsMonBeingMoved;
@@ -6140,8 +6142,8 @@ __attribute__((naked)) void GiveChosenBagItem(void)
 
 void FreePSSData(void)
 {
-    sub_080D1E90();
-    sub_080CFA58();
+    TilemapUtil_Free();
+    MultiMove_Free();
     Free(sStorage);
     sStorage = NULL;
     FreeAllWindowBuffers();
@@ -19219,23 +19221,10 @@ __attribute__((naked)) void sub_080CFA04(void)
     );
 }
 
-__attribute__((naked)) void sub_080CFA58(void)
+void MultiMove_Free(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CFA6C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFA66\n\t"
-        "	bl Free\n\t"
-        "_080CFA66:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFA6C: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sMultiMove != NULL)
+        Free(sMultiMove);
 }
 
 __attribute__((naked)) void sub_080CFA70(void)
@@ -23673,20 +23662,9 @@ __attribute__((naked)) void sub_080D1E3C(void)
     );
 }
 
-__attribute__((naked)) void sub_080D1E90(void)
+void TilemapUtil_Free(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080D1EA0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1EA0: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    Free(sTilemapUtil);
 }
 
 __attribute__((naked)) void sub_080D1EA4(void)
