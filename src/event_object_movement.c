@@ -22274,81 +22274,34 @@ void TurnVirtualObject(u8 virtualObjId, u8 direction)
         StartSpriteAnim(&gSprites[spriteId], GetJumpInPlaceMovementAction(direction));
 }
 
-__attribute__((naked)) void SetVirtualObjectGraphics(u8 virtualObjId, u8 graphicsId)
+void SetVirtualObjectGraphics(u8 virtualObjId, u8 graphicsId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	bl GetVirtualObjectSpriteId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0x40\n\t"
-        "	beq _080975AE\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08097588\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	ldrh r3, [r4, #4]\n\t"
-        "	lsls r3, r3, #0x16\n\t"
-        "	ldr r1, [r0, #0x10]\n\t"
-        "	ldr r2, [r1, #4]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	str r1, [r4]\n\t"
-        "	str r2, [r4, #4]\n\t"
-        "	lsrs r3, r3, #0x16\n\t"
-        "	ldrh r2, [r4, #4]\n\t"
-        "	ldr r1, _0809758C\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r3\n\t"
-        "	strh r1, [r4, #4]\n\t"
-        "	ldrb r2, [r0, #0xc]\n\t"
-        "	lsls r2, r2, #0x1c\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldrb r3, [r4, #5]\n\t"
-        "	movs r1, #0xf\n\t"
-        "	ands r1, r3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r4, #5]\n\t"
-        "	ldr r1, [r0, #0x1c]\n\t"
-        "	str r1, [r4, #0xc]\n\t"
-        "	ldr r1, [r0, #0x14]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08097590\n\t"
-        "	str r1, [r4, #0x18]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x42\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080975A6\n\t"
-        "	.align 2, 0\n\t"
-        "_08097588: .4byte gSprites\n\t"
-        "_0809758C: .4byte 0xFFFFFC00\n\t"
-        "_08097590:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x42\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r2]\n\t"
-        "_080975A6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_080975AE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    int spriteId = GetVirtualObjectSpriteId(virtualObjId);
+
+    if (spriteId != MAX_SPRITES)
+    {
+        struct Sprite *sprite = &gSprites[spriteId];
+        const struct ObjectEventGraphicsInfo *graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
+        u16 tileNum = sprite->oam.tileNum;
+
+        sprite->oam = *graphicsInfo->oam;
+        sprite->oam.tileNum = tileNum;
+        sprite->oam.paletteNum = graphicsInfo->paletteSlot;
+        sprite->images = graphicsInfo->images;
+
+        if (graphicsInfo->subspriteTables == NULL)
+        {
+            sprite->subspriteTables = NULL;
+            sprite->subspriteTableNum = 0;
+            sprite->subspriteMode = SUBSPRITES_OFF;
+        }
+        else
+        {
+            SetSubspriteTables(sprite, graphicsInfo->subspriteTables);
+            sprite->subspriteMode = SUBSPRITES_IGNORE_PRIORITY;
+        }
+        StartSpriteAnim(sprite, 0);
+    }
 }
 
 void SetVirtualObjectInvisibility(u8 virtualObjId, bool32 invisible)
