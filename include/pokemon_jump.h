@@ -25,6 +25,12 @@ struct PrizeQuantityData
     u32 quantity;
 };
 
+struct PokeJumpGfxFunc
+{
+    int id;
+    void (*func)(void);
+};
+
 void StartPokemonJump(u16 partyId, MainCallback exitCallback);
 bool32 IsSpeciesAllowedInPokemonJump(u16 species);
 void IsPokemonJumpSpeciesInParty(void);

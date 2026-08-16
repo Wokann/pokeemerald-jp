@@ -196,12 +196,6 @@ struct PokemonJump_CommData
     u32 jumpScore;
 };
 
-struct PokeJumpGfxFunc
-{
-    int id;
-    void (*func)(void);
-};
-
 struct PokemonJump
 {
     MainCallback exitCallback;

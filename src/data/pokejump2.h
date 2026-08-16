@@ -7,7 +7,7 @@
 
 // Pokemon-jump data (0x82CEFA0..0x82CF744)
 
-extern const struct OamData gUnknown_82CF754; // vine OamData (next region)
+extern const struct OamData sOamData_JumpMon; // vine OamData (pokejump3.h)
 
 // 0x82CEFA0
 const struct PrizeQuantityData sPrizeQuantityData[] =
@@ -130,7 +130,7 @@ const struct SpriteTemplate sSpriteTemplate_JumpMon =
 {
     .tileTag = 0,
     .paletteTag = 0,
-    .oam = &gUnknown_82CF754,
+    .oam = &sOamData_JumpMon,
     .anims = gDummySpriteAnimTable,
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
