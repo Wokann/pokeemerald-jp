@@ -4052,7 +4052,7 @@ SECTIONS {
         src/event_object_movement.o(.text.MovementType_FaceDownUpAndRight_Step3);
         src/event_object_movement.o(.text.MovementType_FaceDownUpAndRight_Step4);
         src/event_object_movement.o(.text.MovementType_FaceUpRightAndLeft);
-        src/event_object_movement.o(.text.MovementType_Invisible_callback);
+        src/event_object_movement.o(.text.MovementType_FaceUpLeftAndRight_callback);
         src/event_object_movement.o(.text.MovementType_FaceUpLeftAndRight_Step0);
         src/event_object_movement.o(.text.MovementType_FaceUpLeftAndRight_Step1);
         src/event_object_movement.o(.text.MovementType_FaceUpLeftAndRight_Step2);
@@ -4195,7 +4195,7 @@ SECTIONS {
         src/event_object_movement.o(.text.GetAcroWheelieJumpDirectionMovementAction);
         src/event_object_movement.o(.text.MovementType_RunInPlace_Step0);
         src/event_object_movement.o(.text.MovementType_Invisible);
-        src/event_object_movement.o(.text.GetFaceDirectionMovementAction);
+        src/event_object_movement.o(.text.MovementType_Invisible_callback);
         src/event_object_movement.o(.text.MovementType_Invisible_Step0);
         src/event_object_movement.o(.text.MovementType_Invisible_Step1);
         src/event_object_movement.o(.text.MovementType_FaceDirection_Step2);
@@ -4247,7 +4247,7 @@ SECTIONS {
         src/event_object_movement.o(.text.ObjectEventClearHeldMovementIfFinished);
         src/event_object_movement.o(.text.EventObjectGetHeldMovementActionId);
         src/event_object_movement.o(.text.UpdateEventObjectCurrentMovement);
-        src/event_object_movement.o(.text.sub_08092CA0);
+        src/event_object_movement.o(.text.GetFaceDirectionMovementAction);
         src/event_object_movement.o(.text.sub_08092CCC);
         src/event_object_movement.o(.text.sub_08092CF8);
         src/event_object_movement.o(.text.sub_08092D24);

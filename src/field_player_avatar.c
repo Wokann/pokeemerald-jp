@@ -693,7 +693,7 @@ u8 sub_08092D7C(u32 direction); // JP: GetWalkFasterMovementAction
 u8 sub_08092DD4(u32 direction); // JP: GetPlayerRunMovementAction
 u8 sub_08092F08(u32 direction); // JP: GetWalkInPlaceNormalMovementAction
 u8 sub_08092EDC(u32 direction); // JP: GetWalkInPlaceSlowMovementAction
-u8 sub_08092CA0(u32 direction); // JP: GetFaceDirectionMovementAction
+u8 GetFaceDirectionMovementAction(u32 direction); // JP: GetFaceDirectionMovementAction
 u8 sub_08092F34(u32 direction); // JP: GetWalkInPlaceFastMovementAction
 u8 sub_08092E00(u32 direction); // JP: GetJump2MovementAction
 bool8 player_should_look_direction_be_enforced_upon_movement(void);
@@ -774,7 +774,7 @@ void PlayerNotOnBikeCollideWithFarawayIslandMew(u8 direction)
 
 void PlayerFaceDirection(u8 direction)
 {
-    PlayerSetAnimId(sub_08092CA0(direction), COPY_MOVE_FACE);
+    PlayerSetAnimId(GetFaceDirectionMovementAction(direction), COPY_MOVE_FACE);
 }
 
 void PlayerTurnInPlace(u8 direction)
@@ -793,7 +793,7 @@ void sub_0808B1C8(void) // JP: US PlayerFreeze
     if (gPlayerAvatar.tileTransitionState == T_TILE_CENTER || gPlayerAvatar.tileTransitionState == T_NOT_MOVING)
     {
         if (player_should_look_direction_be_enforced_upon_movement())
-            PlayerForceSetHeldMovement(sub_08092CA0(gObjectEvents[gPlayerAvatar.objectEventId].facingDirection));
+            PlayerForceSetHeldMovement(GetFaceDirectionMovementAction(gObjectEvents[gPlayerAvatar.objectEventId].facingDirection));
     }
 }
 
