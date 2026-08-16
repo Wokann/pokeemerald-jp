@@ -15,15 +15,15 @@ gMonFrontPic_CircledQuestionMark: @ 0x8B00000
 
 	.globl gMonFrontPic_Bulbasaur
 gMonFrontPic_Bulbasaur: @ 0x8B00338
-	.incbin "baserom_jp.gba", 0xb00338, 0x478
+	.incbin "graphics/pokemon/front_anims/bulbasaur.4bpp.lz"
 
 	.globl gMonFrontPic_Ivysaur
 gMonFrontPic_Ivysaur: @ 0x8B007B0
-	.incbin "baserom_jp.gba", 0xb007b0, 0x660
+	.incbin "graphics/pokemon/front_anims/ivysaur.4bpp.lz"
 
 	.globl gMonFrontPic_Venusaur
 gMonFrontPic_Venusaur: @ 0x8B00E10
-	.incbin "baserom_jp.gba", 0xb00e10, 0x9bc
+	.incbin "graphics/pokemon/front_anims/venusaur.4bpp.lz"
 
 	.globl gMonFrontPic_Charmander
 gMonFrontPic_Charmander: @ 0x8B017CC

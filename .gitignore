@@ -14,6 +14,10 @@ baserom_jp.gba
 *.8bpp
 *.gbapal
 *.lz
+!graphics/pokemon/front_anims/*.lz
+!graphics/pokemon/back_anims/*.lz
+!graphics/pokemon/normal/*.lz
+!graphics/pokemon/shiny/*.lz
 *.rl
 *.latfont
 *.hwjpnfont
