@@ -1,5 +1,6 @@
 #include "global.h"
 #include "event_object_movement.h"
+#include "overworld.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
@@ -1763,134 +1764,42 @@ __attribute__((naked)) void TrySpawnObjectEvents(s16 cameraX, s16 cameraY)
     );
 }
 
-__attribute__((naked)) void RemoveEventObjectsOutsideView(void)
+void RemoveEventObjectsOutsideView(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r6, _0808DA50\n\t"
-        "_0808DA02:\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r5, r3, #1\n\t"
-        "_0808DA08:\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808DA1A\n\t"
-        "	ldrb r1, [r1, #2]\n\t"
-        "	cmp r3, r1\n\t"
-        "	bne _0808DA1A\n\t"
-        "	movs r4, #1\n\t"
-        "_0808DA1A:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #3\n\t"
-        "	bls _0808DA08\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0808DA42\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808DA54\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _0808DA58\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0808DA42\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl RemoveEventObjectIfOutsideView\n\t"
-        "_0808DA42:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0xf\n\t"
-        "	bls _0808DA02\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DA50: .4byte gLinkPlayerObjectEvents\n\t"
-        "_0808DA54: .4byte gObjectEvents\n\t"
-        "_0808DA58: .4byte 0x00010001\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i, j;
+    bool8 isActiveLinkPlayer;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        for (j = 0, isActiveLinkPlayer = FALSE; j < ARRAY_COUNT(gLinkPlayerObjectEvents); j++)
+        {
+            if (gLinkPlayerObjectEvents[j].active && i == gLinkPlayerObjectEvents[j].objEventId)
+                isActiveLinkPlayer = TRUE;
+        }
+        if (!isActiveLinkPlayer)
+        {
+            struct ObjectEvent *objectEvent = &gObjectEvents[i];
+
+            if (objectEvent->active && !objectEvent->isPlayer)
+                RemoveEventObjectIfOutsideView(objectEvent);
+        }
+    }
 }
 
-__attribute__((naked)) void RemoveEventObjectIfOutsideView(void)
+void RemoveEventObjectIfOutsideView(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r0, _0808DAD8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	subs r1, r0, #2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	adds r0, #0x11\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	ldrh r4, [r2, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ldrsh r2, [r3, r0]\n\t"
-        "	lsrs r7, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r2, r1\n\t"
-        "	blt _0808DAA2\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r2, r0\n\t"
-        "	bgt _0808DAA2\n\t"
-        "	movs r0, #0x12\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0808DAA2\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0808DAD0\n\t"
-        "_0808DAA2:\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0808DACA\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _0808DACA\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0808DACA\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0808DAD0\n\t"
-        "_0808DACA:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl RemoveObjectEvent\n\t"
-        "_0808DAD0:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DAD8: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 left =   gSaveBlock1Ptr->pos.x - 2;
+    s16 right =  gSaveBlock1Ptr->pos.x + 17;
+    s16 top =    gSaveBlock1Ptr->pos.y;
+    s16 bottom = gSaveBlock1Ptr->pos.y + 16;
+
+    if (objectEvent->currentCoords.x >= left && objectEvent->currentCoords.x <= right
+     && objectEvent->currentCoords.y >= top && objectEvent->currentCoords.y <= bottom)
+        return;
+    if (objectEvent->initialCoords.x >= left && objectEvent->initialCoords.x <= right
+     && objectEvent->initialCoords.y >= top && objectEvent->initialCoords.y <= bottom)
+        return;
+    RemoveObjectEvent(objectEvent);
 }
 
 __attribute__((naked)) void sub_0808DADC(void)
@@ -3236,31 +3145,11 @@ bool8 EventObjectDoesZCoordMatch(struct ObjectEvent *objectEvent, u8 elevation)
     return TRUE;
 }
 
-__attribute__((naked)) void UpdateObjectEventsForCameraUpdate(s16 x, s16 y)
+void UpdateObjectEventsForCameraUpdate(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	bl UpdateEventObjectCoordsForCameraUpdate\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl TrySpawnObjectEvents\n\t"
-        "	bl RemoveEventObjectsOutsideView\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCoordsForCameraUpdate();
+    TrySpawnObjectEvents(x, y);
+    RemoveEventObjectsOutsideView();
 }
 
 u8 AddCameraObject(u8 followSpriteId)
