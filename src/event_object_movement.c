@@ -28,6 +28,7 @@ extern const u8 sElevationToPriority[];
 extern const s16 sMovementDelaysMedium[];
 extern const s16 sMovementDelaysLong[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
+extern void (*const gUnknown_84DD88C[])(struct Sprite *);
 extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);
@@ -1221,7 +1222,7 @@ __attribute__((naked)) u8 TrySpawnObjectEvent(u8 localId, u8 mapNum, u8 mapGroup
     );
 }
 
-void CopyObjectGraphicsInfoToSpriteTemplate(u8 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
+void CopyObjectGraphicsInfoToSpriteTemplate(u16 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
 {
     const struct ObjectEventGraphicsInfo *graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
 
@@ -1235,26 +1236,9 @@ void CopyObjectGraphicsInfoToSpriteTemplate(u8 graphicsId, void (*callback)(stru
     *subspriteTables = graphicsInfo->subspriteTables;
 }
 
-__attribute__((naked)) void MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex(void)
+void MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex(u16 graphicsId, u16 callbackIndex, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	ldr r4, _0808D6BC\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl CopyObjectGraphicsInfoToSpriteTemplate\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D6BC: .4byte gUnknown_84DD88C\n\t"
-        ".syntax divided\n\t"
-    );
+    CopyObjectGraphicsInfoToSpriteTemplate(graphicsId, gUnknown_84DD88C[callbackIndex], spriteTemplate, subspriteTables);
 }
 
 __attribute__((naked)) void sub_0808D6C0(void)
