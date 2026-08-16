@@ -17329,50 +17329,19 @@ static bool8 DoJumpSpecialAnim(struct ObjectEvent *objectEvent, struct Sprite *s
         return TRUE;
     return FALSE;
 }
-__attribute__((naked)) bool8 sub_08093B50(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+static bool8 DoJumpInPlaceAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnimStep\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08093B6A\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _08093B96\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08093B98\n\t"
-        "_08093B6A:\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl GetOppositeDirection\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetJumpInPlaceTurnAroundMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl obj_npc_animation_step\n\t"
-        "_08093B96:\n\t"
-        "	movs r0, #0\n\t"
-        "_08093B98:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (DoJumpAnimStep(objectEvent, sprite))
+    {
+    case JUMP_FINISHED:
+        return TRUE;
+    case JUMP_HALFWAY:
+        SetEventObjectDirection(objectEvent, GetOppositeDirection(objectEvent->movementDirection));
+        obj_npc_animation_step(objectEvent, sprite, GetJumpInPlaceTurnAroundMovementAction(objectEvent->facingDirection));
+    default:
+        return FALSE;
+    }
 }
 
 
@@ -20279,7 +20248,7 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceDownUp_Step1(struct Objec
         "	push {r4, r5, lr}\n\t"
         "	adds r4, r0, #0\n\t"
         "	adds r5, r1, #0\n\t"
-        "	bl sub_08093B50\n\t"
+        "	bl DoJumpInPlaceAnim\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094C88\n\t"
@@ -20338,7 +20307,7 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceUpDown_Step1(struct Objec
         "	push {r4, r5, lr}\n\t"
         "	adds r4, r0, #0\n\t"
         "	adds r5, r1, #0\n\t"
-        "	bl sub_08093B50\n\t"
+        "	bl DoJumpInPlaceAnim\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094CE0\n\t"
@@ -20398,7 +20367,7 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceLeftRight_Step1(struct Ob
         "	push {r4, r5, lr}\n\t"
         "	adds r4, r0, #0\n\t"
         "	adds r5, r1, #0\n\t"
-        "	bl sub_08093B50\n\t"
+        "	bl DoJumpInPlaceAnim\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094D38\n\t"
@@ -20457,7 +20426,7 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceRightLeft_Step1(struct Ob
         "	push {r4, r5, lr}\n\t"
         "	adds r4, r0, #0\n\t"
         "	adds r5, r1, #0\n\t"
-        "	bl sub_08093B50\n\t"
+        "	bl DoJumpInPlaceAnim\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08094D90\n\t"

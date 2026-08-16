@@ -4329,7 +4329,7 @@ SECTIONS {
         src/event_object_movement.o(.text.DoJumpSpecialAnimStep);
         src/event_object_movement.o(.text.DoJumpAnim);
         src/event_object_movement.o(.text.DoJumpSpecialAnim);
-        src/event_object_movement.o(.text.sub_08093B50);
+        src/event_object_movement.o(.text.DoJumpInPlaceAnim);
         src/event_object_movement.o(.text.MovementAction_Jump2Down_Step0);
         src/event_object_movement.o(.text.MovementAction_Jump2Down_Step1);
         src/event_object_movement.o(.text.MovementAction_Jump2Up_Step0);
