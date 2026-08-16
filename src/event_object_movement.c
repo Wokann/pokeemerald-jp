@@ -5845,97 +5845,31 @@ bool8 MovementType_WalkBackAndForth_Step1(struct ObjectEvent *objectEvent, struc
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_WalkBackAndForth_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WalkBackAndForth_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08090908\n\t"
-        "	ldr r1, [r4, #0xc]\n\t"
-        "	ldr r0, [r4, #0x10]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090908\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl GetOppositeDirection\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "_08090908:\n\t"
-        "	ldrb r1, [r4, #0x18]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetCollisionInDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl sub_08092CF8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r5, #1\n\t"
-        "	bne _0809095E\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x21\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl GetOppositeDirection\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	bl sub_08092CF8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldrb r1, [r4, #0x18]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetCollisionInDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_0809095E:\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _08090970\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl sub_08092F08\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "_08090970:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl ObjectEventSetSingleMovement\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r7, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 collision;
+    u8 movementActionId;
+
+    if (objectEvent->directionSequenceIndex && objectEvent->initialCoords.x == objectEvent->currentCoords.x && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+    {
+        objectEvent->directionSequenceIndex = 0;
+        SetEventObjectDirection(objectEvent, GetOppositeDirection(objectEvent->movementDirection));
+    }
+    collision = GetCollisionInDirection(objectEvent, objectEvent->movementDirection);
+    movementActionId = sub_08092CF8(objectEvent->movementDirection);
+    if (collision == COLLISION_OUTSIDE_RANGE)
+    {
+        objectEvent->directionSequenceIndex++;
+        SetEventObjectDirection(objectEvent, GetOppositeDirection(objectEvent->movementDirection));
+        movementActionId = sub_08092CF8(objectEvent->movementDirection);
+        collision = GetCollisionInDirection(objectEvent, objectEvent->movementDirection);
+    }
+    if (collision)
+        movementActionId = sub_08092F08(objectEvent->facingDirection);
+    ObjectEventSetSingleMovement(objectEvent, sprite, movementActionId);
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = 3;
+    return TRUE;
 }
 
 bool8 MovementType_WalkBackAndForth_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6049,32 +5983,14 @@ __attribute__((naked)) bool8 MoveNextDirectionInSequence(struct ObjectEvent *obj
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WalkSequence_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WalkSequence_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08090A9E\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #3\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "_08090A9E:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        objectEvent->singleMovementActive = FALSE;
+        sprite->sTypeFuncId = 1;
+    }
+    return FALSE;
 }
 
 void MovementType_WalkSequenceUpRightLeftDown(struct Sprite *sprite)
