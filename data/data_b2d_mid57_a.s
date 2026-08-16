@@ -285,12 +285,45 @@ gMonIconPaletteTable: @ 0x855709C
 
 	.globl sMonIconOamData
 sMonIconOamData: @ 0x85570CC
-	.incbin "baserom_jp.gba", 0x5570cc, 0x44
+	.4byte 0x80000000
+	.hword 0x0400, 0x0000
+
+	.globl sAnim_MonIcon_0
+sAnim_MonIcon_0: @ 0x005570D4
+	.hword 0x0000, 0x0006
+	.hword 0x0001, 0x0006
+	.hword 0xFFFE, 0x0000
+
+	.globl sAnim_MonIcon_1
+sAnim_MonIcon_1: @ 0x005570E0
+	.hword 0x0000, 0x0008
+	.hword 0x0001, 0x0008
+	.hword 0xFFFE, 0x0000
+
+	.globl sAnim_MonIcon_2
+sAnim_MonIcon_2: @ 0x005570EC
+	.hword 0x0000, 0x000E
+	.hword 0x0001, 0x000E
+	.hword 0xFFFE, 0x0000
+
+	.globl sAnim_MonIcon_3
+sAnim_MonIcon_3: @ 0x005570F8
+	.hword 0x0000, 0x0016
+	.hword 0x0001, 0x0016
+	.hword 0xFFFE, 0x0000
+
+	.globl sAnim_MonIcon_4
+sAnim_MonIcon_4: @ 0x00557104
+	.hword 0x0000, 0x001D
+	.hword 0x0000, 0x001D
+	.hword 0xFFFE, 0x0000
 
 	.globl sMonIconAnims
 sMonIconAnims: @ 0x8557110
-	.incbin "graphics/misc/sMonIconAnims.bin"
-
+	.4byte sAnim_MonIcon_0, sAnim_MonIcon_1, sAnim_MonIcon_2, sAnim_MonIcon_3
+	.4byte sAnim_MonIcon_4
+	.hword 0x0000, 0x0000, 0x0A00, 0x0000, 0x7FFF, 0x0000, 0x0000, 0x0000
+	.hword 0xFFFE, 0xFFFE, 0x7A00, 0x0000, 0x7FFF, 0x0000, 0x0000, 0x0000
 	.globl sMonIconAffineAnims
 sMonIconAffineAnims: @ 0x8557144
 	.4byte 0x08557124, 0x08557134
