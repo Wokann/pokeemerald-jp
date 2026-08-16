@@ -255,6 +255,8 @@ extern struct PokemonStorageSystemData *sStorage;
 
 extern bool8 (*const sPlaceChangeFuncs[])(void);
 extern const u8 *ItemId_GetName(u16 itemId);
+extern void sub_080D1E90(void);
+extern void sub_080CFA58(void);
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -2290,30 +2292,10 @@ __attribute__((naked)) void sub_080C77E8(void)
     );
 }
 
-__attribute__((naked)) void SetPSSCallback(void)
+void SetPSSCallback(void (*func)(void))
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C783C\n\t"
-        "	ldr r1, _080C7840\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	ldrb r2, [r3, #4]\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r3]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C783C: .4byte gTasks\n\t"
-        "_080C7840: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[sStorage->taskId].func = func;
+    sStorage->state = 0;
 }
 
 __attribute__((naked)) void Cb_InitPSS(void)
@@ -6225,26 +6207,13 @@ __attribute__((naked)) void GiveChosenBagItem(void)
     );
 }
 
-__attribute__((naked)) void FreePSSData(void)
+void FreePSSData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl sub_080D1E90\n\t"
-        "	bl sub_080CFA58\n\t"
-        "	ldr r4, _080C985C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r4]\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C985C: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080D1E90();
+    sub_080CFA58();
+    Free(sStorage);
+    sStorage = NULL;
+    FreeAllWindowBuffers();
 }
 
 __attribute__((naked)) void SetScrollingBackground(void)
