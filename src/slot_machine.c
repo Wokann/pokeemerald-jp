@@ -1225,6 +1225,14 @@ extern const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion;
 extern const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck;
 extern const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke;
 extern const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt;
+extern const s16 sDigitalDisplay_SpriteCoords[][2];
+extern const SpriteCallback sDigitalDisplay_SpriteCallbacks[];
+extern const struct SpriteTemplate *const sSpriteTemplates_DigitalDisplay[];
+extern struct SpriteFrameImage *sImageTables_DigitalDisplay[];
+extern const struct SubspriteTable *const sSubspriteTables_DigitalDisplay[];
+// JP ROM keeps the smoke offset tables as data symbols (US has them inline).
+extern const s16 sDigitalDisplaySmokeXOffsets[];
+extern const s16 sDigitalDisplaySmokeYOffsets[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeShadow[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[];
 // JP ROM keeps the aura flash colors / duck offsets as data symbols (US has them inline).
@@ -5437,495 +5445,172 @@ void DestroyPikaPowerBoltSprite(u8 spriteId)
     DestroySprite(sprite);
 }
 
-__attribute__((naked)) u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 spriteId)
+#define sState       data[0]
+#define sCounter     data[1]
+#define sSpriteId    data[6]
+#define sWaitForAnim data[7]
+
+u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r3, _0812EFE4\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r3, r1, r3\n\t"
-        "	ldr r5, [r3]\n\t"
-        "	ldr r3, _0812EFE8\n\t"
-        "	adds r4, r1, r3\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsh r4, [r4, r6]\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsh r3, [r1, r6]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	str r2, [sp]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl sub_0812EFEC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812EFE4: .4byte gUnknown_858484C\n\t"
-        "_0812EFE8: .4byte gUnknown_85847BE\n\t"
-        ".syntax divided\n\t"
-    );
+    return CreateDigitalDisplaySprite(templateIdx, sDigitalDisplay_SpriteCallbacks[dispInfoId], sDigitalDisplay_SpriteCoords[dispInfoId][0], sDigitalDisplay_SpriteCoords[dispInfoId][1], spriteId);
 }
 
-__attribute__((naked)) u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 spriteId)
+u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 internalSpriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	ldr r5, [sp, #0x34]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	mov sb, r5\n\t"
-        "	ldr r0, _0812F078\n\t"
-        "	lsrs r4, r4, #0x16\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	mov r3, sp\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldm r0!, {r5, r6, r7}\n\t"
-        "	stm r3!, {r5, r6, r7}\n\t"
-        "	ldm r0!, {r5, r6, r7}\n\t"
-        "	stm r3!, {r5, r6, r7}\n\t"
-        "	ldr r0, _0812F07C\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	lsls r0, r7, #4\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812F080\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	mov r5, sb\n\t"
-        "	strh r5, [r2, #0x3a]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "	ldr r0, _0812F084\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0812F066\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "_0812F066:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F078: .4byte gUnknown_85851E8\n\t"
-        "_0812F07C: .4byte gUnknown_3001188\n\t"
-        "_0812F080: .4byte gSprites\n\t"
-        "_0812F084: .4byte gUnknown_8585250\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteTemplate spriteTemplate;
+    u8 spriteId;
+    struct Sprite *sprite;
+
+    spriteTemplate = *sSpriteTemplates_DigitalDisplay[templateIdx];
+    spriteTemplate.images = sImageTables_DigitalDisplay[templateIdx];
+    spriteId = CreateSprite(&spriteTemplate, x, y, 16);
+    sprite = &gSprites[spriteId];
+    sprite->oam.priority = 3;
+    sprite->callback = callback;
+    sprite->sSpriteId = internalSpriteId;
+    sprite->sWaitForAnim = TRUE;
+    if (sSubspriteTables_DigitalDisplay[templateIdx])
+        SetSubspriteTables(sprite, sSubspriteTables_DigitalDisplay[templateIdx]);
+    return spriteId;
 }
 
-__attribute__((naked)) void sub_0812F088(void)
+static void SpriteCB_DigitalDisplay_Static(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x3c]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->sWaitForAnim = FALSE;
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_Smoke(struct Sprite *sprite)
+void SpriteCB_DigitalDisplay_Smoke(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812F10C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #8\n\t"
-        "	bl memcpy\n\t"
-        "	add r5, sp, #8\n\t"
-        "	ldr r1, _0812F110\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl memcpy\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	ble _0812F0D6\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x42\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	lsls r0, r2, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_0812F0D6:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x42\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F102\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0812F102:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F10C: .4byte gUnknown_85845A2\n\t"
-        "_0812F110: .4byte gUnknown_85845AA\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 targetX[4];
+    s16 targetY[4];
+    memcpy(targetX, sDigitalDisplaySmokeXOffsets, sizeof(targetX));
+    memcpy(targetY, sDigitalDisplaySmokeYOffsets, sizeof(targetY));
+
+    if (sprite->sCounter++ >= 16)
+    {
+        sprite->subspriteTableNum ^= 1;
+        sprite->sCounter = 0;
+    }
+    sprite->x2 = 0;
+    sprite->y2 = 0;
+    if (sprite->subspriteTableNum != 0)
+    {
+        sprite->x2 = targetX[sprite->sSpriteId];
+        sprite->y2 = targetY[sprite->sSpriteId];
+    }
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_SmokeNE(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeNE(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x3f\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #1\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	bl sub_0812F090\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->hFlip = TRUE;
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_SmokeSW(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeSW(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x3f\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #2\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	bl sub_0812F090\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->vFlip = TRUE;
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_SmokeSE(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_SmokeSE(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x3f\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #1\n\t"
-        "	orrs r1, r2\n\t"
-        "	movs r2, #2\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	bl sub_0812F090\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->hFlip = TRUE;
+    sprite->vFlip = TRUE;
+    SpriteCB_DigitalDisplay_Smoke(sprite);
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_Reel(struct Sprite *sprite)
+// The word "Reel" in Reel Time
+static void SpriteCB_DigitalDisplay_Reel(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812F194\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _0812F176\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F180\n\t"
-        "	b _0812F1C4\n\t"
-        "_0812F176:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0812F1A4\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _0812F1C0\n\t"
-        "	b _0812F1C4\n\t"
-        "_0812F180:\n\t"
-        "	ldrh r0, [r2, #0x20]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xcf\n\t"
-        "	ble _0812F1C4\n\t"
-        "	movs r0, #0xd0\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	b _0812F1B2\n\t"
-        "_0812F194:\n\t"
-        "	ldrh r0, [r2, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x5a\n\t"
-        "	ble _0812F1C4\n\t"
-        "	b _0812F1B2\n\t"
-        "_0812F1A4:\n\t"
-        "	ldrh r0, [r2, #0x20]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _0812F1BC\n\t"
-        "	cmp r0, r1\n\t"
-        "	ble _0812F1C4\n\t"
-        "_0812F1B2:\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	b _0812F1C4\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F1BC: .4byte 0x010F0000\n\t"
-        "_0812F1C0:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "_0812F1C4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sState)
+    {
+    case 0:
+        sprite->x += 4;
+        if (sprite->x >= DISPLAY_WIDTH - 32)
+        {
+            sprite->x = DISPLAY_WIDTH - 32;
+            sprite->sState++;
+        }
+        break;
+    case 1:
+        if (++sprite->sCounter > 90)
+            sprite->sState++;
+        break;
+    case 2:
+        sprite->x += 4;
+        if (sprite->x >= DISPLAY_WIDTH + 32)
+            sprite->sState++;
+        break;
+    case 3:
+        sprite->sWaitForAnim = FALSE;
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_0812F1C8(void)
+// The word "Time" in Reel Time
+static void SpriteCB_DigitalDisplay_Time(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0812F1FC\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _0812F1DE\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812F1E8\n\t"
-        "	b _0812F226\n\t"
-        "_0812F1DE:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0812F20C\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _0812F222\n\t"
-        "	b _0812F226\n\t"
-        "_0812F1E8:\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	subs r0, #4\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xd0\n\t"
-        "	bgt _0812F226\n\t"
-        "	movs r0, #0xd0\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	b _0812F21A\n\t"
-        "_0812F1FC:\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x5a\n\t"
-        "	ble _0812F226\n\t"
-        "	b _0812F21A\n\t"
-        "_0812F20C:\n\t"
-        "	ldrh r0, [r1, #0x20]\n\t"
-        "	subs r0, #4\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x90\n\t"
-        "	bgt _0812F226\n\t"
-        "_0812F21A:\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	b _0812F226\n\t"
-        "_0812F222:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "_0812F226:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sState)
+    {
+    case 0:
+        sprite->x -= 4;
+        if (sprite->x <= DISPLAY_WIDTH - 32)
+        {
+            sprite->x = DISPLAY_WIDTH - 32;
+            sprite->sState++;
+        }
+        break;
+    case 1:
+        if (++sprite->sCounter > 90)
+            sprite->sState++;
+        break;
+    case 2:
+        sprite->x -= 4;
+        if (sprite->x <= 144)
+            sprite->sState++;
+        break;
+    case 3:
+        sprite->sWaitForAnim = FALSE;
+        break;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_DigitalDisplay_ReelTimeNumber(struct Sprite *sprite)
+static void SpriteCB_DigitalDisplay_ReelTimeNumber(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _0812F2D6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812F244\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F244: .4byte 0x0812F248\n\t"
-        "_0812F248: @ jump table\n\t"
-        "	.4byte _0812F260 @ case 0\n\t"
-        "	.4byte _0812F278 @ case 1\n\t"
-        "	.4byte _0812F298 @ case 2\n\t"
-        "	.4byte _0812F2AC @ case 3\n\t"
-        "	.4byte _0812F2BC @ case 4\n\t"
-        "	.4byte _0812F2D2 @ case 5\n\t"
-        "_0812F260:\n\t"
-        "	ldr r0, _0812F294\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #0xa]\n\t"
-        "	subs r1, #1\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_0812F278:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _0812F2D6\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	b _0812F2D6\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F294: .4byte sSlotMachine\n\t"
-        "_0812F298:\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xcf\n\t"
-        "	ble _0812F2D6\n\t"
-        "	movs r0, #0xd0\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	b _0812F2CA\n\t"
-        "_0812F2AC:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x5a\n\t"
-        "	ble _0812F2D6\n\t"
-        "	b _0812F2CA\n\t"
-        "_0812F2BC:\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xf7\n\t"
-        "	ble _0812F2D6\n\t"
-        "_0812F2CA:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	b _0812F2D6\n\t"
-        "_0812F2D2:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_0812F2D6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->sState)
+    {
+    case 0:
+        StartSpriteAnim(sprite, sSlotMachine->reelTimeSpinsLeft - 1);
+        sprite->sState++;
+        // fallthrough
+    case 1:
+        if (++sprite->sCounter >= 4)
+        {
+            sprite->sState++;
+            sprite->sCounter = 0;
+        }
+        break;
+    case 2:
+        sprite->x += 4;
+        if (sprite->x >= DISPLAY_WIDTH - 32)
+        {
+            sprite->x = DISPLAY_WIDTH - 32;
+            sprite->sState++;
+        }
+        break;
+    case 3:
+        if (++sprite->sCounter > 90)
+            sprite->sState++;
+        break;
+    case 4:
+        sprite->x += 4;
+        if (sprite->x >= DISPLAY_WIDTH + 8)
+            sprite->sState++;
+        break;
+    case 5:
+        sprite->sWaitForAnim = FALSE;
+        break;
+    }
 }
 
 __attribute__((naked)) void SpriteCB_DigitalDisplay_PokeballRocking(struct Sprite *sprite)
@@ -7189,7 +6874,7 @@ __attribute__((naked)) void SetDigitalDisplayImagePtrs(void)
         "	str r0, [r1, #0x64]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0812FBC0: .4byte gUnknown_3001188\n\t"
+        "_0812FBC0: .4byte sImageTables_DigitalDisplay\n\t"
         "_0812FBC4: .4byte sImageTable_DigitalDisplay_Reel\n\t"
         "_0812FBC8: .4byte sImageTable_DigitalDisplay_Time\n\t"
         "_0812FBCC: .4byte sImageTable_DigitalDisplay_Insert\n\t"

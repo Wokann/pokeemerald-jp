@@ -529,12 +529,12 @@ sReelTimeAuraColors: @ 0x8584598
 sReelTimeDuckOffsets: @ 0x858459A
 	.incbin "baserom_jp.gba", 0x58459a, 0x8
 
-	.globl gUnknown_85845A2
-gUnknown_85845A2: @ 0x85845A2
+	.globl sDigitalDisplaySmokeXOffsets
+sDigitalDisplaySmokeXOffsets: @ 0x85845A2
 	.incbin "baserom_jp.gba", 0x5845a2, 0x8
 
-	.globl gUnknown_85845AA
-gUnknown_85845AA: @ 0x85845AA
+	.globl sDigitalDisplaySmokeYOffsets
+sDigitalDisplaySmokeYOffsets: @ 0x85845AA
 	.incbin "baserom_jp.gba", 0x5845aa, 0x8
 
 	.globl gUnknown_85845B2

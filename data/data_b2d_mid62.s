@@ -61,12 +61,12 @@ gUnknown_8584788: @ 0x8584788
 	.incbin "baserom_jp.gba", 0x584788, 0xa
 
 	.section .rodata.85847BE
-	.globl gUnknown_85847BE
-gUnknown_85847BE: @ 0x85847BE
+	.globl sDigitalDisplay_SpriteCoords
+sDigitalDisplay_SpriteCoords: @ 0x85847BE
 	.incbin "baserom_jp.gba", 0x5847be, 0x8e
 
-	.globl gUnknown_858484C
-gUnknown_858484C: @ 0x858484C
+	.globl sDigitalDisplay_SpriteCallbacks
+sDigitalDisplay_SpriteCallbacks: @ 0x858484C
 	.incbin "baserom_jp.gba", 0x58484c, 0x8c
 
 	.section .rodata.85849C0
@@ -162,12 +162,12 @@ sSubspriteTable_ReelTimeShadow: @ 0x8584FAC
 sSubspriteTable_ReelTimeNumberGap: @ 0x8584FC0
 	.incbin "baserom_jp.gba", 0x584fc0, 0x228
 
-	.globl gUnknown_85851E8
-gUnknown_85851E8: @ 0x85851E8
+	.globl sSpriteTemplates_DigitalDisplay
+sSpriteTemplates_DigitalDisplay: @ 0x85851E8
 	.incbin "baserom_jp.gba", 0x5851e8, 0x68
 
-	.globl gUnknown_8585250
-gUnknown_8585250: @ 0x8585250
+	.globl sSubspriteTables_DigitalDisplay
+sSubspriteTables_DigitalDisplay: @ 0x8585250
 	.incbin "baserom_jp.gba", 0x585250, 0x68
 
 	.globl gUnknown_85852B8

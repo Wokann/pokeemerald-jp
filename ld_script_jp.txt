@@ -7583,13 +7583,13 @@ SECTIONS {
         src/slot_machine.o(.text.DestroyPikaPowerBoltSprite);
         src/slot_machine.o(.text.CreateStdDigitalDisplaySprite);
         src/slot_machine.o(.text.CreateDigitalDisplaySprite);
-        src/slot_machine.o(.text.sub_0812F088);
+        src/slot_machine.o(.text.SpriteCB_DigitalDisplay_Static);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_Smoke);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_SmokeNE);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_SmokeSW);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_SmokeSE);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_Reel);
-        src/slot_machine.o(.text.sub_0812F1C8);
+        src/slot_machine.o(.text.SpriteCB_DigitalDisplay_Time);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_ReelTimeNumber);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_PokeballRocking);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_Stop);
