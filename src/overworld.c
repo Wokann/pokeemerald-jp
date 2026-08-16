@@ -10,6 +10,8 @@ extern void *sUnusedOverworldCallback;
 #define linkDirection(obj) ((u8 *)obj)[offsetof(typeof(*obj), range)] // -> rangeX
 
 extern struct InitialPlayerAvatarState sInitialPlayerAvatarState;
+extern struct WarpData sWarpDestination;
+extern struct WarpData sFixedDiveWarp;
 extern struct MapHeader *const *const gMapGroups[];
 extern u8 sObjectEventLoadFlag;
 
@@ -935,23 +937,9 @@ __attribute__((naked)) void SetDynamicWarpWithCoords(s32 unused, s8 mapGroup, s8
     );
 }
 
-__attribute__((naked)) void SetWarpDestinationToDynamicWarp(u8 unusedWarpId)
+void SetWarpDestinationToDynamicWarp(u8 unusedWarpId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0808462C\n\t"
-        "	ldr r0, _08084630\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #0x18]\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808462C: .4byte gUnknown_2031F84\n\t"
-        "_08084630: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    sWarpDestination = gSaveBlock1Ptr->dynamicWarp;
 }
 
 __attribute__((naked)) void SetWarpDestinationToHealLocation(u8 healLocationId)
@@ -989,23 +977,9 @@ __attribute__((naked)) void SetWarpDestinationToHealLocation(u8 healLocationId)
     );
 }
 
-__attribute__((naked)) void SetWarpDestinationToLastHealLocation(void)
+void SetWarpDestinationToLastHealLocation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0808467C\n\t"
-        "	ldr r0, _08084680\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #0x20]\n\t"
-        "	ldr r0, [r0, #0x1c]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808467C: .4byte gUnknown_2031F84\n\t"
-        "_08084680: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    sWarpDestination = gSaveBlock1Ptr->lastHealLocation;
 }
 
 __attribute__((naked)) void SetLastHealLocationWarp(u8 healLocationId)
@@ -1149,23 +1123,9 @@ __attribute__((naked)) void SetEscapeWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 
     );
 }
 
-__attribute__((naked)) void SetWarpDestinationToEscapeWarp(void)
+void SetWarpDestinationToEscapeWarp(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0808478C\n\t"
-        "	ldr r0, _08084790\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #0x28]\n\t"
-        "	ldr r0, [r0, #0x24]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808478C: .4byte gUnknown_2031F84\n\t"
-        "_08084790: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    sWarpDestination = gSaveBlock1Ptr->escapeWarp;
 }
 
 __attribute__((naked)) void SetFixedDiveWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
@@ -1205,22 +1165,9 @@ __attribute__((naked)) void SetFixedDiveWarp(s8 mapGroup, s8 mapNum, s8 warpId, 
     );
 }
 
-__attribute__((naked)) void SetWarpDestinationToDiveWarp(void)
+static void SetWarpDestinationToDiveWarp(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _080847E0\n\t"
-        "	ldr r0, _080847E4\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080847E0: .4byte gUnknown_2031F84\n\t"
-        "_080847E4: .4byte gUnknown_2031F8C\n\t"
-        ".syntax divided\n\t"
-    );
+    sWarpDestination = sFixedDiveWarp;
 }
 
 __attribute__((naked)) void SetFixedHoleWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
@@ -1310,23 +1257,9 @@ __attribute__((naked)) void SetWarpDestinationToFixedHoleWarp(s16 x, s16 y)
     );
 }
 
-__attribute__((naked)) void SetWarpDestinationToContinueGameWarp(void)
+static void SetWarpDestinationToContinueGameWarp(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0808488C\n\t"
-        "	ldr r0, _08084890\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0, #0x10]\n\t"
-        "	ldr r0, [r0, #0xc]\n\t"
-        "	str r0, [r2]\n\t"
-        "	str r1, [r2, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808488C: .4byte gUnknown_2031F84\n\t"
-        "_08084890: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    sWarpDestination = gSaveBlock1Ptr->continueGameWarp;
 }
 
 __attribute__((naked)) void SetContinueGameWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
@@ -1407,21 +1340,9 @@ __attribute__((naked)) void SetContinueGameWarpToHealLocation(u8 healLocationId)
     );
 }
 
-__attribute__((naked)) void SetContinueGameWarpToDynamicWarp(int unused)
+void SetContinueGameWarpToDynamicWarp(int unused)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _08084924\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, [r2, #0x14]\n\t"
-        "	ldr r1, [r2, #0x18]\n\t"
-        "	str r0, [r2, #0xc]\n\t"
-        "	str r1, [r2, #0x10]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08084924: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->continueGameWarp = gSaveBlock1Ptr->dynamicWarp;
 }
 
 __attribute__((naked)) const struct MapConnection *GetMapConnection(u8 dir)
