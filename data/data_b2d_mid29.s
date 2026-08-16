@@ -33,7 +33,9 @@ gResetRtcArrowPalette: @ 0x84E8B14
 
 	.globl gResetRtcArrowSpriteTemplate
 gResetRtcArrowSpriteTemplate: @ 0x84E8B40
-	.incbin "baserom_jp.gba", 0x4e8b40, 0x18
+	.hword 0xFFFF, 0x1000
+	.4byte 0x084E8AB4, 0x084E8B34
+	.4byte 0x084E8B04, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl gUnknown_84E8B58
 gUnknown_84E8B58: @ 0x84E8B58
