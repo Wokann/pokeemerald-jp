@@ -562,7 +562,9 @@ gBitTable: @ 0x82FACB4
 
 	.globl sInvisibleSpriteTemplate
 sInvisibleSpriteTemplate: @ 0x82FAD34
-	.incbin "baserom_jp.gba", 0x2fad34, 0x18
+	.hword 0, 0
+	.4byte gDummyOamData, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl sSpriteDimensions
 sSpriteDimensions: @ 0x82FAD4C

@@ -649,15 +649,34 @@ gUnknown_82ECF8C: @ 0x82ECF8C
 
 	.globl sSmokescreenImpactSpriteSheet
 sSmokescreenImpactSpriteSheet: @ 0x82ECFA8
-	.incbin "baserom_jp.gba", 0x2ecfa8, 0x8
+	.4byte 0x08C0164C
+	.hword 0x0180, 0xD6EB
 
 	.globl sSmokescreenImpactSpritePalette
 sSmokescreenImpactSpritePalette: @ 0x82ECFB0
-	.incbin "graphics/misc/sSmokescreenImpactSpritePalette.bin"
+	.4byte 0x08C0172C
+	.hword 0xD6EB, 0
+
+sOamData_SmokescreenImpact: @ 0x82ECFB8
+	.byte 0x00, 0x00, 0x00, 0x40, 0x00, 0x04, 0x00, 0x00
+
+sAnim_SmokescreenImpact_0: @ 0x82ECFC0
+	.hword 0x0000, 0x0004, 0x0004, 0x0004, 0x0008, 0x0004, 0xFFFF, 0x0000
+sAnim_SmokescreenImpact_1: @ 0x82ECFD0
+	.hword 0x0000, 0x0044, 0x0004, 0x0044, 0x0008, 0x0044, 0xFFFF, 0x0000
+sAnim_SmokescreenImpact_2: @ 0x82ECFE0
+	.hword 0x0000, 0x0084, 0x0004, 0x0084, 0x0008, 0x0084, 0xFFFF, 0x0000
+sAnim_SmokescreenImpact_3: @ 0x82ECFF0
+	.hword 0x0000, 0x00C4, 0x0004, 0x00C4, 0x0008, 0x00C4, 0xFFFF, 0x0000
+
+sAnims_SmokescreenImpact: @ 0x82ED000
+	.4byte sAnim_SmokescreenImpact_0, sAnim_SmokescreenImpact_1, sAnim_SmokescreenImpact_2, sAnim_SmokescreenImpact_3
 
 	.globl sSmokescreenImpactSpriteTemplate
 sSmokescreenImpactSpriteTemplate: @ 0x82ED010
-	.incbin "baserom_jp.gba", 0x2ed010, 0x18
+	.hword 0xD6EB, 0xD6EB
+	.4byte sOamData_SmokescreenImpact, sAnims_SmokescreenImpact
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08074DBD
 
 	.globl gUnknown_82ED028
 gUnknown_82ED028: @ 0x82ED028
