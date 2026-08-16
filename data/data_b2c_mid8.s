@@ -132,11 +132,15 @@ sOam_ConditionSparkle: @ 0x85FA920
 
 	.globl sAnim_ConditionSparkle
 sAnim_ConditionSparkle: @ 0x85FA928
-	.incbin "baserom_jp.gba", 0x5fa928, 0x20
+	.hword 0x0000, 0x0005, 0x0004, 0x0005
+	.hword 0x0008, 0x0005, 0x000C, 0x0005
+	.hword 0x0010, 0x0005, 0x0014, 0x0005
+	.hword 0x0018, 0x0005, 0xFFFF, 0x0000
 
 	.globl sAnims_ConditionSparkle
 sAnims_ConditionSparkle: @ 0x85FA948
-	.incbin "baserom_jp.gba", 0x5fa948, 0x1c
+	.4byte 0x085FA928, 0x085FA930, 0x085FA938, 0x085FA940
+	.4byte 0x085FA948, 0x085FA950, 0x085FA958
 
 	.globl sSpriteTemplate_ConditionSparkle
 sSpriteTemplate_ConditionSparkle: @ 0x85FA964
