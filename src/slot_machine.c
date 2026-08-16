@@ -872,8 +872,13 @@ enum {
     REEL_TASK_STOP_SHAKE,
 };
 
+#define REEL_SYMBOL_HEIGHT 24
+
 #define tState data[0]
 #define tMoving data[14]
+#define tExtraTurns    data[1]
+#define tShockMagnitude data[1]
+#define tTimer         data[2]
 
 __attribute__((section(".rodata.sReelTasks")))
 static const bool8 (*const sReelTasks[])(struct Task *task) =
@@ -884,6 +889,33 @@ static const bool8 (*const sReelTasks[])(struct Task *task) =
     [REEL_TASK_STOP_MOVE]   = ReelTask_MoveToStop,
     [REEL_TASK_STOP_SHAKE]  = ReelTask_ShakingStop,
 };
+
+bool8 DecideStop_Bias_Reel1(void);
+bool8 DecideStop_Bias_Reel2(void);
+bool8 DecideStop_Bias_Reel3(void);
+void DecideStop_NoBias_Reel1(void);
+void DecideStop_NoBias_Reel2(void);
+void DecideStop_NoBias_Reel3(void);
+
+__attribute__((section(".rodata.sDecideStop_Bias")))
+static bool8 (*const sDecideStop_Bias[NUM_REELS])(void) =
+{
+    DecideStop_Bias_Reel1,
+    DecideStop_Bias_Reel2,
+    DecideStop_Bias_Reel3,
+};
+
+__attribute__((section(".rodata.sDecideStop_NoBias")))
+static void (*const sDecideStop_NoBias[NUM_REELS])(void) =
+{
+    DecideStop_NoBias_Reel1,
+    DecideStop_NoBias_Reel2,
+    DecideStop_NoBias_Reel3,
+};
+
+// JP ROM table has a trailing padding u16 (6th entry is never copied/used).
+__attribute__((section(".rodata.sReelStopShocks")))
+static const u16 sReelStopShocks[] = {2, 4, 4, 4, 8, 0};
 
 static void CreateSlotMachineTasks(void)
 {
@@ -3577,7 +3609,7 @@ __attribute__((naked)) void AdvanceSlotReel(u8 reelIndex, s16 value)
     );
 }
 
-__attribute__((naked)) void AdvanceSlotReelToNextTag(u8 a)
+__attribute__((naked)) s16 AdvanceSlotReelToNextSymbol(u8 reelIndex, s16 value)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3760,242 +3792,68 @@ static bool8 ReelTask_Spin(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) bool8 ReelTask_DecideStop(struct Task *task)
+static bool8 ReelTask_DecideStop(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldr r0, _0812C020\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x34\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r2, [r0]\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x2e\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldrb r0, [r3, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C004\n\t"
-        "	ldrb r0, [r3, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BFEC\n\t"
-        "	ldrb r0, [r3, #6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BFEC\n\t"
-        "	ldr r1, _0812C024\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C004\n\t"
-        "_0812BFEC:\n\t"
-        "	ldr r0, _0812C020\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	ldr r1, _0812C028\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "_0812C004:\n\t"
-        "	ldr r0, _0812C020\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #0x2e\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C020: .4byte sSlotMachine\n\t"
-        "_0812C024: .4byte gUnknown_8584468\n\t"
-        "_0812C028: .4byte gUnknown_8584474\n\t"
-        ".syntax divided\n\t"
-    );
+    task->tState++; // REEL_TASK_STOP_MOVE
+    sSlotMachine->winnerRows[task->tReelId] = 0;
+    sSlotMachine->reelExtraTurns[task->tReelId] = 0;
+
+    if (sSlotMachine->reelTimeSpinsLeft == 0)
+    {
+        if (sSlotMachine->machineBias == 0 || !sSlotMachine->didNotFailBias || !sDecideStop_Bias[task->tReelId]())
+        {
+            sSlotMachine->didNotFailBias = FALSE;
+            sDecideStop_NoBias[task->tReelId]();
+        }
+    }
+    task->tExtraTurns = sSlotMachine->reelExtraTurns[task->tReelId];
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 ReelTask_MoveToStop(struct Task *task)
+static bool8 ReelTask_MoveToStop(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812C070\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0xa\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r7, _0812C074\n\t"
-        "	ldr r5, [r7]\n\t"
-        "	movs r1, #0x26\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r6, r0, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C078\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r6, #0x1a\n\t"
-        "	ldrsh r1, [r5, r6]\n\t"
-        "	bl AdvanceSlotReelToNextTag\n\t"
-        "	b _0812C0B0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C070: .4byte gUnknown_8584480\n\t"
-        "_0812C074: .4byte sSlotMachine\n\t"
-        "_0812C078:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x2e\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsh r0, [r1, r6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C0B4\n\t"
-        "	subs r0, r3, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x1a\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl AdvanceSlotReel\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	movs r6, #0x26\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl __modsi3\n\t"
-        "_0812C0B0:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "_0812C0B4:\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _0812C0E2\n\t"
-        "	ldr r0, _0812C0EC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r6, #0x26\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #0x2e\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812C0E2\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	strh r1, [r4, #0xc]\n\t"
-        "_0812C0E2:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C0EC: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 reelStopShocks[5]; // JP copies 10 bytes; sReelStopShocks has a trailing padding entry
+    s16 reelPixelPos;
+
+    memcpy(reelStopShocks, sReelStopShocks, sizeof(reelStopShocks));
+    reelPixelPos = sSlotMachine->reelPixelOffsets[task->tReelId] % REEL_SYMBOL_HEIGHT;
+    if (reelPixelPos != 0)
+    {
+        reelPixelPos = AdvanceSlotReelToNextSymbol(task->tReelId, sSlotMachine->reelSpeed);
+    }
+    else if (sSlotMachine->reelExtraTurns[task->tReelId])
+    {
+        sSlotMachine->reelExtraTurns[task->tReelId]--;
+        AdvanceSlotReel(task->tReelId, sSlotMachine->reelSpeed);
+        reelPixelPos = sSlotMachine->reelPixelOffsets[task->tReelId] % REEL_SYMBOL_HEIGHT;
+    }
+
+    if (reelPixelPos == 0 && sSlotMachine->reelExtraTurns[task->tReelId] == 0)
+    {
+        task->tState++; // REEL_TASK_STOP_SHAKE
+        task->tShockMagnitude = reelStopShocks[task->tExtraTurns];
+        task->tTimer = 0;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 ReelTask_ShakingStop(struct Task *task)
+static bool8 ReelTask_ShakingStop(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r4, _0812C144\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #0x22\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r2, #0xa]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r2, #0xa]\n\t"
-        "	rsbs r3, r0, #0\n\t"
-        "	strh r3, [r2, #0xa]\n\t"
-        "	ldrh r0, [r2, #0xc]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0xc]\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C120\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x11\n\t"
-        "	strh r0, [r2, #0xa]\n\t"
-        "_0812C120:\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsh r3, [r2, r0]\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _0812C13A\n\t"
-        "	strh r3, [r2, #8]\n\t"
-        "	strh r3, [r2, #0x24]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r4, #0x26\n\t"
-        "	ldrsh r0, [r2, r4]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #0x22\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r3, [r1]\n\t"
-        "_0812C13A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C144: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->reelShockOffsets[task->tReelId] = task->tShockMagnitude;
+    task->tShockMagnitude = -task->tShockMagnitude;
+    task->tTimer++;
+    if ((task->tTimer & 0x3) == 0)
+        task->tShockMagnitude >>= 1;
+    if (task->tShockMagnitude == 0)
+    {
+        task->tState = 0;
+        task->tMoving = FALSE;
+        sSlotMachine->reelShockOffsets[task->tReelId] = 0;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void DecideReelTurns_BiasTag_Reel1(u8 taskId)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel1(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4155,7 +4013,7 @@ __attribute__((naked)) bool8 IsBiasTowardsCherryOr7s(void)
     );
 }
 
-__attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel1_Bet1(u8 a, u8 b)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel1_Bet1(u8 a, u8 b)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4209,7 +4067,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel1_Bet1(u8 a, u8 b)
     );
 }
 
-__attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel1_Bet2or3(u8 a, u8 b)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel1_Bet2or3(u8 a, u8 b)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4357,7 +4215,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel1_Bet2or3(u8 a, u8 b)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_BiasTag_Reel2(u8 taskId)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel2(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4383,7 +4241,7 @@ __attribute__((naked)) void DecideReelTurns_BiasTag_Reel2(u8 taskId)
     );
 }
 
-__attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel2_Bet1or2(void)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel2_Bet1or2(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4431,12 +4289,12 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel2_Bet1or2(void)
     );
 }
 
-__attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel2_Bet3(void)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel2_Bet3(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, r5, r6, lr}\n\t"
-        "	bl DecideReelTurns_BiasTag_Reel2_Bet1or2\n\t"
+        "	bl DecideStop_Bias_Reel2_Bet1or2\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812C486\n\t"
@@ -4527,7 +4385,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel2_Bet3(void)
     );
 }
 
-__attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3(u8 a)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel3(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4568,7 +4426,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3(u8 a)
     );
 }
 
-__attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3_Bet1or2(u8 a)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4623,7 +4481,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3_Bet1or2(u8 a)
     );
 }
 
-__attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3_Bet3(u8 a)
+__attribute__((naked)) bool8 DecideStop_Bias_Reel3_Bet3(u8 a)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4641,7 +4499,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3_Bet3(u8 a)
         "	cmp r1, r0\n\t"
         "	bne _0812C5AC\n\t"
         "	adds r0, r6, #0\n\t"
-        "	bl DecideReelTurns_BiasTag_Reel3_Bet1or2\n\t"
+        "	bl DecideStop_Bias_Reel3_Bet1or2\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	b _0812C5E2\n\t"
@@ -4696,7 +4554,7 @@ __attribute__((naked)) bool8 DecideReelTurns_BiasTag_Reel3_Bet3(u8 a)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel1(void)
+__attribute__((naked)) void DecideStop_NoBias_Reel1(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4743,7 +4601,7 @@ bool8 IfSymbol7_SwitchColor(u8 *symbol)
 }
 
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2(u8 taskId)
+__attribute__((naked)) void DecideStop_NoBias_Reel2(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4767,7 +4625,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet1(u8 taskId)
+__attribute__((naked)) void DecideStop_NoBias_Reel2_Bet1(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4838,7 +4696,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet1(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet2(u8 taskId)
+__attribute__((naked)) void DecideStop_NoBias_Reel2_Bet2(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4910,7 +4768,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet2(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet3(u8 taskId)
+__attribute__((naked)) void DecideStop_NoBias_Reel2_Bet3(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4930,7 +4788,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel2_Bet3(u8 taskId)
         "	beq _0812C85A\n\t"
         "	cmp r3, #2\n\t"
         "	bne _0812C7A6\n\t"
-        "	bl DecideReelTurns_NoBiasTag_Reel2_Bet2\n\t"
+        "	bl DecideStop_NoBias_Reel2_Bet2\n\t"
         "	b _0812C85A\n\t"
         "	.align 2, 0\n\t"
         "_0812C784: .4byte sSlotMachine\n\t"
@@ -5177,7 +5035,7 @@ __attribute__((naked)) bool8 NeitherMatchNor7Mismatch(u8 a, u8 b, u8 c)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3(u8 taskId)
+__attribute__((naked)) void DecideStop_NoBias_Reel3(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5201,7 +5059,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet1(u8 taskId)
+__attribute__((naked)) void DecideStop_NoBias_Reel3_Bet1(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5326,7 +5184,7 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet1(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet2(u8 taskId)
+__attribute__((naked)) void DecideStop_NoBias_Reel3_Bet2(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5520,14 +5378,14 @@ __attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet2(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DecideReelTurns_NoBiasTag_Reel3_Bet3(u8 taskId)
+__attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, r5, r6, r7, lr}\n\t"
         "	mov r7, r8\n\t"
         "	push {r7}\n\t"
-        "	bl DecideReelTurns_NoBiasTag_Reel3_Bet2\n\t"
+        "	bl DecideStop_NoBias_Reel3_Bet2\n\t"
         "	ldr r4, _0812CC34\n\t"
         "	ldr r2, [r4]\n\t"
         "	movs r0, #0x36\n\t"
