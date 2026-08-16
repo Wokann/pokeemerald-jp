@@ -8,9 +8,13 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.globl gMonFrontPicTable
-gMonFrontPicTable: @ 0x82DDA1C
-	.incbin "baserom_jp.gba", 0x2dda1c, 0x5b48
+	.globl gUnknown_82DE7DC
+gUnknown_82DE7DC: @ 0x82DE7DC
+	.incbin "baserom_jp.gba", 0x2de7dc, 0x6e0
+
+	.globl gUnknown_82DEEBC
+gUnknown_82DEEBC: @ 0x82DEEBC
+	.incbin "baserom_jp.gba", 0x2deebc, 0x46a8
 
 
 

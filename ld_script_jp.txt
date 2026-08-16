@@ -9236,6 +9236,7 @@ SECTIONS {
         data/data_b_mid2b6.o(.rodata);
         src/data/enemy_mon_elevation.o(.rodata);
         src/data/front_pic_anims.o(.rodata);
+        src/data/front_pic_table.o(.rodata);
         data/data_b_mid2b7.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
@@ -9448,6 +9449,8 @@ SECTIONS {
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
         data/data_rest.o(.rodata);
+        data/data_b2d_gfx_front.o(.rodata);
+        data/data_rest2.o(.rodata);
     } =0
     /* DWARF debug sections.
     Symbols in the DWARF debugging sections are relative to the beginning
