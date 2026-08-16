@@ -1796,24 +1796,10 @@ u8 GetFlashLevel(void)
     return gSaveBlock1Ptr->flashLevel;
 }
 
-__attribute__((naked)) void SetCurrentMapLayout(u16 mapLayoutId)
+void SetCurrentMapLayout(u16 mapLayoutId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _08084EA0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bl GetMapLayout\n\t"
-        "	ldr r1, _08084EA4\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08084EA0: .4byte gSaveBlock1Ptr\n\t"
-        "_08084EA4: .4byte gMapHeader\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->mapLayoutId = mapLayoutId;
+    gMapHeader.mapLayout = GetMapLayout();
 }
 
 void SetObjectEventLoadFlag(u8 flag)
@@ -2915,27 +2901,10 @@ __attribute__((naked)) void DoCB1_Overworld(u16 newKeys, u16 heldKeys)
 }
 
 
-__attribute__((naked)) void CB1_Overworld(void)
+void CB1_Overworld(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _08085784\n\t"
-        "	ldr r1, [r2, #4]\n\t"
-        "	ldr r0, _08085788\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08085780\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	ldrh r1, [r2, #0x2c]\n\t"
-        "	bl DoCB1_Overworld\n\t"
-        "_08085780:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08085784: .4byte gMain\n\t"
-        "_08085788: .4byte CB2_Overworld + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gMain.callback2 == CB2_Overworld)
+        DoCB1_Overworld(gMain.newKeys, gMain.heldKeys);
 }
 
 __attribute__((naked)) void OverworldBasic(void)
