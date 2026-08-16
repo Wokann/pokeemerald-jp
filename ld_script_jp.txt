@@ -5450,7 +5450,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.SetScrollingBackground);
         src/pokemon_storage_system.o(.text.ScrollBackground);
         src/pokemon_storage_system.o(.text.LoadPSSMenuGfx);
-        src/pokemon_storage_system.o(.text.InitPSSWindows);
+        src/pokemon_storage_system.o(.text.InitPokeStorageWindows);
         src/pokemon_storage_system.o(.text.LoadWaveformSpritePalette);
         src/pokemon_storage_system.o(.text.sub_080C994C);
         src/pokemon_storage_system.o(.text.sub_080C99C8);

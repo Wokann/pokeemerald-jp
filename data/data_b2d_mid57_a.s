@@ -81,8 +81,8 @@ gUnknown_854C76C: @ 0x854C76C
 gUnknown_854C9A4: @ 0x854C9A4
 	.incbin "baserom_jp.gba", 0x54c9a4, 0x20
 
-	.globl gUnknown_854C9C4
-gUnknown_854C9C4: @ 0x854C9C4
+	.globl sPSSWindowTemplates
+sPSSWindowTemplates: @ 0x854C9C4
 	.incbin "baserom_jp.gba", 0x54c9c4, 0x20
 
 	.globl gUnknown_854C9E4

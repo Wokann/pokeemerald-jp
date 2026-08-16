@@ -271,6 +271,7 @@ extern s8 sCursorPosition;
 extern bool8 sIsMonBeingMoved;
 extern void UpdateCloseBoxButtonFlash(void);
 extern void UnkUtil_Run(void);
+extern const struct WindowTemplate sPSSWindowTemplates[];
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -2362,7 +2363,7 @@ __attribute__((naked)) void Cb_InitPSS(void)
         "	bl LoadWaveformSpritePalette\n\t"
         "	b _080C7A34\n\t"
         "_080C78EC:\n\t"
-        "	bl InitPSSWindows\n\t"
+        "	bl InitPokeStorageWindows\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080C78F8\n\t"
@@ -6288,29 +6289,12 @@ __attribute__((naked)) void LoadPSSMenuGfx(void)
     );
 }
 
-__attribute__((naked)) void InitPSSWindows(void)
+bool8 InitPokeStorageWindows(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C9930\n\t"
-        "	bl InitWindows\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9934\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080C9936\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9930: .4byte gUnknown_854C9C4\n\t"
-        "_080C9934:\n\t"
-        "	movs r0, #0\n\t"
-        "_080C9936:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!InitWindows(sPSSWindowTemplates))
+        return FALSE;
+    DeactivateAllTextPrinters();
+    return TRUE;
 }
 
 __attribute__((naked)) void LoadWaveformSpritePalette(void)
