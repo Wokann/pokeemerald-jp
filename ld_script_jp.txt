@@ -9336,7 +9336,7 @@ SECTIONS {
         src/data/region_map_tables.o(.rodata);
         data/data_b2d_mid61.o(.rodata.857D49C);
         src/slot_machine.o(.rodata.sWindowTemplate_InfoBox);
-        data/data_b2d_mid61.o(.rodata.85843D0);
+        src/slot_machine.o(.rodata.sColors_ReeltimeHelp);
         src/slot_machine.o(.rodata.sSlotTasks);
         src/slot_machine.o(.rodata.sPayoutTasks);
         src/slot_machine.o(.rodata.sReelTasks);
@@ -9384,6 +9384,7 @@ SECTIONS {
         src/slot_machine.o(.rodata.sSlotMachineMenu_Pal);
         data/data_b2d_mid62.o(.rodata.85855B4);
         src/data/text/region_texts38.o(.rodata);
+        src/data/text/region_texts38.o(.rodata.gText_ReelTimeHelp);
         data/data_b2d_mid38.o(.rodata);
         src/data/text/region_texts33.o(.rodata);
         data/data_b2d_mid33.o(.rodata);

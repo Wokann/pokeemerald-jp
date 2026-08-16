@@ -9,10 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_8588651
-gUnknown_8588651: @ 0x8588651
-	.incbin "baserom_jp.gba", 0x588651, 0x5b
-
 	.globl gUnknown_85886AC
 gUnknown_85886AC: @ 0x85886AC
 	.incbin "baserom_jp.gba", 0x5886ac, 0x200

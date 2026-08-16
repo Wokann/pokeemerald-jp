@@ -1104,6 +1104,7 @@ static void InfoBox_CreateDigitalDisplay(struct Task *task);
 static void InfoBox_LoadPikaPowerMeter(struct Task *task);
 static void InfoBox_FreeTask(struct Task *task);
 extern const u8 gText_YouDontHaveThreeCoins[];
+extern const u8 gText_ReelTimeHelp[];
 extern const u8 gText_YouveGot9999Coins[];
 extern const u8 gText_YouveRunOutOfCoins[];
 extern const u8 gText_QuitTheGame[];
@@ -4554,46 +4555,17 @@ static void InfoBox_DrawWindow(struct Task *task)
     task->tState++;
 }
 
-__attribute__((naked)) void InfoBox_AddText(struct Task *task)
+// JP has a trailing 0 byte after the three colors.
+__attribute__((section(".rodata.sColors_ReeltimeHelp")))
+static const u8 sColors_ReeltimeHelp[] = {TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY, 0};
+
+static void InfoBox_AddText(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _0812DDCC\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r0, _0812DDD0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl AddTextPrinterParameterized3\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DDCC: .4byte gUnknown_85843D0\n\t"
-        "_0812DDD0: .4byte gUnknown_8588651\n\t"
-        ".syntax divided\n\t"
-    );
+    // JP text position (x=0, y=2) and COPYWIN_ALL differ from the US source.
+    AddTextPrinterParameterized3(WIN_INFO, FONT_NORMAL, 0, 2, sColors_ReeltimeHelp, 0, gText_ReelTimeHelp);
+    CopyWindowToVram(WIN_INFO, COPYWIN_FULL);
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    task->tState++;
 }
 
 static void InfoBox_WaitInput(struct Task *task)
