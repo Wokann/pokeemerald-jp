@@ -1172,8 +1172,6 @@ gText_SomeoneDroppedOut2 = gUnknown_85CCE7F;
 gText_SpacePoints2 = gUnknown_85CCDF8;
 gText_SpaceTimes3 = gUnknown_85CCDFB;
 gText_PkmnJumpRecords = gUnknown_85CCDFE;
-sWindowTemplate_Records = gUnknown_82D1AFC;
-sRecordsTexts = gUnknown_82D1B04;
 sSpriteSheet_321Start_Static = gUnknown_82D1F54;
 sSpritePalette_321Start_Static = gUnknown_82D1F64;
 sSpriteTemplate_StaticCountdown = gUnknown_82D1FBC;
@@ -9233,6 +9231,7 @@ SECTIONS {
         src/data/pokejump1.o(.rodata);
         src/data/pokejump2.o(.rodata);
         src/data/pokejump3.o(.rodata);
+        src/data/pokejump4.o(.rodata);
         data/data_b_mid2b2.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
