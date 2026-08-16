@@ -254,11 +254,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--min", type=int, default=16, help="minimum byte length")
     ap.add_argument("--addr", help="only report matches at this JP address")
+    ap.add_argument("--tag-only", action="store_true",
+                    help="only report matches that land exactly on a JP gUnknown label")
     ap.add_argument("--max-repeats", type=int, default=8,
                     help="stop scanning a candidate after this many matches")
     args = ap.parse_args()
 
     rom = (ROOT / "baserom_jp.gba").read_bytes()
+    tag_addrs = set()
+    if args.tag_only:
+        pat = re.compile(r"\.globl\s+(gUnknown_[0-9A-Fa-f]+)")
+        for f in glob.glob(str(ROOT / "data" / "*.s")) + glob.glob(str(ROOT / "asm" / "*.s")):
+            for line in open(f, errors="ignore"):
+                mm = pat.search(line)
+                if mm:
+                    tag_addrs.add(int(mm.group(1).split("_", 1)[1], 16))
+        print(f"JP gUnknown labels: {len(tag_addrs)}")
     vals, funcs = collect_macros()
     vals = collect_enums(vals)
     arrays = expand_arrays(vals, funcs)
@@ -276,7 +287,7 @@ def main():
             if idx < 0:
                 break
             addr = 0x08000000 + idx
-            if args.addr is None or addr == int(args.addr, 16):
+            if (args.addr is None or addr == int(args.addr, 16)) and (not args.tag_only or addr in tag_addrs):
                 addrs.append(addr)
             idx += 1
         if args.addr is not None and not addrs:
