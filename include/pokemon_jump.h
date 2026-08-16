@@ -17,6 +17,14 @@ struct PokemonJumpMons
     u16 jumpType;
 };
 
+// US keeps an anonymous struct for sPrizeQuantityData; JP names it so the
+// data can live in a separate file.
+struct PrizeQuantityData
+{
+    u32 score;
+    u32 quantity;
+};
+
 void StartPokemonJump(u16 partyId, MainCallback exitCallback);
 bool32 IsSpeciesAllowedInPokemonJump(u16 species);
 void IsPokemonJumpSpeciesInParty(void);

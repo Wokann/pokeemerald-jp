@@ -465,14 +465,6 @@ extern int sub_0802BD8C(void); // PokeJumpRandom
 
 // JP: vine speed tables are ROM data (data/data_b.s gUnknown_82CEEC8 /
 // gUnknown_82CEED8); same layouts as US sVineBaseSpeeds / sVineSpeedDelays.
-// US keeps an anonymous struct for sPrizeQuantityData; JP names it so the
-// ROM table (gUnknown_82CEFA0) can be aliased as an extern array.
-struct PrizeQuantityData
-{
-    u32 score;
-    u32 quantity;
-};
-
 extern const u16 sVineBaseSpeeds[];
 extern const u16 sVineSpeedDelays[];
 extern const u16 sSoundEffects[];

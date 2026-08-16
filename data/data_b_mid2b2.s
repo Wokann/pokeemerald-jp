@@ -8,38 +8,13 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.globl gUnknown_82CEFA0
-gUnknown_82CEFA0: @ 0x82CEFA0
-	.incbin "baserom_jp.gba", 0x2cefa0, 0x6f4
-
-	.globl gUnknown_82CF694
-gUnknown_82CF694: @ 0x82CF694
-	.incbin "baserom_jp.gba", 0x2cf694, 0x28
-
-	.globl gUnknown_82CF6BC
-gUnknown_82CF6BC: @ 0x82CF6BC
-	.incbin "baserom_jp.gba", 0x2cf6bc, 0x10
-
-	.globl gUnknown_82CF6CC
-gUnknown_82CF6CC: @ 0x82CF6CC
-	.incbin "baserom_jp.gba", 0x2cf6cc, 0x18
-
-	.globl sVineYCoords
-sVineYCoords: @ 0x82CF6E4
-	.2byte 96, 96, 96, 114, 120, 120, 120, 114
-	.2byte 96, 96, 70, 80, 96, 114, 120, 128
-	.2byte 120, 114, 96, 80, 50, 72, 96, 114
-	.2byte 128, 136, 128, 114, 96, 72, 42, 72
-	.2byte 96, 114, 128, 136, 128, 114, 96, 72
-
-	.globl sVineXCoords
-sVineXCoords: @ 0x82CF734
-	.2byte 16, 40, 72, 104, 136, 168, 200, 224
-
-
 	.globl gUnknown_82CF744
 gUnknown_82CF744: @ 0x82CF744
-	.incbin "baserom_jp.gba", 0x2cf744, 0x154
+	.incbin "baserom_jp.gba", 0x2cf744, 0x10
+
+	.globl gUnknown_82CF754
+gUnknown_82CF754: @ 0x82CF754
+	.incbin "baserom_jp.gba", 0x2cf754, 0x144
 
 	.globl gUnknown_82CF898
 gUnknown_82CF898: @ 0x82CF898
