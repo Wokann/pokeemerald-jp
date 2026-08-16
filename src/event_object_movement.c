@@ -4871,7 +4871,7 @@ __attribute__((naked)) void MovementType_CopyPlayerInGrass_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808EDB8: .4byte gUnknown_84E5B48\n\t"
+        "_0808EDB8: .4byte gMovementTypeFuncs_WanderAround\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5722,7 +5722,7 @@ __attribute__((naked)) void MovementType_CopyPlayer_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F2F4: .4byte gUnknown_84E5B94\n\t"
+        "_0808F2F4: .4byte gMovementTypeFuncs_LookAround\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5926,7 +5926,7 @@ __attribute__((naked)) void MovementType_FaceDirection_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F434: .4byte gUnknown_84E5BA8\n\t"
+        "_0808F434: .4byte gMovementTypeFuncs_WanderUpAndDown\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6181,7 +6181,7 @@ __attribute__((naked)) void MovementType_FaceDownAndLeft_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F5B8: .4byte gUnknown_84E5BC8\n\t"
+        "_0808F5B8: .4byte gMovementTypeFuncs_WanderLeftAndRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6435,7 +6435,7 @@ __attribute__((naked)) void MovementType_FaceDownAndRight_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F73C: .4byte gUnknown_84E5BE8\n\t"
+        "_0808F73C: .4byte gMovementTypeFuncs_FaceDirection\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6879,7 +6879,7 @@ __attribute__((naked)) void MovementType_FaceDownRightAndLeft_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FA00: .4byte gUnknown_84E5C08\n\t"
+        "_0808FA00: .4byte gMovementTypeFuncs_FaceDownAndUp\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7083,7 +7083,7 @@ __attribute__((naked)) void MovementType_FaceDownUpAndLeft_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FB40: .4byte gUnknown_84E5C1C\n\t"
+        "_0808FB40: .4byte gMovementTypeFuncs_FaceLeftAndRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7288,7 +7288,7 @@ __attribute__((naked)) void MovementType_FaceDownUpAndRight_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FC80: .4byte gUnknown_84E5C30\n\t"
+        "_0808FC80: .4byte gMovementTypeFuncs_FaceUpAndLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7492,7 +7492,7 @@ __attribute__((naked)) void MovementType_FaceLeftAndRight_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FDC0: .4byte gUnknown_84E5C48\n\t"
+        "_0808FDC0: .4byte gMovementTypeFuncs_FaceUpAndRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7696,7 +7696,7 @@ __attribute__((naked)) void MovementType_FaceUpAndLeft_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808FF00: .4byte gUnknown_84E5C60\n\t"
+        "_0808FF00: .4byte gMovementTypeFuncs_FaceDownAndLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7901,7 +7901,7 @@ __attribute__((naked)) void MovementType_FaceUpAndRight_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090040: .4byte gUnknown_84E5C78\n\t"
+        "_08090040: .4byte gMovementTypeFuncs_FaceDownAndRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8105,7 +8105,7 @@ __attribute__((naked)) void MovementType_FaceUpRightAndLeft_callback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090180: .4byte gUnknown_84E5C90\n\t"
+        "_08090180: .4byte gMovementTypeFuncs_FaceDownUpAndLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8310,7 +8310,7 @@ __attribute__((naked)) u8 MovementType_Hidden_Callback(struct ObjectEvent *objec
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080902C0: .4byte gUnknown_84E5CA8\n\t"
+        "_080902C0: .4byte gMovementTypeFuncs_FaceDownUpAndRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8514,7 +8514,7 @@ __attribute__((naked)) u8 MovementType_Invisible_callback(struct ObjectEvent *ob
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090400: .4byte gUnknown_84E5CC0\n\t"
+        "_08090400: .4byte gMovementTypeFuncs_FaceUpLeftAndRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8718,7 +8718,7 @@ __attribute__((naked)) u8 MovementType_JogInPlace_callback(struct ObjectEvent *o
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090540: .4byte gUnknown_84E5CD8\n\t"
+        "_08090540: .4byte gMovementTypeFuncs_FaceDownLeftAndRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8923,7 +8923,7 @@ __attribute__((naked)) u8 MovementType_LookAround_callback(struct ObjectEvent *o
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090680: .4byte gUnknown_84E5CF0\n\t"
+        "_08090680: .4byte gMovementTypeFuncs_RotateCounterclockwise\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9092,7 +9092,7 @@ __attribute__((naked)) u8 MovementType_RotateClockwise_callback(struct ObjectEve
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090784: .4byte gUnknown_84E5D08\n\t"
+        "_08090784: .4byte gMovementTypeFuncs_RotateClockwise\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9262,7 +9262,7 @@ __attribute__((naked)) u8 MovementType_RotateCounterclockwise_callback(struct Ob
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090888: .4byte gUnknown_84E5D20\n\t"
+        "_08090888: .4byte gMovementTypeFuncs_WalkBackAndForth\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9620,7 +9620,7 @@ __attribute__((naked)) u8 EventObjectCB2_BerryTree(struct ObjectEvent *objectEve
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090AE8: .4byte gUnknown_84E5D30\n\t"
+        "_08090AE8: .4byte gMovementTypeFuncs_WalkSequenceUpRightLeftDown\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9709,7 +9709,7 @@ __attribute__((naked)) u8 MovementType_RunInPlace_callback(struct ObjectEvent *o
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090B74: .4byte gUnknown_84E5D40\n\t"
+        "_08090B74: .4byte gMovementTypeFuncs_WalkSequenceRightLeftDownUp\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9798,7 +9798,7 @@ __attribute__((naked)) u8 MovementType_WalkBackAndForth_callback(struct ObjectEv
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090C00: .4byte gUnknown_84E5D50\n\t"
+        "_08090C00: .4byte gMovementTypeFuncs_WalkSequenceDownUpRightLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9888,7 +9888,7 @@ __attribute__((naked)) u8 MovementType_WalkInPlace_callback(struct ObjectEvent *
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090C8C: .4byte gUnknown_84E5D60\n\t"
+        "_08090C8C: .4byte gMovementTypeFuncs_WalkSequenceLeftDownUpRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9977,7 +9977,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownLeftRightUp_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090D18: .4byte gUnknown_84E5D70\n\t"
+        "_08090D18: .4byte gMovementTypeFuncs_WalkSequenceUpLeftRightDown\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10066,7 +10066,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownLeftUpRight_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090DA4: .4byte gUnknown_84E5D80\n\t"
+        "_08090DA4: .4byte gMovementTypeFuncs_WalkSequenceLeftRightDownUp\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10155,7 +10155,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownRightLeftUp_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090E30: .4byte gUnknown_84E5D90\n\t"
+        "_08090E30: .4byte gMovementTypeFuncs_WalkSequenceDownUpLeftRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10244,7 +10244,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownRightUpLeft_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090EBC: .4byte gUnknown_84E5D9C\n\t"
+        "_08090EBC: .4byte gMovementTypeFuncs_WalkSequenceRightDownUpLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10334,7 +10334,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownUpLeftRight_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090F48: .4byte gUnknown_84E5DAC\n\t"
+        "_08090F48: .4byte gMovementTypeFuncs_WalkSequenceLeftUpDownRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10423,7 +10423,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftDownRightUp_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08090FD4: .4byte gUnknown_84E5DBC\n\t"
+        "_08090FD4: .4byte gMovementTypeFuncs_WalkSequenceUpDownRightLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10512,7 +10512,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftRightDownUp_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091060: .4byte gUnknown_84E5DCC\n\t"
+        "_08091060: .4byte gMovementTypeFuncs_WalkSequenceRightLeftUpDown\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10601,7 +10601,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftUpDownRight_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080910EC: .4byte gUnknown_84E5DDC\n\t"
+        "_080910EC: .4byte gMovementTypeFuncs_WalkSequenceDownRightLeftUp\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10690,7 +10690,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightDownLeftUp_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091178: .4byte gUnknown_84E5DEC\n\t"
+        "_08091178: .4byte gMovementTypeFuncs_WalkSequenceRightUpDownLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10780,7 +10780,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightLeftDownUp_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091204: .4byte gUnknown_84E5DFC\n\t"
+        "_08091204: .4byte gMovementTypeFuncs_WalkSequenceUpDownLeftRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10869,7 +10869,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightUpDownLeft_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091290: .4byte gUnknown_84E5E0C\n\t"
+        "_08091290: .4byte gMovementTypeFuncs_WalkSequenceLeftRightUpDown\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10958,7 +10958,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpDownLeftRight_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809131C: .4byte gUnknown_84E5E1C\n\t"
+        "_0809131C: .4byte gMovementTypeFuncs_WalkSequenceDownLeftRightUp\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11047,7 +11047,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpLeftDownRight_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080913A8: .4byte gUnknown_84E5E2C\n\t"
+        "_080913A8: .4byte gMovementTypeFuncs_WalkSequenceUpLeftDownRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11136,7 +11136,7 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpRightDownLeft_callback(stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091434: .4byte gUnknown_84E5E3C\n\t"
+        "_08091434: .4byte gMovementTypeFuncs_WalkSequenceDownRightUpLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11226,7 +11226,7 @@ __attribute__((naked)) u8 MovementType_WalkSlowlyInPlace_callback(struct ObjectE
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080914C0: .4byte gUnknown_84E5E4C\n\t"
+        "_080914C0: .4byte gMovementTypeFuncs_WalkSequenceLeftDownRightUp\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11315,7 +11315,7 @@ __attribute__((naked)) u8 MovementType_WanderLeftAndRight_callback(struct Object
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809154C: .4byte gUnknown_84E5E5C\n\t"
+        "_0809154C: .4byte gMovementTypeFuncs_WalkSequenceRightUpLeftDown\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11404,7 +11404,7 @@ __attribute__((naked)) u8 sub_080915BC(struct ObjectEvent *objectEvent, struct S
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080915D8: .4byte gUnknown_84E5E6C\n\t"
+        "_080915D8: .4byte gMovementTypeFuncs_WalkSequenceUpRightDownLeft\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11493,7 +11493,7 @@ __attribute__((naked)) u8 sub_08091648(struct ObjectEvent *objectEvent, struct S
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091664: .4byte gUnknown_84E5E7C\n\t"
+        "_08091664: .4byte gMovementTypeFuncs_WalkSequenceDownLeftUpRight\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11582,7 +11582,7 @@ __attribute__((naked)) u8 GetGroundEffectFlags_TallGrassOnBeginStep(struct Objec
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080916F0: .4byte gUnknown_84E5E8C\n\t"
+        "_080916F0: .4byte gMovementTypeFuncs_WalkSequenceLeftUpRightDown\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11672,7 +11672,7 @@ __attribute__((naked)) u8 sub_08091760(struct ObjectEvent *objectEvent, struct S
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809177C: .4byte gUnknown_84E5E9C\n\t"
+        "_0809177C: .4byte gMovementTypeFuncs_WalkSequenceRightDownLeftUp\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11761,7 +11761,7 @@ __attribute__((naked)) u8 MovementAction_AcroPopWheelieMoveRight_Step0(struct Ob
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091808: .4byte gUnknown_84E5EAC\n\t"
+        "_08091808: .4byte gMovementTypeFuncs_CopyPlayer\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12604,7 +12604,7 @@ __attribute__((naked)) u8 StartFieldEffectForEventObject(struct ObjectEvent *obj
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08091E44: .4byte gUnknown_84E5EE4\n\t"
+        "_08091E44: .4byte gMovementTypeFuncs_CopyPlayerInGrass\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12955,7 +12955,7 @@ __attribute__((naked)) u8 GetAcroPopWheelieFaceDirectionMovementAction(struct Ob
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092084: .4byte gUnknown_84E5EF4\n\t"
+        "_08092084: .4byte gMovementTypeFuncs_WalkInPlace\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13029,7 +13029,7 @@ __attribute__((naked)) u8 GetAcroWheelieFaceDirectionMovementAction(struct Objec
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080920F4: .4byte gUnknown_84E5EFC\n\t"
+        "_080920F4: .4byte gMovementTypeFuncs_WalkSlowlyInPlace\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13104,7 +13104,7 @@ __attribute__((naked)) u8 GetAcroWheelieHopFaceDirectionMovementAction(struct Ob
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092164: .4byte gUnknown_84E5F04\n\t"
+        "_08092164: .4byte gMovementTypeFuncs_JogInPlace\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13178,7 +13178,7 @@ __attribute__((naked)) u8 GetAcroWheelieJumpDirectionMovementAction(struct Objec
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080921D4: .4byte gUnknown_84E5F0C\n\t"
+        "_080921D4: .4byte gMovementTypeFuncs_RunInPlace\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13252,7 +13252,7 @@ __attribute__((naked)) u8 GetFaceDirectionMovementAction(struct ObjectEvent *obj
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092244: .4byte gUnknown_84E5F14\n\t"
+        "_08092244: .4byte gMovementTypeFuncs_Invisible\n\t"
         ".syntax divided\n\t"
     );
 }

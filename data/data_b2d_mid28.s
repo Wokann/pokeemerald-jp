@@ -109,9 +109,10 @@ gUnknown_84E5B30: @ 0x84E5B30
 gUnknown_84E5B40: @ 0x84E5B40
 	.incbin "baserom_jp.gba", 0x4e5b40, 0x8
 
-	.globl gUnknown_84E5B48
-gUnknown_84E5B48: @ 0x84E5B48
-	.incbin "baserom_jp.gba", 0x4e5b48, 0x1c
+	.globl gMovementTypeFuncs_WanderAround
+gMovementTypeFuncs_WanderAround: @ 0x84E5B48
+	.4byte MovementType_WanderAround_Step0 + 1, MovementType_WanderAround_Step1 + 1, MovementType_WanderAround_Step2 + 1, MovementType_WanderAround_Step3 + 1, MovementType_WanderAround_Step4 + 1, MovementType_WanderAround_Step5 + 1, MovementType_WanderAround_Step6 + 1
+
 
 	.globl gUnknown_84E5B64
 gUnknown_84E5B64: @ 0x84E5B64
@@ -122,349 +123,397 @@ gGetVectorDirectionFuncs: @ 0x84E5B68
 	.4byte GetVectorDirection + 1, GetLimitedVectorDirection_SouthNorth + 1, GetLimitedVectorDirection_WestEast + 1, GetLimitedVectorDirection_WestNorth + 1, GetLimitedVectorDirection_EastNorth + 1, GetLimitedVectorDirection_WestSouth + 1, GetLimitedVectorDirection_EastSouth + 1, GetLimitedVectorDirection_SouthNorthWest + 1
 	.4byte GetLimitedVectorDirection_SouthNorthEast + 1, GetLimitedVectorDirection_NorthWestEast + 1, GetLimitedVectorDirection_SouthWestEast + 1
 
-	.globl gUnknown_84E5B94
-gUnknown_84E5B94: @ 0x84E5B94
-	.incbin "baserom_jp.gba", 0x4e5b94, 0x14
+	.globl gMovementTypeFuncs_LookAround
+gMovementTypeFuncs_LookAround: @ 0x84E5B94
+	.4byte MovementType_LookAround_Step0 + 1, MovementType_LookAround_Step1 + 1, MovementType_LookAround_Step2 + 1, MovementType_LookAround_Step3 + 1, MovementType_LookAround_Step4 + 1
 
-	.globl gUnknown_84E5BA8
-gUnknown_84E5BA8: @ 0x84E5BA8
-	.incbin "baserom_jp.gba", 0x4e5ba8, 0x1c
+
+	.globl gMovementTypeFuncs_WanderUpAndDown
+gMovementTypeFuncs_WanderUpAndDown: @ 0x84E5BA8
+	.4byte MovementType_WanderUpAndDown_Step0 + 1, MovementType_WanderUpAndDown_Step1 + 1, MovementType_WanderUpAndDown_Step2 + 1, MovementType_WanderUpAndDown_Step3 + 1, MovementType_WanderUpAndDown_Step4 + 1, MovementType_WanderUpAndDown_Step5 + 1, MovementType_WanderUpAndDown_Step6 + 1
+
 
 	.globl gUnknown_84E5BC4
 gUnknown_84E5BC4: @ 0x84E5BC4
 	.incbin "baserom_jp.gba", 0x4e5bc4, 0x4
 
-	.globl gUnknown_84E5BC8
-gUnknown_84E5BC8: @ 0x84E5BC8
-	.incbin "baserom_jp.gba", 0x4e5bc8, 0x1c
+	.globl gMovementTypeFuncs_WanderLeftAndRight
+gMovementTypeFuncs_WanderLeftAndRight: @ 0x84E5BC8
+	.4byte MovementType_WanderLeftAndRight_Step0 + 1, MovementType_WanderLeftAndRight_Step1 + 1, MovementType_WanderLeftAndRight_Step2 + 1, MovementType_WanderLeftAndRight_Step3 + 1, MovementType_WanderLeftAndRight_Step4 + 1, MovementType_WanderLeftAndRight_Step5 + 1, MovementType_WanderLeftAndRight_Step6 + 1
+
 
 	.globl gUnknown_84E5BE4
 gUnknown_84E5BE4: @ 0x84E5BE4
 	.incbin "baserom_jp.gba", 0x4e5be4, 0x4
 
-	.globl gUnknown_84E5BE8
-gUnknown_84E5BE8: @ 0x84E5BE8
-	.incbin "baserom_jp.gba", 0x4e5be8, 0xc
+	.globl gMovementTypeFuncs_FaceDirection
+gMovementTypeFuncs_FaceDirection: @ 0x84E5BE8
+	.4byte MovementType_FaceDirection_Step0 + 1, MovementType_FaceDirection_Step1 + 1, MovementType_Invisible_Step2 + 1
+
 
 	.globl gUnknown_84E5BF4
 gUnknown_84E5BF4: @ 0x84E5BF4
 	.incbin "baserom_jp.gba", 0x4e5bf4, 0x14
 
-	.globl gUnknown_84E5C08
-gUnknown_84E5C08: @ 0x84E5C08
-	.incbin "baserom_jp.gba", 0x4e5c08, 0x14
+	.globl gMovementTypeFuncs_FaceDownAndUp
+gMovementTypeFuncs_FaceDownAndUp: @ 0x84E5C08
+	.4byte MovementType_FaceDownAndUp_Step0 + 1, MovementType_FaceDownAndUp_Step1 + 1, MovementType_FaceDownAndUp_Step2 + 1, MovementType_FaceDownAndUp_Step3 + 1, MovementType_FaceDownAndUp_Step4 + 1
 
-	.globl gUnknown_84E5C1C
-gUnknown_84E5C1C: @ 0x84E5C1C
-	.incbin "baserom_jp.gba", 0x4e5c1c, 0x14
 
-	.globl gUnknown_84E5C30
-gUnknown_84E5C30: @ 0x84E5C30
-	.incbin "baserom_jp.gba", 0x4e5c30, 0x14
+	.globl gMovementTypeFuncs_FaceLeftAndRight
+gMovementTypeFuncs_FaceLeftAndRight: @ 0x84E5C1C
+	.4byte MovementType_FaceLeftAndRight_Step0 + 1, MovementType_FaceLeftAndRight_Step1 + 1, MovementType_FaceLeftAndRight_Step2 + 1, MovementType_FaceLeftAndRight_Step3 + 1, MovementType_FaceLeftAndRight_Step4 + 1
+
+
+	.globl gMovementTypeFuncs_FaceUpAndLeft
+gMovementTypeFuncs_FaceUpAndLeft: @ 0x84E5C30
+	.4byte MovementType_FaceUpAndLeft_Step0 + 1, MovementType_FaceUpAndLeft_Step1 + 1, MovementType_FaceUpAndLeft_Step2 + 1, MovementType_FaceUpAndLeft_Step3 + 1, MovementType_FaceUpAndLeft_Step4 + 1
+
 
 	.globl gUnknown_84E5C44
 gUnknown_84E5C44: @ 0x84E5C44
 	.incbin "baserom_jp.gba", 0x4e5c44, 0x4
 
-	.globl gUnknown_84E5C48
-gUnknown_84E5C48: @ 0x84E5C48
-	.incbin "baserom_jp.gba", 0x4e5c48, 0x14
+	.globl gMovementTypeFuncs_FaceUpAndRight
+gMovementTypeFuncs_FaceUpAndRight: @ 0x84E5C48
+	.4byte MovementType_FaceUpAndRight_Step0 + 1, MovementType_FaceUpAndRight_Step1 + 1, MovementType_FaceUpAndRight_Step2 + 1, MovementType_FaceUpAndRight_Step3 + 1, MovementType_FaceUpAndRight_Step4 + 1
+
 
 	.globl gUnknown_84E5C5C
 gUnknown_84E5C5C: @ 0x84E5C5C
 	.incbin "baserom_jp.gba", 0x4e5c5c, 0x4
 
-	.globl gUnknown_84E5C60
-gUnknown_84E5C60: @ 0x84E5C60
-	.incbin "baserom_jp.gba", 0x4e5c60, 0x14
+	.globl gMovementTypeFuncs_FaceDownAndLeft
+gMovementTypeFuncs_FaceDownAndLeft: @ 0x84E5C60
+	.4byte MovementType_FaceDownAndLeft_Step0 + 1, MovementType_FaceDownAndLeft_Step1 + 1, MovementType_FaceDownAndLeft_Step2 + 1, MovementType_FaceDownAndLeft_Step3 + 1, MovementType_FaceDownAndLeft_Step4 + 1
+
 
 	.globl gUnknown_84E5C74
 gUnknown_84E5C74: @ 0x84E5C74
 	.incbin "baserom_jp.gba", 0x4e5c74, 0x4
 
-	.globl gUnknown_84E5C78
-gUnknown_84E5C78: @ 0x84E5C78
-	.incbin "baserom_jp.gba", 0x4e5c78, 0x14
+	.globl gMovementTypeFuncs_FaceDownAndRight
+gMovementTypeFuncs_FaceDownAndRight: @ 0x84E5C78
+	.4byte MovementType_FaceDownAndRight_Step0 + 1, MovementType_FaceDownAndRight_Step1 + 1, MovementType_FaceDownAndRight_Step2 + 1, MovementType_FaceDownAndRight_Step3 + 1, MovementType_FaceDownAndRight_Step4 + 1
+
 
 	.globl gUnknown_84E5C8C
 gUnknown_84E5C8C: @ 0x84E5C8C
 	.incbin "baserom_jp.gba", 0x4e5c8c, 0x4
 
-	.globl gUnknown_84E5C90
-gUnknown_84E5C90: @ 0x84E5C90
-	.incbin "baserom_jp.gba", 0x4e5c90, 0x14
+	.globl gMovementTypeFuncs_FaceDownUpAndLeft
+gMovementTypeFuncs_FaceDownUpAndLeft: @ 0x84E5C90
+	.4byte MovementType_FaceDownUpAndLeft_Step0 + 1, MovementType_FaceDownUpAndLeft_Step1 + 1, MovementType_FaceDownUpAndLeft_Step2 + 1, MovementType_FaceDownUpAndLeft_Step3 + 1, MovementType_FaceDownUpAndLeft_Step4 + 1
+
 
 	.globl gUnknown_84E5CA4
 gUnknown_84E5CA4: @ 0x84E5CA4
 	.incbin "baserom_jp.gba", 0x4e5ca4, 0x4
 
-	.globl gUnknown_84E5CA8
-gUnknown_84E5CA8: @ 0x84E5CA8
-	.incbin "baserom_jp.gba", 0x4e5ca8, 0x14
+	.globl gMovementTypeFuncs_FaceDownUpAndRight
+gMovementTypeFuncs_FaceDownUpAndRight: @ 0x84E5CA8
+	.4byte MovementType_FaceDownUpAndRight_Step0 + 1, MovementType_FaceDownUpAndRight_Step1 + 1, MovementType_FaceDownUpAndRight_Step2 + 1, MovementType_FaceDownUpAndRight_Step3 + 1, MovementType_FaceDownUpAndRight_Step4 + 1
+
 
 	.globl gUnknown_84E5CBC
 gUnknown_84E5CBC: @ 0x84E5CBC
 	.incbin "baserom_jp.gba", 0x4e5cbc, 0x4
 
-	.globl gUnknown_84E5CC0
-gUnknown_84E5CC0: @ 0x84E5CC0
-	.incbin "baserom_jp.gba", 0x4e5cc0, 0x14
+	.globl gMovementTypeFuncs_FaceUpLeftAndRight
+gMovementTypeFuncs_FaceUpLeftAndRight: @ 0x84E5CC0
+	.4byte MovementType_FaceUpLeftAndRight_Step0 + 1, MovementType_FaceUpLeftAndRight_Step1 + 1, MovementType_FaceUpLeftAndRight_Step2 + 1, MovementType_FaceUpLeftAndRight_Step3 + 1, MovementType_FaceUpLeftAndRight_Step4 + 1
+
 
 	.globl gUnknown_84E5CD4
 gUnknown_84E5CD4: @ 0x84E5CD4
 	.incbin "baserom_jp.gba", 0x4e5cd4, 0x4
 
-	.globl gUnknown_84E5CD8
-gUnknown_84E5CD8: @ 0x84E5CD8
-	.incbin "baserom_jp.gba", 0x4e5cd8, 0x14
+	.globl gMovementTypeFuncs_FaceDownLeftAndRight
+gMovementTypeFuncs_FaceDownLeftAndRight: @ 0x84E5CD8
+	.4byte MovementType_FaceDownLeftAndRight_Step0 + 1, MovementType_FaceDownLeftAndRight_Step1 + 1, MovementType_FaceDownLeftAndRight_Step2 + 1, MovementType_FaceDownLeftAndRight_Step3 + 1, MovementType_FaceDownLeftAndRight_Step4 + 1
+
 
 	.globl gUnknown_84E5CEC
 gUnknown_84E5CEC: @ 0x84E5CEC
 	.incbin "baserom_jp.gba", 0x4e5cec, 0x4
 
-	.globl gUnknown_84E5CF0
-gUnknown_84E5CF0: @ 0x84E5CF0
-	.incbin "baserom_jp.gba", 0x4e5cf0, 0x10
+	.globl gMovementTypeFuncs_RotateCounterclockwise
+gMovementTypeFuncs_RotateCounterclockwise: @ 0x84E5CF0
+	.4byte MovementType_RotateCounterclockwise_Step0 + 1, MovementType_RotateCounterclockwise_Step1 + 1, MovementType_RotateCounterclockwise_Step2 + 1, MovementType_RotateCounterclockwise_Step3 + 1
+
 
 	.globl gUnknown_84E5D00
 gUnknown_84E5D00: @ 0x84E5D00
 	.incbin "baserom_jp.gba", 0x4e5d00, 0x8
 
-	.globl gUnknown_84E5D08
-gUnknown_84E5D08: @ 0x84E5D08
-	.incbin "baserom_jp.gba", 0x4e5d08, 0x10
+	.globl gMovementTypeFuncs_RotateClockwise
+gMovementTypeFuncs_RotateClockwise: @ 0x84E5D08
+	.4byte MovementType_RotateClockwise_Step0 + 1, MovementType_RotateClockwise_Step1 + 1, MovementType_RotateClockwise_Step2 + 1, MovementType_RotateClockwise_Step3 + 1
+
 
 	.globl gUnknown_84E5D18
 gUnknown_84E5D18: @ 0x84E5D18
 	.incbin "baserom_jp.gba", 0x4e5d18, 0x8
 
-	.globl gUnknown_84E5D20
-gUnknown_84E5D20: @ 0x84E5D20
-	.incbin "baserom_jp.gba", 0x4e5d20, 0x10
+	.globl gMovementTypeFuncs_WalkBackAndForth
+gMovementTypeFuncs_WalkBackAndForth: @ 0x84E5D20
+	.4byte MovementType_WalkBackAndForth_Step0 + 1, MovementType_WalkBackAndForth_Step1 + 1, MovementType_WalkBackAndForth_Step2 + 1, MovementType_WalkBackAndForth_Step3 + 1
 
-	.globl gUnknown_84E5D30
-gUnknown_84E5D30: @ 0x84E5D30
-	.incbin "baserom_jp.gba", 0x4e5d30, 0xc
+
+	.globl gMovementTypeFuncs_WalkSequenceUpRightLeftDown
+gMovementTypeFuncs_WalkSequenceUpRightLeftDown: @ 0x84E5D30
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceUpRightLeftDown_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5D3C
 gUnknown_84E5D3C: @ 0x84E5D3C
 	.incbin "baserom_jp.gba", 0x4e5d3c, 0x4
 
-	.globl gUnknown_84E5D40
-gUnknown_84E5D40: @ 0x84E5D40
-	.incbin "baserom_jp.gba", 0x4e5d40, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceRightLeftDownUp
+gMovementTypeFuncs_WalkSequenceRightLeftDownUp: @ 0x84E5D40
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceRightLeftDownUp_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5D4C
 gUnknown_84E5D4C: @ 0x84E5D4C
 	.incbin "baserom_jp.gba", 0x4e5d4c, 0x4
 
-	.globl gUnknown_84E5D50
-gUnknown_84E5D50: @ 0x84E5D50
-	.incbin "baserom_jp.gba", 0x4e5d50, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceDownUpRightLeft
+gMovementTypeFuncs_WalkSequenceDownUpRightLeft: @ 0x84E5D50
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceDownUpRightLeft_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5D5C
 gUnknown_84E5D5C: @ 0x84E5D5C
 	.incbin "baserom_jp.gba", 0x4e5d5c, 0x4
 
-	.globl gUnknown_84E5D60
-gUnknown_84E5D60: @ 0x84E5D60
-	.incbin "baserom_jp.gba", 0x4e5d60, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceLeftDownUpRight
+gMovementTypeFuncs_WalkSequenceLeftDownUpRight: @ 0x84E5D60
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceLeftDownUpRight_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5D6C
 gUnknown_84E5D6C: @ 0x84E5D6C
 	.incbin "baserom_jp.gba", 0x4e5d6c, 0x4
 
-	.globl gUnknown_84E5D70
-gUnknown_84E5D70: @ 0x84E5D70
-	.incbin "baserom_jp.gba", 0x4e5d70, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceUpLeftRightDown
+gMovementTypeFuncs_WalkSequenceUpLeftRightDown: @ 0x84E5D70
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceUpLeftRightDown_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5D7C
 gUnknown_84E5D7C: @ 0x84E5D7C
 	.incbin "baserom_jp.gba", 0x4e5d7c, 0x4
 
-	.globl gUnknown_84E5D80
-gUnknown_84E5D80: @ 0x84E5D80
-	.incbin "baserom_jp.gba", 0x4e5d80, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceLeftRightDownUp
+gMovementTypeFuncs_WalkSequenceLeftRightDownUp: @ 0x84E5D80
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceLeftRightDownUp_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5D8C
 gUnknown_84E5D8C: @ 0x84E5D8C
 	.incbin "baserom_jp.gba", 0x4e5d8c, 0x4
 
-	.globl gUnknown_84E5D90
-gUnknown_84E5D90: @ 0x84E5D90
-	.incbin "baserom_jp.gba", 0x4e5d90, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceDownUpLeftRight
+gMovementTypeFuncs_WalkSequenceDownUpLeftRight: @ 0x84E5D90
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceDownUpLeftRight_Step1 + 1, MovementType_WalkSequence_Step2 + 1
 
-	.globl gUnknown_84E5D9C
-gUnknown_84E5D9C: @ 0x84E5D9C
-	.incbin "baserom_jp.gba", 0x4e5d9c, 0xc
+
+	.globl gMovementTypeFuncs_WalkSequenceRightDownUpLeft
+gMovementTypeFuncs_WalkSequenceRightDownUpLeft: @ 0x84E5D9C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceRightDownUpLeft_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5DA8
 gUnknown_84E5DA8: @ 0x84E5DA8
 	.incbin "baserom_jp.gba", 0x4e5da8, 0x4
 
-	.globl gUnknown_84E5DAC
-gUnknown_84E5DAC: @ 0x84E5DAC
-	.incbin "baserom_jp.gba", 0x4e5dac, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceLeftUpDownRight
+gMovementTypeFuncs_WalkSequenceLeftUpDownRight: @ 0x84E5DAC
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceLeftUpDownRight_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5DB8
 gUnknown_84E5DB8: @ 0x84E5DB8
 	.incbin "baserom_jp.gba", 0x4e5db8, 0x4
 
-	.globl gUnknown_84E5DBC
-gUnknown_84E5DBC: @ 0x84E5DBC
-	.incbin "baserom_jp.gba", 0x4e5dbc, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceUpDownRightLeft
+gMovementTypeFuncs_WalkSequenceUpDownRightLeft: @ 0x84E5DBC
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceUpDownRightLeft_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5DC8
 gUnknown_84E5DC8: @ 0x84E5DC8
 	.incbin "baserom_jp.gba", 0x4e5dc8, 0x4
 
-	.globl gUnknown_84E5DCC
-gUnknown_84E5DCC: @ 0x84E5DCC
-	.incbin "baserom_jp.gba", 0x4e5dcc, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceRightLeftUpDown
+gMovementTypeFuncs_WalkSequenceRightLeftUpDown: @ 0x84E5DCC
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceRightLeftUpDown_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5DD8
 gUnknown_84E5DD8: @ 0x84E5DD8
 	.incbin "baserom_jp.gba", 0x4e5dd8, 0x4
 
-	.globl gUnknown_84E5DDC
-gUnknown_84E5DDC: @ 0x84E5DDC
-	.incbin "baserom_jp.gba", 0x4e5ddc, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceDownRightLeftUp
+gMovementTypeFuncs_WalkSequenceDownRightLeftUp: @ 0x84E5DDC
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceDownRightLeftUp_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5DE8
 gUnknown_84E5DE8: @ 0x84E5DE8
 	.incbin "baserom_jp.gba", 0x4e5de8, 0x4
 
-	.globl gUnknown_84E5DEC
-gUnknown_84E5DEC: @ 0x84E5DEC
-	.incbin "baserom_jp.gba", 0x4e5dec, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceRightUpDownLeft
+gMovementTypeFuncs_WalkSequenceRightUpDownLeft: @ 0x84E5DEC
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceRightUpDownLeft_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5DF8
 gUnknown_84E5DF8: @ 0x84E5DF8
 	.incbin "baserom_jp.gba", 0x4e5df8, 0x4
 
-	.globl gUnknown_84E5DFC
-gUnknown_84E5DFC: @ 0x84E5DFC
-	.incbin "baserom_jp.gba", 0x4e5dfc, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceUpDownLeftRight
+gMovementTypeFuncs_WalkSequenceUpDownLeftRight: @ 0x84E5DFC
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceUpDownLeftRight_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E08
 gUnknown_84E5E08: @ 0x84E5E08
 	.incbin "baserom_jp.gba", 0x4e5e08, 0x4
 
-	.globl gUnknown_84E5E0C
-gUnknown_84E5E0C: @ 0x84E5E0C
-	.incbin "baserom_jp.gba", 0x4e5e0c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceLeftRightUpDown
+gMovementTypeFuncs_WalkSequenceLeftRightUpDown: @ 0x84E5E0C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceLeftRightUpDown_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E18
 gUnknown_84E5E18: @ 0x84E5E18
 	.incbin "baserom_jp.gba", 0x4e5e18, 0x4
 
-	.globl gUnknown_84E5E1C
-gUnknown_84E5E1C: @ 0x84E5E1C
-	.incbin "baserom_jp.gba", 0x4e5e1c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceDownLeftRightUp
+gMovementTypeFuncs_WalkSequenceDownLeftRightUp: @ 0x84E5E1C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceDownLeftRightUp_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E28
 gUnknown_84E5E28: @ 0x84E5E28
 	.incbin "baserom_jp.gba", 0x4e5e28, 0x4
 
-	.globl gUnknown_84E5E2C
-gUnknown_84E5E2C: @ 0x84E5E2C
-	.incbin "baserom_jp.gba", 0x4e5e2c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceUpLeftDownRight
+gMovementTypeFuncs_WalkSequenceUpLeftDownRight: @ 0x84E5E2C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceUpLeftDownRight_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E38
 gUnknown_84E5E38: @ 0x84E5E38
 	.incbin "baserom_jp.gba", 0x4e5e38, 0x4
 
-	.globl gUnknown_84E5E3C
-gUnknown_84E5E3C: @ 0x84E5E3C
-	.incbin "baserom_jp.gba", 0x4e5e3c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceDownRightUpLeft
+gMovementTypeFuncs_WalkSequenceDownRightUpLeft: @ 0x84E5E3C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceDownRightUpLeft_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E48
 gUnknown_84E5E48: @ 0x84E5E48
 	.incbin "baserom_jp.gba", 0x4e5e48, 0x4
 
-	.globl gUnknown_84E5E4C
-gUnknown_84E5E4C: @ 0x84E5E4C
-	.incbin "baserom_jp.gba", 0x4e5e4c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceLeftDownRightUp
+gMovementTypeFuncs_WalkSequenceLeftDownRightUp: @ 0x84E5E4C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceLeftDownRightUp_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E58
 gUnknown_84E5E58: @ 0x84E5E58
 	.incbin "baserom_jp.gba", 0x4e5e58, 0x4
 
-	.globl gUnknown_84E5E5C
-gUnknown_84E5E5C: @ 0x84E5E5C
-	.incbin "baserom_jp.gba", 0x4e5e5c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceRightUpLeftDown
+gMovementTypeFuncs_WalkSequenceRightUpLeftDown: @ 0x84E5E5C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceRightUpLeftDown_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E68
 gUnknown_84E5E68: @ 0x84E5E68
 	.incbin "baserom_jp.gba", 0x4e5e68, 0x4
 
-	.globl gUnknown_84E5E6C
-gUnknown_84E5E6C: @ 0x84E5E6C
-	.incbin "baserom_jp.gba", 0x4e5e6c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceUpRightDownLeft
+gMovementTypeFuncs_WalkSequenceUpRightDownLeft: @ 0x84E5E6C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceUpRightDownLeft_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E78
 gUnknown_84E5E78: @ 0x84E5E78
 	.incbin "baserom_jp.gba", 0x4e5e78, 0x4
 
-	.globl gUnknown_84E5E7C
-gUnknown_84E5E7C: @ 0x84E5E7C
-	.incbin "baserom_jp.gba", 0x4e5e7c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceDownLeftUpRight
+gMovementTypeFuncs_WalkSequenceDownLeftUpRight: @ 0x84E5E7C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceDownLeftUpRight_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E88
 gUnknown_84E5E88: @ 0x84E5E88
 	.incbin "baserom_jp.gba", 0x4e5e88, 0x4
 
-	.globl gUnknown_84E5E8C
-gUnknown_84E5E8C: @ 0x84E5E8C
-	.incbin "baserom_jp.gba", 0x4e5e8c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceLeftUpRightDown
+gMovementTypeFuncs_WalkSequenceLeftUpRightDown: @ 0x84E5E8C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceLeftUpRightDown_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5E98
 gUnknown_84E5E98: @ 0x84E5E98
 	.incbin "baserom_jp.gba", 0x4e5e98, 0x4
 
-	.globl gUnknown_84E5E9C
-gUnknown_84E5E9C: @ 0x84E5E9C
-	.incbin "baserom_jp.gba", 0x4e5e9c, 0xc
+	.globl gMovementTypeFuncs_WalkSequenceRightDownLeftUp
+gMovementTypeFuncs_WalkSequenceRightDownLeftUp: @ 0x84E5E9C
+	.4byte MovementType_WalkSequence_Step0 + 1, MovementType_WalkSequenceRightDownLeftUp_Step1 + 1, MovementType_WalkSequence_Step2 + 1
+
 
 	.globl gUnknown_84E5EA8
 gUnknown_84E5EA8: @ 0x84E5EA8
 	.incbin "baserom_jp.gba", 0x4e5ea8, 0x4
 
-	.globl gUnknown_84E5EAC
-gUnknown_84E5EAC: @ 0x84E5EAC
-	.incbin "baserom_jp.gba", 0x4e5eac, 0xc
+	.globl gMovementTypeFuncs_CopyPlayer
+gMovementTypeFuncs_CopyPlayer: @ 0x84E5EAC
+	.4byte MovementType_CopyPlayer_Step0 + 1, MovementType_CopyPlayer_Step1 + 1, MovementType_CopyPlayer_Step2 + 1
+
 
 	.globl gUnknown_84E5EB8
 gUnknown_84E5EB8: @ 0x84E5EB8
 	.incbin "baserom_jp.gba", 0x4e5eb8, 0x2c
 
-	.globl gUnknown_84E5EE4
-gUnknown_84E5EE4: @ 0x84E5EE4
-	.incbin "baserom_jp.gba", 0x4e5ee4, 0xc
+	.globl gMovementTypeFuncs_CopyPlayerInGrass
+gMovementTypeFuncs_CopyPlayerInGrass: @ 0x84E5EE4
+	.4byte MovementType_CopyPlayer_Step0 + 1, MovementType_CopyPlayerInGrass_Step1 + 1, MovementType_CopyPlayer_Step2 + 1
+
 
 	.globl gUnknown_84E5EF0
 gUnknown_84E5EF0: @ 0x84E5EF0
 	.incbin "baserom_jp.gba", 0x4e5ef0, 0x4
 
-	.globl gUnknown_84E5EF4
-gUnknown_84E5EF4: @ 0x84E5EF4
-	.incbin "baserom_jp.gba", 0x4e5ef4, 0x8
+	.globl gMovementTypeFuncs_WalkInPlace
+gMovementTypeFuncs_WalkInPlace: @ 0x84E5EF4
+	.4byte MovementType_WalkInPlace_Step0 + 1, MovementType_MoveInPlace_Step1 + 1
 
-	.globl gUnknown_84E5EFC
-gUnknown_84E5EFC: @ 0x84E5EFC
-	.incbin "baserom_jp.gba", 0x4e5efc, 0x8
 
-	.globl gUnknown_84E5F04
-gUnknown_84E5F04: @ 0x84E5F04
-	.incbin "baserom_jp.gba", 0x4e5f04, 0x8
+	.globl gMovementTypeFuncs_WalkSlowlyInPlace
+gMovementTypeFuncs_WalkSlowlyInPlace: @ 0x84E5EFC
+	.4byte MovementType_WalkSlowlyInPlace_Step0 + 1, MovementType_MoveInPlace_Step1 + 1
 
-	.globl gUnknown_84E5F0C
-gUnknown_84E5F0C: @ 0x84E5F0C
-	.incbin "baserom_jp.gba", 0x4e5f0c, 0x8
 
-	.globl gUnknown_84E5F14
-gUnknown_84E5F14: @ 0x84E5F14
-	.incbin "baserom_jp.gba", 0x4e5f14, 0xc
+	.globl gMovementTypeFuncs_JogInPlace
+gMovementTypeFuncs_JogInPlace: @ 0x84E5F04
+	.4byte MovementType_JogInPlace_Step0 + 1, MovementType_MoveInPlace_Step1 + 1
+
+
+	.globl gMovementTypeFuncs_RunInPlace
+gMovementTypeFuncs_RunInPlace: @ 0x84E5F0C
+	.4byte MovementType_RunInPlace_Step0 + 1, MovementType_MoveInPlace_Step1 + 1
+
+
+	.globl gMovementTypeFuncs_Invisible
+gMovementTypeFuncs_Invisible: @ 0x84E5F14
+	.4byte MovementType_Invisible_Step0 + 1, MovementType_Invisible_Step1 + 1, MovementType_FaceDirection_Step2 + 1
+
 
 	.globl gUnknown_84E5F20
 gUnknown_84E5F20: @ 0x84E5F20
