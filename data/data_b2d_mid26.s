@@ -203,9 +203,141 @@ gUnknown_84FD010: @ 0x4FD010
 	.incbin "baserom_jp.gba", 0x4fd010, 0x30
 
 	.globl gUnknown_84FD040
-gUnknown_84FD040: @ 0x4FD040
-	.incbin "baserom_jp.gba", 0x4fd040, 0x210
-
+	.globl sOam_MoveEffectMons
+gUnknown_84FD040:
+sOam_MoveEffectMons: @ 0x84FD040
+	.4byte 0x80004000
+	.hword 0x0800, 0x0000
+	.4byte 0xC0004000
+	.hword 0x0800, 0x0000
+	.4byte 0x00008000
+	.hword 0x0800, 0x0000
+	.4byte 0x40008000
+	.hword 0x0800, 0x0000
+	.4byte 0x80008000
+	.hword 0x0800, 0x0000
+	.4byte 0xC0008000
+	.hword 0x0800, 0x0000
+	.4byte 0x00000100
+	.hword 0x0800, 0x0000
+	.4byte 0x40000100
+	.hword 0x0800, 0x0000
+	.4byte 0x80000100
+	.hword 0x0800, 0x0000
+	.4byte 0xC0000100
+	.hword 0x0800, 0x0000
+	.4byte 0x00004100
+	.hword 0x0800, 0x0000
+	.4byte 0x40004100
+	.hword 0x0800, 0x0000
+	.4byte 0x80004100
+	.hword 0x0800, 0x0000
+	.4byte 0xC0004100
+	.hword 0x0800, 0x0000
+	.4byte 0x00008100
+	.hword 0x0800, 0x0000
+	.4byte 0x40008100
+	.hword 0x0800, 0x0000
+	.4byte 0x80008100
+	.hword 0x0800, 0x0000
+	.4byte 0xC0008100
+	.hword 0x0800, 0x0000
+	.4byte 0x00000300
+	.hword 0x0800, 0x0000
+	.4byte 0x40000300
+	.hword 0x0800, 0x0000
+	.4byte 0x80000300
+	.hword 0x0800, 0x0000
+	.4byte 0xC0000300
+	.hword 0x0800, 0x0000
+	.4byte 0x00004300
+	.hword 0x0800, 0x0000
+	.4byte 0x40004300
+	.hword 0x0800, 0x0000
+	.4byte 0x80004300
+	.hword 0x0800, 0x0000
+	.4byte 0xC0004300
+	.hword 0x0800, 0x0000
+	.4byte 0x00008300
+	.hword 0x0800, 0x0000
+	.4byte 0x40008300
+	.hword 0x0800, 0x0000
+	.4byte 0x80008300
+	.hword 0x0800, 0x0000
+	.4byte 0xC0008300
+	.hword 0x0800, 0x0000
+	.4byte 0x00000400
+	.hword 0x0800, 0x0000
+	.4byte 0x40000400
+	.hword 0x0800, 0x0000
+	.4byte 0x80000400
+	.hword 0x0800, 0x0000
+	.4byte 0xC0000400
+	.hword 0x0800, 0x0000
+	.4byte 0x00004400
+	.hword 0x0800, 0x0000
+	.4byte 0x40004400
+	.hword 0x0800, 0x0000
+	.4byte 0x80004400
+	.hword 0x0800, 0x0000
+	.4byte 0xC0004400
+	.hword 0x0800, 0x0000
+	.4byte 0x00008400
+	.hword 0x0800, 0x0000
+	.4byte 0x40008400
+	.hword 0x0800, 0x0000
+	.4byte 0x80008400
+	.hword 0x0800, 0x0000
+	.4byte 0xC0008400
+	.hword 0x0800, 0x0000
+	.4byte 0x00000500
+	.hword 0x0800, 0x0000
+	.4byte 0x40000500
+	.hword 0x0800, 0x0000
+	.4byte 0x80000500
+	.hword 0x0800, 0x0000
+	.4byte 0xC0000500
+	.hword 0x0800, 0x0000
+	.4byte 0x00004500
+	.hword 0x0800, 0x0000
+	.4byte 0x40004500
+	.hword 0x0800, 0x0000
+	.4byte 0x80004500
+	.hword 0x0800, 0x0000
+	.4byte 0xC0004500
+	.hword 0x0800, 0x0000
+	.4byte 0x00008500
+	.hword 0x0800, 0x0000
+	.4byte 0x40008500
+	.hword 0x0800, 0x0000
+	.4byte 0x80008500
+	.hword 0x0800, 0x0000
+	.4byte 0xC0008500
+	.hword 0x0800, 0x0000
+	.4byte 0x00000700
+	.hword 0x0800, 0x0000
+	.4byte 0x40000700
+	.hword 0x0800, 0x0000
+	.4byte 0x80000700
+	.hword 0x0800, 0x0000
+	.4byte 0xC0000700
+	.hword 0x0800, 0x0000
+	.4byte 0x00004700
+	.hword 0x0800, 0x0000
+	.4byte 0x40004700
+	.hword 0x0800, 0x0000
+	.4byte 0x80004700
+	.hword 0x0800, 0x0000
+	.4byte 0xC0004700
+	.hword 0x0800, 0x0000
+	.4byte 0x00008700
+	.hword 0x0800, 0x0000
+	.4byte 0x40008700
+	.hword 0x0800, 0x0000
+	.4byte 0x80008700
+	.hword 0x0800, 0x0000
+	.4byte 0xC0008700
+	.hword 0x0800, 0x0000
 
 	.globl gBattleAnimPicTable
 gBattleAnimPicTable: @ 0x004FD250
@@ -487,7 +619,8 @@ gUnknown_84FE5A4: @ 0x84FE5A4
 
 	.globl sBattlerCoords
 sBattlerCoords: @ 0x84FE664
-	.incbin "baserom_jp.gba", 0x4fe664, 0x20
+sBattlerCoords: @ 0x84FE664
+	.4byte 0x00005048, 0x000028B0, 0x00002830, 0x00005070, 0x00005020, 0x000028C8, 0x0000585A, 0x00002098
 
 	.globl gCastformFrontSpriteCoords
 gCastformFrontSpriteCoords: @ 0x84FE684
@@ -514,11 +647,20 @@ sCastformBackSpriteYCoords: @ 0x84FE698
 
 	.globl sSpriteTemplates_MoveEffectMons
 sSpriteTemplates_MoveEffectMons: @ 0x84FE69C
-	.incbin "baserom_jp.gba", 0x4fe69c, 0x30
+sSpriteTemplates_MoveEffectMons: @ 0x84FE69C
+	.hword 0xD755, 0xD755
+	.4byte sOam_MoveEffectMons + 0x48, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0xD756, 0xD756
+	.4byte sOam_MoveEffectMons + 0x48, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl sSpriteSheets_MoveEffectMons
 sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
-	.incbin "baserom_jp.gba", 0x4FE6CC, 0x10
+sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
+	.4byte 0x082FAF64
+	.hword 0x0800, 0xD755
+	.4byte 0x082FAF64
+	.hword 0x0800, 0xD756
+
 	.globl PETALBURG_CITY_EventObjects
 PETALBURG_CITY_EventObjects: @ 0x084FE6DC
 	object_event 1, 26, 0, 16, 18, 3, 2, 1, 1, 0, 0, PetalburgCity_EventScript_001DB919, 0x02D8
@@ -5993,11 +6135,15 @@ gMapEvents_SEAFLOOR_CAVERN_ROOM4: @ 0x0850E110
 
 	.globl sFrozenIceCubeSubspriteTable
 sFrozenIceCubeSubspriteTable: @ 0x851769C
-	.incbin "baserom_jp.gba", 0x51769c, 0x8
+sFrozenIceCubeSubspriteTable: @ 0x851769C
+	.4byte 4
+	.4byte 0x0851768C
 
 	.globl sFrozenIceCubeSpriteTemplate
 sFrozenIceCubeSpriteTemplate: @ 0x85176A4
-	.incbin "baserom_jp.gba", 0x5176a4, 0x18
+sFrozenIceCubeSpriteTemplate: @ 0x85176A4
+	.hword 0x271A, 0x271A
+	.4byte sOam_MoveEffectMons + 0x108, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl sFlashingCircleImpactSpriteTemplate
 sFlashingCircleImpactSpriteTemplate: @ 0x85176BC
@@ -6205,11 +6351,16 @@ sFlashLevelToRadius: @ 0x852AB00
 
 	.globl gMaxFlashLevel
 gMaxFlashLevel: @ 0x852AB14
-	.incbin "baserom_jp.gba", 0x52ab14, 0x4
+gMaxFlashLevel: @ 0x852AB14
+	.4byte 8
 
 	.globl sFlashEffectParams
 sFlashEffectParams: @ 0x852AB18
-	.incbin "baserom_jp.gba", 0x52ab18, 0xc
+sFlashEffectParams: @ 0x852AB18
+	.4byte 0x04000040  @ dmaDest
+	.4byte 0xA2600001  @ dmaControl
+	.byte 0x01  @ initState
+	.byte 0x00, 0x00, 0x00
 
 	.globl sBattleTransitionTable_Wild
 sBattleTransitionTable_Wild: @ 0x852AB24
