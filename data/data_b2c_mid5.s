@@ -9,38 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sMatchCallOptionTexts
-sMatchCallOptionTexts: @ 0x85F4188
-	.incbin "baserom_jp.gba", 0x5f4188, 0xc
-
-	.globl sText_CallingDots
-sText_CallingDots: @ 0x85F4194
-	.string "·{PAUSE 4}·{PAUSE 4}·{PAUSE 4}·{PAUSE 4}·\p"
-	.string "$　"
-
-	.globl sCallMsgBoxWindowTemplate
-sCallMsgBoxWindowTemplate: @ 0x85F41A8
-	.incbin "baserom_jp.gba", 0x5f41a8, 0x8
-
-	.globl sOptionsCursorSpriteSheets
-sOptionsCursorSpriteSheets: @ 0x85F41B0
-	.incbin "baserom_jp.gba", 0x5f41b0, 0x8
-
-	.globl sOptionsCursorSpritePalettes
-	.globl sOptionsCursorSpritePalettes
-sOptionsCursorSpritePalettes: @ 0x5F41B8
-	.incbin "graphics/misc/sOptionsCursorSpritePalettes.bin"
-
-	.globl sOptionsCursorOamData
-sOptionsCursorOamData: @ 0x5F41C8
-	.incbin "baserom_jp.gba", 0x5f41c8, 0x8
-
-
-	.globl sOptionsCursorSpriteTemplate
-	.globl sOptionsCursorSpriteTemplate
-sOptionsCursorSpriteTemplate: @ 0x5F41D0
-	.incbin "baserom_jp.gba", 0x5f41d0, 0x18
-
 	.globl sTrainerPicOamData
 sTrainerPicOamData: @ 0x5F41E8
 	.incbin "baserom_jp.gba", 0x5f41e8, 0x8

@@ -197,13 +197,65 @@ static const struct WindowTemplate sMatchCallInfoBoxWindowTemplate =
     .baseBlock = 38
 };
 
-extern const u8 *const sMatchCallOptionTexts[MATCH_CALL_OPTION_COUNT];
-extern const u8 sText_CallingDots[];
-extern const struct WindowTemplate sCallMsgBoxWindowTemplate;
-extern const struct CompressedSpriteSheet sOptionsCursorSpriteSheets[1];
-extern const struct SpritePalette sOptionsCursorSpritePalettes[2];
-extern const struct OamData sOptionsCursorOamData;
-extern const struct SpriteTemplate sOptionsCursorSpriteTemplate;
+// JP stores the three option labels inside gText_Unknown
+// ("ふめい$よびだし$しょうさい$もどる") as $-separated substrings.
+static const u8 *const sMatchCallOptionTexts[MATCH_CALL_OPTION_COUNT] =
+{
+    [MATCH_CALL_OPTION_CALL]   = gText_Unknown + 4,
+    [MATCH_CALL_OPTION_CHECK]  = gText_Unknown + 9,
+    [MATCH_CALL_OPTION_CANCEL] = gText_Unknown + 15,
+};
+
+// JP text carries its own $ and trailing full-width space (no auto
+// terminator), so __() is used to keep the 20-byte slot.
+static const u8 sText_CallingDots[] = __("·{PAUSE 4}·{PAUSE 4}·{PAUSE 4}·{PAUSE 4}·\p$　");
+
+static const struct WindowTemplate sCallMsgBoxWindowTemplate =
+{
+    .bg = 1,
+    .tilemapLeft = 1,
+    .tilemapTop = 12,
+    .width = 28,
+    .height = 4,
+    .paletteNum = 1,
+    .baseBlock = 10
+};
+
+static const struct CompressedSpriteSheet sOptionsCursorSpriteSheets[1] =
+{
+    {sOptionsCursor_Gfx, 0x40, GFXTAG_CURSOR}
+};
+
+static const struct SpritePalette sOptionsCursorSpritePalettes[2] =
+{
+    {sOptionsCursor_Pal, PALTAG_CURSOR}
+};
+
+static const struct OamData sOptionsCursorOamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x16),
+    .x = 0,
+    .size = SPRITE_SIZE(8x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+static const struct SpriteTemplate sOptionsCursorSpriteTemplate =
+{
+    .tileTag = GFXTAG_CURSOR,
+    .paletteTag = PALTAG_CURSOR,
+    .oam = &sOptionsCursorOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_OptionsCursor,
+};
+
 extern const struct OamData sTrainerPicOamData;
 extern const struct SpriteTemplate sTrainerPicSpriteTemplate;
 extern const u8 gText_NumberRegistered[];
