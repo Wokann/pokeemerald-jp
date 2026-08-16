@@ -10200,7 +10200,7 @@ slot_machine.s
 0812dc60 ClearReelTimeWindowTilemap ClearReelTimeWindowTilemap
 0812dc90 OpenInfoBox OpenInfoBox
 0812dcc4 slot_machine.s IsInfoBoxClosed
-0812dce4 sub_0812DCE4_jp Task_DigitalDisplay
+0812dce4 Task_InfoBox Task_InfoBox
 0812dd14 InfoBox_FadeIn InfoBox_FadeIn
 0812dd38 InfoBox_WaitFade InfoBox_WaitFade
 0812dd58 InfoBox_DrawWindow InfoBox_DrawWindow

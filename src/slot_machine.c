@@ -1091,7 +1091,18 @@ static void Task_SlotMachine(u8 taskId)
 void LoadPikaPowerMeter(u8 bolts);
 void CreateDigitalDisplayScene(u8 id);
 bool8 IsDigitalDisplayAnimFinished(void);
-bool8 IsInfoBoxClosed(void);
+static bool8 IsInfoBoxClosed(void);
+static void OpenInfoBox(u8 digDisplayId);
+static void Task_InfoBox(u8 taskId);
+static void InfoBox_FadeIn(struct Task *task);
+static void InfoBox_WaitFade(struct Task *task);
+static void InfoBox_DrawWindow(struct Task *task);
+static void InfoBox_AddText(struct Task *task);
+static void InfoBox_WaitInput(struct Task *task);
+static void InfoBox_LoadSlotMachineTilemap(struct Task *task);
+static void InfoBox_CreateDigitalDisplay(struct Task *task);
+static void InfoBox_LoadPikaPowerMeter(struct Task *task);
+static void InfoBox_FreeTask(struct Task *task);
 extern const u8 gText_YouDontHaveThreeCoins[];
 extern const u8 gText_YouveGot9999Coins[];
 extern const u8 gText_YouveRunOutOfCoins[];
@@ -4459,139 +4470,62 @@ __attribute__((naked)) void ClearReelTimeWindowTilemap(s16 a0)
     );
 }
 
-__attribute__((naked)) void OpenInfoBox(u8 digDisplayId)
+#define tState data[0]
+
+__attribute__((section(".rodata.sInfoBoxTasks")))
+static void (*const sInfoBoxTasks[])(struct Task *task) =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _0812DCBC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0812DCC0\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0xa]\n\t"
-        "	bl _call_via_r5\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DCBC: .4byte Task_DigitalDisplay + 1\n\t"
-        "_0812DCC0: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    InfoBox_FadeIn,
+    InfoBox_WaitFade,
+    InfoBox_DrawWindow,
+    InfoBox_WaitFade,
+    InfoBox_AddText,
+    InfoBox_WaitFade,
+    InfoBox_WaitInput,
+    InfoBox_WaitFade,
+    InfoBox_LoadSlotMachineTilemap,
+    InfoBox_WaitFade,
+    InfoBox_CreateDigitalDisplay,
+    InfoBox_WaitFade,
+    InfoBox_LoadPikaPowerMeter,
+    InfoBox_WaitFade,
+    InfoBox_FreeTask,
+};
+
+// Info Box is the screen shown when Select is pressed
+static void OpenInfoBox(u8 digDisplayId)
+{
+    u8 taskId = CreateTask(Task_InfoBox, 1);
+    gTasks[taskId].data[1] = digDisplayId;
+    Task_InfoBox(taskId);
 }
 
-__attribute__((naked)) bool8 IsInfoBoxClosed(void)
+static bool8 IsInfoBoxClosed(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812DCD8\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _0812DCDC\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812DCDE\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DCD8: .4byte Task_DigitalDisplay + 1\n\t"
-        "_0812DCDC:\n\t"
-        "	movs r0, #1\n\t"
-        "_0812DCDE:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FindTaskIdByFunc(Task_InfoBox) == TASK_NONE)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void Task_DigitalDisplay(u8 taskId)
+static void Task_InfoBox(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _0812DD0C\n\t"
-        "	ldr r2, _0812DD10\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DD0C: .4byte sDigitalDisplayTasks\n\t"
-        "_0812DD10: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    sInfoBoxTasks[gTasks[taskId].tState](&gTasks[taskId]);
 }
 
-__attribute__((naked)) void InfoBox_FadeIn(struct Task *task)
+static void InfoBox_FadeIn(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    task->tState++;
 }
 
-__attribute__((naked)) void InfoBox_WaitFade(struct Task *task)
+static void InfoBox_WaitFade(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _0812DD54\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812DD4E\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "_0812DD4E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DD54: .4byte gPaletteFade\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+        task->tState++;
 }
+
+#undef tState
 
 __attribute__((naked)) void InfoBox_DrawWindow(struct Task *task)
 {
@@ -4790,7 +4724,7 @@ __attribute__((naked)) void InfoBox_FreeTask(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812DEA0: .4byte Task_DigitalDisplay + 1\n\t"
+        "_0812DEA0: .4byte Task_InfoBox + 1\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -7525,7 +7525,7 @@ SECTIONS {
         src/slot_machine.o(.text.ClearReelTimeWindowTilemap);
         src/slot_machine.o(.text.OpenInfoBox);
         src/slot_machine.o(.text.IsInfoBoxClosed);
-        src/slot_machine.o(.text.Task_DigitalDisplay);
+        src/slot_machine.o(.text.Task_InfoBox);
         src/slot_machine.o(.text.InfoBox_FadeIn);
         src/slot_machine.o(.text.InfoBox_WaitFade);
         src/slot_machine.o(.text.InfoBox_DrawWindow);
@@ -9354,7 +9354,8 @@ SECTIONS {
         src/slot_machine.o(.rodata.sReelTimePikachuAnimIds);
         src/slot_machine.o(.rodata.sReelTimeBoltDelays);
         src/slot_machine.o(.rodata.sPikachuAuraFlashDelays);
-        data/data_b2d_mid61.o(.rodata.8584558);
+        src/slot_machine.o(.rodata.sInfoBoxTasks);
+        data/data_b2d_mid61.o(.rodata.8584594);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/slot_machine.o(.rodata.sReelSymbols);
