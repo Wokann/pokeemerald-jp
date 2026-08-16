@@ -7472,49 +7472,13 @@ u8 GetDirectionToFace(s16 x, s16 y, s16 targetX, s16 targetY)
     return DIR_SOUTH;
 }
 
-__attribute__((naked)) void SetTrainerMovementType(struct ObjectEvent *objectEvent, u8 movementType)
+void SetTrainerMovementType(struct ObjectEvent *objectEvent, u8 movementType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	mov ip, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	strb r1, [r0, #6]\n\t"
-        "	adds r0, #0x21\n\t"
-        "	strb r3, [r0]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r3, [r0]\n\t"
-        "	ldr r4, _080924E0\n\t"
-        "	mov r0, ip\n\t"
-        "	ldrb r2, [r0, #4]\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _080924E4\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	str r1, [r0]\n\t"
-        "	mov r0, ip\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r3, [r0, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080924E0: .4byte gSprites\n\t"
-        "_080924E4: .4byte gUnknown_84DD88C\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->movementType = movementType;
+    objectEvent->directionSequenceIndex = 0;
+    objectEvent->playerCopyableMovement = 0;
+    gSprites[objectEvent->spriteId].callback = gUnknown_84DD88C[movementType];
+    gSprites[objectEvent->spriteId].sTypeFuncId = 0;
 }
 
 __attribute__((naked)) void GroundEffect_DeepSandTracks(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -15072,42 +15036,12 @@ __attribute__((naked)) void FreezeEventObject(struct ObjectEvent *objectEvent)
     );
 }
 
-__attribute__((naked)) void FreezeObjectEvents(void)
+void FreezeObjectEvents(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _08096E38\n\t"
-        "_08096E0A:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096E28\n\t"
-        "	ldr r0, _08096E3C\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _08096E28\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl FreezeEventObject\n\t"
-        "_08096E28:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _08096E0A\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096E38: .4byte gObjectEvents\n\t"
-        "_08096E3C: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+        if (gObjectEvents[i].active && i != gPlayerAvatar.objectEventId)
+            FreezeEventObject(&gObjectEvents[i]);
 }
 
 __attribute__((naked)) void FreezeEventObjectsExceptOne(u8 objectEventId)
@@ -15211,37 +15145,12 @@ __attribute__((naked)) void UnfreezeEventObject(struct ObjectEvent *objectEvent)
     );
 }
 
-__attribute__((naked)) void UnfreezeObjectEvents(void)
+void UnfreezeObjectEvents(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _08096F18\n\t"
-        "_08096EF2:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08096F08\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl UnfreezeEventObject\n\t"
-        "_08096F08:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _08096EF2\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08096F18: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+        if (gObjectEvents[i].active)
+            UnfreezeEventObject(&gObjectEvents[i]);
 }
 
 static void Step1(struct Sprite *sprite, u8 dir)
