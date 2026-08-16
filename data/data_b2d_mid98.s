@@ -486,11 +486,11 @@ sDummyPicData: @ 0x85D3AB8
 
 	.globl sOamData_Normal
 sOamData_Normal: @ 0x85D3AC4
-	.incbin "baserom_jp.gba", 0x5d3ac4, 0x8
+	.byte 0x00, 0x00, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00
 
 	.globl sOamData_Affine
 sOamData_Affine: @ 0x85D3ACC
-	.incbin "baserom_jp.gba", 0x5d3acc, 0x8
+	.byte 0x00, 0x01, 0x00, 0xC0, 0x00, 0x00, 0x00, 0x00
 
 	.globl gUnknown_85D3AD4
 gUnknown_85D3AD4: @ 0x85D3AD4
@@ -729,7 +729,7 @@ sBattlePalaceLatePrizes: @ 0x85D6900
 
 	.globl sWinStreakFlags
 sWinStreakFlags: @ 0x85D6914
-	.incbin "baserom_jp.gba", 0x5d6914, 0x10
+	.4byte 0x00000010, 0x00000020, 0x00400000, 0x00800000
 
 	.globl sWinStreakMasks
 sWinStreakMasks: @ 0x85D6924
