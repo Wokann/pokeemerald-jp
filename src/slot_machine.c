@@ -1079,6 +1079,9 @@ void CheckMatch(void);
 void AwardPayout(void);
 void FlashSlotMachineLights(void);
 void AddPikaPowerBolt(u8 bolts);
+void FlashMatchLine(u8 spriteId);
+u8 GetSymbolAtRest(u8 reelIndex, s16 row);
+u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -2041,225 +2044,118 @@ __attribute__((naked)) u16 ReelTimeSpeed(void)
 }
 
 
-__attribute__((naked)) void CheckMatch(void)
+
+__attribute__((section(".rodata.sSlotMatchFlags")))
+static const u16 sSlotMatchFlags[] = {
+    [MATCH_CHERRY]        = 1 << MATCH_CHERRY,
+    [MATCH_TOPBOT_CHERRY] = 1 << MATCH_TOPBOT_CHERRY,
+    [MATCH_REPLAY]        = 1 << MATCH_REPLAY,
+    [MATCH_LOTAD]         = 1 << MATCH_LOTAD,
+    [MATCH_AZURILL]       = 1 << MATCH_AZURILL,
+    [MATCH_POWER]         = 1 << MATCH_POWER,
+    [MATCH_MIXED_7]       = 1 << MATCH_MIXED_7,
+    [MATCH_RED_7]         = 1 << MATCH_RED_7,
+    [MATCH_BLUE_7]        = 1 << MATCH_BLUE_7,
+};
+
+__attribute__((section(".rodata.sSlotPayouts")))
+static const u16 sSlotPayouts[] = {
+    [MATCH_CHERRY]        = 2,
+    [MATCH_TOPBOT_CHERRY] = 4,
+    [MATCH_REPLAY]        = 0,
+    [MATCH_LOTAD]         = 6,
+    [MATCH_AZURILL]       = 12,
+    [MATCH_POWER]         = 3,
+    [MATCH_MIXED_7]       = 90,
+    [MATCH_RED_7]         = 300,
+    [MATCH_BLUE_7]        = 300,
+};
+
+static void CheckMatch(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812B868\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	bl CheckMatch_CenterRow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _0812B854\n\t"
-        "	bl CheckMatch_TopAndBottom\n\t"
-        "_0812B854:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	ble _0812B862\n\t"
-        "	bl CheckMatch_Diagonals\n\t"
-        "_0812B862:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B868: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->matches = 0;
+    CheckMatch_CenterRow();
+    if (sSlotMachine->bet > 1)
+        CheckMatch_TopAndBottom();
+    if (sSlotMachine->bet > 2)
+        CheckMatch_Diagonals();
 }
 
-__attribute__((naked)) void CheckMatch_CenterRow(u8 taskId)
+static void CheckMatch_CenterRow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetMatchFromSymbolsInRow\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #9\n\t"
-        "	beq _0812B8CC\n\t"
-        "	ldr r0, _0812B8D4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _0812B8D8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r3, [r2, #0xe]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldr r0, _0812B8DC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_0812CF44\n\t"
-        "_0812B8CC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B8D4: .4byte sSlotMachine\n\t"
-        "_0812B8D8: .4byte gUnknown_85847AC\n\t"
-        "_0812B8DC: .4byte gUnknown_858479A\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 sym1, sym2, sym3, match;
+
+    sym1 = GetSymbolAtRest(LEFT_REEL, 2);
+    sym2 = GetSymbolAtRest(MIDDLE_REEL, 2);
+    sym3 = GetSymbolAtRest(RIGHT_REEL, 2);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
+    {
+        sSlotMachine->payout += sSlotPayouts[match];
+        sSlotMachine->matches |= sSlotMatchFlags[match];
+        FlashMatchLine(MATCH_MIDDLE_ROW);
+    }
 }
 
-__attribute__((naked)) void CheckMatch_TopAndBottom(u8 taskId)
+static void CheckMatch_TopAndBottom(void)
+{
+    u8 sym1, sym2, sym3, match;
+
+    sym1 = GetSymbolAtRest(LEFT_REEL, 1);
+    sym2 = GetSymbolAtRest(MIDDLE_REEL, 1);
+    sym3 = GetSymbolAtRest(RIGHT_REEL, 1);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
+    {
+        if (match == MATCH_CHERRY)
+            match = MATCH_TOPBOT_CHERRY;
+        sSlotMachine->payout += sSlotPayouts[match];
+        sSlotMachine->matches |= sSlotMatchFlags[match];
+        FlashMatchLine(MATCH_TOP_ROW);
+    }
+    sym1 = GetSymbolAtRest(LEFT_REEL, 3);
+    sym2 = GetSymbolAtRest(MIDDLE_REEL, 3);
+    sym3 = GetSymbolAtRest(RIGHT_REEL, 3);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
+    {
+        if (match == MATCH_CHERRY)
+            match = MATCH_TOPBOT_CHERRY;
+        sSlotMachine->payout += sSlotPayouts[match];
+        sSlotMachine->matches |= sSlotMatchFlags[match];
+        FlashMatchLine(MATCH_BOTTOM_ROW);
+    }
+}
+
+
+
+
+
+
+
+__attribute__((naked)) void CheckMatch_Diagonals(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, r5, lr}\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #1\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetMatchFromSymbolsInRow\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #9\n\t"
-        "	beq _0812B940\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812B91C\n\t"
-        "	movs r1, #1\n\t"
-        "_0812B91C:\n\t"
-        "	ldr r0, _0812B9A4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _0812B9A8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r3, [r2, #0xe]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldr r0, _0812B9AC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_0812CF44\n\t"
-        "_0812B940:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetMatchFromSymbolsInRow\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #9\n\t"
-        "	beq _0812B99E\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812B97A\n\t"
-        "	movs r1, #1\n\t"
-        "_0812B97A:\n\t"
-        "	ldr r0, _0812B9A4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _0812B9A8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r3, [r2, #0xe]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldr r0, _0812B9AC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_0812CF44\n\t"
-        "_0812B99E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B9A4: .4byte sSlotMachine\n\t"
-        "_0812B9A8: .4byte gUnknown_85847AC\n\t"
-        "_0812B9AC: .4byte gUnknown_858479A\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void CheckMatch_Diagonals(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
+        "	bl GetSymbolAtRest\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	movs r0, #1\n\t"
         "	movs r1, #2\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
+        "	bl GetSymbolAtRest\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	movs r0, #2\n\t"
         "	movs r1, #3\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
+        "	bl GetSymbolAtRest\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r2, r0, #0x18\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl GetMatchFromSymbolsInRow\n\t"
+        "	bl GetMatchFromSymbols\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r1, r0, #0x18\n\t"
         "	cmp r1, #9\n\t"
@@ -2287,22 +2183,22 @@ __attribute__((naked)) void CheckMatch_Diagonals(u8 taskId)
         "_0812BA0E:\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #3\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
+        "	bl GetSymbolAtRest\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	movs r0, #1\n\t"
         "	movs r1, #2\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
+        "	bl GetSymbolAtRest\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	movs r0, #2\n\t"
         "	movs r1, #1\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
+        "	bl GetSymbolAtRest\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r2, r0, #0x18\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl GetMatchFromSymbolsInRow\n\t"
+        "	bl GetMatchFromSymbols\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r1, r0, #0x18\n\t"
         "	cmp r1, #9\n\t"
@@ -2333,13 +2229,13 @@ __attribute__((naked)) void CheckMatch_Diagonals(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812BA70: .4byte sSlotMachine\n\t"
-        "_0812BA74: .4byte gUnknown_85847AC\n\t"
-        "_0812BA78: .4byte gUnknown_858479A\n\t"
+        "_0812BA74: .4byte sSlotPayouts\n\t"
+        "_0812BA78: .4byte sSlotMatchFlags\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) u8 GetMatchFromSymbolsInRow(u8 a)
+__attribute__((naked)) u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2672,7 +2568,7 @@ static const bool8 (*const sPayoutTasks[])(struct Task *task) =
     [PAYOUT_TASK_FREE]        = PayoutTask_Free,
 };
 
-__attribute__((naked)) u8 GetNearbyTag_Quantized(u8 a)
+__attribute__((naked)) u8 GetSymbolAtRest(u8 reelIndex, s16 row)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2754,7 +2650,7 @@ __attribute__((naked)) u8 GetNearbyTag(u8 a)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
+        "	bl GetSymbolAtRest\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	pop {r4, r5, r6}\n\t"
@@ -7867,7 +7763,7 @@ __attribute__((naked)) void SpriteCB_ReelSymbol(struct Sprite *sprite)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl GetNearbyTag_Quantized\n\t"
+        "	bl GetSymbolAtRest\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	bl GetSpriteTileStartByTag\n\t"

@@ -10092,7 +10092,7 @@ slot_machine.s
 0812b86c CheckMatch_CenterRow CheckMatch_CenterRow
 0812b8e0 CheckMatch_TopAndBottom CheckMatch_TopAndBottom
 0812b9b0 CheckMatch_Diagonals CheckMatch_Diagonals
-0812ba7c slot_machine.s GetMatchFromSymbolsInRow
+0812ba7c GetMatchFromSymbols GetMatchFromSymbols
 0812bacc AwardPayout AwardPayout
 0812baec IsFinalTask_Task_Payout IsFinalTask_Task_Payout
 0812bb0c Task_Payout Task_Payout

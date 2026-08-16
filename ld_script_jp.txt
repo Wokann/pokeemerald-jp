@@ -7422,14 +7422,14 @@ SECTIONS {
         src/slot_machine.o(.text.CheckMatch_CenterRow);
         src/slot_machine.o(.text.CheckMatch_TopAndBottom);
         src/slot_machine.o(.text.CheckMatch_Diagonals);
-        src/slot_machine.o(.text.GetMatchFromSymbolsInRow);
+        src/slot_machine.o(.text.GetMatchFromSymbols);
         src/slot_machine.o(.text.AwardPayout);
         src/slot_machine.o(.text.IsFinalTask_Task_Payout);
         src/slot_machine.o(.text.Task_Payout);
         src/slot_machine.o(.text.PayoutTask_Init);
         src/slot_machine.o(.text.PayoutTask_GivePayout);
         src/slot_machine.o(.text.PayoutTask_Free);
-        src/slot_machine.o(.text.GetNearbyTag_Quantized);
+        src/slot_machine.o(.text.GetSymbolAtRest);
         src/slot_machine.o(.text.GetNearbyTag);
         src/slot_machine.o(.text.GetNearbyReelTimeTag);
         src/slot_machine.o(.text.AdvanceSlotReel);
@@ -9344,6 +9344,9 @@ SECTIONS {
         data/data_b2d_mid61.o(.rodata.858448C);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
+        src/slot_machine.o(.rodata.sSlotMatchFlags);
+        src/slot_machine.o(.rodata.sSlotPayouts);
+        data/data_b2d_mid62.o(.rodata.85847BE);
         src/data/text/region_texts38.o(.rodata);
         data/data_b2d_mid38.o(.rodata);
         src/data/text/region_texts33.o(.rodata);
