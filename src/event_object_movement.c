@@ -4316,23 +4316,9 @@ __attribute__((naked)) void sub_0808E9F0(void)
     );
 }
 
-__attribute__((naked)) void sub_0808EA2C(void)
+u8 GetObjectTrainerTypeByObjectEventId(u8 objectEventId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0808EA40\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1, #7]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EA40: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    return gObjectEvents[objectEventId].trainerType;
 }
 
 __attribute__((naked)) void sub_0808EA44(void)
@@ -4373,23 +4359,9 @@ __attribute__((naked)) void sub_0808EA44(void)
     );
 }
 
-__attribute__((naked)) void EventObjectGetBerryTreeId(void)
+u8 GetObjectEventBerryTreeId(u8 objectEventId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0808EA94\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1, #0x1d]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EA94: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    return gObjectEvents[objectEventId].trainerRange_berryTreeId;
 }
 
 __attribute__((naked)) void GetEventObjectTemplateByLocalIdAndMap(void)

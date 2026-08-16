@@ -1254,6 +1254,9 @@ sub_0801FBEC = AddYesNoMenuAt;
 sub_0801FCE4 = HideYesNoMenuWindow;
 sub_0801FD0C = DestroyYesNoMenuWindow;
 sub_0801FD30 = ProcessMenuInput;
+sub_0808EA2C = GetObjectTrainerTypeByObjectEventId;
+EventObjectGetBerryTreeId = GetObjectEventBerryTreeId;
+
 AreBattleTowerLinkSpeciesSame = sub_080B23D0;
 mevent_message_print_and_prompt_yes_no = DoMysteryGiftYesNo;
 HandleMysteryGiftListMenu = HandleGiftSelectMenu;
@@ -3916,9 +3919,9 @@ SECTIONS {
         src/event_object_movement.o(.text.GetObjectEventFlagIdByLocalIdAndMap);
         src/event_object_movement.o(.text.GetEventObjectFlagIdByEventObjectId);
         src/event_object_movement.o(.text.sub_0808E9F0);
-        src/event_object_movement.o(.text.sub_0808EA2C);
+        src/event_object_movement.o(.text.GetObjectTrainerTypeByObjectEventId);
         src/event_object_movement.o(.text.sub_0808EA44);
-        src/event_object_movement.o(.text.EventObjectGetBerryTreeId);
+        src/event_object_movement.o(.text.GetObjectEventBerryTreeId);
         src/event_object_movement.o(.text.GetEventObjectTemplateByLocalIdAndMap);
         src/event_object_movement.o(.text.FindEventObjectTemplateByLocalId);
         src/event_object_movement.o(.text.GetBaseTemplateForObjectEvent);
