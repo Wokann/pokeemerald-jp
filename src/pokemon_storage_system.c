@@ -30,15 +30,228 @@
 #include "pokemon_storage_system.h"
 #include "script.h"
 #include "sound.h"
+#include "sprite.h"
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
 #include "util.h"
+#include "window.h"
 
 extern u8 sCurrentBoxOption;
 
 #define WALDA_WALLPAPERS_COUNT 16
 #define WALDA_WALLPAPER_ICONS_COUNT 30
+
+struct StorageMenu
+{
+    const u8 *text;
+    int textId;
+};
+
+struct UnkUtilData
+{
+    const u8 *src;
+    u8 *dest;
+    u16 size;
+    u16 unk;
+    u16 height;
+    void (*func)(struct UnkUtilData *data);
+};
+
+struct UnkUtil
+{
+    struct UnkUtilData *data;
+    u8 numActive;
+    u8 max;
+};
+
+struct ChooseBoxMenu
+{
+    struct Sprite *menuSprite;
+    struct Sprite *menuSideSprites[4];
+    u32 unused1[3];
+    struct Sprite *arrowSprites[2];
+    u8 unused2[0x214];
+    bool32 loadedPalette;
+    u16 tileTag;
+    u16 paletteTag;
+    u8 curBox;
+    u8 unused3;
+    u8 subpriority;
+};
+
+struct ItemIcon
+{
+    struct Sprite *sprite;
+    u8 *tiles;
+    u16 palIndex;
+    u8 area;
+    u8 pos;
+    bool8 active;
+};
+
+#define MAX_MON_ICONS max(IN_BOX_COUNT + PARTY_SIZE + 1, 40)
+#define MAX_ITEM_ICONS 3
+#define STORAGE_MON_NAME_LENGTH 11 // Fixed US-style display buffer; JP kana names are shorter.
+
+struct PokemonStorageSystemData
+{
+    u8 state;
+    u8 boxOption;
+    u8 screenChangeType;
+    bool8 isReopening;
+    u8 taskId;
+    struct UnkUtil unkUtil;
+    struct UnkUtilData unkUtilData[8];
+    u16 partyMenuTilemapBuffer[0x108];
+    u16 partyMenuUnused1; // Never read
+    u16 partyMenuY;
+    u8 partyMenuUnused2; // Unused
+    u8 partyMenuMoveTimer;
+    u8 showPartyMenuState;
+    bool8 closeBoxFlashing;
+    u8 closeBoxFlashTimer;
+    bool8 closeBoxFlashState;
+    s16 newCurrBoxId;
+    u16 bg2_X;
+    s16 scrollSpeed;
+    u16 scrollTimer;
+    u8 wallpaperOffset;
+    u8 scrollUnused1; // Never read
+    u8 scrollToBoxIdUnused; // Never read
+    u16 scrollUnused2; // Never read
+    s16 scrollDirectionUnused; // Never read.
+    u16 scrollUnused3; // Never read
+    u16 scrollUnused4; // Never read
+    u16 scrollUnused5; // Never read
+    u16 scrollUnused6; // Never read
+    u8 filler1[22];
+    u8 ALIGNED(2) boxTitleTiles[1024];
+    u8 boxTitleCycleId;
+    u8 wallpaperLoadState; // Written to, but never read.
+    u8 wallpaperLoadBoxId;
+    s8 wallpaperLoadDir;
+    u16 boxTitlePal[16];
+    u16 boxTitlePalOffset;
+    u16 boxTitleAltPalOffset;
+    struct Sprite *curBoxTitleSprites[2];
+    struct Sprite *nextBoxTitleSprites[2];
+    struct Sprite *arrowSprites[2];
+    u32 wallpaperPalBits;
+    u8 filler2[80]; // Unused
+    u16 unkUnused1; // Never read.
+    s16 wallpaperSetId;
+    s16 wallpaperId;
+    u16 wallpaperTilemap[360];
+    u8 wallpaperChangeState;
+    u8 scrollState;
+    u8 scrollToBoxId;
+    s8 scrollDirection;
+    u8 *wallpaperTiles;
+    struct Sprite *movingMonSprite;
+    struct Sprite *partySprites[PARTY_SIZE];
+    struct Sprite *boxMonsSprites[IN_BOX_COUNT];
+    struct Sprite **shiftMonSpritePtr;
+    struct Sprite **releaseMonSpritePtr;
+    u16 numIconsPerSpecies[MAX_MON_ICONS];
+    u16 iconSpeciesList[MAX_MON_ICONS];
+    u16 boxSpecies[IN_BOX_COUNT];
+    u32 boxPersonalities[IN_BOX_COUNT];
+    u8 incomingBoxId;
+    u8 shiftTimer;
+    u8 numPartyToCompact;
+    u16 iconScrollDistance;
+    s16 iconScrollPos;
+    s16 iconScrollSpeed;
+    u16 iconScrollNumIncoming;
+    u8 iconScrollCurColumn;
+    s8 iconScrollDirection; // Unnecessary duplicate of scrollDirection
+    u8 iconScrollState;
+    u8 iconScrollToBoxId; // Unused duplicate of scrollToBoxId
+    struct WindowTemplate menuWindow;
+    struct StorageMenu menuItems[7];
+    u8 menuItemsCount;
+    u8 menuWidth;
+    u8 menuUnusedField; // Never read.
+    u16 menuWindowId;
+    struct Sprite *cursorSprite;
+    struct Sprite *cursorShadowSprite;
+    s32 cursorNewX;
+    s32 cursorNewY;
+    u32 cursorSpeedX;
+    u32 cursorSpeedY;
+    s16 cursorTargetX;
+    s16 cursorTargetY;
+    u16 cursorMoveSteps;
+    s8 cursorVerticalWrap;
+    s8 cursorHorizontalWrap;
+    u8 newCursorArea;
+    u8 newCursorPosition;
+    u8 cursorPrevHorizPos;
+    u8 cursorFlipTimer;
+    u8 cursorPalNums[2];
+    const u32 *displayMonPalette;
+    u32 displayMonPersonality;
+    u16 displayMonSpecies;
+    u16 displayMonItemId;
+    u16 displayUnusedVar;
+    bool8 setMosaic;
+    u8 displayMonMarkings;
+    u8 displayMonLevel;
+    bool8 displayMonIsEgg;
+    u8 displayMonName[STORAGE_MON_NAME_LENGTH];
+    u8 displayMonNameText[36];
+    u8 displayMonSpeciesName[36];
+    u8 displayMonGenderLvlText[36];
+    u8 displayMonItemName[36];
+    bool8 (*monPlaceChangeFunc)(void);
+    u8 monPlaceChangeState;
+    u8 shiftBoxId;
+    struct Sprite *markingComboSprite;
+    struct Sprite *waveformSprites[2];
+    u16 *markingComboTilesPtr;
+    struct MonMarkingsMenu markMenu;
+    struct ChooseBoxMenu chooseBoxMenu;
+    struct Pokemon movingMon;
+    struct Pokemon tempMon;
+    s8 canReleaseMon;
+    bool8 releaseStatusResolved;
+    s8 releaseCheckBoxId;
+    s8 releaseCheckBoxPos;
+    s8 releaseBoxId;
+    s8 releaseBoxPos;
+    u16 releaseCheckState;
+    u16 restrictedReleaseMonMoves;
+    u16 restrictedMoveList[8];
+    u8 summaryMaxPos;
+    u8 summaryStartPos;
+    u8 summaryScreenMode;
+    union
+    {
+        struct Pokemon *mon;
+        struct BoxPokemon *box;
+    } summaryMon;
+    u8 messageText[40];
+    u8 boxTitleText[40];
+    u8 releaseMonName[STORAGE_MON_NAME_LENGTH];
+    u8 itemName[20];
+    u8 inBoxMovingMode;
+    u16 multiMoveWindowId;
+    struct ItemIcon itemIcons[MAX_ITEM_ICONS];
+    u16 movingItemId;
+    u16 itemInfoWindowOffset;
+    u8 unkUnused2; // Unused
+    u16 displayMonPalOffset;
+    u16 *displayMonTilePtr;
+    struct Sprite *displayMonSprite;
+    u16 displayMonPalBuffer[0x40];
+    u8 ALIGNED(4) tileBuffer[MON_PIC_SIZE * MAX_MON_PIC_FRAMES];
+    u8 ALIGNED(4) itemIconBuffer[0x800];
+    u8 wallpaperBgTilemapBuffer[0x1000];
+    u8 displayMenuTilemapBuffer[0x800];
+};
+
+extern struct PokemonStorageSystemData *sStorage;
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -10575,32 +10788,9 @@ __attribute__((naked)) void sub_080CB914(void)
     );
 }
 
-__attribute__((naked)) void SetMovingMonPriority(u8 a)
+void SetMovingMonPriority(u8 priority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080CB96C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _080CB970\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldrb r2, [r3, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r3, #5]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB96C: .4byte gUnknown_20399A8\n\t"
-        "_080CB970: .4byte 0x00000A6C\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->movingMonSprite->oam.priority = priority;
 }
 
 __attribute__((naked)) void sub_080CB974(void)

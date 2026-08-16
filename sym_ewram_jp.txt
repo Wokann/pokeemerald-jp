@@ -901,6 +901,7 @@ gUnknown_20399A0 = .;
 gUnknown_20399A4 = .;
 . += 0x4;
 gUnknown_20399A8 = .;
+sStorage = .;
 . += 0x4;
 gUnknown_20399AC = .;
 . += 0x1;
