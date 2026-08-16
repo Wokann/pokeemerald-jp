@@ -9248,6 +9248,7 @@ SECTIONS {
         src/data/dodrio1.o(.rodata);
         data/data_b_mid2b.o(.rodata);
         src/data/dodrio2.o(.rodata);
+        src/data/pokejump1.o(.rodata);
         data/data_b_mid2b2.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);

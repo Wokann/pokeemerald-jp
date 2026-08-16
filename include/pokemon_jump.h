@@ -3,6 +3,20 @@
 
 #include "main.h"
 
+// JP: enum order matches the JP ROM data (sPokeJumpMons jumpType bytes).
+// US order is NORMAL, FAST, SLOW; JP data stores NORMAL=0, FAST=1, SLOW=2.
+enum {
+    JUMP_TYPE_NORMAL,
+    JUMP_TYPE_FAST,
+    JUMP_TYPE_SLOW,
+};
+
+struct PokemonJumpMons
+{
+    u16 species;
+    u16 jumpType;
+};
+
 void StartPokemonJump(u16 partyId, MainCallback exitCallback);
 bool32 IsSpeciesAllowedInPokemonJump(u16 species);
 void IsPokemonJumpSpeciesInParty(void);

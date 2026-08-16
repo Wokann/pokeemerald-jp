@@ -74,14 +74,6 @@ struct JP_MonFrontPicCoords
 
 #define LINK_TIMER_STOPPED 0x1111
 
-// JP: enum order matches the JP ROM data (sPokeJumpMons jumpType bytes).
-// US order is NORMAL, FAST, SLOW; JP data stores NORMAL=0, FAST=1, SLOW=2.
-enum {
-    JUMP_TYPE_NORMAL,
-    JUMP_TYPE_FAST,
-    JUMP_TYPE_SLOW,
-};
-
 enum {
     FUNC_GAME_INTRO,
     FUNC_WAIT_ROUND,
@@ -165,12 +157,6 @@ struct PokemonJump_Player
     int jumpState;
     bool32 funcFinished;
     u8 name[8]; // JP: player names are 8 bytes (JP charmap, US is name[11])
-};
-
-struct PokemonJumpMons
-{
-    u16 species;
-    u16 jumpType;
 };
 
 struct PokemonJumpGfx
