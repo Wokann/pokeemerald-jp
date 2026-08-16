@@ -14,8 +14,8 @@
 #include "window.h"
 #include "constants/songs.h"
 #include "data/text/ribbon_descriptions.h"
+#include "data/text/gift_ribbon_descriptions.h"
 
-extern const u8 *const gGiftRibbonDescriptionPointers[][2];
 struct RibbonGfxData { u16 tileNumOffset; u16 palNumOffset; };
 extern const struct RibbonGfxData sRibbonGfxData[];
 struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; };
