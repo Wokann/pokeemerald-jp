@@ -51,6 +51,7 @@ struct Sprite;
 #define sAnimState     data[4]
 #define sVirtualObjId   data[0]
 #define sVirtualObjElev data[1]
+#define sTimer          data[2]
 #define sBerryTreeFlags data[7]
 #define BERRY_FLAG_SPARKLING   (1 << 1)
 #define BERRY_FLAG_JUST_PICKED (1 << 2)
@@ -5115,74 +5116,28 @@ bool8 MovementType_BerryTreeGrowth_Step0(struct ObjectEvent *objectEvent, struct
     return TRUE;
 }
 
-__attribute__((naked)) void MovementType_BerryTreeGrowth_Step1(void)
+bool8 MovementType_BerryTreeGrowth_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808F8CA\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808F8D0\n\t"
-        "_0808F8CA:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "_0808F8D0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        sprite->sTypeFuncId = BERRYTREEFUNC_NORMAL;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void MovementType_BerryTreeGrowth_Step2(void)
+bool8 MovementType_BerryTreeGrowth_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r3, #2\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r0]\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	strh r2, [r1, #0x30]\n\t"
-        "	strh r3, [r1, #0x32]\n\t"
-        "	ldrh r3, [r1, #0x3c]\n\t"
-        "	movs r2, #2\n\t"
-        "	orrs r2, r3\n\t"
-        "	strh r2, [r1, #0x3c]\n\t"
-        "	ldr r3, _0808F920\n\t"
-        "	movs r4, #0x10\n\t"
-        "	ldrsh r2, [r0, r4]\n\t"
-        "	str r2, [r3]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	str r0, [r3, #4]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	str r0, [r3, #8]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r3, #0xc]\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F920: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = BERRYTREEFUNC_SPARKLE;
+    sprite->sTimer = 0;
+    sprite->sBerryTreeFlags |= BERRY_FLAG_SPARKLING;
+    gFieldEffectArguments[0] = objectEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objectEvent->currentCoords.y;
+    gFieldEffectArguments[2] = sprite->subpriority - 1;
+    gFieldEffectArguments[3] = sprite->oam.priority;
+    FieldEffectStart(FLDEFF_BERRY_TREE_GROWTH_SPARKLE);
+    return TRUE;
 }
 
 #define sTimer          data[2]
@@ -5205,52 +5160,18 @@ bool8 MovementType_BerryTreeGrowth_Sparkle(struct ObjectEvent *objectEvent, stru
     return FALSE;
 }
 
-__attribute__((naked)) void MovementType_BerryTreeGrowth_Step4(void)
+bool8 MovementType_BerryTreeGrowth_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrh r2, [r4, #0x32]\n\t"
-        "	adds r2, #1\n\t"
-        "	strh r2, [r4, #0x32]\n\t"
-        "	movs r1, #2\n\t"
-        "	ands r2, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x11\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	ldrb r3, [r0, #1]\n\t"
-        "	subs r1, #0x23\n\t"
-        "	ands r1, r3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	bgt _0808F9AA\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808F9B8\n\t"
-        "_0808F9AA:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	subs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #1\n\t"
-        "_0808F9B8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->sTimer++;
+    objectEvent->invisible = (sprite->sTimer & 2) >> 1;
+    sprite->animPaused = TRUE;
+    if (sprite->sTimer > 64)
+    {
+        sprite->sTypeFuncId = BERRYTREEFUNC_NORMAL;
+        sprite->sBerryTreeFlags &= ~BERRY_FLAG_SPARKLING;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void MovementType_FaceDownAndUp(struct Sprite *sprite)
