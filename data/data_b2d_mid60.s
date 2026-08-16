@@ -839,7 +839,27 @@ gRainDropSpriteTemplate: @ 0x570C04
 
 	.globl gAnims_WaterBubble
 gAnims_WaterBubble: @ 0x570DE4
-	.incbin "baserom_jp.gba", 0x570de4, 0x68
+	.4byte 0x08570DD4, 0x08570DDC
+
+gWaterGunProjectileSpriteTemplate: @ 0x570DEC
+	.hword 0x27AB, 0x27AB
+	.4byte 0x084FD138, 0x08570DE4
+	.4byte 0, gDummySpriteAffineAnimTable, 0x080A7175
+
+gWaterGunDropletSpriteTemplate: @ 0x570E04
+	.hword 0x27AB, 0x27AB
+	.4byte 0x084FD1F8, 0x08570DE8
+	.4byte 0, 0x08571DEC, 0x081080E5
+
+gSmallBubblePairSpriteTemplate: @ 0x570E1C
+	.hword 0x279D, 0x279D
+	.4byte 0x084FD010, 0x0857169C
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08108121
+
+gSmallDriftingBubblesSpriteTemplate: @ 0x570E34
+	.hword 0x27AB, 0x27AB
+	.4byte 0x084FD010, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08108885
 
 
 	.globl gSmallWaterOrbSpriteTemplate
@@ -1157,9 +1177,25 @@ gPoisonGasCloudSpriteTemplate: @ 0x571880
 
 
 	.globl sHailCoordData
-	.globl sHailCoordData
 sHailCoordData: @ 0x571898
-	.incbin "baserom_jp.gba", 0x571898, 0x68
+	.byte 0x64, 0xE0, 0x01, 0x20, 0x55, 0xE0, 0x01, 0x00
+	.byte 0xF2, 0xE0, 0x11, 0x10, 0x42, 0xE0, 0x21, 0x10
+	.byte 0xB6, 0xE0, 0x31, 0x00, 0x3C, 0xE0, 0x01, 0x20
+	.byte 0xD6, 0xE0, 0x11, 0x00, 0x71, 0xE0, 0x01, 0x10
+	.byte 0xD2, 0xE0, 0x31, 0x10, 0x26, 0xE0, 0x21, 0x00
+
+sAffineAnim_HailParticle_0: @ 0x5718C0
+	.hword 0x0100, 0x0100, 0x0000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+sAffineAnim_HailParticle_1: @ 0x5718D0
+	.hword 0x00F0, 0x00F0, 0x0000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+sAffineAnim_HailParticle_2: @ 0x5718E0
+	.hword 0x00E0, 0x00E0, 0x0000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+sAffineAnim_WeatherBallIceDown: @ 0x5718F0
+	.hword 0x0150, 0x0150, 0x0000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
 
 	.globl sAffineAnims_HailParticle
 sAffineAnims_HailParticle: @ 0x571900
@@ -1315,7 +1351,7 @@ gSludgeBombHitParticleSpriteTemplate: @ 0x571DBC
 
 	.globl gAffineAnims_Droplet
 gAffineAnims_Droplet: @ 0x571DEC
-	.incbin "baserom_jp.gba", 0x571dec, 0x4
+	.4byte 0x08571DD4
 
 	.globl gAcidPoisonDropletSpriteTemplate
 gAcidPoisonDropletSpriteTemplate: @ 0x571DF0
@@ -1455,9 +1491,8 @@ gBentSpoonSpriteTemplate: @ 0x5722C0
 
 
 	.globl sAffineAnims_QuestionMark
-	.globl sAffineAnims_QuestionMark
 sAffineAnims_QuestionMark: @ 0x572324
-	.incbin "baserom_jp.gba", 0x572324, 0x4
+	.4byte 0x085722FC
 
 	.globl gQuestionMarkSpriteTemplate
 gQuestionMarkSpriteTemplate: @ 0x572328
