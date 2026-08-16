@@ -324,62 +324,64 @@ gBattleEnvironmentAnimTilemap_Rayquaza: @ 0x8D82D14
 
 	.globl gUnknown_8D82FB4
 gUnknown_8D82FB4: @ 0x8D82FB4
-	.incbin "baserom_jp.gba", 0xd82fb4, 0x5ec
+	.incbin "graphics/misc/gUnknown_8D82FB4.4bpp.lz"
 
 
 	.globl gUnknown_8D835A0
 gUnknown_8D835A0: @ 0x8D835A0
-	.incbin "baserom_jp.gba", 0xd835a0, 0x404
+	.incbin "graphics/misc/gUnknown_8D835A0.4bpp.lz"
 
 
 	.globl gUnknown_8D839A4
 gUnknown_8D839A4: @ 0x8D839A4
-	.incbin "baserom_jp.gba", 0xd839a4, 0x22c
+	.incbin "graphics/misc/gUnknown_8D839A4.4bpp.lz"
 
 
 	.globl gUnknown_8D83BD0
 gUnknown_8D83BD0: @ 0x8D83BD0
-	.incbin "baserom_jp.gba", 0xd83bd0, 0x110
+	.incbin "graphics/misc/gUnknown_8D83BD0.4bpp.lz"
 
 
 	.globl gUnknown_8D83CE0
 gUnknown_8D83CE0: @ 0x8D83CE0
-	.incbin "baserom_jp.gba", 0xd83ce0, 0x114
+	.incbin "graphics/misc/gUnknown_8D83CE0.4bpp.lz"
 
 
 	.globl gUnknown_8D83DF4
 gUnknown_8D83DF4: @ 0x8D83DF4
-	.incbin "baserom_jp.gba", 0xd83df4, 0xc14
+	.incbin "graphics/misc/gUnknown_8D83DF4.4bpp.lz"
 
 
 	.globl gUnknown_8D84A08
 gUnknown_8D84A08: @ 0x8D84A08
-	.incbin "baserom_jp.gba", 0xd84a08, 0x590
+	.incbin "graphics/misc/gUnknown_8D84A08.4bpp.lz"
 
 
 	.globl gUnknown_8D84F98
 gUnknown_8D84F98: @ 0x8D84F98
-	.incbin "baserom_jp.gba", 0xd84f98, 0x3a4
+	.incbin "graphics/misc/gUnknown_8D84F98.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD850F0, 0x24C
 
 
 	.globl gUnknown_8D8533C
 gUnknown_8D8533C: @ 0x8D8533C
-	.incbin "baserom_jp.gba", 0xd8533c, 0xec
+	.incbin "graphics/misc/gUnknown_8D8533C.4bpp.lz"
 
 
 	.globl gUnknown_8D85428
 gUnknown_8D85428: @ 0x8D85428
-	.incbin "baserom_jp.gba", 0xd85428, 0x84
+	.incbin "graphics/misc/gUnknown_8D85428.4bpp.lz"
 
 
 	.globl gUnknown_8D854AC
 gUnknown_8D854AC: @ 0x8D854AC
-	.incbin "baserom_jp.gba", 0xd854ac, 0x120
+	.incbin "graphics/misc/gUnknown_8D854AC.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD854C9, 0x103
 
 
 	.globl gUnknown_8D855CC
 gUnknown_8D855CC: @ 0x8D855CC
-	.incbin "baserom_jp.gba", 0xd855cc, 0x18
+	.incbin "graphics/misc/gUnknown_8D855CC.4bpp.lz"
 
 
 	.globl gBattleWindowTextPalette
@@ -454,77 +456,80 @@ gUnknown_8D85E60: @ 0x8D85E60
 
 	.globl gUnknown_8D88478
 gUnknown_8D88478: @ 0x8D88478
-	.incbin "baserom_jp.gba", 0xd88478, 0x8ac
+	.incbin "graphics/misc/gUnknown_8D88478.4bpp.lz"
 
 
 	.globl gUnknown_8D88D24
 gUnknown_8D88D24: @ 0x8D88D24
-	.incbin "baserom_jp.gba", 0xd88d24, 0x4e4
+	.incbin "graphics/misc/gUnknown_8D88D24.4bpp.lz"
 
 
 	.globl gUnknown_8D89208
 gUnknown_8D89208: @ 0x8D89208
-	.incbin "baserom_jp.gba", 0xd89208, 0x898
+	.incbin "graphics/misc/gUnknown_8D89208.4bpp.lz"
 
 
 	.globl gUnknown_8D89AA0
 gUnknown_8D89AA0: @ 0x8D89AA0
-	.incbin "baserom_jp.gba", 0xd89aa0, 0x4c0
+	.incbin "graphics/misc/gUnknown_8D89AA0.4bpp.lz"
 
 
 	.globl gUnknown_8D89F60
 gUnknown_8D89F60: @ 0x8D89F60
-	.incbin "baserom_jp.gba", 0xd89f60, 0x89c
+	.incbin "graphics/misc/gUnknown_8D89F60.4bpp.lz"
 
 
 	.globl gUnknown_8D8A7FC
 gUnknown_8D8A7FC: @ 0x8D8A7FC
-	.incbin "baserom_jp.gba", 0xd8a7fc, 0x11c
+	.incbin "graphics/misc/gUnknown_8D8A7FC.4bpp.lz"
 
 
 	.globl gUnknown_8D8A918
 gUnknown_8D8A918: @ 0x8D8A918
-	.incbin "baserom_jp.gba", 0xd8a918, 0x120
+	.incbin "graphics/misc/gUnknown_8D8A918.4bpp.lz"
 
 
 	.globl gUnknown_8D8AA38
 gUnknown_8D8AA38: @ 0x8D8AA38
-	.incbin "baserom_jp.gba", 0xd8aa38, 0x72c
+	.incbin "graphics/misc/gUnknown_8D8AA38.4bpp.lz"
 
 
 	.globl gUnknown_8D8B164
 gUnknown_8D8B164: @ 0x8D8B164
-	.incbin "baserom_jp.gba", 0xd8b164, 0x2c0
+	.incbin "graphics/misc/gUnknown_8D8B164.4bpp.lz"
 
 
 	.globl gUnknown_8D8B424
 gUnknown_8D8B424: @ 0x8D8B424
-	.incbin "baserom_jp.gba", 0xd8b424, 0x2a8
+	.incbin "graphics/misc/gUnknown_8D8B424.4bpp.lz"
 
 
 	.globl gUnknown_8D8B6CC
 gUnknown_8D8B6CC: @ 0x8D8B6CC
-	.incbin "baserom_jp.gba", 0xd8b6cc, 0x38c
+	.incbin "graphics/misc/gUnknown_8D8B6CC.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD8B7F0, 0x268
 
 
 	.globl gUnknown_8D8BA58
 gUnknown_8D8BA58: @ 0x8D8BA58
-	.incbin "baserom_jp.gba", 0xd8ba58, 0x6f8
+	.incbin "graphics/misc/gUnknown_8D8BA58.4bpp.lz"
 
 
 	.globl gUnknown_8D8C150
 gUnknown_8D8C150: @ 0x8D8C150
-	.incbin "baserom_jp.gba", 0xd8c150, 0x6cc
+	.incbin "graphics/misc/gUnknown_8D8C150.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD8C358, 0x4C4
 
 
 	.globl gUnknown_8D8C81C
 gUnknown_8D8C81C: @ 0x8D8C81C
-	.incbin "baserom_jp.gba", 0xd8c81c, 0x490
+	.incbin "graphics/misc/gUnknown_8D8C81C.4bpp.lz"
 
 
 	.globl gUnknown_8D8CCAC
 gUnknown_8D8CCAC: @ 0x8D8CCAC
-	.incbin "baserom_jp.gba", 0xd8ccac, 0x748
+	.incbin "graphics/misc/gUnknown_8D8CCAC.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD8CF26, 0x4CE
 
 
 	.globl gBattleAnimBgTilemap_Sandstorm
@@ -643,17 +648,18 @@ gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50
 
 	.globl gUnknown_8D9154C
 gUnknown_8D9154C: @ 0x8D9154C
-	.incbin "baserom_jp.gba", 0xd9154c, 0x820
+	.incbin "graphics/misc/gUnknown_8D9154C.4bpp.lz"
 
 
 	.globl gUnknown_8D91D6C
 gUnknown_8D91D6C: @ 0x8D91D6C
-	.incbin "baserom_jp.gba", 0xd91d6c, 0xa34
+	.incbin "graphics/misc/gUnknown_8D91D6C.4bpp.lz"
 
 
 	.globl gUnknown_8D927A0
 gUnknown_8D927A0: @ 0x8D927A0
-	.incbin "baserom_jp.gba", 0xd927a0, 0xaf4
+	.incbin "graphics/misc/gUnknown_8D927A0.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD92AB1, 0x7E3
 
 
 	.globl gBattleAnimFogTilemap
@@ -703,292 +709,305 @@ gBattleAnimBgTilemap_SurfContest: @ 0x8D96358
 
 	.globl gUnknown_8D967A0
 gUnknown_8D967A0: @ 0x8D967A0
-	.incbin "baserom_jp.gba", 0xd967a0, 0x2c8
+	.incbin "graphics/misc/gUnknown_8D967A0.4bpp.lz"
 
 
 	.globl gUnknown_8D96A68
 gUnknown_8D96A68: @ 0x8D96A68
-	.incbin "baserom_jp.gba", 0xd96a68, 0xec
+	.incbin "graphics/misc/gUnknown_8D96A68.4bpp.lz"
 
 
 	.globl gUnknown_8D96B54
 gUnknown_8D96B54: @ 0x8D96B54
-	.incbin "baserom_jp.gba", 0xd96b54, 0x1100
+	.incbin "graphics/misc/gUnknown_8D96B54.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD96C8C, 0xFC8
 
 
 	.globl gUnknown_8D97C54
 gUnknown_8D97C54: @ 0x8D97C54
-	.incbin "baserom_jp.gba", 0xd97c54, 0x17c
+	.incbin "graphics/misc/gUnknown_8D97C54.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD97CBB, 0x115
 
 
 	.globl gUnknown_8D97DD0
 gUnknown_8D97DD0: @ 0x8D97DD0
-	.incbin "baserom_jp.gba", 0xd97dd0, 0x9cc
+	.incbin "graphics/misc/gUnknown_8D97DD0.4bpp.lz"
 
 
 	.globl gUnknown_8D9879C
 gUnknown_8D9879C: @ 0x8D9879C
-	.incbin "baserom_jp.gba", 0xd9879c, 0xf0
+	.incbin "graphics/misc/gUnknown_8D9879C.4bpp.lz"
 
 
 	.globl gUnknown_8D9888C
 gUnknown_8D9888C: @ 0x8D9888C
-	.incbin "baserom_jp.gba", 0xd9888c, 0x1b8
+	.incbin "graphics/misc/gUnknown_8D9888C.4bpp.lz"
 
 
 	.globl gUnknown_8D98A44
 gUnknown_8D98A44: @ 0x8D98A44
-	.incbin "baserom_jp.gba", 0xd98a44, 0x164
+	.incbin "graphics/misc/gUnknown_8D98A44.4bpp.lz"
 
 
 	.globl gUnknown_8D98BA8
 gUnknown_8D98BA8: @ 0x8D98BA8
-	.incbin "baserom_jp.gba", 0xd98ba8, 0x16c
+	.incbin "graphics/misc/gUnknown_8D98BA8.4bpp.lz"
 
 
 	.globl gUnknown_8D98D14
 gUnknown_8D98D14: @ 0x8D98D14
-	.incbin "baserom_jp.gba", 0xd98d14, 0x178
+	.incbin "graphics/misc/gUnknown_8D98D14.4bpp.lz"
 
 
 	.globl gUnknown_8D98E8C
 gUnknown_8D98E8C: @ 0x8D98E8C
-	.incbin "baserom_jp.gba", 0xd98e8c, 0x18a8
+	.incbin "graphics/misc/gUnknown_8D98E8C.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD9902F, 0x1705
 
 
 	.globl gUnknown_8D9A734
 gUnknown_8D9A734: @ 0x8D9A734
-	.incbin "baserom_jp.gba", 0xd9a734, 0x4c
+	.incbin "graphics/misc/gUnknown_8D9A734.4bpp.lz"
 
 
 	.globl gUnknown_8D9A780
 gUnknown_8D9A780: @ 0x8D9A780
-	.incbin "baserom_jp.gba", 0xd9a780, 0x4c
+	.incbin "graphics/misc/gUnknown_8D9A780.4bpp.lz"
 
 
 	.globl gUnknown_8D9A7CC
 gUnknown_8D9A7CC: @ 0x8D9A7CC
-	.incbin "baserom_jp.gba", 0xd9a7cc, 0x2b8
+	.incbin "graphics/misc/gUnknown_8D9A7CC.4bpp.lz"
 
 
 	.globl gUnknown_8D9AA84
 gUnknown_8D9AA84: @ 0x8D9AA84
-	.incbin "baserom_jp.gba", 0xd9aa84, 0x544
+	.incbin "graphics/misc/gUnknown_8D9AA84.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD9ABE1, 0x3E7
 
 
 	.globl gUnknown_8D9AFC8
 gUnknown_8D9AFC8: @ 0x8D9AFC8
-	.incbin "baserom_jp.gba", 0xd9afc8, 0x34
+	.incbin "graphics/misc/gUnknown_8D9AFC8.4bpp.lz"
 
 
 	.globl gUnknown_8D9AFFC
 gUnknown_8D9AFFC: @ 0x8D9AFFC
-	.incbin "baserom_jp.gba", 0xd9affc, 0x140
+	.incbin "graphics/misc/gUnknown_8D9AFFC.4bpp.lz"
 
 
 	.globl gUnknown_8D9B13C
 gUnknown_8D9B13C: @ 0x8D9B13C
-	.incbin "baserom_jp.gba", 0xd9b13c, 0x78
+	.incbin "graphics/misc/gUnknown_8D9B13C.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD9B164, 0x50
 
 
 	.globl gUnknown_8D9B1B4
 gUnknown_8D9B1B4: @ 0x8D9B1B4
-	.incbin "baserom_jp.gba", 0xd9b1b4, 0x10c
+	.incbin "graphics/misc/gUnknown_8D9B1B4.4bpp.lz"
 
 
 	.globl gUnknown_8D9B2C0
 gUnknown_8D9B2C0: @ 0x8D9B2C0
-	.incbin "baserom_jp.gba", 0xd9b2c0, 0x28
+	.incbin "graphics/misc/gUnknown_8D9B2C0.4bpp.lz"
 
 
 	.globl gUnknown_8D9B2E8
 gUnknown_8D9B2E8: @ 0x8D9B2E8
-	.incbin "baserom_jp.gba", 0xd9b2e8, 0x1cc
+	.incbin "graphics/misc/gUnknown_8D9B2E8.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD9B426, 0x8E
 
 
 	.globl gUnknown_8D9B4B4
 gUnknown_8D9B4B4: @ 0x8D9B4B4
-	.incbin "baserom_jp.gba", 0xd9b4b4, 0x208
+	.incbin "graphics/misc/gUnknown_8D9B4B4.4bpp.lz"
 
 
 	.globl gUnknown_8D9B6BC
 gUnknown_8D9B6BC: @ 0x8D9B6BC
-	.incbin "baserom_jp.gba", 0xd9b6bc, 0x358
+	.incbin "graphics/misc/gUnknown_8D9B6BC.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD9B72A, 0x2EA
 
 
 	.globl gUnknown_8D9BA14
 gUnknown_8D9BA14: @ 0x8D9BA14
-	.incbin "baserom_jp.gba", 0xd9ba14, 0x27c
+	.incbin "graphics/misc/gUnknown_8D9BA14.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD9BB5C, 0x134
 
 
 	.globl gUnknown_8D9BC90
 gUnknown_8D9BC90: @ 0x8D9BC90
-	.incbin "baserom_jp.gba", 0xd9bc90, 0x100
+	.incbin "graphics/misc/gUnknown_8D9BC90.4bpp.lz"
 
 
 	.globl gUnknown_8D9BD90
 gUnknown_8D9BD90: @ 0x8D9BD90
-	.incbin "baserom_jp.gba", 0xd9bd90, 0x41c
+	.incbin "graphics/misc/gUnknown_8D9BD90.4bpp.lz"
 
 
 	.globl gUnknown_8D9C1AC
 gUnknown_8D9C1AC: @ 0x8D9C1AC
-	.incbin "baserom_jp.gba", 0xd9c1ac, 0xa8
+	.incbin "graphics/misc/gUnknown_8D9C1AC.4bpp.lz"
 
 
 	.globl gUnknown_8D9C254
 gUnknown_8D9C254: @ 0x8D9C254
-	.incbin "baserom_jp.gba", 0xd9c254, 0x190
+	.incbin "graphics/misc/gUnknown_8D9C254.4bpp.lz"
 
 
 	.globl gUnknown_8D9C3E4
 gUnknown_8D9C3E4: @ 0x8D9C3E4
-	.incbin "baserom_jp.gba", 0xd9c3e4, 0x7284
+	.incbin "graphics/misc/gUnknown_8D9C3E4.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xD9C4F1, 0x7177
 
 
 	.globl gUnknown_8DA3668
 gUnknown_8DA3668: @ 0x8DA3668
-	.incbin "baserom_jp.gba", 0xda3668, 0x428
+	.incbin "graphics/misc/gUnknown_8DA3668.4bpp.lz"
 
 
 	.globl gUnknown_8DA3A90
 gUnknown_8DA3A90: @ 0x8DA3A90
-	.incbin "baserom_jp.gba", 0xda3a90, 0x3c
+	.incbin "graphics/misc/gUnknown_8DA3A90.4bpp.lz"
 
 
 	.globl gUnknown_8DA3ACC
 gUnknown_8DA3ACC: @ 0x8DA3ACC
-	.incbin "baserom_jp.gba", 0xda3acc, 0x164
+	.incbin "graphics/misc/gUnknown_8DA3ACC.4bpp.lz"
 
 
 	.globl gUnknown_8DA3C30
 gUnknown_8DA3C30: @ 0x8DA3C30
-	.incbin "baserom_jp.gba", 0xda3c30, 0x100
+	.incbin "graphics/misc/gUnknown_8DA3C30.4bpp.lz"
 
 
 	.globl gUnknown_8DA3D30
 gUnknown_8DA3D30: @ 0x8DA3D30
-	.incbin "baserom_jp.gba", 0xda3d30, 0x20c
+	.incbin "graphics/misc/gUnknown_8DA3D30.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xDA3E65, 0xD7
 
 
 	.globl gUnknown_8DA3F3C
 gUnknown_8DA3F3C: @ 0x8DA3F3C
-	.incbin "baserom_jp.gba", 0xda3f3c, 0x1114
+	.incbin "graphics/misc/gUnknown_8DA3F3C.4bpp.lz"
 
 
 	.globl gUnknown_8DA5050
 gUnknown_8DA5050: @ 0x8DA5050
-	.incbin "baserom_jp.gba", 0xda5050, 0x44
+	.incbin "graphics/misc/gUnknown_8DA5050.4bpp.lz"
 
 
 	.globl gUnknown_8DA5094
 gUnknown_8DA5094: @ 0x8DA5094
-	.incbin "baserom_jp.gba", 0xda5094, 0x184
+	.incbin "graphics/misc/gUnknown_8DA5094.4bpp.lz"
 
 
 	.globl gUnknown_8DA5218
 gUnknown_8DA5218: @ 0x8DA5218
-	.incbin "baserom_jp.gba", 0xda5218, 0x1148
+	.incbin "graphics/misc/gUnknown_8DA5218.4bpp.lz"
 
 
 	.globl gUnknown_8DA6360
 gUnknown_8DA6360: @ 0x8DA6360
-	.incbin "baserom_jp.gba", 0xda6360, 0x904
+	.incbin "graphics/misc/gUnknown_8DA6360.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xDA66E8, 0x57C
 
 
 	.globl gUnknown_8DA6C64
 gUnknown_8DA6C64: @ 0x8DA6C64
-	.incbin "baserom_jp.gba", 0xda6c64, 0xb6c
+	.incbin "graphics/misc/gUnknown_8DA6C64.4bpp.lz"
 
 
 	.globl gUnknown_8DA77D0
 gUnknown_8DA77D0: @ 0x8DA77D0
-	.incbin "baserom_jp.gba", 0xda77d0, 0x21c
+	.incbin "graphics/misc/gUnknown_8DA77D0.4bpp.lz"
 
 
 	.globl gUnknown_8DA79EC
 gUnknown_8DA79EC: @ 0x8DA79EC
-	.incbin "baserom_jp.gba", 0xda79ec, 0x40
+	.incbin "graphics/misc/gUnknown_8DA79EC.4bpp.lz"
 
 
 	.globl gUnknown_8DA7A2C
 gUnknown_8DA7A2C: @ 0x8DA7A2C
-	.incbin "baserom_jp.gba", 0xda7a2c, 0x328
+	.incbin "graphics/misc/gUnknown_8DA7A2C.4bpp.lz"
 
 
 	.globl gUnknown_8DA7D54
 gUnknown_8DA7D54: @ 0x8DA7D54
-	.incbin "baserom_jp.gba", 0xda7d54, 0x184
+	.incbin "graphics/misc/gUnknown_8DA7D54.4bpp.lz"
 
 
 	.globl gUnknown_8DA7ED8
 gUnknown_8DA7ED8: @ 0x8DA7ED8
-	.incbin "baserom_jp.gba", 0xda7ed8, 0x13c
+	.incbin "graphics/misc/gUnknown_8DA7ED8.4bpp.lz"
 
 
 	.globl gUnknown_8DA8014
 gUnknown_8DA8014: @ 0x8DA8014
-	.incbin "baserom_jp.gba", 0xda8014, 0x140
+	.incbin "graphics/misc/gUnknown_8DA8014.4bpp.lz"
 
 
 	.globl gUnknown_8DA8154
 gUnknown_8DA8154: @ 0x8DA8154
-	.incbin "baserom_jp.gba", 0xda8154, 0x108
+	.incbin "graphics/misc/gUnknown_8DA8154.4bpp.lz"
 
 
 	.globl gUnknown_8DA825C
 gUnknown_8DA825C: @ 0x8DA825C
-	.incbin "baserom_jp.gba", 0xda825c, 0x108
+	.incbin "graphics/misc/gUnknown_8DA825C.4bpp.lz"
 
 
 	.globl gUnknown_8DA8364
 gUnknown_8DA8364: @ 0x8DA8364
-	.incbin "baserom_jp.gba", 0xda8364, 0xa84
+	.incbin "graphics/misc/gUnknown_8DA8364.4bpp.lz"
 
 
 	.globl gUnknown_8DA8DE8
 gUnknown_8DA8DE8: @ 0x8DA8DE8
-	.incbin "baserom_jp.gba", 0xda8de8, 0x22c
+	.incbin "graphics/misc/gUnknown_8DA8DE8.4bpp.lz"
 
 
 	.globl gUnknown_8DA9014
 gUnknown_8DA9014: @ 0x8DA9014
-	.incbin "baserom_jp.gba", 0xda9014, 0x118
+	.incbin "graphics/misc/gUnknown_8DA9014.4bpp.lz"
 
 
 	.globl gUnknown_8DA912C
 gUnknown_8DA912C: @ 0x8DA912C
-	.incbin "baserom_jp.gba", 0xda912c, 0x1a30
+	.incbin "graphics/misc/gUnknown_8DA912C.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xDA917D, 0x19DF
 
 
 	.globl gUnknown_8DAAB5C
 gUnknown_8DAAB5C: @ 0x8DAAB5C
-	.incbin "baserom_jp.gba", 0xdaab5c, 0x270
+	.incbin "graphics/misc/gUnknown_8DAAB5C.4bpp.lz"
 
 
 	.globl gUnknown_8DAADCC
 gUnknown_8DAADCC: @ 0x8DAADCC
-	.incbin "baserom_jp.gba", 0xdaadcc, 0xf8
+	.incbin "graphics/misc/gUnknown_8DAADCC.4bpp.lz"
 
 
 	.globl gUnknown_8DAAEC4
 gUnknown_8DAAEC4: @ 0x8DAAEC4
-	.incbin "baserom_jp.gba", 0xdaaec4, 0x238
+	.incbin "graphics/misc/gUnknown_8DAAEC4.4bpp.lz"
 
 
 	.globl gUnknown_8DAB0FC
 gUnknown_8DAB0FC: @ 0x8DAB0FC
-	.incbin "baserom_jp.gba", 0xdab0fc, 0x144
+	.incbin "graphics/misc/gUnknown_8DAB0FC.4bpp.lz"
 
 
 	.globl gUnknown_8DAB240
 gUnknown_8DAB240: @ 0x8DAB240
-	.incbin "baserom_jp.gba", 0xdab240, 0x54
+	.incbin "graphics/misc/gUnknown_8DAB240.4bpp.lz"
 
 
 	.globl gUnknown_8DAB294
 gUnknown_8DAB294: @ 0x8DAB294
-	.incbin "baserom_jp.gba", 0xdab294, 0xf52c
+	.incbin "graphics/misc/gUnknown_8DAB294.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xDAB2FD, 0xF4C3
 
 
 	.globl gUnknown_8DBA7C0
@@ -998,7 +1017,8 @@ gUnknown_8DBA7C0: @ 0x8DBA7C0
 
 	.globl gUnknown_8DBA860
 gUnknown_8DBA860: @ 0x8DBA860
-	.incbin "baserom_jp.gba", 0xdba860, 0x1d30
+	.incbin "graphics/misc/gUnknown_8DBA860.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xDBC236, 0x35A
 
 
 	.globl gRouletteMenu_Gfx
@@ -1008,4 +1028,5 @@ gRouletteMenu_Gfx: @ 0x8DBC590
 
 	.globl gRouletteWheel_Gfx
 gRouletteWheel_Gfx: @ 0x8DBCCBC
-	.incbin "baserom_jp.gba", 0xdbccbc, 0x243344
+	.incbin "graphics/misc/gRouletteWheel_Gfx.4bpp.lz"
+	.incbin "baserom_jp.gba", 0xDBDD61, 0x24229F
