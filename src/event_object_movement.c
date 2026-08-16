@@ -60,6 +60,10 @@ extern bool8 MovementAction_AcroWheelieMoveDown_Step1(struct ObjectEvent *object
 extern bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_AcroWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroEndWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroEndWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroEndWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroEndWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_Delay_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_JumpSpecialDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_JumpSpecialLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
@@ -89,6 +93,9 @@ extern void DestroyExtraMovementTask(u8 taskId);
 extern void StartSpriteAnimInDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum);
 extern void SetAndStartSpriteAnim(struct Sprite *sprite, u8 animNum, u8 a);
 extern const u8 gInitialMovementTypeFacingDirections[];
+extern void EventObjectClearHeldMovement(struct ObjectEvent *objectEvent);
+extern bool8 ObjectEventSetHeldMovement(struct ObjectEvent *objectEvent, u8 specialAnimId);
+extern void ObjectEventClearHeldMovementIfActive(struct ObjectEvent *objectEvent);
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -2477,7 +2484,7 @@ __attribute__((naked)) void ObjectEventSetGraphicsId(struct ObjectEvent *objectE
         "	lsrs r0, r0, #7\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0808DE68\n\t"
-        "	bl CameraObjectReset1\n\t"
+        "	bl CameraObjectReset\n\t"
         "_0808DE68:\n\t"
         "	pop {r3}\n\t"
         "	mov r8, r3\n\t"
@@ -3464,7 +3471,7 @@ __attribute__((naked)) void MoveEventObjectToMapCoords(void)
         "	lsrs r0, r0, #7\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0808E50A\n\t"
-        "	bl CameraObjectReset1\n\t"
+        "	bl CameraObjectReset\n\t"
         "_0808E50A:\n\t"
         "	pop {r3}\n\t"
         "	mov r8, r3\n\t"
@@ -3926,67 +3933,33 @@ __attribute__((naked)) struct Sprite *FindCameraObject(void)
     );
 }
 
-__attribute__((naked)) void CameraObjectReset1(void)
+void CameraObjectReset(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl FindCameraObject\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0808E814\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	ldr r1, [r2, #0x1c]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "_0808E814:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *camera = FindCameraObject();
+    if (camera != NULL)
+    {
+        camera->data[1] = 0; // CAMERA_STATE_INIT
+        camera->callback(camera);
+    }
 }
 
-__attribute__((naked)) void CameraObjectSetFollowedSpriteId(void)
+void CameraObjectSetFollowedSpriteId(u8 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl FindCameraObject\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E82C\n\t"
-        "	strh r4, [r0, #0x2e]\n\t"
-        "	bl CameraObjectReset1\n\t"
-        "_0808E82C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *camera = FindCameraObject();
+    if (camera != NULL)
+    {
+        camera->sCamera_FollowSpriteId = spriteId;
+        CameraObjectReset();
+    }
 }
 
-__attribute__((naked)) void CameraObjectGetFollowedSpriteId(void)
+u8 CameraObjectGetFollowedSpriteId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl FindCameraObject\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808E846\n\t"
-        "	ldrh r0, [r0, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _0808E848\n\t"
-        "_0808E846:\n\t"
-        "	movs r0, #0x40\n\t"
-        "_0808E848:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *camera = FindCameraObject();
+    if (camera == NULL)
+        return MAX_SPRITES;
+
+    return camera->sCamera_FollowSpriteId;
 }
 
 void CameraObjectReset2(void)
@@ -14365,44 +14338,16 @@ __attribute__((naked)) bool8 ObjectEventSetHeldMovement(struct ObjectEvent *obje
     );
 }
 
-__attribute__((naked)) bool8 ObjectEventForceSetHeldMovement(struct ObjectEvent *objectEvent, u8 specialAnimId)
+void ObjectEventForceSetHeldMovement(struct ObjectEvent *objectEvent, u8 movementActionId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r4, r1, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl ObjectEventClearHeldMovementIfActive\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventClearHeldMovementIfActive(objectEvent);
+    ObjectEventSetHeldMovement(objectEvent, movementActionId);
 }
 
-__attribute__((naked)) void ObjectEventClearHeldMovementIfActive(struct ObjectEvent *objectEvent)
+void ObjectEventClearHeldMovementIfActive(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x19\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08092BA6\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl EventObjectClearHeldMovement\n\t"
-        "_08092BA6:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->heldMovementActive)
+        EventObjectClearHeldMovement(objectEvent);
 }
 
 __attribute__((naked)) void EventObjectClearHeldMovement(struct ObjectEvent *objectEvent)
@@ -14439,24 +14384,12 @@ __attribute__((naked)) void EventObjectClearHeldMovement(struct ObjectEvent *obj
     );
 }
 
-__attribute__((naked)) u8 ObjectEventCheckHeldMovementStatus(struct ObjectEvent *objectEvent)
+u8 ObjectEventCheckHeldMovementStatus(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #0x19\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08092BEE\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _08092BF0\n\t"
-        "_08092BEE:\n\t"
-        "	lsrs r0, r1, #7\n\t"
-        "_08092BF0:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->heldMovementActive)
+        return objectEvent->heldMovementFinished;
+
+    return 16;
 }
 
 __attribute__((naked)) u8 ObjectEventClearHeldMovementIfFinished(struct ObjectEvent *objectEvent)

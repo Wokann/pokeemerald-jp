@@ -3907,7 +3907,7 @@ SECTIONS {
         src/event_object_movement.o(.text.CameraObject_1);
         src/event_object_movement.o(.text.CameraObject_2);
         src/event_object_movement.o(.text.FindCameraObject);
-        src/event_object_movement.o(.text.CameraObjectReset1);
+        src/event_object_movement.o(.text.CameraObjectReset);
         src/event_object_movement.o(.text.CameraObjectSetFollowedSpriteId);
         src/event_object_movement.o(.text.CameraObjectGetFollowedSpriteId);
         src/event_object_movement.o(.text.CameraObjectReset2);

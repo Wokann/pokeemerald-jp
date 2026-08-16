@@ -3587,7 +3587,7 @@ __attribute__((naked)) void Task_DoPlayerSpinEntrance(void)
         "	adds r0, r7, #0\n\t"
         "	adds r0, #0x43\n\t"
         "	strb r1, [r0]\n\t"
-        "	bl CameraObjectReset1\n\t"
+        "	bl CameraObjectReset\n\t"
         "	mov r0, r8\n\t"
         "	bl DestroyTask\n\t"
         "_0808CCEE:\n\t"
