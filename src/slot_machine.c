@@ -8,6 +8,7 @@
 #include "slot_machine.h"
 #include "constants/rgb.h"
 #include "constants/coins.h"
+#include "constants/songs.h"
 #include "string_util.h"
 #include "decompress.h"
 #include "trig.h"
@@ -924,6 +925,9 @@ extern struct SlotMachine *sSlotMachine;
 
 static void Task_SlotMachine(u8 taskId);
 static void Task_Reel(u8 taskId);
+static void SpinSlotReel(u8 reelIndex);
+static void StopSlotReel(u8 reelIndex);
+static bool8 IsSlotReelMoving(u8 reelIndex);
 static bool8 ReelTask_StayStill(struct Task *task);
 static bool8 ReelTask_Spin(struct Task *task);
 static bool8 ReelTask_DecideStop(struct Task *task);
@@ -1035,6 +1039,7 @@ void BeginReelTime(void);
 u16 ReelTimeSpeed(void);
 bool8 IsReelTimeTaskDone(void);
 void ResetBiasFailure(void);
+void PressStopReelButton(u8 reelIndex);
 
 #define tTimer data[0]
 
@@ -1300,79 +1305,31 @@ static bool8 SlotTask_ResetBiasFailure(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_AwaitReelStop(u8 taskId)
+static bool8 SlotTask_WaitReelStop(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0812AE90\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AE88\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _0812AE94\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0x18]\n\t"
-        "	bl StopSlotReel\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0x18]\n\t"
-        "	bl sub_0812CD50\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812AE88:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AE90: .4byte gMain\n\t"
-        "_0812AE94: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_CONTEST_PLACE);
+        StopSlotReel(sSlotMachine->currentReel);
+        PressStopReelButton(sSlotMachine->currentReel);
+        sSlotMachine->state = SLOTTASK_WAIT_ALL_REELS_STOP;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_WaitForAllReelsToStop(u8 taskId)
+static bool8 SlotTask_WaitAllReelsStop(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812AEC8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0x18]\n\t"
-        "	bl IsSlotReelMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812AECC\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrh r0, [r1, #0x18]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x18]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r2, #0x18\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	ble _0812AEC4\n\t"
-        "	movs r0, #0xe\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812AEC4:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812AECE\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AEC8: .4byte sSlotMachine\n\t"
-        "_0812AECC:\n\t"
-        "	movs r0, #0\n\t"
-        "_0812AECE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!IsSlotReelMoving(sSlotMachine->currentReel))
+    {
+        sSlotMachine->currentReel++;
+        sSlotMachine->state = SLOTTASK_WAIT_REEL_STOP;
+        if (sSlotMachine->currentReel >= NUM_REELS)
+        {
+            sSlotMachine->state = SLOTTASK_CHECK_MATCHES;
+        }
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void SlotAction_CheckMatches(u8 taskId)
@@ -5450,7 +5407,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
     );
 }
 
-__attribute__((naked)) void sub_0812CD50(void)
+__attribute__((naked)) void PressStopReelButton(u8 reelIndex)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

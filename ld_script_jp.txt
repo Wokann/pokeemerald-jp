@@ -7391,8 +7391,8 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_StartSpin);
         src/slot_machine.o(.text.SlotTask_StartReelTimeSpin);
         src/slot_machine.o(.text.SlotTask_ResetBiasFailure);
-        src/slot_machine.o(.text.SlotAction_AwaitReelStop);
-        src/slot_machine.o(.text.SlotAction_WaitForAllReelsToStop);
+        src/slot_machine.o(.text.SlotTask_WaitReelStop);
+        src/slot_machine.o(.text.SlotTask_WaitAllReelsStop);
         src/slot_machine.o(.text.SlotAction_CheckMatches);
         src/slot_machine.o(.text.SlotAction_WaitForPayoutToBeAwarded);
         src/slot_machine.o(.text.SlotAction_EndOfRoll);
@@ -7471,7 +7471,7 @@ SECTIONS {
         src/slot_machine.o(.text.DecideStop_NoBias_Reel3_Bet1);
         src/slot_machine.o(.text.DecideStop_NoBias_Reel3_Bet2);
         src/slot_machine.o(.text.DecideStop_NoBias_Reel3_Bet3);
-        src/slot_machine.o(.text.sub_0812CD50);
+        src/slot_machine.o(.text.PressStopReelButton);
         src/slot_machine.o(.text.sub_0812CD84);
         src/slot_machine.o(.text.StopReelButton_Press);
         src/slot_machine.o(.text.StopReelButton_Wait);
