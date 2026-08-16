@@ -254,6 +254,7 @@ struct PokemonStorageSystemData
 extern struct PokemonStorageSystemData *sStorage;
 
 extern bool8 (*const sPlaceChangeFuncs[])(void);
+extern const u8 *ItemId_GetName(u16 itemId);
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -6078,7 +6079,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
         "	bne _080C9720\n\t"
-        "	bl GetMovingItem\n\t"
+        "	bl GetMovingItemId\n\t"
         "	ldr r1, _080C971C\n\t"
         "	b _080C9724\n\t"
         "	.align 2, 0\n\t"
@@ -8114,20 +8115,10 @@ __attribute__((naked)) bool8 ShowYesNoWindow(u8 a)
     );
 }
 
-__attribute__((naked)) void ClearBottomWindow(void)
+void ClearBottomWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearStdWindowAndFrameToTransparent(1, 0);
+    ScheduleBgCopyTilemapToVram(0);
 }
 
 __attribute__((naked)) void AddWallpaperSetsMenu(void)
@@ -21875,41 +21866,14 @@ __attribute__((naked)) bool8 IsActiveItemMoving(void)
     );
 }
 
-__attribute__((naked)) u8 *GetMovingItemName(void)
+const u8 *GetMovingItemName(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080D0B6C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D0B70\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemId_GetName\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0B6C: .4byte gUnknown_20399A8\n\t"
-        "_080D0B70: .4byte 0x00002234\n\t"
-        ".syntax divided\n\t"
-    );
+    return ItemId_GetName(sStorage->movingItemId);
 }
 
-__attribute__((naked)) u16 GetMovingItem(void)
+u16 GetMovingItemId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080D0B80\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D0B84\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0B80: .4byte gUnknown_20399A8\n\t"
-        "_080D0B84: .4byte 0x00002234\n\t"
-        ".syntax divided\n\t"
-    );
+    return sStorage->movingItemId;
 }
 
 __attribute__((naked)) void sub_080D0B88(void)
@@ -22561,34 +22525,14 @@ __attribute__((naked)) void sub_080D0FE0(void)
     );
 }
 
-__attribute__((naked)) const void *GetItemIconPic(u16 itemId)
+const void *GetItemIconPic(u16 itemId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetItemIconPicOrPalette\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetItemIconPicOrPalette(itemId, 0);
 }
 
-__attribute__((naked)) const void *GetItemIconPalette(u16 itemId)
+const void *GetItemIconPalette(u16 itemId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetItemIconPicOrPalette\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetItemIconPicOrPalette(itemId, 1);
 }
 
 __attribute__((naked)) void Cb_HandleMovingMonFromParty(void)
@@ -23924,49 +23868,14 @@ u8 *GetWaldaPhrasePtr(void)
     return gSaveBlock1Ptr->waldaPhrase.text;
 }
 
-__attribute__((naked)) void SetWaldaPhrase(const u8 *src)
+void SetWaldaPhrase(const u8 *src)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _080D1E10\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D1E14\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	bl StringCopy\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1E10: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1E14: .4byte 0x00003D74\n\t"
-        ".syntax divided\n\t"
-    );
+    StringCopy(gSaveBlock1Ptr->waldaPhrase.text, src);
 }
 
-__attribute__((naked)) bool32 IsWaldaPhraseEmpty(void)
+bool32 IsWaldaPhraseEmpty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r0, _080D1E34\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D1E38\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _080D1E2C\n\t"
-        "	movs r1, #1\n\t"
-        "_080D1E2C:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1E34: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1E38: .4byte 0x00003D74\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->waldaPhrase.text[0] == EOS;
 }
 
 __attribute__((naked)) void sub_080D1E3C(void)

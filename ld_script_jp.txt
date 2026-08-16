@@ -5676,7 +5676,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.sub_080D0AB8);
         src/pokemon_storage_system.o(.text.IsActiveItemMoving);
         src/pokemon_storage_system.o(.text.GetMovingItemName);
-        src/pokemon_storage_system.o(.text.GetMovingItem);
+        src/pokemon_storage_system.o(.text.GetMovingItemId);
         src/pokemon_storage_system.o(.text.sub_080D0B88);
         src/pokemon_storage_system.o(.text.sub_080D0BC4);
         src/pokemon_storage_system.o(.text.sub_080D0C10);
