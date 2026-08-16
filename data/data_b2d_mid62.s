@@ -18,8 +18,8 @@ sDigitalDisplayBigBonusOffsets: @ 0x85845E2
 	.incbin "baserom_jp.gba", 0x5845e2, 0x10
 
 	.section .rodata.8584638
-	.globl gUnknown_8584638
-gUnknown_8584638: @ 0x8584638
+	.globl sInitialReelPositions
+sInitialReelPositions: @ 0x8584638
 	.incbin "baserom_jp.gba", 0x584638, 0xc
 
 	.globl sSpecialDrawOdds

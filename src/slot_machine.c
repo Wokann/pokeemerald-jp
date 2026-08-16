@@ -4,6 +4,7 @@
 #include "random.h"
 #include "gpu_regs.h"
 #include "bg.h"
+#include "tv.h"
 #include "sound.h"
 #include "main.h"
 #include "task.h"
@@ -38,769 +39,30 @@ enum
     SYMBOL_REPLAY,
 };
 
-__attribute__((naked)) void Task_FadeToSlotMachine(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _0812A50C\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0812A510\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _0812A528\n\t"
-        "	b _0812A540\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A50C: .4byte gTasks\n\t"
-        "_0812A510:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	b _0812A540\n\t"
-        "_0812A528:\n\t"
-        "	ldr r0, _0812A548\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812A540\n\t"
-        "	ldr r0, _0812A54C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0812A540:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A548: .4byte gPaletteFade\n\t"
-        "_0812A54C: .4byte CB2_SlotMachineSetup + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void PlaySlotMachine(u8 machineId, MainCallback exitCallback)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _0812A58C\n\t"
-        "	movs r0, #0x68\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r5]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl PlaySlotMachine_Internal\n\t"
-        "	ldr r0, _0812A590\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0812A594\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A58C: .4byte sSlotMachine\n\t"
-        "_0812A590: .4byte Task_FadeToSlotMachine + 1\n\t"
-        "_0812A594: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void CB2_SlotMachineSetup(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _0812A5B4\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bhi _0812A676\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812A5B8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A5B4: .4byte gMain\n\t"
-        "_0812A5B8: .4byte 0x0812A5BC\n\t"
-        "_0812A5BC: @ jump table\n\t"
-        "	.4byte _0812A5EC @ case 0\n\t"
-        "	.4byte _0812A5F6 @ case 1\n\t"
-        "	.4byte _0812A5FC @ case 2\n\t"
-        "	.4byte _0812A606 @ case 3\n\t"
-        "	.4byte _0812A60C @ case 4\n\t"
-        "	.4byte _0812A612 @ case 5\n\t"
-        "	.4byte _0812A618 @ case 6\n\t"
-        "	.4byte _0812A61E @ case 7\n\t"
-        "	.4byte _0812A648 @ case 8\n\t"
-        "	.4byte _0812A64E @ case 9\n\t"
-        "	.4byte _0812A654 @ case 10\n\t"
-        "	.4byte _0812A670 @ case 11\n\t"
-        "_0812A5EC:\n\t"
-        "	bl SlotMachineSetup_0_0\n\t"
-        "	bl SlotMachineSetup_0_1\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A5F6:\n\t"
-        "	bl SlotMachineSetup_InitVRAM\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A5FC:\n\t"
-        "	bl SlotMachineSetup_InitOAM\n\t"
-        "	bl SlotMachineSetup_2_1\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A606:\n\t"
-        "	bl SlotMachineSetup_3_0\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A60C:\n\t"
-        "	bl SlotMachineSetup_4_0\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A612:\n\t"
-        "	bl SlotMachineSetup_5_0\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A618:\n\t"
-        "	bl SlotMachineSetup_6_0\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A61E:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #3\n\t"
-        "	bl ShowBg\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A648:\n\t"
-        "	bl SlotMachineSetup_8_0\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A64E:\n\t"
-        "	bl SlotMachineSetup_9_0\n\t"
-        "	b _0812A65C\n\t"
-        "_0812A654:\n\t"
-        "	bl CreateSlotMachineSprites\n\t"
-        "	bl CreateGameplayTasks\n\t"
-        "_0812A65C:\n\t"
-        "	ldr r1, _0812A66C\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0812A676\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A66C: .4byte gMain\n\t"
-        "_0812A670:\n\t"
-        "	ldr r0, _0812A67C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0812A676:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A67C: .4byte CB2_SlotMachineLoop + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void CB2_SlotMachineLoop(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachine_VBlankCallback(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	ldr r4, _0812A6E0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x58\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x5a\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x5c\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x48\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x5e\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A6E0: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void PlaySlotMachine_Internal(u8 machineId, MainCallback exitCallback)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _0812A718\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl CreateTask\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0812A71C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0, #8]\n\t"
-        "	adds r0, #0xa\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl StoreWordInTwoHalfwords\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A718: .4byte SlotMachineDummyTask + 1\n\t"
-        "_0812A71C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_0812A720(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812A750\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r0, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	ldr r0, _0812A754\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r3, _0812A758\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	adds r2, #0xa\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	adds r1, #0x64\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl LoadWordFromTwoHalfwords\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A750: .4byte SlotMachineDummyTask + 1\n\t"
-        "_0812A754: .4byte gTasks\n\t"
-        "_0812A758: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-void SlotMachineDummyTask(u8 taskId) {}
-__attribute__((naked)) void SlotMachineSetup_0_0(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetHBlankCallback\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	ldr r2, _0812A7A0\n\t"
-        "	mov r0, sp\n\t"
-        "	bl CpuSet\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _0812A7A4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	ldr r0, _0812A7A8\n\t"
-        "	bl InitWindows\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A7A0: .4byte 0x05006000\n\t"
-        "_0812A7A4: .4byte gUnknown_85843A8\n\t"
-        "_0812A7A8: .4byte gUnknown_85843B8\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachineSetup_6_0(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812A7C8\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	movs r0, #1\n\t"
-        "	bl EnableInterrupts\n\t"
-        "	movs r1, #0xc1\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A7C8: .4byte SlotMachine_VBlankCallback + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachineSetup_InitVRAM(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	lsls r2, r2, #0x13\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #9\n\t"
-        "	mov r4, sp\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _0812A818\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #5\n\t"
-        "	ldr r7, _0812A81C\n\t"
-        "	movs r0, #0x81\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	mov ip, r0\n\t"
-        "_0812A7EA:\n\t"
-        "	strh r6, [r4]\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r2, [r1, #4]\n\t"
-        "	str r7, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	subs r3, r3, r5\n\t"
-        "	cmp r3, r5\n\t"
-        "	bhi _0812A7EA\n\t"
-        "	strh r6, [r4]\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r2, [r1, #4]\n\t"
-        "	lsrs r0, r3, #1\n\t"
-        "	mov r2, ip\n\t"
-        "	orrs r0, r2\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A818: .4byte 0x040000D4\n\t"
-        "_0812A81C: .4byte 0x81000800\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachineSetup_InitOAM(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r2, #0xe0\n\t"
-        "	lsls r2, r2, #0x13\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0812A83C\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r2, [r0, #4]\n\t"
-        "	ldr r1, _0812A840\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	add sp, #4\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A83C: .4byte 0x040000D4\n\t"
-        "_0812A840: .4byte 0x81000200\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachineSetup_2_1(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0xa\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0xc\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0xe\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x14\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x16\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0812A8CC\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0812A8D0\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A8CC: .4byte 0x00001048\n\t"
-        "_0812A8D0: .4byte 0x00000809\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachineSetup_0_1(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	bl sub_0812A720\n\t"
-        "	ldr r5, _0812A9B4\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	strb r4, [r0, #2]\n\t"
-        "	bl Random\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r2, #3]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	strb r4, [r0, #4]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r4, [r0, #8]\n\t"
-        "	strb r1, [r0, #0xa]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	strb r1, [r0, #0xb]\n\t"
-        "	bl GetCoins\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	strh r0, [r2, #0xc]\n\t"
-        "	strh r4, [r2, #0xe]\n\t"
-        "	strh r4, [r2, #0x10]\n\t"
-        "	strh r4, [r2, #0x12]\n\t"
-        "	strh r4, [r2, #0x18]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r2, #0x1a]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x58\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x5c\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl GetCurrentMapMusic\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, #0x60\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r0, _0812A9B8\n\t"
-        "	mov r8, r0\n\t"
-        "_0812A944:\n\t"
-        "	ldr r0, _0812A9B4\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	lsls r6, r7, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x22\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	adds r5, #0x28\n\t"
-        "	adds r5, r5, r6\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	lsls r1, r7, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	add r0, r8\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl __modsi3\n\t"
-        "	strh r0, [r5]\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	movs r2, #0xfc\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl __modsi3\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #2\n\t"
-        "	bls _0812A944\n\t"
-        "	bl GetCoins\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl AlertTVThatPlayerPlayedSlotMachine\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A9B4: .4byte sSlotMachine\n\t"
-        "_0812A9B8: .4byte gUnknown_8584638\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachineSetup_3_0(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	ldr r1, _0812A9D8\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	bl ResetTasks\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812A9D8: .4byte gOamLimit\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachineSetup_4_0(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _0812AA30\n\t"
-        "	movs r0, #8\n\t"
-        "	bl Alloc\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r4, _0812AA34\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r5, _0812AA38\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r5]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _0812AA3C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _0812AA40\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	ldr r2, _0812AA44\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	ldr r2, _0812AA48\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	ldr r2, _0812AA4C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	ldr r2, _0812AA50\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	ldr r2, _0812AA54\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AA30: .4byte sSelectedPikaPowerTile\n\t"
-        "_0812AA34: .4byte sReelOverlay_Tilemap\n\t"
-        "_0812AA38: .4byte sReelButtonPress_Tilemap\n\t"
-        "_0812AA3C: .4byte 0x00002051\n\t"
-        "_0812AA40: .4byte 0x00002851\n\t"
-        "_0812AA44: .4byte 0x00002061\n\t"
-        "_0812AA48: .4byte 0x00002861\n\t"
-        "_0812AA4C: .4byte 0x000020BE\n\t"
-        "_0812AA50: .4byte 0x000028BE\n\t"
-        "_0812AA54: .4byte 0x000020BF\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SlotMachineSetup_5_0(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_0812F918\n\t"
-        "	bl sub_0812F968\n\t"
-        "	bl sub_0812F7F4\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0xf0\n\t"
-        "	bl LoadMessageBoxGfx\n\t"
-        "	movs r1, #0x85\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0xe0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-void CreateSlotMachineSprites(void)
+static void Task_FadeToSlotMachine(u8 taskId);
+static void CB2_SlotMachineSetup(void);
+static void CB2_SlotMachine(void);
+static void SlotMachine_VBlankCB(void);
+static void PlaySlotMachine_Internal(u8 machineId, MainCallback exitCallback);
+static void SlotMachine_InitFromTask(void);
+static void SlotMachineSetup_InitBgsWindows(void);
+static void SlotMachineSetup_InitVBlank(void);
+static void SlotMachineSetup_InitVRAM(void);
+static void SlotMachineSetup_InitOAM(void);
+static void SlotMachineSetup_InitGpuRegs(void);
+static void InitSlotMachine(void);
+static void SlotMachineSetup_InitPalsSpritesTasks(void);
+static void SlotMachineSetup_InitTilemaps(void);
+static void SlotMachineSetup_LoadGfxAndTilemaps(void);
+static void CreateGameplayTasks(void);
+static void SlotMachineDummyTask(u8 taskId) {}
+static void CreateSlotMachineSprites(void)
 {
     CreateReelSymbolSprites();
     CreateCreditPayoutNumberSprites();
     CreateInvisibleFlashMatchLineSprites();
     CreateReelBackgroundSprite();
 }
-__attribute__((naked)) void CreateGameplayTasks(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl CreatePikaPowerBoltTask\n\t"
-        "	bl CreateReelTasks\n\t"
-        "	bl sub_0812DEA4\n\t"
-        "	bl CreateSlotMachineTasks\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
 enum {
     MATCH_MIDDLE_ROW,
     MATCH_TOP_ROW,
@@ -1273,6 +535,9 @@ extern const u16 sReelTimeSpeed_Probabilities[][2];
 extern const u16 sQuarterSpeed_ProbabilityBoost[];
 extern const u16 sBiasesSpecial[3];
 extern const u16 sBiasesRegular[5];
+extern const struct BgTemplate sSlotMachineBgTemplates[4];
+extern const struct WindowTemplate sSlotMachineWindowTemplates[];
+extern const s16 sInitialReelPositions[NUM_REELS][2];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeShadow[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[];
 // JP ROM keeps the aura flash colors / duck offsets as data symbols (US has them inline).
@@ -5752,3 +5017,264 @@ static void DecideStop_NoBias_Reel2_Bet3(void)
     }
 }
 
+// NOTE: these setup/entry functions are kept at the end of the file on purpose:
+// agbcc changes LoadReelBackground's register allocation when C code precedes
+// it (byte mismatch otherwise).
+#define tState     data[0]
+
+static void Task_FadeToSlotMachine(u8 taskId)
+{
+    switch (gTasks[taskId].tState)
+    {
+    case 0:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+        gTasks[taskId].tState++;
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+        {
+            SetMainCallback2(CB2_SlotMachineSetup);
+            DestroyTask(taskId);
+        }
+        break;
+    }
+}
+
+void PlaySlotMachine(u8 machineId, MainCallback exitCallback)
+{
+    u8 taskId;
+
+    sSlotMachine = AllocZeroed(sizeof(*sSlotMachine));
+    PlaySlotMachine_Internal(machineId, exitCallback);
+    taskId = CreateTask(Task_FadeToSlotMachine, 0);
+    gTasks[taskId].tState = 0;
+}
+
+static void CB2_SlotMachineSetup(void)
+{
+    switch (gMain.state)
+    {
+        case 0:
+            SlotMachineSetup_InitBgsWindows();
+            InitSlotMachine();
+            gMain.state++;
+            break;
+        case 1:
+            SlotMachineSetup_InitVRAM();
+            gMain.state++;
+            break;
+        case 2:
+            SlotMachineSetup_InitOAM();
+            SlotMachineSetup_InitGpuRegs();
+            gMain.state++;
+            break;
+        case 3:
+            SlotMachineSetup_InitPalsSpritesTasks();
+            gMain.state++;
+            break;
+        case 4:
+            SlotMachineSetup_InitTilemaps();
+            gMain.state++;
+            break;
+        case 5:
+            SlotMachineSetup_LoadGfxAndTilemaps();
+            gMain.state++;
+            break;
+        case 6:
+            SlotMachineSetup_InitVBlank();
+            gMain.state++;
+            break;
+        case 7:
+            BeginNormalPaletteFade(-1, 0, 0x10, 0, RGB_BLACK);
+            ShowBg(0);
+            ShowBg(1);
+            ShowBg(2);
+            ShowBg(3);
+            gMain.state++;
+            break;
+        case 8:
+            AllocDigitalDisplayGfx();
+            gMain.state++;
+            break;
+        case 9:
+            SetDigitalDisplayImagePtrs();
+            gMain.state++;
+            break;
+        case 10:
+            CreateSlotMachineSprites();
+            CreateGameplayTasks();
+            gMain.state++;
+            break;
+        case 11:
+            SetMainCallback2(CB2_SlotMachine);
+            break;
+    }
+}
+
+static void CB2_SlotMachine(void)
+{
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+}
+
+static void SlotMachine_VBlankCB(void)
+{
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
+    SetGpuReg(REG_OFFSET_WIN0H, sSlotMachine->win0h);
+    SetGpuReg(REG_OFFSET_WIN0V, sSlotMachine->win0v);
+    SetGpuReg(REG_OFFSET_WININ, sSlotMachine->winIn);
+    SetGpuReg(REG_OFFSET_WINOUT, sSlotMachine->winOut);
+}
+
+#define tMachineId    data[0]
+#define tExitCallback data[1]
+
+static void PlaySlotMachine_Internal(u8 machineId, MainCallback exitCallback)
+{
+    struct Task *task = &gTasks[CreateTask(SlotMachineDummyTask, 0xFF)];
+    task->tMachineId = machineId;
+    StoreWordInTwoHalfwords(&task->tExitCallback, (intptr_t)exitCallback);
+}
+
+// Extracts and assigns machineId and exit callback from task.
+static void SlotMachine_InitFromTask(void)
+{
+    struct Task *task = &gTasks[FindTaskIdByFunc(SlotMachineDummyTask)];
+    sSlotMachine->machineId = task->tMachineId;
+    LoadWordFromTwoHalfwords((u16 *)&task->tExitCallback, (u32 *)&sSlotMachine->prevMainCb);
+}
+
+#undef tMachineId
+#undef tExitCallback
+
+static void SlotMachineSetup_InitBgsWindows(void)
+{
+    SetVBlankCallback(NULL);
+    SetHBlankCallback(NULL);
+    CpuFill32(0, (void *)VRAM, VRAM_SIZE);
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sSlotMachineBgTemplates, ARRAY_COUNT(sSlotMachineBgTemplates));
+    InitWindows(sSlotMachineWindowTemplates);
+    DeactivateAllTextPrinters();
+}
+
+static void SlotMachineSetup_InitVBlank(void)
+{
+    SetVBlankCallback(SlotMachine_VBlankCB);
+    EnableInterrupts(INTR_FLAG_VBLANK);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON | DISPCNT_WIN0_ON);
+}
+
+static void SlotMachineSetup_InitVRAM(void)
+{
+    DmaClearLarge16(3, (u16 *)(BG_VRAM), BG_VRAM_SIZE, 0x1000);
+}
+
+static void SlotMachineSetup_InitOAM(void)
+{
+    DmaClear16(3, (u16 *)OAM, OAM_SIZE);
+}
+
+static void SlotMachineSetup_InitGpuRegs(void)
+{
+    SetGpuReg(REG_OFFSET_BG0CNT, 0);
+    SetGpuReg(REG_OFFSET_BG1CNT, 0);
+    SetGpuReg(REG_OFFSET_BG2CNT, 0);
+    SetGpuReg(REG_OFFSET_BG3CNT, 0);
+    SetGpuReg(REG_OFFSET_BG0HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+    SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+    SetGpuReg(REG_OFFSET_BG2HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+    SetGpuReg(REG_OFFSET_BG3HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
+    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG3 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_OBJ);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(9, 8));
+}
+
+// Set up initial state of slot machine
+static void InitSlotMachine(void)
+{
+    u8 i;
+
+    SlotMachine_InitFromTask();
+    sSlotMachine->state = SLOTTASK_UNFADE;
+    sSlotMachine->pikaPowerBolts = 0;
+    sSlotMachine->luckyGame = Random() & 1;
+    sSlotMachine->machineBias = 0;
+    sSlotMachine->matches = 0;
+    sSlotMachine->reelTimeSpinsLeft = 0;
+    sSlotMachine->reelTimeSpinsUsed = 0;
+    sSlotMachine->coins = GetCoins();
+    sSlotMachine->payout = 0;
+    sSlotMachine->netCoinLoss = 0;
+    sSlotMachine->bet = 0;
+    sSlotMachine->currentReel = LEFT_REEL;
+    sSlotMachine->reelSpeed = REEL_NORMAL_SPEED;
+    sSlotMachine->win0h = DISPLAY_WIDTH;
+    sSlotMachine->win0v = DISPLAY_HEIGHT;
+    sSlotMachine->winIn = WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR;
+    sSlotMachine->winOut = WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR;
+    sSlotMachine->backupMapMusic = GetCurrentMapMusic();
+
+    for (i = 0; i < NUM_REELS; i++)
+    {
+        sSlotMachine->reelShockOffsets[i] = 0;
+        sSlotMachine->reelPositions[i] = sInitialReelPositions[i][sSlotMachine->luckyGame] % SYMBOLS_PER_REEL;
+        sSlotMachine->reelPixelOffsets[i] = REEL_HEIGHT - sSlotMachine->reelPositions[i] * REEL_SYMBOL_HEIGHT;
+        sSlotMachine->reelPixelOffsets[i] %= REEL_HEIGHT;
+    }
+    AlertTVThatPlayerPlayedSlotMachine(GetCoins());
+}
+
+static void SlotMachineSetup_InitPalsSpritesTasks(void)
+{
+    ResetPaletteFade();
+    ResetSpriteData();
+    gOamLimit = 0x80;
+    FreeAllSpritePalettes();
+    ResetTasks();
+}
+
+static void SlotMachineSetup_InitTilemaps(void)
+{
+    sSelectedPikaPowerTile = Alloc(8);
+    sReelOverlay_Tilemap = AllocZeroed(14);
+    sReelButtonPress_Tilemap = AllocZeroed(8);
+
+    // several of these are 1 bit off from each other
+    sReelOverlay_Tilemap[0] = 0x2051;
+    sReelOverlay_Tilemap[1] = 0x2851;
+    sReelOverlay_Tilemap[2] = 0x2061;
+    sReelOverlay_Tilemap[3] = 0x2861;
+    sReelOverlay_Tilemap[4] = 0x20BE;
+    sReelOverlay_Tilemap[5] = 0x28BE;
+    sReelOverlay_Tilemap[6] = 0x20BF;
+}
+
+static void SlotMachineSetup_LoadGfxAndTilemaps(void)
+{
+    LoadMenuGfx();
+    LoadMenuAndReelOverlayTilemaps();
+    LoadSlotMachineGfx();
+    LoadMessageBoxGfx(0, 0x200, BG_PLTT_ID(15));
+    LoadUserWindowBorderGfx(0, 0x214, BG_PLTT_ID(14));
+    PutWindowTilemap(WIN_MSG);
+}
+
+static void CreateGameplayTasks(void)
+{
+    CreatePikaPowerBoltTask();
+    CreateReelTasks();
+    CreateDigitalDisplayTask();
+    CreateSlotMachineTasks();
+}
+
+#undef tState

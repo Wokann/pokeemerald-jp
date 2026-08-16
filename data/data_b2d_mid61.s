@@ -512,12 +512,12 @@ gUnknown_85822E8: @ 0x85822E8
 gUnknown_8582300: @ 0x8582300
 	.incbin "baserom_jp.gba", 0x582300, 0x20a8
 
-	.globl gUnknown_85843A8
-gUnknown_85843A8: @ 0x85843A8
+	.globl sSlotMachineBgTemplates
+sSlotMachineBgTemplates: @ 0x85843A8
 	.incbin "baserom_jp.gba", 0x5843a8, 0x10
 
-	.globl gUnknown_85843B8
-gUnknown_85843B8: @ 0x85843B8
+	.globl sSlotMachineWindowTemplates
+sSlotMachineWindowTemplates: @ 0x85843B8
 	.incbin "baserom_jp.gba", 0x5843b8, 0x10
 
 	.section .rodata.8584598
