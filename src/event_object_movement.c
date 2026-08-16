@@ -293,38 +293,16 @@ __attribute__((naked)) void CreateReflectionEffectSprites(void)
     );
 }
 
-__attribute__((naked)) void GetFirstInactiveEventObjectId(void)
+u8 GetFirstInactiveEventObjectId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r2, _0808CE70\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	b _0808CE88\n\t"
-        "	.align 2, 0\n\t"
-        "_0808CE70: .4byte gObjectEvents\n\t"
-        "_0808CE74:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	bhi _0808CE8E\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "_0808CE88:\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808CE74\n\t"
-        "_0808CE8E:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if (!gObjectEvents[i].active)
+            break;
+    }
+    return i;
 }
 
 u8 GetObjectEventIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroupId)
