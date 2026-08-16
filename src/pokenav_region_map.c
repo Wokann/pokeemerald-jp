@@ -78,16 +78,96 @@ extern const u16 gRegionMapCityZoomTiles_Pal[];
 extern const u32 gRegionMapCityZoomText_Gfx[];
 extern const u16 sMapSecInfoWindow_Pal[];
 extern const u32 sRegionMapCityZoomTiles_Gfx[];
-extern const struct CityMapEntry sPokenavCityMaps[NUM_CITY_MAPS];
 
 // JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern const struct BgTemplate sRegionMapBgTemplates[3];
-extern const LoopedTask sRegionMapLoopTaskFuncs[];
-extern const struct CompressedSpriteSheet sCityZoomTextSpriteSheet[1];
-extern const struct SpritePalette sCityZoomTilesSpritePalette[];
-extern const struct WindowTemplate sMapSecInfoWindowTemplate;
-extern const struct OamData sCityZoomTextSprite_OamData;
-extern const struct SpriteTemplate sCityZoomTextSpriteTemplate;
+static const struct BgTemplate sRegionMapBgTemplates[3] =
+{
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 0x1F,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 0x06,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 0x00,
+        .screenSize = 2,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    },
+};
+
+static const LoopedTask sRegionMapLoopTaskFuncs[] =
+{
+    [POKENAV_MAP_FUNC_NONE]         = NULL,
+    [POKENAV_MAP_FUNC_CURSOR_MOVED] = LoopedTask_UpdateInfoAfterCursorMove,
+    [POKENAV_MAP_FUNC_ZOOM_OUT]     = LoopedTask_RegionMapZoomOut,
+    [POKENAV_MAP_FUNC_ZOOM_IN]      = LoopedTask_RegionMapZoomIn,
+    [POKENAV_MAP_FUNC_EXIT]         = LoopedTask_ExitRegionMap
+};
+
+static const struct CompressedSpriteSheet sCityZoomTextSpriteSheet[1] =
+{
+    {gRegionMapCityZoomText_Gfx, 0x800, GFXTAG_CITY_ZOOM}
+};
+
+static const struct SpritePalette sCityZoomTilesSpritePalette[] =
+{
+    {gRegionMapCityZoomTiles_Pal, PALTAG_CITY_ZOOM},
+    {}
+};
+
+static const struct WindowTemplate sMapSecInfoWindowTemplate =
+{
+    .bg = 1,
+    .tilemapLeft = 17,
+    .tilemapTop = 4,
+    .width = 12,
+    .height = 13,
+    .paletteNum = 1,
+    .baseBlock = 0x4C
+};
+
+#include "data/region_map/city_map_entries.h"
+
+static const struct OamData sCityZoomTextSprite_OamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+static const struct SpriteTemplate sCityZoomTextSpriteTemplate =
+{
+    .tileTag = GFXTAG_CITY_ZOOM,
+    .paletteTag = PALTAG_CITY_ZOOM,
+    .oam = &sCityZoomTextSprite_OamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_CityZoomText,
+};
 
 u32 PokenavCallback_Init_RegionMap(void)
 {
