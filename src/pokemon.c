@@ -3041,6 +3041,8 @@ __attribute__((naked)) void MonRestorePP(struct Pokemon *mon)
 
 
 
+
+
 void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
 {
     u16 species = GetBoxMonData(boxMon, MON_DATA_SPECIES, NULL);
@@ -14581,60 +14583,22 @@ __attribute__((naked)) void GiveMonInitialMoveset(struct Pokemon *mon)
 
 
 
-__attribute__((naked)) void BoxMonRestorePP(struct BoxPokemon *boxMon)
+void BoxMonRestorePP(struct BoxPokemon *boxMon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r6, #0\n\t"
-        "_0806E3C4:\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	adds r4, #0xd\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0806E410\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x15\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r6, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CalculatePPWithBonus\n\t"
-        "	mov r1, sp\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r1, #0x11\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetBoxMonData\n\t"
-        "_0806E410:\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	ble _0806E3C4\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetBoxMonData(boxMon, MON_DATA_MOVE1 + i, 0))
+        {
+            u16 move = GetBoxMonData(boxMon, MON_DATA_MOVE1 + i, 0);
+            u16 bonus = GetBoxMonData(boxMon, MON_DATA_PP_BONUSES, 0);
+            u8 pp = CalculatePPWithBonus(move, bonus, i);
+            SetBoxMonData(boxMon, MON_DATA_PP1 + i, &pp);
+        }
+    }
 }
+
 
 __attribute__((naked)) void SetMonPreventsSwitchingString()
 {
