@@ -184,120 +184,299 @@ sAnims_TrainerHillRayquaza: @ 0x85FBA20
 	.4byte sAnim_TrainerHillRayquaza, sAnim_TrainerHillRayquaza_1
 
 	.globl gUnknown_85FBA28
-gUnknown_85FBA28: @ 0x85FBA28
-	.incbin "baserom_jp.gba", 0x5fba28, 0x24
+gUnknown_85FBA28: @ 0x085FBA28
+	.hword 0x7729, 0x7729
+	.4byte sOam_TrainerHillRayquaza, sAnims_TrainerHillRayquaza, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+sAnims_85FBA48: @ 0x085FBA48
+	.4byte gUnknown_85FBA28 + 0x18
 
 	.globl gUnknown_85FBA4C
-gUnknown_85FBA4C: @ 0x85FBA4C
-	.incbin "baserom_jp.gba", 0x5fba4c, 0x24
+gUnknown_85FBA4C: @ 0x085FBA4C
+	.hword 0x772A, 0x7729
+	.4byte sOam_TrainerHillRayquaza + 8, sAnims_85FBA48, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+sAnims_85FBA6C: @ 0x085FBA6C
+	.4byte gUnknown_85FBA28 + 0x3C
 
 	.globl gUnknown_85FBA70
-gUnknown_85FBA70: @ 0x85FBA70
-	.incbin "baserom_jp.gba", 0x5fba70, 0xa8
+gUnknown_85FBA70: @ 0x085FBA70
+	.hword 0x772B, 0x7729
+	.4byte sOam_TrainerHillRayquaza + 0x10, sAnims_85FBA6C, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0008, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0010, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0018, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0020, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0028, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0030, 0x0024
+	.hword 0x0040, 0x0024
+	.hword 0x0050, 0x0024
+	.hword 0x0040, 0x0024
+	.hword 0xFFFE, 0x0000
+	.hword 0x0038, 0x0024
+	.hword 0x0048, 0x0024
+	.hword 0x0058, 0x0024
+	.hword 0x0048, 0x0024
+	.hword 0xFFFE, 0x0000
+	.hword 0x0060, 0x0024
+	.hword 0x0068, 0x0024
+	.hword 0x0070, 0x0024
+	.hword 0x0068, 0x0024
+	.hword 0xFFFE, 0x0000
+sAnims_85FBAF4: @ 0x085FBAF4
+	.4byte gUnknown_85FBA28 + 0x60
+	.4byte gUnknown_85FBA28 + 0x68
+	.4byte gUnknown_85FBA28 + 0x70
+	.4byte gUnknown_85FBA28 + 0x78
+	.4byte gUnknown_85FBA28 + 0x80
+	.4byte gUnknown_85FBA28 + 0x88
+	.4byte gUnknown_85FBA28 + 0x90
+	.4byte gUnknown_85FBA28 + 0xA4
+	.4byte gUnknown_85FBA28 + 0xB8
 
 	.globl gUnknown_85FBB18
-gUnknown_85FBB18: @ 0x85FBB18
-	.incbin "baserom_jp.gba", 0x5fbb18, 0x30
+gUnknown_85FBB18: @ 0x085FBB18
+	.hword 0x772C, 0x772C
+	.4byte sOam_TrainerHillRayquaza + 0x18, sAnims_85FBAF4, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0x0000, 0x0024
+	.hword 0x0002, 0x0024
+	.hword 0x0004, 0x0024
+	.hword 0x0002, 0x0024
+	.hword 0xFFFE, 0x0000
+sAnims_85FBB44: @ 0x085FBB44
+	.4byte gUnknown_85FBA28 + 0x108
 
 	.globl gUnknown_85FBB48
-gUnknown_85FBB48: @ 0x85FBB48
-	.incbin "baserom_jp.gba", 0x5fbb48, 0x18
+gUnknown_85FBB48: @ 0x085FBB48
+	.hword 0x772D, 0x772C
+	.4byte sOam_TrainerHillRayquaza + 0x20, sAnims_85FBB44, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FBB60
-gUnknown_85FBB60: @ 0x85FBB60
-	.incbin "baserom_jp.gba", 0x5fbb60, 0x18
+gUnknown_85FBB60: @ 0x085FBB60
+	.hword 0x772E, 0x772C
+	.4byte sOam_TrainerHillRayquaza + 8, sAnims_85FBA48, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FBB78
-gUnknown_85FBB78: @ 0x85FBB78
-	.incbin "baserom_jp.gba", 0x5fbb78, 0xc
+gUnknown_85FBB78: @ 0x085FBB78
+	.hword 0x0014, 0x0400
+	.hword 0x0001, 0xA260
+	.hword 0x0001, 0x0000
 
 	.globl gUnknown_85FBB84
-gUnknown_85FBB84: @ 0x85FBB84
-	.incbin "baserom_jp.gba", 0x5fbb84, 0x3c
+gUnknown_85FBB84: @ 0x085FBB84
+	.hword 0x01F0, 0x0000
+	.hword 0x21E1, 0x0000
+	.hword 0x11D2, 0x0000
+	.hword 0x0000, 0x0014
+	.hword 0x0040, 0x0014
+	.hword 0x0080, 0x0014
+	.hword 0x0040, 0x0014
+	.hword 0xFFFE, 0x0000
+	.hword 0x00C0, 0x0014
+	.hword 0x0100, 0x0014
+	.hword 0x0140, 0x0014
+	.hword 0x0100, 0x0014
+	.hword 0xFFFE, 0x0000
+sAnims_85FBBB8: @ 0x085FBBB8
+	.4byte gUnknown_85FBA28 + 0x168
+	.4byte gUnknown_85FBA28 + 0x17C
 
 	.globl gUnknown_85FBBC0
-gUnknown_85FBBC0: @ 0x85FBBC0
-	.incbin "baserom_jp.gba", 0x5fbbc0, 0x8
+gUnknown_85FBBC0: @ 0x085FBBC0
+	.4byte 0x08DA2120
+	.hword 0x3000, 0x7729
 
 	.globl gUnknown_85FBBC8
-gUnknown_85FBBC8: @ 0x85FBBC8
-	.incbin "baserom_jp.gba", 0x5fbbc8, 0x8
+gUnknown_85FBBC8: @ 0x085FBBC8
+	.4byte 0x08DA3618
+	.hword 0x7729, 0x0000
 
 	.globl gUnknown_85FBBD0
-gUnknown_85FBBD0: @ 0x85FBBD0
-	.incbin "baserom_jp.gba", 0x5fbbd0, 0x24
+gUnknown_85FBBD0: @ 0x085FBBD0
+	.hword 0x7729, 0x7729
+	.4byte sOam_TrainerHillRayquaza, sAnims_85FBBB8, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+sAnims_85FBBF0: @ 0x085FBBF0
+	.4byte gUnknown_85FBA28 + 0x1C0
 
 	.globl gUnknown_85FBBF4
-gUnknown_85FBBF4: @ 0x85FBBF4
-	.incbin "baserom_jp.gba", 0x5fbbf4, 0x8
+gUnknown_85FBBF4: @ 0x085FBBF4
+	.4byte 0x08DA2D04
+	.hword 0x0200, 0x772A
 
 	.globl gUnknown_85FBBFC
-gUnknown_85FBBFC: @ 0x85FBBFC
-	.incbin "baserom_jp.gba", 0x5fbbfc, 0x24
+gUnknown_85FBBFC: @ 0x085FBBFC
+	.hword 0x772A, 0x7729
+	.4byte sOam_TrainerHillRayquaza + 8, sAnims_85FBBF0, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+sAnims_85FBC1C: @ 0x085FBC1C
+	.4byte gUnknown_85FBA28 + 0x1EC
 
 	.globl gUnknown_85FBC20
-gUnknown_85FBC20: @ 0x85FBC20
-	.incbin "baserom_jp.gba", 0x5fbc20, 0x8
+gUnknown_85FBC20: @ 0x085FBC20
+	.4byte 0x08DA2DD0
+	.hword 0x0400, 0x772B
 
 	.globl gUnknown_85FBC28
-gUnknown_85FBC28: @ 0x85FBC28
-	.incbin "baserom_jp.gba", 0x5fbc28, 0xa8
+gUnknown_85FBC28: @ 0x085FBC28
+	.hword 0x772B, 0x7729
+	.4byte sOam_TrainerHillRayquaza + 0x10, sAnims_85FBC1C, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0008, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0010, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0018, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0020, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0028, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0030, 0x0018
+	.hword 0x0040, 0x0018
+	.hword 0x0050, 0x0018
+	.hword 0x0040, 0x0018
+	.hword 0xFFFE, 0x0000
+	.hword 0x0038, 0x0018
+	.hword 0x0048, 0x0018
+	.hword 0x0058, 0x0018
+	.hword 0x0048, 0x0018
+	.hword 0xFFFE, 0x0000
+	.hword 0x0060, 0x0018
+	.hword 0x0068, 0x0018
+	.hword 0x0070, 0x0018
+	.hword 0x0068, 0x0018
+	.hword 0xFFFE, 0x0000
+sAnims_85FBCAC: @ 0x085FBCAC
+	.4byte gUnknown_85FBA4C + 0x1F4
+	.4byte gUnknown_85FBA4C + 0x1FC
+	.4byte gUnknown_85FBA70 + 0x1E0
+	.4byte gUnknown_85FBA70 + 0x1E8
+	.4byte gUnknown_85FBA70 + 0x1F0
+	.4byte gUnknown_85FBA70 + 0x1F8
+	.4byte gUnknown_85FBB18 + 0x158
+	.4byte gUnknown_85FBB18 + 0x16C
+	.4byte gUnknown_85FBB18 + 0x180
 
 	.globl gUnknown_85FBCD0
-gUnknown_85FBCD0: @ 0x85FBCD0
-	.incbin "baserom_jp.gba", 0x5fbcd0, 0x8
+gUnknown_85FBCD0: @ 0x085FBCD0
+	.4byte 0x08DA2FC4
+	.hword 0x0F00, 0x772C
 
 	.globl gUnknown_85FBCD8
-gUnknown_85FBCD8: @ 0x85FBCD8
-	.incbin "baserom_jp.gba", 0x5fbcd8, 0x8
+gUnknown_85FBCD8: @ 0x085FBCD8
+	.4byte 0x08DA3640
+	.hword 0x772C, 0x0000
 
 	.globl gUnknown_85FBCE0
-gUnknown_85FBCE0: @ 0x85FBCE0
-	.incbin "baserom_jp.gba", 0x5fbce0, 0x30
+gUnknown_85FBCE0: @ 0x085FBCE0
+	.hword 0x772C, 0x772C
+	.4byte sOam_TrainerHillRayquaza + 0x18, sAnims_85FBCAC, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.hword 0x0000, 0x0018
+	.hword 0x0002, 0x0018
+	.hword 0x0004, 0x0018
+	.hword 0x0002, 0x0018
+	.hword 0xFFFE, 0x0000
+sAnims_85FBD0C: @ 0x085FBD0C
+	.4byte gUnknown_85FBB18 + 0x1E0
 
 	.globl gUnknown_85FBD10
-gUnknown_85FBD10: @ 0x85FBD10
-	.incbin "baserom_jp.gba", 0x5fbd10, 0x8
+gUnknown_85FBD10: @ 0x085FBD10
+	.4byte 0x08DA34F8
+	.hword 0x00C0, 0x772D
 
 	.globl gUnknown_85FBD18
-gUnknown_85FBD18: @ 0x85FBD18
-	.incbin "baserom_jp.gba", 0x5fbd18, 0x18
+gUnknown_85FBD18: @ 0x085FBD18
+	.hword 0x772D, 0x772C
+	.4byte sOam_TrainerHillRayquaza + 0x20, sAnims_85FBD0C, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FBD30
-gUnknown_85FBD30: @ 0x85FBD30
-	.incbin "baserom_jp.gba", 0x5fbd30, 0x8
+gUnknown_85FBD30: @ 0x085FBD30
+	.4byte 0x08DA354C
+	.hword 0x0200, 0x772E
 
 	.globl gUnknown_85FBD38
-gUnknown_85FBD38: @ 0x85FBD38
-	.incbin "baserom_jp.gba", 0x5fbd38, 0x18
+gUnknown_85FBD38: @ 0x085FBD38
+	.hword 0x772E, 0x772C
+	.4byte sOam_TrainerHillRayquaza + 8, sAnims_85FBBF0, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FBD50
-gUnknown_85FBD50: @ 0x85FBD50
-	.incbin "baserom_jp.gba", 0x5fbd50, 0x3c
+gUnknown_85FBD50: @ 0x085FBD50
+	.hword 0x01F8, 0x0000
+	.hword 0x21E1, 0x0000
+	.hword 0x13D6, 0x0000
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+sAnims_85FBD64: @ 0x085FBD64
+	.4byte gUnknown_85FBB60 + 0x1FC
+	.hword 0xFFC0, 0xFFC0
+	.hword 0x0100, 0x0000
+	.hword 0x0020, 0x0020
+	.hword 0x0E00, 0x0000
+	.hword 0x0100, 0x0100
+	.hword 0x0000, 0x0000
+	.hword 0x7FFE, 0x0000
+	.hword 0x0000, 0x0000
+	.4byte gUnknown_85FBB78 + 0x1F0
 
 	.globl gUnknown_85FBD8C
-gUnknown_85FBD8C: @ 0x85FBD8C
-	.incbin "baserom_jp.gba", 0x5fbd8c, 0x8
+gUnknown_85FBD8C: @ 0x085FBD8C
+	.4byte 0x08DA3E68
+	.hword 0x0100, 0x775B
 
 	.globl gUnknown_85FBD94
-gUnknown_85FBD94: @ 0x85FBD94
-	.incbin "baserom_jp.gba", 0x5fbd94, 0x8
+gUnknown_85FBD94: @ 0x085FBD94
+	.4byte 0x08DA3F24
+	.hword 0x775B, 0x0000
 
 	.globl gUnknown_85FBD9C
-gUnknown_85FBD9C: @ 0x85FBD9C
-	.incbin "baserom_jp.gba", 0x5fbd9c, 0x18
+gUnknown_85FBD9C: @ 0x085FBD9C
+	.hword 0x775B, 0x775B
+	.4byte sOam_TrainerHillRayquaza + 0x18
+	.4byte sAnims_85FBD64
+	.hword 0x0000, 0x0000
+	.4byte gUnknown_85FBBC0 + 0x1C8
+	.4byte sub_081D7B9C
 
 	.globl gUnknown_85FBDB4
-gUnknown_85FBDB4: @ 0x85FBDB4
-	.incbin "baserom_jp.gba", 0x5fbdb4, 0x14
+gUnknown_85FBDB4: @ 0x085FBDB4
+	.hword 0x05FF, 0xFCFD
+	.hword 0xFD05, 0x02F9
+	.hword 0xFFF7, 0xFB01
+	.hword 0x0403, 0x03FB
+	.hword 0xFE07, 0x0109
 
 	.globl gUnknown_85FBDC8
-gUnknown_85FBDC8: @ 0x85FBDC8
-	.incbin "baserom_jp.gba", 0x5fbdc8, 0x30
+gUnknown_85FBDC8: @ 0x085FBDC8
+	.hword 0x01F0, 0x0000
+	.hword 0x11E5, 0x0000
+	.hword 0x21DA, 0x0000
+	.hword 0x31C7, 0x0000
+	.hword 0x0000, 0x0020
+	.hword 0x0040, 0x0020
+	.hword 0xFFFE, 0x0000
+	.4byte gUnknown_85FBBF4 + 0x1E4
+	.hword 0x0000, 0x0020
+	.hword 0x0008, 0x0020
+	.hword 0xFFFE, 0x0000
+	.4byte gUnknown_85FBBF4 + 0x1F4
 
 	.globl gUnknown_85FBDF8
-gUnknown_85FBDF8: @ 0x85FBDF8
-	.incbin "baserom_jp.gba", 0x5fbdf8, 0x8
+gUnknown_85FBDF8: @ 0x085FBDF8
+	.4byte 0x08DA66E8
+	.hword 0x1000, 0x775C
 
 	.globl gUnknown_85FBE00
 gUnknown_85FBE00: @ 0x85FBE00
