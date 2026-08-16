@@ -7430,8 +7430,8 @@ SECTIONS {
         src/slot_machine.o(.text.PayoutTask_GivePayout);
         src/slot_machine.o(.text.PayoutTask_Free);
         src/slot_machine.o(.text.GetSymbolAtRest);
-        src/slot_machine.o(.text.GetNearbyTag);
-        src/slot_machine.o(.text.GetNearbyReelTimeTag);
+        src/slot_machine.o(.text.GetSymbol);
+        src/slot_machine.o(.text.GetReelTimeSymbol);
         src/slot_machine.o(.text.AdvanceSlotReel);
         src/slot_machine.o(.text.AdvanceSlotReelToNextSymbol);
         src/slot_machine.o(.text.AdvanceReeltimeReel);
@@ -9344,6 +9344,9 @@ SECTIONS {
         data/data_b2d_mid61.o(.rodata.858448C);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
+        src/slot_machine.o(.rodata.sReelSymbols);
+        src/slot_machine.o(.rodata.sReelTimeSymbols);
+        data/data_b2d_mid62.o(.rodata.8584638);
         src/slot_machine.o(.rodata.sSymbolToMatch);
         src/slot_machine.o(.rodata.sSlotMatchFlags);
         src/slot_machine.o(.rodata.sSlotPayouts);

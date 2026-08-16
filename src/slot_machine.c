@@ -1085,7 +1085,7 @@ void AwardPayout(void);
 void FlashSlotMachineLights(void);
 void AddPikaPowerBolt(u8 bolts);
 void FlashMatchLine(u8 spriteId);
-u8 GetSymbolAtRest(u8 reelIndex, s16 row);
+static u8 GetSymbolAtRest(u8 reelIndex, s16 row);
 u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3);
 void Task_Payout(u8 taskId);
 bool8 IsMatchLineDoneFlashingBeforePayout(void);
@@ -2331,138 +2331,64 @@ static const bool8 (*const sPayoutTasks[])(struct Task *task) =
     [PAYOUT_TASK_FREE]        = PayoutTask_Free,
 };
 
-__attribute__((naked)) u8 GetSymbolAtRest(u8 reelIndex, s16 row)
+
+__attribute__((section(".rodata.sReelSymbols")))
+static const u8 sReelSymbols[NUM_REELS][SYMBOLS_PER_REEL] =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _0812BCA0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r2, r4, #1\n\t"
-        "	adds r0, #0x28\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0812BC86\n\t"
-        "	adds r0, #0x15\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "_0812BC86:\n\t"
-        "	ldr r2, _0812BCA4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BCA0: .4byte sSlotMachine\n\t"
-        "_0812BCA4: .4byte gUnknown_85845F2\n\t"
-        ".syntax divided\n\t"
-    );
+    [LEFT_REEL] = {
+        SYMBOL_7_RED,   SYMBOL_CHERRY, SYMBOL_AZURILL, SYMBOL_REPLAY, SYMBOL_POWER, SYMBOL_LOTAD, SYMBOL_7_BLUE,
+        SYMBOL_LOTAD,   SYMBOL_CHERRY, SYMBOL_POWER,   SYMBOL_REPLAY, SYMBOL_AZURILL, SYMBOL_7_RED, SYMBOL_POWER,
+        SYMBOL_LOTAD,   SYMBOL_REPLAY, SYMBOL_AZURILL, SYMBOL_7_BLUE, SYMBOL_POWER, SYMBOL_LOTAD, SYMBOL_REPLAY
+    },
+    [MIDDLE_REEL] = {
+        SYMBOL_7_RED,   SYMBOL_CHERRY, SYMBOL_REPLAY, SYMBOL_LOTAD, SYMBOL_AZURILL, SYMBOL_CHERRY, SYMBOL_REPLAY,
+        SYMBOL_POWER,   SYMBOL_POWER,  SYMBOL_LOTAD,  SYMBOL_7_BLUE, SYMBOL_LOTAD, SYMBOL_REPLAY, SYMBOL_CHERRY,
+        SYMBOL_AZURILL, SYMBOL_LOTAD, SYMBOL_REPLAY, SYMBOL_CHERRY, SYMBOL_LOTAD, SYMBOL_REPLAY, SYMBOL_CHERRY
+    },
+    [RIGHT_REEL] = {
+        SYMBOL_7_RED,   SYMBOL_POWER, SYMBOL_7_BLUE, SYMBOL_REPLAY, SYMBOL_LOTAD, SYMBOL_AZURILL, SYMBOL_REPLAY,
+        SYMBOL_LOTAD,   SYMBOL_POWER, SYMBOL_AZURILL, SYMBOL_REPLAY, SYMBOL_LOTAD, SYMBOL_AZURILL, SYMBOL_POWER,
+        SYMBOL_REPLAY,  SYMBOL_LOTAD, SYMBOL_AZURILL, SYMBOL_POWER,  SYMBOL_REPLAY, SYMBOL_LOTAD, SYMBOL_CHERRY
+    },
+};
+
+// JP ROM has a trailing padding byte after the 6 reel-time symbols.
+__attribute__((section(".rodata.sReelTimeSymbols")))
+static const u8 sReelTimeSymbols[] = {
+    1, 0, 5, 4, 3, 2, 0
+};
+
+static u8 GetSymbolAtRest(u8 reel, s16 offset)
+{
+    s16 pos = (sSlotMachine->reelPositions[reel] + offset) % SYMBOLS_PER_REEL;
+    if (pos < 0)
+        pos += SYMBOLS_PER_REEL;
+    return sReelSymbols[reel][pos];
 }
 
-__attribute__((naked)) u8 GetNearbyTag(u8 a)
+// Calculates GetSymbolAtRest as if the reel were snapped downwards into place.
+static u8 GetSymbol(u8 reel, s16 offset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r5, r1, #0x10\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r0, _0812BCF0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BCD2\n\t"
-        "	ldr r6, _0812BCF4\n\t"
-        "_0812BCD2:\n\t"
-        "	lsls r1, r5, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetSymbolAtRest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BCF0: .4byte sSlotMachine\n\t"
-        "_0812BCF4: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 inc = 0;
+    s16 pixelOffset = sSlotMachine->reelPixelOffsets[reel] % REEL_SYMBOL_HEIGHT;
+    if (pixelOffset != 0)
+        inc = -1;
+    return GetSymbolAtRest(reel, offset + inc);
 }
 
-__attribute__((naked)) u8 GetNearbyReelTimeTag(u8 a)
+static u8 GetReelTimeSymbol(s16 offset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0812BD30\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0812BD20\n\t"
-        "	adds r0, #6\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "_0812BD20:\n\t"
-        "	ldr r0, _0812BD34\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BD30: .4byte sSlotMachine\n\t"
-        "_0812BD34: .4byte gUnknown_8584631\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 newPosition = (sSlotMachine->reeltimePosition + offset) % REELTIME_SYMBOLS;
+    if (newPosition < 0)
+        newPosition += REELTIME_SYMBOLS;
+    return sReelTimeSymbols[newPosition];
 }
+
+
+
+
+
+
 
 
 static void AdvanceSlotReel(u8 reelIndex, s16 value)
@@ -2686,7 +2612,7 @@ __attribute__((naked)) bool8 AreTagsAtPosition_Reel1(u8 a, u8 b)
         "	asrs r3, r3, #0x10\n\t"
         "	movs r0, #0\n\t"
         "	adds r1, r3, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	adds r1, r0, #0\n\t"
@@ -2724,7 +2650,7 @@ __attribute__((naked)) bool8 AreCherriesOnScreen_Reel1(u8 a)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #4\n\t"
@@ -2734,7 +2660,7 @@ __attribute__((naked)) bool8 AreCherriesOnScreen_Reel1(u8 a)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #4\n\t"
@@ -2744,7 +2670,7 @@ __attribute__((naked)) bool8 AreCherriesOnScreen_Reel1(u8 a)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #4\n\t"
@@ -3034,7 +2960,7 @@ __attribute__((naked)) bool8 DecideStop_Bias_Reel2_Bet1or2(void)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	ldr r1, _0812C40C\n\t"
         "	ldr r1, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3094,7 +3020,7 @@ __attribute__((naked)) bool8 DecideStop_Bias_Reel2_Bet3(void)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	ldr r1, _0812C478\n\t"
         "	ldr r1, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3134,7 +3060,7 @@ __attribute__((naked)) bool8 DecideStop_Bias_Reel2_Bet3(void)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	ldr r1, _0812C4C8\n\t"
         "	ldr r1, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3224,7 +3150,7 @@ __attribute__((naked)) bool8 DecideStop_Bias_Reel3_Bet1or2(u8 a)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, r7\n\t"
@@ -3307,7 +3233,7 @@ __attribute__((naked)) bool8 DecideStop_Bias_Reel3_Bet3(u8 a)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, r6\n\t"
@@ -3423,7 +3349,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel2_Bet1(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	mov r1, sp\n\t"
         "	strb r0, [r1]\n\t"
         "	mov r0, sp\n\t"
@@ -3441,7 +3367,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel2_Bet1(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	ldrb r1, [r6]\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
@@ -3494,7 +3420,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel2_Bet2(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	mov r1, sp\n\t"
         "	strb r0, [r1]\n\t"
         "	mov r0, sp\n\t"
@@ -3514,7 +3440,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel2_Bet2(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	ldrb r1, [r7]\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
@@ -3591,7 +3517,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel2_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	mov r1, sp\n\t"
         "	strb r0, [r1]\n\t"
         "	mov r0, sp\n\t"
@@ -3614,7 +3540,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel2_Bet3(u8 taskId)
         "	asrs r4, r0, #0x10\n\t"
         "	movs r0, #1\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	ldrb r1, [r7]\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
@@ -3643,7 +3569,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel2_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	ldrb r1, [r7]\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
@@ -3848,7 +3774,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet1(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	ldr r0, [r7]\n\t"
@@ -3858,7 +3784,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet1(u8 taskId)
         "	asrs r4, r4, #0x10\n\t"
         "	movs r0, #1\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r1, r0, #0x18\n\t"
         "	cmp r5, r1\n\t"
@@ -3880,7 +3806,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet1(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r5, r0\n\t"
@@ -3915,7 +3841,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet1(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r5, r0\n\t"
@@ -3941,7 +3867,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet1(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r5, r0\n\t"
@@ -3992,7 +3918,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet2(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r7, r0, #0x18\n\t"
         "	ldr r0, [r4]\n\t"
@@ -4002,7 +3928,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet2(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r6, r0, #0x18\n\t"
         "	adds r0, r7, #0\n\t"
@@ -4031,7 +3957,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet2(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	cmp r7, r4\n\t"
@@ -4058,7 +3984,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet2(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r7, r0, #0x18\n\t"
         "	mov r2, sb\n\t"
@@ -4068,7 +3994,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet2(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r6, r0, #0x18\n\t"
         "	mov r1, sl\n\t"
@@ -4078,7 +4004,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet2(u8 taskId)
         "	asrs r4, r4, #0x10\n\t"
         "	movs r0, #2\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	adds r0, r7, #0\n\t"
@@ -4182,7 +4108,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r6, r0, #0x18\n\t"
         "	ldr r0, [r4]\n\t"
@@ -4192,7 +4118,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	adds r0, r6, #0\n\t"
@@ -4225,7 +4151,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	cmp r6, r4\n\t"
@@ -4254,7 +4180,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r6, r0, #0x18\n\t"
         "	ldr r0, [r7]\n\t"
@@ -4264,7 +4190,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	ldr r0, [r7]\n\t"
@@ -4274,7 +4200,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	adds r0, r6, #0\n\t"
@@ -4315,7 +4241,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #0\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r6, r0, #0x18\n\t"
         "	ldr r0, [r7]\n\t"
@@ -4325,7 +4251,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	ldr r0, [r7]\n\t"
@@ -4335,7 +4261,7 @@ __attribute__((naked)) void DecideStop_NoBias_Reel3_Bet3(u8 taskId)
         "	lsls r1, r1, #0x10\n\t"
         "	asrs r1, r1, #0x10\n\t"
         "	movs r0, #2\n\t"
-        "	bl GetNearbyTag\n\t"
+        "	bl GetSymbol\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	adds r0, r6, #0\n\t"
@@ -6010,7 +5936,7 @@ __attribute__((naked)) void ReelTime_LandOnOutcome(struct Task *task)
         "_0812D81C: .4byte sSlotMachine\n\t"
         "_0812D820:\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyReelTimeTag\n\t"
+        "	bl GetReelTimeSymbol\n\t"
         "	ldr r1, [r6]\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
@@ -6038,7 +5964,7 @@ __attribute__((naked)) void ReelTime_LandOnOutcome(struct Task *task)
         "	cmp r5, #0\n\t"
         "	bne _0812D876\n\t"
         "	movs r0, #1\n\t"
-        "	bl GetNearbyReelTimeTag\n\t"
+        "	bl GetReelTimeSymbol\n\t"
         "	ldr r1, _0812D87C\n\t"
         "	ldr r1, [r1]\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -8122,7 +8048,7 @@ __attribute__((naked)) void SpriteCB_ReelTimeNumbers(struct Sprite *sprite)
         "	bl __divsi3\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	asrs r0, r0, #0x10\n\t"
-        "	bl GetNearbyReelTimeTag\n\t"
+        "	bl GetReelTimeSymbol\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
