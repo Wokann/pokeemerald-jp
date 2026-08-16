@@ -49,73 +49,41 @@ __attribute__((naked)) u32 FieldEffectStart(u8 id)
 }
 
 
-__attribute__((naked)) bool8 FieldEffectCmd_loadtiles(u8 **script, u32 *val)
+
+bool8 FieldEffectCmd_loadtiles(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	str r1, [r0]\n\t"
-        "	bl FieldEffectScript_LoadTiles\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    (*script)++;
+    FieldEffectScript_LoadTiles(script);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 FieldEffectCmd_loadfadedpal(u8 **script, u32 *val)
+
+
+bool8 FieldEffectCmd_loadfadedpal(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	str r1, [r0]\n\t"
-        "	bl FieldEffectScript_LoadFadedPalette\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    (*script)++;
+    FieldEffectScript_LoadFadedPalette(script);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 FieldEffectCmd_loadpal(u8 **script, u32 *val)
+
+
+bool8 FieldEffectCmd_loadpal(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	str r1, [r0]\n\t"
-        "	bl FieldEffectScript_LoadPalette\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    (*script)++;
+    FieldEffectScript_LoadPalette(script);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 FieldEffectCmd_callnative(u8 **script, u32 *val)
+
+
+bool8 FieldEffectCmd_callnative(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r2, #1\n\t"
-        "	str r2, [r0]\n\t"
-        "	bl FieldEffectScript_CallNative\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    (*script)++;
+    FieldEffectScript_CallNative(script, val);
+    return TRUE;
 }
+
 
 bool8 FieldEffectCmd_end(u8 **script, u32 *val)
 {
@@ -194,25 +162,15 @@ __attribute__((naked)) bool8 FieldEffectCmd_loadfadedpal_callnative(u8 **script,
     );
 }
 
-__attribute__((naked)) u32 FieldEffectScript_ReadWord(u8 **script)
+
+u32 FieldEffectScript_ReadWord(u8 **script)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r2, #2]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return (*script)[0]
+         + ((*script)[1] << 8)
+         + ((*script)[2] << 16)
+         + ((*script)[3] << 24);
 }
+
 
 __attribute__((naked)) void FieldEffectScript_LoadTiles(u8 **script)
 {

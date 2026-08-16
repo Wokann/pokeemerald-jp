@@ -2141,27 +2141,14 @@ __attribute__((naked)) bool8 RemovePyramidBagItem(u16 itemId, u16 count)
     );
 }
 
-__attribute__((naked)) void SanitizeItemId(void)
+u16 SanitizeItemId(u16 itemId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	movs r0, #0xbc\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bhi _080D6C86\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	b _080D6C88\n\t"
-        "_080D6C86:\n\t"
-        "	movs r0, #0\n\t"
-        "_080D6C88:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (itemId >= ITEMS_COUNT)
+        return ITEM_NONE;
+    else
+        return itemId;
 }
+
 
 __attribute__((naked)) void ItemId_GetName(void)
 {

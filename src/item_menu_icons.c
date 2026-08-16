@@ -1,5 +1,6 @@
 #include "global.h"
 #include "item_icon.h"
+#include "item_menu.h"
 
 __attribute__((naked)) void RemoveBagSprite(void)
 {
@@ -428,7 +429,6 @@ __attribute__((naked)) void AddBagItemIconSprite(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void RemoveBagItemIconSprite(void)
 {
     __asm__(".syntax unified\n\t"
@@ -445,6 +445,8 @@ __attribute__((naked)) void RemoveBagItemIconSprite(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void sub_080D4830(void)
 {
@@ -748,4 +750,3 @@ __attribute__((naked)) void CreateBerryFlavorCircleSprite(void)
         ".syntax divided\n\t"
     );
 }
-

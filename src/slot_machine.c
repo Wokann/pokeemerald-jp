@@ -754,22 +754,13 @@ __attribute__((naked)) void SlotMachineSetup_5_0(u8 taskId)
     );
 }
 
-__attribute__((naked)) void CreateSlotMachineSprites(u8 taskId)
+void CreateSlotMachineSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_0812E0F4\n\t"
-        "	bl sub_0812E1D8\n\t"
-        "	bl sub_0812CF04\n\t"
-        "	bl sub_0812E310\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateReelSymbolSprites();
+    CreateCreditPayoutNumberSprites();
+    CreateInvisibleFlashMatchLineSprites();
+    CreateReelBackgroundSprite();
 }
-
 __attribute__((naked)) void CreateGameplayTasks(void)
 {
     __asm__(".syntax unified\n\t"
@@ -785,6 +776,8 @@ __attribute__((naked)) void CreateGameplayTasks(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void GameplayTasks_Slots(void)
 {

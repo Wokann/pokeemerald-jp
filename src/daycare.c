@@ -643,7 +643,6 @@ __attribute__((naked)) void GetDaycareCostForSelectedMon(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void PrepareDaycareCostStringForMon(void)
 {
     __asm__(".syntax unified\n\t"
@@ -662,6 +661,8 @@ __attribute__((naked)) void PrepareDaycareCostStringForMon(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void GetDaycareCost(void)
 {
@@ -1818,25 +1819,12 @@ __attribute__((naked)) void BuildEggMoveset(void)
     );
 }
 
-__attribute__((naked)) void RemoveEggFromDayCare(void)
+void RemoveEggFromDayCare(struct DayCare *daycare)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r1, #0x8c\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r3, #0x8e\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    daycare->offspringPersonality = 0;
+    daycare->stepCounter = 0;
 }
+
 
 __attribute__((naked)) void RejectEggFromDayCare()
 {
@@ -2468,24 +2456,11 @@ __attribute__((naked)) bool8 ShouldEggHatch()
     );
 }
 
-__attribute__((naked)) void IsEggPending(void)
+bool8 IsEggPending(struct DayCare *daycare)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0x8c\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08070628\n\t"
-        "	movs r0, #1\n\t"
-        "_08070628:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return (daycare->offspringPersonality != 0);
 }
+
 
 __attribute__((naked)) void _GetDaycareMonNicknames(void)
 {

@@ -5,6 +5,8 @@
 
 extern void *sUnusedOverworldCallback;
 
+#define linkDirection(obj) ((u8 *)obj)[offsetof(typeof(*obj), range)] // -> rangeX
+
 __attribute__((naked)) void DoWhiteOut(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3187,43 +3189,19 @@ __attribute__((naked)) void ChooseAmbientCrySpecies(void)
     );
 }
 
-__attribute__((naked)) u8 GetMapTypeByGroupAndId(s8 mapGroup, s8 mapNum)
+
+u8 GetMapTypeByGroupAndId(s8 mapGroup, s8 mapNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #8\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	bl Overworld_GetMapHeaderByGroupAndId\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum)->mapType;
 }
 
-__attribute__((naked)) u8 GetMapTypeByWarpData(struct WarpData *warp)
+
+
+u8 GetMapTypeByWarpData(struct WarpData *warp)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsb r2, [r0, r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl GetMapTypeByGroupAndId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetMapTypeByGroupAndId(warp->mapGroup, warp->mapNum);
 }
+
 
 __attribute__((naked)) u8 GetCurrentMapType(void)
 {
@@ -6117,24 +6095,13 @@ __attribute__((naked)) u16 GetDirectionForDpadKey(u16 a0)
 }
 
 
-__attribute__((naked)) void ResetPlayerHeldKeys(u16 *keys)
+void ResetPlayerHeldKeys(u16 *keys)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #0x11\n\t"
-        "	adds r1, r0, #6\n\t"
-        "_08086A06:\n\t"
-        "	strh r2, [r1]\n\t"
-        "	subs r1, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _08086A06\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    for (i = 0; i < 4; i++)
+        keys[i] = LINK_KEY_CODE_EMPTY;
 }
+
 
 __attribute__((naked)) u16 KeyInterCB_SelfIdle(u32 key)
 {
@@ -7738,24 +7705,12 @@ __attribute__((naked)) u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEven
     );
 }
 
-__attribute__((naked)) u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1, u8 a2)
+bool8 FacingHandler_ForcedFacingChange(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent, u8 dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r4, #0x19]\n\t"
-        "	bl FlipVerticalAndClearForced\n\t"
-        "	strb r0, [r4, #0x19]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    linkDirection(objEvent) = FlipVerticalAndClearForced(dir, linkDirection(objEvent));
+    return FALSE;
 }
+
 
 void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {

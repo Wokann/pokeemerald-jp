@@ -354,25 +354,12 @@ __attribute__((naked)) void TilesetAnim_General(void)
     );
 }
 
-__attribute__((naked)) void TilesetAnim_Building(void)
+void TilesetAnim_Building(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0490\n\t"
-        "	lsrs r0, r1, #0x13\n\t"
-        "	bl QueueAnimTiles_Building_TVTurnedOn\n\t"
-        "_080A0490:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+        QueueAnimTiles_Building_TVTurnedOn(timer / 8);
 }
+
 
 __attribute__((naked)) void QueueAnimTiles_General_Flower(void)
 {
@@ -1113,45 +1100,19 @@ __attribute__((naked)) void TilesetAnim_Rustboro(void)
     );
 }
 
-__attribute__((naked)) void TilesetAnim_Dewford(void)
+void TilesetAnim_Dewford(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0994\n\t"
-        "	lsrs r0, r1, #0x13\n\t"
-        "	bl QueueAnimTiles_Dewford_Flag\n\t"
-        "_080A0994:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+        QueueAnimTiles_Dewford_Flag(timer / 8);
 }
 
-__attribute__((naked)) void TilesetAnim_Slateport(void)
+
+void TilesetAnim_Slateport(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A09AC\n\t"
-        "	lsrs r0, r1, #0x14\n\t"
-        "	bl QueueAnimTiles_Slateport_Balloons\n\t"
-        "_080A09AC:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 16 == 0)
+        QueueAnimTiles_Slateport_Balloons(timer / 16);
 }
+
 
 __attribute__((naked)) void TilesetAnim_Mauville(void)
 {
@@ -1347,25 +1308,12 @@ __attribute__((naked)) void TilesetAnim_Pacifidlog(void)
     );
 }
 
-__attribute__((naked)) void TilesetAnim_Sootopolis(void)
+void TilesetAnim_Sootopolis(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #0xc\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0B08\n\t"
-        "	lsrs r0, r1, #0x14\n\t"
-        "	bl QueueAnimTiles_Sootopolis_StormyWater\n\t"
-        "_080A0B08:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 16 == 0)
+        QueueAnimTiles_Sootopolis_StormyWater(timer / 16);
 }
+
 
 __attribute__((naked)) void TilesetAnim_Underwater(void)
 {
@@ -1411,45 +1359,19 @@ __attribute__((naked)) void TilesetAnim_Cave(void)
     );
 }
 
-__attribute__((naked)) void TilesetAnim_BattleFrontierOutsideWest(void)
+void TilesetAnim_BattleFrontierOutsideWest(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0B58\n\t"
-        "	lsrs r0, r1, #0x13\n\t"
-        "	bl QueueAnimTiles_BattleFrontierOutsideWest_Flag\n\t"
-        "_080A0B58:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+        QueueAnimTiles_BattleFrontierOutsideWest_Flag(timer / 8);
 }
 
-__attribute__((naked)) void TilesetAnim_BattleFrontierOutsideEast(void)
+
+void TilesetAnim_BattleFrontierOutsideEast(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0B70\n\t"
-        "	lsrs r0, r1, #0x13\n\t"
-        "	bl QueueAnimTiles_BattleFrontierOutsideEast_Flag\n\t"
-        "_080A0B70:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+        QueueAnimTiles_BattleFrontierOutsideEast_Flag(timer / 8);
 }
+
 
 __attribute__((naked)) void QueueAnimTiles_General_LandWaterEdge(void)
 {
@@ -1915,45 +1837,19 @@ __attribute__((naked)) void QueueAnimTiles_Slateport_Balloons(void)
     );
 }
 
-__attribute__((naked)) void TilesetAnim_MauvilleGym(void)
+void TilesetAnim_MauvilleGym(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r2, r0, #0x10\n\t"
-        "	lsrs r0, r2, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0E9C\n\t"
-        "	lsrs r0, r2, #0x11\n\t"
-        "	bl QueueAnimTiles_MauvilleGym_ElectricGates\n\t"
-        "_080A0E9C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 2 == 0)
+        QueueAnimTiles_MauvilleGym_ElectricGates(timer / 2);
 }
 
-__attribute__((naked)) void TilesetAnim_SootopolisGym(void)
+
+void TilesetAnim_SootopolisGym(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0EB4\n\t"
-        "	lsrs r0, r1, #0x13\n\t"
-        "	bl QueueAnimTiles_SootopolisGym_Waterfalls\n\t"
-        "_080A0EB4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 8 == 0)
+        QueueAnimTiles_SootopolisGym_Waterfalls(timer / 8);
 }
+
 
 __attribute__((naked)) void TilesetAnim_EliteFour(void)
 {
@@ -1985,25 +1881,12 @@ __attribute__((naked)) void TilesetAnim_EliteFour(void)
     );
 }
 
-__attribute__((naked)) void TilesetAnim_BikeShop(void)
+void TilesetAnim_BikeShop(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #0xa\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0EF8\n\t"
-        "	lsrs r0, r1, #0x12\n\t"
-        "	bl QueueAnimTiles_BikeShop_BlinkingLights\n\t"
-        "_080A0EF8:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 4 == 0)
+        QueueAnimTiles_BikeShop_BlinkingLights(timer / 4);
 }
+
 
 __attribute__((naked)) void TilesetAnim_BattlePyramid(void)
 {
@@ -2030,45 +1913,19 @@ __attribute__((naked)) void TilesetAnim_BattlePyramid(void)
     );
 }
 
-__attribute__((naked)) void TilesetAnim_BattleDome(void)
+void TilesetAnim_BattleDome(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #0xa\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0F34\n\t"
-        "	lsrs r0, r1, #0x12\n\t"
-        "	bl BlendAnimPalette_BattleDome_FloorLights\n\t"
-        "_080A0F34:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 4 == 0)
+        BlendAnimPalette_BattleDome_FloorLights(timer / 4);
 }
 
-__attribute__((naked)) void TilesetAnim_BattleDome2(void)
+
+void TilesetAnim_BattleDome2(u16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #0xa\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080A0F4C\n\t"
-        "	lsrs r0, r1, #0x12\n\t"
-        "	bl BlendAnimPalette_BattleDome_FloorLightsNoBlend\n\t"
-        "_080A0F4C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (timer % 4 == 0)
+        BlendAnimPalette_BattleDome_FloorLightsNoBlend(timer / 4);
 }
+
 
 __attribute__((naked)) void QueueAnimTiles_Building_TVTurnedOn(void)
 {

@@ -6186,24 +6186,14 @@ __attribute__((naked)) void CalcRubyBattleTowerChecksum(struct RSBattleTowerReco
     );
 }
 
-__attribute__((naked)) void ClearBattleTowerRecord(void)
+void ClearBattleTowerRecord(struct EmeraldBattleTowerRecord *record)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "_08164E8A:\n\t"
-        "	stm r0!, {r2}\n\t"
-        "	adds r1, #1\n\t"
-        "	cmp r1, #0x3a\n\t"
-        "	bls _08164E8A\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 i;
+
+    for (i = 0; i < sizeof(struct EmeraldBattleTowerRecord) / 4; i++)
+        ((u32 *)record)[i] = 0;
 }
+
 
 __attribute__((naked)) u16 GetCurrentBattleTowerWinStreak(u8 lvlMode, u8 battleMode)
 {
@@ -6658,24 +6648,15 @@ __attribute__((naked)) void SetEReaderTrainerChecksum(void)
     );
 }
 
-__attribute__((naked)) void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *ereaderTrainer)
+
+void ClearEReaderTrainer(struct BattleTowerEReaderTrainer *ereaderTrainer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "_081651CE:\n\t"
-        "	stm r0!, {r2}\n\t"
-        "	adds r1, #1\n\t"
-        "	cmp r1, #0x2e\n\t"
-        "	bls _081651CE\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 i;
+
+    for (i = 0; i < (sizeof(struct BattleTowerEReaderTrainer)) / 4; i++)
+        ((u32 *)ereaderTrainer)[i] = 0;
 }
+
 
 __attribute__((naked)) void CopyEReaderTrainerGreeting()
 {

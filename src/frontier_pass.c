@@ -498,22 +498,12 @@ __attribute__((naked)) void CB2_InitFrontierPass(void)
     );
 }
 
-__attribute__((naked)) void CB2_HideFrontierPass(void)
+void CB2_HideFrontierPass(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl HideFrontierPass\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C4D7A\n\t"
-        "	bl LeaveFrontierPass\n\t"
-        "_080C4D7A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (HideFrontierPass())
+        LeaveFrontierPass();
 }
+
 
 __attribute__((naked)) void InitFrontierPass(void)
 {

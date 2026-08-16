@@ -2608,7 +2608,6 @@ __attribute__((naked)) void RegionMap_IsPlayerInCave(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) mapsec_u16_t CorrectSpecialMapSecId(mapsec_u16_t mapSecId)
 {
     __asm__(".syntax unified\n\t"
@@ -2625,6 +2624,8 @@ __attribute__((naked)) mapsec_u16_t CorrectSpecialMapSecId(mapsec_u16_t mapSecId
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void RegionMap_GetPositionOfCursorWithinMapSection(void)
 {

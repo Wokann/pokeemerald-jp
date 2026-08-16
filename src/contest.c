@@ -1,5 +1,10 @@
 #include "global.h"
 #include "contest.h"
+#include "constants/moves.h"
+
+// An index into a palette where the text color for each contestant is stored.
+// Contestant 0 will use palette color 10, contestant 1 will use color 11, etc.
+#define CONTESTANT_TEXT_COLOR_START 10
 
 void TaskDummy1(void) {}
 __attribute__((naked)) void ResetLinkContestBoolean(void)
@@ -7080,7 +7085,6 @@ __attribute__((naked)) void Contest_CopyStringWithColor(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void PrintContestantMonName(void)
 {
     __asm__(".syntax unified\n\t"
@@ -7099,6 +7103,8 @@ __attribute__((naked)) void PrintContestantMonName(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void PrintContestantMonNameWithColor(void)
 {
@@ -7141,7 +7147,6 @@ __attribute__((naked)) void PrintContestantMonNameWithColor(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void PrintContestantTrainerName(void)
 {
     __asm__(".syntax unified\n\t"
@@ -7160,6 +7165,8 @@ __attribute__((naked)) void PrintContestantTrainerName(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void sub_080DA710(void)
 {
@@ -7560,7 +7567,6 @@ __attribute__((naked)) void sub_080DA8D8(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 IsSpeciesNotUnown(u16 species)
 {
     __asm__(".syntax unified\n\t"
@@ -7580,6 +7586,8 @@ __attribute__((naked)) bool8 IsSpeciesNotUnown(u16 species)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void SwapMoveDescAndContestTilemaps(void)
 {
@@ -15016,7 +15024,6 @@ __attribute__((naked)) void sub_080DDEF8(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void SanitizeMove(void)
 {
     __asm__(".syntax unified\n\t"
@@ -15037,7 +15044,6 @@ __attribute__((naked)) void SanitizeMove(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void SanitizeSpecies(void)
 {
     __asm__(".syntax unified\n\t"
@@ -15058,6 +15064,8 @@ __attribute__((naked)) void SanitizeSpecies(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void sub_080DDFC8(void)
 {
@@ -17246,4 +17254,3 @@ __attribute__((naked)) void ContestDebugPrintBitStrings(void)
         ".syntax divided\n\t"
     );
 }
-

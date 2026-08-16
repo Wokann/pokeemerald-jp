@@ -729,7 +729,6 @@ __attribute__((naked)) void GetAvailableEventObjectId(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void RemoveObjectEvent(void)
 {
     __asm__(".syntax unified\n\t"
@@ -746,6 +745,8 @@ __attribute__((naked)) void RemoveObjectEvent(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
 {
@@ -2772,23 +2773,14 @@ __attribute__((naked)) void npc_by_local_id_and_map_set_field_1_bit_x20(void)
     );
 }
 
-__attribute__((naked)) void ObjectEventGetLocalIdAndMap(void)
+
+void ObjectEventGetLocalIdAndMap(struct ObjectEvent *objectEvent, void *localId, void *mapNum, void *mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldrb r4, [r0, #8]\n\t"
-        "	strb r4, [r1]\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	strb r1, [r2]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	strb r0, [r3]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    *(u8 *)(localId) = objectEvent->localId;
+    *(u8 *)(mapNum) = objectEvent->mapNum;
+    *(u8 *)(mapGroup) = objectEvent->mapGroup;
 }
+
 
 __attribute__((naked)) void AllowObjectAtPosTriggerGroundEffects(s16 x, s16 y)
 {
@@ -4540,7 +4532,6 @@ __attribute__((naked)) void OverrideTemplateCoordsForObjectEvent(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void OverrideObjectEventTemplateScript(void)
 {
     __asm__(".syntax unified\n\t"
@@ -4558,6 +4549,8 @@ __attribute__((naked)) void OverrideObjectEventTemplateScript(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void TryOverrideTemplateCoordsForObjectEvent(void)
 {
@@ -5221,24 +5214,17 @@ u8 GetLimitedVectorDirection_SouthNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 }
 
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_WestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
+
+u8 GetLimitedVectorDirection_WestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0808EFC4\n\t"
-        "	movs r1, #3\n\t"
-        "_0808EFC4:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = DIR_EAST;
+    if (dx < 0)
+        direction = DIR_WEST;
+    return direction;
 }
+
 
 __attribute__((naked)) u8 GetLimitedVectorDirection_WestNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
@@ -9433,7 +9419,6 @@ __attribute__((naked)) bool8 MovementType_WalkBackAndForth_Step3(struct ObjectEv
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 MovementType_WalkSequence_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -9450,6 +9435,8 @@ __attribute__((naked)) bool8 MovementType_WalkSequence_Step0(struct ObjectEvent 
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) bool8 MoveNextDirectionInSequence(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 *route)
 {
@@ -27893,22 +27880,14 @@ __attribute__((naked)) u8 MovementAction_FlyUp_Step1(struct ObjectEvent *objectE
     );
 }
 
-__attribute__((naked)) u8 MovementAction_FlyDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+u8 MovementAction_FlyDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _08097A8C\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	ldrh r0, [r1, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08097A8C: .4byte 0x0000FF60\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->y2 = -DISPLAY_HEIGHT;
+    sprite->sActionFuncId++;
+    return FALSE;
 }
+
 
 __attribute__((naked)) u8 MovementAction_FlyDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {

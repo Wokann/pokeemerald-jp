@@ -5796,7 +5796,6 @@ __attribute__((naked)) void SetSav1WeatherFromCurrMapHeader(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void SetWeather(u32 weather)
 {
     __asm__(".syntax unified\n\t"
@@ -5813,7 +5812,6 @@ __attribute__((naked)) void SetWeather(u32 weather)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void SetWeather_Unused(void)
 {
     __asm__(".syntax unified\n\t"
@@ -5830,6 +5828,8 @@ __attribute__((naked)) void SetWeather_Unused(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void DoCurrentWeather()
 {
