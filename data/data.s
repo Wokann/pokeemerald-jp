@@ -242,19 +242,19 @@ gDummySpriteTemplate: @ 0x82BF314
 
 	.globl sAnimFuncs
 sAnimFuncs: @ 0x82BF32C
-	.incbin "baserom_jp.gba", 0x2bf32c, 0x8
+	.4byte 0x08007491, 0x080073A1
 
 	.globl sAffineAnimFuncs
 sAffineAnimFuncs: @ 0x82BF334
-	.incbin "baserom_jp.gba", 0x2bf334, 0x8
+	.4byte 0x0800783D, 0x080077A9
 
 	.globl sAnimCmdFuncs
 sAnimCmdFuncs: @ 0x82BF33C
-	.incbin "baserom_jp.gba", 0x2bf33c, 0x10
+	.4byte 0x080076BD, 0x080075F5, 0x080075DD, 0x08007531
 
 	.globl sAffineAnimCmdFuncs
 sAffineAnimCmdFuncs: @ 0x82BF34C
-	.incbin "baserom_jp.gba", 0x2bf34c, 0x10
+	.4byte 0x08007925, 0x08007A31, 0x08007A7D, 0x08007AB9
 
 	.globl sOamDimensions32
 sOamDimensions32: @ 0x82BF35C
