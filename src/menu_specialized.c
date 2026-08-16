@@ -90,8 +90,68 @@ const u8 sConditionToLineLength[MAX_CONDITION + 1] =
     0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x21, 0x22, 0x22, 0x22, 0x22, 0x22,
     0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x23,
 };
-extern const struct WindowTemplate sMoveRelearnerWindowTemplates[6];
-extern const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate;
+
+// JP window layouts differ from pokeemerald (width/baseBlock/left).
+const struct WindowTemplate sMoveRelearnerWindowTemplates[6] =
+{
+    [RELEARNERWIN_DESC_BATTLE] = {
+        .bg = 1,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 18,
+        .height = 12,
+        .paletteNum = 15,
+        .baseBlock = 0xA
+    },
+    [RELEARNERWIN_DESC_CONTEST] = {
+        .bg = 1,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 18,
+        .height = 12,
+        .paletteNum = 15,
+        .baseBlock = 0xE2
+    },
+    [RELEARNERWIN_MOVE_LIST] = {
+        .bg = 1,
+        .tilemapLeft = 21,
+        .tilemapTop = 1,
+        .width = 8,
+        .height = 12,
+        .paletteNum = 15,
+        .baseBlock = 0x1BA
+    },
+    [RELEARNERWIN_MSG] = {
+        .bg = 1,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x21A
+    },
+    [RELEARNERWIN_YESNO] = {
+        .bg = 0,
+        .tilemapLeft = 22,
+        .tilemapTop = 8,
+        .width = 5,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x272
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate =
+{
+    .bg = 0,
+    .tilemapLeft = 22,
+    .tilemapTop = 8,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x272
+};
 extern void sub_08198D44(const struct WindowTemplate *template, u8 arg1, u8 arg2, u8 arg3);
 extern const struct ListMenuTemplate sMoveRelearnerMovesListTemplate;
 extern const u8 gText_MoveRelearnerBattleMoves[];

@@ -9,14 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sMoveRelearnerWindowTemplates
-sMoveRelearnerWindowTemplates: @ 0x85F7C18
-	.incbin "baserom_jp.gba", 0x5f7c18, 0x30
-
-	.globl sMoveRelearnerYesNoMenuTemplate
-sMoveRelearnerYesNoMenuTemplate: @ 0x85F7C48
-	.incbin "baserom_jp.gba", 0x5f7c48, 0x8
-
 	.globl gText_MoveRelearnerBattleMoves
 gText_MoveRelearnerBattleMoves: @ 0x85F7C50
 	.string "たたかうわざ$"
