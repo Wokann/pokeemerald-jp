@@ -11,7 +11,39 @@
 
 	.globl gUnknown_85F7C98
 gUnknown_85F7C98: @ 0x85F7C98
-	.incbin "baserom_jp.gba", 0x5f7c98, 0x2c00
+	.incbin "baserom_jp.gba", 0x5f7c98, 0x1e40
+
+	.globl sConditionPokeballPal
+sConditionPokeballPal: @ 0x85F9AD8
+	.incbin "graphics/pokenav_conditions/sConditionPokeballPal.bin"
+
+	.globl sConditionCancelPal
+sConditionCancelPal: @ 0x85F9AF8
+	.incbin "graphics/pokenav_conditions/sConditionCancelPal.bin"
+
+	.globl sConditionPokeball_Gfx
+sConditionPokeball_Gfx: @ 0x85F9B18
+	.incbin "graphics/pokenav_conditions/sConditionPokeballGfx.bin"
+
+	.globl sConditionPokeballPlaceholder_Gfx
+sConditionPokeballPlaceholder_Gfx: @ 0x85F9C18
+	.incbin "graphics/pokenav_conditions/sConditionPokeballPlaceholderGfx.bin"
+
+	.globl sConditionCancel_Gfx
+sConditionCancel_Gfx: @ 0x85F9C38
+	.incbin "graphics/pokenav_conditions/sConditionCancelGfx.bin"
+
+	.globl sConditionSparkle_Gfx
+sConditionSparkle_Gfx: @ 0x85F9D38
+	.incbin "graphics/pokenav_conditions/sConditionSparkleGfx.bin"
+
+	.globl sConditionSparkle_Pal
+sConditionSparkle_Pal: @ 0x85F9D58
+	.incbin "graphics/pokenav_conditions/sConditionSparklePal.bin"
+
+	.globl gUnknown_85FA0D8
+gUnknown_85FA0D8: @ 0x85FA0D8
+	.incbin "baserom_jp.gba", 0x5fa0d8, 0x7c0
 
 	.globl sConditionMonPicSheetDescriptor
 sConditionMonPicSheetDescriptor: @ 0x85FA898
