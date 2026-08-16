@@ -2578,6 +2578,8 @@ gUnknown_8573114: @ 0x8573114
 	.globl gUnknown_8573134
 gUnknown_8573134: @ 0x8573134
 	.incbin "baserom_jp.gba", 0x573134, 0x1f8
+	.globl sEasyChatScreenTemplates
+	.set sEasyChatScreenTemplates, gUnknown_8573134
 
 	.globl gUnknown_857332C
 gUnknown_857332C: @ 0x857332C

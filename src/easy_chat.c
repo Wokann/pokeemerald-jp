@@ -5,6 +5,7 @@
 #include "task.h"
 
 extern struct EasyChatScreen *sEasyChatScreen;
+extern const struct EasyChatScreenTemplate sEasyChatScreenTemplates[];
 
 // State values for sEasyChatScreen->inputState
 enum {
@@ -3605,27 +3606,9 @@ u8 GetEasyChatScreenType(void)
     return sEasyChatScreen->type;
 }
 
-__attribute__((naked)) u8 GetEasyChatScreenFrameId(void)
+static u8 GetEasyChatScreenFrameId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0811C284\n\t"
-        "	ldr r0, _0811C288\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	lsls r0, r0, #0x19\n\t"
-        "	lsrs r0, r0, #0x19\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C284: .4byte gUnknown_8573134\n\t"
-        "_0811C288: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreenTemplates[sEasyChatScreen->templateId].frameId;
 }
 
 const u8 *GetTitleText(void)
@@ -3779,21 +3762,10 @@ static void GetEasyChatConfirmDeletionText(const u8 **str1, const u8 **str2)
     *str2 = gText_BeDeletedThatOkay;
 }
 
-__attribute__((naked)) void GetKeyboardCursorColAndRow(s8 *column, s8 *row)
+void GetKeyboardCursorColAndRow(s8 *column, s8 *row)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0811C3B0\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	ldrb r2, [r3, #0xa]\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldrb r0, [r3, #0xb]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C3B0: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    *column = sEasyChatScreen->keyboardColumn;
+    *row = sEasyChatScreen->keyboardRow;
 }
 
 u8 GetInAlphabetMode(void)
@@ -3807,21 +3779,10 @@ u8 GetKeyboardScrollOffset(void)
 }
 
 
-__attribute__((naked)) void GetWordSelectColAndRow(s8 *column, s8 *row)
+void GetWordSelectColAndRow(s8 *column, s8 *row)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0811C3DC\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	ldrb r2, [r3, #0x10]\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldrb r0, [r3, #0x11]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C3DC: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    *column = sEasyChatScreen->wordSelectColumn;
+    *row = sEasyChatScreen->wordSelectRow;
 }
 
 u8 GetWordSelectScrollOffset(void)
