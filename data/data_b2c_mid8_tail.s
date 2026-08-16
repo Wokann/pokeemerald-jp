@@ -74,11 +74,12 @@ gUnknown_85FB868: @ 0x85FB868
 
 	.globl gUnknown_85FB8B8
 gUnknown_85FB8B8: @ 0x85FB8B8
-	.incbin "baserom_jp.gba", 0x5fb8b8, 0x8
+	.4byte gUnknown_85FB868, gUnknown_85FB868 + 0x28
 
 	.globl gUnknown_85FB8C0
 gUnknown_85FB8C0: @ 0x85FB8C0
-	.incbin "baserom_jp.gba", 0x5fb8c0, 0x20
+	.hword 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000
+	.hword 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000
 
 	.globl gUnknown_85FB8E0
 gUnknown_85FB8E0: @ 0x85FB8E0
@@ -94,15 +95,33 @@ gText_ClearTime: @ 0x85FB8EA
 
 	.globl sText_TimeRecordFormat
 sText_TimeRecordFormat: @ 0x85FB8F1
-	.string "{B_COPY_VAR_1}ふん　{B_COPY_VAR_2}びょう　{B_COPY_VAR_3}$1F$2F$3F$4F$　"
+	.string "{B_COPY_VAR_1}ふん　{B_COPY_VAR_2}びょう　{B_COPY_VAR_3}$"
+
+	.globl gText_TrainerHill1F
+gText_TrainerHill1F: @ 0x85FB8FF
+	.string "1F$"
+	.globl gText_TrainerHill2F
+gText_TrainerHill2F: @ 0x85FB902
+	.string "2F$"
+	.globl gText_TrainerHill3F
+gText_TrainerHill3F: @ 0x85FB905
+	.string "3F$"
+	.globl gText_TrainerHill4F
+gText_TrainerHill4F: @ 0x85FB908
+	.string "4F$"
+	.byte 0
 
 	.globl gUnknown_85FB90C
 gUnknown_85FB90C: @ 0x85FB90C
-	.incbin "baserom_jp.gba", 0x5fb90c, 0x10
+	.4byte gText_TrainerHill1F, gText_TrainerHill2F, gText_TrainerHill3F, gText_TrainerHill4F
 
 	.globl gUnknown_85FB91C
 gUnknown_85FB91C: @ 0x85FB91C
-	.incbin "baserom_jp.gba", 0x5fb91c, 0x44
+	.4byte TrainerHillStartChallenge, sub_081D4F2C, sub_081D4F78, sub_081D5024
+	.4byte TrainerHillResumeTimer, TrainerHillSetPlayerLost, TrainerHillGetChallengeStatus, sub_081D5164
+	.4byte sub_081D51F4, sub_081D5238, sub_081D5334, sub_081D5C50
+	.4byte sub_081D5E4C, sub_081D5E7C, sub_081D5E9C, nullsub_2
+	.4byte sub_081D5F08
 
 	.globl sText_TimeRecordEmpty
 sText_TimeRecordEmpty: @ 0x85FB960
