@@ -1932,27 +1932,9 @@ __attribute__((naked)) void StorePlayerCoordsInVars(void)
     );
 }
 
-__attribute__((naked)) void GetPlayerTrainerIdOnesDigit(void)
+u8 GetPlayerTrainerIdOnesDigit(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138B7C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #0xb]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08138B7C: .4byte gSaveBlock2Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 10;
 }
 
 __attribute__((naked)) void GetPlayerBigGuyGirlString(void)
@@ -3414,21 +3396,9 @@ __attribute__((naked)) void sub_08139690(void)
     );
 }
 
-__attribute__((naked)) void FoundBlackGlasses(void)
+bool8 FoundBlackGlasses(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x95\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return FlagGet(FLAG_HIDDEN_ITEM_ROUTE_116_BLACK_GLASSES);
 }
 
 __attribute__((naked)) void SetRoute119Weather(void)
@@ -3514,48 +3484,15 @@ __attribute__((naked)) void ScriptGetPartyMonSpecies(void)
 }
 
 void nullsub_54(void) {}
-__attribute__((naked)) void GetDaysUntilPacifidlogTMAvailable(void)
+u16 GetDaysUntilPacifidlogTMAvailable(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0813979C\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r2, _081397A0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	subs r0, r0, r3\n\t"
-        "	cmp r0, #6\n\t"
-        "	ble _081397A4\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081397BC\n\t"
-        "	.align 2, 0\n\t"
-        "_0813979C: .4byte 0x000040C2\n\t"
-        "_081397A0: .4byte gLocalTime\n\t"
-        "_081397A4:\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	movs r4, #0\n\t"
-        "	ldrsh r0, [r2, r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _081397BA\n\t"
-        "	subs r1, r1, r3\n\t"
-        "	movs r0, #7\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	b _081397BC\n\t"
-        "_081397BA:\n\t"
-        "	movs r0, #8\n\t"
-        "_081397BC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 tmReceivedDay = VarGet(VAR_PACIFIDLOG_TM_RECEIVED_DAY);
+    if (gLocalTime.days - tmReceivedDay >= 7)
+        return 0;
+    else if (gLocalTime.days < 0)
+        return 8;
+
+    return 7 - (gLocalTime.days - tmReceivedDay);
 }
 
 __attribute__((naked)) void SetPacifidlogTMReceivedDay(void)
