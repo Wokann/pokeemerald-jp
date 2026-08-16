@@ -918,6 +918,7 @@ gUnknown_20399B2 = .;
 sMovingItemId = .;
 . += 0x2;
 gUnknown_20399B4 = .;
+sSavedMovingMon = .;
 . += 0x64;
 gUnknown_2039A18 = .;
 sCursorArea = .;

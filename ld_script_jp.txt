@@ -5605,7 +5605,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.IsCursorOnCloseBox);
         src/pokemon_storage_system.o(.text.IsCursorInBox);
         src/pokemon_storage_system.o(.text.TryRefreshDisplayMon);
-        src/pokemon_storage_system.o(.text.sub_080CE458);
+        src/pokemon_storage_system.o(.text.ReshowDisplayMon);
         src/pokemon_storage_system.o(.text.SetCursorMonData);
         src/pokemon_storage_system.o(.text.HandleInput_InBox);
         src/pokemon_storage_system.o(.text.InBoxInput_Normal);

@@ -275,6 +275,7 @@ extern void TilemapUtil_Free(void);
 extern void MultiMove_Free(void);
 extern void *sMultiMove;
 extern void *sTilemapUtil;
+extern struct Pokemon sSavedMovingMon;
 extern s8 sCursorArea;
 extern s8 sCursorPosition;
 extern bool8 sIsMonBeingMoved;
@@ -13152,7 +13153,7 @@ __attribute__((naked)) void sub_080CCC68(void)
         ".code 16\n\t"
         "	push {lr}\n\t"
         "	bl sub_080CF490\n\t"
-        "	bl sub_080CE458\n\t"
+        "	bl ReshowDisplayMon\n\t"
         "	ldr r3, _080CCCA8\n\t"
         "	ldr r0, [r3]\n\t"
         "	ldr r1, _080CCCAC\n\t"
@@ -16256,29 +16257,12 @@ void TryRefreshDisplayMon(void)
     }
 }
 
-__attribute__((naked)) void sub_080CE458(void)
+void ReshowDisplayMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CE46C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE474\n\t"
-        "	ldr r0, _080CE470\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCursorMonData\n\t"
-        "	b _080CE478\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE46C: .4byte gUnknown_2039A1A\n\t"
-        "_080CE470: .4byte gUnknown_20399B4\n\t"
-        "_080CE474:\n\t"
-        "	bl TryRefreshDisplayMon\n\t"
-        "_080CE478:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sIsMonBeingMoved)
+        SetCursorMonData(&sSavedMovingMon, MODE_PARTY);
+    else
+        TryRefreshDisplayMon();
 }
 
 __attribute__((naked)) void SetCursorMonData(const void *data, u8 mode)
