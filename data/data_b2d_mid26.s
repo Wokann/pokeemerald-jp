@@ -6267,19 +6267,40 @@ sStartCopyrightBannerSpriteTemplate: @ 0x851AD74
 
 	.globl sSpriteSheet_PressStart
 sSpriteSheet_PressStart: @ 0x851AD8C
-	.incbin "baserom_jp.gba", 0x51ad8c, 0x10
+	.4byte 0x085176F4
+	.hword 0x0520, 0x03E9
+	.4byte 0x00000000, 0x00000000
 
 	.globl sSpritePalette_PressStart
 sSpritePalette_PressStart: @ 0x851AD9C
-	.incbin "graphics/misc/sSpritePalette_PressStart.bin"
+	.4byte 0x085176D4
+	.hword 0x03E9, 0x0000
+	.4byte 0x00000000, 0x00000000
+
+	.globl sOam_PokemonLogoShine
+sOam_PokemonLogoShine: @ 0x851ADAC
+	.4byte 0xC00000A0
+	.hword 0x0000, 0x0000
+
+	.globl sAnim_PokemonLogoShine
+sAnim_PokemonLogoShine: @ 0x851ADB4
+	.hword 0x0000, 0x0004
+	.hword 0xFFFF, 0x0000
+
+	.globl sAnims_PokemonLogoShine
+sAnims_PokemonLogoShine: @ 0x851ADBC
+	.4byte sAnim_PokemonLogoShine
 
 	.globl sPokemonLogoShineSpriteTemplate
 sPokemonLogoShineSpriteTemplate: @ 0x851ADC0
-	.incbin "baserom_jp.gba", 0x51adc0, 0x18
+	.hword 0x03EA, 0x03E9
+	.4byte sOam_PokemonLogoShine, sAnims_PokemonLogoShine, 0, gDummySpriteAffineAnimTable, 0x080A9E6D
 
 	.globl sPokemonLogoShineSpriteSheet
 sPokemonLogoShineSpriteSheet: @ 0x851ADD8
-	.incbin "graphics/misc/sPokemonLogoShineSpriteSheet.bin"
+	.4byte 0x0851A598
+	.hword 0x0800, 0x03EA
+	.4byte 0x00000000, 0x00000000
 
 	.globl gUnknown_851ADE8
 gUnknown_851ADE8: @ 0x851ADE8
