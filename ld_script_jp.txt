@@ -9236,6 +9236,8 @@ SECTIONS {
         data/data_b_mid2b5.o(.rodata);
         src/data/trainer_back_pic_coords.o(.rodata);
         data/data_b_mid2b6.o(.rodata);
+        src/data/enemy_mon_elevation.o(.rodata);
+        data/data_b_mid2b7.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
         src/data/text/species_names.o(.rodata);
