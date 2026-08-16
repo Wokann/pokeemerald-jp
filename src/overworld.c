@@ -7081,128 +7081,40 @@ __attribute__((naked)) void DestroyLinkPlayerObject(u8 linkPlayerId)
     );
 }
 
-__attribute__((naked)) u8 GetSpriteForLinkedPlayer(u8 a0)
+static u8 GetSpriteForLinkedPlayer(u8 linkPlayerId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _080871D4\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0, #2]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080871D8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080871D4: .4byte gLinkPlayerObjectEvents\n\t"
-        "_080871D8: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
+    struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
+    return objEvent->spriteId;
 }
 
-__attribute__((naked)) void GetLinkPlayerCoords(u8 a0, s16 *a1, s16 *a2)
+static void GetLinkPlayerCoords(u8 linkPlayerId, s16 *x, s16 *y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r3, _080871FC\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r3, [r0, #2]\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r3, _08087200\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r3, [r0, #0x10]\n\t"
-        "	strh r3, [r1]\n\t"
-        "	ldrh r0, [r0, #0x12]\n\t"
-        "	strh r0, [r2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080871FC: .4byte gLinkPlayerObjectEvents\n\t"
-        "_08087200: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
+    struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
+    *x = objEvent->currentCoords.x;
+    *y = objEvent->currentCoords.y;
 }
 
-__attribute__((naked)) u8 GetLinkPlayerFacingDirection(u8 a0)
+static u8 GetLinkPlayerFacingDirection(u8 linkPlayerId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _0808721C\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0, #2]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08087220\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #0x19]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808721C: .4byte gLinkPlayerObjectEvents\n\t"
-        "_08087220: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
+    struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
+    return linkDirection(objEvent);
 }
 
-__attribute__((naked)) u8 GetLinkPlayerElevation(u8 a0)
+static u8 GetLinkPlayerElevation(u8 linkPlayerId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _08087240\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0, #2]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08087244\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08087240: .4byte gLinkPlayerObjectEvents\n\t"
-        "_08087244: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
+    struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
+    return objEvent->currentElevation;
 }
 
-__attribute__((naked)) s16 GetLinkPlayerObjectStepTimer(u8 linkPlayerId)
+static s16 UNUSED GetLinkPlayerObjectStepTimer(u8 linkPlayerId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _08087268\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0, #2]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808726C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, #0x21\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08087268: .4byte gLinkPlayerObjectEvents\n\t"
-        "_0808726C: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objEventId = gLinkPlayerObjectEvents[linkPlayerId].objEventId;
+    struct ObjectEvent *objEvent = &gObjectEvents[objEventId];
+    return 16 - (s8)objEvent->directionSequenceIndex;
 }
 
 __attribute__((naked)) u8 GetLinkPlayerIdAt(s16 a0, s16 a1)
