@@ -14440,29 +14440,14 @@ bool8 MovementAction_StartAnimInDirection_Step0(struct ObjectEvent *objectEvent,
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_WaitSpriteAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WaitSpriteAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SpriteAnimEnded\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094748\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809474E\n\t"
-        "_08094748:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809474E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (SpriteAnimEnded(sprite))
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 InitJumpSpecial(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
@@ -15022,33 +15007,11 @@ bool8 MovementAction_DisableAnimation_Step0(struct ObjectEvent *objectEvent, str
 }
 
 
-__attribute__((naked)) bool8 MovementAction_RestoreAnimation_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RestoreAnimation_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	ldrb r1, [r0, #0xc]\n\t"
-        "	lsls r1, r1, #0x19\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r4, #1]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->inanimate = GetObjectEventGraphicsInfo(objectEvent->graphicsId)->inanimate;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
 
@@ -15069,76 +15032,28 @@ bool8 MovementAction_SetVisible_Step0(struct ObjectEvent *objectEvent, struct Sp
 }
 
 
-__attribute__((naked)) bool8 MovementAction_EmoteExclamationMark_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_EmoteExclamationMark_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldr r1, _08094E6C\n\t"
-        "	adds r2, r1, #4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #8\n\t"
-        "	bl ObjectEventGetLocalIdAndMap\n\t"
-        "	movs r0, #0\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08094E6C: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventGetLocalIdAndMap(objectEvent, &gFieldEffectArguments[0], &gFieldEffectArguments[1], &gFieldEffectArguments[2]);
+    FieldEffectStart(FLDEFF_EXCLAMATION_MARK_ICON);
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_EmoteQuestionMark_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_EmoteQuestionMark_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldr r1, _08094E90\n\t"
-        "	adds r2, r1, #4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #8\n\t"
-        "	bl ObjectEventGetLocalIdAndMap\n\t"
-        "	movs r0, #0x21\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08094E90: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventGetLocalIdAndMap(objectEvent, &gFieldEffectArguments[0], &gFieldEffectArguments[1], &gFieldEffectArguments[2]);
+    FieldEffectStart(FLDEFF_QUESTION_MARK_ICON);
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_EmoteHeart_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_EmoteHeart_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldr r1, _08094EB4\n\t"
-        "	adds r2, r1, #4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #8\n\t"
-        "	bl ObjectEventGetLocalIdAndMap\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08094EB4: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventGetLocalIdAndMap(objectEvent, &gFieldEffectArguments[0], &gFieldEffectArguments[1], &gFieldEffectArguments[2]);
+    FieldEffectStart(FLDEFF_HEART_ICON);
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementAction_RevealTrainer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
