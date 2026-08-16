@@ -5709,8 +5709,7 @@ __attribute__((naked)) void CreateAlternatingWeatherTask(void)
         ".syntax divided\n\t"
     );
 }
-
-__attribute__((naked)) void SetSav1Weather(void)
+__attribute__((naked)) void SetSav1Weather(u32 weather)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5738,6 +5737,8 @@ __attribute__((naked)) void SetSav1Weather(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 u8 GetSavedWeather(void)
 {
@@ -5777,14 +5778,14 @@ __attribute__((naked)) void SetSav1WeatherFromCurrMapHeader(void)
 
 void SetWeather(u32 weather)
 {
-    SetSavedWeather(weather);
+    SetSav1Weather(weather);
     SetNextWeather(GetSavedWeather());
 }
 
 
 void SetWeather_Unused(u32 weather)
 {
-    SetSavedWeather(weather);
+    SetSav1Weather(weather);
     SetCurrentAndNextWeather(GetSavedWeather());
 }
 
