@@ -271,6 +271,7 @@ extern s8 sCursorPosition;
 extern bool8 sIsMonBeingMoved;
 extern u8 sLastUsedBox;
 extern u16 sMovingItemId;
+extern u8 sSavedCursorPosition;
 extern void UpdateCloseBoxButtonFlash(void);
 extern void UpdateCloseBoxButtonTilemap(bool8 state);
 extern void UnkUtil_Run(void);
@@ -2167,7 +2168,7 @@ __attribute__((naked)) void sub_080C77B8(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_080CD488\n\t"
+        "	bl ClearSavedCursorPos\n\t"
         "	ldr r2, _080C77DC\n\t"
         "	movs r1, #0\n\t"
         "	ldr r0, _080C77E0\n\t"
@@ -2705,7 +2706,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	.align 2, 0\n\t"
         "_080C7C54: .4byte gUnknown_20399A8\n\t"
         "_080C7C58:\n\t"
-        "	bl sub_080CD488\n\t"
+        "	bl ClearSavedCursorPos\n\t"
         "	ldr r0, _080C7C64\n\t"
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
@@ -3242,7 +3243,7 @@ __attribute__((naked)) void Cb_HidePartyPokemon(void)
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080C80F2\n\t"
-        "	bl sub_080CD4A8\n\t"
+        "	bl GetSavedCursorPos\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	bl sub_080CD474\n\t"
@@ -3818,7 +3819,7 @@ __attribute__((naked)) void Cb_WithdrawMon(void)
         "	.align 2, 0\n\t"
         "_080C8580: .4byte gUnknown_20399A8\n\t"
         "_080C8584:\n\t"
-        "	bl sub_080CD494\n\t"
+        "	bl SaveCursorPos\n\t"
         "	movs r0, #0\n\t"
         "	bl InitMonPlaceChange\n\t"
         "	ldr r0, _080C8598\n\t"
@@ -13105,7 +13106,7 @@ __attribute__((naked)) void sub_080CCBE8(void)
         "	strb r1, [r0]\n\t"
         "	ldr r0, _080CCC58\n\t"
         "	strb r1, [r0]\n\t"
-        "	bl sub_080CD488\n\t"
+        "	bl ClearSavedCursorPos\n\t"
         "	bl sub_080CF490\n\t"
         "	ldr r2, _080CCC5C\n\t"
         "	ldr r0, [r2]\n\t"
@@ -14205,48 +14206,19 @@ __attribute__((naked)) void sub_080CD474(void)
     );
 }
 
-__attribute__((naked)) void sub_080CD488(void)
+void ClearSavedCursorPos(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080CD490\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD490: .4byte gUnknown_2039A1E\n\t"
-        ".syntax divided\n\t"
-    );
+    sSavedCursorPosition = 0;
 }
 
-__attribute__((naked)) void sub_080CD494(void)
+void SaveCursorPos(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080CD4A0\n\t"
-        "	ldr r1, _080CD4A4\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD4A0: .4byte gUnknown_2039A1E\n\t"
-        "_080CD4A4: .4byte gUnknown_2039A19\n\t"
-        ".syntax divided\n\t"
-    );
+    sSavedCursorPosition = sCursorPosition;
 }
 
-
-__attribute__((naked)) void sub_080CD4A8(void)
+u8 GetSavedCursorPos(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080CD4B0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD4B0: .4byte gUnknown_2039A1E\n\t"
-        ".syntax divided\n\t"
-    );
+    return sSavedCursorPosition;
 }
 
 void InitMonPlaceChange(u8 type)

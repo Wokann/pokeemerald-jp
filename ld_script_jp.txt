@@ -5562,9 +5562,9 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.sub_080CD2E4);
         src/pokemon_storage_system.o(.text.sub_080CD41C);
         src/pokemon_storage_system.o(.text.sub_080CD474);
-        src/pokemon_storage_system.o(.text.sub_080CD488);
-        src/pokemon_storage_system.o(.text.sub_080CD494);
-        src/pokemon_storage_system.o(.text.sub_080CD4A8);
+        src/pokemon_storage_system.o(.text.ClearSavedCursorPos);
+        src/pokemon_storage_system.o(.text.SaveCursorPos);
+        src/pokemon_storage_system.o(.text.GetSavedCursorPos);
         src/pokemon_storage_system.o(.text.InitMonPlaceChange);
         src/pokemon_storage_system.o(.text.InitMultiMonPlaceChange);
         src/pokemon_storage_system.o(.text.DoMonPlaceChange);

@@ -935,6 +935,7 @@ gUnknown_2039A1C = .;
 gUnknown_2039A1D = .;
 . += 0x1;
 gUnknown_2039A1E = .;
+sSavedCursorPosition = .;
 . += 0x2;
 gUnknown_2039A20 = .;
 . += 0x4;
