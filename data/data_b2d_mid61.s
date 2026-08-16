@@ -536,10 +536,7 @@ gUnknown_85843D4: @ 0x85843D4
 gUnknown_8584448: @ 0x8584448
 	.incbin "baserom_jp.gba", 0x584448, 0xc
 
-	.globl gUnknown_8584454
-gUnknown_8584454: @ 0x8584454
-	.incbin "baserom_jp.gba", 0x584454, 0x14
-
+	.section .rodata.8584468
 	.globl gUnknown_8584468
 gUnknown_8584468: @ 0x8584468
 	.incbin "baserom_jp.gba", 0x584468, 0xc

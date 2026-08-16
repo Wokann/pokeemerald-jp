@@ -10111,7 +10111,7 @@ slot_machine.s
 0812beec StopSlotReel StopSlotReel
 0812bf14 IsSlotReelMoving IsSlotReelMoving
 0812bf3c Task_Reel Task_Reel
-0812bf74 slot_machine.s SlotReelAction_StayStill
+0812bf74 ReelTask_StayStill ReelTask_StayStill
 0812bf78 ReelTask_Spin ReelTask_Spin
 0812bf98 ReelTask_DecideStop ReelTask_DecideStop
 0812c02c ReelTask_MoveToStop ReelTask_MoveToStop

@@ -858,6 +858,32 @@ extern struct SlotMachine *sSlotMachine;
 
 static void Task_SlotMachine(u8 taskId);
 static void Task_Reel(u8 taskId);
+static bool8 ReelTask_StayStill(struct Task *task);
+static bool8 ReelTask_Spin(struct Task *task);
+static bool8 ReelTask_DecideStop(struct Task *task);
+static bool8 ReelTask_MoveToStop(struct Task *task);
+static bool8 ReelTask_ShakingStop(struct Task *task);
+
+enum {
+    REEL_TASK_STILL,
+    REEL_TASK_SPIN,
+    REEL_TASK_DECIDE_STOP,
+    REEL_TASK_STOP_MOVE,
+    REEL_TASK_STOP_SHAKE,
+};
+
+#define tState data[0]
+#define tMoving data[14]
+
+__attribute__((section(".rodata.sReelTasks")))
+static const bool8 (*const sReelTasks[])(struct Task *task) =
+{
+    [REEL_TASK_STILL]       = ReelTask_StayStill,
+    [REEL_TASK_SPIN]        = ReelTask_Spin,
+    [REEL_TASK_DECIDE_STOP] = ReelTask_DecideStop,
+    [REEL_TASK_STOP_MOVE]   = ReelTask_MoveToStop,
+    [REEL_TASK_STOP_SHAKE]  = ReelTask_ShakingStop,
+};
 
 static void CreateSlotMachineTasks(void)
 {
@@ -1291,11 +1317,11 @@ __attribute__((naked)) void SlotAction9(u8 taskId)
         "	bl DrawLuckyFlags\n\t"
         "	bl sub_0812DFEC\n\t"
         "	movs r0, #0\n\t"
-        "	bl ReelTasks_SetUnkTaskData\n\t"
+        "	bl SpinSlotReel\n\t"
         "	movs r0, #1\n\t"
-        "	bl ReelTasks_SetUnkTaskData\n\t"
+        "	bl SpinSlotReel\n\t"
         "	movs r0, #2\n\t"
-        "	bl ReelTasks_SetUnkTaskData\n\t"
+        "	bl SpinSlotReel\n\t"
         "	bl sub_080EF784\n\t"
         "	movs r0, #0\n\t"
         "	strh r0, [r4, #8]\n\t"
@@ -1413,7 +1439,7 @@ __attribute__((naked)) void SlotAction_AwaitReelStop(u8 taskId)
         "	ldr r4, _0812AE94\n\t"
         "	ldr r0, [r4]\n\t"
         "	ldrb r0, [r0, #0x18]\n\t"
-        "	bl sub_0812BEEC\n\t"
+        "	bl StopSlotReel\n\t"
         "	ldr r0, [r4]\n\t"
         "	ldrb r0, [r0, #0x18]\n\t"
         "	bl sub_0812CD50\n\t"
@@ -3509,7 +3535,7 @@ __attribute__((naked)) u8 GetNearbyReelTimeTag(u8 a)
     );
 }
 
-__attribute__((naked)) void AdvanceSlotReel(u8 a)
+__attribute__((naked)) void AdvanceSlotReel(u8 reelIndex, s16 value)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3701,162 +3727,40 @@ static void CreateReelTasks(void)
     }
 }
 
-__attribute__((naked)) void ReelTasks_SetUnkTaskData(u8 taskId)
+static void SpinSlotReel(u8 reelIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r4, _0812BEE4\n\t"
-        "	ldr r1, _0812BEE8\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	adds r2, #0x3a\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r3, #1\n\t"
-        "	strh r3, [r0, #8]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r3, [r0, #0x24]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BEE4: .4byte gTasks\n\t"
-        "_0812BEE8: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[sSlotMachine->slotReelTasks[reelIndex]].tState = REEL_TASK_SPIN;
+    gTasks[sSlotMachine->slotReelTasks[reelIndex]].tMoving = TRUE;
 }
 
-
-__attribute__((naked)) void sub_0812BEEC(void)
+static void StopSlotReel(u8 reelIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0812BF0C\n\t"
-        "	ldr r1, _0812BF10\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x3a\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #2\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BF0C: .4byte gTasks\n\t"
-        "_0812BF10: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[sSlotMachine->slotReelTasks[reelIndex]].tState = REEL_TASK_DECIDE_STOP;
 }
 
-__attribute__((naked)) bool8 IsSlotReelMoving(void)
+static bool8 IsSlotReelMoving(u8 reelIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0812BF34\n\t"
-        "	ldr r1, _0812BF38\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x3a\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0, #0x24]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BF34: .4byte gTasks\n\t"
-        "_0812BF38: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    return gTasks[sSlotMachine->slotReelTasks[reelIndex]].tMoving;
 }
 
-__attribute__((naked)) void Task_Reel(u8 taskId)
+static void Task_Reel(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _0812BF6C\n\t"
-        "	ldr r2, _0812BF70\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_0812BF4E:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812BF4E\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BF6C: .4byte gUnknown_8584454\n\t"
-        "_0812BF70: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sReelTasks[gTasks[taskId].tState](&gTasks[taskId]))
+        ;
 }
 
-__attribute__((naked)) void SlotReelAction_StayStill(u8 taskId)
+static bool8 ReelTask_StayStill(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotReelAction_Spin(u8 taskId)
+static bool8 ReelTask_Spin(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrh r0, [r0, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0812BF94\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0x1a\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	bl AdvanceSlotReel\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BF94: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    AdvanceSlotReel(task->tReelId, sSlotMachine->reelSpeed);
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotReelAction_DecideWhereToStop(u8 taskId)
+__attribute__((naked)) bool8 ReelTask_DecideStop(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3935,7 +3839,7 @@ __attribute__((naked)) void SlotReelAction_DecideWhereToStop(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotReelAction_MoveToStop(u8 taskId)
+__attribute__((naked)) bool8 ReelTask_MoveToStop(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4038,7 +3942,7 @@ __attribute__((naked)) void SlotReelAction_MoveToStop(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotReelAction_OscillatingStop(u8 taskId)
+__attribute__((naked)) bool8 ReelTask_ShakingStop(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
