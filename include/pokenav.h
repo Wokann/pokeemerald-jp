@@ -493,6 +493,7 @@ u32 GetRibbonsSummaryMenuCallback(void);
 void FreeRibbonsSummaryScreen1(void);
 bool32 OpenRibbonsSummaryMenu(void);
 void CreateRibbonsSummaryLoopedTask(s32 id);
+u32 sub_081D0090(void);
 u32 IsRibbonsSummaryLoopedTaskActive(void);
 void FreeRibbonsSummaryScreen2(void);
 

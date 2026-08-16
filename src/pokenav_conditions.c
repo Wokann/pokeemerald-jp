@@ -116,7 +116,7 @@ struct Pokenav_SearchResultsGfx
 static u32 LoopedTask_OpenConditionGraphMenu(s32);
 static u32 GetConditionGraphMenuLoopedTaskActive(void);
 static u32 LoopedTask_ExitConditionGraphMenu(s32);
-static bool32 IsSearchResultLoopedTaskActive(void);
+bool32 IsSearchResultLoopedTaskActive(void);
 
 bool32 PokenavCallback_Init_ConditionGraph_Party(void)
 {
