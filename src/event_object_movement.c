@@ -50,6 +50,8 @@ enum
 
 extern void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 mode);
 extern u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent);
+extern bool8 ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_None_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -4774,14 +4776,9 @@ __attribute__((naked)) void MovementType_None(struct Sprite *sprite)
 }
 
 
-__attribute__((naked)) void MovementType_None_callback(void)
+u8 MovementType_None_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return FALSE;
 }
 
 __attribute__((naked)) void MovementType_WanderAround(struct Sprite *sprite)
@@ -12815,17 +12812,10 @@ __attribute__((naked)) u8 sub_08091FFC(struct ObjectEvent *objectEvent, struct S
     );
 }
 
-__attribute__((naked)) bool8 MovementType_Hidden_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_Hidden_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_MoveInPlace_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
