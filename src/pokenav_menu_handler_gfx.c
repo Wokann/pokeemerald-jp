@@ -112,9 +112,62 @@ extern const u32 sPokenavDeviceBgTiles[];
 extern const u32 sPokenavDeviceBgTilemap[];
 extern const u16 sMatchCallBlueLightPal[];
 extern const u32 sMatchCallBlueLightTiles[];
-extern const struct BgTemplate sPokenavMainMenuBgTemplates[3];
-extern const LoopedTask sMenuHandlerLoopTaskFuncs[9];
-extern const struct CompressedSpriteSheet sPokenavOptionsSpriteSheets[2];
+
+static const struct BgTemplate sPokenavMainMenuBgTemplates[] =
+{
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 15,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0x000
+    }, {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 23,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0x000
+    }, {
+        .bg = 3,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0x000
+    }
+};
+
+static const LoopedTask sMenuHandlerLoopTaskFuncs[] =
+{
+    [POKENAV_MENU_FUNC_NONE]                  = NULL,
+    [POKENAV_MENU_FUNC_MOVE_CURSOR]           = LoopedTask_MoveMenuCursor,
+    [POKENAV_MENU_FUNC_OPEN_CONDITION]        = LoopedTask_OpenConditionMenu,
+    [POKENAV_MENU_FUNC_RETURN_TO_MAIN]        = LoopedTask_ReturnToMainMenu,
+    [POKENAV_MENU_FUNC_OPEN_CONDITION_SEARCH] = LoopedTask_OpenConditionSearchMenu,
+    [POKENAV_MENU_FUNC_RETURN_TO_CONDITION]   = LoopedTask_ReturnToConditionMenu,
+    [POKENAV_MENU_FUNC_NO_RIBBON_WINNERS]     = LoopedTask_SelectRibbonsNoWinners,
+    [POKENAV_MENU_FUNC_RESHOW_DESCRIPTION]    = LoopedTask_ReShowDescription,
+    [POKENAV_MENU_FUNC_OPEN_FEATURE]          = LoopedTask_OpenPokenavFeature
+};
+
+static const struct CompressedSpriteSheet sPokenavOptionsSpriteSheets[] =
+{
+    {
+        .data = gPokenavOptions_Gfx,
+        .size = 0x3400,
+        .tag = GFXTAG_OPTIONS
+    },
+    {
+        .data = sMatchCallBlueLightTiles,
+        .size = 0x0100,
+        .tag = GFXTAG_BLUE_LIGHT
+    }
+};
 extern const struct SpritePalette sPokenavOptionsSpritePalettes[7];
 extern const u16 sOptionsLabelGfx_RegionMap[2];
 extern const u16 sOptionsLabelGfx_Condition[2];
