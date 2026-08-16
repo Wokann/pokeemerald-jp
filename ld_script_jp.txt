@@ -9241,9 +9241,10 @@ SECTIONS {
         src/data/front_pic_anims.o(.rodata);
         src/data/front_pic_table.o(.rodata);
         src/data/unknown_table.o(.rodata);
-        data/data_b_mid2b7.o(.rodata);
+        src/data/trainer_parties.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
+        src/data/trainers.o(.rodata);
         src/data/text/species_names.o(.rodata);
         src/data/text/move_names.o(.rodata);
         data/data_b2.o(.rodata);
