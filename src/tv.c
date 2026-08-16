@@ -4,6 +4,8 @@
 #include "fieldmap.h"
 #include "tv.h"
 
+#define LAST_TVSHOW_IDX (TV_SHOWS_COUNT - 1)
+
 enum
 {
     SLOT_MACHINE,
@@ -7797,7 +7799,6 @@ __attribute__((naked)) void DeleteTVShowInArrayByIdx(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void sub_080F0428(void)
 {
     __asm__(".syntax unified\n\t"
@@ -7899,6 +7900,8 @@ __attribute__((naked)) void sub_080F0428(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void TV_GetSomeOtherSpeciesAlreadySeenByPlayer_AndPrintName(void)
 {

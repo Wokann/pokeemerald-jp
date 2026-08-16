@@ -3885,7 +3885,7 @@ SECTIONS {
         src/event_object_movement.o(.text.FindEventObjectPaletteIndexByTag);
         src/event_object_movement.o(.text.LoadPlayerObjectReflectionPalette);
         src/event_object_movement.o(.text.LoadSpecialObjectReflectionPalette);
-        src/event_object_movement.o(.text.sub_0808E420);
+        src/event_object_movement.o(.text._PatchObjectPalette);
         src/event_object_movement.o(.text.IncrementObjectEventCoords);
         src/event_object_movement.o(.text.ShiftEventObjectCoords);
         src/event_object_movement.o(.text.SetEventObjectCoords);
@@ -4634,7 +4634,7 @@ SECTIONS {
         src/event_object_movement.o(.text.oamt_npc_ministep_reset);
         src/event_object_movement.o(.text.obj_npc_ministep);
         src/event_object_movement.o(.text.sub_0809704C);
-        src/event_object_movement.o(.text.sub_0809705C);
+        src/event_object_movement.o(.text.UpdateWalkSlowAnim);
         src/event_object_movement.o(.text.GetFigure8YOffset);
         src/event_object_movement.o(.text.GetFigure8XOffset);
         src/event_object_movement.o(.text.sub_080970C0);

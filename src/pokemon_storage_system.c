@@ -14818,7 +14818,6 @@ __attribute__((naked)) void PlaceMon(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void sub_080CD888(void)
 {
     __asm__(".syntax unified\n\t"
@@ -14831,6 +14830,8 @@ __attribute__((naked)) void sub_080CD888(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void SetMovedMonData(u8 a, u8 b)
 {

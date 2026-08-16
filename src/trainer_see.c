@@ -25,7 +25,7 @@
 u8 sub_08092CA0(u32 direction);   // JP: facing direction -> movement action
 u8 sub_08092CF8(u32 direction);   // JP: walk normal movement action
 u8 sub_08092E2C(u32 direction);   // JP: jump in place movement action
-void sub_0808B64C(void);          // JP: CancelPlayerForcedMovement
+void CancelPlayerForcedMovement(void);
 void sub_0809B720(u8 localId);    // JP: SetMovingNpcId
 u8 GroundEffect_DeepSandTracks(u8 metatileBehavior); // JP: returns movement type
 
@@ -418,7 +418,7 @@ static bool8 PlayerFaceApproachingTrainer(u8 taskId, struct Task *task, struct O
     if (ObjectEventIsMovementOverridden(playerObj) && !ObjectEventClearHeldMovementIfFinished(playerObj))
         return FALSE;
 
-    sub_0808B64C(); // JP: CancelPlayerForcedMovement
+    CancelPlayerForcedMovement();
     ObjectEventSetHeldMovement(&gObjectEvents[gPlayerAvatar.objectEventId], sub_08092CA0(GetOppositeDirection(trainerObj->facingDirection)));
     task->tFuncId++; // TRSEE_PLAYER_FACE_WAIT
     return FALSE;

@@ -9,6 +9,19 @@ struct Sprite;
 #define sTypeFuncId   data[1] // Index into corresponding gMovementTypeFuncs_* table
 #define sActionFuncId data[2] // Index into corresponding gMovementActionFuncs_* table
 #define sDirection    data[3]
+#define sCamera_FollowSpriteId data[0]
+
+#define GROUND_EFFECT_FLAG_PUDDLE (1 << 10)
+
+#define JUMP_HALFWAY  1
+#define JUMP_FINISHED ((u8)-1)
+
+enum
+{
+    JUMP_TYPE_HIGH,
+    JUMP_TYPE_LOW,
+    JUMP_TYPE_NORMAL,
+};
 
 extern void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 mode);
 
@@ -934,7 +947,7 @@ __attribute__((naked)) void TrySetupEventObjectSprite(void)
         "	lsrs r5, r0, #0x18\n\t"
         "	ldrh r0, [r7, #2]\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl sub_0808E420\n\t"
+        "	bl _PatchObjectPalette\n\t"
         "_0808D386:\n\t"
         "	ldrb r0, [r6, #6]\n\t"
         "	cmp r0, #0x4c\n\t"
@@ -1631,7 +1644,7 @@ __attribute__((naked)) void sprite_new(void)
         "	lsrs r2, r1, #0x1c\n\t"
         "	movs r1, #0xf0\n\t"
         "	orrs r1, r2\n\t"
-        "	bl sub_0808E420\n\t"
+        "	bl _PatchObjectPalette\n\t"
         "_0808D89C:\n\t"
         "	ldr r1, [sp, #0x1c]\n\t"
         "	cmp r1, #0\n\t"
@@ -2090,7 +2103,7 @@ __attribute__((naked)) void sub_0808DB28(void)
         "	mov r8, r0\n\t"
         "	ldrh r0, [r5, #2]\n\t"
         "	mov r1, r8\n\t"
-        "	bl sub_0808E420\n\t"
+        "	bl _PatchObjectPalette\n\t"
         "_0808DBEE:\n\t"
         "	mov r1, sp\n\t"
         "	ldr r2, _0808DCF4\n\t"
@@ -2338,7 +2351,7 @@ __attribute__((naked)) void ObjectEventSetGraphicsId(struct ObjectEvent *objectE
         "	lsrs r5, r0, #0x18\n\t"
         "	ldrh r0, [r6, #2]\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl sub_0808E420\n\t"
+        "	bl _PatchObjectPalette\n\t"
         "_0808DDC6:\n\t"
         "	ldr r0, [r6, #0x10]\n\t"
         "	ldrb r2, [r0, #1]\n\t"
@@ -3298,22 +3311,11 @@ __attribute__((naked)) void LoadSpecialObjectReflectionPalette(u16 tag, u8 slot)
     );
 }
 
-__attribute__((naked)) void sub_0808E420(void)
+void _PatchObjectPalette(u16 tag, u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl PatchObjectPalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PatchObjectPalette(tag, slot);
 }
+
 
 __attribute__((naked)) void IncrementObjectEventCoords(void)
 {
@@ -16325,7 +16327,7 @@ __attribute__((naked)) bool8 UpdateWalkSlow(struct ObjectEvent *objectEvent, str
         "	adds r4, r0, #0\n\t"
         "	adds r5, r1, #0\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_0809705C\n\t"
+        "	bl UpdateWalkSlowAnim\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08093512\n\t"
@@ -17419,7 +17421,6 @@ __attribute__((naked)) bool8 sub_08093B38(struct ObjectEvent *objectEvent, struc
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 sub_08093B50(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -17465,6 +17466,8 @@ __attribute__((naked)) bool8 sub_08093B50(struct ObjectEvent *objectEvent, struc
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) bool8 MovementAction_Jump2Down_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -21739,7 +21742,6 @@ __attribute__((naked)) bool8 sub_08095460(struct ObjectEvent *objectEvent, struc
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 sub_0809547C(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -21775,6 +21777,8 @@ __attribute__((naked)) bool8 sub_0809547C(struct ObjectEvent *objectEvent, struc
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) bool8 MovementAction_Figure8_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -22876,6 +22880,7 @@ __attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct 
     );
 }
 
+
 __attribute__((naked)) bool8 sub_08095B30(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -22897,6 +22902,8 @@ __attribute__((naked)) bool8 sub_08095B30(struct ObjectEvent *objectEvent, struc
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -26286,45 +26293,28 @@ __attribute__((naked)) void sub_0809704C(struct Sprite *sprite, u8 a)
     );
 }
 
-__attribute__((naked)) bool8 sub_0809705C(struct Sprite *sprite)
+#define sTimer     data[4]
+#define sNumSteps  data[5]
+
+bool8 UpdateWalkSlowAnim(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x36]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809707C\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Step1\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_0809707C:\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bgt _0809708E\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08097090\n\t"
-        "_0809708E:\n\t"
-        "	movs r0, #1\n\t"
-        "_08097090:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!(sprite->sTimer & 1))
+    {
+        Step1(sprite, sprite->sDirection);
+        sprite->sNumSteps++;
+    }
+
+    sprite->sTimer++;
+
+    if (sprite->sNumSteps > 15)
+        return TRUE;
+    else
+        return FALSE;
 }
+
+#undef sTimer
+#undef sNumSteps
+
 
 __attribute__((naked)) s16 GetFigure8YOffset(s16 idx)
 {

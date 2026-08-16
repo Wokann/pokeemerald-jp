@@ -2028,7 +2028,6 @@ __attribute__((naked)) void sub_081AB754(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void sub_081AB818(void)
 {
     __asm__(".syntax unified\n\t"
@@ -2050,6 +2049,8 @@ __attribute__((naked)) void sub_081AB818(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void SetInitialScrollAndCursorPositions(void)
 {

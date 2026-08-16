@@ -363,17 +363,9 @@ __attribute__((naked)) void GetPlayerAvatarSpriteId(void)
     );
 }
 
-__attribute__((naked)) void sub_0808B64C(void)
+void CancelPlayerForcedMovement(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ForcedMovement_None\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ForcedMovement_None();
 }
 
 __attribute__((naked)) void sub_0808B658(void)

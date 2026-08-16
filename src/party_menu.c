@@ -19335,7 +19335,6 @@ __attribute__((naked)) void sub_081B8C0C(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void sub_081B8C50(void)
 {
     __asm__(".syntax unified\n\t"
@@ -19369,6 +19368,8 @@ __attribute__((naked)) void sub_081B8C50(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 
 __attribute__((naked)) void pokemon_order_func(void)

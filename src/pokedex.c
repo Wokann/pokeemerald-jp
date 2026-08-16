@@ -10627,37 +10627,20 @@ __attribute__((naked)) bool16 HasAllHoennMons()
     );
 }
 
-__attribute__((naked)) void sub_080BFE70(void)
+
+bool8 HasAllKantoMons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r0, #0\n\t"
-        "_080BFE74:\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetSetPokedexFlag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080BFE8C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080BFE94\n\t"
-        "_080BFE8C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	cmp r0, #0x95\n\t"
-        "	bls _080BFE74\n\t"
-        "	movs r0, #1\n\t"
-        "_080BFE94:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    // -1 excludes Mew
+    for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
+    {
+        if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+            return FALSE;
+    }
+    return TRUE;
 }
+
 
 __attribute__((naked)) bool16 HasAllMons()
 {
