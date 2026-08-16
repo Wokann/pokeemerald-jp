@@ -11,6 +11,8 @@
 #include "constants/songs.h"
 #include "coins.h"
 #include "constants/game_stat.h"
+#include "menu.h"
+#include "main_menu.h"
 #include "string_util.h"
 #include "decompress.h"
 #include "trig.h"
@@ -1049,6 +1051,7 @@ bool8 IsInfoBoxClosed(void);
 extern const u8 gText_YouDontHaveThreeCoins[];
 extern const u8 gText_YouveGot9999Coins[];
 extern const u8 gText_YouveRunOutOfCoins[];
+extern const u8 gText_QuitTheGame[];
 void DrawMachineBias(void);
 void DestroyDigitalDisplayScene(void);
 void IncrementDailySlotsUses(void);
@@ -1061,6 +1064,7 @@ void TryPutFindThatGamerOnAir(u16 nCoinsPaidOut);
 bool8 IsFinalTask_Task_Payout(void);
 bool8 TryStopSlotMachineLights(void);
 bool8 IsPikaPowerBoltAnimating(void);
+void DarkenBetTiles(u8 betLevel);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -1562,60 +1566,26 @@ static bool8 SlotTask_MatchedPower(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) void SlotAction18(u8 taskId)
+static bool8 SlotTask_WaitReelTimeAnim(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsDigitalDisplayAnimFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B10C\n\t"
-        "	ldr r2, _0812B114\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	movs r0, #0x13\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	ldrh r1, [r2, #8]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B10C\n\t"
-        "	movs r0, #9\n\t"
-        "	strb r0, [r2]\n\t"
-        "_0812B10C:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B114: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsDigitalDisplayAnimFinished())
+    {
+        sSlotMachine->state = SLOTTASK_RESET_BET_TILES;
+        if (sSlotMachine->matches & (1 << MATCH_REPLAY))
+        {
+            sSlotMachine->state = SLOTTASK_START_SPIN;
+        }
+    }
+    return FALSE;
 }
 
-
-__attribute__((naked)) void SlotAction_Loop(u8 taskId)
+static bool8 SlotTask_ResetBetTiles(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_0812CEC8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_0812CEC8\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_0812CEC8\n\t"
-        "	ldr r0, _0812B13C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B13C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    DarkenBetTiles(0);
+    DarkenBetTiles(1);
+    DarkenBetTiles(2);
+    sSlotMachine->state = SLOTTASK_READY_NEW_SPIN;
+    return FALSE;
 }
 
 static bool8 SlotTask_NoMatches(struct Task *task)
@@ -1628,106 +1598,34 @@ static bool8 SlotTask_NoMatches(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_PrintQuitTheGame(u8 taskId)
+static bool8 SlotTask_AskQuit(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DrawDialogueFrame\n\t"
-        "	ldr r2, _0812B1B8\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r2, #0x85\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	movs r3, #0xca\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	movs r0, #0xe\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	movs r1, #7\n\t"
-        "	bl CreateYesNoMenuParameterized\n\t"
-        "	ldr r0, _0812B1BC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x16\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B1B8: .4byte gUnknown_8588604 + 0x2\n\t"
-        "_0812B1BC: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    DrawDialogueFrame(WIN_MSG, FALSE);
+    AddTextPrinterParameterized(WIN_MSG, FONT_NORMAL, gText_QuitTheGame, 0, 2, 0, 0); // JP text x offset = 2
+    CopyWindowToVram(WIN_MSG, COPYWIN_FULL);
+    CreateYesNoMenuParameterized(0x15, 7, 0x214, 0x194, 0xE, 0xF); // JP baseBlock = 0x194 (US uses 0x180)
+    sSlotMachine->state = SLOTTASK_HANDLE_QUIT_INPUT;
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_SeeIfPlayerQuits(u8 taskId)
+static bool8 SlotTask_HandleQuitInput(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812B1FC\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearDialogWindowAndFrame\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_0812CEC8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_0812CEC8\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_0812CEC8\n\t"
-        "	ldr r0, _0812B1F8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrh r0, [r1, #0x12]\n\t"
-        "	ldrh r2, [r1, #0xc]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	movs r0, #0x1b\n\t"
-        "	b _0812B216\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B1F8: .4byte sSlotMachine\n\t"
-        "_0812B1FC:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _0812B208\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0812B218\n\t"
-        "_0812B208:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearDialogWindowAndFrame\n\t"
-        "	ldr r0, _0812B220\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "_0812B216:\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812B218:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B220: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 input = Menu_ProcessInputNoWrapClearOnChoose();
+    if (input == 0) // Chose to quit
+    {
+        ClearDialogWindowAndFrame(WIN_MSG, TRUE);
+        DarkenBetTiles(0);
+        DarkenBetTiles(1);
+        DarkenBetTiles(2);
+        sSlotMachine->coins += sSlotMachine->bet;
+        sSlotMachine->state = SLOTTASK_END;
+    }
+    else if (input == 1 || input == MENU_B_PRESSED) // Chose not to quit
+    {
+        ClearDialogWindowAndFrame(WIN_MSG, TRUE);
+        sSlotMachine->state = SLOTTASK_BET_INPUT;
+    }
+    return FALSE;
 }
 
 static bool8 SlotTask_PrintMsg_MaxCoins(struct Task *task)
