@@ -7393,7 +7393,7 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_ResetBiasFailure);
         src/slot_machine.o(.text.SlotTask_WaitReelStop);
         src/slot_machine.o(.text.SlotTask_WaitAllReelsStop);
-        src/slot_machine.o(.text.SlotAction_CheckMatches);
+        src/slot_machine.o(.text.SlotTask_CheckMatches);
         src/slot_machine.o(.text.SlotTask_WaitPayout);
         src/slot_machine.o(.text.SlotTask_EndPayout);
         src/slot_machine.o(.text.SlotTask_MatchedPower);
@@ -7490,7 +7490,7 @@ SECTIONS {
         src/slot_machine.o(.text.TryStopSlotMachineLights);
         src/slot_machine.o(.text.Task_FlashSlotMachineLights);
         src/slot_machine.o(.text.GameplayTask_PikaPower);
-        src/slot_machine.o(.text.DisplayPikaPower);
+        src/slot_machine.o(.text.AddPikaPowerBolt);
         src/slot_machine.o(.text.ResetPikaPowerBolts);
         src/slot_machine.o(.text.IsPikaPowerBoltAnimating);
         src/slot_machine.o(.text.Task_CreatePikaPowerBolt);

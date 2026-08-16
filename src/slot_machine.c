@@ -1094,6 +1094,10 @@ bool8 TryStopSlotMachineLights(void);
 bool8 IsPikaPowerBoltAnimating(void);
 void DarkenBetTiles(u8 betLevel);
 void LightenBetTiles(u8 betLevel);
+void CheckMatch(void);
+void AwardPayout(void);
+void FlashSlotMachineLights(void);
+void AddPikaPowerBolt(u8 bolts);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -1300,161 +1304,70 @@ static bool8 SlotTask_WaitAllReelsStop(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_CheckMatches(u8 taskId)
+static bool8 SlotTask_CheckMatches(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812AF40\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #4]\n\t"
-        "	bl CheckMatch\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AEFA\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1, #0xa]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #0xb]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #0xb]\n\t"
-        "_0812AEFA:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AFDC\n\t"
-        "	movs r0, #0xf\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl AwardPayout\n\t"
-        "	bl sub_0812D0C0\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrh r0, [r2, #0x10]\n\t"
-        "	ldrh r1, [r2, #0xe]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0812AF22\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x10]\n\t"
-        "_0812AF22:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrh r1, [r0, #8]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AF48\n\t"
-        "	ldr r0, _0812AF44\n\t"
-        "	bl PlayFanfare\n\t"
-        "	movs r0, #6\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	b _0812AF72\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AF40: .4byte sSlotMachine\n\t"
-        "_0812AF44: .4byte SPECIAL_sub_081398CC\n\t"
-        "_0812AF48:\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AF64\n\t"
-        "	ldr r0, _0812AF60\n\t"
-        "	bl PlayFanfare\n\t"
-        "	movs r0, #5\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	b _0812AF72\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AF60: .4byte SPECIAL_sub_081398CC\n\t"
-        "_0812AF64:\n\t"
-        "	movs r0, #0xc3\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl PlayFanfare\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "_0812AF72:\n\t"
-        "	ldr r2, _0812AFD8\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	ldrh r1, [r3, #8]\n\t"
-        "	movs r0, #0xe0\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AFB6\n\t"
-        "	ldrb r1, [r3, #4]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r4, #0\n\t"
-        "	strb r0, [r3, #4]\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	ldrh r1, [r3, #8]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AFB6\n\t"
-        "	strb r4, [r3, #0xa]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	strb r4, [r0, #0xb]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	strb r4, [r0, #3]\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	ldrh r1, [r3, #8]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AFB6\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r3, #3]\n\t"
-        "_0812AFB6:\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	ldrh r1, [r3, #8]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AFFE\n\t"
-        "	ldrb r0, [r3, #2]\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bhi _0812AFFE\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r3, #2]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrb r0, [r0, #2]\n\t"
-        "	bl DisplayPikaPower\n\t"
-        "	b _0812AFFE\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AFD8: .4byte sSlotMachine\n\t"
-        "_0812AFDC:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrh r0, [r1, #0x12]\n\t"
-        "	ldrh r2, [r1, #0x10]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldr r2, _0812B008\n\t"
-        "	cmp r0, r2\n\t"
-        "	ble _0812AFFE\n\t"
-        "	strh r2, [r1, #0x10]\n\t"
-        "_0812AFFE:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B008: .4byte 0x0000270F\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->machineBias &= (BIAS_STRAIGHT_7 | BIAS_MIXED_7);
+    CheckMatch();
+    if (sSlotMachine->reelTimeSpinsLeft)
+    {
+        sSlotMachine->reelTimeSpinsLeft--;
+        sSlotMachine->reelTimeSpinsUsed++;
+    }
+
+    if (sSlotMachine->matches)
+    {
+        sSlotMachine->state = SLOTTASK_WAIT_PAYOUT;
+        AwardPayout();
+        FlashSlotMachineLights();
+        if ((sSlotMachine->netCoinLoss -= sSlotMachine->payout) < 0)
+        {
+            sSlotMachine->netCoinLoss = 0;
+        }
+        if (sSlotMachine->matches & ((1 << MATCH_BLUE_7) | (1 << MATCH_RED_7)))
+        {
+            PlayFanfare(MUS_SLOTS_JACKPOT);
+            CreateDigitalDisplayScene(DIG_DISPLAY_BONUS_BIG);
+        }
+        else if (sSlotMachine->matches & (1 << MATCH_MIXED_7))
+        {
+            PlayFanfare(MUS_SLOTS_JACKPOT);
+            CreateDigitalDisplayScene(DIG_DISPLAY_BONUS_REG);
+        }
+        else
+        {
+            PlayFanfare(MUS_SLOTS_WIN);
+            CreateDigitalDisplayScene(DIG_DISPLAY_WIN);
+        }
+
+        if (sSlotMachine->matches & ((1 << MATCH_MIXED_7) | (1 << MATCH_BLUE_7) | (1 << MATCH_RED_7)))
+        {
+            sSlotMachine->machineBias &= ~(BIAS_STRAIGHT_7 | BIAS_MIXED_7);
+            if (sSlotMachine->matches & ((1 << MATCH_BLUE_7) | (1 << MATCH_RED_7)))
+            {
+                // ReelTime ends if it was ongoing
+                sSlotMachine->reelTimeSpinsLeft = 0;
+                sSlotMachine->reelTimeSpinsUsed = 0;
+                sSlotMachine->luckyGame = FALSE;
+                if (sSlotMachine->matches & (1 << MATCH_BLUE_7))
+                    sSlotMachine->luckyGame = TRUE;
+            }
+        }
+        if (sSlotMachine->matches & (1 << MATCH_POWER) && sSlotMachine->pikaPowerBolts < 16)
+        {
+            sSlotMachine->pikaPowerBolts++;
+            AddPikaPowerBolt(sSlotMachine->pikaPowerBolts);
+        }
+    }
+    else
+    {
+        CreateDigitalDisplayScene(DIG_DISPLAY_LOSE);
+        sSlotMachine->state = SLOTTASK_NO_MATCHES;
+        if ((sSlotMachine->netCoinLoss += sSlotMachine->bet) > MAX_COINS)
+            sSlotMachine->netCoinLoss = MAX_COINS;
+    }
+    return FALSE;
 }
+
 
 static bool8 SlotTask_WaitPayout(struct Task *task)
 {
@@ -2147,7 +2060,7 @@ __attribute__((naked)) u16 ReelTimeSpeed(void)
 }
 
 
-__attribute__((naked)) void CheckMatch(u8 taskId)
+__attribute__((naked)) void CheckMatch(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2498,7 +2411,7 @@ __attribute__((naked)) u8 GetMatchFromSymbolsInRow(u8 a)
     );
 }
 
-__attribute__((naked)) void AwardPayout(u8 taskId)
+__attribute__((naked)) void AwardPayout(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5606,7 +5519,7 @@ __attribute__((naked)) void GameplayTask_PikaPower(void)
     );
 }
 
-__attribute__((naked)) void DisplayPikaPower(void)
+__attribute__((naked)) void AddPikaPowerBolt(u8 bolts)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
