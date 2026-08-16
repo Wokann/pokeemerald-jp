@@ -5521,7 +5521,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.sub_080CB8D8);
         src/pokemon_storage_system.o(.text.sub_080CB914);
         src/pokemon_storage_system.o(.text.SetMovingMonPriority);
-        src/pokemon_storage_system.o(.text.sub_080CB974);
+        src/pokemon_storage_system.o(.text.SpriteCB_HeldMon);
         src/pokemon_storage_system.o(.text.sub_080CB998);
         src/pokemon_storage_system.o(.text.sub_080CBA54);
         src/pokemon_storage_system.o(.text.sub_080CBAA4);

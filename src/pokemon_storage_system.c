@@ -8288,7 +8288,7 @@ __attribute__((naked)) void CreateMovingMonIcon(void)
         "_080CA88C: .4byte gUnknown_20399A8\n\t"
         "_080CA890: .4byte 0x000020A4\n\t"
         "_080CA894: .4byte 0x00000A6C\n\t"
-        "_080CA898: .4byte sub_080CB974 + 1\n\t"
+        "_080CA898: .4byte SpriteCB_HeldMon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10039,7 +10039,7 @@ __attribute__((naked)) void sub_080CB488(void)
         "_080CB510: .4byte gUnknown_20399A8\n\t"
         "_080CB514: .4byte 0x00000A6C\n\t"
         "_080CB518: .4byte 0x00000A88\n\t"
-        "_080CB51C: .4byte sub_080CB974 + 1\n\t"
+        "_080CB51C: .4byte SpriteCB_HeldMon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10363,7 +10363,7 @@ __attribute__((naked)) void sub_080CB638(void)
         "_080CB774: .4byte 0x00000C5D\n\t"
         "_080CB778: .4byte 0x00000A6C\n\t"
         "_080CB77C: .4byte gSineTable\n\t"
-        "_080CB780: .4byte sub_080CB974 + 1\n\t"
+        "_080CB780: .4byte SpriteCB_HeldMon + 1\n\t"
         "_080CB784: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -10637,29 +10637,10 @@ void SetMovingMonPriority(u8 priority)
     sStorage->movingMonSprite->oam.priority = priority;
 }
 
-__attribute__((naked)) void sub_080CB974(void)
+void SpriteCB_HeldMon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080CB990\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _080CB994\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrh r2, [r2, #0x20]\n\t"
-        "	strh r2, [r0, #0x20]\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrh r1, [r2, #0x26]\n\t"
-        "	ldrh r2, [r2, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, #4\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB990: .4byte gUnknown_20399A8\n\t"
-        "_080CB994: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x = sStorage->cursorSprite->x;
+    sprite->y = sStorage->cursorSprite->y + sStorage->cursorSprite->y2 + 4;
 }
 
 __attribute__((naked)) void sub_080CB998(void)
