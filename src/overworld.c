@@ -5,6 +5,7 @@
 #include "link.h"
 #include "constants/map_types.h"
 #include "constants/songs.h"
+#include "field_screen_effect.h"
 
 extern void *sUnusedOverworldCallback;
 
@@ -245,73 +246,18 @@ __attribute__((naked)) void IncrementGameStat(u8 index)
     );
 }
 
-__attribute__((naked)) u32 GetGameStat(u8 index)
+u32 GetGameStat(u8 index)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x33\n\t"
-        "	bhi _080841B0\n\t"
-        "	ldr r0, _080841A4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	ldr r1, _080841A8\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r0, _080841AC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0xac\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	eors r0, r1\n\t"
-        "	b _080841B2\n\t"
-        "	.align 2, 0\n\t"
-        "_080841A4: .4byte gSaveBlock1Ptr\n\t"
-        "_080841A8: .4byte 0x0000159C\n\t"
-        "_080841AC: .4byte gSaveBlock2Ptr\n\t"
-        "_080841B0:\n\t"
-        "	movs r0, #0\n\t"
-        "_080841B2:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (index >= NUM_USED_GAME_STATS)
+        return 0;
+
+    return gSaveBlock1Ptr->gameStats[index] ^ gSaveBlock2Ptr->encryptionKey;
 }
 
-__attribute__((naked)) void SetGameStat(u8 index, u32 value)
+void SetGameStat(u8 index, u32 value)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x33\n\t"
-        "	bhi _080841DC\n\t"
-        "	ldr r0, _080841E0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	ldr r2, _080841E4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080841E8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xac\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	eors r0, r3\n\t"
-        "	str r0, [r1]\n\t"
-        "_080841DC:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080841E0: .4byte gSaveBlock1Ptr\n\t"
-        "_080841E4: .4byte 0x0000159C\n\t"
-        "_080841E8: .4byte gSaveBlock2Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    if (index < NUM_USED_GAME_STATS)
+        gSaveBlock1Ptr->gameStats[index] = value ^ gSaveBlock2Ptr->encryptionKey;
 }
 
 __attribute__((naked)) void ApplyNewEncryptionKeyToGameStats(u32 newKey)
@@ -1999,32 +1945,11 @@ __attribute__((naked)) void SetDefaultFlashLevel(void)
     );
 }
 
-__attribute__((naked)) void SetFlashLevel(s32 flashLevel)
+void SetFlashLevel(s32 flashLevel)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	blt _08084E64\n\t"
-        "	ldr r0, _08084E74\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08084E66\n\t"
-        "_08084E64:\n\t"
-        "	movs r1, #0\n\t"
-        "_08084E66:\n\t"
-        "	ldr r0, _08084E78\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x30\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08084E74: .4byte gMaxFlashLevel\n\t"
-        "_08084E78: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    if (flashLevel < 0 || flashLevel > gMaxFlashLevel)
+        flashLevel = 0;
+    gSaveBlock1Ptr->flashLevel = flashLevel;
 }
 
 
@@ -2948,69 +2873,26 @@ u8 GetMapTypeByWarpData(struct WarpData *warp)
 }
 
 
-__attribute__((naked)) u8 GetCurrentMapType(void)
+u8 GetCurrentMapType(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08085520\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	bl GetMapTypeByWarpData\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08085520: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetMapTypeByWarpData(&gSaveBlock1Ptr->location);
 }
 
-__attribute__((naked)) u8 GetLastUsedWarpMapType(void)
+u8 GetLastUsedWarpMapType(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08085534\n\t"
-        "	bl GetMapTypeByWarpData\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08085534: .4byte gUnknown_2031F7C\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetMapTypeByWarpData(&gLastUsedWarp);
 }
 
-__attribute__((naked)) bool8 IsMapTypeOutdoors(u8 mapType)
+bool8 IsMapTypeOutdoors(u8 mapType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08085552\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08085552\n\t"
-        "	cmp r0, #5\n\t"
-        "	beq _08085552\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08085552\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _08085556\n\t"
-        "_08085552:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08085558\n\t"
-        "_08085556:\n\t"
-        "	movs r0, #0\n\t"
-        "_08085558:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (mapType == MAP_TYPE_ROUTE
+     || mapType == MAP_TYPE_TOWN
+     || mapType == MAP_TYPE_UNDERWATER
+     || mapType == MAP_TYPE_CITY
+     || mapType == MAP_TYPE_OCEAN_ROUTE)
+        return TRUE;
+    else
+        return FALSE;
 }
 
 
@@ -3037,82 +2919,19 @@ bool8 IsMapTypeIndoors(u8 mapType)
 }
 
 
-__attribute__((naked)) mapsec_u8_t GetSavedWarpRegionMapSectionId(void)
+u8 GetSavedWarpRegionMapSectionId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080855BC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrb r1, [r1, #0x15]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	bl Overworld_GetMapHeaderByGroupAndId\n\t"
-        "	ldrb r0, [r0, #0x14]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080855BC: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->dynamicWarp.mapGroup, gSaveBlock1Ptr->dynamicWarp.mapNum)->regionMapSectionId;
 }
 
-__attribute__((naked)) mapsec_u8_t GetCurrentRegionMapSectionId(void)
+u8 GetCurrentRegionMapSectionId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080855E4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	bl Overworld_GetMapHeaderByGroupAndId\n\t"
-        "	ldrb r0, [r0, #0x14]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080855E4: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum)->regionMapSectionId;
 }
 
-__attribute__((naked)) u8 GetCurrentMapBattleScene(void)
+u8 GetCurrentMapBattleScene(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0808560C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	bl Overworld_GetMapHeaderByGroupAndId\n\t"
-        "	ldrb r0, [r0, #0x1b]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808560C: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum)->battleType;
 }
 
 __attribute__((naked)) void InitOverworldBgs(void)
