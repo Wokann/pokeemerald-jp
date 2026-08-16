@@ -428,7 +428,7 @@ sub_080976A0 = MoveUnionRoomObjectDown;
 sub_08097724 = IsVirtualObjectAnimating;
 sub_08097758 = StartFieldEffectForObjectEvent;
 sub_0809321C = EventObjectExecHeldMovementAction + 0x14;
-sub_08093258 = sub_08093234 + 0x14;
+sub_08093258 = ObjectEventExecSingleMovementAction + 0x14;
 GetAcroEndWheelieMoveDirectionMovementAction = sub_08091FFC + 0x14;
 GetAcroPopWheelieMoveDirectionMovementAction = GetAcroPopWheelieFaceDirectionMovementAction + 0x14;
 GetAcroWheelieHopDirectionMovementAction = GetAcroWheelieFaceDirectionMovementAction + 0x14;
@@ -4279,7 +4279,7 @@ SECTIONS {
         src/event_object_movement.o(.text.zffu_offset_calc);
         src/event_object_movement.o(.text.state_to_direction);
         src/event_object_movement.o(.text.EventObjectExecHeldMovementAction);
-        src/event_object_movement.o(.text.sub_08093234);
+        src/event_object_movement.o(.text.ObjectEventExecSingleMovementAction);
         src/event_object_movement.o(.text.ObjectEventSetSingleMovement);
         src/event_object_movement.o(.text.FaceDirection);
         src/event_object_movement.o(.text.MovementAction_FaceDown_Step0);
