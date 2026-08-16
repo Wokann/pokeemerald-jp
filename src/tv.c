@@ -8685,27 +8685,9 @@ __attribute__((naked)) void GetTVGroupByShowId(void)
     );
 }
 
-__attribute__((naked)) u32 GetPlayerIDAsU32(void)
+u32 GetPlayerIDAsU32(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080F0B08\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r2, #0xd]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldrb r1, [r2, #0xc]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	ldrb r1, [r2, #0xb]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	ldrb r1, [r2, #0xa]\n\t"
-        "	orrs r0, r1\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080F0B08: .4byte gSaveBlock2Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    return (gSaveBlock2Ptr->playerTrainerId[3] << 24) | (gSaveBlock2Ptr->playerTrainerId[2] << 16) | (gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0];
 }
 
 __attribute__((naked)) void CheckForBigMovieOrEmergencyNewsOnTV(void)
