@@ -3872,7 +3872,7 @@ __attribute__((naked)) void sub_080EF6F8(void)
     );
 }
 
-__attribute__((naked)) void sub_080EF784(void)
+__attribute__((naked)) void IncrementDailySlotsUses(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

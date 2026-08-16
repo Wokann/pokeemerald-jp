@@ -852,6 +852,7 @@ enum {
 };
 
 #define MAX_BET 3
+#define REEL_NORMAL_SPEED 8
 
 #define BIAS_REPLAY     (1 << 0)
 #define BIAS_CHERRY     (1 << 1)
@@ -943,7 +944,6 @@ enum {
 #define tMoving data[14]
 #define tExtraTurns    data[1]
 #define tShockMagnitude data[1]
-#define tTimer         data[2]
 
 __attribute__((section(".rodata.sReelTasks")))
 static const bool8 (*const sReelTasks[])(struct Task *task) =
@@ -1028,6 +1028,15 @@ void CreateDigitalDisplayScene(u8 id);
 bool8 IsDigitalDisplayAnimFinished(void);
 bool8 IsInfoBoxClosed(void);
 extern const u8 gText_YouDontHaveThreeCoins[];
+void DrawMachineBias(void);
+void DestroyDigitalDisplayScene(void);
+void IncrementDailySlotsUses(void);
+void BeginReelTime(void);
+u16 ReelTimeSpeed(void);
+bool8 IsReelTimeTaskDone(void);
+void ResetBiasFailure(void);
+
+#define tTimer data[0]
 
 static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
@@ -1242,119 +1251,53 @@ static bool8 SlotTask_WaitInfoBox(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) void SlotAction9(u8 taskId)
+static bool8 SlotTask_StartSpin(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl DrawLuckyFlags\n\t"
-        "	bl sub_0812DFEC\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SpinSlotReel\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SpinSlotReel\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SpinSlotReel\n\t"
-        "	bl sub_080EF784\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldr r4, _0812ADD0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812ADD4\n\t"
-        "	bl BeginReeltime\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _0812ADDE\n\t"
-        "	.align 2, 0\n\t"
-        "_0812ADD0: .4byte sSlotMachine\n\t"
-        "_0812ADD4:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0xb\n\t"
-        "_0812ADDE:\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _0812AE00\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #8\n\t"
-        "	strh r1, [r0, #0x1a]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812ADF6\n\t"
-        "	bl SlowReelSpeed\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	strh r0, [r1, #0x1a]\n\t"
-        "_0812ADF6:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AE00: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    DrawMachineBias();
+    DestroyDigitalDisplayScene();
+
+    SpinSlotReel(LEFT_REEL);
+    SpinSlotReel(MIDDLE_REEL);
+    SpinSlotReel(RIGHT_REEL);
+
+    IncrementDailySlotsUses();
+
+    task->tTimer = 0;
+    if (sSlotMachine->machineBias & BIAS_REELTIME)
+    {
+        BeginReelTime();
+        sSlotMachine->state = SLOTTASK_START_RT_SPIN;
+    }
+    else
+    {
+        CreateDigitalDisplayScene(DIG_DISPLAY_STOP_REEL);
+        sSlotMachine->state = SLOTTASK_RESET_BIAS_FAILURE;
+    }
+    sSlotMachine->reelSpeed = REEL_NORMAL_SPEED;
+    if (sSlotMachine->reelTimeSpinsLeft)
+        sSlotMachine->reelSpeed = ReelTimeSpeed();
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction10(u8 taskId)
+static bool8 SlotTask_StartReelTimeSpin(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsFinalTask_RunReelTimeActions\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812AE28\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	ldr r3, _0812AE30\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #0xdf\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #4]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #0xb\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812AE28:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AE30: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsReelTimeTaskDone())
+    {
+        CreateDigitalDisplayScene(DIG_DISPLAY_STOP_REEL);
+        sSlotMachine->machineBias &= ~BIAS_REELTIME;
+        sSlotMachine->state = SLOTTASK_RESET_BIAS_FAILURE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_SetLuckySpins(u8 taskId)
+static bool8 SlotTask_ResetBiasFailure(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrh r1, [r0, #8]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0x1d\n\t"
-        "	ble _0812AE50\n\t"
-        "	bl SetLuckySpins\n\t"
-        "	ldr r0, _0812AE58\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812AE50:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AE58: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++task->tTimer >= 30)
+    {
+        ResetBiasFailure();
+        sSlotMachine->state = SLOTTASK_WAIT_REEL_STOP;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void SlotAction_AwaitReelStop(u8 taskId)
@@ -2255,7 +2198,7 @@ __attribute__((naked)) void SlotAction_FreeDataStructures(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DrawLuckyFlags(void)
+__attribute__((naked)) void DrawMachineBias(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2316,7 +2259,7 @@ __attribute__((naked)) void DrawLuckyFlags(void)
     );
 }
 
-__attribute__((naked)) void SetLuckySpins(void)
+__attribute__((naked)) void ResetBiasFailure(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2660,7 +2603,7 @@ __attribute__((naked)) void SkipToReeltimeAction14(void)
     );
 }
 
-__attribute__((naked)) void SlowReelSpeed(void)
+__attribute__((naked)) u16 ReelTimeSpeed(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3711,6 +3654,9 @@ static bool8 ReelTask_DecideStop(struct Task *task)
     task->tExtraTurns = sSlotMachine->reelExtraTurns[task->tReelId];
     return TRUE;
 }
+
+#undef tTimer
+#define tTimer data[2]
 
 static bool8 ReelTask_MoveToStop(struct Task *task)
 {
@@ -7402,7 +7348,7 @@ __attribute__((naked)) void ReelTime_DestroySprites(struct Task *task)
         "_0812DA14:\n\t"
         "	movs r0, #4\n\t"
         "	bl sub_0812DEF4\n\t"
-        "	bl SlowReelSpeed\n\t"
+        "	bl ReelTimeSpeed\n\t"
         "	strh r0, [r5, #0xa]\n\t"
         "	strh r6, [r5, #0xc]\n\t"
         "	strh r6, [r5, #0xe]\n\t"

@@ -6132,7 +6132,7 @@ SECTIONS {
         src/tv.o(.text.sub_080EF588);
         src/tv.o(.text.sub_080EF69C);
         src/tv.o(.text.sub_080EF6F8);
-        src/tv.o(.text.sub_080EF784);
+        src/tv.o(.text.IncrementDailySlotsUses);
         src/tv.o(.text.sub_080EF7A8);
         src/tv.o(.text.sub_080EF7CC);
         src/tv.o(.text.sub_080EF7F0);
@@ -7388,9 +7388,9 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_PrintMsg_Need3Coins);
         src/slot_machine.o(.text.SlotTask_WaitMsg_Need3Coins);
         src/slot_machine.o(.text.SlotTask_WaitInfoBox);
-        src/slot_machine.o(.text.SlotAction9);
-        src/slot_machine.o(.text.SlotAction10);
-        src/slot_machine.o(.text.SlotAction_SetLuckySpins);
+        src/slot_machine.o(.text.SlotTask_StartSpin);
+        src/slot_machine.o(.text.SlotTask_StartReelTimeSpin);
+        src/slot_machine.o(.text.SlotTask_ResetBiasFailure);
         src/slot_machine.o(.text.SlotAction_AwaitReelStop);
         src/slot_machine.o(.text.SlotAction_WaitForAllReelsToStop);
         src/slot_machine.o(.text.SlotAction_CheckMatches);
@@ -7408,8 +7408,8 @@ SECTIONS {
         src/slot_machine.o(.text.SlotAction_ExitMessage_NoMoreCoins);
         src/slot_machine.o(.text.SlotAction_EndGame);
         src/slot_machine.o(.text.SlotAction_FreeDataStructures);
-        src/slot_machine.o(.text.DrawLuckyFlags);
-        src/slot_machine.o(.text.SetLuckySpins);
+        src/slot_machine.o(.text.DrawMachineBias);
+        src/slot_machine.o(.text.ResetBiasFailure);
         src/slot_machine.o(.text.GetBiasTag);
         src/slot_machine.o(.text.IsThisRoundLucky);
         src/slot_machine.o(.text.AttemptsAtLuckyFlags_Top3);
@@ -7417,7 +7417,7 @@ SECTIONS {
         src/slot_machine.o(.text.GetReelTimeProbability);
         src/slot_machine.o(.text.GetReeltimeDraw);
         src/slot_machine.o(.text.SkipToReeltimeAction14);
-        src/slot_machine.o(.text.SlowReelSpeed);
+        src/slot_machine.o(.text.ReelTimeSpeed);
         src/slot_machine.o(.text.CheckMatch);
         src/slot_machine.o(.text.CheckMatch_CenterRow);
         src/slot_machine.o(.text.CheckMatch_TopAndBottom);
