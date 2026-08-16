@@ -15275,148 +15275,40 @@ bool8 MovementAction_AcroWheelieFaceRight_Step0(struct ObjectEvent *objectEvent,
 
 
 
-__attribute__((naked)) bool8 MovementAction_AcroPopWheelieDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSlideMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_SOUTH, GetSlideMovementAction(DIR_SOUTH));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroPopWheelieUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetSlideMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_NORTH, GetSlideMovementAction(DIR_NORTH));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroPopWheelieLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetSlideMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_WEST, GetSlideMovementAction(DIR_WEST));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroPopWheelieRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroPopWheelieRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #4\n\t"
-        "	bl GetSlideMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_EAST, GetSlideMovementAction(DIR_EAST));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetWalkFastestMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_SOUTH, GetWalkFastestMovementAction(DIR_SOUTH));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieFaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieFaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetWalkFastestMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_NORTH, GetWalkFastestMovementAction(DIR_NORTH));
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 sub_08095388(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -15443,124 +15335,34 @@ __attribute__((naked)) bool8 sub_08095388(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroEndWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroEndWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #4\n\t"
-        "	bl GetWalkFastestMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_EAST, GetWalkFastestMovementAction(DIR_EAST));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_UnusedAcroActionDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_UnusedAcroActionDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetWalkInPlaceFastMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_SOUTH, GetWalkInPlaceFastMovementAction(DIR_SOUTH));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_UnusedAcroActionUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_UnusedAcroActionUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetWalkInPlaceFastMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_NORTH, GetWalkInPlaceFastMovementAction(DIR_NORTH));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_UnusedAcroActionLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_UnusedAcroActionLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetWalkInPlaceFastMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_WEST, GetWalkInPlaceFastMovementAction(DIR_WEST));
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_UnusedAcroActionRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_UnusedAcroActionRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #4\n\t"
-        "	bl GetWalkInPlaceFastMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_EAST, GetWalkInPlaceFastMovementAction(DIR_EAST));
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 InitFigure8Anim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
