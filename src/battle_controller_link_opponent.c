@@ -5835,109 +5835,53 @@ void LinkOpponentHandleStatusXor(void)
 }
 
 
-__attribute__((naked)) void LinkOpponentHandleDataTransfer(void)
+void LinkOpponentHandleDataTransfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleDMA3Transfer(void)
+
+void LinkOpponentHandleDMA3Transfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandlePlayBGM(void)
+
+void LinkOpponentHandlePlayBGM(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleCmd32(void)
+
+void LinkOpponentHandleCmd32(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleTwoReturnValues(void)
+
+void LinkOpponentHandleTwoReturnValues(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleChosenMonReturnValue(void)
+
+void LinkOpponentHandleChosenMonReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleOneReturnValue(void)
+
+void LinkOpponentHandleOneReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleOneReturnValue_Duplicate(void)
+
+void LinkOpponentHandleOneReturnValue_Duplicate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void sub_08066ECC(void)
 {
@@ -6095,18 +6039,11 @@ __attribute__((naked)) void LinkOpponentHandleHitAnimation(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandleCantSwitch(void)
+void LinkOpponentHandleCantSwitch(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkOpponentHandlePlaySE(void)
 {
@@ -6745,18 +6682,11 @@ __attribute__((naked)) void LinkOpponentHandleHidePartyStatusSummary(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandleEndBounceEffect(void)
+void LinkOpponentHandleEndBounceEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkOpponentHandleSpriteInvisibility(void)
 {
@@ -6891,18 +6821,11 @@ __attribute__((naked)) void LinkOpponentHandleLinkStandbyMsg(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandleResetActionMoveSelection(void)
+void LinkOpponentHandleResetActionMoveSelection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkOpponentHandleCmd55(void)
 {

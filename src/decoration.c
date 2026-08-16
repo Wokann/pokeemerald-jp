@@ -2224,7 +2224,6 @@ __attribute__((naked)) void IdentifyOwnedDecorationsCurrentlyInUseInternal(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void IdentifyOwnedDecorationsCurrentlyInUse(void)
 {
     __asm__(".syntax unified\n\t"
@@ -2239,6 +2238,8 @@ __attribute__((naked)) void IdentifyOwnedDecorationsCurrentlyInUse(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) bool8 IsSelectedDecorInThePC()
 {

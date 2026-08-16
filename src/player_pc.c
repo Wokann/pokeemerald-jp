@@ -1781,20 +1781,11 @@ __attribute__((naked)) void Mailbox_DoMailMoveToBag(void)
     );
 }
 
-__attribute__((naked)) void Mailbox_CancelMoveToBag(void)
+void Mailbox_CancelMoveToBag(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl Mailbox_Cancel\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    Mailbox_Cancel(taskId);
 }
+
 
 __attribute__((naked)) void Mailbox_Give(void)
 {

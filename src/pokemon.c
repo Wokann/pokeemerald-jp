@@ -4784,20 +4784,12 @@ __attribute__((naked)) u8 GetDefaultMoveTarget(u8 battler)
     );
 }
 
-__attribute__((naked)) u8 GetMonGender(struct Pokemon *mon)
+
+u8 GetMonGender(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetBoxMonGender\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetBoxMonGender(&mon->box);
 }
+
 
 __attribute__((naked)) u8 GetBoxMonGender(struct BoxPokemon *boxMon)
 {

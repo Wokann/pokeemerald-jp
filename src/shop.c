@@ -1446,7 +1446,6 @@ __attribute__((naked)) void BuyMenuDrawGraphics(void)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void BuyMenuDrawMapGraphics(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1461,6 +1460,8 @@ __attribute__((naked)) void BuyMenuDrawMapGraphics(void)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void BuyMenuDrawMapBg(void)
 {

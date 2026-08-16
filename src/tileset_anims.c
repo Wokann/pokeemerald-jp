@@ -118,20 +118,14 @@ __attribute__((naked)) void TransferTilesetAnimsBuffer()
     );
 }
 
-__attribute__((naked)) void InitTilesetAnimations()
+
+void InitTilesetAnimations(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ResetTilesetAnimBuffer\n\t"
-        "	bl _InitPrimaryTilesetAnimation\n\t"
-        "	bl _InitSecondaryTilesetAnimation\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetTilesetAnimBuffer();
+    _InitPrimaryTilesetAnimation();
+    _InitSecondaryTilesetAnimation();
 }
+
 
 
 void InitSecondaryTilesetAnimation(void)

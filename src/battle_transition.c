@@ -98,21 +98,12 @@ __attribute__((naked)) void BattleTransition_StartOnField(u8 transitionId)
     );
 }
 
-__attribute__((naked)) void BattleTransition_Start(u8 transitionId)
+
+void BattleTransition_Start(u8 transitionId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/battle_transition.c\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl LaunchBattleTransitionTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LaunchBattleTransitionTask(transitionId);
 }
+
 
 __attribute__((naked)) bool8 IsBattleTransitionDone(void)
 {

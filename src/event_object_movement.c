@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/event_object_movement.h"
 
 struct ObjectEvent;
 struct Sprite;
@@ -5208,22 +5209,17 @@ __attribute__((naked)) u8 GetVectorDirection(s16 dx, s16 dy, s16 absdx, s16 absd
     );
 }
 
-__attribute__((naked)) u8 GetLimitedVectorDirection_SouthNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
+
+u8 GetLimitedVectorDirection_SouthNorth(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0808EFB4\n\t"
-        "	movs r0, #2\n\t"
-        "_0808EFB4:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+
+    direction = DIR_SOUTH;
+    if (dy < 0)
+        direction = DIR_NORTH;
+    return direction;
 }
+
 
 __attribute__((naked)) u8 GetLimitedVectorDirection_WestEast(s16 dx, s16 dy, s16 absdx, s16 absdy)
 {
@@ -6498,21 +6494,13 @@ __attribute__((naked)) bool8 MovementType_FaceDirection_Step1(struct ObjectEvent
     );
 }
 
-__attribute__((naked)) bool8 MovementType_Invisible_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+bool8 MovementType_Invisible_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #3\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->singleMovementActive = FALSE;
+    return FALSE;
 }
+
 
 __attribute__((naked)) void MovementType_BerryTreeGrowth(struct Sprite *sprite)
 {
@@ -13320,21 +13308,13 @@ __attribute__((naked)) bool8 MovementType_Invisible_Step1(struct ObjectEvent *ob
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDirection_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+bool8 MovementType_FaceDirection_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #3\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->singleMovementActive = FALSE;
+    return FALSE;
 }
+
 
 __attribute__((naked)) bool8 ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -16032,66 +16012,38 @@ __attribute__((naked)) void FaceDirection(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_FaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+bool8 MovementAction_FaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #1\n\t"
-        "	bl FaceDirection\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FaceDirection(objectEvent, sprite, DIR_SOUTH);
+    return TRUE;
 }
 
 
-__attribute__((naked)) bool8 MovementAction_FaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_FaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #2\n\t"
-        "	bl FaceDirection\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FaceDirection(objectEvent, sprite, DIR_NORTH);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_FaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_FaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #3\n\t"
-        "	bl FaceDirection\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FaceDirection(objectEvent, sprite, DIR_WEST);
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_FaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_FaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #4\n\t"
-        "	bl FaceDirection\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FaceDirection(objectEvent, sprite, DIR_EAST);
+    return TRUE;
 }
+
 
 __attribute__((naked)) void npc_apply_direction(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
 {
@@ -19903,37 +19855,23 @@ __attribute__((naked)) bool8 MovementAction_FaceAwayPlayer_Step0(struct ObjectEv
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_LockFacingDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+bool8 MovementAction_LockFacingDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r2, [r0, #1]\n\t"
-        "	movs r3, #2\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r0, #1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->facingDirectionLocked = TRUE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_UnlockFacingDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_UnlockFacingDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r3, [r0, #1]\n\t"
-        "	movs r2, #3\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	strb r2, [r0, #1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->facingDirectionLocked = FALSE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
+
 
 
 __attribute__((naked)) bool8 MovementAction_JumpDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -20664,68 +20602,40 @@ __attribute__((naked)) bool8 MovementAction_FaceOriginalDirection_Step0(struct O
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_NurseJoyBowDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+bool8 MovementAction_NurseJoyBowDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0x14\n\t"
-        "	bl StartSpriteAnimInDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnimInDirection(objectEvent, sprite, DIR_SOUTH, ANIM_NURSE_BOW);
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_EnableJumpLandingGroundEffect_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_EnableJumpLandingGroundEffect_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r3, [r0, #3]\n\t"
-        "	movs r2, #3\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	strb r2, [r0, #3]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->disableJumpLandingGroundEffect = FALSE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_DisableJumpLandingGroundEffect_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_DisableJumpLandingGroundEffect_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r2, [r0, #3]\n\t"
-        "	movs r3, #2\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r0, #3]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->disableJumpLandingGroundEffect = TRUE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_DisableAnimation_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_DisableAnimation_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r2, [r0, #1]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r0, #1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->inanimate = TRUE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
+
 
 __attribute__((naked)) bool8 MovementAction_RestoreAnimation_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -20756,37 +20666,23 @@ __attribute__((naked)) bool8 MovementAction_RestoreAnimation_Step0(struct Object
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_SetInvisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+bool8 MovementAction_SetInvisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r2, [r0, #1]\n\t"
-        "	movs r3, #0x20\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r0, #1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->invisible = TRUE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_SetVisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_SetVisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r3, [r0, #1]\n\t"
-        "	movs r2, #0x21\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	strb r2, [r0, #1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->invisible = FALSE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
+
 
 __attribute__((naked)) bool8 MovementAction_EmoteExclamationMark_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -21096,37 +20992,23 @@ __attribute__((naked)) bool8 MovementAction_CutTree_Step2(struct ObjectEvent *ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_SetFixedPriority_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+bool8 MovementAction_SetFixedPriority_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r2, [r0, #3]\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r0, #3]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->fixedPriority = TRUE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_ClearFixedPriority_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_ClearFixedPriority_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r3, [r0, #3]\n\t"
-        "	movs r2, #5\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	strb r2, [r0, #3]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->fixedPriority = FALSE;
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
+
 
 __attribute__((naked)) bool8 MovementAction_InitAffineAnim_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -21503,7 +21385,6 @@ __attribute__((naked)) bool8 sub_08095230(struct ObjectEvent *objectEvent, struc
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -21518,7 +21399,6 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceDown_Step0(struct Obj
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -21533,8 +21413,6 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceUp_Step0(struct Objec
         ".syntax divided\n\t"
     );
 }
-
-
 __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -21549,7 +21427,6 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceLeft_Step0(struct Obj
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -21564,6 +21441,8 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceRight_Step0(struct Ob
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) bool8 MovementAction_AcroPopWheelieDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -23562,21 +23441,13 @@ bool8 sub_08095E28(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     return 1;
 }
-__attribute__((naked)) bool8 MovementAction_PauseSpriteAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+bool8 MovementAction_PauseSpriteAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	adds r1, #0x2c\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #0x40\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->animPaused = TRUE;
+    return TRUE;
 }
+
 
 __attribute__((naked)) void UpdateEventObjectSpriteAnimPause(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
@@ -27986,21 +27857,14 @@ __attribute__((naked)) bool8 sub_080979FC(u8 a, u8 b)
     );
 }
 
-__attribute__((naked)) u8 MovementAction_FlyUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+u8 MovementAction_FlyUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	ldrh r0, [r1, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->y2 = 0;
+    sprite->sActionFuncId++;
+    return FALSE;
 }
+
 
 __attribute__((naked)) u8 MovementAction_FlyUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {

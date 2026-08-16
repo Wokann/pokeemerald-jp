@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/songs.h"
 #include "start_menu.h"
 
 __attribute__((naked)) void SetDexPokemonPokenavFlags(void)
@@ -2983,33 +2984,18 @@ __attribute__((naked)) void HideStartMenuWindow(void)
     );
 }
 
-__attribute__((naked)) void HideStartMenu()
+
+void HideStartMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl HideStartMenuWindow\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    HideStartMenuWindow();
 }
 
-__attribute__((naked)) void AppendToList(u8 *list, u8 *pos, u8 newEntry)
+
+
+void AppendToList(u8 *list, u8 *pos, u8 newEntry)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    list[*pos] = newEntry;
+    (*pos)++;
 }
 
