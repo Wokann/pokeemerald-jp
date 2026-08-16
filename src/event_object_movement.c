@@ -52,6 +52,7 @@ extern void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite,
 extern u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent);
 extern bool8 ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 MovementType_None_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern void RemoveEventObjectInternal(struct ObjectEvent *objectEvent);
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -770,21 +771,10 @@ __attribute__((naked)) void GetAvailableEventObjectId(void)
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) void RemoveObjectEvent(void)
+void RemoveObjectEvent(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl RemoveEventObjectInternal\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->active = FALSE;
+    RemoveEventObjectInternal(objectEvent);
 }
 
 
@@ -830,7 +820,7 @@ __attribute__((naked)) void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapN
     );
 }
 
-__attribute__((naked)) void RemoveEventObjectInternal(void)
+__attribute__((naked)) void RemoveEventObjectInternal(struct ObjectEvent *objectEvent)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3369,39 +3359,21 @@ __attribute__((naked)) void IncrementObjectEventCoords(void)
     );
 }
 
-__attribute__((naked)) void ShiftEventObjectCoords(void)
+void ShiftEventObjectCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrh r3, [r0, #0x10]\n\t"
-        "	strh r3, [r0, #0x14]\n\t"
-        "	ldrh r3, [r0, #0x12]\n\t"
-        "	strh r3, [r0, #0x16]\n\t"
-        "	strh r1, [r0, #0x10]\n\t"
-        "	strh r2, [r0, #0x12]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->previousCoords.x = objectEvent->currentCoords.x;
+    objectEvent->previousCoords.y = objectEvent->currentCoords.y;
+    objectEvent->currentCoords.x = x;
+    objectEvent->currentCoords.y = y;
 }
 
 
-__attribute__((naked)) void SetEventObjectCoords(void)
+void SetEventObjectCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	strh r1, [r0, #0x14]\n\t"
-        "	strh r2, [r0, #0x16]\n\t"
-        "	strh r1, [r0, #0x10]\n\t"
-        "	strh r2, [r0, #0x12]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->previousCoords.x = x;
+    objectEvent->previousCoords.y = y;
+    objectEvent->currentCoords.x = x;
+    objectEvent->currentCoords.y = y;
 }
 
 __attribute__((naked)) void MoveEventObjectToMapCoords(void)
@@ -3537,21 +3509,9 @@ __attribute__((naked)) void TryMoveEventObjectToMapCoords(void)
     );
 }
 
-__attribute__((naked)) void ShiftStillEventObjectCoords(struct ObjectEvent *objectEvent)
+void ShiftStillEventObjectCoords(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r2, [r0, r3]\n\t"
-        "	bl ShiftEventObjectCoords\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ShiftEventObjectCoords(objectEvent, objectEvent->currentCoords.x, objectEvent->currentCoords.y);
 }
 
 __attribute__((naked)) void UpdateEventObjectCoordsForCameraUpdate(void)
@@ -3903,7 +3863,7 @@ __attribute__((naked)) void CameraObject_2(void)
     );
 }
 
-__attribute__((naked)) void FindCameraObject(void)
+__attribute__((naked)) struct Sprite *FindCameraObject(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4012,19 +3972,9 @@ __attribute__((naked)) void CameraObjectGetFollowedSpriteId(void)
     );
 }
 
-__attribute__((naked)) void CameraObjectReset2(void)
+void CameraObjectReset2(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl FindCameraObject\n\t"
-        "	movs r1, #2\n\t"
-        "	strh r1, [r0, #0x30]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FindCameraObject()->sTypeFuncId = 2;
 }
 
 __attribute__((naked)) void CopySprite(void)
