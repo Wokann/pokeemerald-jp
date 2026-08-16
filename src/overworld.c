@@ -5,6 +5,7 @@
 #include "link.h"
 #include "event_data.h"
 #include "heal_location.h"
+extern u16 KeyInterCB_SelfIdle(u32 key);
 #include "constants/map_types.h"
 #include "constants/songs.h"
 #include "field_screen_effect.h"
@@ -4739,20 +4740,10 @@ __attribute__((naked)) void CB1_OverworldLink(void)
     );
 }
 
-__attribute__((naked)) void ResetAllMultiplayerState(void)
+void ResetAllMultiplayerState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ResetAllTradingStates\n\t"
-        "	ldr r0, _080865A0\n\t"
-        "	bl SetKeyInterceptCallback\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080865A0: .4byte KeyInterCB_SelfIdle + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetAllTradingStates();
+    SetKeyInterceptCallback(KeyInterCB_SelfIdle);
 }
 
 __attribute__((naked)) void ClearAllPlayerKeys(void)
@@ -6398,21 +6389,9 @@ void ZeroLinkPlayerObjectEvent(struct LinkPlayerObjectEvent *linkPlayerObjEvent)
     memset(linkPlayerObjEvent, 0, sizeof(struct LinkPlayerObjectEvent));
 }
 
-__attribute__((naked)) void ClearLinkPlayerObjectEvents(void)
+void ClearLinkPlayerObjectEvents(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08087040\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl memset\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08087040: .4byte gLinkPlayerObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    memset(gLinkPlayerObjectEvents, 0, sizeof(gLinkPlayerObjectEvents));
 }
 
 __attribute__((naked)) void ZeroEventObject(void)
