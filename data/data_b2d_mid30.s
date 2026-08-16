@@ -484,1705 +484,2314 @@ gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY: @ 0x083B8204
 	.4byte 0x083B72FC  @ metatiles
 	.4byte 0x083B772C  @ metatileAttributes
 	.4byte 0x00000000  @ callback
-	.incbin "baserom_jp.gba", 0x3B821C, 0x728
+	.incbin "baserom_jp.gba", 0x3B821C, 0x18
+gMapLayout_PETALBURG_CITY_Border:
+	.incbin "data/layouts/PetalburgCity/border.bin"
+gMapLayout_PETALBURG_CITY_Blockdata:
+	.incbin "data/layouts/PetalburgCity/map.bin"
 	.globl gMapLayout_PETALBURG_CITY
 gMapLayout_PETALBURG_CITY: @ 0x083B8944
 	.4byte 30  @ width
 	.4byte 30  @ height
-	.4byte 0x083B8234  @ border
-	.4byte 0x083B823C  @ map
+	.4byte gMapLayout_PETALBURG_CITY_Border  @ border
+	.4byte gMapLayout_PETALBURG_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PETALBURG_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3B895C, 0x12C8
+gMapLayout_SLATEPORT_CITY_Border:
+	.incbin "data/layouts/SlateportCity/border.bin"
+gMapLayout_SLATEPORT_CITY_Blockdata:
+	.incbin "data/layouts/SlateportCity/map.bin"
 	.globl gMapLayout_SLATEPORT_CITY
 gMapLayout_SLATEPORT_CITY: @ 0x083B9C24
 	.4byte 40  @ width
 	.4byte 60  @ height
-	.4byte 0x083B895C  @ border
-	.4byte 0x083B8964  @ map
+	.4byte gMapLayout_SLATEPORT_CITY_Border  @ border
+	.4byte gMapLayout_SLATEPORT_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3B9C3C, 0x648
+gMapLayout_MAUVILLE_CITY_Border:
+	.incbin "data/layouts/MauvilleCity/border.bin"
+gMapLayout_MAUVILLE_CITY_Blockdata:
+	.incbin "data/layouts/MauvilleCity/map.bin"
 	.globl gMapLayout_MAUVILLE_CITY
 gMapLayout_MAUVILLE_CITY: @ 0x083BA284
 	.4byte 40  @ width
 	.4byte 20  @ height
-	.4byte 0x083B9C3C  @ border
-	.4byte 0x083B9C44  @ map
+	.4byte gMapLayout_MAUVILLE_CITY_Border  @ border
+	.4byte gMapLayout_MAUVILLE_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3BA29C, 0x12C8
+gMapLayout_RUSTBORO_CITY_Border:
+	.incbin "data/layouts/RustboroCity/border.bin"
+gMapLayout_RUSTBORO_CITY_Blockdata:
+	.incbin "data/layouts/RustboroCity/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY
 gMapLayout_RUSTBORO_CITY: @ 0x083BB564
 	.4byte 40  @ width
 	.4byte 60  @ height
-	.4byte 0x083BA29C  @ border
-	.4byte 0x083BA2A4  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_RUSTBORO_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3BB57C, 0x648
+gMapLayout_FORTREE_CITY_Border:
+	.incbin "data/layouts/FortreeCity/border.bin"
+gMapLayout_FORTREE_CITY_Blockdata:
+	.incbin "data/layouts/FortreeCity/map.bin"
 	.globl gMapLayout_FORTREE_CITY
 gMapLayout_FORTREE_CITY: @ 0x083BBBC4
 	.4byte 40  @ width
 	.4byte 20  @ height
-	.4byte 0x083BB57C  @ border
-	.4byte 0x083BB584  @ map
+	.4byte gMapLayout_FORTREE_CITY_Border  @ border
+	.4byte gMapLayout_FORTREE_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FORTREE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3BBBDC, 0x1908
+gMapLayout_LILYCOVE_CITY_Border:
+	.incbin "data/layouts/LilycoveCity/border.bin"
+gMapLayout_LILYCOVE_CITY_Blockdata:
+	.incbin "data/layouts/LilycoveCity/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY
 gMapLayout_LILYCOVE_CITY: @ 0x083BD4E4
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x083BBBDC  @ border
-	.4byte 0x083BBBE4  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3BD4FC, 0x1908
+gMapLayout_MOSSDEEP_CITY_Border:
+	.incbin "data/layouts/MossdeepCity/border.bin"
+gMapLayout_MOSSDEEP_CITY_Blockdata:
+	.incbin "data/layouts/MossdeepCity/map.bin"
 	.globl gMapLayout_MOSSDEEP_CITY
 gMapLayout_MOSSDEEP_CITY: @ 0x083BEE04
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x083BD4FC  @ border
-	.4byte 0x083BD504  @ map
+	.4byte gMapLayout_MOSSDEEP_CITY_Border  @ border
+	.4byte gMapLayout_MOSSDEEP_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3BEE1C, 0x1C28
+gMapLayout_SOOTOPOLIS_CITY_Border:
+	.incbin "data/layouts/SootopolisCity/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_Blockdata:
+	.incbin "data/layouts/SootopolisCity/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY
 gMapLayout_SOOTOPOLIS_CITY: @ 0x083C0A44
 	.4byte 60  @ width
 	.4byte 60  @ height
-	.4byte 0x083BEE1C  @ border
-	.4byte 0x083BEE24  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SOOTOPOLIS_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C0A5C, 0x1908
+gMapLayout_EVER_GRANDE_CITY_Border:
+	.incbin "data/layouts/EverGrandeCity/border.bin"
+gMapLayout_EVER_GRANDE_CITY_Blockdata:
+	.incbin "data/layouts/EverGrandeCity/map.bin"
 	.globl gMapLayout_EVER_GRANDE_CITY
 gMapLayout_EVER_GRANDE_CITY: @ 0x083C2364
 	.4byte 40  @ width
 	.4byte 80  @ height
-	.4byte 0x083C0A5C  @ border
-	.4byte 0x083C0A64  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C237C, 0x328
+gMapLayout_LITTLEROOT_TOWN_Border:
+	.incbin "data/layouts/LittlerootTown/border.bin"
+gMapLayout_LITTLEROOT_TOWN_Blockdata:
+	.incbin "data/layouts/LittlerootTown/map.bin"
 	.globl gMapLayout_LITTLEROOT_TOWN
 gMapLayout_LITTLEROOT_TOWN: @ 0x083C26A4
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte 0x083C237C  @ border
-	.4byte 0x083C2384  @ map
+	.4byte gMapLayout_LITTLEROOT_TOWN_Border  @ border
+	.4byte gMapLayout_LITTLEROOT_TOWN_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PETALBURG_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C26BC, 0x328
+gMapLayout_OLDALE_TOWN_Border:
+	.incbin "data/layouts/OldaleTown/border.bin"
+gMapLayout_OLDALE_TOWN_Blockdata:
+	.incbin "data/layouts/OldaleTown/map.bin"
 	.globl gMapLayout_OLDALE_TOWN
 gMapLayout_OLDALE_TOWN: @ 0x083C29E4
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte 0x083C26BC  @ border
-	.4byte 0x083C26C4  @ map
+	.4byte gMapLayout_OLDALE_TOWN_Border  @ border
+	.4byte gMapLayout_OLDALE_TOWN_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PETALBURG_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C29FC, 0x328
+gMapLayout_DEWFORD_TOWN_Border:
+	.incbin "data/layouts/DewfordTown/border.bin"
+gMapLayout_DEWFORD_TOWN_Blockdata:
+	.incbin "data/layouts/DewfordTown/map.bin"
 	.globl gMapLayout_DEWFORD_TOWN
 gMapLayout_DEWFORD_TOWN: @ 0x083C2D24
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte 0x083C29FC  @ border
-	.4byte 0x083C2A04  @ map
+	.4byte gMapLayout_DEWFORD_TOWN_Border  @ border
+	.4byte gMapLayout_DEWFORD_TOWN_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DEWFORD_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C2D3C, 0x328
+gMapLayout_LAVARIDGE_TOWN_Border:
+	.incbin "data/layouts/LavaridgeTown/border.bin"
+gMapLayout_LAVARIDGE_TOWN_Blockdata:
+	.incbin "data/layouts/LavaridgeTown/map.bin"
 	.globl gMapLayout_LAVARIDGE_TOWN
 gMapLayout_LAVARIDGE_TOWN: @ 0x083C3064
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte 0x083C2D3C  @ border
-	.4byte 0x083C2D44  @ map
+	.4byte gMapLayout_LAVARIDGE_TOWN_Border  @ border
+	.4byte gMapLayout_LAVARIDGE_TOWN_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C307C, 0x328
+gMapLayout_FALLARBOR_TOWN_Border:
+	.incbin "data/layouts/FallarborTown/border.bin"
+gMapLayout_FALLARBOR_TOWN_Blockdata:
+	.incbin "data/layouts/FallarborTown/map.bin"
 	.globl gMapLayout_FALLARBOR_TOWN
 gMapLayout_FALLARBOR_TOWN: @ 0x083C33A4
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte 0x083C307C  @ border
-	.4byte 0x083C3084  @ map
+	.4byte gMapLayout_FALLARBOR_TOWN_Border  @ border
+	.4byte gMapLayout_FALLARBOR_TOWN_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C33BC, 0x328
+gMapLayout_VERDANTURF_TOWN_Border:
+	.incbin "data/layouts/VerdanturfTown/border.bin"
+gMapLayout_VERDANTURF_TOWN_Blockdata:
+	.incbin "data/layouts/VerdanturfTown/map.bin"
 	.globl gMapLayout_VERDANTURF_TOWN
 gMapLayout_VERDANTURF_TOWN: @ 0x083C36E4
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte 0x083C33BC  @ border
-	.4byte 0x083C33C4  @ map
+	.4byte gMapLayout_VERDANTURF_TOWN_Border  @ border
+	.4byte gMapLayout_VERDANTURF_TOWN_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C36FC, 0x648
+gMapLayout_PACIFIDLOG_TOWN_Border:
+	.incbin "data/layouts/PacifidlogTown/border.bin"
+gMapLayout_PACIFIDLOG_TOWN_Blockdata:
+	.incbin "data/layouts/PacifidlogTown/map.bin"
 	.globl gMapLayout_PACIFIDLOG_TOWN
 gMapLayout_PACIFIDLOG_TOWN: @ 0x083C3D44
 	.4byte 20  @ width
 	.4byte 40  @ height
-	.4byte 0x083C36FC  @ border
-	.4byte 0x083C3704  @ map
+	.4byte gMapLayout_PACIFIDLOG_TOWN_Border  @ border
+	.4byte gMapLayout_PACIFIDLOG_TOWN_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C3D5C, 0x328
+gMapLayout_ROUTE101_Border:
+	.incbin "data/layouts/Route101/border.bin"
+gMapLayout_ROUTE101_Blockdata:
+	.incbin "data/layouts/Route101/map.bin"
 	.globl gMapLayout_ROUTE101
 gMapLayout_ROUTE101: @ 0x083C4084
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte 0x083C3D5C  @ border
-	.4byte 0x083C3D64  @ map
+	.4byte gMapLayout_ROUTE101_Border  @ border
+	.4byte gMapLayout_ROUTE101_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PETALBURG_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C409C, 0x7D8
+gMapLayout_ROUTE102_Border:
+	.incbin "data/layouts/Route102/border.bin"
+gMapLayout_ROUTE102_Blockdata:
+	.incbin "data/layouts/Route102/map.bin"
 	.globl gMapLayout_ROUTE102
 gMapLayout_ROUTE102: @ 0x083C4874
 	.4byte 50  @ width
 	.4byte 20  @ height
-	.4byte 0x083C409C  @ border
-	.4byte 0x083C40A4  @ map
+	.4byte gMapLayout_ROUTE102_Border  @ border
+	.4byte gMapLayout_ROUTE102_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PETALBURG_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C488C, 0xDC8
+gMapLayout_ROUTE103_Border:
+	.incbin "data/layouts/Route103/border.bin"
+gMapLayout_ROUTE103_Blockdata:
+	.incbin "data/layouts/Route103/map.bin"
 	.globl gMapLayout_ROUTE103
 gMapLayout_ROUTE103: @ 0x083C5654
 	.4byte 80  @ width
 	.4byte 22  @ height
-	.4byte 0x083C488C  @ border
-	.4byte 0x083C4894  @ map
+	.4byte gMapLayout_ROUTE103_Border  @ border
+	.4byte gMapLayout_ROUTE103_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PETALBURG_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C566C, 0x1908
+gMapLayout_ROUTE104_Border:
+	.incbin "data/layouts/Route104/border.bin"
+gMapLayout_ROUTE104_Blockdata:
+	.incbin "data/layouts/Route104/map.bin"
 	.globl gMapLayout_ROUTE104
 gMapLayout_ROUTE104: @ 0x083C6F74
 	.4byte 40  @ width
 	.4byte 80  @ height
-	.4byte 0x083C566C  @ border
-	.4byte 0x083C5674  @ map
+	.4byte gMapLayout_ROUTE104_Border  @ border
+	.4byte gMapLayout_ROUTE104_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_RUSTBORO_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C6F8C, 0x1908
+gMapLayout_ROUTE105_Border:
+	.incbin "data/layouts/Route105/border.bin"
+gMapLayout_ROUTE105_Blockdata:
+	.incbin "data/layouts/Route105/map.bin"
 	.globl gMapLayout_ROUTE105
 gMapLayout_ROUTE105: @ 0x083C8894
 	.4byte 40  @ width
 	.4byte 80  @ height
-	.4byte 0x083C6F8C  @ border
-	.4byte 0x083C6F94  @ map
+	.4byte gMapLayout_ROUTE105_Border  @ border
+	.4byte gMapLayout_ROUTE105_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DEWFORD_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C88AC, 0xC88
+gMapLayout_ROUTE106_Border:
+	.incbin "data/layouts/Route106/border.bin"
+gMapLayout_ROUTE106_Blockdata:
+	.incbin "data/layouts/Route106/map.bin"
 	.globl gMapLayout_ROUTE106
 gMapLayout_ROUTE106: @ 0x083C9534
 	.4byte 80  @ width
 	.4byte 20  @ height
-	.4byte 0x083C88AC  @ border
-	.4byte 0x083C88B4  @ map
+	.4byte gMapLayout_ROUTE106_Border  @ border
+	.4byte gMapLayout_ROUTE106_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DEWFORD_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C954C, 0x968
+gMapLayout_ROUTE107_Border:
+	.incbin "data/layouts/Route107/border.bin"
+gMapLayout_ROUTE107_Blockdata:
+	.incbin "data/layouts/Route107/map.bin"
 	.globl gMapLayout_ROUTE107
 gMapLayout_ROUTE107: @ 0x083C9EB4
 	.4byte 60  @ width
 	.4byte 20  @ height
-	.4byte 0x083C954C  @ border
-	.4byte 0x083C9554  @ map
+	.4byte gMapLayout_ROUTE107_Border  @ border
+	.4byte gMapLayout_ROUTE107_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DEWFORD_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3C9ECC, 0x968
+gMapLayout_ROUTE108_Border:
+	.incbin "data/layouts/Route108/border.bin"
+gMapLayout_ROUTE108_Blockdata:
+	.incbin "data/layouts/Route108/map.bin"
 	.globl gMapLayout_ROUTE108
 gMapLayout_ROUTE108: @ 0x083CA834
 	.4byte 60  @ width
 	.4byte 20  @ height
-	.4byte 0x083C9ECC  @ border
-	.4byte 0x083C9ED4  @ map
+	.4byte gMapLayout_ROUTE108_Border  @ border
+	.4byte gMapLayout_ROUTE108_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3CA84C, 0x13B8
+gMapLayout_ROUTE109_Border:
+	.incbin "data/layouts/Route109/border.bin"
+gMapLayout_ROUTE109_Blockdata:
+	.incbin "data/layouts/Route109/map.bin"
 	.globl gMapLayout_ROUTE109
 gMapLayout_ROUTE109: @ 0x083CBC04
 	.4byte 40  @ width
 	.4byte 63  @ height
-	.4byte 0x083CA84C  @ border
-	.4byte 0x083CA854  @ map
+	.4byte gMapLayout_ROUTE109_Border  @ border
+	.4byte gMapLayout_ROUTE109_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3CBC1C, 0x1F48
+gMapLayout_ROUTE110_Border:
+	.incbin "data/layouts/Route110/border.bin"
+gMapLayout_ROUTE110_Blockdata:
+	.incbin "data/layouts/Route110/map.bin"
 	.globl gMapLayout_ROUTE110
 gMapLayout_ROUTE110: @ 0x083CDB64
 	.4byte 40  @ width
 	.4byte 100  @ height
-	.4byte 0x083CBC1C  @ border
-	.4byte 0x083CBC24  @ map
+	.4byte gMapLayout_ROUTE110_Border  @ border
+	.4byte gMapLayout_ROUTE110_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3CDB7C, 0x2BC8
+gMapLayout_ROUTE111_Border:
+	.incbin "data/layouts/Route111/border.bin"
+gMapLayout_ROUTE111_Blockdata:
+	.incbin "data/layouts/Route111/map.bin"
 	.globl gMapLayout_ROUTE111
 gMapLayout_ROUTE111: @ 0x083D0744
 	.4byte 40  @ width
 	.4byte 140  @ height
-	.4byte 0x083CDB7C  @ border
-	.4byte 0x083CDB84  @ map
+	.4byte gMapLayout_ROUTE111_Border  @ border
+	.4byte gMapLayout_ROUTE111_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3D075C, 0x12C8
+gMapLayout_ROUTE112_Border:
+	.incbin "data/layouts/Route112/border.bin"
+gMapLayout_ROUTE112_Blockdata:
+	.incbin "data/layouts/Route112/map.bin"
 	.globl gMapLayout_ROUTE112
 gMapLayout_ROUTE112: @ 0x083D1A24
 	.4byte 40  @ width
 	.4byte 60  @ height
-	.4byte 0x083D075C  @ border
-	.4byte 0x083D0764  @ map
+	.4byte gMapLayout_ROUTE112_Border  @ border
+	.4byte gMapLayout_ROUTE112_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3D1A3C, 0xFA8
+gMapLayout_ROUTE113_Border:
+	.incbin "data/layouts/Route113/border.bin"
+gMapLayout_ROUTE113_Blockdata:
+	.incbin "data/layouts/Route113/map.bin"
 	.globl gMapLayout_ROUTE113
 gMapLayout_ROUTE113: @ 0x083D29E4
 	.4byte 100  @ width
 	.4byte 20  @ height
-	.4byte 0x083D1A3C  @ border
-	.4byte 0x083D1A44  @ map
+	.4byte gMapLayout_ROUTE113_Border  @ border
+	.4byte gMapLayout_ROUTE113_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3D29FC, 0x1908
+gMapLayout_ROUTE114_Border:
+	.incbin "data/layouts/Route114/border.bin"
+gMapLayout_ROUTE114_Blockdata:
+	.incbin "data/layouts/Route114/map.bin"
 	.globl gMapLayout_ROUTE114
 gMapLayout_ROUTE114: @ 0x083D4304
 	.4byte 40  @ width
 	.4byte 80  @ height
-	.4byte 0x083D29FC  @ border
-	.4byte 0x083D2A04  @ map
+	.4byte gMapLayout_ROUTE114_Border  @ border
+	.4byte gMapLayout_ROUTE114_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3D431C, 0x1908
+gMapLayout_ROUTE115_Border:
+	.incbin "data/layouts/Route115/border.bin"
+gMapLayout_ROUTE115_Blockdata:
+	.incbin "data/layouts/Route115/map.bin"
 	.globl gMapLayout_ROUTE115
 gMapLayout_ROUTE115: @ 0x083D5C24
 	.4byte 40  @ width
 	.4byte 80  @ height
-	.4byte 0x083D431C  @ border
-	.4byte 0x083D4324  @ map
+	.4byte gMapLayout_ROUTE115_Border  @ border
+	.4byte gMapLayout_ROUTE115_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3D5C3C, 0xFA8
+gMapLayout_ROUTE116_Border:
+	.incbin "data/layouts/Route116/border.bin"
+gMapLayout_ROUTE116_Blockdata:
+	.incbin "data/layouts/Route116/map.bin"
 	.globl gMapLayout_ROUTE116
 gMapLayout_ROUTE116: @ 0x083D6BE4
 	.4byte 100  @ width
 	.4byte 20  @ height
-	.4byte 0x083D5C3C  @ border
-	.4byte 0x083D5C44  @ map
+	.4byte gMapLayout_ROUTE116_Border  @ border
+	.4byte gMapLayout_ROUTE116_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_RUSTBORO_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3D6BFC, 0x968
+gMapLayout_ROUTE117_Border:
+	.incbin "data/layouts/Route117/border.bin"
+gMapLayout_ROUTE117_Blockdata:
+	.incbin "data/layouts/Route117/map.bin"
 	.globl gMapLayout_ROUTE117
 gMapLayout_ROUTE117: @ 0x083D7564
 	.4byte 60  @ width
 	.4byte 20  @ height
-	.4byte 0x083D6BFC  @ border
-	.4byte 0x083D6C04  @ map
+	.4byte gMapLayout_ROUTE117_Border  @ border
+	.4byte gMapLayout_ROUTE117_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3D757C, 0xC88
+gMapLayout_ROUTE118_Border:
+	.incbin "data/layouts/Route118/border.bin"
+gMapLayout_ROUTE118_Blockdata:
+	.incbin "data/layouts/Route118/map.bin"
 	.globl gMapLayout_ROUTE118
 gMapLayout_ROUTE118: @ 0x083D8204
 	.4byte 80  @ width
 	.4byte 20  @ height
-	.4byte 0x083D757C  @ border
-	.4byte 0x083D7584  @ map
+	.4byte gMapLayout_ROUTE118_Border  @ border
+	.4byte gMapLayout_ROUTE118_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3D821C, 0x2BC8
+gMapLayout_ROUTE119_Border:
+	.incbin "data/layouts/Route119/border.bin"
+gMapLayout_ROUTE119_Blockdata:
+	.incbin "data/layouts/Route119/map.bin"
 	.globl gMapLayout_ROUTE119
 gMapLayout_ROUTE119: @ 0x083DADE4
 	.4byte 40  @ width
 	.4byte 140  @ height
-	.4byte 0x083D821C  @ border
-	.4byte 0x083D8224  @ map
+	.4byte gMapLayout_ROUTE119_Border  @ border
+	.4byte gMapLayout_ROUTE119_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FORTREE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3DADFC, 0x1F48
+gMapLayout_ROUTE120_Border:
+	.incbin "data/layouts/Route120/border.bin"
+gMapLayout_ROUTE120_Blockdata:
+	.incbin "data/layouts/Route120/map.bin"
 	.globl gMapLayout_ROUTE120
 gMapLayout_ROUTE120: @ 0x083DCD44
 	.4byte 40  @ width
 	.4byte 100  @ height
-	.4byte 0x083DADFC  @ border
-	.4byte 0x083DAE04  @ map
+	.4byte gMapLayout_ROUTE120_Border  @ border
+	.4byte gMapLayout_ROUTE120_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FORTREE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3DCD5C, 0xC88
+gMapLayout_ROUTE121_Border:
+	.incbin "data/layouts/Route121/border.bin"
+gMapLayout_ROUTE121_Blockdata:
+	.incbin "data/layouts/Route121/map.bin"
 	.globl gMapLayout_ROUTE121
 gMapLayout_ROUTE121: @ 0x083DD9E4
 	.4byte 80  @ width
 	.4byte 20  @ height
-	.4byte 0x083DCD5C  @ border
-	.4byte 0x083DCD64  @ map
+	.4byte gMapLayout_ROUTE121_Border  @ border
+	.4byte gMapLayout_ROUTE121_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3DD9FC, 0xC88
+gMapLayout_ROUTE122_Border:
+	.incbin "data/layouts/Route122/border.bin"
+gMapLayout_ROUTE122_Blockdata:
+	.incbin "data/layouts/Route122/map.bin"
 	.globl gMapLayout_ROUTE122
 gMapLayout_ROUTE122: @ 0x083DE684
 	.4byte 40  @ width
 	.4byte 40  @ height
-	.4byte 0x083DD9FC  @ border
-	.4byte 0x083DDA04  @ map
+	.4byte gMapLayout_ROUTE122_Border  @ border
+	.4byte gMapLayout_ROUTE122_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3DE69C, 0x15E8
+gMapLayout_ROUTE123_Border:
+	.incbin "data/layouts/Route123/border.bin"
+gMapLayout_ROUTE123_Blockdata:
+	.incbin "data/layouts/Route123/map.bin"
 	.globl gMapLayout_ROUTE123
 gMapLayout_ROUTE123: @ 0x083DFC84
 	.4byte 140  @ width
 	.4byte 20  @ height
-	.4byte 0x083DE69C  @ border
-	.4byte 0x083DE6A4  @ map
+	.4byte gMapLayout_ROUTE123_Border  @ border
+	.4byte gMapLayout_ROUTE123_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3DFC9C, 0x3208
+gMapLayout_ROUTE124_Border:
+	.incbin "data/layouts/Route124/border.bin"
+gMapLayout_ROUTE124_Blockdata:
+	.incbin "data/layouts/Route124/map.bin"
 	.globl gMapLayout_ROUTE124
 gMapLayout_ROUTE124: @ 0x083E2EA4
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte 0x083DFC9C  @ border
-	.4byte 0x083DFCA4  @ map
+	.4byte gMapLayout_ROUTE124_Border  @ border
+	.4byte gMapLayout_ROUTE124_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3E2EBC, 0x1908
+gMapLayout_ROUTE125_Border:
+	.incbin "data/layouts/Route125/border.bin"
+gMapLayout_ROUTE125_Blockdata:
+	.incbin "data/layouts/Route125/map.bin"
 	.globl gMapLayout_ROUTE125
 gMapLayout_ROUTE125: @ 0x083E47C4
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x083E2EBC  @ border
-	.4byte 0x083E2EC4  @ map
+	.4byte gMapLayout_ROUTE125_Border  @ border
+	.4byte gMapLayout_ROUTE125_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3E47DC, 0x3208
+gMapLayout_ROUTE126_Border:
+	.incbin "data/layouts/Route126/border.bin"
+gMapLayout_ROUTE126_Blockdata:
+	.incbin "data/layouts/Route126/map.bin"
 	.globl gMapLayout_ROUTE126
 gMapLayout_ROUTE126: @ 0x083E79E4
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte 0x083E47DC  @ border
-	.4byte 0x083E47E4  @ map
+	.4byte gMapLayout_ROUTE126_Border  @ border
+	.4byte gMapLayout_ROUTE126_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3E79FC, 0x3208
+gMapLayout_ROUTE127_Border:
+	.incbin "data/layouts/Route127/border.bin"
+gMapLayout_ROUTE127_Blockdata:
+	.incbin "data/layouts/Route127/map.bin"
 	.globl gMapLayout_ROUTE127
 gMapLayout_ROUTE127: @ 0x083EAC04
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte 0x083E79FC  @ border
-	.4byte 0x083E7A04  @ map
+	.4byte gMapLayout_ROUTE127_Border  @ border
+	.4byte gMapLayout_ROUTE127_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3EAC1C, 0x2588
+gMapLayout_ROUTE128_Border:
+	.incbin "data/layouts/Route128/border.bin"
+gMapLayout_ROUTE128_Blockdata:
+	.incbin "data/layouts/Route128/map.bin"
 	.globl gMapLayout_ROUTE128
 gMapLayout_ROUTE128: @ 0x083ED1A4
 	.4byte 120  @ width
 	.4byte 40  @ height
-	.4byte 0x083EAC1C  @ border
-	.4byte 0x083EAC24  @ map
+	.4byte gMapLayout_ROUTE128_Border  @ border
+	.4byte gMapLayout_ROUTE128_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3ED1BC, 0x1908
+gMapLayout_ROUTE129_Border:
+	.incbin "data/layouts/Route129/border.bin"
+gMapLayout_ROUTE129_Blockdata:
+	.incbin "data/layouts/Route129/map.bin"
 	.globl gMapLayout_ROUTE129
 gMapLayout_ROUTE129: @ 0x083EEAC4
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x083ED1BC  @ border
-	.4byte 0x083ED1C4  @ map
+	.4byte gMapLayout_ROUTE129_Border  @ border
+	.4byte gMapLayout_ROUTE129_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3EEADC, 0x2BE8
+	.incbin "baserom_jp.gba", 0x3eeadc, 0x1920
+gMapLayout_ROUTE131_Border:
+	.incbin "data/layouts/Route131/border.bin"
+gMapLayout_ROUTE131_Blockdata:
+	.incbin "data/layouts/Route131/map.bin"
 	.globl gMapLayout_ROUTE131
 gMapLayout_ROUTE131: @ 0x083F16C4
 	.4byte 60  @ width
 	.4byte 40  @ height
-	.4byte 0x083F03FC  @ border
-	.4byte 0x083F0404  @ map
+	.4byte gMapLayout_ROUTE131_Border  @ border
+	.4byte gMapLayout_ROUTE131_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3F16DC, 0x1908
+gMapLayout_ROUTE132_Border:
+	.incbin "data/layouts/Route132/border.bin"
+gMapLayout_ROUTE132_Blockdata:
+	.incbin "data/layouts/Route132/map.bin"
 	.globl gMapLayout_ROUTE132
 gMapLayout_ROUTE132: @ 0x083F2FE4
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x083F16DC  @ border
-	.4byte 0x083F16E4  @ map
+	.4byte gMapLayout_ROUTE132_Border  @ border
+	.4byte gMapLayout_ROUTE132_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3F2FFC, 0x1908
+gMapLayout_ROUTE133_Border:
+	.incbin "data/layouts/Route133/border.bin"
+gMapLayout_ROUTE133_Blockdata:
+	.incbin "data/layouts/Route133/map.bin"
 	.globl gMapLayout_ROUTE133
 gMapLayout_ROUTE133: @ 0x083F4904
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x083F2FFC  @ border
-	.4byte 0x083F3004  @ map
+	.4byte gMapLayout_ROUTE133_Border  @ border
+	.4byte gMapLayout_ROUTE133_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3F491C, 0x1908
+gMapLayout_ROUTE134_Border:
+	.incbin "data/layouts/Route134/border.bin"
+gMapLayout_ROUTE134_Blockdata:
+	.incbin "data/layouts/Route134/map.bin"
 	.globl gMapLayout_ROUTE134
 gMapLayout_ROUTE134: @ 0x083F6224
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x083F491C  @ border
-	.4byte 0x083F4924  @ map
+	.4byte gMapLayout_ROUTE134_Border  @ border
+	.4byte gMapLayout_ROUTE134_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3F623C, 0x3208
+gMapLayout_UNDERWATER_ROUTE126_Border:
+	.incbin "data/layouts/Underwater_Route126/border.bin"
+gMapLayout_UNDERWATER_ROUTE126_Blockdata:
+	.incbin "data/layouts/Underwater_Route126/map.bin"
 	.globl gMapLayout_UNDERWATER_ROUTE126
 gMapLayout_UNDERWATER_ROUTE126: @ 0x083F9444
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte 0x083F623C  @ border
-	.4byte 0x083F6244  @ map
+	.4byte gMapLayout_UNDERWATER_ROUTE126_Border  @ border
+	.4byte gMapLayout_UNDERWATER_ROUTE126_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3F945C, 0x3208
+gMapLayout_UNDERWATER_ROUTE127_Border:
+	.incbin "data/layouts/Underwater_Route127/border.bin"
+gMapLayout_UNDERWATER_ROUTE127_Blockdata:
+	.incbin "data/layouts/Underwater_Route127/map.bin"
 	.globl gMapLayout_UNDERWATER_ROUTE127
 gMapLayout_UNDERWATER_ROUTE127: @ 0x083FC664
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte 0x083F945C  @ border
-	.4byte 0x083F9464  @ map
+	.4byte gMapLayout_UNDERWATER_ROUTE127_Border  @ border
+	.4byte gMapLayout_UNDERWATER_ROUTE127_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FC67C, 0x2588
+gMapLayout_UNDERWATER_ROUTE128_Border:
+	.incbin "data/layouts/Underwater_Route128/border.bin"
+gMapLayout_UNDERWATER_ROUTE128_Blockdata:
+	.incbin "data/layouts/Underwater_Route128/map.bin"
 	.globl gMapLayout_UNDERWATER_ROUTE128
 gMapLayout_UNDERWATER_ROUTE128: @ 0x083FEC04
 	.4byte 120  @ width
 	.4byte 40  @ height
-	.4byte 0x083FC67C  @ border
-	.4byte 0x083FC684  @ map
+	.4byte gMapLayout_UNDERWATER_ROUTE128_Border  @ border
+	.4byte gMapLayout_UNDERWATER_ROUTE128_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FEC1C, 0xD0
+gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_Border:
+	.incbin "data/layouts/LittlerootTown_BrendansHouse_1F/border.bin"
+gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_Blockdata:
+	.incbin "data/layouts/LittlerootTown_BrendansHouse_1F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F
 gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F: @ 0x083FECEC
 	.4byte 11  @ width
 	.4byte 9  @ height
-	.4byte 0x083FEC1C  @ border
-	.4byte 0x083FEC24  @ map
+	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_Border  @ border
+	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FED04, 0x98
+gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_Border:
+	.incbin "data/layouts/LittlerootTown_BrendansHouse_2F/border.bin"
+gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_Blockdata:
+	.incbin "data/layouts/LittlerootTown_BrendansHouse_2F/map.bin"
 	.globl gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
 gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F: @ 0x083FED9C
 	.4byte 9  @ width
 	.4byte 8  @ height
-	.4byte 0x083FED04  @ border
-	.4byte 0x083FED0C  @ map
+	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_Border  @ border
+	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FEDB4, 0xD0
+gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F_Border:
+	.incbin "data/layouts/LittlerootTown_MaysHouse_1F/border.bin"
+gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F_Blockdata:
+	.incbin "data/layouts/LittlerootTown_MaysHouse_1F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F
 gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F: @ 0x083FEE84
 	.4byte 11  @ width
 	.4byte 9  @ height
-	.4byte 0x083FEDB4  @ border
-	.4byte 0x083FEDBC  @ map
+	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F_Border  @ border
+	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FEE9C, 0x98
+gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_2F_Border:
+	.incbin "data/layouts/LittlerootTown_MaysHouse_2F/border.bin"
+gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_2F_Blockdata:
+	.incbin "data/layouts/LittlerootTown_MaysHouse_2F/map.bin"
 	.globl gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_2F
 gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_2F: @ 0x083FEF34
 	.4byte 9  @ width
 	.4byte 8  @ height
-	.4byte 0x083FEE9C  @ border
-	.4byte 0x083FEEA4  @ map
+	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_2F_Border  @ border
+	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FEF4C, 0x15C
+gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_Border:
+	.incbin "data/layouts/LittlerootTown_ProfessorBirchsLab/border.bin"
+gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_Blockdata:
+	.incbin "data/layouts/LittlerootTown_ProfessorBirchsLab/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB
 gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB: @ 0x083FF0A8
 	.4byte 13  @ width
 	.4byte 13  @ height
-	.4byte 0x083FEF4C  @ border
-	.4byte 0x083FEF54  @ map
+	.4byte gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_Border  @ border
+	.4byte gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FF0C0, 0xBC
+gMapLayout_OLDALE_TOWN_HOUSE1_Border:
+	.incbin "data/layouts/OldaleTownHouse1/border.bin"
+gMapLayout_OLDALE_TOWN_HOUSE1_Blockdata:
+	.incbin "data/layouts/OldaleTownHouse1/map.bin"
 	.globl gMapLayout_OLDALE_TOWN_HOUSE1
 gMapLayout_OLDALE_TOWN_HOUSE1: @ 0x083FF17C
 	.4byte 10  @ width
 	.4byte 9  @ height
-	.4byte 0x083FF0C0  @ border
-	.4byte 0x083FF0C8  @ map
+	.4byte gMapLayout_OLDALE_TOWN_HOUSE1_Border  @ border
+	.4byte gMapLayout_OLDALE_TOWN_HOUSE1_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FF194, 0xB8
+gMapLayout_OLDALE_TOWN_HOUSE2_Border:
+	.incbin "data/layouts/OldaleTownHouse2/border.bin"
+gMapLayout_OLDALE_TOWN_HOUSE2_Blockdata:
+	.incbin "data/layouts/OldaleTownHouse2/map.bin"
 	.globl gMapLayout_OLDALE_TOWN_HOUSE2
 gMapLayout_OLDALE_TOWN_HOUSE2: @ 0x083FF24C
 	.4byte 11  @ width
 	.4byte 8  @ height
-	.4byte 0x083FF194  @ border
-	.4byte 0x083FF19C  @ map
+	.4byte gMapLayout_OLDALE_TOWN_HOUSE2_Border  @ border
+	.4byte gMapLayout_OLDALE_TOWN_HOUSE2_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FF264, 0x104
+gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F_Border:
+	.incbin "data/layouts/OldaleTownPokemonCenter1f/border.bin"
+gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F_Blockdata:
+	.incbin "data/layouts/OldaleTownPokemonCenter1f/map.bin"
 	.globl gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F
 gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F: @ 0x083FF368
 	.4byte 14  @ width
 	.4byte 9  @ height
-	.4byte 0x083FF264  @ border
-	.4byte 0x083FF26C  @ map
+	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F_Border  @ border
+	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FF380, 0x120
+gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F_Border:
+	.incbin "data/layouts/OldaleTownPokemonCenter2f/border.bin"
+gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F_Blockdata:
+	.incbin "data/layouts/OldaleTownPokemonCenter2f/map.bin"
 	.globl gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F
 gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F: @ 0x083FF4A0
 	.4byte 14  @ width
 	.4byte 10  @ height
-	.4byte 0x083FF380  @ border
-	.4byte 0x083FF388  @ map
+	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F_Border  @ border
+	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FF4B8, 0xB8
+gMapLayout_OLDALE_TOWN_MART_Border:
+	.incbin "data/layouts/OldaleTownMart/border.bin"
+gMapLayout_OLDALE_TOWN_MART_Blockdata:
+	.incbin "data/layouts/OldaleTownMart/map.bin"
 	.globl gMapLayout_OLDALE_TOWN_MART
 gMapLayout_OLDALE_TOWN_MART: @ 0x083FF570
 	.4byte 11  @ width
 	.4byte 8  @ height
-	.4byte 0x083FF4B8  @ border
-	.4byte 0x083FF4C0  @ map
+	.4byte gMapLayout_OLDALE_TOWN_MART_Border  @ border
+	.4byte gMapLayout_OLDALE_TOWN_MART_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FF588, 0xA8
+gMapLayout_DEWFORD_TOWN_HOUSE1_Border:
+	.incbin "data/layouts/DewfordTownHouse1/border.bin"
+gMapLayout_DEWFORD_TOWN_HOUSE1_Blockdata:
+	.incbin "data/layouts/DewfordTownHouse1/map.bin"
 	.globl gMapLayout_DEWFORD_TOWN_HOUSE1
 gMapLayout_DEWFORD_TOWN_HOUSE1: @ 0x083FF630
 	.4byte 10  @ width
 	.4byte 8  @ height
-	.4byte 0x083FF588  @ border
-	.4byte 0x083FF590  @ map
+	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1_Border  @ border
+	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FF648, 0x3F8
+gMapLayout_DEWFORD_TOWN_GYM_Border:
+	.incbin "data/layouts/DewfordTown_Gym/border.bin"
+gMapLayout_DEWFORD_TOWN_GYM_Blockdata:
+	.incbin "data/layouts/DewfordTown_Gym/map.bin"
 	.globl gMapLayout_DEWFORD_TOWN_GYM
 gMapLayout_DEWFORD_TOWN_GYM: @ 0x083FFA40
 	.4byte 18  @ width
 	.4byte 28  @ height
-	.4byte 0x083FF648  @ border
-	.4byte 0x083FF650  @ map
+	.4byte gMapLayout_DEWFORD_TOWN_GYM_Border  @ border
+	.4byte gMapLayout_DEWFORD_TOWN_GYM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_DEWFORD_TOWN_GYM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FFA58, 0x13C
+gMapLayout_DEWFORD_TOWN_HALL_Border:
+	.incbin "data/layouts/DewfordTown_Hall/border.bin"
+gMapLayout_DEWFORD_TOWN_HALL_Blockdata:
+	.incbin "data/layouts/DewfordTown_Hall/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_DEWFORD_TOWN_HALL
 gMapLayout_DEWFORD_TOWN_HALL: @ 0x083FFB94
 	.4byte 17  @ width
 	.4byte 9  @ height
-	.4byte 0x083FFA58  @ border
-	.4byte 0x083FFA60  @ map
+	.4byte gMapLayout_DEWFORD_TOWN_HALL_Border  @ border
+	.4byte gMapLayout_DEWFORD_TOWN_HALL_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FFBAC, 0xBC
+gMapLayout_DEWFORD_TOWN_HOUSE2_Border:
+	.incbin "data/layouts/DewfordTownHouse2/border.bin"
+gMapLayout_DEWFORD_TOWN_HOUSE2_Blockdata:
+	.incbin "data/layouts/DewfordTownHouse2/map.bin"
 	.globl gMapLayout_DEWFORD_TOWN_HOUSE2
 gMapLayout_DEWFORD_TOWN_HOUSE2: @ 0x083FFC68
 	.4byte 10  @ width
 	.4byte 9  @ height
-	.4byte 0x083FFBAC  @ border
-	.4byte 0x083FFBB4  @ map
+	.4byte gMapLayout_DEWFORD_TOWN_HOUSE2_Border  @ border
+	.4byte gMapLayout_DEWFORD_TOWN_HOUSE2_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FFC80, 0xB8
+gMapLayout_LAVARIDGE_TOWN_HERB_SHOP_Border:
+	.incbin "data/layouts/LavaridgeTown_HerbShop/border.bin"
+gMapLayout_LAVARIDGE_TOWN_HERB_SHOP_Blockdata:
+	.incbin "data/layouts/LavaridgeTown_HerbShop/map.bin"
 	.globl gMapLayout_LAVARIDGE_TOWN_HERB_SHOP
 gMapLayout_LAVARIDGE_TOWN_HERB_SHOP: @ 0x083FFD38
 	.4byte 11  @ width
 	.4byte 8  @ height
-	.4byte 0x083FFC80  @ border
-	.4byte 0x083FFC88  @ map
+	.4byte gMapLayout_LAVARIDGE_TOWN_HERB_SHOP_Border  @ border
+	.4byte gMapLayout_LAVARIDGE_TOWN_HERB_SHOP_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FFD50, 0x290
+gMapLayout_LAVARIDGE_TOWN_GYM_1F_Border:
+	.incbin "data/layouts/LavaridgeTown_Gym_1F/border.bin"
+gMapLayout_LAVARIDGE_TOWN_GYM_1F_Blockdata:
+	.incbin "data/layouts/LavaridgeTown_Gym_1F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_LAVARIDGE_TOWN_GYM_1F
 gMapLayout_LAVARIDGE_TOWN_GYM_1F: @ 0x083FFFE0
 	.4byte 17  @ width
 	.4byte 19  @ height
-	.4byte 0x083FFD50  @ border
-	.4byte 0x083FFD58  @ map
+	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_1F_Border  @ border
+	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x3FFFF8, 0x290
+gMapLayout_LAVARIDGE_TOWN_GYM_B1F_Border:
+	.incbin "data/layouts/LavaridgeTown_Gym_B1F/border.bin"
+gMapLayout_LAVARIDGE_TOWN_GYM_B1F_Blockdata:
+	.incbin "data/layouts/LavaridgeTown_Gym_B1F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_LAVARIDGE_TOWN_GYM_B1F
 gMapLayout_LAVARIDGE_TOWN_GYM_B1F: @ 0x08400288
 	.4byte 17  @ width
 	.4byte 19  @ height
-	.4byte 0x083FFFF8  @ border
-	.4byte 0x08400000  @ map
+	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_B1F_Border  @ border
+	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_B1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4002A0, 0x104
+gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F_Border:
+	.incbin "data/layouts/LavaridgeTown_PokemonCenter_1F/border.bin"
+gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F_Blockdata:
+	.incbin "data/layouts/LavaridgeTown_PokemonCenter_1F/map.bin"
 	.globl gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F
 gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F: @ 0x084003A4
 	.4byte 14  @ width
 	.4byte 9  @ height
-	.4byte 0x084002A0  @ border
-	.4byte 0x084002A8  @ map
+	.4byte gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F_Border  @ border
+	.4byte gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4003BC, 0x490
+	.incbin "baserom_jp.gba", 0x4003bc, 0x408
+gMapLayout_LILYCOVE_CITY_HOUSE2_Border:
+	.incbin "data/layouts/LilycoveCity_House2/border.bin"
+gMapLayout_LILYCOVE_CITY_HOUSE2_Blockdata:
+	.incbin "data/layouts/LilycoveCity_House2/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_HOUSE2
 gMapLayout_LILYCOVE_CITY_HOUSE2: @ 0x0840084C
 	.4byte 8  @ width
 	.4byte 8  @ height
-	.4byte 0x084007C4  @ border
-	.4byte 0x084007CC  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_HOUSE2_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_HOUSE2_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x400864, 0x13C
+	.incbin "baserom_jp.gba", 0x400864, 0x24
+gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE_Border:
+	.incbin "data/layouts/VerdanturfTown_WandasHouse/border.bin"
+gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE_Blockdata:
+	.incbin "data/layouts/VerdanturfTown_WandasHouse/map.bin"
 	.globl gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE
 gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE: @ 0x084009A0
 	.4byte 17  @ width
 	.4byte 8  @ height
-	.4byte 0x08400888  @ border
-	.4byte 0x08400890  @ map
+	.4byte gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE_Border  @ border
+	.4byte gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4009B8, 0xBC
+gMapLayout_PACIFIDLOG_TOWN_HOUSE1_Border:
+	.incbin "data/layouts/PacifidlogTown_House1/border.bin"
+gMapLayout_PACIFIDLOG_TOWN_HOUSE1_Blockdata:
+	.incbin "data/layouts/PacifidlogTown_House1/map.bin"
 	.globl gMapLayout_PACIFIDLOG_TOWN_HOUSE1
 gMapLayout_PACIFIDLOG_TOWN_HOUSE1: @ 0x08400A74
 	.4byte 10  @ width
 	.4byte 9  @ height
-	.4byte 0x084009B8  @ border
-	.4byte 0x084009C0  @ map
+	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1_Border  @ border
+	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x400A8C, 0xBC
+gMapLayout_PACIFIDLOG_TOWN_HOUSE2_Border:
+	.incbin "data/layouts/PacifidlogTown_House2/border.bin"
+gMapLayout_PACIFIDLOG_TOWN_HOUSE2_Blockdata:
+	.incbin "data/layouts/PacifidlogTown_House2/map.bin"
 	.globl gMapLayout_PACIFIDLOG_TOWN_HOUSE2
 gMapLayout_PACIFIDLOG_TOWN_HOUSE2: @ 0x08400B48
 	.4byte 10  @ width
 	.4byte 9  @ height
-	.4byte 0x08400A8C  @ border
-	.4byte 0x08400A94  @ map
+	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE2_Border  @ border
+	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE2_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x400B60, 0x7E8
+gMapLayout_PETALBURG_CITY_GYM_Border:
+	.incbin "data/layouts/PetalburgCity_Gym/border.bin"
+gMapLayout_PETALBURG_CITY_GYM_Blockdata:
+	.incbin "data/layouts/PetalburgCity_Gym/map.bin"
 	.globl gMapLayout_PETALBURG_CITY_GYM
 gMapLayout_PETALBURG_CITY_GYM: @ 0x08401348
 	.4byte 9  @ width
 	.4byte 112  @ height
-	.4byte 0x08400B60  @ border
-	.4byte 0x08400B68  @ map
+	.4byte gMapLayout_PETALBURG_CITY_GYM_Border  @ border
+	.4byte gMapLayout_PETALBURG_CITY_GYM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_PETALBURG_CITY_GYM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x401360, 0xA8
+gMapLayout_PETALBURG_CITY_HOUSE2_Border:
+	.incbin "data/layouts/PetalburgCityHouse2/border.bin"
+gMapLayout_PETALBURG_CITY_HOUSE2_Blockdata:
+	.incbin "data/layouts/PetalburgCityHouse2/map.bin"
 	.globl gMapLayout_PETALBURG_CITY_HOUSE2
 gMapLayout_PETALBURG_CITY_HOUSE2: @ 0x08401408
 	.4byte 10  @ width
 	.4byte 8  @ height
-	.4byte 0x08401360  @ border
-	.4byte 0x08401368  @ map
+	.4byte gMapLayout_PETALBURG_CITY_HOUSE2_Border  @ border
+	.4byte gMapLayout_PETALBURG_CITY_HOUSE2_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x401420, 0x280
+gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F_Border:
+	.incbin "data/layouts/SlateportCity_SternsShipyard_1F/border.bin"
+gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F_Blockdata:
+	.incbin "data/layouts/SlateportCity_SternsShipyard_1F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F
 gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F: @ 0x084016A0
 	.4byte 21  @ width
 	.4byte 15  @ height
-	.4byte 0x08401420  @ border
-	.4byte 0x08401428  @ map
+	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F_Border  @ border
+	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4016B8, 0x208
+gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F_Border:
+	.incbin "data/layouts/SlateportCity_SternsShipyard_2F/border.bin"
+gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F_Blockdata:
+	.incbin "data/layouts/SlateportCity_SternsShipyard_2F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F
 gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F: @ 0x084018C0
 	.4byte 17  @ width
 	.4byte 15  @ height
-	.4byte 0x084016B8  @ border
-	.4byte 0x084016C0  @ map
+	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F_Border  @ border
+	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4018D8, 0x184
+	.incbin "baserom_jp.gba", 0x4018d8, 0x48
+gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB_Border:
+	.incbin "data/layouts/SlateportCity_PokemonFanClub/border.bin"
+gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB_Blockdata:
+	.incbin "data/layouts/SlateportCity_PokemonFanClub/map.bin"
 	.globl gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB
 gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB: @ 0x08401A5C
 	.4byte 14  @ width
 	.4byte 11  @ height
-	.4byte 0x08401920  @ border
-	.4byte 0x08401928  @ map
+	.4byte gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB_Border  @ border
+	.4byte gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x401A74, 0x170
+gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_Border:
+	.incbin "data/layouts/SlateportCity_OceanicMuseum_1F/border.bin"
+gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_Blockdata:
+	.incbin "data/layouts/SlateportCity_OceanicMuseum_1F/map.bin"
 	.globl gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F
 gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F: @ 0x08401BE4
 	.4byte 20  @ width
 	.4byte 9  @ height
-	.4byte 0x08401A74  @ border
-	.4byte 0x08401A7C  @ map
+	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_Border  @ border
+	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x401BFC, 0x170
+gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F_Border:
+	.incbin "data/layouts/SlateportCity_OceanicMuseum_2F/border.bin"
+gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F_Blockdata:
+	.incbin "data/layouts/SlateportCity_OceanicMuseum_2F/map.bin"
 	.globl gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F
 gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F: @ 0x08401D6C
 	.4byte 20  @ width
 	.4byte 9  @ height
-	.4byte 0x08401BFC  @ border
-	.4byte 0x08401C04  @ map
+	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F_Border  @ border
+	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x401D84, 0x2D8
+gMapLayout_SLATEPORT_CITY_HARBOR_Border:
+	.incbin "data/layouts/SlateportCityHarbor/border.bin"
+gMapLayout_SLATEPORT_CITY_HARBOR_Blockdata:
+	.incbin "data/layouts/SlateportCityHarbor/map.bin"
 	.globl gMapLayout_SLATEPORT_CITY_HARBOR
 gMapLayout_SLATEPORT_CITY_HARBOR: @ 0x0840205C
 	.4byte 24  @ width
 	.4byte 15  @ height
-	.4byte 0x08401D84  @ border
-	.4byte 0x08401D8C  @ map
+	.4byte gMapLayout_SLATEPORT_CITY_HARBOR_Border  @ border
+	.4byte gMapLayout_SLATEPORT_CITY_HARBOR_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402074, 0x1AC
+gMapLayout_MAUVILLE_CITY_GYM_Border:
+	.incbin "data/layouts/MauvilleCity_Gym/border.bin"
+gMapLayout_MAUVILLE_CITY_GYM_Blockdata:
+	.incbin "data/layouts/MauvilleCity_Gym/map.bin"
 	.globl gMapLayout_MAUVILLE_CITY_GYM
 gMapLayout_MAUVILLE_CITY_GYM: @ 0x08402220
 	.4byte 10  @ width
 	.4byte 21  @ height
-	.4byte 0x08402074  @ border
-	.4byte 0x0840207C  @ map
+	.4byte gMapLayout_MAUVILLE_CITY_GYM_Border  @ border
+	.4byte gMapLayout_MAUVILLE_CITY_GYM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_GYM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402238, 0xE0
+gMapLayout_MAUVILLE_CITY_BIKE_SHOP_Border:
+	.incbin "data/layouts/MauvilleCity_BikeShop/border.bin"
+gMapLayout_MAUVILLE_CITY_BIKE_SHOP_Blockdata:
+	.incbin "data/layouts/MauvilleCity_BikeShop/map.bin"
 	.globl gMapLayout_MAUVILLE_CITY_BIKE_SHOP
 gMapLayout_MAUVILLE_CITY_BIKE_SHOP: @ 0x08402318
 	.4byte 12  @ width
 	.4byte 9  @ height
-	.4byte 0x08402238  @ border
-	.4byte 0x08402240  @ map
+	.4byte gMapLayout_MAUVILLE_CITY_BIKE_SHOP_Border  @ border
+	.4byte gMapLayout_MAUVILLE_CITY_BIKE_SHOP_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402330, 0x1EC
+gMapLayout_MAUVILLE_CITY_GAME_CORNER_Border:
+	.incbin "data/layouts/MauvilleCity_GameCorner/border.bin"
+gMapLayout_MAUVILLE_CITY_GAME_CORNER_Blockdata:
+	.incbin "data/layouts/MauvilleCity_GameCorner/map.bin"
 	.globl gMapLayout_MAUVILLE_CITY_GAME_CORNER
 gMapLayout_MAUVILLE_CITY_GAME_CORNER: @ 0x0840251C
 	.4byte 22  @ width
 	.4byte 11  @ height
-	.4byte 0x08402330  @ border
-	.4byte 0x08402338  @ map
+	.4byte gMapLayout_MAUVILLE_CITY_GAME_CORNER_Border  @ border
+	.4byte gMapLayout_MAUVILLE_CITY_GAME_CORNER_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402534, 0x160
+gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F_Border:
+	.incbin "data/layouts/RustboroCity_DevonCorp_1F/border.bin"
+gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F_Blockdata:
+	.incbin "data/layouts/RustboroCity_DevonCorp_1F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F
 gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F: @ 0x08402694
 	.4byte 19  @ width
 	.4byte 9  @ height
-	.4byte 0x08402534  @ border
-	.4byte 0x0840253C  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4026AC, 0x160
+gMapLayout_RUSTBORO_CITY_DEVON_CORP_2F_Border:
+	.incbin "data/layouts/RustboroCity_DevonCorp_2F/border.bin"
+gMapLayout_RUSTBORO_CITY_DEVON_CORP_2F_Blockdata:
+	.incbin "data/layouts/RustboroCity_DevonCorp_2F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_RUSTBORO_CITY_DEVON_CORP_2F
 gMapLayout_RUSTBORO_CITY_DEVON_CORP_2F: @ 0x0840280C
 	.4byte 19  @ width
 	.4byte 9  @ height
-	.4byte 0x084026AC  @ border
-	.4byte 0x084026B4  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_2F_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402824, 0x1C0
+gMapLayout_RUSTBORO_CITY_GYM_Border:
+	.incbin "data/layouts/RustboroCity_Gym/border.bin"
+gMapLayout_RUSTBORO_CITY_GYM_Blockdata:
+	.incbin "data/layouts/RustboroCity_Gym/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_GYM
 gMapLayout_RUSTBORO_CITY_GYM: @ 0x084029E4
 	.4byte 11  @ width
 	.4byte 20  @ height
-	.4byte 0x08402824  @ border
-	.4byte 0x0840282C  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_GYM_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_GYM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_RUSTBORO_CITY_GYM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4029FC, 0x110
+gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL_Border:
+	.incbin "data/layouts/RustboroCity_PokemonSchool/border.bin"
+gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL_Blockdata:
+	.incbin "data/layouts/RustboroCity_PokemonSchool/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL
 gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL: @ 0x08402B0C
 	.4byte 12  @ width
 	.4byte 11  @ height
-	.4byte 0x084029FC  @ border
-	.4byte 0x08402A04  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402B24, 0xE0
+gMapLayout_RUSTBORO_CITY_HOUSE2_Border:
+	.incbin "data/layouts/RustboroCityHouse2/border.bin"
+gMapLayout_RUSTBORO_CITY_HOUSE2_Blockdata:
+	.incbin "data/layouts/RustboroCityHouse2/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_HOUSE2
 gMapLayout_RUSTBORO_CITY_HOUSE2: @ 0x08402C04
 	.4byte 12  @ width
 	.4byte 9  @ height
-	.4byte 0x08402B24  @ border
-	.4byte 0x08402B2C  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_HOUSE2_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_HOUSE2_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402C1C, 0xD8
+gMapLayout_RUSTBORO_CITY_HOUSE1_Border:
+	.incbin "data/layouts/RustboroCity_House1/border.bin"
+gMapLayout_RUSTBORO_CITY_HOUSE1_Blockdata:
+	.incbin "data/layouts/RustboroCity_House1/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_HOUSE1
 gMapLayout_RUSTBORO_CITY_HOUSE1: @ 0x08402CF4
 	.4byte 13  @ width
 	.4byte 8  @ height
-	.4byte 0x08402C1C  @ border
-	.4byte 0x08402C24  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_HOUSE1_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_HOUSE1_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402D0C, 0xD0
+gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE_Border:
+	.incbin "data/layouts/RustboroCity_CuttersHouse/border.bin"
+gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE_Blockdata:
+	.incbin "data/layouts/RustboroCity_CuttersHouse/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE
 gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE: @ 0x08402DDC
 	.4byte 11  @ width
 	.4byte 9  @ height
-	.4byte 0x08402D0C  @ border
-	.4byte 0x08402D14  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402DF4, 0x68
+gMapLayout_FORTREE_CITY_HOUSE1_Border:
+	.incbin "data/layouts/FortreeCity_House1/border.bin"
+gMapLayout_FORTREE_CITY_HOUSE1_Blockdata:
+	.incbin "data/layouts/FortreeCity_House1/map.bin"
 	.globl gMapLayout_FORTREE_CITY_HOUSE1
 gMapLayout_FORTREE_CITY_HOUSE1: @ 0x08402E5C
 	.4byte 8  @ width
 	.4byte 6  @ height
-	.4byte 0x08402DF4  @ border
-	.4byte 0x08402DFC  @ map
+	.4byte gMapLayout_FORTREE_CITY_HOUSE1_Border  @ border
+	.4byte gMapLayout_FORTREE_CITY_HOUSE1_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x402E74, 0x3F0
+gMapLayout_FORTREE_CITY_GYM_Border:
+	.incbin "data/layouts/FortreeCity_Gym/border.bin"
+gMapLayout_FORTREE_CITY_GYM_Blockdata:
+	.incbin "data/layouts/FortreeCity_Gym/map.bin"
 	.globl gMapLayout_FORTREE_CITY_GYM
 gMapLayout_FORTREE_CITY_GYM: @ 0x08403264
 	.4byte 20  @ width
 	.4byte 25  @ height
-	.4byte 0x08402E74  @ border
-	.4byte 0x08402E7C  @ map
+	.4byte gMapLayout_FORTREE_CITY_GYM_Border  @ border
+	.4byte gMapLayout_FORTREE_CITY_GYM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_FORTREE_CITY_GYM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40327C, 0x68
+gMapLayout_FORTREE_CITY_HOUSE2_Border:
+	.incbin "data/layouts/FortreeCity_House2/border.bin"
+gMapLayout_FORTREE_CITY_HOUSE2_Blockdata:
+	.incbin "data/layouts/FortreeCity_House2/map.bin"
 	.globl gMapLayout_FORTREE_CITY_HOUSE2
 gMapLayout_FORTREE_CITY_HOUSE2: @ 0x084032E4
 	.4byte 8  @ width
 	.4byte 6  @ height
-	.4byte 0x0840327C  @ border
-	.4byte 0x08403284  @ map
+	.4byte gMapLayout_FORTREE_CITY_HOUSE2_Border  @ border
+	.4byte gMapLayout_FORTREE_CITY_HOUSE2_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4032FC, 0xE0
+gMapLayout_ROUTE104_MR_BRINEYS_HOUSE_Border:
+	.incbin "data/layouts/Route104_MrBrineysHouse/border.bin"
+gMapLayout_ROUTE104_MR_BRINEYS_HOUSE_Blockdata:
+	.incbin "data/layouts/Route104_MrBrineysHouse/map.bin"
 	.globl gMapLayout_ROUTE104_MR_BRINEYS_HOUSE
 gMapLayout_ROUTE104_MR_BRINEYS_HOUSE: @ 0x084033DC
 	.4byte 12  @ width
 	.4byte 9  @ height
-	.4byte 0x084032FC  @ border
-	.4byte 0x08403304  @ map
+	.4byte gMapLayout_ROUTE104_MR_BRINEYS_HOUSE_Border  @ border
+	.4byte gMapLayout_ROUTE104_MR_BRINEYS_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4033F4, 0x254
+gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_Border:
+	.incbin "data/layouts/LilycoveCity_LilycoveMuseum_1F/border.bin"
+gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_LilycoveMuseum_1F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F
 gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F: @ 0x08403648
 	.4byte 21  @ width
 	.4byte 14  @ height
-	.4byte 0x084033F4  @ border
-	.4byte 0x084033FC  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x403660, 0x244
+gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F_Border:
+	.incbin "data/layouts/LilycoveCity_LilycoveMuseum_2F/border.bin"
+gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_LilycoveMuseum_2F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F
 gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F: @ 0x084038A4
 	.4byte 22  @ width
 	.4byte 13  @ height
-	.4byte 0x08403660  @ border
-	.4byte 0x08403668  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4038BC, 0x2F0
+gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY_Border:
+	.incbin "data/layouts/LilycoveCity_ContestLobby/border.bin"
+gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY_Blockdata:
+	.incbin "data/layouts/LilycoveCity_ContestLobby/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY
 gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY: @ 0x08403BAC
 	.4byte 31  @ width
 	.4byte 12  @ height
-	.4byte 0x084038BC  @ border
-	.4byte 0x084038C4  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x403BC4, 0xD30
+gMapLayout_LILYCOVE_CITY_CONTEST_HALL_Border:
+	.incbin "data/layouts/LilycoveCity_ContestHall/border.bin"
+gMapLayout_LILYCOVE_CITY_CONTEST_HALL_Blockdata:
+	.incbin "data/layouts/LilycoveCity_ContestHall/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_LILYCOVE_CITY_CONTEST_HALL
 gMapLayout_LILYCOVE_CITY_CONTEST_HALL: @ 0x084048F4
 	.4byte 51  @ width
 	.4byte 33  @ height
-	.4byte 0x08403BC4  @ border
-	.4byte 0x08403BCC  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_HALL_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_HALL_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40490C, 0x158
+gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_Border:
+	.incbin "data/layouts/LilycoveCity_PokemonTrainerFanClub/border.bin"
+gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_Blockdata:
+	.incbin "data/layouts/LilycoveCity_PokemonTrainerFanClub/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB
 gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB: @ 0x08404A64
 	.4byte 12  @ width
 	.4byte 14  @ height
-	.4byte 0x0840490C  @ border
-	.4byte 0x08404914  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x404A7C, 0x758
+gMapLayout_MOSSDEEP_CITY_GYM_Border:
+	.incbin "data/layouts/MossdeepCity_Gym/border.bin"
+gMapLayout_MOSSDEEP_CITY_GYM_Blockdata:
+	.incbin "data/layouts/MossdeepCity_Gym/map.bin"
 	.globl gMapLayout_MOSSDEEP_CITY_GYM
 gMapLayout_MOSSDEEP_CITY_GYM: @ 0x084051D4
 	.4byte 26  @ width
 	.4byte 36  @ height
-	.4byte 0x08404A7C  @ border
-	.4byte 0x08404A84  @ map
+	.4byte gMapLayout_MOSSDEEP_CITY_GYM_Border  @ border
+	.4byte gMapLayout_MOSSDEEP_CITY_GYM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4051EC, 0x37C
+gMapLayout_SOOTOPOLIS_CITY_GYM_1F_Border:
+	.incbin "data/layouts/SootopolisCity_Gym_1F/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_GYM_1F_Blockdata:
+	.incbin "data/layouts/SootopolisCity_Gym_1F/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY_GYM_1F
 gMapLayout_SOOTOPOLIS_CITY_GYM_1F: @ 0x08405568
 	.4byte 17  @ width
 	.4byte 26  @ height
-	.4byte 0x084051EC  @ border
-	.4byte 0x084051F4  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_1F_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x405580, 0x37C
+gMapLayout_SOOTOPOLIS_CITY_GYM_B1F_Border:
+	.incbin "data/layouts/SootopolisCity_Gym_B1F/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_GYM_B1F_Blockdata:
+	.incbin "data/layouts/SootopolisCity_Gym_B1F/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY_GYM_B1F
 gMapLayout_SOOTOPOLIS_CITY_GYM_B1F: @ 0x084058FC
 	.4byte 17  @ width
 	.4byte 26  @ height
-	.4byte 0x08405580  @ border
-	.4byte 0x08405588  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_B1F_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_B1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x405914, 0x174
+gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM_Border:
+	.incbin "data/layouts/EverGrandeCity_SidneysRoom/border.bin"
+gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM_Blockdata:
+	.incbin "data/layouts/EverGrandeCity_SidneysRoom/map.bin"
 	.globl gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM
 gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM: @ 0x08405A88
 	.4byte 13  @ width
 	.4byte 14  @ height
-	.4byte 0x08405914  @ border
-	.4byte 0x0840591C  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x405AA0, 0x174
+gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM_Border:
+	.incbin "data/layouts/EverGrandeCity_PhoebesRoom/border.bin"
+gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM_Blockdata:
+	.incbin "data/layouts/EverGrandeCity_PhoebesRoom/map.bin"
 	.globl gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM
 gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM: @ 0x08405C14
 	.4byte 13  @ width
 	.4byte 14  @ height
-	.4byte 0x08405AA0  @ border
-	.4byte 0x08405AA8  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x405C2C, 0x174
+gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM_Border:
+	.incbin "data/layouts/EverGrandeCity_GlaciasRoom/border.bin"
+gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM_Blockdata:
+	.incbin "data/layouts/EverGrandeCity_GlaciasRoom/map.bin"
 	.globl gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM
 gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM: @ 0x08405DA0
 	.4byte 13  @ width
 	.4byte 14  @ height
-	.4byte 0x08405C2C  @ border
-	.4byte 0x08405C34  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x405DB8, 0x174
+gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM_Border:
+	.incbin "data/layouts/EverGrandeCity_DrakesRoom/border.bin"
+gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM_Blockdata:
+	.incbin "data/layouts/EverGrandeCity_DrakesRoom/map.bin"
 	.globl gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM
 gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM: @ 0x08405F2C
 	.4byte 13  @ width
 	.4byte 14  @ height
-	.4byte 0x08405DB8  @ border
-	.4byte 0x08405DC0  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x405F44, 0x15C
+gMapLayout_EVER_GRANDE_CITY_CHAMPIONS_ROOM_Border:
+	.incbin "data/layouts/EverGrandeCity_ChampionsRoom/border.bin"
+gMapLayout_EVER_GRANDE_CITY_CHAMPIONS_ROOM_Blockdata:
+	.incbin "data/layouts/EverGrandeCity_ChampionsRoom/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_EVER_GRANDE_CITY_CHAMPIONS_ROOM
 gMapLayout_EVER_GRANDE_CITY_CHAMPIONS_ROOM: @ 0x084060A0
 	.4byte 13  @ width
 	.4byte 13  @ height
-	.4byte 0x08405F44  @ border
-	.4byte 0x08405F4C  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_CHAMPIONS_ROOM_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_CHAMPIONS_ROOM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4060B8, 0x128
+gMapLayout_EVER_GRANDE_CITY_HALL1_Border:
+	.incbin "data/layouts/EverGrandeCityHall1/border.bin"
+gMapLayout_EVER_GRANDE_CITY_HALL1_Blockdata:
+	.incbin "data/layouts/EverGrandeCityHall1/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_EVER_GRANDE_CITY_HALL1
 gMapLayout_EVER_GRANDE_CITY_HALL1: @ 0x084061E0
 	.4byte 11  @ width
 	.4byte 13  @ height
-	.4byte 0x084060B8  @ border
-	.4byte 0x084060C0  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4061F8, 0x118
+gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_Border:
+	.incbin "data/layouts/Route104_PrettyPetalFlowerShop/border.bin"
+gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_Blockdata:
+	.incbin "data/layouts/Route104_PrettyPetalFlowerShop/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP
 gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP: @ 0x08406310
 	.4byte 15  @ width
 	.4byte 9  @ height
-	.4byte 0x084061F8  @ border
-	.4byte 0x08406200  @ map
+	.4byte gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_Border  @ border
+	.4byte gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x406328, 0x140
+gMapLayout_ROUTE112_CABLE_CAR_STATION_Border:
+	.incbin "data/layouts/Route112CableCarStation/border.bin"
+gMapLayout_ROUTE112_CABLE_CAR_STATION_Blockdata:
+	.incbin "data/layouts/Route112CableCarStation/map.bin"
 	.globl gMapLayout_ROUTE112_CABLE_CAR_STATION
 gMapLayout_ROUTE112_CABLE_CAR_STATION: @ 0x08406468
 	.4byte 13  @ width
 	.4byte 12  @ height
-	.4byte 0x08406328  @ border
-	.4byte 0x08406330  @ map
+	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION_Border  @ border
+	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x406480, 0xA8
+gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE_Border:
+	.incbin "data/layouts/Route114_FossilManiacsHouse/border.bin"
+gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE_Blockdata:
+	.incbin "data/layouts/Route114_FossilManiacsHouse/map.bin"
 	.globl gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE
 gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE: @ 0x08406528
 	.4byte 10  @ width
 	.4byte 8  @ height
-	.4byte 0x08406480  @ border
-	.4byte 0x08406488  @ map
+	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE_Border  @ border
+	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x406540, 0x2AC
+gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL_Border:
+	.incbin "data/layouts/Route114_FossilManiacsTunnel/border.bin"
+gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL_Blockdata:
+	.incbin "data/layouts/Route114_FossilManiacsTunnel/map.bin"
 	.globl gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL
 gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL: @ 0x084067EC
 	.4byte 13  @ width
 	.4byte 26  @ height
-	.4byte 0x08406540  @ border
-	.4byte 0x08406548  @ map
+	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL_Border  @ border
+	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x406804, 0xB8
+gMapLayout_ROUTE114_LANETTES_HOUSE_Border:
+	.incbin "data/layouts/Route114_LanettesHouse/border.bin"
+gMapLayout_ROUTE114_LANETTES_HOUSE_Blockdata:
+	.incbin "data/layouts/Route114_LanettesHouse/map.bin"
 	.globl gMapLayout_ROUTE114_LANETTES_HOUSE
 gMapLayout_ROUTE114_LANETTES_HOUSE: @ 0x084068BC
 	.4byte 11  @ width
 	.4byte 8  @ height
-	.4byte 0x08406804  @ border
-	.4byte 0x0840680C  @ map
+	.4byte gMapLayout_ROUTE114_LANETTES_HOUSE_Border  @ border
+	.4byte gMapLayout_ROUTE114_LANETTES_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4068D4, 0xBC
+gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE_Border:
+	.incbin "data/layouts/Route116_TunnelersRestHouse/border.bin"
+gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE_Blockdata:
+	.incbin "data/layouts/Route116_TunnelersRestHouse/map.bin"
 	.globl gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE
 gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE: @ 0x08406990
 	.4byte 10  @ width
 	.4byte 9  @ height
-	.4byte 0x084068D4  @ border
-	.4byte 0x084068DC  @ map
+	.4byte gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE_Border  @ border
+	.4byte gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4069A8, 0xE0
+gMapLayout_ROUTE117_POKEMON_DAY_CARE_Border:
+	.incbin "data/layouts/Route117_PokemonDayCare/border.bin"
+gMapLayout_ROUTE117_POKEMON_DAY_CARE_Blockdata:
+	.incbin "data/layouts/Route117_PokemonDayCare/map.bin"
 	.globl gMapLayout_ROUTE117_POKEMON_DAY_CARE
 gMapLayout_ROUTE117_POKEMON_DAY_CARE: @ 0x08406A88
 	.4byte 12  @ width
 	.4byte 9  @ height
-	.4byte 0x084069A8  @ border
-	.4byte 0x084069B0  @ map
+	.4byte gMapLayout_ROUTE117_POKEMON_DAY_CARE_Border  @ border
+	.4byte gMapLayout_ROUTE117_POKEMON_DAY_CARE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x406AA0, 0x200
+gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE_Border:
+	.incbin "data/layouts/Route121_SafariZoneEntrance/border.bin"
+gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE_Blockdata:
+	.incbin "data/layouts/Route121_SafariZoneEntrance/map.bin"
 	.globl gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE
 gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE: @ 0x08406CA0
 	.4byte 18  @ width
 	.4byte 14  @ height
-	.4byte 0x08406AA0  @ border
-	.4byte 0x08406AA8  @ map
+	.4byte gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE_Border  @ border
+	.4byte gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x406CB8, 0x9E0
+gMapLayout_METEOR_FALLS_1F_1R_Border:
+	.incbin "data/layouts/MeteorFalls_1F_1R/border.bin"
+gMapLayout_METEOR_FALLS_1F_1R_Blockdata:
+	.incbin "data/layouts/MeteorFalls_1F_1R/map.bin"
 	.globl gMapLayout_METEOR_FALLS_1F_1R
 gMapLayout_METEOR_FALLS_1F_1R: @ 0x08407698
 	.4byte 30  @ width
 	.4byte 42  @ height
-	.4byte 0x08406CB8  @ border
-	.4byte 0x08406CC0  @ map
+	.4byte gMapLayout_METEOR_FALLS_1F_1R_Border  @ border
+	.4byte gMapLayout_METEOR_FALLS_1F_1R_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_METEOR_FALLS_1F_1R_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4076B0, 0x788
+gMapLayout_METEOR_FALLS_1F_2R_Border:
+	.incbin "data/layouts/MeteorFalls_1F_2R/border.bin"
+gMapLayout_METEOR_FALLS_1F_2R_Blockdata:
+	.incbin "data/layouts/MeteorFalls_1F_2R/map.bin"
 	.globl gMapLayout_METEOR_FALLS_1F_2R
 gMapLayout_METEOR_FALLS_1F_2R: @ 0x08407E38
 	.4byte 30  @ width
 	.4byte 32  @ height
-	.4byte 0x084076B0  @ border
-	.4byte 0x084076B8  @ map
+	.4byte gMapLayout_METEOR_FALLS_1F_2R_Border  @ border
+	.4byte gMapLayout_METEOR_FALLS_1F_2R_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_METEOR_FALLS_1F_1R_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x407E50, 0x8A4
+gMapLayout_METEOR_FALLS_B1F_1R_Border:
+	.incbin "data/layouts/MeteorFalls_B1F_1R/border.bin"
+gMapLayout_METEOR_FALLS_B1F_1R_Blockdata:
+	.incbin "data/layouts/MeteorFalls_B1F_1R/map.bin"
 	.globl gMapLayout_METEOR_FALLS_B1F_1R
 gMapLayout_METEOR_FALLS_B1F_1R: @ 0x084086F4
 	.4byte 29  @ width
 	.4byte 38  @ height
-	.4byte 0x08407E50  @ border
-	.4byte 0x08407E58  @ map
+	.4byte gMapLayout_METEOR_FALLS_B1F_1R_Border  @ border
+	.4byte gMapLayout_METEOR_FALLS_B1F_1R_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_METEOR_FALLS_1F_1R_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40870C, 0x194
+gMapLayout_METEOR_FALLS_B1F_2R_Border:
+	.incbin "data/layouts/MeteorFalls_B1F_2R/border.bin"
+gMapLayout_METEOR_FALLS_B1F_2R_Blockdata:
+	.incbin "data/layouts/MeteorFalls_B1F_2R/map.bin"
 	.globl gMapLayout_METEOR_FALLS_B1F_2R
 gMapLayout_METEOR_FALLS_B1F_2R: @ 0x084088A0
 	.4byte 11  @ width
 	.4byte 18  @ height
-	.4byte 0x0840870C  @ border
-	.4byte 0x08408714  @ map
+	.4byte gMapLayout_METEOR_FALLS_B1F_2R_Border  @ border
+	.4byte gMapLayout_METEOR_FALLS_B1F_2R_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_METEOR_FALLS_1F_1R_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4088B8, 0x6C8
+gMapLayout_RUSTURF_TUNNEL_Border:
+	.incbin "data/layouts/RusturfTunnel/border.bin"
+gMapLayout_RUSTURF_TUNNEL_Blockdata:
+	.incbin "data/layouts/RusturfTunnel/map.bin"
 	.globl gMapLayout_RUSTURF_TUNNEL
 gMapLayout_RUSTURF_TUNNEL: @ 0x08408F80
 	.4byte 36  @ width
 	.4byte 24  @ height
-	.4byte 0x084088B8  @ border
-	.4byte 0x084088C0  @ map
+	.4byte gMapLayout_RUSTURF_TUNNEL_Border  @ border
+	.4byte gMapLayout_RUSTURF_TUNNEL_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_RUSTURF_TUNNEL_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x408F98, 0x198
+gMapLayout_UNDERWATER_SOOTOPOLIS_CITY_Border:
+	.incbin "data/layouts/Underwater_SootopolisCity/border.bin"
+gMapLayout_UNDERWATER_SOOTOPOLIS_CITY_Blockdata:
+	.incbin "data/layouts/Underwater_SootopolisCity/map.bin"
 	.globl gMapLayout_UNDERWATER_SOOTOPOLIS_CITY
 gMapLayout_UNDERWATER_SOOTOPOLIS_CITY: @ 0x08409130
 	.4byte 20  @ width
 	.4byte 10  @ height
-	.4byte 0x08408F98  @ border
-	.4byte 0x08408FA0  @ map
+	.4byte gMapLayout_UNDERWATER_SOOTOPOLIS_CITY_Border  @ border
+	.4byte gMapLayout_UNDERWATER_SOOTOPOLIS_CITY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x409148, 0x46C
+gMapLayout_DESERT_RUINS_Border:
+	.incbin "data/layouts/DesertRuins/border.bin"
+gMapLayout_DESERT_RUINS_Blockdata:
+	.incbin "data/layouts/DesertRuins/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_DESERT_RUINS
 gMapLayout_DESERT_RUINS: @ 0x084095B4
 	.4byte 17  @ width
 	.4byte 33  @ height
-	.4byte 0x08409148  @ border
-	.4byte 0x08409150  @ map
+	.4byte gMapLayout_DESERT_RUINS_Border  @ border
+	.4byte gMapLayout_DESERT_RUINS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4095CC, 0x4F4
+gMapLayout_GRANITE_CAVE_1F_Border:
+	.incbin "data/layouts/GraniteCave_1F/border.bin"
+gMapLayout_GRANITE_CAVE_1F_Blockdata:
+	.incbin "data/layouts/GraniteCave_1F/map.bin"
 	.globl gMapLayout_GRANITE_CAVE_1F
 gMapLayout_GRANITE_CAVE_1F: @ 0x08409AC0
 	.4byte 42  @ width
 	.4byte 15  @ height
-	.4byte 0x084095CC  @ border
-	.4byte 0x084095D4  @ map
+	.4byte gMapLayout_GRANITE_CAVE_1F_Border  @ border
+	.4byte gMapLayout_GRANITE_CAVE_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x409AD8, 0x688
+gMapLayout_GRANITE_CAVE_B1F_Border:
+	.incbin "data/layouts/GraniteCave_B1F/border.bin"
+gMapLayout_GRANITE_CAVE_B1F_Blockdata:
+	.incbin "data/layouts/GraniteCave_B1F/map.bin"
 	.globl gMapLayout_GRANITE_CAVE_B1F
 gMapLayout_GRANITE_CAVE_B1F: @ 0x0840A160
 	.4byte 32  @ width
 	.4byte 26  @ height
-	.4byte 0x08409AD8  @ border
-	.4byte 0x08409AE0  @ map
+	.4byte gMapLayout_GRANITE_CAVE_B1F_Border  @ border
+	.4byte gMapLayout_GRANITE_CAVE_B1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40A178, 0x688
+gMapLayout_GRANITE_CAVE_B2F_Border:
+	.incbin "data/layouts/GraniteCave_B2F/border.bin"
+gMapLayout_GRANITE_CAVE_B2F_Blockdata:
+	.incbin "data/layouts/GraniteCave_B2F/map.bin"
 	.globl gMapLayout_GRANITE_CAVE_B2F
 gMapLayout_GRANITE_CAVE_B2F: @ 0x0840A800
 	.4byte 32  @ width
 	.4byte 26  @ height
-	.4byte 0x0840A178  @ border
-	.4byte 0x0840A180  @ map
+	.4byte gMapLayout_GRANITE_CAVE_B2F_Border  @ border
+	.4byte gMapLayout_GRANITE_CAVE_B2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40A818, 0x1088
+gMapLayout_PETALBURG_WOODS_Border:
+	.incbin "data/layouts/PetalburgWoods/border.bin"
+gMapLayout_PETALBURG_WOODS_Blockdata:
+	.incbin "data/layouts/PetalburgWoods/map.bin"
 	.globl gMapLayout_PETALBURG_WOODS
 gMapLayout_PETALBURG_WOODS: @ 0x0840B8A0
 	.4byte 48  @ width
 	.4byte 44  @ height
-	.4byte 0x0840A818  @ border
-	.4byte 0x0840A820  @ map
+	.4byte gMapLayout_PETALBURG_WOODS_Border  @ border
+	.4byte gMapLayout_PETALBURG_WOODS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_RUSTBORO_CITY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40B8B8, 0xEB8
+gMapLayout_MT_CHIMNEY_Border:
+	.incbin "data/layouts/MtChimney/border.bin"
+gMapLayout_MT_CHIMNEY_Blockdata:
+	.incbin "data/layouts/MtChimney/map.bin"
 	.globl gMapLayout_MT_CHIMNEY
 gMapLayout_MT_CHIMNEY: @ 0x0840C770
 	.4byte 40  @ width
 	.4byte 47  @ height
-	.4byte 0x0840B8B8  @ border
-	.4byte 0x0840B8C0  @ map
+	.4byte gMapLayout_MT_CHIMNEY_Border  @ border
+	.4byte gMapLayout_MT_CHIMNEY_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40C788, 0x34C
+gMapLayout_MT_PYRE_1F_Border:
+	.incbin "data/layouts/MtPyre_1F/border.bin"
+gMapLayout_MT_PYRE_1F_Blockdata:
+	.incbin "data/layouts/MtPyre_1F/map.bin"
 	.globl gMapLayout_MT_PYRE_1F
 gMapLayout_MT_PYRE_1F: @ 0x0840CAD4
 	.4byte 22  @ width
 	.4byte 19  @ height
-	.4byte 0x0840C788  @ border
-	.4byte 0x0840C790  @ map
+	.4byte gMapLayout_MT_PYRE_1F_Border  @ border
+	.4byte gMapLayout_MT_PYRE_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40CAEC, 0x15C
+gMapLayout_MT_PYRE_2F_Border:
+	.incbin "data/layouts/MtPyre_2F/border.bin"
+gMapLayout_MT_PYRE_2F_Blockdata:
+	.incbin "data/layouts/MtPyre_2F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_MT_PYRE_2F
 gMapLayout_MT_PYRE_2F: @ 0x0840CC48
 	.4byte 13  @ width
 	.4byte 13  @ height
-	.4byte 0x0840CAEC  @ border
-	.4byte 0x0840CAF4  @ map
+	.4byte gMapLayout_MT_PYRE_2F_Border  @ border
+	.4byte gMapLayout_MT_PYRE_2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40CC60, 0x15C
+gMapLayout_MT_PYRE_3F_Border:
+	.incbin "data/layouts/MtPyre_3F/border.bin"
+gMapLayout_MT_PYRE_3F_Blockdata:
+	.incbin "data/layouts/MtPyre_3F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_MT_PYRE_3F
 gMapLayout_MT_PYRE_3F: @ 0x0840CDBC
 	.4byte 13  @ width
 	.4byte 13  @ height
-	.4byte 0x0840CC60  @ border
-	.4byte 0x0840CC68  @ map
+	.4byte gMapLayout_MT_PYRE_3F_Border  @ border
+	.4byte gMapLayout_MT_PYRE_3F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40CDD4, 0x15C
+gMapLayout_MT_PYRE_4F_Border:
+	.incbin "data/layouts/MtPyre_4F/border.bin"
+gMapLayout_MT_PYRE_4F_Blockdata:
+	.incbin "data/layouts/MtPyre_4F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_MT_PYRE_4F
 gMapLayout_MT_PYRE_4F: @ 0x0840CF30
 	.4byte 13  @ width
 	.4byte 13  @ height
-	.4byte 0x0840CDD4  @ border
-	.4byte 0x0840CDDC  @ map
+	.4byte gMapLayout_MT_PYRE_4F_Border  @ border
+	.4byte gMapLayout_MT_PYRE_4F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40CF48, 0x15C
+gMapLayout_MT_PYRE_5F_Border:
+	.incbin "data/layouts/MtPyre_5F/border.bin"
+gMapLayout_MT_PYRE_5F_Blockdata:
+	.incbin "data/layouts/MtPyre_5F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_MT_PYRE_5F
 gMapLayout_MT_PYRE_5F: @ 0x0840D0A4
 	.4byte 13  @ width
 	.4byte 13  @ height
-	.4byte 0x0840CF48  @ border
-	.4byte 0x0840CF50  @ map
+	.4byte gMapLayout_MT_PYRE_5F_Border  @ border
+	.4byte gMapLayout_MT_PYRE_5F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40D0BC, 0x15C
+gMapLayout_MT_PYRE_6F_Border:
+	.incbin "data/layouts/MtPyre_6F/border.bin"
+gMapLayout_MT_PYRE_6F_Blockdata:
+	.incbin "data/layouts/MtPyre_6F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_MT_PYRE_6F
 gMapLayout_MT_PYRE_6F: @ 0x0840D218
 	.4byte 13  @ width
 	.4byte 13  @ height
-	.4byte 0x0840D0BC  @ border
-	.4byte 0x0840D0C4  @ map
+	.4byte gMapLayout_MT_PYRE_6F_Border  @ border
+	.4byte gMapLayout_MT_PYRE_6F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40D230, 0x698
+gMapLayout_AQUA_HIDEOUT_1F_Border:
+	.incbin "data/layouts/AquaHideout_1F/border.bin"
+gMapLayout_AQUA_HIDEOUT_1F_Blockdata:
+	.incbin "data/layouts/AquaHideout_1F/map.bin"
 	.globl gMapLayout_AQUA_HIDEOUT_1F
 gMapLayout_AQUA_HIDEOUT_1F: @ 0x0840D8C8
 	.4byte 28  @ width
 	.4byte 30  @ height
-	.4byte 0x0840D230  @ border
-	.4byte 0x0840D238  @ map
+	.4byte gMapLayout_AQUA_HIDEOUT_1F_Border  @ border
+	.4byte gMapLayout_AQUA_HIDEOUT_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40D8E0, 0x998
+gMapLayout_AQUA_HIDEOUT_B1F_Border:
+	.incbin "data/layouts/AquaHideout_B1F/border.bin"
+gMapLayout_AQUA_HIDEOUT_B1F_Blockdata:
+	.incbin "data/layouts/AquaHideout_B1F/map.bin"
 	.globl gMapLayout_AQUA_HIDEOUT_B1F
 gMapLayout_AQUA_HIDEOUT_B1F: @ 0x0840E278
 	.4byte 51  @ width
 	.4byte 24  @ height
-	.4byte 0x0840D8E0  @ border
-	.4byte 0x0840D8E8  @ map
+	.4byte gMapLayout_AQUA_HIDEOUT_B1F_Border  @ border
+	.4byte gMapLayout_AQUA_HIDEOUT_B1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40E290, 0x668
+gMapLayout_AQUA_HIDEOUT_B2F_Border:
+	.incbin "data/layouts/AquaHideout_B2F/border.bin"
+gMapLayout_AQUA_HIDEOUT_B2F_Blockdata:
+	.incbin "data/layouts/AquaHideout_B2F/map.bin"
 	.globl gMapLayout_AQUA_HIDEOUT_B2F
 gMapLayout_AQUA_HIDEOUT_B2F: @ 0x0840E8F8
 	.4byte 34  @ width
 	.4byte 24  @ height
-	.4byte 0x0840E290  @ border
-	.4byte 0x0840E298  @ map
+	.4byte gMapLayout_AQUA_HIDEOUT_B2F_Border  @ border
+	.4byte gMapLayout_AQUA_HIDEOUT_B2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40E910, 0x104
+gMapLayout_UNDERWATER_SEAFLOOR_CAVERN_Border:
+	.incbin "data/layouts/Underwater_SeafloorCavern/border.bin"
+gMapLayout_UNDERWATER_SEAFLOOR_CAVERN_Blockdata:
+	.incbin "data/layouts/Underwater_SeafloorCavern/map.bin"
 	.globl gMapLayout_UNDERWATER_SEAFLOOR_CAVERN
 gMapLayout_UNDERWATER_SEAFLOOR_CAVERN: @ 0x0840EA14
 	.4byte 14  @ width
 	.4byte 9  @ height
-	.4byte 0x0840E910  @ border
-	.4byte 0x0840E918  @ map
+	.4byte gMapLayout_UNDERWATER_SEAFLOOR_CAVERN_Border  @ border
+	.4byte gMapLayout_UNDERWATER_SEAFLOOR_CAVERN_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40EA2C, 0x328
+gMapLayout_SEAFLOOR_CAVERN_ENTRANCE_Border:
+	.incbin "data/layouts/SeafloorCavern_Entrance/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ENTRANCE_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Entrance/map.bin"
 	.globl gMapLayout_SEAFLOOR_CAVERN_ENTRANCE
 gMapLayout_SEAFLOOR_CAVERN_ENTRANCE: @ 0x0840ED54
 	.4byte 20  @ width
 	.4byte 20  @ height
-	.4byte 0x0840EA2C  @ border
-	.4byte 0x0840EA34  @ map
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ENTRANCE_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ENTRANCE_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40ED6C, 0x350
+gMapLayout_SEAFLOOR_CAVERN_ROOM1_Border:
+	.incbin "data/layouts/SeafloorCavern_Room1/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM1_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room1/map.bin"
 	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM1
 gMapLayout_SEAFLOOR_CAVERN_ROOM1: @ 0x0840F0BC
 	.4byte 20  @ width
 	.4byte 21  @ height
-	.4byte 0x0840ED6C  @ border
-	.4byte 0x0840ED74  @ map
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM1_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM1_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40F0D4, 0x1B8
+gMapLayout_SEAFLOOR_CAVERN_ROOM2_Border:
+	.incbin "data/layouts/SeafloorCavern_Room2/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM2_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room2/map.bin"
 	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM2
 gMapLayout_SEAFLOOR_CAVERN_ROOM2: @ 0x0840F28C
 	.4byte 18  @ width
 	.4byte 12  @ height
-	.4byte 0x0840F0D4  @ border
-	.4byte 0x0840F0DC  @ map
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM2_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM2_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40F2A4, 0x228
+gMapLayout_SEAFLOOR_CAVERN_ROOM3_Border:
+	.incbin "data/layouts/SeafloorCavern_Room3/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM3_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room3/map.bin"
 	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM3
 gMapLayout_SEAFLOOR_CAVERN_ROOM3: @ 0x0840F4CC
 	.4byte 16  @ width
 	.4byte 17  @ height
-	.4byte 0x0840F2A4  @ border
-	.4byte 0x0840F2AC  @ map
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM3_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM3_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40F4E4, 0x2B4
+gMapLayout_SEAFLOOR_CAVERN_ROOM4_Border:
+	.incbin "data/layouts/SeafloorCavern_Room4/border.bin"
+gMapLayout_SEAFLOOR_CAVERN_ROOM4_Blockdata:
+	.incbin "data/layouts/SeafloorCavern_Room4/map.bin"
 	.globl gMapLayout_SEAFLOOR_CAVERN_ROOM4
 gMapLayout_SEAFLOOR_CAVERN_ROOM4: @ 0x0840F798
 	.4byte 18  @ width
 	.4byte 19  @ height
-	.4byte 0x0840F4E4  @ border
-	.4byte 0x0840F4EC  @ map
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM4_Border  @ border
+	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM4_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40F7B0, 0x118B4
+	.incbin "baserom_jp.gba", 0x40f7b0, 0x1184c
+gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
+	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
+gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
+	.incbin "data/layouts/FortreeCity_DecorationShop/map.bin"
 	.globl gMapLayout_FORTREE_CITY_DECORATION_SHOP
 gMapLayout_FORTREE_CITY_DECORATION_SHOP: @ 0x08421064
 	.4byte 8  @ width
 	.4byte 6  @ height
-	.4byte 0x08420FFC  @ border
-	.4byte 0x08421004  @ map
+	.4byte gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border  @ border
+	.4byte gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42107C, 0x1FC
+	.incbin "baserom_jp.gba", 0x42107c, 0xd4
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F_Border:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_1F/border.bin"
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_1F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F: @ 0x08421278
 	.4byte 18  @ width
 	.4byte 8  @ height
-	.4byte 0x08421150  @ border
-	.4byte 0x08421158  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x421290, 0x128
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F_Border:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_2F/border.bin"
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_2F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F: @ 0x084213B8
 	.4byte 18  @ width
 	.4byte 8  @ height
-	.4byte 0x08421290  @ border
-	.4byte 0x08421298  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4213D0, 0x128
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F_Border:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_3F/border.bin"
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_3F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F: @ 0x084214F8
 	.4byte 18  @ width
 	.4byte 8  @ height
-	.4byte 0x084213D0  @ border
-	.4byte 0x084213D8  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x421510, 0x128
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_4F_Border:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_4F/border.bin"
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_4F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_4F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_4F
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_4F: @ 0x08421638
 	.4byte 18  @ width
 	.4byte 8  @ height
-	.4byte 0x08421510  @ border
-	.4byte 0x08421518  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_4F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_4F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x421650, 0x128
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F_Border:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_5F/border.bin"
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_DepartmentStore_5F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F: @ 0x08421778
 	.4byte 18  @ width
 	.4byte 8  @ height
-	.4byte 0x08421650  @ border
-	.4byte 0x08421658  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x421790, 0x1B8
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP_Border:
+	.incbin "data/layouts/LilycoveCity_DepartmentStoreRooftop/border.bin"
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP_Blockdata:
+	.incbin "data/layouts/LilycoveCity_DepartmentStoreRooftop/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP: @ 0x08421948
 	.4byte 18  @ width
 	.4byte 12  @ height
-	.4byte 0x08421790  @ border
-	.4byte 0x08421798  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x421960, 0x1908
+gMapLayout_ROUTE130_Border:
+	.incbin "data/layouts/Route130/border.bin"
+gMapLayout_ROUTE130_Blockdata:
+	.incbin "data/layouts/Route130/map.bin"
 	.globl gMapLayout_ROUTE130
 gMapLayout_ROUTE130: @ 0x08423268
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x08421960  @ border
-	.4byte 0x08421968  @ map
+	.4byte gMapLayout_ROUTE130_Border  @ border
+	.4byte gMapLayout_ROUTE130_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x423280, 0x251C
+	.incbin "baserom_jp.gba", 0x423280, 0x23bc
+gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F_Border:
+	.incbin "data/layouts/RustboroCity_DevonCorp_3F/border.bin"
+gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F_Blockdata:
+	.incbin "data/layouts/RustboroCity_DevonCorp_3F/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F
 gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F: @ 0x0842579C
 	.4byte 19  @ width
 	.4byte 9  @ height
-	.4byte 0x0842563C  @ border
-	.4byte 0x08425644  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4257B4, 0x1D0
+gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_Border:
+	.incbin "data/layouts/EverGrandeCity_PokemonLeague_1F/border.bin"
+gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_Blockdata:
+	.incbin "data/layouts/EverGrandeCity_PokemonLeague_1F/map.bin"
 	.globl gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
 gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F: @ 0x08425984
 	.4byte 19  @ width
 	.4byte 12  @ height
-	.4byte 0x084257B4  @ border
-	.4byte 0x084257BC  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42599C, 0x444
+	.incbin "baserom_jp.gba", 0x42599c, 0x400
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Border:
+	.incbin "data/layouts/LilycoveCity_DepartmentStoreElevator/border.bin"
+gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Blockdata:
+	.incbin "data/layouts/LilycoveCity_DepartmentStoreElevator/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
 gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR: @ 0x08425DE0
 	.4byte 5  @ width
 	.4byte 6  @ height
-	.4byte 0x08425D9C  @ border
-	.4byte 0x08425DA4  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x425DF8, 0x3208
+gMapLayout_UNDERWATER_ROUTE124_Border:
+	.incbin "data/layouts/Underwater_Route124/border.bin"
+gMapLayout_UNDERWATER_ROUTE124_Blockdata:
+	.incbin "data/layouts/Underwater_Route124/map.bin"
 	.globl gMapLayout_UNDERWATER_ROUTE124
 gMapLayout_UNDERWATER_ROUTE124: @ 0x08429000
 	.4byte 80  @ width
 	.4byte 80  @ height
-	.4byte 0x08425DF8  @ border
-	.4byte 0x08425E00  @ map
+	.4byte gMapLayout_UNDERWATER_ROUTE124_Border  @ border
+	.4byte gMapLayout_UNDERWATER_ROUTE124_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x429018, 0x148
+gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F_Border:
+	.incbin "data/layouts/MossdeepCity_SpaceCenter_1F/border.bin"
+gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F_Blockdata:
+	.incbin "data/layouts/MossdeepCity_SpaceCenter_1F/map.bin"
 	.globl gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F
 gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F: @ 0x08429160
 	.4byte 16  @ width
 	.4byte 10  @ height
-	.4byte 0x08429018  @ border
-	.4byte 0x08429020  @ map
+	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F_Border  @ border
+	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x429178, 0x148
+gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F_Border:
+	.incbin "data/layouts/MossdeepCity_SpaceCenter_2F/border.bin"
+gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F_Blockdata:
+	.incbin "data/layouts/MossdeepCity_SpaceCenter_2F/map.bin"
 	.globl gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F
 gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F: @ 0x084292C0
 	.4byte 16  @ width
 	.4byte 10  @ height
-	.4byte 0x08429178  @ border
-	.4byte 0x08429180  @ map
+	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F_Border  @ border
+	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4292D8, 0x3830
+	.incbin "baserom_jp.gba", 0x4292d8, 0x3684
+gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Border:
+	.incbin "data/layouts/GraniteCave_StevensRoom/border.bin"
+gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Blockdata:
+	.incbin "data/layouts/GraniteCave_StevensRoom/map.bin"
 	.globl gMapLayout_GRANITE_CAVE_STEVENS_ROOM
 gMapLayout_GRANITE_CAVE_STEVENS_ROOM: @ 0x0842CB08
 	.4byte 15  @ width
 	.4byte 14  @ height
-	.4byte 0x0842C95C  @ border
-	.4byte 0x0842C964  @ map
+	.4byte gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Border  @ border
+	.4byte gMapLayout_GRANITE_CAVE_STEVENS_ROOM_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42CB20, 0x191C
+	.incbin "baserom_jp.gba", 0x42cb20, 0xe4c
+gMapLayout_JAGGED_PASS_Border:
+	.incbin "data/layouts/JaggedPass/border.bin"
+gMapLayout_JAGGED_PASS_Blockdata:
+	.incbin "data/layouts/JaggedPass/map.bin"
 	.globl gMapLayout_JAGGED_PASS
 gMapLayout_JAGGED_PASS: @ 0x0842E43C
 	.4byte 30  @ width
 	.4byte 46  @ height
-	.4byte 0x0842D96C  @ border
-	.4byte 0x0842D974  @ map
+	.4byte gMapLayout_JAGGED_PASS_Border  @ border
+	.4byte gMapLayout_JAGGED_PASS_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42E454, 0xA6C
+gMapLayout_FIERY_PATH_Border:
+	.incbin "data/layouts/FieryPath/border.bin"
+gMapLayout_FIERY_PATH_Blockdata:
+	.incbin "data/layouts/FieryPath/map.bin"
 	.globl gMapLayout_FIERY_PATH
 gMapLayout_FIERY_PATH: @ 0x0842EEC0
 	.4byte 35  @ width
 	.4byte 38  @ height
-	.4byte 0x0842E454  @ border
-	.4byte 0x0842E45C  @ map
+	.4byte gMapLayout_FIERY_PATH_Border  @ border
+	.4byte gMapLayout_FIERY_PATH_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42EED8, 0x104
+gMapLayout_RUSTBORO_CITY_FLAT2_1F_Border:
+	.incbin "data/layouts/RustboroCity_Flat2_1F/border.bin"
+gMapLayout_RUSTBORO_CITY_FLAT2_1F_Blockdata:
+	.incbin "data/layouts/RustboroCity_Flat2_1F/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_FLAT2_1F
 gMapLayout_RUSTBORO_CITY_FLAT2_1F: @ 0x0842EFDC
 	.4byte 14  @ width
 	.4byte 9  @ height
-	.4byte 0x0842EED8  @ border
-	.4byte 0x0842EEE0  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_1F_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42EFF4, 0x104
+gMapLayout_RUSTBORO_CITY_FLAT2_2F_Border:
+	.incbin "data/layouts/RustboroCity_Flat2_2F/border.bin"
+gMapLayout_RUSTBORO_CITY_FLAT2_2F_Blockdata:
+	.incbin "data/layouts/RustboroCity_Flat2_2F/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_FLAT2_2F
 gMapLayout_RUSTBORO_CITY_FLAT2_2F: @ 0x0842F0F8
 	.4byte 14  @ width
 	.4byte 9  @ height
-	.4byte 0x0842EFF4  @ border
-	.4byte 0x0842EFFC  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_2F_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42F110, 0x104
+gMapLayout_RUSTBORO_CITY_FLAT2_3F_Border:
+	.incbin "data/layouts/RustboroCity_Flat2_3F/border.bin"
+gMapLayout_RUSTBORO_CITY_FLAT2_3F_Blockdata:
+	.incbin "data/layouts/RustboroCity_Flat2_3F/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_FLAT2_3F
 gMapLayout_RUSTBORO_CITY_FLAT2_3F: @ 0x0842F214
 	.4byte 14  @ width
 	.4byte 9  @ height
-	.4byte 0x0842F110  @ border
-	.4byte 0x0842F118  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_3F_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_3F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42F22C, 0x78
+gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_Border:
+	.incbin "data/layouts/SootopolisCity_LotadAndSeedotHouse/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_Blockdata:
+	.incbin "data/layouts/SootopolisCity_LotadAndSeedotHouse/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE
 gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE: @ 0x0842F2A4
 	.4byte 8  @ width
 	.4byte 7  @ height
-	.4byte 0x0842F22C  @ border
-	.4byte 0x0842F234  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42F2BC, 0x208
+gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME_Border:
+	.incbin "data/layouts/EverGrandeCity_HallOfFame/border.bin"
+gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME_Blockdata:
+	.incbin "data/layouts/EverGrandeCity_HallOfFame/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME
 gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME: @ 0x0842F4C4
 	.4byte 15  @ width
 	.4byte 17  @ height
-	.4byte 0x0842F2BC  @ border
-	.4byte 0x0842F2C4  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42F4DC, 0xE0
+gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F_Border:
+	.incbin "data/layouts/LilycoveCity_CoveLilyMotel_1F/border.bin"
+gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_CoveLilyMotel_1F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F
 gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F: @ 0x0842F5BC
 	.4byte 12  @ width
 	.4byte 9  @ height
-	.4byte 0x0842F4DC  @ border
-	.4byte 0x0842F4E4  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42F5D4, 0xE0
+gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F_Border:
+	.incbin "data/layouts/LilycoveCity_CoveLilyMotel_2F/border.bin"
+gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F_Blockdata:
+	.incbin "data/layouts/LilycoveCity_CoveLilyMotel_2F/map.bin"
 	.globl gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F
 gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F: @ 0x0842F6B4
 	.4byte 12  @ width
 	.4byte 9  @ height
-	.4byte 0x0842F5D4  @ border
-	.4byte 0x0842F5DC  @ map
+	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F_Border  @ border
+	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x42F6CC, 0x1000
+	.incbin "baserom_jp.gba", 0x42f6cc, 0xd4
+gMapLayout_MT_PYRE_EXTERIOR_Border:
+	.incbin "data/layouts/MtPyre_Exterior/border.bin"
+gMapLayout_MT_PYRE_EXTERIOR_Blockdata:
+	.incbin "data/layouts/MtPyre_Exterior/map.bin"
 	.globl gMapLayout_MT_PYRE_EXTERIOR
 gMapLayout_MT_PYRE_EXTERIOR: @ 0x084306CC
 	.4byte 38  @ width
 	.4byte 51  @ height
-	.4byte 0x0842F7A0  @ border
-	.4byte 0x0842F7A8  @ map
+	.4byte gMapLayout_MT_PYRE_EXTERIOR_Border  @ border
+	.4byte gMapLayout_MT_PYRE_EXTERIOR_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4306E4, 0xE7C
+gMapLayout_MT_PYRE_SUMMIT_Border:
+	.incbin "data/layouts/MtPyre_Summit/border.bin"
+gMapLayout_MT_PYRE_SUMMIT_Blockdata:
+	.incbin "data/layouts/MtPyre_Summit/map.bin"
 	.globl gMapLayout_MT_PYRE_SUMMIT
 gMapLayout_MT_PYRE_SUMMIT: @ 0x08431560
 	.4byte 50  @ width
 	.4byte 37  @ height
-	.4byte 0x084306E4  @ border
-	.4byte 0x084306EC  @ map
+	.4byte gMapLayout_MT_PYRE_SUMMIT_Border  @ border
+	.4byte gMapLayout_MT_PYRE_SUMMIT_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x431578, 0x4E0
+	.incbin "baserom_jp.gba", 0x431578, 0x3e8
+gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F_Border:
+	.incbin "data/layouts/MossdeepCity_GameCorner_1F/border.bin"
+gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F_Blockdata:
+	.incbin "data/layouts/MossdeepCity_GameCorner_1F/map.bin"
 	.globl gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F
 gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F: @ 0x08431A58
 	.4byte 12  @ width
 	.4byte 10  @ height
-	.4byte 0x08431960  @ border
-	.4byte 0x08431968  @ map
+	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F_Border  @ border
+	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x431A70, 0xE0
+gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F_Border:
+	.incbin "data/layouts/MossdeepCity_GameCorner_B1F/border.bin"
+gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F_Blockdata:
+	.incbin "data/layouts/MossdeepCity_GameCorner_B1F/map.bin"
 	.globl gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F
 gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F: @ 0x08431B50
 	.4byte 12  @ width
 	.4byte 9  @ height
-	.4byte 0x08431A70  @ border
-	.4byte 0x08431A78  @ map
+	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F_Border  @ border
+	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x431B68, 0x78
+gMapLayout_SOOTOPOLIS_CITY_HOUSE1_Border:
+	.incbin "data/layouts/SootopolisCity_House1/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_HOUSE1_Blockdata:
+	.incbin "data/layouts/SootopolisCity_House1/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY_HOUSE1
 gMapLayout_SOOTOPOLIS_CITY_HOUSE1: @ 0x08431BE0
 	.4byte 8  @ width
 	.4byte 7  @ height
-	.4byte 0x08431B68  @ border
-	.4byte 0x08431B70  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE1_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE1_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x431BF8, 0x78
+gMapLayout_SOOTOPOLIS_CITY_HOUSE2_Border:
+	.incbin "data/layouts/SootopolisCity_House2/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_HOUSE2_Blockdata:
+	.incbin "data/layouts/SootopolisCity_House2/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY_HOUSE2
 gMapLayout_SOOTOPOLIS_CITY_HOUSE2: @ 0x08431C70
 	.4byte 8  @ width
 	.4byte 7  @ height
-	.4byte 0x08431BF8  @ border
-	.4byte 0x08431C00  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE2_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE2_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x431C88, 0x78
+gMapLayout_SOOTOPOLIS_CITY_HOUSE3_Border:
+	.incbin "data/layouts/SootopolisCity_House3/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_HOUSE3_Blockdata:
+	.incbin "data/layouts/SootopolisCity_House3/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY_HOUSE3
 gMapLayout_SOOTOPOLIS_CITY_HOUSE3: @ 0x08431D00
 	.4byte 8  @ width
 	.4byte 7  @ height
-	.4byte 0x08431C88  @ border
-	.4byte 0x08431C90  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x431D18, 0xB9C
+	.incbin "baserom_jp.gba", 0x431d18, 0xab4
+gMapLayout_RUSTBORO_CITY_FLAT1_1F_Border:
+	.incbin "data/layouts/RustboroCity_Flat1_1F/border.bin"
+gMapLayout_RUSTBORO_CITY_FLAT1_1F_Blockdata:
+	.incbin "data/layouts/RustboroCity_Flat1_1F/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_FLAT1_1F
 gMapLayout_RUSTBORO_CITY_FLAT1_1F: @ 0x084328B4
 	.4byte 14  @ width
 	.4byte 8  @ height
-	.4byte 0x084327CC  @ border
-	.4byte 0x084327D4  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_1F_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4328CC, 0xE8
+gMapLayout_RUSTBORO_CITY_FLAT1_2F_Border:
+	.incbin "data/layouts/RustboroCity_Flat1_2F/border.bin"
+gMapLayout_RUSTBORO_CITY_FLAT1_2F_Blockdata:
+	.incbin "data/layouts/RustboroCity_Flat1_2F/map.bin"
 	.globl gMapLayout_RUSTBORO_CITY_FLAT1_2F
 gMapLayout_RUSTBORO_CITY_FLAT1_2F: @ 0x084329B4
 	.4byte 14  @ width
 	.4byte 8  @ height
-	.4byte 0x084328CC  @ border
-	.4byte 0x084328D4  @ map
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_2F_Border  @ border
+	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_2F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4329CC, 0x2F4
+gMapLayout_EVER_GRANDE_CITY_HALL4_Border:
+	.incbin "data/layouts/EverGrandeCity_Hall4/border.bin"
+gMapLayout_EVER_GRANDE_CITY_HALL4_Blockdata:
+	.incbin "data/layouts/EverGrandeCity_Hall4/map.bin"
 	.globl gMapLayout_EVER_GRANDE_CITY_HALL4
 gMapLayout_EVER_GRANDE_CITY_HALL4: @ 0x08432CC0
 	.4byte 11  @ width
 	.4byte 34  @ height
-	.4byte 0x084329CC  @ border
-	.4byte 0x084329D4  @ map
+	.4byte gMapLayout_EVER_GRANDE_CITY_HALL4_Border  @ border
+	.4byte gMapLayout_EVER_GRANDE_CITY_HALL4_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x432CD8, 0x44CC
+	.incbin "baserom_jp.gba", 0x432cd8, 0x4414
+gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Border:
+	.incbin "data/layouts/MossdeepCity_StevensHouse/border.bin"
+gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Blockdata:
+	.incbin "data/layouts/MossdeepCity_StevensHouse/map.bin"
 	.globl gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE
 gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE: @ 0x084371A4
 	.4byte 11  @ width
 	.4byte 8  @ height
-	.4byte 0x084370EC  @ border
-	.4byte 0x084370F4  @ map
+	.4byte gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Border  @ border
+	.4byte gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4371BC, 0xD268
+	.incbin "baserom_jp.gba", 0x4371bc, 0xd15c
+gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Border:
+	.incbin "data/layouts/FallarborTownBattleTentLobby/border.bin"
+gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Blockdata:
+	.incbin "data/layouts/FallarborTownBattleTentLobby/map.bin"
 	.globl gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08444424
 	.4byte 13  @ width
 	.4byte 10  @ height
-	.4byte 0x08444318  @ border
-	.4byte 0x08444320  @ map
+	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Border  @ border
+	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x44443C, 0x58
+gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR_Border:
+	.incbin "data/layouts/FallarborTownBattleTentCorridor/border.bin"
+gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR_Blockdata:
+	.incbin "data/layouts/FallarborTownBattleTentCorridor/map.bin"
 	.globl gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR: @ 0x08444494
 	.4byte 5  @ width
 	.4byte 8  @ height
-	.4byte 0x0844443C  @ border
-	.4byte 0x08444444  @ map
+	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR_Border  @ border
+	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x4444AC, 0xBC
+gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM_Border:
+	.incbin "data/layouts/FallarborTownBattleTentBattleRoom/border.bin"
+gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM_Blockdata:
+	.incbin "data/layouts/FallarborTownBattleTentBattleRoom/map.bin"
 	.globl gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
 gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM: @ 0x08444568
 	.4byte 10  @ width
 	.4byte 9  @ height
-	.4byte 0x084444AC  @ border
-	.4byte 0x084444B4  @ map
+	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM_Border  @ border
+	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x444580, 0xF4
+gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_Border:
+	.incbin "data/layouts/VerdanturfTown_BattleTentBattleRoom/border.bin"
+gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_Blockdata:
+	.incbin "data/layouts/VerdanturfTown_BattleTentBattleRoom/map.bin"
+	.byte 0x00, 0x00
 	.globl gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM
 gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM: @ 0x08444674
 	.4byte 13  @ width
 	.4byte 9  @ height
-	.4byte 0x08444580  @ border
-	.4byte 0x08444588  @ map
+	.4byte gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_Border  @ border
+	.4byte gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x44468C, 0xC86C
+	.incbin "baserom_jp.gba", 0x44468c, 0xaf64
+gMapLayout_UNDERWATER_ROUTE105_Border:
+	.incbin "data/layouts/Underwater_Route105/border.bin"
+gMapLayout_UNDERWATER_ROUTE105_Blockdata:
+	.incbin "data/layouts/Underwater_Route105/map.bin"
 	.globl gMapLayout_UNDERWATER_ROUTE105
 gMapLayout_UNDERWATER_ROUTE105: @ 0x08450EF8
 	.4byte 40  @ width
 	.4byte 80  @ height
-	.4byte 0x0844F5F0  @ border
-	.4byte 0x0844F5F8  @ map
+	.4byte gMapLayout_UNDERWATER_ROUTE105_Border  @ border
+	.4byte gMapLayout_UNDERWATER_ROUTE105_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x450F10, 0x1908
+gMapLayout_UNDERWATER_ROUTE125_Border:
+	.incbin "data/layouts/Underwater_Route125/border.bin"
+gMapLayout_UNDERWATER_ROUTE125_Blockdata:
+	.incbin "data/layouts/Underwater_Route125/map.bin"
 	.globl gMapLayout_UNDERWATER_ROUTE125
 gMapLayout_UNDERWATER_ROUTE125: @ 0x08452818
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x08450F10  @ border
-	.4byte 0x08450F18  @ map
+	.4byte gMapLayout_UNDERWATER_ROUTE125_Border  @ border
+	.4byte gMapLayout_UNDERWATER_ROUTE125_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x452830, 0x1908
+gMapLayout_UNDERWATER_ROUTE129_Border:
+	.incbin "data/layouts/Underwater_Route129/border.bin"
+gMapLayout_UNDERWATER_ROUTE129_Blockdata:
+	.incbin "data/layouts/Underwater_Route129/map.bin"
 	.globl gMapLayout_UNDERWATER_ROUTE129
 gMapLayout_UNDERWATER_ROUTE129: @ 0x08454138
 	.4byte 80  @ width
 	.4byte 40  @ height
-	.4byte 0x08452830  @ border
-	.4byte 0x08452838  @ map
+	.4byte gMapLayout_UNDERWATER_ROUTE129_Border  @ border
+	.4byte gMapLayout_UNDERWATER_ROUTE129_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x454150, 0x5EC4
+	.incbin "baserom_jp.gba", 0x454150, 0x5e0c
+gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Border:
+	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_1F/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Blockdata:
+	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_1F/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F: @ 0x0845A014
 	.4byte 11  @ width
 	.4byte 8  @ height
-	.4byte 0x08459F5C  @ border
-	.4byte 0x08459F64  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x45A02C, 0xE0
+gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F_Border:
+	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_B1F/border.bin"
+gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F_Blockdata:
+	.incbin "data/layouts/SootopolisCity_MysteryEventsHouse_B1F/map.bin"
 	.globl gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F
 gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F: @ 0x0845A10C
 	.4byte 12  @ width
 	.4byte 9  @ height
-	.4byte 0x0845A02C  @ border
-	.4byte 0x0845A034  @ map
+	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F_Border  @ border
+	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F_Blockdata  @ map
 	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY  @ primaryTileset
 	.4byte gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY  @ secondaryTileset
 	.incbin "baserom_jp.gba", 0x45A124, 0xD0
