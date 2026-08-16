@@ -39,6 +39,29 @@ extern const u8 gUpLeftAndRightDirections[];
 extern const u8 gDownLeftAndRightDirections[];
 extern const u8 gCounterclockwiseDirections[];
 extern const u8 gClockwiseDirections[];
+extern const u8 gUpRightLeftDownDirections[];
+extern const u8 gRightLeftDownUpDirections[];
+extern const u8 gDownUpRightLeftDirections[];
+extern const u8 gLeftDownUpRightDirections[];
+extern const u8 gUpLeftRightDownDirections[];
+extern const u8 gLeftRightDownUpDirections[];
+extern const u8 gRightDownUpLeftDirections[];
+extern const u8 gLeftUpDownRightDirections[];
+extern const u8 gUpDownRightLeftDirections[];
+extern const u8 gRightLeftUpDownDirections[];
+extern const u8 gDownRightLeftUpDirections[];
+extern const u8 gRightUpDownLeftDirections[];
+extern const u8 gUpDownLeftRightDirections[];
+extern const u8 gLeftRightUpDownDirections[];
+extern const u8 gDownLeftRightUpDirections[];
+extern const u8 gUpLeftDownRightDirections[];
+extern const u8 gDownRightUpLeftDirections[];
+extern const u8 gLeftDownRightUpDirections[];
+extern const u8 gRightUpLeftDownDirections[];
+extern const u8 gUpRightDownLeftDirections[];
+extern const u8 gDownLeftUpRightDirections[];
+extern const u8 gLeftUpRightDownDirections[];
+extern const u8 gRightDownLeftUpDirections[];
 extern const s16 sMovementDelaysLong[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
 extern void (*const gUnknown_84DD88C[])(struct Sprite *);
@@ -6021,46 +6044,14 @@ __attribute__((naked)) u8 EventObjectCB2_BerryTree(struct ObjectEvent *objectEve
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceUpRightLeftDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceUpRightLeftDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090B30\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08090B18\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090B18\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090B18:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090B30: .4byte gUnknown_84E5D3C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gUpRightLeftDownDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceRightLeftDownUp(struct Sprite *sprite)
@@ -6091,46 +6082,14 @@ __attribute__((naked)) u8 MovementType_RunInPlace_callback(struct ObjectEvent *o
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceRightLeftDownUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceRightLeftDownUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090BBC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08090BA4\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090BA4\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090BA4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090BBC: .4byte gUnknown_84E5D4C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gRightLeftDownUpDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 1 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 2;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceDownUpRightLeft(struct Sprite *sprite)
@@ -6162,46 +6121,14 @@ __attribute__((naked)) u8 MovementType_WalkBackAndForth_callback(struct ObjectEv
 }
 
 
-__attribute__((naked)) u8 MovementType_WalkSequenceDownUpRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceDownUpRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090C48\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08090C30\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090C30\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090C30:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090C48: .4byte gUnknown_84E5D5C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gDownUpRightLeftDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 1 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 2;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceLeftDownUpRight(struct Sprite *sprite)
@@ -6232,46 +6159,14 @@ __attribute__((naked)) u8 MovementType_WalkInPlace_callback(struct ObjectEvent *
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceLeftDownUpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceLeftDownUpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090CD4\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08090CBC\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090CBC\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090CBC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090CD4: .4byte gUnknown_84E5D6C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gLeftDownUpRightDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceUpLeftRightDown(struct Sprite *sprite)
@@ -6302,46 +6197,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownLeftRightUp_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceUpLeftRightDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceUpLeftRightDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090D60\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08090D48\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090D48\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090D48:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090D60: .4byte gUnknown_84E5D7C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gUpLeftRightDownDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceLeftRightDownUp(struct Sprite *sprite)
@@ -6372,46 +6235,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownLeftUpRight_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceLeftRightDownUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceLeftRightDownUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090DEC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08090DD4\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090DD4\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090DD4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090DEC: .4byte gUnknown_84E5D8C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gLeftRightDownUpDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 1 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 2;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceDownUpLeftRight(struct Sprite *sprite)
@@ -6442,46 +6273,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownRightLeftUp_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceDownUpLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceDownUpLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090E78\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08090E60\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090E60\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090E60:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090E78: .4byte gUnknown_84E5B64\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gStandardDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 1 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 2;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceRightDownUpLeft(struct Sprite *sprite)
@@ -6513,46 +6312,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownRightUpLeft_callback(stru
 }
 
 
-__attribute__((naked)) u8 MovementType_WalkSequenceRightDownUpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceRightDownUpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090F04\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08090EEC\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090EEC\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090EEC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090F04: .4byte gUnknown_84E5DA8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gRightDownUpLeftDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceLeftUpDownRight(struct Sprite *sprite)
@@ -6583,46 +6350,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownUpLeftRight_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceLeftUpDownRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceLeftUpDownRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090F90\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08090F78\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08090F78\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08090F78:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090F90: .4byte gUnknown_84E5DB8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gLeftUpDownRightDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceUpDownRightLeft(struct Sprite *sprite)
@@ -6653,46 +6388,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftDownRightUp_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceUpDownRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceUpDownRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _0809101C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08091004\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08091004\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08091004:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0809101C: .4byte gUnknown_84E5DC8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gUpDownRightLeftDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 1 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 2;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceRightLeftUpDown(struct Sprite *sprite)
@@ -6723,46 +6426,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftRightDownUp_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceRightLeftUpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceRightLeftUpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _080910A8\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08091090\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08091090\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08091090:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080910A8: .4byte gUnknown_84E5DD8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gRightLeftUpDownDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 1 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 2;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceDownRightLeftUp(struct Sprite *sprite)
@@ -6793,46 +6464,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftUpDownRight_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceDownRightLeftUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceDownRightLeftUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08091134\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0809111C\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0809111C\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_0809111C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08091134: .4byte gUnknown_84E5DE8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gDownRightLeftUpDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceRightUpDownLeft(struct Sprite *sprite)
@@ -6864,46 +6503,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightDownLeftUp_callback(stru
 }
 
 
-__attribute__((naked)) u8 MovementType_WalkSequenceRightUpDownLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceRightUpDownLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _080911C0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080911A8\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080911A8\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080911A8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080911C0: .4byte gUnknown_84E5DF8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gRightUpDownLeftDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceUpDownLeftRight(struct Sprite *sprite)
@@ -6934,46 +6541,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightLeftDownUp_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceUpDownLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceUpDownLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _0809124C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08091234\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08091234\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08091234:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0809124C: .4byte gUnknown_84E5E08\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gUpDownLeftRightDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 1 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 2;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceLeftRightUpDown(struct Sprite *sprite)
@@ -7004,46 +6579,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightUpDownLeft_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceLeftRightUpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceLeftRightUpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _080912D8\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080912C0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080912C0\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080912C0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080912D8: .4byte gUnknown_84E5E18\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gLeftRightUpDownDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 1 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 2;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceDownLeftRightUp(struct Sprite *sprite)
@@ -7074,46 +6617,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpDownLeftRight_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceDownLeftRightUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceDownLeftRightUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08091364\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0809134C\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0809134C\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_0809134C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08091364: .4byte gUnknown_84E5E28\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gDownLeftRightUpDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceUpLeftDownRight(struct Sprite *sprite)
@@ -7144,46 +6655,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpLeftDownRight_callback(stru
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceUpLeftDownRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceUpLeftDownRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _080913F0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080913D8\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080913D8\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080913D8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080913F0: .4byte gUnknown_84E5E38\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gUpLeftDownRightDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceDownRightUpLeft(struct Sprite *sprite)
@@ -7215,46 +6694,14 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpRightDownLeft_callback(stru
 }
 
 
-__attribute__((naked)) u8 MovementType_WalkSequenceDownRightUpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceDownRightUpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _0809147C\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08091464\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08091464\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08091464:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0809147C: .4byte gUnknown_84E5E48\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gDownRightUpLeftDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceLeftDownRightUp(struct Sprite *sprite)
@@ -7285,46 +6732,14 @@ __attribute__((naked)) u8 MovementType_WalkSlowlyInPlace_callback(struct ObjectE
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceLeftDownRightUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceLeftDownRightUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08091508\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080914F0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080914F0\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080914F0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08091508: .4byte gUnknown_84E5E58\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gLeftDownRightUpDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceRightUpLeftDown(struct Sprite *sprite)
@@ -7355,46 +6770,14 @@ __attribute__((naked)) u8 MovementType_WanderLeftAndRight_callback(struct Object
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceRightUpLeftDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceRightUpLeftDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08091594\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0809157C\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0809157C\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_0809157C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08091594: .4byte gUnknown_84E5E68\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gRightUpLeftDownDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceUpRightDownLeft(struct Sprite *sprite)
@@ -7425,46 +6808,14 @@ __attribute__((naked)) u8 sub_080915BC(struct ObjectEvent *objectEvent, struct S
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceUpRightDownLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceUpRightDownLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08091620\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08091608\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08091608\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08091608:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08091620: .4byte gUnknown_84E5E78\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gUpRightDownLeftDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceDownLeftUpRight(struct Sprite *sprite)
@@ -7495,46 +6846,14 @@ __attribute__((naked)) u8 sub_08091648(struct ObjectEvent *objectEvent, struct S
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceDownLeftUpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceDownLeftUpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _080916AC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08091694\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08091694\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08091694:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080916AC: .4byte gUnknown_84E5E88\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gDownLeftUpRightDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.y == objectEvent->currentCoords.y)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceLeftUpRightDown(struct Sprite *sprite)
@@ -7566,46 +6885,14 @@ __attribute__((naked)) u8 GetGroundEffectFlags_TallGrassOnBeginStep(struct Objec
 }
 
 
-__attribute__((naked)) u8 MovementType_WalkSequenceLeftUpRightDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceLeftUpRightDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08091738\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _08091720\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08091720\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08091720:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08091738: .4byte gUnknown_84E5E98\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gLeftUpRightDownDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_WalkSequenceRightDownLeftUp(struct Sprite *sprite)
@@ -7636,46 +6923,14 @@ __attribute__((naked)) u8 sub_08091760(struct ObjectEvent *objectEvent, struct S
     );
 }
 
-__attribute__((naked)) u8 MovementType_WalkSequenceRightDownLeftUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementType_WalkSequenceRightDownLeftUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _080917C4\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x21\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080917AC\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x10\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080917AC\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080917AC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	bl MoveNextDirectionInSequence\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080917C4: .4byte gUnknown_84E5EA8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[4];
+    memcpy(directions, gRightDownLeftUpDirections, sizeof directions);
+    if (objectEvent->directionSequenceIndex == 2 && objectEvent->initialCoords.x == objectEvent->currentCoords.x)
+        objectEvent->directionSequenceIndex = 3;
+
+    return MoveNextDirectionInSequence(objectEvent, sprite, directions);
 }
 
 void MovementType_CopyPlayer(struct Sprite *sprite)
