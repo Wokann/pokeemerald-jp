@@ -314,16 +314,16 @@ gUnknown_85925C4: @ 0x85925C4
 gUnknown_85925CA: @ 0x85925CA
 	.incbin "baserom_jp.gba", 0x5925ca, 0xa
 
-	.globl gUnknown_85925D4
-gUnknown_85925D4: @ 0x85925D4
+	.globl sSlotMachineRandomSeeds
+sSlotMachineRandomSeeds: @ 0x85925D4
 	.incbin "baserom_jp.gba", 0x5925d4, 0xc
 
-	.globl gUnknown_85925E0
-gUnknown_85925E0: @ 0x85925E0
+	.globl sSlotMachineIds
+sSlotMachineIds: @ 0x85925E0
 	.incbin "baserom_jp.gba", 0x5925e0, 0xc
 
-	.globl gUnknown_85925EC
-gUnknown_85925EC: @ 0x85925EC
+	.globl sSlotMachineServiceDayIds
+sSlotMachineServiceDayIds: @ 0x85925EC
 	.incbin "baserom_jp.gba", 0x5925ec, 0xc
 
 	.globl gUnknown_85925F8
@@ -350,10 +350,10 @@ gUnknown_8592650: @ 0x8592650
 gUnknown_8592662: @ 0x8592662
 	.incbin "baserom_jp.gba", 0x592662, 0x12
 
-	.globl gUnknown_8592674
-gUnknown_8592674: @ 0x8592674
+	.globl sElevatorTripLength
+sElevatorTripLength: @ 0x8592674
 	.incbin "baserom_jp.gba", 0x592674, 0x9
 
-	.globl gUnknown_859267D
-gUnknown_859267D: @ 0x859267D
+	.globl sElevatorLightCycles
+sElevatorLightCycles: @ 0x859267D
 	.incbin "baserom_jp.gba", 0x59267d, 0x9

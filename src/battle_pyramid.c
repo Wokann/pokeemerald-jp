@@ -3985,7 +3985,7 @@ __attribute__((naked)) u16 GetBattlePyramidPickupItemId()
         "_081AA8BC: .4byte gSaveBlock2Ptr\n\t"
         "_081AA8C0: .4byte 0x00000CA9\n\t"
         "_081AA8C4: .4byte 0x00000E1A\n\t"
-        "_081AA8C8: .4byte gUnknown_85DF7BE\n\t"
+        "_081AA8C8: .4byte sPickupPercentages\n\t"
         "_081AA8CC: .4byte gUnknown_85DEFD4\n\t"
         "_081AA8D0:\n\t"
         "	ldr r2, _081AA8E4\n\t"

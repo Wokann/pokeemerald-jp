@@ -129,8 +129,8 @@ gUnknown_85A94B8: @ 0x85A94B8
 gUnknown_85A94CC: @ 0x85A94CC
 	.incbin "baserom_jp.gba", 0x5a94cc, 0x14
 
-	.globl gUnknown_85A94E0
-gUnknown_85A94E0: @ 0x85A94E0
+	.globl sFrontierSquaresSpiral_Positions
+sFrontierSquaresSpiral_Positions: @ 0x85A94E0
 	.incbin "baserom_jp.gba", 0x5a94e0, 0x23
 
 	.globl gUnknown_85A9503

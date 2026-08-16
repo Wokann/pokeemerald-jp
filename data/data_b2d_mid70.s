@@ -316,8 +316,8 @@ gUnknown_85BE8F0: @ 0x85BE8F0
 	.globl gUnknown_85BE910
 gUnknown_85BE910: @ 0x85BE910
 	.string "\n$$${STRING}$$$$E$$$ァ$$$$\n$$${STRING}$$$\p$$${DYNAMIC}$"
-	.globl gUnknown_85BE930
-gUnknown_85BE930: @ 0x85BE930
+	.globl sApprenticeChallengeThreshold
+sApprenticeChallengeThreshold: @ 0x85BE930
 	.incbin "baserom_jp.gba", 0x5be930, 0xa
 
 	.globl gUnknown_85BE93A

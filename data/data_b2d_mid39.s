@@ -53,8 +53,8 @@ gUnknown_8592CDC: @ 0x8592CDC
 gUnknown_8592E3C: @ 0x8592E3C
 	.incbin "baserom_jp.gba", 0x592e3c, 0x16
 
-	.globl gUnknown_8592E52
-gUnknown_8592E52: @ 0x8592E52
+	.globl sStoneMaxStepCounts
+sStoneMaxStepCounts: @ 0x8592E52
 	.incbin "baserom_jp.gba", 0x592e52, 0xa
 
 	.globl gUnknown_8592E5C

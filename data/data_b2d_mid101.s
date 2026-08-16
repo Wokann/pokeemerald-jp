@@ -396,8 +396,8 @@ gUnknown_85DF76C: @ 0x85DF76C
 	.globl gUnknown_85DF77E
 gUnknown_85DF77E: @ 0x85DF77E
 	.string "あえ$$　いお$あうか$いき$$　おく$あえかけいおきこうかさ$えけし$おくこすかけさせきこそ$くす$$けしせ$こすそ$させ$$"
-	.globl gUnknown_85DF7BE
-gUnknown_85DF7BE: @ 0x85DF7BE
+	.globl sPickupPercentages
+sPickupPercentages: @ 0x85DF7BE
 	.incbin "baserom_jp.gba", 0x5df7be, 0xa
 
 	.globl gUnknown_85DF7C8

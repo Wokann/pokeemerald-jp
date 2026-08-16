@@ -3141,9 +3141,9 @@ __attribute__((naked)) void GetSlotMachineId(void)
         "_081392EC: .4byte gSaveBlock1Ptr\n\t"
         "_081392F0: .4byte 0x00002E68\n\t"
         "_081392F4: .4byte 0x00002E6A\n\t"
-        "_081392F8: .4byte gUnknown_85925D4\n\t"
+        "_081392F8: .4byte sSlotMachineRandomSeeds\n\t"
         "_081392FC: .4byte gSpecialVar_0x8004\n\t"
-        "_08139300: .4byte gUnknown_85925E0\n\t"
+        "_08139300: .4byte sSlotMachineIds\n\t"
         "_08139304:\n\t"
         "	ldr r4, _08139318\n\t"
         "_08139306:\n\t"
@@ -3156,7 +3156,7 @@ __attribute__((naked)) void GetSlotMachineId(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08139318: .4byte gUnknown_85925EC\n\t"
+        "_08139318: .4byte sSlotMachineServiceDayIds\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4415,7 +4415,7 @@ __attribute__((naked)) void ShakeScreenInElevator(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08139B64: .4byte gUnknown_8592674\n\t"
+        "_08139B64: .4byte sElevatorTripLength\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4594,7 +4594,7 @@ __attribute__((naked)) void sub_08139C68(void)
         "	.align 2, 0\n\t"
         "_08139CB0: .4byte MoveElevatorWindowLights + 1\n\t"
         "_08139CB4: .4byte gTasks\n\t"
-        "_08139CB8: .4byte gUnknown_859267D\n\t"
+        "_08139CB8: .4byte sElevatorLightCycles\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4894,7 +4894,7 @@ __attribute__((naked)) void warp0_in_pokecenter(void)
         "	b _08139F04\n\t"
         "	.align 2, 0\n\t"
         "_08139EEC: .4byte gUnknown_2031F7C\n\t"
-        "_08139EF0: .4byte gUnknown_859267D + 0x9\n\t"
+        "_08139EF0: .4byte sElevatorLightCycles + 0x9\n\t"
         "_08139EF4: .4byte 0x0000FFFF\n\t"
         "_08139EF8:\n\t"
         "	adds r1, #2\n\t"
@@ -7283,7 +7283,7 @@ __attribute__((naked)) void Task_DeoxysRockInteraction(void)
         "	.align 2, 0\n\t"
         "_0813B084: .4byte 0x00004035\n\t"
         "_0813B088: .4byte 0x00004034\n\t"
-        "_0813B08C: .4byte gUnknown_8592E52\n\t"
+        "_0813B08C: .4byte sStoneMaxStepCounts\n\t"
         "_0813B090: .4byte gSpecialVar_Result\n\t"
         "_0813B094:\n\t"
         "	cmp r5, #0xa\n\t"

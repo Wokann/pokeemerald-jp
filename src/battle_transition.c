@@ -10811,7 +10811,7 @@ __attribute__((naked)) void Phase2_33_Func2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814AB3C: .4byte gUnknown_85A94E0\n\t"
+        "_0814AB3C: .4byte sFrontierSquaresSpiral_Positions\n\t"
         "_0814AB40: .4byte gUnknown_85A83D8\n\t"
         ".syntax divided\n\t"
     );
@@ -10907,7 +10907,7 @@ __attribute__((naked)) void Phase2_33_Func4(void)
         "	b _0814AC38\n\t"
         "	.align 2, 0\n\t"
         "_0814ABE4: .4byte gUnknown_85A83D8\n\t"
-        "_0814ABE8: .4byte gUnknown_85A94E0\n\t"
+        "_0814ABE8: .4byte sFrontierSquaresSpiral_Positions\n\t"
         "_0814ABEC:\n\t"
         "	movs r1, #0xc\n\t"
         "	ldrsh r0, [r7, r1]\n\t"
@@ -10964,7 +10964,7 @@ __attribute__((naked)) void Phase2_33_Func4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814AC5C: .4byte gUnknown_85A94E0\n\t"
+        "_0814AC5C: .4byte sFrontierSquaresSpiral_Positions\n\t"
         ".syntax divided\n\t"
     );
 }
