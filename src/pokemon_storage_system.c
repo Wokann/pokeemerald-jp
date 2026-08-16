@@ -303,6 +303,7 @@ extern bool8 sIsMonBeingMoved;
 extern u8 sLastUsedBox;
 extern u16 sMovingItemId;
 extern u8 sSavedCursorPosition;
+extern u8 sMovingMonOrigBoxId;
 extern void UpdateCloseBoxButtonFlash(void);
 extern void UpdateCloseBoxButtonTilemap(bool8 state);
 extern void UnkUtil_Run(void);
@@ -18642,41 +18643,14 @@ void StartCursorAnim(u8 anim)
     StartSpriteAnim(sStorage->cursorSprite, anim);
 }
 
-__attribute__((naked)) void sub_080CF6F4(void)
+u8 GetMovingMonOrigBoxId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080CF6FC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF6FC: .4byte gUnknown_2039A1B\n\t"
-        ".syntax divided\n\t"
-    );
+    return sMovingMonOrigBoxId;
 }
 
-__attribute__((naked)) void sub_080CF700(void)
+void SetCursorPriority(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080CF71C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CF720\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF71C: .4byte gUnknown_20399A8\n\t"
-        "_080CF720: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->cursorSprite->oam.priority = 1;
 }
 
 __attribute__((naked)) void sub_080CF724(void)
@@ -19364,7 +19338,7 @@ __attribute__((naked)) void sub_080CFBE4(void)
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080CFC48\n\t"
-        "	bl sub_080CF700\n\t"
+        "	bl SetCursorPriority\n\t"
         "	movs r0, #3\n\t"
         "	bl GetTextWindowPalette\n\t"
         "	movs r1, #0xd0\n\t"
@@ -19619,7 +19593,7 @@ __attribute__((naked)) void sub_080CFD68(void)
         "	movs r1, #0xd0\n\t"
         "	movs r2, #0x20\n\t"
         "	bl LoadPalette\n\t"
-        "	bl sub_080CF700\n\t"
+        "	bl SetCursorPriority\n\t"
         "	movs r0, #0\n\t"
         "	bl ShowBg\n\t"
         "	movs r0, #0\n\t"

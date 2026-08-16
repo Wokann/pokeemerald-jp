@@ -930,6 +930,7 @@ gUnknown_2039A1A = .;
 sIsMonBeingMoved = .;
 . += 0x1;
 gUnknown_2039A1B = .;
+sMovingMonOrigBoxId = .;
 . += 0x1;
 gUnknown_2039A1C = .;
 . += 0x1;

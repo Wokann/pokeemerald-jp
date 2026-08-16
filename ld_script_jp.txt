@@ -5625,8 +5625,8 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.GetCursorPosition);
         src/pokemon_storage_system.o(.text.sub_080CF690);
         src/pokemon_storage_system.o(.text.StartCursorAnim);
-        src/pokemon_storage_system.o(.text.sub_080CF6F4);
-        src/pokemon_storage_system.o(.text.sub_080CF700);
+        src/pokemon_storage_system.o(.text.GetMovingMonOrigBoxId);
+        src/pokemon_storage_system.o(.text.SetCursorPriority);
         src/pokemon_storage_system.o(.text.sub_080CF724);
         src/pokemon_storage_system.o(.text.sub_080CF748);
         src/pokemon_storage_system.o(.text.InitMenu);
