@@ -14272,240 +14272,72 @@ static bool8 DoJumpInPlaceAnim(struct ObjectEvent *objectEvent, struct Sprite *s
 
 
 
-__attribute__((naked)) bool8 MovementAction_Jump2Down_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Jump2Down_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_Jump2Down_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_SOUTH, JUMP_DISTANCE_FAR, JUMP_TYPE_HIGH);
+    return MovementAction_Jump2Down_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_Jump2Down_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Jump2Down_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093BE0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093BF0\n\t"
-        "_08093BE0:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093BF0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_Jump2Up_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Jump2Up_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_Jump2Up_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_NORTH, JUMP_DISTANCE_FAR, JUMP_TYPE_HIGH);
+    return MovementAction_Jump2Up_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_Jump2Up_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Jump2Up_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093C38\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093C48\n\t"
-        "_08093C38:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093C48:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_Jump2Left_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Jump2Left_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #2\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_Jump2Left_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_WEST, JUMP_DISTANCE_FAR, JUMP_TYPE_HIGH);
+    return MovementAction_Jump2Left_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_Jump2Left_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Jump2Left_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093C90\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093CA0\n\t"
-        "_08093C90:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093CA0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_Jump2Right_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Jump2Right_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #2\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_Jump2Right_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_EAST, JUMP_DISTANCE_FAR, JUMP_TYPE_HIGH);
+    return MovementAction_Jump2Right_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_Jump2Right_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Jump2Right_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08093CE8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093CF8\n\t"
-        "_08093CE8:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093CF8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 void InitMovementDelay(struct Sprite *sprite, u16 delay)
@@ -15423,268 +15255,78 @@ bool8 MovementAction_JumpRight_Step1(struct ObjectEvent *objectEvent, struct Spr
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpInPlaceDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_SOUTH, JUMP_DISTANCE_IN_PLACE, JUMP_TYPE_HIGH);
+    return MovementAction_JumpInPlaceDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094B28\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094B38\n\t"
-        "_08094B28:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094B38:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpInPlaceUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_NORTH, JUMP_DISTANCE_IN_PLACE, JUMP_TYPE_HIGH);
+    return MovementAction_JumpInPlaceUp_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094B80\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094B90\n\t"
-        "_08094B80:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094B90:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #0\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpInPlaceLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_WEST, JUMP_DISTANCE_IN_PLACE, JUMP_TYPE_HIGH);
+    return MovementAction_JumpInPlaceLeft_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094BD8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094BE8\n\t"
-        "_08094BD8:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094BE8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #0\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpInPlaceRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_EAST, JUMP_DISTANCE_IN_PLACE, JUMP_TYPE_HIGH);
+    return MovementAction_JumpInPlaceRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094C30\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094C40\n\t"
-        "_08094C30:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094C40:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceDownUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceDownUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpInPlaceDownUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_SOUTH, JUMP_DISTANCE_IN_PLACE, JUMP_TYPE_NORMAL);
+    return MovementAction_JumpInPlaceDownUp_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpInPlaceDownUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -15718,32 +15360,10 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceDownUp_Step1(struct Objec
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceUpDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceUpDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpInPlaceUpDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_NORTH, JUMP_DISTANCE_IN_PLACE, JUMP_TYPE_NORMAL);
+    return MovementAction_JumpInPlaceUpDown_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpInPlaceUpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -15778,32 +15398,10 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceUpDown_Step1(struct Objec
 }
 
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceLeftRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceLeftRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #0\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpInPlaceLeftRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_WEST, JUMP_DISTANCE_IN_PLACE, JUMP_TYPE_NORMAL);
+    return MovementAction_JumpInPlaceLeftRight_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpInPlaceLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -15837,32 +15435,10 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceLeftRight_Step1(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpInPlaceRightLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpInPlaceRightLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #0\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpInPlaceRightLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_EAST, JUMP_DISTANCE_IN_PLACE, JUMP_TYPE_NORMAL);
+    return MovementAction_JumpInPlaceRightLeft_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpInPlaceRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
