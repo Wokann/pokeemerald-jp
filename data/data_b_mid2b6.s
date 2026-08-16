@@ -37,4 +37,19 @@ gTrainerBackPicTable: @ 0x82D95DC
 
 	.globl gUnknown_82D961C
 gUnknown_82D961C: @ 0x82D961C
-	.incbin "baserom_jp.gba", 0x2d961c, 0x40
+	.4byte gTrainerPalette_Brendan
+	.4byte 0
+	.4byte gTrainerPalette_May
+	.4byte 1
+	.4byte gUnknown_82D961C_2_Pal
+	.4byte 2
+	.4byte gUnknown_82D961C_3_Pal
+	.4byte 3
+	.4byte gTrainerPalette_RubySapphireBrendan
+	.4byte 4
+	.4byte gTrainerPalette_RubySapphireMay
+	.4byte 5
+	.4byte gTrainerPalette_Wally
+	.4byte 6
+	.4byte gTrainerPalette_Steven
+	.4byte 7

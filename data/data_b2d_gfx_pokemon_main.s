@@ -7418,4 +7418,10 @@ gTrainerBackPic_Wally: @ 0x8D73524
 	.globl gTrainerBackPic_Steven
 gTrainerBackPic_Steven: @ 0x8D75524
 	.incbin "graphics/trainers/back_pics/Steven.4bpp"
-	.incbin "baserom_jp.gba", 0xD77524, 0x470
+	.globl gUnknown_82D961C_2_Pal
+gUnknown_82D961C_2_Pal: @ 0x8D77524
+	.incbin "graphics/trainers/palettes/gUnknown_82D961C_2.gbapal.lz"
+	.globl gUnknown_82D961C_3_Pal
+gUnknown_82D961C_3_Pal: @ 0x8D7754C
+	.incbin "graphics/trainers/palettes/gUnknown_82D961C_3.gbapal.lz"
+	.incbin "baserom_jp.gba", 0xD77574, 0x420
