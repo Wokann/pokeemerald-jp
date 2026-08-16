@@ -1155,6 +1155,10 @@ void CreateReelTimeNumberSprites(void);
 void CreateReelTimeShadowSprites(void);
 void CreateReelTimeNumberGapSprite(void);
 void GetReeltimeDraw(void);
+void CreateReelTimeBoltSprites(void);
+void CreateReelTimePikachuAuraSprites(void);
+void SetReelTimeBoltDelay(s16 delay);
+void SetReelTimePikachuAuraFlashDelay(s16 delay);
 void FlashMatchLine(u8 spriteId);
 void CreateInvisibleFlashMatchLineSprites(void);
 static bool8 TryStopMatchLineFlashing(u8 spriteId);
@@ -4069,201 +4073,91 @@ static void ReelTime_WindowEnter(struct Task *task)
 #undef tTimer1
 #undef tExplodeChecks
 
-__attribute__((naked)) void ReelTime_WaitStartPikachu(struct Task *task)
+#define tState         data[0]
+#define tReelSpeed     data[1]
+#define tTimer3        data[2]
+#define tRtReelSpeed   data[4]
+#define tTimer2        data[4]
+#define tTimer1        data[5]
+#define tExplodeChecks data[6]
+
+__attribute__((section(".rodata.sReelTimePikachuAnimIds")))
+static const u8 sReelTimePikachuAnimIds[] = {1, 1, 2, 2};
+
+__attribute__((section(".rodata.sReelTimeBoltDelays")))
+static const s16 sReelTimeBoltDelays[] = {64, 48, 24, 8};
+
+__attribute__((section(".rodata.sPikachuAuraFlashDelays")))
+static const s16 sPikachuAuraFlashDelays[] = {10, 8, 6, 4};
+
+static void ReelTime_WaitStartPikachu(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReel\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	ble _0812D646\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	bl CreateReelTimeSprites1\n\t"
-        "	bl CreateReelTimeSprite2\n\t"
-        "_0812D646:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    AdvanceReeltimeReel(task->tRtReelSpeed >> 8);
+    if (++task->tTimer1 >= 60)
+    {
+        task->tState++; // RT_TASK_PIKA_SPEEDUP1
+        CreateReelTimeBoltSprites();
+        CreateReelTimePikachuAuraSprites();
+    }
 }
 
-__attribute__((naked)) void ReelTime_PikachuSpeedUp1(struct Task *task)
+static void ReelTime_PikachuSpeedUp1(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	ldr r1, _0812D6E8\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	add r0, sp, #4\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _0812D6EC\n\t"
-        "	movs r2, #8\n\t"
-        "	bl memcpy\n\t"
-        "	add r6, sp, #0xc\n\t"
-        "	ldr r1, _0812D6F0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl memcpy\n\t"
-        "	ldrh r0, [r7, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReel\n\t"
-        "	ldrh r0, [r7, #0x10]\n\t"
-        "	subs r0, #4\n\t"
-        "	strh r0, [r7, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r5, #4\n\t"
-        "	subs r5, r5, r0\n\t"
-        "	lsls r4, r5, #1\n\t"
-        "	add r8, r4\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	bl sub_0812EA54\n\t"
-        "	adds r6, r6, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	bl sub_0812EBBC\n\t"
-        "	ldr r0, _0812D6F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812D6F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl StartSpriteAnimIfDifferent\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	cmp r0, r1\n\t"
-        "	bgt _0812D6DC\n\t"
-        "	ldrh r0, [r7, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r7, #8]\n\t"
-        "	strh r1, [r7, #0x10]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r7, #0x12]\n\t"
-        "_0812D6DC:\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D6E8: .4byte gUnknown_8584544\n\t"
-        "_0812D6EC: .4byte gUnknown_8584548\n\t"
-        "_0812D6F0: .4byte gUnknown_8584550\n\t"
-        "_0812D6F4: .4byte sSlotMachine\n\t"
-        "_0812D6F8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    u8 pikachuAnimIds[ARRAY_COUNT(sReelTimePikachuAnimIds)];
+    s16 reelTimeBoltDelays[ARRAY_COUNT(sReelTimeBoltDelays)];
+    s16 pikachuAuraFlashDelays[ARRAY_COUNT(sPikachuAuraFlashDelays)];
+
+    memcpy(pikachuAnimIds, sReelTimePikachuAnimIds, sizeof(sReelTimePikachuAnimIds));
+    memcpy(reelTimeBoltDelays, sReelTimeBoltDelays, sizeof(sReelTimeBoltDelays));
+    memcpy(pikachuAuraFlashDelays, sPikachuAuraFlashDelays, sizeof(sPikachuAuraFlashDelays));
+
+    AdvanceReeltimeReel(task->tRtReelSpeed >> 8);
+    // gradually slow down the reel
+    task->tRtReelSpeed -= 4;
+    i = 4 - (task->tRtReelSpeed >> 8);
+    SetReelTimeBoltDelay(reelTimeBoltDelays[i]);
+    SetReelTimePikachuAuraFlashDelay(pikachuAuraFlashDelays[i]);
+    StartSpriteAnimIfDifferent(&gSprites[sSlotMachine->reelTimePikachuSpriteId], pikachuAnimIds[i]);
+    // once speed goes below 256, go to next ReelTime task and keep the speed level
+    if (task->tRtReelSpeed <= 0x100)
+    {
+        task->tState++; // RT_TASK_PIKA_SPEEDUP2
+        task->tRtReelSpeed = 0x100;
+        task->tTimer1 = 0;
+    }
 }
 
-__attribute__((naked)) void ReelTime_PikachuSpeedUp2(struct Task *task)
+static void ReelTime_PikachuSpeedUp2(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReel\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x4f\n\t"
-        "	ble _0812D740\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_0812EBBC\n\t"
-        "	ldr r0, _0812D748\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812D74C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl StartSpriteAnimIfDifferent\n\t"
-        "_0812D740:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D748: .4byte sSlotMachine\n\t"
-        "_0812D74C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    AdvanceReeltimeReel(task->tRtReelSpeed >> 8);
+    if (++task->tTimer1 >= 80)
+    {
+        task->tState++; // RT_TASK_WAIT_REEL
+        task->tTimer1 = 0;
+        SetReelTimePikachuAuraFlashDelay(2);
+        StartSpriteAnimIfDifferent(&gSprites[sSlotMachine->reelTimePikachuSpriteId], 3);
+    }
 }
 
-__attribute__((naked)) void ReelTime_WaitReel(struct Task *task)
+static void ReelTime_WaitReel(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReel\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	adds r0, #0x80\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x4f\n\t"
-        "	ble _0812D77C\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "_0812D77C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    AdvanceReeltimeReel(task->tRtReelSpeed >> 8);
+    task->tRtReelSpeed = (u8)task->tRtReelSpeed + 0x80;
+    if (++task->tTimer1 >= 80)
+    {
+        task->tState++; // RT_TASK_CHECK_EXPLODE
+        task->tTimer1 = 0;
+    }
 }
+
+#undef tState
+#undef tReelSpeed
+#undef tTimer3
+#undef tRtReelSpeed
+#undef tTimer2
+#undef tTimer1
+#undef tExplodeChecks
 
 __attribute__((naked)) void ReelTime_CheckExplode(struct Task *task)
 {

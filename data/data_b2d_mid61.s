@@ -528,19 +528,7 @@ gUnknown_85843C8: @ 0x85843C8
 gUnknown_85843D0: @ 0x85843D0
 	.incbin "baserom_jp.gba", 0x5843d0, 0x4
 
-	.section .rodata.8584544
-	.globl gUnknown_8584544
-gUnknown_8584544: @ 0x8584544
-	.incbin "baserom_jp.gba", 0x584544, 0x4
-
-	.globl gUnknown_8584548
-gUnknown_8584548: @ 0x8584548
-	.incbin "baserom_jp.gba", 0x584548, 0x8
-
-	.globl gUnknown_8584550
-gUnknown_8584550: @ 0x8584550
-	.incbin "baserom_jp.gba", 0x584550, 0x8
-
+	.section .rodata.8584558
 	.globl sDigitalDisplayTasks
 sDigitalDisplayTasks: @ 0x8584558
 	.4byte InfoBox_FadeIn + 1, InfoBox_WaitFade + 1, InfoBox_DrawWindow + 1, InfoBox_WaitFade + 1, InfoBox_AddText + 1, InfoBox_WaitFade + 1, InfoBox_WaitInput + 1, InfoBox_WaitFade + 1
