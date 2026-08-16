@@ -5143,7 +5143,7 @@ sPlayerNotOnBikeFuncs: @ 0x846F8B0
 
 	.globl sAcroBikeTrickMetatiles
 sAcroBikeTrickMetatiles: @ 0x846F8BC
-	.incbin "baserom_jp.gba", 0x46f8bc, 0x14
+	.4byte MetatileBehavior_IsBumpySlope + 1, MetatileBehavior_IsIsolatedVerticalRail + 1, MetatileBehavior_IsIsolatedHorizontalRail + 1, MetatileBehavior_IsVerticalRail + 1, MetatileBehavior_IsHorizontalRail + 1
 
 	.globl sAcroBikeTrickCollisionTypes
 sAcroBikeTrickCollisionTypes: @ 0x846F8D0
@@ -5156,7 +5156,7 @@ sPlayerAvatarTransitionFuncs: @ 0x846F8D8
 
 	.globl sArrowWarpMetatileBehaviorChecks
 sArrowWarpMetatileBehaviorChecks: @ 0x846F8F8
-	.incbin "baserom_jp.gba", 0x46f8f8, 0x10
+	.4byte MetatileBehavior_IsSouthArrowWarp + 1, MetatileBehavior_IsNorthArrowWarp + 1, MetatileBehavior_IsWestArrowWarp + 1, MetatileBehavior_IsEastArrowWarp + 1
 
 	.globl gUnknown_846F908
 gUnknown_846F908: @ 0x846F908
