@@ -129,15 +129,15 @@ sText_TimeRecordEmpty: @ 0x85FB960
 
 	.globl gUnknown_85FB96C
 gUnknown_85FB96C: @ 0x85FB96C
-	.incbin "baserom_jp.gba", 0x5fb96c, 0x18
+	.4byte 0x00006400, 0x00000000, 0x00110103, 0x00000001, 0x00000000, 0x00000000
 
 	.globl gUnknown_85FB984
 gUnknown_85FB984: @ 0x85FB984
-	.incbin "baserom_jp.gba", 0x5fb984, 0x10
+	.4byte 0x0000003E, 0x0000003F, 0x00000040, 0x00000041
 
 	.globl gUnknown_85FB994
 gUnknown_85FB994: @ 0x85FB994
-	.incbin "baserom_jp.gba", 0x5fb994, 0x8
+	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x00, 0x00
 
 	.globl gUnknown_85FB99C
 gUnknown_85FB99C: @ 0x85FB99C
