@@ -816,6 +816,28 @@ enum {
 };
 
 enum {
+    RT_TASK_INIT,
+    RT_TASK_WINDOW_ENTER,
+    RT_TASK_WAIT_START_PIKA,
+    RT_TASK_PIKA_SPEEDUP1,
+    RT_TASK_PIKA_SPEEDUP2,
+    RT_TASK_WAIT_REEL,
+    RT_TASK_CHECK_EXPLODE,
+    RT_TASK_LAND,
+    RT_TASK_PIKA_REACT,
+    RT_TASK_WAIT_CLEAR_POWER,
+    RT_TASK_CLOSE_WINDOW_SUCCESS,
+    RT_TASK_DESTROY_SPRITES,
+    RT_TASK_SET_REEL_SPEED,
+    RT_TASK_END_SUCCESS,
+    RT_TASK_EXPLODE,
+    RT_TASK_WAIT_EXPLODE,
+    RT_TASK_WAIT_SMOKE,
+    RT_TASK_CLOSE_WINDOW_FAILURE,
+    RT_TASK_END_FAILURE,
+};
+
+enum {
     MATCH_CHERRY,        // Cherry in center of first reel
     MATCH_TOPBOT_CHERRY, // Cherry in top/bottom of first reel
     MATCH_REPLAY,
@@ -1107,6 +1129,32 @@ static void PikaPowerBolt_ClearAll(struct Task *task);
 static void ResetPikaPowerBoltTask(struct Task *task);
 u8 CreatePikaPowerBoltSprite(s16 x, s16 y);
 void DestroyPikaPowerBoltSprite(u8 spriteId);
+static void Task_ReelTime(u8 taskId);
+static void ReelTime_Init(struct Task *task);
+static void ReelTime_WindowEnter(struct Task *task);
+static void ReelTime_WaitStartPikachu(struct Task *task);
+static void ReelTime_PikachuSpeedUp1(struct Task *task);
+static void ReelTime_PikachuSpeedUp2(struct Task *task);
+static void ReelTime_WaitReel(struct Task *task);
+static void ReelTime_CheckExplode(struct Task *task);
+static void ReelTime_LandOnOutcome(struct Task *task);
+static void ReelTime_PikachuReact(struct Task *task);
+static void ReelTime_WaitClearPikaPower(struct Task *task);
+static void ReelTime_CloseWindow(struct Task *task);
+static void ReelTime_DestroySprites(struct Task *task);
+static void ReelTime_SetReelSpeed(struct Task *task);
+static void ReelTime_EndSuccess(struct Task *task);
+static void ReelTime_ExplodeMachine(struct Task *task);
+static void ReelTime_WaitExplode(struct Task *task);
+static void ReelTime_WaitSmoke(struct Task *task);
+static void ReelTime_EndFailure(struct Task *task);
+void LoadReelTimeWindowTilemap(s16 a0, s16 a1);
+void CreateReelTimeMachineSprites(void);
+void CreateReelTimePikachuSprite(void);
+void CreateReelTimeNumberSprites(void);
+void CreateReelTimeShadowSprites(void);
+void CreateReelTimeNumberGapSprite(void);
+void GetReeltimeDraw(void);
 void FlashMatchLine(u8 spriteId);
 void CreateInvisibleFlashMatchLineSprites(void);
 static bool8 TryStopMatchLineFlashing(u8 spriteId);
@@ -3918,200 +3966,108 @@ void LoadPikaPowerMeter(u8 bolts)
 #undef tTimer
 #undef tAnimating
 
-__attribute__((naked)) void BeginReelTime(void)
+#define tState         data[0]
+#define tReelSpeed     data[1]
+#define tTimer3        data[2]
+#define tRtReelSpeed   data[4]
+#define tTimer2        data[4]
+#define tTimer1        data[5]
+#define tExplodeChecks data[6]
+
+__attribute__((section(".rodata.sReelTimeTasks")))
+static void (*const sReelTimeTasks[])(struct Task *task) =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812D4D8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl _call_via_r4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D4D8: .4byte Task_ReelTime + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    ReelTime_Init,
+    ReelTime_WindowEnter,
+    ReelTime_WaitStartPikachu,
+    ReelTime_PikachuSpeedUp1,
+    ReelTime_PikachuSpeedUp2,
+    ReelTime_WaitReel,
+    ReelTime_CheckExplode,
+    ReelTime_LandOnOutcome,
+    ReelTime_PikachuReact,
+    ReelTime_WaitClearPikaPower,
+    ReelTime_CloseWindow,
+    ReelTime_DestroySprites,
+    ReelTime_SetReelSpeed,
+    ReelTime_EndSuccess,
+    ReelTime_ExplodeMachine,
+    ReelTime_WaitExplode,
+    ReelTime_WaitSmoke,
+    ReelTime_CloseWindow,
+    ReelTime_EndFailure,
+};
+
+void BeginReelTime(void)
+{
+    u8 taskId = CreateTask(Task_ReelTime, 7);
+    Task_ReelTime(taskId);
 }
 
-__attribute__((naked)) bool8 IsReelTimeTaskDone(void)
+bool8 IsReelTimeTaskDone(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812D4F0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _0812D4F4\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812D4F6\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D4F0: .4byte Task_ReelTime + 1\n\t"
-        "_0812D4F4:\n\t"
-        "	movs r0, #1\n\t"
-        "_0812D4F6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FindTaskIdByFunc(Task_ReelTime) == TAIL_SENTINEL)
+        return TRUE;
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_ReelTime(u8 taskId)
+static void Task_ReelTime(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _0812D524\n\t"
-        "	ldr r2, _0812D528\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D524: .4byte sReelTimeTasks\n\t"
-        "_0812D528: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    sReelTimeTasks[gTasks[taskId].tState](&gTasks[taskId]);
 }
 
-__attribute__((naked)) void ReelTime_Init(struct Task *task)
+static void ReelTime_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _0812D598\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1, #0xa]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	strh r2, [r1, #0x14]\n\t"
-        "	strh r2, [r1, #0x16]\n\t"
-        "	ldrh r1, [r0, #8]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	strh r2, [r0, #0xa]\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	strh r1, [r0, #0xc]\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	strh r1, [r0, #0x10]\n\t"
-        "	ldr r0, _0812D59C\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, _0812D5A0\n\t"
-        "	strh r2, [r0]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x16\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_0812DC18\n\t"
-        "	bl sub_0812E484\n\t"
-        "	bl sub_0812E34C\n\t"
-        "	bl sub_0812E660\n\t"
-        "	bl sub_0812E71C\n\t"
-        "	bl sub_0812E7DC\n\t"
-        "	bl GetReeltimeDraw\n\t"
-        "	bl StopMapMusic\n\t"
-        "	movs r0, #0xc4\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl PlayNewMapMusic\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D598: .4byte sSlotMachine\n\t"
-        "_0812D59C: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812D5A0: .4byte gSpriteCoordOffsetY\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->reelTimeSpinsLeft = 0;
+    sSlotMachine->reeltimePixelOffset = 0;
+    sSlotMachine->reeltimePosition = 0;
+    task->tState++; // RT_TASK_WINDOW_ENTER
+    task->data[1] = 0;
+    task->data[2] = 30;
+    task->tRtReelSpeed = 1280;
+    gSpriteCoordOffsetX = 0;
+    gSpriteCoordOffsetY = 0;
+    SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+    SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+    LoadReelTimeWindowTilemap(REG_OFFSET_BG3VOFS, 0);
+    CreateReelTimeMachineSprites();
+    CreateReelTimePikachuSprite();
+    CreateReelTimeNumberSprites();
+    CreateReelTimeShadowSprites();
+    CreateReelTimeNumberGapSprite();
+    GetReeltimeDraw();
+    StopMapMusic();
+    PlayNewMapMusic(MUS_ROULETTE);
 }
 
-__attribute__((naked)) void ReelTime_WindowEnter(struct Task *task)
+static void ReelTime_WindowEnter(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0812D614\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	adds r1, #8\n\t"
-        "	strh r1, [r4, #0xa]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	adds r0, #0xf0\n\t"
-        "	movs r2, #0xff\n\t"
-        "	ands r0, r2\n\t"
-        "	lsrs r5, r0, #3\n\t"
-        "	ldr r0, _0812D618\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl SetGpuReg\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r2, r0\n\t"
-        "	beq _0812D5F2\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x12\n\t"
-        "	bgt _0812D5F2\n\t"
-        "	strh r5, [r4, #0xc]\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x13\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	movs r0, #0xe\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_0812DC18\n\t"
-        "_0812D5F2:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xc7\n\t"
-        "	ble _0812D604\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	strh r1, [r4, #0xe]\n\t"
-        "_0812D604:\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl AdvanceReeltimeReel\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D614: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812D618: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 r3;
+    gSpriteCoordOffsetX -= 8;
+    task->data[1] += 8;
+    r3 = ((task->data[1] + 240) & 0xff) >> 3;
+    SetGpuReg(REG_OFFSET_BG1HOFS, task->data[1] & 0x1ff);
+    if (r3 != task->data[2] && task->data[3] <= 18)
+    {
+        task->data[2] = r3;
+        task->data[3] = task->data[1] >> 3;
+        LoadReelTimeWindowTilemap(r3, task->data[3]);
+    }
+    if (task->data[1] >= 200)
+    {
+        task->tState++; // RT_TASK_WAIT_START_PIKA
+        task->data[3] = 0;
+    }
+    AdvanceReeltimeReel(task->tRtReelSpeed >> 8);
 }
+
+#undef tState
+#undef tReelSpeed
+#undef tTimer3
+#undef tRtReelSpeed
+#undef tTimer2
+#undef tTimer1
+#undef tExplodeChecks
 
 __attribute__((naked)) void ReelTime_WaitStartPikachu(struct Task *task)
 {

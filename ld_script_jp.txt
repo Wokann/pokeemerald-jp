@@ -9350,7 +9350,8 @@ SECTIONS {
         src/slot_machine.o(.rodata.sReelButtonOffsets);
         src/slot_machine.o(.rodata.sPikaPowerBoltTasks);
         src/slot_machine.o(.rodata.sPikaPowerTileTable);
-        data/data_b2d_mid61.o(.rodata.85844F8);
+        src/slot_machine.o(.rodata.sReelTimeTasks);
+        data/data_b2d_mid61.o(.rodata.8584544);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/slot_machine.o(.rodata.sReelSymbols);

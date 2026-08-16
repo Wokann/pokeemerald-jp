@@ -10176,8 +10176,8 @@ slot_machine.s
 0812d3a4 ResetPikaPowerBoltTask ResetPikaPowerBoltTask
 0812d3c4 LoadPikaPowerMeter LoadPikaPowerMeter
 0812d4bc BeginReelTime BeginReelTime
-0812d4dc slot_machine.s IsFinalTask_RunReelTimeActions
-0812d4fc RunReeltimeActions Task_InfoBox
+0812d4dc IsReelTimeTaskDone IsReelTimeTaskDone
+0812d4fc Task_ReelTime Task_ReelTime
 0812d52c ReelTime_Init ReelTime_Init
 0812d5a4 ReelTime_WindowEnter ReelTime_WindowEnter
 0812d61c ReelTime_WaitStartPikachu ReelTime_WaitStartPikachu
