@@ -11067,60 +11067,23 @@ __attribute__((naked)) u8 MovementType_Invisible_callback(struct ObjectEvent *ob
     );
 }
 
-__attribute__((naked)) bool8 MovementType_Invisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_Invisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ObjectEventSetSingleMovement\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    ObjectEventSetSingleMovement(objectEvent, sprite, GetFaceDirectionMovementAction(objectEvent->facingDirection));
+    objectEvent->invisible = TRUE;
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementType_Invisible_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_Invisible_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ObjectEventExecSingleMovementAction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809228E\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08092294\n\t"
-        "_0809228E:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "_08092294:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventExecSingleMovementAction(objectEvent, sprite))
+    {
+        sprite->sTypeFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
