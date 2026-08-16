@@ -43,35 +43,83 @@ sConditionSparkle_Pal: @ 0x85F9D58
 
 	.globl gUnknown_85FA0D8
 gUnknown_85FA0D8: @ 0x85FA0D8
-	.incbin "baserom_jp.gba", 0x5fa0d8, 0x7c0
+	.incbin "baserom_jp.gba", 0x5fa0d8, 0x798
+
+	.globl sOam_ConditionMonPic
+sOam_ConditionMonPic: @ 0x85FA870
+	.4byte 0xC0000000  @ shape=0, size=3 (64x64), rest zeroed
+	.hword 0x0400, 0x0000  @ tileNum=0, priority=1, paletteNum=0, affineParam=0
+
+	.globl sOam_ConditionSelectionIcon
+sOam_ConditionSelectionIcon: @ 0x85FA878
+	.4byte 0x40000000  @ size=1 (16x16), rest zeroed
+	.hword 0x0800, 0x0000  @ tileNum=0, priority=2, paletteNum=0, affineParam=0
+
+	.globl sAnim_ConditionSelectionIcon_Selected
+sAnim_ConditionSelectionIcon_Selected: @ 0x85FA880
+	.hword 0x0000, 0x0005  @ ANIMCMD_FRAME(0, 5)
+	.hword 0xFFFF, 0x0000  @ ANIMCMD_END
+
+	.globl sAnim_ConditionSelectionIcon_Unselected
+sAnim_ConditionSelectionIcon_Unselected: @ 0x85FA888
+	.hword 0x0004, 0x0005  @ ANIMCMD_FRAME(4, 5)
+	.hword 0xFFFF, 0x0000  @ ANIMCMD_END
+
+	.globl sAnims_ConditionSelectionIcon
+sAnims_ConditionSelectionIcon: @ 0x85FA890
+	.4byte sAnim_ConditionSelectionIcon_Selected, sAnim_ConditionSelectionIcon_Unselected
 
 	.globl sConditionMonPicSheetDescriptor
 sConditionMonPicSheetDescriptor: @ 0x85FA898
-	.incbin "baserom_jp.gba", 0x5fa898, 0x8
+	.4byte 0
+	.hword 0x0800, 0x0064
 
 	.globl sConditionMonPicTemplateDescriptor
 sConditionMonPicTemplateDescriptor: @ 0x85FA8A0
-	.incbin "baserom_jp.gba", 0x5fa8a0, 0x18
+	.hword 0x0064, 0x0064
+	.4byte sOam_ConditionMonPic
+	.4byte gDummySpriteAnimTable
+	.4byte 0
+	.4byte gDummySpriteAffineAnimTable
+	.4byte SpriteCallbackDummy
 
 	.globl sConditionMonPicPalDescriptor
 sConditionMonPicPalDescriptor: @ 0x85FA8B8
-	.incbin "baserom_jp.gba", 0x5fa8b8, 0x8
+	.4byte 0
+	.hword 0x0064, 0x0000
 
 	.globl sConditionSelectionIconsSheets
 sConditionSelectionIconsSheets: @ 0x85FA8C0
-	.incbin "graphics/pokenav_conditions/sConditionSelectionIconsSheets.bin"
+	.4byte sConditionPokeball_Gfx
+	.hword 0x0100, 0x0065
+	.4byte sConditionPokeballPlaceholder_Gfx
+	.hword 0x0020, 0x0067
+	.4byte sConditionCancel_Gfx
+	.hword 0x0100, 0x0066
+	.4byte 0, 0
 
 	.globl sConditionSelectionIconsPals
 sConditionSelectionIconsPals: @ 0x85FA8E0
-	.incbin "graphics/pokenav_conditions/sConditionSelectionIconsPals.bin"
+	.4byte sConditionPokeballPal
+	.hword 0x0065, 0x0000
+	.4byte sConditionCancelPal
+	.hword 0x0066, 0x0000
+	.4byte 0
+	.hword 0x0000, 0x0000
 
 	.globl sConditionSelectionIconsTemplate
 sConditionSelectionIconsTemplate: @ 0x85FA8F8
-	.incbin "baserom_jp.gba", 0x5fa8f8, 0x18
+	.hword 0x0065, 0x0065
+	.4byte sOam_ConditionSelectionIcon
+	.4byte sAnims_ConditionSelectionIcon
+	.4byte 0
+	.4byte gDummySpriteAffineAnimTable
+	.4byte SpriteCallbackDummy
 
 	.globl sConditionSparkleSheetDescriptor
 sConditionSparkleSheetDescriptor: @ 0x85FA910
-	.incbin "baserom_jp.gba", 0x5fa910, 0x8
+	.4byte sConditionSparkle_Pal
+	.hword 0x0380, 0x0068
 
 	.globl sConditionSparklePalDescriptor
 sConditionSparklePalDescriptor: @ 0x85FA918
