@@ -1197,6 +1197,13 @@ extern const struct SpriteTemplate sSpriteTemplate_ReelSymbol;
 extern const struct SpriteTemplate sSpriteTemplate_CoinNumber;
 extern const struct SpriteTemplate sSpriteTemplate_ReelBackground;
 extern const struct SubspriteTable sSubspriteTable_ReelBackground[];
+extern const struct SpriteTemplate sSpriteTemplate_ReelTimePikachu;
+extern const struct SpriteTemplate sSpriteTemplate_ReelTimeMachineAntennae;
+extern const struct SpriteTemplate sSpriteTemplate_ReelTimeMachine;
+extern const struct SpriteTemplate sSpriteTemplate_BrokenReelTimeMachine;
+extern const struct SubspriteTable sSubspriteTable_ReelTimeMachineAntennae[];
+extern const struct SubspriteTable sSubspriteTable_ReelTimeMachine[];
+extern const struct SubspriteTable sSubspriteTable_BrokenReelTimeMachine[];
 static void EndDigitalDisplayScene_StopReel(void);
 static void EndDigitalDisplayScene_Win(void);
 static void EndDigitalDisplayScene_InsertBet(void);
@@ -4958,410 +4965,103 @@ void CreateReelBackgroundSprite(void)
     SetSubspriteTables(&gSprites[spriteId], sSubspriteTable_ReelBackground);
 }
 
-__attribute__((naked)) void CreateReelTimePikachuSprite(void)
+void CreateReelTimePikachuSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	ldr r4, _0812E3E4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812E360\n\t"
-        "	movs r0, #0x28\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "_0812E360:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r0, _0812E3E8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	str r1, [r2]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	strh r3, [r2, #4]\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	strh r3, [r2, #0xc]\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #5\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	str r0, [r2, #0x10]\n\t"
-        "	strh r3, [r2, #0x14]\n\t"
-        "	movs r5, #0xc0\n\t"
-        "	lsls r5, r5, #5\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	str r0, [r2, #0x18]\n\t"
-        "	strh r3, [r2, #0x1c]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [r2, #0x20]\n\t"
-        "	strh r3, [r2, #0x24]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _0812E3EC\n\t"
-        "	ldm r0!, {r3, r4, r5}\n\t"
-        "	stm r1!, {r3, r4, r5}\n\t"
-        "	ldm r0!, {r3, r4, r5}\n\t"
-        "	stm r1!, {r3, r4, r5}\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	movs r1, #0x8c\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0812E3F0\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r3, [r2, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r2, #5]\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r3, #2\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r2]\n\t"
-        "	ldr r1, _0812E3F4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x3f\n\t"
-        "	strb r0, [r1]\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E3E4: .4byte sImageTable_ReelTimePikachu\n\t"
-        "_0812E3E8: .4byte sReelTimeGfxPtr\n\t"
-        "_0812E3EC: .4byte gUnknown_8584CAC\n\t"
-        "_0812E3F0: .4byte gSprites\n\t"
-        "_0812E3F4: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteTemplate spriteTemplate;
+    u8 spriteId;
+    if (sImageTable_ReelTimePikachu == NULL)
+        sImageTable_ReelTimePikachu = AllocZeroed(sizeof(struct SpriteFrameImage) * 5);
+
+    sImageTable_ReelTimePikachu[0].data = sReelTimeGfxPtr + (0 * 0x800);
+    sImageTable_ReelTimePikachu[0].size = 0x800;
+    sImageTable_ReelTimePikachu[1].data = sReelTimeGfxPtr + (1 * 0x800);
+    sImageTable_ReelTimePikachu[1].size = 0x800;
+    sImageTable_ReelTimePikachu[2].data = sReelTimeGfxPtr + (2 * 0x800);
+    sImageTable_ReelTimePikachu[2].size = 0x800;
+    sImageTable_ReelTimePikachu[3].data = sReelTimeGfxPtr + (3 * 0x800);
+    sImageTable_ReelTimePikachu[3].size = 0x800;
+    sImageTable_ReelTimePikachu[4].data = sReelTimeGfxPtr + (4 * 0x800);
+    sImageTable_ReelTimePikachu[4].size = 0x800;
+
+    spriteTemplate = sSpriteTemplate_ReelTimePikachu;
+    spriteTemplate.images = sImageTable_ReelTimePikachu;
+    spriteId = CreateSprite(&spriteTemplate, 280, 80, 1);
+    gSprites[spriteId].oam.priority = 1;
+    gSprites[spriteId].coordOffsetEnabled = TRUE;
+    sSlotMachine->reelTimePikachuSpriteId = spriteId;
 }
 
-__attribute__((naked)) void DestroyReelTimePikachuSprite(void)
+void DestroyReelTimePikachuSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0812E428\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812E42C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r4, _0812E430\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812E420\n\t"
-        "	bl Free\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r4]\n\t"
-        "_0812E420:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E428: .4byte sSlotMachine\n\t"
-        "_0812E42C: .4byte gSprites\n\t"
-        "_0812E430: .4byte sImageTable_ReelTimePikachu\n\t"
-        ".syntax divided\n\t"
-    );
+    DestroySprite(&gSprites[sSlotMachine->reelTimePikachuSpriteId]);
+    TRY_FREE_AND_SET_NULL(sImageTable_ReelTimePikachu);
 }
 
-__attribute__((naked)) void SpriteCB_ReelTimePikachu(struct Sprite *sprite)
+static void SpriteCB_ReelTimePikachu(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x2a\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0812E47A\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812E468\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812E476\n\t"
-        "	b _0812E47A\n\t"
-        "_0812E468:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812E47A\n\t"
-        "_0812E476:\n\t"
-        "	ldr r0, _0812E480\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "_0812E47A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E480: .4byte 0x0000FFF8\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->y2 = sprite->x2 = 0;
+    if (sprite->animNum == 4)
+    {
+        sprite->y2 = sprite->x2 = 8;
+        if ((sprite->animCmdIndex != 0 && sprite->animDelayCounter != 0) || (sprite->animCmdIndex == 0 && sprite->animDelayCounter == 0))
+            sprite->y2 = -8;
+    }
 }
 
-__attribute__((naked)) void CreateReelTimeMachineSprites(void)
+void CreateReelTimeMachineSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	ldr r4, _0812E594\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812E4A0\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "_0812E4A0:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r0, _0812E598\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r2, #4]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _0812E59C\n\t"
-        "	ldm r0!, {r3, r4, r5}\n\t"
-        "	stm r1!, {r3, r4, r5}\n\t"
-        "	ldm r0!, {r3, r4, r7}\n\t"
-        "	stm r1!, {r3, r4, r7}\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0xb8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x34\n\t"
-        "	movs r3, #7\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r5, _0812E5A0\n\t"
-        "	mov sb, r5\n\t"
-        "	adds r2, r0, r5\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r7, #0xd\n\t"
-        "	rsbs r7, r7, #0\n\t"
-        "	mov r8, r7\n\t"
-        "	mov r0, r8\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r6, #2\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _0812E5A4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	ldr r5, _0812E5A8\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x49\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r4, _0812E5AC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812E520\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "_0812E520:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	mov r3, sl\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	movs r4, #0xac\n\t"
-        "	lsls r4, r4, #6\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r2, #4]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _0812E5B0\n\t"
-        "	ldm r0!, {r3, r4, r7}\n\t"
-        "	stm r1!, {r3, r4, r7}\n\t"
-        "	ldm r0!, {r3, r4, r7}\n\t"
-        "	stm r1!, {r3, r4, r7}\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0xb8\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r2, #0x54\n\t"
-        "	movs r3, #7\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	mov r7, sb\n\t"
-        "	adds r2, r0, r7\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	mov r0, r8\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _0812E5B4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x4a\n\t"
-        "	strb r4, [r0]\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E594: .4byte sImageTable_ReelTimeMachineAntennae\n\t"
-        "_0812E598: .4byte sReelTimeGfxPtr\n\t"
-        "_0812E59C: .4byte gUnknown_8584CC4\n\t"
-        "_0812E5A0: .4byte gSprites\n\t"
-        "_0812E5A4: .4byte gUnknown_8584F64\n\t"
-        "_0812E5A8: .4byte sSlotMachine\n\t"
-        "_0812E5AC: .4byte sImageTable_ReelTimeMachine\n\t"
-        "_0812E5B0: .4byte gUnknown_8584CDC\n\t"
-        "_0812E5B4: .4byte gUnknown_8584F78\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteTemplate spriteTemplate;
+    u8 spriteId;
+    struct Sprite *sprite;
+
+    if (sImageTable_ReelTimeMachineAntennae == NULL)
+        sImageTable_ReelTimeMachineAntennae = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+
+    sImageTable_ReelTimeMachineAntennae[0].data = sReelTimeGfxPtr + 0x2800;
+    sImageTable_ReelTimeMachineAntennae[0].size = 0x300;
+    spriteTemplate = sSpriteTemplate_ReelTimeMachineAntennae;
+    spriteTemplate.images = sImageTable_ReelTimeMachineAntennae;
+    spriteId = CreateSprite(&spriteTemplate, 368, 52, 7);
+    sprite = &gSprites[spriteId];
+    sprite->oam.priority = 1;
+    sprite->coordOffsetEnabled = TRUE;
+    SetSubspriteTables(sprite, sSubspriteTable_ReelTimeMachineAntennae);
+    sSlotMachine->reelTimeMachineSpriteIds[0] = spriteId;
+
+    if (sImageTable_ReelTimeMachine == NULL)
+        sImageTable_ReelTimeMachine = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+
+    sImageTable_ReelTimeMachine[0].data = sReelTimeGfxPtr + 0x2800 + 0x300;
+    sImageTable_ReelTimeMachine[0].size = 0x500;
+    spriteTemplate = sSpriteTemplate_ReelTimeMachine;
+    spriteTemplate.images = sImageTable_ReelTimeMachine;
+    spriteId = CreateSprite(&spriteTemplate, 368, 84, 7);
+    sprite = &gSprites[spriteId];
+    sprite->oam.priority = 1;
+    sprite->coordOffsetEnabled = TRUE;
+    SetSubspriteTables(sprite, sSubspriteTable_ReelTimeMachine);
+    sSlotMachine->reelTimeMachineSpriteIds[1] = spriteId;
 }
 
-__attribute__((naked)) void CreateBrokenReelTimeMachineSprite(void)
+void CreateBrokenReelTimeMachineSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	ldr r4, _0812E644\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812E5CC\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "_0812E5CC:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r0, _0812E648\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r2, #4]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _0812E64C\n\t"
-        "	ldm r0!, {r3, r4, r5}\n\t"
-        "	stm r1!, {r3, r4, r5}\n\t"
-        "	ldm r0!, {r3, r4, r5}\n\t"
-        "	stm r1!, {r3, r4, r5}\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	ldr r0, _0812E650\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r1, #0xa8\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #7\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812E654\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r2, #2\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r3]\n\t"
-        "	ldr r1, _0812E658\n\t"
-        "	bl SetSubspriteTables\n\t"
-        "	ldr r0, _0812E65C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x42\n\t"
-        "	strb r4, [r0]\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E644: .4byte sImageTable_BrokenReelTimeMachine\n\t"
-        "_0812E648: .4byte sReelTimeGfxPtr\n\t"
-        "_0812E64C: .4byte gUnknown_8584CF4\n\t"
-        "_0812E650: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812E654: .4byte gSprites\n\t"
-        "_0812E658: .4byte gUnknown_8584F94\n\t"
-        "_0812E65C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteTemplate spriteTemplate;
+    u8 spriteId;
+    struct Sprite *sprite;
+
+    if (sImageTable_BrokenReelTimeMachine == NULL)
+        sImageTable_BrokenReelTimeMachine = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+
+    sImageTable_BrokenReelTimeMachine[0].data = sReelTimeGfxPtr + 0x3000;
+    sImageTable_BrokenReelTimeMachine[0].size = 0x600;
+    spriteTemplate = sSpriteTemplate_BrokenReelTimeMachine;
+    spriteTemplate.images = sImageTable_BrokenReelTimeMachine;
+    spriteId = CreateSprite(&spriteTemplate, 168 - gSpriteCoordOffsetX, 80, 7);
+    sprite = &gSprites[spriteId];
+    sprite->oam.priority = 1;
+    sprite->coordOffsetEnabled = TRUE;
+    SetSubspriteTables(sprite, sSubspriteTable_BrokenReelTimeMachine);
+    sSlotMachine->reelTimeBrokenMachineSpriteId = spriteId;
 }
 
 

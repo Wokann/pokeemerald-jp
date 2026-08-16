@@ -86,20 +86,20 @@ sSpriteTemplate_CoinNumber: @ 0x8584C7C
 sSpriteTemplate_ReelBackground: @ 0x8584C94
 	.incbin "baserom_jp.gba", 0x584c94, 0x18
 
-	.globl gUnknown_8584CAC
-gUnknown_8584CAC: @ 0x8584CAC
+	.globl sSpriteTemplate_ReelTimePikachu
+sSpriteTemplate_ReelTimePikachu: @ 0x8584CAC
 	.incbin "baserom_jp.gba", 0x584cac, 0x18
 
-	.globl gUnknown_8584CC4
-gUnknown_8584CC4: @ 0x8584CC4
+	.globl sSpriteTemplate_ReelTimeMachineAntennae
+sSpriteTemplate_ReelTimeMachineAntennae: @ 0x8584CC4
 	.incbin "baserom_jp.gba", 0x584cc4, 0x18
 
-	.globl gUnknown_8584CDC
-gUnknown_8584CDC: @ 0x8584CDC
+	.globl sSpriteTemplate_ReelTimeMachine
+sSpriteTemplate_ReelTimeMachine: @ 0x8584CDC
 	.incbin "baserom_jp.gba", 0x584cdc, 0x18
 
-	.globl gUnknown_8584CF4
-gUnknown_8584CF4: @ 0x8584CF4
+	.globl sSpriteTemplate_BrokenReelTimeMachine
+sSpriteTemplate_BrokenReelTimeMachine: @ 0x8584CF4
 	.incbin "baserom_jp.gba", 0x584cf4, 0x18
 
 	.globl gUnknown_8584D0C
@@ -142,16 +142,16 @@ gUnknown_8584F1C: @ 0x8584F1C
 sSubspriteTable_ReelBackground: @ 0x8584F44
 	.incbin "baserom_jp.gba", 0x584f44, 0x20
 
-	.globl gUnknown_8584F64
-gUnknown_8584F64: @ 0x8584F64
+	.globl sSubspriteTable_ReelTimeMachineAntennae
+sSubspriteTable_ReelTimeMachineAntennae: @ 0x8584F64
 	.incbin "baserom_jp.gba", 0x584f64, 0x14
 
-	.globl gUnknown_8584F78
-gUnknown_8584F78: @ 0x8584F78
+	.globl sSubspriteTable_ReelTimeMachine
+sSubspriteTable_ReelTimeMachine: @ 0x8584F78
 	.incbin "baserom_jp.gba", 0x584f78, 0x1c
 
-	.globl gUnknown_8584F94
-gUnknown_8584F94: @ 0x8584F94
+	.globl sSubspriteTable_BrokenReelTimeMachine
+sSubspriteTable_BrokenReelTimeMachine: @ 0x8584F94
 	.incbin "baserom_jp.gba", 0x584f94, 0x18
 
 	.globl gUnknown_8584FAC
