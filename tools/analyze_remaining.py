@@ -29,6 +29,12 @@ def main():
     args = ap.parse_args()
 
     rom = (ROOT / "baserom_jp.gba").read_bytes()
+
+    # Collect all label references from src/asm for reference-status marking.
+    src_text = ""
+    for f in glob.glob(str(ROOT / "src" / "*.c")) + glob.glob(str(ROOT / "asm" / "*.s")):
+        src_text += Path(f).read_text(encoding="utf-8", errors="replace")
+
     rows = []
     for f in sorted(glob.glob(str(ROOT / "data" / "*.s"))):
         lines = Path(f).read_text(encoding="utf-8", errors="replace").splitlines()
@@ -43,15 +49,16 @@ def main():
                 size = int(im.group(2), 16)
                 d = rom[off : off + 4]
                 lz = size >= 4 and d[0] == 0x10
-                rows.append((f, cur, off, size, lz))
+                ref = cur in src_text
+                rows.append((f, cur, off, size, lz, ref))
                 cur = None
 
     total_bytes = 0
     per_file = {}
-    lz = raw = 0
-    for f, name, off, size, is_lz in rows:
+    lz = raw = ref = unref = 0
+    for f, name, off, size, is_lz, is_ref in rows:
         total_bytes += size
-        per_file[f] = per_file.get(f, [0, 0, 0])
+        per_file[f] = per_file.get(f, [0, 0, 0, 0])
         per_file[f][0] += 1
         per_file[f][1] += size
         if is_lz:
@@ -59,19 +66,25 @@ def main():
             per_file[f][2] += 1
         else:
             raw += 1
+        if is_ref:
+            ref += 1
+            per_file[f][3] += 1
+        else:
+            unref += 1
 
     print(f"remaining blocks: {len(rows)} (LZ {lz}, raw {raw}), "
-          f"{total_bytes / 1048576:.2f} MB")
-    print(f"{'file':40s} {'blocks':>6s} {'bytes':>10s} {'LZ':>4s}")
+          f"{total_bytes / 1048576:.2f} MB; referenced {ref}, unreferenced {unref}")
+    print(f"{'file':40s} {'blocks':>6s} {'bytes':>10s} {'LZ':>4s} {'ref':>4s}")
     for f in sorted(per_file, key=lambda x: -per_file[x][1]):
-        c, b, l = per_file[f]
-        print(f"{Path(f).name:40s} {c:6d} {b:10d} {l:4d}")
+        c, b, l, r = per_file[f]
+        print(f"{Path(f).name:40s} {c:6d} {b:10d} {l:4d} {r:4d}")
 
     if args.csv:
         with open(args.csv, "w") as out:
-            out.write("file,label,offset,size,lz\n")
-            for f, name, off, size, is_lz in rows:
-                out.write(f"{Path(f).name},{name},0x{off:X},{size},{int(is_lz)}\n")
+            out.write("file,label,offset,size,lz,referenced\n")
+            for f, name, off, size, is_lz, is_ref in rows:
+                out.write(f"{Path(f).name},{name},0x{off:X},{size},"
+                          f"{int(is_lz)},{int(is_ref)}\n")
         print(f"CSV written to {args.csv}")
 
 
