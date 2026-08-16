@@ -52,16 +52,6 @@ enum {
     PACKET_MEMBER_STATE,
 };
 
-// JP: the front-pic coordinate table uses 4-byte entries (size, y_offset,
-// 2 padding bytes).  US pokeemerald uses the 2-byte struct MonCoords, so the
-// JP layout is kept under the raw data symbol gUnknown_82D45C8.
-struct JP_MonFrontPicCoords
-{
-    u8 size;
-    u8 y_offset;
-    u16 unused;
-};
-
 #define VINE_SPRITES_PER_SIDE 4 // Vine rope is divided into 8 sprites, 4 per side copied and flipped horizontally
 #define JUMP_PEAK (-30)
 
@@ -442,7 +432,7 @@ extern const u8 gUnknown_82D1A68[];
 void PrintScore(int num);
 void CreateJumpMonSprites(void);
 extern const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1];
-extern const struct JP_MonFrontPicCoords gUnknown_82D45C8[];
+// gMonFrontPicCoords is declared in include/data.h (struct MonCoords, 4-byte entries in agbcc).
 void CreatePokeJumpYesNoMenu(u16 left, u16 top, u8 cursorPos);
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern const u8 gText_WantToPlayAgain2[];
@@ -2917,7 +2907,7 @@ void CreateJumpMonSprites(void)
     {
         struct PokemonJump_MonInfo *monInfo = GetMonInfoByMultiplayerId(i);
 
-        y = gUnknown_82D45C8[monInfo->species].y_offset;
+        y = gMonFrontPicCoords[monInfo->species].y_offset;
         CreateJumpMonSprite(sPokemonJumpGfx, monInfo, *xCoords, y + 112, i);
         CreateStarSprite(sPokemonJumpGfx, *xCoords, 112, i);
         xCoords++;
