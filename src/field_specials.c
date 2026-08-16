@@ -2453,18 +2453,11 @@ __attribute__((naked)) void PCTurnOnEffect_1(void)
     );
 }
 
-__attribute__((naked)) void DoPCTurnOffEffect(void)
+void DoPCTurnOffEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PCTurnOffEffect\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PCTurnOffEffect();
 }
+
 
 __attribute__((naked)) void PCTurnOffEffect(void)
 {

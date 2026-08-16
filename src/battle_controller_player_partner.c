@@ -2892,18 +2892,11 @@ __attribute__((naked)) void CopyPlayerPartnerMonData(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandleGetRawMonData(void)
+void PlayerPartnerHandleGetRawMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleSetMonData(void)
 {
@@ -4938,18 +4931,11 @@ __attribute__((naked)) void PlayerPartnerHandleDrawTrainerPic(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandleTrainerSlide(void)
+void PlayerPartnerHandleTrainerSlide(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleTrainerSlideBack(void)
 {
@@ -5154,57 +5140,29 @@ __attribute__((naked)) void PlayerPartnerHandleFaintAnimation(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandlePaletteFade(void)
+void PlayerPartnerHandlePaletteFade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleSuccessBallThrowAnim(void)
+
+void PlayerPartnerHandleSuccessBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleBallThrowAnim(void)
+
+void PlayerPartnerHandleBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandlePause(void)
+
+void PlayerPartnerHandlePause(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleMoveAnimation(void)
 {
@@ -5596,18 +5554,11 @@ __attribute__((naked)) void PlayerPartnerHandlePrintString(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandlePrintSelectionString(void)
+void PlayerPartnerHandlePrintSelectionString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleChooseAction(void)
 {
@@ -5718,18 +5669,11 @@ __attribute__((naked)) void PlayerPartnerHandleChooseMove(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandleChooseItem(void)
+void PlayerPartnerHandleChooseItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleChoosePokemon(void)
 {
@@ -5801,18 +5745,11 @@ __attribute__((naked)) void PlayerPartnerHandleChoosePokemon(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandleCmd23(void)
+void PlayerPartnerHandleCmd23(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleHealthBarUpdate(void)
 {
@@ -6118,122 +6055,59 @@ __attribute__((naked)) void PlayerPartnerHandleStatusAnimation(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandleStatusXor(void)
+void PlayerPartnerHandleStatusXor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleDataTransfer(void)
+
+void PlayerPartnerHandleDataTransfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleDMA3Transfer(void)
+
+void PlayerPartnerHandleDMA3Transfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandlePlayBGM(void)
+
+void PlayerPartnerHandlePlayBGM(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleCmd32(void)
+
+void PlayerPartnerHandleCmd32(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleTwoReturnValues(void)
+
+void PlayerPartnerHandleTwoReturnValues(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleChosenMonReturnValue(void)
+
+void PlayerPartnerHandleChosenMonReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleOneReturnValue(void)
+
+void PlayerPartnerHandleOneReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleOneReturnValue_Duplicate(void)
+
+void PlayerPartnerHandleOneReturnValue_Duplicate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleCmd37(void)
 {
@@ -7076,18 +6950,11 @@ __attribute__((naked)) void PlayerPartnerHandleHidePartyStatusSummary(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandleEndBounceEffect(void)
+void PlayerPartnerHandleEndBounceEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleSpriteInvisibility(void)
 {
@@ -7197,31 +7064,17 @@ __attribute__((naked)) void PlayerPartnerHandleBattleAnimation(void)
     );
 }
 
-__attribute__((naked)) void PlayerPartnerHandleLinkStandbyMsg(void)
+void PlayerPartnerHandleLinkStandbyMsg(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
 
-__attribute__((naked)) void PlayerPartnerHandleResetActionMoveSelection(void)
+
+void PlayerPartnerHandleResetActionMoveSelection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PlayerPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    PlayerPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void PlayerPartnerHandleCmd55(void)
 {

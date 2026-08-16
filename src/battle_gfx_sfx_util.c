@@ -3801,19 +3801,12 @@ __attribute__((naked)) void SpriteCB_EnemyShadow(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_SetInvisible(struct Sprite *sprite)
+
+void SpriteCB_SetInvisible(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->invisible = TRUE;
 }
+
 
 __attribute__((naked)) void SetBattlerShadowSpriteCallback(u8 battler, u16 species)
 {

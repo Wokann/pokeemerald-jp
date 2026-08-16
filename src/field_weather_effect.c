@@ -197,18 +197,12 @@ __attribute__((naked)) void Sunny_InitVars()
     );
 }
 
-__attribute__((naked)) void Sunny_InitAll()
+
+void Sunny_InitAll(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Sunny_InitVars\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    Sunny_InitVars();
 }
+
 
 void Sunny_Main() {}
 bool8 Shade_Finish(void)
@@ -5239,18 +5233,12 @@ __attribute__((naked)) void Shade_InitVars()
     );
 }
 
-__attribute__((naked)) void Shade_InitAll()
+
+void Shade_InitAll(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Shade_InitVars\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    Shade_InitVars();
 }
+
 
 void Shade_Main() {}
 bool8 Drought_Finish(void)

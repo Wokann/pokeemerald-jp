@@ -4744,18 +4744,11 @@ __attribute__((naked)) void RecordedPlayerHandleDrawTrainerPic(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandleTrainerSlide(void)
+void RecordedPlayerHandleTrainerSlide(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleTrainerSlideBack(void)
 {
@@ -4960,18 +4953,11 @@ __attribute__((naked)) void RecordedPlayerHandleFaintAnimation(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandlePaletteFade(void)
+void RecordedPlayerHandlePaletteFade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleTwoReturnValues(void)
 {
@@ -4999,18 +4985,11 @@ __attribute__((naked)) void RecordedPlayerHandleChoosePokemon(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandlePause(void)
+void RecordedPlayerHandlePause(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleMoveAnimation(void)
 {
@@ -5402,18 +5381,11 @@ __attribute__((naked)) void RecordedPlayerHandlePrintString(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandlePrintSelectionString(void)
+void RecordedPlayerHandlePrintSelectionString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void ChooseActionInBattlePalace(void)
 {
@@ -5555,18 +5527,11 @@ __attribute__((naked)) void RecordedPlayerHandleChooseMove(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandleChooseItem(void)
+void RecordedPlayerHandleChooseItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandlePlaySE(void)
 {
@@ -5601,18 +5566,11 @@ __attribute__((naked)) void RecordedPlayerHandlePlaySE(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandleCmd23(void)
+void RecordedPlayerHandleCmd23(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleHealthBarUpdate(void)
 {
@@ -5733,18 +5691,11 @@ __attribute__((naked)) void RecordedPlayerHandleHealthBarUpdate(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandleExpUpdate(void)
+void RecordedPlayerHandleExpUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleStatusIconUpdate(void)
 {
@@ -5861,31 +5812,17 @@ __attribute__((naked)) void RecordedPlayerHandleStatusAnimation(void)
     );
 }
 
-__attribute__((naked)) void RecordedPlayerHandleStatusXor(void)
+void RecordedPlayerHandleStatusXor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedPlayerHandleDataTransfer(void)
+
+void RecordedPlayerHandleDataTransfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedPlayerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedPlayerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedPlayerHandleDMA3Transfer(void)
 {

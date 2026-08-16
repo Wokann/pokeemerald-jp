@@ -4006,19 +4006,11 @@ __attribute__((naked)) void sub_0811C430(void)
     );
 }
 
-__attribute__((naked)) int FooterHasFourOptions_(void)
+int FooterHasFourOptions_(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/easy_chat.c\n\t"
-        "	push {lr}\n\t"
-        "	bl FooterHasFourOptions\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return FooterHasFourOptions();
 }
+
 
 __attribute__((naked)) bool8 IsPhraseDifferentThanPlayerInput(const u16 *phrase, u8 phraseLength)
 {

@@ -5195,18 +5195,11 @@ void LinkPartnerHandleOneReturnValue(void)
 }
 
 
-__attribute__((naked)) void LinkPartnerHandleOneReturnValue_Duplicate(void)
+void LinkPartnerHandleOneReturnValue_Duplicate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkPartnerHandleCmd37(void)
 {
@@ -6101,18 +6094,11 @@ __attribute__((naked)) void LinkPartnerHandleHidePartyStatusSummary(void)
     );
 }
 
-__attribute__((naked)) void LinkPartnerHandleEndBounceEffect(void)
+void LinkPartnerHandleEndBounceEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkPartnerHandleSpriteInvisibility(void)
 {
@@ -6247,18 +6233,11 @@ __attribute__((naked)) void LinkPartnerHandleLinkStandbyMsg(void)
     );
 }
 
-__attribute__((naked)) void LinkPartnerHandleResetActionMoveSelection(void)
+void LinkPartnerHandleResetActionMoveSelection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkPartnerBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkPartnerBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkPartnerHandleCmd55(void)
 {
