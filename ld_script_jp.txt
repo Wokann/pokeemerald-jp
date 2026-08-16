@@ -4287,7 +4287,7 @@ SECTIONS {
         src/event_object_movement.o(.text.MovementAction_FaceLeft_Step0);
         src/event_object_movement.o(.text.MovementAction_FaceRight_Step0);
         src/event_object_movement.o(.text.npc_apply_direction);
-        src/event_object_movement.o(.text.do_go_anim);
+        src/event_object_movement.o(.text.InitMovementNormal);
         src/event_object_movement.o(.text.StartRunningAnim);
         src/event_object_movement.o(.text.UpdateMovementNormal);
         src/event_object_movement.o(.text.sub_08093460);
@@ -4410,7 +4410,7 @@ SECTIONS {
         src/event_object_movement.o(.text.StartSpriteAnimInDirection);
         src/event_object_movement.o(.text.MovementAction_StartAnimInDirection_Step0);
         src/event_object_movement.o(.text.MovementAction_WaitSpriteAnim);
-        src/event_object_movement.o(.text.sub_08094754);
+        src/event_object_movement.o(.text.InitJumpSpecial);
         src/event_object_movement.o(.text.MovementAction_JumpSpecialDown_Step0);
         src/event_object_movement.o(.text.MovementAction_JumpSpecialDown_Step1);
         src/event_object_movement.o(.text.MovementAction_JumpSpecialUp_Step0);
@@ -4539,7 +4539,7 @@ SECTIONS {
         src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveLeft_Step1);
         src/event_object_movement.o(.text.sub_08095B30);
         src/event_object_movement.o(.text.MovementAction_AcroPopWheelieMoveRight_Step1);
-        src/event_object_movement.o(.text.sub_08095B70);
+        src/event_object_movement.o(.text.InitAcroWheelieMove);
         src/event_object_movement.o(.text.MovementAction_AcroWheelieMoveDown_Step0);
         src/event_object_movement.o(.text.MovementAction_AcroWheelieMoveDown_Step1);
         src/event_object_movement.o(.text.MovementAction_AcroWheelieMoveUp_Step0);

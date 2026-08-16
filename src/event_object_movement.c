@@ -36,6 +36,14 @@ struct Sprite;
 
 #define GROUND_EFFECT_FLAG_PUDDLE (1 << 10)
 
+enum {
+    MOVE_SPEED_NORMAL, // walking
+    MOVE_SPEED_FAST_1, // running / surfing / sliding (ice tile)
+    MOVE_SPEED_FAST_2, // water current / acro bike
+    MOVE_SPEED_FASTER, // mach bike's max speed
+    MOVE_SPEED_FASTEST,
+};
+
 #define JUMP_HALFWAY  1
 #define JUMP_FINISHED ((u8)-1)
 
@@ -48,6 +56,27 @@ enum
 
 #define FIGURE_8_LENGTH 72
 
+extern bool8 MovementAction_AcroWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_Delay_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_JumpSpecialDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_JumpSpecialLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_JumpSpecialRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_JumpSpecialUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_PlayerRunDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_PlayerRunLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_PlayerRunRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_PlayerRunUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_RideWaterCurrentDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_RideWaterCurrentLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_RideWaterCurrentRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_RideWaterCurrentUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_SlideRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 mode);
 extern u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent);
 extern bool8 ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite);
@@ -15676,7 +15705,7 @@ __attribute__((naked)) void npc_apply_direction(struct ObjectEvent *objectEvent,
     );
 }
 
-__attribute__((naked)) void do_go_anim(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+__attribute__((naked)) void InitMovementNormal(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 speed)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -16301,7 +16330,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpLeft_Step0(struc
         "	adds r5, r1, #0\n\t"
         "	movs r2, #7\n\t"
         "	movs r3, #0\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkNormalDiagonalUpLeft_Step1\n\t"
@@ -16348,7 +16377,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalUpRight_Step0(stru
         "	adds r5, r1, #0\n\t"
         "	movs r2, #8\n\t"
         "	movs r3, #0\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkNormalDiagonalUpRight_Step1\n\t"
@@ -16395,7 +16424,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownLeft_Step0(str
         "	adds r5, r1, #0\n\t"
         "	movs r2, #5\n\t"
         "	movs r3, #0\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkNormalDiagonalDownLeft_Step1\n\t"
@@ -16442,7 +16471,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDiagonalDownRight_Step0(st
         "	adds r5, r1, #0\n\t"
         "	movs r2, #6\n\t"
         "	movs r3, #0\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkNormalDiagonalDownRight_Step1\n\t"
@@ -16489,7 +16518,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalDown_Step0(struct ObjectEv
         "	adds r5, r1, #0\n\t"
         "	movs r2, #1\n\t"
         "	movs r3, #0\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkNormalDown_Step1\n\t"
@@ -16536,7 +16565,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalUp_Step0(struct ObjectEven
         "	adds r5, r1, #0\n\t"
         "	movs r2, #2\n\t"
         "	movs r3, #0\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkNormalUp_Step1\n\t"
@@ -16583,7 +16612,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalLeft_Step0(struct ObjectEv
         "	adds r5, r1, #0\n\t"
         "	movs r2, #3\n\t"
         "	movs r3, #0\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkNormalLeft_Step1\n\t"
@@ -16631,7 +16660,7 @@ __attribute__((naked)) bool8 MovementAction_WalkNormalRight_Step0(struct ObjectE
         "	adds r5, r1, #0\n\t"
         "	movs r2, #4\n\t"
         "	movs r3, #0\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkNormalRight_Step1\n\t"
@@ -17255,7 +17284,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastDown_Step0(struct ObjectEven
         "	adds r5, r1, #0\n\t"
         "	movs r2, #1\n\t"
         "	movs r3, #1\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkFastDown_Step1\n\t"
@@ -17302,7 +17331,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastUp_Step0(struct ObjectEvent 
         "	adds r5, r1, #0\n\t"
         "	movs r2, #2\n\t"
         "	movs r3, #1\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkFastUp_Step1\n\t"
@@ -17349,7 +17378,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastLeft_Step0(struct ObjectEven
         "	adds r5, r1, #0\n\t"
         "	movs r2, #3\n\t"
         "	movs r3, #1\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkFastLeft_Step1\n\t"
@@ -17396,7 +17425,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFastRight_Step0(struct ObjectEve
         "	adds r5, r1, #0\n\t"
         "	movs r2, #4\n\t"
         "	movs r3, #1\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkFastRight_Step1\n\t"
@@ -18073,26 +18102,10 @@ __attribute__((naked)) bool8 MovementAction_WalkInPlaceFasterRight_Step0(struct 
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_RideWaterCurrentDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RideWaterCurrentDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl do_go_anim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_RideWaterCurrentDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_SOUTH, MOVE_SPEED_FAST_2);
+    return MovementAction_RideWaterCurrentDown_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_RideWaterCurrentDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18120,26 +18133,10 @@ __attribute__((naked)) bool8 MovementAction_RideWaterCurrentDown_Step1(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_RideWaterCurrentUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RideWaterCurrentUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl do_go_anim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_RideWaterCurrentUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_NORTH, MOVE_SPEED_FAST_2);
+    return MovementAction_RideWaterCurrentUp_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_RideWaterCurrentUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18167,26 +18164,10 @@ __attribute__((naked)) bool8 MovementAction_RideWaterCurrentUp_Step1(struct Obje
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_RideWaterCurrentLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RideWaterCurrentLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #2\n\t"
-        "	bl do_go_anim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_RideWaterCurrentLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_WEST, MOVE_SPEED_FAST_2);
+    return MovementAction_RideWaterCurrentLeft_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_RideWaterCurrentLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18214,26 +18195,10 @@ __attribute__((naked)) bool8 MovementAction_RideWaterCurrentLeft_Step1(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_RideWaterCurrentRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RideWaterCurrentRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #2\n\t"
-        "	bl do_go_anim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_RideWaterCurrentRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_EAST, MOVE_SPEED_FAST_2);
+    return MovementAction_RideWaterCurrentRight_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_RideWaterCurrentRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18271,7 +18236,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterDown_Step0(struct ObjectEv
         "	adds r5, r1, #0\n\t"
         "	movs r2, #1\n\t"
         "	movs r3, #3\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkFasterDown_Step1\n\t"
@@ -18318,7 +18283,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterUp_Step0(struct ObjectEven
         "	adds r5, r1, #0\n\t"
         "	movs r2, #2\n\t"
         "	movs r3, #3\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkFasterUp_Step1\n\t"
@@ -18365,7 +18330,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterLeft_Step0(struct ObjectEv
         "	adds r5, r1, #0\n\t"
         "	movs r2, #3\n\t"
         "	movs r3, #3\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkFasterLeft_Step1\n\t"
@@ -18412,7 +18377,7 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterRight_Step0(struct ObjectE
         "	adds r5, r1, #0\n\t"
         "	movs r2, #4\n\t"
         "	movs r3, #3\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl MovementAction_WalkFasterRight_Step1\n\t"
@@ -18450,26 +18415,10 @@ __attribute__((naked)) bool8 MovementAction_WalkFasterRight_Step1(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_SlideDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_SlideDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #4\n\t"
-        "	bl do_go_anim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_SlideDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_SOUTH, MOVE_SPEED_FASTEST);
+    return MovementAction_SlideDown_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18497,26 +18446,10 @@ __attribute__((naked)) bool8 MovementAction_SlideDown_Step1(struct ObjectEvent *
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_SlideUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_SlideUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #4\n\t"
-        "	bl do_go_anim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_SlideUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_NORTH, MOVE_SPEED_FASTEST);
+    return MovementAction_SlideUp_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18544,26 +18477,10 @@ __attribute__((naked)) bool8 MovementAction_SlideUp_Step1(struct ObjectEvent *ob
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_SlideLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_SlideLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #4\n\t"
-        "	bl do_go_anim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_SlideLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_WEST, MOVE_SPEED_FASTEST);
+    return MovementAction_SlideLeft_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18591,26 +18508,10 @@ __attribute__((naked)) bool8 MovementAction_SlideLeft_Step1(struct ObjectEvent *
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_SlideRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_SlideRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #4\n\t"
-        "	bl do_go_anim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_SlideRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_EAST, MOVE_SPEED_FASTEST);
+    return MovementAction_SlideRight_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_SlideRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18638,26 +18539,10 @@ __attribute__((naked)) bool8 MovementAction_SlideRight_Step1(struct ObjectEvent 
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_PlayerRunDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_PlayerRunDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl StartRunningAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_PlayerRunDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartRunningAnim(objectEvent, sprite, DIR_SOUTH);
+    return MovementAction_PlayerRunDown_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_PlayerRunDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18685,26 +18570,10 @@ __attribute__((naked)) bool8 MovementAction_PlayerRunDown_Step1(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_PlayerRunUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_PlayerRunUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl StartRunningAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_PlayerRunUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartRunningAnim(objectEvent, sprite, DIR_NORTH);
+    return MovementAction_PlayerRunUp_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_PlayerRunUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18733,26 +18602,10 @@ __attribute__((naked)) bool8 MovementAction_PlayerRunUp_Step1(struct ObjectEvent
 }
 
 
-__attribute__((naked)) bool8 MovementAction_PlayerRunLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_PlayerRunLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl StartRunningAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_PlayerRunLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartRunningAnim(objectEvent, sprite, DIR_WEST);
+    return MovementAction_PlayerRunLeft_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_PlayerRunLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18780,26 +18633,10 @@ __attribute__((naked)) bool8 MovementAction_PlayerRunLeft_Step1(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_PlayerRunRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_PlayerRunRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl StartRunningAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_PlayerRunRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartRunningAnim(objectEvent, sprite, DIR_EAST);
+    return MovementAction_PlayerRunRight_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_PlayerRunRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18899,7 +18736,7 @@ __attribute__((naked)) bool8 MovementAction_WaitSpriteAnim(struct ObjectEvent *o
     );
 }
 
-__attribute__((naked)) bool8 sub_08094754(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 InitJumpSpecial(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -18930,26 +18767,10 @@ __attribute__((naked)) bool8 sub_08094754(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpSpecialDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpSpecialDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl sub_08094754\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpSpecialDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitJumpSpecial(objectEvent, sprite, DIR_SOUTH);
+    return MovementAction_JumpSpecialDown_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpSpecialDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -18981,26 +18802,10 @@ __attribute__((naked)) bool8 MovementAction_JumpSpecialDown_Step1(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpSpecialUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpSpecialUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	bl sub_08094754\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpSpecialUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitJumpSpecial(objectEvent, sprite, DIR_NORTH);
+    return MovementAction_JumpSpecialUp_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpSpecialUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -19032,26 +18837,10 @@ __attribute__((naked)) bool8 MovementAction_JumpSpecialUp_Step1(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpSpecialLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpSpecialLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl sub_08094754\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpSpecialLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitJumpSpecial(objectEvent, sprite, DIR_WEST);
+    return MovementAction_JumpSpecialLeft_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpSpecialLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -19083,26 +18872,10 @@ __attribute__((naked)) bool8 MovementAction_JumpSpecialLeft_Step1(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpSpecialRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpSpecialRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl sub_08094754\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpSpecialRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitJumpSpecial(objectEvent, sprite, DIR_EAST);
+    return MovementAction_JumpSpecialRight_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpSpecialRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -20601,7 +20374,7 @@ __attribute__((naked)) bool8 MovementAction_WalkLeftAffine_Step0(struct ObjectEv
         "	adds r4, r1, #0\n\t"
         "	movs r2, #3\n\t"
         "	movs r3, #1\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r2, r4, #0\n\t"
         "	adds r2, #0x2c\n\t"
         "	ldrb r1, [r2]\n\t"
@@ -20663,7 +20436,7 @@ __attribute__((naked)) bool8 MovementAction_WalkRightAffine_Step0(struct ObjectE
         "	adds r4, r1, #0\n\t"
         "	movs r2, #4\n\t"
         "	movs r3, #1\n\t"
-        "	bl do_go_anim\n\t"
+        "	bl InitMovementNormal\n\t"
         "	adds r2, r4, #0\n\t"
         "	adds r2, #0x2c\n\t"
         "	ldrb r1, [r2]\n\t"
@@ -22254,7 +22027,7 @@ __attribute__((naked)) bool8 MovementAction_AcroPopWheelieMoveRight_Step1(struct
     );
 }
 
-__attribute__((naked)) bool8 sub_08095B70(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+__attribute__((naked)) bool8 InitAcroWheelieMove(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -22283,26 +22056,10 @@ __attribute__((naked)) bool8 sub_08095B70(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieMoveDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095B70\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroWheelieMoveDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroWheelieMove(objectEvent, sprite, DIR_SOUTH, 1);
+    return MovementAction_AcroWheelieMoveDown_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22330,26 +22087,10 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveDown_Step1(struct Obj
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieMoveUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095B70\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroWheelieMoveUp_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroWheelieMove(objectEvent, sprite, DIR_NORTH, 1);
+    return MovementAction_AcroWheelieMoveUp_Step1(objectEvent, sprite);
 }
 
 
@@ -22378,26 +22119,10 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveUp_Step1(struct Objec
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieMoveLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095B70\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroWheelieMoveLeft_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroWheelieMove(objectEvent, sprite, DIR_WEST, 1);
+    return MovementAction_AcroWheelieMoveLeft_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -22425,26 +22150,10 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveLeft_Step1(struct Obj
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_AcroWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_AcroWheelieMoveRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #1\n\t"
-        "	bl sub_08095B70\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_AcroWheelieMoveRight_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitAcroWheelieMove(objectEvent, sprite, DIR_EAST, 1);
+    return MovementAction_AcroWheelieMoveRight_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_AcroWheelieMoveRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
