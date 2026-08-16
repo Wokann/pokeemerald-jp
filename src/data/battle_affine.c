@@ -64,7 +64,20 @@ const u32 sDigitGfx[] =
     0x08D74524, 0x00000800, 0x08D74D24, 0x00000800,
     0x08D75524, 0x00000800, 0x08D75D24, 0x00000800,
     0x08D76524, 0x00000800, 0x08D76D24, 0x00000800,
-    0x00000000, 0x0000FFFF, 0x00000003, 0x0000FFFF,
+};
+
+// 0x82D2DC8 - general anim frames (referenced by the asm gMonFrontPicAnims table).
+const union AnimCmd sAnim_GeneralFrame0[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+// 0x82D2DD0
+const union AnimCmd sAnim_GeneralFrame3[] =
+{
+    ANIMCMD_FRAME(3, 0),
+    ANIMCMD_END
 };
 
 // 0x82D2DD8 - battler affine anims (values match pokeemerald data.c).

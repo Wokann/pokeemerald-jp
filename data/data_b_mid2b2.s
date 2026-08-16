@@ -8,9 +8,9 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.globl gUnknown_82D2F9C
-gUnknown_82D2F9C: @ 0x82D2F9C
-	.incbin "baserom_jp.gba", 0x2d2f9c, 0x162c
+	.globl gUnknown_82D365C
+gUnknown_82D365C: @ 0x82D365C
+	.incbin "baserom_jp.gba", 0x2d365c, 0xf6c
 
 	.globl gUnknown_82D45C8
 	.set gUnknown_82D45C8, gMonFrontPicCoords  @ 0x82D45C8

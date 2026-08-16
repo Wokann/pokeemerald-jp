@@ -11,6 +11,8 @@ extern const u32 sDigitGfx[];
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpritePlayerSide[];
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteOpponentSide[];
 extern const union AffineAnimCmd *const gAffineAnims_BattleSpriteContest[];
+extern const union AnimCmd sAnim_GeneralFrame0[];
+extern const union AnimCmd sAnim_GeneralFrame3[];
 extern const union AnimCmd sAnim_MonPic_0[];
 extern const union AnimCmd sAnim_MonPic_1[];
 extern const union AnimCmd sAnim_MonPic_2[];

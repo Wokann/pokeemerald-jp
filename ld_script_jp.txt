@@ -505,7 +505,6 @@ sub_0818D560 = LoadMonPicInWindow;
 sub_0818D590 = CreateTrainerCardMonIconSprite;
 sub_0818D630 = LoadTrainerPicInWindow;
 sub_0818D664 = CreateTrainerCardTrainerPicSprite;
-gAnims_MonPic = gUnknown_82D2F9C;
 gMonFrontAnimsPtrTable = gUnknown_82DD33C;
 IsLargeBreakableDecoration = sub_080FB654;
 GenerateTrainerHillFloorLayout = sub_081D590C;
@@ -9226,6 +9225,7 @@ SECTIONS {
         src/data/rtc_data.o(.rodata);
         src/data/main_menu_data.o(.rodata);
         src/data/battle_affine.o(.rodata);
+        src/data/unused_anims.o(.rodata);
         data/data_b_mid2b2.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
