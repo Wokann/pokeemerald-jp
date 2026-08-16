@@ -4841,21 +4841,11 @@ __attribute__((naked)) void MovementAction_Fly_Finish(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WanderAround_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderAround_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_WanderAround_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5667,21 +5657,11 @@ __attribute__((naked)) void MovementType_CopyPlayer_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_LookAround_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_LookAround_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_LookAround_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -5871,21 +5851,11 @@ __attribute__((naked)) void MovementType_FaceDirection_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderUpAndDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_WanderUpAndDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6126,21 +6096,11 @@ __attribute__((naked)) void MovementType_FaceDownAndLeft_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WanderLeftAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_WanderLeftAndRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6816,21 +6776,11 @@ __attribute__((naked)) void MovementType_FaceDownRightAndLeft_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7020,21 +6970,11 @@ __attribute__((naked)) void MovementType_FaceDownUpAndLeft_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceLeftAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceLeftAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceLeftAndRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7225,21 +7165,11 @@ __attribute__((naked)) void MovementType_FaceDownUpAndRight_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpAndLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7429,21 +7359,11 @@ __attribute__((naked)) void MovementType_FaceLeftAndRight_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7634,21 +7554,11 @@ __attribute__((naked)) void MovementType_FaceUpAndLeft_callback(void)
 }
 
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7838,21 +7748,11 @@ __attribute__((naked)) void MovementType_FaceUpAndRight_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8042,21 +7942,11 @@ __attribute__((naked)) void MovementType_FaceUpRightAndLeft_callback(void)
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownUpAndLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownUpAndLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownUpAndLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8247,21 +8137,11 @@ __attribute__((naked)) u8 MovementType_Hidden_Callback(struct ObjectEvent *objec
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownUpAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8451,21 +8331,11 @@ __attribute__((naked)) u8 MovementType_Invisible_callback(struct ObjectEvent *ob
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpLeftAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8656,21 +8526,11 @@ __attribute__((naked)) u8 MovementType_JogInPlace_callback(struct ObjectEvent *o
 }
 
 
-__attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownLeftAndRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -9199,21 +9059,11 @@ __attribute__((naked)) u8 MovementType_RotateCounterclockwise_callback(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementType_WalkBackAndForth_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WalkBackAndForth_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_WalkBackAndForth_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -9371,21 +9221,11 @@ __attribute__((naked)) bool8 MovementType_WalkBackAndForth_Step3(struct ObjectEv
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) bool8 MovementType_WalkSequence_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_WalkSequence_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 
