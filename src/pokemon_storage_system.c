@@ -8009,19 +8009,9 @@ __attribute__((naked)) void AddWallpapersMenu(u8 a)
 }
 
 
-__attribute__((naked)) u8 GetCurrentBoxOption(void)
+u8 GetCurrentBoxOption(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr	r0, .LGetCurrentBoxOption\n\t"
-        "	ldrb	r0, [r0]\n\t"
-        "	bx	lr\n\t"
-        ".LGetCurrentBoxOptionPad:\n\t"
-        "	.align	2, 0\n\t"
-        ".LGetCurrentBoxOption:\n\t"
-        "	.word	sCurrentBoxOption\n\t"
-        ".syntax divided\n\t"
-    );
+    return sCurrentBoxOption;
 }
 
 __attribute__((naked)) void sub_080CA720(void)
@@ -23220,18 +23210,9 @@ __attribute__((naked)) void sub_080D156C(void)
 
 void nullsub_98(void) {}
 void nullsub_pss(void) {}
-__attribute__((naked)) u8 StorageGetCurrentBox(void)
+u8 StorageGetCurrentBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080D15B4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D15B4: .4byte gPokemonStoragePtr\n\t"
-        ".syntax divided\n\t"
-    );
+    return gPokemonStoragePtr->currentBox;
 }
 
 

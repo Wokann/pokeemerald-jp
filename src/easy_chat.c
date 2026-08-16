@@ -3,6 +3,8 @@
 #include "main.h"
 #include "task.h"
 
+extern struct EasyChatScreen *sEasyChatScreen;
+
 __attribute__((naked)) void DoEasyChatScreen(u8 type, u16 *words, MainCallback exitCallback, u8 displayedPersonType)
 {
     __asm__(".syntax unified\n\t"
@@ -2286,18 +2288,9 @@ __attribute__((naked)) int DoQuizButton(void)
     );
 }
 
-__attribute__((naked)) u8 GetEasyChatBackupState(void)
+u8 GetEasyChatBackupState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811BA7C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811BA7C: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->inputStateBackup;
 }
 
 __attribute__((naked)) int SelectKeyboardGroup(void)
@@ -3569,19 +3562,9 @@ __attribute__((naked)) int FooterHasFourOptions(void)
     );
 }
 
-__attribute__((naked)) u8 GetEasyChatScreenType(void)
+u8 GetEasyChatScreenType(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/easy_chat.c\n\t"
-        "	ldr r0, _0811C268\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C268: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->type;
 }
 
 __attribute__((naked)) u8 GetEasyChatScreenFrameId(void)
@@ -3607,88 +3590,34 @@ __attribute__((naked)) u8 GetEasyChatScreenFrameId(void)
     );
 }
 
-__attribute__((naked)) const u8 *GetTitleText(void)
+const u8 *GetTitleText(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C294\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #0x34]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C294: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->titleText;
 }
 
-__attribute__((naked)) u16 *GetCurrentPhrase(void)
+u16 * GetCurrentPhrase(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C2A0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3c\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C2A0: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->currentPhrase;
 }
 
-__attribute__((naked)) u8 GetNumRows(void)
+u8 GetNumRows(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C2AC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C2AC: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->numRows;
 }
 
-__attribute__((naked)) u8 GetNumColumns(void)
+u8 GetNumColumns(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C2B8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C2B8: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->numColumns;
 }
 
-__attribute__((naked)) u8 GetMainCursorColumn(void)
+u8 GetMainCursorColumn(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C2C4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C2C4: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->mainCursorColumn;
 }
 
-__attribute__((naked)) u8 GetMainCursorRow(void)
+u8 GetMainCursorRow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C2D0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #6]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C2D0: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->mainCursorRow;
 }
 
 __attribute__((naked)) void GetEasyChatInstructionsText(const u8 **str1, const u8 **str2)
@@ -3839,32 +3768,14 @@ __attribute__((naked)) void GetKeyboardCursorColAndRow(s8 *column, s8 *row)
     );
 }
 
-__attribute__((naked)) bool8 GetInAlphabetMode(void)
+u8 GetInAlphabetMode(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C3BC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C3BC: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->inAlphabetMode;
 }
 
-__attribute__((naked)) u8 GetKeyboardScrollOffset(void)
+u8 GetKeyboardScrollOffset(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C3C8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0xc]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C3C8: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->keyboardScrollOffset;
 }
 
 
@@ -3885,32 +3796,14 @@ __attribute__((naked)) void GetWordSelectColAndRow(s8 *column, s8 *row)
     );
 }
 
-__attribute__((naked)) u8 GetWordSelectScrollOffset(void)
+u8 GetWordSelectScrollOffset(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C3E8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0xe]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C3E8: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->wordSelectScrollOffset;
 }
 
-__attribute__((naked)) u8 GetWordSelectLastRow(void)
+u8 GetWordSelectLastRow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0811C3F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0xf]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0811C3F4: .4byte sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->wordSelectLastRow;
 }
 
 __attribute__((naked)) void sub_0811C3F8(void)
@@ -4056,21 +3949,9 @@ __attribute__((naked)) bool8 IsPhraseDifferentThanPlayerInput(const u16 *phrase,
     );
 }
 
-__attribute__((naked)) u8 GetDisplayedPersonType(void)
+u8 GetDisplayedPersonType(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/easy_chat.c\n\t"
-        "	ldr	r0, .LGetDisplayedPersonType\n\t"
-        "	ldr	r0, [r0]\n\t"
-        "	ldrb	r0, [r0, #0x12]\n\t"
-        "	bx	lr\n\t"
-        ".LGetDisplayedPersonTypePad:\n\t"
-        "	.align	2, 0\n\t"
-        ".LGetDisplayedPersonType:\n\t"
-        "	.word	sEasyChatScreen\n\t"
-        ".syntax divided\n\t"
-    );
+    return sEasyChatScreen->displayedPersonType;
 }
 
 __attribute__((naked)) u8 GetEachChatScreenTemplateId(u8 type)
@@ -12293,4 +12174,3 @@ __attribute__((naked)) void InitQuestionnaireWords(void)
         ".syntax divided\n\t"
     );
 }
-

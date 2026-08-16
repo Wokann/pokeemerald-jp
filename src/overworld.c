@@ -3561,17 +3561,9 @@ __attribute__((naked)) void CB2_Overworld(void)
     );
 }
 
-__attribute__((naked)) void SetMainCallback1(MainCallback cb)
+void SetMainCallback1(MainCallback cb)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080857F8\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080857F8: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    gMain.callback1 = cb;
 }
 
 void SetUnusedCallback(void *func)
