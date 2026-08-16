@@ -2729,18 +2729,11 @@ __attribute__((naked)) void CopyLinkOpponentMonData(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandleGetRawMonData(void)
+void LinkOpponentHandleGetRawMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkOpponentHandleSetMonData(void)
 {
@@ -5133,57 +5126,29 @@ __attribute__((naked)) void LinkOpponentHandleFaintAnimation(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandlePaletteFade(void)
+void LinkOpponentHandlePaletteFade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleSuccessBallThrowAnim(void)
+
+void LinkOpponentHandleSuccessBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleBallThrowAnim(void)
+
+void LinkOpponentHandleBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandlePause(void)
+
+void LinkOpponentHandlePause(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkOpponentHandleMoveAnimation(void)
 {
@@ -5589,96 +5554,47 @@ __attribute__((naked)) void LinkOpponentHandlePrintString(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandlePrintSelectionString(void)
+void LinkOpponentHandlePrintSelectionString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleChooseAction(void)
+
+void LinkOpponentHandleChooseAction(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleYesNoBox(void)
+
+void LinkOpponentHandleYesNoBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleChooseMove(void)
+
+void LinkOpponentHandleChooseMove(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleChooseItem(void)
+
+void LinkOpponentHandleChooseItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleChoosePokemon(void)
+
+void LinkOpponentHandleChoosePokemon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void LinkOpponentHandleCmd23(void)
+
+void LinkOpponentHandleCmd23(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkOpponentHandleHealthBarUpdate(void)
 {
@@ -5792,18 +5708,11 @@ __attribute__((naked)) void LinkOpponentHandleHealthBarUpdate(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandleExpUpdate(void)
+void LinkOpponentHandleExpUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkOpponentHandleStatusIconUpdate(void)
 {
@@ -5920,18 +5829,11 @@ __attribute__((naked)) void LinkOpponentHandleStatusAnimation(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentHandleStatusXor(void)
+void LinkOpponentHandleStatusXor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LinkOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LinkOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void LinkOpponentHandleDataTransfer(void)
 {

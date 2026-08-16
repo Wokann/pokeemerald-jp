@@ -12730,7 +12730,6 @@ __attribute__((naked)) void MovementType_TreeDisguise(struct Sprite *sprite)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 MovementType_Disguise_Callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -12743,6 +12742,8 @@ __attribute__((naked)) bool8 MovementType_Disguise_Callback(struct ObjectEvent *
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void MovementType_MountainDisguise(struct Sprite *sprite)
 {
@@ -21187,7 +21188,6 @@ __attribute__((naked)) bool8 MovementAction_ClearAffineAnim_Step0(struct ObjectE
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) bool8 MovementAction_HideReflection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -21201,6 +21201,8 @@ __attribute__((naked)) bool8 MovementAction_HideReflection_Step0(struct ObjectEv
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) bool8 MovementAction_Unknown2_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {

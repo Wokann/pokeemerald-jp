@@ -3264,44 +3264,23 @@ __attribute__((naked)) void SetWallyMonData(void)
     );
 }
 
-__attribute__((naked)) void WallyHandleSetRawMonData(void)
+void WallyHandleSetRawMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleLoadMonSprite(void)
+
+void WallyHandleLoadMonSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleSwitchInAnim(void)
+
+void WallyHandleSwitchInAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void WallyHandleReturnMonToBall(void)
 {
@@ -3565,44 +3544,23 @@ __attribute__((naked)) void WallyHandleTrainerSlide(void)
     );
 }
 
-__attribute__((naked)) void WallyHandleTrainerSlideBack(void)
+void WallyHandleTrainerSlideBack(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleFaintAnimation(void)
+
+void WallyHandleFaintAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandlePaletteFade(void)
+
+void WallyHandlePaletteFade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void WallyHandleSuccessBallThrowAnim(void)
 {
@@ -3696,18 +3654,11 @@ __attribute__((naked)) void WallyHandleBallThrowAnim(void)
     );
 }
 
-__attribute__((naked)) void WallyHandlePause(void)
+void WallyHandlePause(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void WallyHandleMoveAnimation(void)
 {
@@ -4304,31 +4255,17 @@ __attribute__((naked)) void WallyHandleChooseItem(void)
     );
 }
 
-__attribute__((naked)) void WallyHandleChoosePokemon(void)
+void WallyHandleChoosePokemon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleCmd23(void)
+
+void WallyHandleCmd23(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void WallyHandleHealthBarUpdate(void)
 {
@@ -4449,122 +4386,59 @@ __attribute__((naked)) void WallyHandleHealthBarUpdate(void)
     );
 }
 
-__attribute__((naked)) void WallyHandleExpUpdate(void)
+void WallyHandleExpUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleStatusIconUpdate(void)
+
+void WallyHandleStatusIconUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleStatusAnimation(void)
+
+void WallyHandleStatusAnimation(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleStatusXor(void)
+
+void WallyHandleStatusXor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleDataTransfer(void)
+
+void WallyHandleDataTransfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleDMA3Transfer(void)
+
+void WallyHandleDMA3Transfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandlePlayBGM(void)
+
+void WallyHandlePlayBGM(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleCmd32(void)
+
+void WallyHandleCmd32(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleTwoReturnValues(void)
+
+void WallyHandleTwoReturnValues(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void sub_0816A548(void)
 {
@@ -4592,18 +4466,11 @@ __attribute__((naked)) void sub_0816A554(void)
     );
 }
 
-__attribute__((naked)) void WallyHandleOneReturnValue_Duplicate(void)
+void WallyHandleOneReturnValue_Duplicate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void WallyHandleCmd37(void)
 {
@@ -5352,44 +5219,23 @@ __attribute__((naked)) void WallyHandleDrawPartyStatusSummary(void)
     );
 }
 
-__attribute__((naked)) void WallyHandleHidePartyStatusSummary(void)
+void WallyHandleHidePartyStatusSummary(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleEndBounceEffect(void)
+
+void WallyHandleEndBounceEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleSpriteInvisibility(void)
+
+void WallyHandleSpriteInvisibility(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void WallyHandleBattleAnimation(void)
 {
@@ -5443,31 +5289,17 @@ __attribute__((naked)) void WallyHandleBattleAnimation(void)
     );
 }
 
-__attribute__((naked)) void WallyHandleLinkStandbyMsg(void)
+void WallyHandleLinkStandbyMsg(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
 
-__attribute__((naked)) void WallyHandleResetActionMoveSelection(void)
+
+void WallyHandleResetActionMoveSelection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl WallyBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    WallyBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void WallyHandleCmd55(void)
 {

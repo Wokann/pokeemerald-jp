@@ -3033,7 +3033,6 @@ __attribute__((naked)) void SetBattleMonMoveSlot(struct BattlePokemon *mon, u16 
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void MonRestorePP(struct Pokemon *mon)
 {
     __asm__(".syntax unified\n\t"
@@ -3046,6 +3045,8 @@ __attribute__((naked)) void MonRestorePP(struct Pokemon *mon)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
 {
@@ -14645,7 +14646,6 @@ __attribute__((naked)) bool8 IsOtherTrainer(u32 otId, u8 *otName)
         ".syntax divided\n\t"
     );
 }
-
 __attribute__((naked)) void GiveMonInitialMoveset(struct Pokemon *mon)
 {
     __asm__(".syntax unified\n\t"
@@ -14658,6 +14658,8 @@ __attribute__((naked)) void GiveMonInitialMoveset(struct Pokemon *mon)
         ".syntax divided\n\t"
     );
 }
+
+
 
 __attribute__((naked)) void BoxMonRestorePP(struct BoxPokemon *boxMon)
 {
