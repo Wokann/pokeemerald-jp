@@ -186,6 +186,7 @@ extern u8 sub_08092F08(u8 direction);
 extern u8 sub_08092EDC(u8 direction);
 extern u8 sub_08092F60(u8 direction);
 extern bool8 sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum, u16 delay);
+extern void sub_080B3CD0(struct ObjectEvent *objectEvent);
 extern bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
@@ -14946,46 +14947,21 @@ bool8 MovementAction_EmoteHeart_Step0(struct ObjectEvent *objectEvent, struct Sp
     return TRUE;
 }
 
-__attribute__((naked)) bool8 MovementAction_RevealTrainer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RevealTrainer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldrb r0, [r4, #6]\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	bne _08094ECE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080B3CD0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094EF6\n\t"
-        "_08094ECE:\n\t"
-        "	subs r0, #0x39\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _08094EF0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartRevealDisguise\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_RevealTrainer_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _08094EF6\n\t"
-        "_08094EF0:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094EF6:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->movementType == MOVEMENT_TYPE_BURIED)
+    {
+        sub_080B3CD0(objectEvent);
+        return FALSE;
+    }
+    if (objectEvent->movementType != MOVEMENT_TYPE_TREE_DISGUISE && objectEvent->movementType != MOVEMENT_TYPE_MOUNTAIN_DISGUISE)
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    StartRevealDisguise(objectEvent);
+    sprite->sActionFuncId = 1;
+    return MovementAction_RevealTrainer_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_RevealTrainer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
