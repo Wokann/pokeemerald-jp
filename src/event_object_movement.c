@@ -14013,42 +14013,11 @@ bool8 MovementAction_WalkInPlace_Step1(struct ObjectEvent *objectEvent, struct S
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceSlow_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkInPlaceSlow_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08093F5E\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x2c\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	lsls r1, r2, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1a\n\t"
-        "	adds r1, #1\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "_08093F5E:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl MovementAction_WalkInPlace_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[3] & 1)
+        sprite->animDelayCounter++;
+    return MovementAction_WalkInPlace_Step1(objectEvent, sprite);
 }
 
 bool8 MovementAction_WalkInPlaceSlowDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -15038,29 +15007,14 @@ bool8 MovementAction_RockSmashBreak_Step0(struct ObjectEvent *objectEvent, struc
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RockSmashBreak_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SpriteAnimEnded\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08094F54\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08094F54:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (SpriteAnimEnded(sprite))
+    {
+        SetMovementDelay(sprite, 32);
+        sprite->sActionFuncId = 2;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_RockSmashBreak_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
