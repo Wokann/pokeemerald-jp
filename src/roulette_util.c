@@ -462,30 +462,10 @@ void SetTilemapRect(u16 *dest, u16 *src, u8 left, u8 top, u8 width, u8 height)
     }
 }
 
-#ifndef NONMATCHING
-__attribute__((naked)) s32 MathUtil_Inv32(s32 y)
-{
-    __asm__(".syntax unified\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r1, _08151650\n\t"
-        "	ldr r0, _0815164C\n\t"
-        "	asrs r3, r2, #0x1f\n\t"
-        "	bl __divdi3\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0815164C: .4byte 0x00010000\n\t"
-        "_08151650: .4byte 0x00000000\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
 s32 MathUtil_Inv32(s32 y)
 {
-    // Computes floor(0x100000000 / y) as a signed 64-bit division.
-    return (s32)((s64)0x100000000 / y);
+    s64 dividend = 0x10000;
+    return (s32)(dividend / y);
 }
-#endif
 
 
