@@ -13,8 +13,8 @@
 #include "trainer_pokemon_sprites.h"
 #include "window.h"
 #include "constants/songs.h"
+#include "data/text/ribbon_descriptions.h"
 
-extern const u8 *const gRibbonDescriptionPointers[][2];
 extern const u8 *const gGiftRibbonDescriptionPointers[][2];
 struct RibbonGfxData { u16 tileNumOffset; u16 palNumOffset; };
 extern const struct RibbonGfxData sRibbonGfxData[];
