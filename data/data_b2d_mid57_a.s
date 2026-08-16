@@ -149,9 +149,11 @@ gUnknown_8555BA4: @ 0x8555BA4
 gUnknown_8555BDC: @ 0x8555BDC
 	.incbin "baserom_jp.gba", 0x555bdc, 0x8b8
 
-	.globl gUnknown_8556494
-gUnknown_8556494: @ 0x8556494
-	.incbin "baserom_jp.gba", 0x556494, 0xc
+	.globl sPlaceChangeFuncs
+sPlaceChangeFuncs: @ 0x8556494
+	.4byte MonPlaceChange_Grab + 1
+	.4byte MonPlaceChange_Place + 1
+	.4byte MonPlaceChange_Shift + 1
 
 	.globl gUnknown_85564A0
 gUnknown_85564A0: @ 0x85564A0
@@ -1878,4 +1880,3 @@ gBerryCheckCirclePaletteTable: @ 0x855A924
 	.hword 0x0000, 0x0000
 	.hword 0xFFFF, 0x0000
 	.4byte 0x0855A934
-

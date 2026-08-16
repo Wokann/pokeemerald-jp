@@ -5568,7 +5568,7 @@ SECTIONS {
         src/pokemon_storage_system.o(.text.InitMonPlaceChange);
         src/pokemon_storage_system.o(.text.sub_080CD4E0);
         src/pokemon_storage_system.o(.text.DoMonPlaceChange);
-        src/pokemon_storage_system.o(.text.MonPlaceChange_Move);
+        src/pokemon_storage_system.o(.text.MonPlaceChange_Grab);
         src/pokemon_storage_system.o(.text.MonPlaceChange_Place);
         src/pokemon_storage_system.o(.text.MonPlaceChange_Shift);
         src/pokemon_storage_system.o(.text.sub_080CD730);

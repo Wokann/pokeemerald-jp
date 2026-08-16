@@ -203,7 +203,7 @@ struct PokemonStorageSystemData
     u8 displayMonNameText[36];
     u8 displayMonSpeciesName[36];
     u8 displayMonGenderLvlText[36];
-    u8 displayMonItemName[36];
+    u8 displayMonItemName[39]; // JP item name display buffer is 3 bytes longer than US.
     bool8 (*monPlaceChangeFunc)(void);
     u8 monPlaceChangeState;
     u8 shiftBoxId;
@@ -252,6 +252,8 @@ struct PokemonStorageSystemData
 };
 
 extern struct PokemonStorageSystemData *sStorage;
+
+extern bool8 (*const sPlaceChangeFuncs[])(void);
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -14414,32 +14416,10 @@ __attribute__((naked)) void sub_080CD4A8(void)
     );
 }
 
-__attribute__((naked)) void InitMonPlaceChange(u8 a)
+void InitMonPlaceChange(u8 type)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _080CD4D4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _080CD4D8\n\t"
-        "	adds r3, r1, r2\n\t"
-        "	ldr r2, _080CD4DC\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r3]\n\t"
-        "	movs r0, #0xd9\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD4D4: .4byte gUnknown_20399A8\n\t"
-        "_080CD4D8: .4byte 0x00000D8C\n\t"
-        "_080CD4DC: .4byte gUnknown_8556494\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->monPlaceChangeFunc = sPlaceChangeFuncs[type];
+    sStorage->monPlaceChangeState = 0;
 }
 
 __attribute__((naked)) void sub_080CD4E0(void)
@@ -14506,7 +14486,7 @@ __attribute__((naked)) void DoMonPlaceChange(void)
     );
 }
 
-__attribute__((naked)) void MonPlaceChange_Move(void)
+__attribute__((naked)) void MonPlaceChange_Grab(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
