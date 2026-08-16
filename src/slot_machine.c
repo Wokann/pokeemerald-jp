@@ -1082,6 +1082,9 @@ void AddPikaPowerBolt(u8 bolts);
 void FlashMatchLine(u8 spriteId);
 u8 GetSymbolAtRest(u8 reelIndex, s16 row);
 u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3);
+void Task_Payout(u8 taskId);
+bool8 IsMatchLineDoneFlashingBeforePayout(void);
+bool8 TryStopMatchLinesFlashing(void);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -2199,243 +2202,87 @@ static u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3)
 
 
 
-__attribute__((naked)) void AwardPayout(void)
+
+#undef tTimer
+#define tTimer data[1]
+
+static void AwardPayout(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812BAE8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl _call_via_r4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BAE8: .4byte Task_Payout + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    Task_Payout(CreateTask(Task_Payout, 4));
 }
 
-__attribute__((naked)) bool8 IsFinalTask_Task_Payout(void)
+static bool8 IsFinalTask_Task_Payout(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812BB00\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _0812BB04\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812BB06\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BB00: .4byte Task_Payout + 1\n\t"
-        "_0812BB04:\n\t"
-        "	movs r0, #1\n\t"
-        "_0812BB06:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FindTaskIdByFunc(Task_Payout) == TAIL_SENTINEL)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void Task_Payout(u8 taskId)
+static void Task_Payout(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _0812BB3C\n\t"
-        "	ldr r2, _0812BB40\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_0812BB1E:\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812BB1E\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BB3C: .4byte sPayoutTasks\n\t"
-        "_0812BB40: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    while (sPayoutTasks[gTasks[taskId].data[0]](&gTasks[taskId]))
+        ;
 }
 
-__attribute__((naked)) bool8 PayoutTask_Init(struct Task *task)
+static bool8 PayoutTask_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0812CF7C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BB70\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldr r0, _0812BB6C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812BB70\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812BB72\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BB6C: .4byte sSlotMachine\n\t"
-        "_0812BB70:\n\t"
-        "	movs r0, #0\n\t"
-        "_0812BB72:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsMatchLineDoneFlashingBeforePayout())
+    {
+        task->tState++; // PAYOUT_TASK_GIVE_PAYOUT
+        if (sSlotMachine->payout == 0)
+        {
+            task->tState = PAYOUT_TASK_FREE;
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 PayoutTask_GivePayout(struct Task *task)
+static bool8 PayoutTask_GivePayout(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0812BBCC\n\t"
-        "	bl IsFanfareTaskInactive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BB9E\n\t"
-        "	movs r0, #0x15\n\t"
-        "	bl PlaySE\n\t"
-        "_0812BB9E:\n\t"
-        "	ldr r0, _0812BC20\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrh r0, [r2, #0xe]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldrh r3, [r2, #0xc]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	ldr r0, _0812BC24\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _0812BBB8\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	strh r0, [r2, #0xc]\n\t"
-        "_0812BBB8:\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldr r0, _0812BC28\n\t"
-        "	ldrh r1, [r0, #0x2c]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BBCC\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "_0812BBCC:\n\t"
-        "	bl IsFanfareTaskInactive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BC06\n\t"
-        "	ldr r0, _0812BC28\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BC06\n\t"
-        "	movs r0, #0x15\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r1, _0812BC20\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrh r0, [r2, #0xe]\n\t"
-        "	ldrh r3, [r2, #0xc]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldr r3, _0812BC2C\n\t"
-        "	cmp r0, r3\n\t"
-        "	ble _0812BC00\n\t"
-        "	strh r3, [r2, #0xc]\n\t"
-        "_0812BC00:\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "_0812BC06:\n\t"
-        "	ldr r0, _0812BC20\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812BC18\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0812BC18:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BC20: .4byte sSlotMachine\n\t"
-        "_0812BC24: .4byte 0x0000270E\n\t"
-        "_0812BC28: .4byte gMain\n\t"
-        "_0812BC2C: .4byte 0x0000270F\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!task->tTimer--)
+    {
+        if (IsFanfareTaskInactive())
+            PlaySE(SE_PIN);
+        sSlotMachine->payout--;
+        if (sSlotMachine->coins < MAX_COINS)
+            sSlotMachine->coins++;
+        task->tTimer = 8;
+        if (JOY_HELD(A_BUTTON))
+            task->tTimer = 4;
+    }
+    if (IsFanfareTaskInactive() && JOY_NEW(START_BUTTON))
+    {
+        PlaySE(SE_PIN);
+        sSlotMachine->coins += sSlotMachine->payout;
+        if (sSlotMachine->coins > MAX_COINS)
+            sSlotMachine->coins = MAX_COINS;
+        sSlotMachine->payout = 0;
+    }
+    if (sSlotMachine->payout == 0)
+        task->tState++; // PAYOUT_TASK_FREE
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 PayoutTask_Free(struct Task *task)
+static bool8 PayoutTask_Free(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_0812CFC8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812BC4A\n\t"
-        "	ldr r0, _0812BC50\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "_0812BC4A:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BC50: .4byte Task_Payout + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (TryStopMatchLinesFlashing())
+        DestroyTask(FindTaskIdByFunc(Task_Payout));
+    return FALSE;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 __attribute__((section(".rodata.sSlotTasks")))
 static const bool8 (*const sSlotTasks[])(struct Task *task) =
@@ -4999,7 +4846,7 @@ __attribute__((naked)) void FlashMatchLine(u8 spriteId)
     );
 }
 
-__attribute__((naked)) bool8 sub_0812CF7C(void)
+__attribute__((naked)) bool8 IsMatchLineDoneFlashingBeforePayout(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5046,7 +4893,7 @@ __attribute__((naked)) bool8 sub_0812CF7C(void)
     );
 }
 
-__attribute__((naked)) bool8 sub_0812CFC8(void)
+__attribute__((naked)) bool8 TryStopMatchLinesFlashing(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -7482,8 +7482,8 @@ SECTIONS {
         src/slot_machine.o(.text.DarkenBetTiles);
         src/slot_machine.o(.text.CreateInvisibleFlashMatchLineSprites);
         src/slot_machine.o(.text.FlashMatchLine);
-        src/slot_machine.o(.text.sub_0812CF7C);
-        src/slot_machine.o(.text.sub_0812CFC8);
+        src/slot_machine.o(.text.IsMatchLineDoneFlashingBeforePayout);
+        src/slot_machine.o(.text.TryStopMatchLinesFlashing);
         src/slot_machine.o(.text.sub_0812CFFC);
         src/slot_machine.o(.text.SpriteCB_FlashMatchingLines);
         src/slot_machine.o(.text.FlashSlotMachineLights);
