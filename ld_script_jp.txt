@@ -7379,9 +7379,9 @@ SECTIONS {
         src/slot_machine.o(.text.CreateGameplayTasks);
         src/slot_machine.o(.text.CreateSlotMachineTasks);
         src/slot_machine.o(.text.Task_SlotMachine);
-        src/slot_machine.o(.text.SlotAction_UnfadeScreen);
-        src/slot_machine.o(.text.SlotAction_WaitForUnfade);
-        src/slot_machine.o(.text.SlotAction_SetSlotMachineVars);
+        src/slot_machine.o(.text.SlotTask_UnfadeScreen);
+        src/slot_machine.o(.text.SlotTask_WaitUnfade);
+        src/slot_machine.o(.text.SlotTask_ReadyNewSpin);
         src/slot_machine.o(.text.SlotAction3);
         src/slot_machine.o(.text.SlotAction4);
         src/slot_machine.o(.text.SlotAction_AwaitPlayerInput);

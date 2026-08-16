@@ -6,6 +6,7 @@
 #include "main.h"
 #include "task.h"
 #include "slot_machine.h"
+#include "constants/rgb.h"
 #include "string_util.h"
 #include "decompress.h"
 #include "trig.h"
@@ -799,6 +800,61 @@ enum {
 };
 
 enum {
+    SLOTTASK_UNFADE,
+    SLOTTASK_WAIT_FADE,
+    SLOTTASK_READY_NEW_SPIN,
+    SLOTTASK_READY_NEW_RT_SPIN,
+    SLOTTASK_ASK_INSERT_BET,
+    SLOTTASK_BET_INPUT,
+    SLOTTASK_MSG_NEED_3_COINS,
+    SLOTTASK_WAIT_MSG_NEED_3_COINS,
+    SLOTTASK_WAIT_INFO_BOX,
+    SLOTTASK_START_SPIN,
+    SLOTTASK_START_RT_SPIN,
+    SLOTTASK_RESET_BIAS_FAILURE,
+    SLOTTASK_WAIT_REEL_STOP,
+    SLOTTASK_WAIT_ALL_REELS_STOP,
+    SLOTTASK_CHECK_MATCHES,
+    SLOTTASK_WAIT_PAYOUT,
+    SLOTTASK_END_PAYOUT,
+    SLOTTASK_MATCHED_POWER,
+    SLOTTASK_WAIT_RT_ANIM,
+    SLOTTASK_RESET_BET_TILES,
+    SLOTTASK_NO_MATCHES,
+    SLOTTASK_ASK_QUIT,
+    SLOTTASK_HANDLE_QUIT_INPUT,
+    SLOTTASK_MSG_MAX_COINS,
+    SLOTTASK_WAIT_MSG_MAX_COINS,
+    SLOTTASK_MSG_NO_MORE_COINS,
+    SLOTTASK_WAIT_MSG_NO_MORE_COINS,
+    SLOTTASK_END,
+    SLOTTASK_FREE,
+};
+
+// IDs for digital display "scenes", i.e. each of the screens it can show made up of sprites
+enum {
+    DIG_DISPLAY_INSERT_BET,
+    DIG_DISPLAY_STOP_REEL,
+    DIG_DISPLAY_WIN,
+    DIG_DISPLAY_LOSE,
+    DIG_DISPLAY_REEL_TIME,
+    DIG_DISPLAY_BONUS_REG,
+    DIG_DISPLAY_BONUS_BIG,
+};
+
+#define MAX_BET 3
+
+#define BIAS_REPLAY     (1 << 0)
+#define BIAS_CHERRY     (1 << 1)
+#define BIAS_LOTAD      (1 << 2)
+#define BIAS_AZURILL    (1 << 3)
+#define BIAS_POWER      (1 << 4)
+#define BIAS_REELTIME   (1 << 5)
+#define BIAS_MIXED_7    (1 << 6)
+#define BIAS_STRAIGHT_7 (1 << 7)
+#define BIAS_7          (BIAS_STRAIGHT_7 | BIAS_MIXED_7)
+
+enum {
     LEFT_REEL,
     MIDDLE_REEL,
     RIGHT_REEL,
@@ -958,108 +1014,41 @@ __attribute__((naked)) void Task_SlotMachine(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotAction_UnfadeScreen(u8 taskId)
+void LoadPikaPowerMeter(u8 bolts);
+void CreateDigitalDisplayScene(u8 id);
+
+static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r4, _0812AB44\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #2]\n\t"
-        "	bl sub_0812D3C4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AB44: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    LoadPikaPowerMeter(sSlotMachine->pikaPowerBolts);
+    sSlotMachine->state++; // SLOTTASK_WAIT_FADE
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_WaitForUnfade(u8 taskId)
+static bool8 SlotTask_WaitUnfade(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812AB68\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812AB60\n\t"
-        "	ldr r0, _0812AB6C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812AB60:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AB68: .4byte gPaletteFade\n\t"
-        "_0812AB6C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+        sSlotMachine->state++;
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_SetSlotMachineVars(u8 taskId)
+static bool8 SlotTask_ReadyNewSpin(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _0812AB9C\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	strh r0, [r1, #0x18]\n\t"
-        "	ldrb r2, [r1, #4]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #4]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r3, [r3]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _0812ABA0\n\t"
-        "	movs r0, #0x19\n\t"
-        "	strb r0, [r3]\n\t"
-        "	b _0812ABB0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AB9C: .4byte sSlotMachine\n\t"
-        "_0812ABA0:\n\t"
-        "	ldrb r0, [r3, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812ABB0\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r3]\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "_0812ABB0:\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->payout = 0;
+    sSlotMachine->bet = 0;
+    sSlotMachine->currentReel = LEFT_REEL;
+    sSlotMachine->machineBias &= (BIAS_STRAIGHT_7 | BIAS_MIXED_7);
+    sSlotMachine->state = SLOTTASK_ASK_INSERT_BET;
+    if (sSlotMachine->coins <= 0)
+    {
+        sSlotMachine->state = SLOTTASK_MSG_NO_MORE_COINS;
+    }
+    else if (sSlotMachine->reelTimeSpinsLeft)
+    {
+        sSlotMachine->state = SLOTTASK_READY_NEW_RT_SPIN;
+        CreateDigitalDisplayScene(DIG_DISPLAY_REEL_TIME);
+    }
+    return TRUE;
 }
 
 __attribute__((naked)) void SlotAction3(u8 taskId)
