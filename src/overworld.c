@@ -3,6 +3,7 @@
 #include "main.h"
 #include "task.h"
 #include "link.h"
+#include "event_data.h"
 #include "constants/map_types.h"
 #include "constants/songs.h"
 #include "field_screen_effect.h"
@@ -212,38 +213,18 @@ void ResetGameStats(void)
 }
 
 
-__attribute__((naked)) void IncrementGameStat(u8 index)
+void IncrementGameStat(u8 index)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0x33\n\t"
-        "	bhi _08084174\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetGameStat\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _08084168\n\t"
-        "	cmp r1, r0\n\t"
-        "	bhi _0808416C\n\t"
-        "	adds r1, #1\n\t"
-        "	b _0808416E\n\t"
-        "	.align 2, 0\n\t"
-        "_08084168: .4byte 0x00FFFFFE\n\t"
-        "_0808416C:\n\t"
-        "	ldr r1, _0808417C\n\t"
-        "_0808416E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetGameStat\n\t"
-        "_08084174:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808417C: .4byte 0x00FFFFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    if (index < NUM_USED_GAME_STATS)
+    {
+        u32 statVal = GetGameStat(index);
+        if (statVal < 0xFFFFFF)
+            statVal++;
+        else
+            statVal = 0xFFFFFF;
+
+        SetGameStat(index, statVal);
+    }
 }
 
 u32 GetGameStat(u8 index)
@@ -363,81 +344,37 @@ __attribute__((naked)) void LoadSaveblockEventObjScripts(void)
     );
 }
 
-__attribute__((naked)) void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
+void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	ldr r0, _080842C0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r6, #0xc7\n\t"
-        "	lsls r6, r6, #4\n\t"
-        "	adds r3, r0, r6\n\t"
-        "_080842B2:\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _080842C4\n\t"
-        "	strh r4, [r3, #4]\n\t"
-        "	strh r2, [r3, #6]\n\t"
-        "	b _080842CC\n\t"
-        "	.align 2, 0\n\t"
-        "_080842C0: .4byte gSaveBlock1Ptr\n\t"
-        "_080842C4:\n\t"
-        "	adds r3, #0x18\n\t"
-        "	adds r1, #1\n\t"
-        "	cmp r1, #0x3f\n\t"
-        "	ble _080842B2\n\t"
-        "_080842CC:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    struct ObjectEventTemplate *savObjTemplates = gSaveBlock1Ptr->objectEventTemplates;
+
+    for (i = 0; i < OBJECT_EVENT_TEMPLATES_COUNT; i++)
+    {
+        struct ObjectEventTemplate *objectEventTemplate = &savObjTemplates[i];
+        if (objectEventTemplate->localId == localId)
+        {
+            objectEventTemplate->x = x;
+            objectEventTemplate->y = y;
+            return;
+        }
+    }
 }
 
-__attribute__((naked)) void SetObjEventTemplateMovementType(u8 localId, u8 movementType)
+void SetObjEventTemplateMovementType(u8 localId, u8 movementType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r0, _080842F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r5, #0xc7\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r2, r0, r5\n\t"
-        "_080842EA:\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _080842F8\n\t"
-        "	strb r1, [r2, #9]\n\t"
-        "	b _08084300\n\t"
-        "	.align 2, 0\n\t"
-        "_080842F4: .4byte gSaveBlock1Ptr\n\t"
-        "_080842F8:\n\t"
-        "	adds r2, #0x18\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, #0x3f\n\t"
-        "	ble _080842EA\n\t"
-        "_08084300:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    struct ObjectEventTemplate *savObjTemplates = gSaveBlock1Ptr->objectEventTemplates;
+    for (i = 0; i < OBJECT_EVENT_TEMPLATES_COUNT; i++)
+    {
+        struct ObjectEventTemplate *objectEventTemplate = &savObjTemplates[i];
+        if (objectEventTemplate->localId == localId)
+        {
+            objectEventTemplate->movementType = movementType;
+            return;
+        }
+    }
 }
 
 __attribute__((naked)) void InitMapView(void)
@@ -1895,54 +1832,14 @@ __attribute__((naked)) bool32 Overworld_IsBikingAllowed(void)
     );
 }
 
-__attribute__((naked)) void SetDefaultFlashLevel(void)
+void SetDefaultFlashLevel(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08084E10\n\t"
-        "	ldrb r1, [r0, #0x15]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08084E18\n\t"
-        "	ldr r0, _08084E14\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x30\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _08084E46\n\t"
-        "	.align 2, 0\n\t"
-        "_08084E10: .4byte gMapHeader\n\t"
-        "_08084E14: .4byte gSaveBlock1Ptr\n\t"
-        "_08084E18:\n\t"
-        "	ldr r0, _08084E30\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08084E38\n\t"
-        "	ldr r0, _08084E34\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x30\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _08084E46\n\t"
-        "	.align 2, 0\n\t"
-        "_08084E30: .4byte 0x00000888\n\t"
-        "_08084E34: .4byte gSaveBlock1Ptr\n\t"
-        "_08084E38:\n\t"
-        "	ldr r0, _08084E4C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _08084E50\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	adds r1, #0x30\n\t"
-        "	strb r0, [r1]\n\t"
-        "_08084E46:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08084E4C: .4byte gSaveBlock1Ptr\n\t"
-        "_08084E50: .4byte gMaxFlashLevel\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gMapHeader.cave)
+        gSaveBlock1Ptr->flashLevel = 0;
+    else if (FlagGet(FLAG_SYS_USE_FLASH))
+        gSaveBlock1Ptr->flashLevel = 1;
+    else
+        gSaveBlock1Ptr->flashLevel = gMaxFlashLevel - 1;
 }
 
 void SetFlashLevel(s32 flashLevel)
@@ -2602,33 +2499,14 @@ __attribute__((naked)) void TryFadeOutOldMapMusic(void)
 }
 
 
-__attribute__((naked)) bool8 BGMusicStopped(void)
+bool8 BGMusicStopped(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/overworld.c\n\t"
-        "	push {lr}\n\t"
-        "	bl IsNotWaitingForBGMStop\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return IsNotWaitingForBGMStop();
 }
 
-__attribute__((naked)) void Overworld_FadeOutMapMusic(void)
+void Overworld_FadeOutMapMusic(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #4\n\t"
-        "	bl FadeOutMapMusic\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    FadeOutMapMusic(4);
 }
 
 __attribute__((naked)) void PlayAmbientCry(void)
