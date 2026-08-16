@@ -1099,6 +1099,10 @@ static bool8 DecideStop_Bias_Reel2_Bet1or2(void);
 static bool8 DecideStop_Bias_Reel2_Bet3(void);
 static bool8 DecideStop_Bias_Reel3_Bet1or2(u8 biasSymbol);
 static bool8 DecideStop_Bias_Reel3_Bet3(u8 biasSymbol);
+static void DecideStop_NoBias_Reel2_Bet1(void);
+static void DecideStop_NoBias_Reel2_Bet2(void);
+static void DecideStop_NoBias_Reel2_Bet3(void);
+bool8 IfSymbol7_SwitchColor(u8 *symbol);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -2890,36 +2894,107 @@ static bool8 DecideStop_Bias_Reel3_Bet3(u8 biasSymbol)
 
 
 
-__attribute__((naked)) void DecideStop_NoBias_Reel1(void)
+
+__attribute__((section(".rodata.sDecideStop_NoBias_Reel2_Bets")))
+static void (*const sDecideStop_NoBias_Reel2_Bets[MAX_BET])(void) =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	b _0812C5F8\n\t"
-        "_0812C5F2:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "_0812C5F8:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl AreCherriesOnScreen_Reel1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C5F2\n\t"
-        "	ldr r0, _0812C614\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strh r5, [r0, #0x2e]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C614: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    DecideStop_NoBias_Reel2_Bet1,
+    DecideStop_NoBias_Reel2_Bet2,
+    DecideStop_NoBias_Reel2_Bet3,
+};
+
+// Advance as many turns as needed until there are no cherries on screen in
+// reel 1, as cherries would cause a match.
+//
+// Based on the distribution of reel 1, this will add at most 3 extra turns.
+void DecideStop_NoBias_Reel1(void)
+{
+    s16 i = 0;
+
+    while (AreCherriesOnScreen_Reel1(i) != 0)
+        i++;
+    sSlotMachine->reelExtraTurns[0] = i;
 }
+
+// If the machine doesn't have a bias, the reel stops immediately.
+//
+// Otherwise, the machine tries to taunt the player if it is biased toward
+// straight 7's. This would only happen if the player did not stop near the
+// correct-color 7, so the machine couldn't force a match.
+//
+// Instead, the machine now tries to line up the opposite-color 7, which is not
+// a valid match.
+void DecideStop_NoBias_Reel2(void)
+{
+    sDecideStop_NoBias_Reel2_Bets[sSlotMachine->bet - 1]();
+}
+
+// If the machine has no bias, stop immediately.
+//
+// Otherwise, the machine manipulates the results if all the following
+// conditions are met:
+// If
+//  - The machine is biased toward straight 7's
+//  - The machine managed to match a 7 in the middle of reel 1
+//  - The machine could not line up a 7 of the same color in reel 2
+// Then
+//    The machine will try to line up a 7 of the opposite color in reel 2
+static void DecideStop_NoBias_Reel2_Bet1(void)
+{
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & BIAS_STRAIGHT_7)
+    {
+        // Note here and in other NoBias functions, reelExtraTurns is 0 if it
+        // corresponds to a previous reel. That reel has already stopped and any
+        // extra turns were applied.
+        u8 reel1MiddleSym = GetSymbol(LEFT_REEL, 2 - sSlotMachine->reelExtraTurns[0]);
+        if (IfSymbol7_SwitchColor(&reel1MiddleSym))
+        {
+            s16 i;
+            for (i = 0; i <= MAX_EXTRA_TURNS; i++)
+            {
+                if (reel1MiddleSym == GetSymbol(MIDDLE_REEL, 2 - i))
+                {
+                    sSlotMachine->winnerRows[1] = 2;
+                    sSlotMachine->reelExtraTurns[1] = i;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+// If the machine has no bias, stop immediately.
+//
+// Otherwise, the machine manipulates the results if all the following
+// conditions are met:
+// If
+//  - The machine is biased toward straight 7's
+//  - The machine managed to match a 7 anywhere in reel 1
+//  - The machine could not line up a 7 of the same color in reel 2
+// Then
+//    The machine will try to line up a 7 of the opposite color in reel 2
+static void DecideStop_NoBias_Reel2_Bet2(void)
+{
+    if (sSlotMachine->winnerRows[0] != 0 && sSlotMachine->machineBias & BIAS_STRAIGHT_7)
+    {
+        u8 reel1BiasSym = GetSymbol(LEFT_REEL, sSlotMachine->winnerRows[0] - sSlotMachine->reelExtraTurns[0]);
+        if (IfSymbol7_SwitchColor(&reel1BiasSym))
+        {
+            s16 i;
+            for (i = 0; i <= MAX_EXTRA_TURNS; i++)
+            {
+                if (reel1BiasSym == GetSymbol(MIDDLE_REEL, sSlotMachine->winnerRows[0] - i))
+                {
+                    sSlotMachine->winnerRows[1] = sSlotMachine->winnerRows[0];
+                    sSlotMachine->reelExtraTurns[1] = i;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
 
 bool8 IfSymbol7_SwitchColor(u8 *symbol)
 {
@@ -2937,174 +3012,13 @@ bool8 IfSymbol7_SwitchColor(u8 *symbol)
 }
 
 
-__attribute__((naked)) void DecideStop_NoBias_Reel2(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _0812C654\n\t"
-        "	ldr r0, _0812C658\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C654: .4byte gUnknown_85844B0\n\t"
-        "_0812C658: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
-}
 
-__attribute__((naked)) void DecideStop_NoBias_Reel2_Bet1(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _0812C6C4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C6D4\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C6D4\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	movs r1, #2\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	mov r1, sp\n\t"
-        "	strb r0, [r1]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl IfSymbol7_SwitchColor\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C6D4\n\t"
-        "	movs r5, #0\n\t"
-        "	mov r6, sp\n\t"
-        "	movs r7, #2\n\t"
-        "_0812C69C:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	subs r1, r7, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSymbol\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0812C6C8\n\t"
-        "	ldr r0, _0812C6C4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	strh r5, [r1, #0x30]\n\t"
-        "	b _0812C6D4\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C6C4: .4byte sSlotMachine\n\t"
-        "_0812C6C8:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812C69C\n\t"
-        "_0812C6D4:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
 
-__attribute__((naked)) void DecideStop_NoBias_Reel2_Bet2(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, _0812C744\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrh r3, [r2, #0x34]\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C754\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C754\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	subs r1, r3, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	mov r1, sp\n\t"
-        "	strb r0, [r1]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl IfSymbol7_SwitchColor\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C754\n\t"
-        "	movs r5, #0\n\t"
-        "	mov r7, sp\n\t"
-        "	adds r6, r4, #0\n\t"
-        "_0812C71C:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrh r1, [r0, #0x34]\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	subs r1, r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetSymbol\n\t"
-        "	ldrb r1, [r7]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0812C748\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrh r1, [r0, #0x34]\n\t"
-        "	strh r1, [r0, #0x36]\n\t"
-        "	strh r5, [r0, #0x30]\n\t"
-        "	b _0812C754\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C744: .4byte sSlotMachine\n\t"
-        "_0812C748:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812C71C\n\t"
-        "_0812C754:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
 
-__attribute__((naked)) void DecideStop_NoBias_Reel2_Bet3(u8 taskId)
+
+
+
+__attribute__((naked)) void DecideStop_NoBias_Reel2_Bet3(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

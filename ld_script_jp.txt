@@ -9344,7 +9344,8 @@ SECTIONS {
         src/slot_machine.o(.rodata.sDecideStop_Bias_Reel1_Bets);
         src/slot_machine.o(.rodata.sDecideStop_Bias_Reel2_Bets);
         src/slot_machine.o(.rodata.sDecideStop_Bias_Reel3_Bets);
-        data/data_b2d_mid61.o(.rodata.85844B0);
+        src/slot_machine.o(.rodata.sDecideStop_NoBias_Reel2_Bets);
+        data/data_b2d_mid61.o(.rodata.85844BC);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/slot_machine.o(.rodata.sReelSymbols);
