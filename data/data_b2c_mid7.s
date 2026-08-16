@@ -9,40 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gText_RibbonsMonListCount
-gText_RibbonsMonListCount: @ 0x85F5DCC
-	.string "　　　/{DYNAMIC 0}$"
-
-	.globl sText_RibbonsMonListItemMale
-sText_RibbonsMonListItemMale: @ 0x85F5DD3
-	.string "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$"
-	.globl sText_RibbonsMonListItemFemale
-sText_RibbonsMonListItemFemale: @ 0x85F5DEB
-	.string "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$"
-	.globl sText_RibbonsMonListItemUnknown
-sText_RibbonsMonListItemUnknown: @ 0x85F5E03
-	.string "{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$　　　"
-
-	.globl sRibbonData
-sRibbonData: @ 0x85F5E14
-	@ struct { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; }
-	.byte 0x01, 0x01, CHAMPION_RIBBON, 0x00  @ {numBits, numRibbons, CHAMPION_RIBBON, isGiftRibbon}
-	.byte 0x03, 0x04, COOL_RIBBON_NORMAL, 0x00  @ {numBits, numRibbons, COOL_RIBBON_NORMAL, isGiftRibbon}
-	.byte 0x03, 0x04, BEAUTY_RIBBON_NORMAL, 0x00  @ {numBits, numRibbons, BEAUTY_RIBBON_NORMAL, isGiftRibbon}
-	.byte 0x03, 0x04, CUTE_RIBBON_NORMAL, 0x00  @ {numBits, numRibbons, CUTE_RIBBON_NORMAL, isGiftRibbon}
-	.byte 0x03, 0x04, SMART_RIBBON_NORMAL, 0x00  @ {numBits, numRibbons, SMART_RIBBON_NORMAL, isGiftRibbon}
-	.byte 0x03, 0x04, TOUGH_RIBBON_NORMAL, 0x00  @ {numBits, numRibbons, TOUGH_RIBBON_NORMAL, isGiftRibbon}
-	.byte 0x01, 0x01, WINNING_RIBBON, 0x00  @ {numBits, numRibbons, WINNING_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, VICTORY_RIBBON, 0x00  @ {numBits, numRibbons, VICTORY_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, ARTIST_RIBBON, 0x00  @ {numBits, numRibbons, ARTIST_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, EFFORT_RIBBON, 0x00  @ {numBits, numRibbons, EFFORT_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, MARINE_RIBBON, 0x01  @ {numBits, numRibbons, MARINE_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, LAND_RIBBON, 0x01  @ {numBits, numRibbons, LAND_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, SKY_RIBBON, 0x01  @ {numBits, numRibbons, SKY_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, COUNTRY_RIBBON, 0x01  @ {numBits, numRibbons, COUNTRY_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, NATIONAL_RIBBON, 0x01  @ {numBits, numRibbons, NATIONAL_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, EARTH_RIBBON, 0x01  @ {numBits, numRibbons, EARTH_RIBBON, isGiftRibbon}
-	.byte 0x01, 0x01, WORLD_RIBBON, 0x01  @ {numBits, numRibbons, WORLD_RIBBON, isGiftRibbon}
 	.globl gUnknown_85F5E58
 gUnknown_85F5E58: @ 0x085F5E58
 	.string "チャンピオンを　たおして$"

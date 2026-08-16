@@ -19,7 +19,7 @@ extern const u8 *const gGiftRibbonDescriptionPointers[][2];
 struct RibbonGfxData { u16 tileNumOffset; u16 palNumOffset; };
 extern const struct RibbonGfxData sRibbonGfxData[];
 struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; };
-extern const struct RibbonData sRibbonData[16]; // ROM 0x085F5E14, 16 entries
+extern const struct RibbonData sRibbonData[16]; // ROM 0x085F5E14, 17 entries (loop runs i<=16)
 extern u32 sRibbonDraw_Total;
 extern u32 sRibbonDraw_Current;
 extern const u16 sRibbonIcons1_Pal[];

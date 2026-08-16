@@ -262,3 +262,32 @@ const struct WindowTemplate sRibbonsMonListWindowTemplate =
     .paletteNum = 1,
     .baseBlock = 20
 };
+
+// Ribbons mon list texts.
+const u8 gText_RibbonsMonListCount[] = _("　　　/{DYNAMIC 0}");
+const u8 sText_RibbonsMonListItemMale[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
+const u8 sText_RibbonsMonListItemFemale[] = _("{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ");
+// JP text carries its own $ and trailing full-width spaces (no auto terminator).
+const u8 sText_RibbonsMonListItemUnknown[] = __("{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$　　");
+
+struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; };
+const struct RibbonData sRibbonData[] =
+{
+    {1, 1, CHAMPION_RIBBON,      FALSE},
+    {3, 4, COOL_RIBBON_NORMAL,   FALSE},
+    {3, 4, BEAUTY_RIBBON_NORMAL, FALSE},
+    {3, 4, CUTE_RIBBON_NORMAL,   FALSE},
+    {3, 4, SMART_RIBBON_NORMAL,  FALSE},
+    {3, 4, TOUGH_RIBBON_NORMAL,  FALSE},
+    {1, 1, WINNING_RIBBON,       FALSE},
+    {1, 1, VICTORY_RIBBON,       FALSE},
+    {1, 1, ARTIST_RIBBON,        FALSE},
+    {1, 1, EFFORT_RIBBON,        FALSE},
+    {1, 1, MARINE_RIBBON,        TRUE},
+    {1, 1, LAND_RIBBON,          TRUE},
+    {1, 1, SKY_RIBBON,           TRUE},
+    {1, 1, COUNTRY_RIBBON,       TRUE},
+    {1, 1, NATIONAL_RIBBON,      TRUE},
+    {1, 1, EARTH_RIBBON,         TRUE},
+    {1, 1, WORLD_RIBBON,         TRUE},
+};
