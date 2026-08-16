@@ -4,6 +4,9 @@
 #include "event_data.h"
 #include "tv.h"
 #include "battle.h"
+#include "string_util.h"
+extern u8 sub_081370D8(u8 nature, u8 *dest);
+extern void GetEreaderTrainerName(u8 *dest);
 #include "field_specials.h"
 
 __attribute__((naked)) void Special_ShowDiploma(void)
@@ -2753,32 +2756,9 @@ __attribute__((naked)) void RemoveCameraObject(void)
     );
 }
 
-__attribute__((naked)) void GetPokeblockNameByMonNature(void)
+u8 GetPokeblockNameByMonNature(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08139268\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl GetNature\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0813926C\n\t"
-        "	bl sub_081370D8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08139268: .4byte gPlayerParty\n\t"
-        "_0813926C: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    return sub_081370D8(GetNature(&gPlayerParty[GetLeadMonIndex()]), gStringVar1);
 }
 
 __attribute__((naked)) void GetSecretBaseNearbyMapName(void)
@@ -2820,19 +2800,9 @@ __attribute__((naked)) void GetBestBattleTowerStreak(void)
     );
 }
 
-__attribute__((naked)) void BufferEReaderTrainerName(void)
+void BufferEReaderTrainerName(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081392B4\n\t"
-        "	bl GetEreaderTrainerName\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081392B4: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    GetEreaderTrainerName(gStringVar1);
 }
 
 __attribute__((naked)) void GetSlotMachineId(void)
