@@ -9383,6 +9383,9 @@ SECTIONS {
         src/slot_machine.o(.rodata.sFlashingLightsPalTable);
         src/slot_machine.o(.rodata.sSlotMachineMenu_Pal);
         data/data_b2d_mid62.o(.rodata.85855B4);
+        src/slot_machine.o(.rodata.sReelTimeWindow_Tilemap);
+        data/data_b2d_mid62.o(.rodata.8588154);
+        src/slot_machine.o(.rodata.sEmptyTilemap);
         src/data/text/region_texts38.o(.rodata);
         src/data/text/region_texts38.o(.rodata.gText_ReelTimeHelp);
         data/data_b2d_mid38.o(.rodata);
