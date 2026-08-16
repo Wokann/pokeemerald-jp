@@ -256,8 +256,31 @@ static const struct SpriteTemplate sOptionsCursorSpriteTemplate =
     .callback = SpriteCB_OptionsCursor,
 };
 
-extern const struct OamData sTrainerPicOamData;
-extern const struct SpriteTemplate sTrainerPicSpriteTemplate;
+static const struct OamData sTrainerPicOamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+static const struct SpriteTemplate sTrainerPicSpriteTemplate =
+{
+    .tileTag = GFXTAG_TRAINER_PIC,
+    .paletteTag = PALTAG_TRAINER_PIC,
+    .oam = &sTrainerPicOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
 extern const u8 gText_NumberRegistered[];
 extern const u8 gText_NumberOfBattles[];
 extern const u8 gText_Unknown[];

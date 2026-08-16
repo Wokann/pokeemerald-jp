@@ -9,15 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sTrainerPicOamData
-sTrainerPicOamData: @ 0x5F41E8
-	.incbin "baserom_jp.gba", 0x5f41e8, 0x8
-
-
-	.globl sTrainerPicSpriteTemplate
-sTrainerPicSpriteTemplate: @ 0x85F41F0
-	.incbin "baserom_jp.gba", 0x5f41f0, 0x18
-
 	.globl sMapSecInfoWindow_Pal
 sMapSecInfoWindow_Pal: @ 0x85F4208
 	.incbin "graphics/misc/sMapSecInfoWindow_Pal.bin"
