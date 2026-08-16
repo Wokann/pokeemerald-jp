@@ -25449,22 +25449,11 @@ __attribute__((naked)) void Step8(struct Sprite *sprite, u8 direction)
     );
 }
 
-__attribute__((naked)) void oamt_npc_ministep_reset(struct Sprite *sprite, u8 a, u8 b)
+void oamt_npc_ministep_reset(struct Sprite *sprite, u8 a, u8 b)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	strh r2, [r0, #0x36]\n\t"
-        "	strh r3, [r0, #0x38]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[3] = a;
+    sprite->data[4] = b;
+    sprite->data[5] = 0;
 }
 
 __attribute__((naked)) bool8 obj_npc_ministep(struct Sprite *sprite)
