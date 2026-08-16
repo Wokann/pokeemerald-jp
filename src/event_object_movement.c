@@ -367,7 +367,7 @@ __attribute__((naked)) bool8 TryGetObjectEventIdByLocalIdAndMap(u8 localId, u8 m
     );
 }
 
-__attribute__((naked)) void GetEventObjectIdByXY(void)
+__attribute__((naked)) u8 GetEventObjectIdByXY(s16 x, s16 y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2854,129 +2854,45 @@ void ObjectEventGetLocalIdAndMap(struct ObjectEvent *objectEvent, void *localId,
 }
 
 
-__attribute__((naked)) void AllowObjectAtPosTriggerGroundEffects(s16 x, s16 y)
+void AllowObjectAtPosTriggerGroundEffects(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl GetEventObjectIdByXY\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	beq _0808E0F4\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808E0F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_0808E0F4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E0F8: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    struct ObjectEvent *objectEvent;
+
+    objectEventId = GetEventObjectIdByXY(x, y);
+    if (objectEventId != OBJECT_EVENTS_COUNT)
+    {
+        objectEvent = &gObjectEvents[objectEventId];
+        objectEvent->triggerGroundEffectsOnMove = TRUE;
+    }
 }
 
-__attribute__((naked)) void SetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup, u8 subpriority)
+void SetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r4, r3, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808E142\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r2, r0, #3\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _0808E14C\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808E150\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r2, #3]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	strb r4, [r0]\n\t"
-        "_0808E142:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E14C: .4byte gObjectEvents\n\t"
-        "_0808E150: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    struct ObjectEvent *objectEvent;
+    struct Sprite *sprite;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+    {
+        objectEvent = &gObjectEvents[objectEventId];
+        sprite = &gSprites[objectEvent->spriteId];
+        objectEvent->fixedPriority = TRUE;
+        sprite->subpriority = subpriority;
+    }
 }
 
-__attribute__((naked)) void ResetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup)
+void ResetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808E190\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0808E198\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r2, [r1, #3]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #3]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0808E190:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E198: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 objectEventId;
+    struct ObjectEvent *objectEvent;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(localId, mapNum, mapGroup, &objectEventId))
+    {
+        objectEvent = &gObjectEvents[objectEventId];
+        objectEvent->fixedPriority = FALSE;
+        objectEvent->triggerGroundEffectsOnMove = TRUE;
+    }
 }
 
 __attribute__((naked)) void sub_0808E19C(void)
