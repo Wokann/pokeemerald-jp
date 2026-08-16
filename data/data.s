@@ -110,7 +110,30 @@ sKeypadIconTiles: @ 0x829C6A4
 
 	.globl sFontInfos
 sFontInfos: @ 0x829CEA4
-	.incbin "baserom_jp.gba", 0x29cea4, 0x60
+	.4byte 0x08005359  @ fontFunction
+	.byte 0x08, 0x0C, 0x00, 0x02  @ maxWidth, maxHeight, letterSpacing, lineSpacing
+	.byte 0x20, 0x31, 0x00, 0x00  @ unk, fg, bg, shadow
+	.4byte 0x0800538D  @ fontFunction
+	.byte 0x08, 0x10, 0x00, 0x00  @ maxWidth, maxHeight, letterSpacing, lineSpacing
+	.byte 0x20, 0x31, 0x00, 0x00  @ unk, fg, bg, shadow
+	.4byte 0x080053C5  @ fontFunction
+	.byte 0x0A, 0x0C, 0x01, 0x02  @ maxWidth, maxHeight, letterSpacing, lineSpacing
+	.byte 0x20, 0x31, 0x00, 0x00  @ unk, fg, bg, shadow
+	.4byte 0x080053FD  @ fontFunction
+	.byte 0x0A, 0x0C, 0x01, 0x02  @ maxWidth, maxHeight, letterSpacing, lineSpacing
+	.byte 0x20, 0x31, 0x00, 0x00  @ unk, fg, bg, shadow
+	.4byte 0x08005435  @ fontFunction
+	.byte 0x0A, 0x0C, 0x00, 0x00  @ maxWidth, maxHeight, letterSpacing, lineSpacing
+	.byte 0x20, 0x31, 0x00, 0x00  @ unk, fg, bg, shadow
+	.4byte 0x0800546D  @ fontFunction
+	.byte 0x0A, 0x0C, 0x00, 0x00  @ maxWidth, maxHeight, letterSpacing, lineSpacing
+	.byte 0x20, 0x31, 0x00, 0x00  @ unk, fg, bg, shadow
+	.4byte 0x081B9EF1  @ fontFunction
+	.byte 0x08, 0x10, 0x00, 0x10  @ maxWidth, maxHeight, letterSpacing, lineSpacing
+	.byte 0x20, 0x31, 0x00, 0x00  @ unk, fg, bg, shadow
+	.4byte 0x00000000  @ fontFunction
+	.byte 0x08, 0x08, 0x00, 0x00  @ maxWidth, maxHeight, letterSpacing, lineSpacing
+	.byte 0x10, 0xF2, 0x00, 0x00  @ unk, fg, bg, shadow
 
 	.globl sMenuCursorDimensions
 sMenuCursorDimensions: @ 0x829CF04
