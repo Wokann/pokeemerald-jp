@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "cable_club.h"
 #include "trade.h"
 
@@ -194,11 +195,15 @@ extern const u16 gUnknown_830D0E8[];
 // layout of the leading region differs from the US TradeAnim struct).
 struct TradeAnim
 {
-    u8 filler_0[0x88];
+    u8 filler_0[0x68];
+    u32 monPersonalities[2];  // 0x68
+    u8 filler_70[0x18];       // 0x70
     u8 linkTimeoutZero1;   // 0x88
     u8 linkTimeoutZero2;   // 0x89
     u16 linkTimeoutTimer;  // 0x8A
-    u8 filler_8C[0x48];
+    u8 filler_8C[2];       // 0x8C
+    u8 monSpriteIds[2];    // 0x8E
+    u8 filler_90[0x44];    // 0x90
     u16 texX;       // 0xD4
     u16 texY;       // 0xD6
     u8 filler_D8[4];
@@ -211,9 +216,13 @@ struct TradeAnim
     s16 sXY;        // 0xE8
     u8 filler_EA[2];
     u16 alpha;      // 0xEC
+    u8 filler_EE[2];
+    u16 monSpecies[2];  // 0xF0
 };
 
 extern struct TradeAnim *gUnknown_2031F40;
+extern struct MonSpritesGfx *gMonSpritesGfxPtr;
+extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
 static void SetTradePartyHPBarSprites(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
@@ -3255,168 +3264,47 @@ static u32 TradeGetMultiplayerId(void)
     return 0;
 }
 
-__attribute__((naked)) void sub_0807A758(void)
+static void LoadTradeMonPic(u8 whichParty, u8 state)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r8, r4\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0807A77E\n\t"
-        "	ldr r0, _0807A7A8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _0807A7AC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r8, r1\n\t"
-        "	movs r4, #1\n\t"
-        "_0807A77E:\n\t"
-        "	cmp r6, #1\n\t"
-        "	bne _0807A79C\n\t"
-        "	ldr r0, _0807A7A8\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _0807A7B0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r8, r1\n\t"
-        "	movs r4, #3\n\t"
-        "_0807A79C:\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _0807A7B4\n\t"
-        "	cmp r5, #1\n\t"
-        "	beq _0807A83C\n\t"
-        "	b _0807A892\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A7A8: .4byte gSelectedTradeMonPositions\n\t"
-        "_0807A7AC: .4byte gPlayerParty\n\t"
-        "_0807A7B0: .4byte gEnemyParty\n\t"
-        "_0807A7B4:\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0807A7F0\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _0807A7E8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807A7EC\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r1, [r1, #8]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl HandleLoadSpecialPokePic_2\n\t"
-        "	movs r4, #0\n\t"
-        "	b _0807A80E\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A7E8: .4byte gMonFrontPicTable\n\t"
-        "_0807A7EC: .4byte gMonSpritesGfxPtr\n\t"
-        "_0807A7F0:\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _0807A830\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807A834\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r4, r6, #1\n\t"
-        "	adds r1, r4, #1\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r2, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl HandleLoadSpecialPokePic_DontHandleDeoxys\n\t"
-        "_0807A80E:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetMonSpritePalStruct\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	ldr r0, _0807A838\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xf0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0]\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r1, #0x68\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r7, [r1]\n\t"
-        "	b _0807A892\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A830: .4byte gMonFrontPicTable\n\t"
-        "_0807A834: .4byte gMonSpritesGfxPtr\n\t"
-        "_0807A838: .4byte gUnknown_2031F40\n\t"
-        "_0807A83C:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetMonSpritePalStruct\n\t"
-        "	ldrh r0, [r0, #4]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetMultiuseSpriteTemplateToPokemon\n\t"
-        "	ldr r0, _0807A89C\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	movs r3, #6\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r4, _0807A8A0\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x8e\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r3, _0807A8A4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r3, #0x1c\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, _0807A8A8\n\t"
-        "	str r1, [r0]\n\t"
-        "_0807A892:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A89C: .4byte gMultiuseSpriteTemplate\n\t"
-        "_0807A8A0: .4byte gUnknown_2031F40\n\t"
-        "_0807A8A4: .4byte gSprites\n\t"
-        "_0807A8A8: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    int pos = 0;
+    struct Pokemon *mon = NULL;
+    u16 species;
+    u32 personality;
+
+    if (whichParty == TRADE_PLAYER)
+    {
+        mon = &gPlayerParty[gSelectedTradeMonPositions[TRADE_PLAYER]];
+        pos = B_POSITION_OPPONENT_LEFT;
+    }
+
+    if (whichParty == TRADE_PARTNER)
+    {
+        mon = &gEnemyParty[gSelectedTradeMonPositions[TRADE_PARTNER] % PARTY_SIZE];
+        pos = B_POSITION_OPPONENT_RIGHT;
+    }
+
+    switch (state)
+    {
+    case 0:
+        species = GetMonData3(mon, MON_DATA_SPECIES_OR_EGG);
+        personality = GetMonData3(mon, MON_DATA_PERSONALITY);
+
+        if (whichParty == TRADE_PLAYER)
+            HandleLoadSpecialPokePic_2(&gMonFrontPicTable[species], gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT], species, personality);
+        else
+            HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonFrontPicTable[species], gMonSpritesGfxPtr->sprites.ptr[whichParty * 2 + B_POSITION_OPPONENT_LEFT], species, personality);
+
+        LoadCompressedSpritePalette(GetMonSpritePalStruct(mon));
+        gUnknown_2031F40->monSpecies[whichParty] = species;
+        gUnknown_2031F40->monPersonalities[whichParty] = personality;
+        break;
+    case 1:
+        SetMultiuseSpriteTemplateToPokemon(GetMonSpritePalStruct(mon)->tag, pos);
+        gUnknown_2031F40->monSpriteIds[whichParty] = CreateSprite(&gMultiuseSpriteTemplate, 120, 60, 6);
+        gSprites[gUnknown_2031F40->monSpriteIds[whichParty]].invisible = TRUE;
+        gSprites[gUnknown_2031F40->monSpriteIds[whichParty]].callback = SpriteCallbackDummy;
+        break;
+    }
 }
 
 __attribute__((naked)) void sub_0807A8AC(void)
@@ -3651,14 +3539,14 @@ __attribute__((naked)) void sub_0807A8AC(void)
         "	adds r0, #0x93\n\t"
         "	strb r1, [r0]\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_0807A758\n\t"
+        "	bl LoadTradeMonPic\n\t"
         "	b _0807AB38\n\t"
         "	.align 2, 0\n\t"
         "_0807AAB0: .4byte gUnknown_2031F40\n\t"
         "_0807AAB4:\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #1\n\t"
-        "	bl sub_0807A758\n\t"
+        "	bl LoadTradeMonPic\n\t"
         "	ldr r1, _0807AAC8\n\t"
         "	movs r2, #0x87\n\t"
         "	lsls r2, r2, #3\n\t"
@@ -3669,12 +3557,12 @@ __attribute__((naked)) void sub_0807A8AC(void)
         "_0807AACC:\n\t"
         "	movs r0, #1\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_0807A758\n\t"
+        "	bl LoadTradeMonPic\n\t"
         "	b _0807AB38\n\t"
         "_0807AAD6:\n\t"
         "	movs r0, #1\n\t"
         "	movs r1, #1\n\t"
-        "	bl sub_0807A758\n\t"
+        "	bl LoadTradeMonPic\n\t"
         "	bl sub_0807ABB0\n\t"
         "	ldr r1, _0807AAEC\n\t"
         "	movs r2, #0x87\n\t"
@@ -4026,24 +3914,24 @@ __attribute__((naked)) void sub_0807ACC8(void)
         "_0807ADE8:\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_0807A758\n\t"
+        "	bl LoadTradeMonPic\n\t"
         "	b _0807AE60\n\t"
         "_0807ADF2:\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #1\n\t"
-        "	bl sub_0807A758\n\t"
+        "	bl LoadTradeMonPic\n\t"
         "	b _0807AE60\n\t"
         "_0807ADFC:\n\t"
         "	movs r0, #1\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_0807A758\n\t"
+        "	bl LoadTradeMonPic\n\t"
         "	movs r0, #0\n\t"
         "	bl ShowBg\n\t"
         "	b _0807AE60\n\t"
         "_0807AE0C:\n\t"
         "	movs r0, #1\n\t"
         "	movs r1, #1\n\t"
-        "	bl sub_0807A758\n\t"
+        "	bl LoadTradeMonPic\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #0xff\n\t"
         "	bl FillWindowPixelBuffer\n\t"

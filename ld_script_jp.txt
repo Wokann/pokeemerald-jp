@@ -3283,7 +3283,7 @@ SECTIONS {
         src/trade.o(.text.ClearLinkTimeoutTimer);
         src/trade.o(.text.CheckForLinkTimeout);
         src/trade.o(.text.TradeGetMultiplayerId);
-        src/trade.o(.text.sub_0807A758);
+        src/trade.o(.text.LoadTradeMonPic);
         src/trade.o(.text.sub_0807A8AC);
         src/trade.o(.text.sub_0807AB9C);
         src/trade.o(.text.sub_0807ABB0);
