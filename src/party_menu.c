@@ -19547,22 +19547,13 @@ __attribute__((naked)) void sub_081B9030(void)
     );
 }
 
-__attribute__((naked)) void hm_add_c3_without_phase_2(void)
+__attribute__((naked)) void task_hm_without_phase_2(u8 taskId);
+
+bool8 hm_add_c3_without_phase_2(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl FadeInFromBlack\n\t"
-        "	ldr r0, _081B907C\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B907C: .4byte task_hm_without_phase_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    FadeInFromBlack();
+    CreateTask(task_hm_without_phase_2, 10);
+    return TRUE;
 }
 
 __attribute__((naked)) void task_hm_without_phase_2(u8 taskId)
