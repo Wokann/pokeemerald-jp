@@ -2903,85 +2903,45 @@ static u32 CanTradeSelectedMon(struct Pokemon *playerParty, int partyCount, int 
         return CANT_TRADE_LAST_MON;
 }
 
-__attribute__((naked)) s32 GetGameProgressForLinkTrade(void)
+s32 GetGameProgressForLinkTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r0, _0807A218\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807A224\n\t"
-        "	movs r4, #0\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	ldr r5, _0807A21C\n\t"
-        "	movs r7, #1\n\t"
-        "	eors r0, r7\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	bls _0807A224\n\t"
-        "	subs r0, r1, #4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _0807A1D2\n\t"
-        "	movs r4, #2\n\t"
-        "_0807A1D2:\n\t"
-        "	cmp r4, #0\n\t"
-        "	ble _0807A224\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r1, [r1, #0x10]\n\t"
-        "	movs r6, #0xf0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807A220\n\t"
-        "	cmp r4, #2\n\t"
-        "	bne _0807A224\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	eors r0, r7\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r1, [r1, #0x10]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A224\n\t"
-        "	movs r0, #2\n\t"
-        "	b _0807A226\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A218: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_0807A21C: .4byte gLinkPlayers\n\t"
-        "_0807A220:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0807A226\n\t"
-        "_0807A224:\n\t"
-        "	movs r0, #0\n\t"
-        "_0807A226:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    // The usage of this value is a little unusual given it's treated as a bool,
+    // but it's the result of its usage in FRLG, where 0 is FRLG, 1 is RS, and 2 is Emerald.
+    s32 versionId; // 0: RSE, 2: FRLG
+    u16 version;
+
+    if (gReceivedRemoteLinkPlayers)
+    {
+        versionId = 0;
+        version = (gLinkPlayers[GetMultiplayerId() ^ 1].version & 0xFF);
+
+        if (version == VERSION_RUBY || version == VERSION_SAPPHIRE || version == VERSION_EMERALD)
+            versionId = 0;
+        else if (version == VERSION_FIRE_RED || version == VERSION_LEAF_GREEN)
+            versionId = 2;
+
+        // If trading with FRLG, both players must have progessed the story enough
+        if (versionId > 0)
+        {
+            // Is player champion
+            if (gLinkPlayers[GetMultiplayerId()].progressFlags & 0xF0)
+            {
+                if (versionId == 2) // Check is only relevant in FRLG, this will always be true
+                {
+                    // Has FRLG partner finished the Sevii Islands
+                    if (gLinkPlayers[GetMultiplayerId() ^ 1].progressFlags & 0xF0)
+                        return TRADE_BOTH_PLAYERS_READY;
+                    else
+                        return TRADE_PARTNER_NOT_READY;
+                }
+            }
+            else
+            {
+                return TRADE_PLAYER_NOT_READY;
+            }
+        }
+    }
+    return TRADE_BOTH_PLAYERS_READY;
 }
 
 __attribute__((naked)) void IsDeoxysOrMewUntradable(void)
