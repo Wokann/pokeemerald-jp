@@ -239,6 +239,19 @@ extern const u16 gUnknown_830BCE4[];
 extern const u16 gUnknown_830BEE4[];
 extern const u16 gUnknown_830C0E4[];
 extern const u8 gUnknown_830D310[][2];
+extern const u16 gUnknown_8305D24[];
+extern const u16 gUnknown_8305D84[];
+extern const u16 gUnknown_8304D04[];
+extern const u16 gUnknown_830ABE4[];
+extern const u16 gUnknown_8309BE4[];
+extern const u32 gUnknown_830BBE4[];
+extern const u16 gUnknown_8302D64[];
+extern const u32 gUnknown_830C104[];
+extern const u32 gUnknown_830C794[];
+extern const u16 gUnknown_83071A4[];
+extern const u16 gUnknown_83099E4[];
+extern const u16 gUnknown_8309AE4[];
+extern void LZ77UnCompVram(const u32 *src, void *dest);
 void DrawTextOnTradeWindow(u8 windowId, const u8 *str, u8 speed);
 static void CB2_FreeTradeAnim(void);
 static void Task_InGameTrade(u8 taskId);
@@ -277,7 +290,7 @@ struct TradeAnim
     u16 bg2vofs;            // 0xE4
     u16 bg2hofs;            // 0xE6
     s16 sXY;                // 0xE8
-    u8 filler_EA[2];
+    u16 gbaScale;           // 0xEA
     u16 alpha;              // 0xEC
     u8 isLinkTrade;         // 0xEE
     u8 filler_EF[1];
@@ -3697,507 +3710,117 @@ static void CB2_InGameTradeAnim(void)
     UpdatePaletteFade();
 }
 
-__attribute__((naked)) void SetTradeSequenceBgGpuRegs(void)
+static void SetTradeSequenceBgGpuRegs(u8 state)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #7\n\t"
-        "	bls _0807B070\n\t"
-        "	b _0807B4A0\n\t"
-        "_0807B070:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807B07C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B07C: .4byte 0x0807B080\n\t"
-        "_0807B080: @ jump table\n\t"
-        "	.4byte _0807B0A0 @ case 0\n\t"
-        "	.4byte _0807B114 @ case 1\n\t"
-        "	.4byte _0807B1BC @ case 2\n\t"
-        "	.4byte _0807B230 @ case 3\n\t"
-        "	.4byte _0807B278 @ case 4\n\t"
-        "	.4byte _0807B344 @ case 5\n\t"
-        "	.4byte _0807B35C @ case 6\n\t"
-        "	.4byte _0807B434 @ case 7\n\t"
-        "_0807B0A0:\n\t"
-        "	ldr r0, _0807B0F8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0xe4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, #0xe6\n\t"
-        "	movs r0, #0xb4\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r1, #0xaa\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0807B0FC\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807B100\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x60\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r3, _0807B104\n\t"
-        "	ldr r4, _0807B108\n\t"
-        "	movs r5, #0xa1\n\t"
-        "	lsls r5, r5, #5\n\t"
-        "	ldr r1, _0807B10C\n\t"
-        "	ldr r6, _0807B110\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #0x18\n\t"
-        "_0807B0E2:\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	str r6, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	subs r5, r5, r2\n\t"
-        "	cmp r5, r2\n\t"
-        "	bhi _0807B0E2\n\t"
-        "	b _0807B484\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B0F8: .4byte gUnknown_2031F40\n\t"
-        "_0807B0FC: .4byte 0x00005206\n\t"
-        "_0807B100: .4byte gUnknown_8305D24\n\t"
-        "_0807B104: .4byte gUnknown_8305D84\n\t"
-        "_0807B108: .4byte 0x06004000\n\t"
-        "_0807B10C: .4byte 0x040000D4\n\t"
-        "_0807B110: .4byte 0x80000800\n\t"
-        "_0807B114:\n\t"
-        "	ldr r4, _0807B14C\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0xe2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r2, #0xe0\n\t"
-        "	movs r1, #0xae\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	strh r1, [r2]\n\t"
-        "	movs r0, #0x16\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0807B150\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0807B154\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xfa\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807B15C\n\t"
-        "	ldr r1, _0807B158\n\t"
-        "	b _0807B15E\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B14C: .4byte gUnknown_2031F40\n\t"
-        "_0807B150: .4byte 0x00008502\n\t"
-        "_0807B154: .4byte 0x00009206\n\t"
-        "_0807B158: .4byte gUnknown_830ABE4\n\t"
-        "_0807B15C:\n\t"
-        "	ldr r1, _0807B1A8\n\t"
-        "_0807B15E:\n\t"
-        "	ldr r2, _0807B1AC\n\t"
-        "	ldr r0, _0807B1B0\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r2, [r0, #4]\n\t"
-        "	ldr r1, _0807B1B4\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	ldr r3, _0807B1B8\n\t"
-        "	movs r4, #0xc0\n\t"
-        "	lsls r4, r4, #0x13\n\t"
-        "	movs r5, #0xa1\n\t"
-        "	lsls r5, r5, #5\n\t"
-        "	ldr r1, _0807B1B0\n\t"
-        "	ldr r6, _0807B1B4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #0x18\n\t"
-        "_0807B182:\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	str r6, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	subs r5, r5, r2\n\t"
-        "	cmp r5, r2\n\t"
-        "	bhi _0807B182\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	lsrs r0, r5, #1\n\t"
-        "	orrs r0, r7\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	movs r1, #0x92\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	b _0807B258\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B1A8: .4byte gUnknown_8309BE4\n\t"
-        "_0807B1AC: .4byte 0x06002800\n\t"
-        "_0807B1B0: .4byte 0x040000D4\n\t"
-        "_0807B1B4: .4byte 0x80000800\n\t"
-        "_0807B1B8: .4byte gUnknown_8305D84\n\t"
-        "_0807B1BC:\n\t"
-        "	ldr r0, _0807B1E8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xe0\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #0x18\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807B1F8\n\t"
-        "	ldr r1, _0807B1EC\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807B1F0\n\t"
-        "	ldr r1, _0807B1F4\n\t"
-        "	bl LZ77UnCompVram\n\t"
-        "	movs r0, #8\n\t"
-        "	b _0807B212\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B1E8: .4byte gUnknown_2031F40\n\t"
-        "_0807B1EC: .4byte 0x00001241\n\t"
-        "_0807B1F0: .4byte gUnknown_830BBE4\n\t"
-        "_0807B1F4: .4byte 0x06002800\n\t"
-        "_0807B1F8:\n\t"
-        "	ldr r1, _0807B21C\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0807B220\n\t"
-        "	ldr r2, _0807B224\n\t"
-        "	ldr r0, _0807B228\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r2, [r0, #4]\n\t"
-        "	ldr r1, _0807B22C\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "_0807B212:\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	b _0807B4A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B21C: .4byte 0x00001241\n\t"
-        "_0807B220: .4byte gUnknown_8302D64\n\t"
-        "_0807B224: .4byte 0x06002800\n\t"
-        "_0807B228: .4byte 0x040000D4\n\t"
-        "_0807B22C: .4byte 0x80000400\n\t"
-        "_0807B230:\n\t"
-        "	ldr r0, _0807B260\n\t"
-        "	movs r1, #0x30\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, _0807B264\n\t"
-        "	ldr r1, _0807B268\n\t"
-        "	bl LZ77UnCompVram\n\t"
-        "	ldr r0, _0807B26C\n\t"
-        "	ldr r1, _0807B270\n\t"
-        "	bl LZ77UnCompVram\n\t"
-        "	ldr r0, _0807B274\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xe4\n\t"
-        "	movs r1, #0x50\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r1, #0xb2\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "_0807B258:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _0807B4A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B260: .4byte gUnknown_830C0E4\n\t"
-        "_0807B264: .4byte gUnknown_830C104\n\t"
-        "_0807B268: .4byte 0x06004000\n\t"
-        "_0807B26C: .4byte gUnknown_830C794\n\t"
-        "_0807B270: .4byte 0x06009000\n\t"
-        "_0807B274: .4byte gUnknown_2031F40\n\t"
-        "_0807B278:\n\t"
-        "	ldr r1, _0807B2FC\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0807B300\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807B304\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0xd4\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x5c\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #0x12\n\t"
-        "	movs r0, #0x20\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xec\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r3, _0807B308\n\t"
-        "	ldr r4, _0807B30C\n\t"
-        "	movs r5, #0xa1\n\t"
-        "	lsls r5, r5, #6\n\t"
-        "	ldr r1, _0807B310\n\t"
-        "	ldr r6, _0807B314\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #0x18\n\t"
-        "_0807B2C4:\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	str r6, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	subs r5, r5, r2\n\t"
-        "	cmp r5, r2\n\t"
-        "	bhi _0807B2C4\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	lsrs r0, r5, #1\n\t"
-        "	orrs r0, r7\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	ldr r0, _0807B304\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xfa\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807B324\n\t"
-        "	ldr r1, _0807B318\n\t"
-        "	ldr r2, _0807B31C\n\t"
-        "	ldr r0, _0807B310\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r2, [r0, #4]\n\t"
-        "	ldr r1, _0807B320\n\t"
-        "	b _0807B49C\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B2FC: .4byte 0x00001441\n\t"
-        "_0807B300: .4byte 0x00001287\n\t"
-        "_0807B304: .4byte gUnknown_2031F40\n\t"
-        "_0807B308: .4byte gUnknown_83071A4\n\t"
-        "_0807B30C: .4byte 0x06004000\n\t"
-        "_0807B310: .4byte 0x040000D4\n\t"
-        "_0807B314: .4byte 0x80000800\n\t"
-        "_0807B318: .4byte gUnknown_83099E4\n\t"
-        "_0807B31C: .4byte 0x06009000\n\t"
-        "_0807B320: .4byte 0x80000080\n\t"
-        "_0807B324:\n\t"
-        "	ldr r1, _0807B334\n\t"
-        "	ldr r2, _0807B338\n\t"
-        "	ldr r0, _0807B33C\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r2, [r0, #4]\n\t"
-        "	ldr r1, _0807B340\n\t"
-        "	b _0807B49C\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B334: .4byte gUnknown_8309AE4\n\t"
-        "_0807B338: .4byte 0x06009000\n\t"
-        "_0807B33C: .4byte 0x040000D4\n\t"
-        "_0807B340: .4byte 0x80000080\n\t"
-        "_0807B344:\n\t"
-        "	ldr r0, _0807B358\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0xe0\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r1]\n\t"
-        "	adds r0, #0xe2\n\t"
-        "	strh r2, [r0]\n\t"
-        "	b _0807B4A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B358: .4byte gUnknown_2031F40\n\t"
-        "_0807B35C:\n\t"
-        "	ldr r1, _0807B3EC\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0807B3F0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807B3F4\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0xd4\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x5c\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #0x12\n\t"
-        "	adds r0, #0xa4\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strh r0, [r1]\n\t"
-        "	subs r1, #0xe\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xec\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r3, _0807B3F8\n\t"
-        "	ldr r4, _0807B3FC\n\t"
-        "	movs r5, #0xa1\n\t"
-        "	lsls r5, r5, #6\n\t"
-        "	ldr r1, _0807B400\n\t"
-        "	ldr r6, _0807B404\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #0x18\n\t"
-        "_0807B3B2:\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	str r6, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	subs r5, r5, r2\n\t"
-        "	cmp r5, r2\n\t"
-        "	bhi _0807B3B2\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	lsrs r0, r5, #1\n\t"
-        "	orrs r0, r7\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	ldr r0, _0807B3F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xfa\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807B414\n\t"
-        "	ldr r1, _0807B408\n\t"
-        "	ldr r2, _0807B40C\n\t"
-        "	ldr r0, _0807B400\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r2, [r0, #4]\n\t"
-        "	ldr r1, _0807B410\n\t"
-        "	b _0807B49C\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B3EC: .4byte 0x00001441\n\t"
-        "_0807B3F0: .4byte 0x00001287\n\t"
-        "_0807B3F4: .4byte gUnknown_2031F40\n\t"
-        "_0807B3F8: .4byte gUnknown_83071A4\n\t"
-        "_0807B3FC: .4byte 0x06004000\n\t"
-        "_0807B400: .4byte 0x040000D4\n\t"
-        "_0807B404: .4byte 0x80000800\n\t"
-        "_0807B408: .4byte gUnknown_83099E4\n\t"
-        "_0807B40C: .4byte 0x06009000\n\t"
-        "_0807B410: .4byte 0x80000080\n\t"
-        "_0807B414:\n\t"
-        "	ldr r1, _0807B424\n\t"
-        "	ldr r2, _0807B428\n\t"
-        "	ldr r0, _0807B42C\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r2, [r0, #4]\n\t"
-        "	ldr r1, _0807B430\n\t"
-        "	b _0807B49C\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B424: .4byte gUnknown_8309AE4\n\t"
-        "_0807B428: .4byte 0x06009000\n\t"
-        "_0807B42C: .4byte 0x040000D4\n\t"
-        "_0807B430: .4byte 0x80000080\n\t"
-        "_0807B434:\n\t"
-        "	ldr r0, _0807B4A8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0xe4\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r1]\n\t"
-        "	adds r0, #0xe6\n\t"
-        "	strh r2, [r0]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0807B4AC\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807B4B0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x60\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r3, _0807B4B4\n\t"
-        "	ldr r4, _0807B4B8\n\t"
-        "	movs r5, #0xa1\n\t"
-        "	lsls r5, r5, #5\n\t"
-        "	ldr r1, _0807B4BC\n\t"
-        "	ldr r6, _0807B4C0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #0x18\n\t"
-        "_0807B472:\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	str r6, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	subs r5, r5, r2\n\t"
-        "	cmp r5, r2\n\t"
-        "	bhi _0807B472\n\t"
-        "_0807B484:\n\t"
-        "	str r3, [r1]\n\t"
-        "	str r4, [r1, #4]\n\t"
-        "	lsrs r0, r5, #1\n\t"
-        "	orrs r0, r7\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	ldr r1, _0807B4C4\n\t"
-        "	ldr r2, _0807B4C8\n\t"
-        "	ldr r0, _0807B4BC\n\t"
-        "	str r1, [r0]\n\t"
-        "	str r2, [r0, #4]\n\t"
-        "	ldr r1, _0807B4C0\n\t"
-        "_0807B49C:\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "_0807B4A0:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B4A8: .4byte gUnknown_2031F40\n\t"
-        "_0807B4AC: .4byte 0x00005206\n\t"
-        "_0807B4B0: .4byte gUnknown_8305D24\n\t"
-        "_0807B4B4: .4byte gUnknown_8305D84\n\t"
-        "_0807B4B8: .4byte 0x06004000\n\t"
-        "_0807B4BC: .4byte 0x040000D4\n\t"
-        "_0807B4C0: .4byte 0x80000800\n\t"
-        "_0807B4C4: .4byte gUnknown_8304D04\n\t"
-        "_0807B4C8: .4byte 0x06009000\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (state)
+    {
+    case 0:
+        gUnknown_2031F40->bg2vofs = 0;
+        gUnknown_2031F40->bg2hofs = 180;
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(18) | BGCNT_TXT512x256);
+        LoadPalette(gUnknown_8305D24, BG_PLTT_ID(1), 3 * PLTT_SIZE_4BPP);
+        DmaCopyLarge16(3, gUnknown_8305D84, (void *) BG_CHAR_ADDR(1), 0x1420, 0x1000);
+        DmaCopy16Defvars(3, gUnknown_8304D04, (void *) BG_SCREEN_ADDR(18), 0x1000);
+        break;
+    case 1:
+        gUnknown_2031F40->bg1hofs = 0;
+        gUnknown_2031F40->bg1vofs = 348;
+        SetGpuReg(REG_OFFSET_BG1VOFS, 348);
+        SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(0) | BGCNT_16COLOR | BGCNT_SCREENBASE(5) | BGCNT_TXT256x512);
+        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(18) | BGCNT_TXT256x512);
+
+        if (gUnknown_2031F40->isCableTrade)
+        {
+            DmaCopy16Defvars(3, gUnknown_830ABE4, (void *) BG_SCREEN_ADDR(5), 0x1000);
+        }
+        else
+        {
+            DmaCopy16Defvars(3, gUnknown_8309BE4, (void *) BG_SCREEN_ADDR(5), 0x1000);
+        }
+
+        DmaCopyLarge16(3, gUnknown_8305D84, (void *) BG_CHAR_ADDR(0), 0x1420, 0x1000);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
+        break;
+    case 2:
+        gUnknown_2031F40->bg1vofs = 0;
+        gUnknown_2031F40->bg1hofs = 0;
+        if (!gUnknown_2031F40->isCableTrade)
+        {
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
+            LZ77UnCompVram(gUnknown_830BBE4, (void *) BG_SCREEN_ADDR(5));
+            BlendPalettes(0x8, 16, RGB_BLACK);
+        }
+        else
+        {
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_OBJ_ON);
+            DmaCopy16Defvars(3, gUnknown_8302D64, (void *) BG_SCREEN_ADDR(5), 0x800);
+            BlendPalettes(0x1, 16, RGB_BLACK);
+        }
+        break;
+    case 3:
+        LoadPalette(gUnknown_830C0E4, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+        LZ77UnCompVram(gUnknown_830C104, (void *) BG_CHAR_ADDR(1));
+        LZ77UnCompVram(gUnknown_830C794, (void *) BG_SCREEN_ADDR(18));
+        gUnknown_2031F40->bg2vofs = 80;
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG1_ON | DISPCNT_BG2_ON | DISPCNT_OBJ_ON);
+        break;
+    case 4:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG2_ON | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(1) | BGCNT_256COLOR | BGCNT_SCREENBASE(18) | BGCNT_AFF128x128);
+        gUnknown_2031F40->texX = 64;
+        gUnknown_2031F40->texY = 92;
+        gUnknown_2031F40->sXY = 32;
+        gUnknown_2031F40->gbaScale = 1024;
+        gUnknown_2031F40->alpha = 0;
+
+        DmaCopyLarge16(3, gUnknown_83071A4, (void *) BG_CHAR_ADDR(1), 0x2840, 0x1000);
+
+        if (gUnknown_2031F40->isCableTrade)
+        {
+            DmaCopy16Defvars(3, gUnknown_83099E4, (void *) BG_SCREEN_ADDR(18), 0x100);
+        }
+        else
+        {
+            DmaCopy16Defvars(3, gUnknown_8309AE4, (void *) BG_SCREEN_ADDR(18), 0x100);
+        }
+        break;
+    case 5:
+        gUnknown_2031F40->bg1vofs = 0;
+        gUnknown_2031F40->bg1hofs = 0;
+        break;
+    case 6:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG2_ON | DISPCNT_OBJ_ON);
+        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(1) | BGCNT_256COLOR | BGCNT_SCREENBASE(18) | BGCNT_AFF128x128);
+        gUnknown_2031F40->texX = 64;
+        gUnknown_2031F40->texY = 92;
+        gUnknown_2031F40->sXY = 256;
+        gUnknown_2031F40->gbaScale = 128;
+        gUnknown_2031F40->scrX = 120;
+        gUnknown_2031F40->scrY = 80;
+        gUnknown_2031F40->alpha = 0;
+
+        DmaCopyLarge16(3, gUnknown_83071A4, (void *) BG_CHAR_ADDR(1), 0x2840, 0x1000);
+
+        if (gUnknown_2031F40->isCableTrade)
+        {
+            DmaCopy16Defvars(3, gUnknown_83099E4, (void *) BG_SCREEN_ADDR(18), 0x100);
+        }
+        else
+        {
+            DmaCopy16Defvars(3, gUnknown_8309AE4, (void *) BG_SCREEN_ADDR(18), 0x100);
+        }
+        break;
+    case 7:
+        gUnknown_2031F40->bg2vofs = 0;
+        gUnknown_2031F40->bg2hofs = 0;
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(18) | BGCNT_TXT512x256);
+        LoadPalette(gUnknown_8305D24, BG_PLTT_ID(1), 3 * PLTT_SIZE_4BPP);
+        DmaCopyLarge16(3, gUnknown_8305D84, (void *) BG_CHAR_ADDR(1), 0x1420, 0x1000);
+        DmaCopy16Defvars(3, gUnknown_8304D04, (void *) BG_SCREEN_ADDR(18), 0x1000);
+        break;
+    }
 }
 
 static void LoadTradeSequenceSpriteSheetsAndPalettes(void)
