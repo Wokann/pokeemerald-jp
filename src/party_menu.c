@@ -14281,7 +14281,7 @@ __attribute__((naked)) void sub_081B6C48(void)
         "	cmp r0, #1\n\t"
         "	bne _081B6C8C\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_081B7458\n\t"
+        "	bl Task_TryLearningNextMove\n\t"
         "	b _081B6C9A\n\t"
         "	.align 2, 0\n\t"
         "_081B6C84: .4byte gMain\n\t"
@@ -14767,7 +14767,7 @@ __attribute__((naked)) void sub_081B6F78(void)
         "_081B7004: .4byte gStringVar4\n\t"
         "_081B7008: .4byte gUnknown_85C97BD + 0x650\n\t"
         "_081B700C: .4byte gTasks\n\t"
-        "_081B7010: .4byte sub_081B7090 + 1\n\t"
+        "_081B7010: .4byte Task_TryLearningNextMoveAfterText + 1\n\t"
         "_081B7014:\n\t"
         "	cmp r0, #2\n\t"
         "	bne _081B701C\n\t"
@@ -14826,27 +14826,12 @@ __attribute__((naked)) void sub_081B6F78(void)
     );
 }
 
-__attribute__((naked)) void sub_081B7090(void)
+__attribute__((naked)) void Task_TryLearningNextMove(u8 taskId);
+
+static void Task_TryLearningNextMoveAfterText(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B70A8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B7458\n\t"
-        "_081B70A8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)IsPartyMenuTextPrinterActive() != TRUE)
+        Task_TryLearningNextMove(taskId);
 }
 
 __attribute__((naked)) void dp05_rare_candy(u8 taskId)
@@ -15230,7 +15215,7 @@ __attribute__((naked)) void sub_081B7374(void)
 }
 
 __attribute__((naked)) void sub_081B74BC(u8 taskId);
-__attribute__((naked)) void sub_081B7458(u8 taskId);
+__attribute__((naked)) void Task_TryLearningNextMove(u8 taskId);
 __attribute__((naked)) void sub_081B7528(u8 taskId);
 __attribute__((naked)) void sub_081B75B8(u8 taskId, u16 learnMove);
 
@@ -15252,7 +15237,7 @@ static void Task_TryLearnNewMoves(u8 taskId)
             sub_081B7528(taskId);
             break;
         case MON_ALREADY_KNOWS_MOVE:
-            gTasks[taskId].func = sub_081B7458;
+            gTasks[taskId].func = Task_TryLearningNextMove;
             break;
         default:
             sub_081B75B8(taskId, learnMove);
@@ -15261,7 +15246,7 @@ static void Task_TryLearnNewMoves(u8 taskId)
     }
 }
 
-__attribute__((naked)) void sub_081B7458(u8 taskId)
+__attribute__((naked)) void Task_TryLearningNextMove(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -8786,7 +8786,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B6EE0);
         src/party_menu.o(.text.sub_081B6F44);
         src/party_menu.o(.text.sub_081B6F78);
-        src/party_menu.o(.text.sub_081B7090);
+        src/party_menu.o(.text.Task_TryLearningNextMoveAfterText);
         src/party_menu.o(.text.dp05_rare_candy);
         src/party_menu.o(.text.sub_081B71F8);
         src/party_menu.o(.text.sub_081B7280);
@@ -8794,7 +8794,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B7328);
         src/party_menu.o(.text.sub_081B7374);
         src/party_menu.o(.text.Task_TryLearnNewMoves);
-        src/party_menu.o(.text.sub_081B7458);
+        src/party_menu.o(.text.Task_TryLearningNextMove);
         src/party_menu.o(.text.sub_081B74BC);
         src/party_menu.o(.text.sub_081B7528);
         src/party_menu.o(.text.sub_081B75B8);
