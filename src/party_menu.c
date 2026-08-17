@@ -1015,7 +1015,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	cmp r1, #7\n\t"
         "	bne _081B058C\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonSelectForRelearner\n\t"
+        "	bl DisplayPartyPokemonDataForRelearner\n\t"
         "	b _081B05CE\n\t"
         "	.align 2, 0\n\t"
         "_081B0588: .4byte gPartyMenu\n\t"
@@ -1171,38 +1171,12 @@ static void DisplayPartyPokemonDataForContest(u8 slot)
     }
 }
 
-__attribute__((naked)) void DisplayPartyPokemonSelectForRelearner(u8 a)
+static void DisplayPartyPokemonDataForRelearner(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081B085C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl GetNumberOfRelearnableMoves\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0860\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #9\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "	b _081B0868\n\t"
-        "	.align 2, 0\n\t"
-        "_081B085C: .4byte gPlayerParty\n\t"
-        "_081B0860:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "_081B0868:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)GetNumberOfRelearnableMoves(&gPlayerParty[slot]) == 0)
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_NOT_ABLE_2);
+    else
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_ABLE_2);
 }
 
 __attribute__((naked)) void sub_081B0870(void)
