@@ -3245,7 +3245,7 @@ SECTIONS {
         src/trade.o(.text.SetSelectedMon);
         src/trade.o(.text.sub_080790C8);
         src/trade.o(.text.sub_0807946C);
-        src/trade.o(.text.sub_08079564);
+        src/trade.o(.text.BufferMovesString);
         src/trade.o(.text.sub_08079644);
         src/trade.o(.text.sub_08079690);
         src/trade.o(.text.sub_08079740);

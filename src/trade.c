@@ -7,6 +7,7 @@
 #include "constants/union_room.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "constants/moves.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "librfu.h"
@@ -200,6 +201,12 @@ extern void sub_08198964(u8 a1, u8 a2, u8 a3, u8 a4, const u8 *text);
 extern u8 sub_081984B0(u8 windowId, u8 fontId, u8 left, u8 top, u8 cursorHeight, u8 numChoices, u8 initialCursorPos);
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern u8 *StringCopy10(u8 *dest, const u8 *src);
+extern u8 *StringCopy(u8 *dest, const u8 *src);
+extern u8 *StringAppend(u8 *dest, const u8 *src);
+extern const u8 gMoveNames[][MOVE_NAME_LENGTH + 1];
+extern const u8 gUnknown_8300A8A[];
+extern const u8 gUnknown_8300A9E[];
+extern const u8 gUnknown_8300AA9[];
 extern const u8 gUnknown_8300AAE[];
 extern const u8 gUnknown_8300AB1[];
 extern const struct MenuAction sSelectTradeMonActions[];
@@ -2174,7 +2181,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "	adds r0, r2, #0\n\t"
         "	ldr r1, [sp, #0x50]\n\t"
         "	mov r2, sl\n\t"
-        "	bl sub_08079564\n\t"
+        "	bl BufferMovesString\n\t"
         "	adds r4, #0xf\n\t"
         "	lsls r4, r4, #0x18\n\t"
         "	lsrs r4, r4, #0x18\n\t"
@@ -2385,117 +2392,34 @@ __attribute__((naked)) void sub_0807946C(void)
     );
 }
 
-__attribute__((naked)) void sub_08079564(void)
+static void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r0, _080795AC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r7, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	adds r1, #0x51\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807961C\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	muls r5, r0, r5\n\t"
-        "	ldr r0, _080795B0\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r2, _080795B4\n\t"
-        "	mov r8, r2\n\t"
-        "_0807959E:\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _080795B8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	mov r2, sb\n\t"
-        "	b _080795BE\n\t"
-        "	.align 2, 0\n\t"
-        "_080795AC: .4byte sTradeMenu\n\t"
-        "_080795B0: .4byte gPlayerParty\n\t"
-        "_080795B4: .4byte gEnemyParty\n\t"
-        "_080795B8:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	mov r2, r8\n\t"
-        "_080795BE:\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	add r1, sp\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _0807959E\n\t"
-        "	ldr r1, _08079610\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	movs r4, #0\n\t"
-        "_080795E0:\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080795FA\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _08079614\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl StringAppend\n\t"
-        "_080795FA:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ldr r1, _08079618\n\t"
-        "	bl StringAppend\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _080795E0\n\t"
-        "	b _0807962C\n\t"
-        "	.align 2, 0\n\t"
-        "_08079610: .4byte gUnknown_8300A8A\n\t"
-        "_08079614: .4byte gMoveNames\n\t"
-        "_08079618: .4byte gUnknown_8300A9E\n\t"
-        "_0807961C:\n\t"
-        "	ldr r1, _0807963C\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r1, _08079640\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl StringAppend\n\t"
-        "_0807962C:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807963C: .4byte gUnknown_8300A8A\n\t"
-        "_08079640: .4byte gUnknown_8300AA9\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 moves[MAX_MON_MOVES];
+    u16 i;
+
+    if (!sTradeMenu->isEgg[whichParty][partyIdx])
+    {
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (whichParty == TRADE_PLAYER)
+                moves[i] = GetMonData3(&gPlayerParty[partyIdx], i + MON_DATA_MOVE1, NULL);
+            else
+                moves[i] = GetMonData3(&gEnemyParty[partyIdx], i + MON_DATA_MOVE1, NULL);
+        }
+
+        StringCopy(str, gUnknown_8300A8A);
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (moves[i] != MOVE_NONE)
+                StringAppend(str, gMoveNames[moves[i]]);
+            StringAppend(str, gUnknown_8300A9E);
+        }
+    }
+    else
+    {
+        StringCopy(str, gUnknown_8300A8A);
+        StringAppend(str, gUnknown_8300AA9);
+    }
 }
 
 __attribute__((naked)) void sub_08079644(void)
