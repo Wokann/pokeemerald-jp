@@ -8678,8 +8678,8 @@ SECTIONS {
         src/party_menu.o(.text.CursorCb_TakeItem);
         src/party_menu.o(.text.CursorCb_Toss);
         src/party_menu.o(.text.Task_TossHeldItemYesNo);
-        src/party_menu.o(.text.sub_081B457C);
-        src/party_menu.o(.text.sub_081B4628);
+        src/party_menu.o(.text.Task_HandleTossHeldItemYesNoInput);
+        src/party_menu.o(.text.Task_TossHeldItem);
         src/party_menu.o(.text.CursorCb_Mail);
         src/party_menu.o(.text.CursorCb_Read);
         src/party_menu.o(.text.CB2_ReadHeldMail);

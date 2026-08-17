@@ -175,8 +175,12 @@ __attribute__((naked)) void CB2_ReadHeldMail(void);
 __attribute__((naked)) void Task_SendMailToPCYesNo(u8 taskId);
 __attribute__((naked)) bool8 TrySwitchInPokemon(void);
 __attribute__((naked)) void Task_SpinTradeYesNo(u8 taskId);
-__attribute__((naked)) void Task_UpdateHeldItemSprite(u8 taskId);
-__attribute__((naked)) void Task_TossHeldItemYesNo(u8 taskId);
+static void Task_UpdateHeldItemSprite(u8 taskId);
+static void Task_TossHeldItemYesNo(u8 taskId);
+static void Task_HandleTossHeldItemYesNoInput(u8 taskId);
+static void Task_TossHeldItem(u8 taskId);
+static void CursorCb_TakeItem(u8 taskId);
+static void CursorCb_Toss(u8 taskId);
 
 enum {
     ACTIONS_NONE,
@@ -307,6 +311,7 @@ static void UpdatePartySelectionSingleLayout(s8 *slotPtr, s8 movementDir);
 static void UpdatePartySelectionDoubleLayout(s8 *slotPtr, s8 movementDir);
 static s8 GetNewSlotDoubleLayout(s8 slotId, s8 movementDir);
 static void PartyMenuRemoveWindow(u8 *windowId);
+static void UpdatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox);
 s8 Menu_ProcessInputNoWrapClearOnChoose(void);
 static void Task_ReturnToChooseMonAfterText(u8 taskId);
 void TryEnterMonForMinigame(u8 taskId, u8 slotId); // TryEnterMonForMinigame
@@ -3146,162 +3151,49 @@ static void Task_DisplayGaveMailFromPartyMessage(u8 taskId)
     }
 }
 
-__attribute__((naked)) void Task_UpdateHeldItemSprite(u8 taskId)
+static void Task_UpdateHeldItemSprite(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r4, _081B4398\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B439C\n\t"
-        "	adds r6, r1, r0\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B43BC\n\t"
-        "	ldr r5, _081B43A0\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl UpdatePartyMonHeldItemSprite\n\t"
-        "	ldrb r1, [r4, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bne _081B43B6\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B43A4\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xb\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonDescriptionText\n\t"
-        "	b _081B43B6\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4398: .4byte gPartyMenu\n\t"
-        "_081B439C: .4byte gPlayerParty\n\t"
-        "_081B43A0: .4byte sPartyMenuBoxes\n\t"
-        "_081B43A4:\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonDescriptionText\n\t"
-        "_081B43B6:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl Task_ReturnToChooseMonAfterText\n\t"
-        "_081B43BC:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        UpdatePartyMonHeldItemSprite(mon, &sPartyMenuBoxes[gPartyMenu.slotId]);
+        if (gPartyMenu.menuType == PARTY_MENU_TYPE_STORE_PYRAMID_HELD_ITEMS)
+        {
+            if (GetMonData(mon, MON_DATA_HELD_ITEM) != ITEM_NONE)
+                DisplayPartyPokemonDescriptionText(PARTYBOX_DESC_HAVE, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
+            else
+                DisplayPartyPokemonDescriptionText(PARTYBOX_DESC_DONT_HAVE, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
+        }
+        Task_ReturnToChooseMonAfterText(taskId);
+    }
 }
 
-__attribute__((naked)) void CursorCb_TakeItem(u8 taskId)
+static void CursorCb_TakeItem(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _081B441C\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B4420\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _081B4424\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl TryTakeMonItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B4428\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B444C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayTookHeldItemMessage\n\t"
-        "	b _081B445A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B441C: .4byte gPartyMenu\n\t"
-        "_081B4420: .4byte gPlayerParty\n\t"
-        "_081B4424: .4byte sPartyMenuInternal\n\t"
-        "_081B4428:\n\t"
-        "	ldr r1, _081B4440\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r4, _081B4444\n\t"
-        "	ldr r1, _081B4448\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	b _081B4454\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4440: .4byte gStringVar1\n\t"
-        "_081B4444: .4byte gStringVar4\n\t"
-        "_081B4448: .4byte gUnknown_85C97BD + 0x4F0\n\t"
-        "_081B444C:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl BufferBagFullCantTakeItemMessage\n\t"
-        "	ldr r0, _081B4474\n\t"
-        "_081B4454:\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "_081B445A:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r0, _081B4478\n\t"
-        "	lsls r1, r7, #2\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B447C\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4474: .4byte gStringVar4\n\t"
-        "_081B4478: .4byte gTasks\n\t"
-        "_081B447C: .4byte Task_UpdateHeldItemSprite + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u16 item = GetMonData(mon, MON_DATA_HELD_ITEM);
+
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    switch (TryTakeMonItem(mon))
+    {
+    case 0: // Not holding item
+        GetMonNickname(mon, gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x4F0); // gText_PkmnNotHolding
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
+        break;
+    case 1: // No room to take item
+        BufferBagFullCantTakeItemMessage(item);
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
+        break;
+    default: // Took item
+        DisplayTookHeldItemMessage(mon, item, TRUE);
+        break;
+    }
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_UpdateHeldItemSprite;
 }
 
 static void CursorCb_Toss(u8 taskId)
@@ -3315,198 +3207,62 @@ static void CursorCb_Toss(u8 taskId)
     if (item == ITEM_NONE)
     {
         GetMonNickname(mon, gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x4F0);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x4F0); // gText_PkmnNotHolding
         DisplayPartyMenuMessage(gStringVar4, TRUE);
         gTasks[taskId].func = Task_UpdateHeldItemSprite;
     }
     else
     {
         CopyItemName(item, gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x84A);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x84A); // gText_ThrowAwayItem
         DisplayPartyMenuMessage(gStringVar4, TRUE);
         gTasks[taskId].func = Task_TossHeldItemYesNo;
     }
 }
 
-
-__attribute__((naked)) void Task_TossHeldItemYesNo(u8 taskId)
+static void Task_TossHeldItemYesNo(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B456C\n\t"
-        "	bl sub_081B2FDC\n\t"
-        "	ldr r0, _081B4574\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B4578\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B456C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4574: .4byte gTasks\n\t"
-        "_081B4578: .4byte sub_081B457C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        sub_081B2FDC(); // PartyMenuDisplayYesNoMenu
+        gTasks[taskId].func = Task_HandleTossHeldItemYesNoInput;
+    }
 }
 
-__attribute__((naked)) void sub_081B457C(void)
+static void Task_HandleTossHeldItemYesNoInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _081B45AC\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B45B0\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B45BA\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _081B45B4\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B4604\n\t"
-        "	b _081B4618\n\t"
-        "	.align 2, 0\n\t"
-        "_081B45AC: .4byte gPartyMenu\n\t"
-        "_081B45B0: .4byte gPlayerParty\n\t"
-        "_081B45B4:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _081B460A\n\t"
-        "	b _081B4618\n\t"
-        "_081B45BA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r1, _081B45F0\n\t"
-        "	bl CopyItemName\n\t"
-        "	ldr r4, _081B45F4\n\t"
-        "	ldr r1, _081B45F8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B45FC\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4600\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _081B4618\n\t"
-        "	.align 2, 0\n\t"
-        "_081B45F0: .4byte gStringVar1\n\t"
-        "_081B45F4: .4byte gStringVar4\n\t"
-        "_081B45F8: .4byte gUnknown_85C97BD + 0x85B\n\t"
-        "_081B45FC: .4byte gTasks\n\t"
-        "_081B4600: .4byte sub_081B4628 + 1\n\t"
-        "_081B4604:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "_081B460A:\n\t"
-        "	ldr r0, _081B4620\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B4624\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B4618:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4620: .4byte gTasks\n\t"
-        "_081B4624: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0:
+        CopyItemName(GetMonData(mon, MON_DATA_HELD_ITEM), gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x85B); // gText_ItemThrownAway
+        DisplayPartyMenuMessage(gStringVar4, FALSE);
+        gTasks[taskId].func = Task_TossHeldItem;
+        break;
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        // fallthrough
+    case 1:
+        gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_081B4628(void)
+static void Task_TossHeldItem(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r6, _081B4694\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r6, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B4698\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B468C\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	ldr r4, _081B469C\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r6, r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl UpdatePartyMonHeldItemSprite\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r6, r0]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonDescriptionText\n\t"
-        "	ldr r1, _081B46A0\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B46A4\n\t"
-        "	str r1, [r0]\n\t"
-        "_081B468C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4694: .4byte gPartyMenu\n\t"
-        "_081B4698: .4byte gPlayerParty\n\t"
-        "_081B469C: .4byte sPartyMenuBoxes\n\t"
-        "_081B46A0: .4byte gTasks\n\t"
-        "_081B46A4: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        u16 item = ITEM_NONE;
+
+        SetMonData(mon, MON_DATA_HELD_ITEM, &item);
+        UpdatePartyMonHeldItemSprite(mon, &sPartyMenuBoxes[gPartyMenu.slotId]);
+        DisplayPartyPokemonDescriptionText(PARTYBOX_DESC_DONT_HAVE, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
+        gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+    }
 }
 
 static void CursorCb_Mail(u8 taskId)
