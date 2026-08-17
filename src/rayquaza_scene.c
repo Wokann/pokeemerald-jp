@@ -6196,7 +6196,7 @@ __attribute__((naked)) void sub_081D8F58(void)
         "	bl sub_081D911C\n\t"
         "	b _081D90DA\n\t"
         "	.align 2, 0\n\t"
-        "_081D9038: .4byte SPECIAL_sub_081B957C\n\t"
+        "_081D9038: .4byte SPECIAL_IsSelectedMonEgg\n\t"
         "_081D903C:\n\t"
         "	movs r0, #0xa4\n\t"
         "	lsls r0, r0, #1\n\t"

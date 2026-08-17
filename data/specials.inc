@@ -237,10 +237,10 @@ gSpecials:
 	def_special DoPCTurnOnEffect
 	def_special EndLotteryCornerComputerEffect
 	def_special ChooseMonForMoveRelearner
-	def_special sub_081B932C
-	def_special sub_081B9410
-	def_special sub_081B93B8
-	def_special sub_081B9370
+	def_special MoveDeleterChooseMoveToForget
+	def_special MoveDeleterForgetMove
+	def_special BufferMoveDeleterNicknameAndMove
+	def_special GetNumMovesSelectedMonHas
 	def_special TeachMoveRelearnerMove, waitstate=1
 	def_special GetRecordedCyclingRoadResults
 	def_special Special_BeginCyclingRoadChallenge
@@ -344,7 +344,7 @@ gSpecials:
 	def_special SetRoute123Weather
 	def_special ScriptGetMultiplayerId
 	def_special ScriptGetPartyMonSpecies
-	def_special sub_081B957C
+	def_special IsSelectedMonEgg
 	def_special nullsub_54
 	def_special MoveOutOfSecretBaseFromOutside
 	def_special LoadPlayerBag
@@ -465,7 +465,7 @@ gSpecials:
 	def_special sub_0813A0BC
 	def_special sub_081C62AC
 	def_special sub_081C472C
-	def_special sub_081B9280
+	def_special DoBattlePyramidMonsHaveHeldItem
 	def_special BattlePyramidChooseMonHeldItems
 	def_special sub_0813A774
 	def_special sub_0813A7C0
@@ -535,7 +535,7 @@ gSpecials:
 	def_special ShowTrainerHillRecords, waitstate=1
 	def_special sub_080B3F60
 	def_special sub_0813B9D8
-	def_special sub_081B95B8
+	def_special IsLastMonThatKnowsSurf
 	def_special sub_08071CF0
 	def_special TryPrepareSecondApproachingTrainer
 	def_special RemoveRecordsWindow

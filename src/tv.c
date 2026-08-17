@@ -5423,7 +5423,7 @@ __attribute__((naked)) void sub_080EE238(void)
         "_080EE30C: .4byte 0x00000864\n\t"
         "_080EE310: .4byte gSaveBlock1Ptr\n\t"
         "_080EE314: .4byte 0x000027CC\n\t"
-        "_080EE318: .4byte SPECIAL_sub_081B957C\n\t"
+        "_080EE318: .4byte SPECIAL_IsSelectedMonEgg\n\t"
         "_080EE31C: .4byte gUnknown_3005E20\n\t"
         "_080EE320: .4byte gUnknown_8568B40\n\t"
         "_080EE324: .4byte gGameLanguage\n\t"

@@ -780,7 +780,7 @@ __attribute__((naked)) void BattleArena_DeductSkillPoints(u8 battler, u16 string
         "	beq _081A544C\n\t"
         "	b _081A5454\n\t"
         "	.align 2, 0\n\t"
-        "_081A5434: .4byte SPECIAL_sub_081B957C\n\t"
+        "_081A5434: .4byte SPECIAL_IsSelectedMonEgg\n\t"
         "_081A5438:\n\t"
         "	movs r0, #0xad\n\t"
         "	lsls r0, r0, #1\n\t"

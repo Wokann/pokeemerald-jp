@@ -57,7 +57,7 @@ BattleFrontier_BattlePyramidLobby_EventScript_0022BD99::
 	callstd 0x4
 
 BattleFrontier_BattlePyramidLobby_EventScript_0022BDA1::
-	special sub_081B9280
+	special DoBattlePyramidMonsHaveHeldItem
 	compare_var_to_value 0x800D, 0x1
 	call_if 0x1, BattleFrontier_BattlePyramidLobby_EventScript_0022C3A2
 	clearflag 0x4004
@@ -580,7 +580,7 @@ BattleFrontier_BattlePyramidLobby_EventScript_0022C417::
 	end
 
 BattleFrontier_BattlePyramidLobby_EventScript_0022C427::
-	special sub_081B9280
+	special DoBattlePyramidMonsHaveHeldItem
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, BattleFrontier_BattlePyramidLobby_EventScript_0022C436
 	return

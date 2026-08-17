@@ -1004,7 +1004,7 @@ __attribute__((naked)) void WindowFunc_DrawDialogueFrame(void)
         "_08197548: .4byte 0x00000202\n\t"
         "_0819754C: .4byte SPECIAL_ShowTrainerHillRecords\n\t"
         "_08197550: .4byte SPECIAL_sub_0813B9D8\n\t"
-        "_08197554: .4byte SPECIAL_sub_081B95B8\n\t"
+        "_08197554: .4byte SPECIAL_IsLastMonThatKnowsSurf\n\t"
         "_08197558: .4byte SPECIAL_sub_08071CF0\n\t"
         "_0819755C: .4byte 0x0000020D\n\t"
         "_08197560: .4byte SPECIAL_sub_080B331C\n\t"

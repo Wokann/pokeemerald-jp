@@ -496,7 +496,20 @@ void ChooseMonForMoveRelearner(void);
 static void Task_ChooseMonForMoveRelearner(u8 taskId);
 void SetCB2ToReshowScreenAfterMenu2(void); // CB2_SetUpReshowBattleScreenAfterMenu
 extern u8 gContestMonPartyIndex;
-void CB2_ChooseMonForMoveRelearner(void); // CB2_ChooseMonForMoveRelearner
+static void CB2_ChooseMonForMoveRelearner(void);
+void DoBattlePyramidMonsHaveHeldItem(void);
+void BattlePyramidChooseMonHeldItems(void);
+static void Task_BattlePyramidChooseMonHeldItems(u8 taskId);
+void MoveDeleterChooseMoveToForget(void);
+void GetNumMovesSelectedMonHas(void);
+void BufferMoveDeleterNicknameAndMove(void);
+void MoveDeleterForgetMove(void);
+static void ShiftMoveSlot(struct Pokemon *mon, u8 slotTo, u8 slotFrom);
+void IsSelectedMonEgg(void);
+void IsLastMonThatKnowsSurf(void);
+#define SUMMARY_MODE_SELECT_MOVE 3
+extern void (*gFieldCallback)(void);
+void FieldCB_ContinueScriptHandleMusic(void);
 extern void (*gCB2_AfterEvolution)(void);
 void sub_081C478C(void); // CB2_ReturnToPyramidBagMenu
 struct PlayerPCItemPageStruct
@@ -6447,94 +6460,31 @@ static void Task_ChooseMonForMoveRelearner(u8 taskId)
     }
 }
 
-__attribute__((naked)) void CB2_ChooseMonForMoveRelearner(void)
+static void CB2_ChooseMonForMoveRelearner(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _081B9240\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bls _081B9244\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _081B925A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9240: .4byte gSpecialVar_0x8004\n\t"
-        "_081B9244:\n\t"
-        "	ldr r4, _081B926C\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B9270\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl GetNumberOfRelearnableMoves\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4]\n\t"
-        "_081B925A:\n\t"
-        "	ldr r0, _081B9274\n\t"
-        "	ldr r1, _081B9278\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _081B927C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B926C: .4byte gSpecialVar_0x8005\n\t"
-        "_081B9270: .4byte gPlayerParty\n\t"
-        "_081B9274: .4byte gFieldCallback2\n\t"
-        "_081B9278: .4byte CB2_FadeFromPartyMenu + 1\n\t"
-        "_081B927C: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpecialVar_0x8004 = GetCursorSelectionMonId();
+    if (gSpecialVar_0x8004 >= PARTY_SIZE)
+        gSpecialVar_0x8004 = PARTY_NOTHING_CHOSEN;
+    else
+        gSpecialVar_0x8005 = GetNumberOfRelearnableMoves(&gPlayerParty[gSpecialVar_0x8004]);
+    gFieldCallback2 = CB2_FadeFromPartyMenu;
+    SetMainCallback2(CB2_ReturnToField);
 }
 
-__attribute__((naked)) void sub_081B9280(void)
+void DoBattlePyramidMonsHaveHeldItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r1, _081B9290\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	b _081B929A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9290: .4byte gSpecialVar_Result\n\t"
-        "_081B9294:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_081B929A:\n\t"
-        "	cmp r4, #2\n\t"
-        "	bhi _081B92B4\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081B92BC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B9294\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "_081B92B4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B92BC: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 i;
 
-__attribute__((naked)) void Task_BattlePyramidChooseMonHeldItems(u8 taskId);
+    gSpecialVar_Result = FALSE;
+    for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) != ITEM_NONE)
+        {
+            gSpecialVar_Result = TRUE;
+            break;
+        }
+    }
+}
 
 void BattlePyramidChooseMonHeldItems(void)
 {
@@ -6543,465 +6493,103 @@ void BattlePyramidChooseMonHeldItems(void)
     CreateTask(Task_BattlePyramidChooseMonHeldItems, 10);
 }
 
-__attribute__((naked)) void Task_BattlePyramidChooseMonHeldItems(u8 taskId)
+static void Task_BattlePyramidChooseMonHeldItems(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _081B9320\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _081B9318\n\t"
-        "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	str r4, [sp]\n\t"
-        "	ldr r0, _081B9324\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B9328\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081B9318:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9320: .4byte gPaletteFade\n\t"
-        "_081B9324: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B9328: .4byte BufferMonSelection + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        InitPartyMenu(PARTY_MENU_TYPE_STORE_PYRAMID_HELD_ITEMS, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, BufferMonSelection);
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_081B932C(void)
+void MoveDeleterChooseMoveToForget(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _081B9358\n\t"
-        "	ldr r0, _081B935C\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	ldr r0, _081B9360\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	subs r3, #1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r0, _081B9364\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #3\n\t"
-        "	bl ShowPokemonSummaryScreen\n\t"
-        "	ldr r1, _081B9368\n\t"
-        "	ldr r0, _081B936C\n\t"
-        "	str r0, [r1]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9358: .4byte gPlayerParty\n\t"
-        "_081B935C: .4byte gSpecialVar_0x8004\n\t"
-        "_081B9360: .4byte gPlayerPartyCount\n\t"
-        "_081B9364: .4byte CB2_ReturnToField + 1\n\t"
-        "_081B9368: .4byte gFieldCallback\n\t"
-        "_081B936C: .4byte FieldCB_ContinueScriptHandleMusic + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    ShowPokemonSummaryScreen(SUMMARY_MODE_SELECT_MOVE, gPlayerParty, gSpecialVar_0x8004, gPlayerPartyCount - 1, CB2_ReturnToField);
+    gFieldCallback = FieldCB_ContinueScriptHandleMusic;
 }
 
-__attribute__((naked)) void sub_081B9370(void)
+void GetNumMovesSelectedMonHas(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r1, _081B93AC\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "_081B937C:\n\t"
-        "	ldr r0, _081B93B0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B93B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B939A\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "_081B939A:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _081B937C\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B93AC: .4byte gSpecialVar_Result\n\t"
-        "_081B93B0: .4byte gSpecialVar_0x8004\n\t"
-        "_081B93B4: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    gSpecialVar_Result = 0;
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_MOVE1 + i) != MOVE_NONE)
+            gSpecialVar_Result++;
+    }
 }
 
-__attribute__((naked)) void sub_081B93B8(void)
+void BufferMoveDeleterNicknameAndMove(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _081B93F8\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	muls r5, r0, r5\n\t"
-        "	ldr r0, _081B93FC\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	ldr r0, _081B9400\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #0xd\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r1, _081B9404\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r0, _081B9408\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r1, _081B940C\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B93F8: .4byte gSpecialVar_0x8004\n\t"
-        "_081B93FC: .4byte gPlayerParty\n\t"
-        "_081B9400: .4byte gSpecialVar_0x8005\n\t"
-        "_081B9404: .4byte gStringVar1\n\t"
-        "_081B9408: .4byte gStringVar2\n\t"
-        "_081B940C: .4byte gMoveNames\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8004];
+    u16 move = GetMonData(mon, MON_DATA_MOVE1 + gSpecialVar_0x8005);
+
+    GetMonNickname(mon, gStringVar1);
+    StringCopy(gStringVar2, gMoveNames[move]);
 }
 
-__attribute__((naked)) void sub_081B9410(void)
+void MoveDeleterForgetMove(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	ldr r0, _081B9470\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _081B9474\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r4, _081B9478\n\t"
-        "	ldrb r2, [r4]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetMonMoveSlot\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	bl RemoveMonPPBonus\n\t"
-        "	ldrh r4, [r4]\n\t"
-        "	cmp r4, #2\n\t"
-        "	bhi _081B9464\n\t"
-        "_081B9442:\n\t"
-        "	ldr r0, _081B9470\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B9474\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r1, r4, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r4, #1\n\t"
-        "	lsls r2, r4, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl sub_081B947C\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	cmp r4, #2\n\t"
-        "	bls _081B9442\n\t"
-        "_081B9464:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9470: .4byte gSpecialVar_0x8004\n\t"
-        "_081B9474: .4byte gPlayerParty\n\t"
-        "_081B9478: .4byte gSpecialVar_0x8005\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    SetMonMoveSlot(&gPlayerParty[gSpecialVar_0x8004], MOVE_NONE, gSpecialVar_0x8005);
+    RemoveMonPPBonus(&gPlayerParty[gSpecialVar_0x8004], gSpecialVar_0x8005);
+    for (i = gSpecialVar_0x8005; i < MAX_MON_MOVES - 1; i++)
+        ShiftMoveSlot(&gPlayerParty[gSpecialVar_0x8004], i, i + 1);
 }
 
-__attribute__((naked)) void sub_081B947C(void)
+static void ShiftMoveSlot(struct Pokemon *mon, u8 slotTo, u8 slotFrom)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0xd\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [sp, #8]\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, #2\n\t"
-        "	str r1, [sp, #0x14]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0xd\n\t"
-        "	str r3, [sp, #0xc]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r7, r5, #0\n\t"
-        "	adds r7, #0x11\n\t"
-        "	str r7, [sp, #0x10]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r1, #5\n\t"
-        "	str r1, [sp, #0x18]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x11\n\t"
-        "	str r3, [sp, #0x1c]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	add r7, sp, #4\n\t"
-        "	mov sl, r7\n\t"
-        "	strb r0, [r7]\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0x15\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r6, sp\n\t"
-        "	adds r6, #6\n\t"
-        "	strb r0, [r6]\n\t"
-        "	ldr r1, _081B9578\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	mov sb, r0\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	mov r3, sb\n\t"
-        "	ands r2, r3\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	asrs r2, r5\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	asrs r1, r4\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r7, sb\n\t"
-        "	bics r0, r7\n\t"
-        "	strb r0, [r6]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	bics r0, r3\n\t"
-        "	strb r0, [r6]\n\t"
-        "	lsls r2, r4\n\t"
-        "	lsls r1, r5\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r6]\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [sp, #8]\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [sp, #0xc]\n\t"
-        "	ldr r2, [sp, #0x14]\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [sp, #0x10]\n\t"
-        "	mov r2, sl\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [sp, #0x1c]\n\t"
-        "	ldr r2, [sp, #0x18]\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0x15\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9578: .4byte gUnknown_82FA6AA\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 move1 = GetMonData(mon, MON_DATA_MOVE1 + slotTo);
+    u16 move0 = GetMonData(mon, MON_DATA_MOVE1 + slotFrom);
+    u8 pp1 = GetMonData(mon, MON_DATA_PP1 + slotTo);
+    u8 pp0 = GetMonData(mon, MON_DATA_PP1 + slotFrom);
+    u8 ppBonuses = GetMonData(mon, MON_DATA_PP_BONUSES);
+    u8 ppBonusMask1 = gPPUpGetMask[slotTo];
+    u8 ppBonusMove1 = (ppBonuses & ppBonusMask1) >> (slotTo * 2);
+    u8 ppBonusMask2 = gPPUpGetMask[slotFrom];
+    u8 ppBonusMove2 = (ppBonuses & ppBonusMask2) >> (slotFrom * 2);
+    ppBonuses &= ~ppBonusMask1;
+    ppBonuses &= ~ppBonusMask2;
+    ppBonuses |= (ppBonusMove1 << (slotFrom * 2)) + (ppBonusMove2 << (slotTo * 2));
+    SetMonData(mon, MON_DATA_MOVE1 + slotTo, &move0);
+    SetMonData(mon, MON_DATA_MOVE1 + slotFrom, &move1);
+    SetMonData(mon, MON_DATA_PP1 + slotTo, &pp0);
+    SetMonData(mon, MON_DATA_PP1 + slotFrom, &pp1);
+    SetMonData(mon, MON_DATA_PP_BONUSES, &ppBonuses);
 }
 
-__attribute__((naked)) void sub_081B957C(void)
+void IsSelectedMonEgg(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B95A0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B95A4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B95AC\n\t"
-        "	ldr r1, _081B95A8\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _081B95B0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B95A0: .4byte gSpecialVar_0x8004\n\t"
-        "_081B95A4: .4byte gPlayerParty\n\t"
-        "_081B95A8: .4byte gSpecialVar_Result\n\t"
-        "_081B95AC:\n\t"
-        "	ldr r0, _081B95B4\n\t"
-        "	strh r1, [r0]\n\t"
-        "_081B95B0:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B95B4: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_IS_EGG))
+        gSpecialVar_Result = TRUE;
+    else
+        gSpecialVar_Result = FALSE;
 }
 
-__attribute__((naked)) void sub_081B95B8(void)
+void IsLastMonThatKnowsSurf(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	ldr r1, _081B95E8\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _081B95EC\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B95F0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B95F4\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	adds r1, #0xd\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r0, #0x39\n\t"
-        "	bne _081B963C\n\t"
-        "	movs r6, #0\n\t"
-        "	b _081B9620\n\t"
-        "	.align 2, 0\n\t"
-        "_081B95E8: .4byte gSpecialVar_Result\n\t"
-        "_081B95EC: .4byte gSpecialVar_0x8004\n\t"
-        "_081B95F0: .4byte gPlayerParty\n\t"
-        "_081B95F4: .4byte gSpecialVar_0x8005\n\t"
-        "_081B95F8:\n\t"
-        "	ldr r0, _081B9648\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	beq _081B961E\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r5, r6, #0\n\t"
-        "	muls r5, r0, r5\n\t"
-        "	ldr r7, _081B964C\n\t"
-        "_081B960A:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	adds r0, r5, r7\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0x39\n\t"
-        "	beq _081B963C\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _081B960A\n\t"
-        "_081B961E:\n\t"
-        "	adds r6, #1\n\t"
-        "_081B9620:\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r6, r0\n\t"
-        "	blo _081B95F8\n\t"
-        "	mov r0, r8\n\t"
-        "	bl AnyStorageMonWithMove\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B963C\n\t"
-        "	ldr r1, _081B9650\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_081B963C:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9648: .4byte gSpecialVar_0x8004\n\t"
-        "_081B964C: .4byte gPlayerParty\n\t"
-        "_081B9650: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 move;
+    u32 i, j;
+
+    gSpecialVar_Result = FALSE;
+    move = GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_MOVE1 + gSpecialVar_0x8005);
+    if (move == MOVE_SURF)
+    {
+        for (i = 0; i < CalculatePlayerPartyCount(); i++)
+        {
+            if (i != gSpecialVar_0x8004)
+            {
+                for (j = 0; j < MAX_MON_MOVES; j++)
+                {
+                    if (GetMonData(&gPlayerParty[i], MON_DATA_MOVE1 + j) == MOVE_SURF)
+                        return;
+                }
+            }
+        }
+        if (AnyStorageMonWithMove(move) != TRUE)
+            gSpecialVar_Result = TRUE;
+    }
 }
