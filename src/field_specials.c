@@ -2,6 +2,7 @@
 #include "constants/field_specials.h"
 #include "constants/metatile_labels.h"
 #include "constants/event_objects.h"
+#include "constants/weather.h"
 #include "fieldmap.h"
 #include "task.h"
 extern void Task_LotteryCornerComputerEffect(u8 taskId);
@@ -404,19 +405,9 @@ void SetSSTidalFlag(void)
     *GetVarPointer(VAR_CRUISE_STEP_COUNT) = 0;
 }
 
-__attribute__((naked)) void ResetSSTidalFlag(void)
+void ResetSSTidalFlag(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813802C\n\t"
-        "	bl FlagClear\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813802C: .4byte 0x0000088D\n\t"
-        ".syntax divided\n\t"
-    );
+    FlagClear(FLAG_SYS_CRUISE_MODE);
 }
 
 __attribute__((naked)) bool32 CountSSTidalStep(u16 delta)
@@ -2971,48 +2962,16 @@ bool8 FoundBlackGlasses(void)
     return FlagGet(FLAG_HIDDEN_ITEM_ROUTE_116_BLACK_GLASSES);
 }
 
-__attribute__((naked)) void SetRoute119Weather(void)
+void SetRoute119Weather(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLastUsedWarpMapType\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl IsMapTypeOutdoors\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081396D4\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl SetSavedWeather\n\t"
-        "_081396D4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)IsMapTypeOutdoors((u8)GetLastUsedWarpMapType()) != TRUE)
+        SetSavedWeather(WEATHER_ROUTE119_CYCLE);
 }
 
-__attribute__((naked)) void SetRoute123Weather(void)
+void SetRoute123Weather(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLastUsedWarpMapType\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl IsMapTypeOutdoors\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081396F4\n\t"
-        "	movs r0, #0x15\n\t"
-        "	bl SetSavedWeather\n\t"
-        "_081396F4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)IsMapTypeOutdoors((u8)GetLastUsedWarpMapType()) != TRUE)
+        SetSavedWeather(WEATHER_ROUTE123_CYCLE);
 }
 
 u8 GetLeadMonIndex(void)
