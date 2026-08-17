@@ -1885,7 +1885,7 @@ __attribute__((naked)) void AnimatePartySlot(u8 slot, u8 animNum)
         "	adds r5, r5, r0\n\t"
         "	ldrb r0, [r5, #0xb]\n\t"
         "	mov r1, r8\n\t"
-        "	bl sub_081B5C38\n\t"
+        "	bl PartyMenuStartSpriteAnim\n\t"
         "	b _081B0DB8\n\t"
         "	.align 2, 0\n\t"
         "_081B0D00: .4byte gPlayerParty\n\t"
@@ -1978,7 +1978,7 @@ __attribute__((naked)) void AnimatePartySlot(u8 slot, u8 animNum)
         "_081B0DAA:\n\t"
         "	lsrs r0, r0, #0x19\n\t"
         "	mov r1, r8\n\t"
-        "	bl sub_081B5C38\n\t"
+        "	bl PartyMenuStartSpriteAnim\n\t"
         "	movs r0, #1\n\t"
         "	bl ScheduleBgCopyTilemapToVram\n\t"
         "_081B0DB8:\n\t"
@@ -12169,28 +12169,9 @@ __attribute__((naked)) void sub_081B5C14(void)
     );
 }
 
-__attribute__((naked)) void sub_081B5C38(void)
+static void PartyMenuStartSpriteAnim(u8 spriteId, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _081B5C58\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5C58: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnim(&gSprites[spriteId], animNum);
 }
 
 __attribute__((naked)) void sub_081B5C5C(void)
