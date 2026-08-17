@@ -3,6 +3,7 @@
 #include "constants/songs.h"
 #include "task.h"
 #include "text.h"
+#include "window.h"
 
 // Cursors after this point are created using a sprite with their own task.
 // This allows them to have idle animations. Cursors prior to this are simply printed text.
@@ -443,81 +444,21 @@ __attribute__((naked)) void RedrawListMenu(u8 listTaskId)
     );
 }
 
-__attribute__((naked)) void ChangeListMenuPals(u8 listTaskId, u8 cursorPal, u8 fillValue, u8 cursorShadowPal)
+void ChangeListMenuPals(u8 listTaskId, u8 cursorPal, u8 fillValue, u8 cursorShadowPal)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _081AE468\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsrs r1, r1, #0x14\n\t"
-        "	ldrb r6, [r4, #0x14]\n\t"
-        "	movs r5, #0xf\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r6\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #0x14]\n\t"
-        "	ands r2, r5\n\t"
-        "	ldrb r1, [r4, #0x15]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	lsrs r3, r3, #0x14\n\t"
-        "	ands r0, r5\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r4, #0x15]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE468: .4byte gUnknown_3005B68\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+
+    list->template.cursorPal = cursorPal;
+    list->template.fillValue = fillValue;
+    list->template.cursorShadowPal = cursorShadowPal;
 }
 
-__attribute__((naked)) void ChangeListMenuCoords(u8 listTaskId, u8 x, u8 y)
+void ChangeListMenuCoords(u8 listTaskId, u8 x, u8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _081AE4A4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	bl SetWindowAttribute\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	movs r1, #2\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl SetWindowAttribute\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE4A4: .4byte gUnknown_3005B68\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+
+    SetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_LEFT, x);
+    SetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP, y);
 }
 
 __attribute__((naked)) s32 ListMenuTestInput(struct ListMenuTemplate *template, u32 scrollOffset, u32 selectedRow, u16 keys, u16 *newScrollOffset, u16 *newSelectedRow)
