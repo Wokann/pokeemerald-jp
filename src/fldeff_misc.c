@@ -25,6 +25,7 @@ extern void sub_080FA66C(void);
 extern void sub_080FA500(u8 taskId);
 static __attribute__((naked)) void sub_080FA4B4(void (*func)(u8), u16 x, u16 y, u8 z);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
+extern void Task_WateringBerryTreeAnim_1(u8 taskId);
 extern void FieldCallback_SecretBaseCave(void);
 extern void FieldCallback_SecretBaseTree(void);
 extern void FieldCallback_SecretBaseShrub(void);
@@ -1897,28 +1898,12 @@ __attribute__((naked)) void sub_080FB730(void)
     );
 }
 
-__attribute__((naked)) void Task_WateringBerryTreeAnim_0(u8 taskId)
+void Task_WateringBerryTreeAnim_0(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080FB758\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r0, _080FB75C\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB758: .4byte gTasks\n\t"
-        "_080FB75C: .4byte Task_WateringBerryTreeAnim_1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].func = Task_WateringBerryTreeAnim_1;
 }
 
-__attribute__((naked)) void Task_WateringBerryTreeAnim_1(void)
+__attribute__((naked)) void Task_WateringBerryTreeAnim_1(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
