@@ -179,7 +179,7 @@ enum {
 u32 sub_08079AD4(void);
 extern void CB2_ReturnToFieldFromMultiplayer(void);
 void sub_080790C8(u8 side);
-void sub_0807987C(u8 side);
+static void PrintPartyLevelsAndGenders(u8 whichParty);
 void sub_08079AFC(void);
 static void PrintPartyNicknames(u8 whichParty);
 bool8 sub_08079C28(void);
@@ -211,6 +211,8 @@ extern const u8 gUnknown_8300AAE[];
 extern const u8 gUnknown_8300AB1[];
 extern const u8 gUnknown_8300C00[];
 extern const u32 gUnknown_82FFFC8[];
+extern const u8 gUnknown_8300A36[][2];
+extern const u8 gUnknown_8300A4E[][2];
 extern const struct MenuAction sSelectTradeMonActions[];
 extern const struct WindowTemplate sTradeYesNoWindowTemplate;
 static void LoadTradeBgGfx(u8 state);
@@ -890,8 +892,8 @@ static void LoadTradeBgGfx(u8 state)
         break;
     case 1:
         LoadBgTilemap(3, gUnknown_82FF7C8, 0x800, 0);
-        sub_0807987C(TRADE_PLAYER);
-        sub_0807987C(TRADE_PARTNER);
+        PrintPartyLevelsAndGenders(TRADE_PLAYER);
+        PrintPartyLevelsAndGenders(TRADE_PARTNER);
         CopyBgTilemapBufferToVram(1);
         break;
     case 2:
@@ -2480,61 +2482,19 @@ static void PrintLevelAndGender(u8 whichParty, u8 monIdx, u8 x, u8 y, u8 width, 
     }
 }
 
-__attribute__((naked)) void sub_0807987C(u8 side)
+static void PrintPartyLevelsAndGenders(u8 whichParty)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r0, _080798D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	bge _080798CC\n\t"
-        "	lsls r0, r6, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r1, _080798D8\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldr r1, _080798DC\n\t"
-        "	adds r4, r0, r1\n\t"
-        "_080798A2:\n\t"
-        "	lsls r1, r7, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	ldrb r3, [r5, #1]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl PrintLevelAndGender\n\t"
-        "	adds r5, #2\n\t"
-        "	adds r4, #2\n\t"
-        "	adds r7, #1\n\t"
-        "	ldr r0, _080798D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	blt _080798A2\n\t"
-        "_080798CC:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080798D4: .4byte sTradeMenu\n\t"
-        "_080798D8: .4byte gUnknown_8300A36\n\t"
-        "_080798DC: .4byte gUnknown_8300A4E\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    for (i = 0; i < sTradeMenu->partyCounts[whichParty]; i++)
+    {
+        s32 j = i + PARTY_SIZE * whichParty;
+        PrintLevelAndGender(whichParty, i,
+            gUnknown_8300A36[j][0],
+            gUnknown_8300A36[j][1],
+            gUnknown_8300A4E[j][0],
+            gUnknown_8300A4E[j][1]);
+    }
 }
 
 __attribute__((naked)) void sub_080798E0(void)
@@ -2690,7 +2650,7 @@ __attribute__((naked)) void sub_080799C0(u8 whichParty)
         "	movs r0, #1\n\t"
         "	bl CopyBgTilemapBufferToVram\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_0807987C\n\t"
+        "	bl PrintPartyLevelsAndGenders\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl PrintPartyNicknames\n\t"
         "	adds r0, r4, #0\n\t"
