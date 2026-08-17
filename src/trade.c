@@ -215,7 +215,7 @@ struct TradeAnim
     u8 filler_70[2];         // 0x70
     u8 playerFinishStatus;   // 0x72
     u8 partnerFinishStatus;  // 0x73
-    u8 filler_74[0x14];      // 0x74
+    u16 linkData[10];        // 0x74
     u8 linkTimeoutZero1;   // 0x88
     u8 linkTimeoutZero2;   // 0x89
     u16 linkTimeoutTimer;  // 0x8A
@@ -3732,53 +3732,21 @@ __attribute__((naked)) void sub_0807AF08(void)
     );
 }
 
-__attribute__((naked)) void sub_0807AFF0(void)
+static void HandleLinkDataSend(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0807B004\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x93\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0807B008\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0807B02E\n\t"
-        "	b _0807B038\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B004: .4byte gUnknown_2031F40\n\t"
-        "_0807B008:\n\t"
-        "	bl IsLinkTaskFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807B02E\n\t"
-        "	bl BitmaskAllOtherLinkPlayers\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x74\n\t"
-        "	movs r2, #0x14\n\t"
-        "	bl SendBlock\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x93\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0807B02E:\n\t"
-        "	ldr r0, _0807B040\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x93\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "_0807B038:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B040: .4byte gUnknown_2031F40\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gUnknown_2031F40->scheduleLinkTransfer)
+    {
+    case 1:
+        if (IsLinkTaskFinished())
+        {
+            SendBlock(BitmaskAllOtherLinkPlayers(), gUnknown_2031F40->linkData, sizeof(gUnknown_2031F40->linkData));
+            gUnknown_2031F40->scheduleLinkTransfer++;
+        }
+        // fallthrough
+    case 2:
+        gUnknown_2031F40->scheduleLinkTransfer = 0;
+        break;
+    }
 }
 
 __attribute__((naked)) void sub_0807B044(void)
@@ -9697,7 +9665,7 @@ __attribute__((naked)) void CB2_UpdateLinkTrade(void)
         "	ldr r0, _0807E500\n\t"
         "	bl SetMainCallback2\n\t"
         "_0807E4CE:\n\t"
-        "	bl sub_0807AFF0\n\t"
+        "	bl HandleLinkDataSend\n\t"
         "	bl sub_0807DF14\n\t"
         "	bl RunTasks\n\t"
         "	bl RunTextPrinters\n\t"
