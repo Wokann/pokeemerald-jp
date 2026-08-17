@@ -8,6 +8,13 @@
 #include "trig.h"
 #include "window.h"
 
+extern const struct SpriteTemplate sSpriteTemplate_ScrollArrowIndicator;
+extern const struct {
+    u8 animNum:4;
+    u8 bounceDir:4;
+    u8 multiplier;
+    u16 frequency;
+} sScrollIndicatorTemplates[];
 // Cursors after this point are created using a sprite with their own task.
 // This allows them to have idle animations. Cursors prior to this are simply printed text.
 #define CURSOR_OBJECT_START CURSOR_RED_OUTLINE
@@ -1156,7 +1163,7 @@ void ListMenuSetUnkIndicatorsStructField(u8 taskId, u8 field, u32 value)
 #define tFrequency data[4]
 #define tSinePos data[5]
 
-static void SpriteCallback_ScrollIndicatorArrow(struct Sprite *sprite)
+void SpriteCallback_ScrollIndicatorArrow(struct Sprite *sprite)
 {
     s32 multiplier;
 
@@ -1190,81 +1197,41 @@ static void SpriteCallback_ScrollIndicatorArrow(struct Sprite *sprite)
 #undef tFrequency
 #undef tSinePos
 
-__attribute__((naked)) void AddScrollIndicatorArrowObject(void)
+#define tState data[0]
+#define tAnimNum data[1]
+#define tBounceDir data[2]
+#define tMultiplier data[3]
+#define tFrequency data[4]
+#define tSinePos data[5]
+
+u8 AddScrollIndicatorArrowObject(u8 arrowDir, u8 x, u8 y, u16 tileTag, u16 palTag)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r5, [sp, #0x30]\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	mov r8, r6\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	mov ip, r5\n\t"
-        "	mov r4, sp\n\t"
-        "	ldr r0, _081AF04C\n\t"
-        "	ldm r0!, {r5, r6, r7}\n\t"
-        "	stm r4!, {r5, r6, r7}\n\t"
-        "	ldm r0!, {r5, r6, r7}\n\t"
-        "	stm r4!, {r5, r6, r7}\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r4, #0\n\t"
-        "	strh r3, [r0]\n\t"
-        "	mov r3, ip\n\t"
-        "	strh r3, [r0, #2]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081AF050\n\t"
-        "	lsls r3, r0, #4\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	adds r5, r3, #0\n\t"
-        "	adds r5, #0x3e\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r5]\n\t"
-        "	strh r4, [r3, #0x2e]\n\t"
-        "	ldr r1, _081AF054\n\t"
-        "	mov r5, r8\n\t"
-        "	lsls r6, r5, #2\n\t"
-        "	adds r6, r6, r1\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	lsls r1, r2, #0x1c\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	strh r1, [r3, #0x30]\n\t"
-        "	lsrs r2, r2, #4\n\t"
-        "	strh r2, [r3, #0x32]\n\t"
-        "	ldrb r1, [r6, #1]\n\t"
-        "	strh r1, [r3, #0x34]\n\t"
-        "	ldrh r1, [r6, #2]\n\t"
-        "	strh r1, [r3, #0x36]\n\t"
-        "	strh r4, [r3, #0x38]\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF04C: .4byte gUnknown_85DFAFC\n\t"
-        "_081AF050: .4byte gSprites\n\t"
-        "_081AF054: .4byte gUnknown_85DFAB4\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+    struct SpriteTemplate spriteTemplate;
+
+    spriteTemplate = sSpriteTemplate_ScrollArrowIndicator;
+    spriteTemplate.tileTag = tileTag;
+    spriteTemplate.paletteTag = palTag;
+
+    spriteId = CreateSprite(&spriteTemplate, x, y, 0);
+    gSprites[spriteId].invisible = TRUE;
+    gSprites[spriteId].tState = 0;
+    gSprites[spriteId].tAnimNum = sScrollIndicatorTemplates[arrowDir].animNum;
+    gSprites[spriteId].tBounceDir = sScrollIndicatorTemplates[arrowDir].bounceDir;
+    gSprites[spriteId].tMultiplier = sScrollIndicatorTemplates[arrowDir].multiplier;
+    gSprites[spriteId].tFrequency = sScrollIndicatorTemplates[arrowDir].frequency;
+    gSprites[spriteId].tSinePos = 0;
+
+    return spriteId;
 }
+
+#undef tState
+#undef tAnimNum
+#undef tBounceDir
+#undef tMultiplier
+#undef tFrequency
+#undef tSinePos
+
 
 __attribute__((naked)) u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *arrowInfo, u16 *scrollOffset)
 {

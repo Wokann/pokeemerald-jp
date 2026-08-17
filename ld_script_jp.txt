@@ -9509,6 +9509,8 @@ SECTIONS {
         src/data/text/region_texts115.o(.rodata);
         src/data/text/region_texts116.o(.rodata);
         data/data_b2d_mid101.o(.rodata);
+        src/data/list_menu_data.o(.rodata);
+        data/data_b2d_mid101_tail.o(.rodata);
         src/data/text/nature_names.o(.rodata);
         data/data_b2c_mid1.o(.rodata);
         src/pokenav.o(.rodata);
