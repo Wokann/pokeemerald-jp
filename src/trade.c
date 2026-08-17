@@ -210,6 +210,7 @@ extern const u8 gUnknown_8300AA9[];
 extern const u8 gUnknown_8300AAE[];
 extern const u8 gUnknown_8300AB1[];
 extern const u8 gUnknown_8300C00[];
+extern const u32 gUnknown_82FFFC8[];
 extern const struct MenuAction sSelectTradeMonActions[];
 extern const struct WindowTemplate sTradeYesNoWindowTemplate;
 static void LoadTradeBgGfx(u8 state);
@@ -2248,7 +2249,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "	str r0, [sp, #4]\n\t"
         "	adds r0, r7, #0\n\t"
         "	mov r1, sl\n\t"
-        "	bl sub_08079740\n\t"
+        "	bl PrintLevelAndGender\n\t"
         "	ldr r2, _08079468\n\t"
         "	ldr r1, [r2]\n\t"
         "_0807944A:\n\t"
@@ -2452,168 +2453,31 @@ static void PrintPartyNicknames(u8 whichParty)
     }
 }
 
-__attribute__((naked)) void sub_08079740(void)
+static void PrintLevelAndGender(u8 whichParty, u8 monIdx, u8 x, u8 y, u8 width, u8 height)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	ldr r4, [sp, #0x30]\n\t"
-        "	ldr r5, [sp, #0x34]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov sb, r2\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	str r3, [sp, #0xc]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _0807979C\n\t"
-        "	movs r0, #6\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl CopyToBgTilemapBufferRect_ChangePalette\n\t"
-        "	movs r0, #1\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _080797A4\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r1, r8\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldr r1, _080797A0\n\t"
-        "	b _080797AE\n\t"
-        "	.align 2, 0\n\t"
-        "_0807979C: .4byte gUnknown_82FFFC8\n\t"
-        "_080797A0: .4byte gPlayerParty\n\t"
-        "_080797A4:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r3, r8\n\t"
-        "	muls r3, r0, r3\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ldr r1, _08079824\n\t"
-        "_080797AE:\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, _08079828\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	lsls r0, r7, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x51\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807982C\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, [sp, #0xc]\n\t"
-        "	lsls r2, r1, #5\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080797FE\n\t"
-        "	mov r3, sb\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r3, #0x8f\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r1, r4, r3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x60\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080797FE:\n\t"
-        "	mov r0, sl\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r3, #0x8f\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r4, r4, r3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, #0x70\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _0807986A\n\t"
-        "	.align 2, 0\n\t"
-        "_08079824: .4byte gEnemyParty\n\t"
-        "_08079828: .4byte sTradeMenu\n\t"
-        "_0807982C:\n\t"
-        "	ldr r1, [sp, #0xc]\n\t"
-        "	lsls r0, r1, #5\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r3, r1, r0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	subs r1, #0x20\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r0, #0x8f\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r2, r4, r0\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	subs r0, #0x21\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	subs r1, #0x1f\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	subs r0, #0x24\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrh r2, [r2]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	orrs r0, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807986A:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 level;
+    u8 tens;
+
+    CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_82FFFC8, width, height, 6, 3, 0);
+    CopyBgTilemapBufferToVram(1);
+
+    if (whichParty == TRADE_PLAYER)
+        level = GetMonData3(&gPlayerParty[monIdx], MON_DATA_LEVEL, NULL);
+    else
+        level = GetMonData3(&gEnemyParty[monIdx], MON_DATA_LEVEL, NULL);
+
+    if (!sTradeMenu->isEgg[whichParty][monIdx])
+    {
+        tens = level / 10;
+        if (tens != 0)
+            sTradeMenu->tilemapBuffer[x + (y * 32)] = tens + 0x60;
+        sTradeMenu->tilemapBuffer[x + (y * 32) + 1] = (level % 10) + 0x70;
+    }
+    else
+    {
+        sTradeMenu->tilemapBuffer[x + (y * 32) - 32] = sTradeMenu->tilemapBuffer[x + (y * 32) - 33];
+        sTradeMenu->tilemapBuffer[x + (y * 32) - 31] = sTradeMenu->tilemapBuffer[x + (y * 32) - 36] | 0x400;
+    }
 }
 
 __attribute__((naked)) void sub_0807987C(u8 side)
@@ -2649,7 +2513,7 @@ __attribute__((naked)) void sub_0807987C(u8 side)
         "	ldrb r0, [r4, #1]\n\t"
         "	str r0, [sp, #4]\n\t"
         "	adds r0, r6, #0\n\t"
-        "	bl sub_08079740\n\t"
+        "	bl PrintLevelAndGender\n\t"
         "	adds r5, #2\n\t"
         "	adds r4, #2\n\t"
         "	adds r7, #1\n\t"
