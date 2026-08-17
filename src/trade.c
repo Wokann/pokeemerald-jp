@@ -3296,28 +3296,11 @@ __attribute__((naked)) void sub_0807A6C0(void)
     );
 }
 
-__attribute__((naked)) void sub_0807A738(void)
+static u32 TradeGetMultiplayerId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0807A748\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A74C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0807A754\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A748: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_0807A74C:\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0807A754:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gReceivedRemoteLinkPlayers)
+        return GetMultiplayerId();
+    return 0;
 }
 
 __attribute__((naked)) void sub_0807A758(void)
@@ -9572,7 +9555,7 @@ __attribute__((naked)) void sub_0807DF14(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, r5, r6, lr}\n\t"
-        "	bl sub_0807A738\n\t"
+        "	bl TradeGetMultiplayerId\n\t"
         "	bl GetBlockReceivedStatus\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
@@ -10353,7 +10336,7 @@ __attribute__((naked)) void sub_0807E504(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
-        "	bl sub_0807A738\n\t"
+        "	bl TradeGetMultiplayerId\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	bl IsWirelessTrade\n\t"

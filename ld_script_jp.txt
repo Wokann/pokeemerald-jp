@@ -3282,7 +3282,7 @@ SECTIONS {
         src/trade.o(.text.VBlankCB_TradeAnim);
         src/trade.o(.text.ResetTradeAnimState);
         src/trade.o(.text.sub_0807A6C0);
-        src/trade.o(.text.sub_0807A738);
+        src/trade.o(.text.TradeGetMultiplayerId);
         src/trade.o(.text.sub_0807A758);
         src/trade.o(.text.sub_0807A8AC);
         src/trade.o(.text.sub_0807AB9C);
