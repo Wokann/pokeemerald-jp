@@ -52,7 +52,7 @@ gSpecials:
 	def_special ColosseumPlayerSpotTriggered, waitstate=1
 	def_special PlayerEnteredTradeSeat, waitstate=1
 	def_special nullsub_37
-	def_special sub_080B2A00
+	def_special CableClubSaveGame
 	def_special TryBerryBlenderLinkup
 	def_special GetLinkPartnerNames
 	def_special SpawnLinkPartnerEventObject

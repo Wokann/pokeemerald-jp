@@ -1,7 +1,11 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_main.h"
+#include "battle_setup.h"
 #include "cable_club.h"
+#include "constants/field_weather.h"
 #include "constants/songs.h"
+#include "constants/trainers.h"
 #include "data.h"
 #include "event_data.h"
 #include "field_message_box.h"
@@ -9,12 +13,16 @@
 #include "main.h"
 #include "menu.h"
 #include "overworld.h"
+#include "palette.h"
 #include "party_menu.h"
 #include "script.h"
+#include "script_pokemon_util.h"
+#include "start_menu.h"
 #include "string_util.h"
 #include "trainer_card.h"
 #include "window.h"
 
+#define tState      data[0]
 #define tMinPlayers data[1]
 #define tMaxPlayers data[2]
 #define tNumPlayers data[3]
@@ -35,6 +43,10 @@ static void Task_LinkupCheckStatusAfterConfirm(u8 taskId);
 static void Task_LinkupAwaitTrainerCardData(u8 taskId);
 static void Task_StopLinkup(u8 taskId);
 static bool8 TryLinkTimeout(u8 taskId);
+static void Task_ReestablishLink(u8 taskId);
+static void Task_ReestablishLinkAwaitConnection(u8 taskId);
+static void Task_ReestablishLinkLeader(u8 taskId);
+static void Task_ReestablishLinkAwaitConfirmation(u8 taskId);
 void Task_LinkupFailed(u8 taskId);
 void Task_LinkupConnectionError(u8 taskId);
 
@@ -44,6 +56,7 @@ extern const u8 gText_ConfirmStartLinkWithXPlayers[];
 extern const u8 gText_AwaitingLinkup[];
 extern struct Pokemon gUnknown_202412C[];
 extern void TrainerCard_GenerateCardForPlayer(struct TrainerCard *trainerCard);
+extern struct LinkPlayer gLocalLinkPlayer;
 
 static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
 {
@@ -634,715 +647,249 @@ void TryContestEModeLinkup(void)
     CreateLinkupTask(2, 4);
 }
 
-__attribute__((naked)) u8 CreateTask_ReestablishCableClubLink()
+u8 CreateTask_ReestablishCableClubLink(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B2810\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2814\n\t"
-        "	movs r0, #0xff\n\t"
-        "	b _080B28E0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2810: .4byte sub_080B28F0 + 1\n\t"
-        "_080B2814:\n\t"
-        "	ldr r0, _080B2828\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r0, #8\n\t"
-        "	bhi _080B28D4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B282C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2828: .4byte gSpecialVar_0x8004\n\t"
-        "_080B282C: .4byte _080B2830\n\t"
-        "_080B2830:\n\t"
-        "	.4byte _080B2854\n\t"
-        "	.4byte _080B2864\n\t"
-        "	.4byte _080B28BC\n\t"
-        "	.4byte _080B28CC\n\t"
-        "	.4byte _080B2874\n\t"
-        "	.4byte _080B28D4\n\t"
-        "	.4byte _080B28D4\n\t"
-        "	.4byte _080B28D4\n\t"
-        "	.4byte _080B2884\n\t"
-        "_080B2854:\n\t"
-        "	ldr r1, _080B285C\n\t"
-        "	ldr r2, _080B2860\n\t"
-        "	b _080B28D0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B285C: .4byte gLinkType\n\t"
-        "_080B2860: .4byte 0x00002233\n\t"
-        "_080B2864:\n\t"
-        "	ldr r1, _080B286C\n\t"
-        "	ldr r2, _080B2870\n\t"
-        "	b _080B28D0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B286C: .4byte gLinkType\n\t"
-        "_080B2870: .4byte 0x00002244\n\t"
-        "_080B2874:\n\t"
-        "	ldr r1, _080B287C\n\t"
-        "	ldr r2, _080B2880\n\t"
-        "	b _080B28D0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B287C: .4byte gLinkType\n\t"
-        "_080B2880: .4byte 0x00002255\n\t"
-        "_080B2884:\n\t"
-        "	ldr r0, _080B289C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080B28A0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B28AC\n\t"
-        "	ldr r1, _080B28A4\n\t"
-        "	ldr r2, _080B28A8\n\t"
-        "	b _080B28D0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B289C: .4byte gSaveBlock2Ptr\n\t"
-        "_080B28A0: .4byte 0x00000CA9\n\t"
-        "_080B28A4: .4byte gLinkType\n\t"
-        "_080B28A8: .4byte 0x00002266\n\t"
-        "_080B28AC:\n\t"
-        "	ldr r1, _080B28B4\n\t"
-        "	ldr r2, _080B28B8\n\t"
-        "	b _080B28D0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B28B4: .4byte gLinkType\n\t"
-        "_080B28B8: .4byte 0x00002277\n\t"
-        "_080B28BC:\n\t"
-        "	ldr r1, _080B28C4\n\t"
-        "	ldr r2, _080B28C8\n\t"
-        "	b _080B28D0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B28C4: .4byte gLinkType\n\t"
-        "_080B28C8: .4byte 0x00001111\n\t"
-        "_080B28CC:\n\t"
-        "	ldr r1, _080B28E4\n\t"
-        "	ldr r2, _080B28E8\n\t"
-        "_080B28D0:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080B28D4:\n\t"
-        "	ldr r0, _080B28EC\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_080B28E0:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B28E4: .4byte gLinkType\n\t"
-        "_080B28E8: .4byte 0x00003322\n\t"
-        "_080B28EC: .4byte sub_080B28F0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FuncIsActiveTask(Task_ReestablishLink) != FALSE)
+        return TASK_NONE;
+
+    switch (gSpecialVar_0x8004)
+    {
+    case USING_SINGLE_BATTLE:
+        gLinkType = LINKTYPE_SINGLE_BATTLE;
+        break;
+    case USING_DOUBLE_BATTLE:
+        gLinkType = LINKTYPE_DOUBLE_BATTLE;
+        break;
+    case USING_MULTI_BATTLE:
+        gLinkType = LINKTYPE_MULTI_BATTLE;
+        break;
+    case USING_BATTLE_TOWER:
+        if (gSaveBlock2Ptr->frontier.lvlMode == FRONTIER_LVL_50)
+            gLinkType = LINKTYPE_BATTLE_TOWER_50;
+        else
+            gLinkType = LINKTYPE_BATTLE_TOWER_OPEN;
+        break;
+    case USING_TRADE_CENTER:
+        gLinkType = LINKTYPE_TRADE;
+        break;
+    case USING_RECORD_CORNER:
+        gLinkType = LINKTYPE_RECORD_MIX_AFTER;
+        break;
+    }
+
+    return CreateTask(Task_ReestablishLink, 80);
 }
 
-__attribute__((naked)) void sub_080B28F0(void)
+static void Task_ReestablishLink(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B291C\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080B2924\n\t"
-        "	bl OpenLink\n\t"
-        "	bl ResetLinkPlayers\n\t"
-        "	ldr r0, _080B2920\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	b _080B2930\n\t"
-        "	.align 2, 0\n\t"
-        "_080B291C: .4byte gUnknown_3005B68\n\t"
-        "_080B2920: .4byte Task_WaitForLinkPlayerConnection + 1\n\t"
-        "_080B2924:\n\t"
-        "	cmp r2, #9\n\t"
-        "	ble _080B2930\n\t"
-        "	subs r0, #8\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r1, _080B293C\n\t"
-        "	str r1, [r0]\n\t"
-        "_080B2930:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B293C: .4byte sub_080B2940 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    if (data[0] == 0)
+    {
+        OpenLink();
+        ResetLinkPlayers();
+        CreateTask(Task_WaitForLinkPlayerConnection, 80);
+    }
+    else if (data[0] >= 10)
+    {
+        gTasks[taskId].func = Task_ReestablishLinkAwaitConnection;
+    }
+    data[0]++;
 }
 
-__attribute__((naked)) void sub_080B2940(void)
+static void Task_ReestablishLinkAwaitConnection(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _080B2986\n\t"
-        "	bl IsLinkMaster\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B2978\n\t"
-        "	ldr r0, _080B2970\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B2974\n\t"
-        "	b _080B2984\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2970: .4byte gTasks\n\t"
-        "_080B2974: .4byte sub_080B2994 + 1\n\t"
-        "_080B2978:\n\t"
-        "	ldr r0, _080B298C\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B2990\n\t"
-        "_080B2984:\n\t"
-        "	str r0, [r1]\n\t"
-        "_080B2986:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B298C: .4byte gTasks\n\t"
-        "_080B2990: .4byte sub_080B29CC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetLinkPlayerCount_2() >= 2)
+    {
+        if (IsLinkMaster() == TRUE)
+            gTasks[taskId].func = Task_ReestablishLinkLeader;
+        else
+            gTasks[taskId].func = Task_ReestablishLinkAwaitConfirmation;
+    }
 }
 
-__attribute__((naked)) void sub_080B2994(void)
+static void Task_ReestablishLinkLeader(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	bl GetSavedPlayerCount\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _080B29BE\n\t"
-        "	bl CheckShouldAdvanceLinkState\n\t"
-        "	ldr r0, _080B29C4\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B29C8\n\t"
-        "	str r0, [r1]\n\t"
-        "_080B29BE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B29C4: .4byte gTasks\n\t"
-        "_080B29C8: .4byte sub_080B29CC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetSavedPlayerCount() == GetLinkPlayerCount_2())
+    {
+        CheckShouldAdvanceLinkState();
+        gTasks[taskId].func = Task_ReestablishLinkAwaitConfirmation;
+    }
 }
 
-__attribute__((naked)) void sub_080B29CC(void)
+static void Task_ReestablishLinkAwaitConfirmation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080B29FC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B29F4\n\t"
-        "	bl IsLinkPlayerDataExchangeComplete\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B29F4\n\t"
-        "	bl sub_0800A6DC\n\t"
-        "	bl StartSendingKeysToLink\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B29F4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B29FC: .4byte gReceivedRemoteLinkPlayers\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gReceivedRemoteLinkPlayers == TRUE
+     && IsLinkPlayerDataExchangeComplete() == TRUE)
+    {
+        CheckLinkPlayersMatchSaved();
+        StartSendingKeysToLink();
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_080B2A00(void)
+// Unused
+void CableClubSaveGame(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SaveGame\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SaveGame();
 }
 
-__attribute__((naked)) void sub_080B2A0C(void)
+static void SetLinkBattleTypeFlags(int linkService)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B2A30\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _080B2A1C\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2A26\n\t"
-        "	b _080B2A52\n\t"
-        "_080B2A1C:\n\t"
-        "	cmp r0, #5\n\t"
-        "	beq _080B2A3C\n\t"
-        "	cmp r0, #9\n\t"
-        "	beq _080B2A4C\n\t"
-        "	b _080B2A52\n\t"
-        "_080B2A26:\n\t"
-        "	ldr r1, _080B2A2C\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _080B2A50\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2A2C: .4byte gBattleTypeFlags\n\t"
-        "_080B2A30:\n\t"
-        "	ldr r1, _080B2A38\n\t"
-        "	movs r0, #0xb\n\t"
-        "	b _080B2A50\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2A38: .4byte gBattleTypeFlags\n\t"
-        "_080B2A3C:\n\t"
-        "	bl ReducePlayerPartyToSelectedMons\n\t"
-        "	ldr r1, _080B2A48\n\t"
-        "	movs r0, #0x4b\n\t"
-        "	b _080B2A50\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2A48: .4byte gBattleTypeFlags\n\t"
-        "_080B2A4C:\n\t"
-        "	ldr r1, _080B2A58\n\t"
-        "	ldr r0, _080B2A5C\n\t"
-        "_080B2A50:\n\t"
-        "	str r0, [r1]\n\t"
-        "_080B2A52:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2A58: .4byte gBattleTypeFlags\n\t"
-        "_080B2A5C: .4byte SPECIAL_Script_FadeOutMapMusic\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (linkService)
+    {
+    case USING_SINGLE_BATTLE:
+        gBattleTypeFlags = BATTLE_TYPE_LINK | BATTLE_TYPE_TRAINER;
+        break;
+    case USING_DOUBLE_BATTLE:
+        gBattleTypeFlags = BATTLE_TYPE_DOUBLE | BATTLE_TYPE_LINK | BATTLE_TYPE_TRAINER;
+        break;
+    case USING_MULTI_BATTLE:
+        ReducePlayerPartyToSelectedMons();
+        gBattleTypeFlags = BATTLE_TYPE_DOUBLE | BATTLE_TYPE_LINK | BATTLE_TYPE_TRAINER | BATTLE_TYPE_MULTI;
+        break;
+    case USING_BATTLE_TOWER:
+        gBattleTypeFlags = BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_DOUBLE | BATTLE_TYPE_LINK | BATTLE_TYPE_TRAINER | BATTLE_TYPE_MULTI;
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080B2A60(void)
+#define tTimer data[1]
+
+static void Task_StartWiredCableClubBattle(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B2A84\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _080B2B4C\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B2A88\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2A84: .4byte gTasks\n\t"
-        "_080B2A88: .4byte _080B2A8C\n\t"
-        "_080B2A8C:\n\t"
-        "	.4byte _080B2AA4\n\t"
-        "	.4byte _080B2AC4\n\t"
-        "	.4byte _080B2AD4\n\t"
-        "	.4byte _080B2AE4\n\t"
-        "	.4byte _080B2AEA\n\t"
-        "	.4byte _080B2B00\n\t"
-        "_080B2AA4:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FadeScreen\n\t"
-        "	ldr r1, _080B2ABC\n\t"
-        "	ldr r2, _080B2AC0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl ClearLinkCallback_2\n\t"
-        "	b _080B2AF2\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2ABC: .4byte gLinkType\n\t"
-        "_080B2AC0: .4byte 0x00002211\n\t"
-        "_080B2AC4:\n\t"
-        "	ldr r0, _080B2AD0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	b _080B2AEE\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2AD0: .4byte gPaletteFade\n\t"
-        "_080B2AD4:\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	ble _080B2B4C\n\t"
-        "	b _080B2AF2\n\t"
-        "_080B2AE4:\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	b _080B2AF2\n\t"
-        "_080B2AEA:\n\t"
-        "	ldr r0, _080B2AFC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "_080B2AEE:\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B2B4C\n\t"
-        "_080B2AF2:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	b _080B2B4C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2AFC: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_080B2B00:\n\t"
-        "	ldr r0, _080B2B14\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2B1C\n\t"
-        "	ldr r0, _080B2B18\n\t"
-        "	bl PlayMapChosenOrBattleBGM\n\t"
-        "	b _080B2B24\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2B14: .4byte gLinkPlayers\n\t"
-        "_080B2B18: .4byte SPECIAL_DoDeoxysRockInteraction\n\t"
-        "_080B2B1C:\n\t"
-        "	movs r0, #0xee\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl PlayMapChosenOrBattleBGM\n\t"
-        "_080B2B24:\n\t"
-        "	ldr r0, _080B2B54\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl sub_080B2A0C\n\t"
-        "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	ldr r1, _080B2B58\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080B2B5C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, _080B2B60\n\t"
-        "	ldr r0, _080B2B64\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B2B4C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2B54: .4byte gSpecialVar_0x8004\n\t"
-        "_080B2B58: .4byte gTrainerBattleOpponent_A\n\t"
-        "_080B2B5C: .4byte CB2_InitBattle + 1\n\t"
-        "_080B2B60: .4byte gMain\n\t"
-        "_080B2B64: .4byte CB2_ReturnFromCableClubBattle + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    case 0:
+        FadeScreen(FADE_TO_BLACK, 0);
+        gLinkType = LINKTYPE_BATTLE;
+        ClearLinkCallback_2();
+        task->tState++;
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+            task->tState++;
+        break;
+    case 2:
+        task->tTimer++;
+        if (task->tTimer > 20)
+            task->tState++;
+        break;
+    case 3:
+        SetCloseLinkCallback();
+        task->tState++;
+        break;
+    case 4:
+        if (!gReceivedRemoteLinkPlayers)
+            task->tState++;
+        break;
+    case 5:
+        if (gLinkPlayers[0].trainerId & 1)
+            PlayMapChosenOrBattleBGM(MUS_VS_GYM_LEADER);
+        else
+            PlayMapChosenOrBattleBGM(MUS_VS_TRAINER);
+
+        SetLinkBattleTypeFlags(gSpecialVar_0x8004);
+        CleanupOverworldWindowsAndTilemaps();
+        gTrainerBattleOpponent_A = TRAINER_LINK_OPPONENT;
+        SetMainCallback2(CB2_InitBattle);
+        gMain.savedCallback = CB2_ReturnFromCableClubBattle;
+        DestroyTask(taskId);
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080B2B68(void)
+static void Task_StartWirelessCableClubBattle(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B2B8C\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bls _080B2B82\n\t"
-        "	b _080B2CDA\n\t"
-        "_080B2B82:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B2B90\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2B8C: .4byte gUnknown_3005B68\n\t"
-        "_080B2B90: .4byte _080B2B94\n\t"
-        "_080B2B94:\n\t"
-        "	.4byte _080B2BB4\n\t"
-        "	.4byte _080B2BD8\n\t"
-        "	.4byte _080B2BF0\n\t"
-        "	.4byte _080B2C04\n\t"
-        "	.4byte _080B2C58\n\t"
-        "	.4byte _080B2C6C\n\t"
-        "	.4byte _080B2C76\n\t"
-        "	.4byte _080B2C86\n\t"
-        "_080B2BB4:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FadeScreen\n\t"
-        "	ldr r0, _080B2BD0\n\t"
-        "	ldr r2, _080B2BD4\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl ClearLinkCallback_2\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _080B2CDA\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2BD0: .4byte gLinkType\n\t"
-        "_080B2BD4: .4byte 0x00002211\n\t"
-        "_080B2BD8:\n\t"
-        "	ldr r0, _080B2BEC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2BE6\n\t"
-        "	b _080B2CDA\n\t"
-        "_080B2BE6:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _080B2CDA\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2BEC: .4byte gPaletteFade\n\t"
-        "_080B2BF0:\n\t"
-        "	ldr r1, _080B2C00\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	bl SendBlock\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _080B2CDA\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2C00: .4byte gLocalLinkPlayer\n\t"
-        "_080B2C04:\n\t"
-        "	bl GetBlockReceivedStatus\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0800A59C\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _080B2CDA\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r6, _080B2C1C\n\t"
-        "	b _080B2C40\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2C1C: .4byte gLinkPlayers\n\t"
-        "_080B2C20:\n\t"
-        "	lsls r1, r4, #8\n\t"
-        "	ldr r2, _080B2C54\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldm r1!, {r2, r3, r7}\n\t"
-        "	stm r0!, {r2, r3, r7}\n\t"
-        "	ldm r1!, {r2, r3, r7}\n\t"
-        "	stm r0!, {r2, r3, r7}\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	str r1, [r0]\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl ResetBlockReceivedFlag\n\t"
-        "	adds r6, #0x1c\n\t"
-        "	adds r4, #1\n\t"
-        "_080B2C40:\n\t"
-        "	bl GetLinkPlayerCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	blt _080B2C20\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _080B2CDA\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2C54: .4byte gBlockRecvBuffer\n\t"
-        "_080B2C58:\n\t"
-        "	ldrh r0, [r5, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #2]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	ble _080B2CDA\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _080B2CDA\n\t"
-        "_080B2C6C:\n\t"
-        "	bl SetLinkStandbyCallback\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _080B2CDA\n\t"
-        "_080B2C76:\n\t"
-        "	bl IsLinkTaskFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2CDA\n\t"
-        "	movs r0, #7\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _080B2CDA\n\t"
-        "_080B2C86:\n\t"
-        "	ldr r0, _080B2C9C\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2CA4\n\t"
-        "	ldr r0, _080B2CA0\n\t"
-        "	bl PlayMapChosenOrBattleBGM\n\t"
-        "	b _080B2CAC\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2C9C: .4byte gLinkPlayers\n\t"
-        "_080B2CA0: .4byte SPECIAL_DoDeoxysRockInteraction\n\t"
-        "_080B2CA4:\n\t"
-        "	movs r0, #0xee\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	bl PlayMapChosenOrBattleBGM\n\t"
-        "_080B2CAC:\n\t"
-        "	ldr r1, _080B2CE0\n\t"
-        "	ldr r0, _080B2CE4\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "	ldr r0, _080B2CE8\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl sub_080B2A0C\n\t"
-        "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	ldr r1, _080B2CEC\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080B2CF0\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, _080B2CF4\n\t"
-        "	ldr r0, _080B2CF8\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B2CDA:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2CE0: .4byte gLinkPlayers\n\t"
-        "_080B2CE4: .4byte 0x00002211\n\t"
-        "_080B2CE8: .4byte gSpecialVar_0x8004\n\t"
-        "_080B2CEC: .4byte gTrainerBattleOpponent_A\n\t"
-        "_080B2CF0: .4byte CB2_InitBattle + 1\n\t"
-        "_080B2CF4: .4byte gMain\n\t"
-        "_080B2CF8: .4byte CB2_ReturnFromCableClubBattle + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    s16 *data = gTasks[taskId].data;
+
+    switch (tState)
+    {
+    case 0:
+        FadeScreen(FADE_TO_BLACK, 0);
+        gLinkType = LINKTYPE_BATTLE;
+        ClearLinkCallback_2();
+        tState = 1;
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+            tState = 2;
+        break;
+    case 2:
+        SendBlock(0, &gLocalLinkPlayer, sizeof(gLocalLinkPlayer));
+        tState = 3;
+        break;
+    case 3:
+        if (GetBlockReceivedStatus() == GetLinkPlayerCountAsBitFlags())
+        {
+            for (i = 0; i < GetLinkPlayerCount(); i++)
+            {
+                struct LinkPlayer *player = (struct LinkPlayer *)gBlockRecvBuffer[i];
+                gLinkPlayers[i] = *player;
+                ResetBlockReceivedFlag(i);
+            }
+            tState = 4;
+        }
+        break;
+    case 4:
+        tTimer++;
+        if (tTimer > 20)
+            tState = 5;
+        break;
+    case 5:
+        SetLinkStandbyCallback();
+        tState = 6;
+        break;
+    case 6:
+        if (IsLinkTaskFinished())
+        {
+            tState = 7;
+        }
+        break;
+    case 7:
+        if (gLinkPlayers[0].trainerId & 1)
+            PlayMapChosenOrBattleBGM(MUS_VS_GYM_LEADER);
+        else
+            PlayMapChosenOrBattleBGM(MUS_VS_TRAINER);
+
+        gLinkPlayers[0].linkType = LINKTYPE_BATTLE;
+        SetLinkBattleTypeFlags(gSpecialVar_0x8004);
+        CleanupOverworldWindowsAndTilemaps();
+        gTrainerBattleOpponent_A = TRAINER_LINK_OPPONENT;
+        SetMainCallback2(CB2_InitBattle);
+        gMain.savedCallback = CB2_ReturnFromCableClubBattle;
+        DestroyTask(taskId);
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080B2CFC(void)
+#undef tTimer
+
+static void CB2_ReturnFromUnionRoomBattle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080B2D18\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2D3A\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080B2D1C\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2D22\n\t"
-        "	b _080B2D5A\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2D18: .4byte gMain\n\t"
-        "_080B2D1C:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B2D54\n\t"
-        "	b _080B2D5A\n\t"
-        "_080B2D22:\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	bl sub_08009C40\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2D34\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r4]\n\t"
-        "	b _080B2D5A\n\t"
-        "_080B2D34:\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	b _080B2D5A\n\t"
-        "_080B2D3A:\n\t"
-        "	ldr r0, _080B2D4C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B2D5A\n\t"
-        "	ldr r0, _080B2D50\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _080B2D5A\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2D4C: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_080B2D50: .4byte CB2_ReturnToField + 1\n\t"
-        "_080B2D54:\n\t"
-        "	ldr r0, _080B2D64\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_080B2D5A:\n\t"
-        "	bl RunTasks\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2D64: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        SetCloseLinkCallback();
+        if (Link_AnyPartnersPlayingFRLG_JP())
+            gMain.state = 2;
+        else
+            gMain.state = 1;
+        break;
+    case 1:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            SetMainCallback2(CB2_ReturnToField);
+        }
+        break;
+    case 2:
+        SetMainCallback2(CB2_ReturnToField);
+        break;
+    }
+    RunTasks();
 }
 
 __attribute__((naked)) void sub_080B2D68(void)
@@ -1430,7 +977,7 @@ __attribute__((naked)) void sub_080B2D68(void)
         "	.align 2, 0\n\t"
         "_080B2E1C: .4byte gLinkPlayers\n\t"
         "_080B2E20: .4byte gMain\n\t"
-        "_080B2E24: .4byte sub_080B2CFC + 1\n\t"
+        "_080B2E24: .4byte CB2_ReturnFromUnionRoomBattle + 1\n\t"
         "_080B2E28:\n\t"
         "	ldr r1, _080B2E3C\n\t"
         "	ldr r0, _080B2E40\n\t"
@@ -1827,7 +1374,7 @@ __attribute__((naked)) void ColosseumPlayerSpotTriggered(void)
         "_080B30E0: .4byte gLinkType\n\t"
         "_080B30E4: .4byte 0x00002211\n\t"
         "_080B30E8: .4byte gWirelessCommType\n\t"
-        "_080B30EC: .4byte sub_080B2B68 + 1\n\t"
+        "_080B30EC: .4byte Task_StartWirelessCableClubBattle + 1\n\t"
         "_080B30F0:\n\t"
         "	ldr r0, _080B30FC\n\t"
         "	bl sub_080B2F30\n\t"
@@ -1835,7 +1382,7 @@ __attribute__((naked)) void ColosseumPlayerSpotTriggered(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B30FC: .4byte sub_080B2A60 + 1\n\t"
+        "_080B30FC: .4byte Task_StartWiredCableClubBattle + 1\n\t"
         ".syntax divided\n\t"
     );
 }

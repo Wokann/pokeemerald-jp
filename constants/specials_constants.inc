@@ -68,8 +68,8 @@
 .equ SPECIAL_WAITSTATE_PlayerEnteredTradeSeat, 1
 .equ SPECIAL_nullsub_37, 34
 .equ SPECIAL_WAITSTATE_nullsub_37, 0
-.equ SPECIAL_sub_080B2A00, 35
-.equ SPECIAL_WAITSTATE_sub_080B2A00, 0
+.equ SPECIAL_CableClubSaveGame, 35
+.equ SPECIAL_WAITSTATE_CableClubSaveGame, 0
 .equ SPECIAL_TryBerryBlenderLinkup, 36
 .equ SPECIAL_WAITSTATE_TryBerryBlenderLinkup, 0
 .equ SPECIAL_GetLinkPartnerNames, 37
