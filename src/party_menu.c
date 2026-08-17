@@ -2,7 +2,9 @@
 #include "party_menu.h"
 #include "pokemon_icon.h"
 #include "bg.h"
+#include "constants/field_effects.h"
 #include "decompress.h"
+#include "field_effect.h"
 #include "malloc.h"
 #include "palette.h"
 
@@ -11406,24 +11408,10 @@ __attribute__((naked)) void sub_081B547C(void)
     );
 }
 
-__attribute__((naked)) void hm_surf_run_dp02scr(void)
+static void FieldCallback_Surf(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	ldr r1, _081B54BC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #9\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B54BC: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = GetCursorSelectionMonId();
+    FieldEffectStart(FLDEFF_USE_SURF);
 }
 
 
@@ -11454,7 +11442,7 @@ __attribute__((naked)) void SetUpFieldMove_Surf(void)
         "_081B54EC: .4byte gFieldCallback2\n\t"
         "_081B54F0: .4byte 0x081B53D9\n\t"
         "_081B54F4: .4byte gPostMenuFieldCallback\n\t"
-        "_081B54F8: .4byte hm_surf_run_dp02scr + 1\n\t"
+        "_081B54F8: .4byte FieldCallback_Surf + 1\n\t"
         "_081B54FC:\n\t"
         "	movs r0, #0\n\t"
         "_081B54FE:\n\t"

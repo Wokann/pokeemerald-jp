@@ -8709,7 +8709,7 @@ SECTIONS {
         src/party_menu.o(.text.brm_get_selected_species);
         src/party_menu.o(.text.task_brm_cancel_1_on_keypad_a_or_b);
         src/party_menu.o(.text.sub_081B547C);
-        src/party_menu.o(.text.hm_surf_run_dp02scr);
+        src/party_menu.o(.text.FieldCallback_Surf);
         src/party_menu.o(.text.SetUpFieldMove_Surf);
         src/party_menu.o(.text.sub_081B5504);
         src/party_menu.o(.text.SetUpFieldMove_Fly);
