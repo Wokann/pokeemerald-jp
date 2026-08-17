@@ -2541,52 +2541,16 @@ static void RedrawPartyWindow(u8 whichParty)
     sTradeMenu->drawSelectedMonState[whichParty] = 0;
 }
 
-__attribute__((naked)) void sub_08079A38(void)
+static void Task_DrawSelectionSummary(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect_Palette0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+    CopyBgTilemapBufferToVram(0);
 }
 
-__attribute__((naked)) void sub_08079A5C(void)
+static void Task_DrawSelectionTrade(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect_Palette0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+    CopyBgTilemapBufferToVram(0);
 }
 
 __attribute__((naked)) void sub_08079A80(u16 action, u8 data)
