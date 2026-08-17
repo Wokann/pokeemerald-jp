@@ -1,5 +1,6 @@
 #include "global.h"
 #include "party_menu.h"
+#include "pokemon_icon.h"
 #include "bg.h"
 #include "decompress.h"
 #include "malloc.h"
@@ -12098,17 +12099,9 @@ __attribute__((naked)) void UpdatePartyMonIconFrameAndBounce(struct Sprite *spri
     );
 }
 
-__attribute__((naked)) void UpdatePartyMonIconFrame(void)
+void UpdatePartyMonIconFrame(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl UpdateMonIconFrame\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateMonIconFrame(sprite);
 }
 
 __attribute__((naked)) void party_menu_held_item_object(void)
