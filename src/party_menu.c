@@ -17509,21 +17509,9 @@ __attribute__((naked)) void InitChooseHalfPartyForBattle(u8 unused)
     );
 }
 
-__attribute__((naked)) void sub_081B81F8(void)
+void sub_081B81F8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B8208\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memset\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8208: .4byte gSelectedOrderFromParty\n\t"
-        ".syntax divided\n\t"
-    );
+    memset(gSelectedOrderFromParty, 0, 4);
 }
 
 __attribute__((naked)) void sub_081B820C(void)
