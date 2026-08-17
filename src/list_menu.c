@@ -9,6 +9,8 @@
 #define CURSOR_OBJECT_START CURSOR_RED_OUTLINE
 
 void Task_RedArrowCursor(void) {}
+static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
+void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
 __attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 drawMode, u16 tileNum, u16 palOffset)
 {
     __asm__(".syntax unified\n\t"
@@ -357,47 +359,19 @@ __attribute__((naked)) s32 ListMenu_ProcessInput(u8 listTaskId)
     );
 }
 
-__attribute__((naked)) void DestroyListMenuTask(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
+void DestroyListMenuTask(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081AE3E0\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _081AE3BC\n\t"
-        "	ldrh r0, [r1, #0x18]\n\t"
-        "	strh r0, [r3]\n\t"
-        "_081AE3BC:\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081AE3C4\n\t"
-        "	ldrh r0, [r1, #0x1a]\n\t"
-        "	strh r0, [r2]\n\t"
-        "_081AE3C4:\n\t"
-        "	ldrb r0, [r1, #0x1e]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _081AE3D4\n\t"
-        "	ldrb r1, [r1, #0x17]\n\t"
-        "	lsrs r1, r1, #6\n\t"
-        "	subs r1, #2\n\t"
-        "	bl ListMenuRemoveCursorObject\n\t"
-        "_081AE3D4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE3E0: .4byte gUnknown_3005B68\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+
+    if (scrollOffset != NULL)
+        *scrollOffset = list->scrollOffset;
+    if (selectedRow != NULL)
+        *selectedRow = list->selectedRow;
+
+    if (list->taskId != TASK_NONE)
+        ListMenuRemoveCursorObject(list->taskId, list->template.cursorKind - CURSOR_OBJECT_START);
+
+    DestroyTask(listTaskId);
 }
 
 __attribute__((naked)) void RedrawListMenu(u8 listTaskId)
@@ -1583,32 +1557,10 @@ __attribute__((naked)) void ListMenuChangeSelection(void)
     );
 }
 
-__attribute__((naked)) void ListMenuCallSelectionChangedCallback(void)
+static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	ldr r3, [r2, #4]\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _081AECFA\n\t"
-        "	ldrh r0, [r2, #0x18]\n\t"
-        "	ldrh r1, [r2, #0x1a]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl _call_via_r3\n\t"
-        "_081AECFA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (list->template.moveCursorFunc != NULL)
+        list->template.moveCursorFunc(list->template.items[list->scrollOffset + list->selectedRow].id, onInit, list);
 }
 
 __attribute__((naked)) void ListMenuOverrideSetColors(u8 cursorPal, u8 fillValue, u8 cursorShadowPal)
@@ -2543,46 +2495,23 @@ void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId)
 
 
 void Task_RedOutlineCursor(void) {}
-__attribute__((naked)) void ListMenuGetRedOutlineCursorSpriteCount(void)
+u8 ListMenuGetRedOutlineCursorSpriteCount(u16 rowWidth, u16 rowHeight)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r3, #4\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bls _081AF3E0\n\t"
-        "	movs r2, #8\n\t"
-        "	subs r0, #8\n\t"
-        "	cmp r2, r0\n\t"
-        "	bge _081AF3E0\n\t"
-        "_081AF3D8:\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r2, #8\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _081AF3D8\n\t"
-        "_081AF3E0:\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	bls _081AF3F4\n\t"
-        "	movs r2, #8\n\t"
-        "	subs r1, #8\n\t"
-        "	cmp r2, r1\n\t"
-        "	bge _081AF3F4\n\t"
-        "_081AF3EC:\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r2, #8\n\t"
-        "	cmp r2, r1\n\t"
-        "	blt _081AF3EC\n\t"
-        "_081AF3F4:\n\t"
-        "	lsls r0, r3, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    s32 count = 4;
+
+    if (rowWidth > 16)
+    {
+        for (i = 8; i < (rowWidth - 8); i += 8)
+            count += 2;
+    }
+    if (rowHeight > 16)
+    {
+        for (i = 8; i < (rowHeight - 8); i += 8)
+            count += 2;
+    }
+
+    return count;
 }
 
 __attribute__((naked)) void ListMenuSetUpRedOutlineCursorSpriteOamTable(void)
