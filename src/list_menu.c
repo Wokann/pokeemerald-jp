@@ -2479,34 +2479,10 @@ void ListMenuRemoveRedOutlineCursorObject(u8 taskId)
     DestroyTask(taskId);
 }
 
-__attribute__((naked)) void SpriteCallback_RedArrowCursor(void)
+static void SpriteCallback_RedArrowCursor(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r1, _081AF730\n\t"
-        "	ldrh r3, [r2, #0x2e]\n\t"
-        "	lsls r0, r3, #0x18\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081AF720\n\t"
-        "	adds r0, #0x3f\n\t"
-        "_081AF720:\n\t"
-        "	asrs r0, r0, #6\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF730: .4byte gSineTable\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x2 = gSineTable[(u8)(sprite->data[0])] / 64;
+    sprite->data[0] += 8;
 }
 
 void ListMenuDummyTask(void) {}
