@@ -11508,58 +11508,18 @@ static void FieldCallback_Waterfall(void)
     FieldEffectStart(FLDEFF_USE_WATERFALL);
 }
 
-__attribute__((naked)) void SetUpFieldMove_Waterfall(void)
+static bool8 SetUpFieldMove_Waterfall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetXYCoordsOneStepInFrontOfPlayer\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl MetatileBehavior_IsWaterfall\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B55EC\n\t"
-        "	bl IsPlayerSurfingNorth\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B55EC\n\t"
-        "	ldr r1, _081B55DC\n\t"
-        "	ldr r0, _081B55E0\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r1, _081B55E4\n\t"
-        "	ldr r0, _081B55E8\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B55EE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B55DC: .4byte gFieldCallback2\n\t"
-        "_081B55E0: .4byte 0x081B53D9\n\t"
-        "_081B55E4: .4byte gPostMenuFieldCallback\n\t"
-        "_081B55E8: .4byte FieldCallback_Waterfall + 1\n\t"
-        "_081B55EC:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B55EE:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x, y;
+
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+    if ((u8)MetatileBehavior_IsWaterfall((u8)MapGridGetMetatileBehaviorAt(x, y)) == TRUE && (u8)IsPlayerSurfingNorth() == TRUE)
+    {
+        gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
+        gPostMenuFieldCallback = FieldCallback_Waterfall;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 static void FieldCallback_Dive(void)
