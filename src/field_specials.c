@@ -1,5 +1,7 @@
 #include "global.h"
 #include "constants/field_specials.h"
+#include "constants/metatile_labels.h"
+#include "fieldmap.h"
 #include "rtc.h"
 #include "field_player_avatar.h"
 #include "event_data.h"
@@ -2406,27 +2408,11 @@ __attribute__((naked)) void LotteryCornerComputerEffect(void)
     );
 }
 
-__attribute__((naked)) void EndLotteryCornerComputerEffect(void)
+void EndLotteryCornerComputerEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _0813903C\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #8\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	ldr r2, _08139040\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #9\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	bl DrawWholeMapView\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813903C: .4byte 0x00000E9D\n\t"
-        "_08139040: .4byte 0x00000EA5\n\t"
-        ".syntax divided\n\t"
-    );
+    MapGridSetMetatileIdAt(11 + MAP_OFFSET, 1 + MAP_OFFSET, METATILE_Shop_Laptop1_Normal | MAPGRID_IMPASSABLE);
+    MapGridSetMetatileIdAt(11 + MAP_OFFSET, 2 + MAP_OFFSET, METATILE_Shop_Laptop2_Normal | MAPGRID_IMPASSABLE);
+    DrawWholeMapView();
 }
 
 __attribute__((naked)) void ResetTrickHouseEndRoomFlag(void)
