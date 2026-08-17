@@ -304,16 +304,16 @@ sFieldMoveCursorCallbacks: @ 0x85E1654
 sUnionRoomTradeMessages: @ 0x85E16C4
 	.incbin "baserom_jp.gba", 0x5e16c4, 0xa4
 
-	.globl gUnknown_85E1768
-gUnknown_85E1768: @ 0x85E1768
+	.globl sSpriteSheet_HeldItem
+sSpriteSheet_HeldItem: @ 0x85E1768
 	.incbin "baserom_jp.gba", 0x5e1768, 0x8
 
-	.globl gUnknown_85E1770
-gUnknown_85E1770: @ 0x85E1770
+	.globl sSpritePalette_HeldItem
+sSpritePalette_HeldItem: @ 0x85E1770
 	.incbin "baserom_jp.gba", 0x5e1770, 0x8
 
-	.globl gUnknown_85E1778
-gUnknown_85E1778: @ 0x85E1778
+	.globl sSpriteTemplate_HeldItem
+sSpriteTemplate_HeldItem: @ 0x85E1778
 	.incbin "baserom_jp.gba", 0x5e1778, 0x38
 
 	.globl gUnknown_85E17B0
@@ -348,8 +348,8 @@ gUnknown_85E18B8: @ 0x85E18B8
 gUnknown_85E18C0: @ 0x85E18C0
 	.incbin "baserom_jp.gba", 0x5e18c0, 0x18
 
-	.globl gUnknown_85E18D8
-gUnknown_85E18D8: @ 0x85E18D8
+	.globl sMultiBattlePartnersPartyMask
+sMultiBattlePartnersPartyMask: @ 0x85E18D8
 	.incbin "baserom_jp.gba", 0x5e18d8, 0x20
 
 	.globl gUnknown_85E18F8

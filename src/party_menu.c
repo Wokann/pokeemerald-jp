@@ -158,6 +158,16 @@ static void Task_CancelAfterAorBPress(u8 taskId);
 static void DisplayCantUseFlashMessage(void);
 static void DisplayCantUseSurfMessage(void);
 static u16 GetFieldMoveMonSpecies(void);
+void CB2_ReturnToFieldWithOpenMenu(void);
+bool32 MetatileBehavior_IsWaterfall(u32 metatileBehavior);
+bool32 IsPlayerSurfingNorth(void);
+u8 TrySetDiveWarp(void);
+void GetXYCoordsOneStepInFrontOfPlayer(s16 *xPtr, s16 *yPtr);
+s32 MapGridGetMetatileBehaviorAt(s32 x, s32 y);
+extern const struct SpriteTemplate sSpriteTemplate_HeldItem;
+extern const struct CompressedSpriteSheet sSpriteSheet_HeldItem;
+extern const struct CompressedSpritePalette sSpritePalette_HeldItem;
+extern const u8 sMultiBattlePartnersPartyMask[];
 static void MoveCursorToConfirm(void);
 u8 GetMaxBattleEntries(void);
 static void Task_HandleSelectionMenuInput(u8 taskId);
@@ -341,6 +351,18 @@ static void UpdatePartySelectionDoubleLayout(s8 *slotPtr, s8 movementDir);
 static s8 GetNewSlotDoubleLayout(s8 slotId, s8 movementDir);
 static void PartyMenuRemoveWindow(u8 *windowId);
 static void UpdatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox);
+void CB2_ReturnToPartyMenuFromFlyMap(void);
+static void CreatePartyMonIconSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox, u32 slot);
+static void CreatePartyMonIconSpriteParameterized(u16 species, u32 pid, struct PartyMenuBox *menuBox, u8 priority, bool32 handleDeoxys);
+static void UpdateHPBar(u8 spriteId, u16 hp, u16 maxhp);
+static void UpdatePartyMonHPBar(u8 spriteId, struct Pokemon *mon);
+static void AnimateSelectedPartyIcon(u8 spriteId, u8 animNum);
+static void SpriteCB_BouncePartyMonIcon(struct Sprite *sprite);
+static void SpriteCB_UpdatePartyMonIcon(struct Sprite *sprite);
+static void CreatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox);
+static void CreatePartyMonHeldItemSpriteParameterized(u16 species, u16 item, struct PartyMenuBox *menuBox);
+static void CreateHeldItemSpriteForTrade(u8 spriteId, bool8 isMail);
+static void SpriteCB_HeldItem(struct Sprite *sprite);
 s8 Menu_ProcessInputNoWrapClearOnChoose(void);
 static void Task_ReturnToChooseMonAfterText(u8 taskId);
 void TryEnterMonForMinigame(u8 taskId, u8 slotId); // TryEnterMonForMinigame
@@ -3820,31 +3842,9 @@ static bool8 SetUpFieldMove_Fly(void)
 }
 
 
-__attribute__((naked)) void sub_081B5548(void)
+void CB2_ReturnToPartyMenuFromFlyMap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B556C\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B5570\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B556C: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B5570: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, TRUE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ReturnToFieldWithOpenMenu);
 }
 
 static void FieldCallback_Waterfall(void)
@@ -3885,417 +3885,121 @@ static bool8 SetUpFieldMove_Dive(void)
     return FALSE;
 }
 
-__attribute__((naked)) void CreatePartyMonIconSprite(void)
+static void CreatePartyMonIconSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox, u32 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	movs r6, #1\n\t"
-        "	bl IsMultiBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B568A\n\t"
-        "	ldr r0, _081B56C0\n\t"
-        "	ldr r1, _081B56C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B568A\n\t"
-        "	ldr r0, _081B56C8\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	eors r1, r6\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	lsrs r6, r0, #0x1f\n\t"
-        "_081B568A:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	str r6, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreatePartyMonIconSpriteParameterized\n\t"
-        "	ldrb r0, [r7, #9]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_081B57D8\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B56C0: .4byte gMain\n\t"
-        "_081B56C4: .4byte 0x00000439\n\t"
-        "_081B56C8: .4byte gUnknown_85E18D8\n\t"
-        ".syntax divided\n\t"
-    );
+    bool32 handleDeoxys = TRUE;
+    u16 species2;
+
+    // If in a multi battle, show partners Deoxys icon as Normal forme
+    if (IsMultiBattle() == TRUE && gMain.inBattle)
+        handleDeoxys = (sMultiBattlePartnersPartyMask[slot] ^ handleDeoxys) ? TRUE : FALSE;
+
+    species2 = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
+    CreatePartyMonIconSpriteParameterized(species2, GetMonData(mon, MON_DATA_PERSONALITY), menuBox, 1, handleDeoxys);
+    UpdatePartyMonHPBar(menuBox->monSpriteId, mon);
 }
 
-__attribute__((naked)) void CreatePartyMonIconSpriteParameterized(void)
+static void CreatePartyMonIconSpriteParameterized(u16 species, u32 pid, struct PartyMenuBox *menuBox, u8 priority, bool32 handleDeoxys)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r7, r3, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _081B571A\n\t"
-        "	ldr r1, _081B5724\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	ldrb r3, [r0, #1]\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	ldr r0, [sp, #0x20]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CreateMonIcon\n\t"
-        "	strb r0, [r4, #9]\n\t"
-        "	ldr r2, _081B5728\n\t"
-        "	ldrb r0, [r4, #9]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #3\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r3, [r1, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "_081B571A:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5724: .4byte SpriteCB_MonIcon + 1\n\t"
-        "_081B5728: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (species != SPECIES_NONE)
+    {
+        menuBox->monSpriteId = CreateMonIcon(species, SpriteCB_MonIcon, menuBox->spriteCoords[0], menuBox->spriteCoords[1], 4, pid, handleDeoxys);
+        gSprites[menuBox->monSpriteId].oam.priority = priority;
+    }
 }
 
-__attribute__((naked)) void sub_081B572C(void)
+static void UpdateHPBar(u8 spriteId, u16 hp, u16 maxhp)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl GetHPBarLevel\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B578C\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _081B5754\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B57A4\n\t"
-        "	b _081B57BC\n\t"
-        "_081B5754:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _081B5774\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _081B57BC\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B5770\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetPartyHPBarSprite\n\t"
-        "	b _081B57CC\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5770: .4byte gSprites\n\t"
-        "_081B5774:\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B5788\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetPartyHPBarSprite\n\t"
-        "	b _081B57CC\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5788: .4byte gSprites\n\t"
-        "_081B578C:\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B57A0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl SetPartyHPBarSprite\n\t"
-        "	b _081B57CC\n\t"
-        "	.align 2, 0\n\t"
-        "_081B57A0: .4byte gSprites\n\t"
-        "_081B57A4:\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B57B8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl SetPartyHPBarSprite\n\t"
-        "	b _081B57CC\n\t"
-        "	.align 2, 0\n\t"
-        "_081B57B8: .4byte gSprites\n\t"
-        "_081B57BC:\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B57D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	bl SetPartyHPBarSprite\n\t"
-        "_081B57CC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B57D4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (GetHPBarLevel(hp, maxhp))
+    {
+    case HP_BAR_FULL:
+        SetPartyHPBarSprite(&gSprites[spriteId], 0);
+        break;
+    case HP_BAR_GREEN:
+        SetPartyHPBarSprite(&gSprites[spriteId], 1);
+        break;
+    case HP_BAR_YELLOW:
+        SetPartyHPBarSprite(&gSprites[spriteId], 2);
+        break;
+    case HP_BAR_RED:
+        SetPartyHPBarSprite(&gSprites[spriteId], 3);
+        break;
+    default:
+        SetPartyHPBarSprite(&gSprites[spriteId], 4);
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_081B57D8(void)
+static void UpdatePartyMonHPBar(u8 spriteId, struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_081B572C\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateHPBar(spriteId, GetMonData(mon, MON_DATA_HP), GetMonData(mon, MON_DATA_MAX_HP));
 }
 
-__attribute__((naked)) void AnimateSelectedPartyIcon(u8 a, u8 b)
+static void AnimateSelectedPartyIcon(u8 spriteId, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r5, _081B583C\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r6, r0, #2\n\t"
-        "	adds r2, r6, r5\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r3, [r2, #0x2e]\n\t"
-        "	mov ip, r5\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081B5864\n\t"
-        "	movs r1, #0x20\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #0x18\n\t"
-        "	bne _081B5844\n\t"
-        "	strh r3, [r2, #0x24]\n\t"
-        "	ldr r0, _081B5840\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	b _081B584A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B583C: .4byte gSprites\n\t"
-        "_081B5840: .4byte 0x0000FFFC\n\t"
-        "_081B5844:\n\t"
-        "	ldr r0, _081B585C\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	strh r3, [r2, #0x26]\n\t"
-        "_081B584A:\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	mov r1, ip\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B5860\n\t"
-        "	b _081B5870\n\t"
-        "	.align 2, 0\n\t"
-        "_081B585C: .4byte 0x0000FFFC\n\t"
-        "_081B5860: .4byte UpdatePartyMonIconFrame + 1\n\t"
-        "_081B5864:\n\t"
-        "	strh r3, [r2, #0x24]\n\t"
-        "	strh r3, [r2, #0x26]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldr r1, _081B5878\n\t"
-        "_081B5870:\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5878: .4byte UpdatePartyMonIconFrameAndBounce + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gSprites[spriteId].data[0] = 0;
+    if (animNum == 0)
+    {
+        if (gSprites[spriteId].x == 24) // JP uses 24 (US uses 16)
+        {
+            gSprites[spriteId].x2 = 0;
+            gSprites[spriteId].y2 = -4;
+        }
+        else
+        {
+            gSprites[spriteId].x2 = -4;
+            gSprites[spriteId].y2 = 0;
+        }
+        gSprites[spriteId].callback = SpriteCB_UpdatePartyMonIcon;
+    }
+    else
+    {
+        gSprites[spriteId].x2 = 0;
+        gSprites[spriteId].y2 = 0;
+        gSprites[spriteId].callback = SpriteCB_BouncePartyMonIcon;
+    }
 }
 
-__attribute__((naked)) void UpdatePartyMonIconFrameAndBounce(struct Sprite *sprite)
+static void SpriteCB_BouncePartyMonIcon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl UpdateMonIconFrame\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B58A2\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B58A0\n\t"
-        "	ldr r0, _081B589C\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _081B58A2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B589C: .4byte 0x0000FFFD\n\t"
-        "_081B58A0:\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "_081B58A2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 animCmd = UpdateMonIconFrame(sprite);
+
+    if (animCmd != 0)
+    {
+        if (animCmd & 1) // % 2 also matches
+            sprite->y2 = -3;
+        else
+            sprite->y2 = 1;
+    }
 }
 
-void UpdatePartyMonIconFrame(struct Sprite *sprite)
+static void SpriteCB_UpdatePartyMonIcon(struct Sprite *sprite)
 {
     UpdateMonIconFrame(sprite);
 }
 
-__attribute__((naked)) void CreatePartyMonHeldItemSprite(void)
+static void CreatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B58DC\n\t"
-        "	ldr r0, _081B58E4\n\t"
-        "	ldr r2, [r4, #4]\n\t"
-        "	ldrb r1, [r2, #2]\n\t"
-        "	ldrb r2, [r2, #3]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4, #0xa]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl UpdatePartyMonHeldItemSprite\n\t"
-        "_081B58DC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B58E4: .4byte gUnknown_85E1778\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        menuBox->itemSpriteId = CreateSprite(&sSpriteTemplate_HeldItem, menuBox->spriteCoords[2], menuBox->spriteCoords[3], 0);
+        UpdatePartyMonHeldItemSprite(mon, menuBox);
+    }
 }
 
-__attribute__((naked)) void CreatePartyMonHeldItemSpriteParameterized(void)
+static void CreatePartyMonHeldItemSpriteParameterized(u16 species, u16 item, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r5, r1, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B5924\n\t"
-        "	ldr r0, _081B592C\n\t"
-        "	ldr r2, [r4, #4]\n\t"
-        "	ldrb r1, [r2, #2]\n\t"
-        "	ldrb r2, [r2, #3]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4, #0xa]\n\t"
-        "	ldr r2, _081B5930\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl ShowOrHideHeldItemSprite\n\t"
-        "_081B5924:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B592C: .4byte gUnknown_85E1778\n\t"
-        "_081B5930: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (species != SPECIES_NONE)
+    {
+        menuBox->itemSpriteId = CreateSprite(&sSpriteTemplate_HeldItem, menuBox->spriteCoords[2], menuBox->spriteCoords[3], 0);
+        gSprites[menuBox->itemSpriteId].oam.priority = 0;
+        ShowOrHideHeldItemSprite(item, menuBox);
+    }
 }
 
 static void UpdatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)
 {
-    ShowOrHideHeldItemSprite((u16)GetMonData3(mon, MON_DATA_HELD_ITEM), menuBox);
+    ShowOrHideHeldItemSprite(GetMonData(mon, MON_DATA_HELD_ITEM), menuBox);
 }
 
 static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
@@ -4306,7 +4010,7 @@ static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
     }
     else
     {
-        if ((u8)ItemIsMail(item))
+        if (ItemIsMail(item))
             StartSpriteAnim(&gSprites[menuBox->itemSpriteId], 1);
         else
             StartSpriteAnim(&gSprites[menuBox->itemSpriteId], 0);
@@ -4314,225 +4018,65 @@ static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
     }
 }
 
-extern const struct CompressedSpriteSheet gUnknown_85E1768;
-extern const struct CompressedSpritePalette gUnknown_85E1770;
-
 void LoadHeldItemIcons(void)
 {
-    LoadSpriteSheet(&gUnknown_85E1768);
-    LoadSpritePalette(&gUnknown_85E1770);
+    LoadSpriteSheet(&sSpriteSheet_HeldItem);
+    LoadSpritePalette(&sSpritePalette_HeldItem);
 }
 
-
-__attribute__((naked)) void sub_081B59EC(void)
+void DrawHeldItemIconsForTrade(u8 *partyCounts, u8 *partySpriteIds, u8 whichParty)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081B5A00\n\t"
-        "	cmp r2, #1\n\t"
-        "	beq _081B5A48\n\t"
-        "	b _081B5A84\n\t"
-        "_081B5A00:\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bhs _081B5A84\n\t"
-        "_081B5A08:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081B5A44\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B5A34\n\t"
-        "	adds r0, r7, r5\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl ItemIsMail\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B5A90\n\t"
-        "_081B5A34:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	cmp r5, r0\n\t"
-        "	blo _081B5A08\n\t"
-        "	b _081B5A84\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5A44: .4byte gPlayerParty\n\t"
-        "_081B5A48:\n\t"
-        "	movs r5, #0\n\t"
-        "	b _081B5A7E\n\t"
-        "_081B5A4C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081B5A8C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B5A78\n\t"
-        "	adds r0, r5, r7\n\t"
-        "	ldrb r4, [r0, #6]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl ItemIsMail\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B5A90\n\t"
-        "_081B5A78:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "_081B5A7E:\n\t"
-        "	ldrb r0, [r6, #1]\n\t"
-        "	cmp r5, r0\n\t"
-        "	blo _081B5A4C\n\t"
-        "_081B5A84:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5A8C: .4byte gEnemyParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u16 item;
+
+    switch (whichParty)
+    {
+    case TRADE_PLAYER:
+        for (i = 0; i < partyCounts[TRADE_PLAYER]; i++)
+        {
+            item = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+            if (item != ITEM_NONE)
+                CreateHeldItemSpriteForTrade(partySpriteIds[i], ItemIsMail(item));
+        }
+        break;
+    case TRADE_PARTNER:
+        for (i = 0; i < partyCounts[TRADE_PARTNER]; i++)
+        {
+            item = GetMonData(&gEnemyParty[i], MON_DATA_HELD_ITEM);
+            if (item != ITEM_NONE)
+                CreateHeldItemSpriteForTrade(partySpriteIds[i + PARTY_SIZE], ItemIsMail(item));
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_081B5A90(void)
+static void CreateHeldItemSpriteForTrade(u8 spriteId, bool8 isMail)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, _081B5B08\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r6, #4\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	ldr r0, _081B5B0C\n\t"
-        "	subs r3, #1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r1, #0xfa\n\t"
-        "	movs r2, #0xaa\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r5, r4, r0\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	add r8, r0\n\t"
-        "	add r4, r8\n\t"
-        "	ldr r0, _081B5B10\n\t"
-        "	str r0, [r4]\n\t"
-        "	strh r6, [r5, #0x3c]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, sb\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5B08: .4byte gSprites\n\t"
-        "_081B5B0C: .4byte gUnknown_85E1778\n\t"
-        "_081B5B10: .4byte SpriteCB_HeldItem + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 subpriority = gSprites[spriteId].subpriority;
+    u8 newSpriteId = CreateSprite(&sSpriteTemplate_HeldItem, 250, 170, subpriority - 1);
+
+    gSprites[newSpriteId].x2 = 4;
+    gSprites[newSpriteId].y2 = 10;
+    gSprites[newSpriteId].callback = SpriteCB_HeldItem;
+    gSprites[newSpriteId].data[7] = spriteId;
+    StartSpriteAnim(&gSprites[newSpriteId], isMail);
+    gSprites[newSpriteId].callback(&gSprites[newSpriteId]);
 }
 
-__attribute__((naked)) void SpriteCB_HeldItem(struct Sprite *sprite)
+static void SpriteCB_HeldItem(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _081B5B44\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r0, r2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081B5B48\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _081B5B66\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5B44: .4byte gSprites\n\t"
-        "_081B5B48:\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	ldrh r0, [r2, #0x24]\n\t"
-        "	ldrh r1, [r2, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r0, [r2, #0x26]\n\t"
-        "	ldrh r2, [r2, #0x22]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "_081B5B66:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 otherSpriteId = sprite->data[7];
+
+    if (gSprites[otherSpriteId].invisible)
+    {
+        sprite->invisible = TRUE;
+    }
+    else
+    {
+        sprite->invisible = FALSE;
+        sprite->x = gSprites[otherSpriteId].x + gSprites[otherSpriteId].x2;
+        sprite->y = gSprites[otherSpriteId].y + gSprites[otherSpriteId].y2;
+    }
 }
 
 __attribute__((naked)) void CreatePartyMonPokeballSprite(void)
@@ -7415,7 +6959,7 @@ __attribute__((naked)) void sub_081B71F8(void)
         "	adds r0, r4, r0\n\t"
         "	ldrb r0, [r0, #9]\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl sub_081B57D8\n\t"
+        "	bl UpdatePartyMonHPBar\n\t"
         "	adds r0, r7, #0\n\t"
         "	movs r1, #1\n\t"
         "	bl AnimatePartySlot\n\t"
