@@ -33,6 +33,24 @@ void Task_PrintAndWaitForText(void);
 __attribute__((naked)) void Task_FieldMoveWaitForFade(u8 taskId);
 static void MoveCursorToConfirm(void);
 u8 GetMaxBattleEntries(void);
+__attribute__((naked)) void HandleMenuInput(u8 a);
+
+enum {
+    ACTIONS_NONE,
+    ACTIONS_SWITCH,
+    ACTIONS_SHIFT,
+    ACTIONS_SEND_OUT,
+    ACTIONS_ENTER,
+    ACTIONS_NO_ENTRY,
+    ACTIONS_STORE,
+    ACTIONS_SUMMARY_ONLY,
+    ACTIONS_ITEM,
+    ACTIONS_MAIL,
+    ACTIONS_REGISTER,
+    ACTIONS_TRADE,
+    ACTIONS_SPIN_TRADE,
+    ACTIONS_TAKEITEM_TOSS,
+};
 
 struct PartyMenuInternal
 {
@@ -6429,7 +6447,7 @@ __attribute__((naked)) void sub_081B2DD0(void)
     );
 }
 
-__attribute__((naked)) void sub_081B2E34(void)
+__attribute__((naked)) void DisplaySelectionWindow(u8 which)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6715,7 +6733,7 @@ static void RemoveLevelUpStatsWindow(void)
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
 }
 
-__attribute__((naked)) void sub_081B3054(void)
+__attribute__((naked)) void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 action)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7062,9 +7080,9 @@ __attribute__((naked)) void sub_081B32A8(void)
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r7, #0\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl sub_081B3054\n\t"
+        "	bl SetPartyMonSelectionActions\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_081B2E34\n\t"
+        "	bl DisplaySelectionWindow\n\t"
         "	movs r0, #0x15\n\t"
         "	bl DisplayPartyMenuStdMessage\n\t"
         "	b _081B338A\n\t"
@@ -7114,9 +7132,9 @@ __attribute__((naked)) void sub_081B32A8(void)
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r7, #0\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl sub_081B3054\n\t"
+        "	bl SetPartyMonSelectionActions\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_081B2E34\n\t"
+        "	bl DisplaySelectionWindow\n\t"
         "	ldr r1, _081B3398\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl CopyItemName\n\t"
@@ -8439,53 +8457,18 @@ static void CursorCb_Cancel1(u8 taskId)
 }
 
 
-__attribute__((naked)) void CursorCb_Item(u8 taskId)
+static void CursorCb_Item(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _081B3E24\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, _081B3E28\n\t"
-        "	ldr r1, _081B3E2C\n\t"
-        "	ldrb r1, [r1, #9]\n\t"
-        "	movs r2, #8\n\t"
-        "	bl sub_081B3054\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_081B2E34\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r1, _081B3E30\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xff\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	ldr r1, _081B3E34\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3E24: .4byte sPartyMenuInternal\n\t"
-        "_081B3E28: .4byte gPlayerParty\n\t"
-        "_081B3E2C: .4byte gPartyMenu\n\t"
-        "_081B3E30: .4byte gTasks\n\t"
-        "_081B3E34: .4byte HandleMenuInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, ACTIONS_ITEM);
+    DisplaySelectionWindow(SELECTWINDOW_ITEM);
+    DisplayPartyMenuStdMessage(PARTY_MSG_DO_WHAT_WITH_ITEM);
+    gTasks[taskId].data[0] = 0xFF;
+    gTasks[taskId].func = HandleMenuInput;
 }
+
 
 __attribute__((naked)) void CursorCb_Summary(u8 taskId)
 {
@@ -9591,9 +9574,9 @@ __attribute__((naked)) void CursorCb_Mail(u8 taskId)
         "	ldr r1, _081B4700\n\t"
         "	ldrb r1, [r1, #9]\n\t"
         "	movs r2, #9\n\t"
-        "	bl sub_081B3054\n\t"
+        "	bl SetPartyMonSelectionActions\n\t"
         "	movs r0, #2\n\t"
-        "	bl sub_081B2E34\n\t"
+        "	bl DisplaySelectionWindow\n\t"
         "	movs r0, #0x19\n\t"
         "	bl DisplayPartyMenuStdMessage\n\t"
         "	ldr r1, _081B4704\n\t"
@@ -10057,14 +10040,14 @@ __attribute__((naked)) void CursorCb_Cancel2(u8 taskId)
         "	lsrs r2, r2, #0x18\n\t"
         "	adds r0, r6, #0\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl sub_081B3054\n\t"
+        "	bl SetPartyMonSelectionActions\n\t"
         "	ldrb r1, [r5, #8]\n\t"
         "	movs r0, #0xf\n\t"
         "	ands r0, r1\n\t"
         "	cmp r0, #0xc\n\t"
         "	beq _081B4A84\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_081B2E34\n\t"
+        "	bl DisplaySelectionWindow\n\t"
         "	movs r0, #0x15\n\t"
         "	bl DisplayPartyMenuStdMessage\n\t"
         "	b _081B4AA2\n\t"
@@ -10074,7 +10057,7 @@ __attribute__((naked)) void CursorCb_Cancel2(u8 taskId)
         "_081B4A80: .4byte sPartyMenuInternal\n\t"
         "_081B4A84:\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_081B2E34\n\t"
+        "	bl DisplaySelectionWindow\n\t"
         "	adds r0, r7, #0\n\t"
         "	movs r1, #0xc\n\t"
         "	bl GetMonData3\n\t"
@@ -13196,7 +13179,7 @@ __attribute__((naked)) void sub_081B66B0(void)
         "	movs r1, #1\n\t"
         "	mov r8, r1\n\t"
         "	movs r0, #3\n\t"
-        "	bl sub_081B2E34\n\t"
+        "	bl DisplaySelectionWindow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	mov sb, r0\n\t"

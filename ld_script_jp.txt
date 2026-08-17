@@ -8635,12 +8635,12 @@ SECTIONS {
         src/party_menu.o(.text.PartyMenuRemoveWindow);
         src/party_menu.o(.text.DisplayPartyMenuStdMessage);
         src/party_menu.o(.text.sub_081B2DD0);
-        src/party_menu.o(.text.sub_081B2E34);
+        src/party_menu.o(.text.DisplaySelectionWindow);
         src/party_menu.o(.text.sub_081B2F90);
         src/party_menu.o(.text.sub_081B2FDC);
         src/party_menu.o(.text.sub_081B3004);
         src/party_menu.o(.text.RemoveLevelUpStatsWindow);
-        src/party_menu.o(.text.sub_081B3054);
+        src/party_menu.o(.text.SetPartyMonSelectionActions);
         src/party_menu.o(.text.CreateActionList);
         src/party_menu.o(.text.sub_081B31DC);
         src/party_menu.o(.text.sub_081B32A8);
