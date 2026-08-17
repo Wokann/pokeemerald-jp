@@ -3,6 +3,10 @@
 #include "constants/metatile_labels.h"
 #include "fieldmap.h"
 #include "task.h"
+extern void StartSecretBaseCaveFieldEffect(void);
+extern void StartSecretBaseShrubFieldEffect(void);
+extern void StartSecretBaseTreeFieldEffect(void);
+
 #define tMetatileID data[0]
 #define tX data[0]
 #define tY data[1]
@@ -742,31 +746,14 @@ __attribute__((naked)) void FieldCallback_SecretBaseCave(void)
     );
 }
 
-__attribute__((naked)) bool8 FldEff_UseSecretPowerCave()
+bool8 FldEff_UseSecretPowerCave(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl CreateFieldMoveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080FA990\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _080FA994\n\t"
-        "	lsrs r0, r2, #0x10\n\t"
-        "	strh r0, [r1, #0x18]\n\t"
-        "	strh r2, [r1, #0x1a]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA990: .4byte gTasks\n\t"
-        "_080FA994: .4byte StartSecretBaseCaveFieldEffect + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateFieldMoveTask();
+
+    gTasks[taskId].data[8] = (u32)StartSecretBaseCaveFieldEffect >> 16;
+    gTasks[taskId].data[9] = (u32)StartSecretBaseCaveFieldEffect;
+
+    return FALSE;
 }
 
 __attribute__((naked)) void StartSecretBaseCaveFieldEffect(void)
@@ -916,31 +903,14 @@ __attribute__((naked)) void FieldCallback_SecretBaseShrub(void)
     );
 }
 
-__attribute__((naked)) bool8 FldEff_UseSecretPowerShrub()
+bool8 FldEff_UseSecretPowerShrub(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl CreateFieldMoveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080FAA9C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _080FAAA0\n\t"
-        "	lsrs r0, r2, #0x10\n\t"
-        "	strh r0, [r1, #0x18]\n\t"
-        "	strh r2, [r1, #0x1a]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAA9C: .4byte gTasks\n\t"
-        "_080FAAA0: .4byte StartSecretBaseTreeFieldEffect + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateFieldMoveTask();
+
+    gTasks[taskId].data[8] = (u32)StartSecretBaseTreeFieldEffect >> 16;
+    gTasks[taskId].data[9] = (u32)StartSecretBaseTreeFieldEffect;
+
+    return FALSE;
 }
 
 __attribute__((naked)) void StartSecretBaseTreeFieldEffect(void)
@@ -1132,31 +1102,14 @@ __attribute__((naked)) void FieldCallback_SecretBaseTree(void)
     );
 }
 
-__attribute__((naked)) bool8 FldEff_UseSecretPowerTree()
+bool8 FldEff_UseSecretPowerTree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl CreateFieldMoveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080FAC00\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _080FAC04\n\t"
-        "	lsrs r0, r2, #0x10\n\t"
-        "	strh r0, [r1, #0x18]\n\t"
-        "	strh r2, [r1, #0x1a]\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAC00: .4byte gTasks\n\t"
-        "_080FAC04: .4byte StartSecretBaseShrubFieldEffect + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateFieldMoveTask();
+
+    gTasks[taskId].data[8] = (u32)StartSecretBaseShrubFieldEffect >> 16;
+    gTasks[taskId].data[9] = (u32)StartSecretBaseShrubFieldEffect;
+
+    return FALSE;
 }
 
 __attribute__((naked)) void StartSecretBaseShrubFieldEffect(void)
