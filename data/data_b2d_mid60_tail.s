@@ -23,12 +23,12 @@ gUnknown_856A22C: @ 0x856A22C
 gUnknown_856A270: @ 0x856A270
 	.incbin "baserom_jp.gba", 0x56a270, 0x1d8
 
-	.globl gUnknown_856A448
-gUnknown_856A448: @ 0x856A448
+	.globl sSpritePalette_RecordMixLights
+sSpritePalette_RecordMixLights: @ 0x856A448
 	.incbin "baserom_jp.gba", 0x56a448, 0x1c
 
-	.globl gUnknown_856A464
-gUnknown_856A464: @ 0x856A464
+	.globl sSpriteTemplate_RecordMixLights
+sSpriteTemplate_RecordMixLights: @ 0x856A464
 	.incbin "baserom_jp.gba", 0x56a464, 0x18
 
 	.globl sTruckCamera_HorizontalTable

@@ -60,6 +60,9 @@ extern void ShrubEntranceSpriteCallbackEnd(struct Sprite *sprite);
 extern void TreeEntranceSpriteCallback1(struct Sprite *sprite);
 extern void TreeEntranceSpriteCallback2(struct Sprite *sprite);
 extern void TreeEntranceSpriteCallbackEnd(struct Sprite *sprite);
+static void SpriteCB_SandPillar_BreakTop(struct Sprite *sprite);
+static void SpriteCB_SandPillar_BreakBase(struct Sprite *sprite);
+static void SpriteCB_SandPillar_End(struct Sprite *sprite);
 extern void FieldCallback_SecretBaseCave(void);
 extern void FieldCallback_SecretBaseTree(void);
 extern void FieldCallback_SecretBaseShrub(void);
@@ -958,263 +961,92 @@ void DoSecretBaseGlitterMatSparkle(void)
 }
 
 
-__attribute__((naked)) bool8 FldEff_SandPillar()
+extern const struct SpriteTemplate gUnknown_856A270;
+
+bool8 FldEff_SandPillar(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetXYCoordsOneStepInFrontOfPlayer\n\t"
-        "	ldr r1, _080FB328\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	str r0, [r1, #0x18]\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080FB36C\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _080FB32C\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080FB336\n\t"
-        "	b _080FB3FC\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB328: .4byte gFieldEffectArguments\n\t"
-        "_080FB32C:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080FB39C\n\t"
-        "	cmp r0, #4\n\t"
-        "	beq _080FB3D4\n\t"
-        "	b _080FB3FC\n\t"
-        "_080FB336:\n\t"
-        "	ldr r0, _080FB360\n\t"
-        "	ldr r3, _080FB364\n\t"
-        "	ldr r1, _080FB368\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r1, [r2, #2]\n\t"
-        "	lsls r1, r1, #0x17\n\t"
-        "	lsrs r1, r1, #7\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #0xc\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	adds r2, #0x20\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	b _080FB3FC\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB360: .4byte gUnknown_856A270\n\t"
-        "_080FB364: .4byte gSprites\n\t"
-        "_080FB368: .4byte gPlayerAvatar\n\t"
-        "_080FB36C:\n\t"
-        "	ldr r0, _080FB390\n\t"
-        "	ldr r3, _080FB394\n\t"
-        "	ldr r1, _080FB398\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r1, [r2, #2]\n\t"
-        "	lsls r1, r1, #0x17\n\t"
-        "	lsrs r1, r1, #7\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #0xc\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	b _080FB3BC\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB390: .4byte gUnknown_856A270\n\t"
-        "_080FB394: .4byte gSprites\n\t"
-        "_080FB398: .4byte gPlayerAvatar\n\t"
-        "_080FB39C:\n\t"
-        "	ldr r0, _080FB3C4\n\t"
-        "	ldr r3, _080FB3C8\n\t"
-        "	ldr r1, _080FB3CC\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r1, [r2, #2]\n\t"
-        "	lsls r1, r1, #0x17\n\t"
-        "	lsrs r1, r1, #7\n\t"
-        "	ldr r3, _080FB3D0\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	adds r2, #0x10\n\t"
-        "_080FB3BC:\n\t"
-        "	movs r3, #0x94\n\t"
-        "	bl CreateSprite\n\t"
-        "	b _080FB3FC\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB3C4: .4byte gUnknown_856A270\n\t"
-        "_080FB3C8: .4byte gSprites\n\t"
-        "_080FB3CC: .4byte gPlayerAvatar\n\t"
-        "_080FB3D0: .4byte 0xFFF80000\n\t"
-        "_080FB3D4:\n\t"
-        "	ldr r0, _080FB408\n\t"
-        "	ldr r3, _080FB40C\n\t"
-        "	ldr r1, _080FB410\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r1, [r2, #2]\n\t"
-        "	lsls r1, r1, #0x17\n\t"
-        "	lsrs r1, r1, #7\n\t"
-        "	movs r3, #0xc0\n\t"
-        "	lsls r3, r3, #0xd\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	adds r2, #0x10\n\t"
-        "	movs r3, #0x94\n\t"
-        "	bl CreateSprite\n\t"
-        "_080FB3FC:\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB408: .4byte gUnknown_856A270\n\t"
-        "_080FB40C: .4byte gSprites\n\t"
-        "_080FB410: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x, y;
+
+    LockPlayerFieldControls();
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+
+    gFieldEffectArguments[5] = x;
+    gFieldEffectArguments[6] = y;
+
+    switch (GetPlayerFacingDirection())
+    {
+    case DIR_SOUTH:
+        CreateSprite(&gUnknown_856A270,
+                     gSprites[gPlayerAvatar.spriteId].oam.x + 8,
+                     gSprites[gPlayerAvatar.spriteId].oam.y + 32,
+                     0);
+
+        break;
+
+    case DIR_NORTH:
+        CreateSprite(&gUnknown_856A270,
+                     gSprites[gPlayerAvatar.spriteId].oam.x + 8,
+                     gSprites[gPlayerAvatar.spriteId].oam.y,
+                     148);
+
+        break;
+
+    case DIR_WEST:
+        CreateSprite(&gUnknown_856A270,
+                     gSprites[gPlayerAvatar.spriteId].oam.x - 8,
+                     gSprites[gPlayerAvatar.spriteId].oam.y + 16,
+                     148);
+
+        break;
+
+    case DIR_EAST:
+        CreateSprite(&gUnknown_856A270,
+                     gSprites[gPlayerAvatar.spriteId].oam.x + 24,
+                     gSprites[gPlayerAvatar.spriteId].oam.y + 16,
+                     148);
+
+        break;
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void SpriteCB_SandPillar_0(void)
+static void SpriteCB_SandPillar_BreakTop(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x83\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _080FB440\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldr r1, [r4, #0x18]\n\t"
-        "	subs r1, #1\n\t"
-        "	bl MapGridGetMetatileIdAt\n\t"
-        "	ldr r1, _080FB444\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080FB44C\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldr r1, [r4, #0x18]\n\t"
-        "	subs r1, #1\n\t"
-        "	ldr r2, _080FB448\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	b _080FB45A\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB440: .4byte gFieldEffectArguments\n\t"
-        "_080FB444: .4byte 0x00000286\n\t"
-        "_080FB448: .4byte 0x00000E02\n\t"
-        "_080FB44C:\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldr r1, [r4, #0x18]\n\t"
-        "	subs r1, #1\n\t"
-        "	movs r2, #0xa1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "_080FB45A:\n\t"
-        "	ldr r4, _080FB488\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldr r1, [r4, #0x18]\n\t"
-        "	ldr r2, _080FB48C\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldr r1, [r4, #0x18]\n\t"
-        "	subs r1, #1\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldr r1, [r4, #0x18]\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	ldr r0, _080FB490\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB488: .4byte gFieldEffectArguments\n\t"
-        "_080FB48C: .4byte SPECIAL_sub_08139C4C\n\t"
-        "_080FB490: .4byte SpriteCB_SandPillar_1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_M_ROCK_THROW);
+
+    if (MapGridGetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1) == METATILE_SecretBase_SandOrnament_TopWall)
+        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1, METATILE_SecretBase_Wall_TopMid | MAPGRID_IMPASSABLE);
+    else
+        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1, METATILE_SecretBase_SandOrnament_BrokenTop);
+
+    MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6], METATILE_SecretBase_Ground);
+    CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6] - 1);
+    CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6]);
+
+    sprite->data[0] = 0;
+    sprite->callback = SpriteCB_SandPillar_BreakBase;
 }
 
-__attribute__((naked)) void SpriteCB_SandPillar_1(void)
+static void SpriteCB_SandPillar_BreakBase(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r1, [r5, #0x2e]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0x11\n\t"
-        "	bgt _080FB4A8\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	b _080FB4C4\n\t"
-        "_080FB4A8:\n\t"
-        "	ldr r4, _080FB4CC\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldr r1, [r4, #0x18]\n\t"
-        "	ldr r2, _080FB4D0\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	ldr r0, [r4, #0x14]\n\t"
-        "	ldr r1, [r4, #0x18]\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	ldr r0, _080FB4D4\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "_080FB4C4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB4CC: .4byte gFieldEffectArguments\n\t"
-        "_080FB4D0: .4byte 0x00000E8C\n\t"
-        "_080FB4D4: .4byte SpriteCB_SandPillar_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[0] < 18)
+    {
+        sprite->data[0]++;
+    }
+    else
+    {
+        MapGridSetMetatileIdAt(gFieldEffectArguments[5], gFieldEffectArguments[6], METATILE_SecretBase_SandOrnament_BrokenBase | MAPGRID_IMPASSABLE);
+        CurrentMapDrawMetatileAt(gFieldEffectArguments[5], gFieldEffectArguments[6]);
+        sprite->data[0] = 0;
+        sprite->callback = SpriteCB_SandPillar_End;
+    }
 }
 
-__attribute__((naked)) void SpriteCB_SandPillar_2(void)
+static void SpriteCB_SandPillar_End(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0x34\n\t"
-        "	bl FieldEffectStop\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldEffectStop(sprite, FLDEFF_SAND_PILLAR);
+    ScriptContext_Enable();
 }
 
 void GetShieldToyTVDecorationInfo(void)
@@ -1382,95 +1214,42 @@ void DoWateringBerryTreeAnim(void)
     CreateTask(Task_WateringBerryTreeAnim_0, 80);
 }
 
-__attribute__((naked)) void CreateRecordMixingSprite(void)
+extern const struct SpritePalette sSpritePalette_RecordMixLights;
+extern const struct SpriteTemplate sSpriteTemplate_RecordMixLights;
+
+u8 CreateRecordMixingLights(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _080FB8D0\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	ldr r0, _080FB8D4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x52\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0x40\n\t"
-        "	beq _080FB8DC\n\t"
-        "	lsls r0, r5, #4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080FB8D8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x20\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x22\n\t"
-        "	movs r0, #0x10\n\t"
-        "	movs r1, #0xd\n\t"
-        "	bl GetMapCoordsFromSpritePos\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	adds r0, #0x10\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	b _080FB8DE\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB8D0: .4byte gUnknown_856A448\n\t"
-        "_080FB8D4: .4byte gUnknown_856A464\n\t"
-        "_080FB8D8: .4byte gSprites\n\t"
-        "_080FB8DC:\n\t"
-        "	movs r0, #0x40\n\t"
-        "_080FB8DE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    LoadSpritePalette(&sSpritePalette_RecordMixLights);
+
+    spriteId = CreateSprite(&sSpriteTemplate_RecordMixLights, 0, 0, 82);
+
+    if (spriteId == MAX_SPRITES)
+    {
+        return MAX_SPRITES;
+    }
+    else
+    {
+        struct Sprite *sprite = &gSprites[spriteId];
+        GetMapCoordsFromSpritePos(16, 13, &sprite->x, &sprite->y);
+        sprite->coordOffsetEnabled = TRUE;
+        sprite->x += 16;
+        sprite->y += 2;
+    }
+    return spriteId;
 }
 
-__attribute__((naked)) void DestroyRecordMixingSprite(void)
+void DestroyRecordMixingLights(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r4, _080FB918\n\t"
-        "	adds r7, r4, #0\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r5, #0x3f\n\t"
-        "_080FB8EE:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r0, #0x14\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080FB91C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080FB908\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FreeSpritePalette\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_080FB908:\n\t"
-        "	adds r4, #0x44\n\t"
-        "	adds r6, #0x44\n\t"
-        "	subs r5, #1\n\t"
-        "	cmp r5, #0\n\t"
-        "	bge _080FB8EE\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB918: .4byte gSprites\n\t"
-        "_080FB91C: .4byte gUnknown_856A464\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        if (gSprites[i].template == &sSpriteTemplate_RecordMixLights)
+        {
+            FreeSpritePalette(&gSprites[i]);
+            DestroySprite(&gSprites[i]);
+        }
+    }
 }
