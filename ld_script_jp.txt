@@ -3230,12 +3230,12 @@ SECTIONS {
         src/trade.o(.text.CB_ShowTradeMonSummaryScreen);
         src/trade.o(.text.CheckValidityOfTradeMons);
         src/trade.o(.text.CheckMonsBeforeTrade);
-        src/trade.o(.text.sub_08078C20);
-        src/trade.o(.text.sub_08078CA4);
-        src/trade.o(.text.sub_08078CEC);
-        src/trade.o(.text.sub_08078D64);
-        src/trade.o(.text.sub_08078DA0);
-        src/trade.o(.text.Wait2SecondsAndCreateYesNoMenu);
+        src/trade.o(.text.CB_ProcessConfirmTradeInput);
+        src/trade.o(.text.RestoreNicknamesCoveredByYesNo);
+        src/trade.o(.text.CB_ProcessCancelTradeInput);
+        src/trade.o(.text.CB_SetSelectedMons);
+        src/trade.o(.text.CB_PrintIsThisTradeOkay);
+        src/trade.o(.text.CB_InitConfirmTradePrompt);
         src/trade.o(.text.sub_08078E1C);
         src/trade.o(.text.sub_08078EA4);
         src/trade.o(.text.sub_08078EE0);

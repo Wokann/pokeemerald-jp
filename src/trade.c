@@ -162,6 +162,9 @@ enum {
 #define QUEUE_DELAY_MSG   3
 #define QUEUE_DELAY_DATA  5
 
+// Checked to confirm DrawSelectedMonScreen has reached final state
+#define DRAW_SELECTED_FINISH 5
+
 enum {
     CURSOR_ANIM_NORMAL,
     CURSOR_ANIM_ON_CANCEL,
@@ -1564,293 +1567,91 @@ static bool32 CheckMonsBeforeTrade(void)
     return FALSE;
 }
 
-__attribute__((naked)) void sub_08078C20(void)
+static void CB_ProcessConfirmTradeInput(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08078C42\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _08078C3C\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08078C70\n\t"
-        "	b _08078C98\n\t"
-        "_08078C3C:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _08078C70\n\t"
-        "	b _08078C98\n\t"
-        "_08078C42:\n\t"
-        "	bl CheckMonsBeforeTrade\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078C58\n\t"
-        "	ldr r0, _08078C54\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0x64\n\t"
-        "	b _08078C60\n\t"
-        "	.align 2, 0\n\t"
-        "_08078C54: .4byte sTradeMenu\n\t"
-        "_08078C58:\n\t"
-        "	ldr r0, _08078C6C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0x11\n\t"
-        "_08078C60:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	b _08078C98\n\t"
-        "	.align 2, 0\n\t"
-        "_08078C6C: .4byte sTradeMenu\n\t"
-        "_08078C70:\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_08079A80\n\t"
-        "	bl IsLinkTradeTaskFinished\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078C88\n\t"
-        "	ldr r0, _08078C9C\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetLinkData\n\t"
-        "_08078C88:\n\t"
-        "	ldr r0, _08078CA0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0x64\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "_08078C98:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078C9C: .4byte 0x0000BBCC\n\t"
-        "_08078CA0: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0: // YES, Confirm selection
+        if (!CheckMonsBeforeTrade())
+            sTradeMenu->callbackId = CB_IDLE;
+        else
+            sTradeMenu->callbackId = CB_PARTNER_MON_INVALID;
+
+        PutWindowTilemap(17);
+        break;
+    case 1: // NO, Cancel Trade
+    case MENU_B_PRESSED:
+        sub_08079A80(QUEUE_DELAY_MSG, QUEUE_STANDBY);
+        if (IsLinkTradeTaskFinished())
+            SetLinkData(LINKCMD_READY_CANCEL_TRADE, 0);
+        sTradeMenu->callbackId = CB_IDLE;
+        PutWindowTilemap(17);
+        break;
+    }
 }
 
 
-__attribute__((naked)) void sub_08078CA4(void)
+// Only when choosing Yes to cancel, when No is chosen all are redrawn anyway
+static void RestoreNicknamesCoveredByYesNo(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, _08078CE8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x37\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #4\n\t"
-        "	cmp r5, r0\n\t"
-        "	bge _08078CE0\n\t"
-        "	movs r6, #0xc0\n\t"
-        "	lsls r6, r6, #0x14\n\t"
-        "_08078CBA:\n\t"
-        "	lsrs r4, r6, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r6, r6, r0\n\t"
-        "	adds r5, #1\n\t"
-        "	ldr r0, _08078CE8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x37\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #4\n\t"
-        "	cmp r5, r0\n\t"
-        "	blt _08078CBA\n\t"
-        "_08078CE0:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078CE8: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < sTradeMenu->partyCounts[1] - 4; i++)
+    {
+        PutWindowTilemap(i + PARTY_SIZE * 2);
+        CopyWindowToVram(i + PARTY_SIZE * 2, COPYWIN_MAP);
+    }
 }
 
-__attribute__((naked)) void sub_08078CEC(void)
+static void CB_ProcessCancelTradeInput(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08078D0E\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _08078D08\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08078D54\n\t"
-        "	b _08078D5E\n\t"
-        "_08078D08:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _08078D54\n\t"
-        "	b _08078D5E\n\t"
-        "_08078D0E:\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	ldr r0, _08078D48\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetLinkData\n\t"
-        "	ldr r2, _08078D4C\n\t"
-        "	ldr r3, _08078D50\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x34\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0x64\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl sub_08078CA4\n\t"
-        "	b _08078D5E\n\t"
-        "	.align 2, 0\n\t"
-        "_08078D48: .4byte 0x0000EEAA\n\t"
-        "_08078D4C: .4byte gSprites\n\t"
-        "_08078D50: .4byte sTradeMenu\n\t"
-        "_08078D54:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl RedrawChooseAPokemonWindow\n\t"
-        "_08078D5E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0: // YES, Cancel
+        sub_08079BD4(MSG_WAITING_FOR_FRIEND);
+        SetLinkData(LINKCMD_REQUEST_CANCEL, 0);
+        gSprites[sTradeMenu->cursorSpriteId].invisible = TRUE;
+        sTradeMenu->callbackId = CB_IDLE;
+        RestoreNicknamesCoveredByYesNo();
+        break;
+    case 1: // NO, Continue
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        RedrawChooseAPokemonWindow();
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_08078D64(void)
+static void CB_SetSelectedMons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078D8C\n\t"
-        "	movs r0, #0\n\t"
-        "	bl rbox_fill_rectangle\n\t"
-        "	ldr r4, _08078D9C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x35\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetSelectedMon\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x7e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetSelectedMon\n\t"
-        "_08078D8C:\n\t"
-        "	ldr r0, _08078D9C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #7\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078D9C: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMultiplayerId() == 0)
+    {
+        rbox_fill_rectangle(0);
+        SetSelectedMon(sTradeMenu->cursorPosition);
+        SetSelectedMon(sTradeMenu->partnerCursorPosition);
+    }
+    sTradeMenu->callbackId = CB_PRINT_IS_THIS_OKAY;
 }
 
-__attribute__((naked)) void sub_08078DA0(void)
+static void CB_PrintIsThisTradeOkay(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _08078DC4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x74\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _08078DC8\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08078DBC\n\t"
-        "	bl DrawTradeMonNicknames\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0xe\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078DBC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078DC4: .4byte sTradeMenu\n\t"
-        "_08078DC8: .4byte 0x00000505\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sTradeMenu->drawSelectedMonState[TRADE_PLAYER] == DRAW_SELECTED_FINISH
+     && sTradeMenu->drawSelectedMonState[TRADE_PARTNER] == DRAW_SELECTED_FINISH)
+    {
+        DrawTradeMonNicknames(); // JP shows the nickname matchup instead of the fixed US text
+        sTradeMenu->callbackId = CB_INIT_CONFIRM_TRADE_PROMPT;
+    }
 }
 
-__attribute__((naked)) void Wait2SecondsAndCreateYesNoMenu(void)
+static void CB_InitConfirmTradePrompt(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r4, _08078E14\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0xa8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xa8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x78\n\t"
-        "	bls _08078E0C\n\t"
-        "	ldr r0, _08078E18\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl CreateYesNoMenuAtPos\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xa8\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #3\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078E0C:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078E14: .4byte sTradeMenu\n\t"
-        "_08078E18: .4byte gUnknown_8300CAC\n\t"
-        ".syntax divided\n\t"
-    );
+    sTradeMenu->timer++;
+    if (sTradeMenu->timer > 120)
+    {
+        CreateYesNoMenuAtPos(&sTradeYesNoWindowTemplate, FONT_NORMAL, 2, 2, 1, 14, 0);
+        sTradeMenu->timer = 0;
+        sTradeMenu->callbackId = CB_CONFIRM_TRADE_PROMPT;
+    }
 }
 
 __attribute__((naked)) void sub_08078E1C(void)
@@ -2122,16 +1923,16 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	bl CB_ShowTradeMonSummaryScreen\n\t"
         "	b _0807908C\n\t"
         "_0807903A:\n\t"
-        "	bl sub_08078C20\n\t"
+        "	bl CB_ProcessConfirmTradeInput\n\t"
         "	b _0807908C\n\t"
         "_08079040:\n\t"
-        "	bl sub_08078CEC\n\t"
+        "	bl CB_ProcessCancelTradeInput\n\t"
         "	b _0807908C\n\t"
         "_08079046:\n\t"
-        "	bl sub_08078D64\n\t"
+        "	bl CB_SetSelectedMons\n\t"
         "	b _0807908C\n\t"
         "_0807904C:\n\t"
-        "	bl sub_08078DA0\n\t"
+        "	bl CB_PrintIsThisTradeOkay\n\t"
         "	b _0807908C\n\t"
         "_08079052:\n\t"
         "	bl sub_08078E1C\n\t"
@@ -2152,7 +1953,7 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	bl CB_StartLinkTrade\n\t"
         "	b _0807908C\n\t"
         "_08079076:\n\t"
-        "	bl Wait2SecondsAndCreateYesNoMenu\n\t"
+        "	bl CB_InitConfirmTradePrompt\n\t"
         "	b _0807908C\n\t"
         "_0807907C:\n\t"
         "	bl CB_ChooseMonAfterButtonPress\n\t"
