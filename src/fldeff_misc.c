@@ -4,6 +4,7 @@
 #include "constants/field_effects.h"
 #include "event_data.h"
 #include "fieldmap.h"
+#include "event_object_movement.h"
 #include "field_effect.h"
 #include "fldeff.h"
 #include "party_menu.h"
@@ -1364,123 +1365,37 @@ void PlaySecretBaseMusicNoteMatSound(s16 metatileId)
     gTasks[taskId].data[1] = 0;
 }
 
-__attribute__((naked)) void SpriteCB_GlitterMatSparkle(void)
+static void SpriteCB_GlitterMatSparkle(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #8\n\t"
-        "	bne _080FB22C\n\t"
-        "	movs r0, #0xc3\n\t"
-        "	bl PlaySE\n\t"
-        "_080FB22C:\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	ble _080FB23A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_080FB23A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0]++;
+
+    if (sprite->data[0] == 8)
+        PlaySE(SE_M_HEAL_BELL);
+
+    if (sprite->data[0] >= 32)
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void DoSecretBaseGlitterMatSparkle()
+
+void DoSecretBaseGlitterMatSparkle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r3, _080FB2D8\n\t"
-        "	ldr r2, _080FB2DC\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r1, [r0, #0x10]\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r0, [r0, #0x12]\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	strh r0, [r4]\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #4\n\t"
-        "	bl SetSpritePosToOffsetMapCoords\n\t"
-        "	ldr r0, _080FB2E0\n\t"
-        "	ldr r0, [r0, #0x58]\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSpriteAtEnd\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _080FB2CE\n\t"
-        "	ldr r3, _080FB2E4\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r4, r2, r3\n\t"
-        "	movs r0, #0x3e\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	mov ip, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	mov r1, ip\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x50\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "	adds r3, #0x1c\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldr r0, _080FB2E8\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_080FB2CE:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB2D8: .4byte gObjectEvents\n\t"
-        "_080FB2DC: .4byte gPlayerAvatar\n\t"
-        "_080FB2E0: .4byte gFieldEffectObjectTemplatePointers\n\t"
-        "_080FB2E4: .4byte gSprites\n\t"
-        "_080FB2E8: .4byte SpriteCB_GlitterMatSparkle + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x = gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.x;
+    s16 y = gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.y;
+    u8 spriteId;
+
+    SetSpritePosToOffsetMapCoords(&x, &y, 8, 4);
+
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_SPARKLE], x, y, 0);
+    if (spriteId != MAX_SPRITES)
+    {
+        gSprites[spriteId].coordOffsetEnabled = TRUE;
+        gSprites[spriteId].oam.priority = 1;
+        gSprites[spriteId].oam.paletteNum = 5;
+        gSprites[spriteId].callback = SpriteCB_GlitterMatSparkle;
+        gSprites[spriteId].data[0] = 0;
+    }
 }
+
 
 __attribute__((naked)) bool8 FldEff_SandPillar()
 {
