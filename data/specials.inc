@@ -176,7 +176,7 @@ gSpecials:
 	def_special ChooseStarter, waitstate=1
 	def_special StartWallyTutorialBattle, waitstate=1
 	def_special ChangePokemonNickname, waitstate=1
-	def_special sub_081B9150
+	def_special ChoosePartyMon
 	def_special sub_08136F64
 	def_special DoBerryBlending, waitstate=1
 	def_special PlayRoulette, waitstate=1

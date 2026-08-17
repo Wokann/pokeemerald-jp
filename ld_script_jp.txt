@@ -8869,8 +8869,8 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B90A4);
         src/party_menu.o(.text.Task_ChooseContestMon);
         src/party_menu.o(.text.sub_081B9110);
-        src/party_menu.o(.text.sub_081B9150);
-        src/party_menu.o(.text.sub_081B9170);
+        src/party_menu.o(.text.ChoosePartyMon);
+        src/party_menu.o(.text.Task_ChoosePartyMon);
         src/party_menu.o(.text.sub_081B91BC);
         src/party_menu.o(.text.sub_081B91DC);
         src/party_menu.o(.text.sub_081B9228);
