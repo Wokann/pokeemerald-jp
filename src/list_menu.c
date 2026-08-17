@@ -2,6 +2,7 @@
 #include "list_menu.h"
 #include "main.h"
 #include "menu.h"
+#include "palette.h"
 #include "constants/songs.h"
 #include "task.h"
 #include "text.h"
@@ -9,12 +10,23 @@
 #include "window.h"
 
 extern const struct SpriteTemplate sSpriteTemplate_ScrollArrowIndicator;
+extern const struct SpriteTemplate sSpriteTemplate_RedArrowCursor;
+extern const u32 gUnknown_85DFC30[];
+extern const u16 gUnknown_85DFB60[];
 extern const struct {
     u8 animNum:4;
     u8 bounceDir:4;
     u8 multiplier;
     u16 frequency;
 } sScrollIndicatorTemplates[];
+extern const struct Subsprite sSubsprite_RedOutline1;
+extern const struct Subsprite sSubsprite_RedOutline2;
+extern const struct Subsprite sSubsprite_RedOutline3;
+extern const struct Subsprite sSubsprite_RedOutline4;
+extern const struct Subsprite sSubsprite_RedOutline5;
+extern const struct Subsprite sSubsprite_RedOutline6;
+extern const struct Subsprite sSubsprite_RedOutline7;
+extern const struct Subsprite sSubsprite_RedOutline8;
 // Cursors after this point are created using a sprite with their own task.
 // This allows them to have idle animations. Cursors prior to this are simply printed text.
 #define CURSOR_OBJECT_START CURSOR_RED_OUTLINE
@@ -1539,139 +1551,63 @@ u8 ListMenuGetRedOutlineCursorSpriteCount(u16 rowWidth, u16 rowHeight)
     return count;
 }
 
-__attribute__((naked)) void ListMenuSetUpRedOutlineCursorSpriteOamTable(void)
+void ListMenuSetUpRedOutlineCursorSpriteOamTable(u16 rowWidth, u16 rowHeight, struct Subsprite *subsprites)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov sb, r1\n\t"
-        "	ldr r0, _081AF4E0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r3]\n\t"
-        "	movs r1, #0x88\n\t"
-        "	strb r1, [r3]\n\t"
-        "	strb r1, [r3, #1]\n\t"
-        "	ldr r0, _081AF4E4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r3, #4]\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r2, #0x80\n\t"
-        "	strb r2, [r3, #4]\n\t"
-        "	strb r1, [r3, #5]\n\t"
-        "	ldr r0, _081AF4E8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r3, #8]\n\t"
-        "	strb r1, [r3, #8]\n\t"
-        "	mov r4, sb\n\t"
-        "	adds r4, #0x80\n\t"
-        "	strb r4, [r3, #9]\n\t"
-        "	ldr r0, _081AF4EC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r3, #0xc]\n\t"
-        "	strb r2, [r3, #0xc]\n\t"
-        "	strb r4, [r3, #0xd]\n\t"
-        "	movs r0, #4\n\t"
-        "	mov ip, r0\n\t"
-        "	mov r2, r8\n\t"
-        "	cmp r2, #0x10\n\t"
-        "	bls _081AF490\n\t"
-        "	movs r2, #8\n\t"
-        "	mov r5, r8\n\t"
-        "	subs r5, #8\n\t"
-        "	cmp r2, r5\n\t"
-        "	bge _081AF490\n\t"
-        "	ldr r0, _081AF4F0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081AF4F4\n\t"
-        "	ldr r6, [r0]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r7, #0x88\n\t"
-        "	mov sl, r7\n\t"
-        "_081AF46E:\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	subs r0, #0x78\n\t"
-        "	strb r0, [r1]\n\t"
-        "	mov r7, sl\n\t"
-        "	strb r7, [r1, #1]\n\t"
-        "	adds r1, #4\n\t"
-        "	str r6, [r1]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	strb r4, [r1, #1]\n\t"
-        "	adds r1, #4\n\t"
-        "	movs r0, #2\n\t"
-        "	add ip, r0\n\t"
-        "	adds r2, #8\n\t"
-        "	cmp r2, r5\n\t"
-        "	blt _081AF46E\n\t"
-        "_081AF490:\n\t"
-        "	mov r2, sb\n\t"
-        "	cmp r2, #0x10\n\t"
-        "	bls _081AF4CE\n\t"
-        "	movs r1, #8\n\t"
-        "	mov r4, sb\n\t"
-        "	subs r4, #8\n\t"
-        "	cmp r1, r4\n\t"
-        "	bge _081AF4CE\n\t"
-        "	ldr r0, _081AF4F8\n\t"
-        "	ldr r6, [r0]\n\t"
-        "	ldr r0, _081AF4FC\n\t"
-        "	ldr r5, [r0]\n\t"
-        "	mov r7, ip\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r2, r0, r3\n\t"
-        "	movs r7, #0x88\n\t"
-        "	mov r3, r8\n\t"
-        "	adds r3, #0x80\n\t"
-        "_081AF4B4:\n\t"
-        "	str r6, [r2]\n\t"
-        "	strb r7, [r2]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	subs r0, #0x78\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	adds r2, #4\n\t"
-        "	str r5, [r2]\n\t"
-        "	strb r3, [r2]\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	adds r2, #4\n\t"
-        "	adds r1, #8\n\t"
-        "	cmp r1, r4\n\t"
-        "	blt _081AF4B4\n\t"
-        "_081AF4CE:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF4E0: .4byte gUnknown_85DFB14\n\t"
-        "_081AF4E4: .4byte gUnknown_85DFB18\n\t"
-        "_081AF4E8: .4byte gUnknown_85DFB2C\n\t"
-        "_081AF4EC: .4byte gUnknown_85DFB30\n\t"
-        "_081AF4F0: .4byte gUnknown_85DFB1C\n\t"
-        "_081AF4F4: .4byte gUnknown_85DFB28\n\t"
-        "_081AF4F8: .4byte gUnknown_85DFB20\n\t"
-        "_081AF4FC: .4byte gUnknown_85DFB24\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j, id = 0;
+
+    subsprites[id] = sSubsprite_RedOutline1;
+    subsprites[id].x = 136;
+    subsprites[id].y = 136;
+    id++;
+
+    subsprites[id] = sSubsprite_RedOutline2;
+    subsprites[id].x = rowWidth + 128;
+    subsprites[id].y = 136;
+    id++;
+
+    subsprites[id] = sSubsprite_RedOutline7;
+    subsprites[id].x = 136;
+    subsprites[id].y = rowHeight + 128;
+    id++;
+
+    subsprites[id] = sSubsprite_RedOutline8;
+    subsprites[id].x = rowWidth + 128;
+    subsprites[id].y = rowHeight + 128;
+    id++;
+
+    if (rowWidth > 16)
+    {
+        for (i = 8; i < rowWidth - 8; i += 8)
+        {
+            subsprites[id] = sSubsprite_RedOutline3;
+            subsprites[id].x = i - 120;
+            subsprites[id].y = -120;
+            id++;
+
+            subsprites[id] = sSubsprite_RedOutline6;
+            subsprites[id].x = i - 120;
+            subsprites[id].y = rowHeight + 128;
+            id++;
+        }
+    }
+
+    if (rowHeight > 16)
+    {
+        for (j = 8; j < rowHeight - 8; j += 8)
+        {
+            subsprites[id] = sSubsprite_RedOutline4;
+            subsprites[id].x = 136;
+            subsprites[id].y = j - 120;
+            id++;
+
+            subsprites[id] = sSubsprite_RedOutline5;
+            subsprites[id].x = rowWidth + 128;
+            subsprites[id].y = j - 120;
+            id++;
+        }
+    }
 }
+
 
 __attribute__((naked)) void ListMenuAddRedOutlineCursorObject(void)
 {
@@ -1871,141 +1807,59 @@ void ListMenuRemoveRedOutlineCursorObject(u8 taskId)
     DestroyTask(taskId);
 }
 
-static void SpriteCallback_RedArrowCursor(struct Sprite *sprite)
+void SpriteCallback_RedArrowCursor(struct Sprite *sprite)
 {
     sprite->x2 = gSineTable[(u8)(sprite->data[0])] / 64;
     sprite->data[0] += 8;
 }
 
 void ListMenuDummyTask(void) {}
-__attribute__((naked)) void ListMenuAddRedArrowCursorObject(void)
+u8 ListMenuAddRedArrowCursorObject(struct CursorStruct *cursor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x28\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _081AF77C\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	ldr r6, _081AF780\n\t"
-        "	add r0, sp, #0x18\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ands r1, r6\n\t"
-        "	movs r2, #0x80\n\t"
-        "	orrs r1, r2\n\t"
-        "	ldrh r2, [r5, #6]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	ldr r4, _081AF784\n\t"
-        "	ands r1, r4\n\t"
-        "	orrs r1, r2\n\t"
-        "	str r1, [r0, #4]\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldrh r2, [r5, #8]\n\t"
-        "	cmp r2, r4\n\t"
-        "	bne _081AF78C\n\t"
-        "	ldr r0, _081AF788\n\t"
-        "	ldrb r1, [r5, #0xa]\n\t"
-        "	lsls r1, r1, #0x14\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0x11\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _081AF79E\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF77C: .4byte gUnknown_85DFC30\n\t"
-        "_081AF780: .4byte 0xFFFF0000\n\t"
-        "_081AF784: .4byte 0x0000FFFF\n\t"
-        "_081AF788: .4byte gUnknown_85DFB60\n\t"
-        "_081AF78C:\n\t"
-        "	ldr r0, _081AF828\n\t"
-        "	str r0, [sp, #0x20]\n\t"
-        "	add r0, sp, #0x20\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ands r1, r6\n\t"
-        "	orrs r1, r2\n\t"
-        "	str r1, [r0, #4]\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "_081AF79E:\n\t"
-        "	ldr r0, _081AF82C\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081AF830\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	strh r0, [r4, #4]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _081AF834\n\t"
-        "	ldm r0!, {r2, r3, r7}\n\t"
-        "	stm r1!, {r2, r3, r7}\n\t"
-        "	ldm r0!, {r2, r3, r7}\n\t"
-        "	stm r1!, {r2, r3, r7}\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	ldrb r2, [r5, #1]\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r3, _081AF838\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r2, #8\n\t"
-        "	strh r2, [r0, #0x24]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r2, [r0, #0x26]\n\t"
-        "	ldrh r1, [r5, #8]\n\t"
-        "	ldr r0, _081AF83C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081AF81E\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r2, [r5, #0xa]\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	ldrb r3, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "_081AF81E:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	add sp, #0x28\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF828: .4byte gUnknown_85DFB60\n\t"
-        "_081AF82C: .4byte ListMenuDummyTask + 1\n\t"
-        "_081AF830: .4byte gUnknown_3005B68\n\t"
-        "_081AF834: .4byte gUnknown_85DFB48\n\t"
-        "_081AF838: .4byte gSprites\n\t"
-        "_081AF83C: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    struct CompressedSpriteSheet spriteSheet;
+    struct SpritePalette spritePal;
+    struct RedArrowCursor *data;
+    struct SpriteTemplate spriteTemplate;
+    u8 taskId;
+
+    spriteSheet.data = gUnknown_85DFC30;
+    spriteSheet.size = 0x80;
+    spriteSheet.tag = cursor->tileTag;
+    LoadCompressedSpriteSheet(&spriteSheet);
+
+    if (cursor->palTag == TAG_NONE)
+    {
+        LoadPalette(gUnknown_85DFB60, OBJ_PLTT_ID(cursor->palNum), PLTT_SIZE_4BPP);
+    }
+    else
+    {
+        spritePal.data = gUnknown_85DFB60;
+        spritePal.tag = cursor->palTag;
+        LoadSpritePalette(&spritePal);
+    }
+
+    taskId = CreateTask(ListMenuDummyTask, 0);
+    data = (void *) gTasks[taskId].data;
+
+    data->tileTag = cursor->tileTag;
+    data->palTag = cursor->palTag;
+
+    spriteTemplate = sSpriteTemplate_RedArrowCursor;
+    spriteTemplate.tileTag = cursor->tileTag;
+    spriteTemplate.paletteTag = cursor->palTag;
+
+    data->spriteId = CreateSprite(&spriteTemplate, cursor->left, cursor->top, 0);
+    gSprites[data->spriteId].x2 = 8;
+    gSprites[data->spriteId].y2 = 8;
+
+    if (cursor->palTag == TAG_NONE)
+    {
+        gSprites[data->spriteId].oam.paletteNum = cursor->palNum;
+    }
+
+    return taskId;
 }
+
 
 void ListMenuUpdateRedArrowCursorObject(u8 taskId, u16 x, u16 y)
 {

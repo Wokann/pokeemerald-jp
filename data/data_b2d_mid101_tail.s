@@ -9,42 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85DFB14
-gUnknown_85DFB14: @ 0x85DFB14
-	.incbin "baserom_jp.gba", 0x5dfb14, 0x4
-
-	.globl gUnknown_85DFB18
-gUnknown_85DFB18: @ 0x85DFB18
-	.incbin "baserom_jp.gba", 0x5dfb18, 0x4
-
-	.globl gUnknown_85DFB1C
-gUnknown_85DFB1C: @ 0x85DFB1C
-	.incbin "baserom_jp.gba", 0x5dfb1c, 0x4
-
-	.globl gUnknown_85DFB20
-gUnknown_85DFB20: @ 0x85DFB20
-	.incbin "baserom_jp.gba", 0x5dfb20, 0x4
-
-	.globl gUnknown_85DFB24
-gUnknown_85DFB24: @ 0x85DFB24
-	.incbin "baserom_jp.gba", 0x5dfb24, 0x4
-
-	.globl gUnknown_85DFB28
-gUnknown_85DFB28: @ 0x85DFB28
-	.incbin "baserom_jp.gba", 0x5dfb28, 0x4
-
-	.globl gUnknown_85DFB2C
-gUnknown_85DFB2C: @ 0x85DFB2C
-	.incbin "baserom_jp.gba", 0x5dfb2c, 0x4
-
-	.globl gUnknown_85DFB30
-gUnknown_85DFB30: @ 0x85DFB30
-	.incbin "baserom_jp.gba", 0x5dfb30, 0x18
-
-	.globl gUnknown_85DFB48
-gUnknown_85DFB48: @ 0x85DFB48
-	.incbin "baserom_jp.gba", 0x5dfb48, 0x18
-
 	.globl gUnknown_85DFB60
 gUnknown_85DFB60: @ 0x85DFB60
 	.incbin "baserom_jp.gba", 0x5dfb60, 0x20
