@@ -200,7 +200,10 @@ struct TradeAnim
     u8 filler_D8[4];
     s16 scrX;       // 0xDC
     s16 scrY;       // 0xDE
-    u8 filler_E0[8];
+    u16 bg1vofs;    // 0xE0
+    u16 bg1hofs;    // 0xE2
+    u16 bg2vofs;    // 0xE4
+    u16 bg2hofs;    // 0xE6
     s16 sXY;        // 0xE8
     u8 filler_EA[2];
     u16 alpha;      // 0xEC
@@ -3188,52 +3191,23 @@ static void SetTradeBGAffine(void)
     SetGpuReg(REG_OFFSET_BG2Y_L, (u16)affine.dy);
 }
 
-__attribute__((naked)) void sub_0807A628(void)
+static void SetTradeGpuRegs(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0807A670\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xe0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x16\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xe2\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetGpuReg\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	lsls r1, r1, #0xb\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0807A674\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xe4\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xe6\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _0807A678\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A670: .4byte gUnknown_2031F40\n\t"
-        "_0807A674:\n\t"
-        "	bl SetTradeBGAffine\n\t"
-        "_0807A678:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 dispcnt;
+
+    SetGpuReg(REG_OFFSET_BG1VOFS, (u16)gUnknown_2031F40->bg1vofs);
+    SetGpuReg(REG_OFFSET_BG1HOFS, (u16)gUnknown_2031F40->bg1hofs);
+
+    dispcnt = GetGpuReg(REG_OFFSET_DISPCNT);
+    if ((dispcnt & 7) == DISPCNT_MODE_0)
+    {
+        SetGpuReg(REG_OFFSET_BG2VOFS, (u16)gUnknown_2031F40->bg2vofs);
+        SetGpuReg(REG_OFFSET_BG2HOFS, (u16)gUnknown_2031F40->bg2hofs);
+    }
+    else
+    {
+        SetTradeBGAffine();
+    }
 }
 
 __attribute__((naked)) void sub_0807A680(void)
@@ -3241,7 +3215,7 @@ __attribute__((naked)) void sub_0807A680(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_0807A628\n\t"
+        "	bl SetTradeGpuRegs\n\t"
         "	bl LoadOam\n\t"
         "	bl ProcessSpriteCopyRequests\n\t"
         "	bl TransferPlttBuffer\n\t"
