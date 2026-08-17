@@ -2954,139 +2954,66 @@ static bool32 IsDeoxysOrMewUntradable(u16 species, bool8 isModernFatefulEncounte
     return FALSE;
 }
 
-__attribute__((naked)) void sub_0807A250(void)
+int GetUnionRoomTradeMessageId(struct RfuGameCompatibilityData player, struct RfuGameCompatibilityData partner, u16 playerSpecies2, u16 partnerSpecies, u8 requestedType, u16 playerSpecies, bool8 isModernFatefulEncounter)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	ldr r4, [sp, #0x20]\n\t"
-        "	ldr r5, [sp, #0x24]\n\t"
-        "	ldr r6, [sp, #0x28]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r7, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	mov r8, r3\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	lsls r2, r0, #0x17\n\t"
-        "	lsrs r2, r2, #0x1f\n\t"
-        "	mov sb, r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x1f\n\t"
-        "	lsls r0, r1, #0x17\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	mov sl, r0\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	lsls r1, r1, #0x12\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	cmp r1, #3\n\t"
-        "	beq _0807A2A2\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _0807A29A\n\t"
-        "	movs r0, #8\n\t"
-        "	b _0807A330\n\t"
-        "_0807A29A:\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A2A2\n\t"
-        "	movs r0, #9\n\t"
-        "	b _0807A330\n\t"
-        "_0807A2A2:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl IsDeoxysOrMewUntradable\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A308\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r8, r0\n\t"
-        "	bne _0807A2BE\n\t"
-        "	cmp r7, r8\n\t"
-        "	beq _0807A2DC\n\t"
-        "	movs r0, #2\n\t"
-        "	b _0807A330\n\t"
-        "_0807A2BE:\n\t"
-        "	ldr r0, _0807A2D8\n\t"
-        "	lsls r1, r7, #3\n\t"
-        "	subs r1, r1, r7\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1, #6]\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _0807A2DC\n\t"
-        "	ldrb r0, [r1, #7]\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _0807A2DC\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0807A330\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A2D8: .4byte gSpeciesInfo\n\t"
-        "_0807A2DC:\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r7, r0\n\t"
-        "	bne _0807A2EC\n\t"
-        "	cmp r7, r8\n\t"
-        "	beq _0807A2EC\n\t"
-        "	movs r0, #3\n\t"
-        "	b _0807A330\n\t"
-        "_0807A2EC:\n\t"
-        "	mov r0, sb\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A31A\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r7, r0\n\t"
-        "	bne _0807A2FE\n\t"
-        "	movs r0, #6\n\t"
-        "	b _0807A330\n\t"
-        "_0807A2FE:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl IsSpeciesInHoennDex\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A30C\n\t"
-        "_0807A308:\n\t"
-        "	movs r0, #4\n\t"
-        "	b _0807A330\n\t"
-        "_0807A30C:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl IsSpeciesInHoennDex\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A31A\n\t"
-        "	movs r0, #5\n\t"
-        "	b _0807A330\n\t"
-        "_0807A31A:\n\t"
-        "	mov r0, sl\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A32E\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl IsSpeciesInHoennDex\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A32E\n\t"
-        "	movs r0, #7\n\t"
-        "	b _0807A330\n\t"
-        "_0807A32E:\n\t"
-        "	movs r0, #0\n\t"
-        "_0807A330:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 playerHasNationalDex = player.hasNationalDex;
+    bool8 playerCanLinkNationally = player.canLinkNationally;
+    bool8 partnerHasNationalDex = partner.hasNationalDex;
+    bool8 partnerCanLinkNationally = partner.canLinkNationally;
+    u8 partnerVersion = partner.version;
+
+    // If partner is not using Emerald, both players must have progressed the story
+    // to a certain point (becoming champion in RSE, finishing the Sevii islands in FRLG)
+    if (partnerVersion != VERSION_EMERALD)
+    {
+        if (!playerCanLinkNationally)
+            return UR_TRADE_MSG_CANT_TRADE_WITH_PARTNER_1;
+        else if (!partnerCanLinkNationally)
+            return UR_TRADE_MSG_CANT_TRADE_WITH_PARTNER_2;
+    }
+
+    // Cannot trade illegitimate Deoxys/Mew
+    if (IsDeoxysOrMewUntradable(playerSpecies, isModernFatefulEncounter))
+        return UR_TRADE_MSG_MON_CANT_BE_TRADED_2;
+
+    if (partnerSpecies == SPECIES_EGG)
+    {
+        // If partner is trading an Egg then the player must also be trading an Egg
+        if (playerSpecies2 != partnerSpecies)
+            return UR_TRADE_MSG_NOT_EGG;
+    }
+    else
+    {
+        // Player's Pokémon must be of the type the partner requested
+        if (gSpeciesInfo[playerSpecies2].types[0] != requestedType
+         && gSpeciesInfo[playerSpecies2].types[1] != requestedType)
+            return UR_TRADE_MSG_NOT_MON_PARTNER_WANTS;
+    }
+
+    // If the player is trading an Egg then the partner must also be trading an Egg
+    // Odd that this wasn't checked earlier, as by this point we know either the partner doesn't have an Egg or that both do.
+    if (playerSpecies2 == SPECIES_EGG && playerSpecies2 != partnerSpecies)
+        return UR_TRADE_MSG_MON_CANT_BE_TRADED_1;
+
+    // If the player doesn't have the National Dex then Eggs and non-Hoenn Pokémon can't be traded
+    if (!playerHasNationalDex)
+    {
+        if (playerSpecies2 == SPECIES_EGG)
+            return UR_TRADE_MSG_EGG_CANT_BE_TRADED;
+
+        if (!IsSpeciesInHoennDex(playerSpecies2))
+            return UR_TRADE_MSG_MON_CANT_BE_TRADED_2;
+
+        if (!IsSpeciesInHoennDex(partnerSpecies))
+            return UR_TRADE_MSG_PARTNERS_MON_CANT_BE_TRADED;
+    }
+
+    // If the partner doesn't have the National Dex then the player's offer has to be a Hoenn Pokémon
+    if (!partnerHasNationalDex && !IsSpeciesInHoennDex(playerSpecies2))
+        return UR_TRADE_MSG_PARTNER_CANT_ACCEPT_MON;
+
+    // Trade is allowed
+    return UR_TRADE_MSG_NONE;
 }
 
 __attribute__((naked)) int CanRegisterMonForTradingBoard(struct RfuGameCompatibilityData player, u16 species2, u16 species, bool8 isModernFatefulEncounter)

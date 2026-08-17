@@ -3268,7 +3268,7 @@ SECTIONS {
         src/trade.o(.text.CanTradeSelectedMon);
         src/trade.o(.text.GetGameProgressForLinkTrade);
         src/trade.o(.text.IsDeoxysOrMewUntradable);
-        src/trade.o(.text.sub_0807A250);
+        src/trade.o(.text.GetUnionRoomTradeMessageId);
         src/trade.o(.text.CanRegisterMonForTradingBoard);
         src/trade.o(.text.CanSpinTradeMon);
         src/trade.o(.text.sub_0807A498);
