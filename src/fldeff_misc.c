@@ -2,6 +2,7 @@
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
 #include "constants/field_effects.h"
+#include "constants/metatile_behaviors.h"
 #include "event_data.h"
 #include "fieldmap.h"
 #include "event_object_movement.h"
@@ -359,46 +360,180 @@ void StartSecretBaseCaveFieldEffect(void)
     FieldEffectStart(FLDEFF_SECRET_POWER_CAVE);
 }
 
-__attribute__((naked)) bool8 FldEff_SecretPowerCave()
+extern const u8 gUnknown_856955C[];
+extern const u8 gUnknown_85695DC[];
+extern const u8 gUnknown_856965C[];
+extern const u8 gUnknown_85696DC[];
+extern const u8 gUnknown_856975C[];
+extern const u8 gUnknown_856981C[];
+extern const u8 gUnknown_856989C[];
+extern const u8 gUnknown_856991C[];
+extern const u8 gUnknown_856999C[];
+extern const u8 gUnknown_8569A1C[];
+extern const u8 gUnknown_8569A9C[];
+extern const u8 gUnknown_8569B1C[];
+extern const u8 gUnknown_8569B9C[];
+extern const u8 gUnknown_8569C1C[];
+extern const u8 gUnknown_8569C9C[];
+
+static const struct OamData sOam_SecretPower =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl AdjustSecretPowerSpritePixelOffsets\n\t"
-        "	ldr r0, _080FA9EC\n\t"
-        "	ldr r3, _080FA9F0\n\t"
-        "	ldr r1, _080FA9F4\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r1, [r2, #2]\n\t"
-        "	lsls r1, r1, #0x17\n\t"
-        "	lsrs r1, r1, #0x17\n\t"
-        "	ldr r4, _080FA9F8\n\t"
-        "	ldr r3, [r4, #0x14]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	ldr r3, [r4, #0x18]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r3, #0x94\n\t"
-        "	bl CreateSprite\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA9EC: .4byte gUnknown_856A1E4\n\t"
-        "_080FA9F0: .4byte gSprites\n\t"
-        "_080FA9F4: .4byte gPlayerAvatar\n\t"
-        "_080FA9F8: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    .y = 0,
+    .x = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 2,
+};
+
+static const union AnimCmd sAnim_SecretPowerCave[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_VineDropLeft[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_VineRiseLeft[] =
+{
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_VineDropRight[] =
+{
+    ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(1, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(2, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(3, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(4, 8, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_VineRiseRight[] =
+{
+    ANIMCMD_FRAME(4, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(3, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(2, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(1, 8, .hFlip = TRUE),
+    ANIMCMD_FRAME(0, 8, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SecretPowerShrub[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnimTable_SecretPowerCave[] =
+{
+    sAnim_SecretPowerCave,
+};
+
+static const union AnimCmd *const sAnimTable_SecretPowerTree[] =
+{
+    sAnim_VineDropLeft,
+    sAnim_VineRiseLeft,
+    sAnim_VineDropRight,
+    sAnim_VineRiseRight,
+};
+
+static const union AnimCmd *const sAnimTable_SecretPowerShrub[] =
+{
+    sAnim_SecretPowerShrub,
+};
+
+static const struct SpriteFrameImage sPicTable_SecretPowerCave[] =
+{
+    { gUnknown_856955C, 128, 0 },
+    { gUnknown_85695DC, 128, 0 },
+    { gUnknown_856965C, 128, 0 },
+    { gUnknown_85696DC, 128, 0 },
+    { gUnknown_856975C, 128, 0 },
+};
+
+static const struct SpriteFrameImage sPicTable_SecretPowerTree[] =
+{
+    { gUnknown_8569A9C, 128, 0 },
+    { gUnknown_8569B1C, 128, 0 },
+    { gUnknown_8569B9C, 128, 0 },
+    { gUnknown_8569C1C, 128, 0 },
+    { gUnknown_8569C9C, 128, 0 },
+};
+
+static const struct SpriteFrameImage sPicTable_SecretPowerShrub[] =
+{
+    { gUnknown_856981C, 128, 0 },
+    { gUnknown_856989C, 128, 0 },
+    { gUnknown_856991C, 128, 0 },
+    { gUnknown_856999C, 128, 0 },
+    { gUnknown_8569A1C, 128, 0 },
+};
+
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerCave =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_TREE,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerCave,
+    .images = sPicTable_SecretPowerCave,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = CaveEntranceSpriteCallback1,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerTree =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_PLANT,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerTree,
+    .images = sPicTable_SecretPowerTree,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = TreeEntranceSpriteCallback1,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_SecretPowerShrub =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SECRET_POWER_PLANT,
+    .oam = &sOam_SecretPower,
+    .anims = sAnimTable_SecretPowerShrub,
+    .images = sPicTable_SecretPowerShrub,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = ShrubEntranceSpriteCallback1,
+};
+
+bool8 FldEff_SecretPowerCave(void)
+{
+    AdjustSecretPowerSpritePixelOffsets();
+    CreateSprite(&sSpriteTemplate_SecretPowerCave,
+                 gSprites[gPlayerAvatar.spriteId].oam.x + gFieldEffectArguments[5],
+                 gSprites[gPlayerAvatar.spriteId].oam.y + gFieldEffectArguments[6],
+                 148);
+    return FALSE;
 }
 
 void CaveEntranceSpriteCallback1(struct Sprite *sprite)
@@ -454,78 +589,27 @@ void StartSecretBaseTreeFieldEffect(void)
     FieldEffectStart(FLDEFF_SECRET_POWER_TREE);
 }
 
-__attribute__((naked)) bool8 FldEff_SecretPowerTree()
+bool8 FldEff_SecretPowerTree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _080FAB30\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r1, _080FAB34\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ands r2, r0\n\t"
-        "	cmp r2, #0x96\n\t"
-        "	bne _080FAADA\n\t"
-        "	ldr r1, _080FAB38\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_080FAADA:\n\t"
-        "	cmp r2, #0x9c\n\t"
-        "	bne _080FAAE4\n\t"
-        "	ldr r1, _080FAB38\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_080FAAE4:\n\t"
-        "	bl AdjustSecretPowerSpritePixelOffsets\n\t"
-        "	ldr r0, _080FAB3C\n\t"
-        "	ldr r3, _080FAB40\n\t"
-        "	ldr r1, _080FAB44\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r1, [r2, #2]\n\t"
-        "	lsls r1, r1, #0x17\n\t"
-        "	lsrs r1, r1, #0x17\n\t"
-        "	ldr r4, _080FAB38\n\t"
-        "	ldr r3, [r4, #0x14]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	ldr r3, [r4, #0x18]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r3, #0x94\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r0, [r4, #0x1c]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080FAB22\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080FAB26\n\t"
-        "_080FAB22:\n\t"
-        "	bl ToggleSecretBaseEntranceMetatile\n\t"
-        "_080FAB26:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAB30: .4byte gPlayerFacingPosition\n\t"
-        "_080FAB34: .4byte 0x00000FFF\n\t"
-        "_080FAB38: .4byte gFieldEffectArguments\n\t"
-        "_080FAB3C: .4byte gUnknown_856A1FC\n\t"
-        "_080FAB40: .4byte gSprites\n\t"
-        "_080FAB44: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 mb = MapGridGetMetatileBehaviorAt(gPlayerFacingPosition.x, gPlayerFacingPosition.y) & 0xFFF;
+
+    if (mb == MB_SECRET_BASE_SPOT_TREE_LEFT)
+        gFieldEffectArguments[7] = 0;
+
+    if (mb == MB_SECRET_BASE_SPOT_TREE_RIGHT)
+        gFieldEffectArguments[7] = 2;
+
+    AdjustSecretPowerSpritePixelOffsets();
+
+    CreateSprite(&sSpriteTemplate_SecretPowerTree,
+                 gSprites[gPlayerAvatar.spriteId].oam.x + gFieldEffectArguments[5],
+                 gSprites[gPlayerAvatar.spriteId].oam.y + gFieldEffectArguments[6],
+                 148);
+
+    if (gFieldEffectArguments[7] == 1 || gFieldEffectArguments[7] == 3)
+        ToggleSecretBaseEntranceMetatile();
+
+    return FALSE;
 }
 
 void TreeEntranceSpriteCallback1(struct Sprite *sprite)
@@ -582,46 +666,16 @@ void StartSecretBaseShrubFieldEffect(void)
     FieldEffectStart(FLDEFF_SECRET_POWER_SHRUB);
 }
 
-__attribute__((naked)) bool8 FldEff_SecretPowerShrub()
+bool8 FldEff_SecretPowerShrub(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl AdjustSecretPowerSpritePixelOffsets\n\t"
-        "	ldr r0, _080FAC5C\n\t"
-        "	ldr r3, _080FAC60\n\t"
-        "	ldr r1, _080FAC64\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrh r1, [r2, #2]\n\t"
-        "	lsls r1, r1, #0x17\n\t"
-        "	lsrs r1, r1, #0x17\n\t"
-        "	ldr r4, _080FAC68\n\t"
-        "	ldr r3, [r4, #0x14]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	ldr r3, [r4, #0x18]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	movs r3, #0x94\n\t"
-        "	bl CreateSprite\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAC5C: .4byte gUnknown_856A214\n\t"
-        "_080FAC60: .4byte gSprites\n\t"
-        "_080FAC64: .4byte gPlayerAvatar\n\t"
-        "_080FAC68: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    AdjustSecretPowerSpritePixelOffsets();
+
+    CreateSprite(&sSpriteTemplate_SecretPowerShrub,
+                 gSprites[gPlayerAvatar.spriteId].oam.x + gFieldEffectArguments[5],
+                 gSprites[gPlayerAvatar.spriteId].oam.y + gFieldEffectArguments[6],
+                 148);
+
+    return FALSE;
 }
 
 void ShrubEntranceSpriteCallback1(struct Sprite *sprite)
