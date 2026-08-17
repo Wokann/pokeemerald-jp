@@ -12139,75 +12139,24 @@ static void PartyMenuStartSpriteAnim(u8 spriteId, u8 animNum)
     StartSpriteAnim(&gSprites[spriteId], animNum);
 }
 
-__attribute__((naked)) void sub_081B5C5C(void)
+static void UNUSED SpriteCB_BounceConfirmCancelButton(u8 spriteId, u8 spriteId2, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _081B5CA0\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _081B5C9C\n\t"
-        "	mov r8, r0\n\t"
-        "	add r4, r8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	lsls r5, r7, #4\n\t"
-        "	adds r5, r5, r7\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	add r5, r8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	strh r6, [r4, #0x26]\n\t"
-        "	strh r6, [r5, #0x26]\n\t"
-        "	b _081B5CCC\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5C9C: .4byte gSprites\n\t"
-        "_081B5CA0:\n\t"
-        "	lsls r5, r0, #4\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	ldr r0, _081B5CD8\n\t"
-        "	mov r8, r0\n\t"
-        "	add r5, r8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	lsls r4, r7, #4\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	add r4, r8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, _081B5CDC\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_081B5CCC:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5CD8: .4byte gSprites\n\t"
-        "_081B5CDC: .4byte 0x0000FFFC\n\t"
-        ".syntax divided\n\t"
-    );
+    if (animNum == 0)
+    {
+        StartSpriteAnim(&gSprites[spriteId], 2);
+        StartSpriteAnim(&gSprites[spriteId2], 4);
+        gSprites[spriteId].y2 = 0;
+        gSprites[spriteId2].y2 = 0;
+    }
+    else
+    {
+        StartSpriteAnim(&gSprites[spriteId], 3);
+        StartSpriteAnim(&gSprites[spriteId2], 5);
+        gSprites[spriteId].y2 = -4;
+        gSprites[spriteId2].y2 = 4;
+    }
 }
+
 
 extern const struct CompressedSpriteSheet gUnknown_85E17B0;
 extern const struct CompressedSpriteSheet gUnknown_85E1828;

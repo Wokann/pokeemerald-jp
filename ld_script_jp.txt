@@ -8738,7 +8738,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B5BD4);
         src/party_menu.o(.text.CreateSmallPokeballButtonSprite);
         src/party_menu.o(.text.PartyMenuStartSpriteAnim);
-        src/party_menu.o(.text.sub_081B5C5C);
+        src/party_menu.o(.text.SpriteCB_BounceConfirmCancelButton);
         src/party_menu.o(.text.LoadPartyMenuPokeballGfx);
         src/party_menu.o(.text.party_menu_status_condition_object);
         src/party_menu.o(.text.party_menu_link_mon_status_condition_object);
