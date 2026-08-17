@@ -3255,7 +3255,7 @@ SECTIONS {
         src/trade.o(.text.RedrawPartyWindow);
         src/trade.o(.text.Task_DrawSelectionSummary);
         src/trade.o(.text.Task_DrawSelectionTrade);
-        src/trade.o(.text.sub_08079A80);
+        src/trade.o(.text.QueueAction);
         src/trade.o(.text.sub_08079AD4);
         src/trade.o(.text.sub_08079AFC);
         src/trade.o(.text.sub_08079BD4);

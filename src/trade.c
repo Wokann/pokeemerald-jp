@@ -193,7 +193,7 @@ void sub_08079D98(u8 side);
 void sub_08079EE0(u8 side);
 void CB1_UpdateLink(void);
 static void SetSelectedMon(u8 cursorPosition);
-void sub_08079A80(u16 action, u8 data);
+static void QueueAction(u16 delay, u8 actionId);
 void PrintTradePartnerPartyNicknames(void);
 u32 CanTradeSelectedMon(struct Pokemon *playerParty, int partyCount, int monIdx);
 u8 CheckValidityOfTradeMons(u8 *aliveMons, u8 playerPartyCount, u8 playerMonIdx, u8 partnerMonIdx);
@@ -1194,7 +1194,7 @@ static void Leader_HandleCommunication(void)
             sTradeMenu->callbackId = CB_SET_SELECTED_MONS;
             sTradeMenu->linkData[0] = LINKCMD_SET_MONS_TO_TRADE;
             sTradeMenu->linkData[1] = sTradeMenu->cursorPosition;
-            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
             sTradeMenu->playerSelectStatus = sTradeMenu->partnerSelectStatus = STATUS_NONE;
         }
         else if (sTradeMenu->playerSelectStatus == STATUS_READY
@@ -1205,7 +1205,7 @@ static void Leader_HandleCommunication(void)
             sub_08079BD4(MSG_CANCELED);
             sTradeMenu->linkData[0] = LINKCMD_PARTNER_CANCEL_TRADE;
             sTradeMenu->linkData[1] = 0;
-            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
             sTradeMenu->playerConfirmStatus = sTradeMenu->partnerConfirmStatus = STATUS_NONE;
             sTradeMenu->playerSelectStatus = sTradeMenu->partnerSelectStatus = STATUS_NONE;
             sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
@@ -1218,7 +1218,7 @@ static void Leader_HandleCommunication(void)
             sub_08079BD4(MSG_FRIEND_WANTS_TO_TRADE);
             sTradeMenu->linkData[0] = LINKCMD_PLAYER_CANCEL_TRADE;
             sTradeMenu->linkData[1] = 0;
-            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
             sTradeMenu->playerConfirmStatus = sTradeMenu->partnerConfirmStatus = STATUS_NONE;
             sTradeMenu->playerSelectStatus = sTradeMenu->partnerSelectStatus = STATUS_NONE;
             sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
@@ -1229,7 +1229,7 @@ static void Leader_HandleCommunication(void)
             // Both players have selected Cancel
             sTradeMenu->linkData[0] = LINKCMD_BOTH_CANCEL_TRADE;
             sTradeMenu->linkData[1] = 0;
-            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
             sTradeMenu->playerSelectStatus = sTradeMenu->partnerSelectStatus = STATUS_NONE;
             sTradeMenu->callbackId = CB_INIT_EXIT_CANCELED_TRADE;
@@ -1245,7 +1245,7 @@ static void Leader_HandleCommunication(void)
             // Both players have confirmed trade
             sTradeMenu->linkData[0] = LINKCMD_START_TRADE;
             sTradeMenu->linkData[1] = 0;
-            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
             sTradeMenu->playerConfirmStatus = STATUS_NONE;
             sTradeMenu->partnerConfirmStatus = STATUS_NONE;
             sTradeMenu->callbackId = CB_FADE_TO_START_TRADE;
@@ -1259,7 +1259,7 @@ static void Leader_HandleCommunication(void)
             sub_08079BD4(MSG_CANCELED);
             sTradeMenu->linkData[0] = LINKCMD_PLAYER_CANCEL_TRADE;
             sTradeMenu->linkData[1] = 0;
-            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
             sTradeMenu->playerConfirmStatus = STATUS_NONE;
             sTradeMenu->partnerConfirmStatus = STATUS_NONE;
             sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
@@ -1271,7 +1271,7 @@ static void _SetLinkData(u16 *linkData, u16 linkCmd, u16 cursorPosition)
 {
     linkData[0] = linkCmd;
     linkData[1] = cursorPosition;
-    sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+    QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
 }
 
 static void SetLinkData(u16 linkCmd, u16 cursorPosition)
@@ -1425,17 +1425,17 @@ static void CB_ProcessSelectedMonInput(void)
             gSprites[sTradeMenu->cursorSpriteId].invisible = TRUE;
             break;
         case CANT_TRADE_LAST_MON:
-            sub_08079A80(QUEUE_DELAY_MSG, QUEUE_ONLY_MON2);
+            QueueAction(QUEUE_DELAY_MSG, QUEUE_ONLY_MON2);
             sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
             break;
         case CANT_TRADE_NATIONAL:
         case CANT_TRADE_INVALID_MON:
-            sub_08079A80(QUEUE_DELAY_MSG, QUEUE_MON_CANT_BE_TRADED);
+            QueueAction(QUEUE_DELAY_MSG, QUEUE_MON_CANT_BE_TRADED);
             sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
             break;
         case CANT_TRADE_EGG_YET:
         case CANT_TRADE_PARTNER_EGG_YET:
-            sub_08079A80(QUEUE_DELAY_MSG, QUEUE_EGG_CANT_BE_TRADED);
+            QueueAction(QUEUE_DELAY_MSG, QUEUE_EGG_CANT_BE_TRADED);
             sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
             break;
         }
@@ -1568,15 +1568,15 @@ static bool32 CheckMonsBeforeTrade(void)
                                                 sTradeMenu->partnerCursorPosition))
     {
     case PLAYER_MON_INVALID:
-        sub_08079A80(QUEUE_DELAY_MSG, QUEUE_ONLY_MON2);
+        QueueAction(QUEUE_DELAY_MSG, QUEUE_ONLY_MON2);
         SetLinkData(LINKCMD_READY_CANCEL_TRADE, 0);
         break;
     case BOTH_MONS_VALID:
-        sub_08079A80(QUEUE_DELAY_MSG, QUEUE_STANDBY);
+        QueueAction(QUEUE_DELAY_MSG, QUEUE_STANDBY);
         SetLinkData(LINKCMD_INIT_BLOCK, 0);
         break;
     case PARTNER_MON_INVALID:
-        sub_08079A80(QUEUE_DELAY_MSG, QUEUE_FRIENDS_MON_CANT_BE_TRADED);
+        QueueAction(QUEUE_DELAY_MSG, QUEUE_FRIENDS_MON_CANT_BE_TRADED);
         return TRUE;
     }
     return FALSE;
@@ -1596,7 +1596,7 @@ static void CB_ProcessConfirmTradeInput(void)
         break;
     case 1: // NO, Cancel Trade
     case MENU_B_PRESSED:
-        sub_08079A80(QUEUE_DELAY_MSG, QUEUE_STANDBY);
+        QueueAction(QUEUE_DELAY_MSG, QUEUE_STANDBY);
         if (IsLinkTradeTaskFinished())
             SetLinkData(LINKCMD_READY_CANCEL_TRADE, 0);
         sTradeMenu->callbackId = CB_IDLE;
@@ -2553,56 +2553,21 @@ static void Task_DrawSelectionTrade(u8 taskId)
     CopyBgTilemapBufferToVram(0);
 }
 
-__attribute__((naked)) void sub_08079A80(u16 action, u8 data)
+static void QueueAction(u16 delay, u8 actionId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r4, _08079AC0\n\t"
-        "	mov ip, r4\n\t"
-        "	movs r7, #0x8d\n\t"
-        "	lsls r7, r7, #4\n\t"
-        "_08079A94:\n\t"
-        "	mov r1, ip\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	lsls r1, r3, #3\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08079AC8\n\t"
-        "	ldr r3, _08079AC4\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	strh r5, [r0]\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	strb r6, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x8d\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _08079ACE\n\t"
-        "	.align 2, 0\n\t"
-        "_08079AC0: .4byte sTradeMenu\n\t"
-        "_08079AC4: .4byte 0x000008D2\n\t"
-        "_08079AC8:\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, #3\n\t"
-        "	ble _08079A94\n\t"
-        "_08079ACE:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < (int)ARRAY_COUNT(sTradeMenu->queuedActions); i++)
+    {
+        // Find first available spot
+        if (!sTradeMenu->queuedActions[i].active)
+        {
+            sTradeMenu->queuedActions[i].delay = delay;
+            sTradeMenu->queuedActions[i].actionId = actionId;
+            sTradeMenu->queuedActions[i].active = TRUE;
+            break;
+        }
+    }
 }
 
 __attribute__((naked)) u32 sub_08079AD4(void)
