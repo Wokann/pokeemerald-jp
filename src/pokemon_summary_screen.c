@@ -5986,7 +5986,7 @@ __attribute__((naked)) void Summar_PrintGenderSymbol(void)
         "	bl SummaryScreen_PrintTextOnWindow\n\t"
         "	b _081C218E\n\t"
         "	.align 2, 0\n\t"
-        "_081C2174: .4byte gUnknown_85C940A\n\t"
+        "_081C2174: .4byte gText_MaleSymbol\n\t"
         "_081C2178:\n\t"
         "	ldr r1, _081C2198\n\t"
         "	lsls r2, r4, #0x1b\n\t"
@@ -6004,7 +6004,7 @@ __attribute__((naked)) void Summar_PrintGenderSymbol(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C2198: .4byte gUnknown_85C940C\n\t"
+        "_081C2198: .4byte gText_FemaleSymbol\n\t"
         ".syntax divided\n\t"
     );
 }

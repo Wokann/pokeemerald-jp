@@ -2,6 +2,8 @@
 #include "party_menu.h"
 #include "pokemon_icon.h"
 #include "bg.h"
+#include "battle_interface.h"
+#include "data.h"
 #include "battle.h"
 #include "constants/field_effects.h"
 #include "constants/field_weather.h"
@@ -40,6 +42,13 @@ extern const u8 sPartyBoxCurrSelectionPalIds2[];
 extern const u8 sPartyBoxSelectedForActionPalIds2[];
 extern const u8 sPartyBoxNoMonPalIds[];
 extern const u8 sFontColorTable[][3];
+extern const u8 sGenderPalOffsets[];
+extern const u8 sGenderMalePalIds[];
+extern const u8 sGenderFemalePalIds[];
+extern const u8 sHPBarPalOffsets[];
+extern const u8 sHPBarGreenPalIds[];
+extern const u8 sHPBarYellowPalIds[];
+extern const u8 sHPBarRedPalIds[];
 #include "constants/items.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
@@ -5260,544 +5269,113 @@ static void DisplayPartyPokemonLevel(u8 level, struct PartyMenuBox *menuBox)
     DisplayPartyPokemonBarDetail(menuBox->windowId, gStringVar1, 0, &menuBox->infoRects->dimensions[4]);
 }
 
-__attribute__((naked)) void DisplayPartyPokemonGenderNidoranCheck(u8 a)
+static void DisplayPartyPokemonGenderNidoranCheck(struct Pokemon *mon, struct PartyMenuBox *menuBox, u8 c)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r2, #1\n\t"
-        "	bne _081B285A\n\t"
-        "	ldr r5, [r7]\n\t"
-        "	ldrb r0, [r7, #8]\n\t"
-        "	ldrb r1, [r5, #0xc]\n\t"
-        "	lsrs r1, r1, #3\n\t"
-        "	ldrb r2, [r5, #0xd]\n\t"
-        "	lsrs r2, r2, #3\n\t"
-        "	adds r2, #1\n\t"
-        "	ldrb r3, [r5, #0xe]\n\t"
-        "	lsrs r3, r3, #3\n\t"
-        "	ldrb r4, [r5, #0xf]\n\t"
-        "	lsrs r4, r4, #3\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r4, [r5]\n\t"
-        "	bl _call_via_r4\n\t"
-        "_081B285A:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	add r1, sp, #8\n\t"
-        "	bl GetMonNickname\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetMonGender\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	add r2, sp, #8\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl DisplayPartyPokemonGender\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 nickname[POKEMON_NAME_STORAGE_LENGTH + 1];
+
+    if (c == 1)
+        menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[8] >> 3, (menuBox->infoRects->dimensions[9] >> 3) + 1, menuBox->infoRects->dimensions[10] >> 3, menuBox->infoRects->dimensions[11] >> 3, FALSE);
+    GetMonNickname(mon, nickname);
+    DisplayPartyPokemonGender(GetMonGender(mon), (u16)GetMonData(mon, MON_DATA_SPECIES), nickname, menuBox);
 }
 
-__attribute__((naked)) void DisplayPartyPokemonGender(u8 a)
+static void DisplayPartyPokemonGender(u8 gender, u16 species, u8 *nickname, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	mov sb, r2\n\t"
-        "	adds r7, r3, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	ldrb r0, [r7, #8]\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetWindowAttribute\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081B2956\n\t"
-        "	cmp r4, #0x20\n\t"
-        "	beq _081B28C0\n\t"
-        "	cmp r4, #0x1d\n\t"
-        "	bne _081B28D4\n\t"
-        "_081B28C0:\n\t"
-        "	lsls r1, r5, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r0, _081B28E0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r0, sb\n\t"
-        "	bl StringCompare\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2956\n\t"
-        "_081B28D4:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B28E4\n\t"
-        "	cmp r0, #0xfe\n\t"
-        "	beq _081B2924\n\t"
-        "	b _081B2956\n\t"
-        "	.align 2, 0\n\t"
-        "_081B28E0: .4byte gSpeciesNames\n\t"
-        "_081B28E4:\n\t"
-        "	ldr r5, _081B2918\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPalBufferPtr\n\t"
-        "	ldr r4, _081B291C\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPalBufferPtr\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r7, #8]\n\t"
-        "	ldr r1, _081B2920\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	adds r3, #0xc\n\t"
-        "	movs r2, #2\n\t"
-        "	bl DisplayPartyPokemonBarDetail\n\t"
-        "	b _081B2956\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2918: .4byte sGenderMalePalIds\n\t"
-        "_081B291C: .4byte sGenderPalOffsets\n\t"
-        "_081B2920: .4byte gUnknown_85C940A\n\t"
-        "_081B2924:\n\t"
-        "	ldr r5, _081B2964\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPalBufferPtr\n\t"
-        "	ldr r4, _081B2968\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPalBufferPtr\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r7, #8]\n\t"
-        "	ldr r1, _081B296C\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	adds r3, #0xc\n\t"
-        "	movs r2, #2\n\t"
-        "	bl DisplayPartyPokemonBarDetail\n\t"
-        "_081B2956:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2964: .4byte sGenderFemalePalIds\n\t"
-        "_081B2968: .4byte sGenderPalOffsets\n\t"
-        "_081B296C: .4byte gUnknown_85C940C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 palOffset = BG_PLTT_ID(GetWindowAttribute(menuBox->windowId, WINDOW_PALETTE_NUM));
+
+    if (species == SPECIES_NONE)
+        return;
+    if ((species == SPECIES_NIDORAN_M || species == SPECIES_NIDORAN_F) && StringCompare(nickname, gSpeciesNames[species]) == 0)
+        return;
+    switch (gender)
+    {
+    case MON_MALE:
+        LoadPalette(GetPartyMenuPalBufferPtr(sGenderMalePalIds[0]), sGenderPalOffsets[0] + palOffset, PLTT_SIZEOF(1));
+        LoadPalette(GetPartyMenuPalBufferPtr(sGenderMalePalIds[1]), sGenderPalOffsets[1] + palOffset, PLTT_SIZEOF(1));
+        DisplayPartyPokemonBarDetail(menuBox->windowId, gText_MaleSymbol, 2, &menuBox->infoRects->dimensions[8]);
+        break;
+    case MON_FEMALE:
+        LoadPalette(GetPartyMenuPalBufferPtr(sGenderFemalePalIds[0]), sGenderPalOffsets[0] + palOffset, PLTT_SIZEOF(1));
+        LoadPalette(GetPartyMenuPalBufferPtr(sGenderFemalePalIds[1]), sGenderPalOffsets[1] + palOffset, PLTT_SIZEOF(1));
+        DisplayPartyPokemonBarDetail(menuBox->windowId, gText_FemaleSymbol, 2, &menuBox->infoRects->dimensions[8]);
+        break;
+    }
 }
 
-__attribute__((naked)) void DisplayPartyPokemonHPCheck(u8 a)
+static void DisplayPartyPokemonHPCheck(struct Pokemon *mon, struct PartyMenuBox *menuBox, u8 c)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	mov r8, r4\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B29CA\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081B29B2\n\t"
-        "	ldr r5, [r6]\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldrb r1, [r5, #0x10]\n\t"
-        "	lsrs r1, r1, #3\n\t"
-        "	ldrb r2, [r5, #0x11]\n\t"
-        "	lsrs r2, r2, #3\n\t"
-        "	adds r2, #1\n\t"
-        "	ldrb r3, [r5, #0x12]\n\t"
-        "	lsrs r3, r3, #3\n\t"
-        "	ldrb r4, [r5, #0x13]\n\t"
-        "	lsrs r4, r4, #3\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r4, [r5]\n\t"
-        "	bl _call_via_r4\n\t"
-        "_081B29B2:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B29CA\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl DisplayPartyPokemonHP\n\t"
-        "_081B29CA:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        if (c != 0)
+            menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[12] >> 3, (menuBox->infoRects->dimensions[13] >> 3) + 1, menuBox->infoRects->dimensions[14] >> 3, menuBox->infoRects->dimensions[15] >> 3, FALSE);
+        if (c != 2)
+            DisplayPartyPokemonHP((u16)GetMonData(mon, MON_DATA_HP), menuBox);
+    }
 }
 
-__attribute__((naked)) void DisplayPartyPokemonHP(u16 a, u8 b)
+static void DisplayPartyPokemonHP(u16 hp, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	ldr r5, _081B2A04\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #3\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldrb r0, [r4, #8]\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	adds r3, #0x10\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonBarDetail\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2A04: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    ConvertIntToDecimalStringN(gStringVar1, hp, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    DisplayPartyPokemonBarDetail(menuBox->windowId, gStringVar1, 0, &menuBox->infoRects->dimensions[12]);
 }
 
-__attribute__((naked)) void DisplayPartyPokemonMaxHPCheck(u8 a)
+static void DisplayPartyPokemonMaxHPCheck(struct Pokemon *mon, struct PartyMenuBox *menuBox, u8 c)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	mov r8, r4\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2A64\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081B2A4C\n\t"
-        "	ldr r5, [r6]\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldrb r1, [r5, #0x14]\n\t"
-        "	lsrs r1, r1, #3\n\t"
-        "	adds r1, #1\n\t"
-        "	ldrb r2, [r5, #0x15]\n\t"
-        "	lsrs r2, r2, #3\n\t"
-        "	adds r2, #1\n\t"
-        "	ldrb r3, [r5, #0x16]\n\t"
-        "	lsrs r3, r3, #3\n\t"
-        "	ldrb r4, [r5, #0x17]\n\t"
-        "	lsrs r4, r4, #3\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r4, [r5]\n\t"
-        "	bl _call_via_r4\n\t"
-        "_081B2A4C:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B2A64\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl DisplayPartyPokemonMaxHP\n\t"
-        "_081B2A64:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        if (c != 0)
+            menuBox->infoRects->blitFunc(menuBox->windowId, (menuBox->infoRects->dimensions[16] >> 3) + 1, (menuBox->infoRects->dimensions[17] >> 3) + 1, menuBox->infoRects->dimensions[18] >> 3, menuBox->infoRects->dimensions[19] >> 3, FALSE);
+        if (c != 2)
+            DisplayPartyPokemonMaxHP((u16)GetMonData(mon, MON_DATA_MAX_HP), menuBox);
+    }
 }
 
-__attribute__((naked)) void DisplayPartyPokemonMaxHP(u16 a, u8 b)
+static void DisplayPartyPokemonMaxHP(u16 maxhp, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	ldr r5, _081B2AB0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #3\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r4, _081B2AB4\n\t"
-        "	ldr r1, _081B2AB8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	adds r3, #0x14\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonBarDetail\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2AB0: .4byte gStringVar2\n\t"
-        "_081B2AB4: .4byte gStringVar1\n\t"
-        "_081B2AB8: .4byte gText_Slash\n\t"
-        ".syntax divided\n\t"
-    );
+    ConvertIntToDecimalStringN(gStringVar2, maxhp, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    StringCopy(gStringVar1, gText_Slash);
+    StringAppend(gStringVar1, gStringVar2);
+    DisplayPartyPokemonBarDetail(menuBox->windowId, gStringVar1, 0, &menuBox->infoRects->dimensions[16]);
 }
 
-__attribute__((naked)) void DisplayPartyPokemonHPBarCheck(u8 a)
+static void DisplayPartyPokemonHPBarCheck(struct Pokemon *mon, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2AF0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl DisplayPartyPokemonHPBar\n\t"
-        "_081B2AF0:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+        DisplayPartyPokemonHPBar((u16)GetMonData(mon, MON_DATA_HP), (u16)GetMonData(mon, MON_DATA_MAX_HP), menuBox);
 }
 
 
-__attribute__((naked)) void DisplayPartyPokemonHPBar(void)
+static void DisplayPartyPokemonHPBar(u16 hp, u16 maxhp, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov sb, r1\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetWindowAttribute\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl GetHPBarLevel\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B2B44\n\t"
-        "	cmp r0, #2\n\t"
-        "	blt _081B2B74\n\t"
-        "	cmp r0, #4\n\t"
-        "	bgt _081B2B74\n\t"
-        "	ldr r5, _081B2B40\n\t"
-        "	b _081B2B46\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2B40: .4byte sHPBarGreenPalIds\n\t"
-        "_081B2B44:\n\t"
-        "	ldr r5, _081B2B6C\n\t"
-        "_081B2B46:\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPalBufferPtr\n\t"
-        "	ldr r4, _081B2B70\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPalBufferPtr\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _081B2B98\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2B6C: .4byte sHPBarYellowPalIds\n\t"
-        "_081B2B70: .4byte sHPBarPalOffsets\n\t"
-        "_081B2B74:\n\t"
-        "	ldr r5, _081B2C34\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPalBufferPtr\n\t"
-        "	ldr r4, _081B2C38\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPalBufferPtr\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "_081B2B98:\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r2, [r2, #0x1a]\n\t"
-        "	bl GetScaledHPFraction\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldr r4, _081B2C38\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	ldrb r2, [r3, #0x18]\n\t"
-        "	ldrb r3, [r3, #0x19]\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r7, #1\n\t"
-        "	str r7, [sp, #4]\n\t"
-        "	bl FillWindowPixelRect\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	ldrb r2, [r3, #0x18]\n\t"
-        "	ldrb r3, [r3, #0x19]\n\t"
-        "	adds r3, #1\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r4, #2\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	bl FillWindowPixelRect\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r0, [r1, #0x1a]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _081B2C1C\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldrb r2, [r1, #0x18]\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrb r3, [r1, #0x19]\n\t"
-        "	ldrb r1, [r1, #0x1a]\n\t"
-        "	subs r1, r1, r5\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r7, [sp, #4]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	bl FillWindowPixelRect\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r2, [r1, #0x18]\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrb r3, [r1, #0x19]\n\t"
-        "	adds r3, #1\n\t"
-        "	ldrb r1, [r1, #0x1a]\n\t"
-        "	subs r1, r1, r5\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl FillWindowPixelRect\n\t"
-        "_081B2C1C:\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2C34: .4byte sHPBarRedPalIds\n\t"
-        "_081B2C38: .4byte sHPBarPalOffsets\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 palOffset = BG_PLTT_ID(GetWindowAttribute(menuBox->windowId, WINDOW_PALETTE_NUM));
+    u8 hpFraction;
+
+    switch (GetHPBarLevel(hp, maxhp))
+    {
+    case HP_BAR_GREEN:
+    case HP_BAR_FULL:
+        LoadPalette(GetPartyMenuPalBufferPtr(sHPBarGreenPalIds[0]), sHPBarPalOffsets[0] + palOffset, PLTT_SIZEOF(1));
+        LoadPalette(GetPartyMenuPalBufferPtr(sHPBarGreenPalIds[1]), sHPBarPalOffsets[1] + palOffset, PLTT_SIZEOF(1));
+        break;
+    case HP_BAR_YELLOW:
+        LoadPalette(GetPartyMenuPalBufferPtr(sHPBarYellowPalIds[0]), sHPBarPalOffsets[0] + palOffset, PLTT_SIZEOF(1));
+        LoadPalette(GetPartyMenuPalBufferPtr(sHPBarYellowPalIds[1]), sHPBarPalOffsets[1] + palOffset, PLTT_SIZEOF(1));
+        break;
+    default:
+        LoadPalette(GetPartyMenuPalBufferPtr(sHPBarRedPalIds[0]), sHPBarPalOffsets[0] + palOffset, PLTT_SIZEOF(1));
+        LoadPalette(GetPartyMenuPalBufferPtr(sHPBarRedPalIds[1]), sHPBarPalOffsets[1] + palOffset, PLTT_SIZEOF(1));
+        break;
+    }
+
+    hpFraction = GetScaledHPFraction(hp, maxhp, menuBox->infoRects->dimensions[22]);
+    FillWindowPixelRect(menuBox->windowId, sHPBarPalOffsets[1], menuBox->infoRects->dimensions[20], menuBox->infoRects->dimensions[21], hpFraction, 1);
+    FillWindowPixelRect(menuBox->windowId, sHPBarPalOffsets[0], menuBox->infoRects->dimensions[20], menuBox->infoRects->dimensions[21] + 1, hpFraction, 2);
+    if (hpFraction != menuBox->infoRects->dimensions[22])
+    {
+        FillWindowPixelRect(menuBox->windowId, 0x0D, menuBox->infoRects->dimensions[20] + hpFraction, menuBox->infoRects->dimensions[21], menuBox->infoRects->dimensions[22] - hpFraction, 1);
+        FillWindowPixelRect(menuBox->windowId, 0x02, menuBox->infoRects->dimensions[20] + hpFraction, menuBox->infoRects->dimensions[21] + 1, menuBox->infoRects->dimensions[22] - hpFraction, 2);
+    }
+    CopyWindowToVram(menuBox->windowId, COPYWIN_GFX);
 }
 
 __attribute__((naked)) void DisplayPartyPokemonOtherText(u8 stringID, struct PartyMenuBox *menuBox, u8 c)

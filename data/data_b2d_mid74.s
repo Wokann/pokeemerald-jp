@@ -49,12 +49,12 @@ gUnknown_85C9403: @ 0x85C9403
 gText_ThreeDashes: @ 0x85C9406
 	.string "ーーー$"
 
-	.globl gUnknown_85C940A
-gUnknown_85C940A: @ 0x85C940A
+	.globl gText_MaleSymbol
+gText_MaleSymbol: @ 0x85C940A
 	.string "♂$"
 
-	.globl gUnknown_85C940C
-gUnknown_85C940C: @ 0x85C940C
+	.globl gText_FemaleSymbol
+gText_FemaleSymbol: @ 0x85C940C
 	.string "♀$"
 
 	.globl gText_LevelSymbol
