@@ -2387,45 +2387,12 @@ __attribute__((naked)) void ListMenuAddRedOutlineCursorObject(void)
     );
 }
 
-__attribute__((naked)) void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y)
+void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	lsls r3, r0, #2\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	ldr r0, _081AF6A8\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	ldr r5, _081AF6AC\n\t"
-        "	ldrb r4, [r3, #0xc]\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r1, #0x78\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	ldrb r1, [r3, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r2, #0x78\n\t"
-        "	strh r2, [r0, #0x22]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF6A8: .4byte gUnknown_3005B68\n\t"
-        "_081AF6AC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct RedOutlineCursor *data = (void *) gTasks[taskId].data;
+
+    gSprites[data->spriteId].x = x + 120;
+    gSprites[data->spriteId].y = y + 120;
 }
 
 void ListMenuRemoveRedOutlineCursorObject(u8 taskId)
@@ -2579,39 +2546,12 @@ __attribute__((naked)) void ListMenuAddRedArrowCursorObject(void)
     );
 }
 
-__attribute__((naked)) void ListMenuUpdateRedArrowCursorObject(u8 taskId, u16 x, u16 y)
+void ListMenuUpdateRedArrowCursorObject(u8 taskId, u16 x, u16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r3, r0, #2\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	ldr r0, _081AF870\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	ldr r5, _081AF874\n\t"
-        "	ldrb r4, [r3]\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r2, [r0, #0x22]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF870: .4byte gUnknown_3005B68\n\t"
-        "_081AF874: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct RedArrowCursor *data = (void *) gTasks[taskId].data;
+
+    gSprites[data->spriteId].x = x;
+    gSprites[data->spriteId].y = y;
 }
 
 void ListMenuRemoveRedArrowCursorObject(u8 taskId)
