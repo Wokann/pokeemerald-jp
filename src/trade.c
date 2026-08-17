@@ -157,6 +157,11 @@ enum {
 #define QUEUE_DELAY_MSG   3
 #define QUEUE_DELAY_DATA  5
 
+enum {
+    CURSOR_ANIM_NORMAL,
+    CURSOR_ANIM_ON_CANCEL,
+};
+
 #define NUM_PLAYER_NAME_SPRITES 3
 #define NUM_PARTNER_NAME_SPRITES 3
 #define NUM_CHOOSE_PKMN_SPRITES 6 // JP creates all 6 Choose-Pokémon sprites
@@ -185,6 +190,7 @@ static void LoadTradeBgGfx(u8 state);
 static void SetActiveMenuOptions(void);
 
 extern const u8 sTradeMonSpriteCoords[][2];
+extern const u8 sCursorMoveDestinations[][4][6];
 extern const struct SpriteTemplate sSpriteTemplate_MenuText;
 extern const struct SpriteTemplate sSpriteTemplate_Cursor;
 extern const u8 *const sActionTexts[];
@@ -1259,152 +1265,44 @@ static void CB1_UpdateLink(void)
         Leader_HandleCommunication();
 }
 
-__attribute__((naked)) void sub_08078650(void)
+static u8 GetNewCursorPosition(u8 oldPosition, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r2, _08078684\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	ldr r4, _08078688\n\t"
-        "	lsls r2, r1, #1\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r3, #0x38\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	adds r2, r2, r4\n\t"
-        "_08078676:\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0807868C\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	b _08078694\n\t"
-        "	.align 2, 0\n\t"
-        "_08078684: .4byte sTradeMenu\n\t"
-        "_08078688: .4byte gUnknown_83008E4\n\t"
-        "_0807868C:\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #5\n\t"
-        "	ble _08078676\n\t"
-        "_08078694:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    u8 newPosition = 0;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (sTradeMenu->optionsActive[sCursorMoveDestinations[oldPosition][direction][i]] == TRUE)
+        {
+            newPosition = sCursorMoveDestinations[oldPosition][direction][i];
+            break;
+        }
+    }
+
+    return newPosition;
 }
 
-__attribute__((naked)) void TradeMenuMoveCursor(void)
+static void TradeMenuMoveCursor(u8 *cursorPosition, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	bl sub_08078650\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0xc\n\t"
-        "	bne _080786F4\n\t"
-        "	ldr r5, _080786EC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x34\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _080786F0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r2, #0x34\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xe8\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	b _0807873C\n\t"
-        "	.align 2, 0\n\t"
-        "_080786EC: .4byte sTradeMenu\n\t"
-        "_080786F0: .4byte gSprites\n\t"
-        "_080786F4:\n\t"
-        "	ldr r4, _08078750\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x34\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r5, _08078754\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	adds r4, #0x34\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldr r2, _08078758\n\t"
-        "	lsls r3, r6, #1\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, #0x20\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "_0807873C:\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	cmp r0, r6\n\t"
-        "	beq _08078748\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "_08078748:\n\t"
-        "	strb r6, [r7]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078750: .4byte sTradeMenu\n\t"
-        "_08078754: .4byte gSprites\n\t"
-        "_08078758: .4byte gUnknown_8300A1C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 newPosition = GetNewCursorPosition(*cursorPosition, direction);
+
+    if (newPosition == (PARTY_SIZE * 2)) // CANCEL
+    {
+        StartSpriteAnim(&gSprites[sTradeMenu->cursorSpriteId], CURSOR_ANIM_ON_CANCEL);
+        gSprites[sTradeMenu->cursorSpriteId].x = 0xE8; // JP: DISPLAY_WIDTH - 8
+        gSprites[sTradeMenu->cursorSpriteId].y = DISPLAY_HEIGHT;
+    }
+    else
+    {
+        StartSpriteAnim(&gSprites[sTradeMenu->cursorSpriteId], CURSOR_ANIM_NORMAL);
+        gSprites[sTradeMenu->cursorSpriteId].x = sTradeMonSpriteCoords[newPosition][0] * 8 + 32;
+        gSprites[sTradeMenu->cursorSpriteId].y = sTradeMonSpriteCoords[newPosition][1] * 8;
+    }
+
+    if (*cursorPosition != newPosition)
+        PlaySE(SE_SELECT);
+
+    *cursorPosition = newPosition;
 }
 
 __attribute__((naked)) void sub_0807875C(void)

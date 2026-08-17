@@ -231,6 +231,9 @@ gUnknown_83008DC: @ 0x83008DC
 gUnknown_83008E4: @ 0x83008E4
 	.incbin "baserom_jp.gba", 0x3008e4, 0x138
 
+	.globl sCursorMoveDestinations
+	.set sCursorMoveDestinations, gUnknown_83008E4
+
 	.globl gUnknown_8300A1C
 gUnknown_8300A1C: @ 0x8300A1C
 	.incbin "baserom_jp.gba", 0x300a1c, 0x1a
