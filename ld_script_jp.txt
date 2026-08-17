@@ -3241,7 +3241,7 @@ SECTIONS {
         src/trade.o(.text.CB_ExitCanceledTrade);
         src/trade.o(.text.CB_WaitToStartRfuTrade);
         src/trade.o(.text.CB_PartnersMonWasInvalid);
-        src/trade.o(.text.sub_08078FC0);
+        src/trade.o(.text.RunTradeMenuCallback);
         src/trade.o(.text.SetSelectedMon);
         src/trade.o(.text.sub_080790C8);
         src/trade.o(.text.sub_0807946C);

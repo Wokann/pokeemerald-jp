@@ -175,7 +175,6 @@ enum {
 #define NUM_PARTNER_NAME_SPRITES 3
 #define NUM_CHOOSE_PKMN_SPRITES 6 // JP creates all 6 Choose-Pokémon sprites
 
-void sub_08078FC0(void);
 u32 sub_08079AD4(void);
 extern void CB2_ReturnToFieldFromMultiplayer(void);
 void sub_080790C8(u8 side);
@@ -851,7 +850,7 @@ static void CB_StartLinkTrade(void)
 
 static void CB2_TradeMenu(void)
 {
-    sub_08078FC0();
+    RunTradeMenuCallback();
     sub_08079AFC();
 
     // As long as drawSelectedMonState is 0, these do nothing
@@ -1736,99 +1735,63 @@ static void CB_PartnersMonWasInvalid(void)
     }
 }
 
-__attribute__((naked)) void sub_08078FC0(void)
+static void RunTradeMenuCallback(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08078FD8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x11\n\t"
-        "	bhi _0807908C\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08078FDC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078FD8: .4byte sTradeMenu\n\t"
-        "_08078FDC: .4byte 0x08078FE0\n\t"
-        "_08078FE0: @ jump table\n\t"
-        "	.4byte _08079028 @ case 0\n\t"
-        "	.4byte _0807902E @ case 1\n\t"
-        "	.4byte _08079034 @ case 2\n\t"
-        "	.4byte _0807903A @ case 3\n\t"
-        "	.4byte _08079040 @ case 4\n\t"
-        "	.4byte _0807908C @ case 5\n\t"
-        "	.4byte _08079046 @ case 6\n\t"
-        "	.4byte _0807904C @ case 7\n\t"
-        "	.4byte _08079052 @ case 8\n\t"
-        "	.4byte _08079058 @ case 9\n\t"
-        "	.4byte _0807905E @ case 10\n\t"
-        "	.4byte _08079064 @ case 11\n\t"
-        "	.4byte _0807906A @ case 12\n\t"
-        "	.4byte _08079070 @ case 13\n\t"
-        "	.4byte _08079076 @ case 14\n\t"
-        "	.4byte _0807907C @ case 15\n\t"
-        "	.4byte _08079082 @ case 16\n\t"
-        "	.4byte _08079088 @ case 17\n\t"
-        "_08079028:\n\t"
-        "	bl CB_ProcessMenuInput\n\t"
-        "	b _0807908C\n\t"
-        "_0807902E:\n\t"
-        "	bl CB_ProcessSelectedMonInput\n\t"
-        "	b _0807908C\n\t"
-        "_08079034:\n\t"
-        "	bl CB_ShowTradeMonSummaryScreen\n\t"
-        "	b _0807908C\n\t"
-        "_0807903A:\n\t"
-        "	bl CB_ProcessConfirmTradeInput\n\t"
-        "	b _0807908C\n\t"
-        "_08079040:\n\t"
-        "	bl CB_ProcessCancelTradeInput\n\t"
-        "	b _0807908C\n\t"
-        "_08079046:\n\t"
-        "	bl CB_SetSelectedMons\n\t"
-        "	b _0807908C\n\t"
-        "_0807904C:\n\t"
-        "	bl CB_PrintIsThisTradeOkay\n\t"
-        "	b _0807908C\n\t"
-        "_08079052:\n\t"
-        "	bl CB_HandleTradeCanceled\n\t"
-        "	b _0807908C\n\t"
-        "_08079058:\n\t"
-        "	bl CB_FadeToStartTrade\n\t"
-        "	b _0807908C\n\t"
-        "_0807905E:\n\t"
-        "	bl CB_WaitToStartTrade\n\t"
-        "	b _0807908C\n\t"
-        "_08079064:\n\t"
-        "	bl CB_InitExitCanceledTrade\n\t"
-        "	b _0807908C\n\t"
-        "_0807906A:\n\t"
-        "	bl CB_ExitCanceledTrade\n\t"
-        "	b _0807908C\n\t"
-        "_08079070:\n\t"
-        "	bl CB_StartLinkTrade\n\t"
-        "	b _0807908C\n\t"
-        "_08079076:\n\t"
-        "	bl CB_InitConfirmTradePrompt\n\t"
-        "	b _0807908C\n\t"
-        "_0807907C:\n\t"
-        "	bl CB_ChooseMonAfterButtonPress\n\t"
-        "	b _0807908C\n\t"
-        "_08079082:\n\t"
-        "	bl CB_WaitToStartRfuTrade\n\t"
-        "	b _0807908C\n\t"
-        "_08079088:\n\t"
-        "	bl CB_PartnersMonWasInvalid\n\t"
-        "_0807908C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sTradeMenu->callbackId)
+    {
+    case CB_MAIN_MENU:
+        CB_ProcessMenuInput();
+        break;
+    case CB_SELECTED_MON:
+        CB_ProcessSelectedMonInput();
+        break;
+    case CB_SHOW_MON_SUMMARY:
+        CB_ShowTradeMonSummaryScreen();
+        break;
+    case CB_CONFIRM_TRADE_PROMPT:
+        CB_ProcessConfirmTradeInput();
+        break;
+    case CB_CANCEL_TRADE_PROMPT:
+        CB_ProcessCancelTradeInput();
+        break;
+    case CB_SET_SELECTED_MONS:
+        CB_SetSelectedMons();
+        break;
+    case CB_PRINT_IS_THIS_OKAY:
+        CB_PrintIsThisTradeOkay();
+        break;
+    case CB_HANDLE_TRADE_CANCELED:
+        CB_HandleTradeCanceled();
+        break;
+    case CB_FADE_TO_START_TRADE:
+        CB_FadeToStartTrade();
+        break;
+    case CB_WAIT_TO_START_TRADE:
+        CB_WaitToStartTrade();
+        break;
+    case CB_INIT_EXIT_CANCELED_TRADE:
+        CB_InitExitCanceledTrade();
+        break;
+    case CB_EXIT_CANCELED_TRADE:
+        CB_ExitCanceledTrade();
+        break;
+    case CB_START_LINK_TRADE:
+        CB_StartLinkTrade();
+        break;
+    case CB_INIT_CONFIRM_TRADE_PROMPT:
+        CB_InitConfirmTradePrompt();
+        break;
+    case CB_UNUSED_CLOSE_MSG:
+        CB_ChooseMonAfterButtonPress();
+        break;
+    case CB_WAIT_TO_START_RFU_TRADE:
+        CB_WaitToStartRfuTrade();
+        break;
+    case CB_PARTNER_MON_INVALID:
+        CB_PartnersMonWasInvalid();
+        break;
+  //case CB_IDLE: is nop
+    }
 }
 
 __attribute__((naked)) void SetSelectedMon(u8 cursorPosition)
