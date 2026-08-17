@@ -548,6 +548,9 @@ EventScript_WirelessBoxResults: @ 0x8247869
 gUnknown_8247C79: @ 0x8247C79
 	.include "data/scripts/gUnknown_8247C79.inc"
 
+	.globl gText_PleaseWaitForLink
+	.set gText_PleaseWaitForLink, gUnknown_8247C79
+
 	.globl gUnknown_8247C97
 gUnknown_8247C97: @ 0x8247C97
 	.include "data/scripts/gUnknown_8247C97.inc"

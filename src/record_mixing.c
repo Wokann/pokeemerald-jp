@@ -7,7 +7,7 @@ __attribute__((naked)) void RecordMixingPlayerSpotTriggered()
         ".code 16\n\t"
         "	push {lr}\n\t"
         "	ldr r0, _080E63D0\n\t"
-        "	bl sub_080B2F30\n\t"
+        "	bl CreateTask_EnterCableClubSeat\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"

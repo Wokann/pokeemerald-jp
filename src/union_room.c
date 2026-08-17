@@ -1596,7 +1596,7 @@ static void Task_CreateTradeMenu(u8 taskId)
     DestroyTask(taskId);
 }
 
-u8 EvolutionSparkles_CircleInward(void)
+u8 CreateTask_CreateTradeMenu(void)
 {
     return CreateTask(Task_CreateTradeMenu, 0);
 }

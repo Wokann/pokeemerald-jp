@@ -4,14 +4,18 @@
 #include "battle_setup.h"
 #include "cable_club.h"
 #include "constants/field_weather.h"
+#include "constants/mystery_gift.h"
 #include "constants/songs.h"
+#include "constants/trade.h"
 #include "constants/trainers.h"
 #include "data.h"
 #include "event_data.h"
+#include "field_specials.h"
 #include "field_message_box.h"
 #include "link.h"
 #include "main.h"
 #include "menu.h"
+#include "mystery_gift.h"
 #include "overworld.h"
 #include "palette.h"
 #include "party_menu.h"
@@ -19,6 +23,7 @@
 #include "script_pokemon_util.h"
 #include "start_menu.h"
 #include "string_util.h"
+#include "trade.h"
 #include "trainer_card.h"
 #include "window.h"
 
@@ -57,6 +62,9 @@ extern const u8 gText_AwaitingLinkup[];
 extern struct Pokemon gUnknown_202412C[];
 extern void TrainerCard_GenerateCardForPlayer(struct TrainerCard *trainerCard);
 extern struct LinkPlayer gLocalLinkPlayer;
+extern const u8 sTrainerCardColorNames[][5];
+extern const u8 gText_PleaseWaitForLink[];
+extern void sub_0809FDEC(void);
 
 static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
 {
@@ -892,465 +900,186 @@ static void CB2_ReturnFromUnionRoomBattle(void)
     RunTasks();
 }
 
-__attribute__((naked)) void sub_080B2D68(void)
+void CB2_ReturnFromCableClubBattle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r2, _080B2DB8\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	movs r1, #0x21\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "	bl Overworld_ResetMapMusic\n\t"
-        "	bl LoadPlayerParty\n\t"
-        "	bl SavePlayerBag\n\t"
-        "	bl sub_0813BF34\n\t"
-        "	ldr r0, _080B2DBC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _080B2E0E\n\t"
-        "	ldr r0, _080B2DC0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r5, #1\n\t"
-        "	eors r0, r5\n\t"
-        "	bl UpdatePlayerLinkBattleRecords\n\t"
-        "	ldr r0, _080B2DC4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2E0E\n\t"
-        "	ldr r0, _080B2DC8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2DCC\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B2DF0\n\t"
-        "	b _080B2E0E\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2DB8: .4byte gBattleTypeFlags\n\t"
-        "_080B2DBC: .4byte gSpecialVar_0x8004\n\t"
-        "_080B2DC0: .4byte gLocalLinkPlayerId\n\t"
-        "_080B2DC4: .4byte gWirelessCommType\n\t"
-        "_080B2DC8: .4byte gBattleOutcome\n\t"
-        "_080B2DCC:\n\t"
-        "	ldr r4, _080B2DEC\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	eors r0, r5\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r4, #4\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl MysteryGift_TryIncrementStat\n\t"
-        "	b _080B2E0E\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2DEC: .4byte gLinkPlayers\n\t"
-        "_080B2DF0:\n\t"
-        "	ldr r4, _080B2E1C\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	eors r0, r5\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r4, #4\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl MysteryGift_TryIncrementStat\n\t"
-        "_080B2E0E:\n\t"
-        "	bl InUnionRoom\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B2E28\n\t"
-        "	ldr r1, _080B2E20\n\t"
-        "	ldr r0, _080B2E24\n\t"
-        "	b _080B2E2C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2E1C: .4byte gLinkPlayers\n\t"
-        "_080B2E20: .4byte gMain\n\t"
-        "_080B2E24: .4byte CB2_ReturnFromUnionRoomBattle + 1\n\t"
-        "_080B2E28:\n\t"
-        "	ldr r1, _080B2E3C\n\t"
-        "	ldr r0, _080B2E40\n\t"
-        "_080B2E2C:\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, _080B2E44\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2E3C: .4byte gMain\n\t"
-        "_080B2E40: .4byte CB2_ReturnToFieldFromMultiplayer + 1\n\t"
-        "_080B2E44: .4byte sub_0809FDEC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gBattleTypeFlags &= ~BATTLE_TYPE_LINK_IN_BATTLE;
+    Overworld_ResetMapMusic();
+    LoadPlayerParty();
+    SavePlayerBag();
+    UpdateTrainerFansAfterLinkBattle();
+
+    if (gSpecialVar_0x8004 == USING_SINGLE_BATTLE || gSpecialVar_0x8004 == USING_DOUBLE_BATTLE)
+    {
+        UpdatePlayerLinkBattleRecords(gLocalLinkPlayerId ^ 1);
+        if (gWirelessCommType)
+        {
+            switch (gBattleOutcome)
+            {
+            case B_OUTCOME_WON:
+                MysteryGift_TryIncrementStat(CARD_STAT_BATTLES_WON, gLinkPlayers[GetMultiplayerId() ^ 1].trainerId);
+                break;
+            case B_OUTCOME_LOST:
+                MysteryGift_TryIncrementStat(CARD_STAT_BATTLES_LOST, gLinkPlayers[GetMultiplayerId() ^ 1].trainerId);
+                break;
+            }
+        }
+    }
+
+    if (InUnionRoom() == TRUE)
+        gMain.savedCallback = CB2_ReturnFromUnionRoomBattle;
+    else
+        gMain.savedCallback = CB2_ReturnToFieldFromMultiplayer;
+
+    SetMainCallback2(sub_0809FDEC);
 }
 
-__attribute__((naked)) void CleanupLinkRoomState(void)
+void CleanupLinkRoomState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B2E74\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _080B2E62\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r0, #5\n\t"
-        "	beq _080B2E62\n\t"
-        "	cmp r0, #9\n\t"
-        "	bne _080B2E6A\n\t"
-        "_080B2E62:\n\t"
-        "	bl LoadPlayerParty\n\t"
-        "	bl SavePlayerBag\n\t"
-        "_080B2E6A:\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	bl SetWarpDestinationToDynamicWarp\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2E74: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSpecialVar_0x8004 == USING_SINGLE_BATTLE
+     || gSpecialVar_0x8004 == USING_DOUBLE_BATTLE
+     || gSpecialVar_0x8004 == USING_MULTI_BATTLE
+     || gSpecialVar_0x8004 == USING_BATTLE_TOWER)
+    {
+        LoadPlayerParty();
+        SavePlayerBag();
+    }
+    SetWarpDestinationToDynamicWarp(WARP_ID_DYNAMIC);
 }
 
-__attribute__((naked)) void ExitLinkRoom(void)
+void ExitLinkRoom(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl QueueExitLinkRoomKey\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    QueueExitLinkRoomKey();
 }
 
-__attribute__((naked)) void sub_080B2E84(void)
+static void Task_EnterCableClubSeat(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B2EA8\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2EC8\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080B2EAC\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2EB6\n\t"
-        "	b _080B2F28\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2EA8: .4byte gTasks\n\t"
-        "_080B2EAC:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B2EE8\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080B2F14\n\t"
-        "	b _080B2F28\n\t"
-        "_080B2EB6:\n\t"
-        "	ldr r0, _080B2EC4\n\t"
-        "	bl ShowFieldMessage\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _080B2F28\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2EC4: .4byte gUnknown_8247C79\n\t"
-        "_080B2EC8:\n\t"
-        "	bl IsFieldMessageBoxHidden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2F28\n\t"
-        "	bl sub_08086BEC\n\t"
-        "	ldr r0, _080B2EE4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetLocalLinkPlayerId\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _080B2F28\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2EE4: .4byte gSpecialVar_0x8005\n\t"
-        "_080B2EE8:\n\t"
-        "	bl sub_08086B78\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2EFA\n\t"
-        "	cmp r0, #1\n\t"
-        "	blo _080B2F28\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B2F0E\n\t"
-        "	b _080B2F28\n\t"
-        "_080B2EFA:\n\t"
-        "	bl HideFieldMessageBox\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	bl sub_08086C28\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SwitchTaskToFollowupFunc\n\t"
-        "	b _080B2F28\n\t"
-        "_080B2F0E:\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _080B2F28\n\t"
-        "_080B2F14:\n\t"
-        "	bl sub_08086C00\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_081978F0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "_080B2F28:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    case 0:
+        ShowFieldMessage(gText_PleaseWaitForLink);
+        task->tState = 1;
+        break;
+    case 1:
+        if (IsFieldMessageBoxHidden())
+        {
+            SetInCableClubSeat();
+            SetLocalLinkPlayerId(gSpecialVar_0x8005);
+            task->tState = 2;
+        }
+        break;
+    case 2:
+        switch (GetCableClubPartnersReady())
+        {
+        case CABLE_SEAT_WAITING:
+            break;
+        case CABLE_SEAT_SUCCESS:
+            // Partners linked and ready, switch to relevant link function
+            HideFieldMessageBox();
+            task->tState = 0;
+            SetStartedCableClubActivity();
+            SwitchTaskToFollowupFunc(taskId);
+            break;
+        case CABLE_SEAT_FAILED:
+            task->tState = 3;
+            break;
+        }
+        break;
+    case 3:
+        // Exit, failure
+        SetLinkWaitingForScript();
+        EraseFieldMessageBox(TRUE);
+        DestroyTask(taskId);
+        ScriptContext_Enable();
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080B2F30(void)
+void CreateTask_EnterCableClubSeat(TaskFunc followupFunc)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r4, _080B2F54\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl SetTaskFuncWithFollowupFunc\n\t"
-        "	bl ScriptContext_Stop\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2F54: .4byte sub_080B2E84 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(Task_EnterCableClubSeat, 80);
+    SetTaskFuncWithFollowupFunc(taskId, Task_EnterCableClubSeat, followupFunc);
+    ScriptContext_Stop();
 }
 
-__attribute__((naked)) void sub_080B2F58(void)
+static void Task_StartWiredTrade(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B2F7C\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2F9C\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080B2F80\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2F8A\n\t"
-        "	b _080B2FE0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2F7C: .4byte gTasks\n\t"
-        "_080B2F80:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B2FB0\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080B2FCC\n\t"
-        "	b _080B2FE0\n\t"
-        "_080B2F8A:\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FadeScreen\n\t"
-        "	bl ClearLinkCallback_2\n\t"
-        "	b _080B2FC0\n\t"
-        "_080B2F9C:\n\t"
-        "	ldr r0, _080B2FAC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B2FE0\n\t"
-        "	b _080B2FC0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2FAC: .4byte gPaletteFade\n\t"
-        "_080B2FB0:\n\t"
-        "	ldr r1, _080B2FC8\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	bl m4aMPlayAllStop\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "_080B2FC0:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	b _080B2FE0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2FC8: .4byte gSelectedTradeMonPositions\n\t"
-        "_080B2FCC:\n\t"
-        "	ldr r0, _080B2FE8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B2FE0\n\t"
-        "	ldr r0, _080B2FEC\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B2FE0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2FE8: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_080B2FEC: .4byte CB2_StartCreateTradeMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    case 0:
+        LockPlayerFieldControls();
+        FadeScreen(FADE_TO_BLACK, 0);
+        ClearLinkCallback_2();
+        task->tState++;
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+            task->tState++;
+        break;
+    case 2:
+        gSelectedTradeMonPositions[TRADE_PLAYER] = 0;
+        gSelectedTradeMonPositions[TRADE_PARTNER] = 0;
+        m4aMPlayAllStop();
+        SetCloseLinkCallback();
+        task->tState++;
+        break;
+    case 3:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            SetMainCallback2(CB2_StartCreateTradeMenu);
+            DestroyTask(taskId);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080B2FF0(void)
+static void Task_StartWirelessTrade(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080B3014\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B3034\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080B3018\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B3022\n\t"
-        "	b _080B3078\n\t"
-        "	.align 2, 0\n\t"
-        "_080B3014: .4byte gUnknown_3005B68\n\t"
-        "_080B3018:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B3048\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080B3064\n\t"
-        "	b _080B3078\n\t"
-        "_080B3022:\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FadeScreen\n\t"
-        "	bl ClearLinkRfuCallback\n\t"
-        "	b _080B3058\n\t"
-        "_080B3034:\n\t"
-        "	ldr r0, _080B3044\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B3078\n\t"
-        "	b _080B3058\n\t"
-        "	.align 2, 0\n\t"
-        "_080B3044: .4byte gPaletteFade\n\t"
-        "_080B3048:\n\t"
-        "	ldr r1, _080B3060\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	bl m4aMPlayAllStop\n\t"
-        "	bl SetLinkStandbyCallback\n\t"
-        "_080B3058:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _080B3078\n\t"
-        "	.align 2, 0\n\t"
-        "_080B3060: .4byte gSelectedTradeMonPositions\n\t"
-        "_080B3064:\n\t"
-        "	bl IsLinkTaskFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B3078\n\t"
-        "	bl EvolutionSparkles_CircleInward\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B3078:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    switch (tState)
+    {
+    case 0:
+        LockPlayerFieldControls();
+        FadeScreen(FADE_TO_BLACK, 0);
+        ClearLinkRfuCallback();
+        tState++;
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+            tState++;
+        break;
+    case 2:
+        gSelectedTradeMonPositions[TRADE_PLAYER] = 0;
+        gSelectedTradeMonPositions[TRADE_PARTNER] = 0;
+        m4aMPlayAllStop();
+        SetLinkStandbyCallback();
+        tState++;
+        break;
+    case 3:
+        if (IsLinkTaskFinished())
+        {
+            CreateTask_CreateTradeMenu();
+            DestroyTask(taskId);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void PlayerEnteredTradeSeat(void)
+void PlayerEnteredTradeSeat(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B3094\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B309C\n\t"
-        "	ldr r0, _080B3098\n\t"
-        "	bl sub_080B2F30\n\t"
-        "	b _080B30A2\n\t"
-        "	.align 2, 0\n\t"
-        "_080B3094: .4byte gWirelessCommType\n\t"
-        "_080B3098: .4byte sub_080B2FF0 + 1\n\t"
-        "_080B309C:\n\t"
-        "	ldr r0, _080B30A8\n\t"
-        "	bl sub_080B2F30\n\t"
-        "_080B30A2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B30A8: .4byte sub_080B2F58 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWirelessCommType != 0)
+        CreateTask_EnterCableClubSeat(Task_StartWirelessTrade);
+    else
+        CreateTask_EnterCableClubSeat(Task_StartWiredTrade);
 }
 
-__attribute__((naked)) void sub_080B30AC(void)
+static void UNUSED CreateTask_StartWiredTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080B30BC\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B30BC: .4byte sub_080B2F58 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateTask(Task_StartWiredTrade, 80);
 }
 
 void nullsub_37(void) {}
@@ -1368,7 +1097,7 @@ __attribute__((naked)) void ColosseumPlayerSpotTriggered(void)
         "	cmp r0, #0\n\t"
         "	beq _080B30F0\n\t"
         "	ldr r0, _080B30EC\n\t"
-        "	bl sub_080B2F30\n\t"
+        "	bl CreateTask_EnterCableClubSeat\n\t"
         "	b _080B30F6\n\t"
         "	.align 2, 0\n\t"
         "_080B30E0: .4byte gLinkType\n\t"
@@ -1377,7 +1106,7 @@ __attribute__((naked)) void ColosseumPlayerSpotTriggered(void)
         "_080B30EC: .4byte Task_StartWirelessCableClubBattle + 1\n\t"
         "_080B30F0:\n\t"
         "	ldr r0, _080B30FC\n\t"
-        "	bl sub_080B2F30\n\t"
+        "	bl CreateTask_EnterCableClubSeat\n\t"
         "_080B30F6:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -1399,7 +1128,7 @@ __attribute__((naked)) void sub_080B3100(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B3114: .4byte sub_080B2E84 + 1\n\t"
+        "_080B3114: .4byte Task_EnterCableClubSeat + 1\n\t"
         ".syntax divided\n\t"
     );
 }

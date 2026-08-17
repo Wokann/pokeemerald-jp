@@ -6694,6 +6694,9 @@ sBadgeFlagsJp: @ 0x852B220
 	.globl sWindowTemplate_LinkPlayerCount
 	.set sWindowTemplate_LinkPlayerCount, sBadgeFlagsJp + 0x1C
 
+	.globl sTrainerCardColorNames
+	.set sTrainerCardColorNames, sBadgeFlagsJp + 0x1F
+
 	.incbin "baserom_jp.gba", 0x52b230, 0x1a8
 
 	.globl sDirectionalApproachDistanceFuncs
