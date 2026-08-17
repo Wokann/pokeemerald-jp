@@ -15258,7 +15258,7 @@ __attribute__((naked)) void sub_081B8B20(void)
     );
 }
 
-__attribute__((naked)) void GetPartyIdFromBattleSlot(void)
+__attribute__((naked)) u8 GetPartyIdFromBattleSlot(u8 slotId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15462,48 +15462,15 @@ __attribute__((naked)) void pokemon_change_order(void)
     );
 }
 
-__attribute__((naked)) void UpdatePartyToFieldOrder(void)
+static void UpdatePartyToFieldOrder(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r4, #0x96\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Alloc\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, _081B8D6C\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl memcpy\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r6, #0x64\n\t"
-        "_081B8D3A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetPartyIdFromBattleSlot\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r1, _081B8D6C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	muls r1, r6, r1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #5\n\t"
-        "	bls _081B8D3A\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Free\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8D6C: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *partyBuffer = Alloc(sizeof(gPlayerParty));
+    u8 i;
+
+    memcpy(partyBuffer, gPlayerParty, sizeof(gPlayerParty));
+    for (i = 0; i < PARTY_SIZE; i++)
+        memcpy(&gPlayerParty[(u8)GetPartyIdFromBattleSlot(i)], &partyBuffer[i], sizeof(struct Pokemon));
+    Free(partyBuffer);
 }
 
 __attribute__((naked)) void sub_081B8D70(void)
