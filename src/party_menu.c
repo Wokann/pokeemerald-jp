@@ -947,7 +947,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	cmp r5, #2\n\t"
         "	bls _081B0534\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_081B09C4\n\t"
+        "	bl DisplayPartyPokemonDataForMultiBattle\n\t"
         "	ldr r0, _081B04F8\n\t"
         "	subs r1, r5, #3\n\t"
         "	lsls r1, r1, #5\n\t"
@@ -1255,88 +1255,28 @@ static void DisplayPartyPokemonDataToTeachMove(u8 slot, u16 item, u8 tutor)
     }
 }
 
-__attribute__((naked)) void sub_081B09C4(void)
+static void DisplayPartyPokemonDataForMultiBattle(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081B09F4\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r6, r1, r2\n\t"
-        "	subs r0, #3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r5, _081B09F8\n\t"
-        "	lsrs r0, r0, #0x13\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r7, r0, r5\n\t"
-        "	ldrh r0, [r7]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B09FC\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	bl DrawEmptySlot\n\t"
-        "	b _081B0A60\n\t"
-        "	.align 2, 0\n\t"
-        "_081B09F4: .4byte sPartyMenuBoxes\n\t"
-        "_081B09F8: .4byte gMultiPartnerParty\n\t"
-        "_081B09FC:\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r4, [r2]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl _call_via_r4\n\t"
-        "	ldr r4, _081B0A6C\n\t"
-        "	adds r5, #4\n\t"
-        "	add r5, r8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringGet_Nickname\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	adds r3, #4\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonBarDetail\n\t"
-        "	ldrb r0, [r7, #0xf]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl DisplayPartyPokemonLevel\n\t"
-        "	ldrb r0, [r7, #0x1c]\n\t"
-        "	ldrh r1, [r7]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	bl DisplayPartyPokemonGender\n\t"
-        "	ldrh r0, [r7, #0x10]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl DisplayPartyPokemonHP\n\t"
-        "	ldrh r0, [r7, #0x12]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl DisplayPartyPokemonMaxHP\n\t"
-        "	ldrh r0, [r7, #0x10]\n\t"
-        "	ldrh r1, [r7, #0x12]\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl DisplayPartyPokemonHPBar\n\t"
-        "_081B0A60:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0A6C: .4byte gStringVar1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct PartyMenuBox *menuBox = &sPartyMenuBoxes[slot];
+    u8 actualSlot = slot - MULTI_PARTY_SIZE;
+
+    if (gMultiPartnerParty[actualSlot].species == SPECIES_NONE)
+    {
+        DrawEmptySlot(menuBox->windowId);
+    }
+    else
+    {
+        menuBox->infoRects->blitFunc(menuBox->windowId, 0, 0, 0, 0, FALSE);
+        StringCopy(gStringVar1, gMultiPartnerParty[actualSlot].nickname);
+        StringGet_Nickname(gStringVar1);
+        // JP: no ConvertInternationalPlayerName (US converts partner name here)
+        DisplayPartyPokemonBarDetail(menuBox->windowId, gStringVar1, 0, menuBox->infoRects->dimensions);
+        DisplayPartyPokemonLevel(gMultiPartnerParty[actualSlot].level, menuBox);
+        DisplayPartyPokemonGender(gMultiPartnerParty[actualSlot].gender, gMultiPartnerParty[actualSlot].species, gMultiPartnerParty[actualSlot].nickname, menuBox);
+        DisplayPartyPokemonHP(gMultiPartnerParty[actualSlot].hp, menuBox);
+        DisplayPartyPokemonMaxHP(gMultiPartnerParty[actualSlot].maxhp, menuBox);
+        DisplayPartyPokemonHPBar(gMultiPartnerParty[actualSlot].hp, gMultiPartnerParty[actualSlot].maxhp, menuBox);
+    }
 }
 
 __attribute__((naked)) void RenderPartyMenuBoxes(void)

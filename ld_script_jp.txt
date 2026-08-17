@@ -8553,7 +8553,7 @@ SECTIONS {
         src/party_menu.o(.text.DisplayPartyPokemonDataForBattlePyramidHeldItem);
         src/party_menu.o(.text.DisplayPartyPokemonDataForMoveTutorOrEvolutionItem);
         src/party_menu.o(.text.DisplayPartyPokemonDataToTeachMove);
-        src/party_menu.o(.text.sub_081B09C4);
+        src/party_menu.o(.text.DisplayPartyPokemonDataForMultiBattle);
         src/party_menu.o(.text.RenderPartyMenuBoxes);
         src/party_menu.o(.text.GetPartyMiscGraphicsTile);
         src/party_menu.o(.text.party_menu_add_per_mon_objects_internal);
