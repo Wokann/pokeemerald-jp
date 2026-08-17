@@ -94,7 +94,7 @@ struct TradeMenu
 extern struct TradeMenu *sTradeMenu;
 extern u8 *sMenuTextTileBuffer;
 extern u8 *sMenuTextTileBuffers[];
-void sub_080799C0(u8 whichParty);
+static void RedrawPartyWindow(u8 whichParty);
 extern const struct BgTemplate gUnknown_8300C04[];
 extern const struct WindowTemplate gUnknown_8300C14[];
 extern void VBlankCB_TradeMenu(void);
@@ -214,6 +214,7 @@ extern const u32 gUnknown_82FFFC8[];
 extern const u8 gUnknown_8300A36[][2];
 extern const u8 gUnknown_8300A4E[][2];
 extern const u8 gUnknown_8300A1C[][2];
+extern const u8 gUnknown_82FEDCA[];
 extern const struct MenuAction sSelectTradeMonActions[];
 extern const struct WindowTemplate sTradeYesNoWindowTemplate;
 static void LoadTradeBgGfx(u8 state);
@@ -1684,8 +1685,8 @@ static void CB_HandleTradeCanceled(void)
             rbox_fill_rectangle(i + 14);
         }
 
-        sub_080799C0(TRADE_PLAYER);
-        sub_080799C0(TRADE_PARTNER);
+        RedrawPartyWindow(TRADE_PLAYER);
+        RedrawPartyWindow(TRADE_PARTNER);
         sTradeMenu->callbackId = CB_MAIN_MENU;
         gSprites[sTradeMenu->cursorSpriteId].invisible = FALSE;
     }
@@ -2529,63 +2530,15 @@ __attribute__((naked)) void PrintTradePartnerPartyNicknames(void)
     );
 }
 
-__attribute__((naked)) void sub_080799C0(u8 whichParty)
+static void RedrawPartyWindow(u8 whichParty)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r1, _08079A28\n\t"
-        "	lsls r2, r4, #4\n\t"
-        "	subs r2, r2, r4\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #0xf\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r6, #0\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyToBgTilemapBufferRect_ChangePalette\n\t"
-        "	movs r0, #1\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl PrintPartyLevelsAndGenders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl PrintPartyNicknames\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ShowTradePartyMonIcons\n\t"
-        "	ldr r0, _08079A2C\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	ldr r5, _08079A30\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, #0x72\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	ldr r2, _08079A34\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x18\n\t"
-        "	bl sub_08079D3C\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x74\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strb r6, [r0]\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079A28: .4byte gUnknown_82FEDCA\n\t"
-        "_08079A2C: .4byte gUnknown_8300AFC\n\t"
-        "_08079A30: .4byte sTradeMenu\n\t"
-        "_08079A34: .4byte 0x06010000\n\t"
-        ".syntax divided\n\t"
-    );
+    CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_82FEDCA, whichParty * 15, 0, 15, 17, 0);
+    CopyBgTilemapBufferToVram(1);
+    PrintPartyLevelsAndGenders(whichParty);
+    PrintPartyNicknames(whichParty);
+    ShowTradePartyMonIcons(whichParty);
+    sub_08079D3C(sActionTexts[TEXT_CHOOSE_MON], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
+    sTradeMenu->drawSelectedMonState[whichParty] = 0;
 }
 
 __attribute__((naked)) void sub_08079A38(void)

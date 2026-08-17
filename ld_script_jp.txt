@@ -3252,7 +3252,7 @@ SECTIONS {
         src/trade.o(.text.PrintPartyLevelsAndGenders);
         src/trade.o(.text.ShowTradePartyMonIcons);
         src/trade.o(.text.PrintTradePartnerPartyNicknames);
-        src/trade.o(.text.sub_080799C0);
+        src/trade.o(.text.RedrawPartyWindow);
         src/trade.o(.text.sub_08079A38);
         src/trade.o(.text.sub_08079A5C);
         src/trade.o(.text.sub_08079A80);
