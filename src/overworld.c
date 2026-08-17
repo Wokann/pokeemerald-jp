@@ -243,35 +243,12 @@ void SetGameStat(u8 index, u32 value)
         gSaveBlock1Ptr->gameStats[index] = value ^ gSaveBlock2Ptr->encryptionKey;
 }
 
-__attribute__((naked)) void ApplyNewEncryptionKeyToGameStats(u32 newKey)
+void ApplyNewEncryptionKeyToGameStats(u32 newKey)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r6, _08084214\n\t"
-        "_080841F4:\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	ldr r0, _08084218\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ApplyNewEncryptionKeyToWord\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0x3f\n\t"
-        "	bls _080841F4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08084214: .4byte gSaveBlock1Ptr\n\t"
-        "_08084218: .4byte 0x0000159C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < NUM_GAME_STATS; i++)
+        ApplyNewEncryptionKeyToWord(&gSaveBlock1Ptr->gameStats[i], newKey);
 }
 
 __attribute__((naked)) void LoadObjEventTemplatesFromHeader(void)
@@ -1061,43 +1038,9 @@ static void SetWarpDestinationToContinueGameWarp(void)
     sWarpDestination = gSaveBlock1Ptr->continueGameWarp;
 }
 
-__attribute__((naked)) void SetContinueGameWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
+void SetContinueGameWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 x, s8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	ldr r1, [sp, #0x18]\n\t"
-        "	ldr r0, _080848D0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	asrs r5, r5, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	asrs r6, r6, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	asrs r3, r3, #0x18\n\t"
-        "	str r3, [sp]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	bl SetWarpData\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080848D0: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    SetWarpData(&gSaveBlock1Ptr->continueGameWarp, mapGroup, mapNum, warpId, x, y);
 }
 
 __attribute__((naked)) void SetContinueGameWarpToHealLocation(u8 healLocationId)
@@ -2288,32 +2231,11 @@ __attribute__((naked)) void Overworld_ChangeMusicToDefault(void)
     );
 }
 
-__attribute__((naked)) void Overworld_ChangeMusicTo(u16 newMusic)
+void Overworld_ChangeMusicTo(u16 newMusic)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	bl GetCurrentMapMusic\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r1, r4\n\t"
-        "	beq _0808524C\n\t"
-        "	ldr r0, _08085254\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0808524C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl FadeOutAndPlayNewMapMusic\n\t"
-        "_0808524C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08085254: .4byte SPECIAL_sub_0813A164\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 currentMusic = GetCurrentMapMusic();
+    if (currentMusic != newMusic && currentMusic != MUS_ABNORMAL_WEATHER)
+        FadeOutAndPlayNewMapMusic(newMusic, 8);
 }
 
 
