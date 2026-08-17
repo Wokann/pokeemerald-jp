@@ -195,7 +195,7 @@ extern const u8 *const gUnknown_8300BDC[];
 static bool8 BufferTradeParties(void);
 void sub_0807A028(void);
 static void ComputePartyTradeableFlags(u8 whichParty);
-void sub_08079EE0(u8 side);
+static void ComputePartyHPBarLevels(u8 whichParty);
 void CB1_UpdateLink(void);
 static void SetSelectedMon(u8 cursorPosition);
 static void QueueAction(u16 delay, u8 actionId);
@@ -595,11 +595,11 @@ static void CB2_CreateTradeMenu(void)
         gMain.state++;
         break;
     case 20:
-        sub_08079EE0(TRADE_PLAYER);
+        ComputePartyHPBarLevels(TRADE_PLAYER);
         gMain.state++;
         break;
     case 21:
-        sub_08079EE0(TRADE_PARTNER);
+        ComputePartyHPBarLevels(TRADE_PARTNER);
         sub_08079FB4();
         gMain.state++;
         break;
@@ -2791,113 +2791,30 @@ static void ComputePartyTradeableFlags(u8 whichParty)
     }
 }
 
-__attribute__((naked)) void sub_08079EE0(u8 side)
+static void ComputePartyHPBarLevels(u8 whichParty)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08079EF0\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08079F50\n\t"
-        "	b _08079FA4\n\t"
-        "_08079EF0:\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _08079F48\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bhs _08079FA4\n\t"
-        "	adds r7, r1, #0\n\t"
-        "_08079F00:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08079F4C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl GetHPBarLevel\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x5d\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	blo _08079F00\n\t"
-        "	b _08079FA4\n\t"
-        "	.align 2, 0\n\t"
-        "_08079F48: .4byte sTradeMenu\n\t"
-        "_08079F4C: .4byte gPlayerParty\n\t"
-        "_08079F50:\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _08079FAC\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x37\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bhs _08079FA4\n\t"
-        "	adds r7, r1, #0\n\t"
-        "_08079F60:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08079FB0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl GetHPBarLevel\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x63\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x37\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	blo _08079F60\n\t"
-        "_08079FA4:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079FAC: .4byte sTradeMenu\n\t"
-        "_08079FB0: .4byte gEnemyParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    s16 curHp, maxHp;
+
+    switch (whichParty)
+    {
+    case TRADE_PLAYER:
+        for (i = 0; i < sTradeMenu->partyCounts[TRADE_PLAYER]; i++)
+        {
+            curHp = GetMonData3(&gPlayerParty[i], MON_DATA_HP);
+            maxHp = GetMonData3(&gPlayerParty[i], MON_DATA_MAX_HP);
+            sTradeMenu->hpBarLevels[TRADE_PLAYER][i] = GetHPBarLevel(curHp, maxHp);
+        }
+        break;
+    case TRADE_PARTNER:
+        for (i = 0; i < sTradeMenu->partyCounts[TRADE_PARTNER]; i++)
+        {
+            curHp = GetMonData3(&gEnemyParty[i], MON_DATA_HP);
+            maxHp = GetMonData3(&gEnemyParty[i], MON_DATA_MAX_HP);
+            sTradeMenu->hpBarLevels[TRADE_PARTNER][i] = GetHPBarLevel(curHp, maxHp);
+        }
+        break;
+    }
 }
 
 __attribute__((naked)) void sub_08079FB4(void)
