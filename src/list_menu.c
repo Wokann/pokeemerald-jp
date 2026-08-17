@@ -1293,62 +1293,36 @@ u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *arrowInfo, u16
 }
 
 
-__attribute__((naked)) u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType, s32 commonPos, s32 firstPos, s32 secondPos, s32 fullyDownThreshold, s32 tileTag, s32 palTag, u16 *scrollOffset)
+u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType, s32 commonPos, s32 firstPos, s32 secondPos, s32 fullyDownThreshold, s32 tileTag, s32 palTag, u16 *scrollOffset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	subs r0, #2\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _081AF19C\n\t"
-        "	ldr r0, _081AF198\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	strb r4, [r0, #1]\n\t"
-        "	strb r2, [r0, #2]\n\t"
-        "	movs r1, #3\n\t"
-        "	strb r1, [r0, #3]\n\t"
-        "	strb r4, [r0, #4]\n\t"
-        "	strb r3, [r0, #5]\n\t"
-        "	b _081AF1AE\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF198: .4byte gTempScrollArrowTemplate\n\t"
-        "_081AF19C:\n\t"
-        "	ldr r0, _081AF1D8\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	strb r2, [r0, #1]\n\t"
-        "	strb r4, [r0, #2]\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0, #3]\n\t"
-        "	strb r3, [r0, #4]\n\t"
-        "	strb r4, [r0, #5]\n\t"
-        "_081AF1AE:\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #6]\n\t"
-        "	ldr r0, [sp, #8]\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "	ldr r0, [sp, #0xc]\n\t"
-        "	strh r0, [r2, #0xa]\n\t"
-        "	ldr r0, [sp, #0x10]\n\t"
-        "	strh r0, [r2, #0xc]\n\t"
-        "	strb r1, [r2, #0xe]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ldr r1, [sp, #0x14]\n\t"
-        "	bl AddScrollIndicatorArrowPair\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF1D8: .4byte gTempScrollArrowTemplate\n\t"
-        ".syntax divided\n\t"
-    );
+    if (arrowType == SCROLL_ARROW_UP || arrowType == SCROLL_ARROW_DOWN)
+    {
+        gTempScrollArrowTemplate.firstArrowType = SCROLL_ARROW_UP;
+        gTempScrollArrowTemplate.firstX = commonPos;
+        gTempScrollArrowTemplate.firstY = firstPos;
+        gTempScrollArrowTemplate.secondArrowType = SCROLL_ARROW_DOWN;
+        gTempScrollArrowTemplate.secondX = commonPos;
+        gTempScrollArrowTemplate.secondY = secondPos;
+    }
+    else
+    {
+        gTempScrollArrowTemplate.firstArrowType = SCROLL_ARROW_LEFT;
+        gTempScrollArrowTemplate.firstX = firstPos;
+        gTempScrollArrowTemplate.firstY = commonPos;
+        gTempScrollArrowTemplate.secondArrowType = SCROLL_ARROW_RIGHT;
+        gTempScrollArrowTemplate.secondX = secondPos;
+        gTempScrollArrowTemplate.secondY = commonPos;
+    }
+
+    gTempScrollArrowTemplate.fullyUpThreshold = 0;
+    gTempScrollArrowTemplate.fullyDownThreshold = fullyDownThreshold;
+    gTempScrollArrowTemplate.tileTag = tileTag;
+    gTempScrollArrowTemplate.palTag = palTag;
+    gTempScrollArrowTemplate.palNum = 0;
+
+    return AddScrollIndicatorArrowPair(&gTempScrollArrowTemplate, scrollOffset);
 }
+
 
 void Task_ScrollIndicatorArrowPair(u8 taskId)
 {
