@@ -34,6 +34,15 @@ extern void Task_WateringBerryTreeAnim_3(u8 taskId);
 extern u8 sub_0808B634(void);
 extern void sub_0808BB8C(u8 direction);
 extern u8 sub_08092F08(u32 direction);
+extern void CaveEntranceSpriteCallback1(struct Sprite *sprite);
+extern void CaveEntranceSpriteCallback2(struct Sprite *sprite);
+extern void CaveEntranceSpriteCallbackEnd(struct Sprite *sprite);
+extern void ShrubEntranceSpriteCallback1(struct Sprite *sprite);
+extern void ShrubEntranceSpriteCallback2(struct Sprite *sprite);
+extern void ShrubEntranceSpriteCallbackEnd(struct Sprite *sprite);
+extern void TreeEntranceSpriteCallback1(struct Sprite *sprite);
+extern void TreeEntranceSpriteCallback2(struct Sprite *sprite);
+extern void TreeEntranceSpriteCallbackEnd(struct Sprite *sprite);
 extern void FieldCallback_SecretBaseCave(void);
 extern void FieldCallback_SecretBaseTree(void);
 extern void FieldCallback_SecretBaseShrub(void);
@@ -635,73 +644,35 @@ __attribute__((naked)) bool8 FldEff_SecretPowerCave()
     );
 }
 
-__attribute__((naked)) void CaveEntranceSpriteCallback1(void)
+void CaveEntranceSpriteCallback1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x83\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r0, _080FAA14\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAA14: .4byte ShrubEntranceSpriteCallback2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_M_ROCK_THROW);
+    sprite->data[0] = 0;
+    sprite->callback = ShrubEntranceSpriteCallback2;
 }
 
-__attribute__((naked)) void ShrubEntranceSpriteCallback2(void)
+
+void ShrubEntranceSpriteCallback2(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r2, [r1, #0x2e]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0x27\n\t"
-        "	bgt _080FAA38\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	bne _080FAA40\n\t"
-        "	bl ToggleSecretBaseEntranceMetatile\n\t"
-        "	b _080FAA40\n\t"
-        "_080FAA38:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	ldr r0, _080FAA44\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_080FAA40:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAA44: .4byte CaveEntranceSpriteCallbackEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[0] < 40)
+    {
+        if (++sprite->data[0] == 20)
+            ToggleSecretBaseEntranceMetatile();
+    }
+    else
+    {
+        sprite->data[0] = 0;
+        sprite->callback = CaveEntranceSpriteCallbackEnd;
+    }
 }
 
-__attribute__((naked)) void CaveEntranceSpriteCallbackEnd(void)
+
+void CaveEntranceSpriteCallbackEnd(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0x37\n\t"
-        "	bl FieldEffectStop\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldEffectStop(sprite, FLDEFF_SECRET_POWER_CAVE);
+    ScriptContext_Enable();
 }
+
 
 void FieldCallback_SecretBaseShrub(void)
 {
@@ -800,83 +771,36 @@ __attribute__((naked)) bool8 FldEff_SecretPowerTree()
     );
 }
 
-__attribute__((naked)) void TreeEntranceSpriteCallback1(void)
+void TreeEntranceSpriteCallback1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x9b\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080FAB6C\n\t"
-        "	ldr r1, [r0, #0x1c]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2a\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r1, [r2]\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r0, _080FAB70\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAB6C: .4byte gFieldEffectArguments\n\t"
-        "_080FAB70: .4byte TreeEntranceSpriteCallback2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_M_SCRATCH);
+    sprite->animNum = gFieldEffectArguments[7];
+    sprite->data[0] = 0;
+    sprite->callback = TreeEntranceSpriteCallback2;
 }
 
-__attribute__((naked)) void TreeEntranceSpriteCallback2(void)
+
+void TreeEntranceSpriteCallback2(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x27\n\t"
-        "	ble _080FAB9E\n\t"
-        "	ldr r0, _080FABA4\n\t"
-        "	ldr r0, [r0, #0x1c]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FAB92\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080FAB96\n\t"
-        "_080FAB92:\n\t"
-        "	bl ToggleSecretBaseEntranceMetatile\n\t"
-        "_080FAB96:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r0, _080FABA8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_080FAB9E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FABA4: .4byte gFieldEffectArguments\n\t"
-        "_080FABA8: .4byte TreeEntranceSpriteCallbackEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0]++;
+
+    if (sprite->data[0] >= 40)
+    {
+        if (gFieldEffectArguments[7] == 0 || gFieldEffectArguments[7] == 2)
+            ToggleSecretBaseEntranceMetatile();
+
+        sprite->data[0] = 0;
+        sprite->callback = TreeEntranceSpriteCallbackEnd;
+    }
 }
 
-__attribute__((naked)) void TreeEntranceSpriteCallbackEnd(void)
+
+void TreeEntranceSpriteCallbackEnd(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0x38\n\t"
-        "	bl FieldEffectStop\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldEffectStop(sprite, FLDEFF_SECRET_POWER_TREE);
+    ScriptContext_Enable();
 }
+
 
 void FieldCallback_SecretBaseTree(void)
 {
@@ -943,73 +867,37 @@ __attribute__((naked)) bool8 FldEff_SecretPowerShrub()
     );
 }
 
-__attribute__((naked)) void ShrubEntranceSpriteCallback1(void)
+void ShrubEntranceSpriteCallback1(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0xa9\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r0, _080FAC84\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAC84: .4byte CaveEntranceSpriteCallback2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_M_POISON_POWDER);
+    sprite->data[0] = 0;
+    sprite->callback = CaveEntranceSpriteCallback2;
 }
 
-__attribute__((naked)) void CaveEntranceSpriteCallback2(void)
+
+void CaveEntranceSpriteCallback2(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r2, [r1, #0x2e]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0x27\n\t"
-        "	bgt _080FACA8\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	bne _080FACB0\n\t"
-        "	bl ToggleSecretBaseEntranceMetatile\n\t"
-        "	b _080FACB0\n\t"
-        "_080FACA8:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	ldr r0, _080FACB4\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_080FACB0:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FACB4: .4byte ShrubEntranceSpriteCallbackEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[0] < 40)
+    {
+        sprite->data[0]++;
+
+        if (sprite->data[0] == 20)
+            ToggleSecretBaseEntranceMetatile();
+    }
+    else
+    {
+        sprite->data[0] = 0;
+        sprite->callback = ShrubEntranceSpriteCallbackEnd;
+    }
 }
 
-__attribute__((naked)) void ShrubEntranceSpriteCallbackEnd(void)
+
+void ShrubEntranceSpriteCallbackEnd(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl FieldEffectStop\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldEffectStop(sprite, FLDEFF_SECRET_POWER_SHRUB);
+    ScriptContext_Enable();
 }
+
 
 bool8 FldEff_SecretBasePCTurnOn(void)
 {
