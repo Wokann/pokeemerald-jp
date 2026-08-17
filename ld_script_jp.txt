@@ -3214,7 +3214,7 @@ SECTIONS {
         src/trade.o(.text.Trade_Memcpy);
         src/trade.o(.text.BufferTradeParties);
         src/trade.o(.text.DrawTradeMonNicknames);
-        src/trade.o(.text.sub_080781C4);
+        src/trade.o(.text.Leader_ReadLinkBuffer);
         src/trade.o(.text.sub_080782E4);
         src/trade.o(.text.sub_080783E0);
         src/trade.o(.text.sub_080785E0);

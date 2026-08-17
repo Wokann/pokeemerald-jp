@@ -1045,156 +1045,48 @@ static void DrawTradeMonNicknames(void)
     sub_08079D3C(nickname, (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
 }
 
-__attribute__((naked)) void sub_080781C4(void)
+static void Leader_ReadLinkBuffer(u8 mpId, u8 status)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078248\n\t"
-        "	ldr r0, _080781EC\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _080781F0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08078228\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _080781F8\n\t"
-        "	ldr r0, _080781F4\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08078218\n\t"
-        "	b _08078242\n\t"
-        "	.align 2, 0\n\t"
-        "_080781EC: .4byte gBlockRecvBuffer\n\t"
-        "_080781F0: .4byte 0x0000BBBB\n\t"
-        "_080781F4: .4byte 0x0000AABB\n\t"
-        "_080781F8:\n\t"
-        "	ldr r0, _0807820C\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08078238\n\t"
-        "	ldr r0, _08078210\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08078242\n\t"
-        "	ldr r0, _08078214\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x78\n\t"
-        "	b _0807823E\n\t"
-        "	.align 2, 0\n\t"
-        "_0807820C: .4byte 0x0000BBCC\n\t"
-        "_08078210: .4byte 0x0000EEAA\n\t"
-        "_08078214: .4byte sTradeMenu\n\t"
-        "_08078218:\n\t"
-        "	ldr r0, _08078224\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x78\n\t"
-        "	strb r2, [r0]\n\t"
-        "	b _08078242\n\t"
-        "	.align 2, 0\n\t"
-        "_08078224: .4byte sTradeMenu\n\t"
-        "_08078228:\n\t"
-        "	ldr r0, _08078234\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x7a\n\t"
-        "	strb r2, [r0]\n\t"
-        "	b _08078242\n\t"
-        "	.align 2, 0\n\t"
-        "_08078234: .4byte sTradeMenu\n\t"
-        "_08078238:\n\t"
-        "	ldr r0, _08078270\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x7a\n\t"
-        "_0807823E:\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078242:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl TradeResetReceivedFlag\n\t"
-        "_08078248:\n\t"
-        "	movs r2, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080782DA\n\t"
-        "	ldr r3, _08078274\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _08078278\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080782BC\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _08078280\n\t"
-        "	ldr r0, _0807827C\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080782A0\n\t"
-        "	b _080782D4\n\t"
-        "	.align 2, 0\n\t"
-        "_08078270: .4byte sTradeMenu\n\t"
-        "_08078274: .4byte gBlockRecvBuffer\n\t"
-        "_08078278: .4byte 0x0000BBBB\n\t"
-        "_0807827C: .4byte 0x0000AABB\n\t"
-        "_08078280:\n\t"
-        "	ldr r0, _08078294\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080782CC\n\t"
-        "	ldr r0, _08078298\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080782D4\n\t"
-        "	ldr r0, _0807829C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x79\n\t"
-        "	b _080782D2\n\t"
-        "	.align 2, 0\n\t"
-        "_08078294: .4byte 0x0000BBCC\n\t"
-        "_08078298: .4byte 0x0000EEAA\n\t"
-        "_0807829C: .4byte sTradeMenu\n\t"
-        "_080782A0:\n\t"
-        "	ldr r2, _080782B8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	movs r4, #0x81\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r0, r3, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, #6\n\t"
-        "	adds r1, #0x7e\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x79\n\t"
-        "	b _080782C2\n\t"
-        "	.align 2, 0\n\t"
-        "_080782B8: .4byte sTradeMenu\n\t"
-        "_080782BC:\n\t"
-        "	ldr r0, _080782C8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x7b\n\t"
-        "_080782C2:\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080782D4\n\t"
-        "	.align 2, 0\n\t"
-        "_080782C8: .4byte sTradeMenu\n\t"
-        "_080782CC:\n\t"
-        "	ldr r0, _080782E0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x7b\n\t"
-        "_080782D2:\n\t"
-        "	strb r2, [r0]\n\t"
-        "_080782D4:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl TradeResetReceivedFlag\n\t"
-        "_080782DA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080782E0: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (status & 1)
+    {
+        switch (gBlockRecvBuffer[0][0])
+        {
+        case LINKCMD_REQUEST_CANCEL:
+            sTradeMenu->playerSelectStatus = STATUS_CANCEL;
+            break;
+        case LINKCMD_READY_TO_TRADE:
+            sTradeMenu->playerSelectStatus = STATUS_READY;
+            break;
+        case LINKCMD_INIT_BLOCK:
+            sTradeMenu->playerConfirmStatus = STATUS_READY;
+            break;
+        case LINKCMD_READY_CANCEL_TRADE:
+            sTradeMenu->playerConfirmStatus = STATUS_CANCEL;
+            break;
+        }
+        TradeResetReceivedFlag(0);
+    }
+
+    if (status & 2)
+    {
+        switch (gBlockRecvBuffer[1][0])
+        {
+        case LINKCMD_REQUEST_CANCEL:
+            sTradeMenu->partnerSelectStatus = STATUS_CANCEL;
+            break;
+        case LINKCMD_READY_TO_TRADE:
+            sTradeMenu->partnerCursorPosition = gBlockRecvBuffer[1][1] + PARTY_SIZE;
+            sTradeMenu->partnerSelectStatus = STATUS_READY;
+            break;
+        case LINKCMD_INIT_BLOCK:
+            sTradeMenu->partnerConfirmStatus = STATUS_READY;
+            break;
+        case LINKCMD_READY_CANCEL_TRADE:
+            sTradeMenu->partnerConfirmStatus = STATUS_CANCEL;
+            break;
+        }
+        TradeResetReceivedFlag(1);
+    }
 }
 
 __attribute__((naked)) void sub_080782E4(void)
@@ -1639,7 +1531,7 @@ __attribute__((naked)) void sub_08078618(void)
         "	cmp r4, #0\n\t"
         "	bne _0807863A\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_080781C4\n\t"
+        "	bl Leader_ReadLinkBuffer\n\t"
         "	b _08078640\n\t"
         "_0807863A:\n\t"
         "	adds r0, r4, #0\n\t"
