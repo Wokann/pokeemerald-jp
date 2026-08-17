@@ -2,6 +2,8 @@
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
 #include "fieldmap.h"
+#include "field_effect.h"
+#include "fldeff.h"
 #include "task.h"
 extern void StartSecretBaseCaveFieldEffect(void);
 extern void StartSecretBaseShrubFieldEffect(void);
@@ -453,114 +455,61 @@ __attribute__((naked)) void sub_080FA66C(void)
     );
 }
 
-__attribute__((naked)) void SetCurrentSecretBase(void)
+void SetCurrentSecretBase(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080FA7E0\n\t"
-        "	ldr r1, _080FA7E4\n\t"
-        "	ldr r1, [r1, #4]\n\t"
-        "	bl SetCurSecretBaseIdFromPosition\n\t"
-        "	bl TrySetCurSecretBaseIndex\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA7E0: .4byte gPlayerFacingPosition\n\t"
-        "_080FA7E4: .4byte gMapHeader\n\t"
-        ".syntax divided\n\t"
-    );
+    SetCurSecretBaseIdFromPosition(&gPlayerFacingPosition, gMapHeader.events);
+    TrySetCurSecretBaseIndex();
 }
 
-__attribute__((naked)) void AdjustSecretPowerSpritePixelOffsets(void)
+
+void AdjustSecretPowerSpritePixelOffsets(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080FA808\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #6\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FA830\n\t"
-        "	ldr r1, _080FA80C\n\t"
-        "	ldr r0, [r1, #4]\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080FA81E\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _080FA810\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080FA816\n\t"
-        "	b _080FA86E\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA808: .4byte gPlayerAvatar\n\t"
-        "_080FA80C: .4byte gFieldEffectArguments\n\t"
-        "_080FA810:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080FA826\n\t"
-        "	b _080FA84C\n\t"
-        "_080FA816:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "	movs r0, #0x28\n\t"
-        "	b _080FA86C\n\t"
-        "_080FA81E:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "	movs r0, #8\n\t"
-        "	b _080FA86C\n\t"
-        "_080FA826:\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	b _080FA86C\n\t"
-        "_080FA830:\n\t"
-        "	ldr r1, _080FA844\n\t"
-        "	ldr r0, [r1, #4]\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080FA85A\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _080FA848\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080FA852\n\t"
-        "	b _080FA86E\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA844: .4byte gFieldEffectArguments\n\t"
-        "_080FA848:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080FA85E\n\t"
-        "_080FA84C:\n\t"
-        "	cmp r0, #4\n\t"
-        "	beq _080FA868\n\t"
-        "	b _080FA86E\n\t"
-        "_080FA852:\n\t"
-        "	movs r0, #8\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "	movs r0, #0x28\n\t"
-        "	b _080FA86C\n\t"
-        "_080FA85A:\n\t"
-        "	movs r0, #8\n\t"
-        "	b _080FA86A\n\t"
-        "_080FA85E:\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	b _080FA86C\n\t"
-        "_080FA868:\n\t"
-        "	movs r0, #0x18\n\t"
-        "_080FA86A:\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "_080FA86C:\n\t"
-        "	str r0, [r1, #0x18]\n\t"
-        "_080FA86E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gPlayerAvatar.flags & (PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE))
+    {
+        switch (gFieldEffectArguments[1])
+        {
+        case DIR_SOUTH:
+            gFieldEffectArguments[5] = 16;
+            gFieldEffectArguments[6] = 40;
+            break;
+        case DIR_NORTH:
+            gFieldEffectArguments[5] = 16;
+            gFieldEffectArguments[6] = 8;
+            break;
+        case DIR_WEST:
+            gFieldEffectArguments[5] = -8;
+            gFieldEffectArguments[6] = 24;
+            break;
+        case DIR_EAST:
+            gFieldEffectArguments[5] = 24;
+            gFieldEffectArguments[6] = 24;
+            break;
+        }
+    }
+    else
+    {
+        switch (gFieldEffectArguments[1])
+        {
+        case DIR_SOUTH:
+            gFieldEffectArguments[5] = 8;
+            gFieldEffectArguments[6] = 40;
+            break;
+        case DIR_NORTH:
+            gFieldEffectArguments[5] = 8;
+            gFieldEffectArguments[6] = 8;
+            break;
+        case DIR_WEST:
+            gFieldEffectArguments[5] = -8;
+            gFieldEffectArguments[6] = 24;
+            break;
+        case DIR_EAST:
+            gFieldEffectArguments[5] = 24;
+            gFieldEffectArguments[6] = 24;
+            break;
+        }
+    }
 }
+
 
 __attribute__((naked)) bool8 SetUpFieldMove_SecretPower()
 {
