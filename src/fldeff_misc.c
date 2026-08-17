@@ -2,6 +2,10 @@
 #include "constants/songs.h"
 #include "task.h"
 #define tMetatileID data[0]
+#define tX data[0]
+#define tY data[1]
+#define tState data[2]
+extern void Task_SecretBasePCTurnOn(u8 taskId);
 extern void Task_SecretBaseMusicNoteMatSound(u8 taskId);
 extern void Task_FieldPoisonEffect(u8 taskId);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
@@ -1278,47 +1282,22 @@ __attribute__((naked)) void ShrubEntranceSpriteCallbackEnd(void)
     );
 }
 
-__attribute__((naked)) bool8 FldEff_SecretBasePCTurnOn()
+bool8 FldEff_SecretBasePCTurnOn(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetXYCoordsOneStepInFrontOfPlayer\n\t"
-        "	ldr r0, _080FAD08\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080FAD0C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	strh r2, [r1, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAD08: .4byte Task_SecretBasePCTurnOn + 1\n\t"
-        "_080FAD0C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x, y;
+    u8 taskId;
+
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+
+    taskId = CreateTask(Task_SecretBasePCTurnOn, 0);
+    gTasks[taskId].tX = x;
+    gTasks[taskId].tY = y;
+    gTasks[taskId].tState = 0;
+
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_SecretBasePCTurnOn(void)
+__attribute__((naked)) void Task_SecretBasePCTurnOn(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
