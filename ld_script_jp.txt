@@ -3290,7 +3290,7 @@ SECTIONS {
         src/trade.o(.text.TradeAnimInit_LoadGfx);
         src/trade.o(.text.CB2_InGameTrade);
         src/trade.o(.text.sub_0807AE9C);
-        src/trade.o(.text.sub_0807AEFC);
+        src/trade.o(.text.GetMultiplayerIdWrapper);
         src/trade.o(.text.sub_0807AF08);
         src/trade.o(.text.sub_0807AFF0);
         src/trade.o(.text.sub_0807B044);

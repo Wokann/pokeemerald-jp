@@ -3642,7 +3642,7 @@ __attribute__((naked)) void sub_0807AE9C(void)
     );
 }
 
-__attribute__((naked)) void sub_0807AEFC(void)
+__attribute__((naked)) void GetMultiplayerIdWrapper(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3746,7 +3746,7 @@ __attribute__((naked)) void sub_0807AF08(void)
         "	ldrb r0, [r0]\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0807AFC6\n\t"
-        "	bl sub_0807AEFC\n\t"
+        "	bl GetMultiplayerIdWrapper\n\t"
         "_0807AFC6:\n\t"
         "	add sp, #4\n\t"
         "	pop {r3, r4}\n\t"
