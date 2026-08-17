@@ -11528,40 +11528,16 @@ static void FieldCallback_Dive(void)
     FieldEffectStart(FLDEFF_USE_DIVE);
 }
 
-__attribute__((naked)) void SetUpFieldMove_Dive(void)
+static bool8 SetUpFieldMove_Dive(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl TrySetDiveWarp\n\t"
-        "	ldr r1, _081B562C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B5630\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B563E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B562C: .4byte gFieldEffectArguments\n\t"
-        "_081B5630:\n\t"
-        "	ldr r1, _081B5644\n\t"
-        "	ldr r0, _081B5648\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r1, _081B564C\n\t"
-        "	ldr r0, _081B5650\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "_081B563E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5644: .4byte gFieldCallback2\n\t"
-        "_081B5648: .4byte 0x081B53D9\n\t"
-        "_081B564C: .4byte gPostMenuFieldCallback\n\t"
-        "_081B5650: .4byte FieldCallback_Dive + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[1] = (u8)TrySetDiveWarp();
+    if (gFieldEffectArguments[1] != 0)
+    {
+        gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
+        gPostMenuFieldCallback = FieldCallback_Dive;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void party_menu_icon_anim(void)
