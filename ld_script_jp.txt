@@ -8847,7 +8847,7 @@ SECTIONS {
         src/party_menu.o(.text.BufferBattlePartyCurrentOrderBySide);
         src/party_menu.o(.text.BufferBattlePartyOrderBySide);
         src/party_menu.o(.text.sub_081B8B20);
-        src/party_menu.o(.text.sub_081B8BD8);
+        src/party_menu.o(.text.GetPartyIdFromBattleSlot);
         src/party_menu.o(.text.sub_081B8C0C);
         src/party_menu.o(.text.sub_081B8C50);
         src/party_menu.o(.text.pokemon_order_func);
