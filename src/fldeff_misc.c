@@ -1842,73 +1842,37 @@ __attribute__((naked)) void sub_080FB654(void)
     );
 }
 
-__attribute__((naked)) void Task_FieldPoisonEffect(u8 taskId)
+#undef tState
+#define tState data[0]
+#define tMosaic data[1]
+
+static void Task_FieldPoisonEffect(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080FB6CC\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080FB6E6\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080FB6D0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB6D6\n\t"
-        "	b _080FB702\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB6CC: .4byte gUnknown_3005B68\n\t"
-        "_080FB6D0:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080FB6FA\n\t"
-        "	b _080FB702\n\t"
-        "_080FB6D6:\n\t"
-        "	ldrh r0, [r1, #2]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #8\n\t"
-        "	ble _080FB702\n\t"
-        "	b _080FB6F2\n\t"
-        "_080FB6E6:\n\t"
-        "	ldrh r0, [r1, #2]\n\t"
-        "	subs r0, #2\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080FB702\n\t"
-        "_080FB6F2:\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _080FB702\n\t"
-        "_080FB6FA:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080FB712\n\t"
-        "_080FB702:\n\t"
-        "	ldrh r0, [r1, #2]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	bl SetGpuReg\n\t"
-        "_080FB712:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    switch (tState)
+    {
+    case 0:
+        tMosaic += 2;
+        if (tMosaic > 8)
+            tState++;
+        break;
+    case 1:
+        tMosaic -= 2;
+        if (tMosaic == 0)
+            tState++;
+        break;
+    case 2:
+        DestroyTask(taskId);
+        return;
+    }
+    SetGpuReg(REG_OFFSET_MOSAIC, (u16)((tMosaic << 4) | tMosaic));
 }
+
+#undef tState
+#undef tMosaic
+#define tState data[2]
+
 
 void FldEffPoison_Start(void)
 {
