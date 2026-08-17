@@ -10,6 +10,7 @@
 #include "field_effect.h"
 #include "fldeff.h"
 #include "party_menu.h"
+#include "secret_base.h"
 #include "task.h"
 extern void StartSecretBaseCaveFieldEffect(void);
 extern void StartSecretBaseShrubFieldEffect(void);
@@ -1025,104 +1026,34 @@ bool8 FldEff_SecretBasePCTurnOn(void)
     return FALSE;
 }
 
-__attribute__((naked)) void Task_SecretBasePCTurnOn(u8 taskId)
+void Task_SecretBasePCTurnOn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080FAD38\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	subs r0, #4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bhi _080FADDE\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080FAD3C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAD38: .4byte gUnknown_3005B68\n\t"
-        "_080FAD3C: .4byte _080FAD40\n\t"
-        "_080FAD40:\n\t"
-        "	.4byte _080FAD84\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FAD92\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FAD84\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FAD92\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADDE\n\t"
-        "	.4byte _080FADB0\n\t"
-        "_080FAD84:\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r2, #0x89\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	b _080FAD9E\n\t"
-        "_080FAD92:\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r2, #0x88\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "_080FAD9E:\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	b _080FADDE\n\t"
-        "_080FADB0:\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r2, #0x89\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	movs r0, #0x3d\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080FADE4\n\t"
-        "_080FADDE:\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #4]\n\t"
-        "_080FADE4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    switch (tState)
+    {
+    case 4:
+    case 12:
+        MapGridSetMetatileIdAt(tX, tY, METATILE_SecretBase_PC_On);
+        CurrentMapDrawMetatileAt(tX, tY);
+        break;
+    case 8:
+    case 16:
+        MapGridSetMetatileIdAt(tX, tY, METATILE_SecretBase_PC);
+        CurrentMapDrawMetatileAt(tX, tY);
+        break;
+    case 20:
+        MapGridSetMetatileIdAt(tX, tY, METATILE_SecretBase_PC_On);
+        CurrentMapDrawMetatileAt(tX, tY);
+        FieldEffectActiveListRemove(FLDEFF_PCTURN_ON);
+        ScriptContext_Enable();
+        DestroyTask(taskId);
+        return;
+    }
+
+    tState++;
 }
+
 
 void DoSecretBasePCTurnOffEffect(void)
 {
@@ -1150,77 +1081,30 @@ void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
     gTasks[taskId].data[4] = 1;
 }
 
-__attribute__((naked)) void Task_PopSecretBaseBalloon(u8 taskId)
+void Task_PopSecretBaseBalloon(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080FAEBC\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r1, [r4, #6]\n\t"
-        "	movs r2, #6\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _080FAEC0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080FAEC2\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAEBC: .4byte gUnknown_3005B68\n\t"
-        "_080FAEC0:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "_080FAEC2:\n\t"
-        "	strh r0, [r4, #6]\n\t"
-        "	movs r3, #6\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080FAF14\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080FAEDC\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	bl DoBalloonSoundEffect\n\t"
-        "_080FAEDC:\n\t"
-        "	movs r3, #2\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	movs r2, #4\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	ldrh r2, [r4, #8]\n\t"
-        "	ldrh r3, [r4]\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	movs r1, #2\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	ldrh r1, [r4, #8]\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080FAF10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080FAF14\n\t"
-        "_080FAF10:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080FAF14:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    if (data[3] == 6)
+        data[3] = 0;
+    else
+        data[3]++;
+
+    if (data[3] == 0)
+    {
+        if (data[4] == 2)
+            DoBalloonSoundEffect(data[0]);
+
+        MapGridSetMetatileIdAt(data[1], data[2], data[0] + data[4]);
+        CurrentMapDrawMetatileAt(data[1], data[2]);
+
+        if (data[4] == 3)
+            DestroyTask(taskId);
+        else
+            data[4]++;
+    }
 }
+
 
 static void DoBalloonSoundEffect(s16 metatileId)
 {
@@ -1799,55 +1683,25 @@ __attribute__((naked)) void GetShieldToyTVDecorationInfo(void)
     );
 }
 
-__attribute__((naked)) void sub_080FB654(void)
+bool8 sub_080FB654(u16 x, u8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	bl CurMapIsSecretBase\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB698\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080FB68C\n\t"
-        "	ldr r1, _080FB684\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _080FB680\n\t"
-        "	ldr r0, _080FB688\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _080FB698\n\t"
-        "_080FB680:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080FB69A\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB684: .4byte 0xFFFFFD7B\n\t"
-        "_080FB688: .4byte 0x00000237\n\t"
-        "_080FB68C:\n\t"
-        "	ldr r0, _080FB6A0\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _080FB680\n\t"
-        "	ldr r0, _080FB6A4\n\t"
-        "	cmp r6, r0\n\t"
-        "	beq _080FB680\n\t"
-        "_080FB698:\n\t"
-        "	movs r0, #0\n\t"
-        "_080FB69A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB6A0: .4byte 0x0000028D\n\t"
-        "_080FB6A4: .4byte 0x0000023F\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!CurMapIsSecretBase())
+        return FALSE;
+    if (y == 0)
+    {
+        if ((u16)(x - METATILE_SecretBase_SandOrnament_Top) <= 1)
+            return TRUE;
+        if (x == METATILE_SecretBase_BreakableDoor_TopClosed)
+            return TRUE;
+    }
+    else
+    {
+        if (x == METATILE_SecretBase_SandOrnament_Base1)
+            return TRUE;
+        if (x == METATILE_SecretBase_BreakableDoor_BottomClosed)
+            return TRUE;
+    }
+    return FALSE;
 }
 
 #undef tState
