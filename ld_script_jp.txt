@@ -3294,7 +3294,7 @@ SECTIONS {
         src/trade.o(.text.sub_0807AF08);
         src/trade.o(.text.sub_0807AFF0);
         src/trade.o(.text.sub_0807B044);
-        src/trade.o(.text.sub_0807B064);
+        src/trade.o(.text.SetTradeSequenceBgGpuRegs);
         src/trade.o(.text.LoadTradeSequenceSpriteSheetsAndPalettes);
         src/trade.o(.text.SetTradeSceneStrings);
         src/trade.o(.text.sub_0807B600);
