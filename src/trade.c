@@ -204,7 +204,7 @@ extern const struct BgTemplate gUnknown_830D294[];
 extern const struct WindowTemplate gUnknown_830D27C[];
 extern u8 gUnknown_20226A8[];
 extern u16 gSpecialVar_0x8005;
-void sub_0807B044(void);
+void CB2_InGameTradeAnim(void);
 
 // JP trade-animation state (fields used by the affine setup below; the
 // layout of the leading region differs from the US TradeAnim struct).
@@ -3583,7 +3583,7 @@ void CB2_InGameTrade(void)
         gMain.state++;
         break;
     case 12:
-        SetMainCallback2(sub_0807B044);
+        SetMainCallback2(CB2_InGameTradeAnim);
         break;
     }
     RunTasks();
@@ -3669,22 +3669,14 @@ static void HandleLinkDataSend(void)
     }
 }
 
-__attribute__((naked)) void sub_0807B044(void)
+static void CB2_InGameTradeAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl DoTradeAnim\n\t"
-        "	bl RunTasks\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    DoTradeAnim();
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
 __attribute__((naked)) void SetTradeSequenceBgGpuRegs(void)
@@ -6413,7 +6405,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "	.align 2, 0\n\t"
         "_0807C958: .4byte gSpecialVar_0x8005\n\t"
         "_0807C95C: .4byte gCB2_AfterEvolution\n\t"
-        "_0807C960: .4byte sub_0807B044 + 1\n\t"
+        "_0807C960: .4byte CB2_InGameTradeAnim + 1\n\t"
         "_0807C964: .4byte gSelectedTradeMonPositions\n\t"
         "_0807C968: .4byte gPlayerParty\n\t"
         "_0807C96C: .4byte gUnknown_2031F40\n\t"
@@ -8634,7 +8626,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	.align 2, 0\n\t"
         "_0807DDA4: .4byte gSpecialVar_0x8005\n\t"
         "_0807DDA8: .4byte gCB2_AfterEvolution\n\t"
-        "_0807DDAC: .4byte sub_0807B044 + 1\n\t"
+        "_0807DDAC: .4byte CB2_InGameTradeAnim + 1\n\t"
         "_0807DDB0: .4byte gSelectedTradeMonPositions\n\t"
         "_0807DDB4: .4byte gPlayerParty\n\t"
         "_0807DDB8: .4byte gUnknown_2031F40\n\t"
