@@ -160,6 +160,9 @@ void sub_0807A028(void);
 void sub_08079D98(u8 side);
 void sub_08079EE0(u8 side);
 void sub_08078618(void);
+extern u8 *StringCopy10(u8 *dest, const u8 *src);
+extern const u8 gUnknown_8300AAE[];
+extern const u8 gUnknown_8300AB1[];
 static void LoadTradeBgGfx(u8 state);
 static void SetActiveMenuOptions(void);
 
@@ -1024,78 +1027,22 @@ static bool8 BufferTradeParties(void)
     return FALSE;
 }
 
-__attribute__((naked)) void sub_08078120(void)
+// JP-specific: draws "player nickname と　 partner nickname ..." in the bottom bar
+static void DrawTradeMonNicknames(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x34\n\t"
-        "	ldr r5, _080781AC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x35\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r4, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _080781B0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	add r6, sp, #0x1c\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x7e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _080781B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	add r4, sp, #0x28\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r1, _080781B8\n\t"
-        "	mov r0, sp\n\t"
-        "	bl StringAppend\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	ldr r1, _080781BC\n\t"
-        "	mov r0, sp\n\t"
-        "	bl StringAppend\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x72\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	ldr r0, _080781C0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #0x18\n\t"
-        "	bl sub_08079D3C\n\t"
-        "	add sp, #0x34\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080781AC: .4byte sTradeMenu\n\t"
-        "_080781B0: .4byte gPlayerParty\n\t"
-        "_080781B4: .4byte gEnemyParty\n\t"
-        "_080781B8: .4byte gUnknown_8300AAE\n\t"
-        "_080781BC: .4byte gUnknown_8300AB1\n\t"
-        "_080781C0: .4byte 0x06010000\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 nickname[0x1C];
+    u8 str1[0xC];
+    u8 str2[0xC];
+
+    GetMonData(&gPlayerParty[sTradeMenu->cursorPosition], MON_DATA_NICKNAME, nickname);
+    StringCopy10(str1, nickname);
+    GetMonData(&gEnemyParty[sTradeMenu->partnerCursorPosition % PARTY_SIZE], MON_DATA_NICKNAME, nickname);
+    StringCopy10(str2, nickname);
+    StringCopy(nickname, str1);
+    StringAppend(nickname, gUnknown_8300AAE);
+    StringAppend(nickname, str2);
+    StringAppend(nickname, gUnknown_8300AB1);
+    sub_08079D3C(nickname, (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
 }
 
 __attribute__((naked)) void sub_080781C4(void)
@@ -2725,7 +2672,7 @@ __attribute__((naked)) void sub_08078DA0(void)
         "	ldr r0, _08078DC8\n\t"
         "	cmp r1, r0\n\t"
         "	bne _08078DBC\n\t"
-        "	bl sub_08078120\n\t"
+        "	bl DrawTradeMonNicknames\n\t"
         "	ldr r0, [r4]\n\t"
         "	adds r0, #0x6f\n\t"
         "	movs r1, #0xe\n\t"
