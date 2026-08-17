@@ -8636,7 +8636,7 @@ SECTIONS {
         src/party_menu.o(.text.DisplayPartyMenuStdMessage);
         src/party_menu.o(.text.ShouldUseChooseMonText);
         src/party_menu.o(.text.DisplaySelectionWindow);
-        src/party_menu.o(.text.sub_081B2F90);
+        src/party_menu.o(.text.PrintMessage);
         src/party_menu.o(.text.sub_081B2FDC);
         src/party_menu.o(.text.sub_081B3004);
         src/party_menu.o(.text.RemoveLevelUpStatsWindow);

@@ -80,6 +80,8 @@ extern const struct
 #include "link_rfu.h"
 #include "main.h"
 #include "text.h"
+extern bool16 AddTextPrinterParameterized2(u8 windowId, u8 fontId, const u8 *str, u8 speed, TextPrinterCallback callback, u8 fgColor, u8 bgColor, u8 shadowColor);
+extern u8 GetPlayerTextSpeedDelay(void);
 #include "window.h"
 #include "menu_helpers.h"
 #include "sprite.h"
@@ -144,6 +146,10 @@ enum {
     MENU_TRADE2,
     MENU_TOSS,
     MENU_FIELD_MOVES
+};
+
+enum {
+    WIN_MSG = PARTY_SIZE,
 };
 
 struct PartyMenuInternal
@@ -3587,7 +3593,7 @@ __attribute__((naked)) u8 DisplayPartyMenuMessage(const u8 *str, bool8 keepOpen)
         "	push {r4, lr}\n\t"
         "	lsls r4, r1, #0x18\n\t"
         "	lsrs r4, r4, #0x18\n\t"
-        "	bl sub_081B2F90\n\t"
+        "	bl PrintMessage\n\t"
         "	ldr r0, _081B1854\n\t"
         "	movs r1, #1\n\t"
         "	bl CreateTask\n\t"
@@ -5599,47 +5605,11 @@ static u8 DisplaySelectionWindow(u8 windowType)
     return sPartyMenuInternal->windowId[0];
 }
 
-__attribute__((naked)) void sub_081B2F90(void)
+static void PrintMessage(const u8 *text)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #6\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x4f\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl DrawStdFrameWithCustomTileAndPalette\n\t"
-        "	ldr r2, _081B2FD8\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	bl GetPlayerTextSpeedDelay\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #6\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2FD8: .4byte gTextFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    DrawStdFrameWithCustomTileAndPalette(WIN_MSG, FALSE, 0x4F, 13);
+    gTextFlags.canABSpeedUpPrint = TRUE;
+    AddTextPrinterParameterized2(WIN_MSG, FONT_NORMAL, text, GetPlayerTextSpeedDelay(), 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
 }
 
 __attribute__((naked)) void sub_081B2FDC(void)
