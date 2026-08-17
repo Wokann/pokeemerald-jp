@@ -1297,55 +1297,23 @@ static void Task_ShatterSecretBaseBreakableDoor(u8 taskId)
 }
 
 
-__attribute__((naked)) void ShatterSecretBaseBreakableDoor(s16 x, s16 y)
+void ShatterSecretBaseBreakableDoor(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r7, r5, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080FB02C\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r4, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl DoSecretBaseBreakableDoorEffect\n\t"
-        "	b _080FB04E\n\t"
-        "_080FB02C:\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080FB04E\n\t"
-        "	ldr r0, _080FB054\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080FB058\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	strh r7, [r1, #0xa]\n\t"
-        "	strh r6, [r1, #0xc]\n\t"
-        "_080FB04E:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB054: .4byte Task_ShatterSecretBaseBreakableDoor + 1\n\t"
-        "_080FB058: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 dir = (u8)GetPlayerFacingDirection();
+
+    if (dir == DIR_SOUTH)
+    {
+        DoSecretBaseBreakableDoorEffect(x, y);
+    }
+    else if (dir == DIR_NORTH)
+    {
+        u8 taskId = CreateTask(Task_ShatterSecretBaseBreakableDoor, 5);
+        gTasks[taskId].data[0] = 0;
+        gTasks[taskId].data[1] = x;
+        gTasks[taskId].data[2] = y;
+    }
 }
+
 
 __attribute__((naked)) void Task_SecretBaseMusicNoteMatSound(u8 taskId)
 {
