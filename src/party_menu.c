@@ -11529,24 +11529,10 @@ __attribute__((naked)) void sub_081B5548(void)
     );
 }
 
-__attribute__((naked)) void hm2_waterfall(void)
+static void FieldCallback_Waterfall(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	ldr r1, _081B558C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #0x2b\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B558C: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = GetCursorSelectionMonId();
+    FieldEffectStart(FLDEFF_USE_WATERFALL);
 }
 
 __attribute__((naked)) void SetUpFieldMove_Waterfall(void)
@@ -11590,7 +11576,7 @@ __attribute__((naked)) void SetUpFieldMove_Waterfall(void)
         "_081B55DC: .4byte gFieldCallback2\n\t"
         "_081B55E0: .4byte 0x081B53D9\n\t"
         "_081B55E4: .4byte gPostMenuFieldCallback\n\t"
-        "_081B55E8: .4byte hm2_waterfall + 1\n\t"
+        "_081B55E8: .4byte FieldCallback_Waterfall + 1\n\t"
         "_081B55EC:\n\t"
         "	movs r0, #0\n\t"
         "_081B55EE:\n\t"
