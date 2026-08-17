@@ -3301,7 +3301,7 @@ SECTIONS {
         src/trade.o(.text.DoTradeAnim_Cable);
         src/trade.o(.text.DoTradeAnim_Wireless);
         src/trade.o(.text.c2_08053788);
-        src/trade.o(.text.sub_0807DF14);
+        src/trade.o(.text.HandleLinkDataReceive);
         src/trade.o(.text.sub_0807DF94);
         src/trade.o(.text.sub_0807E010);
         src/trade.o(.text.sub_0807E084);
@@ -3313,7 +3313,7 @@ SECTIONS {
         src/trade.o(.text.GetTradeSpecies);
         src/trade.o(.text.CreateInGameTradePokemon);
         src/trade.o(.text.CB2_UpdateLinkTrade);
-        src/trade.o(.text.sub_0807E504);
+        src/trade.o(.text.CB2_WaitTradeComplete);
         src/trade.o(.text.sub_0807E588);
         src/trade.o(.text.c2_080543C4);
         src/trade.o(.text.DoInGameTradeScene);

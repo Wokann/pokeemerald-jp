@@ -281,7 +281,8 @@ struct InGameTrade
     u8 filler_3A[2];            // 0x3A
 };                              // size: 0x3C
 
-void CB2_UpdateLinkTrade(void);
+static void CB2_UpdateLinkTrade(void);
+static void CB2_WaitTradeComplete(void);
 extern struct MonSpritesGfx *gMonSpritesGfxPtr;
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
@@ -8745,72 +8746,28 @@ __attribute__((naked)) void c2_08053788(void)
     );
 }
 
-__attribute__((naked)) void sub_0807DF14(void)
+static void HandleLinkDataReceive(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	bl TradeGetMultiplayerId\n\t"
-        "	bl GetBlockReceivedStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r6, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r6\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DF52\n\t"
-        "	ldr r4, _0807DF80\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	ldr r0, _0807DF84\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0807DF3C\n\t"
-        "	ldr r0, _0807DF88\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0807DF3C:\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	ldr r0, _0807DF8C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0807DF4C\n\t"
-        "	ldr r0, _0807DF90\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x72\n\t"
-        "	strb r6, [r0]\n\t"
-        "_0807DF4C:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBlockReceivedFlag\n\t"
-        "_0807DF52:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DF7A\n\t"
-        "	ldr r0, _0807DF80\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _0807DF8C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0807DF74\n\t"
-        "	ldr r0, _0807DF90\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x73\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "_0807DF74:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ResetBlockReceivedFlag\n\t"
-        "_0807DF7A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DF80: .4byte gBlockRecvBuffer\n\t"
-        "_0807DF84: .4byte 0x0000DCBA\n\t"
-        "_0807DF88: .4byte c2_08053788 + 1\n\t"
-        "_0807DF8C: .4byte 0x0000ABCD\n\t"
-        "_0807DF90: .4byte gUnknown_2031F40\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 recvStatus;
+    TradeGetMultiplayerId(); // no effect call, ret val ignored
+    recvStatus = GetBlockReceivedStatus();
+    if (recvStatus & (1 << 0))
+    {
+        if (gBlockRecvBuffer[0][0] == LINKCMD_CONFIRM_FINISH_TRADE)
+            SetMainCallback2(c2_08053788);
+
+        if (gBlockRecvBuffer[0][0] == LINKCMD_READY_FINISH_TRADE)
+            gUnknown_2031F40->playerFinishStatus = STATUS_READY;
+
+        ResetBlockReceivedFlag(0);
+    }
+    if (recvStatus & (1 << 1))
+    {
+        if (gBlockRecvBuffer[1][0] == LINKCMD_READY_FINISH_TRADE)
+            gUnknown_2031F40->partnerFinishStatus = STATUS_READY;
+
+        ResetBlockReceivedFlag(1);
+    }
 }
 
 __attribute__((naked)) void sub_0807DF94(void)
@@ -9454,138 +9411,52 @@ __attribute__((naked)) void CreateInGameTradePokemon(void)
     );
 }
 
-__attribute__((naked)) void CB2_UpdateLinkTrade(void)
+static void CB2_UpdateLinkTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	bl DoTradeAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #1\n\t"
-        "	bne _0807E4CE\n\t"
-        "	ldr r5, _0807E4F0\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _0807E4F4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	ldr r0, _0807E4F8\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl TradeMons\n\t"
-        "	bl IsWirelessTrade\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E4C8\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0x74\n\t"
-        "	ldr r1, _0807E4FC\n\t"
-        "	strh r1, [r2]\n\t"
-        "	adds r0, #0x93\n\t"
-        "	strb r6, [r0]\n\t"
-        "_0807E4C8:\n\t"
-        "	ldr r0, _0807E500\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0807E4CE:\n\t"
-        "	bl HandleLinkDataSend\n\t"
-        "	bl sub_0807DF14\n\t"
-        "	bl RunTasks\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E4F0: .4byte gUnknown_2031F40\n\t"
-        "_0807E4F4: .4byte gSprites\n\t"
-        "_0807E4F8: .4byte gSelectedTradeMonPositions\n\t"
-        "_0807E4FC: .4byte 0x0000ABCD\n\t"
-        "_0807E500: .4byte sub_0807E504 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoTradeAnim() == TRUE)
+    {
+        DestroySprite(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]]);
+        FreeSpriteOamMatrix(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]]);
+        TradeMons(gSelectedTradeMonPositions[TRADE_PLAYER], gSelectedTradeMonPositions[TRADE_PARTNER] % PARTY_SIZE);
+        if (!IsWirelessTrade())
+        {
+            gUnknown_2031F40->linkData[0] = LINKCMD_READY_FINISH_TRADE;
+            gUnknown_2031F40->scheduleLinkTransfer = 1;
+        }
+        SetMainCallback2(CB2_WaitTradeComplete);
+    }
+    HandleLinkDataSend();
+    HandleLinkDataReceive();
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void sub_0807E504(void)
+static void CB2_WaitTradeComplete(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl TradeGetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsWirelessTrade\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807E524\n\t"
-        "	ldr r0, _0807E520\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _0807E564\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E520: .4byte c2_08053788 + 1\n\t"
-        "_0807E524:\n\t"
-        "	bl sub_0807DF14\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0807E564\n\t"
-        "	ldr r4, _0807E57C\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x72\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _0807E580\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0807E564\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x74\n\t"
-        "	ldr r0, _0807E584\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl BitmaskAllOtherLinkPlayers\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x74\n\t"
-        "	movs r2, #0x14\n\t"
-        "	bl SendBlock\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x72\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x73\n\t"
-        "	strb r1, [r0]\n\t"
-        "_0807E564:\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E57C: .4byte gUnknown_2031F40\n\t"
-        "_0807E580: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
-        "_0807E584: .4byte 0x0000DCBA\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 mpId = TradeGetMultiplayerId();
+    if (IsWirelessTrade())
+    {
+        SetMainCallback2(c2_08053788);
+    }
+    else
+    {
+        HandleLinkDataReceive();
+        // JP reads both finish-status bytes as one u16; 0x0101 = both STATUS_READY.
+        if (mpId == 0 && *(u16 *)&gUnknown_2031F40->playerFinishStatus == 0x0101)
+        {
+            gUnknown_2031F40->linkData[0] = LINKCMD_CONFIRM_FINISH_TRADE;
+            SendBlock(BitmaskAllOtherLinkPlayers(), gUnknown_2031F40->linkData, sizeof(gUnknown_2031F40->linkData));
+            gUnknown_2031F40->playerFinishStatus = STATUS_CANCEL;
+            gUnknown_2031F40->partnerFinishStatus = STATUS_CANCEL;
+        }
+    }
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
 __attribute__((naked)) void sub_0807E588(void)
