@@ -3698,7 +3698,6 @@ static void CursorCb_NoEntry(u8 taskId)
 }
 
 
-__attribute__((naked)) void Task_ClosePartyMenu(u8 taskId);
 
 static void CursorCb_Store(u8 taskId)
 {
