@@ -1,4 +1,5 @@
 gTypeNamesJP = gTypeNames;
+sBikeCyclingTimer = gUnknown_203A824;
 gText_BigGuy = 0x85CB02A;
 gText_BigGirl = 0x85CB031;
 gText_Son = 0x85CB038;

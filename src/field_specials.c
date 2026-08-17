@@ -23,7 +23,7 @@ extern void Task_PCTurnOnEffect(u8 taskId);
 #include "tv.h"
 #include "battle.h"
 #include "string_util.h"
-extern u32 gUnknown_203A824; // sBikeCyclingTimer
+extern u32 sBikeCyclingTimer;
 extern void Task_DeoxysRockInteraction(u8 taskId);
 extern const u8 gText_BigGuy[];
 extern const u8 gText_BigGirl[];
@@ -63,33 +63,16 @@ __attribute__((naked)) void ResetCyclingRoadChallengeData()
         "	.align 2, 0\n\t"
         "_08137D70: .4byte gBikeCyclingChallenge\n\t"
         "_08137D74: .4byte gBikeCollisions\n\t"
-        "_08137D78: .4byte gUnknown_203A824\n\t"
+        "_08137D78: .4byte sBikeCyclingTimer\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Special_BeginCyclingRoadChallenge(void)
+void Special_BeginCyclingRoadChallenge(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _08137D94\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _08137D98\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _08137D9C\n\t"
-        "	ldr r0, _08137DA0\n\t"
-        "	ldr r0, [r0, #0x20]\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08137D94: .4byte gBikeCyclingChallenge\n\t"
-        "_08137D98: .4byte gBikeCollisions\n\t"
-        "_08137D9C: .4byte gUnknown_203A824\n\t"
-        "_08137DA0: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    gBikeCyclingChallenge = TRUE;
+    gBikeCollisions = 0;
+    sBikeCyclingTimer = gMain.vblankCounter1;
 }
 
 u16 GetPlayerAvatarBike(void)
@@ -242,7 +225,7 @@ __attribute__((naked)) void DetermineCyclingRoadResults(u32 numFrames, u16 bikeC
 
 void FinishCyclingRoadChallenge(void)
 {
-    const u32 numFrames = gMain.vblankCounter1 - gUnknown_203A824;
+    const u32 numFrames = gMain.vblankCounter1 - sBikeCyclingTimer;
 
     DetermineCyclingRoadResults(numFrames, gBikeCollisions);
     RecordCyclingRoadResults(numFrames, gBikeCollisions);
@@ -2599,36 +2582,12 @@ void GiveLeadMonEffortRibbon(void)
         TryPutSpotTheCutiesOnAir(leadMon, MON_DATA_EFFORT_RIBBON);
 }
 
-__attribute__((naked)) void Special_AreLeadMonEVsMaxedOut(void)
+bool8 Special_AreLeadMonEVsMaxedOut(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0813945C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl GetMonEVCount\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _08139460\n\t"
-        "	cmp r0, r1\n\t"
-        "	bhi _08139464\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08139466\n\t"
-        "	.align 2, 0\n\t"
-        "_0813945C: .4byte gPlayerParty\n\t"
-        "_08139460: .4byte 0x01FD0000\n\t"
-        "_08139464:\n\t"
-        "	movs r0, #1\n\t"
-        "_08139466:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonEVCount(&gPlayerParty[GetLeadMonIndex()]) >= MAX_TOTAL_EVS)
+        return TRUE;
+
+    return FALSE;
 }
 
 __attribute__((naked)) void TryUpdateRusturfTunnelState(void)
