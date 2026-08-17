@@ -12,6 +12,7 @@ extern const u16 sTMHMMoves[];
 #include "constants/rgb.h"
 #include "main.h"
 #include "menu_helpers.h"
+#include "string_util.h"
 #include "task.h"
 
 static void Task_ExitPartyMenu(u8 taskId);
@@ -3848,21 +3849,11 @@ __attribute__((naked)) u8 TryTakeMonItem(struct Pokemon *mon)
     );
 }
 
-__attribute__((naked)) void pokemon_item_not_removed(void)
+extern const u8 gUnknown_85C97BD[];
+
+static void BufferBagFullCantTakeItemMessage(u16 itemUnused)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B1B28\n\t"
-        "	ldr r1, _081B1B2C\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1B28: .4byte gStringVar4\n\t"
-        "_081B1B2C: .4byte gUnknown_85C97BD + 0x58A\n\t"
-        ".syntax divided\n\t"
-    );
+    StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x58A);
 }
 
 __attribute__((naked)) void sub_081B1B30(void)
@@ -8892,7 +8883,7 @@ __attribute__((naked)) void sub_081B407C(void)
         "	movs r1, #1\n\t"
         "	bl AddBagItem\n\t"
         "	ldrh r0, [r6]\n\t"
-        "	bl pokemon_item_not_removed\n\t"
+        "	bl BufferBagFullCantTakeItemMessage\n\t"
         "	ldr r0, _081B40EC\n\t"
         "	movs r1, #0\n\t"
         "	bl DisplayPartyMenuMessage\n\t"
@@ -9335,7 +9326,7 @@ __attribute__((naked)) void CursorCb_TakeItem(u8 taskId)
         "_081B4448: .4byte gUnknown_85C97BD + 0x4F0\n\t"
         "_081B444C:\n\t"
         "	adds r0, r6, #0\n\t"
-        "	bl pokemon_item_not_removed\n\t"
+        "	bl BufferBagFullCantTakeItemMessage\n\t"
         "	ldr r0, _081B4474\n\t"
         "_081B4454:\n\t"
         "	movs r1, #1\n\t"
@@ -10042,7 +10033,7 @@ __attribute__((naked)) void sub_081B4934(void)
         "_081B49C0: .4byte sub_081B433C + 1\n\t"
         "_081B49C4:\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl pokemon_item_not_removed\n\t"
+        "	bl BufferBagFullCantTakeItemMessage\n\t"
         "	ldr r0, _081B49E4\n\t"
         "	movs r1, #0\n\t"
         "	bl DisplayPartyMenuMessage\n\t"
@@ -17235,7 +17226,7 @@ __attribute__((naked)) void sub_081B7F74(void)
         "	adds r0, r4, #0\n\t"
         "	bl sub_081B80BC\n\t"
         "	ldrh r0, [r6]\n\t"
-        "	bl pokemon_item_not_removed\n\t"
+        "	bl BufferBagFullCantTakeItemMessage\n\t"
         "	ldr r0, _081B7FD4\n\t"
         "	movs r1, #0\n\t"
         "	bl DisplayPartyMenuMessage\n\t"

@@ -8594,7 +8594,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B1A38);
         src/party_menu.o(.text.sub_081B1A88);
         src/party_menu.o(.text.TryTakeMonItem);
-        src/party_menu.o(.text.pokemon_item_not_removed);
+        src/party_menu.o(.text.BufferBagFullCantTakeItemMessage);
         src/party_menu.o(.text.sub_081B1B30);
         src/party_menu.o(.text.PartyMenuModifyHP);
         src/party_menu.o(.text.sub_081B1C78);
