@@ -186,7 +186,8 @@ bool8 sub_08079C28(void);
 void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed);
 void sub_08079FB4(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
-void PrintTradeMessage(u8 msgId);
+static void PrintTradeMessage(u8 messageId);
+extern const u8 *const gUnknown_8300BDC[];
 static bool8 BufferTradeParties(void);
 void sub_0807A028(void);
 void sub_08079D98(u8 side);
@@ -2629,48 +2630,13 @@ static void DoQueuedActions(void)
     }
 }
 
-__attribute__((naked)) void PrintTradeMessage(u8 msgId)
+static void PrintTradeMessage(u8 messageId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r0, _08079C24\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x14\n\t"
-        "	movs r2, #0xc\n\t"
-        "	bl DrawTextBorderOuter\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079C24: .4byte gUnknown_8300BDC\n\t"
-        ".syntax divided\n\t"
-    );
+    FillWindowPixelBuffer(0, PIXEL_FILL(1));
+    AddTextPrinterParameterized(0, FONT_NORMAL, gUnknown_8300BDC[messageId], 2, 2, TEXT_SKIP_DRAW, NULL);
+    DrawTextBorderOuter(0, 20, 12);
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_FULL);
 }
 
 __attribute__((naked)) bool8 sub_08079C28(void)
