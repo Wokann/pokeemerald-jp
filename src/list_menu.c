@@ -4,6 +4,7 @@
 #include "menu.h"
 #include "palette.h"
 #include "constants/songs.h"
+#include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "trig.h"
@@ -47,9 +48,9 @@ extern struct {
 void Task_RedArrowCursor(void) {}
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
 u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow);
-static __attribute__((naked)) void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count);
-static __attribute__((naked)) void ListMenuDrawCursor(struct ListMenu *list);
-static __attribute__((naked)) void ListMenuErasePrintedCursor(struct ListMenu *list, u16 selectedRow);
+static void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count);
+static void ListMenuDrawCursor(struct ListMenu *list);
+static void ListMenuErasePrintedCursor(struct ListMenu *list, u16 selectedRow);
 static u8 ListMenuUpdateSelectedRowIndexAndScrollOffset(struct ListMenu *list, bool8 movingDown);
 static bool8 ListMenuChangeSelection(struct ListMenu *list, bool8 updateCursorAndCallCallback, u8 count, bool8 movingDown);
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
@@ -559,234 +560,57 @@ static void ListMenuPrint(struct ListMenu *list, const u8 *str, u8 x, u8 y)
 }
 
 
-static __attribute__((naked)) void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count)
+static void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	str r2, [sp]\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	mov sl, r3\n\t"
-        "	ldrb r0, [r4, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	ldrb r1, [r4, #0x16]\n\t"
-        "	lsls r1, r1, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1d\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r8, sl\n\t"
-        "	bge _081AE7E8\n\t"
-        "_081AE782:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	mov r2, sb\n\t"
-        "	lsls r1, r2, #3\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r2, [r0, #4]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r2, r0\n\t"
-        "	beq _081AE79A\n\t"
-        "	ldrb r6, [r4, #0x12]\n\t"
-        "	b _081AE79C\n\t"
-        "_081AE79A:\n\t"
-        "	ldrb r6, [r4, #0x11]\n\t"
-        "_081AE79C:\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	add r0, r8\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	ldrb r0, [r4, #0x14]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r7, r2, #0\n\t"
-        "	ldr r3, [r4, #8]\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _081AE7C6\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r5, r1\n\t"
-        "	ldr r1, [r1, #4]\n\t"
-        "	bl _call_via_r3\n\t"
-        "_081AE7C6:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl ListMenuPrint\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	add r8, r0\n\t"
-        "	cmp r8, sl\n\t"
-        "	blt _081AE782\n\t"
-        "_081AE7E8:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    u8 x, y;
+    u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + list->template.itemVerticalPadding;
+
+    for (i = 0; i < count; i++)
+    {
+        if (list->template.items[startIndex].id != LIST_HEADER)
+            x = list->template.item_X;
+        else
+            x = list->template.header_X;
+
+        y = (yOffset + i) * yMultiplier + list->template.upText_Y;
+        if (list->template.itemPrintFunc != NULL)
+            list->template.itemPrintFunc(list->template.windowId, list->template.items[startIndex].id, y);
+
+        ListMenuPrint(list, list->template.items[startIndex].name, x, y);
+        startIndex++;
+    }
 }
 
-static __attribute__((naked)) void ListMenuDrawCursor(struct ListMenu *list)
+static void ListMenuDrawCursor(struct ListMenu *list)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldrb r0, [r6, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	ldrb r1, [r6, #0x16]\n\t"
-        "	lsls r1, r1, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1d\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r6, #0x13]\n\t"
-        "	mov r8, r1\n\t"
-        "	ldrh r1, [r6, #0x1a]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldrb r0, [r6, #0x14]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldrb r0, [r6, #0x17]\n\t"
-        "	lsrs r0, r0, #6\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081AE8E4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081AE83E\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AE848\n\t"
-        "	b _081AE8E4\n\t"
-        "_081AE83E:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081AE85C\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _081AE8A4\n\t"
-        "	b _081AE8E4\n\t"
-        "_081AE848:\n\t"
-        "	ldr r1, _081AE858\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl ListMenuPrint\n\t"
-        "	b _081AE8E4\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE858: .4byte gText_SelectorArrow2\n\t"
-        "_081AE85C:\n\t"
-        "	ldrb r0, [r6, #0x1e]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _081AE86C\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ListMenuAddCursorObject\n\t"
-        "	strb r0, [r6, #0x1e]\n\t"
-        "_081AE86C:\n\t"
-        "	ldrb r5, [r6, #0x1e]\n\t"
-        "	ldrb r0, [r6, #0x10]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetWindowAttribute\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x13\n\t"
-        "	ldr r0, _081AE8A0\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldrb r0, [r6, #0x10]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetWindowAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	subs r2, #1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl ListMenuUpdateCursorObject\n\t"
-        "	b _081AE8E4\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE8A0: .4byte 0xFFFF0000\n\t"
-        "_081AE8A4:\n\t"
-        "	ldrb r0, [r6, #0x1e]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _081AE8B4\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ListMenuAddCursorObject\n\t"
-        "	strb r0, [r6, #0x1e]\n\t"
-        "_081AE8B4:\n\t"
-        "	ldrb r5, [r6, #0x1e]\n\t"
-        "	ldrb r0, [r6, #0x10]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetWindowAttribute\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	add r4, r8\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldrb r0, [r6, #0x10]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetWindowAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl ListMenuUpdateCursorObject\n\t"
-        "_081AE8E4:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + list->template.itemVerticalPadding;
+    u8 x = list->template.cursor_X;
+    u8 y = list->selectedRow * yMultiplier + list->template.upText_Y;
+    switch (list->template.cursorKind)
+    {
+    case CURSOR_BLACK_ARROW:
+        ListMenuPrint(list, gText_SelectorArrow2, x, y);
+        break;
+    case CURSOR_INVISIBLE:
+        break;
+    case CURSOR_RED_OUTLINE:
+        if (list->taskId == TASK_NONE)
+            list->taskId = ListMenuAddCursorObject(list, CURSOR_RED_OUTLINE - CURSOR_OBJECT_START);
+        ListMenuUpdateCursorObject(list->taskId,
+                                   (u16)(GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_LEFT) * 8 - 1),
+                                   (u16)(GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP) * 8 + y - 1),
+                                   CURSOR_RED_OUTLINE - CURSOR_OBJECT_START);
+        break;
+    case CURSOR_RED_ARROW:
+        if (list->taskId == TASK_NONE)
+            list->taskId = ListMenuAddCursorObject(list, CURSOR_RED_ARROW - CURSOR_OBJECT_START);
+        ListMenuUpdateCursorObject(list->taskId,
+                                   (u16)(GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_LEFT) * 8 + x),
+                                   (u16)(GetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP) * 8 + y),
+                                   CURSOR_RED_ARROW - CURSOR_OBJECT_START);
+        break;
+    }
 }
 
 static u8 ListMenuAddCursorObject(struct ListMenu *list, u32 cursorObjId)
@@ -804,77 +628,21 @@ static u8 ListMenuAddCursorObject(struct ListMenu *list, u32 cursorObjId)
     return ListMenuAddCursorObjectInternal(&cursor, cursorObjId);
 }
 
-static __attribute__((naked)) void ListMenuErasePrintedCursor(struct ListMenu *list, u16 selectedRow)
+static void ListMenuErasePrintedCursor(struct ListMenu *list, u16 selectedRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov r8, r1\n\t"
-        "	ldrb r1, [r7, #0x17]\n\t"
-        "	lsrs r0, r1, #6\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081AE9CC\n\t"
-        "	lsls r0, r1, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r7, #0x16]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1d\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldrb r0, [r7, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMenuCursorDimensionByFont\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldrb r0, [r7, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMenuCursorDimensionByFont\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r6, [r7, #0x10]\n\t"
-        "	ldrb r2, [r7, #0x15]\n\t"
-        "	lsls r2, r2, #0x1c\n\t"
-        "	lsrs r1, r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r2, [r7, #0x13]\n\t"
-        "	mov r3, r8\n\t"
-        "	muls r3, r4, r3\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	ldrb r3, [r7, #0x14]\n\t"
-        "	lsls r3, r3, #0x1c\n\t"
-        "	lsrs r3, r3, #0x1c\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	str r5, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl FillWindowPixelRect\n\t"
-        "_081AE9CC:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 cursorKind = list->template.cursorKind;
+    if (cursorKind == CURSOR_BLACK_ARROW)
+    {
+        u8 yMultiplier = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + list->template.itemVerticalPadding;
+        u8 width  = GetMenuCursorDimensionByFont(list->template.fontId, 0);
+        u8 height = GetMenuCursorDimensionByFont(list->template.fontId, 1);
+        FillWindowPixelRect(list->template.windowId,
+                            PIXEL_FILL(list->template.fillValue),
+                            list->template.cursor_X,
+                            (u16)(selectedRow * yMultiplier + list->template.upText_Y),
+                            width,
+                            height);
+    }
 }
 
 static u8 ListMenuUpdateSelectedRowIndexAndScrollOffset(struct ListMenu *list, bool8 movingDown)
