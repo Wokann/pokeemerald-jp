@@ -764,35 +764,11 @@ __attribute__((naked)) void AllocPartyMiscGfx(void)
     );
 }
 
-__attribute__((naked)) void PartyPaletteBufferCopy(u8 palNum)
+static void PartyPaletteBufferCopy(u8 palNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x1c\n\t"
-        "	ldr r5, _081B03C4\n\t"
-        "	lsrs r4, r4, #0x17\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	subs r1, #0x60\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, _081B03C8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl CpuSet\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B03C4: .4byte gUnknown_2037414\n\t"
-        "_081B03C8: .4byte gPlttBufferFaded\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 offset = PLTT_ID(palNum);
+    CpuCopy16(&gPlttBufferUnfaded[BG_PLTT_ID(3)], &gPlttBufferUnfaded[offset], PLTT_SIZE_4BPP);
+    CpuCopy16(&gPlttBufferUnfaded[BG_PLTT_ID(3)], &gPlttBufferFaded[offset], PLTT_SIZE_4BPP);
 }
 
 static void FreePartyPointers(void)
