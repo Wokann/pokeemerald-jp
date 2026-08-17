@@ -13,7 +13,9 @@ extern const struct SpriteTemplate sSpriteTemplate_ScrollArrowIndicator;
 extern const struct SpriteTemplate sSpriteTemplate_RedArrowCursor;
 extern const u32 gUnknown_85DFC30[];
 extern const u32 gUnknown_85DFBF0[];
+extern const u32 gUnknown_85DFB80[];
 extern const u16 gUnknown_85DFB60[];
+extern void Task_ScrollIndicatorArrowPair(u8 taskId);
 extern const struct {
     u8 animNum:4;
     u8 bounceDir:4;
@@ -1246,147 +1248,50 @@ u8 AddScrollIndicatorArrowObject(u8 arrowDir, u8 x, u8 y, u16 tileTag, u16 palTa
 #undef tSinePos
 
 
-__attribute__((naked)) u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *arrowInfo, u16 *scrollOffset)
+u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *arrowInfo, u16 *scrollOffset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov sb, r1\n\t"
-        "	ldr r0, _081AF0A4\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r5, _081AF0A8\n\t"
-        "	ldr r0, [sp, #8]\n\t"
-        "	ands r0, r5\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	ldrh r1, [r6, #0xa]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	ldr r4, _081AF0AC\n\t"
-        "	ands r0, r4\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	add r0, sp, #4\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldrh r2, [r6, #0xc]\n\t"
-        "	cmp r2, r4\n\t"
-        "	bne _081AF0B4\n\t"
-        "	ldr r0, _081AF0B0\n\t"
-        "	ldrb r1, [r6, #0xe]\n\t"
-        "	lsls r1, r1, #0x14\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0x11\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _081AF0C6\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF0A4: .4byte gUnknown_85DFB80\n\t"
-        "_081AF0A8: .4byte 0xFFFF0000\n\t"
-        "_081AF0AC: .4byte 0x0000FFFF\n\t"
-        "_081AF0B0: .4byte gUnknown_85DFB60\n\t"
-        "_081AF0B4:\n\t"
-        "	ldr r0, _081AF164\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	add r0, sp, #0xc\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ands r1, r5\n\t"
-        "	orrs r1, r2\n\t"
-        "	str r1, [r0, #4]\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "_081AF0C6:\n\t"
-        "	ldr r0, _081AF168\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081AF16C\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r7]\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [r7, #4]\n\t"
-        "	ldrh r0, [r6, #6]\n\t"
-        "	strh r0, [r7, #8]\n\t"
-        "	ldrh r0, [r6, #8]\n\t"
-        "	strh r0, [r7, #0xa]\n\t"
-        "	ldrh r0, [r6, #0xa]\n\t"
-        "	strh r0, [r7, #0xe]\n\t"
-        "	ldrh r0, [r6, #0xc]\n\t"
-        "	strh r0, [r7, #0x10]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	ldrb r1, [r6, #1]\n\t"
-        "	ldrb r2, [r6, #2]\n\t"
-        "	ldrh r3, [r6, #0xa]\n\t"
-        "	ldrh r4, [r6, #0xc]\n\t"
-        "	str r4, [sp]\n\t"
-        "	bl AddScrollIndicatorArrowObject\n\t"
-        "	strb r0, [r7, #0xc]\n\t"
-        "	ldrb r0, [r6, #3]\n\t"
-        "	ldrb r1, [r6, #4]\n\t"
-        "	ldrb r2, [r6, #5]\n\t"
-        "	ldrh r3, [r6, #0xa]\n\t"
-        "	ldrh r4, [r6, #0xc]\n\t"
-        "	str r4, [sp]\n\t"
-        "	bl AddScrollIndicatorArrowObject\n\t"
-        "	strb r0, [r7, #0xd]\n\t"
-        "	ldrh r1, [r6, #0xc]\n\t"
-        "	ldr r0, _081AF170\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081AF154\n\t"
-        "	ldr r5, _081AF174\n\t"
-        "	ldrb r0, [r7, #0xc]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r3, [r6, #0xe]\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	ldrb r4, [r1, #5]\n\t"
-        "	movs r2, #0xf\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r4\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldrb r1, [r7, #0xd]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r6, #0xe]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r3, [r0, #5]\n\t"
-        "	ands r2, r3\n\t"
-        "	orrs r2, r1\n\t"
-        "	strb r2, [r0, #5]\n\t"
-        "_081AF154:\n\t"
-        "	mov r0, r8\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF164: .4byte gUnknown_85DFB60\n\t"
-        "_081AF168: .4byte Task_ScrollIndicatorArrowPair + 1\n\t"
-        "_081AF16C: .4byte gUnknown_3005B68\n\t"
-        "_081AF170: .4byte 0x0000FFFF\n\t"
-        "_081AF174: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct CompressedSpriteSheet spriteSheet;
+    struct SpritePalette spritePal;
+    struct ScrollIndicatorPair *data;
+    u8 taskId;
+
+    spriteSheet.data = gUnknown_85DFB80;
+    spriteSheet.size = 0x100;
+    spriteSheet.tag = arrowInfo->tileTag;
+    LoadCompressedSpriteSheet(&spriteSheet);
+
+    if (arrowInfo->palTag == TAG_NONE)
+    {
+        LoadPalette(gUnknown_85DFB60, OBJ_PLTT_ID(arrowInfo->palNum), PLTT_SIZE_4BPP);
+    }
+    else
+    {
+        spritePal.data = gUnknown_85DFB60;
+        spritePal.tag = arrowInfo->palTag;
+        LoadSpritePalette(&spritePal);
+    }
+
+    taskId = CreateTask(Task_ScrollIndicatorArrowPair, 0);
+    data = (void *) gTasks[taskId].data;
+
+    data->field_0 = 0;
+    data->scrollOffset = scrollOffset;
+    data->fullyUpThreshold = arrowInfo->fullyUpThreshold;
+    data->fullyDownThreshold = arrowInfo->fullyDownThreshold;
+    data->tileTag = arrowInfo->tileTag;
+    data->palTag = arrowInfo->palTag;
+    data->topSpriteId = AddScrollIndicatorArrowObject(arrowInfo->firstArrowType, arrowInfo->firstX, arrowInfo->firstY, arrowInfo->tileTag, arrowInfo->palTag);
+    data->bottomSpriteId = AddScrollIndicatorArrowObject(arrowInfo->secondArrowType, arrowInfo->secondX, arrowInfo->secondY, arrowInfo->tileTag, arrowInfo->palTag);
+
+    if (arrowInfo->palTag == TAG_NONE)
+    {
+        gSprites[data->topSpriteId].oam.paletteNum = arrowInfo->palNum;
+        gSprites[data->bottomSpriteId].oam.paletteNum = arrowInfo->palNum;
+    }
+
+    return taskId;
 }
+
 
 __attribute__((naked)) u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType, s32 commonPos, s32 firstPos, s32 secondPos, s32 fullyDownThreshold, s32 tileTag, s32 palTag, u16 *scrollOffset)
 {
