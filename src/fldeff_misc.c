@@ -1888,21 +1888,9 @@ void FldEffPoison_Start(void)
     CreateTask(Task_FieldPoisonEffect, 80);
 }
 
-__attribute__((naked)) void sub_080FB730(void)
+bool32 sub_080FB730(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080FB740\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB740: .4byte Task_FieldPoisonEffect + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    return FuncIsActiveTask(Task_FieldPoisonEffect);
 }
 
 void Task_WateringBerryTreeAnim_0(u8 taskId)
