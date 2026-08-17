@@ -1,4 +1,8 @@
 #include "global.h"
+#include "constants/songs.h"
+extern void Task_FieldPoisonEffect(u8 taskId);
+extern void Task_WateringBerryTreeAnim_0(u8 taskId);
+
 #include "fldeff_misc.h"
 
 __attribute__((naked)) void sub_080FA43C(void)
@@ -2547,7 +2551,7 @@ __attribute__((naked)) void sub_080FB654(void)
     );
 }
 
-__attribute__((naked)) void Task_FieldPoisonEffect(void)
+__attribute__((naked)) void Task_FieldPoisonEffect(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2615,22 +2619,10 @@ __attribute__((naked)) void Task_FieldPoisonEffect(void)
     );
 }
 
-__attribute__((naked)) void FldEffPoison_Start()
+void FldEffPoison_Start(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x4f\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080FB72C\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB72C: .4byte Task_FieldPoisonEffect + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_FIELD_POISON);
+    CreateTask(Task_FieldPoisonEffect, 80);
 }
 
 __attribute__((naked)) void sub_080FB730(void)
@@ -2650,7 +2642,7 @@ __attribute__((naked)) void sub_080FB730(void)
     );
 }
 
-__attribute__((naked)) void Task_WateringBerryTreeAnim_0(void)
+__attribute__((naked)) void Task_WateringBerryTreeAnim_0(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2809,20 +2801,9 @@ __attribute__((naked)) void Task_WateringBerryTreeAnim_3(void)
     );
 }
 
-__attribute__((naked)) void DoWateringBerryTreeAnim()
+void DoWateringBerryTreeAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080FB878\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB878: .4byte Task_WateringBerryTreeAnim_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateTask(Task_WateringBerryTreeAnim_0, 80);
 }
 
 __attribute__((naked)) void CreateRecordMixingSprite(void)
