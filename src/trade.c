@@ -176,7 +176,7 @@ enum {
 #define NUM_PARTNER_NAME_SPRITES 3
 #define NUM_CHOOSE_PKMN_SPRITES 6 // JP creates all 6 Choose-Pokémon sprites
 
-u32 sub_08079AD4(void);
+static u32 GetNumQueuedActions(void);
 extern void CB2_ReturnToFieldFromMultiplayer(void);
 void sub_080790C8(u8 side);
 static void PrintPartyLevelsAndGenders(u8 whichParty);
@@ -1709,7 +1709,7 @@ static void CB_ExitCanceledTrade(void)
 {
     if (gWirelessCommType)
     {
-        if (IsLinkTradeTaskFinished() && sub_08079AD4() == 0)
+        if (IsLinkTradeTaskFinished() && GetNumQueuedActions() == 0)
         {
             Free(sMenuTextTileBuffer);
             Free(sTradeMenu);
@@ -1732,7 +1732,7 @@ static void CB_ExitCanceledTrade(void)
 
 static void CB_WaitToStartRfuTrade(void)
 {
-    if (!Rfu_SetLinkRecovery(FALSE) && sub_08079AD4() == 0)
+    if (!Rfu_SetLinkRecovery(FALSE) && GetNumQueuedActions() == 0)
     {
         SetLinkStandbyCallback();
         sTradeMenu->callbackId = CB_START_LINK_TRADE;
@@ -2570,32 +2570,17 @@ static void QueueAction(u16 delay, u8 actionId)
     }
 }
 
-__attribute__((naked)) u32 sub_08079AD4(void)
+static u32 GetNumQueuedActions(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _08079AF8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x8d\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #3\n\t"
-        "_08079AE4:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	adds r1, #8\n\t"
-        "	subs r2, #1\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _08079AE4\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08079AF8: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 numActions = 0;
+    int i;
+
+    for (i = 0; i < (int)ARRAY_COUNT(sTradeMenu->queuedActions); i++)
+    {
+        numActions += sTradeMenu->queuedActions[i].active;
+    }
+
+    return numActions;
 }
 
 __attribute__((naked)) void sub_08079AFC(void)
