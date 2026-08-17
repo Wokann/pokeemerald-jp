@@ -80,6 +80,9 @@ extern const struct
 } sCursorOptions[];
 #include "constants/items.h"
 #include "constants/contest.h"
+#include "item_use.h"
+#include "event_data.h"
+#include "item_menu.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
 #include "constants/rgb.h"
@@ -181,6 +184,13 @@ enum {
     FIELD_MOVES_COUNT
 };
 
+enum {
+    CAN_LEARN_MOVE,
+    CANNOT_LEARN_MOVE,
+    ALREADY_KNOWS_MOVE,
+    CANNOT_LEARN_MOVE_IS_EGG
+};
+
 struct PartyMenuInternal
 {
     TaskFunc task;
@@ -222,6 +232,7 @@ static void DisplayPartyPokemonLevel(u8, struct PartyMenuBox *);
 bool8 ShouldUseChooseMonText(void);
 static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *mon);
 static u8 GetPartySlotEntryStatus(s8 slotId);
+static void DisplayPartyPokemonDataToTeachMove(u8 slot, u16 item, u8 tutor);
 static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox);
 
 extern const struct PartyMenuBoxInfoRects gUnknown_85E0F9C[];
@@ -1045,7 +1056,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	b _081B05CE\n\t"
         "_081B05BC:\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_081B08D4\n\t"
+        "	bl DisplayPartyPokemonDataForMoveTutorOrEvolutionItem\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _081B05CE\n\t"
@@ -1195,138 +1206,53 @@ static void DisplayPartyPokemonDataForBattlePyramidHeldItem(u8 slot)
         DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_DONT_HAVE);
 }
 
-__attribute__((naked)) void sub_081B08D4(void)
+static bool8 DisplayPartyPokemonDataForMoveTutorOrEvolutionItem(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B0904\n\t"
-        "	adds r6, r1, r0\n\t"
-        "	ldr r0, _081B0908\n\t"
-        "	ldrh r4, [r0]\n\t"
-        "	ldr r0, _081B090C\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bne _081B0918\n\t"
-        "	ldr r1, _081B0910\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _081B0914\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DisplayPartyPokemonSelectToTeachMove\n\t"
-        "	b _081B0962\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0904: .4byte gPlayerParty\n\t"
-        "_081B0908: .4byte gSpecialVar_ItemId\n\t"
-        "_081B090C: .4byte gPartyMenu\n\t"
-        "_081B0910: .4byte gSpecialVar_Result\n\t"
-        "_081B0914: .4byte gSpecialVar_0x8005\n\t"
-        "_081B0918:\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _081B092E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckIfItemIsTMHMOrEvolutionStone\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B0932\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B093E\n\t"
-        "_081B092E:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B0964\n\t"
-        "_081B0932:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonSelectToTeachMove\n\t"
-        "	b _081B0962\n\t"
-        "_081B093E:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B095A\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl GetEvolutionTargetSpecies\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B092E\n\t"
-        "_081B095A:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "_081B0962:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B0964:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *currentPokemon = &gPlayerParty[slot];
+    u16 item = gSpecialVar_ItemId;
+
+    if (gPartyMenu.action == PARTY_ACTION_MOVE_TUTOR)
+    {
+        gSpecialVar_Result = FALSE;
+        DisplayPartyPokemonDataToTeachMove(slot, 0, gSpecialVar_0x8005);
+    }
+    else
+    {
+        if (gPartyMenu.action != PARTY_ACTION_USE_ITEM)
+            return FALSE;
+
+        switch ((u8)CheckIfItemIsTMHMOrEvolutionStone(item))
+        {
+        default:
+            return FALSE;
+        case ITEM_IS_TM_HM:
+            DisplayPartyPokemonDataToTeachMove(slot, item, 0);
+            break;
+        case ITEM_IS_EVOLUTION_STONE:
+            if (!GetMonData(currentPokemon, MON_DATA_IS_EGG) && GetEvolutionTargetSpecies(currentPokemon, EVO_MODE_ITEM_CHECK, item) != SPECIES_NONE)
+                return FALSE;
+            DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_NO_USE);
+            break;
+        }
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) void DisplayPartyPokemonSelectToTeachMove(u8 a)
+static void DisplayPartyPokemonDataToTeachMove(u8 slot, u16 item, u8 tutor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r3, _081B0998\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	bl CanMonLearnTMTutor\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B09AA\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _081B099C\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B09A0\n\t"
-        "	b _081B09B4\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0998: .4byte gPlayerParty\n\t"
-        "_081B099C:\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _081B09B4\n\t"
-        "_081B09A0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #9\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "	b _081B09BC\n\t"
-        "_081B09AA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "	b _081B09BC\n\t"
-        "_081B09B4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "_081B09BC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch ((u8)CanMonLearnTMTutor(&gPlayerParty[slot], item, tutor))
+    {
+    case CANNOT_LEARN_MOVE:
+    case CANNOT_LEARN_MOVE_IS_EGG:
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_NOT_ABLE_2);
+        break;
+    case ALREADY_KNOWS_MOVE:
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_LEARNED);
+        break;
+    default:
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_ABLE_2);
+        break;
+    }
 }
 
 __attribute__((naked)) void sub_081B09C4(void)
