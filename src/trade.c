@@ -1305,44 +1305,21 @@ static void TradeMenuMoveCursor(u8 *cursorPosition, u8 direction)
     *cursorPosition = newPosition;
 }
 
-__attribute__((naked)) void sub_0807875C(void)
+static void SetReadyToTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	ldr r4, _08078788\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0x64\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08078790\n\t"
-        "	ldr r0, _0807878C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x35\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl SetLinkData\n\t"
-        "	b _08078798\n\t"
-        "	.align 2, 0\n\t"
-        "_08078788: .4byte sTradeMenu\n\t"
-        "_0807878C: .4byte 0x0000AABB\n\t"
-        "_08078790:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x78\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078798:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08079BD4(MSG_STANDBY);
+    sTradeMenu->callbackId = CB_IDLE;
+
+    if (GetMultiplayerId() == 1)
+    {
+        // Communicate to the link leader that we're ready to trade
+        SetLinkData(LINKCMD_READY_TO_TRADE, sTradeMenu->cursorPosition);
+    }
+    else
+    {
+        // We are the link leader, no communication necessary
+        sTradeMenu->playerSelectStatus = STATUS_READY;
+    }
 }
 
 __attribute__((naked)) void sub_080787A0(void)
@@ -1626,7 +1603,7 @@ __attribute__((naked)) void sub_08078958(void)
         "	.4byte _08078A1A @ case 4\n\t"
         "	.4byte _08078A20 @ case 5\n\t"
         "_080789EC:\n\t"
-        "	bl sub_0807875C\n\t"
+        "	bl SetReadyToTrade\n\t"
         "	ldr r2, _08078A0C\n\t"
         "	ldr r0, _08078A10\n\t"
         "	ldr r0, [r0]\n\t"

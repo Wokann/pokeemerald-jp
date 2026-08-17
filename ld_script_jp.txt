@@ -3222,7 +3222,7 @@ SECTIONS {
         src/trade.o(.text.CB1_UpdateLink);
         src/trade.o(.text.GetNewCursorPosition);
         src/trade.o(.text.TradeMenuMoveCursor);
-        src/trade.o(.text.sub_0807875C);
+        src/trade.o(.text.SetReadyToTrade);
         src/trade.o(.text.sub_080787A0);
         src/trade.o(.text.sub_08078900);
         src/trade.o(.text.sub_08078958);
