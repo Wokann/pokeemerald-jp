@@ -3261,7 +3261,7 @@ SECTIONS {
         src/trade.o(.text.PrintTradeMessage);
         src/trade.o(.text.LoadUISpriteGfx);
         src/trade.o(.text.DrawBottomRowText);
-        src/trade.o(.text.sub_08079D98);
+        src/trade.o(.text.ComputePartyTradeableFlags);
         src/trade.o(.text.sub_08079EE0);
         src/trade.o(.text.sub_08079FB4);
         src/trade.o(.text.sub_0807A028);

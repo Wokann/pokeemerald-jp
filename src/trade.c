@@ -194,7 +194,7 @@ static void PrintTradeMessage(u8 messageId);
 extern const u8 *const gUnknown_8300BDC[];
 static bool8 BufferTradeParties(void);
 void sub_0807A028(void);
-void sub_08079D98(u8 side);
+static void ComputePartyTradeableFlags(u8 whichParty);
 void sub_08079EE0(u8 side);
 void CB1_UpdateLink(void);
 static void SetSelectedMon(u8 cursorPosition);
@@ -564,7 +564,7 @@ static void CB2_CreateTradeMenu(void)
         rbox_fill_rectangle(0);
         break;
     case 14:
-        sub_08079D98(TRADE_PLAYER);
+        ComputePartyTradeableFlags(TRADE_PLAYER);
         PrintPartyNicknames(TRADE_PLAYER);
         sTradeMenu->bg2hofs = 0;
         sTradeMenu->bg3hofs = 0;
@@ -573,7 +573,7 @@ static void CB2_CreateTradeMenu(void)
         PlayBGM(MUS_SCHOOL);
         break;
     case 15:
-        sub_08079D98(TRADE_PARTNER);
+        ComputePartyTradeableFlags(TRADE_PARTNER);
         PrintPartyNicknames(TRADE_PARTNER);
         gMain.state++;
         // fallthrough
@@ -2742,181 +2742,53 @@ __attribute__((naked)) void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused
     );
 }
 
-__attribute__((naked)) void sub_08079D98(u8 side)
+static void ComputePartyTradeableFlags(u8 whichParty)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08079DB0\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08079E44\n\t"
-        "	b _08079ED0\n\t"
-        "_08079DB0:\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r1, _08079DF0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	blt _08079DC0\n\t"
-        "	b _08079ED0\n\t"
-        "_08079DC0:\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	mov sb, r5\n\t"
-        "_08079DC6:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _08079DF4\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _08079DF8\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x45\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r2, sb\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x51\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	b _08079E28\n\t"
-        "	.align 2, 0\n\t"
-        "_08079DF0: .4byte sTradeMenu\n\t"
-        "_08079DF4: .4byte gPlayerParty\n\t"
-        "_08079DF8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08079E16\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x45\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x51\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	b _08079E28\n\t"
-        "_08079E16:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x45\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x51\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r1, sb\n\t"
-        "_08079E28:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _08079E40\n\t"
-        "	adds r5, #1\n\t"
-        "	adds r7, #1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	blt _08079DC6\n\t"
-        "	b _08079ED0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079E40: .4byte sTradeMenu\n\t"
-        "_08079E44:\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r1, _08079E84\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x37\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	bge _08079ED0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	movs r5, #6\n\t"
-        "	movs r2, #0\n\t"
-        "	mov sb, r2\n\t"
-        "_08079E5A:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _08079E88\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _08079E8C\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x45\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r2, sb\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x51\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	b _08079EBC\n\t"
-        "	.align 2, 0\n\t"
-        "_08079E84: .4byte sTradeMenu\n\t"
-        "_08079E88: .4byte gEnemyParty\n\t"
-        "_08079E8C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08079EAA\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x45\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x51\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	b _08079EBC\n\t"
-        "_08079EAA:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x45\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x51\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r1, sb\n\t"
-        "_08079EBC:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _08079EDC\n\t"
-        "	adds r5, #1\n\t"
-        "	adds r7, #1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	blt _08079E5A\n\t"
-        "_08079ED0:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079EDC: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    switch (whichParty)
+    {
+    case TRADE_PLAYER:
+        for (i = 0; i < sTradeMenu->partyCounts[whichParty]; i++)
+        {
+            if (GetMonData3(&gPlayerParty[i], MON_DATA_IS_EGG) == TRUE)
+            {
+                sTradeMenu->isLiveMon[whichParty][i] = FALSE;
+                sTradeMenu->isEgg[whichParty][i] = TRUE;
+            }
+            else if (GetMonData3(&gPlayerParty[i], MON_DATA_HP) == 0)
+            {
+                sTradeMenu->isLiveMon[whichParty][i] = FALSE;
+                sTradeMenu->isEgg[whichParty][i] = FALSE;
+            }
+            else
+            {
+                sTradeMenu->isLiveMon[whichParty][i] = TRUE;
+                sTradeMenu->isEgg[whichParty][i] = FALSE;
+            }
+        }
+        break;
+    case TRADE_PARTNER:
+        for (i = 0; i < sTradeMenu->partyCounts[whichParty]; i++)
+        {
+            if (GetMonData3(&gEnemyParty[i], MON_DATA_IS_EGG) == TRUE)
+            {
+                sTradeMenu->isLiveMon[whichParty][i] = FALSE;
+                sTradeMenu->isEgg[whichParty][i] = TRUE;
+            }
+            else if (GetMonData3(&gEnemyParty[i], MON_DATA_HP) == 0)
+            {
+                sTradeMenu->isLiveMon[whichParty][i] = FALSE;
+                sTradeMenu->isEgg[whichParty][i] = FALSE;
+            }
+            else
+            {
+                sTradeMenu->isLiveMon[whichParty][i] = TRUE;
+                sTradeMenu->isEgg[whichParty][i] = FALSE;
+            }
+        }
+        break;
+    }
 }
 
 __attribute__((naked)) void sub_08079EE0(u8 side)
