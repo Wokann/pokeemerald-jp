@@ -8,6 +8,7 @@
 #define tY data[1]
 #define tState data[2]
 extern void Task_SecretBasePCTurnOn(u8 taskId);
+extern void Task_PopSecretBaseBalloon(u8 taskId);
 extern void Task_SecretBaseMusicNoteMatSound(u8 taskId);
 extern void Task_FieldPoisonEffect(u8 taskId);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
@@ -1413,48 +1414,18 @@ void DoSecretBasePCTurnOffEffect(void)
     CurrentMapDrawMetatileAt(x, y);
 }
 
-__attribute__((naked)) void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
+void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	ldr r0, _080FAE94\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080FAE98\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r4, [r1, #8]\n\t"
-        "	strh r5, [r1, #0xa]\n\t"
-        "	strh r6, [r1, #0xc]\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAE94: .4byte Task_PopSecretBaseBalloon + 1\n\t"
-        "_080FAE98: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(Task_PopSecretBaseBalloon, 0);
+
+    gTasks[taskId].data[0] = metatileId;
+    gTasks[taskId].data[1] = x;
+    gTasks[taskId].data[2] = y;
+    gTasks[taskId].data[3] = 0;
+    gTasks[taskId].data[4] = 1;
 }
 
-__attribute__((naked)) void Task_PopSecretBaseBalloon(void)
+__attribute__((naked)) void Task_PopSecretBaseBalloon(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
