@@ -93,6 +93,7 @@ extern const struct
 #include "text.h"
 extern bool16 AddTextPrinterParameterized2(u8 windowId, u8 fontId, const u8 *str, u8 speed, TextPrinterCallback callback, u8 fgColor, u8 bgColor, u8 shadowColor);
 extern u8 GetPlayerTextSpeedDelay(void);
+extern void SetBgTilemapPalette(u8 bgId, u8 left, u8 top, u8 width, u8 height, u8 palette);
 #include "window.h"
 #include "menu_helpers.h"
 #include "start_menu.h"
@@ -1226,162 +1227,52 @@ static void CreateCancelConfirmPokeballSprites(void)
     }
 }
 
-__attribute__((naked)) void AnimatePartySlot(u8 slot, u8 animNum)
+void AnimatePartySlot(u8 slot, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	cmp r7, #6\n\t"
-        "	beq _081B0D08\n\t"
-        "	cmp r7, #7\n\t"
-        "	beq _081B0D44\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	ldr r1, _081B0D00\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B0DB8\n\t"
-        "	ldr r6, _081B0D04\n\t"
-        "	lsls r5, r7, #4\n\t"
-        "	ldr r4, [r6]\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	bl GetPartyBoxPalBitfield\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl LoadPartyBoxPalette\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	mov r1, r8\n\t"
-        "	bl AnimateSelectedPartyIcon\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	ldrb r0, [r5, #0xb]\n\t"
-        "	mov r1, r8\n\t"
-        "	bl PartyMenuStartSpriteAnim\n\t"
-        "	b _081B0DB8\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0D00: .4byte gPlayerParty\n\t"
-        "_081B0D04: .4byte sPartyMenuBoxes\n\t"
-        "_081B0D08:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0D22\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r1, #0x17\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #7\n\t"
-        "	bl SetBgTilemapPalette\n\t"
-        "	b _081B0D34\n\t"
-        "_081B0D22:\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0x17\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #7\n\t"
-        "	bl SetBgTilemapPalette\n\t"
-        "_081B0D34:\n\t"
-        "	ldr r0, _081B0D40\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x15\n\t"
-        "	b _081B0DAA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0D40: .4byte sPartyMenuInternal\n\t"
-        "_081B0D44:\n\t"
-        "	ldr r0, _081B0D64\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0D76\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0D68\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r1, #0x17\n\t"
-        "	movs r2, #0x11\n\t"
-        "	b _081B0D88\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0D64: .4byte sPartyMenuInternal\n\t"
-        "_081B0D68:\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0x17\n\t"
-        "	movs r2, #0x11\n\t"
-        "	b _081B0D88\n\t"
-        "_081B0D76:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0D90\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r1, #0x17\n\t"
-        "	movs r2, #0x12\n\t"
-        "_081B0D88:\n\t"
-        "	movs r3, #7\n\t"
-        "	bl SetBgTilemapPalette\n\t"
-        "	b _081B0DA2\n\t"
-        "_081B0D90:\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0x17\n\t"
-        "	movs r2, #0x12\n\t"
-        "	movs r3, #7\n\t"
-        "	bl SetBgTilemapPalette\n\t"
-        "_081B0DA2:\n\t"
-        "	ldr r0, _081B0DC4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0xe\n\t"
-        "_081B0DAA:\n\t"
-        "	lsrs r0, r0, #0x19\n\t"
-        "	mov r1, r8\n\t"
-        "	bl PartyMenuStartSpriteAnim\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "_081B0DB8:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0DC4: .4byte sPartyMenuInternal\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    switch (slot)
+    {
+    default:
+        if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) != SPECIES_NONE)
+        {
+            LoadPartyBoxPalette(&sPartyMenuBoxes[slot], (u8)GetPartyBoxPaletteFlags(slot, animNum));
+            AnimateSelectedPartyIcon(sPartyMenuBoxes[slot].monSpriteId, animNum);
+            PartyMenuStartSpriteAnim(sPartyMenuBoxes[slot].pokeballSpriteId, animNum);
+        }
+        return;
+    case PARTY_SIZE: // Confirm
+        if (animNum == 0)
+            SetBgTilemapPalette(1, 23, 16, 7, 2, 1);
+        else
+            SetBgTilemapPalette(1, 23, 16, 7, 2, 2);
+        spriteId = sPartyMenuInternal->spriteIdConfirmPokeball;
+        break;
+    case PARTY_SIZE + 1: // Cancel
+        // The position of the Cancel button changes if Confirm is present
+        if (!sPartyMenuInternal->chooseHalf)
+        {
+            if (animNum == 0)
+                SetBgTilemapPalette(1, 23, 17, 7, 2, 1);
+            else
+                SetBgTilemapPalette(1, 23, 17, 7, 2, 2);
+        }
+        else if (animNum == 0)
+        {
+            SetBgTilemapPalette(1, 23, 18, 7, 2, 1);
+        }
+        else
+        {
+            SetBgTilemapPalette(1, 23, 18, 7, 2, 2);
+        }
+        spriteId = sPartyMenuInternal->spriteIdCancelPokeball;
+        break;
+    }
+    PartyMenuStartSpriteAnim(spriteId, animNum);
+    ScheduleBgCopyTilemapToVram(1);
 }
 
-__attribute__((naked)) u8 GetPartyBoxPalBitfield(u8 a, u8 b)
+__attribute__((naked)) u8 GetPartyBoxPaletteFlags(u8 a, u8 b)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

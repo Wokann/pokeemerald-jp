@@ -8560,7 +8560,7 @@ SECTIONS {
         src/party_menu.o(.text.CreatePartyMonSpritesLoop);
         src/party_menu.o(.text.CreateCancelConfirmPokeballSprites);
         src/party_menu.o(.text.AnimatePartySlot);
-        src/party_menu.o(.text.GetPartyBoxPalBitfield);
+        src/party_menu.o(.text.GetPartyBoxPaletteFlags);
         src/party_menu.o(.text.PartyBoxPal_ParnterOrDisqualifiedInArena);
         src/party_menu.o(.text.DrawCancelConfirmButtons);
         src/party_menu.o(.text.IsMultiBattle);
