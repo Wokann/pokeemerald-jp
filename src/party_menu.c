@@ -116,7 +116,12 @@ extern void AddTextPrinterParameterized3(u8 windowId, u8 fontId, u8 left, u8 top
 #include "trade.h"
 
 static void Task_ExitPartyMenu(u8 taskId);
-__attribute__((naked)) bool8 PartyMenuSetup(void);
+static bool8 ShowPartyMenu(void);
+static void CB2_InitPartyMenu(void);
+void reset_brm(void);
+void sub_081B1D6C(void); // SetPartyMonsAllowedInMinigame
+void sub_081B206C(u8 layout); // InitPartyMenuWindows
+void sub_081B20F8(u8 chooseHalf); // CreateCancelConfirmWindows
 void Task_PrintAndWaitForText(void);
 __attribute__((naked)) void Task_FieldMoveWaitForFade(u8 taskId);
 static void MoveCursorToConfirm(void);
@@ -275,201 +280,62 @@ void sub_081B81F8(void); // ClearSelectedPartyOrder
 u8 *sub_081B855C(void); // GetFacilityCancelString
 void sub_081B8DE0(void); // CB2_SetUpExitToBattleScreen
 void sub_081B2FDC(void); // PartyMenuDisplayYesNoMenu
+static bool8 AllocPartyMenuBg(void);
+static bool8 AllocPartyMenuBgGfx(void);
+static void ExitPartyMenu(void);
+static void InitPartyMenuBoxes(u8 layout);
+static bool8 RenderPartyMenuBoxes(void);
+static bool8 CreatePartyMonSpritesLoop(void);
+static void CreateCancelConfirmPokeballSprites(void);
+static void LoadPartyMenuPokeballGfx(void);
+static void LoadPartyMenuAilmentGfx(void);
+void ScanlineEffect_Stop(void);
+extern struct PartyMenuInternal *sPartyMenuInternal;
 
-__attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId)
+static void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId, TaskFunc task, MainCallback callback)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, [sp, #0x24]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sb, r1\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r7, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	str r3, [sp]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r6, r4, #0x18\n\t"
-        "	bl reset_brm\n\t"
-        "	ldr r0, _081AFD5C\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r0, #0x8e\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	bl Alloc\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	mov r1, sl\n\t"
-        "	str r5, [r1]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _081AFD60\n\t"
-        "	ldr r0, [sp, #0x2c]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _081AFE6C\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFD5C: .4byte sPartyMenuInternal\n\t"
-        "_081AFD60:\n\t"
-        "	ldr r3, _081AFDC4\n\t"
-        "	movs r1, #0xf\n\t"
-        "	mov r4, r8\n\t"
-        "	ands r1, r4\n\t"
-        "	ldrb r2, [r3, #8]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #8]\n\t"
-        "	ldr r0, [sp, #0x2c]\n\t"
-        "	str r0, [r3]\n\t"
-        "	movs r4, #0\n\t"
-        "	strb r7, [r3, #0xb]\n\t"
-        "	lsls r2, r6, #2\n\t"
-        "	ldrh r1, [r5, #0xa]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	str r0, [r5]\n\t"
-        "	str r4, [r5, #4]\n\t"
-        "	ldrb r1, [r5, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r5, #8]\n\t"
-        "	mov r1, sl\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	movs r4, #0xfe\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "	ldr r0, [r2, #8]\n\t"
-        "	movs r1, #0xfe\n\t"
-        "	lsls r1, r1, #0xa\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r2, #8]\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	mov r5, r8\n\t"
-        "	cmp r5, #4\n\t"
-        "	bne _081AFDC8\n\t"
-        "	ldrb r0, [r2, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	b _081AFDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFDC4: .4byte gPartyMenu\n\t"
-        "_081AFDC8:\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "_081AFDD0:\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "	mov r0, sb\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _081AFDEC\n\t"
-        "	movs r0, #3\n\t"
-        "	mov r1, sb\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldrb r2, [r6, #8]\n\t"
-        "	movs r1, #0x31\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r6, #8]\n\t"
-        "_081AFDEC:\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _081AFE30\n\t"
-        "	movs r4, #0x86\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	movs r3, #0\n\t"
-        "_081AFDF6:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r3, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0xf\n\t"
-        "	bls _081AFDF6\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r4, _081AFE30\n\t"
-        "	movs r3, #0xff\n\t"
-        "_081AFE10:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #2\n\t"
-        "	bls _081AFE10\n\t"
-        "	ldr r4, [sp]\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _081AFE34\n\t"
-        "	strb r4, [r6, #9]\n\t"
-        "	b _081AFE56\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFE30: .4byte sPartyMenuInternal\n\t"
-        "_081AFE34:\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bgt _081AFE52\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081AFE7C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081AFE56\n\t"
-        "_081AFE52:\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r6, #9]\n\t"
-        "_081AFE56:\n\t"
-        "	ldr r2, _081AFE80\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	ldr r0, _081AFE84\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_081AFE6C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFE7C: .4byte gPlayerParty\n\t"
-        "_081AFE80: .4byte gTextFlags\n\t"
-        "_081AFE84: .4byte CB2_InitPartyMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    reset_brm();
+    sPartyMenuInternal = Alloc(sizeof(struct PartyMenuInternal));
+    if (sPartyMenuInternal == NULL)
+    {
+        SetMainCallback2(callback);
+    }
+    else
+    {
+        gPartyMenu.menuType = menuType;
+        gPartyMenu.exitCallback = callback;
+        gPartyMenu.action = partyAction;
+        sPartyMenuInternal->messageId = messageId;
+        sPartyMenuInternal->task = task;
+        sPartyMenuInternal->exitCallback = NULL;
+        sPartyMenuInternal->lastSelectedSlot = 0;
+        sPartyMenuInternal->spriteIdConfirmPokeball = 0x7F;
+        sPartyMenuInternal->spriteIdCancelPokeball = 0x7F;
+
+        if (menuType == PARTY_MENU_TYPE_CHOOSE_HALF)
+            sPartyMenuInternal->chooseHalf = TRUE;
+        else
+            sPartyMenuInternal->chooseHalf = FALSE;
+
+        if (layout != KEEP_PARTY_LAYOUT)
+            gPartyMenu.layout = layout;
+
+        for (i = 0; i < ARRAY_COUNT(sPartyMenuInternal->data); i++)
+            sPartyMenuInternal->data[i] = 0;
+        for (i = 0; i < ARRAY_COUNT(sPartyMenuInternal->windowId); i++)
+            sPartyMenuInternal->windowId[i] = WINDOW_NONE;
+
+        if (!keepCursorPos)
+            gPartyMenu.slotId = 0;
+        else if (gPartyMenu.slotId > PARTY_SIZE - 1 || GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_SPECIES) == SPECIES_NONE)
+            gPartyMenu.slotId = 0;
+
+        gTextFlags.autoScroll = 0;
+        CalculatePlayerPartyCount();
+        SetMainCallback2(CB2_InitPartyMenu);
+    }
 }
 
 static void CB2_UpdatePartyMenu(void)
@@ -492,329 +358,133 @@ static void CB2_InitPartyMenu(void)
 {
     while (TRUE)
     {
-        if (MenuHelpers_ShouldWaitForLinkRecv() == TRUE || PartyMenuSetup() == TRUE || MenuHelpers_IsLinkActive() == TRUE)
+        if (MenuHelpers_ShouldWaitForLinkRecv() == TRUE || ShowPartyMenu() == TRUE || MenuHelpers_IsLinkActive() == TRUE)
             return;
     }
 }
 
-__attribute__((naked)) bool8 PartyMenuSetup(void)
+static bool8 ShowPartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _081AFF04\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0x16\n\t"
-        "	bls _081AFEFA\n\t"
-        "	b _081B0170\n\t"
-        "_081AFEFA:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081AFF08\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFF04: .4byte gMain\n\t"
-        "_081AFF08: .4byte 0x081AFF0C\n\t"
-        "_081AFF0C: @ jump table\n\t"
-        "	.4byte _081AFF68 @ case 0\n\t"
-        "	.4byte _081AFF84 @ case 1\n\t"
-        "	.4byte _081AFF8A @ case 2\n\t"
-        "	.4byte _081AFFAC @ case 3\n\t"
-        "	.4byte _081AFFB2 @ case 4\n\t"
-        "	.4byte _081AFFC4 @ case 5\n\t"
-        "	.4byte _081AFFD6 @ case 6\n\t"
-        "	.4byte _081AFFE8 @ case 7\n\t"
-        "	.4byte _081B0010 @ case 8\n\t"
-        "	.4byte _081B002C @ case 9\n\t"
-        "	.4byte _081B0040 @ case 10\n\t"
-        "	.4byte _081B0064 @ case 11\n\t"
-        "	.4byte _081B0078 @ case 12\n\t"
-        "	.4byte _081B007E @ case 13\n\t"
-        "	.4byte _081B0090 @ case 14\n\t"
-        "	.4byte _081B0096 @ case 15\n\t"
-        "	.4byte _081B00B8 @ case 16\n\t"
-        "	.4byte _081B00D8 @ case 17\n\t"
-        "	.4byte _081B00EC @ case 18\n\t"
-        "	.4byte _081B0100 @ case 19\n\t"
-        "	.4byte _081B0108 @ case 20\n\t"
-        "	.4byte _081B0124 @ case 21\n\t"
-        "	.4byte _081B014C @ case 22\n\t"
-        "_081AFF68:\n\t"
-        "	bl SetVBlankHBlankCallbacksToNull\n\t"
-        "	bl ResetVramOamAndBgCntRegs\n\t"
-        "	bl ClearScheduledBgCopiesToVram\n\t"
-        "	ldr r1, _081AFF80\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFF80: .4byte gMain\n\t"
-        "_081AFF84:\n\t"
-        "	bl ScanlineEffect_Stop\n\t"
-        "	b _081B015C\n\t"
-        "_081AFF8A:\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	ldr r2, _081AFFA4\n\t"
-        "	ldrb r0, [r2, #8]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "	ldr r1, _081AFFA8\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFFA4: .4byte gPaletteFade\n\t"
-        "_081AFFA8: .4byte gMain\n\t"
-        "_081AFFAC:\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	b _081B015C\n\t"
-        "_081AFFB2:\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	ldr r1, _081AFFC0\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFFC0: .4byte gMain\n\t"
-        "_081AFFC4:\n\t"
-        "	bl sub_081221B8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AFFD0\n\t"
-        "	b _081B015C\n\t"
-        "_081AFFD0:\n\t"
-        "	bl ResetTasks\n\t"
-        "	b _081B015C\n\t"
-        "_081AFFD6:\n\t"
-        "	bl sub_081B1D6C\n\t"
-        "	ldr r1, _081AFFE4\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081AFFE4: .4byte gMain\n\t"
-        "_081AFFE8:\n\t"
-        "	bl AllocPartyMenuBg\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081AFFFA\n\t"
-        "	bl ExitPartyMenu\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B018A\n\t"
-        "_081AFFFA:\n\t"
-        "	ldr r0, _081B000C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x86\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081B015C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B000C: .4byte sPartyMenuInternal\n\t"
-        "_081B0010:\n\t"
-        "	bl AllocPartyMenuBgGfx\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B001C\n\t"
-        "	b _081B0188\n\t"
-        "_081B001C:\n\t"
-        "	ldr r1, _081B0028\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0028: .4byte gMain\n\t"
-        "_081B002C:\n\t"
-        "	ldr r0, _081B003C\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	bl sub_081B206C\n\t"
-        "	b _081B015C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B003C: .4byte gPartyMenu\n\t"
-        "_081B0040:\n\t"
-        "	ldr r0, _081B005C\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	bl InitPartyMenuBoxes\n\t"
-        "	ldr r0, _081B0060\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x86\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081B015C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B005C: .4byte gPartyMenu\n\t"
-        "_081B0060: .4byte sPartyMenuInternal\n\t"
-        "_081B0064:\n\t"
-        "	bl LoadHeldItemIcons\n\t"
-        "	ldr r1, _081B0074\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0074: .4byte gMain\n\t"
-        "_081B0078:\n\t"
-        "	bl LoadPartyMenuPokeballGfx\n\t"
-        "	b _081B015C\n\t"
-        "_081B007E:\n\t"
-        "	bl LoadPartyMenuAilmentGfx\n\t"
-        "	ldr r1, _081B008C\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B008C: .4byte gMain\n\t"
-        "_081B0090:\n\t"
-        "	bl LoadMonIconPalettes\n\t"
-        "	b _081B015C\n\t"
-        "_081B0096:\n\t"
-        "	bl CreatePartyMonSpritesLoop\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B00A2\n\t"
-        "	b _081B0188\n\t"
-        "_081B00A2:\n\t"
-        "	ldr r0, _081B00B4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x86\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081B015C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B00B4: .4byte sPartyMenuInternal\n\t"
-        "_081B00B8:\n\t"
-        "	bl RenderPartyMenuBoxes\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B0188\n\t"
-        "	ldr r0, _081B00D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x86\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081B015C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B00D4: .4byte sPartyMenuInternal\n\t"
-        "_081B00D8:\n\t"
-        "	bl CreateCancelConfirmPokeballSprites\n\t"
-        "	ldr r1, _081B00E8\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B00E8: .4byte gMain\n\t"
-        "_081B00EC:\n\t"
-        "	ldr r0, _081B00FC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	bl sub_081B20F8\n\t"
-        "	b _081B015C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B00FC: .4byte sPartyMenuInternal\n\t"
-        "_081B0100:\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	b _081B0164\n\t"
-        "_081B0108:\n\t"
-        "	ldr r4, _081B0120\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrh r0, [r0, #0xa]\n\t"
-        "	lsrs r0, r0, #2\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	b _081B015C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0120: .4byte sPartyMenuInternal\n\t"
-        "_081B0124:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	ldr r2, _081B0144\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "	ldr r1, _081B0148\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _081B0164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0144: .4byte gPaletteFade\n\t"
-        "_081B0148: .4byte gMain\n\t"
-        "_081B014C:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_081B015C:\n\t"
-        "	ldr r1, _081B016C\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "_081B0164:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _081B0188\n\t"
-        "	.align 2, 0\n\t"
-        "_081B016C: .4byte gMain\n\t"
-        "_081B0170:\n\t"
-        "	ldr r0, _081B0180\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r0, _081B0184\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B018A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0180: .4byte VBlankCB_PartyMenu + 1\n\t"
-        "_081B0184: .4byte CB2_UpdatePartyMenu + 1\n\t"
-        "_081B0188:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B018A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        SetVBlankHBlankCallbacksToNull();
+        ResetVramOamAndBgCntRegs();
+        ClearScheduledBgCopiesToVram();
+        gMain.state++;
+        break;
+    case 1:
+        ScanlineEffect_Stop();
+        gMain.state++;
+        break;
+    case 2:
+        ResetPaletteFade();
+        gPaletteFade.bufferTransferDisabled = TRUE;
+        gMain.state++;
+        break;
+    case 3:
+        ResetSpriteData();
+        gMain.state++;
+        break;
+    case 4:
+        FreeAllSpritePalettes();
+        gMain.state++;
+        break;
+    case 5:
+        if (!MenuHelpers_IsLinkActive())
+            ResetTasks();
+        gMain.state++;
+        break;
+    case 6:
+        sub_081B1D6C(); // SetPartyMonsAllowedInMinigame
+        gMain.state++;
+        break;
+    case 7:
+        if (!AllocPartyMenuBg())
+        {
+            ExitPartyMenu();
+            return TRUE;
+        }
+        else
+        {
+            sPartyMenuInternal->data[0] = 0;
+            gMain.state++;
+        }
+        break;
+    case 8:
+        if (AllocPartyMenuBgGfx())
+            gMain.state++;
+        break;
+    case 9:
+        sub_081B206C(gPartyMenu.layout); // InitPartyMenuWindows
+        gMain.state++;
+        break;
+    case 10:
+        InitPartyMenuBoxes(gPartyMenu.layout);
+        sPartyMenuInternal->data[0] = 0;
+        gMain.state++;
+        break;
+    case 11:
+        LoadHeldItemIcons();
+        gMain.state++;
+        break;
+    case 12:
+        LoadPartyMenuPokeballGfx();
+        gMain.state++;
+        break;
+    case 13:
+        LoadPartyMenuAilmentGfx();
+        gMain.state++;
+        break;
+    case 14:
+        LoadMonIconPalettes();
+        gMain.state++;
+        break;
+    case 15:
+        if (CreatePartyMonSpritesLoop())
+        {
+            sPartyMenuInternal->data[0] = 0;
+            gMain.state++;
+        }
+        break;
+    case 16:
+        if (RenderPartyMenuBoxes())
+        {
+            sPartyMenuInternal->data[0] = 0;
+            gMain.state++;
+        }
+        break;
+    case 17:
+        CreateCancelConfirmPokeballSprites();
+        gMain.state++;
+        break;
+    case 18:
+        sub_081B20F8(sPartyMenuInternal->chooseHalf); // CreateCancelConfirmWindows
+        gMain.state++;
+        break;
+    case 19:
+        gMain.state++;
+        break;
+    case 20:
+        CreateTask(sPartyMenuInternal->task, 0);
+        DisplayPartyMenuStdMessage(sPartyMenuInternal->messageId);
+        gMain.state++;
+        break;
+    case 21:
+        BlendPalettes(PALETTES_ALL, 16, 0);
+        gPaletteFade.bufferTransferDisabled = FALSE;
+        gMain.state++;
+        break;
+    case 22:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gMain.state++;
+        break;
+    default:
+        SetVBlankCallback(VBlankCB_PartyMenu);
+        SetMainCallback2(CB2_UpdatePartyMenu);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 static void ExitPartyMenu(void)
@@ -3013,7 +2683,7 @@ __attribute__((naked)) bool8 CanLearnTutorMove(u16 move, u8 a)
     );
 }
 
-__attribute__((naked)) void sub_081B206C(void)
+__attribute__((naked)) void sub_081B206C(u8 layout)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3087,7 +2757,7 @@ __attribute__((naked)) void sub_081B206C(void)
     );
 }
 
-__attribute__((naked)) void sub_081B20F8(void)
+__attribute__((naked)) void sub_081B20F8(u8 chooseHalf)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
