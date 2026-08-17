@@ -152,8 +152,8 @@ sMailReadTakeWindowTemplate: @ 0x85E1210
 sMoveSelectWindowTemplate: @ 0x85E1218
 	.incbin "baserom_jp.gba", 0x5e1218, 0x8
 
-	.globl gUnknown_85E1220
-gUnknown_85E1220: @ 0x85E1220
+	.globl sPartyMenuYesNoWindowTemplate
+sPartyMenuYesNoWindowTemplate: @ 0x85E1220
 	.incbin "baserom_jp.gba", 0x5e1220, 0x8
 
 	.globl gUnknown_85E1228

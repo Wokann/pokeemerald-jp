@@ -54,6 +54,8 @@ extern const struct WindowTemplate sDefaultPartyMsgWindowTemplate;
 extern const struct WindowTemplate sItemGiveTakeWindowTemplate;
 extern const struct WindowTemplate sMailReadTakeWindowTemplate;
 extern const struct WindowTemplate sMoveSelectWindowTemplate;
+extern const struct WindowTemplate sPartyMenuYesNoWindowTemplate;
+extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern const struct WindowTemplate sDoWhatWithMonMsgWindowTemplate;
 extern const struct WindowTemplate sWhichMoveMsgWindowTemplate;
 extern const struct WindowTemplate sDoWhatWithItemMsgWindowTemplate;
@@ -5612,30 +5614,10 @@ static void PrintMessage(const u8 *text)
     AddTextPrinterParameterized2(WIN_MSG, FONT_NORMAL, text, GetPlayerTextSpeedDelay(), 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
 }
 
-__attribute__((naked)) void sub_081B2FDC(void)
+// JP-only: yes/no menu via CreateYesNoMenuAtPos (US wraps in CreateYesNoMenu; JP left=2/top=2)
+void sub_081B2FDC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _081B3000\n\t"
-        "	movs r1, #0x4f\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl CreateYesNoMenuAtPos\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3000: .4byte gUnknown_85E1220\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateYesNoMenuAtPos(&sPartyMenuYesNoWindowTemplate, FONT_NORMAL, 2, 2, 0x4F, 13, 0);
 }
 
 __attribute__((naked)) void sub_081B3004(void)
