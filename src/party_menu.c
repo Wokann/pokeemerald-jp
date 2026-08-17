@@ -40,6 +40,8 @@ __attribute__((naked)) void CB2_ReadHeldMail(void);
 __attribute__((naked)) void Task_SendMailToPCYesNo(u8 taskId);
 __attribute__((naked)) bool8 TrySwitchInPokemon(void);
 __attribute__((naked)) void Task_SpinTradeYesNo(u8 taskId);
+__attribute__((naked)) void Task_UpdateHeldItemSprite(u8 taskId);
+__attribute__((naked)) void Task_TossHeldItemYesNo(u8 taskId);
 
 enum {
     ACTIONS_NONE,
@@ -7128,7 +7130,7 @@ __attribute__((naked)) void sub_081B32A8(void)
         "_081B3350: .4byte gStringVar4\n\t"
         "_081B3354: .4byte gUnknown_85C97BD + 0x4F0\n\t"
         "_081B3358: .4byte gTasks\n\t"
-        "_081B335C: .4byte sub_081B433C + 1\n\t"
+        "_081B335C: .4byte Task_UpdateHeldItemSprite + 1\n\t"
         "_081B3360:\n\t"
         "	ldrb r4, [r4, #9]\n\t"
         "	adds r0, r5, #0\n\t"
@@ -8632,7 +8634,7 @@ __attribute__((naked)) void sub_081B3F70(void)
         "_081B3FE0: .4byte gPartyMenu\n\t"
         "_081B3FE4: .4byte gPlayerParty\n\t"
         "_081B3FE8: .4byte gTasks\n\t"
-        "_081B3FEC: .4byte sub_081B433C + 1\n\t"
+        "_081B3FEC: .4byte Task_UpdateHeldItemSprite + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8825,7 +8827,7 @@ __attribute__((naked)) void sub_081B407C(void)
         "_081B4168: .4byte gPartyMenu\n\t"
         "_081B416C: .4byte gPlayerParty\n\t"
         "_081B4170: .4byte gTasks\n\t"
-        "_081B4174: .4byte sub_081B433C + 1\n\t"
+        "_081B4174: .4byte Task_UpdateHeldItemSprite + 1\n\t"
         "_081B4178:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -9059,12 +9061,12 @@ __attribute__((naked)) void sub_081B42C4(void)
         "	.align 2, 0\n\t"
         "_081B4330: .4byte gSpecialVar_ItemId\n\t"
         "_081B4334: .4byte gTasks\n\t"
-        "_081B4338: .4byte sub_081B433C + 1\n\t"
+        "_081B4338: .4byte Task_UpdateHeldItemSprite + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_081B433C(void)
+__attribute__((naked)) void Task_UpdateHeldItemSprite(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9217,100 +9219,37 @@ __attribute__((naked)) void CursorCb_TakeItem(u8 taskId)
         "	.align 2, 0\n\t"
         "_081B4474: .4byte gStringVar4\n\t"
         "_081B4478: .4byte gTasks\n\t"
-        "_081B447C: .4byte sub_081B433C + 1\n\t"
+        "_081B447C: .4byte Task_UpdateHeldItemSprite + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void CursorCb_Toss(u8 taskId)
+static void CursorCb_Toss(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, _081B44E4\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B44E8\n\t"
-        "	adds r7, r1, r0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _081B44EC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _081B4504\n\t"
-        "	ldr r1, _081B44F0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r4, _081B44F4\n\t"
-        "	ldr r1, _081B44F8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B44FC\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4500\n\t"
-        "	b _081B452A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B44E4: .4byte gPartyMenu\n\t"
-        "_081B44E8: .4byte gPlayerParty\n\t"
-        "_081B44EC: .4byte sPartyMenuInternal\n\t"
-        "_081B44F0: .4byte gStringVar1\n\t"
-        "_081B44F4: .4byte gStringVar4\n\t"
-        "_081B44F8: .4byte gUnknown_85C97BD + 0x4F0\n\t"
-        "_081B44FC: .4byte gTasks\n\t"
-        "_081B4500: .4byte sub_081B433C + 1\n\t"
-        "_081B4504:\n\t"
-        "	ldr r1, _081B4534\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CopyItemName\n\t"
-        "	ldr r4, _081B4538\n\t"
-        "	ldr r1, _081B453C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B4540\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4544\n\t"
-        "_081B452A:\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4534: .4byte gStringVar1\n\t"
-        "_081B4538: .4byte gStringVar4\n\t"
-        "_081B453C: .4byte gUnknown_85C97BD + 0x84A\n\t"
-        "_081B4540: .4byte gTasks\n\t"
-        "_081B4544: .4byte sub_081B4548 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u16 item = GetMonData(mon, MON_DATA_HELD_ITEM);
+
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    if (item == ITEM_NONE)
+    {
+        GetMonNickname(mon, gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x4F0);
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
+        gTasks[taskId].func = Task_UpdateHeldItemSprite;
+    }
+    else
+    {
+        CopyItemName(item, gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x84A);
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
+        gTasks[taskId].func = Task_TossHeldItemYesNo;
+    }
 }
 
-__attribute__((naked)) void sub_081B4548(void)
+
+__attribute__((naked)) void Task_TossHeldItemYesNo(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9676,7 +9615,7 @@ __attribute__((naked)) void sub_081B4840(void)
         "_081B489C: .4byte gPlayerParty\n\t"
         "_081B48A0: .4byte gUnknown_85C97BD + 0x44D\n\t"
         "_081B48A4: .4byte gTasks\n\t"
-        "_081B48A8: .4byte sub_081B433C + 1\n\t"
+        "_081B48A8: .4byte Task_UpdateHeldItemSprite + 1\n\t"
         "_081B48AC:\n\t"
         "	ldr r0, _081B48C4\n\t"
         "	movs r1, #0\n\t"
@@ -9818,7 +9757,7 @@ __attribute__((naked)) void sub_081B4934(void)
         "_081B49B4: .4byte gPlayerParty\n\t"
         "_081B49B8: .4byte gUnknown_85C97BD + 0x51D\n\t"
         "_081B49BC: .4byte gTasks\n\t"
-        "_081B49C0: .4byte sub_081B433C + 1\n\t"
+        "_081B49C0: .4byte Task_UpdateHeldItemSprite + 1\n\t"
         "_081B49C4:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl BufferBagFullCantTakeItemMessage\n\t"

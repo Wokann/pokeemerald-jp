@@ -8674,10 +8674,10 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B41CC);
         src/party_menu.o(.text.sub_081B4218);
         src/party_menu.o(.text.sub_081B42C4);
-        src/party_menu.o(.text.sub_081B433C);
+        src/party_menu.o(.text.Task_UpdateHeldItemSprite);
         src/party_menu.o(.text.CursorCb_TakeItem);
         src/party_menu.o(.text.CursorCb_Toss);
-        src/party_menu.o(.text.sub_081B4548);
+        src/party_menu.o(.text.Task_TossHeldItemYesNo);
         src/party_menu.o(.text.sub_081B457C);
         src/party_menu.o(.text.sub_081B4628);
         src/party_menu.o(.text.CursorCb_Mail);
