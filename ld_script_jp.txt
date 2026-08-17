@@ -8716,7 +8716,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B5548);
         src/party_menu.o(.text.FieldCallback_Waterfall);
         src/party_menu.o(.text.SetUpFieldMove_Waterfall);
-        src/party_menu.o(.text.sub_081B55F8);
+        src/party_menu.o(.text.FieldCallback_Dive);
         src/party_menu.o(.text.SetUpFieldMove_Dive);
         src/party_menu.o(.text.party_menu_icon_anim);
         src/party_menu.o(.text.party_menu_link_mon_icon_anim);

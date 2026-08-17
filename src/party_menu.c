@@ -11562,24 +11562,10 @@ __attribute__((naked)) void SetUpFieldMove_Waterfall(void)
     );
 }
 
-__attribute__((naked)) void sub_081B55F8(void)
+static void FieldCallback_Dive(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	ldr r1, _081B5610\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #0x2c\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5610: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = GetCursorSelectionMonId();
+    FieldEffectStart(FLDEFF_USE_DIVE);
 }
 
 __attribute__((naked)) void SetUpFieldMove_Dive(void)
@@ -11613,7 +11599,7 @@ __attribute__((naked)) void SetUpFieldMove_Dive(void)
         "_081B5644: .4byte gFieldCallback2\n\t"
         "_081B5648: .4byte 0x081B53D9\n\t"
         "_081B564C: .4byte gPostMenuFieldCallback\n\t"
-        "_081B5650: .4byte sub_081B55F8 + 1\n\t"
+        "_081B5650: .4byte FieldCallback_Dive + 1\n\t"
         ".syntax divided\n\t"
     );
 }
