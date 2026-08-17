@@ -5517,7 +5517,7 @@ __attribute__((naked)) void GetSubstruct(void)
     );
 }
 
-__attribute__((naked)) u32 GetMonData3(struct Pokemon *mon, s32 field, u8 *data)
+__attribute__((naked)) u32 GetMonData3(struct Pokemon *mon, s32 field, ...)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
