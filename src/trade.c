@@ -213,6 +213,7 @@ extern const u8 gUnknown_8300C00[];
 extern const u32 gUnknown_82FFFC8[];
 extern const u8 gUnknown_8300A36[][2];
 extern const u8 gUnknown_8300A4E[][2];
+extern const u8 gUnknown_8300A1C[][2];
 extern const struct MenuAction sSelectTradeMonActions[];
 extern const struct WindowTemplate sTradeYesNoWindowTemplate;
 static void LoadTradeBgGfx(u8 state);
@@ -2497,114 +2498,18 @@ static void PrintPartyLevelsAndGenders(u8 whichParty)
     }
 }
 
-__attribute__((naked)) void sub_080798E0(void)
+static void ShowTradePartyMonIcons(u8 whichParty)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov ip, r0\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r3, _080799A0\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	add r0, ip\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r7, r0\n\t"
-        "	bge _08079992\n\t"
-        "	ldr r6, _080799A4\n\t"
-        "	mov sb, r3\n\t"
-        "	mov r1, ip\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	add r0, ip\n\t"
-        "	lsls r2, r0, #1\n\t"
-        "	mov sl, r2\n\t"
-        "	ldr r1, _080799A8\n\t"
-        "	movs r2, #0\n\t"
-        "	mov r8, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r5, r0, r1\n\t"
-        "_08079918:\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	mov r2, sl\n\t"
-        "	adds r4, r7, r2\n\t"
-        "	adds r0, #0x28\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	mov r0, sb\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x28\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, #0xe\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	subs r0, #0xc\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	mov r1, r8\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r2, [r0, #0x26]\n\t"
-        "	adds r5, #2\n\t"
-        "	adds r7, #1\n\t"
-        "	adds r3, #0x36\n\t"
-        "	add r3, ip\n\t"
-        "	ldrb r3, [r3]\n\t"
-        "	cmp r7, r3\n\t"
-        "	blt _08079918\n\t"
-        "_08079992:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080799A0: .4byte sTradeMenu\n\t"
-        "_080799A4: .4byte gSprites\n\t"
-        "_080799A8: .4byte gUnknown_8300A1C\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < sTradeMenu->partyCounts[whichParty]; i++)
+    {
+        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].invisible = FALSE;
+        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].x = gUnknown_8300A1C[(whichParty * PARTY_SIZE) + i][0] * 8 + 14;
+        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].y = gUnknown_8300A1C[(whichParty * PARTY_SIZE) + i][1] * 8 - 12;
+        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].x2 = 0;
+        gSprites[sTradeMenu->partySpriteIds[whichParty][i]].y2 = 0;
+    }
 }
 
 
@@ -2654,7 +2559,7 @@ __attribute__((naked)) void sub_080799C0(u8 whichParty)
         "	adds r0, r4, #0\n\t"
         "	bl PrintPartyNicknames\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080798E0\n\t"
+        "	bl ShowTradePartyMonIcons\n\t"
         "	ldr r0, _08079A2C\n\t"
         "	ldr r0, [r0, #4]\n\t"
         "	ldr r5, _08079A30\n\t"
