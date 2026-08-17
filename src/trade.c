@@ -1230,45 +1230,16 @@ static void Leader_HandleCommunication(void)
     }
 }
 
-__attribute__((naked)) void sub_080785E0(void)
+static void _SetLinkData(u16 *linkData, u16 linkCmd, u16 cursorPosition)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	strh r1, [r0]\n\t"
-        "	strh r2, [r0, #2]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_08079A80\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    linkData[0] = linkCmd;
+    linkData[1] = cursorPosition;
+    sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
 }
 
-__attribute__((naked)) void sub_080785F4(void)
+static void SetLinkData(u16 linkCmd, u16 cursorPosition)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	ldr r0, _08078614\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x80\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl sub_080785E0\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078614: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    _SetLinkData(sTradeMenu->linkData, linkCmd, cursorPosition);
 }
 
 __attribute__((naked)) void sub_08078618(void)
@@ -1474,7 +1445,7 @@ __attribute__((naked)) void sub_0807875C(void)
         "	ldr r1, [r4]\n\t"
         "	adds r1, #0x35\n\t"
         "	ldrb r1, [r1]\n\t"
-        "	bl sub_080785F4\n\t"
+        "	bl SetLinkData\n\t"
         "	b _08078798\n\t"
         "	.align 2, 0\n\t"
         "_08078788: .4byte sTradeMenu\n\t"
@@ -2072,7 +2043,7 @@ __attribute__((naked)) void sub_08078B7C(void)
         "	ldr r0, _08078C04\n\t"
         "_08078BFA:\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_080785F4\n\t"
+        "	bl SetLinkData\n\t"
         "	b _08078C14\n\t"
         "	.align 2, 0\n\t"
         "_08078C04: .4byte 0x0000BBBB\n\t"
@@ -2147,7 +2118,7 @@ __attribute__((naked)) void sub_08078C20(void)
         "	beq _08078C88\n\t"
         "	ldr r0, _08078C9C\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_080785F4\n\t"
+        "	bl SetLinkData\n\t"
         "_08078C88:\n\t"
         "	ldr r0, _08078CA0\n\t"
         "	ldr r0, [r0]\n\t"
@@ -2236,7 +2207,7 @@ __attribute__((naked)) void sub_08078CEC(void)
         "	bl sub_08079BD4\n\t"
         "	ldr r0, _08078D48\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_080785F4\n\t"
+        "	bl SetLinkData\n\t"
         "	ldr r2, _08078D4C\n\t"
         "	ldr r3, _08078D50\n\t"
         "	ldr r0, [r3]\n\t"
@@ -2587,7 +2558,7 @@ __attribute__((naked)) void sub_08078F90(void)
         "	beq _08078FB0\n\t"
         "	ldr r0, _08078FB8\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_080785F4\n\t"
+        "	bl SetLinkData\n\t"
         "	ldr r0, _08078FBC\n\t"
         "	ldr r0, [r0]\n\t"
         "	adds r0, #0x6f\n\t"
