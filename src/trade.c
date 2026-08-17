@@ -9,6 +9,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/moves.h"
+#include "constants/items.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "librfu.h"
@@ -209,7 +210,7 @@ void sub_0807B044(void);
 // layout of the leading region differs from the US TradeAnim struct).
 struct TradeAnim
 {
-    u8 filler_0[0x64];
+    struct Pokemon tempMon;    // 0x00
     u32 timer;               // 0x64
     u32 monPersonalities[2]; // 0x68
     u8 filler_70[2];         // 0x70
@@ -3621,115 +3622,34 @@ __attribute__((naked)) void GetMultiplayerIdWrapper(void)
 }
 
 
-__attribute__((naked)) void sub_0807AF08(void)
+static void TradeMons(u8 playerPartyIdx, u8 partnerPartyIdx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r5, #0x64\n\t"
-        "	mov r1, sb\n\t"
-        "	muls r1, r5, r1\n\t"
-        "	ldr r0, _0807AFD4\n\t"
-        "	adds r7, r1, r0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	muls r1, r5, r1\n\t"
-        "	ldr r0, _0807AFD8\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r6, #0xff\n\t"
-        "	beq _0807AF62\n\t"
-        "	ldr r0, _0807AFDC\n\t"
-        "	lsls r1, r6, #3\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r2, _0807AFE0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl ClearMail\n\t"
-        "_0807AF62:\n\t"
-        "	ldr r4, _0807AFE4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	movs r1, #0x46\n\t"
-        "	mov r0, sp\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807AF9E\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "_0807AF9E:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _0807AFB4\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	add r1, r8\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0807AFE8\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl GiveMailToMon\n\t"
-        "_0807AFB4:\n\t"
-        "	mov r0, sb\n\t"
-        "	bl UpdatePokedexForReceivedMon\n\t"
-        "	ldr r0, _0807AFEC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807AFC6\n\t"
-        "	bl GetMultiplayerIdWrapper\n\t"
-        "_0807AFC6:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AFD4: .4byte gPlayerParty\n\t"
-        "_0807AFD8: .4byte gEnemyParty\n\t"
-        "_0807AFDC: .4byte gSaveBlock1Ptr\n\t"
-        "_0807AFE0: .4byte 0x00002BE0\n\t"
-        "_0807AFE4: .4byte gUnknown_2031F40\n\t"
-        "_0807AFE8: .4byte gTradeMail\n\t"
-        "_0807AFEC: .4byte gReceivedRemoteLinkPlayers\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 friendship;
+
+    struct Pokemon *playerMon = &gPlayerParty[playerPartyIdx];
+    u16 playerMail = GetMonData3(playerMon, MON_DATA_MAIL);
+
+    struct Pokemon *partnerMon = &gEnemyParty[partnerPartyIdx];
+    u16 partnerMail = GetMonData3(partnerMon, MON_DATA_MAIL);
+
+    // The mail attached to the sent Pokémon no longer exists in your file.
+    if (playerMail != MAIL_NONE)
+        ClearMail(&gSaveBlock1Ptr->mail[playerMail]);
+
+    SWAP(*playerMon, *partnerMon, gUnknown_2031F40->tempMon);
+
+    // By default, a Pokémon received from a trade will have 70 Friendship.
+    // Eggs use Friendship to track egg cycles, so don't set this on Eggs.
+    friendship = 70;
+    if (!GetMonData3(playerMon, MON_DATA_IS_EGG))
+        SetMonData(playerMon, MON_DATA_FRIENDSHIP, &friendship);
+
+    if (partnerMail != MAIL_NONE)
+        GiveMailToMon(playerMon, &gTradeMail[partnerMail]);
+
+    UpdatePokedexForReceivedMon(playerPartyIdx);
+    if (gReceivedRemoteLinkPlayers)
+        GetMultiplayerIdWrapper();
 }
 
 static void HandleLinkDataSend(void)
@@ -6462,7 +6382,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "	ldr r0, _0807C958\n\t"
         "	ldrb r0, [r0]\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_0807AF08\n\t"
+        "	bl TradeMons\n\t"
         "	ldr r1, _0807C95C\n\t"
         "	ldr r0, _0807C960\n\t"
         "	str r0, [r1]\n\t"
@@ -8683,7 +8603,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	ldr r0, _0807DDA4\n\t"
         "	ldrb r0, [r0]\n\t"
         "	movs r1, #0\n\t"
-        "	bl sub_0807AF08\n\t"
+        "	bl TradeMons\n\t"
         "	ldr r1, _0807DDA8\n\t"
         "	ldr r0, _0807DDAC\n\t"
         "	str r0, [r1]\n\t"
@@ -9632,7 +9552,7 @@ __attribute__((naked)) void CB2_UpdateLinkTrade(void)
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_0807AF08\n\t"
+        "	bl TradeMons\n\t"
         "	bl IsWirelessTrade\n\t"
         "	cmp r0, #0\n\t"
         "	bne _0807E4C8\n\t"

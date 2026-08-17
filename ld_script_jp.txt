@@ -3291,7 +3291,7 @@ SECTIONS {
         src/trade.o(.text.CB2_InGameTrade);
         src/trade.o(.text.UpdatePokedexForReceivedMon);
         src/trade.o(.text.GetMultiplayerIdWrapper);
-        src/trade.o(.text.sub_0807AF08);
+        src/trade.o(.text.TradeMons);
         src/trade.o(.text.HandleLinkDataSend);
         src/trade.o(.text.sub_0807B044);
         src/trade.o(.text.SetTradeSequenceBgGpuRegs);
