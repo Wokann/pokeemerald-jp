@@ -1616,260 +1616,106 @@ void ListMenuDefaultCursorMoveFunc(s32 itemIndex, bool8 onInit, struct ListMenu 
         PlaySE(SE_SELECT);
 }
 
-__attribute__((naked)) void ListMenuGetUnkIndicatorsStructFields(void)
+u32 ListMenuGetUnkIndicatorsStructFields(u8 taskId, u8 field)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r3, r1, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081AED88\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	cmp r3, #0x10\n\t"
-        "	bhi _081AEE2C\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	ldr r1, _081AED8C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AED88: .4byte gUnknown_3005B68\n\t"
-        "_081AED8C: .4byte _081AED90\n\t"
-        "_081AED90:\n\t"
-        "	.4byte _081AEDD4\n\t"
-        "	.4byte _081AEDD4\n\t"
-        "	.4byte _081AEDD8\n\t"
-        "	.4byte _081AEDDC\n\t"
-        "	.4byte _081AEDE0\n\t"
-        "	.4byte _081AEDE4\n\t"
-        "	.4byte _081AEDE8\n\t"
-        "	.4byte _081AEDEC\n\t"
-        "	.4byte _081AEDF0\n\t"
-        "	.4byte _081AEDF4\n\t"
-        "	.4byte _081AEDFA\n\t"
-        "	.4byte _081AEE02\n\t"
-        "	.4byte _081AEE08\n\t"
-        "	.4byte _081AEE10\n\t"
-        "	.4byte _081AEE18\n\t"
-        "	.4byte _081AEE1E\n\t"
-        "	.4byte _081AEE26\n\t"
-        "_081AEDD4:\n\t"
-        "	ldr r0, [r2, #4]\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEDD8:\n\t"
-        "	ldrh r0, [r2, #0xc]\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEDDC:\n\t"
-        "	ldrh r0, [r2, #0xe]\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEDE0:\n\t"
-        "	ldrb r0, [r2, #0x10]\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEDE4:\n\t"
-        "	ldrb r0, [r2, #0x11]\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEDE8:\n\t"
-        "	ldrb r0, [r2, #0x12]\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEDEC:\n\t"
-        "	ldrb r0, [r2, #0x13]\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEDF0:\n\t"
-        "	ldrb r0, [r2, #0x14]\n\t"
-        "	b _081AEDFC\n\t"
-        "_081AEDF4:\n\t"
-        "	ldrb r0, [r2, #0x14]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEDFA:\n\t"
-        "	ldrb r0, [r2, #0x15]\n\t"
-        "_081AEDFC:\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEE02:\n\t"
-        "	ldrb r0, [r2, #0x15]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEE08:\n\t"
-        "	ldrb r0, [r2, #0x16]\n\t"
-        "	lsls r0, r0, #0x1d\n\t"
-        "	lsrs r0, r0, #0x1d\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEE10:\n\t"
-        "	ldrb r0, [r2, #0x16]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1d\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEE18:\n\t"
-        "	ldrb r0, [r2, #0x16]\n\t"
-        "	lsrs r0, r0, #6\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEE1E:\n\t"
-        "	ldrb r0, [r2, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEE26:\n\t"
-        "	ldrb r0, [r2, #0x17]\n\t"
-        "	lsrs r0, r0, #6\n\t"
-        "	b _081AEE30\n\t"
-        "_081AEE2C:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_081AEE30:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[taskId].data;
+
+    switch (field)
+    {
+    case 0:
+    case 1:
+        return (u32) list->template.moveCursorFunc;
+    case 2:
+        return list->template.totalItems;
+    case 3:
+        return list->template.maxShowed;
+    case 4:
+        return list->template.windowId;
+    case 5:
+        return list->template.header_X;
+    case 6:
+        return list->template.item_X;
+    case 7:
+        return list->template.cursor_X;
+    case 8:
+        return list->template.upText_Y;
+    case 9:
+        return list->template.cursorPal;
+    case 10:
+        return list->template.fillValue;
+    case 11:
+        return list->template.cursorShadowPal;
+    case 12:
+        return list->template.lettersSpacing;
+    case 13:
+        return list->template.itemVerticalPadding;
+    case 14:
+        return list->template.scrollMultiple;
+    case 15:
+        return list->template.fontId;
+    case 16:
+        return list->template.cursorKind;
+    default:
+        return -1;
+    }
 }
 
-__attribute__((naked)) void ListMenuSetUnkIndicatorsStructField(void)
+void ListMenuSetUnkIndicatorsStructField(u8 taskId, u8 field, u32 value)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081AEE58\n\t"
-        "	adds r3, r1, r0\n\t"
-        "	cmp r4, #0x10\n\t"
-        "	bhi _081AEF34\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	ldr r1, _081AEE5C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AEE58: .4byte gUnknown_3005B68\n\t"
-        "_081AEE5C: .4byte _081AEE60\n\t"
-        "_081AEE60:\n\t"
-        "	.4byte _081AEEA4\n\t"
-        "	.4byte _081AEEA4\n\t"
-        "	.4byte _081AEEA8\n\t"
-        "	.4byte _081AEEAC\n\t"
-        "	.4byte _081AEEB0\n\t"
-        "	.4byte _081AEEB4\n\t"
-        "	.4byte _081AEEB8\n\t"
-        "	.4byte _081AEEBC\n\t"
-        "	.4byte _081AEEC0\n\t"
-        "	.4byte _081AEECC\n\t"
-        "	.4byte _081AEEDA\n\t"
-        "	.4byte _081AEEE6\n\t"
-        "	.4byte _081AEEF4\n\t"
-        "	.4byte _081AEF00\n\t"
-        "	.4byte _081AEF0E\n\t"
-        "	.4byte _081AEF1C\n\t"
-        "	.4byte _081AEF28\n\t"
-        "_081AEEA4:\n\t"
-        "	str r2, [r3, #4]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEA8:\n\t"
-        "	strh r2, [r3, #0xc]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEAC:\n\t"
-        "	strh r2, [r3, #0xe]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEB0:\n\t"
-        "	strb r2, [r3, #0x10]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEB4:\n\t"
-        "	strb r2, [r3, #0x11]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEB8:\n\t"
-        "	strb r2, [r3, #0x12]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEBC:\n\t"
-        "	strb r2, [r3, #0x13]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEC0:\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r2, r0\n\t"
-        "	ldrb r1, [r3, #0x14]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	b _081AEED2\n\t"
-        "_081AEECC:\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	ldrb r1, [r3, #0x14]\n\t"
-        "	movs r0, #0xf\n\t"
-        "_081AEED2:\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r3, #0x14]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEDA:\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r2, r0\n\t"
-        "	ldrb r1, [r3, #0x15]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	b _081AEEEC\n\t"
-        "_081AEEE6:\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	ldrb r1, [r3, #0x15]\n\t"
-        "	movs r0, #0xf\n\t"
-        "_081AEEEC:\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r3, #0x15]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEEF4:\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r2, r0\n\t"
-        "	ldrb r1, [r3, #0x16]\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	b _081AEF14\n\t"
-        "_081AEF00:\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r2, r0\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	ldrb r1, [r3, #0x16]\n\t"
-        "	movs r0, #0x39\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	b _081AEF14\n\t"
-        "_081AEF0E:\n\t"
-        "	lsls r2, r2, #6\n\t"
-        "	ldrb r1, [r3, #0x16]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "_081AEF14:\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r3, #0x16]\n\t"
-        "	b _081AEF34\n\t"
-        "_081AEF1C:\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r2, r0\n\t"
-        "	ldrb r1, [r3, #0x17]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	b _081AEF2E\n\t"
-        "_081AEF28:\n\t"
-        "	lsls r2, r2, #6\n\t"
-        "	ldrb r1, [r3, #0x17]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "_081AEF2E:\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r3, #0x17]\n\t"
-        "_081AEF34:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[taskId].data;
+
+    switch (field)
+    {
+    case 0:
+    case 1:
+        list->template.moveCursorFunc = (void (*)(s32, bool8, struct ListMenu *)) value;
+        break;
+    case 2:
+        list->template.totalItems = value;
+        break;
+    case 3:
+        list->template.maxShowed = value;
+        break;
+    case 4:
+        list->template.windowId = value;
+        break;
+    case 5:
+        list->template.header_X = value;
+        break;
+    case 6:
+        list->template.item_X = value;
+        break;
+    case 7:
+        list->template.cursor_X = value;
+        break;
+    case 8:
+        list->template.upText_Y = value;
+        break;
+    case 9:
+        list->template.cursorPal = value;
+        break;
+    case 10:
+        list->template.fillValue = value;
+        break;
+    case 11:
+        list->template.cursorShadowPal = value;
+        break;
+    case 12:
+        list->template.lettersSpacing = value;
+        break;
+    case 13:
+        list->template.itemVerticalPadding = value;
+        break;
+    case 14:
+        list->template.scrollMultiple = value;
+        break;
+    case 15:
+        list->template.fontId = value;
+        break;
+    case 16:
+        list->template.cursorKind = value;
+        break;
+    }
 }
 
 __attribute__((naked)) void SpriteCallback_ScrollIndicatorArrow(void)
