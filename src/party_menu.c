@@ -12624,25 +12624,15 @@ __attribute__((naked)) void sub_081B5C5C(void)
     );
 }
 
-__attribute__((naked)) void LoadPartyMenuPokeballGfx(void)
+extern const struct CompressedSpriteSheet gUnknown_85E17B0;
+extern const struct CompressedSpriteSheet gUnknown_85E1828;
+extern const struct CompressedSpritePalette gUnknown_85E17B8;
+
+static void LoadPartyMenuPokeballGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B5CF8\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldr r0, _081B5CFC\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldr r0, _081B5D00\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5CF8: .4byte gUnknown_85E17B0\n\t"
-        "_081B5CFC: .4byte gUnknown_85E1828\n\t"
-        "_081B5D00: .4byte gUnknown_85E17B8\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadCompressedSpriteSheet(&gUnknown_85E17B0);
+    LoadCompressedSpriteSheet(&gUnknown_85E1828);
+    LoadCompressedSpritePalette(&gUnknown_85E17B8);
 }
 
 __attribute__((naked)) void party_menu_status_condition_object(void)
