@@ -8566,7 +8566,7 @@ SECTIONS {
         src/party_menu.o(.text.IsMultiBattle);
         src/party_menu.o(.text.sub_081B0F58);
         src/party_menu.o(.text.Task_ClosePartyMenu);
-        src/party_menu.o(.text.c3_0811FAB4);
+        src/party_menu.o(.text.Task_ClosePartyMenuAndSetCB2);
         src/party_menu.o(.text.GetCursorSelectionMonId);
         src/party_menu.o(.text.GetPartyMenuType);
         src/party_menu.o(.text.Task_HandleChooseMonInput);

@@ -231,6 +231,7 @@ struct PartyMenuBox
 
 static void DisplayPartyPokemonLevel(u8, struct PartyMenuBox *);
 bool8 ShouldUseChooseMonText(void);
+static void Task_ClosePartyMenuAndSetCB2(u8 taskId);
 static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *mon);
 static u8 GetPartySlotEntryStatus(s8 slotId);
 static void DisplayPartyPokemonDataToTeachMove(u8 slot, u16 item, u8 tutor);
@@ -1389,41 +1390,13 @@ void sub_081B0F58(void *a, void *b)
     Free(tmp);
 }
 
-__attribute__((naked)) void Task_ClosePartyMenu(u8 taskId)
+static void Task_ClosePartyMenu(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, _081B0FC0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B0FC4\n\t"
-        "	str r1, [r0]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0FC0: .4byte gTasks\n\t"
-        "_081B0FC4: .4byte c3_0811FAB4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    gTasks[taskId].func = Task_ClosePartyMenuAndSetCB2;
 }
 
-__attribute__((naked)) void c3_0811FAB4(void)
+__attribute__((naked)) static void Task_ClosePartyMenuAndSetCB2(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
