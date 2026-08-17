@@ -54,4 +54,16 @@ gUnknown_85C97BD: @ 0x85C97BD
 	.set gText_ReturnToWaitingRoom, gUnknown_85C97BD + 0xA6C
 	.globl gText_CancelChallenge
 	.set gText_CancelChallenge, gUnknown_85C97BD + 0xA7B
+	.globl gText_PkmnCantSwitchOut
+	.set gText_PkmnCantSwitchOut, gUnknown_85C97BD + 0x35D
+	.globl gText_PkmnAlreadyInBattle
+	.set gText_PkmnAlreadyInBattle, gUnknown_85C97BD + 0x370
+	.globl gText_PkmnAlreadySelected
+	.set gText_PkmnAlreadySelected, gUnknown_85C97BD + 0x386
+	.globl gText_PkmnHasNoEnergy
+	.set gText_PkmnHasNoEnergy, gUnknown_85C97BD + 0x39C
+	.globl gText_CantSwitchWithAlly
+	.set gText_CantSwitchWithAlly, gUnknown_85C97BD + 0x3B9
+	.globl gText_EggCantBattle
+	.set gText_EggCantBattle, gUnknown_85C97BD + 0x3E0
 	.globl gUnknown_85C983E

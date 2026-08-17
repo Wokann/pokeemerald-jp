@@ -14,8 +14,8 @@
 
 // JP asm names for helpers still in asm/party_menu.s; US names:
 // GetPartyIdFromBattlePartyId and SwitchPartyMonSlots.
-u8 pokemon_order_func(u8 battlerId);
-void sub_081B8C50(u8 partyId, u8 arg1);
+u8 GetPartyIdFromBattlePartyId(u8 battlerId);
+void SwitchPartyMonSlots(u8 partyId, u8 arg1);
 // JP calls the trainer-hill data free helper directly; US battle_util2
 // calls FreeTrainerHillBattleStruct which wraps this same function.
 void FreeDataStruct(void);
@@ -122,7 +122,7 @@ void SwitchPartyOrderInGameMulti(u8 battler, u8 arg1)
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
             gBattlePartyCurrentOrder[i] = *(i + (u8 *)(gBattleStruct->battlerPartyOrders));
 
-        sub_081B8C50(pokemon_order_func(gBattlerPartyIndexes[battler]), pokemon_order_func(arg1));
+        SwitchPartyMonSlots(GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[battler]), GetPartyIdFromBattlePartyId(arg1));
 
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
             *(i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];

@@ -3006,7 +3006,7 @@ __attribute__((naked)) void sub_080FED9C(void)
         "	b _080FEDD2\n\t"
         "	.align 2, 0\n\t"
         "_080FEDBC: .4byte gUnknown_203CB20\n\t"
-        "_080FEDC0: .4byte sub_081B8690 + 1\n\t"
+        "_080FEDC0: .4byte ChooseMonForInBattleItem + 1\n\t"
         "_080FEDC4:\n\t"
         "	ldr r0, _080FEDD8\n\t"
         "	ldr r1, [r0]\n\t"
@@ -3020,7 +3020,7 @@ __attribute__((naked)) void sub_080FED9C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEDD8: .4byte gUnknown_203CBF8\n\t"
-        "_080FEDDC: .4byte sub_081B8690 + 1\n\t"
+        "_080FEDDC: .4byte ChooseMonForInBattleItem + 1\n\t"
         ".syntax divided\n\t"
     );
 }

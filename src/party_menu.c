@@ -213,7 +213,6 @@ static void Task_HandleSendMailToPCYesNoInput(u8 taskId);
 static void Task_LoseMailMessageYesNo(u8 taskId);
 static void Task_HandleLoseMailMessageYesNoInput(u8 taskId);
 static void CursorCb_Cancel2(u8 taskId);
-__attribute__((naked)) bool8 TrySwitchInPokemon(void);
 static void Task_SpinTradeYesNo(u8 taskId);
 static void Task_UpdateHeldItemSprite(u8 taskId);
 static void Task_TossHeldItemYesNo(u8 taskId);
@@ -467,6 +466,17 @@ void ChooseMonForTradingBoard(u8 menuType, MainCallback callback);
 void ChooseMonForMoveTutor(void);
 void ChooseMonForWirelessMinigame(void);
 static u8 GetPartyLayoutFromBattleType(void);
+void OpenPartyMenuInBattle(u8 partyAction);
+void ChooseMonForInBattleItem(void);
+static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *mon);
+static bool8 TrySwitchInPokemon(void);
+static u8 GetPartyIdFromBattleSlot(u8 slot);
+void SwitchPartyMonSlots(u8 slot, u8 slot2);
+u8 GetPartyIdFromBattlePartyId(u8 battlePartyId);
+static void UpdatePartyToBattleOrder(void);
+static void UNUSED SwitchAliveMonIntoLeadSlot(void);
+void nullsub_35(void); // ReshowBattleScreenDummy
+void SetCB2ToReshowScreenAfterMenu2(void); // CB2_SetUpReshowBattleScreenAfterMenu
 extern void (*gCB2_AfterEvolution)(void);
 void sub_081C478C(void); // CB2_ReturnToPyramidBagMenu
 struct PlayerPCItemPageStruct
@@ -485,6 +495,9 @@ void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
 #define FACILITY_UNION_ROOM        8
 #define FACILITY_MULTI_OR_EREADER  9
 #define FRONTIER_FACILITY_DOME     1
+#define ACTIONS_SEND_OUT 3
+#define ACTIONS_SHIFT 2
+#define ACTIONS_SUMMARY_ONLY 7
 void TryTutorSelectedMon(u8 taskId); // TryTutorSelectedMon
 void TryGiveItemOrMailToSelectedMon(u8 taskId); // TryGiveItemOrMailToSelectedMon
 void TryGiveMailToSelectedMon(u8 taskId); // TryGiveMailToSelectedMon
@@ -508,7 +521,7 @@ s8 Menu_ProcessInputNoWrapAround_other(void);
 s8 ProcessMenuInput_other(void);
 u8 Menu_GetCursorPos(void);
 void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void));
-void pokemon_change_order(void); // UpdatePartyToBattleOrder
+void UpdatePartyToBattleOrder(void); // UpdatePartyToBattleOrder
 void sub_08199954(u8 bgId, u16 *dest, u8 left, u8 top, u8 width, u8 height); // CopyToBufferFromBgTilemap
 static void SlidePartyMenuBoxOneStep(u8 taskId);
 static void Task_SlideSelectedSlotsOffscreen(u8 taskId);
@@ -2815,7 +2828,7 @@ static void CB2_ShowPokemonSummaryScreen(void)
 {
     if (gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE)
     {
-        pokemon_change_order(); // UpdatePartyToBattleOrder
+        UpdatePartyToBattleOrder(); // UpdatePartyToBattleOrder
         ShowPokemonSummaryScreen(SUMMARY_MODE_LOCK_MOVES, gPlayerParty, gPartyMenu.slotId, gPlayerPartyCount - 1, CB2_ReturnToPartyMenuFromSummaryScreen);
     }
     else
@@ -5824,618 +5837,225 @@ static u8 GetPartyLayoutFromBattleType(void)
 {
     if ((u8)IsDoubleBattle() == FALSE)
         return PARTY_LAYOUT_SINGLE;
-    if (IsMultiBattle() == TRUE)
+    if ((u8)IsMultiBattle() == TRUE)
         return PARTY_LAYOUT_MULTI;
     return PARTY_LAYOUT_DOUBLE;
 }
 
-__attribute__((naked)) void OpenPartyMenuInBattle(u8 partyAction)
+void OpenPartyMenuInBattle(u8 partyAction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl GetPartyLayoutFromBattleType\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B8688\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B868C\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	bl nullsub_35\n\t"
-        "	bl pokemon_change_order\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8688: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B868C: .4byte SetCB2ToReshowScreenAfterMenu2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(PARTY_MENU_TYPE_IN_BATTLE, GetPartyLayoutFromBattleType(), partyAction, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, SetCB2ToReshowScreenAfterMenu2);
+    nullsub_35(); // ReshowBattleScreenDummy
+    UpdatePartyToBattleOrder();
 }
 
-__attribute__((naked)) void sub_081B8690(void)
+void ChooseMonForInBattleItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	bl GetPartyLayoutFromBattleType\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B86C4\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B86C8\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	bl nullsub_35\n\t"
-        "	bl pokemon_change_order\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B86C4: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B86C8: .4byte CB2_ReturnToBagMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(PARTY_MENU_TYPE_IN_BATTLE, GetPartyLayoutFromBattleType(), PARTY_ACTION_USE_ITEM, FALSE, PARTY_MSG_USE_ON_WHICH_MON, Task_HandleChooseMonInput, CB2_ReturnToBagMenu);
+    nullsub_35(); // ReshowBattleScreenDummy
+    UpdatePartyToBattleOrder();
 }
 
-__attribute__((naked)) static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *mon)
+static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _081B86F4\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B8714\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B8714\n\t"
-        "	ldr r0, _081B86F8\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B86FC\n\t"
-        "	movs r0, #3\n\t"
-        "	b _081B8716\n\t"
-        "	.align 2, 0\n\t"
-        "_081B86F4: .4byte gUnknown_20241F4\n\t"
-        "_081B86F8: .4byte gPartyMenu\n\t"
-        "_081B86FC:\n\t"
-        "	ldr r0, _081B8710\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xb\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B8714\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081B8716\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8710: .4byte gBattleTypeFlags\n\t"
-        "_081B8714:\n\t"
-        "	movs r0, #7\n\t"
-        "_081B8716:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(&gPlayerParty[1], MON_DATA_SPECIES) != SPECIES_NONE && GetMonData(mon, MON_DATA_IS_EGG) == FALSE)
+    {
+        if (gPartyMenu.action == PARTY_ACTION_SEND_OUT)
+            return ACTIONS_SEND_OUT;
+        if (!(gBattleTypeFlags & BATTLE_TYPE_ARENA))
+            return ACTIONS_SHIFT;
+    }
+    return ACTIONS_SUMMARY_ONLY;
 }
 
-__attribute__((naked)) bool8 TrySwitchInPokemon(void)
+static bool8 TrySwitchInPokemon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	bl IsMultiBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B8764\n\t"
-        "	cmp r5, #1\n\t"
-        "	beq _081B8742\n\t"
-        "	cmp r5, #4\n\t"
-        "	beq _081B8742\n\t"
-        "	cmp r5, #5\n\t"
-        "	bne _081B8764\n\t"
-        "_081B8742:\n\t"
-        "	ldr r4, _081B8758\n\t"
-        "	bl GetTrainerPartnerName\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r0, _081B875C\n\t"
-        "	ldr r1, _081B8760\n\t"
-        "	b _081B88E2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8758: .4byte gStringVar1\n\t"
-        "_081B875C: .4byte gStringVar4\n\t"
-        "_081B8760: .4byte gUnknown_85C97BD + 0x3B9\n\t"
-        "_081B8764:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B8788\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B8798\n\t"
-        "	ldr r1, _081B878C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r0, _081B8790\n\t"
-        "	ldr r1, _081B8794\n\t"
-        "	b _081B88E2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8788: .4byte gPlayerParty\n\t"
-        "_081B878C: .4byte gStringVar1\n\t"
-        "_081B8790: .4byte gStringVar4\n\t"
-        "_081B8794: .4byte gUnknown_85C97BD + 0x39C\n\t"
-        "_081B8798:\n\t"
-        "	movs r4, #0\n\t"
-        "	b _081B87C4\n\t"
-        "_081B879C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B87BE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetPartyIdFromBattleSlot\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r2, _081B87EC\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _081B889C\n\t"
-        "_081B87BE:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_081B87C4:\n\t"
-        "	ldr r0, _081B87F0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	blo _081B879C\n\t"
-        "	movs r7, #0x64\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	ldr r1, _081B87F4\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B8800\n\t"
-        "	ldr r0, _081B87F8\n\t"
-        "	ldr r1, _081B87FC\n\t"
-        "	b _081B88E2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B87EC: .4byte gBattlerPartyIndexes\n\t"
-        "_081B87F0: .4byte gBattlersCount\n\t"
-        "_081B87F4: .4byte gPlayerParty\n\t"
-        "_081B87F8: .4byte gStringVar4\n\t"
-        "_081B87FC: .4byte gUnknown_85C97BD + 0x3E0\n\t"
-        "_081B8800:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetPartyIdFromBattleSlot\n\t"
-        "	ldr r1, _081B8824\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x8b\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _081B8834\n\t"
-        "	ldr r1, _081B8828\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r0, _081B882C\n\t"
-        "	ldr r1, _081B8830\n\t"
-        "	b _081B88E2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8824: .4byte gBattleStruct\n\t"
-        "_081B8828: .4byte gStringVar1\n\t"
-        "_081B882C: .4byte gStringVar4\n\t"
-        "_081B8830: .4byte gUnknown_85C97BD + 0x386\n\t"
-        "_081B8834:\n\t"
-        "	ldr r0, _081B8844\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _081B8848\n\t"
-        "	bl SetMonPreventsSwitchingString\n\t"
-        "	b _081B88E6\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8844: .4byte gPartyMenu\n\t"
-        "_081B8848:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B88C0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetPartyIdFromBattleSlot\n\t"
-        "	ldr r1, _081B888C\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _081B8890\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _081B8894\n\t"
-        "	ldr r0, _081B8898\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl pokemon_order_func\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_081B8C50\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	add r0, r8\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl sub_081B0F58\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B88E8\n\t"
-        "	.align 2, 0\n\t"
-        "_081B888C: .4byte gUnknown_203CBB5\n\t"
-        "_081B8890: .4byte gPartyMenuUseExitCallback\n\t"
-        "_081B8894: .4byte gBattlerPartyIndexes\n\t"
-        "_081B8898: .4byte gBattlerInMenuId\n\t"
-        "_081B889C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081B88B0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B88B4\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r0, _081B88B8\n\t"
-        "	ldr r1, _081B88BC\n\t"
-        "	b _081B88E2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B88B0: .4byte gPlayerParty\n\t"
-        "_081B88B4: .4byte gStringVar1\n\t"
-        "_081B88B8: .4byte gStringVar4\n\t"
-        "_081B88BC: .4byte gUnknown_85C97BD + 0x370\n\t"
-        "_081B88C0:\n\t"
-        "	ldr r0, _081B88F4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _081B88F8\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl pokemon_order_func\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	add r0, r8\n\t"
-        "	ldr r1, _081B88FC\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r0, _081B8900\n\t"
-        "	ldr r1, _081B8904\n\t"
-        "_081B88E2:\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "_081B88E6:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B88E8:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B88F4: .4byte gBattlerInMenuId\n\t"
-        "_081B88F8: .4byte gBattlerPartyIndexes\n\t"
-        "_081B88FC: .4byte gStringVar1\n\t"
-        "_081B8900: .4byte gStringVar4\n\t"
-        "_081B8904: .4byte gUnknown_85C97BD + 0x35D\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 slot = GetCursorSelectionMonId();
+    u8 newSlot;
+    u8 i;
+
+    // In a multi battle, slots 1, 4, and 5 are the partner's Pokémon
+    if (IsMultiBattle() == TRUE && (slot == 1 || slot == 4 || slot == 5))
+    {
+        StringCopy(gStringVar1, GetTrainerPartnerName());
+        StringExpandPlaceholders(gStringVar4, gText_CantSwitchWithAlly);
+        return FALSE;
+    }
+    if (GetMonData(&gPlayerParty[slot], MON_DATA_HP) == 0)
+    {
+        GetMonNickname(&gPlayerParty[slot], gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnHasNoEnergy);
+        return FALSE;
+    }
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if ((u8)GetBattlerSide(i) == B_SIDE_PLAYER && GetPartyIdFromBattleSlot(slot) == gBattlerPartyIndexes[i])
+        {
+            GetMonNickname(&gPlayerParty[slot], gStringVar1);
+            StringExpandPlaceholders(gStringVar4, gText_PkmnAlreadyInBattle);
+            return FALSE;
+        }
+    }
+    if (GetMonData(&gPlayerParty[slot], MON_DATA_IS_EGG))
+    {
+        StringExpandPlaceholders(gStringVar4, gText_EggCantBattle);
+        return FALSE;
+    }
+    if (GetPartyIdFromBattleSlot(slot) == gBattleStruct->prevSelectedPartySlot)
+    {
+        GetMonNickname(&gPlayerParty[slot], gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnAlreadySelected);
+        return FALSE;
+    }
+    if (gPartyMenu.action == PARTY_ACTION_ABILITY_PREVENTS)
+    {
+        SetMonPreventsSwitchingString();
+        return FALSE;
+    }
+    if (gPartyMenu.action == PARTY_ACTION_CANT_SWITCH)
+    {
+        u8 currBattler = gBattlerInMenuId;
+        GetMonNickname(&gPlayerParty[GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[currBattler])], gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gText_PkmnCantSwitchOut);
+        return FALSE;
+    }
+    gSelectedMonPartyId = GetPartyIdFromBattleSlot(slot);
+    gPartyMenuUseExitCallback = TRUE;
+    newSlot = GetPartyIdFromBattlePartyId(gBattlerPartyIndexes[gBattlerInMenuId]);
+    SwitchPartyMonSlots(newSlot, slot);
+    sub_081B0F58(&gPlayerParty[newSlot], &gPlayerParty[slot]); // SwapPartyPokemon
+    return TRUE;
 }
 
-__attribute__((naked)) void BufferBattlePartyOrder(u8 *partyBattleOrder, u8 flankId);
 
 void BufferBattlePartyCurrentOrder(void)
 {
     BufferBattlePartyOrder(gBattlePartyCurrentOrder, (u8)GetPlayerFlankId());
 }
 
-__attribute__((naked)) void BufferBattlePartyOrder(u8 *partyBattleOrder, u8 flankId)
+static void BufferBattlePartyOrder(u8 *partyBattleOrder, u8 flankId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	bl IsMultiBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B895E\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081B8950\n\t"
-        "	movs r0, #0x30\n\t"
-        "	strb r0, [r6]\n\t"
-        "	movs r0, #0x45\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	strb r0, [r6, #2]\n\t"
-        "	b _081B89F8\n\t"
-        "_081B8950:\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r6]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	strb r0, [r6, #1]\n\t"
-        "	movs r0, #0x45\n\t"
-        "	strb r0, [r6, #2]\n\t"
-        "	b _081B89F8\n\t"
-        "_081B895E:\n\t"
-        "	bl IsDoubleBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B899C\n\t"
-        "	movs r5, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	mov r2, sp\n\t"
-        "	ldr r1, _081B8998\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "_081B8982:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _081B8990\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	strb r4, [r0]\n\t"
-        "	adds r5, #1\n\t"
-        "_081B8990:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #5\n\t"
-        "	ble _081B8982\n\t"
-        "	b _081B89E0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8998: .4byte gBattlerPartyIndexes\n\t"
-        "_081B899C:\n\t"
-        "	movs r5, #2\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r4, _081B8A00\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	mov r1, sp\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	movs r4, #0\n\t"
-        "_081B89C6:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _081B89DA\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _081B89DA\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	strb r4, [r0]\n\t"
-        "	adds r5, #1\n\t"
-        "_081B89DA:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #5\n\t"
-        "	ble _081B89C6\n\t"
-        "_081B89E0:\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r3, sp\n\t"
-        "_081B89E4:\n\t"
-        "	adds r0, r6, r4\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r3, #1]\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #2\n\t"
-        "	ble _081B89E4\n\t"
-        "_081B89F8:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8A00: .4byte gBattlerPartyIndexes\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 partyIds[PARTY_SIZE];
+    int i, j;
+
+    if ((u8)IsMultiBattle() == TRUE)
+    {
+        // Party ids are packed in 4 bits at a time
+        if (flankId != 0)
+        {
+            partyBattleOrder[0] = 0 | (3 << 4);
+            partyBattleOrder[1] = 5 | (4 << 4);
+            partyBattleOrder[2] = 2 | (1 << 4);
+        }
+        else
+        {
+            partyBattleOrder[0] = 3 | (0 << 4);
+            partyBattleOrder[1] = 2 | (1 << 4);
+            partyBattleOrder[2] = 5 | (4 << 4);
+        }
+        return;
+    }
+    else if ((u8)IsDoubleBattle() == FALSE)
+    {
+        j = 1;
+        partyIds[0] = gBattlerPartyIndexes[(u8)GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)];
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (i != partyIds[0])
+            {
+                partyIds[j] = i;
+                j++;
+            }
+        }
+    }
+    else
+    {
+        j = 2;
+        partyIds[0] = gBattlerPartyIndexes[(u8)GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)];
+        partyIds[1] = gBattlerPartyIndexes[(u8)GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT)];
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (i != partyIds[0] && i != partyIds[1])
+            {
+                partyIds[j] = i;
+                j++;
+            }
+        }
+    }
+    for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
+        partyBattleOrder[i] = (partyIds[0 + (i * 2)] << 4) | partyIds[1 + (i * 2)];
 }
 
-__attribute__((naked)) void BufferBattlePartyOrderBySide(u8 *partyBattleOrder, u8 flankId, u8 battler);
 
 void BufferBattlePartyCurrentOrderBySide(u8 battler, u8 flankId)
 {
     BufferBattlePartyOrderBySide(gBattleStruct->battlerPartyOrders[battler], flankId, battler);
 }
 
-__attribute__((naked)) void BufferBattlePartyOrderBySide(u8 *partyBattleOrder, u8 flankId, u8 battler)
+static void BufferBattlePartyOrderBySide(u8 *partyBattleOrder, u8 flankId, u8 battler)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B8A50\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081B8A5C\n\t"
-        "_081B8A50:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #3\n\t"
-        "_081B8A5C:\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	bl IsMultiBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B8A90\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _081B8A82\n\t"
-        "	movs r0, #0x30\n\t"
-        "	strb r0, [r5]\n\t"
-        "	movs r0, #0x45\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	strb r0, [r5, #2]\n\t"
-        "	b _081B8B12\n\t"
-        "_081B8A82:\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r5]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	strb r0, [r5, #1]\n\t"
-        "	movs r0, #0x45\n\t"
-        "	strb r0, [r5, #2]\n\t"
-        "	b _081B8B12\n\t"
-        "_081B8A90:\n\t"
-        "	bl IsDoubleBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B8AC8\n\t"
-        "	movs r3, #1\n\t"
-        "	mov r2, sp\n\t"
-        "	ldr r1, _081B8AC4\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "_081B8AAC:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _081B8ABA\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	strb r4, [r0]\n\t"
-        "	adds r3, #1\n\t"
-        "_081B8ABA:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #5\n\t"
-        "	ble _081B8AAC\n\t"
-        "	b _081B8AFA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8AC4: .4byte gBattlerPartyIndexes\n\t"
-        "_081B8AC8:\n\t"
-        "	movs r3, #2\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r2, _081B8B1C\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r6, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	movs r4, #0\n\t"
-        "_081B8AE0:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _081B8AF4\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _081B8AF4\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	strb r4, [r0]\n\t"
-        "	adds r3, #1\n\t"
-        "_081B8AF4:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #5\n\t"
-        "	ble _081B8AE0\n\t"
-        "_081B8AFA:\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r3, sp\n\t"
-        "_081B8AFE:\n\t"
-        "	adds r0, r5, r4\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r3, #1]\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r3, #2\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #2\n\t"
-        "	ble _081B8AFE\n\t"
-        "_081B8B12:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8B1C: .4byte gBattlerPartyIndexes\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 partyIndexes[PARTY_SIZE];
+    int i, j;
+    u8 leftBattler;
+    u8 rightBattler;
+
+    if ((u8)GetBattlerSide(battler) == B_SIDE_PLAYER)
+    {
+        leftBattler = (u8)GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+        rightBattler = (u8)GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
+    }
+    else
+    {
+        leftBattler = (u8)GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        rightBattler = (u8)GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+    }
+
+    if ((u8)IsMultiBattle() == TRUE)
+    {
+        if (flankId != 0)
+        {
+            partyBattleOrder[0] = 0 | (3 << 4);
+            partyBattleOrder[1] = 5 | (4 << 4);
+            partyBattleOrder[2] = 2 | (1 << 4);
+        }
+        else
+        {
+            partyBattleOrder[0] = 3 | (0 << 4);
+            partyBattleOrder[1] = 2 | (1 << 4);
+            partyBattleOrder[2] = 5 | (4 << 4);
+        }
+        return;
+    }
+    else if ((u8)IsDoubleBattle() == FALSE)
+    {
+        j = 1;
+        partyIndexes[0] = gBattlerPartyIndexes[leftBattler];
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (i != partyIndexes[0])
+            {
+                partyIndexes[j] = i;
+                j++;
+            }
+        }
+    }
+    else
+    {
+        j = 2;
+        partyIndexes[0] = gBattlerPartyIndexes[leftBattler];
+        partyIndexes[1] = gBattlerPartyIndexes[rightBattler];
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (i != partyIndexes[0] && i != partyIndexes[1])
+            {
+                partyIndexes[j] = i;
+                j++;
+            }
+        }
+    }
+
+    for (i = 0; i < 3; i++)
+        partyBattleOrder[i] = (partyIndexes[0 + (i * 2)] << 4) | partyIndexes[1 + (i * 2)];
 }
 
 __attribute__((naked)) void sub_081B8B20(void)
@@ -6540,208 +6160,66 @@ __attribute__((naked)) void sub_081B8B20(void)
     );
 }
 
-__attribute__((naked)) u8 GetPartyIdFromBattleSlot(u8 slotId)
+static u8 GetPartyIdFromBattleSlot(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r2\n\t"
-        "	lsrs r2, r0, #0x19\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B8BF8\n\t"
-        "	ldr r0, _081B8BF4\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0xf\n\t"
-        "	ands r1, r0\n\t"
-        "	b _081B8C00\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8BF4: .4byte gBattlePartyCurrentOrder\n\t"
-        "_081B8BF8:\n\t"
-        "	ldr r0, _081B8C08\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsrs r1, r0, #4\n\t"
-        "_081B8C00:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8C08: .4byte gBattlePartyCurrentOrder\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 modResult = slot & 1;
+    u8 retVal;
+
+    slot /= 2;
+    if (modResult != 0)
+        retVal = gBattlePartyCurrentOrder[slot] & 0xF;
+    else
+        retVal = gBattlePartyCurrentOrder[slot] >> 4;
+    return retVal;
 }
 
-__attribute__((naked)) void sub_081B8C0C(void)
+static void SetPartyIdAtBattleSlot(u8 slot, u8 setVal)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r3\n\t"
-        "	lsrs r3, r0, #0x19\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B8C34\n\t"
-        "	ldr r0, _081B8C30\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _081B8C44\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8C30: .4byte gBattlePartyCurrentOrder\n\t"
-        "_081B8C34:\n\t"
-        "	ldr r2, _081B8C4C\n\t"
-        "	adds r2, r3, r2\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r1, r4, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_081B8C44:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8C4C: .4byte gBattlePartyCurrentOrder\n\t"
-        ".syntax divided\n\t"
-    );
-}
-__attribute__((naked)) void sub_081B8C50(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetPartyIdFromBattleSlot\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetPartyIdFromBattleSlot\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B8C0C\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_081B8C0C\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    bool32 modResult = slot & 1;
+
+    slot /= 2;
+    if (modResult != 0)
+        gBattlePartyCurrentOrder[slot] = (gBattlePartyCurrentOrder[slot] & 0xF0) | setVal;
+    else
+        gBattlePartyCurrentOrder[slot] = (gBattlePartyCurrentOrder[slot] & 0xF) | (setVal << 4);
 }
 
-
-
-
-__attribute__((naked)) void pokemon_order_func(void)
+void SwitchPartyMonSlots(u8 slot, u8 slot2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _081B8CB4\n\t"
-        "_081B8C98:\n\t"
-        "	adds r0, r3, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsrs r0, r1, #4\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _081B8CB0\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _081B8CB8\n\t"
-        "_081B8CB0:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _081B8CCA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8CB4: .4byte gBattlePartyCurrentOrder\n\t"
-        "_081B8CB8:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #2\n\t"
-        "	bls _081B8C98\n\t"
-        "	movs r0, #0\n\t"
-        "_081B8CCA:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 partyId = GetPartyIdFromBattleSlot(slot);
+    SetPartyIdAtBattleSlot(slot, GetPartyIdFromBattleSlot(slot2));
+    SetPartyIdAtBattleSlot(slot2, partyId);
 }
 
-__attribute__((naked)) void pokemon_change_order(void)
+u8 GetPartyIdFromBattlePartyId(u8 battlePartyId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r4, #0x96\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Alloc\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, _081B8D1C\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl memcpy\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r6, #0x64\n\t"
-        "_081B8CEA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl pokemon_order_func\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r1, _081B8D1C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	muls r1, r6, r1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #5\n\t"
-        "	bls _081B8CEA\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Free\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8D1C: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i, j;
+
+    for (j = i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); j++, i++)
+    {
+        if ((gBattlePartyCurrentOrder[i] >> 4) != battlePartyId)
+        {
+            j++;
+            if ((gBattlePartyCurrentOrder[i] & 0xF) == battlePartyId)
+                return j;
+        }
+        else
+        {
+            return j;
+        }
+    }
+    return 0;
+}
+
+static void UpdatePartyToBattleOrder(void)
+{
+    struct Pokemon *partyBuffer = Alloc(sizeof(gPlayerParty));
+    u8 i;
+
+    memcpy(partyBuffer, gPlayerParty, sizeof(gPlayerParty));
+    for (i = 0; i < PARTY_SIZE; i++)
+        memcpy(&gPlayerParty[GetPartyIdFromBattlePartyId(i)], &partyBuffer[i], sizeof(struct Pokemon));
+    Free(partyBuffer);
 }
 
 static void UpdatePartyToFieldOrder(void)
@@ -6755,65 +6233,23 @@ static void UpdatePartyToFieldOrder(void)
     Free(partyBuffer);
 }
 
-__attribute__((naked)) void sub_081B8D70(void)
+static void UNUSED SwitchAliveMonIntoLeadSlot(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	movs r6, #1\n\t"
-        "	movs r7, #0x64\n\t"
-        "	ldr r0, _081B8DC8\n\t"
-        "	mov r8, r0\n\t"
-        "_081B8D7E:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetPartyIdFromBattleSlot\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B8DCC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B8DCC\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetPartyIdFromBattleSlot\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl sub_081B8C50\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	add r0, r8\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_081B0F58\n\t"
-        "	b _081B8DD6\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8DC8: .4byte gPlayerParty\n\t"
-        "_081B8DCC:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #5\n\t"
-        "	bls _081B8D7E\n\t"
-        "_081B8DD6:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    struct Pokemon *mon;
+    u8 partyId;
+
+    for (i = 1; i < PARTY_SIZE; i++)
+    {
+        mon = &gPlayerParty[GetPartyIdFromBattleSlot(i)];
+        if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE && GetMonData(mon, MON_DATA_HP) != 0)
+        {
+            partyId = GetPartyIdFromBattleSlot(0);
+            SwitchPartyMonSlots(0, i);
+            sub_081B0F58(&gPlayerParty[partyId], mon); // SwapPartyPokemon
+            break;
+        }
+    }
 }
 
 void SetCB2ToReshowScreenAfterMenu2(void);
