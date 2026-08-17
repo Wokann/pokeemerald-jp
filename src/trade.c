@@ -3500,202 +3500,89 @@ static void TradeAnimInit_LoadGfx(void)
     LoadCompressedPalette(gBattleTextboxPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) void CB2_InGameTrade(void)
+void CB2_InGameTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _0807ACE8\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bls _0807ACDC\n\t"
-        "	b _0807AE7A\n\t"
-        "_0807ACDC:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807ACEC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807ACE8: .4byte gMain\n\t"
-        "_0807ACEC: .4byte 0x0807ACF0\n\t"
-        "_0807ACF0: @ jump table\n\t"
-        "	.4byte _0807AD24 @ case 0\n\t"
-        "	.4byte _0807AE7A @ case 1\n\t"
-        "	.4byte _0807AE7A @ case 2\n\t"
-        "	.4byte _0807AE7A @ case 3\n\t"
-        "	.4byte _0807AE7A @ case 4\n\t"
-        "	.4byte _0807ADE8 @ case 5\n\t"
-        "	.4byte _0807ADF2 @ case 6\n\t"
-        "	.4byte _0807ADFC @ case 7\n\t"
-        "	.4byte _0807AE0C @ case 8\n\t"
-        "	.4byte _0807AE2C @ case 9\n\t"
-        "	.4byte _0807AE48 @ case 10\n\t"
-        "	.4byte _0807AE50 @ case 11\n\t"
-        "	.4byte _0807AE74 @ case 12\n\t"
-        "_0807AD24:\n\t"
-        "	ldr r1, _0807ADC8\n\t"
-        "	ldr r0, _0807ADCC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r5, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #6\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldr r4, _0807ADD0\n\t"
-        "	ldr r0, _0807ADD4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r0, _0807ADD8\n\t"
-        "	movs r1, #7\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r4, _0807ADDC\n\t"
-        "	movs r6, #0x80\n\t"
-        "	lsls r6, r6, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	bl AllocateMonSpritesGfx\n\t"
-        "	bl ResetTasks\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	ldr r0, _0807ADE0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl TradeAnimInit_LoadGfx\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xee\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x8c\n\t"
-        "	strh r5, [r0]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r5, [r0]\n\t"
-        "	adds r0, #0x40\n\t"
-        "	movs r1, #0x40\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r5, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r5, [r0]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0xdc\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xe8\n\t"
-        "	strh r6, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r5, [r0]\n\t"
-        "	str r5, [r2, #0x64]\n\t"
-        "	ldr r0, _0807ADE4\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #5\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0807AE7A\n\t"
-        "	.align 2, 0\n\t"
-        "_0807ADC8: .4byte gSelectedTradeMonPositions\n\t"
-        "_0807ADCC: .4byte gSpecialVar_0x8005\n\t"
-        "_0807ADD0: .4byte gUnknown_20226A8\n\t"
-        "_0807ADD4: .4byte gSaveBlock2Ptr\n\t"
-        "_0807ADD8: .4byte gEnemyParty\n\t"
-        "_0807ADDC: .4byte gUnknown_2031F40\n\t"
-        "_0807ADE0: .4byte VBlankCB_TradeAnim + 1\n\t"
-        "_0807ADE4: .4byte gMain\n\t"
-        "_0807ADE8:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl LoadTradeMonPic\n\t"
-        "	b _0807AE60\n\t"
-        "_0807ADF2:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl LoadTradeMonPic\n\t"
-        "	b _0807AE60\n\t"
-        "_0807ADFC:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl LoadTradeMonPic\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	b _0807AE60\n\t"
-        "_0807AE0C:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl LoadTradeMonPic\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	b _0807AE60\n\t"
-        "_0807AE2C:\n\t"
-        "	bl LoadTradeSequenceSpriteSheetsAndPalettes\n\t"
-        "	ldr r0, _0807AE40\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _0807AE44\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	b _0807AE60\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AE40: .4byte gUnknown_830CF5C\n\t"
-        "_0807AE44: .4byte gUnknown_830CF64\n\t"
-        "_0807AE48:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	b _0807AE60\n\t"
-        "_0807AE50:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	bl SetTradeSceneStrings\n\t"
-        "_0807AE60:\n\t"
-        "	ldr r1, _0807AE70\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0807AE7A\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AE70: .4byte gMain\n\t"
-        "_0807AE74:\n\t"
-        "	ldr r0, _0807AE98\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0807AE7A:\n\t"
-        "	bl RunTasks\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AE98: .4byte sub_0807B044 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 otName[12];
+
+    switch (gMain.state)
+    {
+    case 0:
+        gSelectedTradeMonPositions[TRADE_PLAYER] = gSpecialVar_0x8005;
+        gSelectedTradeMonPositions[TRADE_PARTNER] = 6;
+        StringCopy(gUnknown_20226A8, gSaveBlock2Ptr->playerName);
+        GetMonData3(&gEnemyParty[0], MON_DATA_OT_NAME, otName);
+        StringCopy(gUnknown_20226A8 + 0x1C, otName);
+        gUnknown_2031F40 = AllocZeroed(sizeof(*gUnknown_2031F40));
+        AllocateMonSpritesGfx();
+        ResetTasks();
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        SetVBlankCallback(VBlankCB_TradeAnim);
+        TradeAnimInit_LoadGfx();
+        gUnknown_2031F40->isLinkTrade = FALSE;
+        gUnknown_2031F40->neverRead_8C = 0;
+        gUnknown_2031F40->state = 0;
+        gUnknown_2031F40->texX = 64;
+        gUnknown_2031F40->texY = 64;
+        gUnknown_2031F40->neverRead_D8 = 0;
+        gUnknown_2031F40->neverRead_DA = 0;
+        gUnknown_2031F40->scrX = DISPLAY_WIDTH / 2;
+        gUnknown_2031F40->scrY = DISPLAY_HEIGHT / 2;
+        gUnknown_2031F40->sXY = 256;
+        gUnknown_2031F40->alpha = 0;
+        gUnknown_2031F40->timer = 0;
+        gMain.state = 5;
+        break;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+        break;
+    case 5:
+        LoadTradeMonPic(TRADE_PLAYER, 0);
+        gMain.state++;
+        break;
+    case 6:
+        LoadTradeMonPic(TRADE_PLAYER, 1);
+        gMain.state++;
+        break;
+    case 7:
+        LoadTradeMonPic(TRADE_PARTNER, 0);
+        ShowBg(0);
+        gMain.state++;
+        break;
+    case 8:
+        LoadTradeMonPic(TRADE_PARTNER, 1);
+        FillWindowPixelBuffer(0, PIXEL_FILL(15));
+        PutWindowTilemap(0);
+        CopyWindowToVram(0, COPYWIN_FULL);
+        gMain.state++;
+        break;
+    case 9:
+        LoadTradeSequenceSpriteSheetsAndPalettes();
+        LoadSpriteSheet(&gUnknown_830CF5C);
+        LoadSpritePalette(&gUnknown_830CF64);
+        gMain.state++;
+        break;
+    case 10:
+        ShowBg(0);
+        gMain.state++;
+        break;
+    case 11:
+        SetTradeSequenceBgGpuRegs(5);
+        SetTradeSequenceBgGpuRegs(0);
+        SetTradeSceneStrings();
+        gMain.state++;
+        break;
+    case 12:
+        SetMainCallback2(sub_0807B044);
+        break;
+    }
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
 
