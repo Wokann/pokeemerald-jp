@@ -8736,7 +8736,7 @@ SECTIONS {
         src/party_menu.o(.text.party_menu_pokeball_object);
         src/party_menu.o(.text.party_menu_link_mon_pokeball_object);
         src/party_menu.o(.text.sub_081B5BD4);
-        src/party_menu.o(.text.sub_081B5C14);
+        src/party_menu.o(.text.CreateSmallPokeballButtonSprite);
         src/party_menu.o(.text.PartyMenuStartSpriteAnim);
         src/party_menu.o(.text.sub_081B5C5C);
         src/party_menu.o(.text.LoadPartyMenuPokeballGfx);
