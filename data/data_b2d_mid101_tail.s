@@ -180,96 +180,96 @@ gUnknown_85E1302: @ 0x85E1302
 sSlotTilemap_WideEmpty: @ 0x85E1338
 	.incbin "baserom_jp.gba", 0x5e1338, 0x36
 
-	.globl gUnknown_85E136E
-gUnknown_85E136E: @ 0x85E136E
+	.globl sGenderPalOffsets
+sGenderPalOffsets: @ 0x85E136E
 	.incbin "baserom_jp.gba", 0x5e136e, 0x2
 
-	.globl gUnknown_85E1370
-gUnknown_85E1370: @ 0x85E1370
+	.globl sHPBarPalOffsets
+sHPBarPalOffsets: @ 0x85E1370
 	.incbin "baserom_jp.gba", 0x5e1370, 0x2
 
-	.globl gUnknown_85E1372
-gUnknown_85E1372: @ 0x85E1372
+	.globl sPartyBoxPalOffsets1
+sPartyBoxPalOffsets1: @ 0x85E1372
 	.incbin "baserom_jp.gba", 0x5e1372, 0x3
 
-	.globl gUnknown_85E1375
-gUnknown_85E1375: @ 0x85E1375
+	.globl sPartyBoxPalOffsets2
+sPartyBoxPalOffsets2: @ 0x85E1375
 	.incbin "baserom_jp.gba", 0x5e1375, 0x3
 
-	.globl gUnknown_85E1378
-gUnknown_85E1378: @ 0x85E1378
+	.globl sPartyBoxNoMonPalOffsets
+sPartyBoxNoMonPalOffsets: @ 0x85E1378
 	.incbin "baserom_jp.gba", 0x5e1378, 0x3
 
-	.globl gUnknown_85E137B
-gUnknown_85E137B: @ 0x85E137B
+	.globl sGenderMalePalIds
+sGenderMalePalIds: @ 0x85E137B
 	.incbin "baserom_jp.gba", 0x5e137b, 0x2
 
-	.globl gUnknown_85E137D
-gUnknown_85E137D: @ 0x85E137D
+	.globl sGenderFemalePalIds
+sGenderFemalePalIds: @ 0x85E137D
 	.incbin "baserom_jp.gba", 0x5e137d, 0x2
 
-	.globl gUnknown_85E137F
-gUnknown_85E137F: @ 0x85E137F
+	.globl sHPBarGreenPalIds
+sHPBarGreenPalIds: @ 0x85E137F
 	.incbin "baserom_jp.gba", 0x5e137f, 0x2
 
-	.globl gUnknown_85E1381
-gUnknown_85E1381: @ 0x85E1381
+	.globl sHPBarYellowPalIds
+sHPBarYellowPalIds: @ 0x85E1381
 	.incbin "baserom_jp.gba", 0x5e1381, 0x2
 
-	.globl gUnknown_85E1383
-gUnknown_85E1383: @ 0x85E1383
+	.globl sHPBarRedPalIds
+sHPBarRedPalIds: @ 0x85E1383
 	.incbin "baserom_jp.gba", 0x5e1383, 0x2
 
-	.globl gUnknown_85E1385
-gUnknown_85E1385: @ 0x85E1385
+	.globl sPartyBoxEmptySlotPalIds1
+sPartyBoxEmptySlotPalIds1: @ 0x85E1385
 	.incbin "baserom_jp.gba", 0x5e1385, 0x3
 
-	.globl gUnknown_85E1388
-gUnknown_85E1388: @ 0x85E1388
+	.globl sPartyBoxMultiPalIds1
+sPartyBoxMultiPalIds1: @ 0x85E1388
 	.incbin "baserom_jp.gba", 0x5e1388, 0x3
 
-	.globl gUnknown_85E138B
-gUnknown_85E138B: @ 0x85E138B
+	.globl sPartyBoxFaintedPalIds1
+sPartyBoxFaintedPalIds1: @ 0x85E138B
 	.incbin "baserom_jp.gba", 0x5e138b, 0x3
 
-	.globl gUnknown_85E138E
-gUnknown_85E138E: @ 0x85E138E
+	.globl sPartyBoxCurrSelectionPalIds1
+sPartyBoxCurrSelectionPalIds1: @ 0x85E138E
 	.incbin "baserom_jp.gba", 0x5e138e, 0x3
 
-	.globl gUnknown_85E1391
-gUnknown_85E1391: @ 0x85E1391
+	.globl sPartyBoxCurrSelectionMultiPalIds
+sPartyBoxCurrSelectionMultiPalIds: @ 0x85E1391
 	.incbin "baserom_jp.gba", 0x5e1391, 0x3
 
-	.globl gUnknown_85E1394
-gUnknown_85E1394: @ 0x85E1394
+	.globl sPartyBoxCurrSelectionFaintedPalIds
+sPartyBoxCurrSelectionFaintedPalIds: @ 0x85E1394
 	.incbin "baserom_jp.gba", 0x5e1394, 0x3
 
-	.globl gUnknown_85E1397
-gUnknown_85E1397: @ 0x85E1397
+	.globl sPartyBoxSelectedForActionPalIds1
+sPartyBoxSelectedForActionPalIds1: @ 0x85E1397
 	.incbin "baserom_jp.gba", 0x5e1397, 0x3
 
-	.globl gUnknown_85E139A
-gUnknown_85E139A: @ 0x85E139A
+	.globl sPartyBoxEmptySlotPalIds2
+sPartyBoxEmptySlotPalIds2: @ 0x85E139A
 	.incbin "baserom_jp.gba", 0x5e139a, 0x3
 
-	.globl gUnknown_85E139D
-gUnknown_85E139D: @ 0x85E139D
+	.globl sPartyBoxMultiPalIds2
+sPartyBoxMultiPalIds2: @ 0x85E139D
 	.incbin "baserom_jp.gba", 0x5e139d, 0x3
 
-	.globl gUnknown_85E13A0
-gUnknown_85E13A0: @ 0x85E13A0
+	.globl sPartyBoxFaintedPalIds2
+sPartyBoxFaintedPalIds2: @ 0x85E13A0
 	.incbin "baserom_jp.gba", 0x5e13a0, 0x3
 
-	.globl gUnknown_85E13A3
-gUnknown_85E13A3: @ 0x85E13A3
+	.globl sPartyBoxCurrSelectionPalIds2
+sPartyBoxCurrSelectionPalIds2: @ 0x85E13A3
 	.incbin "baserom_jp.gba", 0x5e13a3, 0x3
 
-	.globl gUnknown_85E13A6
-gUnknown_85E13A6: @ 0x85E13A6
+	.globl sPartyBoxSelectedForActionPalIds2
+sPartyBoxSelectedForActionPalIds2: @ 0x85E13A6
 	.incbin "baserom_jp.gba", 0x5e13a6, 0x3
 
-	.globl gUnknown_85E13A9
-gUnknown_85E13A9: @ 0x85E13A9
+	.globl sPartyBoxNoMonPalIds
+sPartyBoxNoMonPalIds: @ 0x85E13A9
 	.incbin "baserom_jp.gba", 0x5e13a9, 0x3
 
 	.globl gUnknown_85E13AC

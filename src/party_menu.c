@@ -13,6 +13,32 @@
 
 extern const u16 sTMHMMoves[];
 extern const u8 sSlotTilemap_WideEmpty[];
+
+#define PARTY_PAL_SELECTED     (1 << 0)
+#define PARTY_PAL_FAINTED      (1 << 1)
+#define PARTY_PAL_TO_SWITCH    (1 << 2)
+#define PARTY_PAL_MULTI_ALT    (1 << 3)
+#define PARTY_PAL_SWITCHING    (1 << 4)
+#define PARTY_PAL_TO_SOFTBOIL  (1 << 5)
+#define PARTY_PAL_NO_MON       (1 << 6)
+#define PARTY_PAL_UNUSED       (1 << 7)
+
+extern const u8 sPartyBoxPalOffsets1[];
+extern const u8 sPartyBoxPalOffsets2[];
+extern const u8 sPartyBoxNoMonPalOffsets[];
+extern const u8 sPartyBoxEmptySlotPalIds1[];
+extern const u8 sPartyBoxMultiPalIds1[];
+extern const u8 sPartyBoxFaintedPalIds1[];
+extern const u8 sPartyBoxCurrSelectionPalIds1[];
+extern const u8 sPartyBoxCurrSelectionMultiPalIds[];
+extern const u8 sPartyBoxCurrSelectionFaintedPalIds[];
+extern const u8 sPartyBoxSelectedForActionPalIds1[];
+extern const u8 sPartyBoxEmptySlotPalIds2[];
+extern const u8 sPartyBoxMultiPalIds2[];
+extern const u8 sPartyBoxFaintedPalIds2[];
+extern const u8 sPartyBoxCurrSelectionPalIds2[];
+extern const u8 sPartyBoxSelectedForActionPalIds2[];
+extern const u8 sPartyBoxNoMonPalIds[];
 #include "constants/items.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
@@ -825,7 +851,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	ldr r0, [r0]\n\t"
         "	adds r0, r0, r4\n\t"
         "	movs r1, #0x40\n\t"
-        "	bl UpdateSelectedPartyBox\n\t"
+        "	bl LoadPartyBoxPalette\n\t"
         "	b _081B050E\n\t"
         "	.align 2, 0\n\t"
         "_081B04F4: .4byte gPartyMenu\n\t"
@@ -837,7 +863,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	ldr r0, [r0]\n\t"
         "	adds r0, r0, r4\n\t"
         "	movs r1, #8\n\t"
-        "	bl UpdateSelectedPartyBox\n\t"
+        "	bl LoadPartyBoxPalette\n\t"
         "_081B050E:\n\t"
         "	adds r5, r4, #0\n\t"
         "	ldr r4, _081B0530\n\t"
@@ -873,7 +899,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	ldr r0, [r4]\n\t"
         "	adds r0, r0, r5\n\t"
         "	movs r1, #0x40\n\t"
-        "	bl UpdateSelectedPartyBox\n\t"
+        "	bl LoadPartyBoxPalette\n\t"
         "	ldr r0, [r4]\n\t"
         "	adds r0, r5, r0\n\t"
         "	ldrb r0, [r0, #8]\n\t"
@@ -1907,7 +1933,7 @@ __attribute__((naked)) void AnimatePartySlot(u8 slot, u8 animNum)
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl UpdateSelectedPartyBox\n\t"
+        "	bl LoadPartyBoxPalette\n\t"
         "	ldr r0, [r6]\n\t"
         "	adds r0, r5, r0\n\t"
         "	ldrb r0, [r0, #9]\n\t"
@@ -4845,7 +4871,7 @@ __attribute__((naked)) void sub_081B20F8(void)
     );
 }
 
-__attribute__((naked)) const void *GetPartyMenuPaletteFromBuffer(u8 a)
+__attribute__((naked)) const void *GetPartyMenuPalBufferPtr(u8 a)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5104,329 +5130,88 @@ static void DrawEmptySlot(u8 windowId)
     BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideEmpty, 18, 0, 0, 18, 3);
 }
 
-__attribute__((naked)) void UpdateSelectedPartyBox(u8 a, u8 b)
+#define LOAD_PARTY_BOX_PAL(paletteIds, paletteOffsets)                                                    \
+{                                                                                                         \
+    LoadPalette(GetPartyMenuPalBufferPtr(paletteIds[0]), paletteOffsets[0] + palOffset, PLTT_SIZEOF(1));  \
+    LoadPalette(GetPartyMenuPalBufferPtr(paletteIds[1]), paletteOffsets[1] + palOffset, PLTT_SIZEOF(1));  \
+    LoadPalette(GetPartyMenuPalBufferPtr(paletteIds[2]), paletteOffsets[2] + palOffset, PLTT_SIZEOF(1));  \
+}
+
+static void LoadPartyBoxPalette(struct PartyMenuBox *menuBox, u8 palFlags)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetWindowAttribute\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r7, r6, #0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2418\n\t"
-        "	ldr r5, _081B2410\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B2414\n\t"
-        "	b _081B261A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2410: .4byte gUnknown_85E13A9\n\t"
-        "_081B2414: .4byte gUnknown_85E1378\n\t"
-        "_081B2418:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2474\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2430\n\t"
-        "	ldr r5, _081B242C\n\t"
-        "	b _081B25DE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B242C: .4byte gUnknown_85E1397\n\t"
-        "_081B2430:\n\t"
-        "	ldr r5, _081B2468\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B246C\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r5, _081B2470\n\t"
-        "	b _081B2612\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2468: .4byte gUnknown_85E1397\n\t"
-        "_081B246C: .4byte gUnknown_85E1372\n\t"
-        "_081B2470: .4byte gUnknown_85E13A6\n\t"
-        "_081B2474:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B24C0\n\t"
-        "	ldr r5, _081B24B4\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B24B8\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r5, _081B24BC\n\t"
-        "	b _081B2612\n\t"
-        "	.align 2, 0\n\t"
-        "_081B24B4: .4byte gUnknown_85E1397\n\t"
-        "_081B24B8: .4byte gUnknown_85E1372\n\t"
-        "_081B24BC: .4byte gUnknown_85E13A6\n\t"
-        "_081B24C0:\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B251C\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B24D8\n\t"
-        "	ldr r5, _081B24D4\n\t"
-        "	b _081B25DE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B24D4: .4byte gUnknown_85E1397\n\t"
-        "_081B24D8:\n\t"
-        "	ldr r5, _081B2510\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B2514\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r5, _081B2518\n\t"
-        "	b _081B2612\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2510: .4byte gUnknown_85E1397\n\t"
-        "_081B2514: .4byte gUnknown_85E1372\n\t"
-        "_081B2518: .4byte gUnknown_85E13A6\n\t"
-        "_081B251C:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2578\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2534\n\t"
-        "	ldr r5, _081B2530\n\t"
-        "	b _081B25DE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2530: .4byte gUnknown_85E1394\n\t"
-        "_081B2534:\n\t"
-        "	ldr r5, _081B256C\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B2570\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r5, _081B2574\n\t"
-        "	b _081B2612\n\t"
-        "	.align 2, 0\n\t"
-        "_081B256C: .4byte gUnknown_85E138B\n\t"
-        "_081B2570: .4byte gUnknown_85E1372\n\t"
-        "_081B2574: .4byte gUnknown_85E13A0\n\t"
-        "_081B2578:\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B25D4\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2590\n\t"
-        "	ldr r5, _081B258C\n\t"
-        "	b _081B25DE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B258C: .4byte gUnknown_85E1391\n\t"
-        "_081B2590:\n\t"
-        "	ldr r5, _081B25C8\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B25CC\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r5, _081B25D0\n\t"
-        "	b _081B2612\n\t"
-        "	.align 2, 0\n\t"
-        "_081B25C8: .4byte gUnknown_85E1388\n\t"
-        "_081B25CC: .4byte gUnknown_85E1372\n\t"
-        "_081B25D0: .4byte gUnknown_85E139D\n\t"
-        "_081B25D4:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r5, r0\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _081B2658\n\t"
-        "	ldr r5, _081B2648\n\t"
-        "_081B25DE:\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B264C\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r5, _081B2650\n\t"
-        "_081B2612:\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B2654\n\t"
-        "_081B261A:\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _081B26C0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2648: .4byte gUnknown_85E138E\n\t"
-        "_081B264C: .4byte gUnknown_85E1372\n\t"
-        "_081B2650: .4byte gUnknown_85E13A3\n\t"
-        "_081B2654: .4byte gUnknown_85E1375\n\t"
-        "_081B2658:\n\t"
-        "	ldr r5, _081B26C8\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B26CC\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r5, _081B26D0\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldr r4, _081B26D4\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldrb r0, [r5, #2]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
-        "	ldrb r1, [r4, #2]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "_081B26C0:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B26C8: .4byte gUnknown_85E1385\n\t"
-        "_081B26CC: .4byte gUnknown_85E1372\n\t"
-        "_081B26D0: .4byte gUnknown_85E139A\n\t"
-        "_081B26D4: .4byte gUnknown_85E1375\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 palOffset = BG_PLTT_ID(GetWindowAttribute(menuBox->windowId, WINDOW_PALETTE_NUM));
+
+    if (palFlags & PARTY_PAL_NO_MON)
+    {
+        LOAD_PARTY_BOX_PAL(sPartyBoxNoMonPalIds, sPartyBoxNoMonPalOffsets);
+    }
+    else if (palFlags & PARTY_PAL_TO_SOFTBOIL)
+    {
+        if (palFlags & PARTY_PAL_SELECTED)
+        {
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
+            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+        }
+        else
+        {
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds2, sPartyBoxPalOffsets2);
+        }
+    }
+    else if (palFlags & PARTY_PAL_SWITCHING)
+    {
+        LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
+        LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds2, sPartyBoxPalOffsets2);
+    }
+    else if (palFlags & PARTY_PAL_TO_SWITCH)
+    {
+        if (palFlags & PARTY_PAL_SELECTED)
+        {
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
+            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+        }
+        else
+        {
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds1, sPartyBoxPalOffsets1);
+            LOAD_PARTY_BOX_PAL(sPartyBoxSelectedForActionPalIds2, sPartyBoxPalOffsets2);
+        }
+    }
+    else if (palFlags & PARTY_PAL_FAINTED)
+    {
+        if (palFlags & PARTY_PAL_SELECTED)
+        {
+            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionFaintedPalIds, sPartyBoxPalOffsets1);
+            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+        }
+        else
+        {
+            LOAD_PARTY_BOX_PAL(sPartyBoxFaintedPalIds1, sPartyBoxPalOffsets1);
+            LOAD_PARTY_BOX_PAL(sPartyBoxFaintedPalIds2, sPartyBoxPalOffsets2);
+        }
+    }
+    else if (palFlags & PARTY_PAL_MULTI_ALT)
+    {
+        if (palFlags & PARTY_PAL_SELECTED)
+        {
+            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionMultiPalIds, sPartyBoxPalOffsets1);
+            LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+        }
+        else
+        {
+            LOAD_PARTY_BOX_PAL(sPartyBoxMultiPalIds1, sPartyBoxPalOffsets1);
+            LOAD_PARTY_BOX_PAL(sPartyBoxMultiPalIds2, sPartyBoxPalOffsets2);
+        }
+    }
+    else if (palFlags & PARTY_PAL_SELECTED)
+    {
+        LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds1, sPartyBoxPalOffsets1);
+        LOAD_PARTY_BOX_PAL(sPartyBoxCurrSelectionPalIds2, sPartyBoxPalOffsets2);
+    }
+    else
+    {
+        LOAD_PARTY_BOX_PAL(sPartyBoxEmptySlotPalIds1, sPartyBoxPalOffsets1);
+        LOAD_PARTY_BOX_PAL(sPartyBoxEmptySlotPalIds2, sPartyBoxPalOffsets2);
+    }
 }
 
 __attribute__((naked)) void DisplayPartyPokemonBarDetail(u8 a)
@@ -5722,14 +5507,14 @@ __attribute__((naked)) void DisplayPartyPokemonGender(u8 a)
         "_081B28E4:\n\t"
         "	ldr r5, _081B2918\n\t"
         "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
+        "	bl GetPartyMenuPalBufferPtr\n\t"
         "	ldr r4, _081B291C\n\t"
         "	ldrb r1, [r4]\n\t"
         "	adds r1, r1, r6\n\t"
         "	movs r2, #2\n\t"
         "	bl LoadPalette\n\t"
         "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
+        "	bl GetPartyMenuPalBufferPtr\n\t"
         "	ldrb r1, [r4, #1]\n\t"
         "	adds r1, r1, r6\n\t"
         "	movs r2, #2\n\t"
@@ -5742,20 +5527,20 @@ __attribute__((naked)) void DisplayPartyPokemonGender(u8 a)
         "	bl DisplayPartyPokemonBarDetail\n\t"
         "	b _081B2956\n\t"
         "	.align 2, 0\n\t"
-        "_081B2918: .4byte gUnknown_85E137B\n\t"
-        "_081B291C: .4byte gUnknown_85E136E\n\t"
+        "_081B2918: .4byte sGenderMalePalIds\n\t"
+        "_081B291C: .4byte sGenderPalOffsets\n\t"
         "_081B2920: .4byte gUnknown_85C940A\n\t"
         "_081B2924:\n\t"
         "	ldr r5, _081B2964\n\t"
         "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
+        "	bl GetPartyMenuPalBufferPtr\n\t"
         "	ldr r4, _081B2968\n\t"
         "	ldrb r1, [r4]\n\t"
         "	adds r1, r1, r6\n\t"
         "	movs r2, #2\n\t"
         "	bl LoadPalette\n\t"
         "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
+        "	bl GetPartyMenuPalBufferPtr\n\t"
         "	ldrb r1, [r4, #1]\n\t"
         "	adds r1, r1, r6\n\t"
         "	movs r2, #2\n\t"
@@ -5774,8 +5559,8 @@ __attribute__((naked)) void DisplayPartyPokemonGender(u8 a)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081B2964: .4byte gUnknown_85E137D\n\t"
-        "_081B2968: .4byte gUnknown_85E136E\n\t"
+        "_081B2964: .4byte sGenderFemalePalIds\n\t"
+        "_081B2968: .4byte sGenderPalOffsets\n\t"
         "_081B296C: .4byte gUnknown_85C940C\n\t"
         ".syntax divided\n\t"
     );
@@ -6041,38 +5826,38 @@ __attribute__((naked)) void DisplayPartyPokemonHPBar(void)
         "	ldr r5, _081B2B40\n\t"
         "	b _081B2B46\n\t"
         "	.align 2, 0\n\t"
-        "_081B2B40: .4byte gUnknown_85E137F\n\t"
+        "_081B2B40: .4byte sHPBarGreenPalIds\n\t"
         "_081B2B44:\n\t"
         "	ldr r5, _081B2B6C\n\t"
         "_081B2B46:\n\t"
         "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
+        "	bl GetPartyMenuPalBufferPtr\n\t"
         "	ldr r4, _081B2B70\n\t"
         "	ldrb r1, [r4]\n\t"
         "	adds r1, r1, r7\n\t"
         "	movs r2, #2\n\t"
         "	bl LoadPalette\n\t"
         "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
+        "	bl GetPartyMenuPalBufferPtr\n\t"
         "	ldrb r1, [r4, #1]\n\t"
         "	adds r1, r1, r7\n\t"
         "	movs r2, #2\n\t"
         "	bl LoadPalette\n\t"
         "	b _081B2B98\n\t"
         "	.align 2, 0\n\t"
-        "_081B2B6C: .4byte gUnknown_85E1381\n\t"
-        "_081B2B70: .4byte gUnknown_85E1370\n\t"
+        "_081B2B6C: .4byte sHPBarYellowPalIds\n\t"
+        "_081B2B70: .4byte sHPBarPalOffsets\n\t"
         "_081B2B74:\n\t"
         "	ldr r5, _081B2C34\n\t"
         "	ldrb r0, [r5]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
+        "	bl GetPartyMenuPalBufferPtr\n\t"
         "	ldr r4, _081B2C38\n\t"
         "	ldrb r1, [r4]\n\t"
         "	adds r1, r1, r7\n\t"
         "	movs r2, #2\n\t"
         "	bl LoadPalette\n\t"
         "	ldrb r0, [r5, #1]\n\t"
-        "	bl GetPartyMenuPaletteFromBuffer\n\t"
+        "	bl GetPartyMenuPalBufferPtr\n\t"
         "	ldrb r1, [r4, #1]\n\t"
         "	adds r1, r1, r7\n\t"
         "	movs r2, #2\n\t"
@@ -6151,8 +5936,8 @@ __attribute__((naked)) void DisplayPartyPokemonHPBar(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081B2C34: .4byte gUnknown_85E1383\n\t"
-        "_081B2C38: .4byte gUnknown_85E1370\n\t"
+        "_081B2C34: .4byte sHPBarRedPalIds\n\t"
+        "_081B2C38: .4byte sHPBarPalOffsets\n\t"
         ".syntax divided\n\t"
     );
 }
