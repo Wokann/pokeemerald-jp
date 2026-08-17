@@ -9486,53 +9486,18 @@ __attribute__((naked)) void sub_081B4628(void)
     );
 }
 
-__attribute__((naked)) void CursorCb_Mail(u8 taskId)
+static void CursorCb_Mail(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _081B46F8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, _081B46FC\n\t"
-        "	ldr r1, _081B4700\n\t"
-        "	ldrb r1, [r1, #9]\n\t"
-        "	movs r2, #9\n\t"
-        "	bl SetPartyMonSelectionActions\n\t"
-        "	movs r0, #2\n\t"
-        "	bl DisplaySelectionWindow\n\t"
-        "	movs r0, #0x19\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r1, _081B4704\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xff\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	ldr r1, _081B4708\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B46F8: .4byte sPartyMenuInternal\n\t"
-        "_081B46FC: .4byte gPlayerParty\n\t"
-        "_081B4700: .4byte gPartyMenu\n\t"
-        "_081B4704: .4byte gTasks\n\t"
-        "_081B4708: .4byte HandleMenuInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, ACTIONS_MAIL);
+    DisplaySelectionWindow(SELECTWINDOW_MAIL);
+    DisplayPartyMenuStdMessage(PARTY_MSG_DO_WHAT_WITH_MAIL);
+    gTasks[taskId].data[0] = 0xFF;
+    gTasks[taskId].func = HandleMenuInput;
 }
+
 
 __attribute__((naked)) void CursorCb_Read(u8 taskId)
 {
