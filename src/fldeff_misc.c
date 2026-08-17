@@ -1,5 +1,7 @@
 #include "global.h"
 #include "constants/songs.h"
+#include "constants/metatile_labels.h"
+#include "fieldmap.h"
 #include "task.h"
 #define tMetatileID data[0]
 #define tX data[0]
@@ -1396,58 +1398,19 @@ __attribute__((naked)) void Task_SecretBasePCTurnOn(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DoSecretBasePCTurnOffEffect()
+void DoSecretBasePCTurnOffEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetXYCoordsOneStepInFrontOfPlayer\n\t"
-        "	movs r0, #3\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080FAE24\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080FAE28\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r2, #0xe2\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	b _080FAE38\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAE24: .4byte 0x00004054\n\t"
-        "_080FAE28:\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	ldr r2, _080FAE50\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "_080FAE38:\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAE50: .4byte 0x00000E21\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x, y;
+
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+    PlaySE(SE_PC_OFF);
+
+    if (!(u16)VarGet(VAR_CURRENT_SECRET_BASE))
+        MapGridSetMetatileIdAt(x, y, METATILE_SecretBase_PC | MAPGRID_IMPASSABLE);
+    else
+        MapGridSetMetatileIdAt(x, y, METATILE_SecretBase_RegisterPC | MAPGRID_IMPASSABLE);
+
+    CurrentMapDrawMetatileAt(x, y);
 }
 
 __attribute__((naked)) void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
