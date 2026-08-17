@@ -5173,7 +5173,7 @@ __attribute__((naked)) void ItemMenu_Give(void)
         "	b _081AD0E2\n\t"
         "	.align 2, 0\n\t"
         "_081AD0D4: .4byte gUnknown_203CB20\n\t"
-        "_081AD0D8: .4byte sub_081B7C00 + 1\n\t"
+        "_081AD0D8: .4byte CB2_ChooseMonToGiveItem + 1\n\t"
         "_081AD0DC:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl BagMenu_PrintItemCantBeHeld\n\t"

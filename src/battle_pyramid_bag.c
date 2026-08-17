@@ -3128,7 +3128,7 @@ __attribute__((naked)) void BagAction_Give(void)
         "	b _081C5EB6\n\t"
         "	.align 2, 0\n\t"
         "_081C5EA8: .4byte gUnknown_203CBF8\n\t"
-        "_081C5EAC: .4byte sub_081B7C00 + 1\n\t"
+        "_081C5EAC: .4byte CB2_ChooseMonToGiveItem + 1\n\t"
         "_081C5EB0:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_081C5EBC\n\t"
