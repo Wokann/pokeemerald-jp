@@ -3315,12 +3315,12 @@ SECTIONS {
         src/trade.o(.text.CB2_UpdateLinkTrade);
         src/trade.o(.text.CB2_WaitTradeComplete);
         src/trade.o(.text.CB2_SaveAndEndTrade);
-        src/trade.o(.text.c2_080543C4);
+        src/trade.o(.text.CB2_FreeTradeAnim);
         src/trade.o(.text.DoInGameTradeScene);
-        src/trade.o(.text.sub_0807EB48);
-        src/trade.o(.text.sub_0807EB84);
-        src/trade.o(.text.sub_0807EBD4);
-        src/trade.o(.text.sub_0807EBE0);
+        src/trade.o(.text.Task_InGameTrade);
+        src/trade.o(.text.CheckPartnersMonForRibbons);
+        src/trade.o(.text.LoadTradeAnimGfx);
+        src/trade.o(.text.DrawTextOnTradeWindow);
         src/trade.o(.text.c3_08054588);
         src/trade.o(.text.c3_0805465C);
         src/trade.o(.text.sub_0807EDD4);

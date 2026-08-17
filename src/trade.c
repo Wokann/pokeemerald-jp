@@ -14,6 +14,7 @@
 #include "constants/items.h"
 #include "constants/region_map_sections.h"
 #include "constants/mystery_gift.h"
+#include "constants/characters.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "librfu.h"
@@ -228,8 +229,14 @@ extern bool8 LinkFullSave_Init(void);
 extern bool8 LinkFullSave_WriteSector(void);
 extern bool8 LinkFullSave_ReplaceLastSector(void);
 extern bool8 LinkFullSave_SetLastSectorSignature(void);
-void sub_0807EBE0(u8 windowId, const u8 *str, u8 speed);
-void c2_080543C4(void);
+extern void FreeMonSpritesGfx(void);
+extern void FieldCB_ContinueScriptHandleMusic(void);
+extern void LockPlayerFieldControls(void);
+extern void (*gFieldCallback)(void);
+extern u8 FlagSet(u16 id);
+void DrawTextOnTradeWindow(u8 windowId, const u8 *str, u8 speed);
+static void CB2_FreeTradeAnim(void);
+static void Task_InGameTrade(u8 taskId);
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
 void CB2_InGameTradeAnim(void);
@@ -270,7 +277,9 @@ struct TradeAnim
     u8 isLinkTrade;         // 0xEE
     u8 filler_EF[1];
     u16 monSpecies[2];  // 0xF0
-    u8 filler_F4[6];        // 0xF4
+    u8 filler_F4[2];        // 0xF4
+    u8 textColors[3];       // 0xF6
+    u8 filler_F9[1];        // 0xF9
     u8 isCableTrade;        // 0xFA
     u8 wirelessWinLeft;     // 0xFB
     u8 wirelessWinTop;      // 0xFC
@@ -4688,7 +4697,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "	movs r0, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
+        "	bl DrawTextOnTradeWindow\n\t"
         "	ldr r4, _0807BB9C\n\t"
         "	ldr r0, [r4]\n\t"
         "	adds r2, r0, #0\n\t"
@@ -4757,7 +4766,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "	movs r0, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
+        "	bl DrawTextOnTradeWindow\n\t"
         "	bl _0807C9EC\n\t"
         "	.align 2, 0\n\t"
         "_0807BC04: .4byte gSprites\n\t"
@@ -6234,7 +6243,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "	movs r0, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
+        "	bl DrawTextOnTradeWindow\n\t"
         "	ldr r0, _0807C84C\n\t"
         "	ldr r3, [r0]\n\t"
         "	adds r1, r3, #0\n\t"
@@ -6310,7 +6319,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "	movs r0, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
+        "	bl DrawTextOnTradeWindow\n\t"
         "	ldr r0, [r7]\n\t"
         "	str r5, [r0, #0x64]\n\t"
         "	b _0807C9EC\n\t"
@@ -6329,7 +6338,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "_0807C8E6:\n\t"
         "	b _0807C984\n\t"
         "_0807C8E8:\n\t"
-        "	bl sub_0807EB84\n\t"
+        "	bl CheckPartnersMonForRibbons\n\t"
         "	b _0807C980\n\t"
         "_0807C8EE:\n\t"
         "	ldr r2, [r7]\n\t"
@@ -6859,7 +6868,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	movs r0, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
+        "	bl DrawTextOnTradeWindow\n\t"
         "	ldr r4, _0807CF78\n\t"
         "	ldr r0, [r4]\n\t"
         "	adds r2, r0, #0\n\t"
@@ -6928,7 +6937,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	movs r0, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
+        "	bl DrawTextOnTradeWindow\n\t"
         "	bl _0807DE38\n\t"
         "	.align 2, 0\n\t"
         "_0807CFE0: .4byte gSprites\n\t"
@@ -8455,7 +8464,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	movs r0, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
+        "	bl DrawTextOnTradeWindow\n\t"
         "	ldr r0, _0807DC98\n\t"
         "	ldr r3, [r0]\n\t"
         "	adds r1, r3, #0\n\t"
@@ -8531,7 +8540,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	movs r0, #0\n\t"
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
+        "	bl DrawTextOnTradeWindow\n\t"
         "	ldr r0, [r7]\n\t"
         "	str r5, [r0, #0x64]\n\t"
         "	b _0807DE38\n\t"
@@ -8550,7 +8559,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "_0807DD32:\n\t"
         "	b _0807DDD0\n\t"
         "_0807DD34:\n\t"
-        "	bl sub_0807EB84\n\t"
+        "	bl CheckPartnersMonForRibbons\n\t"
         "	b _0807DDCC\n\t"
         "_0807DD3A:\n\t"
         "	ldr r2, [r7]\n\t"
@@ -8957,7 +8966,7 @@ static void CB2_SaveAndEndTrade(void)
     case 0:
         gMain.state++;
         StringExpandPlaceholders(gStringVar4, gUnknown_8595430);
-        sub_0807EBE0(0, gStringVar4, 0);
+        DrawTextOnTradeWindow(0, gStringVar4, 0);
         break;
     case 1:
         SetTradeLinkStandbyCallback(0);
@@ -8980,7 +8989,7 @@ static void CB2_SaveAndEndTrade(void)
     case 2:
         gMain.state = 50;
         StringExpandPlaceholders(gStringVar4, gText_SavingDontTurnOffPower);
-        sub_0807EBE0(0, gStringVar4, 0);
+        DrawTextOnTradeWindow(0, gStringVar4, 0);
         break;
     case 50:
         if (!InUnionRoom())
@@ -9079,13 +9088,13 @@ static void CB2_SaveAndEndTrade(void)
             if (_IsLinkTaskFinished())
             {
                 gSoftResetDisabled = FALSE;
-                SetMainCallback2(c2_080543C4);
+                SetMainCallback2(CB2_FreeTradeAnim);
             }
         }
         else if (!gReceivedRemoteLinkPlayers)
         {
             gSoftResetDisabled = FALSE;
-            SetMainCallback2(c2_080543C4);
+            SetMainCallback2(CB2_FreeTradeAnim);
         }
         break;
     }
@@ -9096,232 +9105,67 @@ static void CB2_SaveAndEndTrade(void)
     UpdatePaletteFade();
 }
 
-__attribute__((naked)) void c2_080543C4(void)
+static void CB2_FreeTradeAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _0807EB0C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0807EAF6\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	bl FreeMonSpritesGfx\n\t"
-        "	ldr r4, _0807EB10\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl Free\n\t"
-        "	str r5, [r4]\n\t"
-        "	ldr r0, _0807EB14\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807EAEE\n\t"
-        "	bl DestroyWirelessStatusIndicatorSprite\n\t"
-        "_0807EAEE:\n\t"
-        "	ldr r0, _0807EB18\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0807EAF6:\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EB0C: .4byte gPaletteFade\n\t"
-        "_0807EB10: .4byte gUnknown_2031F40\n\t"
-        "_0807EB14: .4byte gWirelessCommType\n\t"
-        "_0807EB18: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        FreeAllWindowBuffers();
+        Free(GetBgTilemapBuffer(3));
+        Free(GetBgTilemapBuffer(1));
+        Free(GetBgTilemapBuffer(0));
+        FreeMonSpritesGfx();
+        FREE_AND_SET_NULL(gUnknown_2031F40);
+        if (gWirelessCommType)
+            DestroyWirelessStatusIndicatorSprite();
+        SetMainCallback2(gMain.savedCallback);
+    }
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void DoInGameTradeScene(void)
+void DoInGameTradeScene(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	ldr r0, _0807EB44\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EB44: .4byte sub_0807EB48 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    LockPlayerFieldControls();
+    CreateTask(Task_InGameTrade, 10);
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
 }
 
-__attribute__((naked)) void sub_0807EB48(void)
+static void Task_InGameTrade(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _0807EB74\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807EB6C\n\t"
-        "	ldr r0, _0807EB78\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, _0807EB7C\n\t"
-        "	ldr r0, _0807EB80\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0807EB6C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EB74: .4byte gPaletteFade\n\t"
-        "_0807EB78: .4byte CB2_InGameTrade + 1\n\t"
-        "_0807EB7C: .4byte gFieldCallback\n\t"
-        "_0807EB80: .4byte FieldCB_ContinueScriptHandleMusic + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        SetMainCallback2(CB2_InGameTrade);
+        gFieldCallback = FieldCB_ContinueScriptHandleMusic;
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_0807EB84(void)
+static void CheckPartnersMonForRibbons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0\n\t"
-        "_0807EB8A:\n\t"
-        "	ldr r0, _0807EBC8\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0807EBCC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x43\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xb\n\t"
-        "	bls _0807EB8A\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _0807EBC2\n\t"
-        "	ldr r0, _0807EBD0\n\t"
-        "	bl FlagSet\n\t"
-        "_0807EBC2:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EBC8: .4byte gSelectedTradeMonPositions\n\t"
-        "_0807EBCC: .4byte gEnemyParty\n\t"
-        "_0807EBD0: .4byte 0x0000089B\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 numRibbons = 0;
+    for (i = 0; i < (MON_DATA_UNUSED_RIBBONS - MON_DATA_CHAMPION_RIBBON); i++)
+        numRibbons += GetMonData3(&gEnemyParty[gSelectedTradeMonPositions[TRADE_PARTNER] % PARTY_SIZE], MON_DATA_CHAMPION_RIBBON + i);
+
+    if (numRibbons != 0)
+        FlagSet(FLAG_SYS_RIBBON_GET);
 }
 
-__attribute__((naked)) void sub_0807EBD4(void)
+void LoadTradeAnimGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl TradeAnimInit_LoadGfx\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    TradeAnimInit_LoadGfx();
 }
 
-__attribute__((naked)) void sub_0807EBE0(u8 windowId, const u8 *str, u8 speed)
+void DrawTextOnTradeWindow(u8 windowId, const u8 *str, u8 speed)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, _0807EC44\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xf6\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r1, #0xf\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xf7\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xf8\n\t"
-        "	movs r1, #6\n\t"
-        "	strb r1, [r0]\n\t"
-        "	str r3, [sp]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xf6\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	str r4, [sp, #0xc]\n\t"
-        "	str r6, [sp, #0x10]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl AddTextPrinterParameterized4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EC44: .4byte gUnknown_2031F40\n\t"
-        ".syntax divided\n\t"
-    );
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(15));
+    gUnknown_2031F40->textColors[0] = TEXT_DYNAMIC_COLOR_6;
+    gUnknown_2031F40->textColors[1] = TEXT_COLOR_WHITE;
+    gUnknown_2031F40->textColors[2] = TEXT_COLOR_GREEN;
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 0, 2, 0, 0, gUnknown_2031F40->textColors, speed, str);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
 }
 
 __attribute__((naked)) void c3_08054588(void)
@@ -9642,7 +9486,7 @@ static void CB2_SaveAndEndWirelessTrade(void)
     case 0:
         gMain.state = 1;
         StringExpandPlaceholders(gStringVar4, gUnknown_8595430);
-        sub_0807EBE0(0, gStringVar4, 0);
+        DrawTextOnTradeWindow(0, gStringVar4, 0);
         break;
     case 1:
         SetTradeLinkStandbyCallback(0);
@@ -9654,7 +9498,7 @@ static void CB2_SaveAndEndWirelessTrade(void)
         {
             gMain.state = 3;
             StringExpandPlaceholders(gStringVar4, gText_SavingDontTurnOffPower);
-            sub_0807EBE0(0, gStringVar4, 0);
+            DrawTextOnTradeWindow(0, gStringVar4, 0);
             IncrementGameStat(GAME_STAT_POKEMON_TRADES);
             LinkFullSave_Init();
             gUnknown_2031F40->timer = 0;
@@ -9734,7 +9578,7 @@ static void CB2_SaveAndEndWirelessTrade(void)
         if (_IsLinkTaskFinished())
         {
             gSoftResetDisabled = FALSE;
-            SetMainCallback2(c2_080543C4);
+            SetMainCallback2(CB2_FreeTradeAnim);
         }
         break;
     }
