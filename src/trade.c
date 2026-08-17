@@ -190,37 +190,56 @@ extern const struct SpritePalette gUnknown_83008DC;
 extern const struct SpritePalette gUnknown_830083C;
 extern const struct SpriteSheet gUnknown_8300834;
 extern const u16 gUnknown_830D0E8[];
+extern const struct SpriteSheet gUnknown_830CF5C;
+extern const struct SpritePalette gUnknown_830CF64;
 
 // JP trade-animation state (fields used by the affine setup below; the
 // layout of the leading region differs from the US TradeAnim struct).
 struct TradeAnim
 {
-    u8 filler_0[0x68];
-    u32 monPersonalities[2];  // 0x68
-    u8 filler_70[0x18];       // 0x70
+    u8 filler_0[0x64];
+    u32 timer;               // 0x64
+    u32 monPersonalities[2]; // 0x68
+    u8 filler_70[2];         // 0x70
+    u8 playerFinishStatus;   // 0x72
+    u8 partnerFinishStatus;  // 0x73
+    u8 filler_74[0x14];      // 0x74
     u8 linkTimeoutZero1;   // 0x88
     u8 linkTimeoutZero2;   // 0x89
     u16 linkTimeoutTimer;  // 0x8A
-    u8 filler_8C[2];       // 0x8C
+    u16 neverRead_8C;      // 0x8C
     u8 monSpriteIds[2];    // 0x8E
-    u8 filler_90[0x44];    // 0x90
+    u8 filler_90[3];       // 0x90
+    u8 scheduleLinkTransfer; // 0x93
+    u16 state;             // 0x94
+    u8 filler_96[0x3E];    // 0x96
     u16 texX;       // 0xD4
     u16 texY;       // 0xD6
-    u8 filler_D8[4];
-    s16 scrX;       // 0xDC
-    s16 scrY;       // 0xDE
-    u16 bg1vofs;    // 0xE0
-    u16 bg1hofs;    // 0xE2
-    u16 bg2vofs;    // 0xE4
-    u16 bg2hofs;    // 0xE6
-    s16 sXY;        // 0xE8
+    u16 neverRead_D8;   // 0xD8
+    u16 neverRead_DA;   // 0xDA
+    s16 scrX;               // 0xDC
+    s16 scrY;               // 0xDE
+    u16 bg1vofs;            // 0xE0
+    u16 bg1hofs;            // 0xE2
+    u16 bg2vofs;            // 0xE4
+    u16 bg2hofs;            // 0xE6
+    s16 sXY;                // 0xE8
     u8 filler_EA[2];
-    u16 alpha;      // 0xEC
-    u8 filler_EE[2];
+    u16 alpha;              // 0xEC
+    u8 isLinkTrade;         // 0xEE
+    u8 filler_EF[1];
     u16 monSpecies[2];  // 0xF0
+    u8 filler_F4[6];        // 0xF4
+    u8 isCableTrade;        // 0xFA
+    u8 wirelessWinLeft;     // 0xFB
+    u8 wirelessWinTop;      // 0xFC
+    u8 wirelessWinRight;    // 0xFD
+    u8 wirelessWinBottom;   // 0xFE
+    u8 filler_FF;           // 0xFF
 };
 
 extern struct TradeAnim *gUnknown_2031F40;
+void CB2_UpdateLinkTrade(void);
 extern struct MonSpritesGfx *gMonSpritesGfxPtr;
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
@@ -3307,349 +3326,139 @@ static void LoadTradeMonPic(u8 whichParty, u8 state)
     }
 }
 
-__attribute__((naked)) void sub_0807A8AC(void)
+void CB2_LinkTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _0807A8CC\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bls _0807A8C2\n\t"
-        "	b _0807AB72\n\t"
-        "_0807A8C2:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807A8D0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A8CC: .4byte gMain\n\t"
-        "_0807A8D0: .4byte 0x0807A8D4\n\t"
-        "_0807A8D4: @ jump table\n\t"
-        "	.4byte _0807A908 @ case 0\n\t"
-        "	.4byte _0807A9B4 @ case 1\n\t"
-        "	.4byte _0807A9F8 @ case 2\n\t"
-        "	.4byte _0807AA18 @ case 3\n\t"
-        "	.4byte _0807AA62 @ case 4\n\t"
-        "	.4byte _0807AA90 @ case 5\n\t"
-        "	.4byte _0807AAB4 @ case 6\n\t"
-        "	.4byte _0807AACC @ case 7\n\t"
-        "	.4byte _0807AAD6 @ case 8\n\t"
-        "	.4byte _0807AAF0 @ case 9\n\t"
-        "	.4byte _0807AB0C @ case 10\n\t"
-        "	.4byte _0807AB30 @ case 11\n\t"
-        "	.4byte _0807AB4C @ case 12\n\t"
-        "_0807A908:\n\t"
-        "	ldr r0, _0807A99C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A91C\n\t"
-        "	ldr r1, _0807A9A0\n\t"
-        "	ldr r2, _0807A9A4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl CloseLink\n\t"
-        "_0807A91C:\n\t"
-        "	ldr r4, _0807A9A8\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	bl AllocateMonSpritesGfx\n\t"
-        "	bl ResetTasks\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	ldr r0, _0807A9AC\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl sub_0807ABCC\n\t"
-        "	bl ClearLinkTimeoutTimer\n\t"
-        "	ldr r1, _0807A9B0\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x8c\n\t"
-        "	strh r2, [r0]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r2, [r0]\n\t"
-        "	adds r1, #0xee\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xd4\n\t"
-        "	movs r1, #0x40\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r2, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r2, [r0]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0xdc\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xe8\n\t"
-        "	strh r5, [r0]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r2, [r0]\n\t"
-        "	b _0807AB72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A99C: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_0807A9A0: .4byte gLinkType\n\t"
-        "_0807A9A4: .4byte 0x00001144\n\t"
-        "_0807A9A8: .4byte gUnknown_2031F40\n\t"
-        "_0807A9AC: .4byte VBlankCB_TradeAnim + 1\n\t"
-        "_0807A9B0: .4byte gMain\n\t"
-        "_0807A9B4:\n\t"
-        "	ldr r0, _0807A9E0\n\t"
-        "	ldrb r5, [r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0807A9EC\n\t"
-        "	ldr r4, _0807A9E4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xfa\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl OpenLink\n\t"
-        "	ldr r1, _0807A9E8\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	str r5, [r0, #0x64]\n\t"
-        "	b _0807AB72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A9E0: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_0807A9E4: .4byte gUnknown_2031F40\n\t"
-        "_0807A9E8: .4byte gMain\n\t"
-        "_0807A9EC:\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0807AB72\n\t"
-        "_0807A9F8:\n\t"
-        "	ldr r0, _0807AA14\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x3c\n\t"
-        "	bhi _0807AA08\n\t"
-        "	b _0807AB72\n\t"
-        "_0807AA08:\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	b _0807AB40\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AA14: .4byte gUnknown_2031F40\n\t"
-        "_0807AA18:\n\t"
-        "	bl IsLinkMaster\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807AA24\n\t"
-        "	b _0807AB38\n\t"
-        "_0807AA24:\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl GetSavedPlayerCount\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	blo _0807AA5C\n\t"
-        "	ldr r0, _0807AA54\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	bhi _0807AA46\n\t"
-        "	b _0807AB72\n\t"
-        "_0807AA46:\n\t"
-        "	bl CheckShouldAdvanceLinkState\n\t"
-        "	ldr r1, _0807AA58\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _0807AB40\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AA54: .4byte gUnknown_2031F40\n\t"
-        "_0807AA58: .4byte gMain\n\t"
-        "_0807AA5C:\n\t"
-        "	bl CheckForLinkTimeout\n\t"
-        "	b _0807AB72\n\t"
-        "_0807AA62:\n\t"
-        "	bl CheckForLinkTimeout\n\t"
-        "	ldr r0, _0807AA88\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0807AA70\n\t"
-        "	b _0807AB72\n\t"
-        "_0807AA70:\n\t"
-        "	bl IsLinkPlayerDataExchangeComplete\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _0807AA7E\n\t"
-        "	b _0807AB72\n\t"
-        "_0807AA7E:\n\t"
-        "	ldr r1, _0807AA8C\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _0807AB40\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AA88: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_0807AA8C: .4byte gMain\n\t"
-        "_0807AA90:\n\t"
-        "	ldr r2, _0807AAB0\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x72\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x73\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x93\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl LoadTradeMonPic\n\t"
-        "	b _0807AB38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AAB0: .4byte gUnknown_2031F40\n\t"
-        "_0807AAB4:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl LoadTradeMonPic\n\t"
-        "	ldr r1, _0807AAC8\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _0807AB40\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AAC8: .4byte gMain\n\t"
-        "_0807AACC:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl LoadTradeMonPic\n\t"
-        "	b _0807AB38\n\t"
-        "_0807AAD6:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl LoadTradeMonPic\n\t"
-        "	bl sub_0807ABB0\n\t"
-        "	ldr r1, _0807AAEC\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _0807AB40\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AAEC: .4byte gMain\n\t"
-        "_0807AAF0:\n\t"
-        "	bl sub_0807B4CC\n\t"
-        "	ldr r0, _0807AB04\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _0807AB08\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	b _0807AB38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AB04: .4byte gUnknown_830CF5C\n\t"
-        "_0807AB08: .4byte gUnknown_830CF64\n\t"
-        "_0807AB0C:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	ldr r1, _0807AB2C\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _0807AB40\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AB2C: .4byte gMain\n\t"
-        "_0807AB30:\n\t"
-        "	bl sub_0807AB9C\n\t"
-        "	bl SetTradeSceneStrings\n\t"
-        "_0807AB38:\n\t"
-        "	ldr r1, _0807AB48\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "_0807AB40:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0807AB72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AB48: .4byte gMain\n\t"
-        "_0807AB4C:\n\t"
-        "	ldr r0, _0807AB90\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807AB72\n\t"
-        "	ldr r0, _0807AB94\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807AB6C\n\t"
-        "	bl LoadWirelessStatusIndicatorSpriteGfx\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateWirelessStatusIndicatorSprite\n\t"
-        "_0807AB6C:\n\t"
-        "	ldr r0, _0807AB98\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0807AB72:\n\t"
-        "	bl RunTasks\n\t"
-        "	bl RunTextPrinters\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AB90: .4byte gPaletteFade\n\t"
-        "_0807AB94: .4byte gWirelessCommType\n\t"
-        "_0807AB98: .4byte sub_0807E464 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            gLinkType = LINKTYPE_TRADE_DISCONNECTED;
+            CloseLink();
+        }
+        gUnknown_2031F40 = AllocZeroed(sizeof(*gUnknown_2031F40));
+        AllocateMonSpritesGfx();
+        ResetTasks();
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        SetVBlankCallback(VBlankCB_TradeAnim);
+        TradeAnimInit_LoadGfx();
+        ClearLinkTimeoutTimer();
+        gMain.state++;
+        gUnknown_2031F40->neverRead_8C = 0;
+        gUnknown_2031F40->state = 0;
+        gUnknown_2031F40->isLinkTrade = TRUE;
+        gUnknown_2031F40->texX = 64;
+        gUnknown_2031F40->texY = 64;
+        gUnknown_2031F40->neverRead_D8 = 0;
+        gUnknown_2031F40->neverRead_DA = 0;
+        gUnknown_2031F40->scrX = DISPLAY_WIDTH / 2;
+        gUnknown_2031F40->scrY = DISPLAY_HEIGHT / 2;
+        gUnknown_2031F40->sXY = 256;
+        gUnknown_2031F40->alpha = 0;
+        break;
+    case 1:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            gUnknown_2031F40->isCableTrade = TRUE;
+            OpenLink();
+            gMain.state++;
+            gUnknown_2031F40->timer = 0;
+        }
+        else
+        {
+            gMain.state = 4;
+        }
+        break;
+    case 2:
+        if (++gUnknown_2031F40->timer > 60)
+        {
+            gUnknown_2031F40->timer = 0;
+            gMain.state++;
+        }
+        break;
+    case 3:
+        if (IsLinkMaster())
+        {
+            if (GetLinkPlayerCount_2() >= GetSavedPlayerCount())
+            {
+                if (++gUnknown_2031F40->timer > 30)
+                {
+                    CheckShouldAdvanceLinkState();
+                    gMain.state++;
+                }
+            }
+            else
+            {
+                CheckForLinkTimeout();
+            }
+        }
+        else
+        {
+            gMain.state++;
+        }
+        break;
+    case 4:
+        CheckForLinkTimeout();
+        if (gReceivedRemoteLinkPlayers == TRUE && IsLinkPlayerDataExchangeComplete() == TRUE)
+            gMain.state++;
+        break;
+    case 5:
+        gUnknown_2031F40->playerFinishStatus = 0;
+        gUnknown_2031F40->partnerFinishStatus = 0;
+        gUnknown_2031F40->scheduleLinkTransfer = 0;
+        LoadTradeMonPic(TRADE_PLAYER, 0);
+        gMain.state++;
+        break;
+    case 6:
+        LoadTradeMonPic(TRADE_PLAYER, 1);
+        gMain.state++;
+        break;
+    case 7:
+        LoadTradeMonPic(TRADE_PARTNER, 0);
+        gMain.state++;
+        break;
+    case 8:
+        LoadTradeMonPic(TRADE_PARTNER, 1);
+        LinkTradeDrawWindow();
+        gMain.state++;
+        break;
+    case 9:
+        LoadTradeSequenceSpriteSheetsAndPalettes();
+        LoadSpriteSheet(&gUnknown_830CF5C);
+        LoadSpritePalette(&gUnknown_830CF64);
+        gMain.state++;
+        break;
+    case 10:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        ShowBg(0);
+        gMain.state++;
+        break;
+    case 11:
+        InitTradeSequenceBgGpuRegs();
+        SetTradeSceneStrings();
+        gMain.state++;
+        break;
+    case 12:
+        if (!gPaletteFade.active)
+        {
+            if (gWirelessCommType)
+            {
+                LoadWirelessStatusIndicatorSpriteGfx();
+                CreateWirelessStatusIndicatorSprite(0, 0);
+            }
+            SetMainCallback2(CB2_UpdateLinkTrade);
+        }
+        break;
+    }
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void sub_0807AB9C(void)
+__attribute__((naked)) void InitTradeSequenceBgGpuRegs(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3665,7 +3474,7 @@ __attribute__((naked)) void sub_0807AB9C(void)
     );
 }
 
-__attribute__((naked)) void sub_0807ABB0(void)
+__attribute__((naked)) void LinkTradeDrawWindow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3684,7 +3493,7 @@ __attribute__((naked)) void sub_0807ABB0(void)
     );
 }
 
-__attribute__((naked)) void sub_0807ABCC(void)
+__attribute__((naked)) void TradeAnimInit_LoadGfx(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3863,7 +3672,7 @@ __attribute__((naked)) void sub_0807ACC8(void)
         "	bl FreeAllSpritePalettes\n\t"
         "	ldr r0, _0807ADE0\n\t"
         "	bl SetVBlankCallback\n\t"
-        "	bl sub_0807ABCC\n\t"
+        "	bl TradeAnimInit_LoadGfx\n\t"
         "	ldr r0, [r4]\n\t"
         "	adds r0, #0xee\n\t"
         "	strb r5, [r0]\n\t"
@@ -3942,7 +3751,7 @@ __attribute__((naked)) void sub_0807ACC8(void)
         "	bl CopyWindowToVram\n\t"
         "	b _0807AE60\n\t"
         "_0807AE2C:\n\t"
-        "	bl sub_0807B4CC\n\t"
+        "	bl LoadTradeSequenceSpriteSheetsAndPalettes\n\t"
         "	ldr r0, _0807AE40\n\t"
         "	bl LoadSpriteSheet\n\t"
         "	ldr r0, _0807AE44\n\t"
@@ -4736,7 +4545,7 @@ __attribute__((naked)) void sub_0807B064(void)
     );
 }
 
-__attribute__((naked)) void sub_0807B4CC(void)
+__attribute__((naked)) void LoadTradeSequenceSpriteSheetsAndPalettes(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10099,7 +9908,7 @@ __attribute__((naked)) void CreateInGameTradePokemon(void)
     );
 }
 
-__attribute__((naked)) void sub_0807E464(void)
+__attribute__((naked)) void CB2_UpdateLinkTrade(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10933,7 +10742,7 @@ __attribute__((naked)) void sub_0807EBD4(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_0807ABCC\n\t"
+        "	bl TradeAnimInit_LoadGfx\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
