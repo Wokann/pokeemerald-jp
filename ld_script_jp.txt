@@ -8540,7 +8540,7 @@ SECTIONS {
         src/party_menu.o(.text.Task_ExitPartyMenu);
         src/party_menu.o(.text.reset_brm);
         src/party_menu.o(.text.AllocPartyMenuBg);
-        src/party_menu.o(.text.AllocPartyMiscGfx);
+        src/party_menu.o(.text.AllocPartyMenuBgGfx);
         src/party_menu.o(.text.PartyPaletteBufferCopy);
         src/party_menu.o(.text.FreePartyPointers);
         src/party_menu.o(.text.PartyMenuInitHelperStructs);

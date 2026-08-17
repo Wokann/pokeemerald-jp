@@ -1,17 +1,35 @@
 #include "global.h"
 #include "party_menu.h"
 #include "bg.h"
+#include "decompress.h"
+#include "malloc.h"
+#include "palette.h"
 
 extern const u16 sTMHMMoves[];
 #include "constants/items.h"
 #include "constants/rgb.h"
 #include "main.h"
 #include "menu_helpers.h"
-#include "palette.h"
 #include "task.h"
 
 static void Task_ExitPartyMenu(u8 taskId);
 __attribute__((naked)) bool8 PartyMenuSetup(void);
+
+struct PartyMenuInternal
+{
+    TaskFunc task;
+    MainCallback exitCallback;
+    u32 chooseHalf:1;
+    u32 lastSelectedSlot:3;  // Used to return to same slot when going left/right bewtween columns
+    u32 spriteIdConfirmPokeball:7;
+    u32 spriteIdCancelPokeball:7;
+    u32 messageId:14;
+    u8 windowId[3];
+    u8 actions[8];
+    u8 numActions;
+    u16 palBuffer[BG_PLTT_SIZE / sizeof(u16)];
+    s16 data[16];
+};
 
 __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId)
 {
@@ -361,7 +379,7 @@ __attribute__((naked)) bool8 PartyMenuSetup(void)
         "	.align 2, 0\n\t"
         "_081B000C: .4byte sPartyMenuInternal\n\t"
         "_081B0010:\n\t"
-        "	bl AllocPartyMiscGfx\n\t"
+        "	bl AllocPartyMenuBgGfx\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _081B001C\n\t"
@@ -572,10 +590,14 @@ static void Task_ExitPartyMenu(u8 taskId)
     }
 }
 
-extern void *sPartyMenuInternal;
+extern struct PartyMenuInternal *sPartyMenuInternal;
 extern void *sPartyBgTilemapBuffer;
 extern void *sPartyBgGfxTilemap;
 extern void *sPartyMenuBoxes;
+
+extern const u32 gUnknown_8D967A0[];
+extern const u32 gUnknown_8D96B54[];
+extern const u16 gUnknown_8D96A68[];
 
 void reset_brm(void)
 {
@@ -589,14 +611,15 @@ extern const struct BgTemplate gUnknown_85E0F70[];
 
 static bool8 AllocPartyMenuBg(void)
 {
-    sPartyBgTilemapBuffer = Alloc(0x800);
-    if (sPartyBgTilemapBuffer == NULL)
+    void **buf = &sPartyBgTilemapBuffer;
+    *buf = Alloc(0x800);
+    if (*buf == NULL)
         return FALSE;
 
-    memset(sPartyBgTilemapBuffer, 0, 0x800);
+    memset(*buf, 0, 0x800);
     ResetBgsAndClearDma3BusyFlags(0);
     InitBgsFromTemplates(0, gUnknown_85E0F70, 3);
-    SetBgTilemapBuffer(1, sPartyBgTilemapBuffer);
+    SetBgTilemapBuffer(1, *buf);
     ResetAllBgsCoordinates();
     ScheduleBgCopyTilemapToVram(1);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
@@ -607,128 +630,53 @@ static bool8 AllocPartyMenuBg(void)
     return TRUE;
 }
 
-__attribute__((naked)) void AllocPartyMiscGfx(void)
+static bool8 AllocPartyMenuBgGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _081B02C0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x86\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bhi _081B0388\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B02C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B02C0: .4byte sPartyMenuInternal\n\t"
-        "_081B02C4: .4byte 0x081B02C8\n\t"
-        "_081B02C8: @ jump table\n\t"
-        "	.4byte _081B02E8 @ case 0\n\t"
-        "	.4byte _081B0310 @ case 1\n\t"
-        "	.4byte _081B0330 @ case 2\n\t"
-        "	.4byte _081B035C @ case 3\n\t"
-        "	.4byte _081B0360 @ case 4\n\t"
-        "	.4byte _081B0364 @ case 5\n\t"
-        "	.4byte _081B0368 @ case 6\n\t"
-        "	.4byte _081B036C @ case 7\n\t"
-        "_081B02E8:\n\t"
-        "	ldr r4, _081B0308\n\t"
-        "	ldr r0, _081B030C\n\t"
-        "	mov r1, sp\n\t"
-        "	bl malloc_and_decompress\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	str r1, [r4]\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl LoadBgTiles\n\t"
-        "	b _081B0372\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0308: .4byte sPartyBgGfxTilemap\n\t"
-        "_081B030C: .4byte gUnknown_8D967A0\n\t"
-        "_081B0310:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B038C\n\t"
-        "	ldr r0, _081B0328\n\t"
-        "	ldr r1, _081B032C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	b _081B0372\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0328: .4byte gUnknown_8D96B54\n\t"
-        "_081B032C: .4byte sPartyBgTilemapBuffer\n\t"
-        "_081B0330:\n\t"
-        "	ldr r0, _081B0350\n\t"
-        "	movs r2, #0xb0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	ldr r0, _081B0354\n\t"
-        "	ldr r4, _081B0358\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x18\n\t"
-        "	movs r2, #0xb0\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	b _081B0376\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0350: .4byte gUnknown_8D96A68\n\t"
-        "_081B0354: .4byte gPlttBufferUnfaded\n\t"
-        "_081B0358: .4byte sPartyMenuInternal\n\t"
-        "_081B035C:\n\t"
-        "	movs r0, #4\n\t"
-        "	b _081B036E\n\t"
-        "_081B0360:\n\t"
-        "	movs r0, #5\n\t"
-        "	b _081B036E\n\t"
-        "_081B0364:\n\t"
-        "	movs r0, #6\n\t"
-        "	b _081B036E\n\t"
-        "_081B0368:\n\t"
-        "	movs r0, #7\n\t"
-        "	b _081B036E\n\t"
-        "_081B036C:\n\t"
-        "	movs r0, #8\n\t"
-        "_081B036E:\n\t"
-        "	bl PartyPaletteBufferCopy\n\t"
-        "_081B0372:\n\t"
-        "	ldr r0, _081B0384\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_081B0376:\n\t"
-        "	movs r0, #0x86\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _081B038C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0384: .4byte sPartyMenuInternal\n\t"
-        "_081B0388:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B038E\n\t"
-        "_081B038C:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B038E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 sizeout;
+
+    switch (sPartyMenuInternal->data[0])
+    {
+    case 0:
+        sPartyBgGfxTilemap = malloc_and_decompress(gUnknown_8D967A0, &sizeout);
+        LoadBgTiles(1, sPartyBgGfxTilemap, sizeout, 0);
+        sPartyMenuInternal->data[0]++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            LZDecompressVram(gUnknown_8D96B54, sPartyBgTilemapBuffer);
+            sPartyMenuInternal->data[0]++;
+        }
+        break;
+    case 2:
+        LoadCompressedPalette(gUnknown_8D96A68, BG_PLTT_ID(0), 11 * PLTT_SIZE_4BPP);
+        CpuCopy16(gPlttBufferUnfaded, sPartyMenuInternal->palBuffer, 11 * PLTT_SIZE_4BPP);
+        sPartyMenuInternal->data[0]++;
+        break;
+    case 3:
+        PartyPaletteBufferCopy(4);
+        sPartyMenuInternal->data[0]++;
+        break;
+    case 4:
+        PartyPaletteBufferCopy(5);
+        sPartyMenuInternal->data[0]++;
+        break;
+    case 5:
+        PartyPaletteBufferCopy(6);
+        sPartyMenuInternal->data[0]++;
+        break;
+    case 6:
+        PartyPaletteBufferCopy(7);
+        sPartyMenuInternal->data[0]++;
+        break;
+    case 7:
+        PartyPaletteBufferCopy(8);
+        sPartyMenuInternal->data[0]++;
+        break;
+    default:
+        return TRUE;
+    }
+    return FALSE;
 }
 
 static void PartyPaletteBufferCopy(u8 palNum)
