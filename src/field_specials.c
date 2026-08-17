@@ -6,6 +6,11 @@
 #include "tv.h"
 #include "battle.h"
 #include "string_util.h"
+extern const u8 gText_BigGuy[];
+extern const u8 gText_BigGirl[];
+extern const u8 gText_Son[];
+extern const u8 gText_Daughter[];
+
 extern u8 sub_081370D8(u8 nature, u8 *dest);
 extern void GetEreaderTrainerName(u8 *dest);
 #include "field_specials.h"
@@ -1880,68 +1885,20 @@ u8 GetPlayerTrainerIdOnesDigit(void)
     return (u16)((gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0]) % 10;
 }
 
-__attribute__((naked)) void GetPlayerBigGuyGirlString(void)
+void GetPlayerBigGuyGirlString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138B98\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08138BA4\n\t"
-        "	ldr r0, _08138B9C\n\t"
-        "	ldr r1, _08138BA0\n\t"
-        "	bl StringCopy\n\t"
-        "	b _08138BAC\n\t"
-        "	.align 2, 0\n\t"
-        "_08138B98: .4byte gSaveBlock2Ptr\n\t"
-        "_08138B9C: .4byte gStringVar1\n\t"
-        "_08138BA0: .4byte gUnknown_85CADD0 + 0x25A\n\t"
-        "_08138BA4:\n\t"
-        "	ldr r0, _08138BB0\n\t"
-        "	ldr r1, _08138BB4\n\t"
-        "	bl StringCopy\n\t"
-        "_08138BAC:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138BB0: .4byte gStringVar1\n\t"
-        "_08138BB4: .4byte gUnknown_85CADD0 + 0x261\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSaveBlock2Ptr->playerGender == MALE)
+        StringCopy(gStringVar1, gText_BigGuy);
+    else
+        StringCopy(gStringVar1, gText_BigGirl);
 }
 
-__attribute__((naked)) void GetRivalSonDaughterString(void)
+void GetRivalSonDaughterString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138BD0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08138BDC\n\t"
-        "	ldr r0, _08138BD4\n\t"
-        "	ldr r1, _08138BD8\n\t"
-        "	bl StringCopy\n\t"
-        "	b _08138BE4\n\t"
-        "	.align 2, 0\n\t"
-        "_08138BD0: .4byte gSaveBlock2Ptr\n\t"
-        "_08138BD4: .4byte gStringVar1\n\t"
-        "_08138BD8: .4byte gUnknown_85CADD0 + 0x26C\n\t"
-        "_08138BDC:\n\t"
-        "	ldr r0, _08138BE8\n\t"
-        "	ldr r1, _08138BEC\n\t"
-        "	bl StringCopy\n\t"
-        "_08138BE4:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138BE8: .4byte gStringVar1\n\t"
-        "_08138BEC: .4byte gUnknown_85CADD0 + 0x268\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSaveBlock2Ptr->playerGender == MALE)
+        StringCopy(gStringVar1, gText_Daughter);
+    else
+        StringCopy(gStringVar1, gText_Son);
 }
 
 u8 GetBattleOutcome(void)

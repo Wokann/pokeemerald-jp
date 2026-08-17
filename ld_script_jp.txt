@@ -1,4 +1,8 @@
 gTypeNamesJP = gTypeNames;
+gText_BigGuy = 0x85CB02A;
+gText_BigGirl = 0x85CB031;
+gText_Son = 0x85CB038;
+gText_Daughter = 0x85CB03C;
 sPrimaryTilesetAnimCounter = gUnknown_3000F36;
 sPrimaryTilesetAnimCounterMax = gUnknown_3000F38;
 sPrimaryTilesetAnimCallback = gUnknown_3000F40;
