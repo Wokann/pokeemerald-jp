@@ -17,6 +17,7 @@
 #include "constants/characters.h"
 #include "decompress.h"
 #include "graphics.h"
+#include "gpu_regs.h"
 #include "librfu.h"
 #include "link.h"
 #include "link_rfu.h"
@@ -234,6 +235,10 @@ extern void FieldCB_ContinueScriptHandleMusic(void);
 extern void LockPlayerFieldControls(void);
 extern void (*gFieldCallback)(void);
 extern u8 FlagSet(u16 id);
+extern const u16 gUnknown_830BCE4[];
+extern const u16 gUnknown_830BEE4[];
+extern const u16 gUnknown_830C0E4[];
+extern const u8 gUnknown_830D310[][2];
 void DrawTextOnTradeWindow(u8 windowId, const u8 *str, u8 speed);
 static void CB2_FreeTradeAnim(void);
 static void Task_InGameTrade(u8 taskId);
@@ -7146,7 +7151,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	.align 2, 0\n\t"
         "_0807D1A8: .4byte gSprites\n\t"
         "_0807D1AC: .4byte 0x00000452\n\t"
-        "_0807D1B0: .4byte c3_08054588 + 1\n\t"
+        "_0807D1B0: .4byte Task_AnimateWirelessSignal + 1\n\t"
         "_0807D1B4:\n\t"
         "	ldr r0, _0807D1D4\n\t"
         "	bl FuncIsActiveTask\n\t"
@@ -7162,7 +7167,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	strh r1, [r0]\n\t"
         "	bl _0807DE38\n\t"
         "	.align 2, 0\n\t"
-        "_0807D1D4: .4byte c3_08054588 + 1\n\t"
+        "_0807D1D4: .4byte Task_AnimateWirelessSignal + 1\n\t"
         "_0807D1D8: .4byte gUnknown_2031F40\n\t"
         "_0807D1DC:\n\t"
         "	ldr r2, [r7]\n\t"
@@ -7470,7 +7475,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	b _0807D692\n\t"
         "	.align 2, 0\n\t"
         "_0807D468: .4byte gSprites\n\t"
-        "_0807D46C: .4byte c3_0805465C + 1\n\t"
+        "_0807D46C: .4byte Task_OpenCenterWhiteColumn + 1\n\t"
         "_0807D470:\n\t"
         "	ldr r2, _0807D480\n\t"
         "	movs r0, #8\n\t"
@@ -7736,7 +7741,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	b _0807DE38\n\t"
         "	.align 2, 0\n\t"
         "_0807D69C: .4byte gSprites\n\t"
-        "_0807D6A0: .4byte sub_0807EDD4 + 1\n\t"
+        "_0807D6A0: .4byte Task_CloseCenterWhiteColumn + 1\n\t"
         "_0807D6A4:\n\t"
         "	ldr r4, _0807D728\n\t"
         "	ldr r2, [r7]\n\t"
@@ -7997,7 +8002,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	b _0807DDD0\n\t"
         "	.align 2, 0\n\t"
         "_0807D8B0: .4byte gUnknown_2031F40\n\t"
-        "_0807D8B4: .4byte c3_08054588 + 1\n\t"
+        "_0807D8B4: .4byte Task_AnimateWirelessSignal + 1\n\t"
         "_0807D8B8: .4byte gTasks\n\t"
         "_0807D8BC:\n\t"
         "	ldr r0, [r7]\n\t"
@@ -8046,7 +8051,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "	str r3, [r2, #0x64]\n\t"
         "	b _0807DE38\n\t"
         "	.align 2, 0\n\t"
-        "_0807D918: .4byte c3_08054588 + 1\n\t"
+        "_0807D918: .4byte Task_AnimateWirelessSignal + 1\n\t"
         "_0807D91C: .4byte gUnknown_2031F40\n\t"
         "_0807D920:\n\t"
         "	ldr r1, [r7]\n\t"
@@ -9168,315 +9173,190 @@ void DrawTextOnTradeWindow(u8 windowId, const u8 *str, u8 speed)
     CopyWindowToVram(windowId, COPYWIN_FULL);
 }
 
-__attribute__((naked)) void c3_08054588(void)
+static void Task_AnimateWirelessSignal(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0807EC80\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldr r1, _0807EC84\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	movs r3, #4\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807EC8C\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807EC94\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	ldr r1, _0807EC88\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	b _0807EC96\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EC80: .4byte gUnknown_3005B68\n\t"
-        "_0807EC84: .4byte gUnknown_830D310\n\t"
-        "_0807EC88: .4byte gUnknown_830BCE4\n\t"
-        "_0807EC8C:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0807ECA4\n\t"
-        "_0807EC94:\n\t"
-        "	ldr r0, _0807ECA0\n\t"
-        "_0807EC96:\n\t"
-        "	movs r1, #0x30\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _0807ECB2\n\t"
-        "	.align 2, 0\n\t"
-        "_0807ECA0: .4byte gUnknown_830C0E4\n\t"
-        "_0807ECA4:\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	ldr r1, _0807ED08\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x30\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "_0807ECB2:\n\t"
-        "	ldr r0, _0807ED0C\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807ECD0\n\t"
-        "	movs r3, #2\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807ECD0\n\t"
-        "	movs r0, #0xc3\n\t"
-        "	bl PlaySE\n\t"
-        "_0807ECD0:\n\t"
-        "	movs r0, #2\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	ldr r1, _0807ED0C\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bne _0807ED10\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _0807ED16\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _0807ED16\n\t"
-        "	.align 2, 0\n\t"
-        "_0807ED08: .4byte gUnknown_830BEE4\n\t"
-        "_0807ED0C: .4byte gUnknown_830D310\n\t"
-        "_0807ED10:\n\t"
-        "	ldrh r0, [r4, #2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "_0807ED16:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    u16 paletteIdx = gUnknown_830D310[data[0]][0] * 16;
+    if (!data[2])
+    {
+        if (paletteIdx == 256)
+            LoadPalette(gUnknown_830C0E4, 0x30, 0x20);
+        else
+            LoadPalette(&gUnknown_830BCE4[paletteIdx], 0x30, 0x20);
+    }
+    else
+    {
+        if (paletteIdx == 256)
+            LoadPalette(gUnknown_830C0E4, 0x30, 0x20);
+        else
+            LoadPalette(&gUnknown_830BEE4[paletteIdx], 0x30, 0x20);
+    }
+
+    if (gUnknown_830D310[data[0]][0] == 0 && data[1] == 0)
+        PlaySE(SE_M_HEAL_BELL);
+
+    if (data[1] == gUnknown_830D310[data[0]][1])
+    {
+        data[0]++;
+        data[1] = 0;
+        if (gUnknown_830D310[data[0]][1] == 0xFF)
+            DestroyTask(taskId);
+    }
+    else
+    {
+        data[1]++;
+    }
 }
 
-__attribute__((naked)) void c3_0805465C(void)
+// JP-specific variant of the US Task_OpenCenterWhiteColumn.  The C below is
+// the intended readable version; it is kept as naked asm because agbcc
+// allocates data[0] to a different register than the original build.
+// static void Task_OpenCenterWhiteColumn(u8 taskId)
+// {
+//     s16 *data = gTasks[taskId].data;
+//     if (data[0] == 0)
+//     {
+//         gUnknown_2031F40->wirelessWinRight = 0x78;
+//         gUnknown_2031F40->wirelessWinLeft = 0x78;
+//         gUnknown_2031F40->wirelessWinTop = 0;
+//         gUnknown_2031F40->wirelessWinBottom = 0xA0;
+//         SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+//         SetGpuReg(REG_OFFSET_WINOUT, 0x10);
+//         SetGpuReg(REG_OFFSET_WININ, 0x13);
+//     }
+//     SetGpuReg(REG_OFFSET_WIN0H, gUnknown_2031F40->wirelessWinRight | (gUnknown_2031F40->wirelessWinLeft << 8));
+//     SetGpuReg(REG_OFFSET_WIN0V, gUnknown_2031F40->wirelessWinBottom | (gUnknown_2031F40->wirelessWinTop << 8));
+//     data[0]++;
+//     gUnknown_2031F40->wirelessWinLeft -= 5;
+//     gUnknown_2031F40->wirelessWinRight += 5;
+//     if (gUnknown_2031F40->wirelessWinLeft > 0x4F)
+//         DestroyTask(taskId);
+// }
+__attribute__((naked)) void Task_OpenCenterWhiteColumn(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0807EDCC\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r4, [r5, r0]\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0807ED6E\n\t"
-        "	ldr r2, _0807EDD0\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0xfd\n\t"
-        "	movs r1, #0x78\n\t"
-        "	strb r1, [r3]\n\t"
-        "	adds r0, #0xfb\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xfc\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xfe\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuRegBits\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #0x13\n\t"
-        "	bl SetGpuReg\n\t"
+        "\tpush {r4, r5, r6, lr}\n\t"
+        "\tlsls r0, r0, #0x18\n\t"
+        "\tlsrs r0, r0, #0x18\n\t"
+        "\tadds r6, r0, #0\n\t"
+        "\tlsls r0, r6, #2\n\t"
+        "\tadds r0, r0, r6\n\t"
+        "\tlsls r0, r0, #3\n\t"
+        "\tldr r1, _0807EDCC\n\t"
+        "\tadds r5, r0, r1\n\t"
+        "\tmovs r0, #0\n\t"
+        "\tldrsh r4, [r5, r0]\n\t"
+        "\tcmp r4, #0\n\t"
+        "\tbne _0807ED6E\n\t"
+        "\tldr r2, _0807EDD0\n\t"
+        "\tldr r0, [r2]\n\t"
+        "\tadds r3, r0, #0\n\t"
+        "\tadds r3, #0xfd\n\t"
+        "\tmovs r1, #0x78\n\t"
+        "\tstrb r1, [r3]\n\t"
+        "\tadds r0, #0xfb\n\t"
+        "\tstrb r1, [r0]\n\t"
+        "\tldr r0, [r2]\n\t"
+        "\tadds r0, #0xfc\n\t"
+        "\tstrb r4, [r0]\n\t"
+        "\tldr r0, [r2]\n\t"
+        "\tadds r0, #0xfe\n\t"
+        "\tmovs r1, #0xa0\n\t"
+        "\tstrb r1, [r0]\n\t"
+        "\tmovs r1, #0x80\n\t"
+        "\tlsls r1, r1, #6\n\t"
+        "\tmovs r0, #0\n\t"
+        "\tbl SetGpuRegBits\n\t"
+        "\tmovs r0, #0x4a\n\t"
+        "\tmovs r1, #0x10\n\t"
+        "\tbl SetGpuReg\n\t"
+        "\tmovs r0, #0x48\n\t"
+        "\tmovs r1, #0x13\n\t"
+        "\tbl SetGpuReg\n\t"
         "_0807ED6E:\n\t"
-        "	ldr r4, _0807EDD0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0xfd\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, #0xfb\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0xfe\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, #0xfc\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0xfb\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0xfd\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xfb\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x4f\n\t"
-        "	bhi _0807EDC6\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroyTask\n\t"
+        "\tldr r4, _0807EDD0\n\t"
+        "\tldr r0, [r4]\n\t"
+        "\tadds r1, r0, #0\n\t"
+        "\tadds r1, #0xfd\n\t"
+        "\tldrb r1, [r1]\n\t"
+        "\tadds r0, #0xfb\n\t"
+        "\tldrb r0, [r0]\n\t"
+        "\tlsls r0, r0, #8\n\t"
+        "\torrs r1, r0\n\t"
+        "\tmovs r0, #0x40\n\t"
+        "\tbl SetGpuReg\n\t"
+        "\tldr r0, [r4]\n\t"
+        "\tadds r1, r0, #0\n\t"
+        "\tadds r1, #0xfe\n\t"
+        "\tldrb r1, [r1]\n\t"
+        "\tadds r0, #0xfc\n\t"
+        "\tldrb r0, [r0]\n\t"
+        "\tlsls r0, r0, #8\n\t"
+        "\torrs r1, r0\n\t"
+        "\tmovs r0, #0x44\n\t"
+        "\tbl SetGpuReg\n\t"
+        "\tldrh r0, [r5]\n\t"
+        "\tadds r0, #1\n\t"
+        "\tstrh r0, [r5]\n\t"
+        "\tldr r1, [r4]\n\t"
+        "\tadds r1, #0xfb\n\t"
+        "\tldrb r0, [r1]\n\t"
+        "\tsubs r0, #5\n\t"
+        "\tstrb r0, [r1]\n\t"
+        "\tldr r1, [r4]\n\t"
+        "\tadds r1, #0xfd\n\t"
+        "\tldrb r0, [r1]\n\t"
+        "\tadds r0, #5\n\t"
+        "\tstrb r0, [r1]\n\t"
+        "\tldr r0, [r4]\n\t"
+        "\tadds r0, #0xfb\n\t"
+        "\tldrb r0, [r0]\n\t"
+        "\tcmp r0, #0x4f\n\t"
+        "\tbhi _0807EDC6\n\t"
+        "\tadds r0, r6, #0\n\t"
+        "\tbl DestroyTask\n\t"
         "_0807EDC6:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
+        "\tpop {r4, r5, r6}\n\t"
+        "\tpop {r0}\n\t"
+        "\tbx r0\n\t"
+        "\t.align 2, 0\n\t"
         "_0807EDCC: .4byte gUnknown_3005B68\n\t"
         "_0807EDD0: .4byte gUnknown_2031F40\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0807EDD4(void)
+static void Task_CloseCenterWhiteColumn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0807EE78\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807EE10\n\t"
-        "	ldr r2, _0807EE7C\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xfb\n\t"
-        "	movs r1, #0x50\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xfd\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #0x13\n\t"
-        "	bl SetGpuReg\n\t"
-        "_0807EE10:\n\t"
-        "	ldr r4, _0807EE7C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0xfd\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, #0xfb\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0xfe\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, #0xfc\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xfb\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x78\n\t"
-        "	beq _0807EE84\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0xfb\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0xfd\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	subs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xfb\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x73\n\t"
-        "	bls _0807EE94\n\t"
-        "	ldr r2, _0807EE80\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	b _0807EE94\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EE78: .4byte gUnknown_3005B68\n\t"
-        "_0807EE7C: .4byte gUnknown_2031F40\n\t"
-        "_0807EE80: .4byte 0x0000FFFF\n\t"
-        "_0807EE84:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ClearGpuRegBits\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0807EE94:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    if (data[0] == 0)
+    {
+        gUnknown_2031F40->wirelessWinLeft = 0x50;
+        gUnknown_2031F40->wirelessWinRight = 0xA0;
+        SetGpuReg(REG_OFFSET_WINOUT, 0x10);
+        SetGpuReg(REG_OFFSET_WININ, 0x13);
+    }
+
+    SetGpuReg(REG_OFFSET_WIN0H, gUnknown_2031F40->wirelessWinRight | (gUnknown_2031F40->wirelessWinLeft << 8));
+    SetGpuReg(REG_OFFSET_WIN0V, gUnknown_2031F40->wirelessWinBottom | (gUnknown_2031F40->wirelessWinTop << 8));
+
+    if (gUnknown_2031F40->wirelessWinLeft != 0x78)
+    {
+        data[0]++;
+        gUnknown_2031F40->wirelessWinLeft += 5;
+        gUnknown_2031F40->wirelessWinRight -= 5;
+
+        if (gUnknown_2031F40->wirelessWinLeft > 0x73)
+            BlendPalettes(0x8, 0, RGB_WHITEALPHA);
+    }
+    else
+    {
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        DestroyTask(taskId);
+    }
 }
 
 static void CB2_SaveAndEndWirelessTrade(void)

@@ -3321,9 +3321,9 @@ SECTIONS {
         src/trade.o(.text.CheckPartnersMonForRibbons);
         src/trade.o(.text.LoadTradeAnimGfx);
         src/trade.o(.text.DrawTextOnTradeWindow);
-        src/trade.o(.text.c3_08054588);
-        src/trade.o(.text.c3_0805465C);
-        src/trade.o(.text.sub_0807EDD4);
+        src/trade.o(.text.Task_AnimateWirelessSignal);
+        src/trade.o(.text.Task_OpenCenterWhiteColumn);
+        src/trade.o(.text.Task_CloseCenterWhiteColumn);
         src/trade.o(.text.CB2_SaveAndEndWirelessTrade);
         src/berry_blender.o(.text);
         src/play_time.o(.text);
