@@ -8546,7 +8546,7 @@ SECTIONS {
         src/party_menu.o(.text.RenderPartyMenuBox);
         src/party_menu.o(.text.DisplayPartyPokemonData);
         src/party_menu.o(.text.DisplayPartyPokemonDescriptionData);
-        src/party_menu.o(.text.DisplayPartyPokemonSelectForBattle);
+        src/party_menu.o(.text.DisplayPartyPokemonDataForChooseHalf);
         src/party_menu.o(.text.DisplayPartyPokemonSelectForContest);
         src/party_menu.o(.text.DisplayPartyPokemonSelectForRelearner);
         src/party_menu.o(.text.sub_081B0870);

@@ -1028,7 +1028,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	cmp r1, #4\n\t"
         "	bne _081B05A4\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonSelectForBattle\n\t"
+        "	bl DisplayPartyPokemonDataForChooseHalf\n\t"
         "	b _081B05CE\n\t"
         "_081B05A4:\n\t"
         "	cmp r1, #0xb\n\t"
@@ -1129,66 +1129,29 @@ static void DisplayPartyPokemonDescriptionData(u8 slot, u8 stringID)
     DisplayPartyPokemonDescriptionText(stringID, &sPartyMenuBoxes[slot], 0);
 }
 
-__attribute__((naked)) void DisplayPartyPokemonSelectForBattle(u8 a)
+static void DisplayPartyPokemonDataForChooseHalf(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081B0798\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r6, _081B079C\n\t"
-        "	bl GetBattleEntryEligibility\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B07AE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "	b _081B07DA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0798: .4byte gPlayerParty\n\t"
-        "_081B079C: .4byte gSelectedOrderFromParty\n\t"
-        "_081B07A0:\n\t"
-        "	adds r1, r4, #2\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "	b _081B07DA\n\t"
-        "_081B07AE:\n\t"
-        "	movs r4, #0\n\t"
-        "	b _081B07C6\n\t"
-        "_081B07B2:\n\t"
-        "	adds r1, r6, r4\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B07C0\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r0, r5\n\t"
-        "	beq _081B07A0\n\t"
-        "_081B07C0:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_081B07C6:\n\t"
-        "	bl GetMaxBattleEntries\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	blo _081B07B2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "_081B07DA:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    struct Pokemon *mon = &gPlayerParty[slot];
+    u8 *order = gSelectedOrderFromParty;
+
+    if (!(u8)GetBattleEntryEligibility(mon))
+    {
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_NOT_ABLE);
+        return;
+    }
+    else
+    {
+        for (i = 0; i < GetMaxBattleEntries(); i++)
+        {
+            if (order[i] != 0 && (order[i] - 1) == slot)
+            {
+                DisplayPartyPokemonDescriptionData(slot, i + PARTYBOX_DESC_FIRST);
+                return;
+            }
+        }
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_ABLE_3);
+    }
 }
 
 __attribute__((naked)) void DisplayPartyPokemonSelectForContest(u8 a)
