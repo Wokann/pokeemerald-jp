@@ -7390,51 +7390,18 @@ __attribute__((naked)) void sub_081B3534(void)
     );
 }
 
-__attribute__((naked)) void CursorCb_Switch(u8 taskId)
+static void CursorCb_Switch(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r5, _081B35C8\n\t"
-        "	movs r0, #8\n\t"
-        "	strb r0, [r5, #0xb]\n\t"
-        "	ldr r4, _081B35CC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	movs r0, #3\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldrb r0, [r5, #9]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "	ldrb r0, [r5, #9]\n\t"
-        "	strb r0, [r5, #0xa]\n\t"
-        "	ldr r1, _081B35D0\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B35D4\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B35C8: .4byte gPartyMenu\n\t"
-        "_081B35CC: .4byte sPartyMenuInternal\n\t"
-        "_081B35D0: .4byte gTasks\n\t"
-        "_081B35D4: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    gPartyMenu.action = PARTY_ACTION_SWITCH;
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    DisplayPartyMenuStdMessage(PARTY_MSG_MOVE_TO_WHERE);
+    AnimatePartySlot(gPartyMenu.slotId, 1);
+    gPartyMenu.slotId2 = gPartyMenu.slotId;
+    gTasks[taskId].func = Task_HandleChooseMonInput;
 }
+
 
 
 __attribute__((naked)) void sub_081B35D8(void)
