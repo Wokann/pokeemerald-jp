@@ -8683,12 +8683,12 @@ SECTIONS {
         src/party_menu.o(.text.CursorCb_Mail);
         src/party_menu.o(.text.CursorCb_Read);
         src/party_menu.o(.text.CB2_ReadHeldMail);
-        src/party_menu.o(.text.sub_081B4780);
+        src/party_menu.o(.text.CB2_ReturnToPartyMenuFromReadingMail);
         src/party_menu.o(.text.CursorCb_TakeMail);
         src/party_menu.o(.text.Task_SendMailToPCYesNo);
-        src/party_menu.o(.text.sub_081B4840);
-        src/party_menu.o(.text.sub_081B4900);
-        src/party_menu.o(.text.sub_081B4934);
+        src/party_menu.o(.text.Task_HandleSendMailToPCYesNoInput);
+        src/party_menu.o(.text.Task_LoseMailMessageYesNo);
+        src/party_menu.o(.text.Task_HandleLoseMailMessageYesNoInput);
         src/party_menu.o(.text.CursorCb_Cancel2);
         src/party_menu.o(.text.CursorCb_SendMon);
         src/party_menu.o(.text.CursorCb_Enter);
