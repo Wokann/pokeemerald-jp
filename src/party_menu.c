@@ -476,7 +476,27 @@ u8 GetPartyIdFromBattlePartyId(u8 battlePartyId);
 static void UpdatePartyToBattleOrder(void);
 static void UNUSED SwitchAliveMonIntoLeadSlot(void);
 void nullsub_35(void); // ReshowBattleScreenDummy
+void ShowPartyMenuToShowcaseMultiBattleParty(void);
+static void Task_InitMultiPartnerPartySlideIn(u8 taskId);
+static void Task_MultiPartnerPartySlideIn(u8 taskId);
+static void Task_WaitAfterMultiPartnerPartySlideIn(u8 taskId);
+static void MoveMultiPartyMenuBoxSprite(u8 spriteId, s16 x);
+static void SlideMultiPartyMenuBoxSpritesOneStep(u8 taskId);
+void ChooseMonForDaycare(void);
+static void UNUSED ChoosePartyMonByMenuType(u8 menuType);
+static void BufferMonSelection(void);
+bool8 CB2_FadeFromPartyMenu(void);
+static void Task_PartyMenuWaitForFade(u8 taskId);
+void ChooseContestMon(void);
+static void Task_ChooseContestMon(u8 taskId);
+static void CB2_ChooseContestMon(void);
+void ChoosePartyMon(void);
+static void Task_ChoosePartyMon(u8 taskId);
+void ChooseMonForMoveRelearner(void);
+static void Task_ChooseMonForMoveRelearner(u8 taskId);
 void SetCB2ToReshowScreenAfterMenu2(void); // CB2_SetUpReshowBattleScreenAfterMenu
+extern u8 gContestMonPartyIndex;
+void CB2_ChooseMonForMoveRelearner(void); // CB2_ChooseMonForMoveRelearner
 extern void (*gCB2_AfterEvolution)(void);
 void sub_081C478C(void); // CB2_ReturnToPyramidBagMenu
 struct PlayerPCItemPageStruct
@@ -498,6 +518,7 @@ void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
 #define ACTIONS_SEND_OUT 3
 #define ACTIONS_SHIFT 2
 #define ACTIONS_SUMMARY_ONLY 7
+#define tXPos  data[0]
 void TryTutorSelectedMon(u8 taskId); // TryTutorSelectedMon
 void TryGiveItemOrMailToSelectedMon(u8 taskId); // TryGiveItemOrMailToSelectedMon
 void TryGiveMailToSelectedMon(u8 taskId); // TryGiveMailToSelectedMon
@@ -6259,484 +6280,138 @@ void sub_081B8DE0(void)
     SetMainCallback2(SetCB2ToReshowScreenAfterMenu2);
 }
 
-__attribute__((naked)) void sub_081B8DF0(void)
+void ShowPartyMenuToShowcaseMultiBattleParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B8E14\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B8E18\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r1, #3\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8E14: .4byte sub_081B8E1C + 1\n\t"
-        "_081B8E18: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(PARTY_MENU_TYPE_MULTI_SHOWCASE, PARTY_LAYOUT_MULTI_SHOWCASE, PARTY_ACTION_CHOOSE_MON, FALSE, PARTY_MSG_NONE, Task_InitMultiPartnerPartySlideIn, gMain.savedCallback);
 }
 
-__attribute__((naked)) void sub_081B8E1C(void)
+static void Task_InitMultiPartnerPartySlideIn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081B8E4C\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	strh r1, [r4, #8]\n\t"
-        "	bl sub_081B8F34\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	ldr r0, _081B8E50\n\t"
-        "	str r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8E4C: .4byte gTasks\n\t"
-        "_081B8E50: .4byte sub_081B8E54 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    // The first slide step also sets the sprites offscreen
+    gTasks[taskId].tXPos = 256;
+    SlideMultiPartyMenuBoxSpritesOneStep(taskId);
+    ChangeBgX(2, 0x10000, BG_COORD_SET);
+    gTasks[taskId].func = Task_MultiPartnerPartySlideIn;
 }
 
-__attribute__((naked)) void sub_081B8E54(void)
+static void Task_MultiPartnerPartySlideIn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r6, r5, #2\n\t"
-        "	adds r0, r6, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081B8EC8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldr r0, _081B8ECC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B8EC0\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B8F34\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B8EC0\n\t"
-        "	movs r4, #3\n\t"
-        "	ldr r7, _081B8ED0\n\t"
-        "_081B8E88:\n\t"
-        "	subs r0, r4, #3\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B8EA4\n\t"
-        "	ldr r0, _081B8ED4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl AnimateSelectedPartyIcon\n\t"
-        "_081B8EA4:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #5\n\t"
-        "	bls _081B8E88\n\t"
-        "	movs r0, #0x78\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081B8ED8\n\t"
-        "	adds r1, r6, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B8EDC\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B8EC0:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8EC8: .4byte gUnknown_3005B68\n\t"
-        "_081B8ECC: .4byte gPaletteFade\n\t"
-        "_081B8ED0: .4byte gMultiPartnerParty\n\t"
-        "_081B8ED4: .4byte sPartyMenuBoxes\n\t"
-        "_081B8ED8: .4byte gTasks\n\t"
-        "_081B8EDC: .4byte sub_081B8EE0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    u8 i;
+
+    if (!gPaletteFade.active)
+    {
+        tXPos -= 8;
+        SlideMultiPartyMenuBoxSpritesOneStep(taskId);
+        if (tXPos == 0)
+        {
+            for (i = MULTI_PARTY_SIZE; i < PARTY_SIZE; i++)
+            {
+                if (gMultiPartnerParty[i - MULTI_PARTY_SIZE].species != SPECIES_NONE)
+                    AnimateSelectedPartyIcon(sPartyMenuBoxes[i].monSpriteId, 0);
+            }
+            PlaySE(SE_M_HARDEN); // The Harden SE plays once the partners party mons have slid on screen
+            gTasks[taskId].func = Task_WaitAfterMultiPartnerPartySlideIn;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081B8EE0(void)
+static void Task_WaitAfterMultiPartnerPartySlideIn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081B8F0C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081B8F06\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "_081B8F06:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8F0C: .4byte gUnknown_3005B68\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    // data[0] used as a timer afterwards rather than the x pos
+    if (++data[0] == 256)
+        Task_ClosePartyMenu(taskId);
 }
 
-__attribute__((naked)) void sub_081B8F10(void)
+static void MoveMultiPartyMenuBoxSprite(u8 spriteId, s16 x)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r3, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	blt _081B8F2A\n\t"
-        "	ldr r1, _081B8F30\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r3, [r0, #0x24]\n\t"
-        "_081B8F2A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8F30: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (x >= 0)
+        gSprites[spriteId].x2 = x;
 }
 
-__attribute__((naked)) void sub_081B8F34(void)
+static void SlideMultiPartyMenuBoxSpritesOneStep(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081B8FBC\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	movs r6, #3\n\t"
-        "	ldr r7, _081B8FC0\n\t"
-        "_081B8F48:\n\t"
-        "	ldr r0, _081B8FC4\n\t"
-        "	subs r1, r6, #3\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B8FA0\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	lsls r4, r6, #4\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	subs r1, #8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl sub_081B8F10\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	subs r1, #8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl sub_081B8F10\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	subs r1, #8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl sub_081B8F10\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	subs r1, #8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl sub_081B8F10\n\t"
-        "_081B8FA0:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #5\n\t"
-        "	bls _081B8F48\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #1\n\t"
-        "	bl ChangeBgX\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8FBC: .4byte gUnknown_3005B68\n\t"
-        "_081B8FC0: .4byte sPartyMenuBoxes\n\t"
-        "_081B8FC4: .4byte gMultiPartnerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    u8 i;
+
+    for (i = MULTI_PARTY_SIZE; i < PARTY_SIZE; i++)
+    {
+        if (gMultiPartnerParty[i - MULTI_PARTY_SIZE].species != SPECIES_NONE)
+        {
+            MoveMultiPartyMenuBoxSprite(sPartyMenuBoxes[i].monSpriteId, tXPos - 8);
+            MoveMultiPartyMenuBoxSprite(sPartyMenuBoxes[i].itemSpriteId, tXPos - 8);
+            MoveMultiPartyMenuBoxSprite(sPartyMenuBoxes[i].pokeballSpriteId, tXPos - 8);
+            MoveMultiPartyMenuBoxSprite(sPartyMenuBoxes[i].statusSpriteId, tXPos - 8);
+        }
+    }
+    ChangeBgX(2, 0x800, BG_COORD_ADD);
 }
 
-__attribute__((naked)) void sub_081B8FC8(void)
+void ChooseMonForDaycare(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0xf\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B8FEC\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B8FF0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #6\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8FEC: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B8FF0: .4byte sub_081B9030 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(PARTY_MENU_TYPE_DAYCARE, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, FALSE, PARTY_MSG_CHOOSE_MON_2, Task_HandleChooseMonInput, BufferMonSelection);
 }
 
-__attribute__((naked)) void sub_081B8FF4(void)
+static void UNUSED ChoosePartyMonByMenuType(u8 menuType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _081B9020\n\t"
-        "	ldr r1, _081B9024\n\t"
-        "	str r1, [r2]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldr r1, _081B9028\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r1, _081B902C\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xb\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9020: .4byte gFieldCallback2\n\t"
-        "_081B9024: .4byte hm_add_c3_without_phase_2 + 1\n\t"
-        "_081B9028: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B902C: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldCallback2 = CB2_FadeFromPartyMenu;
+    InitPartyMenu(menuType, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_AND_CLOSE, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ReturnToField);
 }
 
-__attribute__((naked)) void sub_081B9030(void)
+static void BufferMonSelection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _081B9058\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bls _081B9046\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strh r0, [r4]\n\t"
-        "_081B9046:\n\t"
-        "	ldr r0, _081B905C\n\t"
-        "	ldr r1, _081B9060\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _081B9064\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9058: .4byte gSpecialVar_0x8004\n\t"
-        "_081B905C: .4byte gFieldCallback2\n\t"
-        "_081B9060: .4byte hm_add_c3_without_phase_2 + 1\n\t"
-        "_081B9064: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpecialVar_0x8004 = GetCursorSelectionMonId();
+    if (gSpecialVar_0x8004 >= PARTY_SIZE)
+        gSpecialVar_0x8004 = PARTY_NOTHING_CHOSEN;
+    gFieldCallback2 = CB2_FadeFromPartyMenu;
+    SetMainCallback2(CB2_ReturnToField);
 }
 
-__attribute__((naked)) void task_hm_without_phase_2(u8 taskId);
-
-bool8 hm_add_c3_without_phase_2(void)
+bool8 CB2_FadeFromPartyMenu(void)
 {
     FadeInFromBlack();
-    CreateTask(task_hm_without_phase_2, 10);
+    CreateTask(Task_PartyMenuWaitForFade, 10);
     return TRUE;
 }
 
-__attribute__((naked)) void task_hm_without_phase_2(u8 taskId)
+static void Task_PartyMenuWaitForFade(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsWeatherNotFadingIn\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B909E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "_081B909E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsWeatherNotFadingIn())
+    {
+        DestroyTask(taskId);
+        UnlockPlayerFieldControls();
+        ScriptContext_Enable();
+    }
 }
 
-__attribute__((naked)) void Task_ChooseContestMon(u8 taskId);
-
-void sub_081B90A4(void)
+void ChooseContestMon(void)
 {
     LockPlayerFieldControls();
     FadeScreen(FADE_TO_BLACK, 0);
     CreateTask(Task_ChooseContestMon, 10);
 }
 
-__attribute__((naked)) void Task_ChooseContestMon(u8 taskId)
+static void Task_ChooseContestMon(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _081B9104\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _081B90FC\n\t"
-        "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	str r4, [sp]\n\t"
-        "	ldr r0, _081B9108\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B910C\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xb\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081B90FC:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B9104: .4byte gPaletteFade\n\t"
-        "_081B9108: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B910C: .4byte sub_081B9110 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        InitPartyMenu(PARTY_MENU_TYPE_CONTEST, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_AND_CLOSE, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ChooseContestMon);
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_081B9110(void)
+static void CB2_ChooseContestMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	ldr r2, _081B913C\n\t"
-        "	strb r0, [r2]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #5\n\t"
-        "	bls _081B9126\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r2]\n\t"
-        "_081B9126:\n\t"
-        "	ldr r1, _081B9140\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _081B9144\n\t"
-        "	ldr r0, _081B9148\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _081B914C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B913C: .4byte gContestMonPartyIndex\n\t"
-        "_081B9140: .4byte gSpecialVar_0x8004\n\t"
-        "_081B9144: .4byte gFieldCallback2\n\t"
-        "_081B9148: .4byte hm_add_c3_without_phase_2 + 1\n\t"
-        "_081B914C: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gContestMonPartyIndex = GetCursorSelectionMonId();
+    if (gContestMonPartyIndex >= PARTY_SIZE)
+        gContestMonPartyIndex = PARTY_NOTHING_CHOSEN;
+    gSpecialVar_0x8004 = gContestMonPartyIndex;
+    gFieldCallback2 = CB2_FadeFromPartyMenu;
+    SetMainCallback2(CB2_ReturnToField);
 }
-
-__attribute__((naked)) void Task_ChoosePartyMon(u8 taskId);
 
 void ChoosePartyMon(void)
 {
@@ -6745,50 +6420,15 @@ void ChoosePartyMon(void)
     CreateTask(Task_ChoosePartyMon, 10);
 }
 
-
-__attribute__((naked)) void Task_ChoosePartyMon(u8 taskId)
+static void Task_ChoosePartyMon(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _081B91B0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _081B91A8\n\t"
-        "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	str r4, [sp]\n\t"
-        "	ldr r0, _081B91B4\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B91B8\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xb\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081B91A8:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B91B0: .4byte gPaletteFade\n\t"
-        "_081B91B4: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B91B8: .4byte sub_081B9030 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        InitPartyMenu(PARTY_MENU_TYPE_CHOOSE_MON, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_AND_CLOSE, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, BufferMonSelection);
+        DestroyTask(taskId);
+    }
 }
-
-__attribute__((naked)) void Task_ChooseMonForMoveRelearner(u8 taskId);
 
 void ChooseMonForMoveRelearner(void)
 {
@@ -6797,49 +6437,17 @@ void ChooseMonForMoveRelearner(void)
     CreateTask(Task_ChooseMonForMoveRelearner, 10);
 }
 
-__attribute__((naked)) void Task_ChooseMonForMoveRelearner(u8 taskId)
+static void Task_ChooseMonForMoveRelearner(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _081B921C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _081B9214\n\t"
-        "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	str r4, [sp]\n\t"
-        "	ldr r0, _081B9220\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B9224\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #7\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xb\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081B9214:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B921C: .4byte gPaletteFade\n\t"
-        "_081B9220: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B9224: .4byte sub_081B9228 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        InitPartyMenu(PARTY_MENU_TYPE_MOVE_RELEARNER, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_AND_CLOSE, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ChooseMonForMoveRelearner);
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_081B9228(void)
+__attribute__((naked)) void CB2_ChooseMonForMoveRelearner(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6880,7 +6488,7 @@ __attribute__((naked)) void sub_081B9228(void)
         "_081B926C: .4byte gSpecialVar_0x8005\n\t"
         "_081B9270: .4byte gPlayerParty\n\t"
         "_081B9274: .4byte gFieldCallback2\n\t"
-        "_081B9278: .4byte hm_add_c3_without_phase_2 + 1\n\t"
+        "_081B9278: .4byte CB2_FadeFromPartyMenu + 1\n\t"
         "_081B927C: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -6972,7 +6580,7 @@ __attribute__((naked)) void Task_BattlePyramidChooseMonHeldItems(u8 taskId)
         "	.align 2, 0\n\t"
         "_081B9320: .4byte gPaletteFade\n\t"
         "_081B9324: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B9328: .4byte sub_081B9030 + 1\n\t"
+        "_081B9328: .4byte BufferMonSelection + 1\n\t"
         ".syntax divided\n\t"
     );
 }

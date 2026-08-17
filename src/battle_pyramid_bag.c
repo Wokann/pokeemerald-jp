@@ -97,7 +97,7 @@ __attribute__((naked)) void sub_081C474C(void)
         "	.align 2, 0\n\t"
         "_081C477C: .4byte gPaletteFade\n\t"
         "_081C4780: .4byte gFieldCallback2\n\t"
-        "_081C4784: .4byte hm_add_c3_without_phase_2 + 1\n\t"
+        "_081C4784: .4byte CB2_FadeFromPartyMenu + 1\n\t"
         "_081C4788: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );

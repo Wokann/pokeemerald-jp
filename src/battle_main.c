@@ -8764,7 +8764,7 @@ __attribute__((naked)) void CB2_PreInitMultiBattle(void)
         "	str r0, [r2]\n\t"
         "	ldr r0, _080379B0\n\t"
         "	str r0, [r1, #8]\n\t"
-        "	bl sub_081B8DF0\n\t"
+        "	bl ShowPartyMenuToShowcaseMultiBattleParty\n\t"
         "	b _08037A5A\n\t"
         "	.align 2, 0\n\t"
         "_080379A0: .4byte gMultiPartnerParty\n\t"

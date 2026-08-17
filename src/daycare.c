@@ -3493,7 +3493,7 @@ __attribute__((naked)) void ChooseSendDaycareMon()
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_081B8FC8\n\t"
+        "	bl ChooseMonForDaycare\n\t"
         "	ldr r1, _08070D60\n\t"
         "	ldr r0, _08070D64\n\t"
         "	str r0, [r1, #8]\n\t"
