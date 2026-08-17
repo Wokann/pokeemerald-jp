@@ -60,8 +60,8 @@ gUnknown_85E08C4: @ 0x85E08C4
 	.globl gTutorMoves
 	.set gTutorMoves, gUnknown_85E08C4
 
-	.globl gUnknown_85E0900
-gUnknown_85E0900: @ 0x85E0900
+	.globl sTutorLearnsets
+sTutorLearnsets: @ 0x85E0900
 	.incbin "baserom_jp.gba", 0x5e0900, 0x670
 
 	.globl gUnknown_85E0F70
@@ -88,32 +88,32 @@ sCancelButton_Tilemap: @ 0x85E1098
 sFontColorTable: @ 0x85E10B4
 	.incbin "baserom_jp.gba", 0x5e10b4, 0x14
 
-	.globl gUnknown_85E10C8
-gUnknown_85E10C8: @ 0x85E10C8
+	.globl sSinglePartyMenuWindowTemplate
+sSinglePartyMenuWindowTemplate: @ 0x85E10C8
 	.incbin "baserom_jp.gba", 0x5e10c8, 0x40
 
-	.globl gUnknown_85E1108
-gUnknown_85E1108: @ 0x85E1108
+	.globl sDoublePartyMenuWindowTemplate
+sDoublePartyMenuWindowTemplate: @ 0x85E1108
 	.incbin "baserom_jp.gba", 0x5e1108, 0x40
 
-	.globl gUnknown_85E1148
-gUnknown_85E1148: @ 0x85E1148
+	.globl sMultiPartyMenuWindowTemplate
+sMultiPartyMenuWindowTemplate: @ 0x85E1148
 	.incbin "baserom_jp.gba", 0x5e1148, 0x40
 
-	.globl gUnknown_85E1188
-gUnknown_85E1188: @ 0x85E1188
+	.globl sShowcaseMultiPartyMenuWindowTemplate
+sShowcaseMultiPartyMenuWindowTemplate: @ 0x85E1188
 	.incbin "baserom_jp.gba", 0x5e1188, 0x38
 
-	.globl gUnknown_85E11C0
-gUnknown_85E11C0: @ 0x85E11C0
+	.globl sCancelButtonWindowTemplate
+sCancelButtonWindowTemplate: @ 0x85E11C0
 	.incbin "baserom_jp.gba", 0x5e11c0, 0x8
 
-	.globl gUnknown_85E11C8
-gUnknown_85E11C8: @ 0x85E11C8
+	.globl sMultiCancelButtonWindowTemplate
+sMultiCancelButtonWindowTemplate: @ 0x85E11C8
 	.incbin "baserom_jp.gba", 0x5e11c8, 0x8
 
-	.globl gUnknown_85E11D0
-gUnknown_85E11D0: @ 0x85E11D0
+	.globl sConfirmButtonWindowTemplate
+sConfirmButtonWindowTemplate: @ 0x85E11D0
 	.incbin "baserom_jp.gba", 0x5e11d0, 0x8
 
 	.globl sDefaultPartyMsgWindowTemplate

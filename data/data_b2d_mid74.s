@@ -9,8 +9,8 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85C93BB
-gUnknown_85C93BB: @ 0x85C93BB
+	.globl gMenuText_Confirm
+gMenuText_Confirm: @ 0x85C93BB
 	.string "けってい$おりる$"
 	.globl gText_Cancel
 gText_Cancel: @ 0x85C93C4

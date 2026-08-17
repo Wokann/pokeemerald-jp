@@ -119,9 +119,30 @@ static void Task_ExitPartyMenu(u8 taskId);
 static bool8 ShowPartyMenu(void);
 static void CB2_InitPartyMenu(void);
 void reset_brm(void);
-void sub_081B1D6C(void); // SetPartyMonsAllowedInMinigame
-void sub_081B206C(u8 layout); // InitPartyMenuWindows
-void sub_081B20F8(u8 chooseHalf); // CreateCancelConfirmWindows
+static void SetPartyMonsAllowedInMinigame(void);
+static void InitPartyMenuWindows(u8 layout);
+static void CreateCancelConfirmWindows(bool8 chooseHalf);
+static bool16 IsMonAllowedInPokemonJump(struct Pokemon *mon);
+static bool16 IsMonAllowedInDodrioBerryPicking(struct Pokemon *mon);
+static bool8 IsMonAllowedInMinigame(u8 slot);
+static void TryEnterMonForMinigame(u8 taskId, u8 slot);
+static void CancelParticipationPrompt(u8 taskId);
+static void Task_CancelParticipationYesNo(u8 taskId);
+static void Task_HandleCancelParticipationYesNoInput(u8 taskId);
+static u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor);
+static u16 GetTutorMove(u8 tutor);
+static bool8 CanLearnTutorMove(u16 species, u8 tutor);
+bool32 IsSpeciesAllowedInPokemonJump(u16 species);
+extern const u32 sTutorLearnsets[];
+extern const struct WindowTemplate sSinglePartyMenuWindowTemplate[];
+extern const struct WindowTemplate sDoublePartyMenuWindowTemplate[];
+extern const struct WindowTemplate sMultiPartyMenuWindowTemplate[];
+extern const struct WindowTemplate sShowcaseMultiPartyMenuWindowTemplate[];
+extern const struct WindowTemplate sCancelButtonWindowTemplate[];
+extern const struct WindowTemplate sMultiCancelButtonWindowTemplate[];
+extern const struct WindowTemplate sConfirmButtonWindowTemplate[];
+extern const u8 gMenuText_Confirm[];
+extern const u16 gStandardMenuPalette[];
 static void Task_PrintAndWaitForText(u8 taskId);
 __attribute__((naked)) void Task_FieldMoveWaitForFade(u8 taskId);
 static void MoveCursorToConfirm(void);
@@ -267,8 +288,8 @@ static s8 GetNewSlotDoubleLayout(s8 slotId, s8 movementDir);
 static void PartyMenuRemoveWindow(u8 *windowId);
 s8 Menu_ProcessInputNoWrapClearOnChoose(void);
 static void Task_ReturnToChooseMonAfterText(u8 taskId);
-void sub_081B1E7C(u8 taskId, u8 slotId); // TryEnterMonForMinigame
-void sub_081B1EE0(u8 taskId); // CancelParticipationPrompt
+void TryEnterMonForMinigame(u8 taskId, u8 slotId); // TryEnterMonForMinigame
+void CancelParticipationPrompt(u8 taskId); // CancelParticipationPrompt
 void sub_081B339C(u8 taskId); // Task_TryCreateSelectionWindow
 void sub_081B35D8(u8 taskId); // SwitchSelectedMons
 void sub_081B3D1C(u8 taskId); // FinishTwoMonAction
@@ -398,7 +419,7 @@ static bool8 ShowPartyMenu(void)
         gMain.state++;
         break;
     case 6:
-        sub_081B1D6C(); // SetPartyMonsAllowedInMinigame
+        SetPartyMonsAllowedInMinigame();
         gMain.state++;
         break;
     case 7:
@@ -418,7 +439,7 @@ static bool8 ShowPartyMenu(void)
             gMain.state++;
         break;
     case 9:
-        sub_081B206C(gPartyMenu.layout); // InitPartyMenuWindows
+        InitPartyMenuWindows(gPartyMenu.layout);
         gMain.state++;
         break;
     case 10:
@@ -461,7 +482,7 @@ static bool8 ShowPartyMenu(void)
         gMain.state++;
         break;
     case 18:
-        sub_081B20F8(sPartyMenuInternal->chooseHalf); // CreateCancelConfirmWindows
+        CreateCancelConfirmWindows(sPartyMenuInternal->chooseHalf);
         gMain.state++;
         break;
     case 19:
@@ -1169,7 +1190,7 @@ static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
         case PARTY_ACTION_MINIGAME:
             if (IsSelectedMonNotEgg((u8 *)slotPtr))
             {
-                sub_081B1E7C(taskId, (u8)*slotPtr); // TryEnterMonForMinigame
+                TryEnterMonForMinigame(taskId, (u8)*slotPtr); // TryEnterMonForMinigame
             }
             break;
         default:
@@ -1206,7 +1227,7 @@ static void HandleChooseMonCancel(u8 taskId, s8 *slotPtr)
         break;
     case PARTY_ACTION_MINIGAME:
         PlaySE(SE_SELECT);
-        sub_081B1EE0(taskId); // CancelParticipationPrompt
+        CancelParticipationPrompt(taskId); // CancelParticipationPrompt
         break;
     default:
         PlaySE(SE_SELECT);
@@ -1723,235 +1744,70 @@ static void ResetHPTaskData(u8 taskId, u8 caseId, u32 hp)
 #undef tPartyId
 #undef tStartHP
 
-__attribute__((naked)) u8 GetAilmentFromStatus(u32 status)
+u8 GetAilmentFromStatus(u32 status)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x88\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1CF4\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B1D26\n\t"
-        "_081B1CF4:\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1D00\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081B1D26\n\t"
-        "_081B1D00:\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1D0C\n\t"
-        "	movs r0, #3\n\t"
-        "	b _081B1D26\n\t"
-        "_081B1D0C:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1D18\n\t"
-        "	movs r0, #4\n\t"
-        "	b _081B1D26\n\t"
-        "_081B1D18:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1D24\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B1D26\n\t"
-        "_081B1D24:\n\t"
-        "	movs r0, #5\n\t"
-        "_081B1D26:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (status & STATUS1_PSN_ANY)
+        return AILMENT_PSN;
+    if (status & STATUS1_PARALYSIS)
+        return AILMENT_PRZ;
+    if (status & STATUS1_SLEEP)
+        return AILMENT_SLP;
+    if (status & STATUS1_FREEZE)
+        return AILMENT_FRZ;
+    if (status & STATUS1_BURN)
+        return AILMENT_BRN;
+    return AILMENT_NONE;
 }
 
-__attribute__((naked)) u8 GetMonAilment(struct Pokemon *mon)
+u8 GetMonAilment(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1D3E\n\t"
-        "	movs r0, #7\n\t"
-        "	b _081B1D66\n\t"
-        "_081B1D3E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x37\n\t"
-        "	bl GetMonData3\n\t"
-        "	bl GetAilmentFromStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1D66\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CheckPartyPokerus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1D64\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B1D66\n\t"
-        "_081B1D64:\n\t"
-        "	movs r0, #6\n\t"
-        "_081B1D66:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 ailment;
+
+    if (GetMonData(mon, MON_DATA_HP) == 0)
+        return AILMENT_FNT;
+    ailment = GetAilmentFromStatus(GetMonData(mon, MON_DATA_STATUS));
+    if (ailment != AILMENT_NONE)
+        return ailment;
+    if (CheckPartyPokerus(mon, 0))
+        return AILMENT_PKRS;
+    return AILMENT_NONE;
 }
 
-__attribute__((naked)) void sub_081B1D6C(void)
+static void SetPartyMonsAllowedInMinigame(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r2, _081B1DBC\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bne _081B1DF6\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r5, #0xe\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldr r0, _081B1DC0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1DCC\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _081B1DC4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	bhs _081B1DF6\n\t"
-        "_081B1D94:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081B1DC8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl sub_081B1E04\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r0, r4\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _081B1DC4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	blo _081B1D94\n\t"
-        "	b _081B1DF6\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1DBC: .4byte gPartyMenu\n\t"
-        "_081B1DC0: .4byte gSpecialVar_0x8005\n\t"
-        "_081B1DC4: .4byte gPlayerPartyCount\n\t"
-        "_081B1DC8: .4byte gPlayerParty\n\t"
-        "_081B1DCC:\n\t"
-        "	movs r4, #0\n\t"
-        "	b _081B1DEE\n\t"
-        "_081B1DD0:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081B1DFC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl sub_081B1E34\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r0, r4\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_081B1DEE:\n\t"
-        "	ldr r0, _081B1E00\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	blo _081B1DD0\n\t"
-        "_081B1DF6:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1DFC: .4byte gPlayerParty\n\t"
-        "_081B1E00: .4byte gPlayerPartyCount\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *ptr;
+
+    if (gPartyMenu.menuType == PARTY_MENU_TYPE_MINIGAME)
+    {
+        u8 i;
+
+        ptr = &gPartyMenu.data[0];
+        gPartyMenu.data[0] = 0;
+        if (gSpecialVar_0x8005 == 0)
+        {
+            for (i = 0; i < gPlayerPartyCount; i++)
+                *ptr += IsMonAllowedInPokemonJump(&gPlayerParty[i]) << i;
+        }
+        else
+        {
+            for (i = 0; i < gPlayerPartyCount; i++)
+                *ptr += IsMonAllowedInDodrioBerryPicking(&gPlayerParty[i]) << i;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081B1E04(void)
+static bool16 IsMonAllowedInPokemonJump(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1E2A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl sub_0802C5FC\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1E2A\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B1E2C\n\t"
-        "_081B1E2A:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B1E2C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_IS_EGG) != TRUE && IsSpeciesAllowedInPokemonJump(GetMonData(mon, MON_DATA_SPECIES)))
+        return TRUE;
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_081B1E34(void)
+static bool16 IsMonAllowedInDodrioBerryPicking(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1E52\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0x55\n\t"
-        "	bne _081B1E52\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B1E54\n\t"
-        "_081B1E52:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B1E54:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_IS_EGG) != TRUE && GetMonData(mon, MON_DATA_SPECIES) == SPECIES_DODRIO)
+        return TRUE;
+    return FALSE;
 }
 
 static bool8 IsMonAllowedInMinigame(u8 slot)
@@ -1961,481 +1817,161 @@ static bool8 IsMonAllowedInMinigame(u8 slot)
     return TRUE;
 }
 
-__attribute__((naked)) void sub_081B1E7C(u8 taskId, u8 slotId)
+static void TryEnterMonForMinigame(u8 taskId, u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl IsMonAllowedInMinigame\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B1EAC\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081B1EA8\n\t"
-        "	strh r5, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "	b _081B1ECE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1EA8: .4byte gSpecialVar_0x8004\n\t"
-        "_081B1EAC:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081B1ED4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r1, _081B1ED8\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B1EDC\n\t"
-        "	str r1, [r0]\n\t"
-        "_081B1ECE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1ED4: .4byte gUnknown_85C97BD + 0xA3E\n\t"
-        "_081B1ED8: .4byte gTasks\n\t"
-        "_081B1EDC: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsMonAllowedInMinigame(slot) == TRUE)
+    {
+        PlaySE(SE_SELECT);
+        gSpecialVar_0x8004 = slot;
+        Task_ClosePartyMenu(taskId);
+    }
+    else
+    {
+        PlaySE(SE_FAILURE);
+        DisplayPartyMenuMessage(gUnknown_85C97BD + 0xA3E, FALSE); // gText_PkmnCantParticipate
+        ScheduleBgCopyTilemapToVram(2);
+        gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+    }
 }
 
-__attribute__((naked)) void sub_081B1EE0(u8 taskId)
+static void CancelParticipationPrompt(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _081B1F0C\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r1, _081B1F10\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B1F14\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1F0C: .4byte gUnknown_85C97BD + 0xA53\n\t"
-        "_081B1F10: .4byte gTasks\n\t"
-        "_081B1F14: .4byte sub_081B1F18 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    DisplayPartyMenuMessage(gUnknown_85C97BD + 0xA53, TRUE); // gText_CancelParticipation
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_CancelParticipationYesNo;
 }
 
-__attribute__((naked)) void sub_081B1F18(void)
+static void Task_CancelParticipationYesNo(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1F3C\n\t"
-        "	bl sub_081B2FDC\n\t"
-        "	ldr r0, _081B1F44\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B1F48\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B1F3C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1F44: .4byte gTasks\n\t"
-        "_081B1F48: .4byte sub_081B1F4C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        sub_081B2FDC(); // PartyMenuDisplayYesNoMenu
+        gTasks[taskId].func = Task_HandleCancelParticipationYesNoInput;
+    }
 }
 
-__attribute__((naked)) void sub_081B1F4C(void)
+static void Task_HandleCancelParticipationYesNoInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B1F72\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _081B1F6C\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B1F84\n\t"
-        "	b _081B1F98\n\t"
-        "_081B1F6C:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _081B1F8A\n\t"
-        "	b _081B1F98\n\t"
-        "_081B1F72:\n\t"
-        "	ldr r1, _081B1F80\n\t"
-        "	movs r0, #7\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "	b _081B1F98\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1F80: .4byte gSpecialVar_0x8004\n\t"
-        "_081B1F84:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "_081B1F8A:\n\t"
-        "	ldr r0, _081B1FA0\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B1FA4\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B1F98:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1FA0: .4byte gTasks\n\t"
-        "_081B1FA4: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0:
+        gSpecialVar_0x8004 = PARTY_SIZE + 1;
+        Task_ClosePartyMenu(taskId);
+        break;
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        // fallthrough
+    case 1:
+        gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+        break;
+    }
 }
 
-__attribute__((naked)) bool8 CanMonLearnTMTutor(struct Pokemon *mon)
+static u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	adds r7, r4, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	mov r8, r6\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1FCA\n\t"
-        "	movs r0, #3\n\t"
-        "	b _081B2026\n\t"
-        "_081B1FCA:\n\t"
-        "	movs r0, #0x90\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r4, r0\n\t"
-        "	bls _081B1FEC\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	subs r1, #0x21\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CanMonLearnTMHM\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2004\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl ItemIdToBattleMoveId\n\t"
-        "	b _081B200E\n\t"
-        "_081B1FEC:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl CanLearnTutorMove\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B2008\n\t"
-        "_081B2004:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B2026\n\t"
-        "_081B2008:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetTutorMove\n\t"
-        "_081B200E:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl MonKnowsMove\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B2024\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B2026\n\t"
-        "_081B2024:\n\t"
-        "	movs r0, #2\n\t"
-        "_081B2026:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 move;
+
+    if (GetMonData(mon, MON_DATA_IS_EGG))
+        return CANNOT_LEARN_MOVE_IS_EGG;
+
+    if (item >= ITEM_TM01)
+    {
+        if (!CanMonLearnTMHM(mon, item - ITEM_TM01))
+            return CANNOT_LEARN_MOVE;
+        else
+            move = ItemIdToBattleMoveId(item);
+    }
+    else
+    {
+        if (!CanLearnTutorMove(GetMonData(mon, MON_DATA_SPECIES), tutor))
+            return CANNOT_LEARN_MOVE;
+        else
+            move = GetTutorMove(tutor);
+    }
+
+    if (MonKnowsMove(mon, move) == TRUE)
+        return ALREADY_KNOWS_MOVE;
+    else
+        return CAN_LEARN_MOVE;
 }
 
-u16 GetTutorMove(u8 tutor)
+static u16 GetTutorMove(u8 tutor)
 {
     return gTutorMoves[tutor];
 }
 
-
-__attribute__((naked)) bool8 CanLearnTutorMove(u16 move, u8 a)
+static bool8 CanLearnTutorMove(u16 species, u8 tutor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _081B2060\n\t"
-        "	lsrs r0, r0, #0xe\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #1\n\t"
-        "	lsls r2, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B2064\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B2066\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2060: .4byte gUnknown_85E0900\n\t"
-        "_081B2064:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B2066:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sTutorLearnsets[species] & (1 << tutor))
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void sub_081B206C(u8 layout)
+static void InitPartyMenuWindows(u8 layout)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B2094\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081B2082\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2088\n\t"
-        "	b _081B20AC\n\t"
-        "_081B2082:\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _081B20A0\n\t"
-        "	b _081B20AC\n\t"
-        "_081B2088:\n\t"
-        "	ldr r0, _081B2090\n\t"
-        "	bl InitWindows\n\t"
-        "	b _081B20B2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2090: .4byte gUnknown_85E10C8\n\t"
-        "_081B2094:\n\t"
-        "	ldr r0, _081B209C\n\t"
-        "	bl InitWindows\n\t"
-        "	b _081B20B2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B209C: .4byte gUnknown_85E1108\n\t"
-        "_081B20A0:\n\t"
-        "	ldr r0, _081B20A8\n\t"
-        "	bl InitWindows\n\t"
-        "	b _081B20B2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B20A8: .4byte gUnknown_85E1148\n\t"
-        "_081B20AC:\n\t"
-        "	ldr r0, _081B20F0\n\t"
-        "	bl InitWindows\n\t"
-        "_081B20B2:\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	movs r4, #0\n\t"
-        "_081B20B8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #5\n\t"
-        "	bls _081B20B8\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x4f\n\t"
-        "	movs r2, #0xd0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "	bl GetOverworldTextboxPalettePtr\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, _081B20F4\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B20F0: .4byte gUnknown_85E1188\n\t"
-        "_081B20F4: .4byte gStandardMenuPalette\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    switch (layout)
+    {
+    case PARTY_LAYOUT_SINGLE:
+        InitWindows(sSinglePartyMenuWindowTemplate);
+        break;
+    case PARTY_LAYOUT_DOUBLE:
+        InitWindows(sDoublePartyMenuWindowTemplate);
+        break;
+    case PARTY_LAYOUT_MULTI:
+        InitWindows(sMultiPartyMenuWindowTemplate);
+        break;
+    default: // PARTY_LAYOUT_MULTI_SHOWCASE
+        InitWindows(sShowcaseMultiPartyMenuWindowTemplate);
+        break;
+    }
+    DeactivateAllTextPrinters();
+    for (i = 0; i < PARTY_SIZE; i++)
+        FillWindowPixelBuffer(i, PIXEL_FILL(0));
+    LoadUserWindowBorderGfx(0, 0x4F, BG_PLTT_ID(13));
+    LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
+    LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) void sub_081B20F8(u8 chooseHalf)
+static void CreateCancelConfirmWindows(bool8 chooseHalf)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _081B2160\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #5\n\t"
-        "	beq _081B21EE\n\t"
-        "	cmp r2, #1\n\t"
-        "	bne _081B2174\n\t"
-        "	ldr r0, _081B2164\n\t"
-        "	bl AddWindow\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B2168\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	ldr r0, _081B216C\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #2\n\t"
-        "	bl AddTextPrinterParameterized4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	ldr r0, _081B2170\n\t"
-        "	bl AddWindow\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r5, #0xa\n\t"
-        "	b _081B2180\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2160: .4byte gPartyMenu\n\t"
-        "_081B2164: .4byte gUnknown_85E11D0\n\t"
-        "_081B2168: .4byte sFontColorTable\n\t"
-        "_081B216C: .4byte gUnknown_85C93BB\n\t"
-        "_081B2170: .4byte gUnknown_85E11C8\n\t"
-        "_081B2174:\n\t"
-        "	ldr r0, _081B21B0\n\t"
-        "	bl AddWindow\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r5, #0xc\n\t"
-        "_081B2180:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r0, _081B21B4\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	beq _081B21C0\n\t"
-        "	ldr r0, _081B21B8\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B21BC\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl AddTextPrinterParameterized3\n\t"
-        "	b _081B21DA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B21B0: .4byte gUnknown_85E11C0\n\t"
-        "_081B21B4: .4byte gPartyMenu\n\t"
-        "_081B21B8: .4byte sFontColorTable\n\t"
-        "_081B21BC: .4byte gText_Cancel\n\t"
-        "_081B21C0:\n\t"
-        "	ldr r0, _081B21F8\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B21FC\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl AddTextPrinterParameterized3\n\t"
-        "_081B21DA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "_081B21EE:\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B21F8: .4byte sFontColorTable\n\t"
-        "_081B21FC: .4byte gText_Exit\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 confirmWindowId;
+    u8 cancelWindowId;
+    u8 offset;
+
+    if (gPartyMenu.menuType != PARTY_MENU_TYPE_MULTI_SHOWCASE)
+    {
+        if (chooseHalf == TRUE)
+        {
+            confirmWindowId = AddWindow(&sConfirmButtonWindowTemplate);
+            FillWindowPixelBuffer(confirmWindowId, PIXEL_FILL(0));
+            AddTextPrinterParameterized4(confirmWindowId, FONT_NORMAL, 8, 2, 0, 0, sFontColorTable[0], TEXT_SKIP_DRAW, gMenuText_Confirm); // JP uses FONT_NORMAL
+            PutWindowTilemap(confirmWindowId);
+            CopyWindowToVram(confirmWindowId, COPYWIN_GFX);
+            cancelWindowId = AddWindow(&sMultiCancelButtonWindowTemplate);
+            offset = 0xA;
+        }
+        else
+        {
+            cancelWindowId = AddWindow(&sCancelButtonWindowTemplate);
+            offset = 0xC;
+        }
+        FillWindowPixelBuffer(cancelWindowId, PIXEL_FILL(0));
+
+        if (gPartyMenu.menuType != PARTY_MENU_TYPE_SPIN_TRADE)
+        {
+            AddTextPrinterParameterized3(cancelWindowId, FONT_NORMAL, offset, 2, sFontColorTable[0], TEXT_SKIP_DRAW, gText_Cancel); // JP uses FONT_NORMAL
+        }
+        else
+        {
+            AddTextPrinterParameterized3(cancelWindowId, FONT_NORMAL, offset, 2, sFontColorTable[0], TEXT_SKIP_DRAW, gText_Exit); // JP uses FONT_NORMAL
+        }
+        PutWindowTilemap(cancelWindowId);
+        CopyWindowToVram(cancelWindowId, COPYWIN_GFX);
+        ScheduleBgCopyTilemapToVram(0);
+    }
 }
 
 __attribute__((naked)) const void *GetPartyMenuPalBufferPtr(u8 a)
