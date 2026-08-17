@@ -26,6 +26,9 @@ extern void Task_WateringBerryTreeAnim_0(u8 taskId);
 extern void FieldCallback_SecretBaseCave(void);
 extern void FieldCallback_SecretBaseTree(void);
 extern void FieldCallback_SecretBaseShrub(void);
+extern const u8 SecretBase_EventScript_Cave[];
+extern const u8 SecretBase_EventScript_Tree[];
+extern const u8 SecretBase_EventScript_Shrub[];
 
 #include "fldeff_misc.h"
 
@@ -556,26 +559,12 @@ bool8 SetUpFieldMove_SecretPower(void)
 }
 
 
-__attribute__((naked)) void FieldCallback_SecretBaseCave(void)
+void FieldCallback_SecretBaseCave(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	ldr r1, _080FA964\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080FA968\n\t"
-        "	bl ScriptContext_SetupScript\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA964: .4byte gFieldEffectArguments\n\t"
-        "_080FA968: .4byte SecretBase_EventScript_Tree\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = (u8)GetCursorSelectionMonId();
+    ScriptContext_SetupScript(SecretBase_EventScript_Tree);
 }
+
 
 bool8 FldEff_UseSecretPowerCave(void)
 {
@@ -713,26 +702,12 @@ __attribute__((naked)) void CaveEntranceSpriteCallbackEnd(void)
     );
 }
 
-__attribute__((naked)) void FieldCallback_SecretBaseShrub(void)
+void FieldCallback_SecretBaseShrub(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	ldr r1, _080FAA70\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080FAA74\n\t"
-        "	bl ScriptContext_SetupScript\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAA70: .4byte gFieldEffectArguments\n\t"
-        "_080FAA74: .4byte SecretBase_EventScript_Shrub\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = (u8)GetCursorSelectionMonId();
+    ScriptContext_SetupScript(SecretBase_EventScript_Shrub);
 }
+
 
 bool8 FldEff_UseSecretPowerShrub(void)
 {
@@ -912,26 +887,12 @@ __attribute__((naked)) void TreeEntranceSpriteCallbackEnd(void)
     );
 }
 
-__attribute__((naked)) void FieldCallback_SecretBaseTree(void)
+void FieldCallback_SecretBaseTree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetCursorSelectionMonId\n\t"
-        "	ldr r1, _080FABD4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080FABD8\n\t"
-        "	bl ScriptContext_SetupScript\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FABD4: .4byte gFieldEffectArguments\n\t"
-        "_080FABD8: .4byte SecretBase_EventScript_Cave\n\t"
-        ".syntax divided\n\t"
-    );
+    gFieldEffectArguments[0] = (u8)GetCursorSelectionMonId();
+    ScriptContext_SetupScript(SecretBase_EventScript_Cave);
 }
+
 
 bool8 FldEff_UseSecretPowerTree(void)
 {
