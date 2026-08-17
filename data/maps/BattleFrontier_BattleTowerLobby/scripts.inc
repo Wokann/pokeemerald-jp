@@ -973,7 +973,7 @@ BattleFrontier_BattleTowerLobby_EventScript_00220306::
 	message 0x08247C79
 	waitmessage
 	setvar 0x8005, 0x0
-	special sub_080B2680
+	special TryBattleLinkup
 	waitstate
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, BattleFrontier_BattleTowerLobby_EventScript_002203F0

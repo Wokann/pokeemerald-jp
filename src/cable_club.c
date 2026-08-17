@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "cable_club.h"
 #include "constants/songs.h"
 #include "data.h"
@@ -17,6 +18,7 @@
 #define tMinPlayers data[1]
 #define tMaxPlayers data[2]
 #define tNumPlayers data[3]
+#define tTimer      data[4]
 #define tWindowId   data[5]
 
 extern s16 gUnknown_3005B68[];
@@ -521,360 +523,115 @@ static void Task_LinkupAwaitTrainerCardData(u8 taskId)
     FinishLinkup(&gSpecialVar_Result, taskId);
 }
 
-__attribute__((naked)) void Task_StopLinkup(u8 taskId)
+static void Task_StopLinkup(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _080B25C0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B25BA\n\t"
-        "	ldr r0, _080B25C4\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	bl ClearLinkPlayerCountWindow\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	ldrb r0, [r4, #0x12]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B25BA:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B25C0: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_080B25C4: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gReceivedRemoteLinkPlayers)
+    {
+        ClearLinkPlayerCountWindow(gTasks[taskId].tWindowId);
+        ScriptContext_Enable();
+        RemoveWindow(gTasks[taskId].tWindowId);
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void Task_LinkupFailed(u8 taskId)
+static void Task_LinkupFailed(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _080B2600\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080B2604\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	bl ClearLinkPlayerCountWindow\n\t"
-        "	bl StopFieldMessage\n\t"
-        "	ldrb r0, [r4, #0x12]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2600: .4byte gSpecialVar_Result\n\t"
-        "_080B2604: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpecialVar_Result = LINKUP_FAILED;
+    ClearLinkPlayerCountWindow(gTasks[taskId].tWindowId);
+    StopFieldMessage();
+    RemoveWindow(gTasks[taskId].tWindowId);
+    ScriptContext_Enable();
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void Task_LinkupConnectionError(u8 taskId)
+static void Task_LinkupConnectionError(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _080B2640\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080B2644\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	bl ClearLinkPlayerCountWindow\n\t"
-        "	ldrb r0, [r4, #0x12]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	bl HideFieldMessageBox\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2640: .4byte gSpecialVar_Result\n\t"
-        "_080B2644: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpecialVar_Result = LINKUP_CONNECTION_ERROR;
+    ClearLinkPlayerCountWindow(gTasks[taskId].tWindowId);
+    RemoveWindow(gTasks[taskId].tWindowId);
+    HideFieldMessageBox();
+    ScriptContext_Enable();
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) bool8 TryLinkTimeout(u8 taskId)
+static bool8 TryLinkTimeout(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B266C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r2, r1, r2\n\t"
-        "	ldrh r0, [r2, #0x10]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0x96\n\t"
-        "	lsls r1, r1, #0x12\n\t"
-        "	cmp r0, r1\n\t"
-        "	bgt _080B2670\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080B2676\n\t"
-        "	.align 2, 0\n\t"
-        "_080B266C: .4byte gTasks\n\t"
-        "_080B2670:\n\t"
-        "	ldr r0, _080B267C\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "_080B2676:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B267C: .4byte Task_LinkupConnectionError + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].tTimer++;
+    if (gTasks[taskId].tTimer > 600)
+    {
+        gTasks[taskId].func = Task_LinkupConnectionError;
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080B2680(void)
+void TryBattleLinkup(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r3, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	ldr r0, _080B2698\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080B26B8\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _080B269C\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B26A6\n\t"
-        "	b _080B2710\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2698: .4byte gSpecialVar_0x8004\n\t"
-        "_080B269C:\n\t"
-        "	cmp r0, #5\n\t"
-        "	beq _080B26C8\n\t"
-        "	cmp r0, #9\n\t"
-        "	beq _080B26DC\n\t"
-        "	b _080B2710\n\t"
-        "_080B26A6:\n\t"
-        "	movs r3, #2\n\t"
-        "	ldr r1, _080B26B0\n\t"
-        "	ldr r4, _080B26B4\n\t"
-        "	b _080B270C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B26B0: .4byte gLinkType\n\t"
-        "_080B26B4: .4byte 0x00002233\n\t"
-        "_080B26B8:\n\t"
-        "	movs r3, #2\n\t"
-        "	ldr r1, _080B26C0\n\t"
-        "	ldr r4, _080B26C4\n\t"
-        "	b _080B270C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B26C0: .4byte gLinkType\n\t"
-        "_080B26C4: .4byte 0x00002244\n\t"
-        "_080B26C8:\n\t"
-        "	movs r3, #4\n\t"
-        "	movs r2, #4\n\t"
-        "	ldr r1, _080B26D4\n\t"
-        "	ldr r4, _080B26D8\n\t"
-        "	b _080B270C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B26D4: .4byte gLinkType\n\t"
-        "_080B26D8: .4byte 0x00002255\n\t"
-        "_080B26DC:\n\t"
-        "	movs r3, #2\n\t"
-        "	ldr r0, _080B26F8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080B26FC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B2708\n\t"
-        "	ldr r1, _080B2700\n\t"
-        "	ldr r4, _080B2704\n\t"
-        "	b _080B270C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B26F8: .4byte gSaveBlock2Ptr\n\t"
-        "_080B26FC: .4byte 0x00000CA9\n\t"
-        "_080B2700: .4byte gLinkType\n\t"
-        "_080B2704: .4byte 0x00002266\n\t"
-        "_080B2708:\n\t"
-        "	ldr r1, _080B2720\n\t"
-        "	ldr r4, _080B2724\n\t"
-        "_080B270C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080B2710:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl CreateLinkupTask\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2720: .4byte gLinkType\n\t"
-        "_080B2724: .4byte 0x00002277\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 minPlayers = 2;
+    u8 maxPlayers = 2;
+
+    switch (gSpecialVar_0x8004)
+    {
+    case USING_SINGLE_BATTLE:
+        minPlayers = 2;
+        gLinkType = LINKTYPE_SINGLE_BATTLE;
+        break;
+    case USING_DOUBLE_BATTLE:
+        minPlayers = 2;
+        gLinkType = LINKTYPE_DOUBLE_BATTLE;
+        break;
+    case USING_MULTI_BATTLE:
+        minPlayers = 4;
+        maxPlayers = 4;
+        gLinkType = LINKTYPE_MULTI_BATTLE;
+        break;
+    case USING_BATTLE_TOWER:
+        minPlayers = 2;
+        if (gSaveBlock2Ptr->frontier.lvlMode == FRONTIER_LVL_50)
+            gLinkType = LINKTYPE_BATTLE_TOWER_50;
+        else
+            gLinkType = LINKTYPE_BATTLE_TOWER_OPEN;
+        break;
+    }
+
+    CreateLinkupTask(minPlayers, maxPlayers);
 }
 
-__attribute__((naked)) void sub_080B2728(void)
+void TryTradeLinkup(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _080B2744\n\t"
-        "	ldr r2, _080B2748\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080B274C\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CreateLinkupTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2744: .4byte gLinkType\n\t"
-        "_080B2748: .4byte 0x00001133\n\t"
-        "_080B274C: .4byte gBattleTypeFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    gLinkType = LINKTYPE_TRADE_SETUP;
+    gBattleTypeFlags = 0;
+    CreateLinkupTask(2, 2);
 }
 
-__attribute__((naked)) void sub_080B2750(void)
+void TryRecordMixLinkup(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _080B2774\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080B2778\n\t"
-        "	ldr r2, _080B277C\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080B2780\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #4\n\t"
-        "	bl CreateLinkupTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2774: .4byte gSpecialVar_Result\n\t"
-        "_080B2778: .4byte gLinkType\n\t"
-        "_080B277C: .4byte 0x00003311\n\t"
-        "_080B2780: .4byte gBattleTypeFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpecialVar_Result = LINKUP_ONGOING;
+    gLinkType = LINKTYPE_RECORD_MIX_BEFORE;
+    gBattleTypeFlags = 0;
+    CreateLinkupTask(2, 4);
 }
 
-__attribute__((naked)) void sub_080B2784(void)
+void TryBerryBlenderLinkup(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _080B27A0\n\t"
-        "	ldr r2, _080B27A4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080B27A8\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #4\n\t"
-        "	bl CreateLinkupTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B27A0: .4byte gLinkType\n\t"
-        "_080B27A4: .4byte 0x00004411\n\t"
-        "_080B27A8: .4byte gBattleTypeFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    gLinkType = LINKTYPE_BERRY_BLENDER_SETUP;
+    gBattleTypeFlags = 0;
+    CreateLinkupTask(2, 4);
 }
 
-__attribute__((naked)) void sub_080B27AC(void)
+void TryContestGModeLinkup(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _080B27C8\n\t"
-        "	ldr r2, _080B27CC\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080B27D0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #4\n\t"
-        "	movs r1, #4\n\t"
-        "	bl CreateLinkupTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B27C8: .4byte gLinkType\n\t"
-        "_080B27CC: .4byte 0x00006601\n\t"
-        "_080B27D0: .4byte gBattleTypeFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    gLinkType = LINKTYPE_CONTEST_GMODE;
+    gBattleTypeFlags = 0;
+    CreateLinkupTask(4, 4);
 }
 
-__attribute__((naked)) void sub_080B27D4(void)
+void TryContestEModeLinkup(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r1, _080B27F0\n\t"
-        "	ldr r2, _080B27F4\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080B27F8\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #4\n\t"
-        "	bl CreateLinkupTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B27F0: .4byte gLinkType\n\t"
-        "_080B27F4: .4byte 0x00006602\n\t"
-        "_080B27F8: .4byte gBattleTypeFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    gLinkType = LINKTYPE_CONTEST_EMODE;
+    gBattleTypeFlags = 0;
+    CreateLinkupTask(2, 4);
 }
 
 __attribute__((naked)) u8 CreateTask_ReestablishCableClubLink()

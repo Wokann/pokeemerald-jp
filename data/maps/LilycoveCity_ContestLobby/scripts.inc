@@ -743,12 +743,12 @@ LilycoveCity_ContestLobby_EventScript_002070D5::
 	end
 
 LilycoveCity_ContestLobby_EventScript_0020717B::
-	special sub_080B27D4
+	special TryContestEModeLinkup
 	waitstate
 	return
 
 LilycoveCity_ContestLobby_EventScript_00207180::
-	special sub_080B27AC
+	special TryContestGModeLinkup
 	waitstate
 	return
 

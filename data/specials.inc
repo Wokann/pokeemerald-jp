@@ -45,15 +45,15 @@ gSpecials:
 	def_special sub_080EAF54
 	def_special DoSecretBasePCTurnOffEffect
 	def_special RecordMixingPlayerSpotTriggered, waitstate=1
-	def_special sub_080B2680
-	def_special sub_080B2728
-	def_special sub_080B2750
+	def_special TryBattleLinkup
+	def_special TryTradeLinkup
+	def_special TryRecordMixLinkup
 	def_special CloseLink
 	def_special ColosseumPlayerSpotTriggered, waitstate=1
 	def_special PlayerEnteredTradeSeat, waitstate=1
 	def_special nullsub_37
 	def_special sub_080B2A00
-	def_special sub_080B2784
+	def_special TryBerryBlenderLinkup
 	def_special GetLinkPartnerNames
 	def_special SpawnLinkPartnerEventObject
 	def_special SavePlayerParty
@@ -109,7 +109,7 @@ gSpecials:
 	def_special sub_080F888C
 	def_special sub_080F95B4
 	def_special GiveMonArtistRibbon
-	def_special sub_080B27AC
+	def_special TryContestGModeLinkup
 	def_special SaveGame, waitstate=1
 	def_special DoWateringBerryTreeAnim, waitstate=1
 	def_special ShowEasyChatScreen
@@ -459,7 +459,7 @@ gSpecials:
 	def_special sub_08139F5C
 	def_special sub_080F99C4
 	def_special sub_080F99E4
-	def_special sub_080B27D4
+	def_special TryContestEModeLinkup
 	def_special sub_0813A164
 	def_special sub_0813A638
 	def_special sub_0813A0BC

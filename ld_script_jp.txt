@@ -5113,12 +5113,12 @@ SECTIONS {
         src/cable_club.o(.text.Task_LinkupFailed);
         src/cable_club.o(.text.Task_LinkupConnectionError);
         src/cable_club.o(.text.TryLinkTimeout);
-        src/cable_club.o(.text.sub_080B2680);
-        src/cable_club.o(.text.sub_080B2728);
-        src/cable_club.o(.text.sub_080B2750);
-        src/cable_club.o(.text.sub_080B2784);
-        src/cable_club.o(.text.sub_080B27AC);
-        src/cable_club.o(.text.sub_080B27D4);
+        src/cable_club.o(.text.TryBattleLinkup);
+        src/cable_club.o(.text.TryTradeLinkup);
+        src/cable_club.o(.text.TryRecordMixLinkup);
+        src/cable_club.o(.text.TryBerryBlenderLinkup);
+        src/cable_club.o(.text.TryContestGModeLinkup);
+        src/cable_club.o(.text.TryContestEModeLinkup);
         src/cable_club.o(.text.CreateTask_ReestablishCableClubLink);
         src/cable_club.o(.text.sub_080B28F0);
         src/cable_club.o(.text.sub_080B2940);
