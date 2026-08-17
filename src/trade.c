@@ -194,7 +194,11 @@ extern const u16 gUnknown_830D0E8[];
 // layout of the leading region differs from the US TradeAnim struct).
 struct TradeAnim
 {
-    u8 filler_0[0xD4];
+    u8 filler_0[0x88];
+    u8 field_88;       // 0x88
+    u8 field_89;       // 0x89
+    u16 field_8A;      // 0x8A
+    u8 filler_8C[0x48];
     u16 texX;       // 0xD4
     u16 texY;       // 0xD6
     u8 filler_D8[4];
@@ -3210,48 +3214,19 @@ static void SetTradeGpuRegs(void)
     }
 }
 
-__attribute__((naked)) void sub_0807A680(void)
+static void VBlankCB_TradeAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SetTradeGpuRegs\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetTradeGpuRegs();
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
-__attribute__((naked)) void sub_0807A698(void)
+static void ResetTradeAnimState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r3, _0807A6BC\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #0x8a\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov ip, r0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r4, ip\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r1, #0x88\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x89\n\t"
-        "	strb r2, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A6BC: .4byte gUnknown_2031F40\n\t"
-        ".syntax divided\n\t"
-    );
+    gUnknown_2031F40->field_8A = 0;
+    gUnknown_2031F40->field_88 = 0;
+    gUnknown_2031F40->field_89 = 0;
 }
 
 __attribute__((naked)) void sub_0807A6C0(void)
@@ -3571,7 +3546,7 @@ __attribute__((naked)) void sub_0807A8AC(void)
         "	ldr r0, _0807A9AC\n\t"
         "	bl SetVBlankCallback\n\t"
         "	bl sub_0807ABCC\n\t"
-        "	bl sub_0807A698\n\t"
+        "	bl ResetTradeAnimState\n\t"
         "	ldr r1, _0807A9B0\n\t"
         "	movs r0, #0x87\n\t"
         "	lsls r0, r0, #3\n\t"
@@ -3618,7 +3593,7 @@ __attribute__((naked)) void sub_0807A8AC(void)
         "_0807A9A0: .4byte gLinkType\n\t"
         "_0807A9A4: .4byte 0x00001144\n\t"
         "_0807A9A8: .4byte gUnknown_2031F40\n\t"
-        "_0807A9AC: .4byte sub_0807A680 + 1\n\t"
+        "_0807A9AC: .4byte VBlankCB_TradeAnim + 1\n\t"
         "_0807A9B0: .4byte gMain\n\t"
         "_0807A9B4:\n\t"
         "	ldr r0, _0807A9E0\n\t"
@@ -4111,7 +4086,7 @@ __attribute__((naked)) void sub_0807ACC8(void)
         "_0807ADD4: .4byte gSaveBlock2Ptr\n\t"
         "_0807ADD8: .4byte gEnemyParty\n\t"
         "_0807ADDC: .4byte gUnknown_2031F40\n\t"
-        "_0807ADE0: .4byte sub_0807A680 + 1\n\t"
+        "_0807ADE0: .4byte VBlankCB_TradeAnim + 1\n\t"
         "_0807ADE4: .4byte gMain\n\t"
         "_0807ADE8:\n\t"
         "	movs r0, #0\n\t"

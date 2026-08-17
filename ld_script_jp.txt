@@ -3279,8 +3279,8 @@ SECTIONS {
         src/trade.o(.text.SpriteCB_GbaScreen);
         src/trade.o(.text.SetTradeBGAffine);
         src/trade.o(.text.SetTradeGpuRegs);
-        src/trade.o(.text.sub_0807A680);
-        src/trade.o(.text.sub_0807A698);
+        src/trade.o(.text.VBlankCB_TradeAnim);
+        src/trade.o(.text.ResetTradeAnimState);
         src/trade.o(.text.sub_0807A6C0);
         src/trade.o(.text.sub_0807A738);
         src/trade.o(.text.sub_0807A758);
