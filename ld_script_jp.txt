@@ -3270,7 +3270,7 @@ SECTIONS {
         src/trade.o(.text.IsDeoxysOrMewUntradable);
         src/trade.o(.text.sub_0807A250);
         src/trade.o(.text.CanRegisterMonForTradingBoard);
-        src/trade.o(.text.sub_0807A388);
+        src/trade.o(.text.CanSpinTradeMon);
         src/trade.o(.text.sub_0807A498);
         src/trade.o(.text.sub_0807A4BC);
         src/trade.o(.text.sub_0807A4EC);
@@ -8698,7 +8698,7 @@ SECTIONS {
         src/party_menu.o(.text.CursorCb_Register);
         src/party_menu.o(.text.CursorCb_Trade1);
         src/party_menu.o(.text.CursorCb_Trade2);
-        src/party_menu.o(.text.sub_081B509C);
+        src/party_menu.o(.text.Task_SpinTradeYesNo);
         src/party_menu.o(.text.sub_081B50D0);
         src/party_menu.o(.text.CursorCb_FieldMove);
         src/party_menu.o(.text.sub_081B5314);

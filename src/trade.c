@@ -7308,7 +7308,7 @@ __attribute__((naked)) int CanRegisterMonForTradingBoard(struct RfuGameCompatibi
     );
 }
 
-__attribute__((naked)) void sub_0807A388(void)
+__attribute__((naked)) int CanSpinTradeMon(struct Pokemon *mon, u16 monIdx)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

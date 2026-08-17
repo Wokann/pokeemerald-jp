@@ -39,6 +39,7 @@ __attribute__((naked)) void CB2_SelectBagItemToGive(void);
 __attribute__((naked)) void CB2_ReadHeldMail(void);
 __attribute__((naked)) void Task_SendMailToPCYesNo(u8 taskId);
 __attribute__((naked)) bool8 TrySwitchInPokemon(void);
+__attribute__((naked)) void Task_SpinTradeYesNo(u8 taskId);
 
 enum {
     ACTIONS_NONE,
@@ -10040,6 +10041,8 @@ static void CursorCb_Store(u8 taskId)
 
 extern const u8 gUnknown_85CA2B4[];
 extern const u8 gUnknown_85CA2CC[];
+extern const u8 gUnknown_85CA294[];
+extern const u8 gUnknown_85CA276[];
 
 static void CursorCb_Register(u8 taskId)
 {
@@ -10191,132 +10194,37 @@ __attribute__((naked)) void CursorCb_Trade1(u8 taskId)
     );
 }
 
-__attribute__((naked)) void CursorCb_Trade2(u8 taskId)
+static void CursorCb_Trade2(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r4, _081B4FBC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, _081B4FC0\n\t"
-        "	ldr r1, _081B4FC4\n\t"
-        "	ldrb r1, [r1, #9]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	bl sub_0807A388\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B4FE0\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _081B4FC8\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B4FCE\n\t"
-        "	b _081B5008\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4FBC: .4byte sPartyMenuInternal\n\t"
-        "_081B4FC0: .4byte gPlayerParty\n\t"
-        "_081B4FC4: .4byte gPartyMenu\n\t"
-        "_081B4FC8:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _081B4FF4\n\t"
-        "	b _081B5008\n\t"
-        "_081B4FCE:\n\t"
-        "	ldr r0, _081B4FD8\n\t"
-        "	ldr r1, _081B4FDC\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B5060\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4FD8: .4byte gStringVar4\n\t"
-        "_081B4FDC: .4byte gUnknown_85CA294\n\t"
-        "_081B4FE0:\n\t"
-        "	ldr r0, _081B4FEC\n\t"
-        "	ldr r1, _081B4FF0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B5060\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4FEC: .4byte gStringVar4\n\t"
-        "_081B4FF0: .4byte gUnknown_85CA2B4\n\t"
-        "_081B4FF4:\n\t"
-        "	ldr r0, _081B5000\n\t"
-        "	ldr r1, _081B5004\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B5060\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5000: .4byte gStringVar4\n\t"
-        "_081B5004: .4byte gUnknown_85CA2CC\n\t"
-        "_081B5008:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081B5044\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B5048\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B504C\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r4, _081B5050\n\t"
-        "	ldr r1, _081B5054\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B5058\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B505C\n\t"
-        "	b _081B5084\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5044: .4byte gPartyMenu\n\t"
-        "_081B5048: .4byte gPlayerParty\n\t"
-        "_081B504C: .4byte gStringVar1\n\t"
-        "_081B5050: .4byte gStringVar4\n\t"
-        "_081B5054: .4byte gUnknown_85CA276\n\t"
-        "_081B5058: .4byte gTasks\n\t"
-        "_081B505C: .4byte sub_081B509C + 1\n\t"
-        "_081B5060:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _081B508C\n\t"
-        "	ldr r1, _081B5090\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B5094\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B5098\n\t"
-        "_081B5084:\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B508C: .4byte gStringVar4\n\t"
-        "_081B5090: .4byte gUnknown_85C97BD + 0xAB6\n\t"
-        "_081B5094: .4byte gTasks\n\t"
-        "_081B5098: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    switch (CanSpinTradeMon(gPlayerParty, gPartyMenu.slotId))
+    {
+    case CANT_TRADE_LAST_MON:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CA294);
+        break;
+    case CANT_TRADE_NATIONAL:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CA2B4);
+        break;
+    case CANT_TRADE_EGG_YET:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CA2CC);
+        break;
+    default: // CAN_TRADE_MON
+        PlaySE(SE_SELECT);
+        GetMonNickname(&gPlayerParty[gPartyMenu.slotId], gStringVar1);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CA276);
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
+        gTasks[taskId].func = Task_SpinTradeYesNo;
+        return;
+    }
+    PlaySE(SE_FAILURE);
+    StringAppend(gStringVar4, gUnknown_85C97BD + 0xAB6);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
 }
 
-__attribute__((naked)) void sub_081B509C(void)
+
+__attribute__((naked)) void Task_SpinTradeYesNo(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
