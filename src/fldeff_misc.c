@@ -9,6 +9,7 @@
 #include "field_player_avatar.h"
 #include "field_effect.h"
 #include "fldeff.h"
+#include "palette.h"
 #include "party_menu.h"
 #include "secret_base.h"
 #include "constants/vars.h"
@@ -26,9 +27,21 @@ extern void Task_SecretBasePCTurnOn(u8 taskId);
 extern void Task_PopSecretBaseBalloon(u8 taskId);
 extern void Task_SecretBaseMusicNoteMatSound(u8 taskId);
 extern void Task_FieldPoisonEffect(u8 taskId);
-extern void sub_080FA66C(void);
-extern void sub_080FA500(u8 taskId);
-static __attribute__((naked)) void sub_080FA4B4(void (*func)(u8), u16 x, u16 y, u8 z);
+static void Task_ComputerScreenCloseEffect(u8 taskId);
+static void Task_ComputerScreenOpenEffect(u8 taskId);
+
+#undef tState
+#define tState         data[0]
+#define tHorzIncrement data[1]
+#define tVertIncrement data[2]
+#define tWinLeft       data[3]
+#define tWinRight      data[4]
+#define tWinTop        data[5]
+#define tWinBottom     data[6]
+#define tBlendCnt      data[7]
+#define tBlendY        data[8]
+
+static void CreateComputerScreenEffectTask(TaskFunc func, u16 increment, u16 unused, u8 priority);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
 extern void Task_WateringBerryTreeAnim_1(u8 taskId);
 extern void Task_WateringBerryTreeAnim_2(u8 taskId);
@@ -55,436 +68,177 @@ extern const u8 SecretBase_EventScript_Shrub[];
 
 #include "fldeff_misc.h"
 
-void sub_080FA43C(u16 x, u16 y, u8 z)
+void ComputerScreenOpenEffect(u16 increment, u16 unused, u8 priority)
 {
-    sub_080FA4B4(sub_080FA500, x, y, z);
+    CreateComputerScreenEffectTask(Task_ComputerScreenOpenEffect, increment, unused, priority);
 }
 
-void sub_080FA464(u16 x, u16 y, u8 z)
+void ComputerScreenCloseEffect(u16 increment, u16 unused, u8 priority)
 {
-    sub_080FA4B4(sub_080FA66C, x, y, z);
+    CreateComputerScreenEffectTask(Task_ComputerScreenCloseEffect, increment, unused, priority);
 }
 
-bool32 sub_080FA48C(void)
+bool8 IsComputerScreenOpenEffectActive(void)
 {
-    return FuncIsActiveTask(sub_080FA500);
+    return FuncIsActiveTask(Task_ComputerScreenOpenEffect);
 }
 
-bool32 FldEffPoison_IsActive(void)
+bool8 IsComputerScreenCloseEffectActive(void)
 {
-    return FuncIsActiveTask(sub_080FA66C);
+    return FuncIsActiveTask(Task_ComputerScreenCloseEffect);
 }
 
-static __attribute__((naked)) void sub_080FA4B4(void (*func)(u8), u16 x, u16 y, u8 z)
+static void CreateComputerScreenEffectTask(TaskFunc func, u16 increment, u16 unused, u8 priority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r1, _080FA4FC\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080FA4E2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "_080FA4E2:\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080FA4EC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "_080FA4EC:\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA4FC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(func, priority);
+
+    gTasks[taskId].tState = 0;
+    gTasks[taskId].tHorzIncrement = increment == 0 ? 16 : increment;
+    gTasks[taskId].tVertIncrement = increment == 0 ? 20 : increment;
+    gTasks[taskId].func(taskId);
 }
 
-__attribute__((naked)) void sub_080FA500(u8 taskId)
+static void Task_ComputerScreenOpenEffect(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080FA524\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080FA580\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080FA528\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FA532\n\t"
-        "	b _080FA64E\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA524: .4byte gTasks\n\t"
-        "_080FA528:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080FA5A2\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080FA604\n\t"
-        "	b _080FA64E\n\t"
-        "_080FA532:\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	movs r0, #0x51\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuRegBits\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x12]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrh r0, [r4, #0x14]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _080FA65E\n\t"
-        "_080FA580:\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl GetGpuReg\n\t"
-        "	strh r0, [r4, #0x16]\n\t"
-        "	movs r0, #0x54\n\t"
-        "	bl GetGpuReg\n\t"
-        "	strh r0, [r4, #0x18]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0xbf\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x54\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _080FA65E\n\t"
-        "_080FA5A2:\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	ldrh r2, [r4, #0x10]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r4, #0x10]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _080FA5C0\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xef\n\t"
-        "	ble _080FA5E6\n\t"
-        "_080FA5C0:\n\t"
-        "	strh r5, [r4, #0xe]\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	movs r0, #0x54\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x16]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	ldr r0, _080FA600\n\t"
-        "	strh r5, [r0]\n\t"
-        "_080FA5E6:\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	b _080FA648\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA600: .4byte gPlttBufferFaded\n\t"
-        "_080FA604:\n\t"
-        "	ldrh r0, [r4, #0x12]\n\t"
-        "	ldrh r1, [r4, #0xc]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	ldrh r2, [r4, #0x14]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r4, #0x14]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _080FA620\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x9f\n\t"
-        "	ble _080FA632\n\t"
-        "_080FA620:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ClearGpuRegBits\n\t"
-        "_080FA632:\n\t"
-        "	ldrh r1, [r4, #0x12]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrh r0, [r4, #0x14]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "_080FA648:\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080FA664\n\t"
-        "	b _080FA65E\n\t"
-        "_080FA64E:\n\t"
-        "	ldrh r1, [r4, #0x16]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080FA664\n\t"
-        "_080FA65E:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080FA664:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    case 0:
+        task->tWinLeft = DISPLAY_WIDTH / 2;
+        task->tWinRight = DISPLAY_WIDTH / 2;
+        task->tWinTop = DISPLAY_HEIGHT / 2;
+        task->tWinBottom = DISPLAY_HEIGHT / 2 + 1;
+
+        SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        SetGpuReg(REG_OFFSET_WIN0H, (u16)WIN_RANGE(task->tWinLeft, task->tWinRight));
+        SetGpuReg(REG_OFFSET_WIN0V, (u16)WIN_RANGE(task->tWinTop, task->tWinBottom));
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
+        SetGpuReg(REG_OFFSET_WINOUT, 0);
+
+        break;
+    case 1:
+        task->tBlendCnt = GetGpuReg(REG_OFFSET_BLDCNT);
+        task->tBlendY = GetGpuReg(REG_OFFSET_BLDY);
+
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_ALL | BLDCNT_EFFECT_LIGHTEN);
+        SetGpuReg(REG_OFFSET_BLDY, 16);
+
+        break;
+    case 2:
+        task->tWinLeft -= task->tHorzIncrement;
+        task->tWinRight += task->tHorzIncrement;
+
+        if (task->tWinLeft < 1 || task->tWinRight > DISPLAY_WIDTH - 1)
+        {
+            task->tWinLeft = 0;
+            task->tWinRight = DISPLAY_WIDTH;
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_BLDCNT, (u16)task->tBlendCnt);
+            BlendPalettes(PALETTES_ALL, 0, 0);
+            gPlttBufferFaded[0] = 0;
+        }
+        SetGpuReg(REG_OFFSET_WIN0H, (u16)WIN_RANGE(task->tWinLeft, task->tWinRight));
+
+        if (task->tWinLeft != 0)
+            return;
+        break;
+    case 3:
+        task->tWinTop -= task->tVertIncrement;
+        task->tWinBottom += task->tVertIncrement;
+
+        if (task->tWinTop < 1 || task->tWinBottom > DISPLAY_HEIGHT - 1)
+        {
+            task->tWinTop = 0;
+            task->tWinBottom = DISPLAY_HEIGHT;
+            ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        }
+        SetGpuReg(REG_OFFSET_WIN0V, (u16)WIN_RANGE(task->tWinTop, task->tWinBottom));
+
+        if (task->tWinTop != 0)
+            return;
+        break;
+    default:
+        SetGpuReg(REG_OFFSET_BLDCNT, (u16)task->tBlendCnt);
+        DestroyTask(taskId);
+        return;
+    }
+    task->tState++;
 }
 
-__attribute__((naked)) void sub_080FA66C(void)
+static void Task_ComputerScreenCloseEffect(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080FA690\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080FA6A8\n\t"
-        "	cmp r1, #1\n\t"
-        "	bgt _080FA694\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080FA69E\n\t"
-        "	b _080FA79C\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA690: .4byte gTasks\n\t"
-        "_080FA694:\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _080FA6F6\n\t"
-        "	cmp r1, #3\n\t"
-        "	beq _080FA748\n\t"
-        "	b _080FA79C\n\t"
-        "_080FA69E:\n\t"
-        "	ldr r0, _080FA6A4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _080FA7BE\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA6A4: .4byte gPlttBufferFaded\n\t"
-        "_080FA6A8:\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r4, #0xe]\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	strh r1, [r4, #0x12]\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuRegBits\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldrh r1, [r4, #0x12]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrh r0, [r4, #0x14]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x48\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _080FA7BE\n\t"
-        "_080FA6F6:\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	ldrh r2, [r4, #0x12]\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strh r1, [r4, #0x12]\n\t"
-        "	ldrh r2, [r4, #0x14]\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0x4f\n\t"
-        "	bgt _080FA714\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x51\n\t"
-        "	bgt _080FA72C\n\t"
-        "_080FA714:\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	movs r0, #0x51\n\t"
-        "	strh r0, [r4, #0x14]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0xbf\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x54\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl SetGpuReg\n\t"
-        "_080FA72C:\n\t"
-        "	ldrh r1, [r4, #0x12]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrh r0, [r4, #0x14]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x50\n\t"
-        "	bne _080FA7C4\n\t"
-        "	b _080FA7BE\n\t"
-        "_080FA748:\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	ldrh r2, [r4, #0xe]\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strh r1, [r4, #0xe]\n\t"
-        "	ldrh r2, [r4, #0x10]\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0x77\n\t"
-        "	bgt _080FA766\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x78\n\t"
-        "	bgt _080FA77C\n\t"
-        "_080FA766:\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	strh r0, [r4, #0x10]\n\t"
-        "	subs r0, #0x79\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	ldr r1, _080FA798\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080FA77C:\n\t"
-        "	ldrh r1, [r4, #0xe]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0xe\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x78\n\t"
-        "	bne _080FA7C4\n\t"
-        "	b _080FA7BE\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA798: .4byte gPlttBufferFaded\n\t"
-        "_080FA79C:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ClearGpuRegBits\n\t"
-        "	movs r0, #0x54\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080FA7C4\n\t"
-        "_080FA7BE:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080FA7C4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    case 0:
+        gPlttBufferFaded[0] = 0;
+        break;
+    case 1:
+        task->tWinLeft = 0;
+        task->tWinRight = DISPLAY_WIDTH;
+        task->tWinTop = 0;
+        task->tWinBottom = DISPLAY_HEIGHT;
+
+        SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        SetGpuReg(REG_OFFSET_WIN0H, (u16)WIN_RANGE(task->tWinLeft, task->tWinRight));
+        SetGpuReg(REG_OFFSET_WIN0V, (u16)WIN_RANGE(task->tWinTop, task->tWinBottom));
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR);
+        SetGpuReg(REG_OFFSET_WINOUT, 0);
+        break;
+    case 2:
+        task->tWinTop += task->tVertIncrement;
+        task->tWinBottom -= task->tVertIncrement;
+
+        if (task->tWinTop >= DISPLAY_HEIGHT / 2 || task->tWinBottom <= DISPLAY_HEIGHT / 2 + 1)
+        {
+            task->tWinTop = DISPLAY_HEIGHT / 2;
+            task->tWinBottom = DISPLAY_HEIGHT / 2 + 1;
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_ALL | BLDCNT_EFFECT_LIGHTEN);
+            SetGpuReg(REG_OFFSET_BLDY, 16);
+        }
+        SetGpuReg(REG_OFFSET_WIN0V, (u16)WIN_RANGE(task->tWinTop, task->tWinBottom));
+
+        if (task->tWinTop != DISPLAY_HEIGHT / 2)
+            return;
+        break;
+    case 3:
+        task->tWinLeft += task->tHorzIncrement;
+        task->tWinRight -= task->tHorzIncrement;
+
+        if (task->tWinLeft >= DISPLAY_WIDTH / 2 || task->tWinRight <= DISPLAY_WIDTH / 2)
+        {
+            task->tWinLeft = DISPLAY_WIDTH / 2;
+            task->tWinRight = DISPLAY_WIDTH / 2;
+            BlendPalettes(PALETTES_ALL, 16, 0);
+            gPlttBufferFaded[0] = 0;
+        }
+        SetGpuReg(REG_OFFSET_WIN0H, (u16)WIN_RANGE(task->tWinLeft, task->tWinRight));
+
+        if (task->tWinLeft != DISPLAY_WIDTH / 2)
+            return;
+        break;
+    default:
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        SetGpuReg(REG_OFFSET_BLDY, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        DestroyTask(taskId);
+        return;
+    }
+    task->tState++;
 }
+
+#undef tState
+#undef tHorzIncrement
+#undef tVertIncrement
+#undef tWinLeft
+#undef tWinRight
+#undef tWinTop
+#undef tWinBottom
+#undef tBlendCnt
+#undef tBlendY
+#define tState data[2]
 
 void SetCurrentSecretBase(void)
 {
