@@ -8534,7 +8534,7 @@ SECTIONS {
         src/party_menu.o(.text.InitPartyMenu);
         src/party_menu.o(.text.CB2_UpdatePartyMenu);
         src/party_menu.o(.text.VBlankCB_PartyMenu);
-        src/party_menu.o(.text.PartyMenuInitCallback);
+        src/party_menu.o(.text.CB2_InitPartyMenu);
         src/party_menu.o(.text.PartyMenuSetup);
         src/party_menu.o(.text.ExitPartyMenu);
         src/party_menu.o(.text.Task_ExitPartyMenu);

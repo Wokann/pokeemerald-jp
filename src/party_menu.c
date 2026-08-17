@@ -5,10 +5,12 @@ extern const u16 sTMHMMoves[];
 #include "constants/items.h"
 #include "constants/rgb.h"
 #include "main.h"
+#include "menu_helpers.h"
 #include "palette.h"
 #include "task.h"
 
 static void Task_ExitPartyMenu(u8 taskId);
+__attribute__((naked)) bool8 PartyMenuSetup(void);
 
 __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId)
 {
@@ -201,7 +203,7 @@ __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction
         "	.align 2, 0\n\t"
         "_081AFE7C: .4byte gPlayerParty\n\t"
         "_081AFE80: .4byte gTextFlags\n\t"
-        "_081AFE84: .4byte PartyMenuInitCallback + 1\n\t"
+        "_081AFE84: .4byte CB2_InitPartyMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -222,36 +224,16 @@ static void VBlankCB_PartyMenu(void)
     TransferPlttBuffer();
 }
 
-__attribute__((naked)) void PartyMenuInitCallback(void)
+static void CB2_InitPartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "_081AFEBA:\n\t"
-        "	bl sub_081221F8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081AFEDE\n\t"
-        "	bl PartyMenuSetup\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081AFEDE\n\t"
-        "	bl sub_081221B8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081AFEBA\n\t"
-        "_081AFEDE:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    while (TRUE)
+    {
+        if (MenuHelpers_ShouldWaitForLinkRecv() == TRUE || PartyMenuSetup() == TRUE || MenuHelpers_IsLinkActive() == TRUE)
+            return;
+    }
 }
 
-__attribute__((naked)) void PartyMenuSetup(void)
+__attribute__((naked)) bool8 PartyMenuSetup(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
