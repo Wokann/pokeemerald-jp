@@ -1272,92 +1272,30 @@ void AnimatePartySlot(u8 slot, u8 animNum)
     ScheduleBgCopyTilemapToVram(1);
 }
 
-__attribute__((naked)) u8 GetPartyBoxPaletteFlags(u8 a, u8 b)
+static u8 GetPartyBoxPaletteFlags(u8 slot, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _081B0DDA\n\t"
-        "	movs r4, #1\n\t"
-        "_081B0DDA:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081B0E54\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0DF0\n\t"
-        "	movs r0, #2\n\t"
-        "	orrs r4, r0\n\t"
-        "_081B0DF0:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl PartyBoxPal_ParnterOrDisqualifiedInArena\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B0E06\n\t"
-        "	movs r0, #8\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_081B0E06:\n\t"
-        "	ldr r0, _081B0E58\n\t"
-        "	ldrb r1, [r0, #0xb]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	cmp r1, #9\n\t"
-        "	bne _081B0E18\n\t"
-        "	movs r0, #0x10\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_081B0E18:\n\t"
-        "	cmp r1, #8\n\t"
-        "	bne _081B0E34\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _081B0E2C\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081B0E34\n\t"
-        "_081B0E2C:\n\t"
-        "	movs r0, #4\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_081B0E34:\n\t"
-        "	ldrb r0, [r2, #0xb]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _081B0E4A\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081B0E4A\n\t"
-        "	movs r0, #0x20\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_081B0E4A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0E54: .4byte gPlayerParty\n\t"
-        "_081B0E58: .4byte gPartyMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 palFlags = 0;
+
+    if (animNum == 1)
+        palFlags |= PARTY_PAL_SELECTED;
+    if (GetMonData(&gPlayerParty[slot], MON_DATA_HP) == 0)
+        palFlags |= PARTY_PAL_FAINTED;
+    if ((u8)PartyBoxPal_ParnterOrDisqualifiedInArena(slot) == TRUE)
+        palFlags |= PARTY_PAL_MULTI_ALT;
+    if (gPartyMenu.action == PARTY_ACTION_SWITCHING)
+        palFlags |= PARTY_PAL_SWITCHING;
+    if (gPartyMenu.action == PARTY_ACTION_SWITCH)
+    {
+        if (slot == gPartyMenu.slotId || slot == gPartyMenu.slotId2)
+            palFlags |= PARTY_PAL_TO_SWITCH;
+    }
+    if (gPartyMenu.action == PARTY_ACTION_SOFTBOILED && slot == gPartyMenu.slotId)
+        palFlags |= PARTY_PAL_TO_SOFTBOIL;
+
+    return palFlags;
 }
 
-__attribute__((naked)) void PartyBoxPal_ParnterOrDisqualifiedInArena(void)
+__attribute__((naked)) bool8 PartyBoxPal_ParnterOrDisqualifiedInArena(u8 slot)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
