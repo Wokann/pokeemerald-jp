@@ -192,6 +192,12 @@ extern const struct SpriteSheet gUnknown_8300834;
 extern const u16 gUnknown_830D0E8[];
 extern const struct SpriteSheet gUnknown_830CF5C;
 extern const struct SpritePalette gUnknown_830CF64;
+extern const struct SpriteSheet gUnknown_830CFB4;
+extern const struct SpriteSheet gUnknown_830D004;
+extern const struct SpriteSheet gUnknown_830D038;
+extern const struct SpriteSheet gUnknown_830D0B0;
+extern const struct SpritePalette gUnknown_830CFBC;
+extern const struct SpritePalette gUnknown_830CFC4;
 extern const struct BgTemplate gUnknown_830D294[];
 extern const struct WindowTemplate gUnknown_830D27C[];
 extern u8 gUnknown_20226A8[];
@@ -4331,34 +4337,14 @@ __attribute__((naked)) void SetTradeSequenceBgGpuRegs(void)
     );
 }
 
-__attribute__((naked)) void LoadTradeSequenceSpriteSheetsAndPalettes(void)
+static void LoadTradeSequenceSpriteSheetsAndPalettes(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0807B4F8\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _0807B4FC\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _0807B500\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _0807B504\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _0807B508\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	ldr r0, _0807B50C\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B4F8: .4byte gUnknown_830CFB4\n\t"
-        "_0807B4FC: .4byte gUnknown_830D004\n\t"
-        "_0807B500: .4byte gUnknown_830D038\n\t"
-        "_0807B504: .4byte gUnknown_830D0B0\n\t"
-        "_0807B508: .4byte gUnknown_830CFBC\n\t"
-        "_0807B50C: .4byte gUnknown_830CFC4\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadSpriteSheet(&gUnknown_830CFB4);
+    LoadSpriteSheet(&gUnknown_830D004);
+    LoadSpriteSheet(&gUnknown_830D038);
+    LoadSpriteSheet(&gUnknown_830D0B0);
+    LoadSpritePalette(&gUnknown_830CFBC);
+    LoadSpritePalette(&gUnknown_830CFC4);
 }
 
 __attribute__((naked)) void SetTradeSceneStrings(void)
