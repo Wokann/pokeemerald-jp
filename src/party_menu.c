@@ -154,7 +154,23 @@ u8 GetMaxBattleEntries(void);
 static void Task_HandleSelectionMenuInput(u8 taskId);
 static void CB2_ShowPokemonSummaryScreen(void);
 static void CB2_ReturnToPartyMenuFromSummaryScreen(void);
-__attribute__((naked)) void CB2_SelectBagItemToGive(void);
+static void CB2_SelectBagItemToGive(void);
+static void CB2_GiveHoldItem(void);
+static void Task_GiveHoldItem(u8 taskId);
+static void Task_SwitchHoldItemsPrompt(u8 taskId);
+static void Task_SwitchItemsYesNo(u8 taskId);
+static void Task_HandleSwitchItemsYesNoInput(u8 taskId);
+static void Task_WriteMailToGiveMonAfterText(u8 taskId);
+static void CB2_WriteMailToGiveMon(void);
+static void CB2_ReturnToPartyMenuFromWritingMail(void);
+static void Task_DisplayGaveMailFromPartyMessage(u8 taskId);
+void DoEasyChatScreen(u8 type, u16 *words, MainCallback exitCallback, u8 displayedPersonType);
+void sub_081C47A0(u8 location, MainCallback callback); // GoToBattlePyramidBagMenu
+extern u16 sPartyMenuItemId;
+u8 CurrentBattlePyramidLocation(void);
+#define POCKETS_COUNT       5
+#define PYRAMIDBAG_LOC_PARTY 2 // JP enum order differs from US
+#define PYRAMID_LOCATION_NONE 0
 __attribute__((naked)) void CB2_ReadHeldMail(void);
 __attribute__((naked)) void Task_SendMailToPCYesNo(u8 taskId);
 __attribute__((naked)) bool8 TrySwitchInPokemon(void);
@@ -2968,635 +2984,166 @@ static void CursorCb_Give(u8 taskId)
     Task_ClosePartyMenu(taskId);
 }
 
-__attribute__((naked)) void CB2_SelectBagItemToGive(void)
+static void CB2_SelectBagItemToGive(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl CurrentBattlePyramidLocation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B3E80\n\t"
-        "	ldr r2, _081B3E7C\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GoToBagMenu\n\t"
-        "	b _081B3E88\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3E7C: .4byte c2_8123744 + 1\n\t"
-        "_081B3E80:\n\t"
-        "	ldr r1, _081B3E8C\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_081C47A0\n\t"
-        "_081B3E88:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3E8C: .4byte c2_8123744 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE == FALSE)
+        GoToBagMenu(ITEMMENULOCATION_PARTY, POCKETS_COUNT, CB2_GiveHoldItem);
+    else
+        sub_081C47A0(PYRAMIDBAG_LOC_PARTY, CB2_GiveHoldItem); // GoToBattlePyramidBagMenu
 }
 
-__attribute__((naked)) void c2_8123744(void)
+static void CB2_GiveHoldItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r6, _081B3EB8\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B3EC4\n\t"
-        "	ldr r3, _081B3EBC\n\t"
-        "	ldrb r0, [r3, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	ldrb r2, [r3, #0xb]\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldr r1, _081B3EC0\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	b _081B3EFA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3EB8: .4byte gSpecialVar_ItemId\n\t"
-        "_081B3EBC: .4byte gPartyMenu\n\t"
-        "_081B3EC0: .4byte Task_TryCreateSelectionWindow + 1\n\t"
-        "_081B3EC4:\n\t"
-        "	ldr r4, _081B3F08\n\t"
-        "	ldr r5, _081B3F0C\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	mov r8, r1\n\t"
-        "	mov r1, r8\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldr r7, _081B3F10\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	strh r0, [r4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B3F18\n\t"
-        "	ldrb r0, [r5, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	ldrb r2, [r5, #0xb]\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldr r1, _081B3F14\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "_081B3EFA:\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	b _081B3F60\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3F08: .4byte gUnknown_203CBC8\n\t"
-        "_081B3F0C: .4byte gPartyMenu\n\t"
-        "_081B3F10: .4byte gPlayerParty\n\t"
-        "_081B3F14: .4byte sub_081B3FF0 + 1\n\t"
-        "_081B3F18:\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B3F44\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl RemoveBagItem\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	mov r1, r8\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrh r1, [r6]\n\t"
-        "	bl GiveItemToMon\n\t"
-        "	bl sub_081B41CC\n\t"
-        "	b _081B3F60\n\t"
-        "_081B3F44:\n\t"
-        "	ldrb r0, [r5, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	ldrb r2, [r5, #0xb]\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldr r1, _081B3F6C\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitPartyMenu\n\t"
-        "_081B3F60:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3F6C: .4byte sub_081B3F70 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gSpecialVar_ItemId == ITEM_NONE)
+    {
+        InitPartyMenu(gPartyMenu.menuType, KEEP_PARTY_LAYOUT, gPartyMenu.action, TRUE, PARTY_MSG_NONE, Task_TryCreateSelectionWindow, gPartyMenu.exitCallback);
+    }
+    else
+    {
+        sPartyMenuItemId = GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_HELD_ITEM);
+
+        // Already holding item
+        if (sPartyMenuItemId != ITEM_NONE)
+        {
+            InitPartyMenu(gPartyMenu.menuType, KEEP_PARTY_LAYOUT, gPartyMenu.action, TRUE, PARTY_MSG_NONE, Task_SwitchHoldItemsPrompt, gPartyMenu.exitCallback);
+        }
+        // Give mail
+        else if (ItemIsMail(gSpecialVar_ItemId))
+        {
+            RemoveBagItem(gSpecialVar_ItemId, 1);
+            GiveItemToMon(&gPlayerParty[gPartyMenu.slotId], gSpecialVar_ItemId);
+            CB2_WriteMailToGiveMon();
+        }
+        // Give item
+        else
+        {
+            InitPartyMenu(gPartyMenu.menuType, KEEP_PARTY_LAYOUT, gPartyMenu.action, TRUE, PARTY_MSG_NONE, Task_GiveHoldItem, gPartyMenu.exitCallback);
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081B3F70(void)
+static void Task_GiveHoldItem(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _081B3FD8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B3FCC\n\t"
-        "	ldr r0, _081B3FDC\n\t"
-        "	ldrh r4, [r0]\n\t"
-        "	ldr r0, _081B3FE0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _081B3FE4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DisplayGaveHeldItemMessage\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GiveItemToMon\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl RemoveBagItem\n\t"
-        "	ldr r1, _081B3FE8\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B3FEC\n\t"
-        "	str r1, [r0]\n\t"
-        "_081B3FCC:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3FD8: .4byte gPaletteFade\n\t"
-        "_081B3FDC: .4byte gSpecialVar_ItemId\n\t"
-        "_081B3FE0: .4byte gPartyMenu\n\t"
-        "_081B3FE4: .4byte gPlayerParty\n\t"
-        "_081B3FE8: .4byte gTasks\n\t"
-        "_081B3FEC: .4byte Task_UpdateHeldItemSprite + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 item;
+
+    if (!gPaletteFade.active)
+    {
+        item = gSpecialVar_ItemId;
+        DisplayGaveHeldItemMessage(&gPlayerParty[gPartyMenu.slotId], item, FALSE, 0);
+        GiveItemToMon(&gPlayerParty[gPartyMenu.slotId], item);
+        RemoveBagItem(item, 1);
+        gTasks[taskId].func = Task_UpdateHeldItemSprite;
+    }
 }
 
-__attribute__((naked)) void sub_081B3FF0(void)
+static void Task_SwitchHoldItemsPrompt(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _081B4030\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B4028\n\t"
-        "	ldr r0, _081B4034\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B4038\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B403C\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayAlreadyHoldingItemSwitchMessage\n\t"
-        "	ldr r1, _081B4040\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4044\n\t"
-        "	str r1, [r0]\n\t"
-        "_081B4028:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4030: .4byte gPaletteFade\n\t"
-        "_081B4034: .4byte gPartyMenu\n\t"
-        "_081B4038: .4byte gPlayerParty\n\t"
-        "_081B403C: .4byte gUnknown_203CBC8\n\t"
-        "_081B4040: .4byte gTasks\n\t"
-        "_081B4044: .4byte sub_081B4048 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DisplayAlreadyHoldingItemSwitchMessage(&gPlayerParty[gPartyMenu.slotId], sPartyMenuItemId, TRUE);
+        gTasks[taskId].func = Task_SwitchItemsYesNo;
+    }
 }
 
-__attribute__((naked)) void sub_081B4048(void)
+static void Task_SwitchItemsYesNo(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B406C\n\t"
-        "	bl sub_081B2FDC\n\t"
-        "	ldr r0, _081B4074\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B4078\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B406C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4074: .4byte gTasks\n\t"
-        "_081B4078: .4byte sub_081B407C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        sub_081B2FDC(); // PartyMenuDisplayYesNoMenu
+        gTasks[taskId].func = Task_HandleSwitchItemsYesNoInput;
+    }
 }
 
-__attribute__((naked)) void sub_081B407C(void)
+static void Task_HandleSwitchItemsYesNoInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B40A2\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _081B409C\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B4178\n\t"
-        "	b _081B418C\n\t"
-        "_081B409C:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _081B417E\n\t"
-        "	b _081B418C\n\t"
-        "_081B40A2:\n\t"
-        "	ldr r5, _081B40E4\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl RemoveBagItem\n\t"
-        "	ldr r6, _081B40E8\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddBagItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B40F8\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddBagItem\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	bl BufferBagFullCantTakeItemMessage\n\t"
-        "	ldr r0, _081B40EC\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B40F0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B40F4\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _081B418C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B40E4: .4byte gSpecialVar_ItemId\n\t"
-        "_081B40E8: .4byte gUnknown_203CBC8\n\t"
-        "_081B40EC: .4byte gStringVar4\n\t"
-        "_081B40F0: .4byte gTasks\n\t"
-        "_081B40F4: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        "_081B40F8:\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B4138\n\t"
-        "	ldr r0, _081B4128\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B412C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	bl GiveItemToMon\n\t"
-        "	ldr r1, _081B4130\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4134\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _081B418C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4128: .4byte gPartyMenu\n\t"
-        "_081B412C: .4byte gPlayerParty\n\t"
-        "_081B4130: .4byte gTasks\n\t"
-        "_081B4134: .4byte sub_081B419C + 1\n\t"
-        "_081B4138:\n\t"
-        "	ldr r0, _081B4168\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B416C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	bl GiveItemToMon\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	ldrh r1, [r6]\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplaySwitchedHeldItemMessage\n\t"
-        "	ldr r1, _081B4170\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4174\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _081B418C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4168: .4byte gPartyMenu\n\t"
-        "_081B416C: .4byte gPlayerParty\n\t"
-        "_081B4170: .4byte gTasks\n\t"
-        "_081B4174: .4byte Task_UpdateHeldItemSprite + 1\n\t"
-        "_081B4178:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "_081B417E:\n\t"
-        "	ldr r0, _081B4194\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B4198\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B418C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4194: .4byte gTasks\n\t"
-        "_081B4198: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0: // Yes, switch items
+        RemoveBagItem(gSpecialVar_ItemId, 1);
+
+        // No room to return held item to bag
+        if (AddBagItem(sPartyMenuItemId, 1) == FALSE)
+        {
+            AddBagItem(gSpecialVar_ItemId, 1);
+            BufferBagFullCantTakeItemMessage(sPartyMenuItemId);
+            DisplayPartyMenuMessage(gStringVar4, FALSE);
+            gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+        }
+        // Giving mail
+        else if (ItemIsMail(gSpecialVar_ItemId))
+        {
+            GiveItemToMon(&gPlayerParty[gPartyMenu.slotId], gSpecialVar_ItemId);
+            gTasks[taskId].func = Task_WriteMailToGiveMonAfterText;
+        }
+        // Giving item
+        else
+        {
+            GiveItemToMon(&gPlayerParty[gPartyMenu.slotId], gSpecialVar_ItemId);
+            DisplaySwitchedHeldItemMessage(gSpecialVar_ItemId, sPartyMenuItemId, TRUE);
+            gTasks[taskId].func = Task_UpdateHeldItemSprite;
+        }
+        break;
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        // fallthrough
+    case 1: // No
+        gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+        break;
+    }
 }
 
-
-__attribute__((naked)) void sub_081B419C(void)
+static void Task_WriteMailToGiveMonAfterText(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B41BC\n\t"
-        "	ldr r0, _081B41C4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _081B41C8\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "_081B41BC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B41C4: .4byte sPartyMenuInternal\n\t"
-        "_081B41C8: .4byte sub_081B41CC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        sPartyMenuInternal->exitCallback = CB2_WriteMailToGiveMon;
+        Task_ClosePartyMenu(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_081B41CC(void)
+static void CB2_WriteMailToGiveMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B4204\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B4208\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081B420C\n\t"
-        "	lsls r2, r0, #3\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r0, _081B4210\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _081B4214\n\t"
-        "	movs r0, #4\n\t"
-        "	movs r3, #3\n\t"
-        "	bl DoEasyChatScreen\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4204: .4byte gPartyMenu\n\t"
-        "_081B4208: .4byte gPlayerParty\n\t"
-        "_081B420C: .4byte gSaveBlock1Ptr\n\t"
-        "_081B4210: .4byte 0x00002BE0\n\t"
-        "_081B4214: .4byte sub_081B4218 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 mail = GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_MAIL);
+
+    DoEasyChatScreen(
+        EASY_CHAT_TYPE_MAIL,
+        gSaveBlock1Ptr->mail[mail].words,
+        CB2_ReturnToPartyMenuFromWritingMail,
+        EASY_CHAT_PERSON_DISPLAY_NONE);
 }
 
-__attribute__((naked)) void sub_081B4218(void)
+static void CB2_ReturnToPartyMenuFromWritingMail(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r6, _081B4284\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r6, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B4288\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _081B428C\n\t"
-        "	ldrh r7, [r0]\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _081B4298\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl TakeMailFromMon\n\t"
-        "	ldr r4, _081B4290\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl RemoveBagItem\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddBagItem\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	ldrb r2, [r6, #0xb]\n\t"
-        "	str r7, [sp]\n\t"
-        "	ldr r1, _081B4294\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	b _081B42B4\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4284: .4byte gPartyMenu\n\t"
-        "_081B4288: .4byte gPlayerParty\n\t"
-        "_081B428C: .4byte gSpecialVar_Result\n\t"
-        "_081B4290: .4byte gUnknown_203CBC8\n\t"
-        "_081B4294: .4byte Task_TryCreateSelectionWindow + 1\n\t"
-        "_081B4298:\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	ldrb r2, [r6, #0xb]\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldr r1, _081B42C0\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitPartyMenu\n\t"
-        "_081B42B4:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B42C0: .4byte sub_081B42C4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u16 item = GetMonData(mon, MON_DATA_HELD_ITEM);
+
+    // Canceled writing mail
+    if (gSpecialVar_Result == FALSE)
+    {
+        TakeMailFromMon(mon);
+        SetMonData(mon, MON_DATA_HELD_ITEM, &sPartyMenuItemId);
+        RemoveBagItem(sPartyMenuItemId, 1);
+        AddBagItem(item, 1);
+        InitPartyMenu(gPartyMenu.menuType, KEEP_PARTY_LAYOUT, gPartyMenu.action, TRUE, PARTY_MSG_CHOOSE_MON, Task_TryCreateSelectionWindow, gPartyMenu.exitCallback);
+    }
+    // Wrote mail
+    else
+    {
+        InitPartyMenu(gPartyMenu.menuType, KEEP_PARTY_LAYOUT, gPartyMenu.action, TRUE, PARTY_MSG_NONE, Task_DisplayGaveMailFromPartyMessage, gPartyMenu.exitCallback);
+    }
 }
 
-__attribute__((naked)) void sub_081B42C4(void)
+// Nearly redundant with Task_DisplayGaveMailFromBagMessgae
+static void Task_DisplayGaveMailFromPartyMessage(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _081B42FC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B432A\n\t"
-        "	ldr r1, _081B4300\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B4310\n\t"
-        "	ldr r0, _081B4304\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B4308\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B430C\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DisplayGaveHeldItemMessage\n\t"
-        "	b _081B431C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B42FC: .4byte gPaletteFade\n\t"
-        "_081B4300: .4byte gUnknown_203CBC8\n\t"
-        "_081B4304: .4byte gPartyMenu\n\t"
-        "_081B4308: .4byte gPlayerParty\n\t"
-        "_081B430C: .4byte gSpecialVar_ItemId\n\t"
-        "_081B4310:\n\t"
-        "	ldr r0, _081B4330\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplaySwitchedHeldItemMessage\n\t"
-        "_081B431C:\n\t"
-        "	ldr r0, _081B4334\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B4338\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B432A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4330: .4byte gSpecialVar_ItemId\n\t"
-        "_081B4334: .4byte gTasks\n\t"
-        "_081B4338: .4byte Task_UpdateHeldItemSprite + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        if (sPartyMenuItemId == ITEM_NONE)
+            DisplayGaveHeldItemMessage(&gPlayerParty[gPartyMenu.slotId], gSpecialVar_ItemId, FALSE, 0);
+        else
+            DisplaySwitchedHeldItemMessage(gSpecialVar_ItemId, sPartyMenuItemId, FALSE);
+        gTasks[taskId].func = Task_UpdateHeldItemSprite;
+    }
 }
 
 __attribute__((naked)) void Task_UpdateHeldItemSprite(u8 taskId)
@@ -10144,7 +9691,7 @@ __attribute__((naked)) void sub_081B7C4C(u8 taskId)
         "	bl sub_081B7CE4\n\t"
         "	b _081B7CD0\n\t"
         "	.align 2, 0\n\t"
-        "_081B7C8C: .4byte gUnknown_203CBC8\n\t"
+        "_081B7C8C: .4byte sPartyMenuItemId\n\t"
         "_081B7C90: .4byte gPartyMenu\n\t"
         "_081B7C94: .4byte gPlayerParty\n\t"
         "_081B7C98:\n\t"
@@ -10416,7 +9963,7 @@ __attribute__((naked)) void sub_081B7E48(void)
         "_081B7E98: .4byte gPartyMenu\n\t"
         "_081B7E9C: .4byte gPlayerParty\n\t"
         "_081B7EA0: .4byte gSpecialVar_Result\n\t"
-        "_081B7EA4: .4byte gUnknown_203CBC8\n\t"
+        "_081B7EA4: .4byte sPartyMenuItemId\n\t"
         "_081B7EA8:\n\t"
         "	ldrb r0, [r6, #8]\n\t"
         "	lsls r0, r0, #0x1c\n\t"
@@ -10467,7 +10014,7 @@ __attribute__((naked)) void sub_081B7ED0(void)
         "	b _081B7F1C\n\t"
         "	.align 2, 0\n\t"
         "_081B7EF8: .4byte gPaletteFade\n\t"
-        "_081B7EFC: .4byte gUnknown_203CBC8\n\t"
+        "_081B7EFC: .4byte sPartyMenuItemId\n\t"
         "_081B7F00: .4byte gPartyMenu\n\t"
         "_081B7F04:\n\t"
         "	ldr r2, _081B7F30\n\t"
@@ -10578,7 +10125,7 @@ __attribute__((naked)) void sub_081B7F74(void)
         "	b _081B8018\n\t"
         "	.align 2, 0\n\t"
         "_081B7FCC: .4byte gPartyMenu\n\t"
-        "_081B7FD0: .4byte gUnknown_203CBC8\n\t"
+        "_081B7FD0: .4byte sPartyMenuItemId\n\t"
         "_081B7FD4: .4byte gStringVar4\n\t"
         "_081B7FD8:\n\t"
         "	adds r0, r4, #0\n\t"
