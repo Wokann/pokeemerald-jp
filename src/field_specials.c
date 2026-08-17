@@ -1,6 +1,7 @@
 #include "global.h"
 #include "constants/field_specials.h"
 #include "constants/metatile_labels.h"
+#include "constants/event_objects.h"
 #include "fieldmap.h"
 #include "task.h"
 extern void Task_LotteryCornerComputerEffect(u8 taskId);
@@ -397,24 +398,10 @@ __attribute__((naked)) void UpdateCyclingRoadState(void)
     );
 }
 
-__attribute__((naked)) void SetSSTidalFlag(void)
+void SetSSTidalFlag(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138018\n\t"
-        "	bl FlagSet\n\t"
-        "	ldr r0, _0813801C\n\t"
-        "	bl GetVarPointer\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138018: .4byte 0x0000088D\n\t"
-        "_0813801C: .4byte 0x0000404A\n\t"
-        ".syntax divided\n\t"
-    );
+    FlagSet(FLAG_SYS_CRUISE_MODE);
+    *GetVarPointer(VAR_CRUISE_STEP_COUNT) = 0;
 }
 
 __attribute__((naked)) void ResetSSTidalFlag(void)
@@ -1852,25 +1839,10 @@ __attribute__((naked)) void ShowFieldMessageStringVar4(void)
     );
 }
 
-__attribute__((naked)) void StorePlayerCoordsInVars(void)
+void StorePlayerCoordsInVars(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _08138B54\n\t"
-        "	ldr r0, _08138B58\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _08138B5C\n\t"
-        "	ldrh r0, [r2, #2]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08138B54: .4byte gSpecialVar_0x8004\n\t"
-        "_08138B58: .4byte gSaveBlock1Ptr\n\t"
-        "_08138B5C: .4byte gSpecialVar_0x8005\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpecialVar_0x8004 = gSaveBlock1Ptr->pos.x;
+    gSpecialVar_0x8005 = gSaveBlock1Ptr->pos.y;
 }
 
 u8 GetPlayerTrainerIdOnesDigit(void)
@@ -2515,27 +2487,10 @@ __attribute__((naked)) void SpawnCameraObject(void)
     );
 }
 
-__attribute__((naked)) void RemoveCameraObject(void)
+void RemoveCameraObject(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetPlayerAvatarSpriteId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl CameraObjectSetFollowedSpriteId\n\t"
-        "	ldr r0, _0813923C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	ldrb r2, [r0, #4]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	bl RemoveObjectEventByLocalIdAndMap\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813923C: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    CameraObjectSetFollowedSpriteId(GetPlayerAvatarSpriteId());
+    RemoveObjectEventByLocalIdAndMap(LOCALID_CAMERA, (u8)gSaveBlock1Ptr->location.mapNum, (u8)gSaveBlock1Ptr->location.mapGroup);
 }
 
 u8 GetPokeblockNameByMonNature(void)
