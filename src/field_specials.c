@@ -3860,31 +3860,11 @@ __attribute__((naked)) void sub_08139F0C(void)
     );
 }
 
-__attribute__((naked)) void UpdateFrontierManiac(u16 daysSince)
+void UpdateFrontierManiac(u16 daysSince)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _08139F58\n\t"
-        "	bl GetVarPointer\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	strh r4, [r5]\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __umodsi3\n\t"
-        "	strh r0, [r5]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139F58: .4byte 0x0000402F\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *var = GetVarPointer(VAR_FRONTIER_MANIAC_FACILITY);
+    *var += daysSince;
+    *var %= 10;
 }
 
 __attribute__((naked)) void sub_08139F5C(void)
@@ -5035,31 +5015,11 @@ __attribute__((naked)) void sub_0813A7C0(void)
     );
 }
 
-__attribute__((naked)) void UpdateFrontierGambler(u16 daysSince)
+void UpdateFrontierGambler(u16 daysSince)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _0813A824\n\t"
-        "	bl GetVarPointer\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	strh r4, [r5]\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl __umodsi3\n\t"
-        "	strh r0, [r5]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813A824: .4byte 0x00004030\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *var = GetVarPointer(VAR_FRONTIER_GAMBLER_CHALLENGE);
+    *var += daysSince;
+    *var %= 12;
 }
 
 __attribute__((naked)) void sub_0813A828(void)
