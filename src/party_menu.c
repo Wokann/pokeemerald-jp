@@ -931,7 +931,7 @@ static void InitPartyMenuBoxes(u8 layout)
         sPartyMenuBoxes[1].infoRects = &gUnknown_85E0F9C[-1];
 }
 
-__attribute__((naked)) void RenderPartyMenuBox(void)
+__attribute__((naked)) void RenderPartyMenuBox(u8 slot)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1279,39 +1279,13 @@ static void DisplayPartyPokemonDataForMultiBattle(u8 slot)
     }
 }
 
-__attribute__((naked)) void RenderPartyMenuBoxes(void)
+static bool8 RenderPartyMenuBoxes(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _081B0A98\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0x86\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl RenderPartyMenuBox\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #6\n\t"
-        "	beq _081B0A9C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B0A9E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0A98: .4byte sPartyMenuInternal\n\t"
-        "_081B0A9C:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B0A9E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    RenderPartyMenuBox((u8)sPartyMenuInternal->data[0]);
+    if (++sPartyMenuInternal->data[0] == PARTY_SIZE)
+        return TRUE;
+    else
+        return FALSE;
 }
 
 __attribute__((naked)) const void *GetPartyMiscGraphicsTile(u16 tileNum)
