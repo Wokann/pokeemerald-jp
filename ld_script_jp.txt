@@ -8603,7 +8603,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B1D6C);
         src/party_menu.o(.text.sub_081B1E04);
         src/party_menu.o(.text.sub_081B1E34);
-        src/party_menu.o(.text.sub_081B1E5C);
+        src/party_menu.o(.text.IsMonAllowedInMinigame);
         src/party_menu.o(.text.sub_081B1E7C);
         src/party_menu.o(.text.sub_081B1EE0);
         src/party_menu.o(.text.sub_081B1F18);

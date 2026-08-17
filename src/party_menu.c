@@ -1261,7 +1261,7 @@ __attribute__((naked)) void sub_081B0870(void)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1E5C\n\t"
+        "	bl IsMonAllowedInMinigame\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
@@ -4329,29 +4329,11 @@ __attribute__((naked)) void sub_081B1E34(void)
     );
 }
 
-__attribute__((naked)) void sub_081B1E5C(void)
+static bool8 IsMonAllowedInMinigame(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081B1E78\n\t"
-        "	movs r2, #0xe\n\t"
-        "	ldrsh r1, [r1, r2]\n\t"
-        "	asrs r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081B1E74\n\t"
-        "	movs r0, #0\n\t"
-        "_081B1E74:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1E78: .4byte gPartyMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!((gPartyMenu.data[0] >> slot) & 1))
+        return FALSE;
+    return TRUE;
 }
 
 __attribute__((naked)) void sub_081B1E7C(void)
@@ -4364,7 +4346,7 @@ __attribute__((naked)) void sub_081B1E7C(void)
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r5, r1, #0x18\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_081B1E5C\n\t"
+        "	bl IsMonAllowedInMinigame\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
