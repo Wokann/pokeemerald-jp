@@ -2714,19 +2714,9 @@ __attribute__((naked)) void TryUpdateRusturfTunnelState(void)
     );
 }
 
-__attribute__((naked)) void SetShoalItemFlag(u16 unused)
+void SetShoalItemFlag(u16 unused)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081394D8\n\t"
-        "	bl FlagSet\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081394D8: .4byte 0x000008BF\n\t"
-        ".syntax divided\n\t"
-    );
+    FlagSet(FLAG_SYS_SHOAL_ITEM);
 }
 
 __attribute__((naked)) void PutZigzagoonInPlayerParty(void)
@@ -2994,24 +2984,10 @@ u16 GetDaysUntilPacifidlogTMAvailable(void)
     return 7 - (gLocalTime.days - tmReceivedDay);
 }
 
-__attribute__((naked)) void SetPacifidlogTMReceivedDay(void)
+u16 SetPacifidlogTMReceivedDay(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _081397D8\n\t"
-        "	ldr r4, _081397DC\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	bl VarSet\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081397D8: .4byte 0x000040C2\n\t"
-        "_081397DC: .4byte gLocalTime\n\t"
-        ".syntax divided\n\t"
-    );
+    VarSet(VAR_PACIFIDLOG_TM_RECEIVED_DAY, gLocalTime.days);
+    return gLocalTime.days;
 }
 
 __attribute__((naked)) void MonOTNameMatchesPlayer(void)
@@ -6931,17 +6907,9 @@ __attribute__((naked)) void UnusualWeatherHasExpired(void)
     );
 }
 
-__attribute__((naked)) void Unused_SetWeatherSunny(void)
+void Unused_SetWeatherSunny(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetCurrentAndNextWeather\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetCurrentAndNextWeather(WEATHER_SUNNY);
 }
 
 __attribute__((naked)) void sub_0813B4C8(void)
@@ -7714,26 +7682,10 @@ __attribute__((naked)) bool8 InPokemonCenter()
     );
 }
 
-__attribute__((naked)) void ResetFanClub()
+void ResetFanClub(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0813BA60\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _0813BA64\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r1]\n\t"
-        "	movs r1, #0xa1\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r2, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0813BA60: .4byte gSaveBlock1Ptr\n\t"
-        "_0813BA64: .4byte 0x0000141E\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->vars[VAR_FANCLUB_FAN_COUNTER - VARS_START] = 0;
+    gSaveBlock1Ptr->vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = 0;
 }
 
 __attribute__((naked)) void sub_0813BA68(void)
