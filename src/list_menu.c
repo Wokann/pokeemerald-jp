@@ -1,5 +1,6 @@
 #include "global.h"
 #include "list_menu.h"
+#include "main.h"
 #include "constants/songs.h"
 #include "task.h"
 #include "text.h"
@@ -17,6 +18,7 @@ static __attribute__((naked)) void ListMenuPrintEntries(struct ListMenu *list, u
 static __attribute__((naked)) void ListMenuDrawCursor(struct ListMenu *list);
 static __attribute__((naked)) void ListMenuErasePrintedCursor(struct ListMenu *list, u16 selectedRow);
 static u8 ListMenuUpdateSelectedRowIndexAndScrollOffset(struct ListMenu *list, bool8 movingDown);
+static bool8 ListMenuChangeSelection(struct ListMenu *list, bool8 updateCursorAndCallCallback, u8 count, bool8 movingDown);
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
 u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId);
 void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y);
@@ -232,124 +234,66 @@ u8 ListMenuInitInRect(struct ListMenuTemplate *listMenuTemplate, struct ListMenu
     return taskId;
 }
 
-__attribute__((naked)) s32 ListMenu_ProcessInput(u8 listTaskId)
+s32 ListMenu_ProcessInput(u8 listTaskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081AE308\n\t"
-        "	adds r3, r1, r0\n\t"
-        "	ldr r2, _081AE30C\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AE310\n\t"
-        "	ldrh r0, [r3, #0x18]\n\t"
-        "	ldrh r1, [r3, #0x1a]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	b _081AE39A\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE308: .4byte gUnknown_3005B68\n\t"
-        "_081AE30C: .4byte gMain\n\t"
-        "_081AE310:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AE31E\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	b _081AE39A\n\t"
-        "_081AE31E:\n\t"
-        "	ldrh r1, [r2, #0x30]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AE332\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	b _081AE392\n\t"
-        "_081AE332:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AE342\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	b _081AE390\n\t"
-        "_081AE342:\n\t"
-        "	ldrb r0, [r3, #0x16]\n\t"
-        "	lsrs r0, r0, #6\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081AE358\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _081AE352\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081AE364\n\t"
-        "_081AE352:\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081AE378\n\t"
-        "_081AE358:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _081AE372\n\t"
-        "_081AE364:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "_081AE372:\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "_081AE378:\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081AE386\n\t"
-        "	ldrb r2, [r3, #0xe]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	b _081AE392\n\t"
-        "_081AE386:\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AE396\n\t"
-        "	ldrb r2, [r3, #0xe]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	movs r1, #1\n\t"
-        "_081AE390:\n\t"
-        "	movs r3, #1\n\t"
-        "_081AE392:\n\t"
-        "	bl ListMenuChangeSelection\n\t"
-        "_081AE396:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_081AE39A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
 
+    if (JOY_NEW(A_BUTTON))
+    {
+        return list->template.items[list->scrollOffset + list->selectedRow].id;
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        return LIST_CANCEL;
+    }
+    else if (JOY_REPEAT(DPAD_UP))
+    {
+        ListMenuChangeSelection(list, TRUE, 1, FALSE);
+        return LIST_NOTHING_CHOSEN;
+    }
+    else if (JOY_REPEAT(DPAD_DOWN))
+    {
+        ListMenuChangeSelection(list, TRUE, 1, TRUE);
+        return LIST_NOTHING_CHOSEN;
+    }
+    else // try to move by one window scroll
+    {
+        bool16 rightButton, leftButton;
+        switch (list->template.scrollMultiple)
+        {
+        case LIST_NO_MULTIPLE_SCROLL:
+        default:
+            leftButton = FALSE;
+            rightButton = FALSE;
+            break;
+        case LIST_MULTIPLE_SCROLL_DPAD:
+            // note: JOY_REPEAT won't match here
+            leftButton = JOY_REPEAT(DPAD_LEFT);
+            rightButton = JOY_REPEAT(DPAD_RIGHT);
+            break;
+        case LIST_MULTIPLE_SCROLL_L_R:
+            // same as above
+            leftButton = JOY_REPEAT(L_BUTTON);
+            rightButton = JOY_REPEAT(R_BUTTON);
+            break;
+        }
+
+        if (leftButton)
+        {
+            ListMenuChangeSelection(list, TRUE, list->template.maxShowed, FALSE);
+            return LIST_NOTHING_CHOSEN;
+        }
+        else if (rightButton)
+        {
+            ListMenuChangeSelection(list, TRUE, list->template.maxShowed, TRUE);
+            return LIST_NOTHING_CHOSEN;
+        }
+        else
+        {
+            return LIST_NOTHING_CHOSEN;
+        }
+    }
+}
 void DestroyListMenuTask(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
 {
     struct ListMenu *list = (void *) gTasks[listTaskId].data;
