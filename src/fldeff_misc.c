@@ -1,5 +1,8 @@
 #include "global.h"
 #include "constants/songs.h"
+#include "task.h"
+#define tMetatileID data[0]
+extern void Task_SecretBaseMusicNoteMatSound(u8 taskId);
 extern void Task_FieldPoisonEffect(u8 taskId);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
 
@@ -1782,7 +1785,7 @@ __attribute__((naked)) void ShatterSecretBaseBreakableDoor(s16 x, s16 y)
     );
 }
 
-__attribute__((naked)) void Task_SecretBaseMusicNoteMatSound(void)
+__attribute__((naked)) void Task_SecretBaseMusicNoteMatSound(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1927,35 +1930,12 @@ __attribute__((naked)) void Task_SecretBaseMusicNoteMatSound(void)
     );
 }
 
-__attribute__((naked)) void PlaySecretBaseMusicNoteMatSound(s16 metatileId)
+void PlaySecretBaseMusicNoteMatSound(s16 metatileId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _080FB20C\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080FB210\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r4, [r1, #8]\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB20C: .4byte Task_SecretBaseMusicNoteMatSound + 1\n\t"
-        "_080FB210: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(Task_SecretBaseMusicNoteMatSound, 5);
+
+    gTasks[taskId].tMetatileID = metatileId;
+    gTasks[taskId].data[1] = 0;
 }
 
 __attribute__((naked)) void SpriteCB_GlitterMatSparkle(void)
