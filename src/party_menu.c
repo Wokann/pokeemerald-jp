@@ -1396,53 +1396,22 @@ static void Task_ClosePartyMenu(u8 taskId)
     gTasks[taskId].func = Task_ClosePartyMenuAndSetCB2;
 }
 
-__attribute__((naked)) static void Task_ClosePartyMenuAndSetCB2(u8 taskId)
+static void Task_ClosePartyMenuAndSetCB2(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _081B0FFC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B101C\n\t"
-        "	ldr r4, _081B1000\n\t"
-        "	ldrb r1, [r4, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B0FEA\n\t"
-        "	bl sub_081B8D20\n\t"
-        "_081B0FEA:\n\t"
-        "	ldr r0, _081B1004\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1008\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _081B100E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0FFC: .4byte gPaletteFade\n\t"
-        "_081B1000: .4byte gPartyMenu\n\t"
-        "_081B1004: .4byte sPartyMenuInternal\n\t"
-        "_081B1008:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_081B100E:\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreePartyPointers\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081B101C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        if (gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE)
+            UpdatePartyToFieldOrder();
+
+        if (sPartyMenuInternal->exitCallback != NULL)
+            SetMainCallback2(sPartyMenuInternal->exitCallback);
+        else
+            SetMainCallback2(gPartyMenu.exitCallback);
+
+        ResetSpriteData();
+        FreePartyPointers();
+        DestroyTask(taskId);
+    }
 }
 
 u8 GetCursorSelectionMonId(void)
@@ -15493,7 +15462,7 @@ __attribute__((naked)) void pokemon_change_order(void)
     );
 }
 
-__attribute__((naked)) void sub_081B8D20(void)
+__attribute__((naked)) void UpdatePartyToFieldOrder(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -8852,7 +8852,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B8C50);
         src/party_menu.o(.text.pokemon_order_func);
         src/party_menu.o(.text.pokemon_change_order);
-        src/party_menu.o(.text.sub_081B8D20);
+        src/party_menu.o(.text.UpdatePartyToFieldOrder);
         src/party_menu.o(.text.sub_081B8D70);
         src/party_menu.o(.text.sub_081B8DE0);
         src/party_menu.o(.text.sub_081B8DF0);
