@@ -38,6 +38,7 @@ __attribute__((naked)) void CB2_ShowPokemonSummaryScreen(void);
 __attribute__((naked)) void CB2_SelectBagItemToGive(void);
 __attribute__((naked)) void CB2_ReadHeldMail(void);
 __attribute__((naked)) void Task_SendMailToPCYesNo(u8 taskId);
+__attribute__((naked)) bool8 TrySwitchInPokemon(void);
 
 enum {
     ACTIONS_NONE,
@@ -9945,54 +9946,22 @@ __attribute__((naked)) void CursorCb_Cancel2(u8 taskId)
 }
 
 
-__attribute__((naked)) void CursorCb_SendMon(u8 taskId)
+static void CursorCb_SendMon(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r5, _081B4AF8\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	bl sub_081B871C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B4AFC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "	b _081B4B1A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4AF8: .4byte sPartyMenuInternal\n\t"
-        "_081B4AFC:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, _081B4B20\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B4B24\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4B28\n\t"
-        "	str r1, [r0]\n\t"
-        "_081B4B1A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4B20: .4byte gStringVar4\n\t"
-        "_081B4B24: .4byte gTasks\n\t"
-        "_081B4B28: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    if ((u8)TrySwitchInPokemon() == TRUE)
+    {
+        Task_ClosePartyMenu(taskId);
+    }
+    else
+    {
+        PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
+        gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
+    }
 }
+
 
 static void CursorCb_Enter(u8 taskId)
 {
@@ -17305,7 +17274,7 @@ __attribute__((naked)) void sub_081B86CC(void)
     );
 }
 
-__attribute__((naked)) void sub_081B871C(void)
+__attribute__((naked)) bool8 TrySwitchInPokemon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
