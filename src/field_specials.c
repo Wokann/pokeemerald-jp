@@ -3,6 +3,8 @@
 #include "constants/metatile_labels.h"
 #include "constants/event_objects.h"
 #include "constants/weather.h"
+#include "constants/songs.h"
+#include "overworld.h"
 #include "fieldmap.h"
 extern void CB2_ShowDiploma(void);
 extern void CB2_ReturnToField(void);
@@ -307,45 +309,16 @@ __attribute__((naked)) void GetRecordedCyclingRoadResults(void)
     );
 }
 
-__attribute__((naked)) void UpdateCyclingRoadState(void)
+void UpdateCyclingRoadState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _08137FF4\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	ldr r0, _08137FF8\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08137FEC\n\t"
-        "	ldr r4, _08137FFC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08137FDE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _08137FEC\n\t"
-        "_08137FDE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl VarSet\n\t"
-        "	movs r0, #0\n\t"
-        "	bl Overworld_SetSavedMusic\n\t"
-        "_08137FEC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08137FF4: .4byte gUnknown_2031F7C\n\t"
-        "_08137FF8: .4byte 0x00000C1D\n\t"
-        "_08137FFC: .4byte 0x000040A9\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gLastUsedWarp.mapNum == MAP_NUM(MAP_ROUTE110_SEASIDE_CYCLING_ROAD_NORTH_ENTRANCE) && gLastUsedWarp.mapGroup == MAP_GROUP(MAP_ROUTE110_SEASIDE_CYCLING_ROAD_NORTH_ENTRANCE))
+        return;
+
+    if (VarGet(VAR_CYCLING_CHALLENGE_STATE) == 2 || VarGet(VAR_CYCLING_CHALLENGE_STATE) == 3)
+    {
+        VarSet(VAR_CYCLING_CHALLENGE_STATE, 0);
+        Overworld_SetSavedMusic(MUS_DUMMY);
+    }
 }
 
 void SetSSTidalFlag(void)
