@@ -181,7 +181,7 @@ extern void CB2_ReturnToFieldFromMultiplayer(void);
 void sub_080790C8(u8 side);
 void sub_0807987C(u8 side);
 void sub_08079AFC(void);
-void sub_08079690(u8 side);
+static void PrintPartyNicknames(u8 whichParty);
 bool8 sub_08079C28(void);
 void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed);
 void sub_08079FB4(void);
@@ -555,7 +555,7 @@ static void CB2_CreateTradeMenu(void)
         break;
     case 14:
         sub_08079D98(TRADE_PLAYER);
-        sub_08079690(TRADE_PLAYER);
+        PrintPartyNicknames(TRADE_PLAYER);
         sTradeMenu->bg2hofs = 0;
         sTradeMenu->bg3hofs = 0;
         SetActiveMenuOptions();
@@ -564,7 +564,7 @@ static void CB2_CreateTradeMenu(void)
         break;
     case 15:
         sub_08079D98(TRADE_PARTNER);
-        sub_08079690(TRADE_PARTNER);
+        PrintPartyNicknames(TRADE_PARTNER);
         gMain.state++;
         // fallthrough
     case 16:
@@ -653,8 +653,8 @@ static void CB2_ReturnToTradeMenu(void)
         sTradeMenu->partyCounts[TRADE_PLAYER] = gPlayerPartyCount;
         sTradeMenu->partyCounts[TRADE_PARTNER] = gEnemyPartyCount;
         ClearWindowTilemap(0);
-        sub_08079690(TRADE_PLAYER);
-        sub_08079690(TRADE_PARTNER);
+        PrintPartyNicknames(TRADE_PLAYER);
+        PrintPartyNicknames(TRADE_PARTNER);
 
         for (i = 0; i < sTradeMenu->partyCounts[TRADE_PLAYER]; i++)
         {
@@ -2423,106 +2423,33 @@ static void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
     }
 }
 
-static void PrintPartyMonNickname(u8 whichParty, s8 windowIdOffset, u8 *nickname)
+static void PrintPartyMonNickname(u8 whichParty, u8 windowIdOffset, u8 *nickname)
 {
-    u8 windowId = (whichParty * PARTY_SIZE) + 2 + windowIdOffset;
+    s8 signedOffset = windowIdOffset;
+    u8 windowId = (u8)(signedOffset + ((whichParty * PARTY_SIZE) + 2));
 
     AddTextPrinterParameterized3(windowId, FONT_NORMAL, 0, 0, gUnknown_8300C00, 0, nickname);
     PutWindowTilemap(windowId);
     CopyWindowToVram(windowId, 3);
 }
 
-__attribute__((naked)) void sub_08079690(u8 side)
+static void PrintPartyNicknames(u8 whichParty)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x34\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _08079734\n\t"
-        "	mov sl, r0\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080796AC\n\t"
-        "	ldr r1, _08079738\n\t"
-        "	mov sl, r1\n\t"
-        "_080796AC:\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _0807973C\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bhs _08079724\n\t"
-        "	add r7, sp, #0x14\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	mov sb, r0\n\t"
-        "_080796C8:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	add r4, sl\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetMonGender\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	mov r3, r8\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	mov r3, sb\n\t"
-        "	adds r1, r6, r3\n\t"
-        "	adds r0, #0x51\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08079706\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl AppendGenderSymbol\n\t"
-        "_08079706:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl PrintPartyMonNickname\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	blo _080796C8\n\t"
-        "_08079724:\n\t"
-        "	add sp, #0x34\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079734: .4byte gEnemyParty\n\t"
-        "_08079738: .4byte gPlayerParty\n\t"
-        "_0807973C: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 temp[POKEMON_NAME_BUFFER_SIZE];
+    u8 nickname[32];
+    u8 gender;
+    u8 i;
+    struct Pokemon *party = (whichParty == TRADE_PLAYER) ? gPlayerParty : gEnemyParty;
+
+    for (i = 0; i < sTradeMenu->partyCounts[whichParty]; i++)
+    {
+        GetMonData3(&party[i], MON_DATA_NICKNAME, temp);
+        StringCopy10(nickname, temp);
+        gender = GetMonGender(&party[i]);
+        if (!sTradeMenu->isEgg[whichParty][i])
+            AppendGenderSymbol(nickname, gender);
+        PrintPartyMonNickname(whichParty, i, nickname);
+    }
 }
 
 __attribute__((naked)) void sub_08079740(void)
@@ -2865,7 +2792,7 @@ __attribute__((naked)) void PrintTradePartnerPartyNicknames(void)
         "	movs r0, #1\n\t"
         "	bl rbox_fill_rectangle\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_08079690\n\t"
+        "	bl PrintPartyNicknames\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -2901,7 +2828,7 @@ __attribute__((naked)) void sub_080799C0(u8 whichParty)
         "	adds r0, r4, #0\n\t"
         "	bl sub_0807987C\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_08079690\n\t"
+        "	bl PrintPartyNicknames\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl sub_080798E0\n\t"
         "	ldr r0, _08079A2C\n\t"
