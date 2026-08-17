@@ -10713,31 +10713,14 @@ static void DisplayCantUseSurfMessage(void)
         DisplayPartyMenuStdMessage(PARTY_MSG_CANT_SURF_HERE);
 }
 
-__attribute__((naked)) void SetUpFieldMove_Fly(void)
+static bool8 SetUpFieldMove_Fly(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B553C\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	bl Overworld_MapTypeAllowsTeleportAndFly\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B5540\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B5542\n\t"
-        "	.align 2, 0\n\t"
-        "_081B553C: .4byte gMapHeader\n\t"
-        "_081B5540:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B5542:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE)
+        return TRUE;
+    else
+        return FALSE;
 }
+
 
 __attribute__((naked)) void sub_081B5548(void)
 {
