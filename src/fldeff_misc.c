@@ -710,20 +710,10 @@ bool8 FldEff_UseSecretPowerShrub(void)
     return FALSE;
 }
 
-__attribute__((naked)) void StartSecretBaseTreeFieldEffect(void)
+void StartSecretBaseTreeFieldEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	movs r0, #0x38\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldEffectActiveListRemove(FLDEFF_USE_SECRET_POWER_TREE);
+    FieldEffectStart(FLDEFF_SECRET_POWER_TREE);
 }
 
 __attribute__((naked)) bool8 FldEff_SecretPowerTree()
@@ -895,20 +885,10 @@ bool8 FldEff_UseSecretPowerTree(void)
     return FALSE;
 }
 
-__attribute__((naked)) void StartSecretBaseShrubFieldEffect(void)
+void StartSecretBaseShrubFieldEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x1b\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	movs r0, #0x39\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldEffectActiveListRemove(FLDEFF_USE_SECRET_POWER_SHRUB);
+    FieldEffectStart(FLDEFF_SECRET_POWER_SHRUB);
 }
 
 __attribute__((naked)) bool8 FldEff_SecretPowerShrub()
