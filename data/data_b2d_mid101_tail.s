@@ -276,8 +276,8 @@ sPartyBoxNoMonPalIds: @ 0x85E13A9
 gUnknown_85E13AC: @ 0x85E13AC
 	.incbin "baserom_jp.gba", 0x5e13ac, 0x6c
 
-	.globl gUnknown_85E1418
-gUnknown_85E1418: @ 0x85E1418
+	.globl sDescriptionStringTable
+sDescriptionStringTable: @ 0x85E1418
 	.incbin "baserom_jp.gba", 0x5e1418, 0xa8
 
 	.globl gUnknown_85E14C0

@@ -8631,7 +8631,7 @@ SECTIONS {
         src/party_menu.o(.text.DisplayPartyPokemonMaxHP);
         src/party_menu.o(.text.DisplayPartyPokemonHPBarCheck);
         src/party_menu.o(.text.DisplayPartyPokemonHPBar);
-        src/party_menu.o(.text.DisplayPartyPokemonOtherText);
+        src/party_menu.o(.text.DisplayPartyPokemonDescriptionText);
         src/party_menu.o(.text.PartyMenuRemoveWindow);
         src/party_menu.o(.text.DisplayPartyMenuStdMessage);
         src/party_menu.o(.text.sub_081B2DD0);

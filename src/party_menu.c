@@ -49,6 +49,7 @@ extern const u8 sHPBarPalOffsets[];
 extern const u8 sHPBarGreenPalIds[];
 extern const u8 sHPBarYellowPalIds[];
 extern const u8 sHPBarRedPalIds[];
+extern const u8 *const sDescriptionStringTable[];
 #include "constants/items.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
@@ -1168,7 +1169,7 @@ __attribute__((naked)) void DisplayPartyPokemonSelectData(u8 a)
         "	adds r1, r1, r5\n\t"
         "	mov r0, r8\n\t"
         "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonOtherText\n\t"
+        "	bl DisplayPartyPokemonDescriptionText\n\t"
         "	add sp, #8\n\t"
         "	pop {r3}\n\t"
         "	mov r8, r3\n\t"
@@ -5378,69 +5379,15 @@ static void DisplayPartyPokemonHPBar(u16 hp, u16 maxhp, struct PartyMenuBox *men
     CopyWindowToVram(menuBox->windowId, COPYWIN_GFX);
 }
 
-__attribute__((naked)) void DisplayPartyPokemonOtherText(u8 stringID, struct PartyMenuBox *menuBox, u8 c)
+static void DisplayPartyPokemonDescriptionText(u8 stringID, struct PartyMenuBox *menuBox, u8 c)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r7, r2, #0\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _081B2C76\n\t"
-        "	ldr r5, [r6]\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldrb r1, [r5, #0x1c]\n\t"
-        "	lsrs r1, r1, #3\n\t"
-        "	ldrb r2, [r5, #0x1d]\n\t"
-        "	lsrs r2, r2, #3\n\t"
-        "	ldrb r3, [r5, #0x1e]\n\t"
-        "	lsrs r3, r3, #3\n\t"
-        "	ldrb r4, [r5, #0x1f]\n\t"
-        "	lsrs r4, r4, #3\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #1\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r4, [r5]\n\t"
-        "	bl _call_via_r4\n\t"
-        "_081B2C76:\n\t"
-        "	cmp r7, #2\n\t"
-        "	beq _081B2C9C\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r2, [r1, #0x1c]\n\t"
-        "	ldrb r3, [r1, #0x1d]\n\t"
-        "	ldr r1, _081B2CA8\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r4, _081B2CAC\n\t"
-        "	mov r5, r8\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddTextPrinterParameterized3\n\t"
-        "_081B2C9C:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2CA8: .4byte sFontColorTable\n\t"
-        "_081B2CAC: .4byte gUnknown_85E1418\n\t"
-        ".syntax divided\n\t"
-    );
+    if (c)
+    {
+        // JP: blit width/height are the raw dimensions >> 3 (US computes (offset%8 + width + 7) / 8)
+        menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->descTextLeft >> 3, menuBox->infoRects->descTextTop >> 3, menuBox->infoRects->descTextWidth >> 3, menuBox->infoRects->descTextHeight >> 3, TRUE);
+    }
+    if (c != 2)
+        AddTextPrinterParameterized3(menuBox->windowId, FONT_NORMAL, menuBox->infoRects->descTextLeft, menuBox->infoRects->descTextTop, sFontColorTable[0], 0, sDescriptionStringTable[stringID]);
 }
 
 __attribute__((naked)) void PartyMenuRemoveWindow(u8 *windowId)
@@ -8310,7 +8257,7 @@ __attribute__((naked)) void Task_UpdateHeldItemSprite(u8 taskId)
         "	adds r1, r1, r0\n\t"
         "	movs r0, #0xb\n\t"
         "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonOtherText\n\t"
+        "	bl DisplayPartyPokemonDescriptionText\n\t"
         "	b _081B43B6\n\t"
         "	.align 2, 0\n\t"
         "_081B4398: .4byte gPartyMenu\n\t"
@@ -8324,7 +8271,7 @@ __attribute__((naked)) void Task_UpdateHeldItemSprite(u8 taskId)
         "	adds r1, r1, r0\n\t"
         "	movs r0, #0xc\n\t"
         "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonOtherText\n\t"
+        "	bl DisplayPartyPokemonDescriptionText\n\t"
         "_081B43B6:\n\t"
         "	adds r0, r7, #0\n\t"
         "	bl Task_ReturnToChooseMonAfterText\n\t"
@@ -8606,7 +8553,7 @@ __attribute__((naked)) void sub_081B4628(void)
         "	adds r1, r1, r0\n\t"
         "	movs r0, #0xc\n\t"
         "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonOtherText\n\t"
+        "	bl DisplayPartyPokemonDescriptionText\n\t"
         "	ldr r1, _081B46A0\n\t"
         "	lsls r0, r7, #2\n\t"
         "	adds r0, r0, r7\n\t"
@@ -9117,7 +9064,7 @@ static void CursorCb_Enter(u8 taskId)
         {
             PlaySE(SE_SELECT);
             gSelectedOrderFromParty[i] = gPartyMenu.slotId + 1;
-            DisplayPartyPokemonOtherText(i + PARTYBOX_DESC_FIRST, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
+            DisplayPartyPokemonDescriptionText(i + PARTYBOX_DESC_FIRST, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
             if (i == (maxBattlers - 1))
                 MoveCursorToConfirm();
             DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
@@ -9159,11 +9106,11 @@ static void CursorCb_NoEntry(u8 taskId)
             break;
         }
     }
-    DisplayPartyPokemonOtherText(PARTYBOX_DESC_ABLE_3, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
+    DisplayPartyPokemonDescriptionText(PARTYBOX_DESC_ABLE_3, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
     for (i = 0; i < (maxBattlers - 1); i++)
     {
         if (gSelectedOrderFromParty[i] != 0)
-            DisplayPartyPokemonOtherText(i + PARTYBOX_DESC_FIRST, &sPartyMenuBoxes[gSelectedOrderFromParty[i] - 1], 1);
+            DisplayPartyPokemonDescriptionText(i + PARTYBOX_DESC_FIRST, &sPartyMenuBoxes[gSelectedOrderFromParty[i] - 1], 1);
     }
     DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
     gTasks[taskId].func = Task_HandleChooseMonInput;
