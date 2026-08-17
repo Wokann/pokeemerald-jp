@@ -3264,7 +3264,7 @@ SECTIONS {
         src/trade.o(.text.ComputePartyTradeableFlags);
         src/trade.o(.text.ComputePartyHPBarLevels);
         src/trade.o(.text.SetTradePartyHPBarSprites);
-        src/trade.o(.text.sub_0807A028);
+        src/trade.o(.text.SaveTradeGiftRibbons);
         src/trade.o(.text.CanTradeSelectedMon);
         src/trade.o(.text.GetGameProgressForLinkTrade);
         src/trade.o(.text.IsDeoxysOrMewUntradable);

@@ -193,7 +193,7 @@ void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
 static void PrintTradeMessage(u8 messageId);
 extern const u8 *const gUnknown_8300BDC[];
 static bool8 BufferTradeParties(void);
-void sub_0807A028(void);
+static void SaveTradeGiftRibbons(void);
 static void ComputePartyTradeableFlags(u8 whichParty);
 static void ComputePartyHPBarLevels(u8 whichParty);
 void CB1_UpdateLink(void);
@@ -462,7 +462,7 @@ static void CB2_CreateTradeMenu(void)
     case 6:
         if (BufferTradeParties())
         {
-            sub_0807A028(); // SaveTradeGiftRibbons
+            SaveTradeGiftRibbons(); // SaveTradeGiftRibbons
             gMain.state++;
         }
         break;
@@ -2828,42 +2828,15 @@ static void SetTradePartyHPBarSprites(void)
     }
 }
 
-__attribute__((naked)) void sub_0807A028(void)
+static void SaveTradeGiftRibbons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _0807A058\n\t"
-        "	ldr r4, _0807A05C\n\t"
-        "	ldr r3, _0807A060\n\t"
-        "_0807A032:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A04C\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0xa9\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807A04C\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0807A04C:\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #0xa\n\t"
-        "	ble _0807A032\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A058: .4byte gSaveBlock1Ptr\n\t"
-        "_0807A05C: .4byte 0x000031A8\n\t"
-        "_0807A060: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < (int)ARRAY_COUNT(sTradeMenu->giftRibbons); i++)
+    {
+        if (gSaveBlock1Ptr->giftRibbons[i] == 0 && sTradeMenu->giftRibbons[i] != 0)
+            gSaveBlock1Ptr->giftRibbons[i] = sTradeMenu->giftRibbons[i];
+    }
 }
 
 __attribute__((naked)) u32 CanTradeSelectedMon(struct Pokemon *playerParty, int partyCount, int monIdx)
