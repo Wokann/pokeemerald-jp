@@ -3,8 +3,10 @@
 #include "pokemon_icon.h"
 #include "bg.h"
 #include "constants/field_effects.h"
+#include "constants/field_weather.h"
 #include "decompress.h"
 #include "field_effect.h"
+#include "field_weather.h"
 #include "malloc.h"
 #include "palette.h"
 
@@ -19367,27 +19369,16 @@ __attribute__((naked)) void task_hm_without_phase_2(u8 taskId)
     );
 }
 
-__attribute__((naked)) void sub_081B90A4(void)
+__attribute__((naked)) void Task_ChooseContestMon(u8 taskId);
+
+void sub_081B90A4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FadeScreen\n\t"
-        "	ldr r0, _081B90C0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B90C0: .4byte sub_081B90C4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    LockPlayerFieldControls();
+    FadeScreen(FADE_TO_BLACK, 0);
+    CreateTask(Task_ChooseContestMon, 10);
 }
 
-__attribute__((naked)) void sub_081B90C4(void)
+__attribute__((naked)) void Task_ChooseContestMon(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

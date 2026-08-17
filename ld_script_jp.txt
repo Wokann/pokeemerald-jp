@@ -8867,7 +8867,7 @@ SECTIONS {
         src/party_menu.o(.text.hm_add_c3_without_phase_2);
         src/party_menu.o(.text.task_hm_without_phase_2);
         src/party_menu.o(.text.sub_081B90A4);
-        src/party_menu.o(.text.sub_081B90C4);
+        src/party_menu.o(.text.Task_ChooseContestMon);
         src/party_menu.o(.text.sub_081B9110);
         src/party_menu.o(.text.sub_081B9150);
         src/party_menu.o(.text.sub_081B9170);
