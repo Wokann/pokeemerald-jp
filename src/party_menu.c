@@ -11213,29 +11213,9 @@ __attribute__((naked)) void Task_FieldMoveWaitForFade(u8 taskId)
     );
 }
 
-__attribute__((naked)) u16 brm_get_selected_species(void)
+u16 brm_get_selected_species(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B544C\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B5450\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B544C: .4byte gPartyMenu\n\t"
-        "_081B5450: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_SPECIES);
 }
 
 __attribute__((naked)) void task_brm_cancel_1_on_keypad_a_or_b(u8 taskId)
