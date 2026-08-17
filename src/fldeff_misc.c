@@ -16,79 +16,25 @@ extern void Task_PopSecretBaseBalloon(u8 taskId);
 extern void Task_SecretBaseMusicNoteMatSound(u8 taskId);
 extern void Task_FieldPoisonEffect(u8 taskId);
 extern void sub_080FA66C(void);
+extern void sub_080FA500(u8 taskId);
+static __attribute__((naked)) void sub_080FA4B4(void (*func)(u8), u16 x, u16 y, u8 z);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
 
 #include "fldeff_misc.h"
 
-__attribute__((naked)) void sub_080FA43C(void)
+void sub_080FA43C(u16 x, u16 y, u8 z)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r0, _080FA460\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl sub_080FA4B4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA460: .4byte sub_080FA500 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080FA4B4(sub_080FA500, x, y, z);
 }
 
-__attribute__((naked)) void sub_080FA464(void)
+void sub_080FA464(u16 x, u16 y, u8 z)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r0, _080FA488\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl sub_080FA4B4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA488: .4byte sub_080FA66C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080FA4B4(sub_080FA66C, x, y, z);
 }
 
-__attribute__((naked)) void sub_080FA48C(void)
+bool32 sub_080FA48C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080FA49C\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA49C: .4byte sub_080FA500 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    return FuncIsActiveTask(sub_080FA500);
 }
 
 bool32 FldEffPoison_IsActive(void)
@@ -96,7 +42,7 @@ bool32 FldEffPoison_IsActive(void)
     return FuncIsActiveTask(sub_080FA66C);
 }
 
-__attribute__((naked)) void sub_080FA4B4(void)
+static __attribute__((naked)) void sub_080FA4B4(void (*func)(u8), u16 x, u16 y, u8 z)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -142,7 +88,7 @@ __attribute__((naked)) void sub_080FA4B4(void)
     );
 }
 
-__attribute__((naked)) void sub_080FA500(void)
+__attribute__((naked)) void sub_080FA500(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
