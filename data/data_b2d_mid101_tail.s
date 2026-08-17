@@ -84,8 +84,8 @@ gUnknown_85E107C: @ 0x85E107C
 gUnknown_85E1098: @ 0x85E1098
 	.incbin "baserom_jp.gba", 0x5e1098, 0x1c
 
-	.globl gUnknown_85E10B4
-gUnknown_85E10B4: @ 0x85E10B4
+	.globl sFontColorTable
+sFontColorTable: @ 0x85E10B4
 	.incbin "baserom_jp.gba", 0x5e10b4, 0x14
 
 	.globl gUnknown_85E10C8

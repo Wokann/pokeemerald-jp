@@ -39,6 +39,7 @@ extern const u8 sPartyBoxFaintedPalIds2[];
 extern const u8 sPartyBoxCurrSelectionPalIds2[];
 extern const u8 sPartyBoxSelectedForActionPalIds2[];
 extern const u8 sPartyBoxNoMonPalIds[];
+extern const u8 sFontColorTable[][3];
 #include "constants/items.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
@@ -47,10 +48,13 @@ extern const u8 sPartyBoxNoMonPalIds[];
 #include "constants/trade.h"
 #include "link_rfu.h"
 #include "main.h"
+#include "text.h"
 #include "menu_helpers.h"
 #include "sprite.h"
 #include "sound.h"
 #include "string_util.h"
+#include "strings.h"
+extern void AddTextPrinterParameterized3(u8 windowId, u8 fontId, u8 left, u8 top, const u8 *color, s8 speed, const u8 *str);
 #include "task.h"
 #include "trade.h"
 
@@ -124,6 +128,7 @@ struct PartyMenuBox
     u8 statusSpriteId;
 };
 
+static void DisplayPartyPokemonLevel(u8, struct PartyMenuBox *);
 static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox);
 
 extern const struct PartyMenuBoxInfoRects gUnknown_85E0F9C[];
@@ -4801,7 +4806,7 @@ __attribute__((naked)) void sub_081B20F8(void)
         "	.align 2, 0\n\t"
         "_081B2160: .4byte gPartyMenu\n\t"
         "_081B2164: .4byte gUnknown_85E11D0\n\t"
-        "_081B2168: .4byte gUnknown_85E10B4\n\t"
+        "_081B2168: .4byte sFontColorTable\n\t"
         "_081B216C: .4byte gUnknown_85C93BB\n\t"
         "_081B2170: .4byte gUnknown_85E11C8\n\t"
         "_081B2174:\n\t"
@@ -4836,7 +4841,7 @@ __attribute__((naked)) void sub_081B20F8(void)
         "	.align 2, 0\n\t"
         "_081B21B0: .4byte gUnknown_85E11C0\n\t"
         "_081B21B4: .4byte gPartyMenu\n\t"
-        "_081B21B8: .4byte gUnknown_85E10B4\n\t"
+        "_081B21B8: .4byte sFontColorTable\n\t"
         "_081B21BC: .4byte gText_Cancel\n\t"
         "_081B21C0:\n\t"
         "	ldr r0, _081B21F8\n\t"
@@ -4865,7 +4870,7 @@ __attribute__((naked)) void sub_081B20F8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081B21F8: .4byte gUnknown_85E10B4\n\t"
+        "_081B21F8: .4byte sFontColorTable\n\t"
         "_081B21FC: .4byte gText_Exit\n\t"
         ".syntax divided\n\t"
     );
@@ -5214,192 +5219,45 @@ static void LoadPartyBoxPalette(struct PartyMenuBox *menuBox, u8 palFlags)
     }
 }
 
-__attribute__((naked)) void DisplayPartyPokemonBarDetail(u8 a)
+static void DisplayPartyPokemonBarDetail(u8 windowId, const u8 *str, u8 color, const u8 *align)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldrb r5, [r3]\n\t"
-        "	ldrb r3, [r3, #1]\n\t"
-        "	lsls r4, r2, #1\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	ldr r2, _081B2708\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl AddTextPrinterParameterized3\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2708: .4byte gUnknown_85E10B4\n\t"
-        ".syntax divided\n\t"
-    );
+    AddTextPrinterParameterized3(windowId, FONT_SMALL, align[0], align[1], sFontColorTable[color], 0, str);
 }
 
-__attribute__((naked)) void DisplayPartyPokemonNickname(u8 a, u8 b)
+static void DisplayPartyPokemonNickname(struct Pokemon *mon, struct PartyMenuBox *menuBox, u8 c)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B275C\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _081B2746\n\t"
-        "	ldr r5, [r6]\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldrb r1, [r5, #4]\n\t"
-        "	lsrs r1, r1, #3\n\t"
-        "	ldrb r2, [r5, #5]\n\t"
-        "	lsrs r2, r2, #3\n\t"
-        "	ldrb r3, [r5, #6]\n\t"
-        "	lsrs r3, r3, #3\n\t"
-        "	ldrb r4, [r5, #7]\n\t"
-        "	lsrs r4, r4, #3\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r4, [r5]\n\t"
-        "	bl _call_via_r4\n\t"
-        "_081B2746:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	add r1, sp, #8\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	adds r3, #4\n\t"
-        "	add r1, sp, #8\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonBarDetail\n\t"
-        "_081B275C:\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 nickname[POKEMON_NAME_STORAGE_LENGTH + 1];
+
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        if (c == 1)
+            menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[0] >> 3, menuBox->infoRects->dimensions[1] >> 3, menuBox->infoRects->dimensions[2] >> 3, menuBox->infoRects->dimensions[3] >> 3, FALSE);
+        GetMonNickname(mon, nickname);
+        DisplayPartyPokemonBarDetail(menuBox->windowId, nickname, 0, menuBox->infoRects->dimensions);
+    }
 }
 
-__attribute__((naked)) void DisplayPartyPokemonLevelCheck(u8 a)
+static void DisplayPartyPokemonLevelCheck(struct Pokemon *mon, struct PartyMenuBox *menuBox, u8 c)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	mov r8, r4\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B27D0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetMonAilment\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2792\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _081B27D0\n\t"
-        "_081B2792:\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081B27B8\n\t"
-        "	ldr r5, [r7]\n\t"
-        "	ldrb r0, [r7, #8]\n\t"
-        "	ldrb r1, [r5, #8]\n\t"
-        "	lsrs r1, r1, #3\n\t"
-        "	ldrb r2, [r5, #9]\n\t"
-        "	lsrs r2, r2, #3\n\t"
-        "	adds r2, #1\n\t"
-        "	ldrb r3, [r5, #0xa]\n\t"
-        "	lsrs r3, r3, #3\n\t"
-        "	ldrb r4, [r5, #0xb]\n\t"
-        "	lsrs r4, r4, #3\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #0\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldr r4, [r5]\n\t"
-        "	bl _call_via_r4\n\t"
-        "_081B27B8:\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B27D0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl DisplayPartyPokemonLevel\n\t"
-        "_081B27D0:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        u8 ailment = GetMonAilment(mon);
+        if (ailment == AILMENT_NONE || ailment == AILMENT_PKRS)
+        {
+            if (c != 0)
+                menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[4] >> 3, (menuBox->infoRects->dimensions[5] >> 3) + 1, menuBox->infoRects->dimensions[6] >> 3, menuBox->infoRects->dimensions[7] >> 3, FALSE);
+            if (c != 2)
+                DisplayPartyPokemonLevel(GetMonData(mon, MON_DATA_LEVEL), menuBox);
+        }
+    }
 }
 
-__attribute__((naked)) void DisplayPartyPokemonLevel(u8 a, u8 b)
+static void DisplayPartyPokemonLevel(u8 level, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r5, _081B281C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #3\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r4, _081B2820\n\t"
-        "	ldr r1, _081B2824\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	ldrb r0, [r6, #8]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	adds r3, #8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonBarDetail\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B281C: .4byte gStringVar2\n\t"
-        "_081B2820: .4byte gStringVar1\n\t"
-        "_081B2824: .4byte gUnknown_85C940E\n\t"
-        ".syntax divided\n\t"
-    );
+    ConvertIntToDecimalStringN(gStringVar2, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringCopy(gStringVar1, gText_LevelSymbol);
+    StringAppend(gStringVar1, gStringVar2);
+    DisplayPartyPokemonBarDetail(menuBox->windowId, gStringVar1, 0, &menuBox->infoRects->dimensions[4]);
 }
 
 __attribute__((naked)) void DisplayPartyPokemonGenderNidoranCheck(u8 a)
@@ -6001,7 +5859,7 @@ __attribute__((naked)) void DisplayPartyPokemonOtherText(u8 stringID, struct Par
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081B2CA8: .4byte gUnknown_85E10B4\n\t"
+        "_081B2CA8: .4byte sFontColorTable\n\t"
         "_081B2CAC: .4byte gUnknown_85E1418\n\t"
         ".syntax divided\n\t"
     );
@@ -6393,7 +6251,7 @@ __attribute__((naked)) void DisplaySelectionWindow(u8 which)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081B2F84: .4byte gUnknown_85E10B4\n\t"
+        "_081B2F84: .4byte sFontColorTable\n\t"
         "_081B2F88: .4byte gUnknown_85E14C0\n\t"
         "_081B2F8C: .4byte sPartyMenuInternal\n\t"
         ".syntax divided\n\t"

@@ -5860,7 +5860,7 @@ __attribute__((naked)) void Summary_PrintNotEggInfo(void)
         "	b _081C2094\n\t"
         "	.align 2, 0\n\t"
         "_081C2078: .4byte gStringVar1\n\t"
-        "_081C207C: .4byte gUnknown_85C940E\n\t"
+        "_081C207C: .4byte gText_LevelSymbol\n\t"
         "_081C2080: .4byte gStringVar2\n\t"
         "_081C2084:\n\t"
         "	str r4, [sp]\n\t"

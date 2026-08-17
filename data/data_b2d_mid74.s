@@ -57,8 +57,8 @@ gUnknown_85C940A: @ 0x85C940A
 gUnknown_85C940C: @ 0x85C940C
 	.string "♀$"
 
-	.globl gUnknown_85C940E
-gUnknown_85C940E: @ 0x85C940E
+	.globl gText_LevelSymbol
+gText_LevelSymbol: @ 0x85C940E
 	.string "{LV_2}$"
 
 	.globl gUnknown_85C9411
