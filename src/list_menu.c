@@ -11,6 +11,37 @@
 void Task_RedArrowCursor(void) {}
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
+void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y);
+void ListMenuUpdateRedArrowCursorObject(u8 taskId, u16 x, u16 y);
+
+struct ScrollIndicatorPair
+{
+    u8 field_0;
+    u16 *scrollOffset;
+    u16 fullyUpThreshold;
+    u16 fullyDownThreshold;
+    u8 topSpriteId;
+    u8 bottomSpriteId;
+    u16 tileTag;
+    u16 palTag;
+};
+
+struct RedOutlineCursor
+{
+    struct SubspriteTable subspriteTable;
+    struct Subsprite *subspritesPtr; // not a const pointer
+    u8 spriteId;
+    u16 tileTag;
+    u16 palTag;
+};
+
+struct RedArrowCursor
+{
+    u8 spriteId;
+    u16 tileTag;
+    u16 palTag;
+};
+
 __attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 drawMode, u16 tileNum, u16 palOffset)
 {
     __asm__(".syntax unified\n\t"
@@ -2234,54 +2265,18 @@ __attribute__((naked)) void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
     );
 }
 
-__attribute__((naked)) void RemoveScrollIndicatorArrowPair(u8 taskId)
+void RemoveScrollIndicatorArrowPair(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081AF34C\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r0, [r5, #0xe]\n\t"
-        "	ldr r4, _081AF350\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _081AF316\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "_081AF316:\n\t"
-        "	ldrh r0, [r5, #0x10]\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _081AF320\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "_081AF320:\n\t"
-        "	ldrb r1, [r5, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _081AF354\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldrb r1, [r5, #0xd]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF34C: .4byte gUnknown_3005B68\n\t"
-        "_081AF350: .4byte 0x0000FFFF\n\t"
-        "_081AF354: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ScrollIndicatorPair *data = (void *) gTasks[taskId].data;
+
+    if (data->tileTag != TAG_NONE)
+        FreeSpriteTilesByTag(data->tileTag);
+    if (data->palTag != TAG_NONE)
+        FreeSpritePaletteByTag(data->palTag);
+
+    DestroySprite(&gSprites[data->topSpriteId]);
+    DestroySprite(&gSprites[data->bottomSpriteId]);
+    DestroyTask(taskId);
 }
 
 u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId)
@@ -2297,33 +2292,17 @@ u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId)
 }
 
 
-__attribute__((naked)) void ListMenuUpdateCursorObject(void)
+void ListMenuUpdateCursorObject(u8 taskId, u16 x, u16 y, u32 cursorObjId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _081AF38C\n\t"
-        "	cmp r3, #1\n\t"
-        "	beq _081AF392\n\t"
-        "	b _081AF396\n\t"
-        "_081AF38C:\n\t"
-        "	bl ListMenuUpdateRedOutlineCursorObject\n\t"
-        "	b _081AF396\n\t"
-        "_081AF392:\n\t"
-        "	bl ListMenuUpdateRedArrowCursorObject\n\t"
-        "_081AF396:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (cursorObjId)
+    {
+    case CURSOR_RED_OUTLINE - CURSOR_OBJECT_START:
+        ListMenuUpdateRedOutlineCursorObject(taskId, x, y);
+        break;
+    case CURSOR_RED_ARROW - CURSOR_OBJECT_START:
+        ListMenuUpdateRedArrowCursorObject(taskId, x, y);
+        break;
+    }
 }
 
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId)
@@ -2669,7 +2648,7 @@ __attribute__((naked)) void ListMenuAddRedOutlineCursorObject(void)
     );
 }
 
-__attribute__((naked)) void ListMenuUpdateRedOutlineCursorObject(void)
+__attribute__((naked)) void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2710,50 +2689,19 @@ __attribute__((naked)) void ListMenuUpdateRedOutlineCursorObject(void)
     );
 }
 
-__attribute__((naked)) void ListMenuRemoveRedOutlineCursorObject(void)
+void ListMenuRemoveRedOutlineCursorObject(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081AF6FC\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldr r0, [r4, #8]\n\t"
-        "	bl Free\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	ldr r6, _081AF700\n\t"
-        "	cmp r0, r6\n\t"
-        "	beq _081AF6D4\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "_081AF6D4:\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	cmp r0, r6\n\t"
-        "	beq _081AF6DE\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "_081AF6DE:\n\t"
-        "	ldrb r1, [r4, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081AF704\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF6FC: .4byte gUnknown_3005B68\n\t"
-        "_081AF700: .4byte 0x0000FFFF\n\t"
-        "_081AF704: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct RedOutlineCursor *data = (void *) gTasks[taskId].data;
+
+    Free(data->subspritesPtr);
+
+    if (data->tileTag != TAG_NONE)
+        FreeSpriteTilesByTag(data->tileTag);
+    if (data->palTag != TAG_NONE)
+        FreeSpritePaletteByTag(data->palTag);
+
+    DestroySprite(&gSprites[data->spriteId]);
+    DestroyTask(taskId);
 }
 
 __attribute__((naked)) void SpriteCallback_RedArrowCursor(void)
@@ -2916,7 +2864,7 @@ __attribute__((naked)) void ListMenuAddRedArrowCursorObject(void)
     );
 }
 
-__attribute__((naked)) void ListMenuUpdateRedArrowCursorObject(void)
+__attribute__((naked)) void ListMenuUpdateRedArrowCursorObject(u8 taskId, u16 x, u16 y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2951,46 +2899,15 @@ __attribute__((naked)) void ListMenuUpdateRedArrowCursorObject(void)
     );
 }
 
-__attribute__((naked)) void ListMenuRemoveRedArrowCursorObject(void)
+void ListMenuRemoveRedArrowCursorObject(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081AF8BC\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r0, [r4, #2]\n\t"
-        "	ldr r6, _081AF8C0\n\t"
-        "	cmp r0, r6\n\t"
-        "	beq _081AF896\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "_081AF896:\n\t"
-        "	ldrh r0, [r4, #4]\n\t"
-        "	cmp r0, r6\n\t"
-        "	beq _081AF8A0\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "_081AF8A0:\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081AF8C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF8BC: .4byte gUnknown_3005B68\n\t"
-        "_081AF8C0: .4byte 0x0000FFFF\n\t"
-        "_081AF8C4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct RedArrowCursor *data = (void *) gTasks[taskId].data;
+
+    if (data->tileTag != TAG_NONE)
+        FreeSpriteTilesByTag(data->tileTag);
+    if (data->palTag != TAG_NONE)
+        FreeSpritePaletteByTag(data->palTag);
+
+    DestroySprite(&gSprites[data->spriteId]);
+    DestroyTask(taskId);
 }
