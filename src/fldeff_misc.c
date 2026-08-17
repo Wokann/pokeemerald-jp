@@ -1214,55 +1214,25 @@ __attribute__((naked)) void Task_PopSecretBaseBalloon(u8 taskId)
     );
 }
 
-__attribute__((naked)) void DoBalloonSoundEffect(void)
+static void DoBalloonSoundEffect(s16 metatileId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FAF48\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _080FAF38\n\t"
-        "	movs r0, #0x8a\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FAF60\n\t"
-        "	b _080FAF66\n\t"
-        "_080FAF38:\n\t"
-        "	movs r0, #0xcf\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FAF50\n\t"
-        "	adds r0, #4\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FAF58\n\t"
-        "	b _080FAF66\n\t"
-        "_080FAF48:\n\t"
-        "	movs r0, #0x4a\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FAF66\n\t"
-        "_080FAF50:\n\t"
-        "	movs r0, #0x4b\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FAF66\n\t"
-        "_080FAF58:\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FAF66\n\t"
-        "_080FAF60:\n\t"
-        "	movs r0, #0x4e\n\t"
-        "	bl PlaySE\n\t"
-        "_080FAF66:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (metatileId)
+    {
+    case METATILE_SecretBase_RedBalloon:
+        PlaySE(SE_BALLOON_RED);
+        break;
+    case METATILE_SecretBase_BlueBalloon:
+        PlaySE(SE_BALLOON_BLUE);
+        break;
+    case METATILE_SecretBase_YellowBalloon:
+        PlaySE(SE_BALLOON_YELLOW);
+        break;
+    case METATILE_SecretBase_MudBall:
+        PlaySE(SE_MUD_BALL);
+        break;
+    }
 }
+
 
 bool8 FldEff_NopA700(void)
 {
