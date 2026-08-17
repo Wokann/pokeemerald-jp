@@ -122,7 +122,7 @@ void reset_brm(void);
 void sub_081B1D6C(void); // SetPartyMonsAllowedInMinigame
 void sub_081B206C(u8 layout); // InitPartyMenuWindows
 void sub_081B20F8(u8 chooseHalf); // CreateCancelConfirmWindows
-void Task_PrintAndWaitForText(void);
+static void Task_PrintAndWaitForText(u8 taskId);
 __attribute__((naked)) void Task_FieldMoveWaitForFade(u8 taskId);
 static void MoveCursorToConfirm(void);
 u8 GetMaxBattleEntries(void);
@@ -266,7 +266,7 @@ static void UpdatePartySelectionDoubleLayout(s8 *slotPtr, s8 movementDir);
 static s8 GetNewSlotDoubleLayout(s8 slotId, s8 movementDir);
 static void PartyMenuRemoveWindow(u8 *windowId);
 s8 Menu_ProcessInputNoWrapClearOnChoose(void);
-void Task_ReturnToChooseMonAfterText(u8 taskId);
+static void Task_ReturnToChooseMonAfterText(u8 taskId);
 void sub_081B1E7C(u8 taskId, u8 slotId); // TryEnterMonForMinigame
 void sub_081B1EE0(u8 taskId); // CancelParticipationPrompt
 void sub_081B339C(u8 taskId); // Task_TryCreateSelectionWindow
@@ -280,6 +280,8 @@ void sub_081B81F8(void); // ClearSelectedPartyOrder
 u8 *sub_081B855C(void); // GetFacilityCancelString
 void sub_081B8DE0(void); // CB2_SetUpExitToBattleScreen
 void sub_081B2FDC(void); // PartyMenuDisplayYesNoMenu
+void CopyItemName(u16 itemId, u8 *dst);
+bool8 AddBagItem(u16 itemId, u16 count);
 static bool8 AllocPartyMenuBg(void);
 static bool8 AllocPartyMenuBgGfx(void);
 static void ExitPartyMenu(void);
@@ -1510,660 +1512,216 @@ static s8 GetNewSlotDoubleLayout(s8 slotId, s8 movementDir)
     }
 }
 
-__attribute__((naked)) u8 *GetMonNickname(struct Pokemon *mon, u8 *dest)
+u8 *GetMonNickname(struct Pokemon *mon, u8 *dest)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringGet_Nickname\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    GetMonData(mon, MON_DATA_NICKNAME, dest);
+    return StringGet_Nickname(dest);
 }
 
-__attribute__((naked)) u8 DisplayPartyMenuMessage(const u8 *str, bool8 keepOpen)
+#define tKeepOpen  data[0]
+
+u8 DisplayPartyMenuMessage(const u8 *str, bool8 keepOpen)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r4, r1, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl PrintMessage\n\t"
-        "	ldr r0, _081B1854\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _081B1858\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #8]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1854: .4byte Task_PrintAndWaitForText + 1\n\t"
-        "_081B1858: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+
+    PrintMessage(str);
+    taskId = CreateTask(Task_PrintAndWaitForText, 1);
+    gTasks[taskId].tKeepOpen = keepOpen;
+    return taskId;
 }
 
-__attribute__((naked)) void Task_PrintAndWaitForText(void)
+static void Task_PrintAndWaitForText(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	movs r0, #6\n\t"
-        "	bl RunTextPrintersRetIsActive\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1898\n\t"
-        "	ldr r0, _081B18A0\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1892\n\t"
-        "	movs r0, #6\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	movs r0, #6\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "_081B1892:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081B1898:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B18A0: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    if (RunTextPrintersRetIsActive(WIN_MSG) != TRUE)
+    {
+        if (gTasks[taskId].tKeepOpen == FALSE)
+        {
+            ClearStdWindowAndFrameToTransparent(WIN_MSG, FALSE);
+            ClearWindowTilemap(WIN_MSG);
+        }
+        DestroyTask(taskId);
+    }
 }
+
+#undef tKeepOpen
 
 bool8 IsPartyMenuTextPrinterActive(void)
 {
     return FuncIsActiveTask(Task_PrintAndWaitForText);
 }
 
-__attribute__((naked)) void sub_081B18B8(void)
+static void Task_WaitForLinkAndReturnToChooseMon(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl sub_081221F8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B18DE\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r0, _081B18E4\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B18E8\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B18DE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B18E4: .4byte gTasks\n\t"
-        "_081B18E8: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
+    {
+        DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
+        gTasks[taskId].func = Task_HandleChooseMonInput;
+    }
 }
 
-__attribute__((naked)) void Task_ReturnToChooseMonAfterText(u8 taskId)
+static void Task_ReturnToChooseMonAfterText(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1944\n\t"
-        "	movs r0, #6\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	movs r0, #6\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	bl sub_081221B8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B1930\n\t"
-        "	ldr r0, _081B1928\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B192C\n\t"
-        "	b _081B1942\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1928: .4byte gTasks\n\t"
-        "_081B192C: .4byte sub_081B18B8 + 1\n\t"
-        "_081B1930:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r0, _081B194C\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B1950\n\t"
-        "_081B1942:\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B1944:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B194C: .4byte gTasks\n\t"
-        "_081B1950: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        ClearStdWindowAndFrameToTransparent(WIN_MSG, FALSE);
+        ClearWindowTilemap(WIN_MSG);
+        if (MenuHelpers_IsLinkActive() == TRUE)
+        {
+            gTasks[taskId].func = Task_WaitForLinkAndReturnToChooseMon;
+        }
+        else
+        {
+            DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
+            gTasks[taskId].func = Task_HandleChooseMonInput;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081B1954(void)
+static void DisplayGaveHeldItemMessage(struct Pokemon *mon, u16 item, bool8 keepOpen, u8 unused)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _081B1990\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r1, _081B1994\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CopyItemName\n\t"
-        "	ldr r4, _081B1998\n\t"
-        "	ldr r1, _081B199C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1990: .4byte gStringVar1\n\t"
-        "_081B1994: .4byte gStringVar2\n\t"
-        "_081B1998: .4byte gStringVar4\n\t"
-        "_081B199C: .4byte gUnknown_85C97BD + 0x4B9\n\t"
-        ".syntax divided\n\t"
-    );
+    GetMonNickname(mon, gStringVar1);
+    CopyItemName(item, gStringVar2);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x4B9); // gText_PkmnWasGivenItem
+    DisplayPartyMenuMessage(gStringVar4, keepOpen);
+    ScheduleBgCopyTilemapToVram(2);
 }
 
-__attribute__((naked)) void sub_081B19A0(void)
+static void DisplayTookHeldItemMessage(struct Pokemon *mon, u16 item, bool8 keepOpen)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _081B19DC\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r1, _081B19E0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CopyItemName\n\t"
-        "	ldr r4, _081B19E4\n\t"
-        "	ldr r1, _081B19E8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B19DC: .4byte gStringVar1\n\t"
-        "_081B19E0: .4byte gStringVar2\n\t"
-        "_081B19E4: .4byte gStringVar4\n\t"
-        "_081B19E8: .4byte gUnknown_85C97BD + 0x509\n\t"
-        ".syntax divided\n\t"
-    );
+    GetMonNickname(mon, gStringVar1);
+    CopyItemName(item, gStringVar2);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x509); // gText_ReceivedItemFromPkmn
+    DisplayPartyMenuMessage(gStringVar4, keepOpen);
+    ScheduleBgCopyTilemapToVram(2);
 }
 
-
-__attribute__((naked)) void sub_081B19EC(void)
+static void DisplayAlreadyHoldingItemSwitchMessage(struct Pokemon *mon, u16 item, bool8 keepOpen)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _081B1A28\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r1, _081B1A2C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CopyItemName\n\t"
-        "	ldr r4, _081B1A30\n\t"
-        "	ldr r1, _081B1A34\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1A28: .4byte gStringVar1\n\t"
-        "_081B1A2C: .4byte gStringVar2\n\t"
-        "_081B1A30: .4byte gStringVar4\n\t"
-        "_081B1A34: .4byte gUnknown_85C97BD + 0x4C9\n\t"
-        ".syntax divided\n\t"
-    );
+    GetMonNickname(mon, gStringVar1);
+    CopyItemName(item, gStringVar2);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x4C9); // gText_PkmnAlreadyHoldingItemSwitch
+    DisplayPartyMenuMessage(gStringVar4, keepOpen);
+    ScheduleBgCopyTilemapToVram(2);
 }
 
-__attribute__((naked)) void sub_081B1A38(void)
+static void DisplaySwitchedHeldItemMessage(u16 item, u16 item2, bool8 keepOpen)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r1, _081B1A78\n\t"
-        "	bl CopyItemName\n\t"
-        "	ldr r1, _081B1A7C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CopyItemName\n\t"
-        "	ldr r4, _081B1A80\n\t"
-        "	ldr r1, _081B1A84\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1A78: .4byte gStringVar1\n\t"
-        "_081B1A7C: .4byte gStringVar2\n\t"
-        "_081B1A80: .4byte gStringVar4\n\t"
-        "_081B1A84: .4byte gUnknown_85C97BD + 0x532\n\t"
-        ".syntax divided\n\t"
-    );
+    CopyItemName(item, gStringVar1);
+    CopyItemName(item2, gStringVar2);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x532); // gText_SwitchedPkmnItem
+    DisplayPartyMenuMessage(gStringVar4, keepOpen);
+    ScheduleBgCopyTilemapToVram(2);
 }
 
-__attribute__((naked)) void sub_081B1A88(void)
+static void GiveItemToMon(struct Pokemon *mon, u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r5, r1, #0x10\n\t"
-        "	lsrs r4, r5, #0x10\n\t"
-        "	adds r7, r4, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B1AB2\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GiveMailToMonByItemId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _081B1AC6\n\t"
-        "_081B1AB2:\n\t"
-        "	mov r0, sp\n\t"
-        "	strb r7, [r0]\n\t"
-        "	mov r1, sp\n\t"
-        "	lsrs r0, r5, #0x18\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "_081B1AC6:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 itemBytes[2];
+
+    if (ItemIsMail(item) == TRUE)
+    {
+        if (GiveMailToMonByItemId(mon, item) == MAIL_NONE)
+            return;
+    }
+    itemBytes[0] = item;
+    itemBytes[1] = item >> 8;
+    SetMonData(mon, MON_DATA_HELD_ITEM, itemBytes);
 }
 
-__attribute__((naked)) u8 TryTakeMonItem(struct Pokemon *mon)
+static u8 TryTakeMonItem(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1AEC\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B1B0E\n\t"
-        "_081B1AEC:\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddBagItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1B0C\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081B1B0E\n\t"
-        "_081B1B0C:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B1B0E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u16 item = GetMonData(mon, MON_DATA_HELD_ITEM);
 
-extern const u8 gUnknown_85C97BD[];
+    if (item == ITEM_NONE)
+        return 0;
+    if (AddBagItem(item, 1) == FALSE)
+        return 1;
+
+    item = ITEM_NONE;
+    SetMonData(mon, MON_DATA_HELD_ITEM, &item);
+    return 2;
+}
 
 static void BufferBagFullCantTakeItemMessage(u16 itemUnused)
 {
-    StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x58A);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x58A); // gText_BagFullCouldNotRemoveItem
 }
 
-__attribute__((naked)) void sub_081B1B30(void)
+#define tHP           data[0]
+#define tMaxHP        data[1]
+#define tHPIncrement  data[2]
+#define tHPToAdd      data[3]
+#define tPartyId      data[4]
+#define tStartHP      data[5]
+
+static void Task_PartyMenuModifyHP(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081B1BD8\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	ldrh r0, [r7, #4]\n\t"
-        "	ldrh r1, [r7]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r7]\n\t"
-        "	ldrh r0, [r7, #6]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r7, #6]\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r0, [r7, r2]\n\t"
-        "	movs r5, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r4, _081B1BDC\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x39\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r2, [r7, r3]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r6, _081B1BE0\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonHPCheck\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r2, [r7, r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	bl DisplayPartyPokemonHPBarCheck\n\t"
-        "	movs r1, #6\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1BAC\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r7, r2]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B1BAC\n\t"
-        "	movs r3, #2\n\t"
-        "	ldrsh r0, [r7, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081B1BCE\n\t"
-        "_081B1BAC:\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r7, r0]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r7, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081B1BC8\n\t"
-        "	ldr r0, _081B1BE4\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r2, [r7, r3]\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #3\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "_081B1BC8:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl SwitchTaskToFollowupFunc\n\t"
-        "_081B1BCE:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1BD8: .4byte gUnknown_3005B68\n\t"
-        "_081B1BDC: .4byte gPlayerParty\n\t"
-        "_081B1BE0: .4byte sPartyMenuBoxes\n\t"
-        "_081B1BE4: .4byte gStringVar2\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    tHP += tHPIncrement;
+    tHPToAdd--;
+    SetMonData(&gPlayerParty[tPartyId], MON_DATA_HP, &tHP);
+    DisplayPartyPokemonHPCheck(&gPlayerParty[tPartyId], &sPartyMenuBoxes[tPartyId], 1);
+    DisplayPartyPokemonHPBarCheck(&gPlayerParty[tPartyId], &sPartyMenuBoxes[tPartyId]);
+    if (tHPToAdd == 0 || tHP == 0 || tHP == tMaxHP)
+    {
+        // If HP was recovered, buffer the amount recovered
+        if (tHP > tStartHP)
+            ConvertIntToDecimalStringN(gStringVar2, tHP - tStartHP, STR_CONV_MODE_LEFT_ALIGN, 3);
+
+        SwitchTaskToFollowupFunc(taskId);
+    }
 }
 
-__attribute__((naked)) void PartyMenuModifyHP(u8 taskId, u8 slot, s8 hpIncrement, s16 hpDifference, TaskFunc task)
+void PartyMenuModifyHP(u8 taskId, u8 slot, s8 hpIncrement, s16 hpDifference, TaskFunc task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	mov r8, r0\n\t"
-        "	mov sb, r1\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	mov sl, r3\n\t"
-        "	ldr r7, [sp, #0x20]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r6, sb\n\t"
-        "	muls r6, r0, r6\n\t"
-        "	ldr r0, _081B1C6C\n\t"
-        "	adds r6, r6, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	add r4, r8\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _081B1C70\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	strh r0, [r4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	bl GetMonData3\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	asrs r5, r5, #0x18\n\t"
-        "	strh r5, [r4, #4]\n\t"
-        "	mov r0, sl\n\t"
-        "	strh r0, [r4, #6]\n\t"
-        "	mov r0, sb\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	ldr r1, _081B1C74\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl SetTaskFuncWithFollowupFunc\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1C6C: .4byte gPlayerParty\n\t"
-        "_081B1C70: .4byte gUnknown_3005B68\n\t"
-        "_081B1C74: .4byte sub_081B1B30 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[slot];
+    s16 *data = gTasks[taskId].data;
+
+    tHP = GetMonData(mon, MON_DATA_HP);
+    tMaxHP = GetMonData(mon, MON_DATA_MAX_HP);
+    tHPIncrement = hpIncrement;
+    tHPToAdd = hpDifference;
+    tPartyId = slot;
+    tStartHP = tHP;
+    SetTaskFuncWithFollowupFunc(taskId, Task_PartyMenuModifyHP, task);
 }
 
-__attribute__((naked)) void sub_081B1C78(void)
+// The usage of hp in this function is mostly nonsense
+// Because caseId is always passed 0, none of the other cases ever occur
+static void ResetHPTaskData(u8 taskId, u8 caseId, u32 hp)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081B1C9C\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	cmp r5, #5\n\t"
-        "	bhi _081B1CDA\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	ldr r1, _081B1CA0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1C9C: .4byte gUnknown_3005B68\n\t"
-        "_081B1CA0: .4byte 0x081B1CA4\n\t"
-        "_081B1CA4: @ jump table\n\t"
-        "	.4byte _081B1CBC @ case 0\n\t"
-        "	.4byte _081B1CC2 @ case 1\n\t"
-        "	.4byte _081B1CC6 @ case 2\n\t"
-        "	.4byte _081B1CCA @ case 3\n\t"
-        "	.4byte _081B1CCE @ case 4\n\t"
-        "	.4byte _081B1CD2 @ case 5\n\t"
-        "_081B1CBC:\n\t"
-        "	strh r2, [r3]\n\t"
-        "	strh r2, [r3, #0xa]\n\t"
-        "	b _081B1CDA\n\t"
-        "_081B1CC2:\n\t"
-        "	strh r2, [r3, #2]\n\t"
-        "	b _081B1CDA\n\t"
-        "_081B1CC6:\n\t"
-        "	strh r2, [r3, #4]\n\t"
-        "	b _081B1CDA\n\t"
-        "_081B1CCA:\n\t"
-        "	strh r2, [r3, #6]\n\t"
-        "	b _081B1CDA\n\t"
-        "_081B1CCE:\n\t"
-        "	strh r2, [r3, #8]\n\t"
-        "	b _081B1CDA\n\t"
-        "_081B1CD2:\n\t"
-        "	ldr r1, _081B1CE0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetTaskFuncWithFollowupFunc\n\t"
-        "_081B1CDA:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1CE0: .4byte sub_081B1B30 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    switch (caseId) // always zero
+    {
+        case 0:
+            tHP = hp;
+            tStartHP = hp;
+            break;
+        case 1:
+            tMaxHP = hp;
+            break;
+        case 2:
+            tHPIncrement = hp;
+            break;
+        case 3:
+            tHPToAdd = hp;
+            break;
+        case 4:
+            tPartyId = hp;
+            break;
+        case 5:
+            SetTaskFuncWithFollowupFunc(taskId, Task_PartyMenuModifyHP, (TaskFunc)hp); // >casting hp as a taskfunc
+            break;
+    }
 }
+
+#undef tHP
+#undef tMaxHP
+#undef tHPIncrement
+#undef tHPToAdd
+#undef tPartyId
+#undef tStartHP
 
 __attribute__((naked)) u8 GetAilmentFromStatus(u32 status)
 {
@@ -5093,7 +4651,7 @@ __attribute__((naked)) void c2_8123744(void)
         "	adds r0, r1, #0\n\t"
         "	adds r0, r0, r7\n\t"
         "	ldrh r1, [r6]\n\t"
-        "	bl sub_081B1A88\n\t"
+        "	bl GiveItemToMon\n\t"
         "	bl sub_081B41CC\n\t"
         "	b _081B3F60\n\t"
         "_081B3F44:\n\t"
@@ -5152,14 +4710,14 @@ __attribute__((naked)) void sub_081B3F70(void)
         "	adds r1, r4, #0\n\t"
         "	movs r2, #0\n\t"
         "	movs r3, #0\n\t"
-        "	bl sub_081B1954\n\t"
+        "	bl DisplayGaveHeldItemMessage\n\t"
         "	mov r1, r8\n\t"
         "	movs r0, #9\n\t"
         "	ldrsb r0, [r1, r0]\n\t"
         "	muls r0, r6, r0\n\t"
         "	adds r0, r0, r5\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl sub_081B1A88\n\t"
+        "	bl GiveItemToMon\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #1\n\t"
         "	bl RemoveBagItem\n\t"
@@ -5210,7 +4768,7 @@ __attribute__((naked)) void sub_081B3FF0(void)
         "	ldr r1, _081B403C\n\t"
         "	ldrh r1, [r1]\n\t"
         "	movs r2, #1\n\t"
-        "	bl sub_081B19EC\n\t"
+        "	bl DisplayAlreadyHoldingItemSwitchMessage\n\t"
         "	ldr r1, _081B4040\n\t"
         "	lsls r0, r4, #2\n\t"
         "	adds r0, r0, r4\n\t"
@@ -5335,7 +4893,7 @@ __attribute__((naked)) void sub_081B407C(void)
         "	ldr r1, _081B412C\n\t"
         "	adds r0, r0, r1\n\t"
         "	ldrh r1, [r5]\n\t"
-        "	bl sub_081B1A88\n\t"
+        "	bl GiveItemToMon\n\t"
         "	ldr r1, _081B4130\n\t"
         "	lsls r0, r4, #2\n\t"
         "	adds r0, r0, r4\n\t"
@@ -5358,11 +4916,11 @@ __attribute__((naked)) void sub_081B407C(void)
         "	ldr r1, _081B416C\n\t"
         "	adds r0, r0, r1\n\t"
         "	ldrh r1, [r5]\n\t"
-        "	bl sub_081B1A88\n\t"
+        "	bl GiveItemToMon\n\t"
         "	ldrh r0, [r5]\n\t"
         "	ldrh r1, [r6]\n\t"
         "	movs r2, #1\n\t"
-        "	bl sub_081B1A38\n\t"
+        "	bl DisplaySwitchedHeldItemMessage\n\t"
         "	ldr r1, _081B4170\n\t"
         "	lsls r0, r4, #2\n\t"
         "	adds r0, r0, r4\n\t"
@@ -5580,7 +5138,7 @@ __attribute__((naked)) void sub_081B42C4(void)
         "	ldrh r1, [r1]\n\t"
         "	movs r2, #0\n\t"
         "	movs r3, #0\n\t"
-        "	bl sub_081B1954\n\t"
+        "	bl DisplayGaveHeldItemMessage\n\t"
         "	b _081B431C\n\t"
         "	.align 2, 0\n\t"
         "_081B42FC: .4byte gPaletteFade\n\t"
@@ -5593,7 +5151,7 @@ __attribute__((naked)) void sub_081B42C4(void)
         "	ldrh r0, [r0]\n\t"
         "	ldrh r1, [r1]\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_081B1A38\n\t"
+        "	bl DisplaySwitchedHeldItemMessage\n\t"
         "_081B431C:\n\t"
         "	ldr r0, _081B4334\n\t"
         "	lsls r1, r4, #2\n\t"
@@ -5724,7 +5282,7 @@ __attribute__((naked)) void CursorCb_TakeItem(u8 taskId)
         "	adds r0, r5, #0\n\t"
         "	adds r1, r6, #0\n\t"
         "	movs r2, #1\n\t"
-        "	bl sub_081B19A0\n\t"
+        "	bl DisplayTookHeldItemMessage\n\t"
         "	b _081B445A\n\t"
         "	.align 2, 0\n\t"
         "_081B441C: .4byte gPartyMenu\n\t"
@@ -8942,7 +8500,7 @@ __attribute__((naked)) void ItemUseCB_Medicine(u8 taskId, TaskFunc task)
         "	mov r0, sb\n\t"
         "	movs r1, #0\n\t"
         "	mov r2, sl\n\t"
-        "	bl sub_081B1C78\n\t"
+        "	bl ResetHPTaskData\n\t"
         "	b _081B63B0\n\t"
         "	.align 2, 0\n\t"
         "_081B6374: .4byte sPartyMenuBoxes\n\t"
@@ -11511,7 +11069,7 @@ __attribute__((naked)) void sub_081B76CC(void)
         "	mov r0, r8\n\t"
         "	movs r1, #0\n\t"
         "	adds r2, r7, #0\n\t"
-        "	bl sub_081B1C78\n\t"
+        "	bl ResetHPTaskData\n\t"
         "	ldr r0, [r4]\n\t"
         "	movs r2, #0x86\n\t"
         "	lsls r2, r2, #2\n\t"
@@ -12181,7 +11739,7 @@ __attribute__((naked)) void sub_081B7C4C(u8 taskId)
         "	adds r0, r0, r7\n\t"
         "	ldrh r1, [r5]\n\t"
         "	movs r2, #1\n\t"
-        "	bl sub_081B19EC\n\t"
+        "	bl DisplayAlreadyHoldingItemSwitchMessage\n\t"
         "	ldr r1, _081B7CDC\n\t"
         "	lsls r0, r6, #2\n\t"
         "	adds r0, r0, r6\n\t"
@@ -12270,7 +11828,7 @@ __attribute__((naked)) void sub_081B7D28(void)
         "	adds r1, r5, #0\n\t"
         "	movs r2, #0\n\t"
         "	movs r3, #1\n\t"
-        "	bl sub_081B1954\n\t"
+        "	bl DisplayGaveHeldItemMessage\n\t"
         "	movs r0, #9\n\t"
         "	ldrsb r0, [r4, r0]\n\t"
         "	mov r1, r8\n\t"
@@ -12278,7 +11836,7 @@ __attribute__((naked)) void sub_081B7D28(void)
         "	adds r0, r1, #0\n\t"
         "	adds r0, r0, r6\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl sub_081B1A88\n\t"
+        "	bl GiveItemToMon\n\t"
         "	adds r0, r5, #0\n\t"
         "	bl sub_081B8090\n\t"
         "	ldr r1, _081B7D9C\n\t"
@@ -12356,7 +11914,7 @@ __attribute__((naked)) void sub_081B7DEC(void)
         "	ldr r5, _081B7E38\n\t"
         "	adds r0, r0, r5\n\t"
         "	ldrh r1, [r4, #0xc]\n\t"
-        "	bl sub_081B1A88\n\t"
+        "	bl GiveItemToMon\n\t"
         "	movs r0, #9\n\t"
         "	ldrsb r0, [r4, r0]\n\t"
         "	muls r0, r6, r0\n\t"
@@ -12478,7 +12036,7 @@ __attribute__((naked)) void sub_081B7ED0(void)
         "	ldrh r0, [r0, #0xc]\n\t"
         "	ldrh r1, [r1]\n\t"
         "	movs r2, #0\n\t"
-        "	bl sub_081B1A38\n\t"
+        "	bl DisplaySwitchedHeldItemMessage\n\t"
         "	b _081B7F1C\n\t"
         "	.align 2, 0\n\t"
         "_081B7EF8: .4byte gPaletteFade\n\t"
@@ -12495,7 +12053,7 @@ __attribute__((naked)) void sub_081B7ED0(void)
         "	ldrh r1, [r2, #0xc]\n\t"
         "	movs r2, #0\n\t"
         "	movs r3, #1\n\t"
-        "	bl sub_081B1954\n\t"
+        "	bl DisplayGaveHeldItemMessage\n\t"
         "_081B7F1C:\n\t"
         "	ldr r0, _081B7F38\n\t"
         "	lsls r1, r4, #2\n\t"
@@ -12619,11 +12177,11 @@ __attribute__((naked)) void sub_081B7F74(void)
         "	ldr r1, _081B8028\n\t"
         "	adds r0, r0, r1\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl sub_081B1A88\n\t"
+        "	bl GiveItemToMon\n\t"
         "	ldrh r1, [r6]\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r2, #1\n\t"
-        "	bl sub_081B1A38\n\t"
+        "	bl DisplaySwitchedHeldItemMessage\n\t"
         "_081B8018:\n\t"
         "	ldr r1, _081B802C\n\t"
         "	lsls r0, r5, #2\n\t"
