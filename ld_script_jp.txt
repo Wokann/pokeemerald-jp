@@ -8692,7 +8692,7 @@ SECTIONS {
         src/party_menu.o(.text.CursorCb_Cancel2);
         src/party_menu.o(.text.CursorCb_SendMon);
         src/party_menu.o(.text.CursorCb_Enter);
-        src/party_menu.o(.text.sub_081B4C28);
+        src/party_menu.o(.text.MoveCursorToConfirm);
         src/party_menu.o(.text.CursorCb_NoEntry);
         src/party_menu.o(.text.CursorCb_Store);
         src/party_menu.o(.text.CursorCb_Register);

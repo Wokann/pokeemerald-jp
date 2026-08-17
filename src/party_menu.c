@@ -2403,7 +2403,7 @@ __attribute__((naked)) void Task_HandleChooseMonInput(u8 taskId)
         "	beq _081B10B0\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
-        "	bl sub_081B4C28\n\t"
+        "	bl MoveCursorToConfirm\n\t"
         "_081B10B0:\n\t"
         "	pop {r4, r5, r6}\n\t"
         "	pop {r0}\n\t"
@@ -10265,7 +10265,7 @@ __attribute__((naked)) void CursorCb_Enter(u8 taskId)
         "	subs r0, r6, #1\n\t"
         "	cmp r5, r0\n\t"
         "	bne _081B4BA4\n\t"
-        "	bl sub_081B4C28\n\t"
+        "	bl MoveCursorToConfirm\n\t"
         "_081B4BA4:\n\t"
         "	movs r0, #0\n\t"
         "	bl DisplayPartyMenuStdMessage\n\t"
@@ -10325,26 +10325,11 @@ __attribute__((naked)) void CursorCb_Enter(u8 taskId)
     );
 }
 
-__attribute__((naked)) void sub_081B4C28(void)
+static void MoveCursorToConfirm(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _081B4C44\n\t"
-        "	ldrb r0, [r4, #9]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "	movs r0, #6\n\t"
-        "	strb r0, [r4, #9]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4C44: .4byte gPartyMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    AnimatePartySlot(gPartyMenu.slotId, 0);
+    gPartyMenu.slotId = PARTY_SIZE;
+    AnimatePartySlot(gPartyMenu.slotId, 1);
 }
 
 __attribute__((naked)) void CursorCb_NoEntry(u8 taskId)
