@@ -91,6 +91,7 @@ extern const struct
     TaskFunc func;
 } sCursorOptions[];
 #include "constants/items.h"
+#include "constants/item_effects.h"
 #include "constants/contest.h"
 #include "item_use.h"
 #include "event_data.h"
@@ -363,6 +364,25 @@ static void CreatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBo
 static void CreatePartyMonHeldItemSpriteParameterized(u16 species, u16 item, struct PartyMenuBox *menuBox);
 static void CreateHeldItemSpriteForTrade(u8 spriteId, bool8 isMail);
 static void SpriteCB_HeldItem(struct Sprite *sprite);
+static void SetPartyMonAilmentGfx(struct Pokemon *mon, struct PartyMenuBox *menuBox);
+static void UpdatePartyMonAilmentGfx(u8 status, struct PartyMenuBox *menuBox);
+static void CB2_ReturnToBagMenu(void);
+static void Task_SetSacredAshCB(u8 taskId);
+static void GetMedicineItemEffectMessage(u16 item);
+u8 sub_081B8624(void); // GetPartyLayoutFromBattleType
+void sub_081B8DE0(void); // CB2_SetUpExitToBattleScreen
+extern MainCallback gUnknown_203CBFC; // gPyramidBagMenuState.exitCallback
+u8 GetPocketByItemId(u16 itemId);
+extern const struct SpriteTemplate sSpriteTemplate_MenuPokeball;
+extern const struct SpriteTemplate sSpriteTemplate_MenuPokeballSmall;
+extern const struct CompressedSpriteSheet sSpriteSheet_MenuPokeball;
+extern const struct CompressedSpriteSheet sSpriteSheet_MenuPokeballSmall;
+extern const struct CompressedSpritePalette sSpritePalette_MenuPokeball;
+extern const struct SpriteTemplate sSpriteTemplate_StatusIcons;
+extern const struct CompressedSpriteSheet sSpriteSheet_StatusIcons;
+extern const struct CompressedSpritePalette sSpritePalette_StatusIcons;
+extern const u8 *const gItemEffectTable[];
+#define PYRAMIDBAG_LOC_PREV 4
 s8 Menu_ProcessInputNoWrapClearOnChoose(void);
 static void Task_ReturnToChooseMonAfterText(u8 taskId);
 void TryEnterMonForMinigame(u8 taskId, u8 slotId); // TryEnterMonForMinigame
@@ -4079,114 +4099,34 @@ static void SpriteCB_HeldItem(struct Sprite *sprite)
     }
 }
 
-__attribute__((naked)) void CreatePartyMonPokeballSprite(void)
+static void CreatePartyMonPokeballSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B5B8A\n\t"
-        "	ldr r0, _081B5B90\n\t"
-        "	ldr r2, [r4, #4]\n\t"
-        "	ldrb r1, [r2, #6]\n\t"
-        "	ldrb r2, [r2, #7]\n\t"
-        "	movs r3, #8\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4, #0xb]\n\t"
-        "_081B5B8A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5B90: .4byte gUnknown_85E17C0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+        menuBox->pokeballSpriteId = CreateSprite(&sSpriteTemplate_MenuPokeball, menuBox->spriteCoords[6], menuBox->spriteCoords[7], 8);
 }
 
-__attribute__((naked)) void CreatePartyMonPokeballSpriteParameterized(void)
+static void CreatePartyMonPokeballSpriteParameterized(u16 species, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B5BC4\n\t"
-        "	ldr r0, _081B5BCC\n\t"
-        "	ldr r2, [r4, #4]\n\t"
-        "	ldrb r1, [r2, #6]\n\t"
-        "	ldrb r2, [r2, #7]\n\t"
-        "	movs r3, #8\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4, #0xb]\n\t"
-        "	ldr r2, _081B5BD0\n\t"
-        "	ldrb r0, [r4, #0xb]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "_081B5BC4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5BCC: .4byte gUnknown_85E17C0\n\t"
-        "_081B5BD0: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (species != SPECIES_NONE)
+    {
+        menuBox->pokeballSpriteId = CreateSprite(&sSpriteTemplate_MenuPokeball, menuBox->spriteCoords[6], menuBox->spriteCoords[7], 8);
+        gSprites[menuBox->pokeballSpriteId].oam.priority = 0;
+    }
 }
 
-__attribute__((naked)) void CreatePokeballButtonSprite(void)
+// For Cancel when Confirm isnt present
+static u8 CreatePokeballButtonSprite(u8 x, u8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r0, _081B5C0C\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _081B5C10\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r3, [r1, #5]\n\t"
-        "	movs r2, #0xd\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	ands r2, r3\n\t"
-        "	movs r3, #8\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r1, #5]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5C0C: .4byte gUnknown_85E17C0\n\t"
-        "_081B5C10: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSprite(&sSpriteTemplate_MenuPokeball, x, y, 8);
+
+    gSprites[spriteId].oam.priority = 2;
+    return spriteId;
 }
 
-extern const struct SpriteTemplate gUnknown_85E1830;
-
+// For Confirm and Cancel when both are present
 static u8 CreateSmallPokeballButtonSprite(u8 x, u8 y)
 {
-    return CreateSprite(&gUnknown_85E1830, x, y, 8);
+    return CreateSprite(&sSpriteTemplate_MenuPokeballSmall, x, y, 8);
 }
 
 static void PartyMenuStartSpriteAnim(u8 spriteId, u8 animNum)
@@ -4212,577 +4152,202 @@ static void UNUSED SpriteCB_BounceConfirmCancelButton(u8 spriteId, u8 spriteId2,
     }
 }
 
-
-extern const struct CompressedSpriteSheet gUnknown_85E17B0;
-extern const struct CompressedSpriteSheet gUnknown_85E1828;
-extern const struct CompressedSpritePalette gUnknown_85E17B8;
-
 static void LoadPartyMenuPokeballGfx(void)
 {
-    LoadCompressedSpriteSheet(&gUnknown_85E17B0);
-    LoadCompressedSpriteSheet(&gUnknown_85E1828);
-    LoadCompressedSpritePalette(&gUnknown_85E17B8);
+    LoadCompressedSpriteSheet(&sSpriteSheet_MenuPokeball);
+    LoadCompressedSpriteSheet(&sSpriteSheet_MenuPokeballSmall);
+    LoadCompressedSpritePalette(&sSpritePalette_MenuPokeball);
 }
 
-__attribute__((naked)) void CreatePartyMonStatusSprite(void)
+static void CreatePartyMonStatusSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B5D2C\n\t"
-        "	ldr r0, _081B5D34\n\t"
-        "	ldr r2, [r4, #4]\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	ldrb r2, [r2, #5]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4, #0xc]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl party_menu_get_status_condition_and_update_object\n\t"
-        "_081B5D2C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5D34: .4byte gUnknown_85E18C0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        menuBox->statusSpriteId = CreateSprite(&sSpriteTemplate_StatusIcons, menuBox->spriteCoords[4], menuBox->spriteCoords[5], 0);
+        SetPartyMonAilmentGfx(mon, menuBox);
+    }
 }
 
-__attribute__((naked)) void CreatePartyMonStatusSpriteParameterized(void)
+static void CreatePartyMonStatusSpriteParameterized(u16 species, u8 status, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B5D74\n\t"
-        "	ldr r0, _081B5D7C\n\t"
-        "	ldr r2, [r4, #4]\n\t"
-        "	ldrb r1, [r2, #4]\n\t"
-        "	ldrb r2, [r2, #5]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	strb r0, [r4, #0xc]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl party_menu_update_status_condition_object\n\t"
-        "	ldr r2, _081B5D80\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "_081B5D74:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5D7C: .4byte gUnknown_85E18C0\n\t"
-        "_081B5D80: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (species != SPECIES_NONE)
+    {
+        menuBox->statusSpriteId = CreateSprite(&sSpriteTemplate_StatusIcons, menuBox->spriteCoords[4], menuBox->spriteCoords[5], 0);
+        UpdatePartyMonAilmentGfx(status, menuBox);
+        gSprites[menuBox->statusSpriteId].oam.priority = 0;
+    }
 }
 
-__attribute__((naked)) void party_menu_update_status_condition_object(u8 ailment, struct PartyMenuBox *box);
-
-static void party_menu_get_status_condition_and_update_object(struct Pokemon *mon, struct PartyMenuBox *box)
+static void SetPartyMonAilmentGfx(struct Pokemon *mon, struct PartyMenuBox *menuBox)
 {
-    party_menu_update_status_condition_object(GetMonAilment(mon), box);
+    UpdatePartyMonAilmentGfx(GetMonAilment(mon), menuBox);
 }
 
-__attribute__((naked)) void party_menu_update_status_condition_object(u8 ailment, struct PartyMenuBox *box)
+static void UpdatePartyMonAilmentGfx(u8 status, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081B5DAC\n\t"
-        "	cmp r2, #6\n\t"
-        "	bne _081B5DC8\n\t"
-        "_081B5DAC:\n\t"
-        "	ldr r2, _081B5DC4\n\t"
-        "	ldrb r1, [r5, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	b _081B5DF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5DC4: .4byte gSprites\n\t"
-        "_081B5DC8:\n\t"
-        "	ldrb r1, [r5, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _081B5DFC\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	subs r1, r2, #1\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrb r1, [r5, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "_081B5DF2:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5DFC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (status)
+    {
+    case AILMENT_NONE:
+    case AILMENT_PKRS:
+        gSprites[menuBox->statusSpriteId].invisible = TRUE;
+        break;
+    default:
+        StartSpriteAnim(&gSprites[menuBox->statusSpriteId], status - 1);
+        gSprites[menuBox->statusSpriteId].invisible = FALSE;
+        break;
+    }
 }
-
-extern const struct CompressedSpriteSheet gUnknown_85E18B0;
-extern const struct CompressedSpritePalette gUnknown_85E18B8;
 
 static void LoadPartyMenuAilmentGfx(void)
 {
-    LoadCompressedSpriteSheet(&gUnknown_85E18B0);
-    LoadCompressedSpritePalette(&gUnknown_85E18B8);
+    LoadCompressedSpriteSheet(&sSpriteSheet_StatusIcons);
+    LoadCompressedSpritePalette(&sSpritePalette_StatusIcons);
 }
 
-__attribute__((naked)) void sub_081B5E1C(void)
+void CB2_ShowPartyMenuForItemUse(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _081B5E44\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _081B5E48\n\t"
-        "	ldr r1, _081B5E4C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B5E5C\n\t"
-        "	movs r7, #1\n\t"
-        "	bl sub_081B8624\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	b _081B5E60\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5E44: .4byte c2_815ABFC + 1\n\t"
-        "_081B5E48: .4byte gMain\n\t"
-        "_081B5E4C: .4byte 0x00000439\n\t"
-        "_081B5E50:\n\t"
-        "	ldr r0, _081B5E58\n\t"
-        "	strb r5, [r0, #9]\n\t"
-        "	b _081B5EA4\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5E58: .4byte gPartyMenu\n\t"
-        "_081B5E5C:\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r6, #0\n\t"
-        "_081B5E60:\n\t"
-        "	ldr r4, _081B5EAC\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	bl GetItemEffectType\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _081B5EBC\n\t"
-        "	ldr r1, _081B5EB0\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #9]\n\t"
-        "	movs r5, #0\n\t"
-        "_081B5E78:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B5EB4\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B5E9A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B5E50\n\t"
-        "_081B5E9A:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _081B5E78\n\t"
-        "_081B5EA4:\n\t"
-        "	ldr r0, _081B5EB8\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	b _081B5ED0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5EAC: .4byte gSpecialVar_ItemId\n\t"
-        "_081B5EB0: .4byte gPartyMenu\n\t"
-        "_081B5EB4: .4byte gPlayerParty\n\t"
-        "_081B5EB8: .4byte sub_081B5F20 + 1\n\t"
-        "_081B5EBC:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	bl GetPocketByItemId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #5\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _081B5ECE\n\t"
-        "	movs r1, #4\n\t"
-        "_081B5ECE:\n\t"
-        "	ldr r0, _081B5EF0\n\t"
-        "_081B5ED0:\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5EF0: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    MainCallback callback = CB2_ReturnToBagMenu;
+    u8 partyLayout;
+    u8 menuType;
+    u8 i;
+    u8 msgId;
+    TaskFunc task;
+
+    if (gMain.inBattle)
+    {
+        menuType = PARTY_MENU_TYPE_IN_BATTLE;
+        partyLayout = sub_081B8624(); // GetPartyLayoutFromBattleType
+    }
+    else
+    {
+        menuType = PARTY_MENU_TYPE_FIELD;
+        partyLayout = PARTY_LAYOUT_SINGLE;
+    }
+
+    if (GetItemEffectType(gSpecialVar_ItemId) == ITEM_EFFECT_SACRED_ASH)
+    {
+        gPartyMenu.slotId = 0;
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) != SPECIES_NONE && GetMonData(&gPlayerParty[i], MON_DATA_HP) == 0)
+            {
+                gPartyMenu.slotId = i;
+                break;
+            }
+        }
+        task = Task_SetSacredAshCB;
+        msgId = PARTY_MSG_NONE;
+    }
+    else
+    {
+        if (GetPocketByItemId(gSpecialVar_ItemId) == POCKET_TM_HM)
+            msgId = PARTY_MSG_TEACH_WHICH_MON;
+        else
+            msgId = PARTY_MSG_USE_ON_WHICH_MON;
+
+        task = Task_HandleChooseMonInput;
+    }
+
+    InitPartyMenu(menuType, partyLayout, PARTY_ACTION_USE_ITEM, TRUE, msgId, task, callback);
 }
 
-__attribute__((naked)) void c2_815ABFC(void)
+static void CB2_ReturnToBagMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl CurrentBattlePyramidLocation\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B5F0C\n\t"
-        "	movs r0, #0xc\n\t"
-        "	movs r1, #5\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GoToBagMenu\n\t"
-        "	b _081B5F16\n\t"
-        "_081B5F0C:\n\t"
-        "	ldr r0, _081B5F1C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_081C47A0\n\t"
-        "_081B5F16:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5F1C: .4byte gUnknown_203CBFC\n\t"
-        ".syntax divided\n\t"
-    );
+    if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE == FALSE)
+        GoToBagMenu(ITEMMENULOCATION_LAST, POCKETS_COUNT, NULL);
+    else
+        sub_081C47A0(PYRAMIDBAG_LOC_PREV, gUnknown_203CBFC); // GoToBattlePyramidBagMenu
 }
 
-__attribute__((naked)) void sub_081B5F20(void)
+static void Task_SetSacredAshCB(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r0, _081B5F58\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B5F52\n\t"
-        "	ldr r0, _081B5F5C\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B5F46\n\t"
-        "	ldr r0, _081B5F60\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _081B5F64\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "_081B5F46:\n\t"
-        "	ldr r0, _081B5F68\n\t"
-        "	ldr r1, _081B5F6C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "_081B5F52:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5F58: .4byte gPaletteFade\n\t"
-        "_081B5F5C: .4byte gPartyMenu\n\t"
-        "_081B5F60: .4byte sPartyMenuInternal\n\t"
-        "_081B5F64: .4byte sub_081B8DE0 + 1\n\t"
-        "_081B5F68: .4byte gItemUseCB\n\t"
-        "_081B5F6C: .4byte sub_081B6434 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        if (gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE)
+            sPartyMenuInternal->exitCallback = sub_081B8DE0; // CB2_SetUpExitToBattleScreen
+        gItemUseCB(taskId, sub_081B6434); // Task_ClosePartyMenuAfterText
+    }
 }
 
-__attribute__((naked)) bool8 IsHPRecoveryItem(u16 itemId)
+static bool8 IsHPRecoveryItem(u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xaf\n\t"
-        "	bne _081B5F8C\n\t"
-        "	ldr r0, _081B5F84\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _081B5F88\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	b _081B5F96\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5F84: .4byte gSaveBlock1Ptr\n\t"
-        "_081B5F88: .4byte 0x00003214\n\t"
-        "_081B5F8C:\n\t"
-        "	ldr r1, _081B5FA4\n\t"
-        "	subs r0, #0xd\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "_081B5F96:\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B5FA8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B5FAA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5FA4: .4byte gUnknown_82EEF14\n\t"
-        "_081B5FA8:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B5FAA:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    const u8 *effect;
+
+    if (item == ITEM_ENIGMA_BERRY)
+        effect = gSaveBlock1Ptr->enigmaBerry.itemEffect;
+    else
+        effect = gItemEffectTable[item - ITEM_POTION];
+
+    if (effect[4] & ITEM4_HEAL_HP)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) u8 GetMedicineItemEffectMessage(u16 itemId)
+static void GetMedicineItemEffectMessage(u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl GetItemEffectType\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #3\n\t"
-        "	cmp r0, #0x12\n\t"
-        "	bls _081B5FC6\n\t"
-        "	b _081B615C\n\t"
-        "_081B5FC6:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B5FD0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5FD0: .4byte 0x081B5FD4\n\t"
-        "_081B5FD4: @ jump table\n\t"
-        "	.4byte _081B6020 @ case 0\n\t"
-        "	.4byte _081B6034 @ case 1\n\t"
-        "	.4byte _081B6048 @ case 2\n\t"
-        "	.4byte _081B605C @ case 3\n\t"
-        "	.4byte _081B6070 @ case 4\n\t"
-        "	.4byte _081B6084 @ case 5\n\t"
-        "	.4byte _081B6098 @ case 6\n\t"
-        "	.4byte _081B615C @ case 7\n\t"
-        "	.4byte _081B60AC @ case 8\n\t"
-        "	.4byte _081B60D0 @ case 9\n\t"
-        "	.4byte _081B60C0 @ case 10\n\t"
-        "	.4byte _081B6100 @ case 11\n\t"
-        "	.4byte _081B6110 @ case 12\n\t"
-        "	.4byte _081B60F0 @ case 13\n\t"
-        "	.4byte _081B60E0 @ case 14\n\t"
-        "	.4byte _081B615C @ case 15\n\t"
-        "	.4byte _081B6134 @ case 16\n\t"
-        "	.4byte _081B6134 @ case 17\n\t"
-        "	.4byte _081B6148 @ case 18\n\t"
-        "_081B6020:\n\t"
-        "	ldr r0, _081B602C\n\t"
-        "	ldr r1, _081B6030\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B602C: .4byte gStringVar4\n\t"
-        "_081B6030: .4byte gUnknown_85C97BD + 0x6E9\n\t"
-        "_081B6034:\n\t"
-        "	ldr r0, _081B6040\n\t"
-        "	ldr r1, _081B6044\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6040: .4byte gStringVar4\n\t"
-        "_081B6044: .4byte gUnknown_85C97BD + 0x717\n\t"
-        "_081B6048:\n\t"
-        "	ldr r0, _081B6054\n\t"
-        "	ldr r1, _081B6058\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6054: .4byte gStringVar4\n\t"
-        "_081B6058: .4byte gUnknown_85C97BD + 0x725\n\t"
-        "_081B605C:\n\t"
-        "	ldr r0, _081B6068\n\t"
-        "	ldr r1, _081B606C\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6068: .4byte gStringVar4\n\t"
-        "_081B606C: .4byte gUnknown_85C97BD + 0x735\n\t"
-        "_081B6070:\n\t"
-        "	ldr r0, _081B607C\n\t"
-        "	ldr r1, _081B6080\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B607C: .4byte gStringVar4\n\t"
-        "_081B6080: .4byte gUnknown_85C97BD + 0x703\n\t"
-        "_081B6084:\n\t"
-        "	ldr r0, _081B6090\n\t"
-        "	ldr r1, _081B6094\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6090: .4byte gStringVar4\n\t"
-        "_081B6094: .4byte gUnknown_85C97BD + 0x82A\n\t"
-        "_081B6098:\n\t"
-        "	ldr r0, _081B60A4\n\t"
-        "	ldr r1, _081B60A8\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B60A4: .4byte gStringVar4\n\t"
-        "_081B60A8: .4byte gUnknown_85C97BD + 0x83A\n\t"
-        "_081B60AC:\n\t"
-        "	ldr r0, _081B60B8\n\t"
-        "	ldr r1, _081B60BC\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B60B8: .4byte gStringVar4\n\t"
-        "_081B60BC: .4byte gUnknown_85C97BD + 0x76E\n\t"
-        "_081B60C0:\n\t"
-        "	ldr r0, _081B60C8\n\t"
-        "	ldr r1, _081B60CC\n\t"
-        "	b _081B6114\n\t"
-        "	.align 2, 0\n\t"
-        "_081B60C8: .4byte gStringVar2\n\t"
-        "_081B60CC: .4byte gUnknown_85C97BD + 0x32A\n\t"
-        "_081B60D0:\n\t"
-        "	ldr r0, _081B60D8\n\t"
-        "	ldr r1, _081B60DC\n\t"
-        "	b _081B6114\n\t"
-        "	.align 2, 0\n\t"
-        "_081B60D8: .4byte gStringVar2\n\t"
-        "_081B60DC: .4byte gText_Register + 0x7\n\t"
-        "_081B60E0:\n\t"
-        "	ldr r0, _081B60E8\n\t"
-        "	ldr r1, _081B60EC\n\t"
-        "	b _081B6114\n\t"
-        "	.align 2, 0\n\t"
-        "_081B60E8: .4byte gStringVar2\n\t"
-        "_081B60EC: .4byte gText_Register + 0xC\n\t"
-        "_081B60F0:\n\t"
-        "	ldr r0, _081B60F8\n\t"
-        "	ldr r1, _081B60FC\n\t"
-        "	b _081B6114\n\t"
-        "	.align 2, 0\n\t"
-        "_081B60F8: .4byte gStringVar2\n\t"
-        "_081B60FC: .4byte gText_Register + 0x1B\n\t"
-        "_081B6100:\n\t"
-        "	ldr r0, _081B6108\n\t"
-        "	ldr r1, _081B610C\n\t"
-        "	b _081B6114\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6108: .4byte gStringVar2\n\t"
-        "_081B610C: .4byte gUnknown_85C97BD + 0x330\n\t"
-        "_081B6110:\n\t"
-        "	ldr r0, _081B6124\n\t"
-        "	ldr r1, _081B6128\n\t"
-        "_081B6114:\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r0, _081B612C\n\t"
-        "	ldr r1, _081B6130\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6124: .4byte gStringVar2\n\t"
-        "_081B6128: .4byte gUnknown_85C97BD + 0x335\n\t"
-        "_081B612C: .4byte gStringVar4\n\t"
-        "_081B6130: .4byte gUnknown_85C97BD + 0x7A2\n\t"
-        "_081B6134:\n\t"
-        "	ldr r0, _081B6140\n\t"
-        "	ldr r1, _081B6144\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6140: .4byte gStringVar4\n\t"
-        "_081B6144: .4byte gUnknown_85C97BD + 0x77E\n\t"
-        "_081B6148:\n\t"
-        "	ldr r0, _081B6154\n\t"
-        "	ldr r1, _081B6158\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B6164\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6154: .4byte gStringVar4\n\t"
-        "_081B6158: .4byte gUnknown_85C97BD + 0x749\n\t"
-        "_081B615C:\n\t"
-        "	ldr r0, _081B6168\n\t"
-        "	ldr r1, _081B616C\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "_081B6164:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6168: .4byte gStringVar4\n\t"
-        "_081B616C: .4byte gUnknown_85C97BD + 0x33A\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (GetItemEffectType(item))
+    {
+    case ITEM_EFFECT_CURE_POISON:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x6E9); // gText_PkmnCuredOfPoison
+        break;
+    case ITEM_EFFECT_CURE_SLEEP:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x717); // gText_PkmnWokeUp2
+        break;
+    case ITEM_EFFECT_CURE_BURN:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x725); // gText_PkmnBurnHealed
+        break;
+    case ITEM_EFFECT_CURE_FREEZE:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x735); // gText_PkmnThawedOut
+        break;
+    case ITEM_EFFECT_CURE_PARALYSIS:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x703); // gText_PkmnCuredOfParalysis
+        break;
+    case ITEM_EFFECT_CURE_CONFUSION:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x82A); // gText_PkmnSnappedOutOfConfusion
+        break;
+    case ITEM_EFFECT_CURE_INFATUATION:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x83A); // gText_PkmnGotOverInfatuation
+        break;
+    case ITEM_EFFECT_CURE_ALL_STATUS:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x76E); // gText_PkmnBecameHealthy
+        break;
+    case ITEM_EFFECT_HP_EV:
+        StringCopy(gStringVar2, gText_HP3);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x7A2); // gText_PkmnBaseVar2StatIncreased
+        break;
+    case ITEM_EFFECT_ATK_EV:
+        StringCopy(gStringVar2, gText_Attack3);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x7A2);
+        break;
+    case ITEM_EFFECT_DEF_EV:
+        StringCopy(gStringVar2, gText_Defense3);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x7A2);
+        break;
+    case ITEM_EFFECT_SPEED_EV:
+        StringCopy(gStringVar2, gText_Speed2);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x7A2);
+        break;
+    case ITEM_EFFECT_SPATK_EV:
+        StringCopy(gStringVar2, gText_SpAtk3);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x7A2);
+        break;
+    case ITEM_EFFECT_SPDEF_EV:
+        StringCopy(gStringVar2, gText_SpDef3);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x7A2);
+        break;
+    case ITEM_EFFECT_PP_UP:
+    case ITEM_EFFECT_PP_MAX:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x77E); // gText_MovesPPIncreased
+        break;
+    case ITEM_EFFECT_HEAL_PP:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x749); // gText_PPWasRestored
+        break;
+    default:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x33A); // gText_WontHaveEffect
+        break;
+    }
 }
-
 
 __attribute__((naked)) void UsingHPEVItemOnShedinja(void)
 {
@@ -4987,7 +4552,7 @@ __attribute__((naked)) void ItemUseCB_Medicine(u8 taskId, TaskFunc task)
         "	ldr r1, [r4]\n\t"
         "	adds r1, r1, r0\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl party_menu_get_status_condition_and_update_object\n\t"
+        "	bl SetPartyMonAilmentGfx\n\t"
         "	ldr r2, _081B637C\n\t"
         "	movs r0, #9\n\t"
         "	ldrsb r0, [r7, r0]\n\t"
@@ -5638,7 +5203,7 @@ __attribute__((naked)) void dp05_ether(void)
         "	bl ether_effect_related\n\t"
         "	b _081B6836\n\t"
         "	.align 2, 0\n\t"
-        "_081B680C: .4byte gUnknown_82EEF14\n\t"
+        "_081B680C: .4byte gItemEffectTable\n\t"
         "_081B6810: .4byte gPartyMenu\n\t"
         "_081B6814:\n\t"
         "	movs r0, #5\n\t"
@@ -6922,7 +6487,7 @@ __attribute__((naked)) void sub_081B71F8(void)
         "	ldr r1, [r6]\n\t"
         "	adds r1, r1, r4\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl party_menu_get_status_condition_and_update_object\n\t"
+        "	bl SetPartyMonAilmentGfx\n\t"
         "	ldr r2, _081B727C\n\t"
         "	ldr r0, [r6]\n\t"
         "	adds r3, r4, r0\n\t"
@@ -7556,7 +7121,7 @@ __attribute__((naked)) void sub_081B76CC(void)
         "	ldr r1, [r4]\n\t"
         "	adds r1, r1, r0\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl party_menu_get_status_condition_and_update_object\n\t"
+        "	bl SetPartyMonAilmentGfx\n\t"
         "	ldr r2, _081B77E0\n\t"
         "	movs r0, #9\n\t"
         "	ldrsb r0, [r6, r0]\n\t"
@@ -7886,7 +7451,7 @@ __attribute__((naked)) u8 GetItemEffectType(u16 item)
         "	movs r0, #0\n\t"
         "	b _081B7AEA\n\t"
         "	.align 2, 0\n\t"
-        "_081B79EC: .4byte gUnknown_82EEF14\n\t"
+        "_081B79EC: .4byte gItemEffectTable\n\t"
         "_081B79F0:\n\t"
         "	movs r2, #0x40\n\t"
         "	adds r0, r2, #0\n\t"
@@ -8211,7 +7776,7 @@ __attribute__((naked)) void sub_081B7C00(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081B7C38: .4byte sub_081C478C + 1\n\t"
-        "_081B7C3C: .4byte c2_815ABFC + 1\n\t"
+        "_081B7C3C: .4byte CB2_ReturnToBagMenu + 1\n\t"
         "_081B7C40: .4byte Task_HandleChooseMonInput + 1\n\t"
         "_081B7C44: .4byte gPartyMenu\n\t"
         "_081B7C48: .4byte gSpecialVar_ItemId\n\t"
@@ -9602,7 +9167,7 @@ __attribute__((naked)) void sub_081B85F8(void)
     );
 }
 
-__attribute__((naked)) void sub_081B8624(void)
+__attribute__((naked)) u8 sub_081B8624(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9694,7 +9259,7 @@ __attribute__((naked)) void sub_081B8690(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081B86C4: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B86C8: .4byte c2_815ABFC + 1\n\t"
+        "_081B86C8: .4byte CB2_ReturnToBagMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }

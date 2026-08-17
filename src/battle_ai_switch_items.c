@@ -1449,7 +1449,7 @@ __attribute__((naked)) bool8 ShouldUseItem(void)
         "_08063BB4: .4byte gEnemyParty\n\t"
         "_08063BB8: .4byte gPlayerParty\n\t"
         "_08063BBC: .4byte gBattleResources\n\t"
-        "_08063BC0: .4byte gUnknown_82EEF14\n\t"
+        "_08063BC0: .4byte gItemEffectTable\n\t"
         "_08063BC4: .4byte gSaveBlock1Ptr\n\t"
         "_08063BC8: .4byte 0x00003214\n\t"
         "_08063BCC:\n\t"

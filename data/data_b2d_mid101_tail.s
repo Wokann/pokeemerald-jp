@@ -316,36 +316,36 @@ sSpritePalette_HeldItem: @ 0x85E1770
 sSpriteTemplate_HeldItem: @ 0x85E1778
 	.incbin "baserom_jp.gba", 0x5e1778, 0x38
 
-	.globl gUnknown_85E17B0
-gUnknown_85E17B0: @ 0x85E17B0
+	.globl sSpriteSheet_MenuPokeball
+sSpriteSheet_MenuPokeball: @ 0x85E17B0
 	.incbin "baserom_jp.gba", 0x5e17b0, 0x8
 
-	.globl gUnknown_85E17B8
-gUnknown_85E17B8: @ 0x85E17B8
+	.globl sSpritePalette_MenuPokeball
+sSpritePalette_MenuPokeball: @ 0x85E17B8
 	.incbin "baserom_jp.gba", 0x5e17b8, 0x8
 
-	.globl gUnknown_85E17C0
-gUnknown_85E17C0: @ 0x85E17C0
+	.globl sSpriteTemplate_MenuPokeball
+sSpriteTemplate_MenuPokeball: @ 0x85E17C0
 	.incbin "baserom_jp.gba", 0x5e17c0, 0x68
 
-	.globl gUnknown_85E1828
-gUnknown_85E1828: @ 0x85E1828
+	.globl sSpriteSheet_MenuPokeballSmall
+sSpriteSheet_MenuPokeballSmall: @ 0x85E1828
 	.incbin "baserom_jp.gba", 0x5e1828, 0x8
 
-	.globl gUnknown_85E1830
-gUnknown_85E1830: @ 0x85E1830
+	.globl sSpriteTemplate_MenuPokeballSmall
+sSpriteTemplate_MenuPokeballSmall: @ 0x85E1830
 	.incbin "baserom_jp.gba", 0x5e1830, 0x80
 
-	.globl gUnknown_85E18B0
-gUnknown_85E18B0: @ 0x85E18B0
+	.globl sSpriteSheet_StatusIcons
+sSpriteSheet_StatusIcons: @ 0x85E18B0
 	.incbin "baserom_jp.gba", 0x5e18b0, 0x8
 
-	.globl gUnknown_85E18B8
-gUnknown_85E18B8: @ 0x85E18B8
+	.globl sSpritePalette_StatusIcons
+sSpritePalette_StatusIcons: @ 0x85E18B8
 	.incbin "baserom_jp.gba", 0x5e18b8, 0x8
 
-	.globl gUnknown_85E18C0
-gUnknown_85E18C0: @ 0x85E18C0
+	.globl sSpriteTemplate_StatusIcons
+sSpriteTemplate_StatusIcons: @ 0x85E18C0
 	.incbin "baserom_jp.gba", 0x5e18c0, 0x18
 
 	.globl sMultiBattlePartnersPartyMask

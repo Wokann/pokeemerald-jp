@@ -33,3 +33,9 @@ gUnknown_85CA2CC: @ 0x85CA2CC
 	.globl gText_Register
 gText_Register: @ 0x85CA368
 	.string "とうろくする$"
+	.globl gText_Attack3
+	.set gText_Attack3, gText_Register + 0x7
+	.globl gText_Defense3
+	.set gText_Defense3, gText_Register + 0xC
+	.globl gText_Speed2
+	.set gText_Speed2, gText_Register + 0x1B
