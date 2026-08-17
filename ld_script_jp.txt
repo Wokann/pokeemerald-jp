@@ -8705,7 +8705,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B5344);
         src/party_menu.o(.text.sub_081B5378);
         src/party_menu.o(.text.FieldCallback_PrepareFadeInFromMenu);
-        src/party_menu.o(.text.task_launch_hm_phase_2);
+        src/party_menu.o(.text.Task_FieldMoveWaitForFade);
         src/party_menu.o(.text.brm_get_selected_species);
         src/party_menu.o(.text.task_brm_cancel_1_on_keypad_a_or_b);
         src/party_menu.o(.text.sub_081B547C);

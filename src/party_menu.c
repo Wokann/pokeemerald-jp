@@ -18,6 +18,7 @@ extern const u16 sTMHMMoves[];
 static void Task_ExitPartyMenu(u8 taskId);
 __attribute__((naked)) bool8 PartyMenuSetup(void);
 void Task_PrintAndWaitForText(void);
+__attribute__((naked)) void Task_FieldMoveWaitForFade(u8 taskId);
 
 struct PartyMenuInternal
 {
@@ -11294,25 +11295,14 @@ __attribute__((naked)) void sub_081B5378(void)
     );
 }
 
-__attribute__((naked)) bool8 FieldCallback_PrepareFadeInFromMenu(void)
+bool8 FieldCallback_PrepareFadeInFromMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl FadeInFromBlack\n\t"
-        "	ldr r0, _081B53EC\n\t"
-        "	movs r1, #8\n\t"
-        "	bl CreateTask\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B53EC: .4byte task_launch_hm_phase_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    FadeInFromBlack();
+    CreateTask(Task_FieldMoveWaitForFade, 8);
+    return TRUE;
 }
 
-__attribute__((naked)) void task_launch_hm_phase_2(u8 taskId)
+__attribute__((naked)) void Task_FieldMoveWaitForFade(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
