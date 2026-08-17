@@ -8550,7 +8550,7 @@ SECTIONS {
         src/party_menu.o(.text.DisplayPartyPokemonDataForContest);
         src/party_menu.o(.text.DisplayPartyPokemonDataForRelearner);
         src/party_menu.o(.text.DisplayPartyPokemonDataForWirelessMinigame);
-        src/party_menu.o(.text.DisplayPartyPokemonSelectHeldItemRelated);
+        src/party_menu.o(.text.DisplayPartyPokemonDataForBattlePyramidHeldItem);
         src/party_menu.o(.text.sub_081B08D4);
         src/party_menu.o(.text.DisplayPartyPokemonSelectToTeachMove);
         src/party_menu.o(.text.sub_081B09C4);

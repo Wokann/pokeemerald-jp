@@ -1041,7 +1041,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	cmp r1, #0xc\n\t"
         "	bne _081B05BC\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonSelectHeldItemRelated\n\t"
+        "	bl DisplayPartyPokemonDataForBattlePyramidHeldItem\n\t"
         "	b _081B05CE\n\t"
         "_081B05BC:\n\t"
         "	adds r0, r5, #0\n\t"
@@ -1187,38 +1187,12 @@ static void DisplayPartyPokemonDataForWirelessMinigame(u8 slot)
         DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_NOT_ABLE);
 }
 
-__attribute__((naked)) void DisplayPartyPokemonSelectHeldItemRelated(u8 a)
+static void DisplayPartyPokemonDataForBattlePyramidHeldItem(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081B08C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B08C4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "	b _081B08CC\n\t"
-        "	.align 2, 0\n\t"
-        "_081B08C0: .4byte gPlayerParty\n\t"
-        "_081B08C4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "_081B08CC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(&gPlayerParty[slot], MON_DATA_HELD_ITEM))
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_HAVE);
+    else
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_DONT_HAVE);
 }
 
 __attribute__((naked)) void sub_081B08D4(void)
