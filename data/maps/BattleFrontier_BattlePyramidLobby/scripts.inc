@@ -572,7 +572,7 @@ BattleFrontier_BattlePyramidLobby_EventScript_0022C407::
 	end
 
 BattleFrontier_BattlePyramidLobby_EventScript_0022C417::
-	special sub_081B92C0
+	special BattlePyramidChooseMonHeldItems
 	waitstate
 	message gJPText_0022CAB5
 	waitmessage

@@ -8875,8 +8875,8 @@ SECTIONS {
         src/party_menu.o(.text.Task_ChooseMonForMoveRelearner);
         src/party_menu.o(.text.sub_081B9228);
         src/party_menu.o(.text.sub_081B9280);
-        src/party_menu.o(.text.sub_081B92C0);
-        src/party_menu.o(.text.sub_081B92E0);
+        src/party_menu.o(.text.BattlePyramidChooseMonHeldItems);
+        src/party_menu.o(.text.Task_BattlePyramidChooseMonHeldItems);
         src/party_menu.o(.text.sub_081B932C);
         src/party_menu.o(.text.sub_081B9370);
         src/party_menu.o(.text.sub_081B93B8);

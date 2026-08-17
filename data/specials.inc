@@ -466,7 +466,7 @@ gSpecials:
 	def_special sub_081C62AC
 	def_special sub_081C472C
 	def_special sub_081B9280
-	def_special sub_081B92C0
+	def_special BattlePyramidChooseMonHeldItems
 	def_special sub_0813A774
 	def_special sub_0813A7C0
 	def_special sub_0813A904
