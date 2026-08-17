@@ -47,25 +47,11 @@ void Special_ViewWallClock(void)
     LockPlayerFieldControls();
 }
 
-__attribute__((naked)) void ResetCyclingRoadChallengeData()
+void ResetCyclingRoadChallengeData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _08137D70\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _08137D74\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, _08137D78\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08137D70: .4byte gBikeCyclingChallenge\n\t"
-        "_08137D74: .4byte gBikeCollisions\n\t"
-        "_08137D78: .4byte sBikeCyclingTimer\n\t"
-        ".syntax divided\n\t"
-    );
+    gBikeCyclingChallenge = FALSE;
+    gBikeCollisions = 0;
+    sBikeCyclingTimer = 0;
 }
 
 void Special_BeginCyclingRoadChallenge(void)
@@ -2876,29 +2862,9 @@ u8 GetLeadMonIndex(void)
     return 0; // Shouldn't happen
 }
 
-__attribute__((naked)) void ScriptGetPartyMonSpecies(void)
+u16 ScriptGetPartyMonSpecies(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08139770\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _08139774\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x41\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08139770: .4byte gSpecialVar_0x8004\n\t"
-        "_08139774: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetMonData3(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES_OR_EGG, NULL);
 }
 
 void nullsub_54(void) {}
