@@ -8,6 +8,7 @@
 
 extern const u16 sTMHMMoves[];
 #include "constants/items.h"
+#include "constants/party_menu.h"
 #include "constants/rgb.h"
 #include "main.h"
 #include "menu_helpers.h"
@@ -31,6 +32,30 @@ struct PartyMenuInternal
     u16 palBuffer[BG_PLTT_SIZE / sizeof(u16)];
     s16 data[16];
 };
+
+struct PartyMenuBoxInfoRects
+{
+    void (*blitFunc)(u8, u8, u8, u8, u8, bool8);
+    u8 dimensions[24];
+    u8 descTextLeft;
+    u8 descTextTop;
+    u8 descTextWidth;
+    u8 descTextHeight;
+};
+
+struct PartyMenuBox
+{
+    const struct PartyMenuBoxInfoRects *infoRects;
+    const u8 *spriteCoords;
+    u8 windowId;
+    u8 monSpriteId;
+    u8 itemSpriteId;
+    u8 pokeballSpriteId;
+    u8 statusSpriteId;
+};
+
+extern const struct PartyMenuBoxInfoRects gUnknown_85E0F9C[];
+extern const u8 gUnknown_85E0FBC[][48];
 
 __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId)
 {
@@ -407,7 +432,7 @@ __attribute__((naked)) bool8 PartyMenuSetup(void)
         "	ldrb r0, [r0, #8]\n\t"
         "	lsls r0, r0, #0x1a\n\t"
         "	lsrs r0, r0, #0x1e\n\t"
-        "	bl PartyMenuInitHelperStructs\n\t"
+        "	bl InitPartyMenuBoxes\n\t"
         "	ldr r0, _081B0060\n\t"
         "	ldr r0, [r0]\n\t"
         "	movs r1, #0x86\n\t"
@@ -594,7 +619,7 @@ static void Task_ExitPartyMenu(u8 taskId)
 extern struct PartyMenuInternal *sPartyMenuInternal;
 extern void *sPartyBgTilemapBuffer;
 extern void *sPartyBgGfxTilemap;
-extern void *sPartyMenuBoxes;
+extern struct PartyMenuBox *sPartyMenuBoxes;
 
 extern const u32 gUnknown_8D967A0[];
 extern const u32 gUnknown_8D96B54[];
@@ -700,92 +725,29 @@ static void FreePartyPointers(void)
     FreeAllWindowBuffers();
 }
 
-__attribute__((naked)) void PartyMenuInitHelperStructs(void)
+static void InitPartyMenuBoxes(u8 layout)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r4, _081B0498\n\t"
-        "	movs r0, #0x60\n\t"
-        "	bl Alloc\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r5, #0\n\t"
-        "	lsls r0, r7, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r6, #0xff\n\t"
-        "	mov sb, r4\n\t"
-        "_081B043C:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	adds r2, r3, r2\n\t"
-        "	ldr r0, _081B049C\n\t"
-        "	mov ip, r0\n\t"
-        "	str r0, [r2]\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	ldr r1, _081B04A0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	add r0, r8\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	strb r5, [r2, #8]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	ldrb r0, [r1, #9]\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r1, #9]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r1, #0xa]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r3, r1\n\t"
-        "	ldrb r0, [r1, #0xb]\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r1, #0xb]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	ldrb r0, [r3, #0xc]\n\t"
-        "	orrs r0, r6\n\t"
-        "	strb r0, [r3, #0xc]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _081B043C\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	mov r1, ip\n\t"
-        "	subs r1, #0x20\n\t"
-        "	str r1, [r0]\n\t"
-        "	cmp r7, #3\n\t"
-        "	bne _081B04A4\n\t"
-        "	str r1, [r0, #0x30]\n\t"
-        "	b _081B04AA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0498: .4byte sPartyMenuBoxes\n\t"
-        "_081B049C: .4byte gUnknown_85E0F9C\n\t"
-        "_081B04A0: .4byte gUnknown_85E0FBC\n\t"
-        "_081B04A4:\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _081B04AA\n\t"
-        "	str r1, [r0, #0x10]\n\t"
-        "_081B04AA:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    sPartyMenuBoxes = Alloc(sizeof(struct PartyMenuBox[PARTY_SIZE]));
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        sPartyMenuBoxes[i].infoRects = &gUnknown_85E0F9C[0];
+        sPartyMenuBoxes[i].spriteCoords = &gUnknown_85E0FBC[layout][i * 8];
+        sPartyMenuBoxes[i].windowId = i;
+        sPartyMenuBoxes[i].monSpriteId = SPRITE_NONE;
+        sPartyMenuBoxes[i].itemSpriteId = SPRITE_NONE;
+        sPartyMenuBoxes[i].pokeballSpriteId = SPRITE_NONE;
+        sPartyMenuBoxes[i].statusSpriteId = SPRITE_NONE;
+    }
+    // The first party mon goes in the left column
+    sPartyMenuBoxes[0].infoRects = &gUnknown_85E0F9C[-1];
+
+    if (layout == PARTY_LAYOUT_MULTI_SHOWCASE)
+        sPartyMenuBoxes[3].infoRects = &gUnknown_85E0F9C[-1];
+    else if (layout != PARTY_LAYOUT_SINGLE)
+        sPartyMenuBoxes[1].infoRects = &gUnknown_85E0F9C[-1];
 }
 
 __attribute__((naked)) void RenderPartyMenuBox(void)

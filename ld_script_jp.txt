@@ -8543,7 +8543,7 @@ SECTIONS {
         src/party_menu.o(.text.AllocPartyMenuBgGfx);
         src/party_menu.o(.text.PartyPaletteBufferCopy);
         src/party_menu.o(.text.FreePartyPointers);
-        src/party_menu.o(.text.PartyMenuInitHelperStructs);
+        src/party_menu.o(.text.InitPartyMenuBoxes);
         src/party_menu.o(.text.RenderPartyMenuBox);
         src/party_menu.o(.text.DisplayPartyPokemonData);
         src/party_menu.o(.text.DisplayPartyPokemonSelectData);
