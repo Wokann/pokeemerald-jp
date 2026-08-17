@@ -13,6 +13,7 @@
 void Task_RedArrowCursor(void) {}
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
+u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId);
 void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y);
 void ListMenuUpdateRedArrowCursorObject(u8 taskId, u16 x, u16 y);
 
@@ -989,56 +990,19 @@ __attribute__((naked)) void ListMenuDrawCursor(void)
     );
 }
 
-__attribute__((naked)) void ListMenuAddCursorObject(void)
+static u8 ListMenuAddCursorObject(struct ListMenu *list, u32 cursorObjId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetWindowAttribute\n\t"
-        "	mov r1, sp\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	ldrb r0, [r4, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	mov r1, sp\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	ldr r0, _081AE94C\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	strb r0, [r1, #0xa]\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ListMenuAddCursorObjectInternal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE94C: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    struct CursorStruct cursor;
+
+    cursor.left = 0;
+    cursor.top = DISPLAY_HEIGHT;
+    cursor.rowWidth = GetWindowAttribute(list->template.windowId, WINDOW_WIDTH) * 8 + 2;
+    cursor.rowHeight = GetFontAttribute(list->template.fontId, FONTATTR_MAX_LETTER_HEIGHT) + 2;
+    cursor.tileTag = 0x4000;
+    cursor.palTag = TAG_NONE;
+    cursor.palNum = 15;
+
+    return ListMenuAddCursorObjectInternal(&cursor, cursorObjId);
 }
 
 __attribute__((naked)) void ListMenuErasePrintedCursor(void)
