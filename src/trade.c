@@ -187,7 +187,7 @@ static bool8 LoadUISpriteGfx(void);
 extern const struct SpritePalette gUnknown_83008DC;
 extern const struct SpritePalette gUnknown_830083C;
 extern const struct SpriteSheet gUnknown_8300834;
-void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed);
+void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
 void sub_08079FB4(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
 static void PrintTradeMessage(u8 messageId);
@@ -512,7 +512,7 @@ static void CB2_CreateTradeMenu(void)
         id = GetMultiplayerId();
         sub_080C66A4(gLinkPlayers[id ^ 1].name, sMenuTextTileBuffers[GFXTAG_PARTNER_NAME_L], 0, 0, gDecompressionBuffer);
         sub_080C66A4(sActionTexts[TEXT_CANCEL], sMenuTextTileBuffers[GFXTAG_CANCEL_L], 0, 0, gDecompressionBuffer);
-        sub_08079D3C(sActionTexts[TEXT_CHOOSE_MON], sMenuTextTileBuffers[GFXTAG_CHOOSE_PKMN_L], 24);
+        DrawBottomRowText(sActionTexts[TEXT_CHOOSE_MON], sMenuTextTileBuffers[GFXTAG_CHOOSE_PKMN_L], 24);
         gMain.state++;
         sTradeMenu->timer = 0;
         break;
@@ -705,7 +705,7 @@ static void CB2_ReturnToTradeMenu(void)
         id = GetMultiplayerId();
         sub_080C66A4(gLinkPlayers[id ^ 1].name, sMenuTextTileBuffers[GFXTAG_PARTNER_NAME_L], 0, 0, gDecompressionBuffer);
         sub_080C66A4(sActionTexts[TEXT_CANCEL], sMenuTextTileBuffers[GFXTAG_CANCEL_L], 0, 0, gDecompressionBuffer);
-        sub_08079D3C(sActionTexts[TEXT_CHOOSE_MON], sMenuTextTileBuffers[GFXTAG_CHOOSE_PKMN_L], 24);
+        DrawBottomRowText(sActionTexts[TEXT_CHOOSE_MON], sMenuTextTileBuffers[GFXTAG_CHOOSE_PKMN_L], 24);
         gMain.state++;
         sTradeMenu->timer = 0;
         break;
@@ -1102,7 +1102,7 @@ static void DrawTradeMonNicknames(void)
     StringAppend(nickname, gUnknown_8300AAE);
     StringAppend(nickname, str2);
     StringAppend(nickname, gUnknown_8300AB1);
-    sub_08079D3C(nickname, (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
+    DrawBottomRowText(nickname, (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
 }
 
 static void Leader_ReadLinkBuffer(u8 mpId, u8 status)
@@ -1395,7 +1395,7 @@ static void CB_ProcessMenuInput(void)
             // Selected Cancel
             CreateYesNoMenuAtPos(&sTradeYesNoWindowTemplate, FONT_NORMAL, 2, 2, 1, 14, 0);
             sTradeMenu->callbackId = CB_CANCEL_TRADE_PROMPT;
-            sub_08079D3C(sActionTexts[TEXT_CANCEL_TRADE], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
+            DrawBottomRowText(sActionTexts[TEXT_CANCEL_TRADE], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
         }
     }
 }
@@ -1405,7 +1405,7 @@ static void RedrawChooseAPokemonWindow(void)
     PrintTradePartnerPartyNicknames();
     sTradeMenu->callbackId = CB_MAIN_MENU;
     gSprites[sTradeMenu->cursorSpriteId].invisible = FALSE;
-    sub_08079D3C(sActionTexts[TEXT_CHOOSE_MON], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
+    DrawBottomRowText(sActionTexts[TEXT_CHOOSE_MON], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
 }
 
 static void CB_ProcessSelectedMonInput(void)
@@ -2532,7 +2532,7 @@ static void RedrawPartyWindow(u8 whichParty)
     PrintPartyLevelsAndGenders(whichParty);
     PrintPartyNicknames(whichParty);
     ShowTradePartyMonIcons(whichParty);
-    sub_08079D3C(sActionTexts[TEXT_CHOOSE_MON], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
+    DrawBottomRowText(sActionTexts[TEXT_CHOOSE_MON], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
     sTradeMenu->drawSelectedMonState[whichParty] = 0;
 }
 
@@ -2688,7 +2688,7 @@ static bool8 LoadUISpriteGfx(void)
     return FALSE;
 }
 
-__attribute__((naked)) void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed)
+__attribute__((naked)) void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
