@@ -8615,8 +8615,8 @@ SECTIONS {
         src/party_menu.o(.text.CreateCancelConfirmWindows);
         src/party_menu.o(.text.GetPartyMenuPalBufferPtr);
         src/party_menu.o(.text.BlitBitmapToPartyWindow);
-        src/party_menu.o(.text.BlitBitmapToPartyWindow_Default1);
-        src/party_menu.o(.text.BlitBitmapToPartyWindow_Default2);
+        src/party_menu.o(.text.BlitBitmapToPartyWindow_LeftColumn);
+        src/party_menu.o(.text.BlitBitmapToPartyWindow_RightColumn);
         src/party_menu.o(.text.DrawEmptySlot);
         src/party_menu.o(.text.LoadPartyBoxPalette);
         src/party_menu.o(.text.DisplayPartyPokemonBarDetail);
@@ -8644,13 +8644,13 @@ SECTIONS {
         src/party_menu.o(.text.SetPartyMonFieldSelectionActions);
         src/party_menu.o(.text.GetPartyMenuActionsType);
         src/party_menu.o(.text.CreateSelectionWindow);
-        src/party_menu.o(.text.sub_081B339C);
-        src/party_menu.o(.text.HandleMenuInput);
-        src/party_menu.o(.text.CursorCb_Give);
+        src/party_menu.o(.text.Task_TryCreateSelectionWindow);
+        src/party_menu.o(.text.Task_HandleSelectionMenuInput);
+        src/party_menu.o(.text.CursorCb_Summary);
         src/party_menu.o(.text.CB2_ShowPokemonSummaryScreen);
-        src/party_menu.o(.text.sub_081B3534);
+        src/party_menu.o(.text.CB2_ReturnToPartyMenuFromSummaryScreen);
         src/party_menu.o(.text.CursorCb_Switch);
-        src/party_menu.o(.text.sub_081B35D8);
+        src/party_menu.o(.text.SwitchSelectedMons);
         src/party_menu.o(.text.sub_081B3778);
         src/party_menu.o(.text.sub_081B37E0);
         src/party_menu.o(.text.sub_081B38AC);
@@ -8663,7 +8663,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B3D1C);
         src/party_menu.o(.text.CursorCb_Cancel1);
         src/party_menu.o(.text.CursorCb_Item);
-        src/party_menu.o(.text.CursorCb_Summary);
+        src/party_menu.o(.text.CursorCb_Give);
         src/party_menu.o(.text.CB2_SelectBagItemToGive);
         src/party_menu.o(.text.c2_8123744);
         src/party_menu.o(.text.sub_081B3F70);

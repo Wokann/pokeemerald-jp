@@ -1425,7 +1425,7 @@ __attribute__((naked)) void CloseSummaryScreen(void)
         "	.align 2, 0\n\t"
         "_081BFE28: .4byte gPaletteFade\n\t"
         "_081BFE2C: .4byte gUnknown_203CBE8\n\t"
-        "_081BFE30: .4byte gUnknown_203CBEC\n\t"
+        "_081BFE30: .4byte gLastViewedMonIndex\n\t"
         "_081BFE34: .4byte 0x000040BE\n\t"
         "_081BFE38: .4byte gMPlayInfo_BGM\n\t"
         "_081BFE3C: .4byte 0x0000FFFF\n\t"

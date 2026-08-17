@@ -160,20 +160,20 @@ sPartyMenuYesNoWindowTemplate: @ 0x85E1220
 sLevelUpStatsWindowTemplate: @ 0x85E1228
 	.incbin "baserom_jp.gba", 0x5e1228, 0x18
 
-	.globl gUnknown_85E1240
-gUnknown_85E1240: @ 0x85E1240
+	.globl sSlotTilemap_Main
+sSlotTilemap_Main: @ 0x85E1240
 	.incbin "baserom_jp.gba", 0x5e1240, 0x46
 
-	.globl gUnknown_85E1286
-gUnknown_85E1286: @ 0x85E1286
+	.globl sSlotTilemap_MainNoHP
+sSlotTilemap_MainNoHP: @ 0x85E1286
 	.incbin "baserom_jp.gba", 0x5e1286, 0x46
 
-	.globl gUnknown_85E12CC
-gUnknown_85E12CC: @ 0x85E12CC
+	.globl sSlotTilemap_Wide
+sSlotTilemap_Wide: @ 0x85E12CC
 	.incbin "baserom_jp.gba", 0x5e12cc, 0x36
 
-	.globl gUnknown_85E1302
-gUnknown_85E1302: @ 0x85E1302
+	.globl sSlotTilemap_WideNoHP
+sSlotTilemap_WideNoHP: @ 0x85E1302
 	.incbin "baserom_jp.gba", 0x5e1302, 0x36
 
 	.globl sSlotTilemap_WideEmpty

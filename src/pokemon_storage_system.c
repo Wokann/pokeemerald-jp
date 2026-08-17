@@ -15932,7 +15932,7 @@ __attribute__((naked)) void sub_080CE160(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080CE180: .4byte gUnknown_2039A19\n\t"
-        "_080CE184: .4byte gUnknown_203CBEC\n\t"
+        "_080CE184: .4byte gLastViewedMonIndex\n\t"
         ".syntax divided\n\t"
     );
 }
