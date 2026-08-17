@@ -2079,7 +2079,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_ReduceEV(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE724: .4byte gItemUseCB\n\t"
-        "_080FE728: .4byte sub_081B6468 + 1\n\t"
+        "_080FE728: .4byte ItemUseCB_ReduceEV + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2119,7 +2119,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PPRecovery(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE75C: .4byte gItemUseCB\n\t"
-        "_080FE760: .4byte dp05_ether + 1\n\t"
+        "_080FE760: .4byte ItemUseCB_PPRecovery + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2139,7 +2139,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PPUp(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE778: .4byte gItemUseCB\n\t"
-        "_080FE77C: .4byte dp05_pp_up + 1\n\t"
+        "_080FE77C: .4byte ItemUseCB_PPUp + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3080,7 +3080,7 @@ __attribute__((naked)) void ItemUseInBattle_PPRecovery(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEE2C: .4byte gItemUseCB\n\t"
-        "_080FEE30: .4byte dp05_ether + 1\n\t"
+        "_080FEE30: .4byte ItemUseCB_PPRecovery + 1\n\t"
         ".syntax divided\n\t"
     );
 }
