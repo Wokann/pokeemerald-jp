@@ -13995,27 +13995,11 @@ __attribute__((naked)) bool8 MonKnowsMove(struct Pokemon *mon, u16 move)
     );
 }
 
-__attribute__((naked)) void sub_081B6A2C(void)
+static void DisplayLearnMoveMessage(const u8 *str)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r4, _081B6A4C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B6A4C: .4byte gStringVar4\n\t"
-        ".syntax divided\n\t"
-    );
+    StringExpandPlaceholders(gStringVar4, str);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    ScheduleBgCopyTilemapToVram(2);
 }
 
 
@@ -14028,7 +14012,7 @@ __attribute__((naked)) void sub_081B6A50(void)
         "	adds r0, r1, #0\n\t"
         "	lsls r4, r4, #0x18\n\t"
         "	lsrs r4, r4, #0x18\n\t"
-        "	bl sub_081B6A2C\n\t"
+        "	bl DisplayLearnMoveMessage\n\t"
         "	ldr r1, _081B6A74\n\t"
         "	lsls r0, r4, #2\n\t"
         "	adds r0, r0, r4\n\t"
@@ -14135,7 +14119,7 @@ __attribute__((naked)) void sub_081B6A7C(void)
         "_081B6B38: .4byte gUnknown_85C97BD + 0x6BC\n\t"
         "_081B6B3C:\n\t"
         "	ldr r0, _081B6B5C\n\t"
-        "	bl sub_081B6A2C\n\t"
+        "	bl DisplayLearnMoveMessage\n\t"
         "	ldr r1, _081B6B60\n\t"
         "	lsls r0, r6, #2\n\t"
         "	adds r0, r0, r6\n\t"
@@ -14564,7 +14548,7 @@ __attribute__((naked)) void sub_081B6E04(void)
         "	adds r1, r4, #0\n\t"
         "	bl StringCopy\n\t"
         "	ldr r0, _081B6E78\n\t"
-        "	bl sub_081B6A2C\n\t"
+        "	bl DisplayLearnMoveMessage\n\t"
         "	ldr r1, _081B6E7C\n\t"
         "	lsls r0, r6, #2\n\t"
         "	adds r0, r0, r6\n\t"
@@ -14818,7 +14802,7 @@ __attribute__((naked)) void sub_081B6F78(void)
         "	adds r1, r1, r2\n\t"
         "	bl StringCopy\n\t"
         "	ldr r0, _081B7084\n\t"
-        "	bl sub_081B6A2C\n\t"
+        "	bl DisplayLearnMoveMessage\n\t"
         "	ldr r1, _081B7088\n\t"
         "	lsls r0, r6, #2\n\t"
         "	adds r0, r0, r6\n\t"
@@ -16231,7 +16215,7 @@ __attribute__((naked)) void sub_081B7AF0(void)
         "_081B7BA4: .4byte gUnknown_85C97BD + 0x6BC\n\t"
         "_081B7BA8:\n\t"
         "	ldr r0, _081B7BC8\n\t"
-        "	bl sub_081B6A2C\n\t"
+        "	bl DisplayLearnMoveMessage\n\t"
         "	ldr r1, _081B7BCC\n\t"
         "	lsls r0, r6, #2\n\t"
         "	adds r0, r0, r6\n\t"

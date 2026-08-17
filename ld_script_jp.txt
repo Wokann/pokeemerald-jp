@@ -8769,7 +8769,7 @@ SECTIONS {
         src/party_menu.o(.text.ItemIdToBattleMoveId);
         src/party_menu.o(.text.IsMoveHm);
         src/party_menu.o(.text.MonKnowsMove);
-        src/party_menu.o(.text.sub_081B6A2C);
+        src/party_menu.o(.text.DisplayLearnMoveMessage);
         src/party_menu.o(.text.sub_081B6A50);
         src/party_menu.o(.text.sub_081B6A7C);
         src/party_menu.o(.text.sub_081B6B68);
