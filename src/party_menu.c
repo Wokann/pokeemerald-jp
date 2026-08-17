@@ -16,6 +16,7 @@ extern const u16 sTMHMMoves[];
 
 static void Task_ExitPartyMenu(u8 taskId);
 __attribute__((naked)) bool8 PartyMenuSetup(void);
+void Task_PrintAndWaitForText(void);
 
 struct PartyMenuInternal
 {
@@ -3470,13 +3471,13 @@ __attribute__((naked)) u8 DisplayPartyMenuMessage(const u8 *str, bool8 keepOpen)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081B1854: .4byte sub_081B185C + 1\n\t"
+        "_081B1854: .4byte Task_PrintAndWaitForText + 1\n\t"
         "_081B1858: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_081B185C(void)
+__attribute__((naked)) void Task_PrintAndWaitForText(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3517,21 +3518,9 @@ __attribute__((naked)) void sub_081B185C(void)
     );
 }
 
-__attribute__((naked)) bool8 IsPartyMenuTextPrinterActive(void)
+bool8 IsPartyMenuTextPrinterActive(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B18B4\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B18B4: .4byte sub_081B185C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    return FuncIsActiveTask(Task_PrintAndWaitForText);
 }
 
 __attribute__((naked)) void sub_081B18B8(void)
