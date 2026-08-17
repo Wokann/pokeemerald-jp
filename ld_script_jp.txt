@@ -8664,7 +8664,7 @@ SECTIONS {
         src/party_menu.o(.text.CursorCb_Cancel1);
         src/party_menu.o(.text.CursorCb_Item);
         src/party_menu.o(.text.CursorCb_Summary);
-        src/party_menu.o(.text.sub_081B3E64);
+        src/party_menu.o(.text.CB2_SelectBagItemToGive);
         src/party_menu.o(.text.c2_8123744);
         src/party_menu.o(.text.sub_081B3F70);
         src/party_menu.o(.text.sub_081B3FF0);
