@@ -195,7 +195,7 @@ void sub_08079EE0(u8 side);
 void CB1_UpdateLink(void);
 static void SetSelectedMon(u8 cursorPosition);
 static void QueueAction(u16 delay, u8 actionId);
-void PrintTradePartnerPartyNicknames(void);
+static void PrintTradePartnerPartyNicknames(void);
 u32 CanTradeSelectedMon(struct Pokemon *playerParty, int partyCount, int monIdx);
 u8 CheckValidityOfTradeMons(u8 *aliveMons, u8 playerPartyCount, u8 playerMonIdx, u8 partnerMonIdx);
 extern void sub_08198964(u8 a1, u8 a2, u8 a3, u8 a4, const u8 *text);
@@ -2515,20 +2515,10 @@ static void ShowTradePartyMonIcons(u8 whichParty)
 }
 
 
-__attribute__((naked)) void PrintTradePartnerPartyNicknames(void)
+static void PrintTradePartnerPartyNicknames(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #1\n\t"
-        "	bl rbox_fill_rectangle\n\t"
-        "	movs r0, #1\n\t"
-        "	bl PrintPartyNicknames\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    rbox_fill_rectangle(1);
+    PrintPartyNicknames(TRADE_PARTNER);
 }
 
 static void RedrawPartyWindow(u8 whichParty)
