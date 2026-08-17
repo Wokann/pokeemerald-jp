@@ -1,46 +1,33 @@
 #include "global.h"
 #include "cable_club.h"
+#include "link.h"
+#include "menu.h"
+#include "string_util.h"
+#include "window.h"
 
-__attribute__((naked)) void sub_080B1C58(void)
+#define tMinPlayers data[1]
+#define tMaxPlayers data[2]
+#define tNumPlayers data[3]
+#define tWindowId   data[5]
+
+extern s16 gUnknown_3005B68[];
+
+void sub_080B1C9C(u16 windowId, u32 numPlayers);
+void sub_080B1F10(u8 taskId);
+
+static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	ldr r4, _080B1C94\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _080B1C8C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B1C98\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r6, [r1, #0xa]\n\t"
-        "	strh r5, [r1, #0xc]\n\t"
-        "_080B1C8C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1C94: .4byte sub_080B1F10 + 1\n\t"
-        "_080B1C98: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FindTaskIdByFunc(sub_080B1F10) == TASK_NONE)
+    {
+        u8 taskId1;
+
+        taskId1 = CreateTask(sub_080B1F10, 80);
+        gTasks[taskId1].tMinPlayers = minPlayers;
+        gTasks[taskId1].tMaxPlayers = maxPlayers;
+    }
 }
 
-__attribute__((naked)) void sub_080B1C9C(void)
+__attribute__((naked)) void sub_080B1C9C(u16 windowId, u32 numPlayers)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -87,134 +74,47 @@ __attribute__((naked)) void sub_080B1C9C(void)
     );
 }
 
-__attribute__((naked)) void sub_080B1CF8(void)
+static void ClearLinkPlayerCountWindow(u16 windowId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ClearStdWindowAndFrame\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearStdWindowAndFrame(windowId, FALSE);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
 }
 
-__attribute__((naked)) void sub_080B1D18(void)
+static void UpdateLinkPlayerCountDisplay(u8 taskId, u8 numPlayers)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B1D40\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	movs r1, #6\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080B1D4E\n\t"
-        "	cmp r5, #1\n\t"
-        "	bhi _080B1D44\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	bl sub_080B1CF8\n\t"
-        "	b _080B1D4C\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1D40: .4byte gUnknown_3005B68\n\t"
-        "_080B1D44:\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_080B1C9C\n\t"
-        "_080B1D4C:\n\t"
-        "	strh r5, [r4, #6]\n\t"
-        "_080B1D4E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gUnknown_3005B68 + taskId * 20;
+
+    if (numPlayers != tNumPlayers)
+    {
+        if (numPlayers <= 1)
+            ClearLinkPlayerCountWindow(tWindowId);
+        else
+            sub_080B1C9C(tWindowId, numPlayers);
+        tNumPlayers = numPlayers;
+    }
 }
 
-__attribute__((naked)) void sub_080B1D54(void)
+static u32 ExchangeDataAndGetLinkupStatus(u8 minPlayers, u8 maxPlayers)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl GetLinkPlayerDataExchangeStatusTimed\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r0, #6\n\t"
-        "	bhi _080B1DCC\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080B1D78\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1D78: .4byte _080B1D7C\n\t"
-        "_080B1D7C:\n\t"
-        "	.4byte _080B1D98\n\t"
-        "	.4byte _080B1DCC\n\t"
-        "	.4byte _080B1D9C\n\t"
-        "	.4byte _080B1DA0\n\t"
-        "	.4byte _080B1DA4\n\t"
-        "	.4byte _080B1DA8\n\t"
-        "	.4byte _080B1DC8\n\t"
-        "_080B1D98:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080B1DCE\n\t"
-        "_080B1D9C:\n\t"
-        "	movs r0, #3\n\t"
-        "	b _080B1DCE\n\t"
-        "_080B1DA0:\n\t"
-        "	movs r0, #7\n\t"
-        "	b _080B1DCE\n\t"
-        "_080B1DA4:\n\t"
-        "	movs r0, #9\n\t"
-        "	b _080B1DCE\n\t"
-        "_080B1DA8:\n\t"
-        "	ldr r4, _080B1DC4\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	movs r0, #4\n\t"
-        "	b _080B1DCE\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1DC4: .4byte gStringVar1\n\t"
-        "_080B1DC8:\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _080B1DCE\n\t"
-        "_080B1DCC:\n\t"
-        "	movs r0, #0\n\t"
-        "_080B1DCE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (GetLinkPlayerDataExchangeStatusTimed(minPlayers, maxPlayers))
+    {
+    case EXCHANGE_COMPLETE:
+        return LINKUP_SUCCESS;
+    case EXCHANGE_DIFF_SELECTIONS:
+        return LINKUP_DIFF_SELECTIONS;
+    case EXCHANGE_PLAYER_NOT_READY:
+        return LINKUP_PLAYER_NOT_READY;
+    case EXCHANGE_PARTNER_NOT_READY:
+        return LINKUP_PARTNER_NOT_READY;
+    case EXCHANGE_WRONG_NUM_PLAYERS:
+        ConvertIntToDecimalStringN(gStringVar1, GetLinkPlayerCount_2(), STR_CONV_MODE_LEFT_ALIGN, 1);
+        return LINKUP_WRONG_NUM_PLAYERS;
+    case EXCHANGE_STAT_7:
+        return LINKUP_FAILED_CONTEST_GMODE;
+    case EXCHANGE_TIMED_OUT:
+    default:
+        return LINKUP_ONGOING;
+    }
 }
 
 __attribute__((naked)) void sub_080B1DD4(void)
@@ -410,7 +310,7 @@ __attribute__((naked)) void sub_080B1EDC(void)
     );
 }
 
-__attribute__((naked)) void sub_080B1F10(void)
+__attribute__((naked)) void sub_080B1F10(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -598,7 +498,7 @@ __attribute__((naked)) void sub_080B2038(void)
         "	adds r6, r5, #0\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r1, r6, #0\n\t"
-        "	bl sub_080B1D18\n\t"
+        "	bl UpdateLinkPlayerCountDisplay\n\t"
         "	ldr r0, _080B20D0\n\t"
         "	ldrh r1, [r0, #0x2e]\n\t"
         "	movs r0, #1\n\t"
@@ -612,7 +512,7 @@ __attribute__((naked)) void sub_080B2038(void)
         "	adds r0, r6, #0\n\t"
         "	bl sub_0800A5C8\n\t"
         "	ldrh r0, [r7, #0xa]\n\t"
-        "	bl sub_080B1CF8\n\t"
+        "	bl ClearLinkPlayerCountWindow\n\t"
         "	ldr r0, _080B20D4\n\t"
         "	adds r1, r5, #0\n\t"
         "	movs r2, #0\n\t"
@@ -761,7 +661,7 @@ __attribute__((naked)) void sub_080B2184(void)
         "	ldr r4, _080B21EC\n\t"
         "	adds r0, r7, #0\n\t"
         "	adds r1, r6, #0\n\t"
-        "	bl sub_080B1D54\n\t"
+        "	bl ExchangeDataAndGetLinkupStatus\n\t"
         "	strh r0, [r4]\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	cmp r0, #0\n\t"
@@ -807,7 +707,7 @@ __attribute__((naked)) void sub_080B21F4(void)
         "	ldr r4, _080B2250\n\t"
         "	adds r0, r6, #0\n\t"
         "	adds r1, r5, #0\n\t"
-        "	bl sub_080B1D54\n\t"
+        "	bl ExchangeDataAndGetLinkupStatus\n\t"
         "	adds r1, r0, #0\n\t"
         "	strh r1, [r4]\n\t"
         "	lsls r0, r1, #0x10\n\t"
@@ -1140,7 +1040,7 @@ __attribute__((naked)) void task_map_chg_seq_0807EC34(void)
         "	lsls r0, r0, #3\n\t"
         "	adds r0, r0, r1\n\t"
         "	ldrh r0, [r0, #0x12]\n\t"
-        "	bl sub_080B1CF8\n\t"
+        "	bl ClearLinkPlayerCountWindow\n\t"
         "	bl ScriptContext_Enable\n\t"
         "	lsls r0, r4, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
@@ -1249,7 +1149,7 @@ __attribute__((naked)) void sub_080B258C(void)
         "	lsls r4, r4, #3\n\t"
         "	adds r4, r4, r0\n\t"
         "	ldrh r0, [r4, #0x12]\n\t"
-        "	bl sub_080B1CF8\n\t"
+        "	bl ClearLinkPlayerCountWindow\n\t"
         "	bl ScriptContext_Enable\n\t"
         "	ldrb r0, [r4, #0x12]\n\t"
         "	bl RemoveWindow\n\t"
@@ -1283,7 +1183,7 @@ __attribute__((naked)) void sub_080B25C8(void)
         "	lsls r4, r4, #3\n\t"
         "	adds r4, r4, r0\n\t"
         "	ldrh r0, [r4, #0x12]\n\t"
-        "	bl sub_080B1CF8\n\t"
+        "	bl ClearLinkPlayerCountWindow\n\t"
         "	bl StopFieldMessage\n\t"
         "	ldrb r0, [r4, #0x12]\n\t"
         "	bl RemoveWindow\n\t"
@@ -1317,7 +1217,7 @@ __attribute__((naked)) void sub_080B2608(void)
         "	lsls r4, r4, #3\n\t"
         "	adds r4, r4, r0\n\t"
         "	ldrh r0, [r4, #0x12]\n\t"
-        "	bl sub_080B1CF8\n\t"
+        "	bl ClearLinkPlayerCountWindow\n\t"
         "	ldrb r0, [r4, #0x12]\n\t"
         "	bl RemoveWindow\n\t"
         "	bl HideFieldMessageBox\n\t"
@@ -1448,7 +1348,7 @@ __attribute__((naked)) void sub_080B2680(void)
         "_080B2710:\n\t"
         "	adds r0, r3, #0\n\t"
         "	adds r1, r2, #0\n\t"
-        "	bl sub_080B1C58\n\t"
+        "	bl CreateLinkupTask\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -1473,7 +1373,7 @@ __attribute__((naked)) void sub_080B2728(void)
         "	str r0, [r1]\n\t"
         "	movs r0, #2\n\t"
         "	movs r1, #2\n\t"
-        "	bl sub_080B1C58\n\t"
+        "	bl CreateLinkupTask\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -1501,7 +1401,7 @@ __attribute__((naked)) void sub_080B2750(void)
         "	str r0, [r1]\n\t"
         "	movs r0, #2\n\t"
         "	movs r1, #4\n\t"
-        "	bl sub_080B1C58\n\t"
+        "	bl CreateLinkupTask\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -1527,7 +1427,7 @@ __attribute__((naked)) void sub_080B2784(void)
         "	str r0, [r1]\n\t"
         "	movs r0, #2\n\t"
         "	movs r1, #4\n\t"
-        "	bl sub_080B1C58\n\t"
+        "	bl CreateLinkupTask\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -1552,7 +1452,7 @@ __attribute__((naked)) void sub_080B27AC(void)
         "	str r0, [r1]\n\t"
         "	movs r0, #4\n\t"
         "	movs r1, #4\n\t"
-        "	bl sub_080B1C58\n\t"
+        "	bl CreateLinkupTask\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -1577,7 +1477,7 @@ __attribute__((naked)) void sub_080B27D4(void)
         "	str r0, [r1]\n\t"
         "	movs r0, #2\n\t"
         "	movs r1, #4\n\t"
-        "	bl sub_080B1C58\n\t"
+        "	bl CreateLinkupTask\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -3116,4 +3016,3 @@ __attribute__((naked)) void sub_080B331C(void)
         ".syntax divided\n\t"
     );
 }
-
