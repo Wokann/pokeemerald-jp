@@ -8643,7 +8643,7 @@ SECTIONS {
         src/party_menu.o(.text.SetPartyMonSelectionActions);
         src/party_menu.o(.text.SetPartyMonFieldSelectionActions);
         src/party_menu.o(.text.GetPartyMenuActionsType);
-        src/party_menu.o(.text.sub_081B32A8);
+        src/party_menu.o(.text.CreateSelectionWindow);
         src/party_menu.o(.text.sub_081B339C);
         src/party_menu.o(.text.HandleMenuInput);
         src/party_menu.o(.text.CursorCb_Give);

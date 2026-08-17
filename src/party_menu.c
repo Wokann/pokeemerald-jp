@@ -56,6 +56,7 @@ extern const struct WindowTemplate sMailReadTakeWindowTemplate;
 extern const struct WindowTemplate sMoveSelectWindowTemplate;
 extern const struct WindowTemplate sPartyMenuYesNoWindowTemplate;
 extern const struct WindowTemplate sLevelUpStatsWindowTemplate;
+extern const u8 gUnknown_85C97BD[]; // JP text block; +0x4F0 = gText_PkmnNotHolding
 extern const u16 sFieldMoves[];
 extern const u8 sPartyMenuActionCounts[];
 extern const u8 *const sPartyMenuActions[];
@@ -5761,115 +5762,40 @@ static u8 GetPartyMenuActionsType(struct Pokemon *mon)
     return actionType;
 }
 
-__attribute__((naked)) void sub_081B32A8(void)
+static bool8 CreateSelectionWindow(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r4, _081B3304\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r7, _081B3308\n\t"
-        "	adds r5, r0, r7\n\t"
-        "	ldr r1, _081B330C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetMonNickname\n\t"
-        "	ldr r0, _081B3310\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldrb r1, [r4, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	beq _081B3314\n\t"
-        "	ldrb r4, [r4, #9]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetPartyMenuActionsType\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetPartyMonSelectionActions\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DisplaySelectionWindow\n\t"
-        "	movs r0, #0x15\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	b _081B338A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3304: .4byte gPartyMenu\n\t"
-        "_081B3308: .4byte gPlayerParty\n\t"
-        "_081B330C: .4byte gStringVar1\n\t"
-        "_081B3310: .4byte sPartyMenuInternal\n\t"
-        "_081B3314:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _081B3360\n\t"
-        "	ldr r4, _081B3350\n\t"
-        "	ldr r1, _081B3354\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r1, _081B3358\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B335C\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B338C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3350: .4byte gStringVar4\n\t"
-        "_081B3354: .4byte gUnknown_85C97BD + 0x4F0\n\t"
-        "_081B3358: .4byte gTasks\n\t"
-        "_081B335C: .4byte Task_UpdateHeldItemSprite + 1\n\t"
-        "_081B3360:\n\t"
-        "	ldrb r4, [r4, #9]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetPartyMenuActionsType\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetPartyMonSelectionActions\n\t"
-        "	movs r0, #1\n\t"
-        "	bl DisplaySelectionWindow\n\t"
-        "	ldr r1, _081B3398\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl CopyItemName\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "_081B338A:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B338C:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3398: .4byte gStringVar2\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u16 item;
+
+    GetMonNickname(mon, gStringVar1);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    if (gPartyMenu.menuType != PARTY_MENU_TYPE_STORE_PYRAMID_HELD_ITEMS)
+    {
+        SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, GetPartyMenuActionsType(mon));
+        DisplaySelectionWindow(SELECTWINDOW_ACTIONS);
+        DisplayPartyMenuStdMessage(PARTY_MSG_DO_WHAT_WITH_MON);
+    }
+    else
+    {
+        item = GetMonData(mon, MON_DATA_HELD_ITEM);
+        if (item != ITEM_NONE)
+        {
+            SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, GetPartyMenuActionsType(mon));
+            DisplaySelectionWindow(SELECTWINDOW_ITEM);
+            CopyItemName(item, gStringVar2);
+            DisplayPartyMenuStdMessage(PARTY_MSG_ALREADY_HOLDING_ONE);
+        }
+        else
+        {
+            // JP: gText_PkmnNotHolding is embedded in the gUnknown_85C97BD text block
+            StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x4F0);
+            DisplayPartyMenuMessage(gStringVar4, TRUE);
+            ScheduleBgCopyTilemapToVram(2);
+            gTasks[taskId].func = Task_UpdateHeldItemSprite;
+            return FALSE;
+        }
+    }
+    return TRUE;
 }
 
 __attribute__((naked)) void sub_081B339C(void)
@@ -5880,7 +5806,7 @@ __attribute__((naked)) void sub_081B339C(void)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_081B32A8\n\t"
+        "	bl CreateSelectionWindow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _081B33C0\n\t"
