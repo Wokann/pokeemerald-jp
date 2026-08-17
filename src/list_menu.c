@@ -2048,162 +2048,37 @@ __attribute__((naked)) u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType
     );
 }
 
-__attribute__((naked)) void Task_ScrollIndicatorArrowPair(void)
+void Task_ScrollIndicatorArrowPair(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081AF214\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	ldrh r5, [r0]\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081AF220\n\t"
-        "	ldr r0, _081AF218\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _081AF220\n\t"
-        "	ldr r3, _081AF21C\n\t"
-        "	ldrb r1, [r4, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	b _081AF236\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF214: .4byte gUnknown_3005B68\n\t"
-        "_081AF218: .4byte 0x0000FFFF\n\t"
-        "_081AF21C: .4byte gSprites\n\t"
-        "_081AF220:\n\t"
-        "	ldr r3, _081AF254\n\t"
-        "	ldrb r1, [r4, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "_081AF236:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrh r0, [r4, #0xa]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081AF258\n\t"
-        "	ldrb r1, [r4, #0xd]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	b _081AF26C\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF254: .4byte gSprites\n\t"
-        "_081AF258:\n\t"
-        "	ldrb r1, [r4, #0xd]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "_081AF26C:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ScrollIndicatorPair *data = (void *) gTasks[taskId].data;
+    u16 currItem = (*data->scrollOffset);
+
+    if (currItem == data->fullyUpThreshold && currItem != 0xFFFF)
+        gSprites[data->topSpriteId].invisible = TRUE;
+    else
+        gSprites[data->topSpriteId].invisible = FALSE;
+
+    if (currItem == data->fullyDownThreshold)
+        gSprites[data->bottomSpriteId].invisible = TRUE;
+    else
+        gSprites[data->bottomSpriteId].invisible = FALSE;
 }
 
-__attribute__((naked)) void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
+void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081AF2B8\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AF2C0\n\t"
-        "	ldr r3, _081AF2BC\n\t"
-        "	ldrb r1, [r4, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r1, [r4, #0xd]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	b _081AF2EA\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF2B8: .4byte gUnknown_3005B68\n\t"
-        "_081AF2BC: .4byte gSprites\n\t"
-        "_081AF2C0:\n\t"
-        "	ldr r3, _081AF2F4\n\t"
-        "	ldrb r1, [r4, #0xc]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r1, [r4, #0xd]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "_081AF2EA:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AF2F4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    struct ScrollIndicatorPair *scrollData = (void *) data;
+
+    if (data[15])
+    {
+        gSprites[scrollData->topSpriteId].invisible = FALSE;
+        gSprites[scrollData->bottomSpriteId].invisible = TRUE;
+    }
+    else
+    {
+        gSprites[scrollData->topSpriteId].invisible = TRUE;
+        gSprites[scrollData->bottomSpriteId].invisible = FALSE;
+    }
 }
 
 void RemoveScrollIndicatorArrowPair(u8 taskId)
