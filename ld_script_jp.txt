@@ -3212,7 +3212,7 @@ SECTIONS {
         src/trade.o(.text.LoadTradeBgGfx);
         src/trade.o(.text.SetActiveMenuOptions);
         src/trade.o(.text.Trade_Memcpy);
-        src/trade.o(.text.shedinja_maker_maybe);
+        src/trade.o(.text.BufferTradeParties);
         src/trade.o(.text.sub_08078120);
         src/trade.o(.text.sub_080781C4);
         src/trade.o(.text.sub_080782E4);

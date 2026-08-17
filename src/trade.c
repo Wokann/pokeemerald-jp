@@ -155,7 +155,7 @@ void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed);
 void sub_08079FB4(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
 void sub_08079BD4(u8 msgId);
-bool8 shedinja_maker_maybe(void);
+static bool8 BufferTradeParties(void);
 void sub_0807A028(void);
 void sub_08079D98(u8 side);
 void sub_08079EE0(u8 side);
@@ -397,7 +397,7 @@ static void CB2_CreateTradeMenu(void)
         }
         break;
     case 6:
-        if (shedinja_maker_maybe()) // BufferTradeParties
+        if (BufferTradeParties())
         {
             sub_0807A028(); // SaveTradeGiftRibbons
             gMain.state++;
@@ -897,350 +897,131 @@ void Trade_Memcpy(void *dest, const void *src, u32 size)
         _dest[i] = _src[i];
 }
 
-__attribute__((naked)) bool8 shedinja_maker_maybe(void)
+static bool8 BufferTradeParties(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _08077E44\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x69\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x15\n\t"
-        "	bls _08077E38\n\t"
-        "	b _08078112\n\t"
-        "_08077E38:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08077E48\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077E44: .4byte sTradeMenu\n\t"
-        "_08077E48: .4byte 0x08077E4C\n\t"
-        "_08077E4C: @ jump table\n\t"
-        "	.4byte _08077EA4 @ case 0\n\t"
-        "	.4byte _08077ED0 @ case 1\n\t"
-        "	.4byte _080780EC @ case 2\n\t"
-        "	.4byte _08077EFC @ case 3\n\t"
-        "	.4byte _08077F10 @ case 4\n\t"
-        "	.4byte _08077F44 @ case 5\n\t"
-        "	.4byte _080780EC @ case 6\n\t"
-        "	.4byte _08077F60 @ case 7\n\t"
-        "	.4byte _08077F74 @ case 8\n\t"
-        "	.4byte _08077FA8 @ case 9\n\t"
-        "	.4byte _080780EC @ case 10\n\t"
-        "	.4byte _08077FC4 @ case 11\n\t"
-        "	.4byte _08077FD8 @ case 12\n\t"
-        "	.4byte _0807800C @ case 13\n\t"
-        "	.4byte _080780EC @ case 14\n\t"
-        "	.4byte _08078034 @ case 15\n\t"
-        "	.4byte _08078048 @ case 16\n\t"
-        "	.4byte _0807807C @ case 17\n\t"
-        "	.4byte _080780EC @ case 18\n\t"
-        "	.4byte _080780A4 @ case 19\n\t"
-        "	.4byte _080780B8 @ case 20\n\t"
-        "	.4byte _080780E8 @ case 21\n\t"
-        "_08077EA4:\n\t"
-        "	ldr r0, _08077EC4\n\t"
-        "	ldr r1, _08077EC8\n\t"
-        "	movs r2, #0xc8\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	ldr r3, _08077ECC\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	adds r1, #0x69\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0xa8\n\t"
-        "	strb r2, [r0]\n\t"
-        "	b _08078112\n\t"
-        "	.align 2, 0\n\t"
-        "_08077EC4: .4byte gBlockSendBuffer\n\t"
-        "_08077EC8: .4byte gPlayerParty\n\t"
-        "_08077ECC: .4byte sTradeMenu\n\t"
-        "_08077ED0:\n\t"
-        "	bl IsLinkTradeTaskFinished\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08077EDA\n\t"
-        "	b _08078112\n\t"
-        "_08077EDA:\n\t"
-        "	bl _GetBlockReceivedStatus\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08077EEC\n\t"
-        "	ldr r0, _08077EE8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077EE8: .4byte sTradeMenu\n\t"
-        "_08077EEC:\n\t"
-        "	bl TradeResetReceivedFlags\n\t"
-        "	ldr r0, _08077EF8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077EF8: .4byte sTradeMenu\n\t"
-        "_08077EFC:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08077F06\n\t"
-        "	movs r0, #1\n\t"
-        "	bl RequestLinkData\n\t"
-        "_08077F06:\n\t"
-        "	ldr r0, _08077F0C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077F0C: .4byte sTradeMenu\n\t"
-        "_08077F10:\n\t"
-        "	bl _GetBlockReceivedStatus\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08077F1A\n\t"
-        "	b _08078112\n\t"
-        "_08077F1A:\n\t"
-        "	ldr r0, _08077F38\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	eors r1, r2\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldr r2, _08077F3C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xc8\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	bl TradeResetReceivedFlags\n\t"
-        "	ldr r0, _08077F40\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077F38: .4byte gEnemyParty\n\t"
-        "_08077F3C: .4byte gBlockRecvBuffer\n\t"
-        "_08077F40: .4byte sTradeMenu\n\t"
-        "_08077F44:\n\t"
-        "	ldr r0, _08077F54\n\t"
-        "	ldr r1, _08077F58\n\t"
-        "	movs r2, #0xc8\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	ldr r0, _08077F5C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077F54: .4byte gBlockSendBuffer\n\t"
-        "_08077F58: .4byte gUnknown_2024258\n\t"
-        "_08077F5C: .4byte sTradeMenu\n\t"
-        "_08077F60:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08077F6A\n\t"
-        "	movs r0, #1\n\t"
-        "	bl RequestLinkData\n\t"
-        "_08077F6A:\n\t"
-        "	ldr r0, _08077F70\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077F70: .4byte sTradeMenu\n\t"
-        "_08077F74:\n\t"
-        "	bl _GetBlockReceivedStatus\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08077F7E\n\t"
-        "	b _08078112\n\t"
-        "_08077F7E:\n\t"
-        "	ldr r0, _08077F9C\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	eors r1, r2\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldr r2, _08077FA0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xc8\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	bl TradeResetReceivedFlags\n\t"
-        "	ldr r0, _08077FA4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077F9C: .4byte gUnknown_20244B0\n\t"
-        "_08077FA0: .4byte gBlockRecvBuffer\n\t"
-        "_08077FA4: .4byte sTradeMenu\n\t"
-        "_08077FA8:\n\t"
-        "	ldr r0, _08077FB8\n\t"
-        "	ldr r1, _08077FBC\n\t"
-        "	movs r2, #0xc8\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	ldr r0, _08077FC0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077FB8: .4byte gBlockSendBuffer\n\t"
-        "_08077FBC: .4byte gUnknown_2024320\n\t"
-        "_08077FC0: .4byte sTradeMenu\n\t"
-        "_08077FC4:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08077FCE\n\t"
-        "	movs r0, #1\n\t"
-        "	bl RequestLinkData\n\t"
-        "_08077FCE:\n\t"
-        "	ldr r0, _08077FD4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08077FD4: .4byte sTradeMenu\n\t"
-        "_08077FD8:\n\t"
-        "	bl _GetBlockReceivedStatus\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08077FE2\n\t"
-        "	b _08078112\n\t"
-        "_08077FE2:\n\t"
-        "	ldr r0, _08078000\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	eors r1, r2\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldr r2, _08078004\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xc8\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	bl TradeResetReceivedFlags\n\t"
-        "	ldr r0, _08078008\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08078000: .4byte gUnknown_2024578\n\t"
-        "_08078004: .4byte gBlockRecvBuffer\n\t"
-        "_08078008: .4byte sTradeMenu\n\t"
-        "_0807800C:\n\t"
-        "	ldr r0, _08078024\n\t"
-        "	ldr r1, _08078028\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _0807802C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xdc\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	ldr r0, _08078030\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08078024: .4byte gBlockSendBuffer\n\t"
-        "_08078028: .4byte gSaveBlock1Ptr\n\t"
-        "_0807802C: .4byte 0x00002BE0\n\t"
-        "_08078030: .4byte sTradeMenu\n\t"
-        "_08078034:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0807803E\n\t"
-        "	movs r0, #3\n\t"
-        "	bl RequestLinkData\n\t"
-        "_0807803E:\n\t"
-        "	ldr r0, _08078044\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08078044: .4byte sTradeMenu\n\t"
-        "_08078048:\n\t"
-        "	bl _GetBlockReceivedStatus\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _08078112\n\t"
-        "	ldr r0, _08078070\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	eors r1, r2\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldr r2, _08078074\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xd8\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	bl TradeResetReceivedFlags\n\t"
-        "	ldr r0, _08078078\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08078070: .4byte gTradeMail\n\t"
-        "_08078074: .4byte gBlockRecvBuffer\n\t"
-        "_08078078: .4byte sTradeMenu\n\t"
-        "_0807807C:\n\t"
-        "	ldr r0, _08078094\n\t"
-        "	ldr r1, _08078098\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _0807809C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xb\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	ldr r0, _080780A0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_08078094: .4byte gBlockSendBuffer\n\t"
-        "_08078098: .4byte gSaveBlock1Ptr\n\t"
-        "_0807809C: .4byte 0x000031A8\n\t"
-        "_080780A0: .4byte sTradeMenu\n\t"
-        "_080780A4:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080780AE\n\t"
-        "	movs r0, #4\n\t"
-        "	bl RequestLinkData\n\t"
-        "_080780AE:\n\t"
-        "	ldr r0, _080780B4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_080780B4: .4byte sTradeMenu\n\t"
-        "_080780B8:\n\t"
-        "	bl _GetBlockReceivedStatus\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _08078112\n\t"
-        "	ldr r4, _080780E0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xa9\n\t"
-        "	movs r2, #1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	eors r1, r2\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	ldr r2, _080780E4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0xb\n\t"
-        "	bl Trade_Memcpy\n\t"
-        "	bl TradeResetReceivedFlags\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	b _0807810A\n\t"
-        "	.align 2, 0\n\t"
-        "_080780E0: .4byte sTradeMenu\n\t"
-        "_080780E4: .4byte gBlockRecvBuffer\n\t"
-        "_080780E8:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08078114\n\t"
-        "_080780EC:\n\t"
-        "	ldr r2, _0807811C\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, #0xa8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0xa8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bls _08078112\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r2]\n\t"
-        "_0807810A:\n\t"
-        "	adds r1, #0x69\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_08078112:\n\t"
-        "	movs r0, #0\n\t"
-        "_08078114:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0807811C: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = GetMultiplayerId();
+
+    switch (sTradeMenu->bufferPartyState)
+    {
+    case 0:
+        // The parties are sent in pairs rather than all at once
+        Trade_Memcpy(gBlockSendBuffer, &gPlayerParty[0], 2 * sizeof(struct Pokemon));
+        sTradeMenu->bufferPartyState++;
+        sTradeMenu->timer = 0;
+        break;
+    case 1:
+        if (IsLinkTradeTaskFinished())
+        {
+            if (_GetBlockReceivedStatus() == 0)
+            {
+                sTradeMenu->bufferPartyState++;
+            }
+            else
+            {
+                TradeResetReceivedFlags();
+                sTradeMenu->bufferPartyState++;
+            }
+        }
+        break;
+    case 3:
+        if (id == 0)
+            RequestLinkData(BLOCK_REQ_SIZE_200);
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 4:
+        if (_GetBlockReceivedStatus() == 3)
+        {
+            Trade_Memcpy(&gEnemyParty[0], gBlockRecvBuffer[id ^ 1], 2 * sizeof(struct Pokemon));
+            TradeResetReceivedFlags();
+            sTradeMenu->bufferPartyState++;
+        }
+        break;
+    case 5:
+        Trade_Memcpy(gBlockSendBuffer, &gPlayerParty[2], 2 * sizeof(struct Pokemon));
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 7:
+        if (id == 0)
+            RequestLinkData(BLOCK_REQ_SIZE_200);
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 8:
+        if (_GetBlockReceivedStatus() == 3)
+        {
+            Trade_Memcpy(&gEnemyParty[2], gBlockRecvBuffer[id ^ 1], 2 * sizeof(struct Pokemon));
+            TradeResetReceivedFlags();
+            sTradeMenu->bufferPartyState++;
+        }
+        break;
+    case 9:
+        Trade_Memcpy(gBlockSendBuffer, &gPlayerParty[4], 2 * sizeof(struct Pokemon));
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 11:
+        if (id == 0)
+            RequestLinkData(BLOCK_REQ_SIZE_200);
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 12:
+        if (_GetBlockReceivedStatus() == 3)
+        {
+            Trade_Memcpy(&gEnemyParty[4], gBlockRecvBuffer[id ^ 1], 2 * sizeof(struct Pokemon));
+            TradeResetReceivedFlags();
+            sTradeMenu->bufferPartyState++;
+        }
+        break;
+    case 13:
+        Trade_Memcpy(gBlockSendBuffer, gSaveBlock1Ptr->mail, PARTY_SIZE * sizeof(struct Mail) + 4);
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 15:
+        if (id == 0)
+            RequestLinkData(BLOCK_REQ_SIZE_220);
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 16:
+        if (_GetBlockReceivedStatus() == 3)
+        {
+            Trade_Memcpy(gTradeMail, gBlockRecvBuffer[id ^ 1], PARTY_SIZE * sizeof(struct Mail));
+            TradeResetReceivedFlags();
+            sTradeMenu->bufferPartyState++;
+        }
+        break;
+    case 17:
+        Trade_Memcpy(gBlockSendBuffer, gSaveBlock1Ptr->giftRibbons, sizeof(sTradeMenu->giftRibbons));
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 19:
+        if (id == 0)
+            RequestLinkData(BLOCK_REQ_SIZE_40);
+        sTradeMenu->bufferPartyState++;
+        break;
+    case 20:
+        if (_GetBlockReceivedStatus() == 3)
+        {
+            Trade_Memcpy(sTradeMenu->giftRibbons, gBlockRecvBuffer[id ^ 1], sizeof(sTradeMenu->giftRibbons));
+            TradeResetReceivedFlags();
+            sTradeMenu->bufferPartyState++;
+        }
+        break;
+    case 21:
+        // JP returns TRUE here without the US Shedinja nickname fixup loop
+        return TRUE;
+    // Delay until next state
+    case 2:
+    case 6:
+    case 10:
+    case 14:
+    case 18:
+        sTradeMenu->timer++;
+        if (sTradeMenu->timer > 10)
+        {
+            sTradeMenu->timer = 0;
+            sTradeMenu->bufferPartyState++;
+        }
+        break;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void sub_08078120(void)
