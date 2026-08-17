@@ -11,6 +11,8 @@
 #include "fldeff.h"
 #include "party_menu.h"
 #include "secret_base.h"
+#include "constants/vars.h"
+#include "string_util.h"
 #include "task.h"
 extern void StartSecretBaseCaveFieldEffect(void);
 extern void StartSecretBaseShrubFieldEffect(void);
@@ -34,6 +36,7 @@ extern void Task_WateringBerryTreeAnim_3(u8 taskId);
 extern u8 sub_0808B634(void);
 extern void sub_0808BB8C(u8 direction);
 extern u8 sub_08092F08(u32 direction);
+extern const u8 gUnknown_85CA70B[];
 extern void CaveEntranceSpriteCallback1(struct Sprite *sprite);
 extern void CaveEntranceSpriteCallback2(struct Sprite *sprite);
 extern void CaveEntranceSpriteCallbackEnd(struct Sprite *sprite);
@@ -1406,170 +1409,58 @@ __attribute__((naked)) void SpriteCB_SandPillar_2(void)
     );
 }
 
-__attribute__((naked)) void GetShieldToyTVDecorationInfo(void)
+void GetShieldToyTVDecorationInfo(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #2\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetXYCoordsOneStepInFrontOfPlayer\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl MapGridGetMetatileIdAt\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _080FB520\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FB5DC\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _080FB524\n\t"
-        "	subs r0, #0x17\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FB584\n\t"
-        "	adds r0, #0x16\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FB5D0\n\t"
-        "	b _080FB63E\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB520: .4byte 0x000002F5\n\t"
-        "_080FB524:\n\t"
-        "	ldr r0, _080FB568\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FB614\n\t"
-        "	adds r0, #0x40\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080FB532\n\t"
-        "	b _080FB63E\n\t"
-        "_080FB532:\n\t"
-        "	ldr r0, _080FB56C\n\t"
-        "	movs r1, #0x64\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #3\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r0, _080FB570\n\t"
-        "	ldr r1, _080FB574\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r1, _080FB578\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080FB57C\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB63E\n\t"
-        "	ldr r4, _080FB580\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarGet\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _080FB5FA\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB568: .4byte 0x000002F6\n\t"
-        "_080FB56C: .4byte gStringVar1\n\t"
-        "_080FB570: .4byte gStringVar2\n\t"
-        "_080FB574: .4byte gUnknown_85CA70B + 0x34\n\t"
-        "_080FB578: .4byte gSpecialVar_Result\n\t"
-        "_080FB57C: .4byte 0x00004054\n\t"
-        "_080FB580: .4byte 0x000040EE\n\t"
-        "_080FB584:\n\t"
-        "	ldr r0, _080FB5B8\n\t"
-        "	movs r1, #0x32\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r0, _080FB5BC\n\t"
-        "	ldr r1, _080FB5C0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r1, _080FB5C4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080FB5C8\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB63E\n\t"
-        "	ldr r4, _080FB5CC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarGet\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x20\n\t"
-        "	b _080FB5FA\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB5B8: .4byte gStringVar1\n\t"
-        "_080FB5BC: .4byte gStringVar2\n\t"
-        "_080FB5C0: .4byte gUnknown_85CA70B + 0x37\n\t"
-        "_080FB5C4: .4byte gSpecialVar_Result\n\t"
-        "_080FB5C8: .4byte 0x00004054\n\t"
-        "_080FB5CC: .4byte 0x000040EE\n\t"
-        "_080FB5D0:\n\t"
-        "	ldr r1, _080FB5D8\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080FB5E0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB5D8: .4byte gSpecialVar_Result\n\t"
-        "_080FB5DC:\n\t"
-        "	ldr r1, _080FB608\n\t"
-        "	movs r0, #2\n\t"
-        "_080FB5E0:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080FB60C\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB63E\n\t"
-        "	ldr r4, _080FB610\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarGet\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x80\n\t"
-        "_080FB5FA:\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarSet\n\t"
-        "	b _080FB63E\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB608: .4byte gSpecialVar_Result\n\t"
-        "_080FB60C: .4byte 0x00004054\n\t"
-        "_080FB610: .4byte 0x000040EE\n\t"
-        "_080FB614:\n\t"
-        "	ldr r1, _080FB648\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080FB64C\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB63E\n\t"
-        "	ldr r4, _080FB650\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarGet\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarSet\n\t"
-        "_080FB63E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB648: .4byte gSpecialVar_Result\n\t"
-        "_080FB64C: .4byte 0x00004054\n\t"
-        "_080FB650: .4byte 0x000040EE\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x, y;
+    s32 metatileId;
+
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+    metatileId = MapGridGetMetatileIdAt(x, y);
+
+    switch (metatileId)
+    {
+    case METATILE_SecretBase_GoldShield_Base1:
+        ConvertIntToDecimalStringN(gStringVar1, 100, 0, 3);
+        StringCopy(gStringVar2, gUnknown_85CA70B + 0x34);
+        gSpecialVar_Result = 0;
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+        {
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | 0x10);
+        }
+        break;
+    case METATILE_SecretBase_SilverShield_Base1:
+        ConvertIntToDecimalStringN(gStringVar1, 50, 0, 2);
+        StringCopy(gStringVar2, gUnknown_85CA70B + 0x37);
+        gSpecialVar_Result = 0;
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+        {
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | 0x20);
+        }
+        break;
+    case METATILE_SecretBase_TV:
+        gSpecialVar_Result = 1;
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+        {
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | 0x80);
+        }
+        break;
+    case METATILE_SecretBase_RoundTV:
+        gSpecialVar_Result = 2;
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+        {
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | 0x80);
+        }
+        break;
+    case METATILE_SecretBase_CuteTV:
+        gSpecialVar_Result = 3;
+        if (VarGet(VAR_CURRENT_SECRET_BASE) != 0)
+        {
+            VarSet(VAR_SECRET_BASE_LOW_TV_FLAGS, VarGet(VAR_SECRET_BASE_LOW_TV_FLAGS) | 0x80);
+        }
+        break;
+    }
 }
+
 
 bool8 sub_080FB654(u16 x, u8 y)
 {
