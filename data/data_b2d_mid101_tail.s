@@ -140,16 +140,16 @@ sWhichMoveMsgWindowTemplate: @ 0x85E11F8
 sAlreadyHoldingOneMsgWindowTemplate: @ 0x85E1200
 	.incbin "baserom_jp.gba", 0x5e1200, 0x8
 
-	.globl gUnknown_85E1208
-gUnknown_85E1208: @ 0x85E1208
+	.globl sItemGiveTakeWindowTemplate
+sItemGiveTakeWindowTemplate: @ 0x85E1208
 	.incbin "baserom_jp.gba", 0x5e1208, 0x8
 
-	.globl gUnknown_85E1210
-gUnknown_85E1210: @ 0x85E1210
+	.globl sMailReadTakeWindowTemplate
+sMailReadTakeWindowTemplate: @ 0x85E1210
 	.incbin "baserom_jp.gba", 0x5e1210, 0x8
 
-	.globl gUnknown_85E1218
-gUnknown_85E1218: @ 0x85E1218
+	.globl sMoveSelectWindowTemplate
+sMoveSelectWindowTemplate: @ 0x85E1218
 	.incbin "baserom_jp.gba", 0x5e1218, 0x8
 
 	.globl gUnknown_85E1220
@@ -280,8 +280,8 @@ sActionStringTable: @ 0x85E13AC
 sDescriptionStringTable: @ 0x85E1418
 	.incbin "baserom_jp.gba", 0x5e1418, 0xa8
 
-	.globl gUnknown_85E14C0
-gUnknown_85E14C0: @ 0x85E14C0
+	.globl sCursorOptions
+sCursorOptions: @ 0x85E14C0
 	.incbin "baserom_jp.gba", 0x5e14c0, 0x130
 
 	.globl gUnknown_85E15F0

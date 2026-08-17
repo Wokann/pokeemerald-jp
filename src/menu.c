@@ -3101,7 +3101,7 @@ __attribute__((naked)) void sub_08198418(void)
     );
 }
 
-__attribute__((naked)) void sub_0819844C(void)
+__attribute__((naked)) void sub_0819844C(u8 windowId, u8 fontId, u8 left, u8 top, u8 cursorHeight, u8 numChoices, u8 initialCursorPos, bool8 muteAPress)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

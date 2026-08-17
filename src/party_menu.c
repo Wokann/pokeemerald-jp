@@ -51,6 +51,9 @@ extern const u8 sHPBarYellowPalIds[];
 extern const u8 sHPBarRedPalIds[];
 extern const u8 *const sDescriptionStringTable[];
 extern const struct WindowTemplate sDefaultPartyMsgWindowTemplate;
+extern const struct WindowTemplate sItemGiveTakeWindowTemplate;
+extern const struct WindowTemplate sMailReadTakeWindowTemplate;
+extern const struct WindowTemplate sMoveSelectWindowTemplate;
 extern const struct WindowTemplate sDoWhatWithMonMsgWindowTemplate;
 extern const struct WindowTemplate sWhichMoveMsgWindowTemplate;
 extern const struct WindowTemplate sDoWhatWithItemMsgWindowTemplate;
@@ -59,6 +62,15 @@ extern const struct WindowTemplate sDoWhatWithMailMsgWindowTemplate;
 extern const struct WindowTemplate sAlreadyHoldingOneMsgWindowTemplate;
 extern const u8 *const sActionStringTable[];
 extern void DrawStdFrameWithCustomTileAndPalette(u8 windowId, bool8 copyToVram, u16 baseTileNum, u8 paletteNum);
+extern void SetWindowTemplateFields(struct WindowTemplate *template, u8 bg, u8 left, u8 top, u8 width, u8 height, u8 paletteNum, u16 baseBlock);
+extern void AddTextPrinterParameterized4(u8 windowId, u8 fontId, u8 left, u8 top, u8 letterSpacing, u8 lineSpacing, const u8 *color, s8 speed, const u8 *str);
+// JP: 0x0819844C = US static InitMenu (name kept to avoid clash with storage InitMenu)
+void sub_0819844C(u8 windowId, u8 fontId, u8 left, u8 top, u8 cursorHeight, u8 numChoices, u8 initialCursorPos, bool8 muteAPress);
+extern const struct
+{
+    const u8 *text;
+    TaskFunc func;
+} sCursorOptions[];
 #include "constants/items.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
@@ -109,6 +121,29 @@ enum {
     ACTIONS_TRADE,
     ACTIONS_SPIN_TRADE,
     ACTIONS_TAKEITEM_TOSS,
+};
+
+enum {
+    MENU_SUMMARY,
+    MENU_SWITCH,
+    MENU_CANCEL1,
+    MENU_ITEM,
+    MENU_GIVE,
+    MENU_TAKE_ITEM,
+    MENU_MAIL,
+    MENU_TAKE_MAIL,
+    MENU_READ,
+    MENU_CANCEL2,
+    MENU_SHIFT,
+    MENU_SEND_OUT,
+    MENU_ENTER,
+    MENU_NO_ENTRY,
+    MENU_STORE,
+    MENU_REGISTER,
+    MENU_TRADE1,
+    MENU_TRADE2,
+    MENU_TOSS,
+    MENU_FIELD_MOVES
 };
 
 struct PartyMenuInternal
@@ -5519,185 +5554,49 @@ __attribute__((naked)) bool8 ShouldUseChooseMonText(void)
     );
 }
 
-__attribute__((naked)) void DisplaySelectionWindow(u8 which)
+static u8 DisplaySelectionWindow(u8 windowType)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #1\n\t"
-        "	beq _081B2E90\n\t"
-        "	cmp r4, #1\n\t"
-        "	bgt _081B2E50\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081B2E56\n\t"
-        "	b _081B2EA0\n\t"
-        "_081B2E50:\n\t"
-        "	cmp r4, #2\n\t"
-        "	beq _081B2E98\n\t"
-        "	b _081B2EA0\n\t"
-        "_081B2E56:\n\t"
-        "	ldr r0, _081B2E88\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #0x17]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r3, #0x13\n\t"
-        "	subs r3, r3, r0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #8\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldrb r0, [r1, #0x17]\n\t"
-        "	lsls r0, r0, #0x19\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0xe\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	ldr r0, _081B2E8C\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	add r0, sp, #0x14\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #0x15\n\t"
-        "	bl SetWindowTemplateFields\n\t"
-        "	b _081B2EAA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2E88: .4byte sPartyMenuInternal\n\t"
-        "_081B2E8C: .4byte 0x000002D3\n\t"
-        "_081B2E90:\n\t"
-        "	ldr r0, _081B2E94\n\t"
-        "	b _081B2EA2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2E94: .4byte gUnknown_85E1208\n\t"
-        "_081B2E98:\n\t"
-        "	ldr r0, _081B2E9C\n\t"
-        "	b _081B2EA2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2E9C: .4byte gUnknown_85E1210\n\t"
-        "_081B2EA0:\n\t"
-        "	ldr r0, _081B2ECC\n\t"
-        "_081B2EA2:\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [sp, #0x14]\n\t"
-        "	str r1, [sp, #0x18]\n\t"
-        "_081B2EAA:\n\t"
-        "	add r0, sp, #0x14\n\t"
-        "	bl AddWindow\n\t"
-        "	ldr r6, _081B2ED0\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	strb r0, [r1, #0xc]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrb r0, [r0, #0xc]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x4f\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl DrawStdFrameWithCustomTileAndPalette\n\t"
-        "	cmp r4, #3\n\t"
-        "	bne _081B2ED4\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	b _081B2F74\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2ECC: .4byte gUnknown_85E1218\n\t"
-        "_081B2ED0: .4byte sPartyMenuInternal\n\t"
-        "_081B2ED4:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMenuCursorDimensionByFont\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bhs _081B2F4E\n\t"
-        "	adds r7, r6, #0\n\t"
-        "	movs r6, #0\n\t"
-        "_081B2EFE:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xf\n\t"
-        "	adds r4, r0, r5\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r2, #3\n\t"
-        "	cmp r0, #0x12\n\t"
-        "	bls _081B2F10\n\t"
-        "	movs r2, #4\n\t"
-        "_081B2F10:\n\t"
-        "	ldrb r0, [r1, #0xc]\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	adds r3, #2\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov r1, r8\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _081B2F84\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	str r6, [sp, #0xc]\n\t"
-        "	ldr r2, _081B2F88\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	str r1, [sp, #0x10]\n\t"
-        "	movs r1, #1\n\t"
-        "	mov r2, sb\n\t"
-        "	bl AddTextPrinterParameterized4\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r5, r0\n\t"
-        "	blo _081B2EFE\n\t"
-        "_081B2F4E:\n\t"
-        "	ldr r4, _081B2F8C\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrb r0, [r2, #0xc]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldrb r1, [r2, #0x17]\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_0819844C\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r0, [r4]\n\t"
-        "_081B2F74:\n\t"
-        "	ldrb r0, [r0, #0xc]\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2F84: .4byte sFontColorTable\n\t"
-        "_081B2F88: .4byte gUnknown_85E14C0\n\t"
-        "_081B2F8C: .4byte sPartyMenuInternal\n\t"
-        ".syntax divided\n\t"
-    );
+    struct WindowTemplate window;
+    u8 cursorDimension;
+    u8 letterSpacing;
+    u8 i;
+
+    switch (windowType)
+    {
+    case SELECTWINDOW_ACTIONS:
+        // JP: left=21, width=8, baseBlock=0x2D3 (US uses 19/10/0x2E9)
+        SetWindowTemplateFields(&window, 2, 21, 19 - (sPartyMenuInternal->numActions * 2), 8, sPartyMenuInternal->numActions * 2, 14, 0x2D3);
+        break;
+    case SELECTWINDOW_ITEM:
+        window = sItemGiveTakeWindowTemplate;
+        break;
+    case SELECTWINDOW_MAIL:
+        window = sMailReadTakeWindowTemplate;
+        break;
+    default: // SELECTWINDOW_MOVES
+        window = sMoveSelectWindowTemplate;
+        break;
+    }
+
+    sPartyMenuInternal->windowId[0] = AddWindow(&window);
+    DrawStdFrameWithCustomTileAndPalette(sPartyMenuInternal->windowId[0], FALSE, 0x4F, 13);
+    if (windowType == SELECTWINDOW_MOVES)
+        return sPartyMenuInternal->windowId[0];
+    cursorDimension = GetMenuCursorDimensionByFont(FONT_NORMAL, 0);
+    letterSpacing = GetFontAttribute(FONT_NORMAL, FONTATTR_LETTER_SPACING);
+
+    for (i = 0; i < sPartyMenuInternal->numActions; i++)
+    {
+        u8 fontColorsId = (sPartyMenuInternal->actions[i] >= MENU_FIELD_MOVES) ? 4 : 3;
+        // JP: y = (i * 16) + 2 (US uses +1)
+        AddTextPrinterParameterized4(sPartyMenuInternal->windowId[0], FONT_NORMAL, cursorDimension, (i * 16) + 2, letterSpacing, 0, sFontColorTable[fontColorsId], 0, sCursorOptions[sPartyMenuInternal->actions[i]].text);
+    }
+
+    // JP: calls InitMenu (0x0819844C) directly with top=2 (US wraps in InitMenuInUpperLeftCorner with top=0)
+    sub_0819844C(sPartyMenuInternal->windowId[0], FONT_NORMAL, 0, 2, 16, sPartyMenuInternal->numActions, 0, TRUE);
+    ScheduleBgCopyTilemapToVram(2);
+
+    return sPartyMenuInternal->windowId[0];
 }
 
 __attribute__((naked)) void sub_081B2F90(void)
@@ -6330,7 +6229,7 @@ __attribute__((naked)) void HandleMenuInput(u8 a)
         "	b _081B348E\n\t"
         "	.align 2, 0\n\t"
         "_081B3464: .4byte sPartyMenuInternal\n\t"
-        "_081B3468: .4byte gUnknown_85E14C0\n\t"
+        "_081B3468: .4byte sCursorOptions\n\t"
         "_081B346C:\n\t"
         "	ldr r4, _081B3494\n\t"
         "	ldr r0, [r4]\n\t"
@@ -6353,7 +6252,7 @@ __attribute__((naked)) void HandleMenuInput(u8 a)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081B3494: .4byte sPartyMenuInternal\n\t"
-        "_081B3498: .4byte gUnknown_85E14C0\n\t"
+        "_081B3498: .4byte sCursorOptions\n\t"
         ".syntax divided\n\t"
     );
 }
