@@ -12795,22 +12795,13 @@ __attribute__((naked)) void party_menu_update_status_condition_object(void)
     );
 }
 
-__attribute__((naked)) void LoadPartyMenuAilmentGfx(void)
+extern const struct CompressedSpriteSheet gUnknown_85E18B0;
+extern const struct CompressedSpritePalette gUnknown_85E18B8;
+
+static void LoadPartyMenuAilmentGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B5E14\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldr r0, _081B5E18\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5E14: .4byte gUnknown_85E18B0\n\t"
-        "_081B5E18: .4byte gUnknown_85E18B8\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadCompressedSpriteSheet(&gUnknown_85E18B0);
+    LoadCompressedSpritePalette(&gUnknown_85E18B8);
 }
 
 __attribute__((naked)) void sub_081B5E1C(void)
