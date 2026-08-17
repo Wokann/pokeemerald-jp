@@ -194,6 +194,9 @@ extern const struct SpriteSheet gUnknown_830CF5C;
 extern const struct SpritePalette gUnknown_830CF64;
 extern const struct BgTemplate gUnknown_830D294[];
 extern const struct WindowTemplate gUnknown_830D27C[];
+extern u8 gUnknown_20226A8[];
+extern u16 gSpecialVar_0x8005;
+void sub_0807B044(void);
 
 // JP trade-animation state (fields used by the affine setup below; the
 // layout of the leading region differs from the US TradeAnim struct).
@@ -3497,7 +3500,7 @@ static void TradeAnimInit_LoadGfx(void)
     LoadCompressedPalette(gBattleTextboxPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) void sub_0807ACC8(void)
+__attribute__((naked)) void CB2_InGameTrade(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3694,6 +3697,7 @@ __attribute__((naked)) void sub_0807ACC8(void)
         ".syntax divided\n\t"
     );
 }
+
 
 __attribute__((naked)) void sub_0807AE9C(void)
 {
@@ -10580,7 +10584,7 @@ __attribute__((naked)) void sub_0807EB48(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0807EB74: .4byte gPaletteFade\n\t"
-        "_0807EB78: .4byte sub_0807ACC8 + 1\n\t"
+        "_0807EB78: .4byte CB2_InGameTrade + 1\n\t"
         "_0807EB7C: .4byte gFieldCallback\n\t"
         "_0807EB80: .4byte FieldCB_ContinueScriptHandleMusic + 1\n\t"
         ".syntax divided\n\t"
