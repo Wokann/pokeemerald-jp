@@ -15,6 +15,7 @@ static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onIni
 u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow);
 static __attribute__((naked)) void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count);
 static __attribute__((naked)) void ListMenuDrawCursor(struct ListMenu *list);
+static __attribute__((naked)) void ListMenuErasePrintedCursor(struct ListMenu *list, u16 selectedRow);
 static u8 ListMenuUpdateSelectedRowIndexAndScrollOffset(struct ListMenu *list, bool8 movingDown);
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
 u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId);
@@ -933,7 +934,7 @@ static u8 ListMenuAddCursorObject(struct ListMenu *list, u32 cursorObjId)
     return ListMenuAddCursorObjectInternal(&cursor, cursorObjId);
 }
 
-__attribute__((naked)) void ListMenuErasePrintedCursor(void)
+static __attribute__((naked)) void ListMenuErasePrintedCursor(struct ListMenu *list, u16 selectedRow)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1130,120 +1131,51 @@ static void ListMenuScroll(struct ListMenu *list, u8 count, bool8 movingDown)
         }
     }
 }
-__attribute__((naked)) void ListMenuChangeSelection(void)
+static bool8 ListMenuChangeSelection(struct ListMenu *list, bool8 updateCursorAndCallCallback, u8 count, bool8 movingDown)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	str r1, [sp]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	mov r8, r2\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov sb, r3\n\t"
-        "	ldrh r0, [r4, #0x1a]\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	cmp r7, r8\n\t"
-        "	bhs _081AEC68\n\t"
-        "_081AEC2E:\n\t"
-        "	adds r6, r0, #1\n\t"
-        "	b _081AEC4E\n\t"
-        "_081AEC32:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldrh r0, [r4, #0x18]\n\t"
-        "	ldrh r1, [r4, #0x1a]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081AEC60\n\t"
-        "_081AEC4E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sb\n\t"
-        "	bl ListMenuUpdateSelectedRowIndexAndScrollOffset\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	orrs r5, r0\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081AEC32\n\t"
-        "_081AEC60:\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, r8\n\t"
-        "	blo _081AEC2E\n\t"
-        "_081AEC68:\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AECC6\n\t"
-        "	cmp r5, #1\n\t"
-        "	beq _081AEC7E\n\t"
-        "	cmp r5, #1\n\t"
-        "	ble _081AEC7A\n\t"
-        "	cmp r5, #3\n\t"
-        "	ble _081AEC9E\n\t"
-        "_081AEC7A:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081AECC8\n\t"
-        "_081AEC7E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sl\n\t"
-        "	bl ListMenuErasePrintedCursor\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ListMenuDrawCursor\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ListMenuCallSelectionChangedCallback\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	b _081AECC6\n\t"
-        "_081AEC9E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sl\n\t"
-        "	bl ListMenuErasePrintedCursor\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	mov r2, sb\n\t"
-        "	bl ListMenuScroll\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ListMenuDrawCursor\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ListMenuCallSelectionChangedCallback\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "_081AECC6:\n\t"
-        "	movs r0, #0\n\t"
-        "_081AECC8:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 oldSelectedRow;
+    u8 selectionChange, i, cursorCount;
+
+    oldSelectedRow = list->selectedRow;
+    cursorCount = 0;
+    selectionChange = 0;
+    for (i = 0; i < count; i++)
+    {
+        do
+        {
+            u8 ret = ListMenuUpdateSelectedRowIndexAndScrollOffset(list, movingDown);
+            selectionChange |= ret;
+            if (ret != 2)
+                break;
+            cursorCount++;
+        } while (list->template.items[list->scrollOffset + list->selectedRow].id == LIST_HEADER);
+    }
+
+    if (updateCursorAndCallCallback)
+    {
+        switch (selectionChange)
+        {
+        case 0:
+        default:
+            return TRUE;
+        case 1:
+            ListMenuErasePrintedCursor(list, oldSelectedRow);
+            ListMenuDrawCursor(list);
+            ListMenuCallSelectionChangedCallback(list, FALSE);
+            CopyWindowToVram(list->template.windowId, COPYWIN_GFX);
+            break;
+        case 2:
+        case 3:
+            ListMenuErasePrintedCursor(list, oldSelectedRow);
+            ListMenuScroll(list, cursorCount, movingDown);
+            ListMenuDrawCursor(list);
+            ListMenuCallSelectionChangedCallback(list, FALSE);
+            CopyWindowToVram(list->template.windowId, COPYWIN_GFX);
+            break;
+        }
+    }
+
+    return FALSE;
 }
 
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit)
