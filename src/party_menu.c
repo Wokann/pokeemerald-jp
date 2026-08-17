@@ -37,6 +37,7 @@ __attribute__((naked)) void HandleMenuInput(u8 a);
 __attribute__((naked)) void CB2_ShowPokemonSummaryScreen(void);
 __attribute__((naked)) void CB2_SelectBagItemToGive(void);
 __attribute__((naked)) void CB2_ReadHeldMail(void);
+__attribute__((naked)) void Task_SendMailToPCYesNo(u8 taskId);
 
 enum {
     ACTIONS_NONE,
@@ -9581,46 +9582,17 @@ __attribute__((naked)) void sub_081B4780(void)
     );
 }
 
-__attribute__((naked)) void CursorCb_TakeMail(u8 taskId)
+static void CursorCb_TakeMail(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r5, _081B47FC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, _081B4800\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B4804\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4808\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B47FC: .4byte sPartyMenuInternal\n\t"
-        "_081B4800: .4byte gUnknown_85C97BD + 0x434\n\t"
-        "_081B4804: .4byte gTasks\n\t"
-        "_081B4808: .4byte sub_081B480C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    DisplayPartyMenuMessage(gUnknown_85C97BD + 0x434, TRUE);
+    gTasks[taskId].func = Task_SendMailToPCYesNo;
 }
 
-__attribute__((naked)) void sub_081B480C(void)
+
+__attribute__((naked)) void Task_SendMailToPCYesNo(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
