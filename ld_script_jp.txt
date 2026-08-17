@@ -8711,7 +8711,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B547C);
         src/party_menu.o(.text.FieldCallback_Surf);
         src/party_menu.o(.text.SetUpFieldMove_Surf);
-        src/party_menu.o(.text.sub_081B5504);
+        src/party_menu.o(.text.DisplayCantUseSurfMessage);
         src/party_menu.o(.text.SetUpFieldMove_Fly);
         src/party_menu.o(.text.sub_081B5548);
         src/party_menu.o(.text.FieldCallback_Waterfall);

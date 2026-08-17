@@ -11030,7 +11030,7 @@ __attribute__((naked)) void CursorCb_FieldMove(u8 taskId)
         "	beq _081B52EA\n\t"
         "	cmp r4, #4\n\t"
         "	bne _081B52F0\n\t"
-        "	bl sub_081B5504\n\t"
+        "	bl DisplayCantUseSurfMessage\n\t"
         "	b _081B52F6\n\t"
         "_081B52EA:\n\t"
         "	bl sub_081B547C\n\t"
@@ -11312,27 +11312,12 @@ static bool8 SetUpFieldMove_Surf(void)
     return FALSE;
 }
 
-__attribute__((naked)) void sub_081B5504(void)
+static void DisplayCantUseSurfMessage(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #8\n\t"
-        "	bl TestPlayerAvatarFlags\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B551A\n\t"
-        "	movs r0, #9\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	b _081B5520\n\t"
-        "_081B551A:\n\t"
-        "	movs r0, #8\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "_081B5520:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING))
+        DisplayPartyMenuStdMessage(PARTY_MSG_ALREADY_SURFING);
+    else
+        DisplayPartyMenuStdMessage(PARTY_MSG_CANT_SURF_HERE);
 }
 
 __attribute__((naked)) void SetUpFieldMove_Fly(void)
