@@ -93,6 +93,7 @@ struct TradeMenu
 extern struct TradeMenu *sTradeMenu;
 extern u8 *sMenuTextTileBuffer;
 extern u8 *sMenuTextTileBuffers[];
+void sub_080799C0(u8 whichParty);
 extern const struct BgTemplate gUnknown_8300C04[];
 extern const struct WindowTemplate gUnknown_8300C14[];
 extern void VBlankCB_TradeMenu(void);
@@ -175,6 +176,8 @@ enum {
 #define NUM_CHOOSE_PKMN_SPRITES 6 // JP creates all 6 Choose-Pokémon sprites
 
 void sub_08078FC0(void);
+u32 sub_08079AD4(void);
+extern void CB2_ReturnToFieldFromMultiplayer(void);
 void sub_080790C8(u8 side);
 void sub_0807987C(u8 side);
 void sub_08079AFC(void);
@@ -1654,225 +1657,83 @@ static void CB_InitConfirmTradePrompt(void)
     }
 }
 
-__attribute__((naked)) void sub_08078E1C(void)
+static void CB_HandleTradeCanceled(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _08078E98\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078E90\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	bl rbox_fill_rectangle\n\t"
-        "	movs r0, #1\n\t"
-        "	bl rbox_fill_rectangle\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r5, #0xe0\n\t"
-        "	lsls r5, r5, #0x14\n\t"
-        "_08078E42:\n\t"
-        "	lsrs r4, r5, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl rbox_fill_rectangle\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	ble _08078E42\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080799C0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080799C0\n\t"
-        "	ldr r2, _08078E9C\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r3, _08078EA0\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x34\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078E90:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078E98: .4byte gMain\n\t"
-        "_08078E9C: .4byte sTradeMenu\n\t"
-        "_08078EA0: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        rbox_fill_rectangle(0);
+        rbox_fill_rectangle(1);
+
+        for (i = 0; i < 4; i++)
+        {
+            FillWindowPixelBuffer(i + 14, PIXEL_FILL(0));
+            rbox_fill_rectangle(i + 14);
+        }
+
+        sub_080799C0(TRADE_PLAYER);
+        sub_080799C0(TRADE_PARTNER);
+        sTradeMenu->callbackId = CB_MAIN_MENU;
+        gSprites[sTradeMenu->cursorSpriteId].invisible = FALSE;
+    }
 }
 
-__attribute__((naked)) void sub_08078EA4(void)
+static void CB_InitExitCanceledTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08078EC0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078ED8\n\t"
-        "	ldr r0, _08078EC4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078EC8\n\t"
-        "	bl SetLinkStandbyCallback\n\t"
-        "	b _08078ECE\n\t"
-        "	.align 2, 0\n\t"
-        "_08078EC0: .4byte gPaletteFade\n\t"
-        "_08078EC4: .4byte gWirelessCommType\n\t"
-        "_08078EC8:\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl sub_0800A7B8\n\t"
-        "_08078ECE:\n\t"
-        "	ldr r0, _08078EDC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0xc\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078ED8:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078EDC: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        if (gWirelessCommType)
+            SetLinkStandbyCallback();
+        else
+            SetCloseLinkCallbackAndType(12);
+
+        sTradeMenu->callbackId = CB_EXIT_CANCELED_TRADE;
+    }
 }
 
-__attribute__((naked)) void sub_08078EE0(void)
+static void CB_ExitCanceledTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08078F1C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078F2C\n\t"
-        "	bl IsLinkTradeTaskFinished\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078F4E\n\t"
-        "	bl sub_08079AD4\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078F4E\n\t"
-        "	ldr r0, _08078F20\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, _08078F24\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	bl DestroyWirelessStatusIndicatorSprite\n\t"
-        "	ldr r0, _08078F28\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _08078F4E\n\t"
-        "	.align 2, 0\n\t"
-        "_08078F1C: .4byte gWirelessCommType\n\t"
-        "_08078F20: .4byte sMenuTextTileBuffer\n\t"
-        "_08078F24: .4byte sTradeMenu\n\t"
-        "_08078F28: .4byte CB2_ReturnToFieldFromMultiplayer + 1\n\t"
-        "_08078F2C:\n\t"
-        "	ldr r0, _08078F54\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078F4E\n\t"
-        "	ldr r0, _08078F58\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, _08078F5C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	ldr r0, _08078F60\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_08078F4E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078F54: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_08078F58: .4byte sMenuTextTileBuffer\n\t"
-        "_08078F5C: .4byte sTradeMenu\n\t"
-        "_08078F60: .4byte CB2_ReturnToFieldFromMultiplayer + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWirelessCommType)
+    {
+        if (IsLinkTradeTaskFinished() && sub_08079AD4() == 0)
+        {
+            Free(sMenuTextTileBuffer);
+            Free(sTradeMenu);
+            FreeAllWindowBuffers();
+            DestroyWirelessStatusIndicatorSprite();
+            SetMainCallback2(CB2_ReturnToFieldFromMultiplayer);
+        }
+    }
+    else
+    {
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            Free(sMenuTextTileBuffer);
+            Free(sTradeMenu);
+            FreeAllWindowBuffers();
+            SetMainCallback2(CB2_ReturnToFieldFromMultiplayer);
+        }
+    }
 }
 
-__attribute__((naked)) void sub_08078F64(void)
+static void CB_WaitToStartRfuTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl Rfu_SetLinkRecovery\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078F88\n\t"
-        "	bl sub_08079AD4\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078F88\n\t"
-        "	bl SetLinkStandbyCallback\n\t"
-        "	ldr r0, _08078F8C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0xd\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078F88:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078F8C: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!Rfu_SetLinkRecovery(FALSE) && sub_08079AD4() == 0)
+    {
+        SetLinkStandbyCallback();
+        sTradeMenu->callbackId = CB_START_LINK_TRADE;
+    }
 }
 
-__attribute__((naked)) void sub_08078F90(void)
+static void CB_PartnersMonWasInvalid(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08078FB4\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078FB0\n\t"
-        "	ldr r0, _08078FB8\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetLinkData\n\t"
-        "	ldr r0, _08078FBC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0x64\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078FB0:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078FB4: .4byte gMain\n\t"
-        "_08078FB8: .4byte 0x0000BBCC\n\t"
-        "_08078FBC: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(A_BUTTON))
+    {
+        SetLinkData(LINKCMD_READY_CANCEL_TRADE, 0);
+        sTradeMenu->callbackId = CB_IDLE;
+    }
 }
 
 __attribute__((naked)) void sub_08078FC0(void)
@@ -1935,7 +1796,7 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	bl CB_PrintIsThisTradeOkay\n\t"
         "	b _0807908C\n\t"
         "_08079052:\n\t"
-        "	bl sub_08078E1C\n\t"
+        "	bl CB_HandleTradeCanceled\n\t"
         "	b _0807908C\n\t"
         "_08079058:\n\t"
         "	bl CB_FadeToStartTrade\n\t"
@@ -1944,10 +1805,10 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	bl CB_WaitToStartTrade\n\t"
         "	b _0807908C\n\t"
         "_08079064:\n\t"
-        "	bl sub_08078EA4\n\t"
+        "	bl CB_InitExitCanceledTrade\n\t"
         "	b _0807908C\n\t"
         "_0807906A:\n\t"
-        "	bl sub_08078EE0\n\t"
+        "	bl CB_ExitCanceledTrade\n\t"
         "	b _0807908C\n\t"
         "_08079070:\n\t"
         "	bl CB_StartLinkTrade\n\t"
@@ -1959,10 +1820,10 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	bl CB_ChooseMonAfterButtonPress\n\t"
         "	b _0807908C\n\t"
         "_08079082:\n\t"
-        "	bl sub_08078F64\n\t"
+        "	bl CB_WaitToStartRfuTrade\n\t"
         "	b _0807908C\n\t"
         "_08079088:\n\t"
-        "	bl sub_08078F90\n\t"
+        "	bl CB_PartnersMonWasInvalid\n\t"
         "_0807908C:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -3179,7 +3040,7 @@ __attribute__((naked)) void PrintTradePartnerPartyNicknames(void)
     );
 }
 
-__attribute__((naked)) void sub_080799C0(void)
+__attribute__((naked)) void sub_080799C0(u8 whichParty)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3338,7 +3199,7 @@ __attribute__((naked)) void sub_08079A80(u16 action, u8 data)
     );
 }
 
-__attribute__((naked)) void sub_08079AD4(void)
+__attribute__((naked)) u32 sub_08079AD4(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
