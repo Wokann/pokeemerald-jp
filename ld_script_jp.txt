@@ -1301,7 +1301,6 @@ sub_08019CEC = UpdateUnionRoomPlayerSprites;
 sub_08019D2C = ScheduleUnionRoomPlayerRefresh;
 sub_08019D3C = HandleUnionRoomPlayerRefresh;
 sub_080198D8 = DestroyUnionRoomPlayerObjects;
-GetPartyMenuType = sub_081B1030;
 ChooseMonForTradingBoard = sub_081B85A4;
 Debug_PrintString = nullsub_13;
 Debug_PrintNum = nullsub_5;
@@ -8569,7 +8568,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B0F90);
         src/party_menu.o(.text.c3_0811FAB4);
         src/party_menu.o(.text.GetCursorSelectionMonId);
-        src/party_menu.o(.text.sub_081B1030);
+        src/party_menu.o(.text.GetPartyMenuType);
         src/party_menu.o(.text.Task_HandleChooseMonInput);
         src/party_menu.o(.text.sub_081B10BC);
         src/party_menu.o(.text.sub_081B10DC);

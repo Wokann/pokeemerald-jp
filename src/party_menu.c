@@ -2328,19 +2328,9 @@ u8 GetCursorSelectionMonId(void)
     return gPartyMenu.slotId;
 }
 
-__attribute__((naked)) void sub_081B1030(void)
+u8 GetPartyMenuType(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _081B103C\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081B103C: .4byte gPartyMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    return gPartyMenu.menuType;
 }
 
 __attribute__((naked)) void Task_HandleChooseMonInput(u8 taskId)
