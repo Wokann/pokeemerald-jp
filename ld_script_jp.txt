@@ -660,7 +660,6 @@ RecordedBattle_SetFrontierPassFlagFromHword = sub_08185CE8;
 ShowPartyMenuToShowcaseMultiBattleParty = ShowPartyMenuToShowcaseMultiBattleParty;
 TrySetLinkBattleTowerEnemyPartyLevel = sub_08165F94;
 SetMultiPartnerMenuParty = sub_08037770;
-Task_ReconnectWithLinkPlayers = sub_080B3250;
 gText_LinkStandby3 = gUnknown_8226D53;
 gText_RecordBattleToPass = gUnknown_85AC0DD;
 gText_BattleYesNoChoice = gUnknown_85ABBC9;
@@ -1203,7 +1202,6 @@ sub_0802EAC0 = SpriteCB_Start;
 sub_0802EBB4 = Load321StartGfx;
 sub_0802EC0C = CreateNumberSprite;
 sub_0802EC60 = CreateStartSprite;
-Task_WaitForLinkPlayerConnection = task00_08081A90;
 BattleControllerDummy = nullsub_21;
 RecordedBattle_Init = sub_08184C50;
 
@@ -5141,14 +5139,14 @@ SECTIONS {
         src/cable_club.o(.text.CreateTask_StartWiredTrade);
         src/cable_club.o(.text.nullsub_37);
         src/cable_club.o(.text.ColosseumPlayerSpotTriggered);
-        src/cable_club.o(.text.sub_080B3100);
-        src/cable_club.o(.text.sp02A_crash_sound);
+        src/cable_club.o(.text.CreateTask_EnterCableClubSeatNoFollowup);
+        src/cable_club.o(.text.Script_ShowLinkTrainerCard);
         src/cable_club.o(.text.GetLinkTrainerCardColor);
-        src/cable_club.o(.text.task00_08081A90);
-        src/cable_club.o(.text.sub_080B3204);
-        src/cable_club.o(.text.sub_080B3228);
-        src/cable_club.o(.text.sub_080B3250);
-        src/cable_club.o(.text.sub_080B331C);
+        src/cable_club.o(.text.Task_WaitForLinkPlayerConnection);
+        src/cable_club.o(.text.Task_WaitExitToScript);
+        src/cable_club.o(.text.ExitLinkToScript);
+        src/cable_club.o(.text.Task_ReconnectWithLinkPlayers);
+        src/cable_club.o(.text.TrySetBattleTowerLinkType);
 
         src/trainer_see.o(.text.CheckForTrainersWantingBattle);
         src/trainer_see.o(.text.CheckTrainer);

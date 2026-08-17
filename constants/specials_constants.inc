@@ -82,8 +82,8 @@
 .equ SPECIAL_WAITSTATE_LoadPlayerParty, 0
 .equ SPECIAL_ChooseHalfPartyForBattle, 41
 .equ SPECIAL_WAITSTATE_ChooseHalfPartyForBattle, 1
-.equ SPECIAL_sp02A_crash_sound, 42
-.equ SPECIAL_WAITSTATE_sp02A_crash_sound, 0
+.equ SPECIAL_Script_ShowLinkTrainerCard, 42
+.equ SPECIAL_WAITSTATE_Script_ShowLinkTrainerCard, 0
 .equ SPECIAL_EventObjectInteractionGetBerryTreeData, 43
 .equ SPECIAL_WAITSTATE_EventObjectInteractionGetBerryTreeData, 0
 .equ SPECIAL_Bag_ChooseBerry, 44
@@ -1044,5 +1044,5 @@
 .equ SPECIAL_WAITSTATE_RemoveRecordsWindow, 0
 .equ SPECIAL_sub_08139C4C, 522
 .equ SPECIAL_WAITSTATE_sub_08139C4C, 0
-.equ SPECIAL_sub_080B331C, 523
-.equ SPECIAL_WAITSTATE_sub_080B331C, 0
+.equ SPECIAL_TrySetBattleTowerLinkType, 523
+.equ SPECIAL_WAITSTATE_TrySetBattleTowerLinkType, 0

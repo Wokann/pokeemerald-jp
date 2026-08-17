@@ -1057,7 +1057,7 @@ BattleFrontier_BattleTowerLobby_EventScript_002203F0::
 	waitstate
 	playse 0x37
 	waitse
-	special sub_080B331C
+	special TrySetBattleTowerLinkType
 	goto BattleFrontier_BattleTowerLobby_EventScript_00220134
 	end
 

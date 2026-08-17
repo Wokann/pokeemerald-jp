@@ -5108,7 +5108,7 @@ __attribute__((naked)) void sub_080295A4(void)
         "_08029C60: .4byte sGfx\n\t"
         "_08029C64: .4byte 0x00003008\n\t"
         "_08029C68: .4byte 0x00003009\n\t"
-        "_08029C6C: .4byte SPECIAL_sub_080B331C\n\t"
+        "_08029C6C: .4byte SPECIAL_TrySetBattleTowerLinkType\n\t"
         "_08029C70: .4byte 0x00003014\n\t"
         "_08029C74:\n\t"
         "	ldr r4, _08029CB0\n\t"

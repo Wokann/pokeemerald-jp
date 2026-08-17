@@ -1007,7 +1007,7 @@ __attribute__((naked)) void WindowFunc_DrawDialogueFrame(void)
         "_08197554: .4byte SPECIAL_IsLastMonThatKnowsSurf\n\t"
         "_08197558: .4byte SPECIAL_sub_08071CF0\n\t"
         "_0819755C: .4byte 0x0000020D\n\t"
-        "_08197560: .4byte SPECIAL_sub_080B331C\n\t"
+        "_08197560: .4byte SPECIAL_TrySetBattleTowerLinkType\n\t"
         "_08197564: .4byte SPECIAL_RemoveRecordsWindow\n\t"
         "_08197568: .4byte 0x0000060B\n\t"
         "_0819756C: .4byte SPECIAL_sub_08139C4C\n\t"

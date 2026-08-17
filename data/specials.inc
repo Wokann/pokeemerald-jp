@@ -59,7 +59,7 @@ gSpecials:
 	def_special SavePlayerParty
 	def_special LoadPlayerParty
 	def_special ChooseHalfPartyForBattle, waitstate=1
-	def_special sp02A_crash_sound
+	def_special Script_ShowLinkTrainerCard
 	def_special EventObjectInteractionGetBerryTreeData
 	def_special Bag_ChooseBerry, waitstate=1
 	def_special EventObjectInteractionPlantBerryTree
@@ -540,4 +540,4 @@ gSpecials:
 	def_special TryPrepareSecondApproachingTrainer
 	def_special RemoveRecordsWindow
 	def_special sub_08139C4C
-	def_special sub_080B331C
+	def_special TrySetBattleTowerLinkType

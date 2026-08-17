@@ -11177,7 +11177,7 @@ __attribute__((naked)) void InitEasyChatPhrases(void)
         "_0811F77C: .4byte 0x00002BB2\n\t"
         "_0811F780: .4byte 0x00001228\n\t"
         "_0811F784: .4byte 0x00002BB4\n\t"
-        "_0811F788: .4byte SPECIAL_sub_080B331C\n\t"
+        "_0811F788: .4byte SPECIAL_TrySetBattleTowerLinkType\n\t"
         "_0811F78C: .4byte 0x0000101F\n\t"
         "_0811F790: .4byte 0x00002BBC\n\t"
         "_0811F794: .4byte 0x00000603\n\t"
