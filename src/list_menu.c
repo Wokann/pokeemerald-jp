@@ -1,5 +1,7 @@
 #include "global.h"
 #include "list_menu.h"
+#include "constants/songs.h"
+#include "task.h"
 
 // Cursors after this point are created using a sprite with their own task.
 // This allows them to have idle animations. Cursors prior to this are simply printed text.
@@ -574,32 +576,12 @@ __attribute__((naked)) s32 ListMenuTestInput(struct ListMenuTemplate *template, 
     );
 }
 
-__attribute__((naked)) void ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *arrayId)
+void ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *arrayId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081AE534\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081AE52E\n\t"
-        "	ldrh r0, [r1, #0x1a]\n\t"
-        "	ldrh r1, [r1, #0x18]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "_081AE52E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE534: .4byte gUnknown_3005B68\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+
+    if (arrayId != NULL)
+        *arrayId = list->scrollOffset + list->selectedRow;
 }
 
 __attribute__((naked)) void ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
@@ -1730,22 +1712,10 @@ __attribute__((naked)) void ListMenuOverrideSetColors(u8 cursorPal, u8 fillValue
     );
 }
 
-__attribute__((naked)) void ListMenuDefaultCursorMoveFunc(s32 itemIndex, bool8 onInit, struct ListMenu *list)
+void ListMenuDefaultCursorMoveFunc(s32 itemIndex, bool8 onInit, struct ListMenu *list)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081AED5E\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "_081AED5E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!onInit)
+        PlaySE(SE_SELECT);
 }
 
 __attribute__((naked)) void ListMenuGetUnkIndicatorsStructFields(void)
