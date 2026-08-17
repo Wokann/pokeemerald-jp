@@ -682,7 +682,7 @@ __attribute__((naked)) bool8 PartyMenuSetup(void)
         "	.align 2, 0\n\t"
         "_081B00D4: .4byte sPartyMenuInternal\n\t"
         "_081B00D8:\n\t"
-        "	bl sub_081B0BF8\n\t"
+        "	bl CreateCancelConfirmPokeballSprites\n\t"
         "	ldr r1, _081B00E8\n\t"
         "	movs r0, #0x87\n\t"
         "	lsls r0, r0, #3\n\t"
@@ -1203,90 +1203,27 @@ static bool8 CreatePartyMonSpritesLoop(void)
         return FALSE;
 }
 
-__attribute__((naked)) void sub_081B0BF8(void)
+static void CreateCancelConfirmPokeballSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _081B0C20\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _081B0C24\n\t"
-        "	movs r0, #7\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	movs r2, #0x17\n\t"
-        "	movs r3, #0x11\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	b _081B0C8C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0C20: .4byte gPartyMenu\n\t"
-        "_081B0C24:\n\t"
-        "	ldr r4, _081B0C5C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B0C64\n\t"
-        "	movs r0, #0xbf\n\t"
-        "	movs r1, #0x88\n\t"
-        "	bl CreateSmallPokeballButtonSprite\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldrh r2, [r3, #8]\n\t"
-        "	ldr r1, _081B0C60\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	strh r1, [r3, #8]\n\t"
-        "	bl sub_081B0EDC\n\t"
-        "	movs r0, #0xbf\n\t"
-        "	movs r1, #0x98\n\t"
-        "	bl CreateSmallPokeballButtonSprite\n\t"
-        "	b _081B0C6C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0C5C: .4byte sPartyMenuInternal\n\t"
-        "_081B0C60: .4byte 0xFFFFF80F\n\t"
-        "_081B0C64:\n\t"
-        "	movs r0, #0xc6\n\t"
-        "	movs r1, #0x94\n\t"
-        "	bl sub_081B5BD4\n\t"
-        "_081B0C6C:\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0xb\n\t"
-        "	ldr r1, [r3, #8]\n\t"
-        "	ldr r2, _081B0C94\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r0\n\t"
-        "	str r1, [r3, #8]\n\t"
-        "	ldr r0, _081B0C98\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "_081B0C8C:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0C94: .4byte 0xFFFC07FF\n\t"
-        "_081B0C98: .4byte gPartyMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gPartyMenu.menuType == PARTY_MENU_TYPE_MULTI_SHOWCASE)
+    {
+        // The showcase has no Cancel/Confirm buttons
+        FillBgTilemapBufferRect(1, 14, 23, 17, 7, 2, 1);
+    }
+    else
+    {
+        if (sPartyMenuInternal->chooseHalf)
+        {
+            sPartyMenuInternal->spriteIdConfirmPokeball = (u8)CreateSmallPokeballButtonSprite(0xBF, 0x88);
+            DrawCancelConfirmButtons();
+            sPartyMenuInternal->spriteIdCancelPokeball = (u8)CreateSmallPokeballButtonSprite(0xBF, 0x98);
+        }
+        else
+        {
+            sPartyMenuInternal->spriteIdCancelPokeball = (u8)CreatePokeballButtonSprite(198, 148);
+        }
+        AnimatePartySlot(gPartyMenu.slotId, 1);
+    }
 }
 
 __attribute__((naked)) void AnimatePartySlot(u8 slot, u8 animNum)
@@ -1600,7 +1537,7 @@ __attribute__((naked)) void PartyBoxPal_ParnterOrDisqualifiedInArena(void)
     );
 }
 
-__attribute__((naked)) void sub_081B0EDC(void)
+__attribute__((naked)) void DrawCancelConfirmButtons(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9433,7 +9370,7 @@ __attribute__((naked)) void CreatePartyMonPokeballSpriteParameterized(void)
     );
 }
 
-__attribute__((naked)) void sub_081B5BD4(void)
+__attribute__((naked)) void CreatePokeballButtonSprite(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

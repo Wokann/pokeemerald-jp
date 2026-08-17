@@ -8558,11 +8558,11 @@ SECTIONS {
         src/party_menu.o(.text.GetPartyMenuBgTile);
         src/party_menu.o(.text.CreatePartyMonSprites);
         src/party_menu.o(.text.CreatePartyMonSpritesLoop);
-        src/party_menu.o(.text.sub_081B0BF8);
+        src/party_menu.o(.text.CreateCancelConfirmPokeballSprites);
         src/party_menu.o(.text.AnimatePartySlot);
         src/party_menu.o(.text.GetPartyBoxPalBitfield);
         src/party_menu.o(.text.PartyBoxPal_ParnterOrDisqualifiedInArena);
-        src/party_menu.o(.text.sub_081B0EDC);
+        src/party_menu.o(.text.DrawCancelConfirmButtons);
         src/party_menu.o(.text.IsMultiBattle);
         src/party_menu.o(.text.sub_081B0F58);
         src/party_menu.o(.text.Task_ClosePartyMenu);
@@ -8735,7 +8735,7 @@ SECTIONS {
         src/party_menu.o(.text.SpriteCB_HeldItem);
         src/party_menu.o(.text.CreatePartyMonPokeballSprite);
         src/party_menu.o(.text.CreatePartyMonPokeballSpriteParameterized);
-        src/party_menu.o(.text.sub_081B5BD4);
+        src/party_menu.o(.text.CreatePokeballButtonSprite);
         src/party_menu.o(.text.CreateSmallPokeballButtonSprite);
         src/party_menu.o(.text.PartyMenuStartSpriteAnim);
         src/party_menu.o(.text.SpriteCB_BounceConfirmCancelButton);
