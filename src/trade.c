@@ -3,6 +3,7 @@
 #include "cable_club.h"
 #include "trade.h"
 #include "evolution_scene.h"
+#include "data.h"
 
 #include "AgbRfu_LinkManager.h"
 #include "bg.h"
@@ -208,6 +209,7 @@ extern const struct InGameTrade gUnknown_830D114[];
 extern u8 gStringVar1[0x100];
 extern u8 gStringVar2[0x100];
 extern u8 gStringVar3[0x100];
+extern const s8 gUnknown_830D2A4[];
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
 void CB2_InGameTradeAnim(void);
@@ -287,6 +289,10 @@ static void CB2_WaitTradeComplete(void);
 static void CB2_TryLinkTradeEvolution(void);
 static void CB2_SaveAndEndTrade(void);
 static void CB2_SaveAndEndWirelessTrade(void);
+static void SpriteCB_BouncingPokeballDepart(struct Sprite *sprite);
+static void SpriteCB_BouncingPokeballDepartEnd(struct Sprite *sprite);
+static void SpriteCB_BouncingPokeballArrive(struct Sprite *sprite);
+static void BufferInGameTradeMonName(void);
 extern struct MonSpritesGfx *gMonSpritesGfxPtr;
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
@@ -4783,7 +4789,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "_0807BC70: .4byte gSprites\n\t"
         "_0807BC74: .4byte SpriteCallbackDummy + 1\n\t"
         "_0807BC78: .4byte gUnknown_830CF6C\n\t"
-        "_0807BC7C: .4byte sub_0807E010 + 1\n\t"
+        "_0807BC7C: .4byte SpriteCB_BouncingPokeballDepart + 1\n\t"
         "_0807BC80:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -6040,7 +6046,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "_0807C6C0: .4byte gUnknown_830CF6C\n\t"
         "_0807C6C4: .4byte gUnknown_2031F40\n\t"
         "_0807C6C8: .4byte gSprites\n\t"
-        "_0807C6CC: .4byte sub_0807E0E4 + 1\n\t"
+        "_0807C6CC: .4byte SpriteCB_BouncingPokeballArrive + 1\n\t"
         "_0807C6D0: .4byte 0x0000FFFF\n\t"
         "_0807C6D4:\n\t"
         "	ldr r2, _0807C700\n\t"
@@ -6414,7 +6420,7 @@ __attribute__((naked)) void DoTradeAnim_Cable(void)
         "_0807C9E2:\n\t"
         "	ldr r0, _0807C9FC\n\t"
         "	bl SetMainCallback2\n\t"
-        "	bl sub_0807E1C4\n\t"
+        "	bl BufferInGameTradeMonName\n\t"
         "_0807C9EC:\n\t"
         "	movs r0, #0\n\t"
         "_0807C9EE:\n\t"
@@ -6954,7 +6960,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "_0807D04C: .4byte gSprites\n\t"
         "_0807D050: .4byte SpriteCallbackDummy + 1\n\t"
         "_0807D054: .4byte gUnknown_830CF6C\n\t"
-        "_0807D058: .4byte sub_0807E010 + 1\n\t"
+        "_0807D058: .4byte SpriteCB_BouncingPokeballDepart + 1\n\t"
         "_0807D05C:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -8261,7 +8267,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "_0807DB0C: .4byte gUnknown_830CF6C\n\t"
         "_0807DB10: .4byte gUnknown_2031F40\n\t"
         "_0807DB14: .4byte gSprites\n\t"
-        "_0807DB18: .4byte sub_0807E0E4 + 1\n\t"
+        "_0807DB18: .4byte SpriteCB_BouncingPokeballArrive + 1\n\t"
         "_0807DB1C: .4byte 0x0000FFFF\n\t"
         "_0807DB20:\n\t"
         "	ldr r2, _0807DB4C\n\t"
@@ -8635,7 +8641,7 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
         "_0807DE2E:\n\t"
         "	ldr r0, _0807DE48\n\t"
         "	bl SetMainCallback2\n\t"
-        "	bl sub_0807E1C4\n\t"
+        "	bl BufferInGameTradeMonName\n\t"
         "_0807DE38:\n\t"
         "	movs r0, #0\n\t"
         "_0807DE3A:\n\t"
@@ -8702,360 +8708,97 @@ static void HandleLinkDataReceive(void)
     }
 }
 
-__attribute__((naked)) void sub_0807DF94(void)
+static void SpriteCB_BouncingPokeball(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __divsi3\n\t"
-        "	ldrh r4, [r5, #0x22]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	strh r4, [r5, #0x22]\n\t"
-        "	ldrh r0, [r5, #0x30]\n\t"
-        "	ldrh r2, [r5, #0x38]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __divsi3\n\t"
-        "	strh r0, [r5, #0x20]\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	cmp r4, #0x4c\n\t"
-        "	ble _0807DFE2\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	strh r0, [r5, #0x22]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	ldrh r0, [r5, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "_0807DFE2:\n\t"
-        "	movs r1, #0x20\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0x78\n\t"
-        "	bne _0807DFEE\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "_0807DFEE:\n\t"
-        "	ldrh r0, [r5, #0x36]\n\t"
-        "	ldrh r2, [r5, #0x2e]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r5, #0x2e]\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0807E006\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "	ldr r0, _0807E00C\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "_0807E006:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E00C: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->y += sprite->data[0] / 10;
+    sprite->data[5] += sprite->data[1];
+    sprite->x = sprite->data[5] / 10;
+    if (sprite->y > 0x4c)
+    {
+        sprite->y = 0x4c;
+        sprite->data[0] = -(sprite->data[0] * sprite->data[2]) / 100;
+        sprite->data[3] ++;
+    }
+    if (sprite->x == 0x78)
+        sprite->data[1] = 0;
+    sprite->data[0] += sprite->data[4];
+    if (sprite->data[3] == 4)
+    {
+        sprite->data[7] = 1;
+        sprite->callback = SpriteCallbackDummy;
+    }
 }
 
-__attribute__((naked)) void sub_0807E010(void)
+static void SpriteCB_BouncingPokeballDepart(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _0807E078\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x16\n\t"
-        "	bne _0807E038\n\t"
-        "	movs r0, #0x38\n\t"
-        "	bl PlaySE\n\t"
-        "_0807E038:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x2c\n\t"
-        "	bne _0807E06E\n\t"
-        "	movs r0, #0x8c\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _0807E07C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	lsls r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ldr r2, _0807E080\n\t"
-        "	str r2, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_0807E06E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E078: .4byte gUnknown_830D2A4\n\t"
-        "_0807E07C: .4byte sub_0807E084 + 1\n\t"
-        "_0807E080: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->y2 += gUnknown_830D2A4[sprite->data[0]];
+    if (sprite->data[0] == 22)
+        PlaySE(SE_BALL_BOUNCE_1);
+    if (++sprite->data[0] == 44)
+    {
+        PlaySE(SE_M_MEGA_KICK);
+        sprite->callback = SpriteCB_BouncingPokeballDepartEnd;
+        sprite->data[0] = 0;
+        BeginNormalPaletteFade(1 << (16 + sprite->oam.paletteNum), -1, 0, 16, RGB_WHITEALPHA);
+    }
 }
 
-__attribute__((naked)) void sub_0807E084(void)
+static void SpriteCB_BouncingPokeballDepartEnd(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	bne _0807E098\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_0807E098:\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	ble _0807E0D6\n\t"
-        "	ldr r1, _0807E0DC\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x17\n\t"
-        "	bne _0807E0D6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, _0807E0E0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0xe\n\t"
-        "	strh r1, [r0]\n\t"
-        "_0807E0D6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E0DC: .4byte gUnknown_830D2A4\n\t"
-        "_0807E0E0: .4byte gUnknown_2031F40\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[1] == 20)
+        StartSpriteAffineAnim(sprite, 1);
+    if (++sprite->data[1] > 20)
+    {
+        sprite->y2 -= gUnknown_830D2A4[sprite->data[0]];
+        sprite->data[0]++;
+        if (sprite->data[0] == 23)
+        {
+            DestroySprite(sprite);
+            gUnknown_2031F40->state = 14; // STATE_FADE_OUT_TO_GBA_SEND
+        }
+    }
 }
 
-__attribute__((naked)) void sub_0807E0E4(void)
+static void SpriteCB_BouncingPokeballArrive(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r2, [r4, #0x32]\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E114\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r3, #0x34\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	cmp r0, r1\n\t"
-        "	ble _0807E164\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0x16\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #0x38\n\t"
-        "	bl PlaySE\n\t"
-        "	b _0807E164\n\t"
-        "_0807E114:\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x42\n\t"
-        "	bne _0807E122\n\t"
-        "	movs r0, #0x39\n\t"
-        "	bl PlaySE\n\t"
-        "_0807E122:\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x5c\n\t"
-        "	bne _0807E130\n\t"
-        "	movs r0, #0x3a\n\t"
-        "	bl PlaySE\n\t"
-        "_0807E130:\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0x6b\n\t"
-        "	bne _0807E13E\n\t"
-        "	movs r0, #0x3b\n\t"
-        "	bl PlaySE\n\t"
-        "_0807E13E:\n\t"
-        "	ldr r1, _0807E16C\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r3, [r4, #0x26]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x6c\n\t"
-        "	bne _0807E164\n\t"
-        "	ldr r0, _0807E170\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_0807E164:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E16C: .4byte gUnknown_830D2A4\n\t"
-        "_0807E170: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[2] == 0)
+    {
+        if ((sprite->y += 4) > sprite->data[3])
+        {
+            sprite->data[2] ++;
+            sprite->data[0] = 0x16;
+            PlaySE(SE_BALL_BOUNCE_1);
+        }
+    }
+    else
+    {
+        if (sprite->data[0] == 0x42)
+            PlaySE(SE_BALL_BOUNCE_2);
+        if (sprite->data[0] == 0x5c)
+            PlaySE(SE_BALL_BOUNCE_3);
+        if (sprite->data[0] == 0x6b)
+            PlaySE(SE_BALL_BOUNCE_4);
+        sprite->y2 += gUnknown_830D2A4[sprite->data[0]];
+        if (++sprite->data[0] == 0x6c)
+            sprite->callback = SpriteCallbackDummy;
+    }
 }
 
-__attribute__((naked)) void GetInGameTradeSpeciesInfo(void)
+u16 GetInGameTradeSpeciesInfo(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _0807E1B0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0807E1B4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _0807E1B8\n\t"
-        "	ldrh r2, [r4, #0x38]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r5, _0807E1BC\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r0, _0807E1C0\n\t"
-        "	ldrh r2, [r4, #0xc]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	bl StringCopy\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E1B0: .4byte gSpecialVar_0x8004\n\t"
-        "_0807E1B4: .4byte gUnknown_830D114\n\t"
-        "_0807E1B8: .4byte gStringVar1\n\t"
-        "_0807E1BC: .4byte gSpeciesNames\n\t"
-        "_0807E1C0: .4byte gStringVar2\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct InGameTrade *inGameTrade = &gUnknown_830D114[gSpecialVar_0x8004];
+    StringCopy(gStringVar1, gSpeciesNames[inGameTrade->requestedSpecies]);
+    StringCopy(gStringVar2, gSpeciesNames[inGameTrade->species]);
+    return inGameTrade->requestedSpecies;
 }
 
-__attribute__((naked)) void sub_0807E1C4(void)
+static void BufferInGameTradeMonName(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	ldr r0, _0807E20C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0807E210\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _0807E214\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0807E218\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, _0807E21C\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	ldr r0, _0807E220\n\t"
-        "	ldrh r2, [r4, #0xc]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r2, _0807E224\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	bl StringCopy\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E20C: .4byte gSpecialVar_0x8004\n\t"
-        "_0807E210: .4byte gUnknown_830D114\n\t"
-        "_0807E214: .4byte gSpecialVar_0x8005\n\t"
-        "_0807E218: .4byte gPlayerParty\n\t"
-        "_0807E21C: .4byte gStringVar1\n\t"
-        "_0807E220: .4byte gStringVar2\n\t"
-        "_0807E224: .4byte gSpeciesNames\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 name[32];
+    const struct InGameTrade *inGameTrade = &gUnknown_830D114[gSpecialVar_0x8004];
+    GetMonData3(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_NICKNAME, name);
+    StringCopy10(gStringVar1, name);
+    StringCopy(gStringVar2, gSpeciesNames[inGameTrade->species]);
 }
 
 __attribute__((naked)) void _CreateInGameTradePokemon(void)

@@ -3302,12 +3302,12 @@ SECTIONS {
         src/trade.o(.text.DoTradeAnim_Wireless);
         src/trade.o(.text.CB2_TryLinkTradeEvolution);
         src/trade.o(.text.HandleLinkDataReceive);
-        src/trade.o(.text.sub_0807DF94);
-        src/trade.o(.text.sub_0807E010);
-        src/trade.o(.text.sub_0807E084);
-        src/trade.o(.text.sub_0807E0E4);
+        src/trade.o(.text.SpriteCB_BouncingPokeball);
+        src/trade.o(.text.SpriteCB_BouncingPokeballDepart);
+        src/trade.o(.text.SpriteCB_BouncingPokeballDepartEnd);
+        src/trade.o(.text.SpriteCB_BouncingPokeballArrive);
         src/trade.o(.text.GetInGameTradeSpeciesInfo);
-        src/trade.o(.text.sub_0807E1C4);
+        src/trade.o(.text.BufferInGameTradeMonName);
         src/trade.o(.text._CreateInGameTradePokemon);
         src/trade.o(.text.sub_0807E3B4);
         src/trade.o(.text.GetTradeSpecies);
