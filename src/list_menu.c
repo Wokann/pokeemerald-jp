@@ -15,6 +15,7 @@ static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onIni
 u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow);
 static __attribute__((naked)) void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count);
 static __attribute__((naked)) void ListMenuDrawCursor(struct ListMenu *list);
+static u8 ListMenuUpdateSelectedRowIndexAndScrollOffset(struct ListMenu *list, bool8 movingDown);
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
 u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId);
 void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y);
@@ -1005,149 +1006,89 @@ __attribute__((naked)) void ListMenuErasePrintedCursor(void)
     );
 }
 
-__attribute__((naked)) void ListMenuUpdateSelectedRowIndexAndScrollOffset(void)
+static u8 ListMenuUpdateSelectedRowIndexAndScrollOffset(struct ListMenu *list, bool8 movingDown)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldrh r3, [r4, #0x1a]\n\t"
-        "	ldrh r5, [r4, #0x18]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081AEA4C\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081AE9F0\n\t"
-        "	movs r2, #0\n\t"
-        "	b _081AEA02\n\t"
-        "_081AE9F0:\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	lsrs r2, r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "_081AEA02:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _081AEA28\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _081AEA8E\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r2, #3\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "_081AEA10:\n\t"
-        "	subs r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	adds r0, r5, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _081AEA92\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _081AEA10\n\t"
-        "	b _081AEA8E\n\t"
-        "_081AEA28:\n\t"
-        "	cmp r3, r2\n\t"
-        "	bls _081AEA48\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r6, #3\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "_081AEA32:\n\t"
-        "	subs r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	adds r0, r5, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _081AEA92\n\t"
-        "	cmp r3, r2\n\t"
-        "	bhi _081AEA32\n\t"
-        "_081AEA48:\n\t"
-        "	subs r0, r5, #1\n\t"
-        "	b _081AEABA\n\t"
-        "_081AEA4C:\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081AEA56\n\t"
-        "	movs r2, #0\n\t"
-        "	b _081AEA60\n\t"
-        "_081AEA56:\n\t"
-        "	ldrh r0, [r4, #0xe]\n\t"
-        "	lsrs r2, r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r0\n\t"
-        "	adds r2, r2, r1\n\t"
-        "_081AEA60:\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081AEA98\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	cmp r3, r0\n\t"
-        "	bge _081AEA8E\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	movs r6, #3\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "	adds r1, r0, #0\n\t"
-        "_081AEA78:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	adds r0, r5, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _081AEA92\n\t"
-        "	cmp r3, r1\n\t"
-        "	blt _081AEA78\n\t"
-        "_081AEA8E:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081AEAC0\n\t"
-        "_081AEA92:\n\t"
-        "	strh r3, [r4, #0x1a]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081AEAC0\n\t"
-        "_081AEA98:\n\t"
-        "	cmp r3, r2\n\t"
-        "	bhs _081AEAB8\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r6, #3\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "_081AEAA2:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	adds r0, r5, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _081AEA92\n\t"
-        "	cmp r3, r2\n\t"
-        "	blo _081AEAA2\n\t"
-        "_081AEAB8:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "_081AEABA:\n\t"
-        "	strh r2, [r4, #0x1a]\n\t"
-        "	strh r0, [r4, #0x18]\n\t"
-        "	movs r0, #2\n\t"
-        "_081AEAC0:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 selectedRow = list->selectedRow;
+    u16 scrollOffset = list->scrollOffset;
+    u16 newRow;
+    u32 newScroll;
+
+    if (!movingDown)
+    {
+        if (list->template.maxShowed == 1)
+            newRow = 0;
+        else
+            newRow = list->template.maxShowed - ((list->template.maxShowed / 2) + (list->template.maxShowed % 2)) - 1;
+
+        if (scrollOffset == 0)
+        {
+            while (selectedRow != 0)
+            {
+                selectedRow--;
+                if (list->template.items[scrollOffset + selectedRow].id != LIST_HEADER)
+                {
+                    list->selectedRow = selectedRow;
+                    return 1;
+                }
+            }
+
+            return 0;
+        }
+        else
+        {
+            while (selectedRow > newRow)
+            {
+                selectedRow--;
+                if (list->template.items[scrollOffset + selectedRow].id != LIST_HEADER)
+                {
+                    list->selectedRow = selectedRow;
+                    return 1;
+                }
+            }
+
+            newScroll = scrollOffset - 1;
+        }
+    }
+    else
+    {
+        if (list->template.maxShowed == 1)
+            newRow = 0;
+        else
+            newRow = ((list->template.maxShowed / 2) + (list->template.maxShowed % 2));
+
+        if (scrollOffset == list->template.totalItems - list->template.maxShowed)
+        {
+            while (selectedRow < list->template.maxShowed - 1)
+            {
+                selectedRow++;
+                if (list->template.items[scrollOffset + selectedRow].id != LIST_HEADER)
+                {
+                    list->selectedRow = selectedRow;
+                    return 1;
+                }
+            }
+
+            return 0;
+        }
+        else
+        {
+            while (selectedRow < newRow)
+            {
+                selectedRow++;
+                if (list->template.items[scrollOffset + selectedRow].id != LIST_HEADER)
+                {
+                    list->selectedRow = selectedRow;
+                    return 1;
+                }
+            }
+
+            newScroll = scrollOffset + 1;
+        }
+    }
+
+    list->selectedRow = newRow;
+    list->scrollOffset = newScroll;
+    return 2;
 }
 
 __attribute__((naked)) void ListMenuScroll(void)
