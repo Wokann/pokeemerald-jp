@@ -1273,47 +1273,15 @@ bool8 FldEff_NopA6FC(void)
     return FALSE;
 }
 
-__attribute__((naked)) void DoSecretBaseBreakableDoorEffect(void)
+void DoSecretBaseBreakableDoorEffect(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	movs r0, #0x4d\n\t"
-        "	bl PlaySE\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	ldr r2, _080FAFBC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	subs r6, r4, #1\n\t"
-        "	ldr r2, _080FAFC0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl MapGridSetMetatileIdAt\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl CurrentMapDrawMetatileAt\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAFBC: .4byte 0x00000276\n\t"
-        "_080FAFC0: .4byte 0x0000026E\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_BREAKABLE_DOOR);
+    MapGridSetMetatileIdAt(x, y, METATILE_SecretBase_BreakableDoor_BottomOpen);
+    MapGridSetMetatileIdAt(x, y - 1, METATILE_SecretBase_BreakableDoor_TopOpen);
+    CurrentMapDrawMetatileAt(x, y);
+    CurrentMapDrawMetatileAt(x, y - 1);
 }
+
 
 __attribute__((naked)) void Task_ShatterSecretBaseBreakableDoor(void)
 {
