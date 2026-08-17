@@ -6,6 +6,7 @@
 #include "tv.h"
 #include "battle.h"
 #include "string_util.h"
+extern u32 gUnknown_203A824; // sBikeCyclingTimer
 extern const u8 gText_BigGuy[];
 extern const u8 gText_BigGirl[];
 extern const u8 gText_Son[];
@@ -106,7 +107,7 @@ u16 GetPlayerAvatarBike(void)
     return 0;
 }
 
-__attribute__((naked)) void DetermineCyclingRoadResults(void)
+__attribute__((naked)) void DetermineCyclingRoadResults(u32 numFrames, u16 bikeCollisions)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -245,35 +246,15 @@ __attribute__((naked)) void DetermineCyclingRoadResults(void)
     );
 }
 
-__attribute__((naked)) void FinishCyclingRoadChallenge(void)
+void FinishCyclingRoadChallenge(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _08137F00\n\t"
-        "	ldr r1, _08137F04\n\t"
-        "	ldr r4, [r0, #0x20]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	ldr r5, _08137F08\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DetermineCyclingRoadResults\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl RecordCyclingRoadResults\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08137F00: .4byte gMain\n\t"
-        "_08137F04: .4byte gUnknown_203A824\n\t"
-        "_08137F08: .4byte gBikeCollisions\n\t"
-        ".syntax divided\n\t"
-    );
+    const u32 numFrames = gMain.vblankCounter1 - gUnknown_203A824;
+
+    DetermineCyclingRoadResults(numFrames, gBikeCollisions);
+    RecordCyclingRoadResults(numFrames, gBikeCollisions);
 }
 
-__attribute__((naked)) void RecordCyclingRoadResults(void)
+__attribute__((naked)) void RecordCyclingRoadResults(u32 numFrames, u16 bikeCollisions)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1973,19 +1954,9 @@ __attribute__((naked)) void CB2_FieldShowRegionMap(void)
     );
 }
 
-__attribute__((naked)) void FieldShowRegionMap(void)
+void FieldShowRegionMap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138D10\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138D10: .4byte CB2_FieldShowRegionMap\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(CB2_FieldShowRegionMap);
 }
 
 __attribute__((naked)) void DoLotteryCornerComputerEffect(void)
