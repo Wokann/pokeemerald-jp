@@ -160,6 +160,7 @@ void sub_0807A028(void);
 void sub_08079D98(u8 side);
 void sub_08079EE0(u8 side);
 void sub_08078618(void);
+void SetSelectedMon(u8 cursorPosition);
 extern u8 *StringCopy10(u8 *dest, const u8 *src);
 extern const u8 gUnknown_8300AAE[];
 extern const u8 gUnknown_8300AB1[];
@@ -1089,134 +1090,42 @@ static void Leader_ReadLinkBuffer(u8 mpId, u8 status)
     }
 }
 
-__attribute__((naked)) void sub_080782E4(void)
+static void Follower_ReadLinkBuffer(u8 mpId, u8 status)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080783C6\n\t"
-        "	ldr r2, _08078310\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	ldr r0, _08078314\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080783B0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _08078320\n\t"
-        "	ldr r0, _08078318\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08078390\n\t"
-        "	ldr r0, _0807831C\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807835C\n\t"
-        "	b _080783C0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078310: .4byte gBlockRecvBuffer\n\t"
-        "_08078314: .4byte 0x0000DDEE\n\t"
-        "_08078318: .4byte 0x0000CCDD\n\t"
-        "_0807831C: .4byte 0x0000DDDD\n\t"
-        "_08078320:\n\t"
-        "	ldr r0, _08078330\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08078334\n\t"
-        "	adds r0, #0x11\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _08078358\n\t"
-        "	b _080783C0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078330: .4byte 0x0000EEBB\n\t"
-        "_08078334:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	ldr r0, _08078354\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0xb\n\t"
-        "	b _080783BE\n\t"
-        "	.align 2, 0\n\t"
-        "_08078354: .4byte sTradeMenu\n\t"
-        "_08078358:\n\t"
-        "	movs r0, #5\n\t"
-        "	b _080783B2\n\t"
-        "_0807835C:\n\t"
-        "	ldr r4, _0807838C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r2, #2]\n\t"
-        "	adds r0, #6\n\t"
-        "	adds r1, #0x7e\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl rbox_fill_rectangle\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x35\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl sub_08079090\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x7e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl sub_08079090\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #7\n\t"
-        "	b _080783BE\n\t"
-        "	.align 2, 0\n\t"
-        "_0807838C: .4byte sTradeMenu\n\t"
-        "_08078390:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _080783AC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0xa\n\t"
-        "	b _080783BE\n\t"
-        "	.align 2, 0\n\t"
-        "_080783AC: .4byte sTradeMenu\n\t"
-        "_080783B0:\n\t"
-        "	movs r0, #1\n\t"
-        "_080783B2:\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	ldr r0, _080783DC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #8\n\t"
-        "_080783BE:\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080783C0:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl TradeResetReceivedFlag\n\t"
-        "_080783C6:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r5\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080783D4\n\t"
-        "	movs r0, #1\n\t"
-        "	bl TradeResetReceivedFlag\n\t"
-        "_080783D4:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080783DC: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (status & 1)
+    {
+        switch (gBlockRecvBuffer[0][0])
+        {
+        case LINKCMD_BOTH_CANCEL_TRADE:
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            sub_08079BD4(MSG_WAITING_FOR_FRIEND);
+            sTradeMenu->callbackId = CB_INIT_EXIT_CANCELED_TRADE;
+            break;
+        case LINKCMD_PARTNER_CANCEL_TRADE:
+            sub_08079BD4(MSG_FRIEND_WANTS_TO_TRADE);
+            sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
+            break;
+        case LINKCMD_SET_MONS_TO_TRADE:
+            sTradeMenu->partnerCursorPosition = gBlockRecvBuffer[0][1] + PARTY_SIZE;
+            rbox_fill_rectangle(0);
+            SetSelectedMon(sTradeMenu->cursorPosition);
+            SetSelectedMon(sTradeMenu->partnerCursorPosition);
+            sTradeMenu->callbackId = CB_PRINT_IS_THIS_OKAY;
+            break;
+        case LINKCMD_START_TRADE:
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            sTradeMenu->callbackId = CB_WAIT_TO_START_TRADE;
+            break;
+        case LINKCMD_PLAYER_CANCEL_TRADE:
+            sub_08079BD4(MSG_CANCELED);
+            sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
+            break;
+        }
+        TradeResetReceivedFlag(0);
+    }
+
+    if (status & 2)
+        TradeResetReceivedFlag(1);
 }
 
 __attribute__((naked)) void sub_080783E0(void)
@@ -1535,7 +1444,7 @@ __attribute__((naked)) void sub_08078618(void)
         "	b _08078640\n\t"
         "_0807863A:\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080782E4\n\t"
+        "	bl Follower_ReadLinkBuffer\n\t"
         "_08078640:\n\t"
         "	cmp r4, #0\n\t"
         "	bne _08078648\n\t"
@@ -2532,11 +2441,11 @@ __attribute__((naked)) void sub_08078D64(void)
         "	ldr r0, [r4]\n\t"
         "	adds r0, #0x35\n\t"
         "	ldrb r0, [r0]\n\t"
-        "	bl sub_08079090\n\t"
+        "	bl SetSelectedMon\n\t"
         "	ldr r0, [r4]\n\t"
         "	adds r0, #0x7e\n\t"
         "	ldrb r0, [r0]\n\t"
-        "	bl sub_08079090\n\t"
+        "	bl SetSelectedMon\n\t"
         "_08078D8C:\n\t"
         "	ldr r0, _08078D9C\n\t"
         "	ldr r0, [r0]\n\t"
@@ -2943,7 +2852,7 @@ __attribute__((naked)) void sub_08078FC0(void)
     );
 }
 
-__attribute__((naked)) void sub_08079090(void)
+__attribute__((naked)) void SetSelectedMon(u8 cursorPosition)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
