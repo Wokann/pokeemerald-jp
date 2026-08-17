@@ -3274,9 +3274,9 @@ SECTIONS {
         src/trade.o(.text.SpriteCB_LinkMonGlow);
         src/trade.o(.text.SpriteCB_LinkMonGlowWireless);
         src/trade.o(.text.SpriteCB_LinkMonShadow);
-        src/trade.o(.text.sub_0807A52C);
-        src/trade.o(.text.sub_0807A550);
-        src/trade.o(.text.sub_0807A574);
+        src/trade.o(.text.SpriteCB_CableEndSending);
+        src/trade.o(.text.SpriteCB_CableEndReceiving);
+        src/trade.o(.text.SpriteCB_GbaScreen);
         src/trade.o(.text.sub_0807A598);
         src/trade.o(.text.sub_0807A628);
         src/trade.o(.text.sub_0807A680);

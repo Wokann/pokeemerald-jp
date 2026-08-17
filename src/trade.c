@@ -3129,82 +3129,31 @@ static void SpriteCB_LinkMonShadow(struct Sprite *sprite)
     }
 }
 
-__attribute__((naked)) void sub_0807A52C(void)
+static void SpriteCB_CableEndSending(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r2, #0x2e]\n\t"
-        "	ldrh r0, [r2, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0xa\n\t"
-        "	bne _0807A54A\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0807A54A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0]++;
+    sprite->y2++;
+
+    if (sprite->data[0] == 10)
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void sub_0807A550(void)
+static void SpriteCB_CableEndReceiving(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r2, #0x2e]\n\t"
-        "	ldrh r0, [r2, #0x26]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0xa\n\t"
-        "	bne _0807A56E\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_0807A56E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0]++;
+    sprite->y2--;
+
+    if (sprite->data[0] == 10)
+        DestroySprite(sprite);
 }
 
-__attribute__((naked)) void sub_0807A574(void)
+static void SpriteCB_GbaScreen(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bne _0807A590\n\t"
-        "	movs r0, #0xcc\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_0807A590:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->data[0] == 15)
+    {
+        PlaySE(SE_M_MINIMIZE);
+        sprite->data[0] = 0;
+    }
 }
 
 __attribute__((naked)) void sub_0807A598(void)
@@ -6774,7 +6723,7 @@ __attribute__((naked)) void sub_0807B624(void)
         "	.align 2, 0\n\t"
         "_0807C4F4: .4byte gUnknown_830D040\n\t"
         "_0807C4F8: .4byte gSprites\n\t"
-        "_0807C4FC: .4byte sub_0807A550 + 1\n\t"
+        "_0807C4FC: .4byte SpriteCB_CableEndReceiving + 1\n\t"
         "_0807C500:\n\t"
         "	ldr r0, _0807C520\n\t"
         "	movs r1, #0x78\n\t"
