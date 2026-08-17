@@ -2313,7 +2313,7 @@ __attribute__((naked)) void sub_080FE88C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE8A0: .4byte gItemUseCB\n\t"
-        "_080FE8A4: .4byte sub_081B6A7C + 1\n\t"
+        "_080FE8A4: .4byte ItemUseCB_TMHM + 1\n\t"
         ".syntax divided\n\t"
     );
 }

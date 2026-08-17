@@ -22,4 +22,20 @@ gUnknown_85C97BD: @ 0x85C97BD
 	.set gText_SpAtk3, gUnknown_85C97BD + 0x330
 	.globl gText_SpDef3
 	.set gText_SpDef3, gUnknown_85C97BD + 0x335
+	.globl gText_PkmnLearnedMove3
+	.set gText_PkmnLearnedMove3, gUnknown_85C97BD + 0x5AB
+	.globl gText_PkmnCantLearnMove
+	.set gText_PkmnCantLearnMove, gUnknown_85C97BD + 0x5BF
+	.globl gText_PkmnNeedsToReplaceMove
+	.set gText_PkmnNeedsToReplaceMove, gUnknown_85C97BD + 0x5E4
+	.globl gText_StopLearningMove2
+	.set gText_StopLearningMove2, gUnknown_85C97BD + 0x635
+	.globl gText_MoveNotLearned
+	.set gText_MoveNotLearned, gUnknown_85C97BD + 0x650
+	.globl gText_WhichMoveToForget
+	.set gText_WhichMoveToForget, gUnknown_85C97BD + 0x666
+	.globl gText_12PoofForgotMove
+	.set gText_12PoofForgotMove, gUnknown_85C97BD + 0x678
+	.globl gText_PkmnAlreadyKnows
+	.set gText_PkmnAlreadyKnows, gUnknown_85C97BD + 0x6BC
 	.globl gUnknown_85C983E
