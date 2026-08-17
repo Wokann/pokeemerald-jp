@@ -191,7 +191,7 @@ void sub_0807A028(void);
 void sub_08079D98(u8 side);
 void sub_08079EE0(u8 side);
 void CB1_UpdateLink(void);
-void SetSelectedMon(u8 cursorPosition);
+static void SetSelectedMon(u8 cursorPosition);
 void sub_08079A80(u16 action, u8 data);
 void PrintTradePartnerPartyNicknames(void);
 u32 CanTradeSelectedMon(struct Pokemon *playerParty, int partyCount, int monIdx);
@@ -1794,39 +1794,18 @@ static void RunTradeMenuCallback(void)
     }
 }
 
-__attribute__((naked)) void SetSelectedMon(u8 cursorPosition)
+static void SetSelectedMon(u8 cursorPosition)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r3, _080790C4\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x74\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080790BC\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x76\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "_080790BC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080790C4: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    //cursorPosition 0-5 are the player's mons, 6-11 are the partner's
+    u8 whichParty = cursorPosition / PARTY_SIZE;
+
+    if (sTradeMenu->drawSelectedMonState[whichParty] == 0)
+    {
+        // Start the animation to display just the selected
+        // Pokémon in the middle of the screen
+        sTradeMenu->drawSelectedMonState[whichParty] = 1;
+        sTradeMenu->selectedMonIdx[whichParty] = cursorPosition;
+    }
 }
 
 __attribute__((naked)) void sub_080790C8(u8 side)
