@@ -2323,20 +2323,9 @@ __attribute__((naked)) void c3_0811FAB4(void)
     );
 }
 
-__attribute__((naked)) u8 GetCursorSelectionMonId(void)
+u8 GetCursorSelectionMonId(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/party_menu.c\n\t"
-        "	ldr	r0, .LGetCursorSelectionMonId\n\t"
-        "	ldrb	r0, [r0, #9]\n\t"
-        "	bx	lr\n\t"
-        ".LGetCursorSelectionMonIdPad:\n\t"
-        "	.align	2, 0\n\t"
-        ".LGetCursorSelectionMonId:\n\t"
-        "	.word	gPartyMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    return gPartyMenu.slotId;
 }
 
 __attribute__((naked)) void sub_081B1030(void)
