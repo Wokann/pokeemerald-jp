@@ -4,6 +4,10 @@
 #include "constants/event_objects.h"
 #include "constants/weather.h"
 #include "fieldmap.h"
+extern void CB2_ShowDiploma(void);
+extern void CB2_ReturnToField(void);
+extern void CB2_ViewWallClock(void);
+
 #include "task.h"
 extern void Task_LotteryCornerComputerEffect(u8 taskId);
 extern void Task_PCTurnOnEffect(u8 taskId);
@@ -30,41 +34,17 @@ extern u8 sub_081370D8(u8 nature, u8 *dest);
 extern void GetEreaderTrainerName(u8 *dest);
 #include "field_specials.h"
 
-__attribute__((naked)) void Special_ShowDiploma(void)
+void Special_ShowDiploma(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08137D34\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08137D34: .4byte 0x08177715\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(CB2_ShowDiploma);
+    LockPlayerFieldControls();
 }
 
-__attribute__((naked)) void Special_ViewWallClock(void)
+void Special_ViewWallClock(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08137D50\n\t"
-        "	ldr r1, _08137D54\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	ldr r0, _08137D58\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08137D50: .4byte gMain\n\t"
-        "_08137D54: .4byte CB2_ReturnToField + 1\n\t"
-        "_08137D58: .4byte CB2_ViewWallClock + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gMain.savedCallback = CB2_ReturnToField;
+    SetMainCallback2(CB2_ViewWallClock);
+    LockPlayerFieldControls();
 }
 
 __attribute__((naked)) void ResetCyclingRoadChallengeData()
@@ -1815,19 +1795,9 @@ __attribute__((naked)) void PetalburgGymSpecial2(void)
     );
 }
 
-__attribute__((naked)) void ShowFieldMessageStringVar4(void)
+void ShowFieldMessageStringVar4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138B3C\n\t"
-        "	bl ShowFieldMessage\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138B3C: .4byte gStringVar4\n\t"
-        ".syntax divided\n\t"
-    );
+    ShowFieldMessage(gStringVar4);
 }
 
 void StorePlayerCoordsInVars(void)
