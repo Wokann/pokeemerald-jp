@@ -192,6 +192,8 @@ extern const struct SpriteSheet gUnknown_8300834;
 extern const u16 gUnknown_830D0E8[];
 extern const struct SpriteSheet gUnknown_830CF5C;
 extern const struct SpritePalette gUnknown_830CF64;
+extern const struct BgTemplate gUnknown_830D294[];
+extern const struct WindowTemplate gUnknown_830D27C[];
 
 // JP trade-animation state (fields used by the affine setup below; the
 // layout of the leading region differs from the US TradeAnim struct).
@@ -3471,113 +3473,28 @@ void LinkTradeDrawWindow(void)
     CopyWindowToVram(0, COPYWIN_FULL);
 }
 
-__attribute__((naked)) void TradeAnimInit_LoadGfx(void)
+static void TradeAnimInit_LoadGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _0807ACB4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	movs r0, #0x8c\n\t"
-        "	lsls r0, r0, #0x14\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	mov sb, r0\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r1, sl\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DecompressAndLoadBgGfxUsingHeap\n\t"
-        "	ldr r0, _0807ACB8\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r4, _0807ACBC\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyToBgTilemapBuffer\n\t"
-        "	ldr r6, _0807ACC0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	ldr r0, _0807ACC4\n\t"
-        "	bl InitWindows\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r1, sl\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DecompressAndLoadBgGfxUsingHeap\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyToBgTilemapBuffer\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807ACB4: .4byte gUnknown_830D294\n\t"
-        "_0807ACB8: .4byte gBattleTextboxTilemap\n\t"
-        "_0807ACBC: .4byte gDecompressionBuffer\n\t"
-        "_0807ACC0: .4byte gBattleTextboxPalette\n\t"
-        "_0807ACC4: .4byte gUnknown_830D27C\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, gUnknown_830D294, 4);
+    ChangeBgX(0, 0, BG_COORD_SET);
+    ChangeBgY(0, 0, BG_COORD_SET);
+    SetBgTilemapBuffer(0, Alloc(BG_SCREEN_SIZE));
+    SetBgTilemapBuffer(1, Alloc(BG_SCREEN_SIZE));
+    SetBgTilemapBuffer(3, Alloc(BG_SCREEN_SIZE));
+    DeactivateAllTextPrinters();
+    // Doing the graphics load...
+    DecompressAndLoadBgGfxUsingHeap(0, (const u32 *)0x08C00000, 0, 0, 0); // gBattleTextboxTiles (fixed ROM address)
+    LZDecompressVram(gBattleTextboxTilemap, gDecompressionBuffer);
+    CopyToBgTilemapBuffer(0, gDecompressionBuffer, BG_SCREEN_SIZE, 0);
+    LoadCompressedPalette(gBattleTextboxPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    InitWindows(gUnknown_830D27C);
+    // ... and doing the same load again
+    DecompressAndLoadBgGfxUsingHeap(0, (const u32 *)0x08C00000, 0, 0, 0); // gBattleTextboxTiles (fixed ROM address)
+    LZDecompressVram(gBattleTextboxTilemap, gDecompressionBuffer);
+    CopyToBgTilemapBuffer(0, gDecompressionBuffer, BG_SCREEN_SIZE, 0);
+    LoadCompressedPalette(gBattleTextboxPalette, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
 }
 
 __attribute__((naked)) void sub_0807ACC8(void)
