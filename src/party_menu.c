@@ -12,6 +12,7 @@
 #include "palette.h"
 
 extern const u16 sTMHMMoves[];
+extern const u8 sSlotTilemap_WideEmpty[];
 #include "constants/items.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
@@ -4862,7 +4863,7 @@ __attribute__((naked)) const void *GetPartyMenuPaletteFromBuffer(u8 a)
     );
 }
 
-__attribute__((naked)) void BlitBitmapToPartyWindow(void)
+__attribute__((naked)) static void BlitBitmapToPartyWindow(u8 windowId, const u8 *b, u8 c, u8 x, u8 y, u8 width, u8 height)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5098,31 +5099,9 @@ __attribute__((naked)) void BlitBitmapToPartyWindow_Default2(void)
     );
 }
 
-__attribute__((naked)) void DrawEmptySlot(u8 a)
+static void DrawEmptySlot(u8 windowId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081B23E0\n\t"
-        "	movs r2, #0\n\t"
-        "	str r2, [sp]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	movs r2, #3\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BlitBitmapToPartyWindow\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B23E0: .4byte gUnknown_85E1338\n\t"
-        ".syntax divided\n\t"
-    );
+    BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideEmpty, 18, 0, 0, 18, 3);
 }
 
 __attribute__((naked)) void UpdateSelectedPartyBox(u8 a, u8 b)

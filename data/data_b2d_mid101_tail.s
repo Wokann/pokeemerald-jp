@@ -176,8 +176,8 @@ gUnknown_85E12CC: @ 0x85E12CC
 gUnknown_85E1302: @ 0x85E1302
 	.incbin "baserom_jp.gba", 0x5e1302, 0x36
 
-	.globl gUnknown_85E1338
-gUnknown_85E1338: @ 0x85E1338
+	.globl sSlotTilemap_WideEmpty
+sSlotTilemap_WideEmpty: @ 0x85E1338
 	.incbin "baserom_jp.gba", 0x5e1338, 0x36
 
 	.globl gUnknown_85E136E
