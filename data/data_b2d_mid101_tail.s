@@ -296,12 +296,12 @@ sPartyMenuActionCounts: @ 0x85E1628
 sFieldMoves: @ 0x85E1636
 	.incbin "baserom_jp.gba", 0x5e1636, 0x1e
 
-	.globl gUnknown_85E1654
-gUnknown_85E1654: @ 0x85E1654
+	.globl sFieldMoveCursorCallbacks
+sFieldMoveCursorCallbacks: @ 0x85E1654
 	.incbin "baserom_jp.gba", 0x5e1654, 0x70
 
-	.globl gUnknown_85E16C4
-gUnknown_85E16C4: @ 0x85E16C4
+	.globl sUnionRoomTradeMessages
+sUnionRoomTradeMessages: @ 0x85E16C4
 	.incbin "baserom_jp.gba", 0x5e16c4, 0xa4
 
 	.globl gUnknown_85E1768
