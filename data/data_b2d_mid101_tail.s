@@ -284,16 +284,16 @@ sDescriptionStringTable: @ 0x85E1418
 sCursorOptions: @ 0x85E14C0
 	.incbin "baserom_jp.gba", 0x5e14c0, 0x130
 
-	.globl gUnknown_85E15F0
-gUnknown_85E15F0: @ 0x85E15F0
+	.globl sPartyMenuActions
+sPartyMenuActions: @ 0x85E15F0
 	.incbin "baserom_jp.gba", 0x5e15f0, 0x38
 
-	.globl gUnknown_85E1628
-gUnknown_85E1628: @ 0x85E1628
+	.globl sPartyMenuActionCounts
+sPartyMenuActionCounts: @ 0x85E1628
 	.incbin "baserom_jp.gba", 0x5e1628, 0xe
 
-	.globl gUnknown_85E1636
-gUnknown_85E1636: @ 0x85E1636
+	.globl sFieldMoves
+sFieldMoves: @ 0x85E1636
 	.incbin "baserom_jp.gba", 0x5e1636, 0x1e
 
 	.globl gUnknown_85E1654

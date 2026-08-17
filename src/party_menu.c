@@ -56,6 +56,9 @@ extern const struct WindowTemplate sMailReadTakeWindowTemplate;
 extern const struct WindowTemplate sMoveSelectWindowTemplate;
 extern const struct WindowTemplate sPartyMenuYesNoWindowTemplate;
 extern const struct WindowTemplate sLevelUpStatsWindowTemplate;
+extern const u16 sFieldMoves[];
+extern const u8 sPartyMenuActionCounts[];
+extern const u8 *const sPartyMenuActions[];
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern const struct WindowTemplate sDoWhatWithMonMsgWindowTemplate;
 extern const struct WindowTemplate sWhichMoveMsgWindowTemplate;
@@ -87,6 +90,9 @@ extern bool16 AddTextPrinterParameterized2(u8 windowId, u8 fontId, const u8 *str
 extern u8 GetPlayerTextSpeedDelay(void);
 #include "window.h"
 #include "menu_helpers.h"
+#include "start_menu.h"
+#include "battle_pike.h"
+#include "mail.h"
 #include "sprite.h"
 #include "sound.h"
 #include "string_util.h"
@@ -153,6 +159,24 @@ enum {
 
 enum {
     WIN_MSG = PARTY_SIZE,
+};
+
+enum {
+    FIELD_MOVE_CUT,
+    FIELD_MOVE_FLASH,
+    FIELD_MOVE_ROCK_SMASH,
+    FIELD_MOVE_STRENGTH,
+    FIELD_MOVE_SURF,
+    FIELD_MOVE_FLY,
+    FIELD_MOVE_DIVE,
+    FIELD_MOVE_WATERFALL,
+    FIELD_MOVE_TELEPORT,
+    FIELD_MOVE_DIG,
+    FIELD_MOVE_SECRET_POWER,
+    FIELD_MOVE_MILK_DRINK,
+    FIELD_MOVE_SOFT_BOILED,
+    FIELD_MOVE_SWEET_SCENT,
+    FIELD_MOVES_COUNT
 };
 
 struct PartyMenuInternal
@@ -5636,209 +5660,52 @@ static void RemoveLevelUpStatsWindow(void)
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
 }
 
-__attribute__((naked)) void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 action)
+static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 action)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _081B3068\n\t"
-        "	bl CreateActionList\n\t"
-        "	b _081B30A0\n\t"
-        "_081B3068:\n\t"
-        "	ldr r4, _081B30A8\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, _081B30AC\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r1, #0x17]\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r3, r0\n\t"
-        "	bhs _081B30A0\n\t"
-        "	ldr r1, _081B30B0\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r2, r0, r1\n\t"
-        "_081B3084:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0xf\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0x17]\n\t"
-        "	cmp r3, r0\n\t"
-        "	blo _081B3084\n\t"
-        "_081B30A0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B30A8: .4byte sPartyMenuInternal\n\t"
-        "_081B30AC: .4byte gUnknown_85E1628\n\t"
-        "_081B30B0: .4byte gUnknown_85E15F0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    if (action == ACTIONS_NONE)
+    {
+        SetPartyMonFieldSelectionActions(mons, slotId);
+    }
+    else
+    {
+        sPartyMenuInternal->numActions = sPartyMenuActionCounts[action];
+        for (i = 0; i < sPartyMenuInternal->numActions; i++)
+            sPartyMenuInternal->actions[i] = sPartyMenuActions[action][i];
+    }
 }
 
-__attribute__((naked)) void CreateActionList(void)
+static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sl, r1\n\t"
-        "	ldr r2, _081B3128\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #0x17]\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xf\n\t"
-        "	adds r1, #0x17\n\t"
-        "	movs r2, #0\n\t"
-        "	bl AppendToList\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r0, _081B312C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	str r0, [sp]\n\t"
-        "_081B30E6:\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	cmp r1, #0xe\n\t"
-        "	beq _081B3140\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r6, sl\n\t"
-        "	muls r6, r0, r6\n\t"
-        "	ldr r5, _081B312C\n\t"
-        "_081B30FA:\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _081B3130\n\t"
-        "	ldr r0, _081B3128\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xf\n\t"
-        "	adds r1, #0x17\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x13\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl AppendToList\n\t"
-        "	b _081B3140\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3128: .4byte sPartyMenuInternal\n\t"
-        "_081B312C: .4byte gUnknown_85E1636\n\t"
-        "_081B3130:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bne _081B30FA\n\t"
-        "_081B3140:\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #3\n\t"
-        "	bls _081B30E6\n\t"
-        "	bl InBattlePike\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B31B8\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r0, #0x64\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B3172\n\t"
-        "	ldr r0, _081B31A4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xf\n\t"
-        "	adds r1, #0x17\n\t"
-        "	movs r2, #1\n\t"
-        "	bl AppendToList\n\t"
-        "_081B3172:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r1, sl\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	add r0, sb\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B31A8\n\t"
-        "	ldr r0, _081B31A4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xf\n\t"
-        "	adds r1, #0x17\n\t"
-        "	movs r2, #6\n\t"
-        "	bl AppendToList\n\t"
-        "	b _081B31B8\n\t"
-        "	.align 2, 0\n\t"
-        "_081B31A4: .4byte sPartyMenuInternal\n\t"
-        "_081B31A8:\n\t"
-        "	ldr r0, _081B31D8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xf\n\t"
-        "	adds r1, #0x17\n\t"
-        "	movs r2, #3\n\t"
-        "	bl AppendToList\n\t"
-        "_081B31B8:\n\t"
-        "	ldr r0, _081B31D8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xf\n\t"
-        "	adds r1, #0x17\n\t"
-        "	movs r2, #2\n\t"
-        "	bl AppendToList\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B31D8: .4byte sPartyMenuInternal\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i, j;
+
+    sPartyMenuInternal->numActions = 0;
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
+
+    // Add field moves to action list
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        for (j = 0; sFieldMoves[j] != FIELD_MOVES_COUNT; j++)
+        {
+            if (GetMonData(&mons[slotId], i + MON_DATA_MOVE1) == sFieldMoves[j])
+            {
+                AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, j + MENU_FIELD_MOVES);
+                break;
+            }
+        }
+    }
+
+    if (!InBattlePike())
+    {
+        if (GetMonData(&mons[1], MON_DATA_SPECIES) != SPECIES_NONE)
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SWITCH);
+        if (ItemIsMail(GetMonData(&mons[slotId], MON_DATA_HELD_ITEM)))
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_MAIL);
+        else
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_ITEM);
+    }
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_CANCEL1);
 }
 
 __attribute__((naked)) void sub_081B31DC(void)
