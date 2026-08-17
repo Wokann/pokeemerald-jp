@@ -188,7 +188,7 @@ extern const struct SpritePalette gUnknown_83008DC;
 extern const struct SpritePalette gUnknown_830083C;
 extern const struct SpriteSheet gUnknown_8300834;
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
-void sub_08079FB4(void);
+static void SetTradePartyHPBarSprites(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
 static void PrintTradeMessage(u8 messageId);
 extern const u8 *const gUnknown_8300BDC[];
@@ -600,7 +600,7 @@ static void CB2_CreateTradeMenu(void)
         break;
     case 21:
         ComputePartyHPBarLevels(TRADE_PARTNER);
-        sub_08079FB4();
+        SetTradePartyHPBarSprites();
         gMain.state++;
         break;
     case 22:
@@ -785,7 +785,7 @@ static void CB2_ReturnToTradeMenu(void)
         gMain.state++;
         break;
     case 21:
-        sub_08079FB4();
+        SetTradePartyHPBarSprites();
         gMain.state++;
         break;
     case 22:
@@ -2817,70 +2817,15 @@ static void ComputePartyHPBarLevels(u8 whichParty)
     }
 }
 
-__attribute__((naked)) void sub_08079FB4(void)
+static void SetTradePartyHPBarSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	movs r5, #0\n\t"
-        "_08079FBC:\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r2, _0807A020\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r1, r5, #1\n\t"
-        "	mov r8, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	bge _0807A00E\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r7, r0, #1\n\t"
-        "_08079FD8:\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	adds r3, r4, r7\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x28\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807A024\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r2, #0x5d\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl SetPartyHPBarSprite\n\t"
-        "	adds r4, #1\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	blt _08079FD8\n\t"
-        "_0807A00E:\n\t"
-        "	mov r5, r8\n\t"
-        "	cmp r5, #1\n\t"
-        "	ble _08079FBC\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A020: .4byte sTradeMenu\n\t"
-        "_0807A024: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    int i, j;
+
+    for (i = 0; i < 2; i++)
+    {
+        for (j = 0; j < sTradeMenu->partyCounts[i]; j++)
+            SetPartyHPBarSprite(&gSprites[sTradeMenu->partySpriteIds[i][j]], 4 - sTradeMenu->hpBarLevels[i][j]);
+    }
 }
 
 __attribute__((naked)) void sub_0807A028(void)
