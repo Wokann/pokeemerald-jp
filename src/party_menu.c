@@ -1096,101 +1096,23 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
     );
 }
 
-__attribute__((naked)) void DisplayPartyPokemonData(u8 a)
+static void DisplayPartyPokemonData(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B0670\n\t"
-        "	adds r7, r1, r0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081B0678\n\t"
-        "	ldr r6, _081B0674\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r5, r4, #4\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r4, [r2]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl _call_via_r4\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonNickname\n\t"
-        "	b _081B06DA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0670: .4byte gPlayerParty\n\t"
-        "_081B0674: .4byte sPartyMenuBoxes\n\t"
-        "_081B0678:\n\t"
-        "	ldr r5, _081B06E4\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	str r2, [sp]\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	ldr r6, [r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl _call_via_r6\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonNickname\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonLevelCheck\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonGenderNidoranCheck\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonHPCheck\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DisplayPartyPokemonMaxHPCheck\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl DisplayPartyPokemonHPBarCheck\n\t"
-        "_081B06DA:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B06E4: .4byte sPartyMenuBoxes\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(&gPlayerParty[slot], MON_DATA_IS_EGG))
+    {
+        sPartyMenuBoxes[slot].infoRects->blitFunc(sPartyMenuBoxes[slot].windowId, 0, 0, 0, 0, TRUE);
+        DisplayPartyPokemonNickname(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
+    }
+    else
+    {
+        sPartyMenuBoxes[slot].infoRects->blitFunc(sPartyMenuBoxes[slot].windowId, 0, 0, 0, 0, FALSE);
+        DisplayPartyPokemonNickname(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonLevelCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonGenderNidoranCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonHPCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonMaxHPCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot], 0);
+        DisplayPartyPokemonHPBarCheck(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
+    }
 }
 
 __attribute__((naked)) void DisplayPartyPokemonSelectData(u8 a)
