@@ -12,6 +12,7 @@
 
 void Task_RedArrowCursor(void) {}
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
+u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow);
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
 u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId);
 void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y);
@@ -199,80 +200,32 @@ __attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *wi
     );
 }
 
-__attribute__((naked)) u8 ListMenuInit(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow)
+u8 ListMenuInit(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	bl ListMenuInitInternal\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldrb r0, [r5, #0x10]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	ldrb r0, [r5, #0x10]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = ListMenuInitInternal(listMenuTemplate, scrollOffset, selectedRow);
+    PutWindowTilemap(listMenuTemplate->windowId);
+    CopyWindowToVram(listMenuTemplate->windowId, COPYWIN_GFX);
+
+    return taskId;
 }
 
-__attribute__((naked)) u8 ListMenuInitInRect(struct ListMenuTemplate *listMenuTemplate, struct ListMenuWindowRect *rect, u16 scrollOffset, u16 selectedRow)
+u8 ListMenuInitInRect(struct ListMenuTemplate *listMenuTemplate, struct ListMenuWindowRect *rect, u16 scrollOffset, u16 selectedRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	bl ListMenuInitInternal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldrb r0, [r4, #4]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _081AE2C8\n\t"
-        "	adds r5, r4, #0\n\t"
-        "_081AE2AC:\n\t"
-        "	ldrb r0, [r6, #0x10]\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	ldrb r2, [r5, #1]\n\t"
-        "	ldrb r3, [r5, #2]\n\t"
-        "	ldrb r4, [r5, #3]\n\t"
-        "	str r4, [sp]\n\t"
-        "	ldrb r4, [r5, #4]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	bl PutWindowRectTilemapOverridePalette\n\t"
-        "	adds r5, #8\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _081AE2AC\n\t"
-        "_081AE2C8:\n\t"
-        "	ldrb r0, [r6, #0x10]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    u8 taskId = ListMenuInitInternal(listMenuTemplate, scrollOffset, selectedRow);
+    for (i = 0; rect[i].palNum != 0xFF; i++)
+    {
+        PutWindowRectTilemapOverridePalette(listMenuTemplate->windowId,
+                                            rect[i].x,
+                                            rect[i].y,
+                                            rect[i].width,
+                                            rect[i].height,
+                                            rect[i].palNum);
+    }
+    CopyWindowToVram(listMenuTemplate->windowId, COPYWIN_GFX);
+
+    return taskId;
 }
 
 __attribute__((naked)) s32 ListMenu_ProcessInput(u8 listTaskId)
@@ -551,7 +504,7 @@ u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId)
     return list->selectedRow * yMultiplier + list->template.upText_Y;
 }
 
-__attribute__((naked)) void ListMenuInitInternal(void)
+__attribute__((naked)) u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
