@@ -24,6 +24,9 @@ gUnknown_8300AFC: @ 0x8300AFC
 gUnknown_8300B28: @ 0x8300B28
 	.incbin "baserom_jp.gba", 0x300b28, 0xb4
 
+	.globl sSelectTradeMonActions
+	.set sSelectTradeMonActions, gUnknown_8300B28
+
 	.globl gUnknown_8300BDC
 gUnknown_8300BDC: @ 0x8300BDC
 	.incbin "baserom_jp.gba", 0x300bdc, 0x24
@@ -42,6 +45,9 @@ gUnknown_8300C14: @ 0x8300C14
 
 	.globl gUnknown_8300CAC
 gUnknown_8300CAC: @ 0x8300CAC
+
+	.globl sTradeYesNoWindowTemplate
+	.set sTradeYesNoWindowTemplate, gUnknown_8300CAC
 	.incbin "baserom_jp.gba", 0x300CAC, 0x94
 	.globl gUnknown_8300D40
 gUnknown_8300D40: @ 0x8300D40

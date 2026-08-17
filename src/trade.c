@@ -126,6 +126,10 @@ enum {
 enum {
     TEXT_CANCEL,
     TEXT_CHOOSE_MON,
+    TEXT_SUMMARY,
+    TEXT_TRADE,
+    TEXT_CANCEL_TRADE,
+    TEXT_JP_QUIT,
 };
 
 // Indexes for sMessages
@@ -183,9 +187,14 @@ void sub_08079EE0(u8 side);
 void CB1_UpdateLink(void);
 void SetSelectedMon(u8 cursorPosition);
 void sub_08079A80(u16 action, u8 data);
+extern void sub_08198964(u8 a1, u8 a2, u8 a3, u8 a4, const u8 *text);
+extern u8 sub_081984B0(u8 windowId, u8 fontId, u8 left, u8 top, u8 cursorHeight, u8 numChoices, u8 initialCursorPos);
+extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern u8 *StringCopy10(u8 *dest, const u8 *src);
 extern const u8 gUnknown_8300AAE[];
 extern const u8 gUnknown_8300AB1[];
+extern const struct MenuAction sSelectTradeMonActions[];
+extern const struct WindowTemplate sTradeYesNoWindowTemplate;
 static void LoadTradeBgGfx(u8 state);
 static void SetActiveMenuOptions(void);
 
@@ -1322,171 +1331,46 @@ static void SetReadyToTrade(void)
     }
 }
 
-__attribute__((naked)) void sub_080787A0(void)
+static void CB_ProcessMenuInput(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r0, _080787C0\n\t"
-        "	ldrh r1, [r0, #0x30]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080787C8\n\t"
-        "	ldr r0, _080787C4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x35\n\t"
-        "	movs r1, #0\n\t"
-        "	bl TradeMenuMoveCursor\n\t"
-        "	b _08078814\n\t"
-        "	.align 2, 0\n\t"
-        "_080787C0: .4byte gMain\n\t"
-        "_080787C4: .4byte sTradeMenu\n\t"
-        "_080787C8:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080787E4\n\t"
-        "	ldr r0, _080787E0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x35\n\t"
-        "	movs r1, #1\n\t"
-        "	bl TradeMenuMoveCursor\n\t"
-        "	b _08078814\n\t"
-        "	.align 2, 0\n\t"
-        "_080787E0: .4byte sTradeMenu\n\t"
-        "_080787E4:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078800\n\t"
-        "	ldr r0, _080787FC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x35\n\t"
-        "	movs r1, #2\n\t"
-        "	bl TradeMenuMoveCursor\n\t"
-        "	b _08078814\n\t"
-        "	.align 2, 0\n\t"
-        "_080787FC: .4byte sTradeMenu\n\t"
-        "_08078800:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078814\n\t"
-        "	ldr r0, _08078888\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x35\n\t"
-        "	movs r1, #3\n\t"
-        "	bl TradeMenuMoveCursor\n\t"
-        "_08078814:\n\t"
-        "	ldr r0, _0807888C\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r5, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080788EA\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _08078888\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x35\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _08078894\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0xe\n\t"
-        "	bl DrawTextBorderOuter\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r0, _08078890\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_08198964\n\t"
-        "	movs r0, #0x10\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081984B0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080788EA\n\t"
-        "	.align 2, 0\n\t"
-        "_08078888: .4byte sTradeMenu\n\t"
-        "_0807888C: .4byte gMain\n\t"
-        "_08078890: .4byte gUnknown_8300B28\n\t"
-        "_08078894:\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bhi _080788B2\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080788EA\n\t"
-        "_080788B2:\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bne _080788EA\n\t"
-        "	ldr r0, _080788F4\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl CreateYesNoMenuAtPos\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _080788F8\n\t"
-        "	ldr r0, [r0, #0x10]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x72\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	ldr r2, _080788FC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x18\n\t"
-        "	bl sub_08079D3C\n\t"
-        "_080788EA:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080788F4: .4byte gUnknown_8300CAC\n\t"
-        "_080788F8: .4byte gUnknown_8300AFC\n\t"
-        "_080788FC: .4byte 0x06010000\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_REPEAT(DPAD_UP))
+        TradeMenuMoveCursor(&sTradeMenu->cursorPosition, 0);
+    else if (JOY_REPEAT(DPAD_DOWN))
+        TradeMenuMoveCursor(&sTradeMenu->cursorPosition, 1);
+    else if (JOY_REPEAT(DPAD_LEFT))
+        TradeMenuMoveCursor(&sTradeMenu->cursorPosition, 2);
+    else if (JOY_REPEAT(DPAD_RIGHT))
+        TradeMenuMoveCursor(&sTradeMenu->cursorPosition, 3);
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+
+        if (sTradeMenu->cursorPosition < PARTY_SIZE)
+        {
+            // Selected Pokémon in player's party
+            DrawTextBorderOuter(1, 1, 14);
+            FillWindowPixelBuffer(1, PIXEL_FILL(1));
+            sub_08198964(1, 1, 0x10, 2, (const u8 *)sSelectTradeMonActions); // JP: PrintMenuTable
+            sub_081984B0(1, 1, 0, 2, 0x10, 2, 0); // JP: InitMenuInUpperLeftCornerNormal
+            PutWindowTilemap(1);
+            CopyWindowToVram(1, COPYWIN_FULL);
+            sTradeMenu->callbackId = CB_SELECTED_MON;
+        }
+        else if (sTradeMenu->cursorPosition < PARTY_SIZE * 2)
+        {
+            // Selected Pokémon in partner's party
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            sTradeMenu->callbackId = CB_SHOW_MON_SUMMARY;
+        }
+        else if (sTradeMenu->cursorPosition == PARTY_SIZE * 2)
+        {
+            // Selected Cancel
+            CreateYesNoMenuAtPos(&sTradeYesNoWindowTemplate, FONT_NORMAL, 2, 2, 1, 14, 0);
+            sTradeMenu->callbackId = CB_CANCEL_TRADE_PROMPT;
+            sub_08079D3C(sActionTexts[TEXT_CANCEL_TRADE], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
+        }
+    }
 }
 
 __attribute__((naked)) void sub_08078900(void)
@@ -2472,7 +2356,7 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	.4byte _08079082 @ case 16\n\t"
         "	.4byte _08079088 @ case 17\n\t"
         "_08079028:\n\t"
-        "	bl sub_080787A0\n\t"
+        "	bl CB_ProcessMenuInput\n\t"
         "	b _0807908C\n\t"
         "_0807902E:\n\t"
         "	bl sub_08078958\n\t"
