@@ -1,5 +1,6 @@
 #include "global.h"
 #include "party_menu.h"
+#include "bg.h"
 
 extern const u16 sTMHMMoves[];
 #include "constants/items.h"
@@ -584,60 +585,26 @@ void reset_brm(void)
     sPartyBgGfxTilemap = NULL;
 }
 
-__attribute__((naked)) void AllocPartyMenuBg(void)
+extern const struct BgTemplate gUnknown_85E0F70[];
+
+static bool8 AllocPartyMenuBg(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _081B0290\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Alloc\n\t"
-        "	str r0, [r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B0298\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl memset\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _081B0294\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	bl ResetAllBgsCoordinates\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r1, #0x82\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x50\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B029A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0290: .4byte sPartyBgTilemapBuffer\n\t"
-        "_081B0294: .4byte gUnknown_85E0F70\n\t"
-        "_081B0298:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B029A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    sPartyBgTilemapBuffer = Alloc(0x800);
+    if (sPartyBgTilemapBuffer == NULL)
+        return FALSE;
+
+    memset(sPartyBgTilemapBuffer, 0, 0x800);
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, gUnknown_85E0F70, 3);
+    SetBgTilemapBuffer(1, sPartyBgTilemapBuffer);
+    ResetAllBgsCoordinates();
+    ScheduleBgCopyTilemapToVram(1);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    ShowBg(0);
+    ShowBg(1);
+    ShowBg(2);
+    return TRUE;
 }
 
 __attribute__((naked)) void AllocPartyMiscGfx(void)
