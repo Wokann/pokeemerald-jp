@@ -1,11 +1,17 @@
 #include "global.h"
 #include "cable_club.h"
 #include "constants/songs.h"
+#include "data.h"
+#include "event_data.h"
 #include "field_message_box.h"
 #include "link.h"
 #include "main.h"
 #include "menu.h"
+#include "overworld.h"
+#include "party_menu.h"
+#include "script.h"
 #include "string_util.h"
+#include "trainer_card.h"
 #include "window.h"
 
 #define tMinPlayers data[1]
@@ -23,13 +29,19 @@ static void Task_LinkupAwaitConfirmation(u8 taskId);
 static void Task_LinkupTryConfirmation(u8 taskId);
 static void Task_LinkupConfirm(u8 taskId);
 static void Task_LinkupExchangeDataWithLeader(u8 taskId);
-void sub_080B25C8(u8 taskId);
-void sub_080B2608(u8 taskId);
+static void Task_LinkupCheckStatusAfterConfirm(u8 taskId);
+static void Task_LinkupAwaitTrainerCardData(u8 taskId);
+static void Task_StopLinkup(u8 taskId);
+static bool8 TryLinkTimeout(u8 taskId);
+void Task_LinkupFailed(u8 taskId);
+void Task_LinkupConnectionError(u8 taskId);
 
 extern const struct WindowTemplate sWindowTemplate_LinkPlayerCount;
 extern const u8 gText_ConfirmLinkWhenPlayersReady[];
 extern const u8 gText_ConfirmStartLinkWithXPlayers[];
 extern const u8 gText_AwaitingLinkup[];
+extern struct Pokemon gUnknown_202412C[];
+extern void TrainerCard_GenerateCardForPlayer(struct TrainerCard *trainerCard);
 
 static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
 {
@@ -137,7 +149,7 @@ static bool32 CheckLinkErrored(u8 taskId)
 {
     if (HasLinkErrorOccurred() == TRUE)
     {
-        gTasks[taskId].func = sub_080B2608;
+        gTasks[taskId].func = Task_LinkupConnectionError;
         return TRUE;
     }
     return FALSE;
@@ -149,7 +161,7 @@ static bool32 CheckLinkCanceledBeforeConnection(u8 taskId)
      && IsLinkConnectionEstablished() == FALSE)
     {
         gLinkType = 0;
-        gTasks[taskId].func = sub_080B25C8;
+        gTasks[taskId].func = Task_LinkupFailed;
         return TRUE;
     }
     return FALSE;
@@ -163,7 +175,7 @@ static bool32 CheckLinkCanceled(u8 taskId)
     if (JOY_NEW(B_BUTTON))
     {
         gLinkType = 0;
-        gTasks[taskId].func = sub_080B25C8;
+        gTasks[taskId].func = Task_LinkupFailed;
         return TRUE;
     }
     return FALSE;
@@ -173,7 +185,7 @@ static bool32 CheckSioErrored(u8 taskId)
 {
     if (GetSioMultiSI() == TRUE)
     {
-        gTasks[taskId].func = sub_080B2608;
+        gTasks[taskId].func = Task_LinkupConnectionError;
         return TRUE;
     }
     return FALSE;
@@ -299,518 +311,217 @@ static void Task_LinkupTryConfirmation(u8 taskId)
     }
 }
 
-__attribute__((naked)) void Task_LinkupConfirm(u8 taskId)
+static void Task_LinkupConfirm(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _080B21C8\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrb r7, [r5, #0xa]\n\t"
-        "	ldrb r6, [r5, #0xc]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B21E6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080B2648\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B21E6\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl GetSavedPlayerCount\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _080B21D0\n\t"
-        "	ldr r0, _080B21CC\n\t"
-        "	b _080B21E4\n\t"
-        "	.align 2, 0\n\t"
-        "_080B21C8: .4byte gTasks\n\t"
-        "_080B21CC: .4byte sub_080B2608 + 1\n\t"
-        "_080B21D0:\n\t"
-        "	ldr r4, _080B21EC\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl ExchangeDataAndGetLinkupStatus\n\t"
-        "	strh r0, [r4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B21E6\n\t"
-        "	ldr r0, _080B21F0\n\t"
-        "_080B21E4:\n\t"
-        "	str r0, [r5]\n\t"
-        "_080B21E6:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B21EC: .4byte gSpecialVar_Result\n\t"
-        "_080B21F0: .4byte sub_080B22E4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 minPlayers = gTasks[taskId].tMinPlayers;
+    u8 maxPlayers = gTasks[taskId].tMaxPlayers;
+
+    if (CheckLinkErrored(taskId) == TRUE
+     || TryLinkTimeout(taskId) == TRUE)
+        return;
+
+    if (GetLinkPlayerCount_2() != GetSavedPlayerCount())
+    {
+        gTasks[taskId].func = Task_LinkupConnectionError;
+    }
+    else
+    {
+        gSpecialVar_Result = ExchangeDataAndGetLinkupStatus(minPlayers, maxPlayers);
+        if (gSpecialVar_Result != LINKUP_ONGOING)
+            gTasks[taskId].func = Task_LinkupCheckStatusAfterConfirm;
+    }
 }
 
-__attribute__((naked)) void Task_LinkupExchangeDataWithLeader(u8 taskId)
+static void Task_LinkupExchangeDataWithLeader(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _080B224C\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	ldrb r6, [r7, #0xa]\n\t"
-        "	ldrb r5, [r7, #0xc]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkCanceledBeforeConnection\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B22C2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B22C2\n\t"
-        "	ldr r4, _080B2250\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ExchangeDataAndGetLinkupStatus\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r1, [r4]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080B22C2\n\t"
-        "	subs r0, r1, #3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _080B2258\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	bl HideFieldMessageBox\n\t"
-        "	ldr r0, _080B2254\n\t"
-        "	b _080B22C0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B224C: .4byte gTasks\n\t"
-        "_080B2250: .4byte gSpecialVar_Result\n\t"
-        "_080B2254: .4byte sub_080B258C + 1\n\t"
-        "_080B2258:\n\t"
-        "	cmp r2, #7\n\t"
-        "	beq _080B2260\n\t"
-        "	cmp r2, #9\n\t"
-        "	bne _080B2270\n\t"
-        "_080B2260:\n\t"
-        "	bl CloseLink\n\t"
-        "	bl HideFieldMessageBox\n\t"
-        "	ldr r0, _080B226C\n\t"
-        "	b _080B22C0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B226C: .4byte sub_080B258C + 1\n\t"
-        "_080B2270:\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	ldr r4, _080B22CC\n\t"
-        "	strb r0, [r4]\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	ldr r1, _080B22D0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl sub_0800A5C8\n\t"
-        "	ldr r4, _080B22D4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl TrainerCard_GenerateCardForPlayer\n\t"
-        "	ldr r0, _080B22D8\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _080B22DC\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0xb\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x54\n\t"
-        "	strh r0, [r1]\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0xb\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, #0x56\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r0, _080B22E0\n\t"
-        "_080B22C0:\n\t"
-        "	str r0, [r7]\n\t"
-        "_080B22C2:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B22CC: .4byte gFieldLinkPlayerCount\n\t"
-        "_080B22D0: .4byte gLocalLinkPlayerId\n\t"
-        "_080B22D4: .4byte gBlockSendBuffer\n\t"
-        "_080B22D8: .4byte gSelectedOrderFromParty\n\t"
-        "_080B22DC: .4byte gUnknown_202412C\n\t"
-        "_080B22E0: .4byte sub_080B250C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 minPlayers, maxPlayers;
+    struct TrainerCard *card;
+
+    minPlayers = gTasks[taskId].tMinPlayers;
+    maxPlayers = gTasks[taskId].tMaxPlayers;
+
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
+     || CheckLinkErrored(taskId) == TRUE)
+        return;
+
+    gSpecialVar_Result = ExchangeDataAndGetLinkupStatus(minPlayers, maxPlayers);
+    if (gSpecialVar_Result == LINKUP_ONGOING)
+        return;
+    if (gSpecialVar_Result == LINKUP_DIFF_SELECTIONS
+     || gSpecialVar_Result == LINKUP_WRONG_NUM_PLAYERS)
+    {
+        SetCloseLinkCallback();
+        HideFieldMessageBox();
+        gTasks[taskId].func = Task_StopLinkup;
+    }
+    else if (gSpecialVar_Result == LINKUP_PLAYER_NOT_READY
+          || gSpecialVar_Result == LINKUP_PARTNER_NOT_READY)
+    {
+        CloseLink();
+        HideFieldMessageBox();
+        gTasks[taskId].func = Task_StopLinkup;
+    }
+    else
+    {
+        gFieldLinkPlayerCount = GetLinkPlayerCount_2();
+        gLocalLinkPlayerId = GetMultiplayerId();
+        SaveLinkPlayers(gFieldLinkPlayerCount);
+        card = (struct TrainerCard *)gBlockSendBuffer;
+        TrainerCard_GenerateCardForPlayer(card);
+        card->monSpecies[0] = GetMonData(&gUnknown_202412C[gSelectedOrderFromParty[0]], MON_DATA_SPECIES, NULL);
+        card->monSpecies[1] = GetMonData(&gUnknown_202412C[gSelectedOrderFromParty[1]], MON_DATA_SPECIES, NULL);
+        gTasks[taskId].func = Task_LinkupAwaitTrainerCardData;
+    }
 }
 
-__attribute__((naked)) void sub_080B22E4(void)
+static void Task_LinkupCheckStatusAfterConfirm(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl CheckLinkErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B23AA\n\t"
-        "	ldr r0, _080B2310\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _080B2314\n\t"
-        "	bl Link_AnyPartnersPlayingRubyOrSapphire\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B2326\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	b _080B232A\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2310: .4byte gSpecialVar_Result\n\t"
-        "_080B2314:\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080B231E\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	b _080B232A\n\t"
-        "_080B231E:\n\t"
-        "	cmp r0, #7\n\t"
-        "	beq _080B2326\n\t"
-        "	cmp r0, #9\n\t"
-        "	bne _080B2348\n\t"
-        "_080B2326:\n\t"
-        "	bl CloseLink\n\t"
-        "_080B232A:\n\t"
-        "	bl HideFieldMessageBox\n\t"
-        "	ldr r0, _080B2340\n\t"
-        "	lsls r1, r7, #2\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B2344\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _080B23AA\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2340: .4byte gTasks\n\t"
-        "_080B2344: .4byte sub_080B258C + 1\n\t"
-        "_080B2348:\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	ldr r4, _080B23B4\n\t"
-        "	strb r0, [r4]\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	ldr r1, _080B23B8\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl sub_0800A5C8\n\t"
-        "	ldr r4, _080B23BC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl TrainerCard_GenerateCardForPlayer\n\t"
-        "	ldr r0, _080B23C0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _080B23C4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0xb\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x54\n\t"
-        "	strh r0, [r1]\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0xb\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, #0x56\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldr r1, _080B23C8\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080B23CC\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_0800A09C\n\t"
-        "_080B23AA:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B23B4: .4byte gFieldLinkPlayerCount\n\t"
-        "_080B23B8: .4byte gLocalLinkPlayerId\n\t"
-        "_080B23BC: .4byte gBlockSendBuffer\n\t"
-        "_080B23C0: .4byte gSelectedOrderFromParty\n\t"
-        "_080B23C4: .4byte gUnknown_202412C\n\t"
-        "_080B23C8: .4byte gTasks\n\t"
-        "_080B23CC: .4byte sub_080B250C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct TrainerCard *card;
+
+    if (CheckLinkErrored(taskId) == TRUE)
+        return;
+
+    if (gSpecialVar_Result == LINKUP_WRONG_NUM_PLAYERS)
+    {
+        if (!Link_AnyPartnersPlayingRubyOrSapphire())
+        {
+            SetCloseLinkCallback();
+            HideFieldMessageBox();
+            gTasks[taskId].func = Task_StopLinkup;
+        }
+        else
+        {
+            CloseLink();
+            HideFieldMessageBox();
+            gTasks[taskId].func = Task_StopLinkup;
+        }
+    }
+    else if (gSpecialVar_Result == LINKUP_DIFF_SELECTIONS)
+    {
+        SetCloseLinkCallback();
+        HideFieldMessageBox();
+        gTasks[taskId].func = Task_StopLinkup;
+    }
+    else if (gSpecialVar_Result == LINKUP_PLAYER_NOT_READY
+          || gSpecialVar_Result == LINKUP_PARTNER_NOT_READY)
+    {
+        CloseLink();
+        HideFieldMessageBox();
+        gTasks[taskId].func = Task_StopLinkup;
+    }
+    else
+    {
+        gFieldLinkPlayerCount = GetLinkPlayerCount_2();
+        gLocalLinkPlayerId = GetMultiplayerId();
+        SaveLinkPlayers(gFieldLinkPlayerCount);
+        card = (struct TrainerCard *)gBlockSendBuffer;
+        TrainerCard_GenerateCardForPlayer(card);
+        card->monSpecies[0] = GetMonData(&gUnknown_202412C[gSelectedOrderFromParty[0]], MON_DATA_SPECIES, NULL);
+        card->monSpecies[1] = GetMonData(&gUnknown_202412C[gSelectedOrderFromParty[1]], MON_DATA_SPECIES, NULL);
+        gTasks[taskId].func = Task_LinkupAwaitTrainerCardData;
+        SendBlockRequest(BLOCK_REQ_SIZE_100);
+    }
 }
 
-__attribute__((naked)) void sub_080B23D0(void)
+bool32 AreBattleTowerLinkSpeciesSame(u16 *speciesList1, u16 *speciesList2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov sl, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r1, _080B2460\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _080B2464\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r0, _080B2468\n\t"
-        "	mov sb, r0\n\t"
-        "_080B23F8:\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r1, #1\n\t"
-        "	mov r8, r1\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	mov r5, sl\n\t"
-        "	movs r6, #1\n\t"
-        "_080B2406:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080B243A\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _080B2422\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	add r1, sb\n\t"
-        "	ldr r0, _080B2460\n\t"
-        "	bl StringCopy\n\t"
-        "	movs r2, #1\n\t"
-        "_080B2422:\n\t"
-        "	cmp r7, #1\n\t"
-        "	bne _080B2438\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	add r1, sb\n\t"
-        "	ldr r0, _080B2464\n\t"
-        "	bl StringCopy\n\t"
-        "	movs r2, #1\n\t"
-        "_080B2438:\n\t"
-        "	adds r7, #1\n\t"
-        "_080B243A:\n\t"
-        "	adds r5, #2\n\t"
-        "	subs r6, #1\n\t"
-        "	cmp r6, #0\n\t"
-        "	bge _080B2406\n\t"
-        "	mov r1, r8\n\t"
-        "	cmp r1, #1\n\t"
-        "	ble _080B23F8\n\t"
-        "	ldr r0, _080B246C\n\t"
-        "	strh r7, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2460: .4byte gStringVar1\n\t"
-        "_080B2464: .4byte gStringVar2\n\t"
-        "_080B2468: .4byte gSpeciesNames\n\t"
-        "_080B246C: .4byte gSpecialVar_0x8005\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    int j;
+    bool32 haveSameSpecies = FALSE;
+    int numSameSpecies = 0;
+
+    gStringVar1[0] = EOS;
+    gStringVar2[0] = EOS;
+
+    for (i = 0; i < FRONTIER_MULTI_PARTY_SIZE; i++)
+    {
+        for (j = 0; j < FRONTIER_MULTI_PARTY_SIZE; j++)
+        {
+            if (speciesList1[i] == speciesList2[j])
+            {
+                if (numSameSpecies == 0)
+                {
+                    StringCopy(gStringVar1, gSpeciesNames[speciesList1[i]]);
+                    haveSameSpecies = TRUE;
+                }
+
+                if (numSameSpecies == 1)
+                {
+                    StringCopy(gStringVar2, gSpeciesNames[speciesList1[i]]);
+                    haveSameSpecies = TRUE;
+                }
+
+                numSameSpecies++;
+            }
+        }
+    }
+
+    // var below is read by BattleFrontier_BattleTowerLobby_EventScript_AbortLink
+    gSpecialVar_0x8005 = numSameSpecies;
+
+    return haveSameSpecies;
 }
 
-__attribute__((naked)) void task_map_chg_seq_0807EC34(void)
+static void FinishLinkup(u16 *linkupStatus, u32 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	ldr r1, _080B24B4\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B24EC\n\t"
-        "	ldr r0, _080B24B8\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	ldr r0, _080B24BC\n\t"
-        "	cmp r2, r0\n\t"
-        "	beq _080B248E\n\t"
-        "	adds r0, #0x11\n\t"
-        "	cmp r2, r0\n\t"
-        "	bne _080B24C8\n\t"
-        "_080B248E:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x54\n\t"
-        "	adds r1, #0xb8\n\t"
-        "	bl sub_080B23D0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B24C8\n\t"
-        "	movs r0, #0xb\n\t"
-        "	strh r0, [r5]\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	ldr r1, _080B24C0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080B24C4\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _080B24FE\n\t"
-        "	.align 2, 0\n\t"
-        "_080B24B4: .4byte gTrainerCards\n\t"
-        "_080B24B8: .4byte gLinkType\n\t"
-        "_080B24BC: .4byte 0x00002266\n\t"
-        "_080B24C0: .4byte gTasks\n\t"
-        "_080B24C4: .4byte sub_080B258C + 1\n\t"
-        "_080B24C8:\n\t"
-        "	ldr r1, _080B24E8\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0, #0x12]\n\t"
-        "	bl ClearLinkPlayerCountWindow\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080B24FE\n\t"
-        "	.align 2, 0\n\t"
-        "_080B24E8: .4byte gTasks\n\t"
-        "_080B24EC:\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "	ldr r0, _080B2504\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B2508\n\t"
-        "	str r0, [r1]\n\t"
-        "_080B24FE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2504: .4byte gTasks\n\t"
-        "_080B2508: .4byte sub_080B258C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct TrainerCard *trainerCards = gTrainerCards;
+
+    if (*linkupStatus == LINKUP_SUCCESS)
+    {
+        if (gLinkType == LINKTYPE_BATTLE_TOWER_50 || gLinkType == LINKTYPE_BATTLE_TOWER_OPEN)
+        {
+            if (AreBattleTowerLinkSpeciesSame(trainerCards[0].monSpecies, trainerCards[1].monSpecies))
+            {
+                // Unsuccessful battle tower linkup
+                *linkupStatus = LINKUP_FAILED_BATTLE_TOWER;
+                SetCloseLinkCallback();
+                gTasks[taskId].func = Task_StopLinkup;
+            }
+            else
+            {
+                // Successful battle tower linkup
+                ClearLinkPlayerCountWindow(gTasks[taskId].tWindowId);
+                ScriptContext_Enable();
+                DestroyTask(taskId);
+            }
+        }
+        else
+        {
+            // Successful linkup
+            ClearLinkPlayerCountWindow(gTasks[taskId].tWindowId);
+            ScriptContext_Enable();
+            DestroyTask(taskId);
+        }
+    }
+    else
+    {
+        // Unsuccessful linkup
+        SetCloseLinkCallback();
+        gTasks[taskId].func = Task_StopLinkup;
+    }
 }
 
-__attribute__((naked)) void sub_080B250C(void)
+static void Task_LinkupAwaitTrainerCardData(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CheckLinkErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2578\n\t"
-        "	bl GetBlockReceivedStatus\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0800A56C\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _080B2578\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r6, _080B2534\n\t"
-        "	b _080B255A\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2534: .4byte gLinkPlayers\n\t"
-        "_080B2538:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _080B2580\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r1, r4, #8\n\t"
-        "	ldr r2, _080B2584\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r2, r4, #3\n\t"
-        "	subs r2, r2, r4\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r6\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	bl CopyTrainerCardData\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "_080B255A:\n\t"
-        "	bl GetLinkPlayerCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	blo _080B2538\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetSuppressLinkErrorMessage\n\t"
-        "	bl ResetBlockReceivedFlags\n\t"
-        "	ldr r0, _080B2588\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl task_map_chg_seq_0807EC34\n\t"
-        "_080B2578:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2580: .4byte gTrainerCards\n\t"
-        "_080B2584: .4byte gBlockRecvBuffer\n\t"
-        "_080B2588: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 index;
+
+    if (CheckLinkErrored(taskId) == TRUE)
+        return;
+
+    if (GetBlockReceivedStatus() != GetSavedLinkPlayerCountAsBitFlags())
+        return;
+
+    for (index = 0; index < GetLinkPlayerCount(); index++)
+    {
+        CopyTrainerCardData(&gTrainerCards[index], (struct TrainerCard *)gBlockRecvBuffer[index], gLinkPlayers[index].version);
+    }
+
+    SetSuppressLinkErrorMessage(FALSE);
+    ResetBlockReceivedFlags();
+    FinishLinkup(&gSpecialVar_Result, taskId);
 }
 
-__attribute__((naked)) void sub_080B258C(void)
+__attribute__((naked)) void Task_StopLinkup(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -844,7 +555,7 @@ __attribute__((naked)) void sub_080B258C(void)
     );
 }
 
-__attribute__((naked)) void sub_080B25C8(u8 taskId)
+__attribute__((naked)) void Task_LinkupFailed(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -878,7 +589,7 @@ __attribute__((naked)) void sub_080B25C8(u8 taskId)
     );
 }
 
-__attribute__((naked)) void sub_080B2608(u8 taskId)
+__attribute__((naked)) void Task_LinkupConnectionError(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -912,7 +623,7 @@ __attribute__((naked)) void sub_080B2608(u8 taskId)
     );
 }
 
-__attribute__((naked)) void sub_080B2648(void)
+__attribute__((naked)) bool8 TryLinkTimeout(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -944,7 +655,7 @@ __attribute__((naked)) void sub_080B2648(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B267C: .4byte sub_080B2608 + 1\n\t"
+        "_080B267C: .4byte Task_LinkupConnectionError + 1\n\t"
         ".syntax divided\n\t"
     );
 }
