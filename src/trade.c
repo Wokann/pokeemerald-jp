@@ -203,6 +203,11 @@ extern const struct SpritePalette gUnknown_830CFC4;
 extern const struct BgTemplate gUnknown_830D294[];
 extern const struct WindowTemplate gUnknown_830D27C[];
 extern u8 gUnknown_20226A8[];
+extern const struct InGameTrade gUnknown_830D114[];
+extern u8 gStringVar1[0x100];
+extern u8 gStringVar2[0x100];
+extern u8 gStringVar3[0x100];
+extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
 void CB2_InGameTradeAnim(void);
 
@@ -252,6 +257,30 @@ struct TradeAnim
 };
 
 extern struct TradeAnim *gUnknown_2031F40;
+
+// JP in-game trade data. Each entry is 0x3C bytes; the leading fields differ
+// from the US struct (nickname is at 0x00 and otName at 0x2B, with no mail
+// struct embedded). Species IDs follow the JP ROM's internal ordering.
+struct InGameTrade
+{
+    u8 nickname[12];            // 0x00
+    u16 species;                // 0x0C
+    u8 ivs[NUM_STATS];          // 0x0E
+    u8 abilityNum;              // 0x14
+    u8 filler_15[3];            // 0x15
+    u32 otId;                   // 0x18
+    u8 conditions[CONTEST_CATEGORIES_COUNT]; // 0x1C
+    u8 filler_21;               // 0x21
+    u8 filler_22[2];            // 0x22
+    u32 personality;            // 0x24
+    u16 heldItem;               // 0x28
+    u8 mailNum;                 // 0x2A
+    u8 otName[12];              // 0x2B
+    u8 sheen;                   // 0x37
+    u16 requestedSpecies;       // 0x38
+    u8 filler_3A[2];            // 0x3A
+};                              // size: 0x3C
+
 void CB2_UpdateLinkTrade(void);
 extern struct MonSpritesGfx *gMonSpritesGfxPtr;
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
@@ -4192,110 +4221,28 @@ static void LoadTradeSequenceSpriteSheetsAndPalettes(void)
     LoadSpritePalette(&gUnknown_830CFC4);
 }
 
-__attribute__((naked)) void SetTradeSceneStrings(void)
+static void SetTradeSceneStrings(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	ldr r0, _0807B580\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xee\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807B5A0\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r3, _0807B584\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0x11\n\t"
-        "	eors r2, r0\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r1, r2, #3\n\t"
-        "	subs r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0807B588\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r5, _0807B58C\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r4, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _0807B590\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, _0807B594\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _0807B598\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, _0807B59C\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	b _0807B5DC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B580: .4byte gUnknown_2031F40\n\t"
-        "_0807B584: .4byte gStringVar1\n\t"
-        "_0807B588: .4byte gUnknown_20226A8\n\t"
-        "_0807B58C: .4byte gSelectedTradeMonPositions\n\t"
-        "_0807B590: .4byte gEnemyParty\n\t"
-        "_0807B594: .4byte gStringVar3\n\t"
-        "_0807B598: .4byte gPlayerParty\n\t"
-        "_0807B59C: .4byte gStringVar2\n\t"
-        "_0807B5A0:\n\t"
-        "	ldr r0, _0807B5E4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0807B5E8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, _0807B5EC\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x2b\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r0, _0807B5F0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl StringCopy10\n\t"
-        "	ldr r0, _0807B5F4\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0807B5F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, _0807B5FC\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "_0807B5DC:\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B5E4: .4byte gSpecialVar_0x8004\n\t"
-        "_0807B5E8: .4byte gUnknown_830D114\n\t"
-        "_0807B5EC: .4byte gStringVar1\n\t"
-        "_0807B5F0: .4byte gStringVar3\n\t"
-        "_0807B5F4: .4byte gSpecialVar_0x8005\n\t"
-        "_0807B5F8: .4byte gPlayerParty\n\t"
-        "_0807B5FC: .4byte gStringVar2\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 name[POKEMON_NAME_BUFFER_SIZE];
+    const struct InGameTrade *ingameTrade;
+
+    if (gUnknown_2031F40->isLinkTrade)
+    {
+        u8 mpId = GetMultiplayerId();
+        StringCopy(gStringVar1, gLinkPlayers[mpId ^ 1].name);
+        GetMonData3(&gEnemyParty[gSelectedTradeMonPositions[TRADE_PARTNER] % PARTY_SIZE], MON_DATA_NICKNAME, name);
+        StringCopy10(gStringVar3, name);
+        GetMonData3(&gPlayerParty[gSelectedTradeMonPositions[TRADE_PLAYER]], MON_DATA_NICKNAME, name);
+        StringCopy10(gStringVar2, name);
+    }
+    else
+    {
+        ingameTrade = &gUnknown_830D114[gSpecialVar_0x8004];
+        StringCopy(gStringVar1, ingameTrade->otName);
+        StringCopy10(gStringVar3, ingameTrade->nickname);
+        GetMonData3(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_NICKNAME, name);
+        StringCopy10(gStringVar2, name);
+    }
 }
 
 static bool8 DoTradeAnim(void)
