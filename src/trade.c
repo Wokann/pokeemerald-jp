@@ -175,7 +175,7 @@ static bool8 BufferTradeParties(void);
 void sub_0807A028(void);
 void sub_08079D98(u8 side);
 void sub_08079EE0(u8 side);
-void sub_08078618(void);
+void CB1_UpdateLink(void);
 void SetSelectedMon(u8 cursorPosition);
 void sub_08079A80(u16 action, u8 data);
 extern u8 *StringCopy10(u8 *dest, const u8 *src);
@@ -564,7 +564,7 @@ static void CB2_CreateTradeMenu(void)
     case 22:
         if (!gPaletteFade.active)
         {
-            gMain.callback1 = sub_08078618; // CB1_UpdateLink
+            gMain.callback1 = CB1_UpdateLink; // CB1_UpdateLink
             SetMainCallback2(CB2_TradeMenu);
         }
         break;
@@ -1242,38 +1242,21 @@ static void SetLinkData(u16 linkCmd, u16 cursorPosition)
     _SetLinkData(sTradeMenu->linkData, linkCmd, cursorPosition);
 }
 
-__attribute__((naked)) void sub_08078618(void)
+static void CB1_UpdateLink(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl _GetBlockReceivedStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08078640\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0807863A\n\t"
-        "	movs r0, #0\n\t"
-        "	bl Leader_ReadLinkBuffer\n\t"
-        "	b _08078640\n\t"
-        "_0807863A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Follower_ReadLinkBuffer\n\t"
-        "_08078640:\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _08078648\n\t"
-        "	bl Leader_HandleCommunication\n\t"
-        "_08078648:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 mpId = GetMultiplayerId();
+    u8 status;
+
+    if ((status = _GetBlockReceivedStatus()))
+    {
+        if (mpId == 0)
+            Leader_ReadLinkBuffer(mpId, status);
+        else
+            Follower_ReadLinkBuffer(mpId, status);
+    }
+
+    if (mpId == 0)
+        Leader_HandleCommunication();
 }
 
 __attribute__((naked)) void sub_08078650(void)

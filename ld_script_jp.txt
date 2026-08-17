@@ -3219,7 +3219,7 @@ SECTIONS {
         src/trade.o(.text.Leader_HandleCommunication);
         src/trade.o(.text._SetLinkData);
         src/trade.o(.text.SetLinkData);
-        src/trade.o(.text.sub_08078618);
+        src/trade.o(.text.CB1_UpdateLink);
         src/trade.o(.text.sub_08078650);
         src/trade.o(.text.TradeMenuMoveCursor);
         src/trade.o(.text.sub_0807875C);
