@@ -12132,7 +12132,7 @@ __attribute__((naked)) void sub_0806D23C(void)
     );
 }
 
-__attribute__((naked)) void sub_0806D288(void)
+__attribute__((naked)) u8 GetPlayerFlankId(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

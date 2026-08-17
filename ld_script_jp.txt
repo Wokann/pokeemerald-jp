@@ -8842,8 +8842,8 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B8690);
         src/party_menu.o(.text.sub_081B86CC);
         src/party_menu.o(.text.sub_081B871C);
-        src/party_menu.o(.text.sub_081B8908);
-        src/party_menu.o(.text.sub_081B8928);
+        src/party_menu.o(.text.BufferBattlePartyCurrentOrder);
+        src/party_menu.o(.text.BufferBattlePartyOrder);
         src/party_menu.o(.text.sub_081B8A04);
         src/party_menu.o(.text.sub_081B8A28);
         src/party_menu.o(.text.sub_081B8B20);

@@ -18255,28 +18255,14 @@ __attribute__((naked)) void sub_081B871C(void)
     );
 }
 
-__attribute__((naked)) void sub_081B8908(void)
+__attribute__((naked)) void BufferBattlePartyOrder(u8 *partyBattleOrder, u8 flankId);
+
+void BufferBattlePartyCurrentOrder(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _081B8924\n\t"
-        "	bl sub_0806D288\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B8928\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8924: .4byte gBattlePartyCurrentOrder\n\t"
-        ".syntax divided\n\t"
-    );
+    BufferBattlePartyOrder(gBattlePartyCurrentOrder, (u8)GetPlayerFlankId());
 }
 
-__attribute__((naked)) void sub_081B8928(void)
+__attribute__((naked)) void BufferBattlePartyOrder(u8 *partyBattleOrder, u8 flankId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -2367,7 +2367,7 @@ __attribute__((naked)) bool8 BattleInitAllSprites(u8 *state1, u8 *battler)
         "_0805DF54: .4byte gBattlersCount\n\t"
         "_0805DF58:\n\t"
         "	bl LoadAndCreateEnemyShadowSprites\n\t"
-        "	bl sub_081B8908\n\t"
+        "	bl BufferBattlePartyCurrentOrder\n\t"
         "	movs r6, #1\n\t"
         "_0805DF62:\n\t"
         "	adds r0, r6, #0\n\t"
