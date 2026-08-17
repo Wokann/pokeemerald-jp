@@ -2944,33 +2944,14 @@ s32 GetGameProgressForLinkTrade(void)
     return TRADE_BOTH_PLAYERS_READY;
 }
 
-__attribute__((naked)) void IsDeoxysOrMewUntradable(void)
+static bool32 IsDeoxysOrMewUntradable(u16 species, bool8 isModernFatefulEncounter)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #0xcd\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	beq _0807A242\n\t"
-        "	cmp r2, #0x97\n\t"
-        "	bne _0807A24A\n\t"
-        "_0807A242:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0807A24A\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0807A24C\n\t"
-        "_0807A24A:\n\t"
-        "	movs r0, #0\n\t"
-        "_0807A24C:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (species == SPECIES_DEOXYS || species == SPECIES_MEW)
+    {
+        if (!isModernFatefulEncounter)
+            return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void sub_0807A250(void)
