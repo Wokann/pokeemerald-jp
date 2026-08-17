@@ -650,7 +650,7 @@ __attribute__((naked)) bool8 PartyMenuSetup(void)
         "	bl LoadMonIconPalettes\n\t"
         "	b _081B015C\n\t"
         "_081B0096:\n\t"
-        "	bl party_menu_add_per_mon_objects\n\t"
+        "	bl CreatePartyMonSpritesLoop\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _081B00A2\n\t"
@@ -1164,171 +1164,43 @@ static u8 *GetPartyMenuBgTile(u16 tileId)
     return (u8 *)sPartyBgGfxTilemap + (tileId << 5);
 }
 
-__attribute__((naked)) void party_menu_add_per_mon_objects_internal(void)
+static void CreatePartyMonSprites(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _081B0B2C\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _081B0B68\n\t"
-        "	cmp r7, #2\n\t"
-        "	bls _081B0B68\n\t"
-        "	subs r0, r7, #3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r0, _081B0B30\n\t"
-        "	mov sb, r0\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	mov r8, r2\n\t"
-        "	mov r6, r8\n\t"
-        "	add r6, sb\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B0BAC\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r1, #0x18\n\t"
-        "	add r1, r8\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r4, _081B0B34\n\t"
-        "	lsls r5, r7, #4\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	movs r3, #0\n\t"
-        "	str r3, [sp]\n\t"
-        "	bl party_menu_link_mon_icon_anim\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	ldrh r1, [r6, #2]\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	bl party_menu_link_mon_held_item_object\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	bl party_menu_link_mon_pokeball_object\n\t"
-        "	ldrh r0, [r6, #0x10]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0B38\n\t"
-        "	movs r3, #7\n\t"
-        "	b _081B0B48\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0B2C: .4byte gPartyMenu\n\t"
-        "_081B0B30: .4byte gMultiPartnerParty\n\t"
-        "_081B0B34: .4byte sPartyMenuBoxes\n\t"
-        "_081B0B38:\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r0, #0x14\n\t"
-        "	add r0, r8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl GetAilmentFromStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "_081B0B48:\n\t"
-        "	ldr r1, _081B0B60\n\t"
-        "	mov r2, sl\n\t"
-        "	lsls r0, r2, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r1, _081B0B64\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl party_menu_link_mon_status_condition_object\n\t"
-        "	b _081B0BAC\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0B60: .4byte gMultiPartnerParty\n\t"
-        "_081B0B64: .4byte sPartyMenuBoxes\n\t"
-        "_081B0B68:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B0BBC\n\t"
-        "	adds r6, r1, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B0BAC\n\t"
-        "	ldr r4, _081B0BC0\n\t"
-        "	lsls r5, r7, #4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl party_menu_icon_anim\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl party_menu_held_item_object\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl party_menu_pokeball_object\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl party_menu_status_condition_object\n\t"
-        "_081B0BAC:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0BBC: .4byte gPlayerParty\n\t"
-        "_081B0BC0: .4byte sPartyMenuBoxes\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 actualSlot;
+
+    if (gPartyMenu.menuType == PARTY_MENU_TYPE_MULTI_SHOWCASE && slot >= MULTI_PARTY_SIZE)
+    {
+        u8 status;
+        actualSlot = slot - MULTI_PARTY_SIZE;
+
+        if (gMultiPartnerParty[actualSlot].species != SPECIES_NONE)
+        {
+            CreatePartyMonIconSpriteParameterized(gMultiPartnerParty[actualSlot].species, gMultiPartnerParty[actualSlot].personality, &sPartyMenuBoxes[slot], 0, FALSE);
+            CreatePartyMonHeldItemSpriteParameterized(gMultiPartnerParty[actualSlot].species, gMultiPartnerParty[actualSlot].heldItem, &sPartyMenuBoxes[slot]);
+            CreatePartyMonPokeballSpriteParameterized(gMultiPartnerParty[actualSlot].species, &sPartyMenuBoxes[slot]);
+            if (gMultiPartnerParty[actualSlot].hp == 0)
+                status = AILMENT_FNT;
+            else
+                status = GetAilmentFromStatus(gMultiPartnerParty[actualSlot].status);
+            CreatePartyMonStatusSpriteParameterized(gMultiPartnerParty[actualSlot].species, status, &sPartyMenuBoxes[slot]);
+        }
+    }
+    else if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        CreatePartyMonIconSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot], slot);
+        CreatePartyMonHeldItemSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
+        CreatePartyMonPokeballSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
+        CreatePartyMonStatusSprite(&gPlayerParty[slot], &sPartyMenuBoxes[slot]);
+    }
 }
 
-__attribute__((naked)) void party_menu_add_per_mon_objects(void)
+static bool8 CreatePartyMonSpritesLoop(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _081B0BEC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0x86\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl party_menu_add_per_mon_objects_internal\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #6\n\t"
-        "	beq _081B0BF0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B0BF2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0BEC: .4byte sPartyMenuInternal\n\t"
-        "_081B0BF0:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B0BF2:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    CreatePartyMonSprites(sPartyMenuInternal->data[0]);
+    if (++sPartyMenuInternal->data[0] == PARTY_SIZE)
+        return TRUE;
+    else
+        return FALSE;
 }
 
 __attribute__((naked)) void sub_081B0BF8(void)
@@ -8846,7 +8718,7 @@ static bool8 SetUpFieldMove_Dive(void)
     return FALSE;
 }
 
-__attribute__((naked)) void party_menu_icon_anim(void)
+__attribute__((naked)) void CreatePartyMonIconSprite(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8891,7 +8763,7 @@ __attribute__((naked)) void party_menu_icon_anim(void)
         "	adds r0, r4, #0\n\t"
         "	adds r2, r7, #0\n\t"
         "	movs r3, #1\n\t"
-        "	bl party_menu_link_mon_icon_anim\n\t"
+        "	bl CreatePartyMonIconSpriteParameterized\n\t"
         "	ldrb r0, [r7, #9]\n\t"
         "	adds r1, r5, #0\n\t"
         "	bl sub_081B57D8\n\t"
@@ -8907,7 +8779,7 @@ __attribute__((naked)) void party_menu_icon_anim(void)
     );
 }
 
-__attribute__((naked)) void party_menu_link_mon_icon_anim(void)
+__attribute__((naked)) void CreatePartyMonIconSpriteParameterized(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9180,7 +9052,7 @@ void UpdatePartyMonIconFrame(struct Sprite *sprite)
     UpdateMonIconFrame(sprite);
 }
 
-__attribute__((naked)) void party_menu_held_item_object(void)
+__attribute__((naked)) void CreatePartyMonHeldItemSprite(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9211,7 +9083,7 @@ __attribute__((naked)) void party_menu_held_item_object(void)
     );
 }
 
-__attribute__((naked)) void party_menu_link_mon_held_item_object(void)
+__attribute__((naked)) void CreatePartyMonHeldItemSpriteParameterized(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9496,7 +9368,7 @@ __attribute__((naked)) void SpriteCB_HeldItem(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) void party_menu_pokeball_object(void)
+__attribute__((naked)) void CreatePartyMonPokeballSprite(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9523,7 +9395,7 @@ __attribute__((naked)) void party_menu_pokeball_object(void)
     );
 }
 
-__attribute__((naked)) void party_menu_link_mon_pokeball_object(void)
+__attribute__((naked)) void CreatePartyMonPokeballSpriteParameterized(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9641,7 +9513,7 @@ static void LoadPartyMenuPokeballGfx(void)
     LoadCompressedSpritePalette(&gUnknown_85E17B8);
 }
 
-__attribute__((naked)) void party_menu_status_condition_object(void)
+__attribute__((naked)) void CreatePartyMonStatusSprite(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9672,7 +9544,7 @@ __attribute__((naked)) void party_menu_status_condition_object(void)
     );
 }
 
-__attribute__((naked)) void party_menu_link_mon_status_condition_object(void)
+__attribute__((naked)) void CreatePartyMonStatusSpriteParameterized(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
