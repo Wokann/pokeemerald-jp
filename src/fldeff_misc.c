@@ -1283,44 +1283,19 @@ void DoSecretBaseBreakableDoorEffect(s16 x, s16 y)
 }
 
 
-__attribute__((naked)) void Task_ShatterSecretBaseBreakableDoor(void)
+static void Task_ShatterSecretBaseBreakableDoor(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _080FAFF4\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r2, [r1, #8]\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bne _080FAFF8\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r1, [r1, r3]\n\t"
-        "	bl DoSecretBaseBreakableDoorEffect\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080FAFFC\n\t"
-        "	.align 2, 0\n\t"
-        "_080FAFF4: .4byte gTasks\n\t"
-        "_080FAFF8:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "_080FAFFC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[0] == 7)
+    {
+        DoSecretBaseBreakableDoorEffect(gTasks[taskId].data[1], gTasks[taskId].data[2]);
+        DestroyTask(taskId);
+    }
+    else
+    {
+        gTasks[taskId].data[0]++;
+    }
 }
+
 
 __attribute__((naked)) void ShatterSecretBaseBreakableDoor(s16 x, s16 y)
 {
