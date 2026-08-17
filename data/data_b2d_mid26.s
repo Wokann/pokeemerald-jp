@@ -6691,6 +6691,9 @@ gUnknown_852AD40: @ 0x852AD40
 sBadgeFlagsJp: @ 0x852B220
 	.hword 0x0867, 0x0868, 0x0869, 0x086A, 0x086B, 0x086C, 0x086D, 0x086E
 
+	.globl sWindowTemplate_LinkPlayerCount
+	.set sWindowTemplate_LinkPlayerCount, sBadgeFlagsJp + 0x1C
+
 	.incbin "baserom_jp.gba", 0x52b230, 0x1a8
 
 	.globl sDirectionalApproachDistanceFuncs

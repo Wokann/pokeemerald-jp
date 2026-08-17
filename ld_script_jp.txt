@@ -5099,13 +5099,13 @@ SECTIONS {
         src/cable_club.o(.text.CheckLinkCanceled);
         src/cable_club.o(.text.CheckSioErrored);
         src/cable_club.o(.text.Task_DelayedBlockRequest);
-        src/cable_club.o(.text.sub_080B1F10);
-        src/cable_club.o(.text.sub_080B1F64);
-        src/cable_club.o(.text.sub_080B1FE8);
-        src/cable_club.o(.text.sub_080B2038);
-        src/cable_club.o(.text.sub_080B20E0);
-        src/cable_club.o(.text.sub_080B2184);
-        src/cable_club.o(.text.sub_080B21F4);
+        src/cable_club.o(.text.Task_LinkupStart);
+        src/cable_club.o(.text.Task_LinkupAwaitConnection);
+        src/cable_club.o(.text.Task_LinkupConfirmWhenReady);
+        src/cable_club.o(.text.Task_LinkupAwaitConfirmation);
+        src/cable_club.o(.text.Task_LinkupTryConfirmation);
+        src/cable_club.o(.text.Task_LinkupConfirm);
+        src/cable_club.o(.text.Task_LinkupExchangeDataWithLeader);
         src/cable_club.o(.text.sub_080B22E4);
         src/cable_club.o(.text.sub_080B23D0);
         src/cable_club.o(.text.task_map_chg_seq_0807EC34);
@@ -5149,6 +5149,7 @@ SECTIONS {
         src/cable_club.o(.text.sub_080B3228);
         src/cable_club.o(.text.sub_080B3250);
         src/cable_club.o(.text.sub_080B331C);
+
         src/trainer_see.o(.text.CheckForTrainersWantingBattle);
         src/trainer_see.o(.text.CheckTrainer);
         src/trainer_see.o(.text.GetTrainerApproachDistance);

@@ -560,6 +560,15 @@ gUnknown_8247CB5: @ 0x8247CB5
 gUnknown_8247CDA: @ 0x8247CDA
 	.include "data/scripts/gUnknown_8247CDA.inc"
 
+	.globl gText_ConfirmLinkWhenPlayersReady
+	.set gText_ConfirmLinkWhenPlayersReady, gUnknown_8247C97
+
+	.globl gText_ConfirmStartLinkWithXPlayers
+	.set gText_ConfirmStartLinkWithXPlayers, gUnknown_8247CB5
+
+	.globl gText_AwaitingLinkup
+	.set gText_AwaitingLinkup, gUnknown_8247CDA
+
 	.globl gUnknown_824B317
 gUnknown_824B317: @ 0x824B317
 	.include "data/scripts/gUnknown_824B317.inc"

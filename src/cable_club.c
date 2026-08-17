@@ -1,5 +1,7 @@
 #include "global.h"
 #include "cable_club.h"
+#include "constants/songs.h"
+#include "field_message_box.h"
 #include "link.h"
 #include "main.h"
 #include "menu.h"
@@ -14,17 +16,28 @@
 extern s16 gUnknown_3005B68[];
 
 void sub_080B1C9C(u16 windowId, u32 numPlayers);
-void sub_080B1F10(u8 taskId);
+static void Task_LinkupStart(u8 taskId);
+static void Task_LinkupAwaitConnection(u8 taskId);
+static void Task_LinkupConfirmWhenReady(u8 taskId);
+static void Task_LinkupAwaitConfirmation(u8 taskId);
+static void Task_LinkupTryConfirmation(u8 taskId);
+static void Task_LinkupConfirm(u8 taskId);
+static void Task_LinkupExchangeDataWithLeader(u8 taskId);
 void sub_080B25C8(u8 taskId);
 void sub_080B2608(u8 taskId);
 
+extern const struct WindowTemplate sWindowTemplate_LinkPlayerCount;
+extern const u8 gText_ConfirmLinkWhenPlayersReady[];
+extern const u8 gText_ConfirmStartLinkWithXPlayers[];
+extern const u8 gText_AwaitingLinkup[];
+
 static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
 {
-    if (FindTaskIdByFunc(sub_080B1F10) == TASK_NONE)
+    if (FindTaskIdByFunc(Task_LinkupStart) == TASK_NONE)
     {
         u8 taskId1;
 
-        taskId1 = CreateTask(sub_080B1F10, 80);
+        taskId1 = CreateTask(Task_LinkupStart, 80);
         gTasks[taskId1].tMinPlayers = minPlayers;
         gTasks[taskId1].tMaxPlayers = maxPlayers;
     }
@@ -176,318 +189,117 @@ static void Task_DelayedBlockRequest(u8 taskId)
     }
 }
 
-__attribute__((naked)) void sub_080B1F10(u8 taskId)
+static void Task_LinkupStart(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080B1F40\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080B1F48\n\t"
-        "	bl OpenLinkTimed\n\t"
-        "	bl sub_0800A75C\n\t"
-        "	bl ResetLinkPlayers\n\t"
-        "	ldr r0, _080B1F44\n\t"
-        "	bl AddWindow\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	b _080B1F54\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1F40: .4byte gUnknown_3005B68\n\t"
-        "_080B1F44: .4byte sBadgeFlagsJp + 0x1C\n\t"
-        "_080B1F48:\n\t"
-        "	cmp r2, #9\n\t"
-        "	ble _080B1F54\n\t"
-        "	subs r0, #8\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldr r1, _080B1F60\n\t"
-        "	str r1, [r0]\n\t"
-        "_080B1F54:\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1F60: .4byte sub_080B1F64 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    if (data[0] == 0)
+    {
+        OpenLinkTimed();
+        ResetLinkPlayerCount();
+        ResetLinkPlayers();
+        tWindowId = AddWindow(&sWindowTemplate_LinkPlayerCount);
+    }
+    else if (data[0] > 9)
+    {
+        gTasks[taskId].func = Task_LinkupAwaitConnection;
+    }
+    data[0]++;
 }
 
-__attribute__((naked)) void sub_080B1F64(void)
+static void Task_LinkupAwaitConnection(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkCanceledBeforeConnection\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B1FD8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkCanceled\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B1FD8\n\t"
-        "	cmp r5, #1\n\t"
-        "	bls _080B1FD8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetSuppressLinkErrorMessage\n\t"
-        "	ldr r1, _080B1FBC\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	bl IsLinkMaster\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080B1FC8\n\t"
-        "	movs r0, #0x15\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080B1FC0\n\t"
-        "	bl ShowFieldAutoScrollMessage\n\t"
-        "	ldr r0, _080B1FC4\n\t"
-        "	b _080B1FD6\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1FBC: .4byte gTasks\n\t"
-        "_080B1FC0: .4byte gUnknown_8247C97\n\t"
-        "_080B1FC4: .4byte sub_080B1FE8 + 1\n\t"
-        "_080B1FC8:\n\t"
-        "	movs r0, #0x16\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080B1FE0\n\t"
-        "	bl ShowFieldAutoScrollMessage\n\t"
-        "	ldr r0, _080B1FE4\n\t"
-        "_080B1FD6:\n\t"
-        "	str r0, [r4]\n\t"
-        "_080B1FD8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1FE0: .4byte gUnknown_8247CDA\n\t"
-        "_080B1FE4: .4byte sub_080B21F4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 playerCount = GetLinkPlayerCount_2();
+
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
+     || CheckLinkCanceled(taskId) == TRUE
+     || playerCount < 2)
+        return;
+
+    SetSuppressLinkErrorMessage(TRUE);
+    gTasks[taskId].data[3] = 0;
+    if (IsLinkMaster() == TRUE)
+    {
+        PlaySE(SE_PIN);
+        ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
+        gTasks[taskId].func = Task_LinkupConfirmWhenReady;
+    }
+    else
+    {
+        PlaySE(SE_BOO);
+        ShowFieldAutoScrollMessage(gText_AwaitingLinkup);
+        gTasks[taskId].func = Task_LinkupExchangeDataWithLeader;
+    }
 }
 
-__attribute__((naked)) void sub_080B1FE8(void)
+static void Task_LinkupConfirmWhenReady(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkCanceledBeforeConnection\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2028\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckSioErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2028\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2028\n\t"
-        "	bl GetFieldMessageBoxMode\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080B2028\n\t"
-        "	ldr r0, _080B2030\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r2, [r1, #0xe]\n\t"
-        "	ldr r0, _080B2034\n\t"
-        "	str r0, [r1]\n\t"
-        "_080B2028:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2030: .4byte gTasks\n\t"
-        "_080B2034: .4byte sub_080B2038 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
+     || CheckSioErrored(taskId) == TRUE
+     || CheckLinkErrored(taskId) == TRUE)
+        return;
+
+    if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN)
+    {
+        gTasks[taskId].tNumPlayers = 0;
+        gTasks[taskId].func = Task_LinkupAwaitConfirmation;
+    }
 }
 
-__attribute__((naked)) void sub_080B2038(void)
+static void Task_LinkupAwaitConfirmation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _080B20CC\n\t"
-        "	mov sb, r0\n\t"
-        "	mov r7, r8\n\t"
-        "	add r7, sb\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkCanceledBeforeConnection\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B20C0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckSioErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B20C0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CheckLinkErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B20C0\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl UpdateLinkPlayerCountDisplay\n\t"
-        "	ldr r0, _080B20D0\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B20C0\n\t"
-        "	movs r1, #2\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	cmp r5, r0\n\t"
-        "	blt _080B20C0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0800A5C8\n\t"
-        "	ldrh r0, [r7, #0xa]\n\t"
-        "	bl ClearLinkPlayerCountWindow\n\t"
-        "	ldr r0, _080B20D4\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r0, _080B20D8\n\t"
-        "	bl ShowFieldAutoScrollMessage\n\t"
-        "	mov r0, sb\n\t"
-        "	subs r0, #8\n\t"
-        "	add r0, r8\n\t"
-        "	ldr r1, _080B20DC\n\t"
-        "	str r1, [r0]\n\t"
-        "_080B20C0:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B20CC: .4byte gUnknown_3005B68\n\t"
-        "_080B20D0: .4byte gMain\n\t"
-        "_080B20D4: .4byte gStringVar1\n\t"
-        "_080B20D8: .4byte gUnknown_8247CB5\n\t"
-        "_080B20DC: .4byte sub_080B20E0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    s32 linkPlayerCount = GetLinkPlayerCount_2();
+
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
+     || CheckSioErrored(taskId) == TRUE
+     || CheckLinkErrored(taskId) == TRUE)
+        return;
+
+    UpdateLinkPlayerCountDisplay(taskId, linkPlayerCount);
+
+    if (!(JOY_NEW(A_BUTTON)))
+        return;
+
+    if (linkPlayerCount < tMinPlayers)
+        return;
+
+    SaveLinkPlayers(linkPlayerCount);
+    ClearLinkPlayerCountWindow(tWindowId);
+    ConvertIntToDecimalStringN(gStringVar1, linkPlayerCount, STR_CONV_MODE_LEFT_ALIGN, 1);
+    ShowFieldAutoScrollMessage(gText_ConfirmStartLinkWithXPlayers);
+    gTasks[taskId].func = Task_LinkupTryConfirmation;
 }
 
-__attribute__((naked)) void sub_080B20E0(void)
+static void Task_LinkupTryConfirmation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CheckLinkCanceledBeforeConnection\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2174\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CheckSioErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2174\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CheckLinkErrored\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B2174\n\t"
-        "	bl GetFieldMessageBoxMode\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B2174\n\t"
-        "	bl GetSavedPlayerCount\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl GetLinkPlayerCount_2\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _080B212E\n\t"
-        "	ldr r0, _080B2144\n\t"
-        "	ldrh r1, [r0, #0x2c]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2154\n\t"
-        "_080B212E:\n\t"
-        "	ldr r0, _080B2148\n\t"
-        "	bl ShowFieldAutoScrollMessage\n\t"
-        "	ldr r1, _080B214C\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080B2150\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _080B2174\n\t"
-        "	.align 2, 0\n\t"
-        "_080B2144: .4byte gMain\n\t"
-        "_080B2148: .4byte gUnknown_8247C97\n\t"
-        "_080B214C: .4byte gTasks\n\t"
-        "_080B2150: .4byte sub_080B1FE8 + 1\n\t"
-        "_080B2154:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B2174\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl CheckShouldAdvanceLinkState\n\t"
-        "	ldr r0, _080B217C\n\t"
-        "	lsls r1, r6, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B2180\n\t"
-        "	str r0, [r1]\n\t"
-        "_080B2174:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B217C: .4byte gTasks\n\t"
-        "_080B2180: .4byte sub_080B2184 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (CheckLinkCanceledBeforeConnection(taskId) == TRUE
+     || CheckSioErrored(taskId) == TRUE
+     || CheckLinkErrored(taskId) == TRUE)
+        return;
+
+    if (GetFieldMessageBoxMode() == FIELD_MESSAGE_BOX_HIDDEN)
+    {
+        if (GetSavedPlayerCount() != GetLinkPlayerCount_2())
+        {
+            ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
+            gTasks[taskId].func = Task_LinkupConfirmWhenReady;
+        }
+        else if (JOY_HELD(B_BUTTON))
+        {
+            ShowFieldAutoScrollMessage(gText_ConfirmLinkWhenPlayersReady);
+            gTasks[taskId].func = Task_LinkupConfirmWhenReady;
+        }
+        else if (JOY_HELD(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            CheckShouldAdvanceLinkState();
+            gTasks[taskId].func = Task_LinkupConfirm;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_080B2184(void)
+__attribute__((naked)) void Task_LinkupConfirm(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -546,7 +358,7 @@ __attribute__((naked)) void sub_080B2184(void)
     );
 }
 
-__attribute__((naked)) void sub_080B21F4(void)
+__attribute__((naked)) void Task_LinkupExchangeDataWithLeader(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
