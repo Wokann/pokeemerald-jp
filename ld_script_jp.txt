@@ -8647,7 +8647,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B339C);
         src/party_menu.o(.text.HandleMenuInput);
         src/party_menu.o(.text.CursorCb_Give);
-        src/party_menu.o(.text.sub_081B34C8);
+        src/party_menu.o(.text.CB2_ShowPokemonSummaryScreen);
         src/party_menu.o(.text.sub_081B3534);
         src/party_menu.o(.text.CursorCb_Switch);
         src/party_menu.o(.text.sub_081B35D8);
