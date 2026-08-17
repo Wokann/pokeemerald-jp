@@ -3226,10 +3226,10 @@ SECTIONS {
         src/trade.o(.text.CB_ProcessMenuInput);
         src/trade.o(.text.RedrawChooseAPokemonWindow);
         src/trade.o(.text.CB_ProcessSelectedMonInput);
-        src/trade.o(.text.sub_08078A3C);
-        src/trade.o(.text.sub_08078A64);
-        src/trade.o(.text.sub_08078ADC);
-        src/trade.o(.text.sub_08078B7C);
+        src/trade.o(.text.CB_ChooseMonAfterButtonPress);
+        src/trade.o(.text.CB_ShowTradeMonSummaryScreen);
+        src/trade.o(.text.CheckValidityOfTradeMons);
+        src/trade.o(.text.CheckMonsBeforeTrade);
         src/trade.o(.text.sub_08078C20);
         src/trade.o(.text.sub_08078CA4);
         src/trade.o(.text.sub_08078CEC);

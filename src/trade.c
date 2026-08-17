@@ -190,6 +190,7 @@ void SetSelectedMon(u8 cursorPosition);
 void sub_08079A80(u16 action, u8 data);
 void PrintTradePartnerPartyNicknames(void);
 u32 CanTradeSelectedMon(struct Pokemon *playerParty, int partyCount, int monIdx);
+u8 CheckValidityOfTradeMons(u8 *aliveMons, u8 playerPartyCount, u8 playerMonIdx, u8 partnerMonIdx);
 extern void sub_08198964(u8 a1, u8 a2, u8 a3, u8 a4, const u8 *text);
 extern u8 sub_081984B0(u8 windowId, u8 fontId, u8 left, u8 top, u8 cursorHeight, u8 numChoices, u8 initialCursorPos);
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
@@ -1424,98 +1425,28 @@ static void CB_ProcessSelectedMonInput(void)
     }
 }
 
-__attribute__((naked)) void sub_08078A3C(void)
+static void CB_ChooseMonAfterButtonPress(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08078A60\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078A52\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078A5C\n\t"
-        "_08078A52:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl RedrawChooseAPokemonWindow\n\t"
-        "_08078A5C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078A60: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        RedrawChooseAPokemonWindow();
+    }
 }
 
-__attribute__((naked)) void sub_08078A64(void)
+static void CB_ShowTradeMonSummaryScreen(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _08078A9C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078ACC\n\t"
-        "	ldr r0, _08078AA0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x35\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	cmp r2, #5\n\t"
-        "	bhi _08078AAC\n\t"
-        "	ldr r1, _08078AA4\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	subs r3, #1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r0, _08078AA8\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowPokemonSummaryScreen\n\t"
-        "	b _08078AC8\n\t"
-        "	.align 2, 0\n\t"
-        "_08078A9C: .4byte gPaletteFade\n\t"
-        "_08078AA0: .4byte sTradeMenu\n\t"
-        "_08078AA4: .4byte gPlayerParty\n\t"
-        "_08078AA8: .4byte CB2_ReturnToTradeMenu + 1\n\t"
-        "_08078AAC:\n\t"
-        "	ldr r1, _08078AD4\n\t"
-        "	subs r2, #6\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, #0x37\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	subs r3, #1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldr r0, _08078AD8\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowPokemonSummaryScreen\n\t"
-        "_08078AC8:\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "_08078ACC:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078AD4: .4byte gEnemyParty\n\t"
-        "_08078AD8: .4byte CB2_ReturnToTradeMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        if (sTradeMenu->cursorPosition < PARTY_SIZE)
+            ShowPokemonSummaryScreen(SUMMARY_MODE_LOCK_MOVES, gPlayerParty, sTradeMenu->cursorPosition, sTradeMenu->partyCounts[TRADE_PLAYER] - 1, CB2_ReturnToTradeMenu);
+        else
+            ShowPokemonSummaryScreen(SUMMARY_MODE_LOCK_MOVES, gEnemyParty, sTradeMenu->cursorPosition - PARTY_SIZE, sTradeMenu->partyCounts[TRADE_PARTNER] - 1, CB2_ReturnToTradeMenu);
+        FreeAllWindowBuffers();
+    }
 }
 
-__attribute__((naked)) void sub_08078ADC(void)
+__attribute__((naked)) u8 CheckValidityOfTradeMons(u8 *aliveMons, u8 playerPartyCount, u8 playerMonIdx, u8 partnerMonIdx)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1606,95 +1537,31 @@ __attribute__((naked)) void sub_08078ADC(void)
     );
 }
 
-__attribute__((naked)) void sub_08078B7C(void)
+static bool32 CheckMonsBeforeTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _08078BD4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0x36\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bge _08078BA8\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r4, #0x45\n\t"
-        "_08078B96:\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r2, #1\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _08078B96\n\t"
-        "_08078BA8:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x36\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0x35\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	adds r0, #0x7e\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl sub_08078ADC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08078BF0\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08078BD8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078BDE\n\t"
-        "	b _08078C14\n\t"
-        "	.align 2, 0\n\t"
-        "_08078BD4: .4byte sTradeMenu\n\t"
-        "_08078BD8:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08078C08\n\t"
-        "	b _08078C14\n\t"
-        "_08078BDE:\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #3\n\t"
-        "	bl sub_08079A80\n\t"
-        "	ldr r0, _08078BEC\n\t"
-        "	b _08078BFA\n\t"
-        "	.align 2, 0\n\t"
-        "_08078BEC: .4byte 0x0000BBCC\n\t"
-        "_08078BF0:\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_08079A80\n\t"
-        "	ldr r0, _08078C04\n\t"
-        "_08078BFA:\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetLinkData\n\t"
-        "	b _08078C14\n\t"
-        "	.align 2, 0\n\t"
-        "_08078C04: .4byte 0x0000BBBB\n\t"
-        "_08078C08:\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #8\n\t"
-        "	bl sub_08079A80\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08078C16\n\t"
-        "_08078C14:\n\t"
-        "	movs r0, #0\n\t"
-        "_08078C16:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    u8 aliveMons[PARTY_SIZE * 2];
+
+    for (i = 0; i < sTradeMenu->partyCounts[TRADE_PLAYER]; i++)
+        aliveMons[i] = sTradeMenu->isLiveMon[TRADE_PLAYER][i];
+
+    switch (CheckValidityOfTradeMons(aliveMons, sTradeMenu->partyCounts[TRADE_PLAYER],
+                                                sTradeMenu->cursorPosition,
+                                                sTradeMenu->partnerCursorPosition))
+    {
+    case PLAYER_MON_INVALID:
+        sub_08079A80(QUEUE_DELAY_MSG, QUEUE_ONLY_MON2);
+        SetLinkData(LINKCMD_READY_CANCEL_TRADE, 0);
+        break;
+    case BOTH_MONS_VALID:
+        sub_08079A80(QUEUE_DELAY_MSG, QUEUE_STANDBY);
+        SetLinkData(LINKCMD_INIT_BLOCK, 0);
+        break;
+    case PARTNER_MON_INVALID:
+        sub_08079A80(QUEUE_DELAY_MSG, QUEUE_FRIENDS_MON_CANT_BE_TRADED);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void sub_08078C20(void)
@@ -1719,7 +1586,7 @@ __attribute__((naked)) void sub_08078C20(void)
         "	beq _08078C70\n\t"
         "	b _08078C98\n\t"
         "_08078C42:\n\t"
-        "	bl sub_08078B7C\n\t"
+        "	bl CheckMonsBeforeTrade\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08078C58\n\t"
         "	ldr r0, _08078C54\n\t"
@@ -2252,7 +2119,7 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	bl CB_ProcessSelectedMonInput\n\t"
         "	b _0807908C\n\t"
         "_08079034:\n\t"
-        "	bl sub_08078A64\n\t"
+        "	bl CB_ShowTradeMonSummaryScreen\n\t"
         "	b _0807908C\n\t"
         "_0807903A:\n\t"
         "	bl sub_08078C20\n\t"
@@ -2288,7 +2155,7 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	bl Wait2SecondsAndCreateYesNoMenu\n\t"
         "	b _0807908C\n\t"
         "_0807907C:\n\t"
-        "	bl sub_08078A3C\n\t"
+        "	bl CB_ChooseMonAfterButtonPress\n\t"
         "	b _0807908C\n\t"
         "_08079082:\n\t"
         "	bl sub_08078F64\n\t"
