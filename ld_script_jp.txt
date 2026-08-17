@@ -8830,7 +8830,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B8410);
         src/party_menu.o(.text.sub_081B843C);
         src/party_menu.o(.text.sub_081B8488);
-        src/party_menu.o(.text.sub_081B84D0);
+        src/party_menu.o(.text.GetMaxBattleEntries);
         src/party_menu.o(.text.sub_081B84FC);
         src/party_menu.o(.text.sub_081B8528);
         src/party_menu.o(.text.sub_081B855C);

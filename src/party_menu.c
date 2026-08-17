@@ -31,6 +31,8 @@ static void Task_ExitPartyMenu(u8 taskId);
 __attribute__((naked)) bool8 PartyMenuSetup(void);
 void Task_PrintAndWaitForText(void);
 __attribute__((naked)) void Task_FieldMoveWaitForFade(u8 taskId);
+static void MoveCursorToConfirm(void);
+u8 GetMaxBattleEntries(void);
 
 struct PartyMenuInternal
 {
@@ -68,6 +70,8 @@ struct PartyMenuBox
     u8 pokeballSpriteId;
     u8 statusSpriteId;
 };
+
+static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox);
 
 extern const struct PartyMenuBoxInfoRects gUnknown_85E0F9C[];
 extern const u8 gUnknown_85E0FBC[][48];
@@ -1157,7 +1161,7 @@ __attribute__((naked)) void DisplayPartyPokemonSelectForBattle(u8 a)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "_081B07C6:\n\t"
-        "	bl sub_081B84D0\n\t"
+        "	bl GetMaxBattleEntries\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r4, r0\n\t"
@@ -6148,7 +6152,7 @@ __attribute__((naked)) void DisplayPartyPokemonHPBar(void)
     );
 }
 
-__attribute__((naked)) void DisplayPartyPokemonOtherText(void)
+__attribute__((naked)) void DisplayPartyPokemonOtherText(u8 stringID, struct PartyMenuBox *menuBox, u8 c)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10190,123 +10194,35 @@ __attribute__((naked)) void CursorCb_SendMon(u8 taskId)
     );
 }
 
-__attribute__((naked)) void CursorCb_Enter(u8 taskId)
+static void CursorCb_Enter(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r4, _081B4BB4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	bl sub_081B84D0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	cmp r5, r6\n\t"
-        "	bhs _081B4BD6\n\t"
-        "	ldr r2, _081B4BB8\n\t"
-        "	ldr r1, _081B4BBC\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r8, r0\n\t"
-        "_081B4B66:\n\t"
-        "	ldr r0, _081B4BC0\n\t"
-        "	adds r4, r5, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B4BCC\n\t"
-        "	movs r0, #5\n\t"
-        "	str r2, [sp]\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	ldrb r0, [r2, #9]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	adds r0, r5, #2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _081B4BC4\n\t"
-        "	ldrb r2, [r2, #9]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonOtherText\n\t"
-        "	subs r0, r6, #1\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081B4BA4\n\t"
-        "	bl MoveCursorToConfirm\n\t"
-        "_081B4BA4:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r0, _081B4BC8\n\t"
-        "	mov r1, r8\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _081B4C08\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4BB4: .4byte sPartyMenuInternal\n\t"
-        "_081B4BB8: .4byte gPartyMenu\n\t"
-        "_081B4BBC: .4byte gTasks\n\t"
-        "_081B4BC0: .4byte gSelectedOrderFromParty\n\t"
-        "_081B4BC4: .4byte sPartyMenuBoxes\n\t"
-        "_081B4BC8: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B4BCC:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, r6\n\t"
-        "	blo _081B4B66\n\t"
-        "_081B4BD6:\n\t"
-        "	ldr r0, _081B4C14\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r4, _081B4C18\n\t"
-        "	ldr r1, _081B4C1C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B4C20\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4C24\n\t"
-        "	str r1, [r0]\n\t"
-        "_081B4C08:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4C14: .4byte gStringVar1\n\t"
-        "_081B4C18: .4byte gStringVar4\n\t"
-        "_081B4C1C: .4byte gUnknown_85C97BD + 0x418\n\t"
-        "_081B4C20: .4byte gTasks\n\t"
-        "_081B4C24: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 maxBattlers;
+    u8 i;
+
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    maxBattlers = GetMaxBattleEntries();
+    for (i = 0; i < maxBattlers; i++)
+    {
+        if (gSelectedOrderFromParty[i] == 0)
+        {
+            PlaySE(SE_SELECT);
+            gSelectedOrderFromParty[i] = gPartyMenu.slotId + 1;
+            DisplayPartyPokemonOtherText(i + PARTYBOX_DESC_FIRST, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
+            if (i == (maxBattlers - 1))
+                MoveCursorToConfirm();
+            DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
+            gTasks[taskId].func = Task_HandleChooseMonInput;
+            return;
+        }
+    }
+    ConvertIntToDecimalStringN(gStringVar1, maxBattlers, STR_CONV_MODE_LEFT_ALIGN, 1);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85C97BD + 0x418);
+    PlaySE(SE_FAILURE);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
 }
+
 
 static void MoveCursorToConfirm(void)
 {
@@ -10334,7 +10250,7 @@ __attribute__((naked)) void CursorCb_NoEntry(u8 taskId)
         "	ldr r0, [r4]\n\t"
         "	adds r0, #0xd\n\t"
         "	bl PartyMenuRemoveWindow\n\t"
-        "	bl sub_081B84D0\n\t"
+        "	bl GetMaxBattleEntries\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	movs r4, #0\n\t"
@@ -17117,7 +17033,7 @@ __attribute__((naked)) void sub_081B82FC(void)
         "	movs r0, #0x13\n\t"
         "	b _081B83F8\n\t"
         "_081B8360:\n\t"
-        "	bl sub_081B84D0\n\t"
+        "	bl GetMaxBattleEntries\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	mov r8, r0\n\t"
@@ -17324,7 +17240,7 @@ __attribute__((naked)) void sub_081B8488(void)
 }
 
 
-__attribute__((naked)) void sub_081B84D0(void)
+__attribute__((naked)) u8 GetMaxBattleEntries(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
