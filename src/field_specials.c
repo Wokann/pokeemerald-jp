@@ -7,6 +7,7 @@
 #include "battle.h"
 #include "string_util.h"
 extern u32 gUnknown_203A824; // sBikeCyclingTimer
+extern void Task_DeoxysRockInteraction(u8 taskId);
 extern const u8 gText_BigGuy[];
 extern const u8 gText_BigGirl[];
 extern const u8 gText_Son[];
@@ -2599,28 +2600,9 @@ u8 GetPokeblockNameByMonNature(void)
     return sub_081370D8(GetNature(&gPlayerParty[GetLeadMonIndex()]), gStringVar1);
 }
 
-__attribute__((naked)) void GetSecretBaseNearbyMapName(void)
+void GetSecretBaseNearbyMapName(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _08139290\n\t"
-        "	ldr r0, _08139294\n\t"
-        "	bl VarGet\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMapName\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08139290: .4byte gStringVar1\n\t"
-        "_08139294: .4byte 0x00004026\n\t"
-        ".syntax divided\n\t"
-    );
+    GetMapName(gStringVar1, VarGet(VAR_SECRET_BASE_MAP), 0);
 }
 
 __attribute__((naked)) void GetBestBattleTowerStreak(void)
@@ -6513,23 +6495,12 @@ __attribute__((naked)) void sub_0813AF80(void)
     );
 }
 
-__attribute__((naked)) void DoDeoxysRockInteraction(void)
+void DoDeoxysRockInteraction(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0813B010\n\t"
-        "	movs r1, #8\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0813B010: .4byte Task_DeoxysRockInteraction + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateTask(Task_DeoxysRockInteraction, 8);
 }
 
-__attribute__((naked)) void Task_DeoxysRockInteraction(void)
+__attribute__((naked)) void Task_DeoxysRockInteraction(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
