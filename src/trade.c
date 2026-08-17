@@ -3036,159 +3036,66 @@ int CanRegisterMonForTradingBoard(struct RfuGameCompatibilityData player, u16 sp
     return CANT_REGISTER_MON;
 }
 
-__attribute__((naked)) int CanSpinTradeMon(struct Pokemon *mon, u16 monIdx)
+int CanSpinTradeMon(struct Pokemon *mon, u16 monIdx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov r8, r1\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, _0807A3D4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bge _0807A3CA\n\t"
-        "	mov r4, sp\n\t"
-        "_0807A3A4:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r6, r0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r1, #0xce\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0807A3BE\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r4]\n\t"
-        "_0807A3BE:\n\t"
-        "	adds r4, #4\n\t"
-        "	adds r5, #1\n\t"
-        "	ldr r0, _0807A3D4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	blt _0807A3A4\n\t"
-        "_0807A3CA:\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r6, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r4, _0807A3D8\n\t"
-        "	b _0807A3F0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A3D4: .4byte gPlayerPartyCount\n\t"
-        "_0807A3D8: .4byte gLinkPlayers\n\t"
-        "_0807A3DC:\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	subs r0, #4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _0807A3E8\n\t"
-        "	movs r7, #0\n\t"
-        "	b _0807A3EC\n\t"
-        "_0807A3E8:\n\t"
-        "	movs r0, #1\n\t"
-        "	orrs r7, r0\n\t"
-        "_0807A3EC:\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r5, #1\n\t"
-        "_0807A3F0:\n\t"
-        "	bl GetLinkPlayerCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	blt _0807A3DC\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	b _0807A424\n\t"
-        "_0807A402:\n\t"
-        "	ldr r0, _0807A44C\n\t"
-        "	adds r2, r4, r0\n\t"
-        "	ldrb r1, [r2, #0x10]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A412\n\t"
-        "	movs r6, #0\n\t"
-        "_0807A412:\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _0807A420\n\t"
-        "	ldrb r0, [r2, #0x10]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807A420\n\t"
-        "	movs r6, #0\n\t"
-        "_0807A420:\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r5, #1\n\t"
-        "_0807A424:\n\t"
-        "	bl GetLinkPlayerCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	blt _0807A402\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0807A45A\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	mov r1, sp\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	bl IsSpeciesInHoennDex\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A450\n\t"
-        "	movs r0, #2\n\t"
-        "	b _0807A48A\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A44C: .4byte gLinkPlayers\n\t"
-        "_0807A450:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A45A\n\t"
-        "	movs r0, #3\n\t"
-        "	b _0807A48A\n\t"
-        "_0807A45A:\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, _0807A484\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bge _0807A47A\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	mov r1, sp\n\t"
-        "_0807A46A:\n\t"
-        "	cmp r8, r5\n\t"
-        "	beq _0807A472\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "_0807A472:\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, r3\n\t"
-        "	blt _0807A46A\n\t"
-        "_0807A47A:\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _0807A488\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0807A48A\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A484: .4byte gPlayerPartyCount\n\t"
-        "_0807A488:\n\t"
-        "	movs r0, #1\n\t"
-        "_0807A48A:\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    int i, version, versions, canTradeAnyMon, numMonsLeft;
+    int speciesArray[PARTY_SIZE];
+
+    // Make Eggs not count for numMonsLeft
+    for (i = 0; i < gPlayerPartyCount; i++)
+    {
+        speciesArray[i] = GetMonData3(&mon[i], MON_DATA_SPECIES_OR_EGG);
+        if (speciesArray[i] == SPECIES_EGG)
+            speciesArray[i] = SPECIES_NONE;
+    }
+
+    versions = 0;
+    canTradeAnyMon = TRUE;
+    for (i = 0; i < GetLinkPlayerCount(); i++)
+    {
+        version = gLinkPlayers[i].version & 0xFF;
+        if (version == VERSION_FIRE_RED ||
+            version == VERSION_LEAF_GREEN)
+            versions = 0;
+        else
+            versions |= 1;
+    }
+
+    for (i = 0; i < GetLinkPlayerCount(); i++)
+    {
+        struct LinkPlayer *player = &gLinkPlayers[i];
+
+        // Does player not have National Dex
+        do
+        {
+            if (!(player->progressFlags & 0xF))
+                canTradeAnyMon = FALSE;
+
+            if (versions && (player->progressFlags / 16))
+                canTradeAnyMon = FALSE;
+        } while (0);
+    }
+
+    if (canTradeAnyMon == FALSE)
+    {
+        if (!IsSpeciesInHoennDex(speciesArray[monIdx]))
+            return CANT_TRADE_NATIONAL;
+
+        if (speciesArray[monIdx] == SPECIES_NONE)
+            return CANT_TRADE_EGG_YET;
+    }
+
+    numMonsLeft = 0;
+    for (i = 0; i < gPlayerPartyCount; i++)
+    {
+        if (monIdx != i)
+            numMonsLeft += speciesArray[i];
+    }
+
+    if (!numMonsLeft)
+        return CANT_TRADE_LAST_MON;
+    else
+        return CAN_TRADE_MON;
 }
 
 
