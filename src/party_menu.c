@@ -1288,21 +1288,9 @@ static bool8 RenderPartyMenuBoxes(void)
         return FALSE;
 }
 
-__attribute__((naked)) const void *GetPartyMiscGraphicsTile(u16 tileNum)
+static u8 *GetPartyMenuBgTile(u16 tileId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _081B0AB4\n\t"
-        "	lsrs r0, r0, #0xb\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0AB4: .4byte sPartyBgGfxTilemap\n\t"
-        ".syntax divided\n\t"
-    );
+    return (u8 *)sPartyBgGfxTilemap + (tileId << 5);
 }
 
 __attribute__((naked)) void party_menu_add_per_mon_objects_internal(void)
@@ -4621,7 +4609,7 @@ __attribute__((naked)) static void BlitBitmapToPartyWindow(u8 windowId, const u8
         "	ldr r2, [sp, #0xc]\n\t"
         "	adds r0, r2, r0\n\t"
         "	ldrb r0, [r0]\n\t"
-        "	bl GetPartyMiscGraphicsTile\n\t"
+        "	bl GetPartyMenuBgTile\n\t"
         "	adds r1, r5, #0\n\t"
         "	muls r1, r6, r1\n\t"
         "	adds r1, r1, r4\n\t"
