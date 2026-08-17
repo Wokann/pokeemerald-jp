@@ -9225,7 +9225,7 @@ __attribute__((naked)) void sub_081B433C(void)
         "	ldr r1, [r5]\n\t"
         "	adds r1, r1, r0\n\t"
         "	adds r0, r6, #0\n\t"
-        "	bl sub_081B5934\n\t"
+        "	bl UpdatePartyMonHeldItemSprite\n\t"
         "	ldrb r1, [r4, #8]\n\t"
         "	movs r0, #0xf\n\t"
         "	ands r0, r1\n\t"
@@ -9594,7 +9594,7 @@ __attribute__((naked)) void sub_081B4628(void)
         "	ldr r1, [r4]\n\t"
         "	adds r1, r1, r0\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_081B5934\n\t"
+        "	bl UpdatePartyMonHeldItemSprite\n\t"
         "	movs r0, #9\n\t"
         "	ldrsb r0, [r6, r0]\n\t"
         "	lsls r0, r0, #4\n\t"
@@ -11894,7 +11894,7 @@ __attribute__((naked)) void party_menu_held_item_object(void)
         "	strb r0, [r4, #0xa]\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl sub_081B5934\n\t"
+        "	bl UpdatePartyMonHeldItemSprite\n\t"
         "_081B58DC:\n\t"
         "	pop {r4, r5}\n\t"
         "	pop {r0}\n\t"
@@ -11936,7 +11936,7 @@ __attribute__((naked)) void party_menu_link_mon_held_item_object(void)
         "	strb r0, [r1, #5]\n\t"
         "	adds r0, r5, #0\n\t"
         "	adds r1, r4, #0\n\t"
-        "	bl sub_081B5950\n\t"
+        "	bl ShowOrHideHeldItemSprite\n\t"
         "_081B5924:\n\t"
         "	pop {r4, r5}\n\t"
         "	pop {r0}\n\t"
@@ -11948,95 +11948,25 @@ __attribute__((naked)) void party_menu_link_mon_held_item_object(void)
     );
 }
 
-__attribute__((naked)) void sub_081B5934(void)
+static void UpdatePartyMonHeldItemSprite(struct Pokemon *mon, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_081B5950\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ShowOrHideHeldItemSprite((u16)GetMonData3(mon, MON_DATA_HELD_ITEM), menuBox);
 }
 
-__attribute__((naked)) void sub_081B5950(void)
+static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B5978\n\t"
-        "	ldr r2, _081B5974\n\t"
-        "	ldrb r1, [r4, #0xa]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	b _081B59C4\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5974: .4byte gSprites\n\t"
-        "_081B5978:\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B599C\n\t"
-        "	ldrb r1, [r4, #0xa]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B5998\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	b _081B59AE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B5998: .4byte gSprites\n\t"
-        "_081B599C:\n\t"
-        "	ldrb r1, [r4, #0xa]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B59CC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_081B59AE:\n\t"
-        "	ldr r2, _081B59CC\n\t"
-        "	ldrb r1, [r4, #0xa]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "_081B59C4:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B59CC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (item == ITEM_NONE)
+    {
+        gSprites[menuBox->itemSpriteId].invisible = TRUE;
+    }
+    else
+    {
+        if ((u8)ItemIsMail(item))
+            StartSpriteAnim(&gSprites[menuBox->itemSpriteId], 1);
+        else
+            StartSpriteAnim(&gSprites[menuBox->itemSpriteId], 0);
+        gSprites[menuBox->itemSpriteId].invisible = FALSE;
+    }
 }
 
 extern const struct CompressedSpriteSheet gUnknown_85E1768;
@@ -16778,7 +16708,7 @@ __attribute__((naked)) void sub_081B7DA4(void)
         "	lsls r2, r2, #4\n\t"
         "	ldr r1, [r1]\n\t"
         "	adds r1, r1, r2\n\t"
-        "	bl sub_081B5934\n\t"
+        "	bl UpdatePartyMonHeldItemSprite\n\t"
         "	adds r0, r5, #0\n\t"
         "	bl Task_ClosePartyMenu\n\t"
         "_081B7DD8:\n\t"

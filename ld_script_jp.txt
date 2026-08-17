@@ -8727,8 +8727,8 @@ SECTIONS {
         src/party_menu.o(.text.UpdatePartyMonIconFrame);
         src/party_menu.o(.text.party_menu_held_item_object);
         src/party_menu.o(.text.party_menu_link_mon_held_item_object);
-        src/party_menu.o(.text.sub_081B5934);
-        src/party_menu.o(.text.sub_081B5950);
+        src/party_menu.o(.text.UpdatePartyMonHeldItemSprite);
+        src/party_menu.o(.text.ShowOrHideHeldItemSprite);
         src/party_menu.o(.text.LoadHeldItemIcons);
         src/party_menu.o(.text.sub_081B59EC);
         src/party_menu.o(.text.sub_081B5A90);
