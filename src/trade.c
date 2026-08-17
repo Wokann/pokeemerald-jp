@@ -3464,23 +3464,11 @@ void InitTradeSequenceBgGpuRegs(void)
     SetTradeSequenceBgGpuRegs(0);
 }
 
-__attribute__((naked)) void LinkTradeDrawWindow(void)
+void LinkTradeDrawWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    FillWindowPixelBuffer(0, PIXEL_FILL(15));
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_FULL);
 }
 
 __attribute__((naked)) void TradeAnimInit_LoadGfx(void)
