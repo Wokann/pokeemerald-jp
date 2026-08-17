@@ -2611,29 +2611,9 @@ bool8 FoundAbandonedShipRoom6Key(void)
     return TRUE;
 }
 
-__attribute__((naked)) void LeadMonHasEffortRibbon(void)
+bool8 LeadMonHasEffortRibbon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081393DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x47\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081393DC: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetMonData3(&gPlayerParty[GetLeadMonIndex()], MON_DATA_EFFORT_RIBBON, NULL);
 }
 
 void GiveLeadMonEffortRibbon(void)
@@ -2818,19 +2798,9 @@ bool8 IsStarterInParty(void)
     return FALSE;
 }
 
-__attribute__((naked)) void ScriptCheckFreePokemonStorageSpace(void)
+bool8 ScriptCheckFreePokemonStorageSpace(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl CheckFreePokemonStorageSpace\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return CheckFreePokemonStorageSpace();
 }
 
 bool8 IsPokerusInParty(void)
