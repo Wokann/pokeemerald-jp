@@ -2099,7 +2099,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_SacredAsh(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE740: .4byte gItemUseCB\n\t"
-        "_080FE744: .4byte sub_081B768C + 1\n\t"
+        "_080FE744: .4byte ItemUseCB_SacredAsh + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2159,7 +2159,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_RareCandy(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE794: .4byte gItemUseCB\n\t"
-        "_080FE798: .4byte dp05_rare_candy + 1\n\t"
+        "_080FE798: .4byte ItemUseCB_RareCandy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2756,7 +2756,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEBDC: .4byte gItemUseCB\n\t"
-        "_080FEBE0: .4byte sub_081B7918 + 1\n\t"
+        "_080FEBE0: .4byte ItemUseCB_EvolutionStone + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3060,7 +3060,7 @@ __attribute__((naked)) void sub_080FEDFC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEE10: .4byte gItemUseCB\n\t"
-        "_080FEE14: .4byte sub_081B768C + 1\n\t"
+        "_080FEE14: .4byte ItemUseCB_SacredAsh + 1\n\t"
         ".syntax divided\n\t"
     );
 }
