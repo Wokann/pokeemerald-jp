@@ -1,6 +1,7 @@
 #include "global.h"
 #include "cable_club.h"
 #include "link.h"
+#include "main.h"
 #include "menu.h"
 #include "string_util.h"
 #include "window.h"
@@ -14,6 +15,8 @@ extern s16 gUnknown_3005B68[];
 
 void sub_080B1C9C(u16 windowId, u32 numPlayers);
 void sub_080B1F10(u8 taskId);
+void sub_080B25C8(u8 taskId);
+void sub_080B2608(u8 taskId);
 
 static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
 {
@@ -117,197 +120,60 @@ static u32 ExchangeDataAndGetLinkupStatus(u8 minPlayers, u8 maxPlayers)
     }
 }
 
-__attribute__((naked)) void sub_080B1DD4(void)
+static bool32 CheckLinkErrored(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl HasLinkErrorOccurred\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B1DEA\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080B1DFA\n\t"
-        "_080B1DEA:\n\t"
-        "	ldr r0, _080B1E00\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B1E04\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "_080B1DFA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1E00: .4byte gTasks\n\t"
-        "_080B1E04: .4byte sub_080B2608 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (HasLinkErrorOccurred() == TRUE)
+    {
+        gTasks[taskId].func = sub_080B2608;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080B1E08(void)
+static bool32 CheckLinkCanceledBeforeConnection(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080B1E3C\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B1E4C\n\t"
-        "	bl IsLinkConnectionEstablished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080B1E4C\n\t"
-        "	ldr r0, _080B1E40\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _080B1E44\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080B1E48\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080B1E4E\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1E3C: .4byte gMain\n\t"
-        "_080B1E40: .4byte gLinkType\n\t"
-        "_080B1E44: .4byte gTasks\n\t"
-        "_080B1E48: .4byte sub_080B25C8 + 1\n\t"
-        "_080B1E4C:\n\t"
-        "	movs r0, #0\n\t"
-        "_080B1E4E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(B_BUTTON)
+     && IsLinkConnectionEstablished() == FALSE)
+    {
+        gLinkType = 0;
+        gTasks[taskId].func = sub_080B25C8;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080B1E54(void)
+static bool32 CheckLinkCanceled(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsLinkConnectionEstablished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080B1E6A\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetSuppressLinkErrorMessage\n\t"
-        "_080B1E6A:\n\t"
-        "	ldr r0, _080B1E7C\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080B1E80\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080B1E96\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1E7C: .4byte gMain\n\t"
-        "_080B1E80:\n\t"
-        "	ldr r1, _080B1E9C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080B1EA0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080B1EA4\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "_080B1E96:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1E9C: .4byte gLinkType\n\t"
-        "_080B1EA0: .4byte gTasks\n\t"
-        "_080B1EA4: .4byte sub_080B25C8 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsLinkConnectionEstablished())
+        SetSuppressLinkErrorMessage(TRUE);
+
+    if (JOY_NEW(B_BUTTON))
+    {
+        gLinkType = 0;
+        gTasks[taskId].func = sub_080B25C8;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080B1EA8(void)
+static bool32 CheckSioErrored(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl GetSioMultiSI\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080B1EBE\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080B1ECE\n\t"
-        "_080B1EBE:\n\t"
-        "	ldr r0, _080B1ED4\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _080B1ED8\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "_080B1ECE:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1ED4: .4byte gTasks\n\t"
-        "_080B1ED8: .4byte sub_080B2608 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetSioMultiSI() == TRUE)
+    {
+        gTasks[taskId].func = sub_080B2608;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080B1EDC(void)
+static void Task_DelayedBlockRequest(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080B1F0C\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _080B1F06\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_0800A09C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080B1F06:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1F0C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].data[0]++;
+    if (gTasks[taskId].data[0] == 10)
+    {
+        SendBlockRequest(BLOCK_REQ_SIZE_100);
+        DestroyTask(taskId);
+    }
 }
 
 __attribute__((naked)) void sub_080B1F10(u8 taskId)
@@ -367,11 +233,11 @@ __attribute__((naked)) void sub_080B1F64(void)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1E08\n\t"
+        "	bl CheckLinkCanceledBeforeConnection\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B1FD8\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1E54\n\t"
+        "	bl CheckLinkCanceled\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B1FD8\n\t"
         "	cmp r5, #1\n\t"
@@ -427,15 +293,15 @@ __attribute__((naked)) void sub_080B1FE8(void)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1E08\n\t"
+        "	bl CheckLinkCanceledBeforeConnection\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B2028\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1EA8\n\t"
+        "	bl CheckSioErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B2028\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1DD4\n\t"
+        "	bl CheckLinkErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B2028\n\t"
         "	bl GetFieldMessageBoxMode\n\t"
@@ -484,15 +350,15 @@ __attribute__((naked)) void sub_080B2038(void)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1E08\n\t"
+        "	bl CheckLinkCanceledBeforeConnection\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B20C0\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1EA8\n\t"
+        "	bl CheckSioErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B20C0\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1DD4\n\t"
+        "	bl CheckLinkErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B20C0\n\t"
         "	adds r6, r5, #0\n\t"
@@ -551,15 +417,15 @@ __attribute__((naked)) void sub_080B20E0(void)
         "	lsrs r5, r0, #0x18\n\t"
         "	adds r6, r5, #0\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_080B1E08\n\t"
+        "	bl CheckLinkCanceledBeforeConnection\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B2174\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_080B1EA8\n\t"
+        "	bl CheckSioErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B2174\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_080B1DD4\n\t"
+        "	bl CheckLinkErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B2174\n\t"
         "	bl GetFieldMessageBoxMode\n\t"
@@ -636,7 +502,7 @@ __attribute__((naked)) void sub_080B2184(void)
         "	ldrb r7, [r5, #0xa]\n\t"
         "	ldrb r6, [r5, #0xc]\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1DD4\n\t"
+        "	bl CheckLinkErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B21E6\n\t"
         "	adds r0, r4, #0\n\t"
@@ -697,11 +563,11 @@ __attribute__((naked)) void sub_080B21F4(void)
         "	ldrb r6, [r7, #0xa]\n\t"
         "	ldrb r5, [r7, #0xc]\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1E08\n\t"
+        "	bl CheckLinkCanceledBeforeConnection\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B22C2\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_080B1DD4\n\t"
+        "	bl CheckLinkErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B22C2\n\t"
         "	ldr r4, _080B2250\n\t"
@@ -803,7 +669,7 @@ __attribute__((naked)) void sub_080B22E4(void)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r7, r0, #0x18\n\t"
         "	adds r0, r7, #0\n\t"
-        "	bl sub_080B1DD4\n\t"
+        "	bl CheckLinkErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B23AA\n\t"
         "	ldr r0, _080B2310\n\t"
@@ -1076,7 +942,7 @@ __attribute__((naked)) void sub_080B250C(void)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_080B1DD4\n\t"
+        "	bl CheckLinkErrored\n\t"
         "	cmp r0, #1\n\t"
         "	beq _080B2578\n\t"
         "	bl GetBlockReceivedStatus\n\t"
@@ -1166,7 +1032,7 @@ __attribute__((naked)) void sub_080B258C(void)
     );
 }
 
-__attribute__((naked)) void sub_080B25C8(void)
+__attribute__((naked)) void sub_080B25C8(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1200,7 +1066,7 @@ __attribute__((naked)) void sub_080B25C8(void)
     );
 }
 
-__attribute__((naked)) void sub_080B2608(void)
+__attribute__((naked)) void sub_080B2608(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -5094,11 +5094,11 @@ SECTIONS {
         src/cable_club.o(.text.ClearLinkPlayerCountWindow);
         src/cable_club.o(.text.UpdateLinkPlayerCountDisplay);
         src/cable_club.o(.text.ExchangeDataAndGetLinkupStatus);
-        src/cable_club.o(.text.sub_080B1DD4);
-        src/cable_club.o(.text.sub_080B1E08);
-        src/cable_club.o(.text.sub_080B1E54);
-        src/cable_club.o(.text.sub_080B1EA8);
-        src/cable_club.o(.text.sub_080B1EDC);
+        src/cable_club.o(.text.CheckLinkErrored);
+        src/cable_club.o(.text.CheckLinkCanceledBeforeConnection);
+        src/cable_club.o(.text.CheckLinkCanceled);
+        src/cable_club.o(.text.CheckSioErrored);
+        src/cable_club.o(.text.Task_DelayedBlockRequest);
         src/cable_club.o(.text.sub_080B1F10);
         src/cable_club.o(.text.sub_080B1F64);
         src/cable_club.o(.text.sub_080B1FE8);
