@@ -13,6 +13,8 @@
 void Task_RedArrowCursor(void) {}
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
 u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow);
+static __attribute__((naked)) void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count);
+static __attribute__((naked)) void ListMenuDrawCursor(struct ListMenu *list);
 void ListMenuRemoveCursorObject(u8 taskId, u32 cursorObjId);
 u8 ListMenuAddCursorObjectInternal(struct CursorStruct *cursor, u32 cursorObjId);
 void ListMenuUpdateRedOutlineCursorObject(u8 taskId, u16 x, u16 y);
@@ -361,42 +363,14 @@ void DestroyListMenuTask(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
     DestroyTask(listTaskId);
 }
 
-__attribute__((naked)) void RedrawListMenu(u8 listTaskId)
+void RedrawListMenu(u8 listTaskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _081AE424\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	ldrb r2, [r4, #0x15]\n\t"
-        "	lsls r2, r2, #0x1c\n\t"
-        "	lsrs r1, r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldrh r1, [r4, #0x18]\n\t"
-        "	ldrh r3, [r4, #0xe]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ListMenuPrintEntries\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ListMenuDrawCursor\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE424: .4byte gUnknown_3005B68\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+
+    FillWindowPixelBuffer(list->template.windowId, PIXEL_FILL(list->template.fillValue));
+    ListMenuPrintEntries(list, list->scrollOffset, 0, list->template.maxShowed);
+    ListMenuDrawCursor(list);
+    CopyWindowToVram(list->template.windowId, COPYWIN_GFX);
 }
 
 void ChangeListMenuPals(u8 listTaskId, u8 cursorPal, u8 fillValue, u8 cursorShadowPal)
@@ -713,7 +687,7 @@ __attribute__((naked)) void ListMenuPrint(void)
     );
 }
 
-__attribute__((naked)) void ListMenuPrintEntries(void)
+static __attribute__((naked)) void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -815,7 +789,7 @@ __attribute__((naked)) void ListMenuPrintEntries(void)
     );
 }
 
-__attribute__((naked)) void ListMenuDrawCursor(void)
+static __attribute__((naked)) void ListMenuDrawCursor(struct ListMenu *list)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
