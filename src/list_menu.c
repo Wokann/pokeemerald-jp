@@ -3,6 +3,7 @@
 #include "constants/songs.h"
 #include "task.h"
 #include "text.h"
+#include "trig.h"
 #include "window.h"
 
 // Cursors after this point are created using a sprite with their own task.
@@ -1690,88 +1691,46 @@ void ListMenuSetUnkIndicatorsStructField(u8 taskId, u8 field, u32 value)
     }
 }
 
-__attribute__((naked)) void SpriteCallback_ScrollIndicatorArrow(void)
+#define tState data[0]
+#define tAnimNum data[1]
+#define tBounceDir data[2]
+#define tMultiplier data[3]
+#define tFrequency data[4]
+#define tSinePos data[5]
+
+static void SpriteCallback_ScrollIndicatorArrow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AEF4E\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081AEF62\n\t"
-        "	b _081AEFBC\n\t"
-        "_081AEF4E:\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	b _081AEFBC\n\t"
-        "_081AEF62:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AEF72\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081AEF98\n\t"
-        "	ldrh r2, [r4, #0x38]\n\t"
-        "	b _081AEFB6\n\t"
-        "_081AEF72:\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	ldr r1, _081AEF94\n\t"
-        "	ldrh r2, [r4, #0x38]\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	muls r0, r3, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081AEF8C\n\t"
-        "	adds r0, #0xff\n\t"
-        "_081AEF8C:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	b _081AEFB6\n\t"
-        "	.align 2, 0\n\t"
-        "_081AEF94: .4byte gSineTable\n\t"
-        "_081AEF98:\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	ldr r1, _081AEFC4\n\t"
-        "	ldrh r2, [r4, #0x38]\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	muls r0, r3, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081AEFB2\n\t"
-        "	adds r0, #0xff\n\t"
-        "_081AEFB2:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_081AEFB6:\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_081AEFBC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AEFC4: .4byte gSineTable\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 multiplier;
+
+    switch (sprite->tState)
+    {
+    case 0:
+        StartSpriteAnim(sprite, sprite->tAnimNum);
+        sprite->tState++;
+        break;
+    case 1:
+        switch (sprite->tBounceDir)
+        {
+        case 0:
+            multiplier = sprite->tMultiplier;
+            sprite->x2 = (gSineTable[(u8)(sprite->tSinePos)] * multiplier) / 256;
+            break;
+        case 1:
+            multiplier = sprite->tMultiplier;
+            sprite->y2 = (gSineTable[(u8)(sprite->tSinePos)] * multiplier) / 256;
+            break;
+        }
+        sprite->tSinePos += sprite->tFrequency;
+        break;
+    }
 }
+
+#undef tState
+#undef tAnimNum
+#undef tBounceDir
+#undef tMultiplier
+#undef tFrequency
+#undef tSinePos
 
 __attribute__((naked)) void AddScrollIndicatorArrowObject(void)
 {
