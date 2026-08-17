@@ -187,6 +187,7 @@ static bool8 LoadUISpriteGfx(void);
 extern const struct SpritePalette gUnknown_83008DC;
 extern const struct SpritePalette gUnknown_830083C;
 extern const struct SpriteSheet gUnknown_8300834;
+extern const u16 gUnknown_830D0E8[];
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
 static void SetTradePartyHPBarSprites(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
@@ -3099,102 +3100,33 @@ int CanSpinTradeMon(struct Pokemon *mon, u16 monIdx)
 }
 
 
-__attribute__((naked)) void sub_0807A498(void)
+static void SpriteCB_LinkMonGlow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _0807A4B4\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_0807A4B4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++sprite->data[0] == 10)
+    {
+        PlaySE(SE_BALL);
+        sprite->data[0] = 0;
+    }
 }
 
-__attribute__((naked)) void sub_0807A4BC(void)
+static void SpriteCB_LinkMonGlowWireless(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0807A4E6\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _0807A4E6\n\t"
-        "	movs r0, #0xc2\n\t"
-        "	bl PlaySE\n\t"
-        "	strh r5, [r4, #0x2e]\n\t"
-        "_0807A4E6:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!sprite->invisible && ++sprite->data[0] == 10)
+    {
+        PlaySE(SE_M_SWAGGER2);
+        sprite->data[0] = 0;
+    }
 }
 
-__attribute__((naked)) void sub_0807A4EC(void)
+static void SpriteCB_LinkMonShadow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r0, #0x30\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0807A522\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bne _0807A508\n\t"
-        "	strh r1, [r2, #0x2e]\n\t"
-        "_0807A508:\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldr r1, _0807A528\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r1, #0x10\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, #4\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadPalette\n\t"
-        "_0807A522:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A528: .4byte gUnknown_830D0E8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!sprite->data[1])
+    {
+        if (++sprite->data[0] == 12)
+            sprite->data[0] = 0;
+
+        LoadPalette(&gUnknown_830D0E8[sprite->data[0]], OBJ_PLTT_ID2(sprite->oam.paletteNum) + 4, PLTT_SIZEOF(1));
+    }
 }
 
 __attribute__((naked)) void sub_0807A52C(void)
@@ -8214,7 +8146,7 @@ __attribute__((naked)) void sub_0807CA00(void)
         "_0807D254: .4byte gUnknown_830CFCC\n\t"
         "_0807D258: .4byte gUnknown_2031F40\n\t"
         "_0807D25C: .4byte gSprites\n\t"
-        "_0807D260: .4byte sub_0807A4BC + 1\n\t"
+        "_0807D260: .4byte SpriteCB_LinkMonGlowWireless + 1\n\t"
         "_0807D264: .4byte gUnknown_830D00C\n\t"
         "_0807D268:\n\t"
         "	ldr r2, [r7]\n\t"
@@ -8864,7 +8796,7 @@ __attribute__((naked)) void sub_0807CA00(void)
         "_0807D7B8: .4byte gPaletteFade\n\t"
         "_0807D7BC: .4byte gUnknown_830CFCC\n\t"
         "_0807D7C0: .4byte gSprites\n\t"
-        "_0807D7C4: .4byte sub_0807A4BC + 1\n\t"
+        "_0807D7C4: .4byte SpriteCB_LinkMonGlowWireless + 1\n\t"
         "_0807D7C8: .4byte gUnknown_830D00C\n\t"
         "_0807D7CC:\n\t"
         "	movs r1, #1\n\t"
