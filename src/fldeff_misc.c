@@ -15,6 +15,7 @@ extern void Task_SecretBasePCTurnOn(u8 taskId);
 extern void Task_PopSecretBaseBalloon(u8 taskId);
 extern void Task_SecretBaseMusicNoteMatSound(u8 taskId);
 extern void Task_FieldPoisonEffect(u8 taskId);
+extern void sub_080FA66C(void);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
 
 #include "fldeff_misc.h"
@@ -90,21 +91,9 @@ __attribute__((naked)) void sub_080FA48C(void)
     );
 }
 
-__attribute__((naked)) bool32 FldEffPoison_IsActive()
+bool32 FldEffPoison_IsActive(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080FA4B0\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA4B0: .4byte sub_080FA66C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    return FuncIsActiveTask(sub_080FA66C);
 }
 
 __attribute__((naked)) void sub_080FA4B4(void)
@@ -1500,24 +1489,14 @@ __attribute__((naked)) void DoBalloonSoundEffect(void)
     );
 }
 
-__attribute__((naked)) void FldEff_NopA700(void)
+bool8 FldEff_NopA700(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return FALSE;
 }
 
-__attribute__((naked)) void FldEff_NopA6FC(void)
+bool8 FldEff_NopA6FC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return FALSE;
 }
 
 __attribute__((naked)) void DoSecretBaseBreakableDoorEffect(void)
@@ -2744,4 +2723,3 @@ __attribute__((naked)) void DestroyRecordMixingSprite(void)
         ".syntax divided\n\t"
     );
 }
-
