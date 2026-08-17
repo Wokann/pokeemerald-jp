@@ -8426,54 +8426,18 @@ __attribute__((naked)) void sub_081B3D1C(void)
     );
 }
 
-__attribute__((naked)) void CursorCb_Cancel1(u8 taskId)
+static void CursorCb_Cancel1(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _081B3DA8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, _081B3DAC\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _081B3DB0\n\t"
-        "	movs r0, #0xf\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	b _081B3DB6\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3DA8: .4byte sPartyMenuInternal\n\t"
-        "_081B3DAC: .4byte gPartyMenu\n\t"
-        "_081B3DB0:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "_081B3DB6:\n\t"
-        "	ldr r0, _081B3DCC\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B3DD0\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3DCC: .4byte gTasks\n\t"
-        "_081B3DD0: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    if (gPartyMenu.menuType == PARTY_MENU_TYPE_DAYCARE)
+        DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON_2);
+    else
+        DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
+    gTasks[taskId].func = Task_HandleChooseMonInput;
 }
+
 
 __attribute__((naked)) void CursorCb_Item(u8 taskId)
 {
