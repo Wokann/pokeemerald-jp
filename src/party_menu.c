@@ -55,6 +55,7 @@ extern const struct WindowTemplate sItemGiveTakeWindowTemplate;
 extern const struct WindowTemplate sMailReadTakeWindowTemplate;
 extern const struct WindowTemplate sMoveSelectWindowTemplate;
 extern const struct WindowTemplate sPartyMenuYesNoWindowTemplate;
+extern const struct WindowTemplate sLevelUpStatsWindowTemplate;
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern const struct WindowTemplate sDoWhatWithMonMsgWindowTemplate;
 extern const struct WindowTemplate sWhichMoveMsgWindowTemplate;
@@ -5620,32 +5621,11 @@ void sub_081B2FDC(void)
     CreateYesNoMenuAtPos(&sPartyMenuYesNoWindowTemplate, FONT_NORMAL, 2, 2, 0x4F, 13, 0);
 }
 
-__attribute__((naked)) void sub_081B3004(void)
+static u8 CreateLevelUpStatsWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _081B302C\n\t"
-        "	bl AddWindow\n\t"
-        "	ldr r4, _081B3030\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	strb r0, [r1, #0xc]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0xc]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x4f\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl DrawStdFrameWithCustomTileAndPalette\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0xc]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B302C: .4byte gUnknown_85E1228\n\t"
-        "_081B3030: .4byte sPartyMenuInternal\n\t"
-        ".syntax divided\n\t"
-    );
+    sPartyMenuInternal->windowId[0] = AddWindow(&sLevelUpStatsWindowTemplate);
+    DrawStdFrameWithCustomTileAndPalette(sPartyMenuInternal->windowId[0], FALSE, 0x4F, 13);
+    return sPartyMenuInternal->windowId[0];
 }
 
 static void PartyMenuRemoveWindow(u8 *windowId);
@@ -13352,7 +13332,7 @@ __attribute__((naked)) void sub_081B7328(void)
         "	movs r0, #0x86\n\t"
         "	lsls r0, r0, #2\n\t"
         "	adds r4, r5, r0\n\t"
-        "	bl sub_081B3004\n\t"
+        "	bl CreateLevelUpStatsWindow\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	strh r0, [r4, #0x18]\n\t"

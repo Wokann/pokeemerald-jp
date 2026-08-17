@@ -156,8 +156,8 @@ sMoveSelectWindowTemplate: @ 0x85E1218
 sPartyMenuYesNoWindowTemplate: @ 0x85E1220
 	.incbin "baserom_jp.gba", 0x5e1220, 0x8
 
-	.globl gUnknown_85E1228
-gUnknown_85E1228: @ 0x85E1228
+	.globl sLevelUpStatsWindowTemplate
+sLevelUpStatsWindowTemplate: @ 0x85E1228
 	.incbin "baserom_jp.gba", 0x5e1228, 0x18
 
 	.globl gUnknown_85E1240
