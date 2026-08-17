@@ -3277,7 +3277,7 @@ SECTIONS {
         src/trade.o(.text.SpriteCB_CableEndSending);
         src/trade.o(.text.SpriteCB_CableEndReceiving);
         src/trade.o(.text.SpriteCB_GbaScreen);
-        src/trade.o(.text.sub_0807A598);
+        src/trade.o(.text.SetTradeBGAffine);
         src/trade.o(.text.sub_0807A628);
         src/trade.o(.text.sub_0807A680);
         src/trade.o(.text.sub_0807A698);

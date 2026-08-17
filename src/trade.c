@@ -22,6 +22,7 @@
 #include "text.h"
 #include "text_window.h"
 #include "union_room.h"
+#include "util.h"
 #include "window.h"
 
 // IDs for RunTradeMenuCallback
@@ -188,6 +189,24 @@ extern const struct SpritePalette gUnknown_83008DC;
 extern const struct SpritePalette gUnknown_830083C;
 extern const struct SpriteSheet gUnknown_8300834;
 extern const u16 gUnknown_830D0E8[];
+
+// JP trade-animation state (fields used by the affine setup below; the
+// layout of the leading region differs from the US TradeAnim struct).
+struct TradeAnim
+{
+    u8 filler_0[0xD4];
+    u16 texX;       // 0xD4
+    u16 texY;       // 0xD6
+    u8 filler_D8[4];
+    s16 scrX;       // 0xDC
+    s16 scrY;       // 0xDE
+    u8 filler_E0[8];
+    s16 sXY;        // 0xE8
+    u8 filler_EA[2];
+    u16 alpha;      // 0xEC
+};
+
+extern struct TradeAnim *gUnknown_2031F40;
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
 static void SetTradePartyHPBarSprites(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
@@ -3156,76 +3175,17 @@ static void SpriteCB_GbaScreen(struct Sprite *sprite)
     }
 }
 
-__attribute__((naked)) void sub_0807A598(void)
+static void SetTradeBGAffine(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	ldr r0, _0807A624\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov ip, r0\n\t"
-        "	adds r0, #0xd4\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	adds r0, #2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	lsls r2, r2, #8\n\t"
-        "	adds r0, #6\n\t"
-        "	movs r4, #0\n\t"
-        "	ldrsh r3, [r0, r4]\n\t"
-        "	adds r0, #2\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsh r0, [r0, r5]\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r4, ip\n\t"
-        "	adds r4, #0xe8\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	mov r0, ip\n\t"
-        "	adds r0, #0xec\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	bl DoBgAffineSet\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl SetGpuReg\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	ldrh r1, [r0, #2]\n\t"
-        "	movs r0, #0x22\n\t"
-        "	bl SetGpuReg\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	ldrh r1, [r0, #4]\n\t"
-        "	movs r0, #0x24\n\t"
-        "	bl SetGpuReg\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	ldrh r1, [r0, #6]\n\t"
-        "	movs r0, #0x26\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, [sp, #0x18]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x28\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, [sp, #0x1c]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x2c\n\t"
-        "	bl SetGpuReg\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A624: .4byte gUnknown_2031F40\n\t"
-        ".syntax divided\n\t"
-    );
+    struct BgAffineDstData affine;
+
+    DoBgAffineSet(&affine, gUnknown_2031F40->texX * 0x100, gUnknown_2031F40->texY * 0x100, gUnknown_2031F40->scrX, gUnknown_2031F40->scrY, gUnknown_2031F40->sXY, gUnknown_2031F40->sXY, gUnknown_2031F40->alpha);
+    SetGpuReg(REG_OFFSET_BG2PA, (u16)affine.pa);
+    SetGpuReg(REG_OFFSET_BG2PB, (u16)affine.pb);
+    SetGpuReg(REG_OFFSET_BG2PC, (u16)affine.pc);
+    SetGpuReg(REG_OFFSET_BG2PD, (u16)affine.pd);
+    SetGpuReg(REG_OFFSET_BG2X_L, (u16)affine.dx);
+    SetGpuReg(REG_OFFSET_BG2Y_L, (u16)affine.dy);
 }
 
 __attribute__((naked)) void sub_0807A628(void)
@@ -3266,7 +3226,7 @@ __attribute__((naked)) void sub_0807A628(void)
         "	.align 2, 0\n\t"
         "_0807A670: .4byte gUnknown_2031F40\n\t"
         "_0807A674:\n\t"
-        "	bl sub_0807A598\n\t"
+        "	bl SetTradeBGAffine\n\t"
         "_0807A678:\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
@@ -5798,7 +5758,7 @@ __attribute__((naked)) void sub_0807B624(void)
         "	bhi _0807BD60\n\t"
         "	bl _0807C9EC\n\t"
         "_0807BD60:\n\t"
-        "	bl sub_0807A598\n\t"
+        "	bl SetTradeBGAffine\n\t"
         "	ldr r0, _0807BD7C\n\t"
         "	movs r1, #0x78\n\t"
         "	movs r2, #0x50\n\t"
