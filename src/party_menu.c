@@ -1387,7 +1387,7 @@ __attribute__((naked)) void Task_HandleChooseMonInput(u8 taskId)
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
         "	beq _081B10B0\n\t"
-        "	bl sub_081B10BC\n\t"
+        "	bl GetCurrentPartySlotPtr\n\t"
         "	adds r4, r0, #0\n\t"
         "	bl PartyMenuButtonHandler\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -1436,30 +1436,12 @@ __attribute__((naked)) void Task_HandleChooseMonInput(u8 taskId)
 }
 
 
-__attribute__((naked)) void sub_081B10BC(void)
+static s8 *GetCurrentPartySlotPtr(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B10D0\n\t"
-        "	ldrb r1, [r0, #0xb]\n\t"
-        "	cmp r1, #8\n\t"
-        "	beq _081B10CA\n\t"
-        "	cmp r1, #0xa\n\t"
-        "	bne _081B10D4\n\t"
-        "_081B10CA:\n\t"
-        "	adds r0, #0xa\n\t"
-        "	b _081B10D6\n\t"
-        "	.align 2, 0\n\t"
-        "_081B10D0: .4byte gPartyMenu\n\t"
-        "_081B10D4:\n\t"
-        "	adds r0, #9\n\t"
-        "_081B10D6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gPartyMenu.action == PARTY_ACTION_SWITCH || gPartyMenu.action == PARTY_ACTION_SOFTBOILED)
+        return &gPartyMenu.slotId2;
+    else
+        return &gPartyMenu.slotId;
 }
 
 __attribute__((naked)) void sub_081B10DC(void)
