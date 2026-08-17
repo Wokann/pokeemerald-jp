@@ -19223,19 +19223,11 @@ __attribute__((naked)) void sub_081B8D70(void)
     );
 }
 
-__attribute__((naked)) void sub_081B8DE0(void)
+void SetCB2ToReshowScreenAfterMenu2(void);
+
+void sub_081B8DE0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B8DEC\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8DEC: .4byte SetCB2ToReshowScreenAfterMenu2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(SetCB2ToReshowScreenAfterMenu2);
 }
 
 __attribute__((naked)) void sub_081B8DF0(void)
