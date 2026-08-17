@@ -5,6 +5,8 @@
 #include "event_data.h"
 #include "fieldmap.h"
 #include "event_object_movement.h"
+#include "script.h"
+#include "field_player_avatar.h"
 #include "field_effect.h"
 #include "fldeff.h"
 #include "party_menu.h"
@@ -26,6 +28,11 @@ extern void sub_080FA500(u8 taskId);
 static __attribute__((naked)) void sub_080FA4B4(void (*func)(u8), u16 x, u16 y, u8 z);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
 extern void Task_WateringBerryTreeAnim_1(u8 taskId);
+extern void Task_WateringBerryTreeAnim_2(u8 taskId);
+extern void Task_WateringBerryTreeAnim_3(u8 taskId);
+extern u8 sub_0808B634(void);
+extern void sub_0808BB8C(u8 direction);
+extern u8 sub_08092F08(u32 direction);
 extern void FieldCallback_SecretBaseCave(void);
 extern void FieldCallback_SecretBaseTree(void);
 extern void FieldCallback_SecretBaseShrub(void);
@@ -1903,143 +1910,43 @@ void Task_WateringBerryTreeAnim_0(u8 taskId)
     gTasks[taskId].func = Task_WateringBerryTreeAnim_1;
 }
 
-__attribute__((naked)) void Task_WateringBerryTreeAnim_1(u8 taskId)
+void Task_WateringBerryTreeAnim_1(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _080FB7C4\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080FB7C8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB78C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB7BE\n\t"
-        "_080FB78C:\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_0808BB8C\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_08092F08\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	ldr r1, _080FB7CC\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080FB7D0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080FB7BE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB7C4: .4byte gPlayerAvatar\n\t"
-        "_080FB7C8: .4byte gObjectEvents\n\t"
-        "_080FB7CC: .4byte gTasks\n\t"
-        "_080FB7D0: .4byte Task_WateringBerryTreeAnim_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+    if (!ObjectEventIsMovementOverridden(playerObjEvent)
+        || ObjectEventClearHeldMovementIfFinished(playerObjEvent))
+    {
+        sub_0808BB8C((u8)GetPlayerFacingDirection());
+        ObjectEventSetHeldMovement(playerObjEvent, sub_08092F08((u8)GetPlayerFacingDirection()));
+        gTasks[taskId].func = Task_WateringBerryTreeAnim_2;
+    }
 }
 
-__attribute__((naked)) void Task_WateringBerryTreeAnim_2(void)
+
+void Task_WateringBerryTreeAnim_2(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _080FB828\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080FB82C\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventClearHeldMovementIfFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080FB838\n\t"
-        "	ldr r1, _080FB830\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldrh r0, [r2, #0xa]\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	strh r1, [r2, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #9\n\t"
-        "	bgt _080FB834\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_08092F08\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	b _080FB838\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB828: .4byte gPlayerAvatar\n\t"
-        "_080FB82C: .4byte gObjectEvents\n\t"
-        "_080FB830: .4byte gTasks\n\t"
-        "_080FB834:\n\t"
-        "	ldr r0, _080FB840\n\t"
-        "	str r0, [r2]\n\t"
-        "_080FB838:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB840: .4byte Task_WateringBerryTreeAnim_3 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+    if (ObjectEventClearHeldMovementIfFinished(playerObjEvent))
+    {
+        s16 value = gTasks[taskId].data[1]++;
+
+        if (value < 10)
+            ObjectEventSetHeldMovement(playerObjEvent, sub_08092F08((u8)GetPlayerFacingDirection()));
+        else
+            gTasks[taskId].func = Task_WateringBerryTreeAnim_3;
+    }
 }
 
-__attribute__((naked)) void Task_WateringBerryTreeAnim_3(void)
+
+void Task_WateringBerryTreeAnim_3(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl sub_0808B634\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl SetPlayerAvatarTransitionFlags\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetPlayerAvatarTransitionFlags((u8)sub_0808B634());
+    DestroyTask(taskId);
+    ScriptContext_Enable();
 }
+
 
 void DoWateringBerryTreeAnim(void)
 {
