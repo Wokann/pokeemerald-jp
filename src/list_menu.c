@@ -336,68 +336,28 @@ void ChangeListMenuCoords(u8 listTaskId, u8 x, u8 y)
     SetWindowAttribute(list->template.windowId, WINDOW_TILEMAP_TOP, y);
 }
 
-__attribute__((naked)) s32 ListMenuTestInput(struct ListMenuTemplate *template, u32 scrollOffset, u32 selectedRow, u16 keys, u16 *newScrollOffset, u16 *newSelectedRow)
+s32 ListMenuTestInput(struct ListMenuTemplate *template, u32 scrollOffset, u32 selectedRow, u16 keys, u16 *newScrollOffset, u16 *newSelectedRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	mov ip, r2\n\t"
-        "	ldr r5, [sp, #0x34]\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	mov r3, sp\n\t"
-        "	ldm r0!, {r2, r6, r7}\n\t"
-        "	stm r3!, {r2, r6, r7}\n\t"
-        "	ldm r0!, {r2, r6, r7}\n\t"
-        "	stm r3!, {r2, r6, r7}\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r1, [r0, #0x18]\n\t"
-        "	mov r1, ip\n\t"
-        "	strh r1, [r0, #0x1a]\n\t"
-        "	strb r3, [r0, #0x1c]\n\t"
-        "	strb r3, [r0, #0x1d]\n\t"
-        "	cmp r4, #0x40\n\t"
-        "	bne _081AE4DC\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl ListMenuChangeSelection\n\t"
-        "_081AE4DC:\n\t"
-        "	cmp r4, #0x80\n\t"
-        "	bne _081AE4EC\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl ListMenuChangeSelection\n\t"
-        "_081AE4EC:\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _081AE4F6\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r0, [r0, #0x18]\n\t"
-        "	strh r0, [r5]\n\t"
-        "_081AE4F6:\n\t"
-        "	ldr r2, [sp, #0x38]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081AE502\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r0, [r0, #0x1a]\n\t"
-        "	strh r0, [r2]\n\t"
-        "_081AE502:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    struct ListMenu list;
 
+    list.template = *template;
+    list.scrollOffset = scrollOffset;
+    list.selectedRow = selectedRow;
+    list.unk_1C = 0;
+    list.unk_1D = 0;
+
+    if (keys == DPAD_UP)
+        ListMenuChangeSelection(&list, FALSE, 1, FALSE);
+    if (keys == DPAD_DOWN)
+        ListMenuChangeSelection(&list, FALSE, 1, TRUE);
+
+    if (newScrollOffset != NULL)
+        *newScrollOffset = list.scrollOffset;
+    if (newSelectedRow != NULL)
+        *newSelectedRow = list.selectedRow;
+
+    return LIST_NOTHING_CHOSEN;
+}
 void ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *arrayId)
 {
     struct ListMenu *list = (void *) gTasks[listTaskId].data;
