@@ -10231,137 +10231,35 @@ static void MoveCursorToConfirm(void)
     AnimatePartySlot(gPartyMenu.slotId, 1);
 }
 
-__attribute__((naked)) void CursorCb_NoEntry(u8 taskId)
+static void CursorCb_NoEntry(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _081B4CB4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	bl GetMaxBattleEntries\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bhs _081B4CCA\n\t"
-        "	ldr r6, _081B4CB8\n\t"
-        "	subs r2, r5, #1\n\t"
-        "	adds r7, r6, #0\n\t"
-        "	ldr r3, _081B4CBC\n\t"
-        "_081B4C82:\n\t"
-        "	adds r0, r4, r6\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r3, r0]\n\t"
-        "	adds r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081B4CC0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	cmp r0, r4\n\t"
-        "	bge _081B4CAC\n\t"
-        "	adds r3, r7, #0\n\t"
-        "_081B4C9A:\n\t"
-        "	adds r2, r0, r3\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r2]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r0, r1, #0x18\n\t"
-        "	cmp r0, r4\n\t"
-        "	blt _081B4C9A\n\t"
-        "_081B4CAC:\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _081B4CCA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4CB4: .4byte sPartyMenuInternal\n\t"
-        "_081B4CB8: .4byte gSelectedOrderFromParty\n\t"
-        "_081B4CBC: .4byte gPartyMenu\n\t"
-        "_081B4CC0:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r5\n\t"
-        "	blo _081B4C82\n\t"
-        "_081B4CCA:\n\t"
-        "	ldr r6, _081B4D38\n\t"
-        "	ldr r0, _081B4D3C\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonOtherText\n\t"
-        "	movs r4, #0\n\t"
-        "	subs r5, #1\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r7, r0, #2\n\t"
-        "	cmp r4, r5\n\t"
-        "	bge _081B4D18\n\t"
-        "_081B4CEE:\n\t"
-        "	ldr r0, _081B4D40\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B4D0E\n\t"
-        "	adds r0, r4, #2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	subs r2, #0x10\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DisplayPartyPokemonOtherText\n\t"
-        "_081B4D0E:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r5\n\t"
-        "	blt _081B4CEE\n\t"
-        "_081B4D18:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r0, _081B4D44\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r1, r7, r2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B4D48\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4D38: .4byte sPartyMenuBoxes\n\t"
-        "_081B4D3C: .4byte gPartyMenu\n\t"
-        "_081B4D40: .4byte gSelectedOrderFromParty\n\t"
-        "_081B4D44: .4byte gTasks\n\t"
-        "_081B4D48: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 maxBattlers;
+    u8 i, j;
+
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    maxBattlers = GetMaxBattleEntries();
+    for (i = 0; i < maxBattlers; i++)
+    {
+        if (gSelectedOrderFromParty[i] == (gPartyMenu.slotId + 1))
+        {
+            for (j = i; j < (maxBattlers - 1); j++)
+                gSelectedOrderFromParty[j] = gSelectedOrderFromParty[j + 1];
+            gSelectedOrderFromParty[j] = 0;
+            break;
+        }
+    }
+    DisplayPartyPokemonOtherText(PARTYBOX_DESC_ABLE_3, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
+    for (i = 0; i < (maxBattlers - 1); i++)
+    {
+        if (gSelectedOrderFromParty[i] != 0)
+            DisplayPartyPokemonOtherText(i + PARTYBOX_DESC_FIRST, &sPartyMenuBoxes[gSelectedOrderFromParty[i] - 1], 1);
+    }
+    DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
+    gTasks[taskId].func = Task_HandleChooseMonInput;
 }
+
 
 __attribute__((naked)) void Task_ClosePartyMenu(u8 taskId);
 
