@@ -17,6 +17,7 @@
 #include "malloc.h"
 #include "menu.h"
 #include "palette.h"
+#include "pokedex.h"
 #include "pokemon_icon.h"
 #include "pokemon_summary_screen.h"
 #include "sprite.h"
@@ -3592,54 +3593,18 @@ void CB2_InGameTrade(void)
 }
 
 
-__attribute__((naked)) void sub_0807AE9C(void)
+static void UpdatePokedexForReceivedMon(u8 partyIdx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _0807AEF8\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807AEF0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HoennToNationalOrder\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetSetPokedexFlag\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl HandleSetPokedexFlag\n\t"
-        "_0807AEF0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807AEF8: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[partyIdx];
+
+    if (!GetMonData3(mon, MON_DATA_IS_EGG))
+    {
+        u16 species = GetMonData3(mon, MON_DATA_SPECIES, NULL);
+        u32 personality = GetMonData3(mon, MON_DATA_PERSONALITY, NULL);
+        species = HoennToNationalOrder(species);
+        GetSetPokedexFlag(species, FLAG_SET_SEEN);
+        HandleSetPokedexFlag(species, FLAG_SET_CAUGHT, personality);
+    }
 }
 
 __attribute__((naked)) void GetMultiplayerIdWrapper(void)
@@ -3741,7 +3706,7 @@ __attribute__((naked)) void sub_0807AF08(void)
         "	bl GiveMailToMon\n\t"
         "_0807AFB4:\n\t"
         "	mov r0, sb\n\t"
-        "	bl sub_0807AE9C\n\t"
+        "	bl UpdatePokedexForReceivedMon\n\t"
         "	ldr r0, _0807AFEC\n\t"
         "	ldrb r0, [r0]\n\t"
         "	cmp r0, #0\n\t"
