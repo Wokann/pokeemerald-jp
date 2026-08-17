@@ -13,6 +13,7 @@
 #include "link.h"
 #include "link_rfu.h"
 #include "malloc.h"
+#include "menu.h"
 #include "palette.h"
 #include "pokemon_icon.h"
 #include "pokemon_summary_screen.h"
@@ -187,6 +188,8 @@ void sub_08079EE0(u8 side);
 void CB1_UpdateLink(void);
 void SetSelectedMon(u8 cursorPosition);
 void sub_08079A80(u16 action, u8 data);
+void PrintTradePartnerPartyNicknames(void);
+u32 CanTradeSelectedMon(struct Pokemon *playerParty, int partyCount, int monIdx);
 extern void sub_08198964(u8 a1, u8 a2, u8 a3, u8 a4, const u8 *text);
 extern u8 sub_081984B0(u8 windowId, u8 fontId, u8 left, u8 top, u8 cursorHeight, u8 numChoices, u8 initialCursorPos);
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
@@ -1373,165 +1376,52 @@ static void CB_ProcessMenuInput(void)
     }
 }
 
-__attribute__((naked)) void sub_08078900(void)
+static void RedrawChooseAPokemonWindow(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_080799AC\n\t"
-        "	ldr r3, _08078948\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r2, _0807894C\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, #0x34\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _08078950\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	adds r1, #0x72\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	ldr r2, _08078954\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x18\n\t"
-        "	bl sub_08079D3C\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078948: .4byte sTradeMenu\n\t"
-        "_0807894C: .4byte gSprites\n\t"
-        "_08078950: .4byte gUnknown_8300AFC\n\t"
-        "_08078954: .4byte 0x06010000\n\t"
-        ".syntax divided\n\t"
-    );
+    PrintTradePartnerPartyNicknames();
+    sTradeMenu->callbackId = CB_MAIN_MENU;
+    gSprites[sTradeMenu->cursorSpriteId].invisible = FALSE;
+    sub_08079D3C(sActionTexts[TEXT_CHOOSE_MON], (void *)(OBJ_VRAM0 + (sTradeMenu->bottomTextTileStart * 32)), 24);
 }
 
-__attribute__((naked)) void sub_08078958(void)
+static void CB_ProcessSelectedMonInput(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	bl Menu_ProcessInputNoWrap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _0807897A\n\t"
-        "	cmp r0, r1\n\t"
-        "	ble _08078A32\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078986\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080789A4\n\t"
-        "	b _08078A32\n\t"
-        "_0807897A:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl sub_08078900\n\t"
-        "	b _08078A32\n\t"
-        "_08078986:\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _080789A0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #2\n\t"
-        "	b _08078A30\n\t"
-        "	.align 2, 0\n\t"
-        "_080789A0: .4byte sTradeMenu\n\t"
-        "_080789A4:\n\t"
-        "	ldr r0, _080789C4\n\t"
-        "	ldr r1, _080789C8\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ldr r2, _080789CC\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	adds r2, #0x35\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	bl sub_0807A064\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _08078A32\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080789D0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080789C4: .4byte gPlayerParty\n\t"
-        "_080789C8: .4byte gPlayerPartyCount\n\t"
-        "_080789CC: .4byte sTradeMenu\n\t"
-        "_080789D0: .4byte 0x080789D4\n\t"
-        "_080789D4: @ jump table\n\t"
-        "	.4byte _080789EC @ case 0\n\t"
-        "	.4byte _08078A14 @ case 1\n\t"
-        "	.4byte _08078A1A @ case 2\n\t"
-        "	.4byte _08078A20 @ case 3\n\t"
-        "	.4byte _08078A1A @ case 4\n\t"
-        "	.4byte _08078A20 @ case 5\n\t"
-        "_080789EC:\n\t"
-        "	bl SetReadyToTrade\n\t"
-        "	ldr r2, _08078A0C\n\t"
-        "	ldr r0, _08078A10\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x34\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	b _08078A30\n\t"
-        "	.align 2, 0\n\t"
-        "_08078A0C: .4byte gSprites\n\t"
-        "_08078A10: .4byte sTradeMenu\n\t"
-        "_08078A14:\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #3\n\t"
-        "	b _08078A24\n\t"
-        "_08078A1A:\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #6\n\t"
-        "	b _08078A24\n\t"
-        "_08078A20:\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r1, #7\n\t"
-        "_08078A24:\n\t"
-        "	bl sub_08079A80\n\t"
-        "	ldr r0, _08078A38\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #8\n\t"
-        "_08078A30:\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078A32:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08078A38: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (Menu_ProcessInputNoWrap())
+    {
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        RedrawChooseAPokemonWindow();
+        break;
+    case MENU_NOTHING_CHOSEN:
+        break;
+    case 0: // Summary
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        sTradeMenu->callbackId = CB_SHOW_MON_SUMMARY;
+        break;
+    case 1: // Trade
+        switch (CanTradeSelectedMon(gPlayerParty, gPlayerPartyCount, sTradeMenu->cursorPosition))
+        {
+        case CAN_TRADE_MON:
+            SetReadyToTrade();
+            gSprites[sTradeMenu->cursorSpriteId].invisible = TRUE;
+            break;
+        case CANT_TRADE_LAST_MON:
+            sub_08079A80(QUEUE_DELAY_MSG, QUEUE_ONLY_MON2);
+            sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
+            break;
+        case CANT_TRADE_NATIONAL:
+        case CANT_TRADE_INVALID_MON:
+            sub_08079A80(QUEUE_DELAY_MSG, QUEUE_MON_CANT_BE_TRADED);
+            sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
+            break;
+        case CANT_TRADE_EGG_YET:
+        case CANT_TRADE_PARTNER_EGG_YET:
+            sub_08079A80(QUEUE_DELAY_MSG, QUEUE_EGG_CANT_BE_TRADED);
+            sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
+            break;
+        }
+        break;
+    }
 }
 
 __attribute__((naked)) void sub_08078A3C(void)
@@ -1552,7 +1442,7 @@ __attribute__((naked)) void sub_08078A3C(void)
         "_08078A52:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
-        "	bl sub_08078900\n\t"
+        "	bl RedrawChooseAPokemonWindow\n\t"
         "_08078A5C:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -1977,7 +1867,7 @@ __attribute__((naked)) void sub_08078CEC(void)
         "_08078D54:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
-        "	bl sub_08078900\n\t"
+        "	bl RedrawChooseAPokemonWindow\n\t"
         "_08078D5E:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -2359,7 +2249,7 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	bl CB_ProcessMenuInput\n\t"
         "	b _0807908C\n\t"
         "_0807902E:\n\t"
-        "	bl sub_08078958\n\t"
+        "	bl CB_ProcessSelectedMonInput\n\t"
         "	b _0807908C\n\t"
         "_08079034:\n\t"
         "	bl sub_08078A64\n\t"
@@ -2676,7 +2566,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "	beq _08079284\n\t"
         "	b _08079454\n\t"
         "_08079284:\n\t"
-        "	bl sub_080799AC\n\t"
+        "	bl PrintTradePartnerPartyNicknames\n\t"
         "	b _08079454\n\t"
         "	.align 2, 0\n\t"
         "_0807928C: .4byte gSprites\n\t"
@@ -3605,7 +3495,7 @@ __attribute__((naked)) void sub_080798E0(void)
 }
 
 
-__attribute__((naked)) void sub_080799AC(void)
+__attribute__((naked)) void PrintTradePartnerPartyNicknames(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4537,7 +4427,7 @@ __attribute__((naked)) void sub_0807A028(void)
     );
 }
 
-__attribute__((naked)) void sub_0807A064(void)
+__attribute__((naked)) u32 CanTradeSelectedMon(struct Pokemon *playerParty, int partyCount, int monIdx)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
