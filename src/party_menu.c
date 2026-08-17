@@ -12719,25 +12719,14 @@ __attribute__((naked)) void party_menu_link_mon_status_condition_object(void)
     );
 }
 
-__attribute__((naked)) void party_menu_get_status_condition_and_update_object(void)
+__attribute__((naked)) void party_menu_update_status_condition_object(u8 ailment, struct PartyMenuBox *box);
+
+static void party_menu_get_status_condition_and_update_object(struct Pokemon *mon, struct PartyMenuBox *box)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl GetMonAilment\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl party_menu_update_status_condition_object\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    party_menu_update_status_condition_object(GetMonAilment(mon), box);
 }
 
-__attribute__((naked)) void party_menu_update_status_condition_object(void)
+__attribute__((naked)) void party_menu_update_status_condition_object(u8 ailment, struct PartyMenuBox *box)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
