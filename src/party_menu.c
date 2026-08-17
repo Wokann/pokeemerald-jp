@@ -12,6 +12,7 @@ extern const u16 sTMHMMoves[];
 #include "constants/rgb.h"
 #include "main.h"
 #include "menu_helpers.h"
+#include "sprite.h"
 #include "string_util.h"
 #include "task.h"
 
@@ -12180,22 +12181,13 @@ __attribute__((naked)) void sub_081B5950(void)
     );
 }
 
-__attribute__((naked)) void LoadHeldItemIcons(void)
+extern const struct CompressedSpriteSheet gUnknown_85E1768;
+extern const struct CompressedSpritePalette gUnknown_85E1770;
+
+void LoadHeldItemIcons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B59E4\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, _081B59E8\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B59E4: .4byte gUnknown_85E1768\n\t"
-        "_081B59E8: .4byte gUnknown_85E1770\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadSpriteSheet(&gUnknown_85E1768);
+    LoadSpritePalette(&gUnknown_85E1770);
 }
 
 
