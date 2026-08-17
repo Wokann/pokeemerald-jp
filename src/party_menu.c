@@ -3,6 +3,12 @@
 
 extern const u16 sTMHMMoves[];
 #include "constants/items.h"
+#include "constants/rgb.h"
+#include "main.h"
+#include "palette.h"
+#include "task.h"
+
+static void Task_ExitPartyMenu(u8 taskId);
 
 __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId)
 {
@@ -200,36 +206,20 @@ __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction
     );
 }
 
-__attribute__((naked)) void PartyMenuCallback(void)
+static void CB2_UpdatePartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl DoScheduledBgTilemapCopiesToVram\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    DoScheduledBgTilemapCopiesToVram();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void PartyMenuVBlankCallback(void)
+static void VBlankCB_PartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
 __attribute__((naked)) void PartyMenuInitCallback(void)
@@ -373,7 +363,7 @@ __attribute__((naked)) void PartyMenuSetup(void)
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _081AFFFA\n\t"
-        "	bl PartyMenuExit\n\t"
+        "	bl ExitPartyMenu\n\t"
         "	movs r0, #1\n\t"
         "	b _081B018A\n\t"
         "_081AFFFA:\n\t"
@@ -567,8 +557,8 @@ __attribute__((naked)) void PartyMenuSetup(void)
         "	movs r0, #1\n\t"
         "	b _081B018A\n\t"
         "	.align 2, 0\n\t"
-        "_081B0180: .4byte PartyMenuVBlankCallback + 1\n\t"
-        "_081B0184: .4byte PartyMenuCallback + 1\n\t"
+        "_081B0180: .4byte VBlankCB_PartyMenu + 1\n\t"
+        "_081B0184: .4byte CB2_UpdatePartyMenu + 1\n\t"
         "_081B0188:\n\t"
         "	movs r0, #0\n\t"
         "_081B018A:\n\t"
@@ -581,65 +571,22 @@ __attribute__((naked)) void PartyMenuSetup(void)
     );
 }
 
-__attribute__((naked)) void PartyMenuExit(void)
+static void ExitPartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _081B01C4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r0, _081B01C8\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r0, _081B01CC\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B01C4: .4byte PartyMenuExitTask + 1\n\t"
-        "_081B01C8: .4byte PartyMenuVBlankCallback + 1\n\t"
-        "_081B01CC: .4byte PartyMenuCallback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+    CreateTask(Task_ExitPartyMenu, 0);
+    SetVBlankCallback(VBlankCB_PartyMenu);
+    SetMainCallback2(CB2_UpdatePartyMenu);
 }
 
-__attribute__((naked)) void PartyMenuExitTask(u8 taskId)
+static void Task_ExitPartyMenu(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _081B01FC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B01F4\n\t"
-        "	ldr r0, _081B0200\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	bl FreePartyPointers\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081B01F4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B01FC: .4byte gPaletteFade\n\t"
-        "_081B0200: .4byte gPartyMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        SetMainCallback2(gPartyMenu.exitCallback);
+        FreePartyPointers();
+        DestroyTask(taskId);
+    }
 }
 
 __attribute__((naked)) void reset_brm(void)

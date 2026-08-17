@@ -8532,12 +8532,12 @@ SECTIONS {
         src/save_location.o(.text);
         src/item_icon.o(.text);
         src/party_menu.o(.text.InitPartyMenu);
-        src/party_menu.o(.text.PartyMenuCallback);
-        src/party_menu.o(.text.PartyMenuVBlankCallback);
+        src/party_menu.o(.text.CB2_UpdatePartyMenu);
+        src/party_menu.o(.text.VBlankCB_PartyMenu);
         src/party_menu.o(.text.PartyMenuInitCallback);
         src/party_menu.o(.text.PartyMenuSetup);
-        src/party_menu.o(.text.PartyMenuExit);
-        src/party_menu.o(.text.PartyMenuExitTask);
+        src/party_menu.o(.text.ExitPartyMenu);
+        src/party_menu.o(.text.Task_ExitPartyMenu);
         src/party_menu.o(.text.reset_brm);
         src/party_menu.o(.text.AllocPartyMenuBg);
         src/party_menu.o(.text.AllocPartyMiscGfx);
