@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "cable_club.h"
 #include "trade.h"
+#include "evolution_scene.h"
 
 #include "AgbRfu_LinkManager.h"
 #include "bg.h"
@@ -283,6 +284,9 @@ struct InGameTrade
 
 static void CB2_UpdateLinkTrade(void);
 static void CB2_WaitTradeComplete(void);
+static void CB2_TryLinkTradeEvolution(void);
+static void CB2_SaveAndEndTrade(void);
+static void CB2_SaveAndEndWirelessTrade(void);
 extern struct MonSpritesGfx *gMonSpritesGfxPtr;
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
@@ -8646,104 +8650,32 @@ __attribute__((naked)) void DoTradeAnim_Wireless(void)
     );
 }
 
-__attribute__((naked)) void c2_08053788(void)
+static void CB2_TryLinkTradeEvolution(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	ldr r0, _0807DE68\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DE6C\n\t"
-        "	cmp r0, #4\n\t"
-        "	beq _0807DE7C\n\t"
-        "	b _0807DEEC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DE68: .4byte gMain\n\t"
-        "_0807DE6C:\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _0807DE78\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0807DEEA\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DE78: .4byte gSoftResetDisabled\n\t"
-        "_0807DE7C:\n\t"
-        "	ldr r0, _0807DEB8\n\t"
-        "	ldr r1, _0807DEBC\n\t"
-        "	mov r8, r1\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r7, _0807DEC0\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _0807DEC4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetEvolutionTargetSpecies\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _0807DECC\n\t"
-        "	ldrb r3, [r7]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _0807DEC8\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x8f\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl TradeEvolutionScene\n\t"
-        "	b _0807DEE6\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DEB8: .4byte gCB2_AfterEvolution\n\t"
-        "_0807DEBC: .4byte sub_0807E588 + 1\n\t"
-        "_0807DEC0: .4byte gSelectedTradeMonPositions\n\t"
-        "_0807DEC4: .4byte gPlayerParty\n\t"
-        "_0807DEC8: .4byte gUnknown_2031F40\n\t"
-        "_0807DECC:\n\t"
-        "	bl IsWirelessTrade\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DEE0\n\t"
-        "	ldr r0, _0807DEDC\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _0807DEE6\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DEDC: .4byte sub_0807EE9C + 1\n\t"
-        "_0807DEE0:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0807DEE6:\n\t"
-        "	ldr r1, _0807DF10\n\t"
-        "	movs r0, #0xff\n\t"
-        "_0807DEEA:\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0807DEEC:\n\t"
-        "	bl HasLinkErrorOccurred\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807DEFA\n\t"
-        "	bl RunTasks\n\t"
-        "_0807DEFA:\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DF10: .4byte gSelectedTradeMonPositions\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 evoTarget;
+    switch (gMain.state)
+    {
+    case 0:
+        gMain.state = 4;
+        gSoftResetDisabled = TRUE;
+        break;
+    case 4:
+        gCB2_AfterEvolution = CB2_SaveAndEndTrade;
+        evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[TRADE_PLAYER]], EVO_MODE_TRADE, ITEM_NONE);
+        if (evoTarget != SPECIES_NONE)
+            TradeEvolutionScene(&gPlayerParty[gSelectedTradeMonPositions[TRADE_PLAYER]], evoTarget, gUnknown_2031F40->monSpriteIds[TRADE_PARTNER], gSelectedTradeMonPositions[TRADE_PLAYER]);
+        else if (IsWirelessTrade())
+            SetMainCallback2(CB2_SaveAndEndWirelessTrade);
+        else
+            SetMainCallback2(CB2_SaveAndEndTrade);
+        gSelectedTradeMonPositions[TRADE_PLAYER] = 255;
+        break;
+    }
+    if (!HasLinkErrorOccurred())
+        RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
 static void HandleLinkDataReceive(void)
@@ -8754,7 +8686,7 @@ static void HandleLinkDataReceive(void)
     if (recvStatus & (1 << 0))
     {
         if (gBlockRecvBuffer[0][0] == LINKCMD_CONFIRM_FINISH_TRADE)
-            SetMainCallback2(c2_08053788);
+            SetMainCallback2(CB2_TryLinkTradeEvolution);
 
         if (gBlockRecvBuffer[0][0] == LINKCMD_READY_FINISH_TRADE)
             gUnknown_2031F40->playerFinishStatus = STATUS_READY;
@@ -9439,7 +9371,7 @@ static void CB2_WaitTradeComplete(void)
     u8 mpId = TradeGetMultiplayerId();
     if (IsWirelessTrade())
     {
-        SetMainCallback2(c2_08053788);
+        SetMainCallback2(CB2_TryLinkTradeEvolution);
     }
     else
     {
@@ -9459,7 +9391,7 @@ static void CB2_WaitTradeComplete(void)
     UpdatePaletteFade();
 }
 
-__attribute__((naked)) void sub_0807E588(void)
+__attribute__((naked)) void CB2_SaveAndEndTrade(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10535,7 +10467,7 @@ __attribute__((naked)) void sub_0807EDD4(void)
     );
 }
 
-__attribute__((naked)) void sub_0807EE9C(void)
+__attribute__((naked)) void CB2_SaveAndEndWirelessTrade(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
