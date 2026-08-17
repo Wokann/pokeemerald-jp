@@ -8634,7 +8634,7 @@ SECTIONS {
         src/party_menu.o(.text.DisplayPartyPokemonDescriptionText);
         src/party_menu.o(.text.PartyMenuRemoveWindow);
         src/party_menu.o(.text.DisplayPartyMenuStdMessage);
-        src/party_menu.o(.text.sub_081B2DD0);
+        src/party_menu.o(.text.ShouldUseChooseMonText);
         src/party_menu.o(.text.DisplaySelectionWindow);
         src/party_menu.o(.text.sub_081B2F90);
         src/party_menu.o(.text.sub_081B2FDC);

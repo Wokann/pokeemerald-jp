@@ -50,6 +50,15 @@ extern const u8 sHPBarGreenPalIds[];
 extern const u8 sHPBarYellowPalIds[];
 extern const u8 sHPBarRedPalIds[];
 extern const u8 *const sDescriptionStringTable[];
+extern const struct WindowTemplate sDefaultPartyMsgWindowTemplate;
+extern const struct WindowTemplate sDoWhatWithMonMsgWindowTemplate;
+extern const struct WindowTemplate sWhichMoveMsgWindowTemplate;
+extern const struct WindowTemplate sDoWhatWithItemMsgWindowTemplate;
+extern const struct WindowTemplate sDoWhatWithMailMsgWindowTemplate;
+extern const struct WindowTemplate sDoWhatWithMailMsgWindowTemplate;
+extern const struct WindowTemplate sAlreadyHoldingOneMsgWindowTemplate;
+extern const u8 *const sActionStringTable[];
+extern void DrawStdFrameWithCustomTileAndPalette(u8 windowId, bool8 copyToVram, u16 baseTileNum, u8 paletteNum);
 #include "constants/items.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
@@ -59,6 +68,7 @@ extern const u8 *const sDescriptionStringTable[];
 #include "link_rfu.h"
 #include "main.h"
 #include "text.h"
+#include "window.h"
 #include "menu_helpers.h"
 #include "sprite.h"
 #include "sound.h"
@@ -139,6 +149,7 @@ struct PartyMenuBox
 };
 
 static void DisplayPartyPokemonLevel(u8, struct PartyMenuBox *);
+bool8 ShouldUseChooseMonText(void);
 static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox);
 
 extern const struct PartyMenuBoxInfoRects gUnknown_85E0F9C[];
@@ -5401,134 +5412,55 @@ static void PartyMenuRemoveWindow(u8 *ptr)
     }
 }
 
-__attribute__((naked)) void DisplayPartyMenuStdMessage(u32 stringId)
+void DisplayPartyMenuStdMessage(u32 stringId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, _081B2D08\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	adds r5, #0xd\n\t"
-        "	ldrb r0, [r4, #0xd]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _081B2CF2\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "_081B2CF2:\n\t"
-        "	cmp r6, #0x7f\n\t"
-        "	beq _081B2DC0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	subs r0, #0x15\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _081B2D58\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B2D0C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2D08: .4byte sPartyMenuInternal\n\t"
-        "_081B2D0C: .4byte 0x081B2D10\n\t"
-        "_081B2D10: @ jump table\n\t"
-        "	.4byte _081B2D28 @ case 0\n\t"
-        "	.4byte _081B2D40 @ case 1\n\t"
-        "	.4byte _081B2D40 @ case 2\n\t"
-        "	.4byte _081B2D30 @ case 3\n\t"
-        "	.4byte _081B2D38 @ case 4\n\t"
-        "	.4byte _081B2D48 @ case 5\n\t"
-        "_081B2D28:\n\t"
-        "	ldr r0, _081B2D2C\n\t"
-        "	b _081B2D4A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2D2C: .4byte gUnknown_85E11E0\n\t"
-        "_081B2D30:\n\t"
-        "	ldr r0, _081B2D34\n\t"
-        "	b _081B2D4A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2D34: .4byte gUnknown_85E11E8\n\t"
-        "_081B2D38:\n\t"
-        "	ldr r0, _081B2D3C\n\t"
-        "	b _081B2D4A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2D3C: .4byte gUnknown_85E11F0\n\t"
-        "_081B2D40:\n\t"
-        "	ldr r0, _081B2D44\n\t"
-        "	b _081B2D4A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2D44: .4byte gUnknown_85E11F8\n\t"
-        "_081B2D48:\n\t"
-        "	ldr r0, _081B2D54\n\t"
-        "_081B2D4A:\n\t"
-        "	bl AddWindow\n\t"
-        "	strb r0, [r5]\n\t"
-        "	b _081B2D60\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2D54: .4byte gUnknown_85E1200\n\t"
-        "_081B2D58:\n\t"
-        "	ldr r0, _081B2D74\n\t"
-        "	bl AddWindow\n\t"
-        "	strb r0, [r4, #0xd]\n\t"
-        "_081B2D60:\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _081B2D88\n\t"
-        "	ldr r0, _081B2D78\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B2D7C\n\t"
-        "	movs r6, #2\n\t"
-        "	b _081B2D88\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2D74: .4byte gUnknown_85E11D8\n\t"
-        "_081B2D78: .4byte sPartyMenuInternal\n\t"
-        "_081B2D7C:\n\t"
-        "	bl sub_081B2DD0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B2D88\n\t"
-        "	movs r6, #1\n\t"
-        "_081B2D88:\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x4f\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl DrawStdFrameWithCustomTileAndPalette\n\t"
-        "	ldr r4, _081B2DC8\n\t"
-        "	ldr r1, _081B2DCC\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	movs r1, #2\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "_081B2DC0:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B2DC8: .4byte gStringVar4\n\t"
-        "_081B2DCC: .4byte gUnknown_85E13AC\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *windowPtr = &sPartyMenuInternal->windowId[1];
+
+    if (*windowPtr != WINDOW_NONE)
+        PartyMenuRemoveWindow(windowPtr);
+
+    if (stringId != PARTY_MSG_NONE)
+    {
+        switch (stringId)
+        {
+        // JP: PARTY_MSG enum order differs from US (RESTORE=22/BOOST=23 before ITEM=24/MAIL=25)
+        case PARTY_MSG_DO_WHAT_WITH_MON:
+            *windowPtr = AddWindow(&sDoWhatWithMonMsgWindowTemplate);
+            break;
+        case PARTY_MSG_DO_WHAT_WITH_ITEM:
+            *windowPtr = AddWindow(&sDoWhatWithItemMsgWindowTemplate);
+            break;
+        case PARTY_MSG_DO_WHAT_WITH_MAIL:
+            *windowPtr = AddWindow(&sDoWhatWithMailMsgWindowTemplate);
+            break;
+        case PARTY_MSG_RESTORE_WHICH_MOVE:
+        case PARTY_MSG_BOOST_PP_WHICH_MOVE:
+            *windowPtr = AddWindow(&sWhichMoveMsgWindowTemplate);
+            break;
+        case PARTY_MSG_ALREADY_HOLDING_ONE:
+            *windowPtr = AddWindow(&sAlreadyHoldingOneMsgWindowTemplate);
+            break;
+        default:
+            *windowPtr = AddWindow(&sDefaultPartyMsgWindowTemplate);
+            break;
+        }
+
+        if (stringId == PARTY_MSG_CHOOSE_MON)
+        {
+            if (sPartyMenuInternal->chooseHalf)
+                stringId = PARTY_MSG_CHOOSE_MON_AND_CONFIRM;
+            else if (!ShouldUseChooseMonText())
+                stringId = PARTY_MSG_CHOOSE_MON_OR_CANCEL;
+        }
+        DrawStdFrameWithCustomTileAndPalette(*windowPtr, FALSE, 0x4F, 13);
+        StringExpandPlaceholders(gStringVar4, sActionStringTable[stringId]);
+        // JP: message text y = 2 (US uses 1)
+        AddTextPrinterParameterized(*windowPtr, FONT_NORMAL, gStringVar4, 0, 2, 0, 0);
+        ScheduleBgCopyTilemapToVram(2);
+    }
 }
 
-__attribute__((naked)) void sub_081B2DD0(void)
+__attribute__((naked)) bool8 ShouldUseChooseMonText(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -116,28 +116,28 @@ gUnknown_85E11C8: @ 0x85E11C8
 gUnknown_85E11D0: @ 0x85E11D0
 	.incbin "baserom_jp.gba", 0x5e11d0, 0x8
 
-	.globl gUnknown_85E11D8
-gUnknown_85E11D8: @ 0x85E11D8
+	.globl sDefaultPartyMsgWindowTemplate
+sDefaultPartyMsgWindowTemplate: @ 0x85E11D8
 	.incbin "baserom_jp.gba", 0x5e11d8, 0x8
 
-	.globl gUnknown_85E11E0
-gUnknown_85E11E0: @ 0x85E11E0
+	.globl sDoWhatWithMonMsgWindowTemplate
+sDoWhatWithMonMsgWindowTemplate: @ 0x85E11E0
 	.incbin "baserom_jp.gba", 0x5e11e0, 0x8
 
-	.globl gUnknown_85E11E8
-gUnknown_85E11E8: @ 0x85E11E8
+	.globl sDoWhatWithItemMsgWindowTemplate
+sDoWhatWithItemMsgWindowTemplate: @ 0x85E11E8
 	.incbin "baserom_jp.gba", 0x5e11e8, 0x8
 
-	.globl gUnknown_85E11F0
-gUnknown_85E11F0: @ 0x85E11F0
+	.globl sDoWhatWithMailMsgWindowTemplate
+sDoWhatWithMailMsgWindowTemplate: @ 0x85E11F0
 	.incbin "baserom_jp.gba", 0x5e11f0, 0x8
 
-	.globl gUnknown_85E11F8
-gUnknown_85E11F8: @ 0x85E11F8
+	.globl sWhichMoveMsgWindowTemplate
+sWhichMoveMsgWindowTemplate: @ 0x85E11F8
 	.incbin "baserom_jp.gba", 0x5e11f8, 0x8
 
-	.globl gUnknown_85E1200
-gUnknown_85E1200: @ 0x85E1200
+	.globl sAlreadyHoldingOneMsgWindowTemplate
+sAlreadyHoldingOneMsgWindowTemplate: @ 0x85E1200
 	.incbin "baserom_jp.gba", 0x5e1200, 0x8
 
 	.globl gUnknown_85E1208
@@ -272,8 +272,8 @@ sPartyBoxSelectedForActionPalIds2: @ 0x85E13A6
 sPartyBoxNoMonPalIds: @ 0x85E13A9
 	.incbin "baserom_jp.gba", 0x5e13a9, 0x3
 
-	.globl gUnknown_85E13AC
-gUnknown_85E13AC: @ 0x85E13AC
+	.globl sActionStringTable
+sActionStringTable: @ 0x85E13AC
 	.incbin "baserom_jp.gba", 0x5e13ac, 0x6c
 
 	.globl sDescriptionStringTable
