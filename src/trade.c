@@ -195,9 +195,9 @@ extern const u16 gUnknown_830D0E8[];
 struct TradeAnim
 {
     u8 filler_0[0x88];
-    u8 field_88;       // 0x88
-    u8 field_89;       // 0x89
-    u16 field_8A;      // 0x8A
+    u8 linkTimeoutZero1;   // 0x88
+    u8 linkTimeoutZero2;   // 0x89
+    u16 linkTimeoutTimer;  // 0x8A
     u8 filler_8C[0x48];
     u16 texX;       // 0xD4
     u16 texY;       // 0xD6
@@ -3222,78 +3222,30 @@ static void VBlankCB_TradeAnim(void)
     TransferPlttBuffer();
 }
 
-static void ResetTradeAnimState(void)
+static void ClearLinkTimeoutTimer(void)
 {
-    gUnknown_2031F40->field_8A = 0;
-    gUnknown_2031F40->field_88 = 0;
-    gUnknown_2031F40->field_89 = 0;
+    gUnknown_2031F40->linkTimeoutTimer = 0;
+    gUnknown_2031F40->linkTimeoutZero1 = 0;
+    gUnknown_2031F40->linkTimeoutZero2 = 0;
 }
 
-__attribute__((naked)) void sub_0807A6C0(void)
+static void CheckForLinkTimeout(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _0807A6E4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x88\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x89\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrb r3, [r3]\n\t"
-        "	cmp r1, r3\n\t"
-        "	bne _0807A6E8\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x8a\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _0807A6EE\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A6E4: .4byte gUnknown_2031F40\n\t"
-        "_0807A6E8:\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x8a\n\t"
-        "	movs r0, #0\n\t"
-        "_0807A6EE:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x8a\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x96\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bls _0807A720\n\t"
-        "	bl CloseLink\n\t"
-        "	ldr r0, _0807A734\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0x8a\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r1, #0x89\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x88\n\t"
-        "	strb r2, [r0]\n\t"
-        "_0807A720:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x88\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, #0x89\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807A734: .4byte CB2_LinkError + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2031F40->linkTimeoutZero1 == gUnknown_2031F40->linkTimeoutZero2)
+        gUnknown_2031F40->linkTimeoutTimer++;
+    else
+        gUnknown_2031F40->linkTimeoutTimer = 0;
+
+    if (gUnknown_2031F40->linkTimeoutTimer > 300)
+    {
+        CloseLink();
+        SetMainCallback2(CB2_LinkError);
+        gUnknown_2031F40->linkTimeoutTimer = 0;
+        gUnknown_2031F40->linkTimeoutZero2 = 0;
+        gUnknown_2031F40->linkTimeoutZero1 = 0;
+    }
+
+    gUnknown_2031F40->linkTimeoutZero2 = gUnknown_2031F40->linkTimeoutZero1;
 }
 
 static u32 TradeGetMultiplayerId(void)
@@ -3529,7 +3481,7 @@ __attribute__((naked)) void sub_0807A8AC(void)
         "	ldr r0, _0807A9AC\n\t"
         "	bl SetVBlankCallback\n\t"
         "	bl sub_0807ABCC\n\t"
-        "	bl ResetTradeAnimState\n\t"
+        "	bl ClearLinkTimeoutTimer\n\t"
         "	ldr r1, _0807A9B0\n\t"
         "	movs r0, #0x87\n\t"
         "	lsls r0, r0, #3\n\t"
@@ -3661,10 +3613,10 @@ __attribute__((naked)) void sub_0807A8AC(void)
         "_0807AA54: .4byte gUnknown_2031F40\n\t"
         "_0807AA58: .4byte gMain\n\t"
         "_0807AA5C:\n\t"
-        "	bl sub_0807A6C0\n\t"
+        "	bl CheckForLinkTimeout\n\t"
         "	b _0807AB72\n\t"
         "_0807AA62:\n\t"
-        "	bl sub_0807A6C0\n\t"
+        "	bl CheckForLinkTimeout\n\t"
         "	ldr r0, _0807AA88\n\t"
         "	ldrb r0, [r0]\n\t"
         "	cmp r0, #1\n\t"
