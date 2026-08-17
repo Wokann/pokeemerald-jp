@@ -79,6 +79,7 @@ extern const struct
     TaskFunc func;
 } sCursorOptions[];
 #include "constants/items.h"
+#include "constants/contest.h"
 #include "constants/party_menu.h"
 #include "constants/pokemon.h"
 #include "constants/rgb.h"
@@ -1022,7 +1023,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	cmp r1, #2\n\t"
         "	bne _081B0598\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonSelectForContest\n\t"
+        "	bl DisplayPartyPokemonDataForContest\n\t"
         "	b _081B05CE\n\t"
         "_081B0598:\n\t"
         "	cmp r1, #4\n\t"
@@ -1154,51 +1155,20 @@ static void DisplayPartyPokemonDataForChooseHalf(u8 slot)
     }
 }
 
-__attribute__((naked)) void DisplayPartyPokemonSelectForContest(u8 a)
+static void DisplayPartyPokemonDataForContest(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081B0804\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl sub_080DA58C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _081B0832\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B0808\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0804: .4byte gPlayerParty\n\t"
-        "_081B0808: .4byte 0x081B080C\n\t"
-        "_081B080C: @ jump table\n\t"
-        "	.4byte _081B0820 @ case 0\n\t"
-        "	.4byte _081B082A @ case 1\n\t"
-        "	.4byte _081B082A @ case 2\n\t"
-        "	.4byte _081B0820 @ case 3\n\t"
-        "	.4byte _081B0820 @ case 4\n\t"
-        "_081B0820:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "	b _081B0832\n\t"
-        "_081B082A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "_081B0832:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch ((u8)GetContestEntryEligibility(&gPlayerParty[slot]))
+    {
+    case CANT_ENTER_CONTEST:
+    case CANT_ENTER_CONTEST_EGG:
+    case CANT_ENTER_CONTEST_FAINTED:
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_NOT_ABLE);
+        break;
+    case CAN_ENTER_CONTEST_EQUAL_RANK:
+    case CAN_ENTER_CONTEST_HIGH_RANK:
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_ABLE);
+        break;
+    }
 }
 
 __attribute__((naked)) void DisplayPartyPokemonSelectForRelearner(u8 a)

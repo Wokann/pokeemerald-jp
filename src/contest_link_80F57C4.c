@@ -5241,7 +5241,7 @@ __attribute__((naked)) void sub_080F87C0(void)
         "	muls r0, r1, r0\n\t"
         "	ldr r1, _080F87FC\n\t"
         "	adds r0, r0, r1\n\t"
-        "	bl sub_080DA58C\n\t"
+        "	bl GetContestEntryEligibility\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	adds r5, r0, #0\n\t"

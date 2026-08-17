@@ -6931,7 +6931,7 @@ __attribute__((naked)) void sub_080DA460(void)
     );
 }
 
-__attribute__((naked)) void sub_080DA58C(void)
+__attribute__((naked)) u8 GetContestEntryEligibility(struct Pokemon *pkmn)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
