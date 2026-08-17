@@ -175,6 +175,7 @@ enum {
 #define NUM_PLAYER_NAME_SPRITES 3
 #define NUM_PARTNER_NAME_SPRITES 3
 #define NUM_CHOOSE_PKMN_SPRITES 6 // JP creates all 6 Choose-Pokémon sprites
+#define GFXTAG_MENU_TEXT 200 // Used as a base tag in CB2_CreateTradeMenu and CB2_ReturnToTradeMenu
 
 static u32 GetNumQueuedActions(void);
 extern void CB2_ReturnToFieldFromMultiplayer(void);
@@ -182,7 +183,10 @@ void sub_080790C8(u8 side);
 static void PrintPartyLevelsAndGenders(u8 whichParty);
 static void DoQueuedActions(void);
 static void PrintPartyNicknames(u8 whichParty);
-bool8 sub_08079C28(void);
+static bool8 LoadUISpriteGfx(void);
+extern const struct SpritePalette gUnknown_83008DC;
+extern const struct SpritePalette gUnknown_830083C;
+extern const struct SpriteSheet gUnknown_8300834;
 void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed);
 void sub_08079FB4(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
@@ -513,7 +517,7 @@ static void CB2_CreateTradeMenu(void)
         sTradeMenu->timer = 0;
         break;
     case 11:
-        if (sub_08079C28())
+        if (LoadUISpriteGfx())
             gMain.state++;
         break;
     case 12:
@@ -706,7 +710,7 @@ static void CB2_ReturnToTradeMenu(void)
         sTradeMenu->timer = 0;
         break;
     case 11:
-        if (sub_08079C28())
+        if (LoadUISpriteGfx())
             gMain.state++;
         break;
     case 12:
@@ -2629,137 +2633,59 @@ static void PrintTradeMessage(u8 messageId)
     CopyWindowToVram(0, COPYWIN_FULL);
 }
 
-__attribute__((naked)) bool8 sub_08079C28(void)
+static bool8 LoadUISpriteGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r0, _08079C78\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0xa8\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r1, #0xc\n\t"
-        "	bhi _08079C64\n\t"
-        "	ldr r1, _08079C7C\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _08079C80\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	ands r2, r0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	orrs r2, r0\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	adds r1, #0xc8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	ldr r0, _08079C84\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "_08079C64:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xa8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bhi _08079D30\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08079C88\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079C78: .4byte sTradeMenu\n\t"
-        "_08079C7C: .4byte sMenuTextTileBuffers\n\t"
-        "_08079C80: .4byte 0xFFFF0000\n\t"
-        "_08079C84: .4byte 0x0000FFFF\n\t"
-        "_08079C88: .4byte 0x08079C8C\n\t"
-        "_08079C8C: @ jump table\n\t"
-        "	.4byte _08079CD0 @ case 0\n\t"
-        "	.4byte _08079CD0 @ case 1\n\t"
-        "	.4byte _08079CD0 @ case 2\n\t"
-        "	.4byte _08079CD0 @ case 3\n\t"
-        "	.4byte _08079CD0 @ case 4\n\t"
-        "	.4byte _08079CD0 @ case 5\n\t"
-        "	.4byte _08079CD0 @ case 6\n\t"
-        "	.4byte _08079CD4 @ case 7\n\t"
-        "	.4byte _08079CEC @ case 8\n\t"
-        "	.4byte _08079CEC @ case 9\n\t"
-        "	.4byte _08079CEC @ case 10\n\t"
-        "	.4byte _08079CEC @ case 11\n\t"
-        "	.4byte _08079CEC @ case 12\n\t"
-        "	.4byte _08079CF0 @ case 13\n\t"
-        "	.4byte _08079CFC @ case 14\n\t"
-        "	.4byte _08079D08 @ case 15\n\t"
-        "	.4byte _08079D24 @ case 16\n\t"
-        "_08079CD0:\n\t"
-        "	mov r0, sp\n\t"
-        "	b _08079D0A\n\t"
-        "_08079CD4:\n\t"
-        "	mov r0, sp\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r1, _08079CE8\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x72\n\t"
-        "	strh r0, [r2]\n\t"
-        "	b _08079D12\n\t"
-        "	.align 2, 0\n\t"
-        "_08079CE8: .4byte sTradeMenu\n\t"
-        "_08079CEC:\n\t"
-        "	mov r0, sp\n\t"
-        "	b _08079D0A\n\t"
-        "_08079CF0:\n\t"
-        "	ldr r0, _08079CF8\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	b _08079D0E\n\t"
-        "	.align 2, 0\n\t"
-        "_08079CF8: .4byte gUnknown_83008DC\n\t"
-        "_08079CFC:\n\t"
-        "	ldr r0, _08079D04\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	b _08079D0E\n\t"
-        "	.align 2, 0\n\t"
-        "_08079D04: .4byte gUnknown_830083C\n\t"
-        "_08079D08:\n\t"
-        "	ldr r0, _08079D1C\n\t"
-        "_08079D0A:\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "_08079D0E:\n\t"
-        "	ldr r0, _08079D20\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_08079D12:\n\t"
-        "	adds r1, #0xa8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08079D30\n\t"
-        "	.align 2, 0\n\t"
-        "_08079D1C: .4byte gUnknown_8300834\n\t"
-        "_08079D20: .4byte sTradeMenu\n\t"
-        "_08079D24:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xa8\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08079D32\n\t"
-        "_08079D30:\n\t"
-        "	movs r0, #0\n\t"
-        "_08079D32:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpriteSheet sheet;
+
+    if (sTradeMenu->timer < NUM_MENU_TEXT_SPRITES)
+    {
+        sheet.data = sMenuTextTileBuffers[sTradeMenu->timer];
+        sheet.size = 0x100;
+        sheet.tag = GFXTAG_MENU_TEXT + sTradeMenu->timer;
+    }
+
+    switch (sTradeMenu->timer)
+    {
+    case GFXTAG_PLAYER_NAME_L:
+    case GFXTAG_PLAYER_NAME_M:
+    case GFXTAG_PLAYER_NAME_R:
+    case GFXTAG_PARTNER_NAME_L:
+    case GFXTAG_PARTNER_NAME_M:
+    case GFXTAG_PARTNER_NAME_R:
+    case GFXTAG_CANCEL_L:
+        LoadSpriteSheet(&sheet);
+        sTradeMenu->timer++;
+        break;
+    case GFXTAG_CHOOSE_PKMN_L:
+        sTradeMenu->bottomTextTileStart = LoadSpriteSheet(&sheet);
+        sTradeMenu->timer++;
+        break;
+    case GFXTAG_CHOOSE_PKMN_M:
+    case GFXTAG_CHOOSE_PKMN_R:
+    case GFXTAG_CHOOSE_PKMN_EMPTY_1:
+    case GFXTAG_CHOOSE_PKMN_EMPTY_2:
+    case GFXTAG_CHOOSE_PKMN_EMPTY_3:
+        LoadSpriteSheet(&sheet);
+        sTradeMenu->timer++;
+        break;
+    case NUM_MENU_TEXT_SPRITES:
+        LoadSpritePalette(&gUnknown_83008DC);
+        sTradeMenu->timer++;
+        break;
+    case NUM_MENU_TEXT_SPRITES + 1:
+        LoadSpritePalette(&gUnknown_830083C);
+        sTradeMenu->timer++;
+        break;
+    case NUM_MENU_TEXT_SPRITES + 2:
+        LoadSpriteSheet(&gUnknown_8300834);
+        sTradeMenu->timer++;
+        break;
+    case NUM_MENU_TEXT_SPRITES + 3:
+        sTradeMenu->timer = 0;
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 __attribute__((naked)) void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed)
