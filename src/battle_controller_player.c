@@ -4545,7 +4545,7 @@ __attribute__((naked)) void WaitForMonSelection(void)
         "_08059468: .4byte gMain\n\t"
         "_0805946C: .4byte BattleMainCB2 + 1\n\t"
         "_08059470: .4byte gPaletteFade\n\t"
-        "_08059474: .4byte gUnknown_203CBB4\n\t"
+        "_08059474: .4byte gPartyMenuUseExitCallback\n\t"
         "_08059478: .4byte gUnknown_203CBB5\n\t"
         "_0805947C: .4byte gBattlePartyCurrentOrder\n\t"
         "_08059480:\n\t"

@@ -2058,7 +2058,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Medicine(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE708: .4byte gUnknown_3006068\n\t"
+        "_080FE708: .4byte gItemUseCB\n\t"
         "_080FE70C: .4byte ItemUseCB_Medicine + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2078,7 +2078,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_ReduceEV(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE724: .4byte gUnknown_3006068\n\t"
+        "_080FE724: .4byte gItemUseCB\n\t"
         "_080FE728: .4byte sub_081B6468 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2098,7 +2098,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_SacredAsh(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE740: .4byte gUnknown_3006068\n\t"
+        "_080FE740: .4byte gItemUseCB\n\t"
         "_080FE744: .4byte sub_081B768C + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2118,7 +2118,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PPRecovery(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE75C: .4byte gUnknown_3006068\n\t"
+        "_080FE75C: .4byte gItemUseCB\n\t"
         "_080FE760: .4byte dp05_ether + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2138,7 +2138,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PPUp(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE778: .4byte gUnknown_3006068\n\t"
+        "_080FE778: .4byte gItemUseCB\n\t"
         "_080FE77C: .4byte dp05_pp_up + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2158,7 +2158,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_RareCandy(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE794: .4byte gUnknown_3006068\n\t"
+        "_080FE794: .4byte gItemUseCB\n\t"
         "_080FE798: .4byte dp05_rare_candy + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2312,7 +2312,7 @@ __attribute__((naked)) void sub_080FE88C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE8A0: .4byte gUnknown_3006068\n\t"
+        "_080FE8A0: .4byte gItemUseCB\n\t"
         "_080FE8A4: .4byte sub_081B6A7C + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2755,7 +2755,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FEBDC: .4byte gUnknown_3006068\n\t"
+        "_080FEBDC: .4byte gItemUseCB\n\t"
         "_080FEBE0: .4byte sub_081B7918 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3039,7 +3039,7 @@ __attribute__((naked)) void ItemUseInBattle_Medicine(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FEDF4: .4byte gUnknown_3006068\n\t"
+        "_080FEDF4: .4byte gItemUseCB\n\t"
         "_080FEDF8: .4byte ItemUseCB_Medicine + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3059,7 +3059,7 @@ __attribute__((naked)) void sub_080FEDFC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FEE10: .4byte gUnknown_3006068\n\t"
+        "_080FEE10: .4byte gItemUseCB\n\t"
         "_080FEE14: .4byte sub_081B768C + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3079,7 +3079,7 @@ __attribute__((naked)) void ItemUseInBattle_PPRecovery(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FEE2C: .4byte gUnknown_3006068\n\t"
+        "_080FEE2C: .4byte gItemUseCB\n\t"
         "_080FEE30: .4byte dp05_ether + 1\n\t"
         ".syntax divided\n\t"
     );

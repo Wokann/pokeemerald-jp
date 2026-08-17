@@ -25,6 +25,12 @@ extern const u8 sSlotTilemap_WideEmpty[];
 #define PARTY_PAL_NO_MON       (1 << 6)
 #define PARTY_PAL_UNUSED       (1 << 7)
 
+#define MENU_DIR_DOWN     1
+#define MENU_DIR_UP      -1
+#define MENU_DIR_RIGHT    2
+#define MENU_DIR_LEFT    -2
+#define MENU_B_PRESSED   -1
+
 extern const u8 sPartyBoxPalOffsets1[];
 extern const u8 sPartyBoxPalOffsets2[];
 extern const u8 sPartyBoxNoMonPalOffsets[];
@@ -241,6 +247,34 @@ static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox);
 
 extern const struct PartyMenuBoxInfoRects gUnknown_85E0F9C[];
 extern const u8 gUnknown_85E0FBC[][48];
+
+static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr);
+static bool8 IsSelectedMonNotEgg(u8 *slotPtr);
+static void HandleChooseMonCancel(u8 taskId, s8 *slotPtr);
+static bool8 DisplayCancelChooseMonYesNo(u8 taskId);
+static void Task_CancelChooseMonYesNo(u8 taskId);
+static void Task_HandleCancelChooseMonYesNoInput(u8 taskId);
+static u16 PartyMenuButtonHandler(s8 *slotPtr);
+static void UpdateCurrentPartySelection(s8 *slotPtr, s8 movementDir);
+static void UpdatePartySelectionSingleLayout(s8 *slotPtr, s8 movementDir);
+static void UpdatePartySelectionDoubleLayout(s8 *slotPtr, s8 movementDir);
+static s8 GetNewSlotDoubleLayout(s8 slotId, s8 movementDir);
+static void PartyMenuRemoveWindow(u8 *windowId);
+s8 Menu_ProcessInputNoWrapClearOnChoose(void);
+void Task_ReturnToChooseMonAfterText(u8 taskId);
+void sub_081B1E7C(u8 taskId, u8 slotId); // TryEnterMonForMinigame
+void sub_081B1EE0(u8 taskId); // CancelParticipationPrompt
+void sub_081B339C(u8 taskId); // Task_TryCreateSelectionWindow
+void sub_081B35D8(u8 taskId); // SwitchSelectedMons
+void sub_081B3D1C(u8 taskId); // FinishTwoMonAction
+void sub_081B6434(u8 taskId); // Task_ClosePartyMenuAfterText
+void sub_081B7AF0(u8 taskId); // TryTutorSelectedMon
+void sub_081B7C4C(u8 taskId); // TryGiveItemOrMailToSelectedMon
+void sub_081B8114(u8 taskId); // TryGiveMailToSelectedMon
+void sub_081B81F8(void); // ClearSelectedPartyOrder
+u8 *sub_081B855C(void); // GetFacilityCancelString
+void sub_081B8DE0(void); // CB2_SetUpExitToBattleScreen
+void sub_081B2FDC(void); // PartyMenuDisplayYesNoMenu
 
 __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId)
 {
@@ -1368,73 +1402,30 @@ u8 GetPartyMenuType(void)
     return gPartyMenu.menuType;
 }
 
-__attribute__((naked)) void Task_HandleChooseMonInput(u8 taskId)
+void Task_HandleChooseMonInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	ldr r0, _081B107C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B10B0\n\t"
-        "	bl sub_081221F8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B10B0\n\t"
-        "	bl GetCurrentPartySlotPtr\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl PartyMenuButtonHandler\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B1090\n\t"
-        "	cmp r0, #2\n\t"
-        "	bgt _081B1080\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1086\n\t"
-        "	b _081B10B0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B107C: .4byte gPaletteFade\n\t"
-        "_081B1080:\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _081B109A\n\t"
-        "	b _081B10B0\n\t"
-        "_081B1086:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_081B10DC\n\t"
-        "	b _081B10B0\n\t"
-        "_081B1090:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_081B12A0\n\t"
-        "	b _081B10B0\n\t"
-        "_081B109A:\n\t"
-        "	ldr r0, _081B10B8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B10B0\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl MoveCursorToConfirm\n\t"
-        "_081B10B0:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B10B8: .4byte sPartyMenuInternal\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (!gPaletteFade.active && MenuHelpers_ShouldWaitForLinkRecv() != TRUE)
+    {
+        s8 *slotPtr = GetCurrentPartySlotPtr();
 
+        switch (PartyMenuButtonHandler(slotPtr))
+        {
+        case A_BUTTON: // Selected mon
+            HandleChooseMonSelection(taskId, slotPtr);
+            break;
+        case B_BUTTON: // Selected Cancel / pressed B
+            HandleChooseMonCancel(taskId, slotPtr);
+            break;
+        case START_BUTTON:
+            if (sPartyMenuInternal->chooseHalf)
+            {
+                PlaySE(SE_SELECT);
+                MoveCursorToConfirm();
+            }
+            break;
+        }
+    }
+}
 
 static s8 *GetCurrentPartySlotPtr(void)
 {
@@ -1444,1006 +1435,409 @@ static s8 *GetCurrentPartySlotPtr(void)
         return &gPartyMenu.slotId;
 }
 
-__attribute__((naked)) void sub_081B10DC(void)
+static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _081B10FC\n\t"
-        "	ldr r0, _081B10F8\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl _call_via_r1\n\t"
-        "	b _081B126E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B10F8: .4byte gPartyMenu\n\t"
-        "_081B10FC:\n\t"
-        "	ldr r0, _081B1114\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	subs r0, #3\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bls _081B1108\n\t"
-        "	b _081B1262\n\t"
-        "_081B1108:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B1118\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1114: .4byte gPartyMenu\n\t"
-        "_081B1118: .4byte 0x081B111C\n\t"
-        "_081B111C: @ jump table\n\t"
-        "	.4byte _081B116C @ case 0\n\t"
-        "	.4byte _081B1262 @ case 1\n\t"
-        "	.4byte _081B1208 @ case 2\n\t"
-        "	.4byte _081B1208 @ case 3\n\t"
-        "	.4byte _081B11E0 @ case 4\n\t"
-        "	.4byte _081B1230 @ case 5\n\t"
-        "	.4byte _081B1262 @ case 6\n\t"
-        "	.4byte _081B1148 @ case 7\n\t"
-        "	.4byte _081B123E @ case 8\n\t"
-        "	.4byte _081B11B8 @ case 9\n\t"
-        "	.4byte _081B124C @ case 10\n\t"
-        "_081B1148:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1274\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1156\n\t"
-        "	b _081B126E\n\t"
-        "_081B1156:\n\t"
-        "	ldr r0, _081B1168\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Task_TryUseSoftboiledOnPartyMon\n\t"
-        "	b _081B126E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1168: .4byte sPartyMenuInternal\n\t"
-        "_081B116C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1274\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B117A\n\t"
-        "	b _081B126E\n\t"
-        "_081B117A:\n\t"
-        "	ldr r0, _081B11A4\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	ldr r2, _081B11A8\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B118E\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r0, _081B11AC\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "_081B118E:\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, _081B11B0\n\t"
-        "	ldr r1, _081B11B4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	b _081B126E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B11A4: .4byte gPartyMenu\n\t"
-        "_081B11A8: .4byte sPartyMenuInternal\n\t"
-        "_081B11AC: .4byte sub_081B8DE0 + 1\n\t"
-        "_081B11B0: .4byte gUnknown_3006068\n\t"
-        "_081B11B4: .4byte sub_081B6434 + 1\n\t"
-        "_081B11B8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1274\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B126E\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081B11DC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B7AF0\n\t"
-        "	b _081B126E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B11DC: .4byte sPartyMenuInternal\n\t"
-        "_081B11E0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1274\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B126E\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081B1204\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B8114\n\t"
-        "	b _081B126E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1204: .4byte sPartyMenuInternal\n\t"
-        "_081B1208:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1274\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B126E\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081B122C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B7C4C\n\t"
-        "	b _081B126E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B122C: .4byte sPartyMenuInternal\n\t"
-        "_081B1230:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B35D8\n\t"
-        "	b _081B126E\n\t"
-        "_081B123E:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "	b _081B126E\n\t"
-        "_081B124C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1274\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B126E\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B1E7C\n\t"
-        "	b _081B126E\n\t"
-        "_081B1262:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B339C\n\t"
-        "_081B126E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (*slotPtr == PARTY_SIZE)
+    {
+        gPartyMenu.task(taskId);
+    }
+    else
+    {
+        switch (gPartyMenu.action)
+        {
+        case PARTY_ACTION_SOFTBOILED:
+            if (IsSelectedMonNotEgg((u8 *)slotPtr))
+            {
+                PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+                Task_TryUseSoftboiledOnPartyMon(taskId);
+            }
+            break;
+        case PARTY_ACTION_USE_ITEM:
+            if (IsSelectedMonNotEgg((u8 *)slotPtr))
+            {
+                if (gPartyMenu.menuType == PARTY_MENU_TYPE_IN_BATTLE)
+                    sPartyMenuInternal->exitCallback = sub_081B8DE0; // CB2_SetUpExitToBattleScreen
+                PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+                gItemUseCB(taskId, sub_081B6434); // Task_ClosePartyMenuAfterText
+            }
+            break;
+        case PARTY_ACTION_MOVE_TUTOR:
+            if (IsSelectedMonNotEgg((u8 *)slotPtr))
+            {
+                PlaySE(SE_SELECT);
+                PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+                sub_081B7AF0(taskId); // TryTutorSelectedMon
+            }
+            break;
+        case PARTY_ACTION_GIVE_MAILBOX_MAIL:
+            if (IsSelectedMonNotEgg((u8 *)slotPtr))
+            {
+                PlaySE(SE_SELECT);
+                PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+                sub_081B8114(taskId); // TryGiveMailToSelectedMon
+            }
+            break;
+        case PARTY_ACTION_GIVE_ITEM:
+        case PARTY_ACTION_GIVE_PC_ITEM:
+            if (IsSelectedMonNotEgg((u8 *)slotPtr))
+            {
+                PlaySE(SE_SELECT);
+                PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+                sub_081B7C4C(taskId); // TryGiveItemOrMailToSelectedMon
+            }
+            break;
+        case PARTY_ACTION_SWITCH:
+            PlaySE(SE_SELECT);
+            sub_081B35D8(taskId); // SwitchSelectedMons
+            break;
+        case PARTY_ACTION_CHOOSE_AND_CLOSE:
+            PlaySE(SE_SELECT);
+            Task_ClosePartyMenu(taskId);
+            break;
+        case PARTY_ACTION_MINIGAME:
+            if (IsSelectedMonNotEgg((u8 *)slotPtr))
+            {
+                sub_081B1E7C(taskId, (u8)*slotPtr); // TryEnterMonForMinigame
+            }
+            break;
+        default:
+        case PARTY_ACTION_ABILITY_PREVENTS:
+        case PARTY_ACTION_SWITCHING:
+            PlaySE(SE_SELECT);
+            sub_081B339C(taskId); // Task_TryCreateSelectionWindow
+            break;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081B1274(void)
+static bool8 IsSelectedMonNotEgg(u8 *slotPtr)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B1290\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1294\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B129C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1290: .4byte gPlayerParty\n\t"
-        "_081B1294:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "_081B129C:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData(&gPlayerParty[*slotPtr], MON_DATA_IS_EGG) == TRUE)
+    {
+        PlaySE(SE_FAILURE);
+        return FALSE;
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_081B12A0(void)
+static void HandleChooseMonCancel(u8 taskId, s8 *slotPtr)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _081B12BC\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _081B12D2\n\t"
-        "	cmp r0, #8\n\t"
-        "	bgt _081B12C0\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B12CA\n\t"
-        "	b _081B12EE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B12BC: .4byte gPartyMenu\n\t"
-        "_081B12C0:\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	beq _081B12D2\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	beq _081B12E0\n\t"
-        "	b _081B12EE\n\t"
-        "_081B12CA:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	b _081B1322\n\t"
-        "_081B12D2:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B3D1C\n\t"
-        "	b _081B1322\n\t"
-        "_081B12E0:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1EE0\n\t"
-        "	b _081B1322\n\t"
-        "_081B12EE:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B1330\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1322\n\t"
-        "	bl sub_081221B8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1312\n\t"
-        "	ldr r1, _081B1328\n\t"
-        "	movs r0, #7\n\t"
-        "	strh r0, [r1]\n\t"
-        "_081B1312:\n\t"
-        "	ldr r0, _081B132C\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #7\n\t"
-        "	strb r0, [r5]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "_081B1322:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1328: .4byte gSpecialVar_0x8004\n\t"
-        "_081B132C: .4byte gUnknown_203CBB4\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gPartyMenu.action)
+    {
+    case PARTY_ACTION_SEND_OUT:
+        PlaySE(SE_FAILURE);
+        break;
+    case PARTY_ACTION_SWITCH:
+    case PARTY_ACTION_SOFTBOILED:
+        PlaySE(SE_SELECT);
+        sub_081B3D1C(taskId); // FinishTwoMonAction
+        break;
+    case PARTY_ACTION_MINIGAME:
+        PlaySE(SE_SELECT);
+        sub_081B1EE0(taskId); // CancelParticipationPrompt
+        break;
+    default:
+        PlaySE(SE_SELECT);
+        if (DisplayCancelChooseMonYesNo(taskId) != TRUE)
+        {
+            if (!MenuHelpers_IsLinkActive())
+                gSpecialVar_0x8004 = PARTY_SIZE + 1;
+            gPartyMenuUseExitCallback = FALSE;
+            *slotPtr = PARTY_SIZE + 1;
+            Task_ClosePartyMenu(taskId);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_081B1330(void)
+static bool8 DisplayCancelChooseMonYesNo(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, _081B1348\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #0xf\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #2\n\t"
-        "	bne _081B1350\n\t"
-        "	ldr r5, _081B134C\n\t"
-        "	b _081B135A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1348: .4byte gPartyMenu\n\t"
-        "_081B134C: .4byte gUnknown_85C97BD + 0xA53\n\t"
-        "_081B1350:\n\t"
-        "	cmp r1, #4\n\t"
-        "	bne _081B135A\n\t"
-        "	bl sub_081B855C\n\t"
-        "	adds r5, r0, #0\n\t"
-        "_081B135A:\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _081B139C\n\t"
-        "	ldr r0, _081B138C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r4, _081B1390\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B1394\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B1398\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B139E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B138C: .4byte sPartyMenuInternal\n\t"
-        "_081B1390: .4byte gStringVar4\n\t"
-        "_081B1394: .4byte gTasks\n\t"
-        "_081B1398: .4byte sub_081B13A4 + 1\n\t"
-        "_081B139C:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B139E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    const u8 *stringPtr = NULL;
+
+    if (gPartyMenu.menuType == PARTY_MENU_TYPE_CONTEST)
+        stringPtr = gUnknown_85C97BD + 0xA53; // gText_CancelParticipation
+    else if (gPartyMenu.menuType == PARTY_MENU_TYPE_CHOOSE_HALF)
+        stringPtr = sub_081B855C(); // GetFacilityCancelString
+
+    if (stringPtr == NULL)
+        return FALSE;
+
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    StringExpandPlaceholders(gStringVar4, stringPtr);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    gTasks[taskId].func = Task_CancelChooseMonYesNo;
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_081B13A4(void)
+static void Task_CancelChooseMonYesNo(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl IsPartyMenuTextPrinterActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B13C8\n\t"
-        "	bl sub_081B2FDC\n\t"
-        "	ldr r0, _081B13D0\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B13D4\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B13C8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B13D0: .4byte gTasks\n\t"
-        "_081B13D4: .4byte sub_081B13D8 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsPartyMenuTextPrinterActive() != TRUE)
+    {
+        sub_081B2FDC(); // PartyMenuDisplayYesNoMenu
+        gTasks[taskId].func = Task_HandleCancelChooseMonYesNoInput;
+    }
 }
 
-__attribute__((naked)) void sub_081B13D8(void)
+static void Task_HandleCancelChooseMonYesNoInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B13FE\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _081B13F8\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B141C\n\t"
-        "	b _081B1428\n\t"
-        "_081B13F8:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _081B1422\n\t"
-        "	b _081B1428\n\t"
-        "_081B13FE:\n\t"
-        "	ldr r0, _081B1414\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, _081B1418\n\t"
-        "	movs r0, #7\n\t"
-        "	strb r0, [r1, #9]\n\t"
-        "	bl sub_081B81F8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "	b _081B1428\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1414: .4byte gUnknown_203CBB4\n\t"
-        "_081B1418: .4byte gPartyMenu\n\t"
-        "_081B141C:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "_081B1422:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Task_ReturnToChooseMonAfterText\n\t"
-        "_081B1428:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (Menu_ProcessInputNoWrapClearOnChoose())
+    {
+    case 0:
+        gPartyMenuUseExitCallback = FALSE;
+        gPartyMenu.slotId = PARTY_SIZE + 1;
+        sub_081B81F8(); // ClearSelectedPartyOrder
+        Task_ClosePartyMenu(taskId);
+        break;
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        // fallthrough
+    case 1:
+        Task_ReturnToChooseMonAfterText(taskId);
+        break;
+    }
 }
 
-__attribute__((naked)) void PartyMenuButtonHandler(u8 taskId)
+static u16 PartyMenuButtonHandler(s8 *slotPtr)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _081B1448\n\t"
-        "	ldrh r1, [r0, #0x30]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	cmp r1, #0x20\n\t"
-        "	beq _081B145E\n\t"
-        "	cmp r1, #0x20\n\t"
-        "	bgt _081B144C\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	beq _081B1462\n\t"
-        "	b _081B1466\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1448: .4byte gMain\n\t"
-        "_081B144C:\n\t"
-        "	cmp r1, #0x40\n\t"
-        "	beq _081B1456\n\t"
-        "	cmp r1, #0x80\n\t"
-        "	beq _081B145A\n\t"
-        "	b _081B1466\n\t"
-        "_081B1456:\n\t"
-        "	movs r1, #0xff\n\t"
-        "	b _081B1482\n\t"
-        "_081B145A:\n\t"
-        "	movs r1, #1\n\t"
-        "	b _081B1482\n\t"
-        "_081B145E:\n\t"
-        "	movs r1, #0xfe\n\t"
-        "	b _081B1482\n\t"
-        "_081B1462:\n\t"
-        "	movs r1, #2\n\t"
-        "	b _081B1482\n\t"
-        "_081B1466:\n\t"
-        "	bl sub_08122118\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B147A\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B147E\n\t"
-        "	movs r1, #0\n\t"
-        "	b _081B1480\n\t"
-        "_081B147A:\n\t"
-        "	movs r1, #0xff\n\t"
-        "	b _081B1480\n\t"
-        "_081B147E:\n\t"
-        "	movs r1, #1\n\t"
-        "_081B1480:\n\t"
-        "	ldr r3, _081B1490\n\t"
-        "_081B1482:\n\t"
-        "	ldrh r2, [r3, #0x2e]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1494\n\t"
-        "	movs r0, #8\n\t"
-        "	b _081B14C0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1490: .4byte gMain\n\t"
-        "_081B1494:\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B14A6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl UpdateCurrentPartySelection\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B14C0\n\t"
-        "_081B14A6:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B14BA\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bne _081B14BA\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081B14C0\n\t"
-        "_081B14BA:\n\t"
-        "	ldrh r1, [r3, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "_081B14C0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 movementDir;
+
+    switch (gMain.newAndRepeatedKeys)
+    {
+    case DPAD_UP:
+        movementDir = MENU_DIR_UP;
+        break;
+    case DPAD_DOWN:
+        movementDir = MENU_DIR_DOWN;
+        break;
+    case DPAD_LEFT:
+        movementDir = MENU_DIR_LEFT;
+        break;
+    case DPAD_RIGHT:
+        movementDir = MENU_DIR_RIGHT;
+        break;
+    default:
+        switch (GetLRKeysPressedAndHeld())
+        {
+        case MENU_L_PRESSED:
+            movementDir = MENU_DIR_UP;
+            break;
+        case MENU_R_PRESSED:
+            movementDir = MENU_DIR_DOWN;
+            break;
+        default:
+            movementDir = 0;
+            break;
+        }
+        break;
+    }
+
+    if (JOY_NEW(START_BUTTON))
+        return START_BUTTON;
+
+    if (movementDir)
+    {
+        UpdateCurrentPartySelection(slotPtr, movementDir);
+        return 0;
+    }
+
+    // Pressed Cancel
+    if (JOY_NEW(A_BUTTON) && *slotPtr == PARTY_SIZE + 1)
+        return B_BUTTON;
+
+    return JOY_NEW(A_BUTTON | B_BUTTON);
 }
 
-__attribute__((naked)) void UpdateCurrentPartySelection(void *a, u8 b)
+static void UpdateCurrentPartySelection(s8 *slotPtr, s8 movementDir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrb r4, [r5]\n\t"
-        "	ldr r0, _081B14EC\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B14F0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetNewPartySelectTarget1\n\t"
-        "	b _081B14FA\n\t"
-        "	.align 2, 0\n\t"
-        "_081B14EC: .4byte gPartyMenu\n\t"
-        "_081B14F0:\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetNewPartySelectTarget2\n\t"
-        "_081B14FA:\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r5, r1]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r0, r4, #0x18\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B151C\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	lsrs r0, r4, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "_081B151C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 newSlotId = *slotPtr;
+    u8 layout = gPartyMenu.layout;
+
+    if (layout == PARTY_LAYOUT_SINGLE)
+        UpdatePartySelectionSingleLayout(slotPtr, movementDir);
+    else
+        UpdatePartySelectionDoubleLayout(slotPtr, movementDir);
+
+    if (*slotPtr != newSlotId)
+    {
+        PlaySE(SE_SELECT);
+        AnimatePartySlot(newSlotId, 0);
+        AnimatePartySlot(*slotPtr, 1);
+    }
 }
 
-__attribute__((naked)) void SetNewPartySelectTarget1(void *a, s8 b)
+static void UpdatePartySelectionSingleLayout(s8 *slotPtr, s8 movementDir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B154A\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _081B1540\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B15F4\n\t"
-        "	b _081B1622\n\t"
-        "_081B1540:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _081B1590\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _081B15C8\n\t"
-        "	b _081B1622\n\t"
-        "_081B154A:\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081B1558\n\t"
-        "	movs r0, #7\n\t"
-        "	b _081B1620\n\t"
-        "_081B1558:\n\t"
-        "	cmp r1, #6\n\t"
-        "	bne _081B1568\n\t"
-        "	ldr r0, _081B1564\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	b _081B1620\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1564: .4byte gPlayerPartyCount\n\t"
-        "_081B1568:\n\t"
-        "	cmp r1, #7\n\t"
-        "	bne _081B158C\n\t"
-        "	ldr r0, _081B157C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1580\n\t"
-        "	movs r0, #6\n\t"
-        "	b _081B1620\n\t"
-        "	.align 2, 0\n\t"
-        "_081B157C: .4byte sPartyMenuInternal\n\t"
-        "_081B1580:\n\t"
-        "	ldr r0, _081B1588\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	b _081B1620\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1588: .4byte gPlayerPartyCount\n\t"
-        "_081B158C:\n\t"
-        "	subs r0, #1\n\t"
-        "	b _081B1620\n\t"
-        "_081B1590:\n\t"
-        "	ldrb r2, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #7\n\t"
-        "	beq _081B161E\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	ldr r0, _081B15B8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081B15C4\n\t"
-        "	ldr r0, _081B15BC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B15C0\n\t"
-        "	movs r0, #6\n\t"
-        "	b _081B1620\n\t"
-        "	.align 2, 0\n\t"
-        "_081B15B8: .4byte gPlayerPartyCount\n\t"
-        "_081B15BC: .4byte sPartyMenuInternal\n\t"
-        "_081B15C0:\n\t"
-        "	movs r0, #7\n\t"
-        "	b _081B1620\n\t"
-        "_081B15C4:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	b _081B1620\n\t"
-        "_081B15C8:\n\t"
-        "	ldr r0, _081B15EC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B1622\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1622\n\t"
-        "	ldr r0, _081B15F0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1620\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B1620\n\t"
-        "	.align 2, 0\n\t"
-        "_081B15EC: .4byte gPlayerPartyCount\n\t"
-        "_081B15F0: .4byte sPartyMenuInternal\n\t"
-        "_081B15F4:\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1622\n\t"
-        "	cmp r0, #6\n\t"
-        "	beq _081B1622\n\t"
-        "	cmp r0, #7\n\t"
-        "	beq _081B1622\n\t"
-        "	ldr r0, _081B1628\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldrb r2, [r3, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #8]\n\t"
-        "_081B161E:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B1620:\n\t"
-        "	strb r0, [r4]\n\t"
-        "_081B1622:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1628: .4byte sPartyMenuInternal\n\t"
-        ".syntax divided\n\t"
-    );
+    // PARTY_SIZE + 1 is Cancel, PARTY_SIZE is Confirm
+    switch (movementDir)
+    {
+    case MENU_DIR_UP:
+        if (*slotPtr == 0)
+        {
+            *slotPtr = PARTY_SIZE + 1;
+        }
+        else if (*slotPtr == PARTY_SIZE)
+        {
+            *slotPtr = gPlayerPartyCount - 1;
+        }
+        else if (*slotPtr == PARTY_SIZE + 1)
+        {
+            if (sPartyMenuInternal->chooseHalf)
+                *slotPtr = PARTY_SIZE;
+            else
+                *slotPtr = gPlayerPartyCount - 1;
+        }
+        else
+        {
+            (*slotPtr)--;
+        }
+        break;
+    case MENU_DIR_DOWN:
+        if (*slotPtr == PARTY_SIZE + 1)
+        {
+            *slotPtr = 0;
+        }
+        else
+        {
+            if (*slotPtr == gPlayerPartyCount - 1)
+            {
+                if (sPartyMenuInternal->chooseHalf)
+                    *slotPtr = PARTY_SIZE;
+                else
+                    *slotPtr = PARTY_SIZE + 1;
+            }
+            else
+            {
+                (*slotPtr)++;
+            }
+        }
+        break;
+    case MENU_DIR_RIGHT:
+        if (gPlayerPartyCount != 1 && *slotPtr == 0)
+        {
+            if (sPartyMenuInternal->lastSelectedSlot == 0)
+                *slotPtr = 1;
+            else
+                *slotPtr = sPartyMenuInternal->lastSelectedSlot;
+        }
+        break;
+    case MENU_DIR_LEFT:
+        if (*slotPtr != 0 && *slotPtr != PARTY_SIZE && *slotPtr != PARTY_SIZE + 1)
+        {
+            sPartyMenuInternal->lastSelectedSlot = *slotPtr;
+            *slotPtr = 0;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void SetNewPartySelectTarget2(void *a, u8 b)
+static void UpdatePartySelectionDoubleLayout(s8 *slotPtr, s8 movementDir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r2, r1, #0x18\n\t"
-        "	asrs r5, r1, #0x18\n\t"
-        "	movs r6, #1\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "	cmp r5, r6\n\t"
-        "	beq _081B1658\n\t"
-        "	cmp r5, r6\n\t"
-        "	bgt _081B164E\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081B164C\n\t"
-        "	b _081B176C\n\t"
-        "_081B164C:\n\t"
-        "	b _081B17C4\n\t"
-        "_081B164E:\n\t"
-        "	cmp r5, #1\n\t"
-        "	beq _081B16B4\n\t"
-        "	cmp r5, #2\n\t"
-        "	beq _081B16F4\n\t"
-        "	b _081B17C4\n\t"
-        "_081B1658:\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B1666\n\t"
-        "	movs r0, #7\n\t"
-        "	b _081B17C2\n\t"
-        "_081B1666:\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _081B1678\n\t"
-        "	ldr r0, _081B1674\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	b _081B17C2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1674: .4byte gPlayerPartyCount\n\t"
-        "_081B1678:\n\t"
-        "	cmp r0, #7\n\t"
-        "	bne _081B1694\n\t"
-        "	ldr r0, _081B168C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B1690\n\t"
-        "	movs r0, #6\n\t"
-        "	b _081B17C2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B168C: .4byte sPartyMenuInternal\n\t"
-        "_081B1690:\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strb r0, [r4]\n\t"
-        "_081B1694:\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	lsls r1, r2, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	bl sub_081B17D0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _081B16B0\n\t"
-        "	b _081B17C4\n\t"
-        "_081B16B0:\n\t"
-        "	strb r2, [r4]\n\t"
-        "	b _081B17C4\n\t"
-        "_081B16B4:\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _081B16C0\n\t"
-        "	movs r0, #7\n\t"
-        "	b _081B17C2\n\t"
-        "_081B16C0:\n\t"
-        "	cmp r0, #7\n\t"
-        "	bne _081B16C8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B17C2\n\t"
-        "_081B16C8:\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_081B17D0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, r6\n\t"
-        "	bne _081B16B0\n\t"
-        "	ldr r0, _081B16EC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B16F0\n\t"
-        "	movs r0, #6\n\t"
-        "	b _081B17C2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B16EC: .4byte sPartyMenuInternal\n\t"
-        "_081B16F0:\n\t"
-        "	movs r0, #7\n\t"
-        "	b _081B17C2\n\t"
-        "_081B16F4:\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B172C\n\t"
-        "	ldr r0, _081B171C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r6, r0, #0x1d\n\t"
-        "	cmp r6, #3\n\t"
-        "	bne _081B1724\n\t"
-        "	ldr r0, _081B1720\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B17C4\n\t"
-        "	strb r6, [r4]\n\t"
-        "	b _081B17C4\n\t"
-        "	.align 2, 0\n\t"
-        "_081B171C: .4byte sPartyMenuInternal\n\t"
-        "_081B1720: .4byte gUnknown_20242BC\n\t"
-        "_081B1724:\n\t"
-        "	ldr r0, _081B1728\n\t"
-        "	b _081B1740\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1728: .4byte gUnknown_2024258\n\t"
-        "_081B172C:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B17C4\n\t"
-        "	ldr r0, _081B1750\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r5, r0, #0x1d\n\t"
-        "	cmp r5, #5\n\t"
-        "	bne _081B1758\n\t"
-        "	ldr r0, _081B1754\n\t"
-        "_081B1740:\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B17C4\n\t"
-        "	strb r5, [r4]\n\t"
-        "	b _081B17C4\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1750: .4byte sPartyMenuInternal\n\t"
-        "_081B1754: .4byte gUnknown_2024384\n\t"
-        "_081B1758:\n\t"
-        "	ldr r0, _081B1768\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B17C4\n\t"
-        "	movs r0, #4\n\t"
-        "	b _081B17C2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1768: .4byte gUnknown_2024320\n\t"
-        "_081B176C:\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	subs r0, r1, #2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _081B179C\n\t"
-        "	ldr r0, _081B1798\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldrb r2, [r3, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B17C2\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1798: .4byte sPartyMenuInternal\n\t"
-        "_081B179C:\n\t"
-        "	subs r0, r1, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _081B17C4\n\t"
-        "	ldr r0, _081B17CC\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	movs r0, #7\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldrb r2, [r3, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "_081B17C2:\n\t"
-        "	strb r0, [r4]\n\t"
-        "_081B17C4:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B17CC: .4byte sPartyMenuInternal\n\t"
-        ".syntax divided\n\t"
-    );
+    // PARTY_SIZE + 1 is Cancel, PARTY_SIZE is Confirm
+    // newSlot is used temporarily as a movement direction during its later assignment
+    s8 newSlot = movementDir;
+
+    switch (movementDir)
+    {
+    case MENU_DIR_UP:
+        if (*slotPtr == 0)
+        {
+            *slotPtr = PARTY_SIZE + 1;
+            break;
+        }
+        else if (*slotPtr == PARTY_SIZE)
+        {
+            *slotPtr = gPlayerPartyCount - 1;
+            break;
+        }
+        else if (*slotPtr == PARTY_SIZE + 1)
+        {
+            if (sPartyMenuInternal->chooseHalf)
+            {
+                *slotPtr = PARTY_SIZE;
+                break;
+            }
+            (*slotPtr)--;
+        }
+        newSlot = GetNewSlotDoubleLayout(*slotPtr, newSlot);
+        if (newSlot != -1)
+            *slotPtr = newSlot;
+        break;
+    case MENU_DIR_DOWN:
+        if (*slotPtr == PARTY_SIZE)
+        {
+            *slotPtr = PARTY_SIZE + 1;
+        }
+        else if (*slotPtr == PARTY_SIZE + 1)
+        {
+            *slotPtr = 0;
+        }
+        else
+        {
+            newSlot = GetNewSlotDoubleLayout(*slotPtr, MENU_DIR_DOWN);
+            if (newSlot == -1)
+            {
+                if (sPartyMenuInternal->chooseHalf)
+                    *slotPtr = PARTY_SIZE;
+                else
+                    *slotPtr = PARTY_SIZE + 1;
+            }
+            else
+            {
+                *slotPtr = newSlot;
+            }
+        }
+        break;
+    case MENU_DIR_RIGHT:
+        if (*slotPtr == 0)
+        {
+            if (sPartyMenuInternal->lastSelectedSlot == 3)
+            {
+                if (GetMonData(&gPlayerParty[3], MON_DATA_SPECIES) != SPECIES_NONE)
+                    *slotPtr = 3;
+            }
+            else if (GetMonData(&gPlayerParty[2], MON_DATA_SPECIES) != SPECIES_NONE)
+            {
+                *slotPtr = 2;
+            }
+        }
+        else if (*slotPtr == 1)
+        {
+            if (sPartyMenuInternal->lastSelectedSlot == 5)
+            {
+                if (GetMonData(&gPlayerParty[5], MON_DATA_SPECIES) != SPECIES_NONE)
+                    *slotPtr = 5;
+            }
+            else if (GetMonData(&gPlayerParty[4], MON_DATA_SPECIES) != SPECIES_NONE)
+            {
+                *slotPtr = 4;
+            }
+        }
+        break;
+    case MENU_DIR_LEFT:
+        if (*slotPtr == 2 || *slotPtr == 3)
+        {
+            sPartyMenuInternal->lastSelectedSlot = *slotPtr;
+            *slotPtr = 0;
+        }
+        else if (*slotPtr == 4 || *slotPtr == 5)
+        {
+            sPartyMenuInternal->lastSelectedSlot = *slotPtr;
+            *slotPtr = 1;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_081B17D0(void)
+static s8 GetNewSlotDoubleLayout(s8 slotId, s8 movementDir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r6, r1, #0x18\n\t"
-        "_081B17DA:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	lsrs r0, r1, #0x18\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _081B1808\n\t"
-        "	asrs r4, r1, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081B1804\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B17DA\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	b _081B180C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B1804: .4byte gPlayerParty\n\t"
-        "_081B1808:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_081B180C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    while (TRUE)
+    {
+        slotId += movementDir;
+        if ((u8)slotId >= PARTY_SIZE)
+            return -1;
+        if (GetMonData(&gPlayerParty[slotId], MON_DATA_SPECIES) != SPECIES_NONE)
+            return slotId;
+    }
 }
 
 __attribute__((naked)) u8 *GetMonNickname(struct Pokemon *mon, u8 *dest)
@@ -3339,7 +2733,7 @@ static bool8 IsMonAllowedInMinigame(u8 slot)
     return TRUE;
 }
 
-__attribute__((naked)) void sub_081B1E7C(void)
+__attribute__((naked)) void sub_081B1E7C(u8 taskId, u8 slotId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3390,7 +2784,7 @@ __attribute__((naked)) void sub_081B1E7C(void)
     );
 }
 
-__attribute__((naked)) void sub_081B1EE0(void)
+__attribute__((naked)) void sub_081B1EE0(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4646,7 +4040,7 @@ static bool8 CreateSelectionWindow(u8 taskId)
     return TRUE;
 }
 
-__attribute__((naked)) void sub_081B339C(void)
+__attribute__((naked)) void sub_081B339C(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4895,7 +4289,7 @@ static void CursorCb_Switch(u8 taskId)
 
 
 
-__attribute__((naked)) void sub_081B35D8(void)
+__attribute__((naked)) void sub_081B35D8(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5841,7 +5235,7 @@ __attribute__((naked)) void swap_pokemon_and_oams(void)
     );
 }
 
-__attribute__((naked)) void sub_081B3D1C(void)
+__attribute__((naked)) void sub_081B3D1C(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9391,7 +8785,7 @@ __attribute__((naked)) void sub_081B5F20(void)
         "_081B5F5C: .4byte gPartyMenu\n\t"
         "_081B5F60: .4byte sPartyMenuInternal\n\t"
         "_081B5F64: .4byte sub_081B8DE0 + 1\n\t"
-        "_081B5F68: .4byte gUnknown_3006068\n\t"
+        "_081B5F68: .4byte gItemUseCB\n\t"
         "_081B5F6C: .4byte sub_081B6434 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -9795,7 +9189,7 @@ __attribute__((naked)) void ItemUseCB_Medicine(u8 taskId, TaskFunc task)
         "_081B62B0: .4byte gPartyMenu\n\t"
         "_081B62B4: .4byte gPlayerParty\n\t"
         "_081B62B8: .4byte gSpecialVar_ItemId\n\t"
-        "_081B62BC: .4byte gUnknown_203CBB4\n\t"
+        "_081B62BC: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B62C0: .4byte gUnknown_85C97BD + 0x33A\n\t"
         "_081B62C4:\n\t"
         "	ldr r1, _081B62EC\n\t"
@@ -9816,7 +9210,7 @@ __attribute__((naked)) void ItemUseCB_Medicine(u8 taskId, TaskFunc task)
         "	bl RemoveBagItem\n\t"
         "	b _081B62F6\n\t"
         "	.align 2, 0\n\t"
-        "_081B62EC: .4byte gUnknown_203CBB4\n\t"
+        "_081B62EC: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B62F0:\n\t"
         "	movs r0, #0x75\n\t"
         "	bl PlaySE\n\t"
@@ -9971,7 +9365,7 @@ __attribute__((naked)) void sub_081B63CC(void)
     );
 }
 
-__attribute__((naked)) void sub_081B6434(void)
+__attribute__((naked)) void sub_081B6434(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9998,7 +9392,7 @@ __attribute__((naked)) void sub_081B6434(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081B6460: .4byte gUnknown_203CBB4\n\t"
+        "_081B6460: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B6464: .4byte sPartyMenuInternal\n\t"
         ".syntax divided\n\t"
     );
@@ -10082,7 +9476,7 @@ __attribute__((naked)) void sub_081B6468(void)
         "_081B6500: .4byte gPartyMenu\n\t"
         "_081B6504: .4byte gPlayerParty\n\t"
         "_081B6508: .4byte gSpecialVar_ItemId\n\t"
-        "_081B650C: .4byte gUnknown_203CBB4\n\t"
+        "_081B650C: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B6510: .4byte gUnknown_85C97BD + 0x33A\n\t"
         "_081B6514:\n\t"
         "	ldr r1, _081B6550\n\t"
@@ -10110,7 +9504,7 @@ __attribute__((naked)) void sub_081B6468(void)
         "	bl StringExpandPlaceholders\n\t"
         "	b _081B6580\n\t"
         "	.align 2, 0\n\t"
-        "_081B6550: .4byte gUnknown_203CBB4\n\t"
+        "_081B6550: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B6554: .4byte gStringVar1\n\t"
         "_081B6558: .4byte gStringVar2\n\t"
         "_081B655C: .4byte gStringVar4\n\t"
@@ -10599,7 +9993,7 @@ __attribute__((naked)) void ether_effect_related(void)
         "	.align 2, 0\n\t"
         "_081B68E4: .4byte gUnknown_203CBA2\n\t"
         "_081B68E8: .4byte gSpecialVar_ItemId\n\t"
-        "_081B68EC: .4byte gUnknown_203CBB4\n\t"
+        "_081B68EC: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B68F0: .4byte gUnknown_85C97BD + 0x33A\n\t"
         "_081B68F4:\n\t"
         "	ldr r1, _081B695C\n\t"
@@ -10648,7 +10042,7 @@ __attribute__((naked)) void ether_effect_related(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081B695C: .4byte gUnknown_203CBB4\n\t"
+        "_081B695C: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B6960: .4byte gPlayerParty\n\t"
         "_081B6964: .4byte gStringVar1\n\t"
         "_081B6968: .4byte gMoveNames\n\t"
@@ -11683,7 +11077,7 @@ __attribute__((naked)) void dp05_rare_candy(u8 taskId)
         "	mov r1, sl\n\t"
         "	b _081B71C2\n\t"
         "	.align 2, 0\n\t"
-        "_081B7154: .4byte gUnknown_203CBB4\n\t"
+        "_081B7154: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B7158: .4byte gUnknown_85C97BD + 0x33A\n\t"
         "_081B715C: .4byte gTasks\n\t"
         "_081B7160:\n\t"
@@ -11737,7 +11131,7 @@ __attribute__((naked)) void dp05_rare_candy(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081B71D4: .4byte gUnknown_203CBB4\n\t"
+        "_081B71D4: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B71D8: .4byte gPartyMenu\n\t"
         "_081B71DC: .4byte gSpecialVar_ItemId\n\t"
         "_081B71E0: .4byte gStringVar1\n\t"
@@ -12531,7 +11925,7 @@ __attribute__((naked)) void task_sacred_ash_party_loop(u8 taskId)
         "_081B7858: .4byte sPartyMenuInternal\n\t"
         "_081B785C: .4byte gPartyMenu\n\t"
         "_081B7860: .4byte 0x0000021A\n\t"
-        "_081B7864: .4byte gUnknown_203CBB4\n\t"
+        "_081B7864: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B7868: .4byte gUnknown_85C97BD + 0x33A\n\t"
         "_081B786C:\n\t"
         "	ldr r1, _081B7894\n\t"
@@ -12554,7 +11948,7 @@ __attribute__((naked)) void task_sacred_ash_party_loop(u8 taskId)
         "	strb r0, [r1, #9]\n\t"
         "	b _081B78AE\n\t"
         "	.align 2, 0\n\t"
-        "_081B7894: .4byte gUnknown_203CBB4\n\t"
+        "_081B7894: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B7898: .4byte gSpecialVar_ItemId\n\t"
         "_081B789C: .4byte gTasks\n\t"
         "_081B78A0: .4byte sub_081B6434 + 1\n\t"
@@ -12659,7 +12053,7 @@ __attribute__((naked)) void sub_081B7918(void)
         "_081B7964: .4byte gCB2_AfterEvolution\n\t"
         "_081B7968: .4byte gPartyMenu\n\t"
         "_081B796C: .4byte gSpecialVar_ItemId\n\t"
-        "_081B7970: .4byte gUnknown_203CBB4\n\t"
+        "_081B7970: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B7974: .4byte gUnknown_85C97BD + 0x33A\n\t"
         "_081B7978: .4byte gTasks\n\t"
         "_081B797C:\n\t"
@@ -12886,7 +12280,7 @@ __attribute__((naked)) u8 GetItemEffectType(u16 item)
     );
 }
 
-__attribute__((naked)) void sub_081B7AF0(void)
+__attribute__((naked)) void sub_081B7AF0(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -13061,7 +12455,7 @@ __attribute__((naked)) void sub_081B7C00(void)
     );
 }
 
-__attribute__((naked)) void sub_081B7C4C(void)
+__attribute__((naked)) void sub_081B7C4C(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -13712,7 +13106,7 @@ __attribute__((naked)) void sub_081B80E8(void)
     );
 }
 
-__attribute__((naked)) void sub_081B8114(void)
+__attribute__((naked)) void sub_081B8114(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -13754,7 +13148,7 @@ __attribute__((naked)) void sub_081B8114(void)
         "	.align 2, 0\n\t"
         "_081B8160: .4byte gPartyMenu\n\t"
         "_081B8164: .4byte gPlayerParty\n\t"
-        "_081B8168: .4byte gUnknown_203CBB4\n\t"
+        "_081B8168: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B816C: .4byte gSaveBlock1Ptr\n\t"
         "_081B8170: .4byte gUnknown_203B984\n\t"
         "_081B8174: .4byte 0x00002BE0\n\t"
@@ -14321,7 +13715,7 @@ __attribute__((naked)) void sub_081B8528(void)
     );
 }
 
-__attribute__((naked)) void sub_081B855C(void)
+__attribute__((naked)) u8 *sub_081B855C(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14755,7 +14149,7 @@ __attribute__((naked)) bool8 TrySwitchInPokemon(void)
         "	b _081B88E8\n\t"
         "	.align 2, 0\n\t"
         "_081B888C: .4byte gUnknown_203CBB5\n\t"
-        "_081B8890: .4byte gUnknown_203CBB4\n\t"
+        "_081B8890: .4byte gPartyMenuUseExitCallback\n\t"
         "_081B8894: .4byte gBattlerPartyIndexes\n\t"
         "_081B8898: .4byte gBattlerInMenuId\n\t"
         "_081B889C:\n\t"
