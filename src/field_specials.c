@@ -2,6 +2,15 @@
 #include "constants/field_specials.h"
 #include "constants/metatile_labels.h"
 #include "fieldmap.h"
+#include "task.h"
+extern void Task_LotteryCornerComputerEffect(u8 taskId);
+extern void Task_PCTurnOnEffect(u8 taskId);
+#define tPaused       data[0]
+#define tTaskId       data[1]
+#define tFlickerCount data[2]
+#define tTimer        data[3]
+#define tIsScreenOn   data[4]
+
 #include "rtc.h"
 #include "field_player_avatar.h"
 #include "event_data.h"
@@ -1962,46 +1971,20 @@ void FieldShowRegionMap(void)
     SetMainCallback2(CB2_FieldShowRegionMap);
 }
 
-__attribute__((naked)) void DoLotteryCornerComputerEffect(void)
+void DoLotteryCornerComputerEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _08138D50\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08138D48\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _08138D54\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r1, #8]\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	strh r2, [r1, #0xc]\n\t"
-        "	strh r2, [r1, #0xe]\n\t"
-        "	strh r2, [r1, #0x10]\n\t"
-        "_08138D48:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08138D50: .4byte Task_PCTurnOnEffect + 1\n\t"
-        "_08138D54: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    if (FuncIsActiveTask(Task_PCTurnOnEffect) != TRUE)
+    {
+        u8 taskId = CreateTask(Task_PCTurnOnEffect, 8);
+        gTasks[taskId].tPaused = FALSE;
+        gTasks[taskId].tTaskId = taskId;
+        gTasks[taskId].tFlickerCount = 0;
+        gTasks[taskId].tTimer = 0;
+        gTasks[taskId].tIsScreenOn = FALSE;
+    }
 }
 
-__attribute__((naked)) void Task_PCTurnOnEffect(void)
+__attribute__((naked)) void Task_PCTurnOnEffect(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2315,7 +2298,7 @@ __attribute__((naked)) void DoPCTurnOnEffect(void)
     );
 }
 
-__attribute__((naked)) void Task_LotteryCornerComputerEffect(void)
+__attribute__((naked)) void Task_LotteryCornerComputerEffect(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
