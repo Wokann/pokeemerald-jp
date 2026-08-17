@@ -209,6 +209,7 @@ extern const u8 gUnknown_8300A9E[];
 extern const u8 gUnknown_8300AA9[];
 extern const u8 gUnknown_8300AAE[];
 extern const u8 gUnknown_8300AB1[];
+extern const u8 gUnknown_8300C00[];
 extern const struct MenuAction sSelectTradeMonActions[];
 extern const struct WindowTemplate sTradeYesNoWindowTemplate;
 static void LoadTradeBgGfx(u8 state);
@@ -2422,47 +2423,13 @@ static void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
     }
 }
 
-__attribute__((naked)) void sub_08079644(void)
+static void PrintPartyMonNickname(u8 whichParty, s8 windowIdOffset, u8 *nickname)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, #2\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _0807968C\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized3\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807968C: .4byte gUnknown_8300C00\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 windowId = (whichParty * PARTY_SIZE) + 2 + windowIdOffset;
+
+    AddTextPrinterParameterized3(windowId, FONT_NORMAL, 0, 0, gUnknown_8300C00, 0, nickname);
+    PutWindowTilemap(windowId);
+    CopyWindowToVram(windowId, 3);
 }
 
 __attribute__((naked)) void sub_08079690(u8 side)
@@ -2530,7 +2497,7 @@ __attribute__((naked)) void sub_08079690(u8 side)
         "	adds r0, r5, #0\n\t"
         "	adds r1, r6, #0\n\t"
         "	adds r2, r7, #0\n\t"
-        "	bl sub_08079644\n\t"
+        "	bl PrintPartyMonNickname\n\t"
         "	adds r0, r6, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r6, r0, #0x18\n\t"
