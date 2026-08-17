@@ -369,7 +369,7 @@ static void UpdatePartyMonAilmentGfx(u8 status, struct PartyMenuBox *menuBox);
 static void CB2_ReturnToBagMenu(void);
 static void Task_SetSacredAshCB(u8 taskId);
 static void GetMedicineItemEffectMessage(u16 item);
-u8 sub_081B8624(void); // GetPartyLayoutFromBattleType
+u8 GetPartyLayoutFromBattleType(void); // GetPartyLayoutFromBattleType
 void sub_081B8DE0(void); // CB2_SetUpExitToBattleScreen
 extern MainCallback gUnknown_203CBFC; // gPyramidBagMenuState.exitCallback
 u8 GetPocketByItemId(u16 itemId);
@@ -447,13 +447,48 @@ static void CB2_ReturnToPartyOrBagMenuFromWritingMail(void);
 static void Task_DisplayGaveMailFromBagMessage(u8 taskId);
 static void Task_SwitchItemsFromBagYesNo(u8 taskId);
 static void Task_HandleSwitchItemsFromBagYesNoInput(u8 taskId);
+static void DisplayItemMustBeRemovedFirstMessage(u8 taskId);
+static void RemoveItemToGiveFromBag(u16 item);
+static bool8 ReturnGiveItemToBagOrPC(u16 item);
+void ChooseMonToGiveMailFromMailbox(void);
+static void TryGiveMailToSelectedMon(u8 taskId);
+void InitChooseHalfPartyForBattle(u8 unused);
+static u8 GetPartySlotEntryStatus(s8 slotId);
+static bool8 GetBattleEntryEligibility(struct Pokemon *mon);
+static u8 CheckBattleEntriesAndGetMessage(void);
+static bool8 HasPartySlotAlreadyBeenSelected(u8 slot);
+static void Task_ValidateChosenHalfParty(u8 taskId);
+static void Task_ContinueChoosingHalfParty(u8 taskId);
+static u8 GetMaxBattleEntries(void);
+static u8 GetMinBattleEntries(void);
+static u8 GetBattleEntryLevelCap(void);
+static const u8 *GetFacilityCancelString(void);
+void ChooseMonForTradingBoard(u8 menuType, MainCallback callback);
+void ChooseMonForMoveTutor(void);
+void ChooseMonForWirelessMinigame(void);
+static u8 GetPartyLayoutFromBattleType(void);
 extern void (*gCB2_AfterEvolution)(void);
 void sub_081C478C(void); // CB2_ReturnToPyramidBagMenu
+struct PlayerPCItemPageStruct
+{
+    u16 cursorPos;
+    u16 itemsAbove;
+    u8 pageItems;
+    u8 count;
+    u8 filler[3];
+    u8 scrollIndicatorTaskId;
+};
+extern struct PlayerPCItemPageStruct gPlayerPCItemPageInfo;
+void Mailbox_ReturnToMailListAfterDeposit(void);
+extern const u16 gFrontierBannedSpecies[];
+void CB2_ReturnToFieldContinueScriptPlayMapMusic(void);
+#define FACILITY_UNION_ROOM        8
+#define FACILITY_MULTI_OR_EREADER  9
+#define FRONTIER_FACILITY_DOME     1
 void TryTutorSelectedMon(u8 taskId); // TryTutorSelectedMon
 void TryGiveItemOrMailToSelectedMon(u8 taskId); // TryGiveItemOrMailToSelectedMon
-void sub_081B8114(u8 taskId); // TryGiveMailToSelectedMon
-void sub_081B81F8(void); // ClearSelectedPartyOrder
-u8 *sub_081B855C(void); // GetFacilityCancelString
+void TryGiveMailToSelectedMon(u8 taskId); // TryGiveMailToSelectedMon
+void ClearSelectedPartyOrder(void);
 void sub_081B8DE0(void); // CB2_SetUpExitToBattleScreen
 void sub_081B2FDC(void); // PartyMenuDisplayYesNoMenu
 void CopyItemName(u16 itemId, u8 *dst);
@@ -1339,7 +1374,7 @@ static void HandleChooseMonSelection(u8 taskId, s8 *slotPtr)
             {
                 PlaySE(SE_SELECT);
                 PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
-                sub_081B8114(taskId); // TryGiveMailToSelectedMon
+                TryGiveMailToSelectedMon(taskId); // TryGiveMailToSelectedMon
             }
             break;
         case PARTY_ACTION_GIVE_ITEM:
@@ -1422,7 +1457,7 @@ static bool8 DisplayCancelChooseMonYesNo(u8 taskId)
     if (gPartyMenu.menuType == PARTY_MENU_TYPE_CONTEST)
         stringPtr = gUnknown_85C97BD + 0xA53; // gText_CancelParticipation
     else if (gPartyMenu.menuType == PARTY_MENU_TYPE_CHOOSE_HALF)
-        stringPtr = sub_081B855C(); // GetFacilityCancelString
+        stringPtr = GetFacilityCancelString(); // GetFacilityCancelString
 
     if (stringPtr == NULL)
         return FALSE;
@@ -1450,7 +1485,7 @@ static void Task_HandleCancelChooseMonYesNoInput(u8 taskId)
     case 0:
         gPartyMenuUseExitCallback = FALSE;
         gPartyMenu.slotId = PARTY_SIZE + 1;
-        sub_081B81F8(); // ClearSelectedPartyOrder
+        ClearSelectedPartyOrder(); // ClearSelectedPartyOrder
         Task_ClosePartyMenu(taskId);
         break;
     case MENU_B_PRESSED:
@@ -4274,7 +4309,7 @@ void CB2_ShowPartyMenuForItemUse(void)
     if (gMain.inBattle)
     {
         menuType = PARTY_MENU_TYPE_IN_BATTLE;
-        partyLayout = sub_081B8624(); // GetPartyLayoutFromBattleType
+        partyLayout = GetPartyLayoutFromBattleType(); // GetPartyLayoutFromBattleType
     }
     else
     {
@@ -5399,7 +5434,7 @@ static void TryGiveItemOrMailToSelectedMon(u8 taskId)
     }
     else if (ItemIsMail(sPartyMenuItemId))
     {
-        sub_081B8058(taskId); // DisplayItemMustBeRemovedFirstMessage
+        DisplayItemMustBeRemovedFirstMessage(taskId); // DisplayItemMustBeRemovedFirstMessage
     }
     else
     {
@@ -5412,7 +5447,7 @@ static void GiveItemOrMailToSelectedMon(u8 taskId)
 {
     if (ItemIsMail(gPartyMenu.bagItem))
     {
-        sub_081B8090(gPartyMenu.bagItem); // RemoveItemToGiveFromBag
+        RemoveItemToGiveFromBag(gPartyMenu.bagItem); // RemoveItemToGiveFromBag
         sPartyMenuInternal->exitCallback = CB2_WriteMailToGiveMonFromBag;
         Task_ClosePartyMenu(taskId);
     }
@@ -5431,7 +5466,7 @@ static void GiveItemToSelectedMon(u8 taskId)
         item = gPartyMenu.bagItem;
         DisplayGaveHeldItemMessage(&gPlayerParty[gPartyMenu.slotId], item, FALSE, 1);
         GiveItemToMon(&gPlayerParty[gPartyMenu.slotId], item);
-        sub_081B8090(item); // RemoveItemToGiveFromBag
+        RemoveItemToGiveFromBag(item); // RemoveItemToGiveFromBag
         gTasks[taskId].func = Task_UpdateHeldItemSpriteAndClosePartyMenu;
     }
 }
@@ -5471,7 +5506,7 @@ static void CB2_ReturnToPartyOrBagMenuFromWritingMail(void)
         TakeMailFromMon(mon);
         SetMonData(mon, MON_DATA_HELD_ITEM, &sPartyMenuItemId);
         RemoveBagItem(sPartyMenuItemId, 1);
-        sub_081B80BC(item); // ReturnGiveItemToBagOrPC
+        ReturnGiveItemToBagOrPC(item); // ReturnGiveItemToBagOrPC
         SetMainCallback2(gPartyMenu.exitCallback);
     }
     // Wrote mail
@@ -5510,10 +5545,10 @@ static void Task_HandleSwitchItemsFromBagYesNoInput(u8 taskId)
     {
     case 0: // Yes, switch items
         item = gPartyMenu.bagItem;
-        sub_081B8090(item); // RemoveItemToGiveFromBag
+        RemoveItemToGiveFromBag(item); // RemoveItemToGiveFromBag
         if (AddBagItem(sPartyMenuItemId, 1) == FALSE)
         {
-            sub_081B80BC(item); // ReturnGiveItemToBagOrPC
+            ReturnGiveItemToBagOrPC(item); // ReturnGiveItemToBagOrPC
             BufferBagFullCantTakeItemMessage(sPartyMenuItemId);
             DisplayPartyMenuMessage(gStringVar4, FALSE);
             gTasks[taskId].func = Task_UpdateHeldItemSpriteAndClosePartyMenu;
@@ -5539,882 +5574,259 @@ static void Task_HandleSwitchItemsFromBagYesNoInput(u8 taskId)
     }
 }
 
-__attribute__((naked)) void sub_081B8058(void)
+static void DisplayItemMustBeRemovedFirstMessage(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _081B8084\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r1, _081B8088\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B808C\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8084: .4byte gUnknown_85C97BD + 0x49F\n\t"
-        "_081B8088: .4byte gTasks\n\t"
-        "_081B808C: .4byte Task_UpdateHeldItemSpriteAndClosePartyMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    DisplayPartyMenuMessage(gText_RemoveMailBeforeItem, TRUE);
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_UpdateHeldItemSpriteAndClosePartyMenu;
 }
 
-__attribute__((naked)) void sub_081B8090(void)
+static void RemoveItemToGiveFromBag(u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	ldr r0, _081B80AC\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _081B80B0\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #1\n\t"
-        "	bl RemovePCItem\n\t"
-        "	b _081B80B8\n\t"
-        "	.align 2, 0\n\t"
-        "_081B80AC: .4byte gPartyMenu\n\t"
-        "_081B80B0:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl RemoveBagItem\n\t"
-        "_081B80B8:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gPartyMenu.action == PARTY_ACTION_GIVE_PC_ITEM) // Unused, never occurs
+        RemovePCItem((u8)item, 1);
+    else
+        RemoveBagItem(item, 1);
 }
 
-__attribute__((naked)) void sub_081B80BC(void)
+static bool8 ReturnGiveItemToBagOrPC(u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	ldr r0, _081B80D4\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	cmp r0, #5\n\t"
-        "	beq _081B80D8\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddPCItem\n\t"
-        "	b _081B80E0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B80D4: .4byte gPartyMenu\n\t"
-        "_081B80D8:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddBagItem\n\t"
-        "_081B80E0:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gPartyMenu.action == PARTY_ACTION_GIVE_ITEM)
+        return AddBagItem(item, 1);
+    else
+        return AddPCItem(item, 1);
 }
 
-__attribute__((naked)) void sub_081B80E8(void)
+void ChooseMonToGiveMailFromMailbox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #6\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B810C\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B8110\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #7\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B810C: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B8110: .4byte Mailbox_ReturnToMailListAfterDeposit + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_GIVE_MAILBOX_MAIL, FALSE, PARTY_MSG_GIVE_TO_WHICH_MON, Task_HandleChooseMonInput, Mailbox_ReturnToMailListAfterDeposit);
 }
 
-__attribute__((naked)) void sub_081B8114(u8 taskId)
+static void TryGiveMailToSelectedMon(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r0, _081B8160\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _081B8164\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	ldr r1, _081B8168\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, _081B816C\n\t"
-        "	ldr r0, _081B8170\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r1, #6\n\t"
-        "	ldrh r0, [r0, #2]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B8174\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B817C\n\t"
-        "	ldr r0, _081B8178\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	b _081B8192\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8160: .4byte gPartyMenu\n\t"
-        "_081B8164: .4byte gPlayerParty\n\t"
-        "_081B8168: .4byte gPartyMenuUseExitCallback\n\t"
-        "_081B816C: .4byte gSaveBlock1Ptr\n\t"
-        "_081B8170: .4byte gUnknown_203B984\n\t"
-        "_081B8174: .4byte 0x00002BE0\n\t"
-        "_081B8178: .4byte gUnknown_85C97BD + 0x54F\n\t"
-        "_081B817C:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GiveMailToMon\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ClearMail\n\t"
-        "	ldr r0, _081B81AC\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "_081B8192:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r0, _081B81B0\n\t"
-        "	lsls r1, r6, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B81B4\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B81AC: .4byte gUnknown_85C97BD + 0x575\n\t"
-        "_081B81B0: .4byte gTasks\n\t"
-        "_081B81B4: .4byte Task_UpdateHeldItemSpriteAndClosePartyMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    struct Mail *mail;
+
+    gPartyMenuUseExitCallback = FALSE;
+    mail = &gSaveBlock1Ptr->mail[gPlayerPCItemPageInfo.itemsAbove + PARTY_SIZE + gPlayerPCItemPageInfo.cursorPos];
+    if (GetMonData(mon, MON_DATA_HELD_ITEM) != ITEM_NONE)
+    {
+        DisplayPartyMenuMessage(gText_PkmnHoldingItemCantHoldMail, TRUE);
+    }
+    else
+    {
+        GiveMailToMon(mon, mail);
+        ClearMail(mail);
+        DisplayPartyMenuMessage(gText_MailTransferredFromMailbox, TRUE);
+    }
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_UpdateHeldItemSpriteAndClosePartyMenu;
 }
 
-__attribute__((naked)) void InitChooseHalfPartyForBattle(u8 unused)
+void ClearSelectedPartyOrder(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	bl sub_081B81F8\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B81E8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B81EC\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	ldr r1, _081B81F0\n\t"
-        "	ldr r0, _081B81F4\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B81E8: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B81EC: .4byte gMain\n\t"
-        "_081B81F0: .4byte gPartyMenu\n\t"
-        "_081B81F4: .4byte sub_081B843C + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    memset(gSelectedOrderFromParty, 0, MAX_FRONTIER_PARTY_SIZE);
 }
 
-void sub_081B81F8(void)
+void InitChooseHalfPartyForBattle(u8 unused)
 {
-    memset(gSelectedOrderFromParty, 0, 4);
+    ClearSelectedPartyOrder();
+    InitPartyMenu(PARTY_MENU_TYPE_CHOOSE_HALF, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, gMain.savedCallback);
+    gPartyMenu.task = Task_ValidateChosenHalfParty;
 }
 
-__attribute__((naked)) static u8 GetPartySlotEntryStatus(s8 slotId)
+static u8 GetPartySlotEntryStatus(s8 slotId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r4, r0, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _081B8228\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl GetBattleEntryEligibility\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B822C\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081B8244\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8228: .4byte gPlayerParty\n\t"
-        "_081B822C:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_081B8410\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B8242\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B8244\n\t"
-        "_081B8242:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B8244:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetBattleEntryEligibility(&gPlayerParty[slotId]) == FALSE)
+        return 2;
+    if (HasPartySlotAlreadyBeenSelected(slotId + 1) == TRUE)
+        return 1;
+    return 0;
 }
 
-__attribute__((naked)) u8 GetBattleEntryEligibility(void *battleEntry)
+static bool8 GetBattleEntryEligibility(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B82A8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_081B8528\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bhi _081B82A8\n\t"
-        "	ldr r0, _081B82AC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r0, #4]\n\t"
-        "	ldr r0, _081B82B0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081B828A\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B82A8\n\t"
-        "_081B828A:\n\t"
-        "	ldr r0, _081B82B4\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _081B82EA\n\t"
-        "	cmp r0, #9\n\t"
-        "	bne _081B82B8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B82EA\n\t"
-        "_081B82A8:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B82EC\n\t"
-        "	.align 2, 0\n\t"
-        "_081B82AC: .4byte gSaveBlock1Ptr\n\t"
-        "_081B82B0: .4byte 0x0000191A\n\t"
-        "_081B82B4: .4byte 0x000040CF\n\t"
-        "_081B82B8:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r3, _081B82F4\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r2, _081B82F8\n\t"
-        "	cmp r0, r2\n\t"
-        "	beq _081B82EA\n\t"
-        "_081B82D2:\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r4\n\t"
-        "	beq _081B82A8\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _081B82D2\n\t"
-        "_081B82EA:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B82EC:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B82F4: .4byte gUnknown_85DD48E\n\t"
-        "_081B82F8: .4byte 0x0000FFFF\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = 0;
+    u16 species;
+
+    if (GetMonData(mon, MON_DATA_IS_EGG)
+        || GetMonData(mon, MON_DATA_LEVEL) > GetBattleEntryLevelCap()
+        || (*(u16 *)&gSaveBlock1Ptr->location.mapGroup == 0x191A // MAP_BATTLE_FRONTIER_BATTLE_PYRAMID_LOBBY bytes (mapGroup|mapNum<<8)
+            && GetMonData(mon, MON_DATA_HELD_ITEM) != ITEM_NONE))
+    {
+        return FALSE;
+    }
+
+    switch (VarGet(VAR_FRONTIER_FACILITY))
+    {
+    case FACILITY_MULTI_OR_EREADER:
+        if (GetMonData(mon, MON_DATA_HP) != 0)
+            return TRUE;
+        return FALSE;
+    case FACILITY_UNION_ROOM:
+        return TRUE;
+    default: // Battle Frontier
+        species = GetMonData(mon, MON_DATA_SPECIES);
+        for (; gFrontierBannedSpecies[i] != 0xFFFF; i++)
+        {
+            if (gFrontierBannedSpecies[i] == species)
+                return FALSE;
+        }
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void sub_081B82FC(void)
+static u8 CheckBattleEntriesAndGetMessage(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	bl sub_081B84FC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	ldr r3, _081B8324\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	subs r0, #1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B833C\n\t"
-        "	cmp r2, #1\n\t"
-        "	bne _081B8328\n\t"
-        "	movs r0, #0xe\n\t"
-        "	b _081B83F8\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8324: .4byte gSelectedOrderFromParty\n\t"
-        "_081B8328:\n\t"
-        "	ldr r0, _081B8338\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	movs r0, #0x11\n\t"
-        "	b _081B83F8\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8338: .4byte gStringVar1\n\t"
-        "_081B833C:\n\t"
-        "	ldr r0, _081B8354\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0xf8\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _081B8360\n\t"
-        "	b _081B83F6\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8354: .4byte 0x000040CF\n\t"
-        "_081B8358:\n\t"
-        "	movs r0, #0x12\n\t"
-        "	b _081B83F8\n\t"
-        "_081B835C:\n\t"
-        "	movs r0, #0x13\n\t"
-        "	b _081B83F8\n\t"
-        "_081B8360:\n\t"
-        "	bl GetMaxBattleEntries\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r5, #0\n\t"
-        "	b _081B83F0\n\t"
-        "_081B836E:\n\t"
-        "	ldr r3, _081B8408\n\t"
-        "	adds r4, r3, r5\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	subs r0, #0x64\n\t"
-        "	ldr r3, _081B840C\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	subs r0, #0x64\n\t"
-        "	ldr r3, _081B840C\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	adds r1, r5, #1\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	mov sb, r1\n\t"
-        "	cmp r4, r8\n\t"
-        "	bhs _081B83E8\n\t"
-        "	movs r7, #0x64\n\t"
-        "_081B83AE:\n\t"
-        "	ldr r0, _081B8408\n\t"
-        "	adds r5, r0, r4\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	subs r0, #0x64\n\t"
-        "	ldr r1, _081B840C\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp sl, r0\n\t"
-        "	beq _081B8358\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _081B83DE\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	subs r0, #0x64\n\t"
-        "	ldr r3, _081B840C\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r6, r0\n\t"
-        "	beq _081B835C\n\t"
-        "_081B83DE:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r8\n\t"
-        "	blo _081B83AE\n\t"
-        "_081B83E8:\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "_081B83F0:\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r5, r0\n\t"
-        "	blt _081B836E\n\t"
-        "_081B83F6:\n\t"
-        "	movs r0, #0xff\n\t"
-        "_081B83F8:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8408: .4byte gSelectedOrderFromParty\n\t"
-        "_081B840C: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 maxBattlers;
+    u8 i, j;
+    u8 facility;
+    struct Pokemon *party = gPlayerParty;
+    u8 minBattlers = GetMinBattleEntries();
+    u8 *order = gSelectedOrderFromParty;
+
+    if (order[minBattlers - 1] == 0)
+    {
+        if (minBattlers == 1)
+            return PARTY_MSG_NO_MON_FOR_BATTLE;
+        ConvertIntToDecimalStringN(gStringVar1, minBattlers, STR_CONV_MODE_LEFT_ALIGN, 1);
+        return PARTY_MSG_X_MONS_ARE_NEEDED;
+    }
+
+    facility = VarGet(VAR_FRONTIER_FACILITY);
+    if (facility == FACILITY_UNION_ROOM || facility == FACILITY_MULTI_OR_EREADER)
+        return 0xFF;
+
+    maxBattlers = GetMaxBattleEntries();
+    for (i = 0; i < maxBattlers - 1; i++)
+    {
+        u16 species = GetMonData(&party[order[i] - 1], MON_DATA_SPECIES);
+        u16 item = GetMonData(&party[order[i] - 1], MON_DATA_HELD_ITEM);
+        for (j = i + 1; j < maxBattlers; j++)
+        {
+            if (species == GetMonData(&party[order[j] - 1], MON_DATA_SPECIES))
+                return PARTY_MSG_MONS_CANT_BE_SAME;
+            if (item != ITEM_NONE && item == GetMonData(&party[order[j] - 1], MON_DATA_HELD_ITEM))
+                return PARTY_MSG_NO_SAME_HOLD_ITEMS;
+        }
+    }
+
+    return 0xFF;
 }
 
-__attribute__((naked)) void sub_081B8410(void)
+static bool8 HasPartySlotAlreadyBeenSelected(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r3, _081B8428\n\t"
-        "_081B841A:\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bne _081B842C\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B8438\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8428: .4byte gSelectedOrderFromParty\n\t"
-        "_081B842C:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #3\n\t"
-        "	bls _081B841A\n\t"
-        "	movs r0, #0\n\t"
-        "_081B8438:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    for (i = 0; i < MAX_FRONTIER_PARTY_SIZE; i++)
+    {
+        if (gSelectedOrderFromParty[i] == slot)
+            return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_081B843C(void)
+static void Task_ValidateChosenHalfParty(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	bl sub_081B82FC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xff\n\t"
-        "	beq _081B8474\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r0, _081B846C\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B8470\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _081B8480\n\t"
-        "	.align 2, 0\n\t"
-        "_081B846C: .4byte gTasks\n\t"
-        "_081B8470: .4byte sub_081B8488 + 1\n\t"
-        "_081B8474:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "_081B8480:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 msgId = CheckBattleEntriesAndGetMessage();
+
+    if (msgId != 0xFF)
+    {
+        PlaySE(SE_FAILURE);
+        DisplayPartyMenuStdMessage(msgId);
+        gTasks[taskId].func = Task_ContinueChoosingHalfParty;
+    }
+    else
+    {
+        PlaySE(SE_SELECT);
+        Task_ClosePartyMenu(taskId);
+    }
 }
 
-__attribute__((naked)) void sub_081B8488(void)
+static void Task_ContinueChoosingHalfParty(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _081B84C4\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B84A2\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B84BC\n\t"
-        "_081B84A2:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r0, _081B84C8\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B84CC\n\t"
-        "	str r0, [r1]\n\t"
-        "_081B84BC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B84C4: .4byte gMain\n\t"
-        "_081B84C8: .4byte gTasks\n\t"
-        "_081B84CC: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON)))
+    {
+        PlaySE(SE_SELECT);
+        DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
+        gTasks[taskId].func = Task_HandleChooseMonInput;
+    }
 }
 
-
-__attribute__((naked)) u8 GetMaxBattleEntries(void)
+static u8 GetMaxBattleEntries(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B84E8\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _081B84EC\n\t"
-        "	cmp r0, #9\n\t"
-        "	bne _081B84F0\n\t"
-        "	movs r0, #3\n\t"
-        "	b _081B84F4\n\t"
-        "	.align 2, 0\n\t"
-        "_081B84E8: .4byte 0x000040CF\n\t"
-        "_081B84EC:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081B84F4\n\t"
-        "_081B84F0:\n\t"
-        "	ldr r0, _081B84F8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "_081B84F4:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B84F8: .4byte gSpecialVar_0x8005\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (VarGet(VAR_FRONTIER_FACILITY))
+    {
+    case FACILITY_MULTI_OR_EREADER:
+        return MULTI_PARTY_SIZE;
+    case FACILITY_UNION_ROOM:
+        return UNION_ROOM_PARTY_SIZE;
+    default: // Battle Frontier
+        return gSpecialVar_0x8005;
+    }
 }
 
-__attribute__((naked)) void sub_081B84FC(void)
+static u8 GetMinBattleEntries(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B8514\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _081B8518\n\t"
-        "	cmp r0, #9\n\t"
-        "	bne _081B851C\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B8520\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8514: .4byte 0x000040CF\n\t"
-        "_081B8518:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081B8520\n\t"
-        "_081B851C:\n\t"
-        "	ldr r0, _081B8524\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "_081B8520:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8524: .4byte gSpecialVar_0x8005\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (VarGet(VAR_FRONTIER_FACILITY))
+    {
+    case FACILITY_MULTI_OR_EREADER:
+        return 1;
+    case FACILITY_UNION_ROOM:
+        return UNION_ROOM_PARTY_SIZE;
+    default: // Battle Frontier
+        return gSpecialVar_0x8005;
+    }
 }
 
-__attribute__((naked)) void sub_081B8528(void)
+static u8 GetBattleEntryLevelCap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B8540\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _081B8544\n\t"
-        "	cmp r0, #9\n\t"
-        "	bne _081B8548\n\t"
-        "_081B853C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	b _081B8552\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8540: .4byte 0x000040CF\n\t"
-        "_081B8544:\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	b _081B8552\n\t"
-        "_081B8548:\n\t"
-        "	ldr r0, _081B8558\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B853C\n\t"
-        "	movs r0, #0x32\n\t"
-        "_081B8552:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8558: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (VarGet(VAR_FRONTIER_FACILITY))
+    {
+    case FACILITY_MULTI_OR_EREADER:
+        return MAX_LEVEL;
+    case FACILITY_UNION_ROOM:
+        return 30;
+    default: // Battle Frontier
+        if (gSpecialVar_0x8004 == 0)
+            return 50;
+        return MAX_LEVEL;
+    }
 }
 
-__attribute__((naked)) u8 *sub_081B855C(void)
+static const u8 *GetFacilityCancelString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B8578\n\t"
-        "	bl VarGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r2, #0xf8\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bhi _081B8580\n\t"
-        "	ldr r0, _081B857C\n\t"
-        "	b _081B859A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8578: .4byte 0x000040CF\n\t"
-        "_081B857C: .4byte gUnknown_85C97BD + 0xA5F\n\t"
-        "_081B8580:\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _081B8598\n\t"
-        "	ldr r0, _081B8590\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _081B8598\n\t"
-        "	ldr r0, _081B8594\n\t"
-        "	b _081B859A\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8590: .4byte gSpecialVar_0x8005\n\t"
-        "_081B8594: .4byte gUnknown_85C97BD + 0xA6C\n\t"
-        "_081B8598:\n\t"
-        "	ldr r0, _081B85A0\n\t"
-        "_081B859A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081B85A0: .4byte gUnknown_85C97BD + 0xA7B\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 facilityNum = VarGet(VAR_FRONTIER_FACILITY);
+
+    if (!(facilityNum != FACILITY_UNION_ROOM && facilityNum != FACILITY_MULTI_OR_EREADER))
+        return gText_CancelBattle;
+    else if (facilityNum == FRONTIER_FACILITY_DOME && gSpecialVar_0x8005 == 2)
+        return gText_ReturnToWaitingRoom;
+    else
+        return gText_CancelChallenge;
 }
 
-__attribute__((naked)) void sub_081B85A4(void)
+void ChooseMonForTradingBoard(u8 menuType, MainCallback callback)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	str r2, [sp]\n\t"
-        "	ldr r2, _081B85C8\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B85C8: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(menuType, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, callback);
 }
 
-__attribute__((naked)) void sub_081B85CC(void)
+void ChooseMonForMoveTutor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B85F0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B85F4\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xc\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B85F0: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B85F4: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_MOVE_TUTOR, FALSE, PARTY_MSG_TEACH_WHICH_MON, Task_HandleChooseMonInput, CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-__attribute__((naked)) void sub_081B85F8(void)
+void ChooseMonForWirelessMinigame(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _081B861C\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _081B8620\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0xb\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xd\n\t"
-        "	movs r3, #0\n\t"
-        "	bl InitPartyMenu\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B861C: .4byte Task_HandleChooseMonInput + 1\n\t"
-        "_081B8620: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitPartyMenu(PARTY_MENU_TYPE_MINIGAME, PARTY_LAYOUT_SINGLE, PARTY_ACTION_MINIGAME, FALSE, PARTY_MSG_CHOOSE_MON_OR_CANCEL, Task_HandleChooseMonInput, CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
-__attribute__((naked)) u8 sub_081B8624(void)
+static u8 GetPartyLayoutFromBattleType(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsDoubleBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B8634\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B8646\n\t"
-        "_081B8634:\n\t"
-        "	bl IsMultiBattle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B8644\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B8646\n\t"
-        "_081B8644:\n\t"
-        "	movs r0, #2\n\t"
-        "_081B8646:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)IsDoubleBattle() == FALSE)
+        return PARTY_LAYOUT_SINGLE;
+    if (IsMultiBattle() == TRUE)
+        return PARTY_LAYOUT_MULTI;
+    return PARTY_LAYOUT_DOUBLE;
 }
 
 __attribute__((naked)) void OpenPartyMenuInBattle(u8 partyAction)
@@ -6426,7 +5838,7 @@ __attribute__((naked)) void OpenPartyMenuInBattle(u8 partyAction)
         "	adds r4, r0, #0\n\t"
         "	lsls r4, r4, #0x18\n\t"
         "	lsrs r4, r4, #0x18\n\t"
-        "	bl sub_081B8624\n\t"
+        "	bl GetPartyLayoutFromBattleType\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
@@ -6459,7 +5871,7 @@ __attribute__((naked)) void sub_081B8690(void)
         ".code 16\n\t"
         "	push {lr}\n\t"
         "	sub sp, #0xc\n\t"
-        "	bl sub_081B8624\n\t"
+        "	bl GetPartyLayoutFromBattleType\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"

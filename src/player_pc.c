@@ -1838,7 +1838,7 @@ __attribute__((naked)) void Mailbox_DoGiveMailPokeMenu(void)
         "	bne _0816B95C\n\t"
         "	bl MailboxMenu_Free\n\t"
         "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	bl sub_081B80E8\n\t"
+        "	bl ChooseMonToGiveMailFromMailbox\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl DestroyTask\n\t"
         "_0816B95C:\n\t"

@@ -358,7 +358,7 @@ __attribute__((naked)) void GetDomeData(void)
         "_0818E924: .4byte gSaveBlock2Ptr\n\t"
         "_0818E928: .4byte 0x00000D08\n\t"
         "_0818E92C:\n\t"
-        "	bl sub_081B81F8\n\t"
+        "	bl ClearSelectedPartyOrder\n\t"
         "	ldr r2, _0818E948\n\t"
         "	ldr r0, _0818E94C\n\t"
         "	ldr r0, [r0]\n\t"

@@ -437,7 +437,7 @@ gSpecials:
 	def_special InitUnionRoom
 	def_special BufferUnionRoomPlayerName
 	def_special WonderNews_GetRewardInfo
-	def_special sub_081B85F8
+	def_special ChooseMonForWirelessMinigame
 	def_special sub_08017B4C
 	def_special sub_08139980
 	def_special ValidateSavedWonderCard
@@ -491,7 +491,7 @@ gSpecials:
 	def_special sub_0813ACC8
 	def_special sub_0813ADF0
 	def_special sub_0813AE0C
-	def_special sub_081B85CC
+	def_special ChooseMonForMoveTutor
 	def_special sub_0813AEEC
 	def_special sub_0813AF80
 	def_special DoDeoxysRockInteraction, waitstate=1

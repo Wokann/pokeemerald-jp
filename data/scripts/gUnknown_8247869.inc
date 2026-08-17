@@ -91,7 +91,7 @@
 	callstd 0x4
 	fadescreen 0x1
 	setvar 0x8005, 0x0
-	special sub_081B85F8
+	special ChooseMonForWirelessMinigame
 	waitstate
 	compare_var_to_value 0x8004, 0x6
 	goto_if 0x4, 0x8246FE5
@@ -109,7 +109,7 @@
 	callstd 0x4
 	fadescreen 0x1
 	setvar 0x8005, 0x1
-	special sub_081B85F8
+	special ChooseMonForWirelessMinigame
 	waitstate
 	compare_var_to_value 0x8004, 0x6
 	goto_if 0x4, 0x8246FE5

@@ -42,4 +42,16 @@ gUnknown_85C97BD: @ 0x85C97BD
 	.set gText_PkmnAlreadyKnows, gUnknown_85C97BD + 0x6BC
 	.globl gText_PkmnElevatedToLvVar2
 	.set gText_PkmnElevatedToLvVar2, gUnknown_85C97BD + 0x791
+	.globl gText_RemoveMailBeforeItem
+	.set gText_RemoveMailBeforeItem, gUnknown_85C97BD + 0x49F
+	.globl gText_PkmnHoldingItemCantHoldMail
+	.set gText_PkmnHoldingItemCantHoldMail, gUnknown_85C97BD + 0x54F
+	.globl gText_MailTransferredFromMailbox
+	.set gText_MailTransferredFromMailbox, gUnknown_85C97BD + 0x575
+	.globl gText_CancelBattle
+	.set gText_CancelBattle, gUnknown_85C97BD + 0xA5F
+	.globl gText_ReturnToWaitingRoom
+	.set gText_ReturnToWaitingRoom, gUnknown_85C97BD + 0xA6C
+	.globl gText_CancelChallenge
+	.set gText_CancelChallenge, gUnknown_85C97BD + 0xA7B
 	.globl gUnknown_85C983E

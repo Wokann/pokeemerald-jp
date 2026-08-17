@@ -431,7 +431,7 @@ __attribute__((naked)) void sub_081A197C(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, r5, r6, r7, lr}\n\t"
-        "	bl sub_081B81F8\n\t"
+        "	bl ClearSelectedPartyOrder\n\t"
         "	movs r3, #0\n\t"
         "	ldr r4, _081A19B4\n\t"
         "	ldrh r0, [r4]\n\t"
