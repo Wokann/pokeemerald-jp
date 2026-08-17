@@ -45,6 +45,15 @@ extern struct {
     bool8 enabled:1;
 } gListMenuOverride;
 
+struct MysteryGiftLinkMenu
+{
+    s32 currItemId;
+    u8 state;
+    u8 windowId;
+    u8 listTaskId;
+};
+extern struct MysteryGiftLinkMenu sMysteryGiftLinkMenu;
+
 void Task_RedArrowCursor(void) {}
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
 u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow);
@@ -86,158 +95,69 @@ struct RedArrowCursor
     u16 palTag;
 };
 
-__attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 drawMode, u16 tileNum, u16 palOffset)
+s32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 drawMode, u16 tileNum, u16 palOffset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	mov ip, r0\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	mov sl, r6\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r7, r3, #0x10\n\t"
-        "	str r7, [sp, #4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r5, _081AE1C4\n\t"
-        "	ldrb r4, [r5, #4]\n\t"
-        "	cmp r4, #1\n\t"
-        "	beq _081AE1CC\n\t"
-        "	cmp r4, #1\n\t"
-        "	ble _081AE16A\n\t"
-        "	cmp r4, #2\n\t"
-        "	beq _081AE230\n\t"
-        "_081AE16A:\n\t"
-        "	mov r0, ip\n\t"
-        "	bl AddWindow\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	cmp r6, #1\n\t"
-        "	beq _081AE188\n\t"
-        "	cmp r6, #2\n\t"
-        "	bne _081AE198\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r2, r1, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "_081AE188:\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	mov r3, r8\n\t"
-        "	lsrs r2, r3, #0x14\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	bl DrawTextBorderOuter\n\t"
-        "_081AE198:\n\t"
-        "	ldr r0, _081AE1C8\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	ldm r1!, {r3, r4, r5}\n\t"
-        "	stm r2!, {r3, r4, r5}\n\t"
-        "	ldm r1!, {r3, r4, r5}\n\t"
-        "	stm r2!, {r3, r4, r5}\n\t"
-        "	ldr r4, _081AE1C4\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	strb r1, [r0, #0x10]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ListMenuInit\n\t"
-        "	strb r0, [r4, #6]\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r4, #4]\n\t"
-        "	b _081AE248\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE1C4: .4byte gUnknown_203CB50\n\t"
-        "_081AE1C8: .4byte gMultiuseListMenuTemplate\n\t"
-        "_081AE1CC:\n\t"
-        "	ldrb r0, [r5, #6]\n\t"
-        "	bl ListMenu_ProcessInput\n\t"
-        "	str r0, [r5]\n\t"
-        "	ldr r1, _081AE208\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	ands r4, r0\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _081AE1E2\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r5, #4]\n\t"
-        "_081AE1E2:\n\t"
-        "	ldrh r1, [r1, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081AE1F6\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r0, [r5]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r5, #4]\n\t"
-        "_081AE1F6:\n\t"
-        "	ldrb r0, [r5, #4]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _081AE248\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _081AE20C\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	b _081AE21E\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE208: .4byte gMain\n\t"
-        "_081AE20C:\n\t"
-        "	mov r4, sl\n\t"
-        "	cmp r4, #0\n\t"
-        "	blt _081AE21E\n\t"
-        "	cmp r4, #2\n\t"
-        "	bgt _081AE21E\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ClearStdWindowAndFrame\n\t"
-        "_081AE21E:\n\t"
-        "	ldr r0, _081AE22C\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	b _081AE248\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE22C: .4byte gUnknown_203CB50\n\t"
-        "_081AE230:\n\t"
-        "	ldrb r0, [r5, #6]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DestroyListMenuTask\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r5, #4]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	b _081AE24C\n\t"
-        "_081AE248:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_081AE24C:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sMysteryGiftLinkMenu.state)
+    {
+    case 0:
+    default:
+        sMysteryGiftLinkMenu.windowId = AddWindow(windowTemplate);
+        switch (drawMode)
+        {
+        case 2:
+            LoadUserWindowBorderGfx(sMysteryGiftLinkMenu.windowId, tileNum, (u8)palOffset);
+        case 1:
+            DrawTextBorderOuter(sMysteryGiftLinkMenu.windowId, tileNum, (u8)(palOffset / 16));
+            break;
+        }
+        gMultiuseListMenuTemplate = *listMenuTemplate;
+        gMultiuseListMenuTemplate.windowId = sMysteryGiftLinkMenu.windowId;
+        sMysteryGiftLinkMenu.listTaskId = ListMenuInit(&gMultiuseListMenuTemplate, 0, 0);
+        CopyWindowToVram(sMysteryGiftLinkMenu.windowId, COPYWIN_MAP);
+        sMysteryGiftLinkMenu.state = 1;
+        break;
+    case 1:
+        sMysteryGiftLinkMenu.currItemId = ListMenu_ProcessInput(sMysteryGiftLinkMenu.listTaskId);
+        if (JOY_NEW(A_BUTTON))
+        {
+            sMysteryGiftLinkMenu.state = 2;
+        }
+        if (JOY_NEW(B_BUTTON))
+        {
+            sMysteryGiftLinkMenu.currItemId = LIST_CANCEL;
+            sMysteryGiftLinkMenu.state = 2;
+        }
+        if (sMysteryGiftLinkMenu.state == 2)
+        {
+            if (drawMode == 0)
+            {
+                ClearWindowTilemap(sMysteryGiftLinkMenu.windowId);
+            }
+            else
+            {
+                switch (drawMode)
+                {
+                case 0: // can never be reached, because of the if statement above
+                    ClearStdWindowAndFrame(sMysteryGiftLinkMenu.windowId, FALSE);
+                    break;
+                case 2:
+                case 1:
+                    ClearStdWindowAndFrame(sMysteryGiftLinkMenu.windowId, FALSE);
+                    break;
+                }
+            }
+
+            CopyWindowToVram(sMysteryGiftLinkMenu.windowId, COPYWIN_MAP);
+        }
+        break;
+    case 2:
+        DestroyListMenuTask(sMysteryGiftLinkMenu.listTaskId, NULL, NULL);
+        RemoveWindow(sMysteryGiftLinkMenu.windowId);
+        sMysteryGiftLinkMenu.state = 0;
+        return sMysteryGiftLinkMenu.currItemId;
+    }
+
+    return LIST_NOTHING_CHOSEN;
 }
 
 u8 ListMenuInit(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow)
@@ -418,116 +338,35 @@ u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId)
     return list->selectedRow * yMultiplier + list->template.upText_Y;
 }
 
-__attribute__((naked)) u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow)
+u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 scrollOffset, u16 selectedRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	ldr r0, _081AE67C\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081AE680\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ldm r4!, {r1, r2, r3}\n\t"
-        "	stm r0!, {r1, r2, r3}\n\t"
-        "	ldm r4!, {r1, r2, r3}\n\t"
-        "	stm r0!, {r1, r2, r3}\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r5, [r7, #0x18]\n\t"
-        "	strh r6, [r7, #0x1a]\n\t"
-        "	strb r1, [r7, #0x1c]\n\t"
-        "	strb r1, [r7, #0x1d]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r7, #0x1e]\n\t"
-        "	strb r1, [r7, #0x1f]\n\t"
-        "	ldr r3, _081AE684\n\t"
-        "	ldrb r1, [r7, #0x14]\n\t"
-        "	movs r5, #0xf\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	ldrb r4, [r3]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	ldrb r1, [r7, #0x15]\n\t"
-        "	lsls r1, r1, #0x1c\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ands r0, r5\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	ldrb r0, [r7, #0x15]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	ands r5, r0\n\t"
-        "	ldrb r0, [r3, #1]\n\t"
-        "	ands r2, r0\n\t"
-        "	orrs r2, r5\n\t"
-        "	strb r2, [r3, #1]\n\t"
-        "	ldrb r1, [r7, #0x16]\n\t"
-        "	lsls r1, r1, #0x1d\n\t"
-        "	lsrs r1, r1, #0x11\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r2, _081AE688\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r3]\n\t"
-        "	ldrb r0, [r7, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	strb r0, [r3, #3]\n\t"
-        "	ldrh r0, [r7, #0xc]\n\t"
-        "	ldrh r1, [r7, #0xe]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bhs _081AE644\n\t"
-        "	strh r0, [r7, #0xe]\n\t"
-        "_081AE644:\n\t"
-        "	ldrb r0, [r7, #0x10]\n\t"
-        "	ldrb r2, [r7, #0x15]\n\t"
-        "	lsls r2, r2, #0x1c\n\t"
-        "	lsrs r1, r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldrh r1, [r7, #0x18]\n\t"
-        "	ldrh r3, [r7, #0xe]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ListMenuPrintEntries\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl ListMenuDrawCursor\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ListMenuCallSelectionChangedCallback\n\t"
-        "	mov r0, r8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE67C: .4byte 0x081AE131\n\t"
-        "_081AE680: .4byte gUnknown_3005B68\n\t"
-        "_081AE684: .4byte gUnknown_3006040\n\t"
-        "_081AE688: .4byte 0xFFFC0FFF\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 listTaskId = CreateTask(Task_RedArrowCursor, 0);
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+
+    list->template = *listMenuTemplate;
+    list->scrollOffset = scrollOffset;
+    list->selectedRow = selectedRow;
+    list->unk_1C = 0;
+    list->unk_1D = 0;
+    list->taskId = TASK_NONE;
+    list->unk_1F = 0;
+
+    gListMenuOverride.cursorPal = list->template.cursorPal;
+    gListMenuOverride.fillValue = list->template.fillValue;
+    gListMenuOverride.cursorShadowPal = list->template.cursorShadowPal;
+    gListMenuOverride.lettersSpacing = list->template.lettersSpacing;
+    gListMenuOverride.fontId = list->template.fontId;
+    gListMenuOverride.enabled = FALSE;
+
+    if (list->template.totalItems < list->template.maxShowed)
+        list->template.maxShowed = list->template.totalItems;
+
+    FillWindowPixelBuffer(list->template.windowId, PIXEL_FILL(list->template.fillValue));
+    ListMenuPrintEntries(list, list->scrollOffset, 0, list->template.maxShowed);
+    ListMenuDrawCursor(list);
+    ListMenuCallSelectionChangedCallback(list, TRUE);
+
+    return listTaskId;
 }
 
 static void ListMenuPrint(struct ListMenu *list, const u8 *str, u8 x, u8 y)
