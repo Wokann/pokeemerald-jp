@@ -1315,150 +1315,46 @@ void ShatterSecretBaseBreakableDoor(s16 x, s16 y)
 }
 
 
-__attribute__((naked)) void Task_SecretBaseMusicNoteMatSound(u8 taskId)
+static void Task_SecretBaseMusicNoteMatSound(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _080FB094\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrh r2, [r1, #0xa]\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #7\n\t"
-        "	beq _080FB078\n\t"
-        "	b _080FB1D6\n\t"
-        "_080FB078:\n\t"
-        "	ldr r2, _080FB098\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ldrh r1, [r1, #8]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x3b\n\t"
-        "	bls _080FB08A\n\t"
-        "	b _080FB1CE\n\t"
-        "_080FB08A:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080FB09C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080FB094: .4byte gTasks\n\t"
-        "_080FB098: .4byte 0xFFFFFD88\n\t"
-        "_080FB09C: .4byte _080FB0A0\n\t"
-        "_080FB0A0:\n\t"
-        "	.4byte _080FB190\n\t"
-        "	.4byte _080FB198\n\t"
-        "	.4byte _080FB1A0\n\t"
-        "	.4byte _080FB1A8\n\t"
-        "	.4byte _080FB1B0\n\t"
-        "	.4byte _080FB1B8\n\t"
-        "	.4byte _080FB1C0\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1CE\n\t"
-        "	.4byte _080FB1C8\n\t"
-        "_080FB190:\n\t"
-        "	movs r0, #0x3e\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FB1CE\n\t"
-        "_080FB198:\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FB1CE\n\t"
-        "_080FB1A0:\n\t"
-        "	movs r0, #0x40\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FB1CE\n\t"
-        "_080FB1A8:\n\t"
-        "	movs r0, #0x41\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FB1CE\n\t"
-        "_080FB1B0:\n\t"
-        "	movs r0, #0x42\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FB1CE\n\t"
-        "_080FB1B8:\n\t"
-        "	movs r0, #0x43\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FB1CE\n\t"
-        "_080FB1C0:\n\t"
-        "	movs r0, #0x44\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080FB1CE\n\t"
-        "_080FB1C8:\n\t"
-        "	movs r0, #0x45\n\t"
-        "	bl PlaySE\n\t"
-        "_080FB1CE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080FB1DA\n\t"
-        "_080FB1D6:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "_080FB1DA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gTasks[taskId].data[1] == 7)
+    {
+        switch (gTasks[taskId].tMetatileID)
+        {
+        case METATILE_SecretBase_NoteMat_C_Low:
+            PlaySE(SE_NOTE_C);
+            break;
+        case METATILE_SecretBase_NoteMat_D:
+            PlaySE(SE_NOTE_D);
+            break;
+        case METATILE_SecretBase_NoteMat_E:
+            PlaySE(SE_NOTE_E);
+            break;
+        case METATILE_SecretBase_NoteMat_F:
+            PlaySE(SE_NOTE_F);
+            break;
+        case METATILE_SecretBase_NoteMat_G:
+            PlaySE(SE_NOTE_G);
+            break;
+        case METATILE_SecretBase_NoteMat_A:
+            PlaySE(SE_NOTE_A);
+            break;
+        case METATILE_SecretBase_NoteMat_B:
+            PlaySE(SE_NOTE_B);
+            break;
+        case METATILE_SecretBase_NoteMat_C_High:
+            PlaySE(SE_NOTE_C_HIGH);
+            break;
+        }
+
+        DestroyTask(taskId);
+    }
+    else
+    {
+        gTasks[taskId].data[1]++;
+    }
 }
+
 
 void PlaySecretBaseMusicNoteMatSound(s16 metatileId)
 {
