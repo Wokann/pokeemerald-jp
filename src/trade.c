@@ -180,13 +180,13 @@ static u32 GetNumQueuedActions(void);
 extern void CB2_ReturnToFieldFromMultiplayer(void);
 void sub_080790C8(u8 side);
 static void PrintPartyLevelsAndGenders(u8 whichParty);
-void sub_08079AFC(void);
+static void DoQueuedActions(void);
 static void PrintPartyNicknames(u8 whichParty);
 bool8 sub_08079C28(void);
 void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed);
 void sub_08079FB4(void);
 void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
-void sub_08079BD4(u8 msgId);
+void PrintTradeMessage(u8 msgId);
 static bool8 BufferTradeParties(void);
 void sub_0807A028(void);
 void sub_08079D98(u8 side);
@@ -374,7 +374,7 @@ static void CB2_CreateTradeMenu(void)
         for (i = 0; i < PARTY_SIZE; i++)
             CreateMon(&gEnemyParty[i], SPECIES_NONE, 0, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
 
-        sub_08079BD4(MSG_STANDBY);
+        PrintTradeMessage(MSG_STANDBY);
         ShowBg(0);
 
         if (!gReceivedRemoteLinkPlayers)
@@ -864,7 +864,7 @@ static void CB_StartLinkTrade(void)
 static void CB2_TradeMenu(void)
 {
     RunTradeMenuCallback();
-    sub_08079AFC();
+    DoQueuedActions();
 
     // As long as drawSelectedMonState is 0, these do nothing
     sub_080790C8(TRADE_PLAYER);
@@ -1152,11 +1152,11 @@ static void Follower_ReadLinkBuffer(u8 mpId, u8 status)
         {
         case LINKCMD_BOTH_CANCEL_TRADE:
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
-            sub_08079BD4(MSG_WAITING_FOR_FRIEND);
+            PrintTradeMessage(MSG_WAITING_FOR_FRIEND);
             sTradeMenu->callbackId = CB_INIT_EXIT_CANCELED_TRADE;
             break;
         case LINKCMD_PARTNER_CANCEL_TRADE:
-            sub_08079BD4(MSG_FRIEND_WANTS_TO_TRADE);
+            PrintTradeMessage(MSG_FRIEND_WANTS_TO_TRADE);
             sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
             break;
         case LINKCMD_SET_MONS_TO_TRADE:
@@ -1171,7 +1171,7 @@ static void Follower_ReadLinkBuffer(u8 mpId, u8 status)
             sTradeMenu->callbackId = CB_WAIT_TO_START_TRADE;
             break;
         case LINKCMD_PLAYER_CANCEL_TRADE:
-            sub_08079BD4(MSG_CANCELED);
+            PrintTradeMessage(MSG_CANCELED);
             sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
             break;
         }
@@ -1202,7 +1202,7 @@ static void Leader_HandleCommunication(void)
         {
             // The player has selected a Pokémon to trade,
             // but the partner has selected Cancel
-            sub_08079BD4(MSG_CANCELED);
+            PrintTradeMessage(MSG_CANCELED);
             sTradeMenu->linkData[0] = LINKCMD_PARTNER_CANCEL_TRADE;
             sTradeMenu->linkData[1] = 0;
             QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
@@ -1215,7 +1215,7 @@ static void Leader_HandleCommunication(void)
         {
             // The partner has selected a Pokémon to trade,
             // but the player has selected cancel
-            sub_08079BD4(MSG_FRIEND_WANTS_TO_TRADE);
+            PrintTradeMessage(MSG_FRIEND_WANTS_TO_TRADE);
             sTradeMenu->linkData[0] = LINKCMD_PLAYER_CANCEL_TRADE;
             sTradeMenu->linkData[1] = 0;
             QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
@@ -1256,7 +1256,7 @@ static void Leader_HandleCommunication(void)
         {
             // One of the players has decided not to confirm the trade,
             // or the trade was not allowed.
-            sub_08079BD4(MSG_CANCELED);
+            PrintTradeMessage(MSG_CANCELED);
             sTradeMenu->linkData[0] = LINKCMD_PLAYER_CANCEL_TRADE;
             sTradeMenu->linkData[1] = 0;
             QueueAction(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
@@ -1338,7 +1338,7 @@ static void TradeMenuMoveCursor(u8 *cursorPosition, u8 direction)
 
 static void SetReadyToTrade(void)
 {
-    sub_08079BD4(MSG_STANDBY);
+    PrintTradeMessage(MSG_STANDBY);
     sTradeMenu->callbackId = CB_IDLE;
 
     if (GetMultiplayerId() == 1)
@@ -1623,7 +1623,7 @@ static void CB_ProcessCancelTradeInput(void)
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
     case 0: // YES, Cancel
-        sub_08079BD4(MSG_WAITING_FOR_FRIEND);
+        PrintTradeMessage(MSG_WAITING_FOR_FRIEND);
         SetLinkData(LINKCMD_REQUEST_CANCEL, 0);
         gSprites[sTradeMenu->cursorSpriteId].invisible = TRUE;
         sTradeMenu->callbackId = CB_IDLE;
@@ -2583,115 +2583,53 @@ static u32 GetNumQueuedActions(void)
     return numActions;
 }
 
-__attribute__((naked)) void sub_08079AFC(void)
+static void DoQueuedActions(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r3, _08079B28\n\t"
-        "_08079B02:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	lsls r1, r4, #3\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	movs r5, #0x8d\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08079BC4\n\t"
-        "	ldr r0, _08079B2C\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08079B30\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _08079BC4\n\t"
-        "	.align 2, 0\n\t"
-        "_08079B28: .4byte sTradeMenu\n\t"
-        "_08079B2C: .4byte 0x000008D2\n\t"
-        "_08079B30:\n\t"
-        "	ldr r1, _08079B44\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #8\n\t"
-        "	bhi _08079BB2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08079B48\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079B44: .4byte 0x000008D4\n\t"
-        "_08079B48: .4byte 0x08079B4C\n\t"
-        "_08079B4C: @ jump table\n\t"
-        "	.4byte _08079B70 @ case 0\n\t"
-        "	.4byte _08079B84 @ case 1\n\t"
-        "	.4byte _08079B8C @ case 2\n\t"
-        "	.4byte _08079B94 @ case 3\n\t"
-        "	.4byte _08079B94 @ case 4\n\t"
-        "	.4byte _08079B94 @ case 5\n\t"
-        "	.4byte _08079B9C @ case 6\n\t"
-        "	.4byte _08079BA4 @ case 7\n\t"
-        "	.4byte _08079BAC @ case 8\n\t"
-        "_08079B70:\n\t"
-        "	ldr r0, _08079B80\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x80\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl SendLinkData\n\t"
-        "	b _08079BB2\n\t"
-        "	.align 2, 0\n\t"
-        "_08079B80: .4byte sTradeMenu\n\t"
-        "_08079B84:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	b _08079BB2\n\t"
-        "_08079B8C:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	b _08079BB2\n\t"
-        "_08079B94:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	b _08079BB2\n\t"
-        "_08079B9C:\n\t"
-        "	movs r0, #6\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	b _08079BB2\n\t"
-        "_08079BA4:\n\t"
-        "	movs r0, #7\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	b _08079BB2\n\t"
-        "_08079BAC:\n\t"
-        "	movs r0, #8\n\t"
-        "	bl sub_08079BD4\n\t"
-        "_08079BB2:\n\t"
-        "	ldr r0, _08079BD0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r2, #0x8d\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "_08079BC4:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #3\n\t"
-        "	ble _08079B02\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079BD0: .4byte sTradeMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    for (i = 0; i < (int)ARRAY_COUNT(sTradeMenu->queuedActions); i++)
+    {
+        if (sTradeMenu->queuedActions[i].active)
+        {
+            if (sTradeMenu->queuedActions[i].delay != 0)
+            {
+                sTradeMenu->queuedActions[i].delay--;
+            }
+            else
+            {
+                switch (sTradeMenu->queuedActions[i].actionId)
+                {
+                case QUEUE_SEND_DATA:
+                    SendLinkData(sTradeMenu->linkData, 20);
+                    break;
+                case QUEUE_STANDBY:
+                    PrintTradeMessage(MSG_STANDBY);
+                    break;
+                case QUEUE_ONLY_MON1:
+                    PrintTradeMessage(MSG_ONLY_MON1);
+                    break;
+                case QUEUE_ONLY_MON2:
+                case QUEUE_UNUSED1:
+                case QUEUE_UNUSED2:
+                    PrintTradeMessage(MSG_ONLY_MON2);
+                    break;
+                case QUEUE_MON_CANT_BE_TRADED:
+                    PrintTradeMessage(MSG_MON_CANT_BE_TRADED);
+                    break;
+                case QUEUE_EGG_CANT_BE_TRADED:
+                    PrintTradeMessage(MSG_EGG_CANT_BE_TRADED);
+                    break;
+                case QUEUE_FRIENDS_MON_CANT_BE_TRADED:
+                    PrintTradeMessage(MSG_FRIENDS_MON_CANT_BE_TRADED);
+                    break;
+                }
+                sTradeMenu->queuedActions[i].active = FALSE;
+            }
+        }
+    }
 }
 
-__attribute__((naked)) void sub_08079BD4(u8 msgId)
+__attribute__((naked)) void PrintTradeMessage(u8 msgId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
