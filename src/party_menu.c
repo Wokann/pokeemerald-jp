@@ -36,6 +36,7 @@ u8 GetMaxBattleEntries(void);
 __attribute__((naked)) void HandleMenuInput(u8 a);
 __attribute__((naked)) void CB2_ShowPokemonSummaryScreen(void);
 __attribute__((naked)) void CB2_SelectBagItemToGive(void);
+__attribute__((naked)) void CB2_ReadHeldMail(void);
 
 enum {
     ACTIONS_NONE,
@@ -9499,33 +9500,15 @@ static void CursorCb_Mail(u8 taskId)
 }
 
 
-__attribute__((naked)) void CursorCb_Read(u8 taskId)
+static void CursorCb_Read(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _081B4730\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _081B4734\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4730: .4byte sPartyMenuInternal\n\t"
-        "_081B4734: .4byte sub_081B4738 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    sPartyMenuInternal->exitCallback = CB2_ReadHeldMail;
+    Task_ClosePartyMenu(taskId);
 }
 
-__attribute__((naked)) void sub_081B4738(void)
+
+__attribute__((naked)) void CB2_ReadHeldMail(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

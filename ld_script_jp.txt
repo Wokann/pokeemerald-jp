@@ -8682,7 +8682,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B4628);
         src/party_menu.o(.text.CursorCb_Mail);
         src/party_menu.o(.text.CursorCb_Read);
-        src/party_menu.o(.text.sub_081B4738);
+        src/party_menu.o(.text.CB2_ReadHeldMail);
         src/party_menu.o(.text.sub_081B4780);
         src/party_menu.o(.text.CursorCb_TakeMail);
         src/party_menu.o(.text.sub_081B480C);
