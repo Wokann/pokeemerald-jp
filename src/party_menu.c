@@ -1035,7 +1035,7 @@ __attribute__((naked)) void RenderPartyMenuBox(void)
         "	cmp r1, #0xb\n\t"
         "	bne _081B05B0\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_081B0870\n\t"
+        "	bl DisplayPartyPokemonDataForWirelessMinigame\n\t"
         "	b _081B05CE\n\t"
         "_081B05B0:\n\t"
         "	cmp r1, #0xc\n\t"
@@ -1179,33 +1179,12 @@ static void DisplayPartyPokemonDataForRelearner(u8 slot)
         DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_ABLE_2);
 }
 
-__attribute__((naked)) void sub_081B0870(void)
+static void DisplayPartyPokemonDataForWirelessMinigame(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl IsMonAllowedInMinigame\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B088E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "	b _081B0896\n\t"
-        "_081B088E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	bl DisplayPartyPokemonDescriptionData\n\t"
-        "_081B0896:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)IsMonAllowedInMinigame(slot) == TRUE)
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_ABLE);
+    else
+        DisplayPartyPokemonDescriptionData(slot, PARTYBOX_DESC_NOT_ABLE);
 }
 
 __attribute__((naked)) void DisplayPartyPokemonSelectHeldItemRelated(u8 a)
