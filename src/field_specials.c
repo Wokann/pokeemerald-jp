@@ -2576,57 +2576,24 @@ bool8 Special_AreLeadMonEVsMaxedOut(void)
     return FALSE;
 }
 
-__attribute__((naked)) void TryUpdateRusturfTunnelState(void)
+u8 TryUpdateRusturfTunnelState(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0xc7\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081394C4\n\t"
-        "	ldr r0, _0813949C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r0, #4]\n\t"
-        "	movs r0, #0x83\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081394C4\n\t"
-        "	subs r0, #0x75\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081394A4\n\t"
-        "	ldr r0, _081394A0\n\t"
-        "	movs r1, #4\n\t"
-        "	b _081394B6\n\t"
-        "	.align 2, 0\n\t"
-        "_0813949C: .4byte gSaveBlock1Ptr\n\t"
-        "_081394A0: .4byte 0x0000409A\n\t"
-        "_081394A4:\n\t"
-        "	movs r0, #0xe9\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	bl FlagGet\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081394C4\n\t"
-        "	ldr r0, _081394C0\n\t"
-        "	movs r1, #5\n\t"
-        "_081394B6:\n\t"
-        "	bl VarSet\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081394C6\n\t"
-        "	.align 2, 0\n\t"
-        "_081394C0: .4byte 0x0000409A\n\t"
-        "_081394C4:\n\t"
-        "	movs r0, #0\n\t"
-        "_081394C6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!FlagGet(FLAG_RUSTURF_TUNNEL_OPENED)
+        && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_RUSTURF_TUNNEL)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_RUSTURF_TUNNEL))
+    {
+        if (FlagGet(FLAG_HIDE_RUSTURF_TUNNEL_ROCK_1))
+        {
+            VarSet(VAR_RUSTURF_TUNNEL_STATE, 4);
+            return TRUE;
+        }
+        else if (FlagGet(FLAG_HIDE_RUSTURF_TUNNEL_ROCK_2))
+        {
+            VarSet(VAR_RUSTURF_TUNNEL_STATE, 5);
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 void SetShoalItemFlag(u16 unused)
