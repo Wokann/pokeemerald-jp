@@ -5,6 +5,7 @@
 #include "bg.h"
 #include "constants/union_room.h"
 #include "constants/rgb.h"
+#include "decompress.h"
 #include "graphics.h"
 #include "librfu.h"
 #include "link.h"
@@ -12,6 +13,7 @@
 #include "malloc.h"
 #include "palette.h"
 #include "pokemon_icon.h"
+#include "pokemon_summary_screen.h"
 #include "sprite.h"
 #include "text.h"
 #include "text_window.h"
@@ -99,8 +101,9 @@ extern const u16 gUnknown_82FF7C8[];
 
 static bool32 IsWirelessTrade(void);
 static void CB2_CreateTradeMenu(void);
+static void CB2_TradeMenu(void);
 
-// Sprite tags for the menu text
+// Sprite tags for the menu text (JP layout: no CANCEL_R, 6 Choose-Pokémon sprites)
 enum {
     GFXTAG_PLAYER_NAME_L,
     GFXTAG_PLAYER_NAME_M,
@@ -109,7 +112,6 @@ enum {
     GFXTAG_PARTNER_NAME_M,
     GFXTAG_PARTNER_NAME_R,
     GFXTAG_CANCEL_L,
-    GFXTAG_CANCEL_R,
     GFXTAG_CHOOSE_PKMN_L,
     GFXTAG_CHOOSE_PKMN_M,
     GFXTAG_CHOOSE_PKMN_R,
@@ -119,10 +121,31 @@ enum {
     NUM_MENU_TEXT_SPRITES
 };
 
+enum {
+    TEXT_CANCEL,
+    TEXT_CHOOSE_MON,
+};
+
+#define NUM_PLAYER_NAME_SPRITES 3
+#define NUM_PARTNER_NAME_SPRITES 3
+#define NUM_CHOOSE_PKMN_SPRITES 6 // JP creates all 6 Choose-Pokémon sprites
+
 void sub_08078FC0(void);
 void sub_080790C8(u8 side);
 void sub_0807987C(u8 side);
 void sub_08079AFC(void);
+void sub_08079690(u8 side);
+bool8 sub_08079C28(void);
+void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed);
+void sub_08079FB4(void);
+void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
+static void LoadTradeBgGfx(u8 state);
+static void SetActiveMenuOptions(void);
+
+extern const u8 sTradeMonSpriteCoords[][2];
+extern const struct SpriteTemplate sSpriteTemplate_MenuText;
+extern const struct SpriteTemplate sSpriteTemplate_Cursor;
+extern const u8 *const sActionTexts[];
 
 static bool8 SendLinkData(const void *linkData, u32 size)
 {
@@ -1108,656 +1131,185 @@ __attribute__((naked)) void CB2_CreateTradeMenu(void)
     );
 }
 
-__attribute__((naked)) void sub_08077558(void)
+static void CB2_ReturnToTradeMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x24\n\t"
-        "	ldr r1, _0807757C\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0x16\n\t"
-        "	bls _08077572\n\t"
-        "	b _08077ABE\n\t"
-        "_08077572:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08077580\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807757C: .4byte gMain\n\t"
-        "_08077580: .4byte 0x08077584\n\t"
-        "_08077584: @ jump table\n\t"
-        "	.4byte _080775E0 @ case 0\n\t"
-        "	.4byte _080775F4 @ case 1\n\t"
-        "	.4byte _080775FC @ case 2\n\t"
-        "	.4byte _08077604 @ case 3\n\t"
-        "	.4byte _0807760C @ case 4\n\t"
-        "	.4byte _08077620 @ case 5\n\t"
-        "	.4byte _08077648 @ case 6\n\t"
-        "	.4byte _08077650 @ case 7\n\t"
-        "	.4byte _08077788 @ case 8\n\t"
-        "	.4byte _080777B0 @ case 9\n\t"
-        "	.4byte _080777D4 @ case 10\n\t"
-        "	.4byte _0807785C @ case 11\n\t"
-        "	.4byte _08077878 @ case 12\n\t"
-        "	.4byte _08077928 @ case 13\n\t"
-        "	.4byte _08077ABE @ case 14\n\t"
-        "	.4byte _08077ABE @ case 15\n\t"
-        "	.4byte _080779F4 @ case 16\n\t"
-        "	.4byte _08077A08 @ case 17\n\t"
-        "	.4byte _08077A30 @ case 18\n\t"
-        "	.4byte _08077A6C @ case 19\n\t"
-        "	.4byte _08077A8C @ case 20\n\t"
-        "	.4byte _08077A94 @ case 21\n\t"
-        "	.4byte _08077AAC @ case 22\n\t"
-        "_080775E0:\n\t"
-        "	bl InitTradeMenu\n\t"
-        "	ldr r1, _080775F0\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_080775F0: .4byte gMain\n\t"
-        "_080775F4:\n\t"
-        "	movs r4, #0x87\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	b _0807782E\n\t"
-        "_080775FC:\n\t"
-        "	movs r5, #0x87\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	b _08077AA0\n\t"
-        "_08077604:\n\t"
-        "	movs r7, #0x87\n\t"
-        "	lsls r7, r7, #3\n\t"
-        "	adds r1, r2, r7\n\t"
-        "	b _08077AA0\n\t"
-        "_0807760C:\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	ldr r1, _0807761C\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807761C: .4byte gMain\n\t"
-        "_08077620:\n\t"
-        "	ldr r0, _08077640\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08077634\n\t"
-        "	bl LoadWirelessStatusIndicatorSpriteGfx\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl CreateWirelessStatusIndicatorSprite\n\t"
-        "_08077634:\n\t"
-        "	ldr r1, _08077644\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077640: .4byte gWirelessCommType\n\t"
-        "_08077644: .4byte gMain\n\t"
-        "_08077648:\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	b _08077AA0\n\t"
-        "_08077650:\n\t"
-        "	bl CalculateEnemyPartyCount\n\t"
-        "	ldr r4, _08077768\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _0807776C\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _08077770\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, #0x37\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_08079690\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_08079690\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bge _080776EC\n\t"
-        "	mov r8, r4\n\t"
-        "	ldr r7, _08077774\n\t"
-        "_0807768C:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08077778\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldrb r2, [r7]\n\t"
-        "	lsls r2, r2, #0x13\n\t"
-        "	movs r4, #0xe0\n\t"
-        "	lsls r4, r4, #0xc\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	ldrb r3, [r7, #1]\n\t"
-        "	lsls r3, r3, #0x13\n\t"
-        "	ldr r1, _0807777C\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ldr r1, _08077780\n\t"
-        "	bl CreateMonIcon\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, #0x28\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r7, #2\n\t"
-        "	adds r6, #1\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x36\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	blt _0807768C\n\t"
-        "_080776EC:\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _08077768\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x37\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	blt _080776FC\n\t"
-        "	b _08077A98\n\t"
-        "_080776FC:\n\t"
-        "	ldr r0, _08077774\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	adds r7, #0xc\n\t"
-        "_08077704:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08077784\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldrb r2, [r7]\n\t"
-        "	lsls r2, r2, #0x13\n\t"
-        "	movs r3, #0xe0\n\t"
-        "	lsls r3, r3, #0xc\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	ldrb r3, [r7, #1]\n\t"
-        "	lsls r3, r3, #0x13\n\t"
-        "	ldr r4, _0807777C\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ldr r1, _08077780\n\t"
-        "	bl CreateMonIcon\n\t"
-        "	mov r5, r8\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, #0x2e\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r7, #2\n\t"
-        "	adds r6, #1\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x37\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	blt _08077704\n\t"
-        "	b _08077A98\n\t"
-        "	.align 2, 0\n\t"
-        "_08077768: .4byte sTradeMenu\n\t"
-        "_0807776C: .4byte gPlayerPartyCount\n\t"
-        "_08077770: .4byte gEnemyPartyCount\n\t"
-        "_08077774: .4byte gUnknown_8300A1C\n\t"
-        "_08077778: .4byte gPlayerParty\n\t"
-        "_0807777C: .4byte 0xFFF40000\n\t"
-        "_08077780: .4byte SpriteCB_MonIcon + 1\n\t"
-        "_08077784: .4byte gEnemyParty\n\t"
-        "_08077788:\n\t"
-        "	bl LoadHeldItemIcons\n\t"
-        "	ldr r0, _080777A8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x36\n\t"
-        "	adds r1, #0x28\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawHeldItemIconsForTrade\n\t"
-        "	ldr r1, _080777AC\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_080777A8: .4byte sTradeMenu\n\t"
-        "_080777AC: .4byte gMain\n\t"
-        "_080777B0:\n\t"
-        "	ldr r0, _080777CC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x36\n\t"
-        "	adds r1, #0x28\n\t"
-        "	movs r2, #1\n\t"
-        "	bl DrawHeldItemIconsForTrade\n\t"
-        "	ldr r1, _080777D0\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_080777CC: .4byte sTradeMenu\n\t"
-        "_080777D0: .4byte gMain\n\t"
-        "_080777D4:\n\t"
-        "	ldr r0, _08077840\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r6, _08077844\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r5, _08077848\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080C66A4\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	eors r1, r0\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807784C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r6, #0xc]\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080C66A4\n\t"
-        "	ldr r4, _08077850\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, [r6, #0x18]\n\t"
-        "	str r5, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080C66A4\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	ldr r1, [r6, #0x1c]\n\t"
-        "	movs r2, #0x18\n\t"
-        "	bl sub_08079D3C\n\t"
-        "	ldr r1, _08077854\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "_0807782E:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _08077858\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xa8\n\t"
-        "	strb r2, [r0]\n\t"
-        "	b _08077ABE\n\t"
-        "	.align 2, 0\n\t"
-        "_08077840: .4byte gSaveBlock2Ptr\n\t"
-        "_08077844: .4byte sMenuTextTileBuffers\n\t"
-        "_08077848: .4byte gDecompressionBuffer\n\t"
-        "_0807784C: .4byte gUnknown_20226A8\n\t"
-        "_08077850: .4byte gUnknown_8300AFC\n\t"
-        "_08077854: .4byte gMain\n\t"
-        "_08077858: .4byte sTradeMenu\n\t"
-        "_0807785C:\n\t"
-        "	bl sub_08079C28\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08077868\n\t"
-        "	b _08077ABE\n\t"
-        "_08077868:\n\t"
-        "	ldr r1, _08077874\n\t"
-        "	movs r4, #0x87\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077874: .4byte gMain\n\t"
-        "_08077878:\n\t"
-        "	ldr r0, _08077918\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl StringLength\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0xe\n\t"
-        "	movs r1, #0x4c\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	movs r6, #0\n\t"
-        "	add r5, sp, #0xc\n\t"
-        "	lsls r4, r1, #0x10\n\t"
-        "_0807788E:\n\t"
-        "	add r1, sp, #0xc\n\t"
-        "	ldr r0, _0807791C\n\t"
-        "	ldm r0!, {r2, r3, r7}\n\t"
-        "	stm r1!, {r2, r3, r7}\n\t"
-        "	ldm r0!, {r2, r3, r7}\n\t"
-        "	stm r1!, {r2, r3, r7}\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r0, [r5]\n\t"
-        "	asrs r1, r4, #0x10\n\t"
-        "	add r0, sp, #0xc\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #0xe\n\t"
-        "	adds r4, r4, r7\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #2\n\t"
-        "	ble _0807788E\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08077920\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl StringLength\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0xe\n\t"
-        "	movs r1, #0xc4\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	movs r6, #0\n\t"
-        "	add r5, sp, #0xc\n\t"
-        "	lsls r4, r1, #0x10\n\t"
-        "_080778E2:\n\t"
-        "	add r1, sp, #0xc\n\t"
-        "	ldr r0, _0807791C\n\t"
-        "	ldm r0!, {r2, r3, r7}\n\t"
-        "	stm r1!, {r2, r3, r7}\n\t"
-        "	ldm r0!, {r2, r3, r7}\n\t"
-        "	stm r1!, {r2, r3, r7}\n\t"
-        "	adds r0, r6, #3\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	asrs r1, r4, #0x10\n\t"
-        "	add r0, sp, #0xc\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0xe\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #2\n\t"
-        "	ble _080778E2\n\t"
-        "	ldr r1, _08077924\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077918: .4byte gSaveBlock2Ptr\n\t"
-        "_0807791C: .4byte gUnknown_83008A4\n\t"
-        "_08077920: .4byte gUnknown_20226A8\n\t"
-        "_08077924: .4byte gMain\n\t"
-        "_08077928:\n\t"
-        "	add r1, sp, #0xc\n\t"
-        "	ldr r0, _08077994\n\t"
-        "	ldm r0!, {r4, r5, r7}\n\t"
-        "	stm r1!, {r4, r5, r7}\n\t"
-        "	ldm r0!, {r2, r3, r4}\n\t"
-        "	stm r1!, {r2, r3, r4}\n\t"
-        "	add r1, sp, #0xc\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	adds r0, #6\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	movs r2, #0x98\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	movs r6, #0\n\t"
-        "	add r4, sp, #0xc\n\t"
-        "	movs r5, #0xc0\n\t"
-        "	lsls r5, r5, #0xd\n\t"
-        "_08077952:\n\t"
-        "	add r1, sp, #0xc\n\t"
-        "	ldr r0, _08077994\n\t"
-        "	ldm r0!, {r2, r3, r7}\n\t"
-        "	stm r1!, {r2, r3, r7}\n\t"
-        "	ldm r0!, {r2, r3, r7}\n\t"
-        "	stm r1!, {r2, r3, r7}\n\t"
-        "	adds r0, r6, #7\n\t"
-        "	ldrh r7, [r4]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r0, [r4]\n\t"
-        "	asrs r1, r5, #0x10\n\t"
-        "	add r0, sp, #0xc\n\t"
-        "	movs r2, #0x96\n\t"
-        "	movs r3, #1\n\t"
-        "	bl CreateSprite\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0xe\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #5\n\t"
-        "	ble _08077952\n\t"
-        "	ldr r0, _08077998\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x35\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r1, #5\n\t"
-        "	bhi _080779A0\n\t"
-        "	ldr r0, _0807799C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _080779A6\n\t"
-        "	.align 2, 0\n\t"
-        "_08077994: .4byte gUnknown_83008A4\n\t"
-        "_08077998: .4byte sTradeMenu\n\t"
-        "_0807799C: .4byte gLastViewedMonIndex\n\t"
-        "_080779A0:\n\t"
-        "	ldr r0, _080779E4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, #6\n\t"
-        "_080779A6:\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _080779E8\n\t"
-        "	ldr r3, _080779EC\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x35\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #0xe\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r3, #1\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	movs r3, #2\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x34\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080779F0\n\t"
-        "	movs r7, #0x87\n\t"
-        "	lsls r7, r7, #3\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	movs r1, #0x10\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _08077ABE\n\t"
-        "	.align 2, 0\n\t"
-        "_080779E4: .4byte gLastViewedMonIndex\n\t"
-        "_080779E8: .4byte gUnknown_830088C\n\t"
-        "_080779EC: .4byte gUnknown_8300A1C\n\t"
-        "_080779F0: .4byte gMain\n\t"
-        "_080779F4:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl LoadTradeBgGfx\n\t"
-        "	ldr r1, _08077A04\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077A04: .4byte gMain\n\t"
-        "_08077A08:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl LoadTradeBgGfx\n\t"
-        "	ldr r2, _08077A28\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	bl SetActiveMenuOptions\n\t"
-        "	ldr r1, _08077A2C\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077A28: .4byte sTradeMenu\n\t"
-        "_08077A2C: .4byte gMain\n\t"
-        "_08077A30:\n\t"
-        "	ldr r2, _08077A64\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "	movs r4, #1\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, _08077A68\n\t"
-        "	movs r3, #0x87\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077A64: .4byte gPaletteFade\n\t"
-        "_08077A68: .4byte gMain\n\t"
-        "_08077A6C:\n\t"
-        "	movs r1, #0x82\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #2\n\t"
-        "	bl LoadTradeBgGfx\n\t"
-        "	ldr r1, _08077A88\n\t"
-        "	movs r4, #0x87\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	b _08077AA0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077A88: .4byte gMain\n\t"
-        "_08077A8C:\n\t"
-        "	movs r5, #0x87\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	b _08077AA0\n\t"
-        "_08077A94:\n\t"
-        "	bl sub_08079FB4\n\t"
-        "_08077A98:\n\t"
-        "	ldr r1, _08077AA8\n\t"
-        "	movs r7, #0x87\n\t"
-        "	lsls r7, r7, #3\n\t"
-        "	adds r1, r1, r7\n\t"
-        "_08077AA0:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _08077ABE\n\t"
-        "	.align 2, 0\n\t"
-        "_08077AA8: .4byte gMain\n\t"
-        "_08077AAC:\n\t"
-        "	ldr r0, _08077ADC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08077ABE\n\t"
-        "	ldr r0, _08077AE0\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_08077ABE:\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	add sp, #0x24\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08077ADC: .4byte gPaletteFade\n\t"
-        "_08077AE0: .4byte CB2_TradeMenu + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    struct SpriteTemplate temp;
+    u8 id;
+    u32 xPos;
+    u16 nameLen;
+
+    switch (gMain.state)
+    {
+    case 0:
+        InitTradeMenu();
+        gMain.state++;
+        break;
+    case 1:
+        gMain.state++;
+        sTradeMenu->timer = 0;
+        break;
+    case 2:
+        gMain.state++;
+        break;
+    case 3:
+        gMain.state++;
+        break;
+    case 4:
+        CalculatePlayerPartyCount();
+        gMain.state++;
+        break;
+    case 5:
+        if (gWirelessCommType)
+        {
+            LoadWirelessStatusIndicatorSpriteGfx();
+            CreateWirelessStatusIndicatorSprite(0, 0);
+        }
+        gMain.state++;
+        break;
+    case 6:
+        gMain.state++;
+        break;
+    case 7:
+        CalculateEnemyPartyCount();
+        sTradeMenu->partyCounts[TRADE_PLAYER] = gPlayerPartyCount;
+        sTradeMenu->partyCounts[TRADE_PARTNER] = gEnemyPartyCount;
+        ClearWindowTilemap(0);
+        sub_08079690(TRADE_PLAYER);
+        sub_08079690(TRADE_PARTNER);
+
+        for (i = 0; i < sTradeMenu->partyCounts[TRADE_PLAYER]; i++)
+        {
+            struct Pokemon *mon = &gPlayerParty[i];
+            sTradeMenu->partySpriteIds[TRADE_PLAYER][i] = CreateMonIcon(GetMonData(mon, MON_DATA_SPECIES_OR_EGG, NULL),
+                                                         SpriteCB_MonIcon,
+                                                         (sTradeMonSpriteCoords[i][0] * 8) + 14,
+                                                         (sTradeMonSpriteCoords[i][1] * 8) - 12,
+                                                         1,
+                                                         GetMonData(mon, MON_DATA_PERSONALITY),
+                                                         TRUE);
+        }
+
+        for (i = 0; i < sTradeMenu->partyCounts[TRADE_PARTNER]; i++)
+        {
+            struct Pokemon *mon = &gEnemyParty[i];
+            sTradeMenu->partySpriteIds[TRADE_PARTNER][i] = CreateMonIcon(GetMonData(mon, MON_DATA_SPECIES_OR_EGG, NULL),
+                                                         SpriteCB_MonIcon,
+                                                         (sTradeMonSpriteCoords[i + PARTY_SIZE][0] * 8) + 14,
+                                                         (sTradeMonSpriteCoords[i + PARTY_SIZE][1] * 8) - 12,
+                                                         1,
+                                                         GetMonData(mon, MON_DATA_PERSONALITY),
+                                                         FALSE);
+        }
+        gMain.state++;
+        break;
+    case 8:
+        LoadHeldItemIcons();
+        DrawHeldItemIconsForTrade(&sTradeMenu->partyCounts[0], sTradeMenu->partySpriteIds[0], TRADE_PLAYER);
+        gMain.state++;
+        break;
+    case 9:
+        DrawHeldItemIconsForTrade(&sTradeMenu->partyCounts[0], sTradeMenu->partySpriteIds[0], TRADE_PARTNER);
+        gMain.state++;
+        break;
+    case 10:
+        sub_080C66A4(gSaveBlock2Ptr->playerName, sMenuTextTileBuffers[GFXTAG_PLAYER_NAME_L], 0, 0, gDecompressionBuffer);
+        id = GetMultiplayerId();
+        sub_080C66A4(gLinkPlayers[id ^ 1].name, sMenuTextTileBuffers[GFXTAG_PARTNER_NAME_L], 0, 0, gDecompressionBuffer);
+        sub_080C66A4(sActionTexts[TEXT_CANCEL], sMenuTextTileBuffers[GFXTAG_CANCEL_L], 0, 0, gDecompressionBuffer);
+        sub_08079D3C(sActionTexts[TEXT_CHOOSE_MON], sMenuTextTileBuffers[GFXTAG_CHOOSE_PKMN_L], 24);
+        gMain.state++;
+        sTradeMenu->timer = 0;
+        break;
+    case 11:
+        if (sub_08079C28())
+            gMain.state++;
+        break;
+    case 12:
+        // Create player's name text sprites (JP inlines the 8px-font centering)
+        nameLen = StringLength(gSaveBlock2Ptr->playerName);
+        xPos = 76 - nameLen * 4;
+        for (i = 0; i < NUM_PLAYER_NAME_SPRITES; i++)
+        {
+            temp = sSpriteTemplate_MenuText;
+            temp.tileTag += i + GFXTAG_PLAYER_NAME_L;
+            CreateSprite(&temp, xPos + (i * 32), 8, 1);
+        }
+
+        // Create partner's name text sprites
+        nameLen = StringLength(gLinkPlayers[GetMultiplayerId() ^ 1].name);
+        xPos = 196 - nameLen * 4;
+        for (i = 0; i < NUM_PARTNER_NAME_SPRITES; i++)
+        {
+            temp = sSpriteTemplate_MenuText;
+            temp.tileTag += i + GFXTAG_PARTNER_NAME_L;
+            CreateSprite(&temp, xPos + (i * 32), 8, 1);
+        }
+        gMain.state++;
+        break;
+    case 13:
+        // Create Cancel text sprite
+        temp = sSpriteTemplate_MenuText;
+        temp.tileTag += GFXTAG_CANCEL_L;
+        CreateSprite(&temp, 224, 152, 1);
+
+        // Create Choose a Pokémon text sprites (JP creates all 6)
+        for (i = 0; i < NUM_CHOOSE_PKMN_SPRITES; i++)
+        {
+            temp = sSpriteTemplate_MenuText;
+            temp.tileTag += i + GFXTAG_CHOOSE_PKMN_L;
+            CreateSprite(&temp, (i * 32) + 24, 150, 1);
+        }
+
+        if (sTradeMenu->cursorPosition < PARTY_SIZE)
+            sTradeMenu->cursorPosition = gLastViewedMonIndex;
+        else
+            sTradeMenu->cursorPosition = gLastViewedMonIndex + PARTY_SIZE;
+
+        sTradeMenu->cursorSpriteId = CreateSprite(&sSpriteTemplate_Cursor,
+                                                     sTradeMonSpriteCoords[sTradeMenu->cursorPosition][0] * 8 + 32,
+                                                     sTradeMonSpriteCoords[sTradeMenu->cursorPosition][1] * 8, 2);
+        gMain.state = 16;
+        break;
+    case 16:
+        LoadTradeBgGfx(0);
+        gMain.state++;
+        break;
+    case 17:
+        LoadTradeBgGfx(1);
+        sTradeMenu->bg2hofs = 0;
+        sTradeMenu->bg3hofs = 0;
+        SetActiveMenuOptions();
+        gMain.state++;
+        break;
+    case 18:
+        gPaletteFade.bufferTransferDisabled = FALSE;
+        BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gMain.state++;
+        break;
+    case 19:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+        LoadTradeBgGfx(2);
+        gMain.state++;
+        break;
+    case 20:
+        gMain.state++;
+        break;
+    case 21:
+        sub_08079FB4();
+        gMain.state++;
+        break;
+    case 22:
+        if (!gPaletteFade.active)
+            SetMainCallback2(CB2_TradeMenu);
+        break;
+    }
+
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
 static void VBlankCB_TradeMenu(void)
@@ -3531,7 +3083,7 @@ __attribute__((naked)) void sub_08078A64(void)
         "_08078A9C: .4byte gPaletteFade\n\t"
         "_08078AA0: .4byte sTradeMenu\n\t"
         "_08078AA4: .4byte gPlayerParty\n\t"
-        "_08078AA8: .4byte sub_08077558 + 1\n\t"
+        "_08078AA8: .4byte CB2_ReturnToTradeMenu + 1\n\t"
         "_08078AAC:\n\t"
         "	ldr r1, _08078AD4\n\t"
         "	subs r2, #6\n\t"
@@ -3554,7 +3106,7 @@ __attribute__((naked)) void sub_08078A64(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08078AD4: .4byte gEnemyParty\n\t"
-        "_08078AD8: .4byte sub_08077558 + 1\n\t"
+        "_08078AD8: .4byte CB2_ReturnToTradeMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5114,7 +4666,7 @@ __attribute__((naked)) void sub_08079644(void)
     );
 }
 
-__attribute__((naked)) void sub_08079690(void)
+__attribute__((naked)) void sub_08079690(u8 side)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5894,7 +5446,7 @@ __attribute__((naked)) void sub_08079BD4(void)
     );
 }
 
-__attribute__((naked)) void sub_08079C28(void)
+__attribute__((naked)) bool8 sub_08079C28(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6027,7 +5579,7 @@ __attribute__((naked)) void sub_08079C28(void)
     );
 }
 
-__attribute__((naked)) void sub_08079D3C(void)
+__attribute__((naked)) void sub_08079D3C(const u8 *str, u8 *buffer, u8 speed)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

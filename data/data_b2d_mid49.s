@@ -17,6 +17,9 @@ gUnknown_8300AB1: @ 0x8300AB1
 gUnknown_8300AFC: @ 0x8300AFC
 	.incbin "baserom_jp.gba", 0x300afc, 0x2c
 
+	.globl sActionTexts
+	.set sActionTexts, gUnknown_8300AFC
+
 	.globl gUnknown_8300B28
 gUnknown_8300B28: @ 0x8300B28
 	.incbin "baserom_jp.gba", 0x300b28, 0xb4

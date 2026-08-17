@@ -213,9 +213,15 @@ gUnknown_830083C: @ 0x830083C
 gUnknown_830088C: @ 0x830088C
 	.incbin "baserom_jp.gba", 0x30088c, 0x18
 
+	.globl sSpriteTemplate_Cursor
+	.set sSpriteTemplate_Cursor, gUnknown_830088C
+
 	.globl gUnknown_83008A4
 gUnknown_83008A4: @ 0x83008A4
 	.incbin "baserom_jp.gba", 0x3008a4, 0x38
+
+	.globl sSpriteTemplate_MenuText
+	.set sSpriteTemplate_MenuText, gUnknown_83008A4
 
 	.globl gUnknown_83008DC
 gUnknown_83008DC: @ 0x83008DC
@@ -228,6 +234,9 @@ gUnknown_83008E4: @ 0x83008E4
 	.globl gUnknown_8300A1C
 gUnknown_8300A1C: @ 0x8300A1C
 	.incbin "baserom_jp.gba", 0x300a1c, 0x1a
+
+	.globl sTradeMonSpriteCoords
+	.set sTradeMonSpriteCoords, gUnknown_8300A1C
 
 	.globl gUnknown_8300A36
 gUnknown_8300A36: @ 0x8300A36

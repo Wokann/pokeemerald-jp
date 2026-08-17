@@ -3203,7 +3203,7 @@ SECTIONS {
         src/trade.o(.text.InitTradeMenu);
         src/trade.o(.text.CB2_StartCreateTradeMenu);
         src/trade.o(.text.CB2_CreateTradeMenu);
-        src/trade.o(.text.sub_08077558);
+        src/trade.o(.text.CB2_ReturnToTradeMenu);
         src/trade.o(.text.VBlankCB_TradeMenu);
         src/trade.o(.text.CB_FadeToStartTrade);
         src/trade.o(.text.CB_WaitToStartTrade);
