@@ -297,7 +297,7 @@ void TryEnterMonForMinigame(u8 taskId, u8 slotId); // TryEnterMonForMinigame
 void CancelParticipationPrompt(u8 taskId); // CancelParticipationPrompt
 void Task_TryCreateSelectionWindow(u8 taskId); // Task_TryCreateSelectionWindow
 void SwitchSelectedMons(u8 taskId); // SwitchSelectedMons
-void sub_081B3D1C(u8 taskId); // FinishTwoMonAction
+static void FinishTwoMonAction(u8 taskId);
 void sub_081B6434(u8 taskId); // Task_ClosePartyMenuAfterText
 void sub_081B7AF0(u8 taskId); // TryTutorSelectedMon
 void sub_081B7C4C(u8 taskId); // TryGiveItemOrMailToSelectedMon
@@ -325,8 +325,10 @@ u8 Menu_GetCursorPos(void);
 void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void));
 void pokemon_change_order(void); // UpdatePartyToBattleOrder
 void sub_08199954(u8 bgId, u16 *dest, u8 left, u8 top, u8 width, u8 height); // CopyToBufferFromBgTilemap
-void sub_081B3960(u8 taskId); // SlidePartyMenuBoxOneStep
-void sub_081B39E8(u8 taskId); // Task_SlideSelectedSlotsOffscreen
+static void SlidePartyMenuBoxOneStep(u8 taskId);
+static void Task_SlideSelectedSlotsOffscreen(u8 taskId);
+static void Task_SlideSelectedSlotsOnscreen(u8 taskId);
+static void SwitchPartyMon(void);
 extern u16 *sSlot1TilemapBuffer;
 extern u16 *sSlot2TilemapBuffer;
 extern u8 gLastViewedMonIndex;
@@ -1243,7 +1245,7 @@ static void HandleChooseMonCancel(u8 taskId, s8 *slotPtr)
     case PARTY_ACTION_SWITCH:
     case PARTY_ACTION_SOFTBOILED:
         PlaySE(SE_SELECT);
-        sub_081B3D1C(taskId); // FinishTwoMonAction
+        FinishTwoMonAction(taskId); // FinishTwoMonAction
         break;
     case PARTY_ACTION_MINIGAME:
         PlaySE(SE_SELECT);
@@ -2676,7 +2678,7 @@ static void SwitchSelectedMons(u8 taskId)
 
     if (gPartyMenu.slotId2 == gPartyMenu.slotId)
     {
-        sub_081B3D1C(taskId); // FinishTwoMonAction
+        FinishTwoMonAction(taskId); // FinishTwoMonAction
     }
     else
     {
@@ -2710,8 +2712,8 @@ static void SwitchSelectedMons(u8 taskId)
         gPartyMenu.action = PARTY_ACTION_SWITCHING;
         AnimatePartySlot(gPartyMenu.slotId, 1);
         AnimatePartySlot(gPartyMenu.slotId2, 1);
-        sub_081B3960(taskId); // SlidePartyMenuBoxOneStep
-        gTasks[taskId].func = sub_081B39E8; // Task_SlideSelectedSlotsOffscreen
+        SlidePartyMenuBoxOneStep(taskId); // SlidePartyMenuBoxOneStep
+        gTasks[taskId].func = Task_SlideSelectedSlotsOffscreen; // Task_SlideSelectedSlotsOffscreen
     }
 }
 
@@ -2728,800 +2730,212 @@ static void SwitchSelectedMons(u8 taskId)
 #undef tSlot1SlideDir
 #undef tSlot2SlideDir
 
-__attribute__((naked)) void sub_081B3778(void)
+#define tSlot1Left     data[0]
+#define tSlot1Top      data[1]
+#define tSlot1Width    data[2]
+#define tSlot1Height   data[3]
+#define tSlot2Left     data[4]
+#define tSlot2Top      data[5]
+#define tSlot2Width    data[6]
+#define tSlot2Height   data[7]
+#define tSlot1Offset   data[8]
+#define tSlot2Offset   data[9]
+#define tSlot1SlideDir data[10]
+#define tSlot2SlideDir data[11]
+
+// returns FALSE if the slot has slid fully offscreen / back onscreen
+static bool8 TryMovePartySlot(s16 x, s16 width, u8 *leftMove, u8 *newX, u8 *newWidth)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	mov ip, r3\n\t"
-        "	ldr r7, [sp, #0x18]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	adds r5, r3, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r2, r1, #0x10\n\t"
-        "	mov r8, r2\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	cmp r4, #0\n\t"
-        "	blt _081B37A2\n\t"
-        "	cmp r1, #0x1f\n\t"
-        "	ble _081B37A6\n\t"
-        "_081B37A2:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081B37D4\n\t"
-        "_081B37A6:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _081B37BA\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	strb r0, [r6]\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r1, ip\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	strb r0, [r7]\n\t"
-        "	b _081B37D2\n\t"
-        "_081B37BA:\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r6]\n\t"
-        "	mov r0, ip\n\t"
-        "	strb r5, [r0]\n\t"
-        "	cmp r4, #0x1f\n\t"
-        "	ble _081B37CE\n\t"
-        "	movs r0, #0x20\n\t"
-        "	subs r0, r0, r5\n\t"
-        "	strb r0, [r7]\n\t"
-        "	b _081B37D2\n\t"
-        "_081B37CE:\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r1, [r7]\n\t"
-        "_081B37D2:\n\t"
-        "	movs r0, #1\n\t"
-        "_081B37D4:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (x + width < 0)
+        return FALSE;
+    if (x >= 32)
+        return FALSE;
+
+    if (x < 0)
+    {
+        *leftMove = x * -1;
+        *newX = 0;
+        *newWidth = width + x;
+    }
+    else
+    {
+        *leftMove = 0;
+        *newX = x;
+        if (x + width >= 32)
+            *newWidth = 32 - x;
+        else
+            *newWidth = width;
+
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_081B37E0(void)
+static void MoveAndBufferPartySlot(const void *rectSrc, s16 x, s16 y, s16 width, s16 height, s16 dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x34\n\t"
-        "	str r0, [sp, #0x28]\n\t"
-        "	ldr r0, [sp, #0x54]\n\t"
-        "	ldr r4, [sp, #0x58]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	mov sb, r2\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	str r4, [sp, #0x30]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r7, r1, #0x10\n\t"
-        "	lsrs r0, r3, #0x10\n\t"
-        "	str r0, [sp, #0x2c]\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	mov r8, r3\n\t"
-        "	mov r5, sp\n\t"
-        "	adds r5, #0x25\n\t"
-        "	mov r6, sp\n\t"
-        "	adds r6, #0x26\n\t"
-        "	str r6, [sp]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	add r2, sp, #0x24\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_081B3778\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B389A\n\t"
-        "	ldrb r2, [r5]\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r1, sl\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r3, sb\n\t"
-        "	bl FillBgTilemapBufferRect_Palette0\n\t"
-        "	ldr r1, [sp, #0x30]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	str r6, [sp]\n\t"
-        "	mov r1, r8\n\t"
-        "	add r2, sp, #0x24\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_081B3778\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B389A\n\t"
-        "	add r0, sp, #0x24\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	ldr r1, [sp, #0x2c]\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	str r4, [sp, #0x14]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #0x1c]\n\t"
-        "	str r0, [sp, #0x20]\n\t"
-        "	ldr r1, [sp, #0x28]\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyRectToBgTilemapBufferRect\n\t"
-        "_081B389A:\n\t"
-        "	add sp, #0x34\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 srcX, newX, newWidth;
+
+    if (TryMovePartySlot(x, width, &srcX, &newX, &newWidth))
+    {
+        FillBgTilemapBufferRect_Palette0(0, 0, newX, y, newWidth, height);
+        if (TryMovePartySlot(x + dir, width, &srcX, &newX, &newWidth))
+            CopyRectToBgTilemapBufferRect(0, rectSrc, srcX, 0, width, height, newX, y, newWidth, height, 17, 0, 0);
+    }
 }
 
-__attribute__((naked)) void sub_081B38AC(void)
+static void MovePartyMenuBoxSprites(struct PartyMenuBox *menuBox, s16 offset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _081B38FC\n\t"
-        "	ldrb r2, [r0, #0xb]\n\t"
-        "	lsls r3, r2, #4\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0xd\n\t"
-        "	ldrh r2, [r3, #0x24]\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	strh r2, [r3, #0x24]\n\t"
-        "	ldrb r3, [r0, #0xa]\n\t"
-        "	lsls r2, r3, #4\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	ldrh r3, [r2, #0x24]\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	strh r3, [r2, #0x24]\n\t"
-        "	ldrb r3, [r0, #9]\n\t"
-        "	lsls r2, r3, #4\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	ldrh r3, [r2, #0x24]\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	strh r3, [r2, #0x24]\n\t"
-        "	ldrb r2, [r0, #0xc]\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r2, [r0, #0x24]\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	strh r2, [r0, #0x24]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B38FC: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    gSprites[menuBox->pokeballSpriteId].x2 += offset * 8;
+    gSprites[menuBox->itemSpriteId].x2 += offset * 8;
+    gSprites[menuBox->monSpriteId].x2 += offset * 8;
+    gSprites[menuBox->statusSpriteId].x2 += offset * 8;
 }
 
-__attribute__((naked)) void sub_081B3900(void)
+static void SlidePartyMenuBoxSpritesOneStep(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081B3954\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B392E\n\t"
-        "	ldr r2, _081B3958\n\t"
-        "	ldr r0, _081B395C\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0x14\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl sub_081B38AC\n\t"
-        "_081B392E:\n\t"
-        "	movs r1, #0x16\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B394C\n\t"
-        "	ldr r2, _081B3958\n\t"
-        "	ldr r0, _081B395C\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl sub_081B38AC\n\t"
-        "_081B394C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3954: .4byte gUnknown_3005B68\n\t"
-        "_081B3958: .4byte sPartyMenuBoxes\n\t"
-        "_081B395C: .4byte gPartyMenu\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    if (tSlot1SlideDir != 0)
+        MovePartyMenuBoxSprites(&sPartyMenuBoxes[gPartyMenu.slotId], tSlot1SlideDir);
+    if (tSlot2SlideDir != 0)
+        MovePartyMenuBoxSprites(&sPartyMenuBoxes[gPartyMenu.slotId2], tSlot2SlideDir);
 }
 
-__attribute__((naked)) void sub_081B3960(u8 taskId)
+static void SlidePartyMenuBoxOneStep(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081B39DC\n\t"
-        "	adds r5, r1, r0\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B39A0\n\t"
-        "	ldr r0, _081B39E0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r5, #0x10]\n\t"
-        "	ldrh r2, [r5]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r3, #2\n\t"
-        "	ldrsh r2, [r5, r3]\n\t"
-        "	movs r4, #4\n\t"
-        "	ldrsh r3, [r5, r4]\n\t"
-        "	movs r6, #6\n\t"
-        "	ldrsh r4, [r5, r6]\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r6, #0x14\n\t"
-        "	ldrsh r4, [r5, r6]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	bl sub_081B37E0\n\t"
-        "_081B39A0:\n\t"
-        "	movs r1, #0x16\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B39CE\n\t"
-        "	ldr r0, _081B39E4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r5, #0x12]\n\t"
-        "	ldrh r2, [r5, #8]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r2, [r5, r3]\n\t"
-        "	movs r4, #0xc\n\t"
-        "	ldrsh r3, [r5, r4]\n\t"
-        "	movs r6, #0xe\n\t"
-        "	ldrsh r4, [r5, r6]\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r6, #0x16\n\t"
-        "	ldrsh r4, [r5, r6]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	bl sub_081B37E0\n\t"
-        "_081B39CE:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B39DC: .4byte gUnknown_3005B68\n\t"
-        "_081B39E0: .4byte sSlot1TilemapBuffer\n\t"
-        "_081B39E4: .4byte sSlot2TilemapBuffer\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    if (tSlot1SlideDir != 0)
+        MoveAndBufferPartySlot(sSlot1TilemapBuffer, tSlot1Left + tSlot1Offset, tSlot1Top, tSlot1Width, tSlot1Height, tSlot1SlideDir);
+    if (tSlot2SlideDir != 0)
+        MoveAndBufferPartySlot(sSlot2TilemapBuffer, tSlot2Left + tSlot2Offset, tSlot2Top, tSlot2Width, tSlot2Height, tSlot2SlideDir);
+    ScheduleBgCopyTilemapToVram(0);
 }
 
-__attribute__((naked)) void sub_081B39E8(u8 taskId)
+static void Task_SlideSelectedSlotsOffscreen(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r7, r0, #3\n\t"
-        "	ldr r0, _081B3AE8\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r6, r7, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B3960\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B3900\n\t"
-        "	ldrh r1, [r6, #0x14]\n\t"
-        "	ldrh r2, [r6, #0x10]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r6, #0x10]\n\t"
-        "	ldrh r0, [r6, #0x16]\n\t"
-        "	ldrh r3, [r6, #0x12]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r6, #0x12]\n\t"
-        "	add r2, sp, #8\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	ldrh r0, [r6, #0x12]\n\t"
-        "	ldrh r3, [r6, #8]\n\t"
-        "	adds r2, r0, r3\n\t"
-        "	strh r2, [r1, #2]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0x21\n\t"
-        "	bls _081B3ADA\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x21\n\t"
-        "	bls _081B3ADA\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r6, #0x14]\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r6, #0x16]\n\t"
-        "	bl swap_pokemon_and_oams\n\t"
-        "	ldr r4, _081B3AEC\n\t"
-        "	ldrb r0, [r4, #9]\n\t"
-        "	bl DisplayPartyPokemonData\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl DisplayPartyPokemonData\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	ldr r5, _081B3AF0\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	ldr r0, _081B3AF4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r2, [r6]\n\t"
-        "	ldrb r3, [r6, #2]\n\t"
-        "	ldrb r0, [r6, #4]\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldrb r0, [r6, #6]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_08199954\n\t"
-        "	ldr r0, _081B3AF8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r2, [r6, #8]\n\t"
-        "	ldrb r3, [r6, #0xa]\n\t"
-        "	ldrb r0, [r6, #0xc]\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldrb r0, [r6, #0xe]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_08199954\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r0, #8\n\t"
-        "	adds r0, r7, r0\n\t"
-        "	ldr r1, _081B3AFC\n\t"
-        "	str r1, [r0]\n\t"
-        "_081B3ADA:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3AE8: .4byte gUnknown_3005B68\n\t"
-        "_081B3AEC: .4byte gPartyMenu\n\t"
-        "_081B3AF0: .4byte sPartyMenuBoxes\n\t"
-        "_081B3AF4: .4byte sSlot1TilemapBuffer\n\t"
-        "_081B3AF8: .4byte sSlot2TilemapBuffer\n\t"
-        "_081B3AFC: .4byte sub_081B3B00 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    u16 slidingSlotPositions[2];
+
+    SlidePartyMenuBoxOneStep(taskId);
+    SlidePartyMenuBoxSpritesOneStep(taskId);
+    tSlot1Offset += tSlot1SlideDir;
+    tSlot2Offset += tSlot2SlideDir;
+    slidingSlotPositions[0] = tSlot1Left + tSlot1Offset;
+    slidingSlotPositions[1] = tSlot2Left + tSlot2Offset;
+
+    // Both slots have slid offscreen
+    if (slidingSlotPositions[0] > 33 && slidingSlotPositions[1] > 33)
+    {
+        tSlot1SlideDir *= -1;
+        tSlot2SlideDir *= -1;
+        SwitchPartyMon();
+        DisplayPartyPokemonData(gPartyMenu.slotId);
+        DisplayPartyPokemonData(gPartyMenu.slotId2);
+        PutWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId].windowId);
+        PutWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId2].windowId);
+        sub_08199954(0, sSlot1TilemapBuffer, tSlot1Left, tSlot1Top, tSlot1Width, tSlot1Height); // CopyToBufferFromBgTilemap
+        sub_08199954(0, sSlot2TilemapBuffer, tSlot2Left, tSlot2Top, tSlot2Width, tSlot2Height); // CopyToBufferFromBgTilemap
+        ClearWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId].windowId);
+        ClearWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId2].windowId);
+        gTasks[taskId].func = Task_SlideSelectedSlotsOnscreen;
+    }
 }
 
-__attribute__((naked)) void sub_081B3B00(void)
+static void Task_SlideSelectedSlotsOnscreen(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _081B3B70\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_081B3960\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_081B3900\n\t"
-        "	movs r1, #0x14\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B3B84\n\t"
-        "	movs r2, #0x16\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B3B84\n\t"
-        "	ldr r5, _081B3B74\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	ldr r4, _081B3B78\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0xa\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r0, _081B3B7C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, _081B3B80\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_081B3D1C\n\t"
-        "	b _081B3BA8\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3B70: .4byte gUnknown_3005B68\n\t"
-        "_081B3B74: .4byte gPartyMenu\n\t"
-        "_081B3B78: .4byte sPartyMenuBoxes\n\t"
-        "_081B3B7C: .4byte sSlot1TilemapBuffer\n\t"
-        "_081B3B80: .4byte sSlot2TilemapBuffer\n\t"
-        "_081B3B84:\n\t"
-        "	ldrh r1, [r4, #0x14]\n\t"
-        "	ldrh r0, [r4, #0x10]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x10]\n\t"
-        "	ldrh r0, [r4, #0x16]\n\t"
-        "	ldrh r2, [r4, #0x12]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x12]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081B3B9E\n\t"
-        "	strh r1, [r4, #0x14]\n\t"
-        "_081B3B9E:\n\t"
-        "	movs r1, #0x12\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B3BA8\n\t"
-        "	strh r0, [r4, #0x16]\n\t"
-        "_081B3BA8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    SlidePartyMenuBoxOneStep(taskId);
+    SlidePartyMenuBoxSpritesOneStep(taskId);
+
+    // Both slots have slid back onscreen
+    if (tSlot1SlideDir == 0 && tSlot2SlideDir == 0)
+    {
+        PutWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId].windowId);
+        PutWindowTilemap(sPartyMenuBoxes[gPartyMenu.slotId2].windowId);
+        ScheduleBgCopyTilemapToVram(0);
+        Free(sSlot1TilemapBuffer);
+        Free(sSlot2TilemapBuffer);
+        FinishTwoMonAction(taskId);
+    }
+    // Continue sliding
+    else
+    {
+        tSlot1Offset += tSlot1SlideDir;
+        tSlot2Offset += tSlot2SlideDir;
+        if (tSlot1Offset == 0)
+            tSlot1SlideDir = 0;
+        if (tSlot2Offset == 0)
+            tSlot2SlideDir = 0;
+    }
 }
 
-__attribute__((naked)) void oamt_swap_pos(void)
+static void SwitchMenuBoxSprites(u8 *spriteIdPtr1, u8 *spriteIdPtr2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	strb r2, [r0]\n\t"
-        "	strb r3, [r1]\n\t"
-        "	ldr r5, _081B3C78\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r3, r2, #4\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	ldrh r6, [r3, #0x20]\n\t"
-        "	ldrh r2, [r3, #0x22]\n\t"
-        "	mov r8, r2\n\t"
-        "	ldrh r2, [r3, #0x24]\n\t"
-        "	mov sb, r2\n\t"
-        "	ldrh r2, [r3, #0x26]\n\t"
-        "	mov sl, r2\n\t"
-        "	ldrb r4, [r1]\n\t"
-        "	lsls r2, r4, #4\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrh r2, [r2, #0x20]\n\t"
-        "	strh r2, [r3, #0x20]\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r3, r2, #4\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	ldrb r4, [r1]\n\t"
-        "	lsls r2, r4, #4\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrh r2, [r2, #0x22]\n\t"
-        "	strh r2, [r3, #0x22]\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r3, r2, #4\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	ldrb r4, [r1]\n\t"
-        "	lsls r2, r4, #4\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrh r2, [r2, #0x24]\n\t"
-        "	strh r2, [r3, #0x24]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	lsls r0, r3, #4\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0, #0x26]\n\t"
-        "	strh r0, [r2, #0x26]\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r6, [r0, #0x20]\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r2, [r0, #0x22]\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r2, sb\n\t"
-        "	strh r2, [r0, #0x24]\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	mov r1, sl\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3C78: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteIdBuffer = *spriteIdPtr1;
+    u16 xBuffer1, yBuffer1, xBuffer2, yBuffer2;
+
+    *spriteIdPtr1 = *spriteIdPtr2;
+    *spriteIdPtr2 = spriteIdBuffer;
+    xBuffer1 = gSprites[*spriteIdPtr1].x;
+    yBuffer1 = gSprites[*spriteIdPtr1].y;
+    xBuffer2 = gSprites[*spriteIdPtr1].x2;
+    yBuffer2 = gSprites[*spriteIdPtr1].y2;
+    gSprites[*spriteIdPtr1].x = gSprites[*spriteIdPtr2].x;
+    gSprites[*spriteIdPtr1].y = gSprites[*spriteIdPtr2].y;
+    gSprites[*spriteIdPtr1].x2 = gSprites[*spriteIdPtr2].x2;
+    gSprites[*spriteIdPtr1].y2 = gSprites[*spriteIdPtr2].y2;
+    gSprites[*spriteIdPtr2].x = xBuffer1;
+    gSprites[*spriteIdPtr2].y = yBuffer1;
+    gSprites[*spriteIdPtr2].x2 = xBuffer2;
+    gSprites[*spriteIdPtr2].y2 = yBuffer2;
 }
 
-__attribute__((naked)) void swap_pokemon_and_oams(void)
+static void SwitchPartyMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r1, _081B3D10\n\t"
-        "	ldr r2, _081B3D14\n\t"
-        "	movs r3, #9\n\t"
-        "	ldrsb r3, [r2, r3]\n\t"
-        "	lsls r0, r3, #4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldrb r2, [r2, #0xa]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	muls r4, r1, r4\n\t"
-        "	ldr r0, _081B3D18\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	muls r5, r1, r5\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	bl Alloc\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	adds r0, #0xb\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	adds r1, #0xb\n\t"
-        "	bl oamt_swap_pos\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	adds r0, #0xa\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	adds r1, #0xa\n\t"
-        "	bl oamt_swap_pos\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	adds r0, #9\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	adds r1, #9\n\t"
-        "	bl oamt_swap_pos\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	adds r1, #0xc\n\t"
-        "	bl oamt_swap_pos\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3D10: .4byte sPartyMenuBoxes\n\t"
-        "_081B3D14: .4byte gPartyMenu\n\t"
-        "_081B3D18: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    struct PartyMenuBox *menuBoxes[2];
+    struct Pokemon *mon1, *mon2;
+    struct Pokemon *monBuffer;
+
+    menuBoxes[0] = &sPartyMenuBoxes[gPartyMenu.slotId];
+    menuBoxes[1] = &sPartyMenuBoxes[gPartyMenu.slotId2];
+    mon1 = &gPlayerParty[gPartyMenu.slotId];
+    mon2 = &gPlayerParty[gPartyMenu.slotId2];
+    monBuffer = Alloc(sizeof(struct Pokemon));
+    *monBuffer = *mon1;
+    *mon1 = *mon2;
+    *mon2 = *monBuffer;
+    Free(monBuffer);
+    SwitchMenuBoxSprites(&menuBoxes[0]->pokeballSpriteId, &menuBoxes[1]->pokeballSpriteId);
+    SwitchMenuBoxSprites(&menuBoxes[0]->itemSpriteId, &menuBoxes[1]->itemSpriteId);
+    SwitchMenuBoxSprites(&menuBoxes[0]->monSpriteId, &menuBoxes[1]->monSpriteId);
+    SwitchMenuBoxSprites(&menuBoxes[0]->statusSpriteId, &menuBoxes[1]->statusSpriteId);
 }
 
-__attribute__((naked)) void sub_081B3D1C(u8 taskId)
+// Finish switching mons or using Softboiled
+static void FinishTwoMonAction(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	ldr r0, _081B3D64\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r4, _081B3D68\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r4, #0xb]\n\t"
-        "	ldrb r0, [r4, #9]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	strb r0, [r4, #9]\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DisplayPartyMenuStdMessage\n\t"
-        "	ldr r1, _081B3D6C\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B3D70\n\t"
-        "	str r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B3D64: .4byte sPartyMenuInternal\n\t"
-        "_081B3D68: .4byte gPartyMenu\n\t"
-        "_081B3D6C: .4byte gTasks\n\t"
-        "_081B3D70: .4byte Task_HandleChooseMonInput + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    gPartyMenu.action = PARTY_ACTION_CHOOSE_MON;
+    AnimatePartySlot(gPartyMenu.slotId, 0);
+    gPartyMenu.slotId = gPartyMenu.slotId2;
+    AnimatePartySlot(gPartyMenu.slotId2, 1);
+    DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_MON);
+    gTasks[taskId].func = Task_HandleChooseMonInput;
 }
+
+#undef tSlot1Left
+#undef tSlot1Top
+#undef tSlot1Width
+#undef tSlot1Height
+#undef tSlot2Left
+#undef tSlot2Top
+#undef tSlot2Width
+#undef tSlot2Height
+#undef tSlot1Offset
+#undef tSlot2Offset
+#undef tSlot1SlideDir
+#undef tSlot2SlideDir
 
 static void CursorCb_Cancel1(u8 taskId)
 {
@@ -3535,7 +2949,6 @@ static void CursorCb_Cancel1(u8 taskId)
     gTasks[taskId].func = Task_HandleChooseMonInput;
 }
 
-
 static void CursorCb_Item(u8 taskId)
 {
     PlaySE(SE_SELECT);
@@ -3548,14 +2961,12 @@ static void CursorCb_Item(u8 taskId)
     gTasks[taskId].func = Task_HandleSelectionMenuInput;
 }
 
-
 static void CursorCb_Give(u8 taskId)
 {
     PlaySE(SE_SELECT);
     sPartyMenuInternal->exitCallback = CB2_SelectBagItemToGive;
     Task_ClosePartyMenu(taskId);
 }
-
 
 __attribute__((naked)) void CB2_SelectBagItemToGive(void)
 {
