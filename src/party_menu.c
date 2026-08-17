@@ -11415,42 +11415,15 @@ static void FieldCallback_Surf(void)
 }
 
 
-__attribute__((naked)) void SetUpFieldMove_Surf(void)
+static bool8 SetUpFieldMove_Surf(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl PartyHasMonWithSurf\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B54FC\n\t"
-        "	bl IsPlayerFacingSurfableFishableWater\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081B54FC\n\t"
-        "	ldr r1, _081B54EC\n\t"
-        "	ldr r0, _081B54F0\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r1, _081B54F4\n\t"
-        "	ldr r0, _081B54F8\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B54FE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B54EC: .4byte gFieldCallback2\n\t"
-        "_081B54F0: .4byte 0x081B53D9\n\t"
-        "_081B54F4: .4byte gPostMenuFieldCallback\n\t"
-        "_081B54F8: .4byte FieldCallback_Surf + 1\n\t"
-        "_081B54FC:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B54FE:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if ((u8)PartyHasMonWithSurf() == TRUE && (u8)IsPlayerFacingSurfableFishableWater() == TRUE)
+    {
+        gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
+        gPostMenuFieldCallback = FieldCallback_Surf;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void sub_081B5504(void)
