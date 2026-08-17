@@ -12,6 +12,7 @@
 #include "constants/songs.h"
 #include "constants/moves.h"
 #include "constants/items.h"
+#include "constants/region_map_sections.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "librfu.h"
@@ -210,6 +211,7 @@ extern u8 gStringVar1[0x100];
 extern u8 gStringVar2[0x100];
 extern u8 gStringVar3[0x100];
 extern const s8 gUnknown_830D2A4[];
+extern const u16 gUnknown_830D204[][MAIL_WORDS_COUNT + 1];
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
 void CB2_InGameTradeAnim(void);
@@ -278,7 +280,8 @@ struct InGameTrade
     u32 personality;            // 0x24
     u16 heldItem;               // 0x28
     u8 mailNum;                 // 0x2A
-    u8 otName[12];              // 0x2B
+    u8 otName[11];              // 0x2B
+    u8 otGender;                // 0x36
     u8 sheen;                   // 0x37
     u16 requestedSpecies;       // 0x38
     u8 filler_3A[2];            // 0x3A
@@ -293,6 +296,8 @@ static void SpriteCB_BouncingPokeballDepart(struct Sprite *sprite);
 static void SpriteCB_BouncingPokeballDepartEnd(struct Sprite *sprite);
 static void SpriteCB_BouncingPokeballArrive(struct Sprite *sprite);
 static void BufferInGameTradeMonName(void);
+static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTrade);
+static void GetInGameTradeMail(struct Mail *mail, const struct InGameTrade *trade);
 extern struct MonSpritesGfx *gMonSpritesGfxPtr;
 extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused);
@@ -8801,289 +8806,82 @@ static void BufferInGameTradeMonName(void)
     StringCopy(gStringVar2, gSpeciesNames[inGameTrade->species]);
 }
 
-__attribute__((naked)) void _CreateInGameTradePokemon(void)
+static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTrade)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x38\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r1, #4\n\t"
-        "	subs r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldr r1, _0807E384\n\t"
-        "	adds r5, r2, r1\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0807E388\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x38\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	add r4, sp, #0x34\n\t"
-        "	movs r0, #0xfe\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r6, _0807E38C\n\t"
-        "	ldrh r1, [r5, #0xc]\n\t"
-        "	movs r3, #1\n\t"
-        "	str r3, [sp]\n\t"
-        "	ldr r0, [r5, #0x24]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r3, [sp, #8]\n\t"
-        "	ldr r0, [r5, #0x18]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r3, #0x20\n\t"
-        "	bl CreateMon\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0xe\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x27\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0xf\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x29\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x11\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x2a\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x12\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x2b\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x13\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x2c\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x2b\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #7\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x36\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x31\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x14\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x1d\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x17\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x1e\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x18\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x16\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x1f\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x21\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x20\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x2f\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x37\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x30\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x23\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r4, sp\n\t"
-        "	adds r4, #0x35\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldrh r0, [r5, #0x28]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807E3A0\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807E394\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_0807E3B4\n\t"
-        "	ldr r0, _0807E390\n\t"
-        "	add r1, sp, #0x10\n\t"
-        "	ldm r1!, {r2, r3, r7}\n\t"
-        "	stm r0!, {r2, r3, r7}\n\t"
-        "	ldm r1!, {r2, r3, r7}\n\t"
-        "	stm r0!, {r2, r3, r7}\n\t"
-        "	ldm r1!, {r2, r3, r7}\n\t"
-        "	stm r0!, {r2, r3, r7}\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x40\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x28\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	b _0807E3A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E384: .4byte gUnknown_830D114\n\t"
-        "_0807E388: .4byte gPlayerParty\n\t"
-        "_0807E38C: .4byte gEnemyParty\n\t"
-        "_0807E390: .4byte gTradeMail\n\t"
-        "_0807E394:\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r2, #0x28\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "_0807E3A0:\n\t"
-        "	ldr r0, _0807E3B0\n\t"
-        "	bl CalculateMonStats\n\t"
-        "	add sp, #0x38\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E3B0: .4byte gEnemyParty\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct InGameTrade *inGameTrade = &gUnknown_830D114[whichInGameTrade];
+    u8 level = GetMonData3(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
+
+    struct Mail mail;
+    metloc_u8_t metLocation = METLOC_IN_GAME_TRADE;
+    u8 mailNum;
+    struct Pokemon *pokemon = &gEnemyParty[0];
+
+    CreateMon(pokemon, inGameTrade->species, level, USE_RANDOM_IVS, TRUE, inGameTrade->personality, OT_ID_PRESET, inGameTrade->otId);
+
+    SetMonData(pokemon, MON_DATA_HP_IV, &inGameTrade->ivs[0]);
+    SetMonData(pokemon, MON_DATA_ATK_IV, &inGameTrade->ivs[1]);
+    SetMonData(pokemon, MON_DATA_DEF_IV, &inGameTrade->ivs[2]);
+    SetMonData(pokemon, MON_DATA_SPEED_IV, &inGameTrade->ivs[3]);
+    SetMonData(pokemon, MON_DATA_SPATK_IV, &inGameTrade->ivs[4]);
+    SetMonData(pokemon, MON_DATA_SPDEF_IV, &inGameTrade->ivs[5]);
+    SetMonData(pokemon, MON_DATA_NICKNAME, inGameTrade->nickname);
+    SetMonData(pokemon, MON_DATA_OT_NAME, inGameTrade->otName);
+    SetMonData(pokemon, MON_DATA_OT_GENDER, &inGameTrade->otGender);
+    SetMonData(pokemon, MON_DATA_ABILITY_NUM, &inGameTrade->abilityNum);
+    SetMonData(pokemon, MON_DATA_BEAUTY, &inGameTrade->conditions[1]);
+    SetMonData(pokemon, MON_DATA_CUTE, &inGameTrade->conditions[2]);
+    SetMonData(pokemon, MON_DATA_COOL, &inGameTrade->conditions[0]);
+    SetMonData(pokemon, MON_DATA_SMART, &inGameTrade->conditions[3]);
+    SetMonData(pokemon, MON_DATA_TOUGH, &inGameTrade->conditions[4]);
+    SetMonData(pokemon, MON_DATA_SHEEN, &inGameTrade->sheen);
+    SetMonData(pokemon, MON_DATA_MET_LOCATION, &metLocation);
+
+    mailNum = 0;
+    if (inGameTrade->heldItem != ITEM_NONE)
+    {
+        u8 isMail = ItemIsMail(inGameTrade->heldItem);
+        if (isMail)
+        {
+            GetInGameTradeMail(&mail, inGameTrade);
+            gTradeMail[0] = mail;
+            SetMonData(pokemon, MON_DATA_MAIL, &mailNum);
+            SetMonData(pokemon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
+        }
+        else
+        {
+            SetMonData(pokemon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
+        }
+    }
+    CalculateMonStats(&gEnemyParty[0]);
 }
 
-__attribute__((naked)) void sub_0807E3B4(void)
+static void GetInGameTradeMail(struct Mail *mail, const struct InGameTrade *trade)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r2, _0807E408\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x2a\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r0, r2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r3, #8\n\t"
-        "_0807E3CE:\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r1, #2\n\t"
-        "	subs r3, #1\n\t"
-        "	cmp r3, #0\n\t"
-        "	bge _0807E3CE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x12\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x2b\n\t"
-        "	bl StringCopy\n\t"
-        "	ldr r1, [r5, #0x18]\n\t"
-        "	lsrs r0, r1, #0x18\n\t"
-        "	strb r0, [r4, #0x1a]\n\t"
-        "	lsrs r0, r1, #0x10\n\t"
-        "	strb r0, [r4, #0x1b]\n\t"
-        "	lsrs r0, r1, #8\n\t"
-        "	strb r0, [r4, #0x1c]\n\t"
-        "	strb r1, [r4, #0x1d]\n\t"
-        "	ldrh r0, [r5, #0xc]\n\t"
-        "	strh r0, [r4, #0x1e]\n\t"
-        "	ldrh r0, [r5, #0x28]\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E408: .4byte gUnknown_830D204\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    for (i = 0; i < MAIL_WORDS_COUNT; i++)
+        mail->words[i] = gUnknown_830D204[trade->mailNum][i];
+
+    StringCopy(mail->playerName, trade->otName);
+
+    mail->trainerId[0] = trade->otId >> 24;
+    mail->trainerId[1] = trade->otId >> 16;
+    mail->trainerId[2] = trade->otId >> 8;
+    mail->trainerId[3] = trade->otId;
+    mail->species = trade->species;
+    mail->itemId = trade->heldItem;
 }
 
-__attribute__((naked)) void GetTradeSpecies(void)
+u16 GetTradeSpecies(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r6, _0807E438\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	movs r5, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r4, _0807E43C\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E440\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	b _0807E442\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E438: .4byte gSpecialVar_0x8005\n\t"
-        "_0807E43C: .4byte gPlayerParty\n\t"
-        "_0807E440:\n\t"
-        "	movs r0, #0\n\t"
-        "_0807E442:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData3(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_IS_EGG))
+        return SPECIES_NONE;
+    return GetMonData3(&gPlayerParty[gSpecialVar_0x8005], MON_DATA_SPECIES);
 }
 
-
-__attribute__((naked)) void CreateInGameTradePokemon(void)
+void CreateInGameTradePokemon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0807E45C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _0807E460\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl _CreateInGameTradePokemon\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E45C: .4byte gSpecialVar_0x8005\n\t"
-        "_0807E460: .4byte gSpecialVar_0x8004\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateInGameTradePokemonInternal(gSpecialVar_0x8005, gSpecialVar_0x8004);
 }
 
 static void CB2_UpdateLinkTrade(void)

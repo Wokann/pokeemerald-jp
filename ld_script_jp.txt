@@ -3308,8 +3308,8 @@ SECTIONS {
         src/trade.o(.text.SpriteCB_BouncingPokeballArrive);
         src/trade.o(.text.GetInGameTradeSpeciesInfo);
         src/trade.o(.text.BufferInGameTradeMonName);
-        src/trade.o(.text._CreateInGameTradePokemon);
-        src/trade.o(.text.sub_0807E3B4);
+        src/trade.o(.text.CreateInGameTradePokemonInternal);
+        src/trade.o(.text.GetInGameTradeMail);
         src/trade.o(.text.GetTradeSpecies);
         src/trade.o(.text.CreateInGameTradePokemon);
         src/trade.o(.text.CB2_UpdateLinkTrade);
