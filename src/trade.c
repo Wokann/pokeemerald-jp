@@ -1614,95 +1614,36 @@ static void CB_ShowTradeMonSummaryScreen(void)
     }
 }
 
-__attribute__((naked)) u8 CheckValidityOfTradeMons(u8 *aliveMons, u8 playerPartyCount, u8 playerMonIdx, u8 partnerMonIdx)
+u8 CheckValidityOfTradeMons(u8 *aliveMons, u8 playerPartyCount, u8 playerMonIdx, u8 partnerMonIdx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r6, r3, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r7, _08078B64\n\t"
-        "	cmp r5, r1\n\t"
-        "	bge _08078B0A\n\t"
-        "_08078AF6:\n\t"
-        "	cmp r2, r3\n\t"
-        "	beq _08078B04\n\t"
-        "	adds r0, r4, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_08078B04:\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, r1\n\t"
-        "	blt _08078AF6\n\t"
-        "_08078B0A:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r7, r0, r7\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	movs r0, #0xcd\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _08078B34\n\t"
-        "	cmp r4, #0x97\n\t"
-        "	bne _08078B40\n\t"
-        "_08078B34:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08078B60\n\t"
-        "_08078B40:\n\t"
-        "	bl IsNationalPokedexEnabled\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078B6C\n\t"
-        "	ldr r0, _08078B68\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x57\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078B60\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl IsSpeciesInHoennDex\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078B6C\n\t"
-        "_08078B60:\n\t"
-        "	movs r0, #2\n\t"
-        "	b _08078B74\n\t"
-        "	.align 2, 0\n\t"
-        "_08078B64: .4byte gEnemyParty\n\t"
-        "_08078B68: .4byte sTradeMenu\n\t"
-        "_08078B6C:\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _08078B72\n\t"
-        "	movs r5, #1\n\t"
-        "_08078B72:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "_08078B74:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+    u16 partnerSpecies;
+    u8 hasLiveMon = 0;
+
+    for (i = 0; i < playerPartyCount; i++)
+    {
+        if (playerMonIdx != i)
+            hasLiveMon += aliveMons[i];
+    }
+    partnerMonIdx %= PARTY_SIZE;
+    partnerSpecies = GetMonData3(&gEnemyParty[partnerMonIdx], MON_DATA_SPECIES);
+
+    if (partnerSpecies == SPECIES_DEOXYS || partnerSpecies == SPECIES_MEW)
+    {
+        if (!GetMonData3(&gEnemyParty[partnerMonIdx], MON_DATA_MODERN_FATEFUL_ENCOUNTER))
+            return PARTNER_MON_INVALID;
+    }
+
+    if (!IsNationalPokedexEnabled())
+    {
+        if (sTradeMenu->isEgg[TRADE_PARTNER][partnerMonIdx] || !IsSpeciesInHoennDex(partnerSpecies))
+            return PARTNER_MON_INVALID;
+    }
+
+    if (hasLiveMon)
+        hasLiveMon = BOTH_MONS_VALID;
+
+    return hasLiveMon;
 }
 
 static bool32 CheckMonsBeforeTrade(void)
