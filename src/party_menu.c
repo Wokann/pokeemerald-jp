@@ -5390,30 +5390,15 @@ static void DisplayPartyPokemonDescriptionText(u8 stringID, struct PartyMenuBox 
         AddTextPrinterParameterized3(menuBox->windowId, FONT_NORMAL, menuBox->infoRects->descTextLeft, menuBox->infoRects->descTextTop, sFontColorTable[0], 0, sDescriptionStringTable[stringID]);
 }
 
-__attribute__((naked)) void PartyMenuRemoveWindow(u8 *windowId)
+static void PartyMenuRemoveWindow(u8 *ptr)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _081B2CD0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "_081B2CD0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (*ptr != WINDOW_NONE)
+    {
+        ClearStdWindowAndFrameToTransparent(*ptr, FALSE);
+        RemoveWindow(*ptr);
+        *ptr = WINDOW_NONE;
+        ScheduleBgCopyTilemapToVram(2);
+    }
 }
 
 __attribute__((naked)) void DisplayPartyMenuStdMessage(u32 stringId)
@@ -5880,7 +5865,7 @@ __attribute__((naked)) void sub_081B3004(void)
     );
 }
 
-__attribute__((naked)) void PartyMenuRemoveWindow(u8 *windowId);
+static void PartyMenuRemoveWindow(u8 *windowId);
 
 static void RemoveLevelUpStatsWindow(void)
 {
