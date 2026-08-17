@@ -13,6 +13,7 @@
 #include "constants/moves.h"
 #include "constants/items.h"
 #include "constants/region_map_sections.h"
+#include "constants/mystery_gift.h"
 #include "decompress.h"
 #include "graphics.h"
 #include "librfu.h"
@@ -212,6 +213,23 @@ extern u8 gStringVar2[0x100];
 extern u8 gStringVar3[0x100];
 extern const s8 gUnknown_830D2A4[];
 extern const u16 gUnknown_830D204[][MAIL_WORDS_COUNT + 1];
+extern u8 gStringVar4[0x3E8];
+extern const u8 gUnknown_8595430[];
+extern const u8 gText_SavingDontTurnOffPower[];
+extern u8 *StringExpandPlaceholders(u8 *dest, const u8 *src);
+extern void IncrementGameStat(u8 index);
+extern u16 Random(void);
+extern void FadeOutBGMTemporarily(u8 speed);
+extern bool8 IsBGMStopped(void);
+extern void MysteryGift_TryIncrementStat(u32 stat, u32 trainerId);
+extern void SetContinueGameWarpStatusToDynamicWarp(void);
+extern void ClearContinueGameWarpStatus(void);
+extern bool8 LinkFullSave_Init(void);
+extern bool8 LinkFullSave_WriteSector(void);
+extern bool8 LinkFullSave_ReplaceLastSector(void);
+extern bool8 LinkFullSave_SetLastSectorSignature(void);
+void sub_0807EBE0(u8 windowId, const u8 *str, u8 speed);
+void c2_080543C4(void);
 extern u16 gSpecialVar_0x8004;
 extern u16 gSpecialVar_0x8005;
 void CB2_InGameTradeAnim(void);
@@ -8932,541 +8950,150 @@ static void CB2_WaitTradeComplete(void)
     UpdatePaletteFade();
 }
 
-__attribute__((naked)) void CB2_SaveAndEndTrade(void)
+static void CB2_SaveAndEndTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _0807E5A8\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0x65\n\t"
-        "	bls _0807E59E\n\t"
-        "	b _0807EA72\n\t"
-        "_0807E59E:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807E5AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E5A8: .4byte gMain\n\t"
-        "_0807E5AC: .4byte 0x0807E5B0\n\t"
-        "_0807E5B0: @ jump table\n\t"
-        "	.4byte _0807E748 @ case 0\n\t"
-        "	.4byte _0807E764 @ case 1\n\t"
-        "	.4byte _0807E7D0 @ case 2\n\t"
-        "	.4byte _0807EA72 @ case 3\n\t"
-        "	.4byte _0807E8B0 @ case 4\n\t"
-        "	.4byte _0807E974 @ case 5\n\t"
-        "	.4byte _0807E99C @ case 6\n\t"
-        "	.4byte _0807E9B6 @ case 7\n\t"
-        "	.4byte _0807E9DC @ case 8\n\t"
-        "	.4byte _0807EA28 @ case 9\n\t"
-        "	.4byte _0807EA72 @ case 10\n\t"
-        "	.4byte _0807EA72 @ case 11\n\t"
-        "	.4byte _0807EA72 @ case 12\n\t"
-        "	.4byte _0807EA72 @ case 13\n\t"
-        "	.4byte _0807EA72 @ case 14\n\t"
-        "	.4byte _0807EA72 @ case 15\n\t"
-        "	.4byte _0807EA72 @ case 16\n\t"
-        "	.4byte _0807EA72 @ case 17\n\t"
-        "	.4byte _0807EA72 @ case 18\n\t"
-        "	.4byte _0807EA72 @ case 19\n\t"
-        "	.4byte _0807EA72 @ case 20\n\t"
-        "	.4byte _0807EA72 @ case 21\n\t"
-        "	.4byte _0807EA72 @ case 22\n\t"
-        "	.4byte _0807EA72 @ case 23\n\t"
-        "	.4byte _0807EA72 @ case 24\n\t"
-        "	.4byte _0807EA72 @ case 25\n\t"
-        "	.4byte _0807EA72 @ case 26\n\t"
-        "	.4byte _0807EA72 @ case 27\n\t"
-        "	.4byte _0807EA72 @ case 28\n\t"
-        "	.4byte _0807EA72 @ case 29\n\t"
-        "	.4byte _0807EA72 @ case 30\n\t"
-        "	.4byte _0807EA72 @ case 31\n\t"
-        "	.4byte _0807EA72 @ case 32\n\t"
-        "	.4byte _0807EA72 @ case 33\n\t"
-        "	.4byte _0807EA72 @ case 34\n\t"
-        "	.4byte _0807EA72 @ case 35\n\t"
-        "	.4byte _0807EA72 @ case 36\n\t"
-        "	.4byte _0807EA72 @ case 37\n\t"
-        "	.4byte _0807EA72 @ case 38\n\t"
-        "	.4byte _0807EA72 @ case 39\n\t"
-        "	.4byte _0807E8D4 @ case 40\n\t"
-        "	.4byte _0807E924 @ case 41\n\t"
-        "	.4byte _0807E952 @ case 42\n\t"
-        "	.4byte _0807EA72 @ case 43\n\t"
-        "	.4byte _0807EA72 @ case 44\n\t"
-        "	.4byte _0807EA72 @ case 45\n\t"
-        "	.4byte _0807EA72 @ case 46\n\t"
-        "	.4byte _0807EA72 @ case 47\n\t"
-        "	.4byte _0807EA72 @ case 48\n\t"
-        "	.4byte _0807EA72 @ case 49\n\t"
-        "	.4byte _0807E7F8 @ case 50\n\t"
-        "	.4byte _0807E854 @ case 51\n\t"
-        "	.4byte _0807E870 @ case 52\n\t"
-        "	.4byte _0807EA72 @ case 53\n\t"
-        "	.4byte _0807EA72 @ case 54\n\t"
-        "	.4byte _0807EA72 @ case 55\n\t"
-        "	.4byte _0807EA72 @ case 56\n\t"
-        "	.4byte _0807EA72 @ case 57\n\t"
-        "	.4byte _0807EA72 @ case 58\n\t"
-        "	.4byte _0807EA72 @ case 59\n\t"
-        "	.4byte _0807EA72 @ case 60\n\t"
-        "	.4byte _0807EA72 @ case 61\n\t"
-        "	.4byte _0807EA72 @ case 62\n\t"
-        "	.4byte _0807EA72 @ case 63\n\t"
-        "	.4byte _0807EA72 @ case 64\n\t"
-        "	.4byte _0807EA72 @ case 65\n\t"
-        "	.4byte _0807EA72 @ case 66\n\t"
-        "	.4byte _0807EA72 @ case 67\n\t"
-        "	.4byte _0807EA72 @ case 68\n\t"
-        "	.4byte _0807EA72 @ case 69\n\t"
-        "	.4byte _0807EA72 @ case 70\n\t"
-        "	.4byte _0807EA72 @ case 71\n\t"
-        "	.4byte _0807EA72 @ case 72\n\t"
-        "	.4byte _0807EA72 @ case 73\n\t"
-        "	.4byte _0807EA72 @ case 74\n\t"
-        "	.4byte _0807EA72 @ case 75\n\t"
-        "	.4byte _0807EA72 @ case 76\n\t"
-        "	.4byte _0807EA72 @ case 77\n\t"
-        "	.4byte _0807EA72 @ case 78\n\t"
-        "	.4byte _0807EA72 @ case 79\n\t"
-        "	.4byte _0807EA72 @ case 80\n\t"
-        "	.4byte _0807EA72 @ case 81\n\t"
-        "	.4byte _0807EA72 @ case 82\n\t"
-        "	.4byte _0807EA72 @ case 83\n\t"
-        "	.4byte _0807EA72 @ case 84\n\t"
-        "	.4byte _0807EA72 @ case 85\n\t"
-        "	.4byte _0807EA72 @ case 86\n\t"
-        "	.4byte _0807EA72 @ case 87\n\t"
-        "	.4byte _0807EA72 @ case 88\n\t"
-        "	.4byte _0807EA72 @ case 89\n\t"
-        "	.4byte _0807EA72 @ case 90\n\t"
-        "	.4byte _0807EA72 @ case 91\n\t"
-        "	.4byte _0807EA72 @ case 92\n\t"
-        "	.4byte _0807EA72 @ case 93\n\t"
-        "	.4byte _0807EA72 @ case 94\n\t"
-        "	.4byte _0807EA72 @ case 95\n\t"
-        "	.4byte _0807EA72 @ case 96\n\t"
-        "	.4byte _0807EA72 @ case 97\n\t"
-        "	.4byte _0807EA72 @ case 98\n\t"
-        "	.4byte _0807EA72 @ case 99\n\t"
-        "	.4byte _0807E77C @ case 100\n\t"
-        "	.4byte _0807E7B4 @ case 101\n\t"
-        "_0807E748:\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _0807E75C\n\t"
-        "	ldr r1, _0807E760\n\t"
-        "	b _0807E7DE\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E75C: .4byte gStringVar4\n\t"
-        "_0807E760: .4byte gUnknown_8595430\n\t"
-        "_0807E764:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetTradeLinkStandbyCallback\n\t"
-        "	ldr r0, _0807E778\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #0x64\n\t"
-        "	b _0807E8C0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E778: .4byte gMain\n\t"
-        "_0807E77C:\n\t"
-        "	ldr r0, _0807E7AC\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r0, [r3, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r3, #0x64]\n\t"
-        "	cmp r0, #0xb4\n\t"
-        "	bls _0807E798\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #0x65\n\t"
-        "	strb r1, [r0]\n\t"
-        "	str r2, [r3, #0x64]\n\t"
-        "_0807E798:\n\t"
-        "	bl _IsLinkTaskFinished\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E7A2\n\t"
-        "	b _0807EA72\n\t"
-        "_0807E7A2:\n\t"
-        "	ldr r0, _0807E7B0\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	b _0807E7C6\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E7AC: .4byte gUnknown_2031F40\n\t"
-        "_0807E7B0: .4byte gMain\n\t"
-        "_0807E7B4:\n\t"
-        "	bl _IsLinkTaskFinished\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E7BE\n\t"
-        "	b _0807EA72\n\t"
-        "_0807E7BE:\n\t"
-        "	ldr r0, _0807E7CC\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_0807E7C6:\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E7CC: .4byte gMain\n\t"
-        "_0807E7D0:\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _0807E7F0\n\t"
-        "	ldr r1, _0807E7F4\n\t"
-        "_0807E7DE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl sub_0807EBE0\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E7F0: .4byte gStringVar4\n\t"
-        "_0807E7F4: .4byte gText_SavingDontTurnOffPower\n\t"
-        "_0807E7F8:\n\t"
-        "	bl InUnionRoom\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E806\n\t"
-        "	movs r0, #0x15\n\t"
-        "	bl IncrementGameStat\n\t"
-        "_0807E806:\n\t"
-        "	ldr r0, _0807E848\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807E82E\n\t"
-        "	ldr r4, _0807E84C\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #3\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r4, #4\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl MysteryGift_TryIncrementStat\n\t"
-        "_0807E82E:\n\t"
-        "	bl SetContinueGameWarpStatusToDynamicWarp\n\t"
-        "	bl sub_081532BC\n\t"
-        "	ldr r1, _0807E850\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0807E8C2\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E848: .4byte gWirelessCommType\n\t"
-        "_0807E84C: .4byte gLinkPlayers\n\t"
-        "_0807E850: .4byte gMain\n\t"
-        "_0807E854:\n\t"
-        "	ldr r0, _0807E86C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #5\n\t"
-        "	beq _0807E864\n\t"
-        "	b _0807EA72\n\t"
-        "_0807E864:\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	b _0807EA1C\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E86C: .4byte gUnknown_2031F40\n\t"
-        "_0807E870:\n\t"
-        "	bl sub_081532E8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0807E894\n\t"
-        "	bl ClearContinueGameWarpStatus\n\t"
-        "	ldr r0, _0807E890\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E890: .4byte gMain\n\t"
-        "_0807E894:\n\t"
-        "	ldr r0, _0807E8A8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r1, [r0, #0x64]\n\t"
-        "	ldr r0, _0807E8AC\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x33\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E8A8: .4byte gUnknown_2031F40\n\t"
-        "_0807E8AC: .4byte gMain\n\t"
-        "_0807E8B0:\n\t"
-        "	bl sub_0815331C\n\t"
-        "	ldr r0, _0807E8CC\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #0x28\n\t"
-        "_0807E8C0:\n\t"
-        "	strb r1, [r0]\n\t"
-        "_0807E8C2:\n\t"
-        "	ldr r0, _0807E8D0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r2, [r0, #0x64]\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E8CC: .4byte gMain\n\t"
-        "_0807E8D0: .4byte gUnknown_2031F40\n\t"
-        "_0807E8D4:\n\t"
-        "	ldr r4, _0807E908\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x32\n\t"
-        "	bhi _0807E8E4\n\t"
-        "	b _0807EA72\n\t"
-        "_0807E8E4:\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E90C\n\t"
-        "	bl Random\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	str r0, [r4, #0x64]\n\t"
-        "	b _0807E912\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E908: .4byte gUnknown_2031F40\n\t"
-        "_0807E90C:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "_0807E912:\n\t"
-        "	ldr r0, _0807E920\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x29\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E920: .4byte gMain\n\t"
-        "_0807E924:\n\t"
-        "	ldr r0, _0807E944\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E94C\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetTradeLinkStandbyCallback\n\t"
-        "	ldr r0, _0807E948\n\t"
-        "	movs r1, #0x87\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x2a\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E944: .4byte gUnknown_2031F40\n\t"
-        "_0807E948: .4byte gMain\n\t"
-        "_0807E94C:\n\t"
-        "	subs r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	b _0807EA72\n\t"
-        "_0807E952:\n\t"
-        "	bl _IsLinkTaskFinished\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807E95C\n\t"
-        "	b _0807EA72\n\t"
-        "_0807E95C:\n\t"
-        "	bl sub_08153344\n\t"
-        "	ldr r0, _0807E970\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #5\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E970: .4byte gMain\n\t"
-        "_0807E974:\n\t"
-        "	ldr r0, _0807E998\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x3c\n\t"
-        "	bls _0807EA72\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetTradeLinkStandbyCallback\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E998: .4byte gUnknown_2031F40\n\t"
-        "_0807E99C:\n\t"
-        "	bl _IsLinkTaskFinished\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807EA72\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	b _0807EA14\n\t"
-        "_0807E9B6:\n\t"
-        "	ldr r0, _0807E9D4\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807EA72\n\t"
-        "	movs r0, #3\n\t"
-        "	bl FadeOutBGMTemporarily\n\t"
-        "	ldr r1, _0807E9D8\n\t"
-        "	movs r0, #0x87\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _0807EA1C\n\t"
-        "	.align 2, 0\n\t"
-        "_0807E9D4: .4byte gPaletteFade\n\t"
-        "_0807E9D8: .4byte gMain\n\t"
-        "_0807E9DC:\n\t"
-        "	bl IsBGMStopped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0807EA72\n\t"
-        "	ldr r0, _0807EA04\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807EA10\n\t"
-        "	ldr r0, _0807EA08\n\t"
-        "	ldr r1, [r0, #8]\n\t"
-        "	ldr r0, _0807EA0C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0807EA10\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetTradeLinkStandbyCallback\n\t"
-        "	b _0807EA14\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EA04: .4byte gWirelessCommType\n\t"
-        "_0807EA08: .4byte gMain\n\t"
-        "_0807EA0C: .4byte CB2_StartCreateTradeMenu + 1\n\t"
-        "_0807EA10:\n\t"
-        "	bl SetCloseLinkCallback\n\t"
-        "_0807EA14:\n\t"
-        "	ldr r1, _0807EA24\n\t"
-        "	movs r2, #0x87\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "_0807EA1C:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EA24: .4byte gMain\n\t"
-        "_0807EA28:\n\t"
-        "	ldr r0, _0807EA50\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807EA60\n\t"
-        "	ldr r1, [r2, #8]\n\t"
-        "	ldr r0, _0807EA54\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0807EA60\n\t"
-        "	bl _IsLinkTaskFinished\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807EA72\n\t"
-        "	ldr r0, _0807EA58\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _0807EA5C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _0807EA72\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EA50: .4byte gWirelessCommType\n\t"
-        "_0807EA54: .4byte CB2_StartCreateTradeMenu + 1\n\t"
-        "_0807EA58: .4byte gSoftResetDisabled\n\t"
-        "_0807EA5C: .4byte c2_080543C4 + 1\n\t"
-        "_0807EA60:\n\t"
-        "	ldr r0, _0807EA94\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0807EA72\n\t"
-        "	ldr r0, _0807EA98\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _0807EA9C\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_0807EA72:\n\t"
-        "	bl HasLinkErrorOccurred\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807EA80\n\t"
-        "	bl RunTasks\n\t"
-        "_0807EA80:\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807EA94: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_0807EA98: .4byte gSoftResetDisabled\n\t"
-        "_0807EA9C: .4byte c2_080543C4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gMain.state)
+    {
+    case 0:
+        gMain.state++;
+        StringExpandPlaceholders(gStringVar4, gUnknown_8595430);
+        sub_0807EBE0(0, gStringVar4, 0);
+        break;
+    case 1:
+        SetTradeLinkStandbyCallback(0);
+        gMain.state = 100;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case 100:
+        if (++gUnknown_2031F40->timer > 180)
+        {
+            gMain.state = 101;
+            gUnknown_2031F40->timer = 0;
+        }
+        if (_IsLinkTaskFinished())
+            gMain.state = 2;
+        break;
+    case 101:
+        if (_IsLinkTaskFinished())
+            gMain.state = 2;
+        break;
+    case 2:
+        gMain.state = 50;
+        StringExpandPlaceholders(gStringVar4, gText_SavingDontTurnOffPower);
+        sub_0807EBE0(0, gStringVar4, 0);
+        break;
+    case 50:
+        if (!InUnionRoom())
+            IncrementGameStat(GAME_STAT_POKEMON_TRADES);
+        if (gWirelessCommType)
+            MysteryGift_TryIncrementStat(CARD_STAT_NUM_TRADES, gLinkPlayers[GetMultiplayerId() ^ 1].trainerId);
+
+        SetContinueGameWarpStatusToDynamicWarp();
+        LinkFullSave_Init();
+        gMain.state++;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case 51:
+        if (++gUnknown_2031F40->timer == 5)
+            gMain.state++;
+        break;
+    case 52:
+        if (LinkFullSave_WriteSector())
+        {
+            ClearContinueGameWarpStatus();
+            gMain.state = 4;
+        }
+        else
+        {
+            gUnknown_2031F40->timer = 0;
+            gMain.state = 51;
+        }
+        break;
+    case 4:
+        LinkFullSave_ReplaceLastSector();
+        gMain.state = 40;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case 40:
+        if (++gUnknown_2031F40->timer > 50)
+        {
+            if (GetMultiplayerId() == 0)
+                gUnknown_2031F40->timer = Random() % 30;
+            else
+                gUnknown_2031F40->timer = 0;
+            gMain.state = 41;
+        }
+        break;
+    case 41:
+        if (gUnknown_2031F40->timer == 0)
+        {
+            SetTradeLinkStandbyCallback(1);
+            gMain.state = 42;
+        }
+        else
+        {
+            gUnknown_2031F40->timer--;
+        }
+        break;
+    case 42:
+        if (_IsLinkTaskFinished())
+        {
+            LinkFullSave_SetLastSectorSignature();
+            gMain.state = 5;
+        }
+        break;
+    case 5:
+        if (++gUnknown_2031F40->timer > 60)
+        {
+            gMain.state++;
+            SetTradeLinkStandbyCallback(2);
+        }
+        break;
+    case 6:
+        if (_IsLinkTaskFinished())
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            gMain.state++;
+        }
+        break;
+    case 7:
+        if (!gPaletteFade.active)
+        {
+            FadeOutBGMTemporarily(3);
+            gMain.state++;
+        }
+        break;
+    case 8:
+        if (IsBGMStopped() == TRUE)
+        {
+            if (gWirelessCommType && gMain.savedCallback == CB2_StartCreateTradeMenu)
+                SetTradeLinkStandbyCallback(3);
+            else
+                SetCloseLinkCallback();
+            gMain.state++;
+        }
+        break;
+    case 9:
+        if (gWirelessCommType && gMain.savedCallback == CB2_StartCreateTradeMenu)
+        {
+            if (_IsLinkTaskFinished())
+            {
+                gSoftResetDisabled = FALSE;
+                SetMainCallback2(c2_080543C4);
+            }
+        }
+        else if (!gReceivedRemoteLinkPlayers)
+        {
+            gSoftResetDisabled = FALSE;
+            SetMainCallback2(c2_080543C4);
+        }
+        break;
+    }
+    if (!HasLinkErrorOccurred())
+        RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
 }
 
 __attribute__((naked)) void c2_080543C4(void)
@@ -9640,7 +9267,7 @@ __attribute__((naked)) void sub_0807EBD4(void)
     );
 }
 
-__attribute__((naked)) void sub_0807EBE0(void)
+__attribute__((naked)) void sub_0807EBE0(u8 windowId, const u8 *str, u8 speed)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
