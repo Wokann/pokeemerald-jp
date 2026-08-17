@@ -3297,9 +3297,9 @@ SECTIONS {
         src/trade.o(.text.SetTradeSequenceBgGpuRegs);
         src/trade.o(.text.LoadTradeSequenceSpriteSheetsAndPalettes);
         src/trade.o(.text.SetTradeSceneStrings);
-        src/trade.o(.text.sub_0807B600);
-        src/trade.o(.text.sub_0807B624);
-        src/trade.o(.text.sub_0807CA00);
+        src/trade.o(.text.DoTradeAnim);
+        src/trade.o(.text.DoTradeAnim_Cable);
+        src/trade.o(.text.DoTradeAnim_Wireless);
         src/trade.o(.text.c2_08053788);
         src/trade.o(.text.sub_0807DF14);
         src/trade.o(.text.sub_0807DF94);

@@ -3754,7 +3754,7 @@ __attribute__((naked)) void sub_0807B044(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_0807B600\n\t"
+        "	bl DoTradeAnim\n\t"
         "	bl RunTasks\n\t"
         "	bl RunTextPrinters\n\t"
         "	bl AnimateSprites\n\t"
@@ -4386,33 +4386,15 @@ __attribute__((naked)) void SetTradeSceneStrings(void)
     );
 }
 
-__attribute__((naked)) void sub_0807B600(void)
+static bool8 DoTradeAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0807B614\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0xfa\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807B618\n\t"
-        "	bl sub_0807CA00\n\t"
-        "	b _0807B61C\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B614: .4byte gUnknown_2031F40\n\t"
-        "_0807B618:\n\t"
-        "	bl sub_0807B624\n\t"
-        "_0807B61C:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2031F40->isCableTrade)
+        return DoTradeAnim_Cable();
+    else
+        return DoTradeAnim_Wireless();
 }
 
-__attribute__((naked)) void sub_0807B624(void)
+__attribute__((naked)) void DoTradeAnim_Cable(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6583,7 +6565,7 @@ __attribute__((naked)) void sub_0807B624(void)
     );
 }
 
-__attribute__((naked)) void sub_0807CA00(void)
+__attribute__((naked)) void DoTradeAnim_Wireless(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9618,7 +9600,7 @@ __attribute__((naked)) void CB2_UpdateLinkTrade(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {r4, r5, r6, lr}\n\t"
-        "	bl sub_0807B600\n\t"
+        "	bl DoTradeAnim\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r6, r0, #0x18\n\t"
         "	cmp r6, #1\n\t"
