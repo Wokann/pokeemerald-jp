@@ -1,6 +1,7 @@
 #include "global.h"
 #include "list_menu.h"
 #include "main.h"
+#include "menu.h"
 #include "constants/songs.h"
 #include "task.h"
 #include "text.h"
@@ -10,6 +11,16 @@
 // Cursors after this point are created using a sprite with their own task.
 // This allows them to have idle animations. Cursors prior to this are simply printed text.
 #define CURSOR_OBJECT_START CURSOR_RED_OUTLINE
+
+extern struct {
+    u8 cursorPal:4;
+    u8 fillValue:4;
+    u8 cursorShadowPal:4;
+    u8 lettersSpacing:6;
+    u8 field_2_2:6; // unused
+    u8 fontId:7;
+    bool8 enabled:1;
+} gListMenuOverride;
 
 void Task_RedArrowCursor(void) {}
 static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onInit);
@@ -496,102 +507,35 @@ __attribute__((naked)) u8 ListMenuInitInternal(struct ListMenuTemplate *listMenu
     );
 }
 
-__attribute__((naked)) void ListMenuPrint(void)
+static void ListMenuPrint(struct ListMenu *list, const u8 *str, u8 x, u8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r7, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov ip, r3\n\t"
-        "	ldr r5, _081AE6F4\n\t"
-        "	ldrb r1, [r5, #3]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _081AE6F8\n\t"
-        "	add r1, sp, #0x14\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	movs r3, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r2, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	lsls r0, r2, #0x14\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	lsrs r1, r1, #0x19\n\t"
-        "	lsls r2, r2, #0xe\n\t"
-        "	lsrs r2, r2, #0x1a\n\t"
-        "	str r2, [sp]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	add r2, sp, #0x14\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	movs r2, #1\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	str r6, [sp, #0x10]\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	mov r3, ip\n\t"
-        "	bl AddTextPrinterParameterized4\n\t"
-        "	ldrb r1, [r5, #3]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r5, #3]\n\t"
-        "	b _081AE736\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE6F4: .4byte gUnknown_3006040\n\t"
-        "_081AE6F8:\n\t"
-        "	add r2, sp, #0x14\n\t"
-        "	ldrb r1, [r4, #0x15]\n\t"
-        "	lsls r0, r1, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrb r0, [r4, #0x14]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x1c\n\t"
-        "	strb r1, [r0, #2]\n\t"
-        "	ldrb r0, [r4, #0x10]\n\t"
-        "	ldrb r1, [r4, #0x17]\n\t"
-        "	lsls r1, r1, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1a\n\t"
-        "	ldrb r2, [r4, #0x16]\n\t"
-        "	lsls r2, r2, #0x1d\n\t"
-        "	lsrs r2, r2, #0x1d\n\t"
-        "	str r2, [sp]\n\t"
-        "	str r3, [sp, #4]\n\t"
-        "	add r2, sp, #0x14\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	movs r2, #1\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	str r6, [sp, #0x10]\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	mov r3, ip\n\t"
-        "	bl AddTextPrinterParameterized4\n\t"
-        "_081AE736:\n\t"
-        "	add sp, #0x18\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 colors[3];
+    if (gListMenuOverride.enabled)
+    {
+        colors[0] = gListMenuOverride.fillValue;
+        colors[1] = gListMenuOverride.cursorPal;
+        colors[2] = gListMenuOverride.cursorShadowPal;
+        AddTextPrinterParameterized4(list->template.windowId,
+                                     gListMenuOverride.fontId,
+                                     x, y,
+                                     gListMenuOverride.lettersSpacing,
+                                     0, colors, TEXT_SKIP_DRAW, str);
+
+        gListMenuOverride.enabled = FALSE;
+    }
+    else
+    {
+        colors[0] = list->template.fillValue;
+        colors[1] = list->template.cursorPal;
+        colors[2] = list->template.cursorShadowPal;
+        AddTextPrinterParameterized4(list->template.windowId,
+                                     list->template.fontId,
+                                     x, y,
+                                     list->template.lettersSpacing,
+                                     0, colors, TEXT_SKIP_DRAW, str);
+    }
 }
+
 
 static __attribute__((naked)) void ListMenuPrintEntries(struct ListMenu *list, u16 startIndex, u16 yOffset, u16 count)
 {
@@ -1088,52 +1032,14 @@ static void ListMenuCallSelectionChangedCallback(struct ListMenu *list, u8 onIni
         list->template.moveCursorFunc(list->template.items[list->scrollOffset + list->selectedRow].id, onInit, list);
 }
 
-__attribute__((naked)) void ListMenuOverrideSetColors(u8 cursorPal, u8 fillValue, u8 cursorShadowPal)
+void ListMenuOverrideSetColors(u8 cursorPal, u8 fillValue, u8 cursorShadowPal)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r6, _081AED4C\n\t"
-        "	movs r5, #0xf\n\t"
-        "	ands r0, r5\n\t"
-        "	ldrb r3, [r6]\n\t"
-        "	mov r8, r3\n\t"
-        "	movs r4, #0x10\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	mov r7, r8\n\t"
-        "	ands r3, r7\n\t"
-        "	orrs r3, r0\n\t"
-        "	lsrs r1, r1, #0x14\n\t"
-        "	ands r3, r5\n\t"
-        "	orrs r3, r1\n\t"
-        "	strb r3, [r6]\n\t"
-        "	ands r2, r5\n\t"
-        "	ldrb r0, [r6, #1]\n\t"
-        "	ands r4, r0\n\t"
-        "	orrs r4, r2\n\t"
-        "	strb r4, [r6, #1]\n\t"
-        "	ldrb r0, [r6, #3]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6, #3]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AED4C: .4byte gUnknown_3006040\n\t"
-        ".syntax divided\n\t"
-    );
+    gListMenuOverride.cursorPal = cursorPal;
+    gListMenuOverride.fillValue = fillValue;
+    gListMenuOverride.cursorShadowPal = cursorShadowPal;
+    gListMenuOverride.enabled = TRUE;
 }
+
 
 void ListMenuDefaultCursorMoveFunc(s32 itemIndex, bool8 onInit, struct ListMenu *list)
 {

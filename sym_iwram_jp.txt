@@ -697,6 +697,7 @@ gUnknown_3006034 = .;
 . += 0xc;
 gUnknown_3006040 = .;
 . += 0x10;
+gListMenuOverride = gUnknown_3006040;
 gMultiuseListMenuTemplate = .;
 . += 0x18;
 gUnknown_3006068 = .;
