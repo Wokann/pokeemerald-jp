@@ -1379,35 +1379,14 @@ __attribute__((naked)) bool8 IsMultiBattle(void)
     );
 }
 
-__attribute__((naked)) void sub_081B0F58(void)
+// JP-only: swaps two 0x64-byte blocks (used to exchange party slots)
+void sub_081B0F58(void *a, void *b)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	bl Alloc\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Free\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    void *tmp = Alloc(0x64);
+    memcpy(tmp, a, 0x64);
+    memcpy(a, b, 0x64);
+    memcpy(b, tmp, 0x64);
+    Free(tmp);
 }
 
 __attribute__((naked)) void Task_ClosePartyMenu(u8 taskId)
