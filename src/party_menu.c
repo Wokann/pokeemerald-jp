@@ -13,11 +13,13 @@
 extern const u16 sTMHMMoves[];
 #include "constants/items.h"
 #include "constants/party_menu.h"
+#include "constants/pokemon.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "main.h"
 #include "menu_helpers.h"
 #include "sprite.h"
+#include "sound.h"
 #include "string_util.h"
 #include "task.h"
 
@@ -15282,7 +15284,7 @@ __attribute__((naked)) void sub_081B72E0(void)
         "	.align 2, 0\n\t"
         "_081B731C: .4byte gMain\n\t"
         "_081B7320: .4byte gTasks\n\t"
-        "_081B7324: .4byte sub_081B73B0 + 1\n\t"
+        "_081B7324: .4byte Task_TryLearnNewMoves + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15363,95 +15365,39 @@ __attribute__((naked)) void sub_081B7374(void)
     );
 }
 
-__attribute__((naked)) void sub_081B73B0(void)
+__attribute__((naked)) void sub_081B74BC(u8 taskId);
+__attribute__((naked)) void sub_081B7458(u8 taskId);
+__attribute__((naked)) void sub_081B7528(u8 taskId);
+__attribute__((naked)) void sub_081B75B8(u8 taskId, u16 learnMove);
+
+static void Task_TryLearnNewMoves(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	bl WaitFanfare\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B7452\n\t"
-        "	ldr r0, _081B7408\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r6, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B73D8\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B7452\n\t"
-        "_081B73D8:\n\t"
-        "	bl RemoveLevelUpStatsWindow\n\t"
-        "	ldr r4, _081B740C\n\t"
-        "	movs r1, #9\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081B7410\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl MonTryLearningNewMove\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	strh r6, [r4, #0x10]\n\t"
-        "	ldr r0, _081B7414\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B7434\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _081B7418\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _081B7424\n\t"
-        "	b _081B744C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B7408: .4byte gMain\n\t"
-        "_081B740C: .4byte gPartyMenu\n\t"
-        "_081B7410: .4byte gPlayerParty\n\t"
-        "_081B7414: .4byte 0x0000FFFE\n\t"
-        "_081B7418:\n\t"
-        "	ldr r0, _081B7420\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _081B742C\n\t"
-        "	b _081B744C\n\t"
-        "	.align 2, 0\n\t"
-        "_081B7420: .4byte 0x0000FFFF\n\t"
-        "_081B7424:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B74BC\n\t"
-        "	b _081B7452\n\t"
-        "_081B742C:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B7528\n\t"
-        "	b _081B7452\n\t"
-        "_081B7434:\n\t"
-        "	ldr r0, _081B7444\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, _081B7448\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _081B7452\n\t"
-        "	.align 2, 0\n\t"
-        "_081B7444: .4byte gTasks\n\t"
-        "_081B7448: .4byte sub_081B7458 + 1\n\t"
-        "_081B744C:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081B75B8\n\t"
-        "_081B7452:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 learnMove;
+
+    if ((u8)WaitFanfare(FALSE) && ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON))))
+    {
+        RemoveLevelUpStatsWindow();
+        learnMove = MonTryLearningNewMove(&gPlayerParty[gPartyMenu.slotId], TRUE);
+        gPartyMenu.data[1] = 1;
+        switch (learnMove)
+        {
+        case 0: // No moves to learn
+            sub_081B74BC(taskId);
+            break;
+        case MON_HAS_MAX_MOVES:
+            sub_081B7528(taskId);
+            break;
+        case MON_ALREADY_KNOWS_MOVE:
+            gTasks[taskId].func = sub_081B7458;
+            break;
+        default:
+            sub_081B75B8(taskId, learnMove);
+            break;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_081B7458(void)
+__attribute__((naked)) void sub_081B7458(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15507,7 +15453,7 @@ __attribute__((naked)) void sub_081B7458(void)
     );
 }
 
-__attribute__((naked)) void sub_081B74BC(void)
+__attribute__((naked)) void sub_081B74BC(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15564,7 +15510,7 @@ __attribute__((naked)) void sub_081B74BC(void)
     );
 }
 
-__attribute__((naked)) void sub_081B7528(void)
+__attribute__((naked)) void sub_081B7528(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15630,7 +15576,7 @@ __attribute__((naked)) void sub_081B7528(void)
     );
 }
 
-__attribute__((naked)) void sub_081B75B8(void)
+__attribute__((naked)) void sub_081B75B8(u8 taskId, u16 learnMove)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

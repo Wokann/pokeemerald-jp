@@ -8793,7 +8793,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B72E0);
         src/party_menu.o(.text.sub_081B7328);
         src/party_menu.o(.text.sub_081B7374);
-        src/party_menu.o(.text.sub_081B73B0);
+        src/party_menu.o(.text.Task_TryLearnNewMoves);
         src/party_menu.o(.text.sub_081B7458);
         src/party_menu.o(.text.sub_081B74BC);
         src/party_menu.o(.text.sub_081B7528);
