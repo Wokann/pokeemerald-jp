@@ -1,6 +1,7 @@
 #include "global.h"
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
+#include "constants/field_effects.h"
 #include "event_data.h"
 #include "fieldmap.h"
 #include "field_effect.h"
@@ -576,20 +577,10 @@ bool8 FldEff_UseSecretPowerCave(void)
     return FALSE;
 }
 
-__attribute__((naked)) void StartSecretBaseCaveFieldEffect(void)
+void StartSecretBaseCaveFieldEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0xb\n\t"
-        "	bl FieldEffectActiveListRemove\n\t"
-        "	movs r0, #0x37\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    FieldEffectActiveListRemove(FLDEFF_USE_SECRET_POWER_CAVE);
+    FieldEffectStart(FLDEFF_SECRET_POWER_CAVE);
 }
 
 __attribute__((naked)) bool8 FldEff_SecretPowerCave()
