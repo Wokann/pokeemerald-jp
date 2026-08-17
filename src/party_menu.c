@@ -931,181 +931,52 @@ static void InitPartyMenuBoxes(u8 layout)
         sPartyMenuBoxes[1].infoRects = &gUnknown_85E0F9C[-1];
 }
 
-__attribute__((naked)) void RenderPartyMenuBox(u8 slot)
+static void RenderPartyMenuBox(u8 slot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r0, _081B04F4\n\t"
-        "	ldrb r1, [r0, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _081B0534\n\t"
-        "	cmp r5, #2\n\t"
-        "	bls _081B0534\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonDataForMultiBattle\n\t"
-        "	ldr r0, _081B04F8\n\t"
-        "	subs r1, r5, #3\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0500\n\t"
-        "	ldr r0, _081B04FC\n\t"
-        "	lsls r4, r5, #4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl LoadPartyBoxPalette\n\t"
-        "	b _081B050E\n\t"
-        "	.align 2, 0\n\t"
-        "_081B04F4: .4byte gPartyMenu\n\t"
-        "_081B04F8: .4byte gMultiPartnerParty\n\t"
-        "_081B04FC: .4byte sPartyMenuBoxes\n\t"
-        "_081B0500:\n\t"
-        "	ldr r0, _081B0530\n\t"
-        "	lsls r4, r5, #4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #8\n\t"
-        "	bl LoadPartyBoxPalette\n\t"
-        "_081B050E:\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	ldr r4, _081B0530\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	b _081B0616\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0530: .4byte sPartyMenuBoxes\n\t"
-        "_081B0534:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldr r1, _081B056C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B0574\n\t"
-        "	ldr r4, _081B0570\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl DrawEmptySlot\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl LoadPartyBoxPalette\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	b _081B0604\n\t"
-        "	.align 2, 0\n\t"
-        "_081B056C: .4byte gPlayerParty\n\t"
-        "_081B0570: .4byte sPartyMenuBoxes\n\t"
-        "_081B0574:\n\t"
-        "	ldr r0, _081B0588\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	movs r1, #0xf\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #7\n\t"
-        "	bne _081B058C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonDataForRelearner\n\t"
-        "	b _081B05CE\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0588: .4byte gPartyMenu\n\t"
-        "_081B058C:\n\t"
-        "	cmp r1, #2\n\t"
-        "	bne _081B0598\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonDataForContest\n\t"
-        "	b _081B05CE\n\t"
-        "_081B0598:\n\t"
-        "	cmp r1, #4\n\t"
-        "	bne _081B05A4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonDataForChooseHalf\n\t"
-        "	b _081B05CE\n\t"
-        "_081B05A4:\n\t"
-        "	cmp r1, #0xb\n\t"
-        "	bne _081B05B0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonDataForWirelessMinigame\n\t"
-        "	b _081B05CE\n\t"
-        "_081B05B0:\n\t"
-        "	cmp r1, #0xc\n\t"
-        "	bne _081B05BC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonDataForBattlePyramidHeldItem\n\t"
-        "	b _081B05CE\n\t"
-        "_081B05BC:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonDataForMoveTutorOrEvolutionItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081B05CE\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DisplayPartyPokemonData\n\t"
-        "_081B05CE:\n\t"
-        "	ldr r2, _081B05E4\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #5\n\t"
-        "	bne _081B05E8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "	b _081B0602\n\t"
-        "	.align 2, 0\n\t"
-        "_081B05E4: .4byte gPartyMenu\n\t"
-        "_081B05E8:\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _081B05FA\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "	b _081B0602\n\t"
-        "_081B05FA:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl AnimatePartySlot\n\t"
-        "_081B0602:\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "_081B0604:\n\t"
-        "	ldr r0, _081B061C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "_081B0616:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B061C: .4byte sPartyMenuBoxes\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gPartyMenu.menuType == PARTY_MENU_TYPE_MULTI_SHOWCASE && slot >= MULTI_PARTY_SIZE)
+    {
+        DisplayPartyPokemonDataForMultiBattle(slot);
+        if (gMultiPartnerParty[slot - MULTI_PARTY_SIZE].species == SPECIES_NONE)
+            LoadPartyBoxPalette(&sPartyMenuBoxes[slot], PARTY_PAL_NO_MON);
+        else
+            LoadPartyBoxPalette(&sPartyMenuBoxes[slot], PARTY_PAL_MULTI_ALT);
+        CopyWindowToVram(sPartyMenuBoxes[slot].windowId, COPYWIN_GFX);
+        PutWindowTilemap(sPartyMenuBoxes[slot].windowId);
+        ScheduleBgCopyTilemapToVram(2);
+    }
+    else
+    {
+        if (GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) == SPECIES_NONE)
+        {
+            DrawEmptySlot(sPartyMenuBoxes[slot].windowId);
+            LoadPartyBoxPalette(&sPartyMenuBoxes[slot], PARTY_PAL_NO_MON);
+            CopyWindowToVram(sPartyMenuBoxes[slot].windowId, COPYWIN_GFX);
+        }
+        else
+        {
+            if (gPartyMenu.menuType == PARTY_MENU_TYPE_MOVE_RELEARNER)
+                DisplayPartyPokemonDataForRelearner(slot);
+            else if (gPartyMenu.menuType == PARTY_MENU_TYPE_CONTEST)
+                DisplayPartyPokemonDataForContest(slot);
+            else if (gPartyMenu.menuType == PARTY_MENU_TYPE_CHOOSE_HALF)
+                DisplayPartyPokemonDataForChooseHalf(slot);
+            else if (gPartyMenu.menuType == PARTY_MENU_TYPE_MINIGAME)
+                DisplayPartyPokemonDataForWirelessMinigame(slot);
+            else if (gPartyMenu.menuType == PARTY_MENU_TYPE_STORE_PYRAMID_HELD_ITEMS)
+                DisplayPartyPokemonDataForBattlePyramidHeldItem(slot);
+            else if (!(u8)DisplayPartyPokemonDataForMoveTutorOrEvolutionItem(slot))
+                DisplayPartyPokemonData(slot);
+
+            if (gPartyMenu.menuType == PARTY_MENU_TYPE_MULTI_SHOWCASE)
+                AnimatePartySlot(slot, 0);
+            else if (gPartyMenu.slotId == slot)
+                AnimatePartySlot(slot, 1);
+            else
+                AnimatePartySlot(slot, 0);
+        }
+        PutWindowTilemap(sPartyMenuBoxes[slot].windowId);
+        ScheduleBgCopyTilemapToVram(0);
+    }
 }
 
 static void DisplayPartyPokemonData(u8 slot)
