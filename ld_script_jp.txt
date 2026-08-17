@@ -8642,7 +8642,7 @@ SECTIONS {
         src/party_menu.o(.text.RemoveLevelUpStatsWindow);
         src/party_menu.o(.text.SetPartyMonSelectionActions);
         src/party_menu.o(.text.SetPartyMonFieldSelectionActions);
-        src/party_menu.o(.text.sub_081B31DC);
+        src/party_menu.o(.text.GetPartyMenuActionsType);
         src/party_menu.o(.text.sub_081B32A8);
         src/party_menu.o(.text.sub_081B339C);
         src/party_menu.o(.text.HandleMenuInput);
@@ -8824,7 +8824,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B8114);
         src/party_menu.o(.text.InitChooseHalfPartyForBattle);
         src/party_menu.o(.text.sub_081B81F8);
-        src/party_menu.o(.text.sub_081B820C);
+        src/party_menu.o(.text.GetPartySlotEntryStatus);
         src/party_menu.o(.text.GetBattleEntryEligibility);
         src/party_menu.o(.text.sub_081B82FC);
         src/party_menu.o(.text.sub_081B8410);
@@ -8840,7 +8840,7 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B8624);
         src/party_menu.o(.text.OpenPartyMenuInBattle);
         src/party_menu.o(.text.sub_081B8690);
-        src/party_menu.o(.text.sub_081B86CC);
+        src/party_menu.o(.text.GetPartyMenuActionsTypeInBattle);
         src/party_menu.o(.text.TrySwitchInPokemon);
         src/party_menu.o(.text.BufferBattlePartyCurrentOrder);
         src/party_menu.o(.text.BufferBattlePartyOrder);

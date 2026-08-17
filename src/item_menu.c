@@ -5512,7 +5512,7 @@ __attribute__((naked)) bool8 UseRegisteredKeyItemOnField()
         "	lsrs r7, r0, #0x18\n\t"
         "	cmp r7, #0\n\t"
         "	bne _081AD344\n\t"
-        "	bl InMultiBattleRoom\n\t"
+        "	bl InMultiPartnerRoom\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"

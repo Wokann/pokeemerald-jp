@@ -91,7 +91,7 @@ __attribute__((naked)) void BuildStartMenuActions(void)
         "	bl BuildBattlePyramidStartMenu\n\t"
         "	b _0809ED84\n\t"
         "_0809ED70:\n\t"
-        "	bl InMultiBattleRoom\n\t"
+        "	bl InMultiPartnerRoom\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0809ED80\n\t"

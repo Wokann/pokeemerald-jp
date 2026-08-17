@@ -218,6 +218,8 @@ struct PartyMenuBox
 
 static void DisplayPartyPokemonLevel(u8, struct PartyMenuBox *);
 bool8 ShouldUseChooseMonText(void);
+static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *mon);
+static u8 GetPartySlotEntryStatus(s8 slotId);
 static void ShowOrHideHeldItemSprite(u16 item, struct PartyMenuBox *menuBox);
 
 extern const struct PartyMenuBoxInfoRects gUnknown_85E0F9C[];
@@ -5708,109 +5710,55 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_CANCEL1);
 }
 
-__attribute__((naked)) void sub_081B31DC(void)
+static u8 GetPartyMenuActionsType(struct Pokemon *mon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _081B31F8\n\t"
-        "	ldrb r0, [r1, #8]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bhi _081B329E\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _081B31FC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B31F8: .4byte gPartyMenu\n\t"
-        "_081B31FC: .4byte 0x081B3200\n\t"
-        "_081B3200: @ jump table\n\t"
-        "	.4byte _081B3234 @ case 0\n\t"
-        "	.4byte _081B3250 @ case 1\n\t"
-        "	.4byte _081B329E @ case 2\n\t"
-        "	.4byte _081B329E @ case 3\n\t"
-        "	.4byte _081B325C @ case 4\n\t"
-        "	.4byte _081B329E @ case 5\n\t"
-        "	.4byte _081B327C @ case 6\n\t"
-        "	.4byte _081B329E @ case 7\n\t"
-        "	.4byte _081B328E @ case 8\n\t"
-        "	.4byte _081B3292 @ case 9\n\t"
-        "	.4byte _081B3296 @ case 10\n\t"
-        "	.4byte _081B329E @ case 11\n\t"
-        "	.4byte _081B329A @ case 12\n\t"
-        "_081B3234:\n\t"
-        "	bl InMultiBattleRoom\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B324C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B329E\n\t"
-        "_081B324C:\n\t"
-        "	movs r1, #1\n\t"
-        "	b _081B32A0\n\t"
-        "_081B3250:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081B86CC\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	b _081B32A0\n\t"
-        "_081B325C:\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	bl sub_081B820C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B3274\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B3278\n\t"
-        "	movs r1, #7\n\t"
-        "	b _081B32A0\n\t"
-        "_081B3274:\n\t"
-        "	movs r1, #4\n\t"
-        "	b _081B32A0\n\t"
-        "_081B3278:\n\t"
-        "	movs r1, #5\n\t"
-        "	b _081B32A0\n\t"
-        "_081B327C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	movs r1, #6\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B32A0\n\t"
-        "	movs r1, #7\n\t"
-        "	b _081B32A0\n\t"
-        "_081B328E:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	b _081B32A0\n\t"
-        "_081B3292:\n\t"
-        "	movs r1, #0xb\n\t"
-        "	b _081B32A0\n\t"
-        "_081B3296:\n\t"
-        "	movs r1, #0xc\n\t"
-        "	b _081B32A0\n\t"
-        "_081B329A:\n\t"
-        "	movs r1, #0xd\n\t"
-        "	b _081B32A0\n\t"
-        "_081B329E:\n\t"
-        "	movs r1, #0\n\t"
-        "_081B32A0:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 actionType;
+
+    switch (gPartyMenu.menuType)
+    {
+    case PARTY_MENU_TYPE_FIELD:
+        if ((u8)InMultiPartnerRoom() == TRUE || GetMonData(mon, MON_DATA_IS_EGG))
+            actionType = ACTIONS_SWITCH;
+        else
+            actionType = ACTIONS_NONE; // actions populated by SetPartyMonFieldSelectionActions
+        break;
+    case PARTY_MENU_TYPE_IN_BATTLE:
+        actionType = GetPartyMenuActionsTypeInBattle(mon);
+        break;
+    case PARTY_MENU_TYPE_CHOOSE_HALF:
+        switch (GetPartySlotEntryStatus(gPartyMenu.slotId))
+        {
+        default: // Not eligible
+            actionType = ACTIONS_SUMMARY_ONLY;
+            break;
+        case 0: // Eligible
+            actionType = ACTIONS_ENTER;
+            break;
+        case 1: // Already selected
+            actionType = ACTIONS_NO_ENTRY;
+            break;
+        }
+        break;
+    case PARTY_MENU_TYPE_DAYCARE:
+        actionType = (GetMonData(mon, MON_DATA_IS_EGG)) ? ACTIONS_SUMMARY_ONLY : ACTIONS_STORE;
+        break;
+    case PARTY_MENU_TYPE_UNION_ROOM_REGISTER:
+        actionType = ACTIONS_REGISTER;
+        break;
+    case PARTY_MENU_TYPE_UNION_ROOM_TRADE:
+        actionType = ACTIONS_TRADE;
+        break;
+    case PARTY_MENU_TYPE_SPIN_TRADE:
+        actionType = ACTIONS_SPIN_TRADE;
+        break;
+    case PARTY_MENU_TYPE_STORE_PYRAMID_HELD_ITEMS:
+        actionType = ACTIONS_TAKEITEM_TOSS;
+        break;
+    default:
+        actionType = ACTIONS_NONE;
+        break;
+    }
+    return actionType;
 }
 
 __attribute__((naked)) void sub_081B32A8(void)
@@ -5844,7 +5792,7 @@ __attribute__((naked)) void sub_081B32A8(void)
         "	beq _081B3314\n\t"
         "	ldrb r4, [r4, #9]\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_081B31DC\n\t"
+        "	bl GetPartyMenuActionsType\n\t"
         "	adds r2, r0, #0\n\t"
         "	lsls r2, r2, #0x18\n\t"
         "	lsrs r2, r2, #0x18\n\t"
@@ -5896,7 +5844,7 @@ __attribute__((naked)) void sub_081B32A8(void)
         "_081B3360:\n\t"
         "	ldrb r4, [r4, #9]\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_081B31DC\n\t"
+        "	bl GetPartyMenuActionsType\n\t"
         "	adds r2, r0, #0\n\t"
         "	lsls r2, r2, #0x18\n\t"
         "	lsrs r2, r2, #0x18\n\t"
@@ -8590,7 +8538,7 @@ __attribute__((naked)) void CursorCb_Cancel2(u8 taskId)
         "	bl PartyMenuRemoveWindow\n\t"
         "	ldrb r4, [r5, #9]\n\t"
         "	adds r0, r7, #0\n\t"
-        "	bl sub_081B31DC\n\t"
+        "	bl GetPartyMenuActionsType\n\t"
         "	adds r2, r0, #0\n\t"
         "	lsls r2, r2, #0x18\n\t"
         "	lsrs r2, r2, #0x18\n\t"
@@ -15106,7 +15054,7 @@ void sub_081B81F8(void)
     memset(gSelectedOrderFromParty, 0, 4);
 }
 
-__attribute__((naked)) void sub_081B820C(void)
+__attribute__((naked)) static u8 GetPartySlotEntryStatus(s8 slotId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15819,7 +15767,7 @@ __attribute__((naked)) void sub_081B8690(void)
     );
 }
 
-__attribute__((naked)) void sub_081B86CC(void)
+__attribute__((naked)) static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *mon)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

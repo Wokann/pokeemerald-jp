@@ -10697,7 +10697,7 @@ field_specials.s
 081398cc field_specials.s sub_081398CC_jp
 08139938 sub_08139938_jp BufferTMHMMoveName
 08139980 sub_08139980_jp IsBadEggInParty
-081399c0 InMultiBattleRoom ScrCmd_buffercontestname
+081399c0 InMultiPartnerRoom InMultiPartnerRoom
 081399f4 OffsetCameraForBattle OffsetCameraForBattle
 08139a08 SetDeptStoreFloor SetDeptStoreFloor
 08139a68 field_specials.s sub_08139A68_jp

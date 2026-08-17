@@ -3096,7 +3096,7 @@ __attribute__((naked)) void sub_08139980(void)
     );
 }
 
-__attribute__((naked)) void InMultiBattleRoom(void)
+__attribute__((naked)) bool8 InMultiPartnerRoom(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
