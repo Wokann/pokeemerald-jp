@@ -1316,39 +1316,12 @@ static void DrawCancelConfirmButtons(void)
     ScheduleBgCopyTilemapToVram(1);
 }
 
-__attribute__((naked)) bool8 IsMultiBattle(void)
+bool8 IsMultiBattle(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _081B0F44\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x49\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0x49\n\t"
-        "	bne _081B0F50\n\t"
-        "	ldr r0, _081B0F48\n\t"
-        "	ldr r1, _081B0F4C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081B0F50\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B0F52\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0F44: .4byte gBattleTypeFlags\n\t"
-        "_081B0F48: .4byte gMain\n\t"
-        "_081B0F4C: .4byte 0x00000439\n\t"
-        "_081B0F50:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B0F52:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gBattleTypeFlags & BATTLE_TYPE_MULTI && gBattleTypeFlags & BATTLE_TYPE_DOUBLE && gBattleTypeFlags & BATTLE_TYPE_TRAINER && gMain.inBattle)
+        return TRUE;
+    else
+        return FALSE;
 }
 
 // JP-only: swaps two 0x64-byte blocks (used to exchange party slots)
