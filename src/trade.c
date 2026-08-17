@@ -1,366 +1,220 @@
 #include "global.h"
 #include "trade.h"
 
-__attribute__((naked)) void sub_08076B78(void)
+#include "AgbRfu_LinkManager.h"
+#include "bg.h"
+#include "constants/union_room.h"
+#include "graphics.h"
+#include "librfu.h"
+#include "link.h"
+#include "link_rfu.h"
+#include "malloc.h"
+#include "palette.h"
+#include "pokemon_icon.h"
+#include "sprite.h"
+#include "text.h"
+#include "text_window.h"
+#include "union_room.h"
+#include "window.h"
+
+// IDs for RunTradeMenuCallback
+enum {
+    CB_MAIN_MENU,
+    CB_SELECTED_MON,
+    CB_SHOW_MON_SUMMARY,
+    CB_CONFIRM_TRADE_PROMPT,
+    CB_CANCEL_TRADE_PROMPT,
+    CB_READY_WAIT, // Unused in Emerald, equivalent to CB_IDLE
+    CB_SET_SELECTED_MONS,
+    CB_PRINT_IS_THIS_OKAY,
+    CB_HANDLE_TRADE_CANCELED,
+    CB_FADE_TO_START_TRADE,
+    CB_WAIT_TO_START_TRADE,
+    CB_INIT_EXIT_CANCELED_TRADE,
+    CB_EXIT_CANCELED_TRADE,
+    CB_START_LINK_TRADE,
+    CB_INIT_CONFIRM_TRADE_PROMPT,
+    CB_UNUSED_CLOSE_MSG,
+    CB_WAIT_TO_START_RFU_TRADE,
+    CB_PARTNER_MON_INVALID,
+    CB_IDLE = 100,
+};
+
+enum {
+    STATUS_NONE,
+    STATUS_READY,
+    STATUS_CANCEL,
+};
+
+struct TradeMenu
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	ldr r0, _08076B98\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x1d\n\t"
-        "	beq _08076B9C\n\t"
-        "	lsls r2, r3, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SendBlock\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _08076BAA\n\t"
-        "	.align 2, 0\n\t"
-        "_08076B98: .4byte gPlayerCurrActivity\n\t"
-        "_08076B9C:\n\t"
-        "	ldr r0, _08076BB0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0x54\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl rfu_NI_setSendData\n\t"
-        "	movs r0, #1\n\t"
-        "_08076BAA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08076BB0: .4byte lman\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 bg2hofs;
+    u8 bg3hofs;
+    u8 filler_2[38];
+    u8 partySpriteIds[2][PARTY_SIZE];
+    u8 cursorSpriteId;
+    u8 cursorPosition;
+    u8 partyCounts[2];
+    bool8 optionsActive[PARTY_SIZE * 2 + 1];
+    bool8 isLiveMon[2][PARTY_SIZE];
+    bool8 isEgg[2][PARTY_SIZE];
+    u8 hpBarLevels[2][PARTY_SIZE];
+    u8 bufferPartyState;
+    u8 filler_6A[5];
+    u8 callbackId;
+    u8 neverRead_70;
+    u16 bottomTextTileStart;
+    u8 drawSelectedMonState[2];
+    u8 selectedMonIdx[2];
+    u8 playerSelectStatus;
+    u8 partnerSelectStatus;
+    u8 playerConfirmStatus;
+    u8 partnerConfirmStatus;
+    u8 filler_7C[2];
+    u8 partnerCursorPosition;
+    u16 linkData[20];
+    u8 timer;
+    u8 giftRibbons[GIFT_RIBBONS_COUNT];
+    u8 filler_B4[0x81C];
+    struct {
+        bool8 active;
+        u16 delay;
+        u8 actionId;
+    } queuedActions[4];
+    u16 tilemapBuffer[BG_SCREEN_SIZE / 2];
+};
+
+extern struct TradeMenu *sTradeMenu;
+extern const struct BgTemplate gUnknown_8300C04[];
+extern const struct WindowTemplate gUnknown_8300C14[];
+extern void VBlankCB_TradeMenu(void);
+
+static bool32 IsWirelessTrade(void);
+static void CB2_CreateTradeMenu(void);
+
+static bool8 SendLinkData(const void *linkData, u32 size)
+{
+    if (gPlayerCurrActivity == ACTIVITY_29)
+    {
+        rfu_NI_setSendData(lman.acceptSlot_flag, 84, linkData, size);
+        return TRUE;
+    }
+    else
+    {
+        return SendBlock(0, linkData, size);
+    }
 }
 
-__attribute__((naked)) void sub_08076BB4(void)
+static void RequestLinkData(u8 type)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_0800A09C\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SendBlockRequest(type);
 }
 
-__attribute__((naked)) void sub_08076BC4(void)
+static bool32 IsLinkTradeTaskFinished(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _08076BE8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x1d\n\t"
-        "	bne _08076BF8\n\t"
-        "	ldr r4, _08076BEC\n\t"
-        "	ldr r0, _08076BF0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl Rfu_GetIndexOfNewestChild\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08076BF4\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08076C00\n\t"
-        "	.align 2, 0\n\t"
-        "_08076BE8: .4byte gPlayerCurrActivity\n\t"
-        "_08076BEC: .4byte gRfuSlotStatusNI\n\t"
-        "_08076BF0: .4byte lman\n\t"
-        "_08076BF4:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08076C00\n\t"
-        "_08076BF8:\n\t"
-        "	bl IsLinkTaskFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_08076C00:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gPlayerCurrActivity == ACTIVITY_29)
+    {
+        if (gRfuSlotStatusNI[Rfu_GetIndexOfNewestChild(lman.acceptSlot_flag)]->send.state == 0)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    else
+    {
+        return IsLinkTaskFinished();
+    }
 }
 
-__attribute__((naked)) void _GetBlockReceivedStatus(void)
+static u32 _GetBlockReceivedStatus(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetBlockReceivedStatus\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetBlockReceivedStatus();
 }
 
-__attribute__((naked)) void sub_08076C18(void)
+static void TradeResetReceivedFlags(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_08076C68\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08076C34\n\t"
-        "	ldr r0, _08076C30\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl rfu_clearSlot\n\t"
-        "	b _08076C38\n\t"
-        "	.align 2, 0\n\t"
-        "_08076C30: .4byte lman\n\t"
-        "_08076C34:\n\t"
-        "	bl ResetBlockReceivedFlags\n\t"
-        "_08076C38:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsWirelessTrade())
+        rfu_clearSlot(12, lman.acceptSlot_flag);
+    else
+        ResetBlockReceivedFlags();
 }
 
-__attribute__((naked)) void sub_08076C3C(void)
+static void TradeResetReceivedFlag(u32 who)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_08076C68\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08076C58\n\t"
-        "	ldr r0, _08076C54\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl rfu_clearSlot\n\t"
-        "	b _08076C60\n\t"
-        "	.align 2, 0\n\t"
-        "_08076C54: .4byte lman\n\t"
-        "_08076C58:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl ResetBlockReceivedFlag\n\t"
-        "_08076C60:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsWirelessTrade())
+        rfu_clearSlot(12, lman.acceptSlot_flag);
+    else
+        ResetBlockReceivedFlag(who);
 }
 
-__attribute__((naked)) void sub_08076C68(void)
+static bool32 IsWirelessTrade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08076C80\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08076C88\n\t"
-        "	ldr r0, _08076C84\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x1d\n\t"
-        "	bne _08076C88\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08076C8A\n\t"
-        "	.align 2, 0\n\t"
-        "_08076C80: .4byte gWirelessCommType\n\t"
-        "_08076C84: .4byte gPlayerCurrActivity\n\t"
-        "_08076C88:\n\t"
-        "	movs r0, #0\n\t"
-        "_08076C8A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gWirelessCommType && gPlayerCurrActivity == ACTIVITY_29)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) void sub_08076C90(void)
+static void SetTradeLinkStandbyCallback(u8 unused)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl SetLinkStandbyCallback\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetLinkStandbyCallback();
 }
 
-__attribute__((naked)) void _IsLinkTaskFinished(void)
+static bool32 _IsLinkTaskFinished(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsLinkTaskFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return IsLinkTaskFinished();
 }
 
-__attribute__((naked)) void sub_08076CAC(void)
+static void InitTradeMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	bl ResetTasks\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	ldr r2, _08076D9C\n\t"
-        "	ldrb r0, [r2, #8]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "	ldr r0, _08076DA0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r4, _08076DA4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	movs r2, #0x14\n\t"
-        "	bl LoadPalette\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xd0\n\t"
-        "	movs r2, #0x14\n\t"
-        "	bl LoadPalette\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ResetBgsAndClearDma3BusyFlags\n\t"
-        "	ldr r1, _08076DA8\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	ldr r0, _08076DAC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x8f\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	ldr r0, _08076DB0\n\t"
-        "	bl InitWindows\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08076D94\n\t"
-        "	bl DeactivateAllTextPrinters\n\t"
-        "	movs r5, #0\n\t"
-        "_08076D18:\n\t"
-        "	lsls r4, r5, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #0x11\n\t"
-        "	bls _08076D18\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x14\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	bl LoadUserWindowBorderGfx_\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0xe0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "	bl LoadMonIconPalettes\n\t"
-        "	ldr r2, _08076DAC\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x69\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x70\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x74\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x75\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x7a\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x7b\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0xa8\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08076D94:\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08076D9C: .4byte gPaletteFade\n\t"
-        "_08076DA0: .4byte sub_08077AE4 + 1\n\t"
-        "_08076DA4: .4byte gStandardMenuPalette\n\t"
-        "_08076DA8: .4byte gUnknown_8300C04\n\t"
-        "_08076DAC: .4byte gUnknown_2031F3C\n\t"
-        "_08076DB0: .4byte gUnknown_8300C14\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetTasks();
+    ResetPaletteFade();
+
+    gPaletteFade.bufferTransferDisabled = TRUE;
+
+    SetVBlankCallback(VBlankCB_TradeMenu);
+    LoadPalette(gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZEOF(10));
+    LoadPalette(gStandardMenuPalette, BG_PLTT_ID(13), PLTT_SIZEOF(10));
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, gUnknown_8300C04, 4);
+    SetBgTilemapBuffer(1, sTradeMenu->tilemapBuffer);
+
+    if (InitWindows(gUnknown_8300C14))
+    {
+        u32 i;
+
+        DeactivateAllTextPrinters();
+
+        for (i = 0; i < 18; i++)
+        {
+            ClearWindowTilemap(i);
+            FillWindowPixelBuffer(i, PIXEL_FILL(0));
+        }
+
+        FillBgTilemapBufferRect(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT, 15);
+        LoadUserWindowBorderGfx_(0, 20, BG_PLTT_ID(12));
+        LoadUserWindowBorderGfx(2, 1, BG_PLTT_ID(14));
+        LoadMonIconPalettes();
+        sTradeMenu->bufferPartyState = 0;
+        sTradeMenu->callbackId = CB_MAIN_MENU;
+        sTradeMenu->neverRead_70 = 0;
+        sTradeMenu->drawSelectedMonState[TRADE_PLAYER] = 0;
+        sTradeMenu->drawSelectedMonState[TRADE_PARTNER] = 0;
+        sTradeMenu->playerConfirmStatus = STATUS_NONE;
+        sTradeMenu->partnerConfirmStatus = STATUS_NONE;
+        sTradeMenu->timer = 0;
+    }
 }
 
-__attribute__((naked)) void sub_08076DB4(void)
+void CB2_StartCreateTradeMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08076DCC\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	ldr r0, _08076DD0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _08076DD4\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08076DCC: .4byte sub_08076DD8 + 1\n\t"
-        "_08076DD0: .4byte gMain\n\t"
-        "_08076DD4: .4byte gUnknown_202418E\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMainCallback2(CB2_CreateTradeMenu);
+    gMain.callback1 = NULL;
+    gEnemyPartyCount = 0;
 }
 
-__attribute__((naked)) void sub_08076DD8(void)
+__attribute__((naked)) void CB2_CreateTradeMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -415,7 +269,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	ldr r0, _08076E9C\n\t"
         "	bl AllocZeroed\n\t"
         "	str r0, [r4]\n\t"
-        "	bl sub_08076CAC\n\t"
+        "	bl InitTradeMenu\n\t"
         "	ldr r4, _08076EA0\n\t"
         "	movs r0, #0xd0\n\t"
         "	lsls r0, r0, #4\n\t"
@@ -437,7 +291,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	adds r1, r1, r3\n\t"
         "	b _08077506\n\t"
         "	.align 2, 0\n\t"
-        "_08076E98: .4byte gUnknown_2031F3C\n\t"
+        "_08076E98: .4byte sTradeMenu\n\t"
         "_08076E9C: .4byte 0x000010F0\n\t"
         "_08076EA0: .4byte gUnknown_2031E28\n\t"
         "_08076EA4: .4byte gUnknown_2031E2C\n\t"
@@ -496,7 +350,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "_08076F1C: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_08076F20: .4byte gLinkType\n\t"
         "_08076F24: .4byte 0x00001122\n\t"
-        "_08076F28: .4byte gUnknown_2031F3C\n\t"
+        "_08076F28: .4byte sTradeMenu\n\t"
         "_08076F2C: .4byte gWirelessCommType\n\t"
         "_08076F30:\n\t"
         "	bl OpenLink\n\t"
@@ -546,7 +400,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	adds r1, r3, r2\n\t"
         "	b _08077506\n\t"
         "	.align 2, 0\n\t"
-        "_08076F90: .4byte gUnknown_2031F3C\n\t"
+        "_08076F90: .4byte sTradeMenu\n\t"
         "_08076F94:\n\t"
         "	bl GetLinkPlayerCount_2\n\t"
         "	adds r4, r0, #0\n\t"
@@ -580,7 +434,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	adds r1, r1, r3\n\t"
         "	b _08077506\n\t"
         "	.align 2, 0\n\t"
-        "_08076FD8: .4byte gUnknown_2031F3C\n\t"
+        "_08076FD8: .4byte sTradeMenu\n\t"
         "_08076FDC: .4byte gMain\n\t"
         "_08076FE0:\n\t"
         "	ldr r1, _08076FEC\n\t"
@@ -631,7 +485,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	.align 2, 0\n\t"
         "_08077040: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_08077044: .4byte gMain\n\t"
-        "_08077048: .4byte gUnknown_2031F3C\n\t"
+        "_08077048: .4byte sTradeMenu\n\t"
         "_0807704C: .4byte gWirelessCommType\n\t"
         "_08077050:\n\t"
         "	ldr r0, _08077080\n\t"
@@ -817,9 +671,9 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	adds r1, r1, r3\n\t"
         "	b _08077506\n\t"
         "	.align 2, 0\n\t"
-        "_080771CC: .4byte gUnknown_2031F3C\n\t"
+        "_080771CC: .4byte sTradeMenu\n\t"
         "_080771D0: .4byte gPlayerPartyCount\n\t"
-        "_080771D4: .4byte gUnknown_202418E\n\t"
+        "_080771D4: .4byte gEnemyPartyCount\n\t"
         "_080771D8: .4byte gUnknown_8300A1C\n\t"
         "_080771DC: .4byte gPlayerParty\n\t"
         "_080771E0: .4byte 0xFFF40000\n\t"
@@ -841,7 +695,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	adds r1, r1, r4\n\t"
         "	b _08077506\n\t"
         "	.align 2, 0\n\t"
-        "_08077210: .4byte gUnknown_2031F3C\n\t"
+        "_08077210: .4byte sTradeMenu\n\t"
         "_08077214: .4byte gMain\n\t"
         "_08077218:\n\t"
         "	ldr r0, _08077234\n\t"
@@ -857,7 +711,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	adds r1, r1, r7\n\t"
         "	b _08077506\n\t"
         "	.align 2, 0\n\t"
-        "_08077234: .4byte gUnknown_2031F3C\n\t"
+        "_08077234: .4byte sTradeMenu\n\t"
         "_08077238: .4byte gMain\n\t"
         "_0807723C:\n\t"
         "	ldr r0, _080772A8\n\t"
@@ -916,7 +770,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "_080772B4: .4byte gUnknown_20226A8\n\t"
         "_080772B8: .4byte gUnknown_8300AFC\n\t"
         "_080772BC: .4byte gMain\n\t"
-        "_080772C0: .4byte gUnknown_2031F3C\n\t"
+        "_080772C0: .4byte sTradeMenu\n\t"
         "_080772C4:\n\t"
         "	bl sub_08079C28\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1080,7 +934,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "_08077410: .4byte gUnknown_83008A4\n\t"
         "_08077414: .4byte gUnknown_830088C\n\t"
         "_08077418: .4byte gUnknown_8300A1C\n\t"
-        "_0807741C: .4byte gUnknown_2031F3C\n\t"
+        "_0807741C: .4byte sTradeMenu\n\t"
         "_08077420: .4byte gMain\n\t"
         "_08077424:\n\t"
         "	movs r0, #0\n\t"
@@ -1105,7 +959,7 @@ __attribute__((naked)) void sub_08076DD8(void)
         "	bl PlayBGM\n\t"
         "	b _0807752A\n\t"
         "	.align 2, 0\n\t"
-        "_08077458: .4byte gUnknown_2031F3C\n\t"
+        "_08077458: .4byte sTradeMenu\n\t"
         "_0807745C: .4byte gMain\n\t"
         "_08077460: .4byte SPECIAL_sub_080F999C\n\t"
         "_08077464:\n\t"
@@ -1273,7 +1127,7 @@ __attribute__((naked)) void sub_08077558(void)
         "	.4byte _08077A94 @ case 21\n\t"
         "	.4byte _08077AAC @ case 22\n\t"
         "_080775E0:\n\t"
-        "	bl sub_08076CAC\n\t"
+        "	bl InitTradeMenu\n\t"
         "	ldr r1, _080775F0\n\t"
         "	movs r3, #0x87\n\t"
         "	lsls r3, r3, #3\n\t"
@@ -1464,9 +1318,9 @@ __attribute__((naked)) void sub_08077558(void)
         "	blt _08077704\n\t"
         "	b _08077A98\n\t"
         "	.align 2, 0\n\t"
-        "_08077768: .4byte gUnknown_2031F3C\n\t"
+        "_08077768: .4byte sTradeMenu\n\t"
         "_0807776C: .4byte gPlayerPartyCount\n\t"
-        "_08077770: .4byte gUnknown_202418E\n\t"
+        "_08077770: .4byte gEnemyPartyCount\n\t"
         "_08077774: .4byte gUnknown_8300A1C\n\t"
         "_08077778: .4byte gPlayerParty\n\t"
         "_0807777C: .4byte 0xFFF40000\n\t"
@@ -1487,7 +1341,7 @@ __attribute__((naked)) void sub_08077558(void)
         "	adds r1, r1, r0\n\t"
         "	b _08077AA0\n\t"
         "	.align 2, 0\n\t"
-        "_080777A8: .4byte gUnknown_2031F3C\n\t"
+        "_080777A8: .4byte sTradeMenu\n\t"
         "_080777AC: .4byte gMain\n\t"
         "_080777B0:\n\t"
         "	ldr r0, _080777CC\n\t"
@@ -1503,7 +1357,7 @@ __attribute__((naked)) void sub_08077558(void)
         "	adds r1, r1, r2\n\t"
         "	b _08077AA0\n\t"
         "	.align 2, 0\n\t"
-        "_080777CC: .4byte gUnknown_2031F3C\n\t"
+        "_080777CC: .4byte sTradeMenu\n\t"
         "_080777D0: .4byte gMain\n\t"
         "_080777D4:\n\t"
         "	ldr r0, _08077840\n\t"
@@ -1563,7 +1417,7 @@ __attribute__((naked)) void sub_08077558(void)
         "_0807784C: .4byte gUnknown_20226A8\n\t"
         "_08077850: .4byte gUnknown_8300AFC\n\t"
         "_08077854: .4byte gMain\n\t"
-        "_08077858: .4byte gUnknown_2031F3C\n\t"
+        "_08077858: .4byte sTradeMenu\n\t"
         "_0807785C:\n\t"
         "	bl sub_08079C28\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1717,7 +1571,7 @@ __attribute__((naked)) void sub_08077558(void)
         "	b _080779A6\n\t"
         "	.align 2, 0\n\t"
         "_08077994: .4byte gUnknown_83008A4\n\t"
-        "_08077998: .4byte gUnknown_2031F3C\n\t"
+        "_08077998: .4byte sTradeMenu\n\t"
         "_0807799C: .4byte gLastViewedMonIndex\n\t"
         "_080779A0:\n\t"
         "	ldr r0, _080779E4\n\t"
@@ -1785,7 +1639,7 @@ __attribute__((naked)) void sub_08077558(void)
         "	adds r1, r1, r2\n\t"
         "	b _08077AA0\n\t"
         "	.align 2, 0\n\t"
-        "_08077A28: .4byte gUnknown_2031F3C\n\t"
+        "_08077A28: .4byte sTradeMenu\n\t"
         "_08077A2C: .4byte gMain\n\t"
         "_08077A30:\n\t"
         "	ldr r2, _08077A64\n\t"
@@ -1874,7 +1728,7 @@ __attribute__((naked)) void sub_08077558(void)
     );
 }
 
-__attribute__((naked)) void sub_08077AE4(void)
+__attribute__((naked)) void VBlankCB_TradeMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1922,7 +1776,7 @@ __attribute__((naked)) void sub_08077AF8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08077B30: .4byte gUnknown_2031F3C\n\t"
+        "_08077B30: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1961,7 +1815,7 @@ __attribute__((naked)) void sub_08077B34(void)
         "	.align 2, 0\n\t"
         "_08077B6C: .4byte gPaletteFade\n\t"
         "_08077B70: .4byte gSelectedTradeMonPositions\n\t"
-        "_08077B74: .4byte gUnknown_2031F3C\n\t"
+        "_08077B74: .4byte sTradeMenu\n\t"
         "_08077B78: .4byte gWirelessCommType\n\t"
         "_08077B7C:\n\t"
         "	movs r0, #0x20\n\t"
@@ -2012,7 +1866,7 @@ __attribute__((naked)) void sub_08077B90(void)
         "_08077BD4: .4byte CB2_StartCreateTradeMenu + 1\n\t"
         "_08077BD8: .4byte gWirelessCommType\n\t"
         "_08077BDC: .4byte gUnknown_2031E28\n\t"
-        "_08077BE0: .4byte gUnknown_2031F3C\n\t"
+        "_08077BE0: .4byte sTradeMenu\n\t"
         "_08077BE4: .4byte CB2_LinkTrade + 1\n\t"
         "_08077BE8:\n\t"
         "	ldr r0, _08077C14\n\t"
@@ -2036,7 +1890,7 @@ __attribute__((naked)) void sub_08077B90(void)
         "	.align 2, 0\n\t"
         "_08077C14: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_08077C18: .4byte gUnknown_2031E28\n\t"
-        "_08077C1C: .4byte gUnknown_2031F3C\n\t"
+        "_08077C1C: .4byte sTradeMenu\n\t"
         "_08077C20: .4byte CB2_LinkTrade + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2080,7 +1934,7 @@ __attribute__((naked)) void sub_08077C24(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08077C7C: .4byte gUnknown_2031F3C\n\t"
+        "_08077C7C: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2230,7 +2084,7 @@ __attribute__((naked)) void sub_08077D50(void)
         "	strb r7, [r0]\n\t"
         "	b _08077DAE\n\t"
         "	.align 2, 0\n\t"
-        "_08077DA0: .4byte gUnknown_2031F3C\n\t"
+        "_08077DA0: .4byte sTradeMenu\n\t"
         "_08077DA4: .4byte gSprites\n\t"
         "_08077DA8:\n\t"
         "	adds r0, #0x38\n\t"
@@ -2317,7 +2171,7 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_08077E44: .4byte gUnknown_2031F3C\n\t"
+        "_08077E44: .4byte sTradeMenu\n\t"
         "_08077E48: .4byte 0x08077E4C\n\t"
         "_08077E4C: @ jump table\n\t"
         "	.4byte _08077EA4 @ case 0\n\t"
@@ -2361,9 +2215,9 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	.align 2, 0\n\t"
         "_08077EC4: .4byte gBlockSendBuffer\n\t"
         "_08077EC8: .4byte gPlayerParty\n\t"
-        "_08077ECC: .4byte gUnknown_2031F3C\n\t"
+        "_08077ECC: .4byte sTradeMenu\n\t"
         "_08077ED0:\n\t"
-        "	bl sub_08076BC4\n\t"
+        "	bl IsLinkTradeTaskFinished\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08077EDA\n\t"
         "	b _08078112\n\t"
@@ -2375,25 +2229,25 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
-        "_08077EE8: .4byte gUnknown_2031F3C\n\t"
+        "_08077EE8: .4byte sTradeMenu\n\t"
         "_08077EEC:\n\t"
-        "	bl sub_08076C18\n\t"
+        "	bl TradeResetReceivedFlags\n\t"
         "	ldr r0, _08077EF8\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
-        "_08077EF8: .4byte gUnknown_2031F3C\n\t"
+        "_08077EF8: .4byte sTradeMenu\n\t"
         "_08077EFC:\n\t"
         "	cmp r5, #0\n\t"
         "	bne _08077F06\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_08076BB4\n\t"
+        "	bl RequestLinkData\n\t"
         "_08077F06:\n\t"
         "	ldr r0, _08077F0C\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
-        "_08077F0C: .4byte gUnknown_2031F3C\n\t"
+        "_08077F0C: .4byte sTradeMenu\n\t"
         "_08077F10:\n\t"
         "	bl _GetBlockReceivedStatus\n\t"
         "	cmp r0, #3\n\t"
@@ -2409,14 +2263,14 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	adds r1, r1, r2\n\t"
         "	movs r2, #0xc8\n\t"
         "	bl Trade_Memcpy\n\t"
-        "	bl sub_08076C18\n\t"
+        "	bl TradeResetReceivedFlags\n\t"
         "	ldr r0, _08077F40\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
         "_08077F38: .4byte gEnemyParty\n\t"
         "_08077F3C: .4byte gBlockRecvBuffer\n\t"
-        "_08077F40: .4byte gUnknown_2031F3C\n\t"
+        "_08077F40: .4byte sTradeMenu\n\t"
         "_08077F44:\n\t"
         "	ldr r0, _08077F54\n\t"
         "	ldr r1, _08077F58\n\t"
@@ -2428,18 +2282,18 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	.align 2, 0\n\t"
         "_08077F54: .4byte gBlockSendBuffer\n\t"
         "_08077F58: .4byte gUnknown_2024258\n\t"
-        "_08077F5C: .4byte gUnknown_2031F3C\n\t"
+        "_08077F5C: .4byte sTradeMenu\n\t"
         "_08077F60:\n\t"
         "	cmp r5, #0\n\t"
         "	bne _08077F6A\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_08076BB4\n\t"
+        "	bl RequestLinkData\n\t"
         "_08077F6A:\n\t"
         "	ldr r0, _08077F70\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
-        "_08077F70: .4byte gUnknown_2031F3C\n\t"
+        "_08077F70: .4byte sTradeMenu\n\t"
         "_08077F74:\n\t"
         "	bl _GetBlockReceivedStatus\n\t"
         "	cmp r0, #3\n\t"
@@ -2455,14 +2309,14 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	adds r1, r1, r2\n\t"
         "	movs r2, #0xc8\n\t"
         "	bl Trade_Memcpy\n\t"
-        "	bl sub_08076C18\n\t"
+        "	bl TradeResetReceivedFlags\n\t"
         "	ldr r0, _08077FA4\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
         "_08077F9C: .4byte gUnknown_20244B0\n\t"
         "_08077FA0: .4byte gBlockRecvBuffer\n\t"
-        "_08077FA4: .4byte gUnknown_2031F3C\n\t"
+        "_08077FA4: .4byte sTradeMenu\n\t"
         "_08077FA8:\n\t"
         "	ldr r0, _08077FB8\n\t"
         "	ldr r1, _08077FBC\n\t"
@@ -2474,18 +2328,18 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	.align 2, 0\n\t"
         "_08077FB8: .4byte gBlockSendBuffer\n\t"
         "_08077FBC: .4byte gUnknown_2024320\n\t"
-        "_08077FC0: .4byte gUnknown_2031F3C\n\t"
+        "_08077FC0: .4byte sTradeMenu\n\t"
         "_08077FC4:\n\t"
         "	cmp r5, #0\n\t"
         "	bne _08077FCE\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_08076BB4\n\t"
+        "	bl RequestLinkData\n\t"
         "_08077FCE:\n\t"
         "	ldr r0, _08077FD4\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
-        "_08077FD4: .4byte gUnknown_2031F3C\n\t"
+        "_08077FD4: .4byte sTradeMenu\n\t"
         "_08077FD8:\n\t"
         "	bl _GetBlockReceivedStatus\n\t"
         "	cmp r0, #3\n\t"
@@ -2501,14 +2355,14 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	adds r1, r1, r2\n\t"
         "	movs r2, #0xc8\n\t"
         "	bl Trade_Memcpy\n\t"
-        "	bl sub_08076C18\n\t"
+        "	bl TradeResetReceivedFlags\n\t"
         "	ldr r0, _08078008\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
         "_08078000: .4byte gUnknown_2024578\n\t"
         "_08078004: .4byte gBlockRecvBuffer\n\t"
-        "_08078008: .4byte gUnknown_2031F3C\n\t"
+        "_08078008: .4byte sTradeMenu\n\t"
         "_0807800C:\n\t"
         "	ldr r0, _08078024\n\t"
         "	ldr r1, _08078028\n\t"
@@ -2524,18 +2378,18 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "_08078024: .4byte gBlockSendBuffer\n\t"
         "_08078028: .4byte gSaveBlock1Ptr\n\t"
         "_0807802C: .4byte 0x00002BE0\n\t"
-        "_08078030: .4byte gUnknown_2031F3C\n\t"
+        "_08078030: .4byte sTradeMenu\n\t"
         "_08078034:\n\t"
         "	cmp r5, #0\n\t"
         "	bne _0807803E\n\t"
         "	movs r0, #3\n\t"
-        "	bl sub_08076BB4\n\t"
+        "	bl RequestLinkData\n\t"
         "_0807803E:\n\t"
         "	ldr r0, _08078044\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
-        "_08078044: .4byte gUnknown_2031F3C\n\t"
+        "_08078044: .4byte sTradeMenu\n\t"
         "_08078048:\n\t"
         "	bl _GetBlockReceivedStatus\n\t"
         "	cmp r0, #3\n\t"
@@ -2549,14 +2403,14 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	adds r1, r1, r2\n\t"
         "	movs r2, #0xd8\n\t"
         "	bl Trade_Memcpy\n\t"
-        "	bl sub_08076C18\n\t"
+        "	bl TradeResetReceivedFlags\n\t"
         "	ldr r0, _08078078\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
         "_08078070: .4byte gTradeMail\n\t"
         "_08078074: .4byte gBlockRecvBuffer\n\t"
-        "_08078078: .4byte gUnknown_2031F3C\n\t"
+        "_08078078: .4byte sTradeMenu\n\t"
         "_0807807C:\n\t"
         "	ldr r0, _08078094\n\t"
         "	ldr r1, _08078098\n\t"
@@ -2572,18 +2426,18 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "_08078094: .4byte gBlockSendBuffer\n\t"
         "_08078098: .4byte gSaveBlock1Ptr\n\t"
         "_0807809C: .4byte 0x000031A8\n\t"
-        "_080780A0: .4byte gUnknown_2031F3C\n\t"
+        "_080780A0: .4byte sTradeMenu\n\t"
         "_080780A4:\n\t"
         "	cmp r5, #0\n\t"
         "	bne _080780AE\n\t"
         "	movs r0, #4\n\t"
-        "	bl sub_08076BB4\n\t"
+        "	bl RequestLinkData\n\t"
         "_080780AE:\n\t"
         "	ldr r0, _080780B4\n\t"
         "	ldr r1, [r0]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
-        "_080780B4: .4byte gUnknown_2031F3C\n\t"
+        "_080780B4: .4byte sTradeMenu\n\t"
         "_080780B8:\n\t"
         "	bl _GetBlockReceivedStatus\n\t"
         "	cmp r0, #3\n\t"
@@ -2599,11 +2453,11 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	adds r1, r1, r2\n\t"
         "	movs r2, #0xb\n\t"
         "	bl Trade_Memcpy\n\t"
-        "	bl sub_08076C18\n\t"
+        "	bl TradeResetReceivedFlags\n\t"
         "	ldr r1, [r4]\n\t"
         "	b _0807810A\n\t"
         "	.align 2, 0\n\t"
-        "_080780E0: .4byte gUnknown_2031F3C\n\t"
+        "_080780E0: .4byte sTradeMenu\n\t"
         "_080780E4: .4byte gBlockRecvBuffer\n\t"
         "_080780E8:\n\t"
         "	movs r0, #1\n\t"
@@ -2636,7 +2490,7 @@ __attribute__((naked)) void shedinja_maker_maybe(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0807811C: .4byte gUnknown_2031F3C\n\t"
+        "_0807811C: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2705,7 +2559,7 @@ __attribute__((naked)) void sub_08078120(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080781AC: .4byte gUnknown_2031F3C\n\t"
+        "_080781AC: .4byte sTradeMenu\n\t"
         "_080781B0: .4byte gPlayerParty\n\t"
         "_080781B4: .4byte gEnemyParty\n\t"
         "_080781B8: .4byte gUnknown_8300AAE\n\t"
@@ -2756,7 +2610,7 @@ __attribute__((naked)) void sub_080781C4(void)
         "	.align 2, 0\n\t"
         "_0807820C: .4byte 0x0000BBCC\n\t"
         "_08078210: .4byte 0x0000EEAA\n\t"
-        "_08078214: .4byte gUnknown_2031F3C\n\t"
+        "_08078214: .4byte sTradeMenu\n\t"
         "_08078218:\n\t"
         "	ldr r0, _08078224\n\t"
         "	ldr r0, [r0]\n\t"
@@ -2764,7 +2618,7 @@ __attribute__((naked)) void sub_080781C4(void)
         "	strb r2, [r0]\n\t"
         "	b _08078242\n\t"
         "	.align 2, 0\n\t"
-        "_08078224: .4byte gUnknown_2031F3C\n\t"
+        "_08078224: .4byte sTradeMenu\n\t"
         "_08078228:\n\t"
         "	ldr r0, _08078234\n\t"
         "	ldr r0, [r0]\n\t"
@@ -2772,7 +2626,7 @@ __attribute__((naked)) void sub_080781C4(void)
         "	strb r2, [r0]\n\t"
         "	b _08078242\n\t"
         "	.align 2, 0\n\t"
-        "_08078234: .4byte gUnknown_2031F3C\n\t"
+        "_08078234: .4byte sTradeMenu\n\t"
         "_08078238:\n\t"
         "	ldr r0, _08078270\n\t"
         "	ldr r0, [r0]\n\t"
@@ -2782,7 +2636,7 @@ __attribute__((naked)) void sub_080781C4(void)
         "	strb r1, [r0]\n\t"
         "_08078242:\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_08076C3C\n\t"
+        "	bl TradeResetReceivedFlag\n\t"
         "_08078248:\n\t"
         "	movs r2, #2\n\t"
         "	adds r0, r4, #0\n\t"
@@ -2804,7 +2658,7 @@ __attribute__((naked)) void sub_080781C4(void)
         "	beq _080782A0\n\t"
         "	b _080782D4\n\t"
         "	.align 2, 0\n\t"
-        "_08078270: .4byte gUnknown_2031F3C\n\t"
+        "_08078270: .4byte sTradeMenu\n\t"
         "_08078274: .4byte gBlockRecvBuffer\n\t"
         "_08078278: .4byte 0x0000BBBB\n\t"
         "_0807827C: .4byte 0x0000AABB\n\t"
@@ -2822,7 +2676,7 @@ __attribute__((naked)) void sub_080781C4(void)
         "	.align 2, 0\n\t"
         "_08078294: .4byte 0x0000BBCC\n\t"
         "_08078298: .4byte 0x0000EEAA\n\t"
-        "_0807829C: .4byte gUnknown_2031F3C\n\t"
+        "_0807829C: .4byte sTradeMenu\n\t"
         "_080782A0:\n\t"
         "	ldr r2, _080782B8\n\t"
         "	ldr r1, [r2]\n\t"
@@ -2837,7 +2691,7 @@ __attribute__((naked)) void sub_080781C4(void)
         "	adds r0, #0x79\n\t"
         "	b _080782C2\n\t"
         "	.align 2, 0\n\t"
-        "_080782B8: .4byte gUnknown_2031F3C\n\t"
+        "_080782B8: .4byte sTradeMenu\n\t"
         "_080782BC:\n\t"
         "	ldr r0, _080782C8\n\t"
         "	ldr r0, [r0]\n\t"
@@ -2847,7 +2701,7 @@ __attribute__((naked)) void sub_080781C4(void)
         "	strb r1, [r0]\n\t"
         "	b _080782D4\n\t"
         "	.align 2, 0\n\t"
-        "_080782C8: .4byte gUnknown_2031F3C\n\t"
+        "_080782C8: .4byte sTradeMenu\n\t"
         "_080782CC:\n\t"
         "	ldr r0, _080782E0\n\t"
         "	ldr r0, [r0]\n\t"
@@ -2856,13 +2710,13 @@ __attribute__((naked)) void sub_080781C4(void)
         "	strb r2, [r0]\n\t"
         "_080782D4:\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_08076C3C\n\t"
+        "	bl TradeResetReceivedFlag\n\t"
         "_080782DA:\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080782E0: .4byte gUnknown_2031F3C\n\t"
+        "_080782E0: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2924,7 +2778,7 @@ __attribute__((naked)) void sub_080782E4(void)
         "	movs r1, #0xb\n\t"
         "	b _080783BE\n\t"
         "	.align 2, 0\n\t"
-        "_08078354: .4byte gUnknown_2031F3C\n\t"
+        "_08078354: .4byte sTradeMenu\n\t"
         "_08078358:\n\t"
         "	movs r0, #5\n\t"
         "	b _080783B2\n\t"
@@ -2950,7 +2804,7 @@ __attribute__((naked)) void sub_080782E4(void)
         "	movs r1, #7\n\t"
         "	b _080783BE\n\t"
         "	.align 2, 0\n\t"
-        "_0807838C: .4byte gUnknown_2031F3C\n\t"
+        "_0807838C: .4byte sTradeMenu\n\t"
         "_08078390:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -2965,7 +2819,7 @@ __attribute__((naked)) void sub_080782E4(void)
         "	movs r1, #0xa\n\t"
         "	b _080783BE\n\t"
         "	.align 2, 0\n\t"
-        "_080783AC: .4byte gUnknown_2031F3C\n\t"
+        "_080783AC: .4byte sTradeMenu\n\t"
         "_080783B0:\n\t"
         "	movs r0, #1\n\t"
         "_080783B2:\n\t"
@@ -2978,21 +2832,21 @@ __attribute__((naked)) void sub_080782E4(void)
         "	strb r1, [r0]\n\t"
         "_080783C0:\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_08076C3C\n\t"
+        "	bl TradeResetReceivedFlag\n\t"
         "_080783C6:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r5\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080783D4\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_08076C3C\n\t"
+        "	bl TradeResetReceivedFlag\n\t"
         "_080783D4:\n\t"
         "	add sp, #4\n\t"
         "	pop {r4, r5}\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080783DC: .4byte gUnknown_2031F3C\n\t"
+        "_080783DC: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3049,7 +2903,7 @@ __attribute__((naked)) void sub_080783E0(void)
         "	strb r4, [r0]\n\t"
         "	b _08078528\n\t"
         "	.align 2, 0\n\t"
-        "_0807843C: .4byte gUnknown_2031F3C\n\t"
+        "_0807843C: .4byte sTradeMenu\n\t"
         "_08078440: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
         "_08078444: .4byte 0x0000DDDD\n\t"
         "_08078448:\n\t"
@@ -3244,7 +3098,7 @@ __attribute__((naked)) void sub_080783E0(void)
         "	.align 2, 0\n\t"
         "_080785C8: .4byte 0x00000202\n\t"
         "_080785CC: .4byte 0x0000EEBB\n\t"
-        "_080785D0: .4byte gUnknown_2031F3C\n\t"
+        "_080785D0: .4byte sTradeMenu\n\t"
         "_080785D4: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
         "_080785D8: .4byte 0x0000CCDD\n\t"
         "_080785DC: .4byte 0x0000DDEE\n\t"
@@ -3288,7 +3142,7 @@ __attribute__((naked)) void sub_080785F4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078614: .4byte gUnknown_2031F3C\n\t"
+        "_08078614: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3359,7 +3213,7 @@ __attribute__((naked)) void sub_08078650(void)
         "	adds r6, r1, #0\n\t"
         "	b _08078694\n\t"
         "	.align 2, 0\n\t"
-        "_08078684: .4byte gUnknown_2031F3C\n\t"
+        "_08078684: .4byte sTradeMenu\n\t"
         "_08078688: .4byte gUnknown_83008E4\n\t"
         "_0807868C:\n\t"
         "	adds r2, #1\n\t"
@@ -3418,7 +3272,7 @@ __attribute__((naked)) void TradeMenuMoveCursor(void)
         "	strh r1, [r0, #0x22]\n\t"
         "	b _0807873C\n\t"
         "	.align 2, 0\n\t"
-        "_080786EC: .4byte gUnknown_2031F3C\n\t"
+        "_080786EC: .4byte sTradeMenu\n\t"
         "_080786F0: .4byte gSprites\n\t"
         "_080786F4:\n\t"
         "	ldr r4, _08078750\n\t"
@@ -3468,7 +3322,7 @@ __attribute__((naked)) void TradeMenuMoveCursor(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078750: .4byte gUnknown_2031F3C\n\t"
+        "_08078750: .4byte sTradeMenu\n\t"
         "_08078754: .4byte gSprites\n\t"
         "_08078758: .4byte gUnknown_8300A1C\n\t"
         ".syntax divided\n\t"
@@ -3499,7 +3353,7 @@ __attribute__((naked)) void sub_0807875C(void)
         "	bl sub_080785F4\n\t"
         "	b _08078798\n\t"
         "	.align 2, 0\n\t"
-        "_08078788: .4byte gUnknown_2031F3C\n\t"
+        "_08078788: .4byte sTradeMenu\n\t"
         "_0807878C: .4byte 0x0000AABB\n\t"
         "_08078790:\n\t"
         "	ldr r0, [r4]\n\t"
@@ -3535,7 +3389,7 @@ __attribute__((naked)) void sub_080787A0(void)
         "	b _08078814\n\t"
         "	.align 2, 0\n\t"
         "_080787C0: .4byte gMain\n\t"
-        "_080787C4: .4byte gUnknown_2031F3C\n\t"
+        "_080787C4: .4byte sTradeMenu\n\t"
         "_080787C8:\n\t"
         "	movs r0, #0x80\n\t"
         "	ands r0, r1\n\t"
@@ -3548,7 +3402,7 @@ __attribute__((naked)) void sub_080787A0(void)
         "	bl TradeMenuMoveCursor\n\t"
         "	b _08078814\n\t"
         "	.align 2, 0\n\t"
-        "_080787E0: .4byte gUnknown_2031F3C\n\t"
+        "_080787E0: .4byte sTradeMenu\n\t"
         "_080787E4:\n\t"
         "	movs r0, #0x20\n\t"
         "	ands r0, r1\n\t"
@@ -3561,7 +3415,7 @@ __attribute__((naked)) void sub_080787A0(void)
         "	bl TradeMenuMoveCursor\n\t"
         "	b _08078814\n\t"
         "	.align 2, 0\n\t"
-        "_080787FC: .4byte gUnknown_2031F3C\n\t"
+        "_080787FC: .4byte sTradeMenu\n\t"
         "_08078800:\n\t"
         "	movs r0, #0x10\n\t"
         "	ands r0, r1\n\t"
@@ -3624,7 +3478,7 @@ __attribute__((naked)) void sub_080787A0(void)
         "	strb r1, [r0]\n\t"
         "	b _080788EA\n\t"
         "	.align 2, 0\n\t"
-        "_08078888: .4byte gUnknown_2031F3C\n\t"
+        "_08078888: .4byte sTradeMenu\n\t"
         "_0807888C: .4byte gMain\n\t"
         "_08078890: .4byte gUnknown_8300B28\n\t"
         "_08078894:\n\t"
@@ -3720,7 +3574,7 @@ __attribute__((naked)) void sub_08078900(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078948: .4byte gUnknown_2031F3C\n\t"
+        "_08078948: .4byte sTradeMenu\n\t"
         "_0807894C: .4byte gSprites\n\t"
         "_08078950: .4byte gUnknown_8300AFC\n\t"
         "_08078954: .4byte 0x06010000\n\t"
@@ -3766,7 +3620,7 @@ __attribute__((naked)) void sub_08078958(void)
         "	movs r1, #2\n\t"
         "	b _08078A30\n\t"
         "	.align 2, 0\n\t"
-        "_080789A0: .4byte gUnknown_2031F3C\n\t"
+        "_080789A0: .4byte sTradeMenu\n\t"
         "_080789A4:\n\t"
         "	ldr r0, _080789C4\n\t"
         "	ldr r1, _080789C8\n\t"
@@ -3786,7 +3640,7 @@ __attribute__((naked)) void sub_08078958(void)
         "	.align 2, 0\n\t"
         "_080789C4: .4byte gPlayerParty\n\t"
         "_080789C8: .4byte gPlayerPartyCount\n\t"
-        "_080789CC: .4byte gUnknown_2031F3C\n\t"
+        "_080789CC: .4byte sTradeMenu\n\t"
         "_080789D0: .4byte 0x080789D4\n\t"
         "_080789D4: @ jump table\n\t"
         "	.4byte _080789EC @ case 0\n\t"
@@ -3813,7 +3667,7 @@ __attribute__((naked)) void sub_08078958(void)
         "	b _08078A30\n\t"
         "	.align 2, 0\n\t"
         "_08078A0C: .4byte gSprites\n\t"
-        "_08078A10: .4byte gUnknown_2031F3C\n\t"
+        "_08078A10: .4byte sTradeMenu\n\t"
         "_08078A14:\n\t"
         "	movs r0, #3\n\t"
         "	movs r1, #3\n\t"
@@ -3838,7 +3692,7 @@ __attribute__((naked)) void sub_08078958(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078A38: .4byte gUnknown_2031F3C\n\t"
+        "_08078A38: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3904,7 +3758,7 @@ __attribute__((naked)) void sub_08078A64(void)
         "	b _08078AC8\n\t"
         "	.align 2, 0\n\t"
         "_08078A9C: .4byte gPaletteFade\n\t"
-        "_08078AA0: .4byte gUnknown_2031F3C\n\t"
+        "_08078AA0: .4byte sTradeMenu\n\t"
         "_08078AA4: .4byte gPlayerParty\n\t"
         "_08078AA8: .4byte sub_08077558 + 1\n\t"
         "_08078AAC:\n\t"
@@ -4009,7 +3863,7 @@ __attribute__((naked)) void sub_08078ADC(void)
         "	b _08078B74\n\t"
         "	.align 2, 0\n\t"
         "_08078B64: .4byte gEnemyParty\n\t"
-        "_08078B68: .4byte gUnknown_2031F3C\n\t"
+        "_08078B68: .4byte sTradeMenu\n\t"
         "_08078B6C:\n\t"
         "	cmp r5, #0\n\t"
         "	beq _08078B72\n\t"
@@ -4074,7 +3928,7 @@ __attribute__((naked)) void sub_08078B7C(void)
         "	beq _08078BDE\n\t"
         "	b _08078C14\n\t"
         "	.align 2, 0\n\t"
-        "_08078BD4: .4byte gUnknown_2031F3C\n\t"
+        "_08078BD4: .4byte sTradeMenu\n\t"
         "_08078BD8:\n\t"
         "	cmp r0, #2\n\t"
         "	beq _08078C08\n\t"
@@ -4147,7 +4001,7 @@ __attribute__((naked)) void sub_08078C20(void)
         "	movs r1, #0x64\n\t"
         "	b _08078C60\n\t"
         "	.align 2, 0\n\t"
-        "_08078C54: .4byte gUnknown_2031F3C\n\t"
+        "_08078C54: .4byte sTradeMenu\n\t"
         "_08078C58:\n\t"
         "	ldr r0, _08078C6C\n\t"
         "	ldr r0, [r0]\n\t"
@@ -4159,12 +4013,12 @@ __attribute__((naked)) void sub_08078C20(void)
         "	bl PutWindowTilemap\n\t"
         "	b _08078C98\n\t"
         "	.align 2, 0\n\t"
-        "_08078C6C: .4byte gUnknown_2031F3C\n\t"
+        "_08078C6C: .4byte sTradeMenu\n\t"
         "_08078C70:\n\t"
         "	movs r0, #3\n\t"
         "	movs r1, #1\n\t"
         "	bl sub_08079A80\n\t"
-        "	bl sub_08076BC4\n\t"
+        "	bl IsLinkTradeTaskFinished\n\t"
         "	cmp r0, #0\n\t"
         "	beq _08078C88\n\t"
         "	ldr r0, _08078C9C\n\t"
@@ -4183,7 +4037,7 @@ __attribute__((naked)) void sub_08078C20(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08078C9C: .4byte 0x0000BBCC\n\t"
-        "_08078CA0: .4byte gUnknown_2031F3C\n\t"
+        "_08078CA0: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4227,7 +4081,7 @@ __attribute__((naked)) void sub_08078CA4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078CE8: .4byte gUnknown_2031F3C\n\t"
+        "_08078CE8: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4282,7 +4136,7 @@ __attribute__((naked)) void sub_08078CEC(void)
         "	.align 2, 0\n\t"
         "_08078D48: .4byte 0x0000EEAA\n\t"
         "_08078D4C: .4byte gSprites\n\t"
-        "_08078D50: .4byte gUnknown_2031F3C\n\t"
+        "_08078D50: .4byte sTradeMenu\n\t"
         "_08078D54:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -4325,7 +4179,7 @@ __attribute__((naked)) void sub_08078D64(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078D9C: .4byte gUnknown_2031F3C\n\t"
+        "_08078D9C: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4352,7 +4206,7 @@ __attribute__((naked)) void sub_08078DA0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078DC4: .4byte gUnknown_2031F3C\n\t"
+        "_08078DC4: .4byte sTradeMenu\n\t"
         "_08078DC8: .4byte 0x00000505\n\t"
         ".syntax divided\n\t"
     );
@@ -4399,7 +4253,7 @@ __attribute__((naked)) void Wait2SecondsAndCreateYesNoMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078E14: .4byte gUnknown_2031F3C\n\t"
+        "_08078E14: .4byte sTradeMenu\n\t"
         "_08078E18: .4byte gUnknown_8300CAC\n\t"
         ".syntax divided\n\t"
     );
@@ -4467,7 +4321,7 @@ __attribute__((naked)) void sub_08078E1C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08078E98: .4byte gMain\n\t"
-        "_08078E9C: .4byte gUnknown_2031F3C\n\t"
+        "_08078E9C: .4byte sTradeMenu\n\t"
         "_08078EA0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -4506,7 +4360,7 @@ __attribute__((naked)) void sub_08078EA4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078EDC: .4byte gUnknown_2031F3C\n\t"
+        "_08078EDC: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4520,7 +4374,7 @@ __attribute__((naked)) void sub_08078EE0(void)
         "	ldrb r0, [r0]\n\t"
         "	cmp r0, #0\n\t"
         "	beq _08078F2C\n\t"
-        "	bl sub_08076BC4\n\t"
+        "	bl IsLinkTradeTaskFinished\n\t"
         "	cmp r0, #0\n\t"
         "	beq _08078F4E\n\t"
         "	bl sub_08079AD4\n\t"
@@ -4540,7 +4394,7 @@ __attribute__((naked)) void sub_08078EE0(void)
         "	.align 2, 0\n\t"
         "_08078F1C: .4byte gWirelessCommType\n\t"
         "_08078F20: .4byte gUnknown_2031E28\n\t"
-        "_08078F24: .4byte gUnknown_2031F3C\n\t"
+        "_08078F24: .4byte sTradeMenu\n\t"
         "_08078F28: .4byte CB2_ReturnToFieldFromMultiplayer + 1\n\t"
         "_08078F2C:\n\t"
         "	ldr r0, _08078F54\n\t"
@@ -4562,7 +4416,7 @@ __attribute__((naked)) void sub_08078EE0(void)
         "	.align 2, 0\n\t"
         "_08078F54: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_08078F58: .4byte gUnknown_2031E28\n\t"
-        "_08078F5C: .4byte gUnknown_2031F3C\n\t"
+        "_08078F5C: .4byte sTradeMenu\n\t"
         "_08078F60: .4byte CB2_ReturnToFieldFromMultiplayer + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -4591,7 +4445,7 @@ __attribute__((naked)) void sub_08078F64(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078F8C: .4byte gUnknown_2031F3C\n\t"
+        "_08078F8C: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4621,7 +4475,7 @@ __attribute__((naked)) void sub_08078F90(void)
         "	.align 2, 0\n\t"
         "_08078FB4: .4byte gMain\n\t"
         "_08078FB8: .4byte 0x0000BBCC\n\t"
-        "_08078FBC: .4byte gUnknown_2031F3C\n\t"
+        "_08078FBC: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4643,7 +4497,7 @@ __attribute__((naked)) void sub_08078FC0(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_08078FD8: .4byte gUnknown_2031F3C\n\t"
+        "_08078FD8: .4byte sTradeMenu\n\t"
         "_08078FDC: .4byte 0x08078FE0\n\t"
         "_08078FE0: @ jump table\n\t"
         "	.4byte _08079028 @ case 0\n\t"
@@ -4751,7 +4605,7 @@ __attribute__((naked)) void sub_08079090(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080790C4: .4byte gUnknown_2031F3C\n\t"
+        "_080790C4: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4800,7 +4654,7 @@ __attribute__((naked)) void sub_080790C8(void)
         "	beq _08079126\n\t"
         "	b _08079454\n\t"
         "	.align 2, 0\n\t"
-        "_08079114: .4byte gUnknown_2031F3C\n\t"
+        "_08079114: .4byte sTradeMenu\n\t"
         "_08079118:\n\t"
         "	cmp r0, #3\n\t"
         "	bne _0807911E\n\t"
@@ -4989,7 +4843,7 @@ __attribute__((naked)) void sub_080790C8(void)
         "	b _08079454\n\t"
         "	.align 2, 0\n\t"
         "_0807928C: .4byte gSprites\n\t"
-        "_08079290: .4byte gUnknown_2031F3C\n\t"
+        "_08079290: .4byte sTradeMenu\n\t"
         "_08079294: .4byte gUnknown_8300A1C\n\t"
         "_08079298: .4byte SpriteCB_MonIcon + 1\n\t"
         "_0807929C: .4byte gUnknown_82FEDCA\n\t"
@@ -5164,7 +5018,7 @@ __attribute__((naked)) void sub_080790C8(void)
         "	.align 2, 0\n\t"
         "_08079404: .4byte gUnknown_82FEBCC\n\t"
         "_08079408: .4byte gSprites\n\t"
-        "_0807940C: .4byte gUnknown_2031F3C\n\t"
+        "_0807940C: .4byte sTradeMenu\n\t"
         "_08079410: .4byte gUnknown_8300A1C\n\t"
         "_08079414: .4byte gUnknown_8300C00\n\t"
         "_08079418: .4byte gUnknown_8300A9B\n\t"
@@ -5208,7 +5062,7 @@ __attribute__((naked)) void sub_080790C8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08079464: .4byte gUnknown_8300D40\n\t"
-        "_08079468: .4byte gUnknown_2031F3C\n\t"
+        "_08079468: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5307,7 +5161,7 @@ __attribute__((naked)) void sub_0807946C(void)
         "	b _08079544\n\t"
         "	.align 2, 0\n\t"
         "_0807952C: .4byte gEnemyParty\n\t"
-        "_08079530: .4byte gUnknown_2031F3C\n\t"
+        "_08079530: .4byte sTradeMenu\n\t"
         "_08079534: .4byte gUnknown_8300AA0\n\t"
         "_08079538: .4byte gUnknown_8300AA2\n\t"
         "_0807953C:\n\t"
@@ -5374,7 +5228,7 @@ __attribute__((naked)) void sub_08079564(void)
         "	mov r2, sb\n\t"
         "	b _080795BE\n\t"
         "	.align 2, 0\n\t"
-        "_080795AC: .4byte gUnknown_2031F3C\n\t"
+        "_080795AC: .4byte sTradeMenu\n\t"
         "_080795B0: .4byte gPlayerParty\n\t"
         "_080795B4: .4byte gEnemyParty\n\t"
         "_080795B8:\n\t"
@@ -5577,7 +5431,7 @@ __attribute__((naked)) void sub_08079690(void)
         "	.align 2, 0\n\t"
         "_08079734: .4byte gEnemyParty\n\t"
         "_08079738: .4byte gPlayerParty\n\t"
-        "_0807973C: .4byte gUnknown_2031F3C\n\t"
+        "_0807973C: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5699,7 +5553,7 @@ __attribute__((naked)) void sub_08079740(void)
         "	b _0807986A\n\t"
         "	.align 2, 0\n\t"
         "_08079824: .4byte gEnemyParty\n\t"
-        "_08079828: .4byte gUnknown_2031F3C\n\t"
+        "_08079828: .4byte sTradeMenu\n\t"
         "_0807982C:\n\t"
         "	ldr r1, [sp, #0xc]\n\t"
         "	lsls r0, r1, #5\n\t"
@@ -5796,7 +5650,7 @@ __attribute__((naked)) void sub_0807987C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080798D4: .4byte gUnknown_2031F3C\n\t"
+        "_080798D4: .4byte sTradeMenu\n\t"
         "_080798D8: .4byte gUnknown_8300A36\n\t"
         "_080798DC: .4byte gUnknown_8300A4E\n\t"
         ".syntax divided\n\t"
@@ -5906,7 +5760,7 @@ __attribute__((naked)) void sub_080798E0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080799A0: .4byte gUnknown_2031F3C\n\t"
+        "_080799A0: .4byte sTradeMenu\n\t"
         "_080799A4: .4byte gSprites\n\t"
         "_080799A8: .4byte gUnknown_8300A1C\n\t"
         ".syntax divided\n\t"
@@ -5983,7 +5837,7 @@ __attribute__((naked)) void sub_080799C0(void)
         "	.align 2, 0\n\t"
         "_08079A28: .4byte gUnknown_82FEDCA\n\t"
         "_08079A2C: .4byte gUnknown_8300AFC\n\t"
-        "_08079A30: .4byte gUnknown_2031F3C\n\t"
+        "_08079A30: .4byte sTradeMenu\n\t"
         "_08079A34: .4byte 0x06010000\n\t"
         ".syntax divided\n\t"
     );
@@ -6075,7 +5929,7 @@ __attribute__((naked)) void sub_08079A80(void)
         "	strb r1, [r0]\n\t"
         "	b _08079ACE\n\t"
         "	.align 2, 0\n\t"
-        "_08079AC0: .4byte gUnknown_2031F3C\n\t"
+        "_08079AC0: .4byte sTradeMenu\n\t"
         "_08079AC4: .4byte 0x000008D2\n\t"
         "_08079AC8:\n\t"
         "	adds r3, #1\n\t"
@@ -6112,7 +5966,7 @@ __attribute__((naked)) void sub_08079AD4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08079AF8: .4byte gUnknown_2031F3C\n\t"
+        "_08079AF8: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6144,7 +5998,7 @@ __attribute__((naked)) void sub_08079AFC(void)
         "	strh r0, [r1]\n\t"
         "	b _08079BC4\n\t"
         "	.align 2, 0\n\t"
-        "_08079B28: .4byte gUnknown_2031F3C\n\t"
+        "_08079B28: .4byte sTradeMenu\n\t"
         "_08079B2C: .4byte 0x000008D2\n\t"
         "_08079B30:\n\t"
         "	ldr r1, _08079B44\n\t"
@@ -6175,10 +6029,10 @@ __attribute__((naked)) void sub_08079AFC(void)
         "	ldr r0, [r0]\n\t"
         "	adds r0, #0x80\n\t"
         "	movs r1, #0x14\n\t"
-        "	bl sub_08076B78\n\t"
+        "	bl SendLinkData\n\t"
         "	b _08079BB2\n\t"
         "	.align 2, 0\n\t"
-        "_08079B80: .4byte gUnknown_2031F3C\n\t"
+        "_08079B80: .4byte sTradeMenu\n\t"
         "_08079B84:\n\t"
         "	movs r0, #0\n\t"
         "	bl sub_08079BD4\n\t"
@@ -6220,7 +6074,7 @@ __attribute__((naked)) void sub_08079AFC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08079BD0: .4byte gUnknown_2031F3C\n\t"
+        "_08079BD0: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6315,7 +6169,7 @@ __attribute__((naked)) void sub_08079C28(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_08079C78: .4byte gUnknown_2031F3C\n\t"
+        "_08079C78: .4byte sTradeMenu\n\t"
         "_08079C7C: .4byte gUnknown_2031E2C\n\t"
         "_08079C80: .4byte 0xFFFF0000\n\t"
         "_08079C84: .4byte 0x0000FFFF\n\t"
@@ -6351,7 +6205,7 @@ __attribute__((naked)) void sub_08079C28(void)
         "	strh r0, [r2]\n\t"
         "	b _08079D12\n\t"
         "	.align 2, 0\n\t"
-        "_08079CE8: .4byte gUnknown_2031F3C\n\t"
+        "_08079CE8: .4byte sTradeMenu\n\t"
         "_08079CEC:\n\t"
         "	mov r0, sp\n\t"
         "	b _08079D0A\n\t"
@@ -6382,7 +6236,7 @@ __attribute__((naked)) void sub_08079C28(void)
         "	b _08079D30\n\t"
         "	.align 2, 0\n\t"
         "_08079D1C: .4byte gUnknown_8300834\n\t"
-        "_08079D20: .4byte gUnknown_2031F3C\n\t"
+        "_08079D20: .4byte sTradeMenu\n\t"
         "_08079D24:\n\t"
         "	ldr r0, [r4]\n\t"
         "	adds r0, #0xa8\n\t"
@@ -6507,7 +6361,7 @@ __attribute__((naked)) void sub_08079D98(void)
         "	adds r0, r0, r5\n\t"
         "	b _08079E28\n\t"
         "	.align 2, 0\n\t"
-        "_08079DF0: .4byte gUnknown_2031F3C\n\t"
+        "_08079DF0: .4byte sTradeMenu\n\t"
         "_08079DF4: .4byte gPlayerParty\n\t"
         "_08079DF8:\n\t"
         "	adds r0, r4, #0\n\t"
@@ -6547,7 +6401,7 @@ __attribute__((naked)) void sub_08079D98(void)
         "	blt _08079DC6\n\t"
         "	b _08079ED0\n\t"
         "	.align 2, 0\n\t"
-        "_08079E40: .4byte gUnknown_2031F3C\n\t"
+        "_08079E40: .4byte sTradeMenu\n\t"
         "_08079E44:\n\t"
         "	movs r7, #0\n\t"
         "	ldr r1, _08079E84\n\t"
@@ -6582,7 +6436,7 @@ __attribute__((naked)) void sub_08079D98(void)
         "	adds r0, r0, r5\n\t"
         "	b _08079EBC\n\t"
         "	.align 2, 0\n\t"
-        "_08079E84: .4byte gUnknown_2031F3C\n\t"
+        "_08079E84: .4byte sTradeMenu\n\t"
         "_08079E88: .4byte gEnemyParty\n\t"
         "_08079E8C:\n\t"
         "	adds r0, r4, #0\n\t"
@@ -6628,7 +6482,7 @@ __attribute__((naked)) void sub_08079D98(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08079EDC: .4byte gUnknown_2031F3C\n\t"
+        "_08079EDC: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6688,7 +6542,7 @@ __attribute__((naked)) void sub_08079EE0(void)
         "	blo _08079F00\n\t"
         "	b _08079FA4\n\t"
         "	.align 2, 0\n\t"
-        "_08079F48: .4byte gUnknown_2031F3C\n\t"
+        "_08079F48: .4byte sTradeMenu\n\t"
         "_08079F4C: .4byte gPlayerParty\n\t"
         "_08079F50:\n\t"
         "	movs r6, #0\n\t"
@@ -6736,7 +6590,7 @@ __attribute__((naked)) void sub_08079EE0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08079FAC: .4byte gUnknown_2031F3C\n\t"
+        "_08079FAC: .4byte sTradeMenu\n\t"
         "_08079FB0: .4byte gEnemyParty\n\t"
         ".syntax divided\n\t"
     );
@@ -6802,7 +6656,7 @@ __attribute__((naked)) void sub_08079FB4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0807A020: .4byte gUnknown_2031F3C\n\t"
+        "_0807A020: .4byte sTradeMenu\n\t"
         "_0807A024: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -6841,7 +6695,7 @@ __attribute__((naked)) void sub_0807A028(void)
         "	.align 2, 0\n\t"
         "_0807A058: .4byte gSaveBlock1Ptr\n\t"
         "_0807A05C: .4byte 0x000031A8\n\t"
-        "_0807A060: .4byte gUnknown_2031F3C\n\t"
+        "_0807A060: .4byte sTradeMenu\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14105,7 +13959,7 @@ __attribute__((naked)) void c2_08053788(void)
         "_0807DEC4: .4byte gPlayerParty\n\t"
         "_0807DEC8: .4byte gUnknown_2031F40\n\t"
         "_0807DECC:\n\t"
-        "	bl sub_08076C68\n\t"
+        "	bl IsWirelessTrade\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0807DEE0\n\t"
         "	ldr r0, _0807DEDC\n\t"
@@ -14889,7 +14743,7 @@ __attribute__((naked)) void sub_0807E464(void)
         "	lsrs r1, r1, #0x18\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl sub_0807AF08\n\t"
-        "	bl sub_08076C68\n\t"
+        "	bl IsWirelessTrade\n\t"
         "	cmp r0, #0\n\t"
         "	bne _0807E4C8\n\t"
         "	ldr r0, [r5]\n\t"
@@ -14931,7 +14785,7 @@ __attribute__((naked)) void sub_0807E504(void)
         "	bl sub_0807A738\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r4, r0, #0x18\n\t"
-        "	bl sub_08076C68\n\t"
+        "	bl IsWirelessTrade\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0807E524\n\t"
         "	ldr r0, _0807E520\n\t"
@@ -15127,7 +14981,7 @@ __attribute__((naked)) void sub_0807E588(void)
         "_0807E760: .4byte gUnknown_8595430\n\t"
         "_0807E764:\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_08076C90\n\t"
+        "	bl SetTradeLinkStandbyCallback\n\t"
         "	ldr r0, _0807E778\n\t"
         "	movs r1, #0x87\n\t"
         "	lsls r1, r1, #3\n\t"
@@ -15353,7 +15207,7 @@ __attribute__((naked)) void sub_0807E588(void)
         "	cmp r0, #0\n\t"
         "	bne _0807E94C\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_08076C90\n\t"
+        "	bl SetTradeLinkStandbyCallback\n\t"
         "	ldr r0, _0807E948\n\t"
         "	movs r1, #0x87\n\t"
         "	lsls r1, r1, #3\n\t"
@@ -15399,7 +15253,7 @@ __attribute__((naked)) void sub_0807E588(void)
         "	adds r0, #1\n\t"
         "	strb r0, [r1]\n\t"
         "	movs r0, #2\n\t"
-        "	bl sub_08076C90\n\t"
+        "	bl SetTradeLinkStandbyCallback\n\t"
         "	b _0807EA72\n\t"
         "	.align 2, 0\n\t"
         "_0807E998: .4byte gUnknown_2031F40\n\t"
@@ -15448,7 +15302,7 @@ __attribute__((naked)) void sub_0807E588(void)
         "	cmp r1, r0\n\t"
         "	bne _0807EA10\n\t"
         "	movs r0, #3\n\t"
-        "	bl sub_08076C90\n\t"
+        "	bl SetTradeLinkStandbyCallback\n\t"
         "	b _0807EA14\n\t"
         "	.align 2, 0\n\t"
         "_0807EA04: .4byte gWirelessCommType\n\t"
@@ -16119,7 +15973,7 @@ __attribute__((naked)) void sub_0807EE9C(void)
         "_0807EF1C: .4byte gUnknown_8595430\n\t"
         "_0807EF20:\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_08076C90\n\t"
+        "	bl SetTradeLinkStandbyCallback\n\t"
         "	ldr r0, _0807EF34\n\t"
         "	movs r1, #0x87\n\t"
         "	lsls r1, r1, #3\n\t"
@@ -16273,7 +16127,7 @@ __attribute__((naked)) void sub_0807EE9C(void)
         "	cmp r0, #0\n\t"
         "	bne _0807F080\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_08076C90\n\t"
+        "	bl SetTradeLinkStandbyCallback\n\t"
         "	ldr r0, _0807F07C\n\t"
         "	movs r1, #0x87\n\t"
         "	lsls r1, r1, #3\n\t"
@@ -16317,7 +16171,7 @@ __attribute__((naked)) void sub_0807EE9C(void)
         "	adds r0, #1\n\t"
         "	strb r0, [r1]\n\t"
         "	movs r0, #2\n\t"
-        "	bl sub_08076C90\n\t"
+        "	bl SetTradeLinkStandbyCallback\n\t"
         "	b _0807F144\n\t"
         "	.align 2, 0\n\t"
         "_0807F0C8: .4byte gUnknown_2031F40\n\t"
@@ -16356,7 +16210,7 @@ __attribute__((naked)) void sub_0807EE9C(void)
         "	cmp r0, #1\n\t"
         "	bne _0807F144\n\t"
         "	movs r0, #3\n\t"
-        "	bl sub_08076C90\n\t"
+        "	bl SetTradeLinkStandbyCallback\n\t"
         "	ldr r0, _0807F12C\n\t"
         "	movs r2, #0x87\n\t"
         "	lsls r2, r2, #3\n\t"

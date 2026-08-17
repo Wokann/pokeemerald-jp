@@ -7582,7 +7582,7 @@ __attribute__((naked)) u8 CalculateEnemyPartyCount()
         "	strb r1, [r0]\n\t"
         "	b _0806B060\n\t"
         "	.align 2, 0\n\t"
-        "_0806B054: .4byte gUnknown_202418E\n\t"
+        "_0806B054: .4byte gEnemyPartyCount\n\t"
         "_0806B058:\n\t"
         "	ldrb r0, [r4]\n\t"
         "	adds r0, #1\n\t"
