@@ -2,6 +2,7 @@
 #include "party_menu.h"
 #include "pokemon_icon.h"
 #include "bg.h"
+#include "battle.h"
 #include "constants/field_effects.h"
 #include "constants/field_weather.h"
 #include "decompress.h"
@@ -18110,32 +18111,14 @@ __attribute__((naked)) void BufferBattlePartyOrder(u8 *partyBattleOrder, u8 flan
     );
 }
 
-__attribute__((naked)) void sub_081B8A04(void)
+__attribute__((naked)) void BufferBattlePartyOrderBySide(u8 *partyBattleOrder, u8 flankId, u8 battler);
+
+void BufferBattlePartyCurrentOrderBySide(u8 battler, u8 flankId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r0, _081B8A24\n\t"
-        "	lsls r3, r2, #1\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	adds r3, #0x60\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	bl sub_081B8A28\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B8A24: .4byte gBattleStruct\n\t"
-        ".syntax divided\n\t"
-    );
+    BufferBattlePartyOrderBySide(gBattleStruct->battlerPartyOrders[battler], flankId, battler);
 }
 
-__attribute__((naked)) void sub_081B8A28(void)
+__attribute__((naked)) void BufferBattlePartyOrderBySide(u8 *partyBattleOrder, u8 flankId, u8 battler)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

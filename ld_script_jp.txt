@@ -1204,7 +1204,7 @@ sub_0802EC60 = CreateStartSprite;
 Task_WaitForLinkPlayerConnection = task00_08081A90;
 BattleControllerDummy = nullsub_21;
 RecordedBattle_Init = sub_08184C50;
-BufferBattlePartyCurrentOrderBySide = sub_081B8A04;
+
 SetControllerToRecordedOpponent = sub_08186218;
 BattleScriptPop = DoBattlerEndTurnEffects;
 sub_080416AC = AtkCanceler_UnableToUseMove;
@@ -8844,8 +8844,8 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B871C);
         src/party_menu.o(.text.BufferBattlePartyCurrentOrder);
         src/party_menu.o(.text.BufferBattlePartyOrder);
-        src/party_menu.o(.text.sub_081B8A04);
-        src/party_menu.o(.text.sub_081B8A28);
+        src/party_menu.o(.text.BufferBattlePartyCurrentOrderBySide);
+        src/party_menu.o(.text.BufferBattlePartyOrderBySide);
         src/party_menu.o(.text.sub_081B8B20);
         src/party_menu.o(.text.sub_081B8BD8);
         src/party_menu.o(.text.sub_081B8C0C);
