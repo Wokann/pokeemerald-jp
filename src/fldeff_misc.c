@@ -1,9 +1,11 @@
 #include "global.h"
 #include "constants/songs.h"
 #include "constants/metatile_labels.h"
+#include "event_data.h"
 #include "fieldmap.h"
 #include "field_effect.h"
 #include "fldeff.h"
+#include "party_menu.h"
 #include "task.h"
 extern void StartSecretBaseCaveFieldEffect(void);
 extern void StartSecretBaseShrubFieldEffect(void);
@@ -21,6 +23,9 @@ extern void sub_080FA66C(void);
 extern void sub_080FA500(u8 taskId);
 static __attribute__((naked)) void sub_080FA4B4(void (*func)(u8), u16 x, u16 y, u8 z);
 extern void Task_WateringBerryTreeAnim_0(u8 taskId);
+extern void FieldCallback_SecretBaseCave(void);
+extern void FieldCallback_SecretBaseTree(void);
+extern void FieldCallback_SecretBaseShrub(void);
 
 #include "fldeff_misc.h"
 
@@ -511,103 +516,45 @@ void AdjustSecretPowerSpritePixelOffsets(void)
 }
 
 
-__attribute__((naked)) bool8 SetUpFieldMove_SecretPower()
+bool8 SetUpFieldMove_SecretPower(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl CheckPlayerHasSecretBase\n\t"
-        "	ldr r0, _080FA8C8\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080FA91E\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080FA91E\n\t"
-        "	ldr r4, _080FA8CC\n\t"
-        "	adds r1, r4, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetXYCoordsOneStepInFrontOfPlayer\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #2\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl MapGridGetMetatileBehaviorAt\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl MetatileBehavior_IsSecretBaseCave\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080FA8E0\n\t"
-        "	bl SetCurrentSecretBase\n\t"
-        "	ldr r1, _080FA8D0\n\t"
-        "	ldr r0, _080FA8D4\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r1, _080FA8D8\n\t"
-        "	ldr r0, _080FA8DC\n\t"
-        "	b _080FA930\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA8C8: .4byte gSpecialVar_Result\n\t"
-        "_080FA8CC: .4byte gPlayerFacingPosition\n\t"
-        "_080FA8D0: .4byte gFieldCallback2\n\t"
-        "_080FA8D4: .4byte 0x081B53D9\n\t"
-        "_080FA8D8: .4byte gPostMenuFieldCallback\n\t"
-        "_080FA8DC: .4byte FieldCallback_SecretBaseCave + 1\n\t"
-        "_080FA8E0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl MetatileBehavior_IsSecretBaseTree\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080FA910\n\t"
-        "	bl SetCurrentSecretBase\n\t"
-        "	ldr r1, _080FA900\n\t"
-        "	ldr r0, _080FA904\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r1, _080FA908\n\t"
-        "	ldr r0, _080FA90C\n\t"
-        "	b _080FA930\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA900: .4byte gFieldCallback2\n\t"
-        "_080FA904: .4byte 0x081B53D9\n\t"
-        "_080FA908: .4byte gPostMenuFieldCallback\n\t"
-        "_080FA90C: .4byte FieldCallback_SecretBaseShrub + 1\n\t"
-        "_080FA910:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl MetatileBehavior_IsSecretBaseShrub\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080FA922\n\t"
-        "_080FA91E:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080FA934\n\t"
-        "_080FA922:\n\t"
-        "	bl SetCurrentSecretBase\n\t"
-        "	ldr r1, _080FA93C\n\t"
-        "	ldr r0, _080FA940\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r1, _080FA944\n\t"
-        "	ldr r0, _080FA948\n\t"
-        "_080FA930:\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "_080FA934:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080FA93C: .4byte gFieldCallback2\n\t"
-        "_080FA940: .4byte 0x081B53D9\n\t"
-        "_080FA944: .4byte gPostMenuFieldCallback\n\t"
-        "_080FA948: .4byte FieldCallback_SecretBaseTree + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 mb;
+
+    CheckPlayerHasSecretBase();
+
+    if (gSpecialVar_Result == 1 || (u8)GetPlayerFacingDirection() != DIR_NORTH)
+        return FALSE;
+
+    GetXYCoordsOneStepInFrontOfPlayer(&gPlayerFacingPosition.x, &gPlayerFacingPosition.y);
+    mb = MapGridGetMetatileBehaviorAt(gPlayerFacingPosition.x, gPlayerFacingPosition.y);
+
+    if ((u8)MetatileBehavior_IsSecretBaseCave(mb) == TRUE)
+    {
+        SetCurrentSecretBase();
+        gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
+        gPostMenuFieldCallback = FieldCallback_SecretBaseCave;
+        return TRUE;
+    }
+
+    if ((u8)MetatileBehavior_IsSecretBaseTree(mb) == TRUE)
+    {
+        SetCurrentSecretBase();
+        gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
+        gPostMenuFieldCallback = FieldCallback_SecretBaseShrub;
+        return TRUE;
+    }
+
+    if ((u8)MetatileBehavior_IsSecretBaseShrub(mb) == TRUE)
+    {
+        SetCurrentSecretBase();
+        gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
+        gPostMenuFieldCallback = FieldCallback_SecretBaseTree;
+        return TRUE;
+    }
+
+    return FALSE;
 }
+
 
 __attribute__((naked)) void FieldCallback_SecretBaseCave(void)
 {
