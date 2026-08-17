@@ -19507,27 +19507,16 @@ __attribute__((naked)) void Task_ChoosePartyMon(u8 taskId)
     );
 }
 
-__attribute__((naked)) void sub_081B91BC(void)
+__attribute__((naked)) void Task_ChooseMonForMoveRelearner(u8 taskId);
+
+void ChooseMonForMoveRelearner(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FadeScreen\n\t"
-        "	ldr r0, _081B91D8\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl CreateTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B91D8: .4byte sub_081B91DC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    LockPlayerFieldControls();
+    FadeScreen(FADE_TO_BLACK, 0);
+    CreateTask(Task_ChooseMonForMoveRelearner, 10);
 }
 
-__attribute__((naked)) void sub_081B91DC(void)
+__attribute__((naked)) void Task_ChooseMonForMoveRelearner(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

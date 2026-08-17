@@ -236,7 +236,7 @@ gSpecials:
 	def_special SetDepartmentStoreFloorVar
 	def_special DoPCTurnOnEffect
 	def_special EndLotteryCornerComputerEffect
-	def_special sub_081B91BC
+	def_special ChooseMonForMoveRelearner
 	def_special sub_081B932C
 	def_special sub_081B9410
 	def_special sub_081B93B8

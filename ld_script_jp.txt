@@ -8871,8 +8871,8 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B9110);
         src/party_menu.o(.text.ChoosePartyMon);
         src/party_menu.o(.text.Task_ChoosePartyMon);
-        src/party_menu.o(.text.sub_081B91BC);
-        src/party_menu.o(.text.sub_081B91DC);
+        src/party_menu.o(.text.ChooseMonForMoveRelearner);
+        src/party_menu.o(.text.Task_ChooseMonForMoveRelearner);
         src/party_menu.o(.text.sub_081B9228);
         src/party_menu.o(.text.sub_081B9280);
         src/party_menu.o(.text.sub_081B92C0);
