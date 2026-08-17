@@ -3016,50 +3016,24 @@ int GetUnionRoomTradeMessageId(struct RfuGameCompatibilityData player, struct Rf
     return UR_TRADE_MSG_NONE;
 }
 
-__attribute__((naked)) int CanRegisterMonForTradingBoard(struct RfuGameCompatibilityData player, u16 species2, u16 species, bool8 isModernFatefulEncounter)
+int CanRegisterMonForTradingBoard(struct RfuGameCompatibilityData player, u16 species2, u16 species, bool8 isModernFatefulEncounter)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r5, r1, #0x10\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	lsls r0, r0, #0x17\n\t"
-        "	lsrs r4, r0, #0x1f\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl IsDeoxysOrMewUntradable\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A37A\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0807A37E\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _0807A370\n\t"
-        "	movs r0, #2\n\t"
-        "	b _0807A380\n\t"
-        "_0807A370:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl IsSpeciesInHoennDex\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807A37E\n\t"
-        "_0807A37A:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0807A380\n\t"
-        "_0807A37E:\n\t"
-        "	movs r0, #0\n\t"
-        "_0807A380:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 hasNationalDex = player.hasNationalDex;
+
+    if (IsDeoxysOrMewUntradable(species, isModernFatefulEncounter))
+        return CANT_REGISTER_MON;
+
+    if (hasNationalDex)
+        return CAN_REGISTER_MON;
+
+    // Eggs can only be traded if the player has the National Dex
+    if (species2 == SPECIES_EGG)
+        return CANT_REGISTER_EGG;
+
+    if (IsSpeciesInHoennDex(species2))
+        return CAN_REGISTER_MON;
+
+    return CANT_REGISTER_MON;
 }
 
 __attribute__((naked)) int CanSpinTradeMon(struct Pokemon *mon, u16 monIdx)
