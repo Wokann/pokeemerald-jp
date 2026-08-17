@@ -76,12 +76,12 @@ gUnknown_85E0F9C: @ 0x85E0F9C
 gUnknown_85E0FBC: @ 0x85E0FBC
 	.incbin "baserom_jp.gba", 0x5e0fbc, 0xc0
 
-	.globl gUnknown_85E107C
-gUnknown_85E107C: @ 0x85E107C
+	.globl sConfirmButton_Tilemap
+sConfirmButton_Tilemap: @ 0x85E107C
 	.incbin "baserom_jp.gba", 0x5e107c, 0x1c
 
-	.globl gUnknown_85E1098
-gUnknown_85E1098: @ 0x85E1098
+	.globl sCancelButton_Tilemap
+sCancelButton_Tilemap: @ 0x85E1098
 	.incbin "baserom_jp.gba", 0x5e1098, 0x1c
 
 	.globl sFontColorTable

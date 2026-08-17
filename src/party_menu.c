@@ -58,6 +58,8 @@ extern const struct WindowTemplate sPartyMenuYesNoWindowTemplate;
 extern const struct WindowTemplate sLevelUpStatsWindowTemplate;
 extern const u8 gUnknown_85C97BD[]; // JP text block; +0x4F0 = gText_PkmnNotHolding
 extern const u16 sFieldMoves[];
+extern const u32 sConfirmButton_Tilemap[];
+extern const u32 sCancelButton_Tilemap[];
 extern const u8 sPartyMenuActionCounts[];
 extern const u8 *const sPartyMenuActions[];
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
@@ -1307,42 +1309,11 @@ static bool8 PartyBoxPal_ParnterOrDisqualifiedInArena(u8 slot)
     return FALSE;
 }
 
-__attribute__((naked)) void DrawCancelConfirmButtons(void)
+static void DrawCancelConfirmButtons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r1, _081B0F18\n\t"
-        "	movs r6, #7\n\t"
-        "	str r6, [sp]\n\t"
-        "	movs r5, #2\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	movs r4, #0x11\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0x17\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl CopyToBgTilemapBufferRect_ChangePalette\n\t"
-        "	ldr r1, _081B0F1C\n\t"
-        "	str r6, [sp]\n\t"
-        "	str r5, [sp, #4]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0x17\n\t"
-        "	movs r3, #0x12\n\t"
-        "	bl CopyToBgTilemapBufferRect_ChangePalette\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B0F18: .4byte gUnknown_85E107C\n\t"
-        "_081B0F1C: .4byte gUnknown_85E1098\n\t"
-        ".syntax divided\n\t"
-    );
+    CopyToBgTilemapBufferRect_ChangePalette(1, sConfirmButton_Tilemap, 23, 16, 7, 2, 17);
+    CopyToBgTilemapBufferRect_ChangePalette(1, sCancelButton_Tilemap, 23, 18, 7, 2, 17);
+    ScheduleBgCopyTilemapToVram(1);
 }
 
 __attribute__((naked)) bool8 IsMultiBattle(void)
