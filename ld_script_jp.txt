@@ -3269,7 +3269,7 @@ SECTIONS {
         src/trade.o(.text.GetGameProgressForLinkTrade);
         src/trade.o(.text.IsDeoxysOrMewUntradable);
         src/trade.o(.text.sub_0807A250);
-        src/trade.o(.text.sub_0807A340);
+        src/trade.o(.text.CanRegisterMonForTradingBoard);
         src/trade.o(.text.sub_0807A388);
         src/trade.o(.text.sub_0807A498);
         src/trade.o(.text.sub_0807A4BC);
@@ -8587,7 +8587,7 @@ SECTIONS {
         src/party_menu.o(.text.Task_PrintAndWaitForText);
         src/party_menu.o(.text.IsPartyMenuTextPrinterActive);
         src/party_menu.o(.text.sub_081B18B8);
-        src/party_menu.o(.text.sub_081B18EC);
+        src/party_menu.o(.text.Task_ReturnToChooseMonAfterText);
         src/party_menu.o(.text.sub_081B1954);
         src/party_menu.o(.text.sub_081B19A0);
         src/party_menu.o(.text.sub_081B19EC);

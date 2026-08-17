@@ -16,12 +16,15 @@ extern const u16 sTMHMMoves[];
 #include "constants/pokemon.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "constants/trade.h"
+#include "link_rfu.h"
 #include "main.h"
 #include "menu_helpers.h"
 #include "sprite.h"
 #include "sound.h"
 #include "string_util.h"
 #include "task.h"
+#include "trade.h"
 
 static void Task_ExitPartyMenu(u8 taskId);
 __attribute__((naked)) bool8 PartyMenuSetup(void);
@@ -2861,7 +2864,7 @@ __attribute__((naked)) void sub_081B13D8(void)
         "	bl PlaySE\n\t"
         "_081B1422:\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_081B18EC\n\t"
+        "	bl Task_ReturnToChooseMonAfterText\n\t"
         "_081B1428:\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
@@ -3565,7 +3568,7 @@ __attribute__((naked)) void sub_081B18B8(void)
     );
 }
 
-__attribute__((naked)) void sub_081B18EC(void)
+__attribute__((naked)) void Task_ReturnToChooseMonAfterText(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4397,7 +4400,7 @@ __attribute__((naked)) void sub_081B1E7C(void)
         "	.align 2, 0\n\t"
         "_081B1ED4: .4byte gUnknown_85C97BD + 0xA3E\n\t"
         "_081B1ED8: .4byte gTasks\n\t"
-        "_081B1EDC: .4byte sub_081B18EC + 1\n\t"
+        "_081B1EDC: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4513,7 +4516,7 @@ __attribute__((naked)) void sub_081B1F4C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081B1FA0: .4byte gTasks\n\t"
-        "_081B1FA4: .4byte sub_081B18EC + 1\n\t"
+        "_081B1FA4: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8896,7 +8899,7 @@ __attribute__((naked)) void sub_081B407C(void)
         "_081B40E8: .4byte gUnknown_203CBC8\n\t"
         "_081B40EC: .4byte gStringVar4\n\t"
         "_081B40F0: .4byte gTasks\n\t"
-        "_081B40F4: .4byte sub_081B18EC + 1\n\t"
+        "_081B40F4: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         "_081B40F8:\n\t"
         "	ldrh r0, [r5]\n\t"
         "	bl ItemIsMail\n\t"
@@ -8969,7 +8972,7 @@ __attribute__((naked)) void sub_081B407C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081B4194: .4byte gTasks\n\t"
-        "_081B4198: .4byte sub_081B18EC + 1\n\t"
+        "_081B4198: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9251,7 +9254,7 @@ __attribute__((naked)) void sub_081B433C(void)
         "	bl DisplayPartyPokemonOtherText\n\t"
         "_081B43B6:\n\t"
         "	adds r0, r7, #0\n\t"
-        "	bl sub_081B18EC\n\t"
+        "	bl Task_ReturnToChooseMonAfterText\n\t"
         "_081B43BC:\n\t"
         "	pop {r4, r5, r6, r7}\n\t"
         "	pop {r0}\n\t"
@@ -9546,7 +9549,7 @@ __attribute__((naked)) void sub_081B457C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081B4620: .4byte gTasks\n\t"
-        "_081B4624: .4byte sub_081B18EC + 1\n\t"
+        "_081B4624: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9611,7 +9614,7 @@ __attribute__((naked)) void sub_081B4628(void)
         "_081B4698: .4byte gPlayerParty\n\t"
         "_081B469C: .4byte sPartyMenuBoxes\n\t"
         "_081B46A0: .4byte gTasks\n\t"
-        "_081B46A4: .4byte sub_081B18EC + 1\n\t"
+        "_081B46A4: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9899,7 +9902,7 @@ __attribute__((naked)) void sub_081B4840(void)
         "	.align 2, 0\n\t"
         "_081B48C4: .4byte gUnknown_85C97BD + 0x463\n\t"
         "_081B48C8: .4byte gTasks\n\t"
-        "_081B48CC: .4byte sub_081B18EC + 1\n\t"
+        "_081B48CC: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         "_081B48D0:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -10044,7 +10047,7 @@ __attribute__((naked)) void sub_081B4934(void)
         "	.align 2, 0\n\t"
         "_081B49E4: .4byte gStringVar4\n\t"
         "_081B49E8: .4byte gTasks\n\t"
-        "_081B49EC: .4byte sub_081B18EC + 1\n\t"
+        "_081B49EC: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         "_081B49F0:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -10064,7 +10067,7 @@ __attribute__((naked)) void sub_081B4934(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081B4A10: .4byte gTasks\n\t"
-        "_081B4A14: .4byte sub_081B18EC + 1\n\t"
+        "_081B4A14: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10199,7 +10202,7 @@ __attribute__((naked)) void CursorCb_SendMon(u8 taskId)
         "	.align 2, 0\n\t"
         "_081B4B20: .4byte gStringVar4\n\t"
         "_081B4B24: .4byte gTasks\n\t"
-        "_081B4B28: .4byte sub_081B18EC + 1\n\t"
+        "_081B4B28: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10317,7 +10320,7 @@ __attribute__((naked)) void CursorCb_Enter(u8 taskId)
         "_081B4C18: .4byte gStringVar4\n\t"
         "_081B4C1C: .4byte gUnknown_85C97BD + 0x418\n\t"
         "_081B4C20: .4byte gTasks\n\t"
-        "_081B4C24: .4byte sub_081B18EC + 1\n\t"
+        "_081B4C24: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10484,127 +10487,34 @@ static void CursorCb_Store(u8 taskId)
     Task_ClosePartyMenu(taskId);
 }
 
-__attribute__((naked)) void CursorCb_Register(u8 taskId)
+extern const u8 gUnknown_85CA2B4[];
+extern const u8 gUnknown_85CA2CC[];
+
+static void CursorCb_Register(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _081B4DF4\n\t"
-        "	mov sb, r0\n\t"
-        "	ldrb r0, [r0, #9]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	mov r8, r1\n\t"
-        "	mov r1, r8\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldr r4, _081B4DF8\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	mov r1, sb\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	mov r1, r8\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	mov r1, sb\n\t"
-        "	movs r0, #9\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	mov r1, r8\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl GetHostRfuGameData\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl sub_0807A340\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081B4DFC\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081B4E10\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl Task_ClosePartyMenu\n\t"
-        "	b _081B4E50\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4DF4: .4byte gPartyMenu\n\t"
-        "_081B4DF8: .4byte gPlayerParty\n\t"
-        "_081B4DFC:\n\t"
-        "	ldr r0, _081B4E08\n\t"
-        "	ldr r1, _081B4E0C\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	b _081B4E18\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4E08: .4byte gStringVar4\n\t"
-        "_081B4E0C: .4byte gUnknown_85CA2B4\n\t"
-        "_081B4E10:\n\t"
-        "	ldr r0, _081B4E5C\n\t"
-        "	ldr r1, _081B4E60\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "_081B4E18:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _081B4E64\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0xd\n\t"
-        "	bl PartyMenuRemoveWindow\n\t"
-        "	ldr r4, _081B4E5C\n\t"
-        "	ldr r1, _081B4E68\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl DisplayPartyMenuMessage\n\t"
-        "	ldr r1, _081B4E6C\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B4E70\n\t"
-        "	str r1, [r0]\n\t"
-        "_081B4E50:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081B4E5C: .4byte gStringVar4\n\t"
-        "_081B4E60: .4byte gUnknown_85CA2CC\n\t"
-        "_081B4E64: .4byte sPartyMenuInternal\n\t"
-        "_081B4E68: .4byte gUnknown_85C97BD + 0xAB6\n\t"
-        "_081B4E6C: .4byte gTasks\n\t"
-        "_081B4E70: .4byte sub_081B18EC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 species2 = GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_SPECIES_OR_EGG);
+    u16 species = GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_SPECIES);
+    u8 isModernFatefulEncounter = GetMonData(&gPlayerParty[gPartyMenu.slotId], MON_DATA_MODERN_FATEFUL_ENCOUNTER);
+
+    switch (CanRegisterMonForTradingBoard(*(struct RfuGameCompatibilityData *)GetHostRfuGameData(), species2, species, isModernFatefulEncounter))
+    {
+    case CANT_REGISTER_MON:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CA2B4);
+        break;
+    case CANT_REGISTER_EGG:
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CA2CC);
+        break;
+    default:
+        PlaySE(SE_SELECT);
+        Task_ClosePartyMenu(taskId);
+        return;
+    }
+    PlaySE(SE_FAILURE);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    StringAppend(gStringVar4, gUnknown_85C97BD + 0xAB6);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
 }
 
 __attribute__((naked)) void CursorCb_Trade1(u8 taskId)
@@ -10711,7 +10621,7 @@ __attribute__((naked)) void CursorCb_Trade1(u8 taskId)
         "_081B4F58: .4byte sPartyMenuInternal\n\t"
         "_081B4F5C: .4byte gUnknown_85C97BD + 0xAB6\n\t"
         "_081B4F60: .4byte gTasks\n\t"
-        "_081B4F64: .4byte sub_081B18EC + 1\n\t"
+        "_081B4F64: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         "_081B4F68:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -10850,7 +10760,7 @@ __attribute__((naked)) void CursorCb_Trade2(u8 taskId)
         "_081B508C: .4byte gStringVar4\n\t"
         "_081B5090: .4byte gUnknown_85C97BD + 0xAB6\n\t"
         "_081B5094: .4byte gTasks\n\t"
-        "_081B5098: .4byte sub_081B18EC + 1\n\t"
+        "_081B5098: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10918,7 +10828,7 @@ __attribute__((naked)) void sub_081B50D0(void)
         "	bl PlaySE\n\t"
         "_081B5104:\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_081B18EC\n\t"
+        "	bl Task_ReturnToChooseMonAfterText\n\t"
         "_081B510A:\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
@@ -11010,7 +10920,7 @@ __attribute__((naked)) void CursorCb_FieldMove(u8 taskId)
         "_081B51B4: .4byte 0x00000867\n\t"
         "_081B51B8: .4byte gUnknown_85C97BD + 0x3FA\n\t"
         "_081B51BC: .4byte gTasks\n\t"
-        "_081B51C0: .4byte sub_081B18EC + 1\n\t"
+        "_081B51C0: .4byte Task_ReturnToChooseMonAfterText + 1\n\t"
         "_081B51C4:\n\t"
         "	ldr r1, _081B51EC\n\t"
         "	lsls r0, r4, #3\n\t"
@@ -11266,7 +11176,7 @@ __attribute__((naked)) void sub_081B5378(void)
         "	ldr r0, _081B53D4\n\t"
         "	str r1, [r0]\n\t"
         "	adds r0, r4, #0\n\t"
-        "	bl sub_081B18EC\n\t"
+        "	bl Task_ReturnToChooseMonAfterText\n\t"
         "_081B53CA:\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"

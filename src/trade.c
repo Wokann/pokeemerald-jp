@@ -7262,7 +7262,7 @@ __attribute__((naked)) void sub_0807A250(void)
     );
 }
 
-__attribute__((naked)) void sub_0807A340(void)
+__attribute__((naked)) int CanRegisterMonForTradingBoard(struct RfuGameCompatibilityData player, u16 species2, u16 species, bool8 isModernFatefulEncounter)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
