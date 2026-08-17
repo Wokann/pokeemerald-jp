@@ -3216,7 +3216,7 @@ SECTIONS {
         src/trade.o(.text.DrawTradeMonNicknames);
         src/trade.o(.text.Leader_ReadLinkBuffer);
         src/trade.o(.text.Follower_ReadLinkBuffer);
-        src/trade.o(.text.sub_080783E0);
+        src/trade.o(.text.Leader_HandleCommunication);
         src/trade.o(.text.sub_080785E0);
         src/trade.o(.text.sub_080785F4);
         src/trade.o(.text.sub_08078618);

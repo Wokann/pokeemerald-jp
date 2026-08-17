@@ -141,6 +141,22 @@ enum {
     MSG_FRIENDS_MON_CANT_BE_TRADED,
 };
 
+// IDs for QueueAction
+enum {
+    QUEUE_SEND_DATA,
+    QUEUE_STANDBY,
+    QUEUE_ONLY_MON1,
+    QUEUE_ONLY_MON2,
+    QUEUE_UNUSED1, // Presumably intended for MSG_WAITING_FOR_FRIEND
+    QUEUE_UNUSED2, // Presumably intended for MSG_FRIEND_WANTS_TO_TRADE
+    QUEUE_MON_CANT_BE_TRADED,
+    QUEUE_EGG_CANT_BE_TRADED,
+    QUEUE_FRIENDS_MON_CANT_BE_TRADED,
+};
+
+#define QUEUE_DELAY_MSG   3
+#define QUEUE_DELAY_DATA  5
+
 #define NUM_PLAYER_NAME_SPRITES 3
 #define NUM_PARTNER_NAME_SPRITES 3
 #define NUM_CHOOSE_PKMN_SPRITES 6 // JP creates all 6 Choose-Pokémon sprites
@@ -161,6 +177,7 @@ void sub_08079D98(u8 side);
 void sub_08079EE0(u8 side);
 void sub_08078618(void);
 void SetSelectedMon(u8 cursorPosition);
+void sub_08079A80(u16 action, u8 data);
 extern u8 *StringCopy10(u8 *dest, const u8 *src);
 extern const u8 gUnknown_8300AAE[];
 extern const u8 gUnknown_8300AB1[];
@@ -1128,259 +1145,89 @@ static void Follower_ReadLinkBuffer(u8 mpId, u8 status)
         TradeResetReceivedFlag(1);
 }
 
-__attribute__((naked)) void sub_080783E0(void)
+static void Leader_HandleCommunication(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r6, _0807843C\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x78\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080783F4\n\t"
-        "	b _08078528\n\t"
-        "_080783F4:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x79\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08078400\n\t"
-        "	b _08078528\n\t"
-        "_08078400:\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	ldr r0, _08078440\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08078448\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x6f\n\t"
-        "	movs r0, #6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x80\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _08078444\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x35\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, #0x4d\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_08079A80\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0x79\n\t"
-        "	strb r4, [r2]\n\t"
-        "	adds r0, #0x78\n\t"
-        "	strb r4, [r0]\n\t"
-        "	b _08078528\n\t"
-        "	.align 2, 0\n\t"
-        "_0807843C: .4byte sTradeMenu\n\t"
-        "_08078440: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
-        "_08078444: .4byte 0x0000DDDD\n\t"
-        "_08078448:\n\t"
-        "	ldr r0, _08078490\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08078498\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x80\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _08078494\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, #0x82\n\t"
-        "	strh r3, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_08079A80\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x7b\n\t"
-        "	strb r4, [r1]\n\t"
-        "	adds r0, #0x7a\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x79\n\t"
-        "	strb r4, [r1]\n\t"
-        "	adds r0, #0x78\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #8\n\t"
-        "	b _08078526\n\t"
-        "	.align 2, 0\n\t"
-        "_08078490: .4byte SPECIAL_sub_0813B9A0\n\t"
-        "_08078494: .4byte 0x0000EECC\n\t"
-        "_08078498:\n\t"
-        "	movs r0, #0x81\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080784E4\n\t"
-        "	movs r0, #5\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x80\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _080784E0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, #0x82\n\t"
-        "	strh r3, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_08079A80\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x7b\n\t"
-        "	strb r4, [r1]\n\t"
-        "	adds r0, #0x7a\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x79\n\t"
-        "	strb r4, [r1]\n\t"
-        "	adds r0, #0x78\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #8\n\t"
-        "	b _08078526\n\t"
-        "	.align 2, 0\n\t"
-        "_080784E0: .4byte 0x0000DDEE\n\t"
-        "_080784E4:\n\t"
-        "	ldr r0, _080785C8\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08078528\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x80\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _080785CC\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x82\n\t"
-        "	strh r4, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_08079A80\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x79\n\t"
-        "	strb r5, [r1]\n\t"
-        "	adds r0, #0x78\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #0xb\n\t"
-        "_08078526:\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078528:\n\t"
-        "	ldr r5, _080785D0\n\t"
-        "	ldr r3, [r5]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x7a\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080785C0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x7b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080785C0\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	ldr r0, _080785D4\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08078576\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x80\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _080785D8\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x82\n\t"
-        "	strh r2, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_08079A80\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x7a\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x7b\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #9\n\t"
-        "	strb r1, [r0]\n\t"
-        "_08078576:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x7a\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _0807858C\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x7b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080785C0\n\t"
-        "_0807858C:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_08079BD4\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x80\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _080785DC\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, #0x82\n\t"
-        "	strh r3, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_08079A80\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x7a\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x7b\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x6f\n\t"
-        "	movs r1, #8\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080785C0:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080785C8: .4byte 0x00000202\n\t"
-        "_080785CC: .4byte 0x0000EEBB\n\t"
-        "_080785D0: .4byte sTradeMenu\n\t"
-        "_080785D4: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
-        "_080785D8: .4byte 0x0000CCDD\n\t"
-        "_080785DC: .4byte 0x0000DDEE\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sTradeMenu->playerSelectStatus != STATUS_NONE
+     && sTradeMenu->partnerSelectStatus != STATUS_NONE)
+    {
+        if (sTradeMenu->playerSelectStatus == STATUS_READY
+         && sTradeMenu->partnerSelectStatus == STATUS_READY)
+        {
+            // Both players have selected a Pokémon to trade
+            sTradeMenu->callbackId = CB_SET_SELECTED_MONS;
+            sTradeMenu->linkData[0] = LINKCMD_SET_MONS_TO_TRADE;
+            sTradeMenu->linkData[1] = sTradeMenu->cursorPosition;
+            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            sTradeMenu->playerSelectStatus = sTradeMenu->partnerSelectStatus = STATUS_NONE;
+        }
+        else if (sTradeMenu->playerSelectStatus == STATUS_READY
+              && sTradeMenu->partnerSelectStatus == STATUS_CANCEL)
+        {
+            // The player has selected a Pokémon to trade,
+            // but the partner has selected Cancel
+            sub_08079BD4(MSG_CANCELED);
+            sTradeMenu->linkData[0] = LINKCMD_PARTNER_CANCEL_TRADE;
+            sTradeMenu->linkData[1] = 0;
+            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            sTradeMenu->playerConfirmStatus = sTradeMenu->partnerConfirmStatus = STATUS_NONE;
+            sTradeMenu->playerSelectStatus = sTradeMenu->partnerSelectStatus = STATUS_NONE;
+            sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
+        }
+        else if (sTradeMenu->playerSelectStatus == STATUS_CANCEL
+              && sTradeMenu->partnerSelectStatus == STATUS_READY)
+        {
+            // The partner has selected a Pokémon to trade,
+            // but the player has selected cancel
+            sub_08079BD4(MSG_FRIEND_WANTS_TO_TRADE);
+            sTradeMenu->linkData[0] = LINKCMD_PLAYER_CANCEL_TRADE;
+            sTradeMenu->linkData[1] = 0;
+            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            sTradeMenu->playerConfirmStatus = sTradeMenu->partnerConfirmStatus = STATUS_NONE;
+            sTradeMenu->playerSelectStatus = sTradeMenu->partnerSelectStatus = STATUS_NONE;
+            sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
+        }
+        else if (sTradeMenu->playerSelectStatus == STATUS_CANCEL
+              && sTradeMenu->partnerSelectStatus == STATUS_CANCEL)
+        {
+            // Both players have selected Cancel
+            sTradeMenu->linkData[0] = LINKCMD_BOTH_CANCEL_TRADE;
+            sTradeMenu->linkData[1] = 0;
+            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            sTradeMenu->playerSelectStatus = sTradeMenu->partnerSelectStatus = STATUS_NONE;
+            sTradeMenu->callbackId = CB_INIT_EXIT_CANCELED_TRADE;
+        }
+    }
+
+    if (sTradeMenu->playerConfirmStatus != STATUS_NONE
+     && sTradeMenu->partnerConfirmStatus != STATUS_NONE)
+    {
+        if (sTradeMenu->playerConfirmStatus == STATUS_READY
+         && sTradeMenu->partnerConfirmStatus == STATUS_READY)
+        {
+            // Both players have confirmed trade
+            sTradeMenu->linkData[0] = LINKCMD_START_TRADE;
+            sTradeMenu->linkData[1] = 0;
+            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            sTradeMenu->playerConfirmStatus = STATUS_NONE;
+            sTradeMenu->partnerConfirmStatus = STATUS_NONE;
+            sTradeMenu->callbackId = CB_FADE_TO_START_TRADE;
+        }
+
+        if (sTradeMenu->playerConfirmStatus == STATUS_CANCEL
+         || sTradeMenu->partnerConfirmStatus == STATUS_CANCEL)
+        {
+            // One of the players has decided not to confirm the trade,
+            // or the trade was not allowed.
+            sub_08079BD4(MSG_CANCELED);
+            sTradeMenu->linkData[0] = LINKCMD_PLAYER_CANCEL_TRADE;
+            sTradeMenu->linkData[1] = 0;
+            sub_08079A80(QUEUE_DELAY_DATA, QUEUE_SEND_DATA);
+            sTradeMenu->playerConfirmStatus = STATUS_NONE;
+            sTradeMenu->partnerConfirmStatus = STATUS_NONE;
+            sTradeMenu->callbackId = CB_HANDLE_TRADE_CANCELED;
+        }
+    }
 }
 
 __attribute__((naked)) void sub_080785E0(void)
@@ -1448,7 +1295,7 @@ __attribute__((naked)) void sub_08078618(void)
         "_08078640:\n\t"
         "	cmp r4, #0\n\t"
         "	bne _08078648\n\t"
-        "	bl sub_080783E0\n\t"
+        "	bl Leader_HandleCommunication\n\t"
         "_08078648:\n\t"
         "	pop {r4}\n\t"
         "	pop {r0}\n\t"
@@ -4168,7 +4015,7 @@ __attribute__((naked)) void sub_08079A5C(void)
     );
 }
 
-__attribute__((naked)) void sub_08079A80(void)
+__attribute__((naked)) void sub_08079A80(u16 action, u8 data)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
