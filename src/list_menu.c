@@ -2,6 +2,7 @@
 #include "list_menu.h"
 #include "constants/songs.h"
 #include "task.h"
+#include "text.h"
 
 // Cursors after this point are created using a sprite with their own task.
 // This allows them to have idle animations. Cursors prior to this are simply printed text.
@@ -584,77 +585,22 @@ void ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *arrayId)
         *arrayId = list->scrollOffset + list->selectedRow;
 }
 
-__attribute__((naked)) void ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
+void ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _081AE560\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _081AE552\n\t"
-        "	ldrh r0, [r1, #0x18]\n\t"
-        "	strh r0, [r3]\n\t"
-        "_081AE552:\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _081AE55A\n\t"
-        "	ldrh r0, [r1, #0x1a]\n\t"
-        "	strh r0, [r2]\n\t"
-        "_081AE55A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE560: .4byte gUnknown_3005B68\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+
+    if (scrollOffset != NULL)
+        *scrollOffset = list->scrollOffset;
+    if (selectedRow != NULL)
+        *selectedRow = list->selectedRow;
 }
 
-__attribute__((naked)) u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId)
+u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	ldr r0, _081AE5A8\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4, #0x17]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1a\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	ldrb r1, [r4, #0x16]\n\t"
-        "	lsls r1, r1, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1d\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x1a]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	muls r2, r0, r2\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	ldrb r0, [r4, #0x14]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_081AE5A8: .4byte gUnknown_3005B68\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+    u8 yMultiplier = GetFontAttribute(list->template.fontId, 1) + list->template.itemVerticalPadding;
+
+    return list->selectedRow * yMultiplier + list->template.upText_Y;
 }
 
 __attribute__((naked)) void ListMenuInitInternal(void)
