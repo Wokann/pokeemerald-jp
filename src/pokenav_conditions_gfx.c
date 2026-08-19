@@ -557,6 +557,226 @@ extern const struct SpriteSheet sConditionSelectionSpriteSheets[];
 extern const struct SpriteTemplate sConditionSelectionSpriteTemplate;
 extern const struct SpritePalette sConditionSelectionSpritePalettes[];
 
+static u32 LoopedTask_OpenConditionGraphMenu(s32);
+static u32 GetConditionGraphMenuLoopedTaskActive(void);
+u32 LoopedTask_ExitConditionGraphMenu(s32);
+bool32 OpenConditionGraphMenu(void)
+{
+    struct Pokenav_ConditionMenuGfx *menu = AllocSubstruct(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX, sizeof(struct Pokenav_ConditionMenuGfx));
+
+    if (menu == NULL)
+        return FALSE;
+
+    menu->monPicSpriteId = SPRITE_NONE;
+    menu->loopedTaskId = CreateLoopedTask(LoopedTask_OpenConditionGraphMenu, 1);
+    menu->callback = GetConditionGraphMenuLoopedTaskActive;
+    menu->windowModeState = 0;
+    return TRUE;
+}
+
+void CreateConditionGraphMenuLoopedTask(s32 id)
+{
+    struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
+    menu->loopedTaskId = CreateLoopedTask(sLoopedTaskFuncs[id], 1);
+    menu->callback = GetConditionGraphMenuLoopedTaskActive;
+}
+
+bool32 IsSearchResultLoopedTaskActive(void)
+{
+    // JP: POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX, callback at +0x1810
+    u8 *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
+    return ((bool32 (*)(void))*(u32 *)(gfx + 0x1810))();
+}
+
+
+// JP-only alias: the `bx r1` at the end of IsSearchResultLoopedTaskActive is
+// also labeled sub_081CD5D8 (0x081CD5D8) in the JP ROM.  No separate code.
+__asm__(".set sub_081CD5D8, IsSearchResultLoopedTaskActive + 0x14");
+
+static u32 GetConditionGraphMenuLoopedTaskActive(void)
+{
+    struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
+    return IsLoopedTaskActive(menu->loopedTaskId);
+}
+
+static u32 LoopedTask_OpenConditionGraphMenu(s32 state)
+{
+    u32 zero;
+    struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
+
+    switch (state)
+    {
+    case 0:
+        if (LoadConditionGraphMenuGfx() != TRUE)
+            return LT_PAUSE;
+        return LT_INC_AND_PAUSE;
+    case 1:
+        InitBgTemplates(sMenuBgTemplates, ARRAY_COUNT(sMenuBgTemplates));
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        ChangeBgX(2, 0, BG_COORD_SET);
+        ChangeBgY(2, 0, BG_COORD_SET);
+        ChangeBgX(3, 0, BG_COORD_SET);
+        ChangeBgY(3, 0, BG_COORD_SET);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG3_ON);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(11, 4));
+        DecompressAndCopyTileDataToVram(3, gPokenavCondition_Gfx, 0, 0, 0);
+        return LT_INC_AND_PAUSE;
+    case 2:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        DecompressAndCopyTileDataToVram(2, sConditionGraphData_Gfx, 0, 0, 0);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        LZ77UnCompVram(gPokenavCondition_Tilemap, menu->tilemapBuffers[0]);
+        SetBgTilemapBuffer(3, menu->tilemapBuffers[0]);
+        if (IsConditionMenuSearchMode() == TRUE)
+            CopyToBgTilemapBufferRect(3, gPokenavOptions_Tilemap, 0, 5, 9, 4);
+        CopyBgTilemapBufferToVram(3);
+        CopyPaletteIntoBufferUnfaded(gPokenavCondition_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        CopyPaletteIntoBufferUnfaded(gConditionText_Pal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+        menu->monTransitionX = -80;
+        return LT_INC_AND_PAUSE;
+    case 4:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        LZ77UnCompVram(sConditionGraphData_Tilemap, menu->tilemapBuffers[2]);
+        SetBgTilemapBuffer(2, menu->tilemapBuffers[2]);
+        CopyBgTilemapBufferToVram(2);
+        CopyPaletteIntoBufferUnfaded(gConditionGraphData_Pal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+        ConditionGraph_InitWindow(2);
+        return LT_INC_AND_PAUSE;
+    case 5:
+        BgDmaFill(1, 0, 0, 1);
+        BgDmaFill(1, 17, 1, 1);
+        zero = 0;
+        CpuSet(&zero, menu->tilemapBuffers[1], OBJ_PLTT);
+        SetBgTilemapBuffer(1, menu->tilemapBuffers[1]);
+        return LT_INC_AND_PAUSE;
+    case 6:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        menu->nameGenderWindowId = AddWindow(&sMonNameGenderWindowTemplate);
+        if (IsConditionMenuSearchMode() == TRUE)
+        {
+            menu->listIndexWindowId = AddWindow(&sListIndexWindowTemplate);
+            menu->unusedWindowId1 = AddWindow(&sUnusedWindowTemplate1);
+            menu->unusedWindowId2 = AddWindow(&sUnusedWindowTemplate2);
+        }
+        DeactivateAllTextPrinters();
+        return LT_INC_AND_PAUSE;
+    case 7:
+        CreateConditionMonPic(0);
+        return LT_INC_AND_PAUSE;
+    case 8:
+        CreateMonMarkingsOrPokeballIndicators();
+        return LT_INC_AND_PAUSE;
+    case 9:
+        if (IsConditionMenuSearchMode() == TRUE)
+            CopyUnusedConditionWindowsToVram();
+        return LT_INC_AND_PAUSE;
+    case 10:
+        UpdateConditionGraphMenuWindows(0, (u16)(s8)GetConditionGraphMenuCurrentLoadIndex(), TRUE);
+        return LT_INC_AND_PAUSE;
+    case 11:
+        UpdateConditionGraphMenuWindows(1, (u16)(s8)GetConditionGraphMenuCurrentLoadIndex(), TRUE);
+        return LT_INC_AND_PAUSE;
+    case 12:
+        UpdateConditionGraphMenuWindows(2, (u16)(s8)GetConditionGraphMenuCurrentLoadIndex(), TRUE);
+        return LT_INC_AND_PAUSE;
+    case 13:
+        if (UpdateConditionGraphMenuWindows(3, (u16)(s8)GetConditionGraphMenuCurrentLoadIndex(), TRUE) != TRUE)
+            return LT_PAUSE;
+        PutWindowTilemap(menu->nameGenderWindowId);
+        if (IsConditionMenuSearchMode() == TRUE)
+        {
+            PutWindowTilemap(menu->listIndexWindowId);
+            PutWindowTilemap(menu->unusedWindowId1);
+            PutWindowTilemap(menu->unusedWindowId2);
+        }
+        return LT_INC_AND_PAUSE;
+    case 14:
+        ShowBg(1);
+        HideBg(2);
+        ShowBg(3);
+        if (IsConditionMenuSearchMode() == TRUE)
+            PrintHelpBarText(HELPBAR_CONDITION_MON_STATUS);
+        return LT_INC_AND_PAUSE;
+    case 15:
+        PokenavFadeScreen(POKENAV_FADE_FROM_BLACK);
+        if (!IsConditionMenuSearchMode())
+        {
+            LoadLeftHeaderGfxForIndex(POKENAV_GFX_PARTY_MENU);
+            ShowLeftHeaderGfx(POKENAV_GFX_CONDITION_MENU, TRUE, FALSE);
+            ShowLeftHeaderGfx(POKENAV_GFX_PARTY_MENU, TRUE, FALSE);
+        }
+        return LT_INC_AND_PAUSE;
+    case 16:
+        if (IsPaletteFadeActive())
+            return LT_PAUSE;
+        if (!IsConditionMenuSearchMode() && AreLeftHeaderSpritesMoving())
+            return LT_PAUSE;
+        SetVBlankCallback_(VBlankCB_PokenavConditionGraph);
+        return LT_INC_AND_PAUSE;
+    case 17:
+        DoConditionGraphEnterTransition();
+        ConditionGraph_InitResetScanline(GetConditionGraphPtr());
+        return LT_INC_AND_PAUSE;
+    case 18:
+        if (ConditionGraph_ResetScanline(GetConditionGraphPtr()))
+            return LT_PAUSE;
+        return LT_INC_AND_PAUSE;
+    case 19:
+        ToggleGraphData(TRUE);
+        return LT_INC_AND_PAUSE;
+    case 20:
+        if (!ConditionMenu_UpdateMonEnter(GetConditionGraphPtr(), &menu->monTransitionX))
+        {
+            ResetConditionSparkleSprites(menu->conditionSparkleSprites);
+            if (IsConditionMenuSearchMode() == TRUE || GetConditionGraphCurrentListIndex() != GetMonListCount())
+                CreateConditionSparkleSprites(menu->conditionSparkleSprites, menu->monPicSpriteId, GetNumConditionMonSparkles());
+            return LT_FINISH;
+        }
+        return LT_PAUSE;
+    }
+    return LT_FINISH;
+}
+
+u32 LoopedTask_ExitConditionGraphMenu(s32 state)
+{
+    struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
+
+    switch (state)
+    {
+    case 0:
+        DoConditionGraphExitTransition();
+        DestroyConditionSparkleSprites(menu->conditionSparkleSprites);
+        return LT_INC_AND_CONTINUE;
+    case 1:
+        if (ConditionMenu_UpdateMonExit(GetConditionGraphPtr(), &menu->monTransitionX))
+            return 2;
+        ToggleGraphData(FALSE);
+        return LT_INC_AND_CONTINUE;
+    case 2:
+        PokenavFadeScreen(POKENAV_FADE_TO_BLACK);
+        if (!IsConditionMenuSearchMode())
+            SlideMenuHeaderDown();
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsPaletteFadeActive() || MainMenuLoopedTaskIsBusy())
+            return LT_PAUSE;
+        FreeConditionSparkles(menu->conditionSparkleSprites);
+        HideBg(1);
+        HideBg(2);
+        HideBg(3);
+        return LT_INC_AND_CONTINUE;
+    }
+
+    return LT_FINISH;
+}
 u32 LoopedTask_TransitionMons(s32 state)
 {
     struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
