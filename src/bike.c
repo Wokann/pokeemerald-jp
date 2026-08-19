@@ -11,10 +11,9 @@
 #include "constants/songs.h"
 
 // this file's functions
-// JP: MovePlayerOnMachBike (0x081199EC) and MovePlayerOnAcroBike (0x08119C18)
-// stay in asm (asm/bike_stub_face.s / asm/bike_stub_44.s) because their
-// literal pools live inside the adjacent JP stub functions.
-void MovePlayerOnMachBike(u8, u16, u16);
+// JP: These two naked functions share a section because MovePlayerOnMachBike
+// branches through a literal pool stored in AcroBikeTransition_FaceDirection.
+void MovePlayerOnMachBike();
 void MovePlayerOnAcroBike(u8, u16, u16);
 u8 GetMachBikeTransition(u8 *);
 void MachBikeTransition_FaceDirection(u8);
@@ -30,7 +29,7 @@ u8 AcroBikeHandleInputBunnyHop(u8 *, u16, u16);
 u8 AcroBikeHandleInputWheelieMoving(u8 *, u16, u16);
 u8 AcroBikeHandleInputSidewaysJump(u8 *, u16, u16);
 u8 AcroBikeHandleInputTurnJump(u8 *, u16, u16);
-void AcroBikeTransition_FaceDirection(u8);
+void AcroBikeTransition_FaceDirection();
 void AcroBikeTransition_TurnDirection(u8);
 void AcroBikeTransition_Moving(u8);
 void AcroBikeTransition_NormalToWheelie(u8);
@@ -1016,4 +1015,40 @@ bool32 IsRunningDisallowed(u8 metatile)
         return TRUE;
     else
         return FALSE;
+}
+__attribute__((naked, section(".text.bike_stub_face"))) void MovePlayerOnMachBike(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	sub sp, #4\n\t"
+        "	mov r1, sp\n\t"
+        "	strb r0, [r1]\n\t"
+        "	ldr r4, _08119A18\n\t"
+        "	mov r0, sp\n\t"
+        "	bl GetMachBikeTransition\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x16\n\t"
+        "	adds r0, r0, r4\n\t"
+        "	mov r1, sp\n\t"
+        "	ldrb r1, [r1]\n\t"
+        "	ldr r2, [r0]\n\t"
+        "	adds r0, r1, #0\n\t"
+        "	bl _call_via_r2\n\t"
+        "	add sp, #4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked, section(".text.bike_stub_face"))) void AcroBikeTransition_FaceDirection(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_08119A18: .4byte sMachBikeTransitions\n\t"
+        ".syntax divided\n\t"
+    );
 }

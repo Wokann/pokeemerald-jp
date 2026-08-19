@@ -3751,7 +3751,6 @@ SECTIONS {
         src/metatile_behavior.o(.text.MetatileBehavior_IsLongGrassSouthEdge);
         src/metatile_behavior.o(.text.MetatileBehavior_IsTrainerHillTimer);
         src/field_camera.o(.text);
-        src/field_camera_rest.o(.text);
         src/field_door.o(.text);
         src/field_player_avatar.o(.text.MovementType_Player);
         src/field_player_avatar.o(.text.ObjectEventCB2_NoMovement2);
@@ -7105,7 +7104,7 @@ SECTIONS {
         src/battle_anim_utility_funcs.o(.text.AnimTask_WaitAndRestoreVisibility);
         src/battle_intro.o(.text);
         src/bike.o(.text.MovePlayerOnBike);
-        src/bike_stub_face.o(.text);
+        src/bike.o(.text.bike_stub_face);
         src/bike.o(.text.GetMachBikeTransition);
         src/bike.o(.text.MachBikeTransition_FaceDirection);
         src/bike.o(.text.MachBikeTransition_TurnDirection);
