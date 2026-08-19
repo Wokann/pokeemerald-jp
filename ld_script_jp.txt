@@ -6327,7 +6327,6 @@ SECTIONS {
         src/tv.o(.text.DoTVShowPokemonContestLiveUpdates2);
         src/tv.o(.text.TVShowDone);
         src/tv.o(.text.ResetTVShowState);
-        src/contest_link_80F57C4.o(.text);
         src/contest_util.o(.text);
         src/script_pokemon_util.o(.text);
         src/field_poison.o(.text);
