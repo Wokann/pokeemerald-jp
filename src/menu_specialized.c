@@ -31,7 +31,6 @@ extern const struct CompressedSpriteSheet gMonFrontPicTable[];
 
 extern EWRAM_DATA u8 sMailboxWindowIds[MAILBOXWIN_COUNT];
 extern EWRAM_DATA struct ListMenuItem *sMailboxList;
-extern const u8 *const sLvlUpStatStrings[];
 
 const struct WindowTemplate sWindowTemplates_MailboxMenu[MAILBOXWIN_COUNT] =
 {
@@ -191,19 +190,178 @@ const struct ListMenuTemplate sMoveRelearnerMovesListTemplate =
     .fontId = 1, // JP font id
     .cursorKind = CURSOR_BLACK_ARROW
 };
+static void SpriteCB_ConditionSparkle(struct Sprite *);
+
+#define MENU_SPECIALIZED_CONDITION_RESOURCES __attribute__((section(".rodata.menu_specialized_condition_resources")))
+#define MENU_SPECIALIZED_CONDITION_DATA __attribute__((section(".rodata.menu_specialized_condition_data")))
+
+static const u16 sConditionPokeballPal[] MENU_SPECIALIZED_CONDITION_RESOURCES =
+    INCBIN_U16("graphics/pokenav/condition/pokeball.gbapal");
+const u16 gPokenavConditionCancel_Pal[] MENU_SPECIALIZED_CONDITION_RESOURCES =
+    INCBIN_U16("graphics/pokenav/condition/cancel.gbapal");
+static const u32 sConditionPokeball_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES =
+    INCBIN_U32("graphics/pokenav/condition/pokeball.4bpp");
+static const u32 sConditionPokeballPlaceholder_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES =
+    INCBIN_U32("graphics/pokenav/condition/pokeball_placeholder.4bpp");
+const u8 gPokenavConditionCancel_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES =
+    INCBIN_U8("graphics/pokenav/condition/cancel.4bpp");
+static const u16 sConditionSparkle_Gfx[] MENU_SPECIALIZED_CONDITION_RESOURCES =
+    INCBIN_U16("graphics/pokenav/condition/sparkle.gbapal");
+static const u32 sConditionSparkle_Pal[] MENU_SPECIALIZED_CONDITION_RESOURCES =
+    INCBIN_U32("graphics/pokenav/condition/sparkle.4bpp");
+
+const struct OamData sOam_ConditionMonPic MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .shape = SPRITE_SHAPE(64x64),
+    .size = SPRITE_SIZE(64x64),
+    .priority = 1,
+};
+
+const struct OamData sOam_ConditionSelectionIcon MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+    .priority = 2,
+};
+
+const union AnimCmd sAnim_ConditionSelectionIcon_Selected[] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+const union AnimCmd sAnim_ConditionSelectionIcon_Unselected[] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_END,
+};
+
+const union AnimCmd *const sAnims_ConditionSelectionIcon[] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    sAnim_ConditionSelectionIcon_Selected,
+    sAnim_ConditionSelectionIcon_Unselected,
+};
+
+const struct SpriteSheet sConditionMonPicSheetDescriptor MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .data = NULL,
+    .size = 0x800,
+    .tag = 100,
+};
+
+const struct SpriteTemplate sConditionMonPicTemplateDescriptor MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .tileTag = 100,
+    .paletteTag = 100,
+    .oam = &sOam_ConditionMonPic,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const struct SpritePalette sConditionMonPicPalDescriptor MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .data = NULL,
+    .tag = 100,
+};
+
+const struct SpriteSheet sConditionSelectionIconsSheets[] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    {sConditionPokeball_Gfx, 0x100, 101},
+    {sConditionPokeballPlaceholder_Gfx, 0x20, 103},
+    {gPokenavConditionCancel_Gfx, 0x100, 102},
+    {},
+};
+
+const struct SpritePalette sConditionSelectionIconsPals[] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    {sConditionPokeballPal, 101},
+    {gPokenavConditionCancel_Pal, 102},
+    {},
+};
+
+const struct SpriteTemplate sConditionSelectionIconsTemplate MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .tileTag = 101,
+    .paletteTag = 101,
+    .oam = &sOam_ConditionSelectionIcon,
+    .anims = sAnims_ConditionSelectionIcon,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const struct SpriteSheet sConditionSparkleSheetDescriptor MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .data = sConditionSparkle_Pal,
+    .size = 0x380,
+    .tag = 104,
+};
+
+const struct SpritePalette sConditionSparklePalDescriptor MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .data = sConditionSparkle_Gfx,
+    .tag = 104,
+};
+
+const struct OamData sOam_ConditionSparkle MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .shape = SPRITE_SHAPE(16x16),
+    .size = SPRITE_SIZE(16x16),
+};
+
+const union AnimCmd sAnim_ConditionSparkle[] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    ANIMCMD_FRAME(0, 5), ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(8, 5), ANIMCMD_FRAME(12, 5),
+    ANIMCMD_FRAME(16, 5), ANIMCMD_FRAME(20, 5),
+    ANIMCMD_FRAME(24, 5), ANIMCMD_END,
+};
+
+const union AnimCmd *const sAnims_ConditionSparkle[] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    &sAnim_ConditionSparkle[0], &sAnim_ConditionSparkle[2],
+    &sAnim_ConditionSparkle[4], &sAnim_ConditionSparkle[6],
+    &sAnim_ConditionSparkle[8], &sAnim_ConditionSparkle[10],
+    &sAnim_ConditionSparkle[12],
+};
+
+const struct SpriteTemplate sSpriteTemplate_ConditionSparkle MENU_SPECIALIZED_CONDITION_DATA =
+{
+    .tileTag = 104,
+    .paletteTag = 104,
+    .oam = &sOam_ConditionSparkle,
+    .anims = sAnims_ConditionSparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_ConditionSparkle,
+};
+
+const s16 sConditionSparkleCoords[MAX_CONDITION_SPARKLES][2] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    {0, -35}, {20, -28}, {33, -10}, {33, 10}, {20, 28},
+    {0, 35}, {-20, 28}, {-33, 10}, {-33, -10}, {-20, -28},
+};
+
+const u8 gText_MaxHP[] MENU_SPECIALIZED_CONDITION_DATA = _("さいだいHP");
+const u8 gText_Attack[] MENU_SPECIALIZED_CONDITION_DATA = _("こうげき");
+const u8 gText_Defense[] MENU_SPECIALIZED_CONDITION_DATA = _("ぼうぎょ");
+const u8 gText_Speed[] MENU_SPECIALIZED_CONDITION_DATA = _("すばやさ");
+const u8 gText_SpAtk[] MENU_SPECIALIZED_CONDITION_DATA = _("とくこう");
+const u8 gText_SpDef[] MENU_SPECIALIZED_CONDITION_DATA = _("とくぼう");
+const u8 gText_Plus[] MENU_SPECIALIZED_CONDITION_DATA = _("{PLUS}");
+const u8 gText_Dash[] MENU_SPECIALIZED_CONDITION_DATA = _("ー");
+
+const u8 *const sLvlUpStatStrings[] MENU_SPECIALIZED_CONDITION_DATA =
+{
+    gText_MaxHP, gText_Attack, gText_Defense,
+    gText_SpAtk, gText_SpDef, gText_Speed,
+};
+
 extern void sub_08198D44(const struct WindowTemplate *template, u8 arg1, u8 arg2, u8 arg3);
 #define JP_MOVE_DESCRIPTION_LENGTH 56
 extern const u8 gMoveDescriptionsJP[]; // JP fixed-width move-description table (0x38-byte entries)
-extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
-extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898
-extern const struct SpriteTemplate sConditionMonPicTemplateDescriptor; // JP 0x085FA8A0
-extern const struct SpritePalette sConditionMonPicPalDescriptor;     // JP 0x085FA8B8
-extern const struct SpriteSheet sConditionSelectionIconsSheets[4];   // JP 0x085FA8C0
-extern const struct SpritePalette sConditionSelectionIconsPals[3];   // JP 0x085FA8E0
-extern const struct SpriteTemplate sConditionSelectionIconsTemplate; // JP 0x085FA8F8
-extern const struct SpriteSheet sConditionSparkleSheetDescriptor; // JP 0x085FA910
-extern const struct SpritePalette sConditionSparklePalDescriptor; // JP 0x085FA918
-extern const s16 sConditionSparkleCoords[MAX_CONDITION_SPARKLES][2];
 
 static void MailboxMenu_MoveCursorFunc(s32, bool8, struct ListMenu *);
 static void ConditionGraph_CalcRightHalf(struct ConditionGraph *);

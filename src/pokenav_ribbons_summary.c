@@ -56,7 +56,7 @@ extern const union AnimCmd sAnim_ConditionSparkle[];
 extern const union AnimCmd *const sAnims_ConditionSparkle;
 extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const s16 sConditionSparkleCoords[];
-extern const u8 *const sLvlUpStatStrings;
+extern const u8 *const sLvlUpStatStrings[];
 extern const struct WindowTemplate sWindowTemplates_MailboxMenu[];
 extern const u8 sEmptyItemName[];
 extern const struct WindowTemplate sMoveRelearnerWindowTemplates[];

@@ -434,7 +434,7 @@ $(C_BUILDDIR)/pokenav_match_call_list.o: src/pokenav_match_call_list.c src/data/
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_match_call_list.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_match_call_list.gen.s
 
-$(C_BUILDDIR)/menu_specialized.o: src/menu_specialized.c charmap.txt
+$(C_BUILDDIR)/menu_specialized.o: src/menu_specialized.c charmap.txt $(wildcard graphics/pokenav/condition/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/menu_specialized.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/menu_specialized.gen.s | $(AS) $(ASFLAGS) -o $@ -
