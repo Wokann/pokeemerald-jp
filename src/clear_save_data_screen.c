@@ -14,9 +14,22 @@
 
 extern const u8 gText_ClearAllSaveData[];
 extern const u8 gText_ClearingData[];
-extern const struct BgTemplate sClearSaveBgTemplates[2];
-extern const struct WindowTemplate sClearSaveTextWindow[];
-extern const struct WindowTemplate sClearSaveYesNo[];
+#define CLEAR_SAVE_DATA __attribute__((section(".rodata.clear_save_data_screen_data")))
+
+static CLEAR_SAVE_DATA const struct BgTemplate sClearSaveBgTemplates[2] =
+{
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 0, .mapBaseIndex = 30, .screenSize = 0, .paletteMode = 0, .priority = 1, .baseTile = 0 },
+};
+static CLEAR_SAVE_DATA const struct WindowTemplate sClearSaveTextWindow[] =
+{
+    { .bg = 0, .tilemapLeft = 3, .tilemapTop = 15, .width = 26, .height = 4, .paletteNum = 15, .baseBlock = 11 },
+    DUMMY_WIN_TEMPLATE
+};
+static CLEAR_SAVE_DATA const struct WindowTemplate sClearSaveYesNo[] =
+{
+    { .bg = 0, .tilemapLeft = 3, .tilemapTop = 2, .width = 5, .height = 4, .paletteNum = 15, .baseBlock = 115 }
+};
 void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 
 static void Task_DoClearSaveDataScreenYesNo(u8);

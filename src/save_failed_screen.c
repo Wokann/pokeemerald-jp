@@ -25,15 +25,65 @@ extern const u8 gText_SaveCompleteGameCannotContinue[];
 extern const u8 gText_SaveCompletePressA[];
 extern const u8 gText_GamePlayCannotBeContinued[];
 
-// ROM-resident data (bound to fixed addresses in data/data.s).
-extern const struct OamData sClockOamData;
-extern const struct BgTemplate sSaveFailedBgTemplates[3];
-extern const struct WindowTemplate sDummyWindowTemplate[];
-extern const struct WindowTemplate sWindowTemplate_Text[];
-extern const struct WindowTemplate sWindowTemplate_Clock[];
-extern const u8 sClockFrames[8][3];
-extern const u8 sSaveFailedClockPal[];
-extern const u32 sSaveFailedClockGfx[];
+#define SAVE_FAILED_DATA __attribute__((section(".rodata.save_failed_screen_data")))
+
+static SAVE_FAILED_DATA const struct OamData sClockOamData =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0
+};
+
+static SAVE_FAILED_DATA const struct BgTemplate sSaveFailedBgTemplates[3] =
+{
+    { .bg = 0, .charBaseIndex = 2, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 0, .mapBaseIndex = 14, .screenSize = 0, .paletteMode = 0, .priority = 2, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 0, .mapBaseIndex = 15, .screenSize = 0, .paletteMode = 0, .priority = 3, .baseTile = 0 },
+};
+
+static SAVE_FAILED_DATA const struct WindowTemplate sDummyWindowTemplate[] = { DUMMY_WIN_TEMPLATE };
+static SAVE_FAILED_DATA const struct WindowTemplate sWindowTemplate_Text[] =
+{
+    { .bg = 0, .tilemapLeft = 1, .tilemapTop = 13, .width = 28, .height = 6, .paletteNum = 15, .baseBlock = 1 }
+};
+static SAVE_FAILED_DATA const struct WindowTemplate sWindowTemplate_Clock[] =
+{
+    { .bg = 0, .tilemapLeft = 14, .tilemapTop = 9, .width = 2, .height = 2, .paletteNum = 15, .baseBlock = 169 }
+};
+static SAVE_FAILED_DATA const u8 sClockFrames[8][3] =
+{
+    { 1, 0, 0 }, { 5, 0, 0 }, { 9, 0, 0 }, { 5, 0, 1 },
+    { 1, 0, 1 }, { 5, 1, 1 }, { 9, 1, 0 }, { 5, 1, 0 },
+};
+static SAVE_FAILED_DATA const u8 sSaveFailedClockPal[] =
+{
+    0x2C, 0x2E, 0x00, 0x00, 0xE7, 0x1C, 0xEF, 0x3D,
+    0xF7, 0x5E, 0xFF, 0x7F, 0x1F, 0x15, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+static SAVE_FAILED_DATA const u32 sSaveFailedClockGfx[] =
+{
+    0x00018010, 0x0000000A, 0x44020022, 0x02550200,
+    0x65554200, 0x03305420, 0x30556542, 0x001C0003,
+    0x55040044, 0x56120400, 0x03002455, 0x03300245,
+    0x10246E55, 0x55274003, 0x03203300, 0xFC554300,
+    0x53104B20, 0x23100400, 0x03001E00, 0x30BF0245,
+    0x4B202403, 0x5B105310, 0x47607FC0, 0xD0C25310,
+    0x663B207F, 0x00650245, 0x00BF6603, 0x7FF0668C,
+    0x7FF07FF0, 0x7FF07FF0, 0x50E77FF0, 0x0047607F,
+    0xF056667F, 0x107FC07F, 0x7FF0C023, 0x00007F70,
+};
 
 // sClockInfo enum
 enum
