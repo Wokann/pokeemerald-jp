@@ -9598,6 +9598,8 @@ SECTIONS {
         src/pokemon_summary_screen.o(.rodata.move_descriptions_jp);
         src/data/text/nature_names.o(.rodata);
         data/data_b2c_mid1.o(.rodata.mid1_prefix);
+        src/pokemon_summary_screen.o(.rodata.pokemon_summary_layout_data);
+        data/data_b2c_mid1.o(.rodata.mid1_sprite_data);
         src/pokedex_area_region_map.o(.rodata.pokedex_area_region_map_data);
         src/battle_pyramid_bag.o(.rodata.battle_pyramid_bag_data);
         src/pokenav.o(.rodata);

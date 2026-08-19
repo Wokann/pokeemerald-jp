@@ -18,41 +18,7 @@ gUnknown_85ECE88: @ 0x85ECE88
 gUnknown_85ECFBC: @ 0x85ECFBC
 	.incbin "baserom_jp.gba", 0x5ecfbc, 0x78
 
-	.globl gUnknown_85ED034
-gUnknown_85ED034: @ 0x85ED034
-	.incbin "baserom_jp.gba", 0x5ed034, 0xc
-
-	.globl gUnknown_85ED040
-gUnknown_85ED040: @ 0x85ED040
-	.incbin "baserom_jp.gba", 0x5ed040, 0xc
-
-	.globl gUnknown_85ED04C
-gUnknown_85ED04C: @ 0x85ED04C
-	.incbin "baserom_jp.gba", 0x5ed04c, 0xc
-
-	.globl gUnknown_85ED058
-gUnknown_85ED058: @ 0x85ED058
-	.incbin "baserom_jp.gba", 0x5ed058, 0xc
-
-	.globl gUnknown_85ED064
-gUnknown_85ED064: @ 0x85ED064
-	.incbin "baserom_jp.gba", 0x5ed064, 0x8
-
-	.globl gUnknown_85ED06C
-gUnknown_85ED06C: @ 0x85ED06C
-	.incbin "baserom_jp.gba", 0x5ed06c, 0xa8
-
-	.globl gUnknown_85ED114
-gUnknown_85ED114: @ 0x85ED114
-	.incbin "baserom_jp.gba", 0x5ed114, 0x20
-
-	.globl gUnknown_85ED134
-gUnknown_85ED134: @ 0x85ED134
-	.incbin "baserom_jp.gba", 0x5ed134, 0x28
-
-	.globl gUnknown_85ED15C
-gUnknown_85ED15C: @ 0x85ED15C
-	.incbin "baserom_jp.gba", 0x5ed15c, 0x20
+	.section .rodata.mid1_sprite_data
 
 	.globl gUnknown_85ED17C
 gUnknown_85ED17C: @ 0x85ED17C

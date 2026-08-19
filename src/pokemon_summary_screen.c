@@ -1,6 +1,90 @@
 #include "global.h"
 #include "pokemon_summary_screen.h"
 #include "data/text/move_descriptions.h"
+#include "bg.h"
+#include "window.h"
+
+#define SUMMARY_LAYOUT_DATA __attribute__((section(".rodata.pokemon_summary_layout_data")))
+#define SUMMARY_WIN(bg_, left_, top_, width_, height_, pal_, base_) \
+    { .bg = (bg_), .tilemapLeft = (left_), .tilemapTop = (top_), .width = (width_), .height = (height_), .paletteNum = (pal_), .baseBlock = (base_) }
+
+extern const u8 gUnknown_85ECE88[];
+
+struct SlidingWindow
+{
+    const u16 *gfx;
+    u16 defaultTile;
+    u8 width;
+    u8 height;
+    u8 left;
+    u8 top;
+};
+
+SUMMARY_LAYOUT_DATA static const struct SlidingWindow sStatusSlidingWindow1 =
+{ (const u16 *)(gUnknown_85ECE88 + 0x10), 1, 10, 2, 0, 17 };
+SUMMARY_LAYOUT_DATA static const struct SlidingWindow sStatusSlidingWindow2 =
+{ (const u16 *)(gUnknown_85ECE88 + 0x10), 1, 10, 2, 0, 49 };
+SUMMARY_LAYOUT_DATA static const struct SlidingWindow sPowerAccSlidingWindow =
+{ (const u16 *)(gUnknown_85ECE88 + 0x38), 0, 9, 7, 1, 45 };
+SUMMARY_LAYOUT_DATA static const struct SlidingWindow sAppealJamSlidingWindow =
+{ (const u16 *)(gUnknown_85ECE88 + 0xB6), 0, 9, 7, 1, 45 };
+SUMMARY_LAYOUT_DATA static const s8 sMultiBattleOrder[] = {0, 2, 3, 1, 4, 5};
+
+SUMMARY_LAYOUT_DATA
+static const struct WindowTemplate sSummaryTemplate[] =
+{
+    SUMMARY_WIN(0, 1, 0, 9, 2, 6, 1),
+    SUMMARY_WIN(0, 1, 0, 9, 2, 6, 19),
+    SUMMARY_WIN(0, 1, 0, 6, 2, 6, 37),
+    SUMMARY_WIN(0, 1, 0, 7, 2, 6, 49),
+    SUMMARY_WIN(0, 24, 0, 5, 2, 7, 63),
+    SUMMARY_WIN(0, 24, 0, 6, 2, 7, 73),
+    SUMMARY_WIN(0, 24, 0, 6, 2, 7, 85),
+    SUMMARY_WIN(0, 11, 4, 3, 2, 6, 97),
+    SUMMARY_WIN(0, 11, 4, 8, 2, 6, 103),
+    SUMMARY_WIN(0, 11, 6, 4, 2, 6, 119),
+    SUMMARY_WIN(0, 11, 7, 4, 6, 6, 127),
+    SUMMARY_WIN(0, 22, 7, 4, 6, 6, 151),
+    SUMMARY_WIN(0, 11, 14, 18, 4, 6, 175),
+    SUMMARY_WIN(0, 1, 17, 5, 2, 6, 247),
+    SUMMARY_WIN(0, 2, 15, 8, 4, 6, 257),
+    SUMMARY_WIN(0, 2, 15, 4, 4, 6, 289),
+    SUMMARY_WIN(0, 22, 4, 2, 2, 6, 305),
+    SUMMARY_WIN(0, 1, 2, 4, 2, 7, 309),
+    SUMMARY_WIN(0, 1, 12, 9, 2, 6, 317),
+    SUMMARY_WIN(0, 4, 14, 6, 2, 6, 335),
+    DUMMY_WIN_TEMPLATE,
+};
+
+SUMMARY_LAYOUT_DATA
+static const struct WindowTemplate sPageInfoTemplate[] =
+{
+    SUMMARY_WIN(0, 14, 4, 7, 2, 6, 347),
+    SUMMARY_WIN(0, 24, 4, 5, 2, 6, 361),
+    SUMMARY_WIN(0, 11, 9, 18, 4, 6, 371),
+    SUMMARY_WIN(0, 11, 14, 18, 4, 6, 443),
+};
+
+SUMMARY_LAYOUT_DATA
+static const struct WindowTemplate sPageSkillsTemplate[] =
+{
+    SUMMARY_WIN(0, 11, 4, 9, 2, 6, 347),
+    SUMMARY_WIN(0, 21, 4, 8, 2, 6, 365),
+    SUMMARY_WIN(0, 15, 7, 7, 6, 6, 381),
+    SUMMARY_WIN(0, 26, 7, 3, 6, 6, 423),
+    SUMMARY_WIN(0, 21, 14, 8, 4, 6, 441),
+};
+
+SUMMARY_LAYOUT_DATA
+static const struct WindowTemplate sPageMovesTemplate[] =
+{
+    SUMMARY_WIN(0, 15, 4, 7, 10, 6, 347),
+    SUMMARY_WIN(0, 23, 4, 6, 10, 8, 417),
+    SUMMARY_WIN(0, 11, 15, 18, 4, 6, 477),
+    SUMMARY_WIN(0, 6, 15, 3, 4, 6, 549),
+};
+
+
 
 __attribute__((naked)) void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
 {
@@ -2092,7 +2176,7 @@ __attribute__((naked)) void sub_081C02E8(void)
         "	b _081C0378\n\t"
         "	.align 2, 0\n\t"
         "_081C0368: .4byte gUnknown_203CBE8\n\t"
-        "_081C036C: .4byte gUnknown_85ED064\n\t"
+        "_081C036C: .4byte sMultiBattleOrder\n\t"
         "_081C0370: .4byte 0x000040BE\n\t"
         "_081C0374:\n\t"
         "	movs r0, #1\n\t"
@@ -4607,7 +4691,7 @@ __attribute__((naked)) void sub_081C16D8(void)
         "	bl sub_081C15E4\n\t"
         "	b _081C1746\n\t"
         "	.align 2, 0\n\t"
-        "_081C1710: .4byte gUnknown_85ED04C\n\t"
+        "_081C1710: .4byte sPowerAccSlidingWindow\n\t"
         "_081C1714: .4byte gUnknown_203CBE8\n\t"
         "_081C1718: .4byte 0x000020BC\n\t"
         "_081C171C:\n\t"
@@ -4667,7 +4751,7 @@ __attribute__((naked)) void sub_081C1754(void)
         "	b _081C1794\n\t"
         "	.align 2, 0\n\t"
         "_081C177C: .4byte gUnknown_3005B68\n\t"
-        "_081C1780: .4byte gUnknown_85ED04C\n\t"
+        "_081C1780: .4byte sPowerAccSlidingWindow\n\t"
         "_081C1784:\n\t"
         "	movs r0, #2\n\t"
         "	ldrsh r1, [r4, r0]\n\t"
@@ -4708,7 +4792,7 @@ __attribute__((naked)) void sub_081C1754(void)
         "	bl PutWindowTilemap\n\t"
         "	b _081C1808\n\t"
         "	.align 2, 0\n\t"
-        "_081C17D0: .4byte gUnknown_85ED04C\n\t"
+        "_081C17D0: .4byte sPowerAccSlidingWindow\n\t"
         "_081C17D4: .4byte gUnknown_203CBE8\n\t"
         "_081C17D8: .4byte 0x000020BC\n\t"
         "_081C17DC: .4byte 0x000040C0\n\t"
@@ -4788,7 +4872,7 @@ __attribute__((naked)) void sub_081C1830(void)
         "	bl sub_081C15E4\n\t"
         "	b _081C18A4\n\t"
         "	.align 2, 0\n\t"
-        "_081C186C: .4byte gUnknown_85ED058\n\t"
+        "_081C186C: .4byte sAppealJamSlidingWindow\n\t"
         "_081C1870: .4byte gUnknown_203CBE8\n\t"
         "_081C1874: .4byte 0x000030BC\n\t"
         "_081C1878:\n\t"
@@ -4849,7 +4933,7 @@ __attribute__((naked)) void sub_081C18B4(void)
         "	b _081C18F4\n\t"
         "	.align 2, 0\n\t"
         "_081C18DC: .4byte gUnknown_3005B68\n\t"
-        "_081C18E0: .4byte gUnknown_85ED058\n\t"
+        "_081C18E0: .4byte sAppealJamSlidingWindow\n\t"
         "_081C18E4:\n\t"
         "	movs r0, #2\n\t"
         "	ldrsh r1, [r4, r0]\n\t"
@@ -4898,7 +4982,7 @@ __attribute__((naked)) void sub_081C18B4(void)
         "	bl DrawContestMoveHearts\n\t"
         "	b _081C1980\n\t"
         "	.align 2, 0\n\t"
-        "_081C1944: .4byte gUnknown_85ED058\n\t"
+        "_081C1944: .4byte sAppealJamSlidingWindow\n\t"
         "_081C1948: .4byte gUnknown_203CBE8\n\t"
         "_081C194C: .4byte 0x000030BC\n\t"
         "_081C1950: .4byte 0x000040C0\n\t"
@@ -4983,9 +5067,9 @@ __attribute__((naked)) void sub_081C19A8(void)
         "	bl sub_081C15E4\n\t"
         "	b _081C1A16\n\t"
         "	.align 2, 0\n\t"
-        "_081C19F0: .4byte gUnknown_85ED034\n\t"
+        "_081C19F0: .4byte sStatusSlidingWindow1\n\t"
         "_081C19F4: .4byte gUnknown_203CBE8\n\t"
-        "_081C19F8: .4byte gUnknown_85ED040\n\t"
+        "_081C19F8: .4byte sStatusSlidingWindow2\n\t"
         "_081C19FC:\n\t"
         "	ldr r0, _081C1A1C\n\t"
         "	movs r1, #8\n\t"
@@ -5035,7 +5119,7 @@ __attribute__((naked)) void sub_081C1A24(void)
         "	b _081C1A64\n\t"
         "	.align 2, 0\n\t"
         "_081C1A4C: .4byte gUnknown_3005B68\n\t"
-        "_081C1A50: .4byte gUnknown_85ED034\n\t"
+        "_081C1A50: .4byte sStatusSlidingWindow1\n\t"
         "_081C1A54:\n\t"
         "	movs r0, #2\n\t"
         "	ldrsh r1, [r5, r0]\n\t"
@@ -5086,9 +5170,9 @@ __attribute__((naked)) void sub_081C1A24(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C1ABC: .4byte gUnknown_85ED034\n\t"
+        "_081C1ABC: .4byte sStatusSlidingWindow1\n\t"
         "_081C1AC0: .4byte gUnknown_203CBE8\n\t"
-        "_081C1AC4: .4byte gUnknown_85ED040\n\t"
+        "_081C1AC4: .4byte sStatusSlidingWindow2\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5651,7 +5735,7 @@ __attribute__((naked)) void ResetWindows(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C1ECC: .4byte gUnknown_85ED06C\n\t"
+        "_081C1ECC: .4byte sSummaryTemplate\n\t"
         "_081C1ED0: .4byte gUnknown_203CBE8\n\t"
         "_081C1ED4: .4byte 0x000040CB\n\t"
         ".syntax divided\n\t"
@@ -6815,7 +6899,7 @@ __attribute__((naked)) void PrintMonOTID(void)
         "	bl SummaryScreen_PrintTextOnWindow\n\t"
         "	b _081C2822\n\t"
         "	.align 2, 0\n\t"
-        "_081C2804: .4byte gUnknown_85ED114\n\t"
+        "_081C2804: .4byte sPageInfoTemplate\n\t"
         "_081C2808: .4byte gUnknown_203CBE8\n\t"
         "_081C280C:\n\t"
         "	adds r1, r0, #0\n\t"
@@ -6882,7 +6966,7 @@ __attribute__((naked)) void PrintEggOTID(void)
         "	.align 2, 0\n\t"
         "_081C2880: .4byte gStringVar1\n\t"
         "_081C2884: .4byte gUnknown_203CBE8\n\t"
-        "_081C2888: .4byte gUnknown_85ED114\n\t"
+        "_081C2888: .4byte sPageInfoTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6926,7 +7010,7 @@ __attribute__((naked)) void PrintMonAbilityDescription(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C28D4: .4byte gUnknown_203CBE8\n\t"
-        "_081C28D8: .4byte gUnknown_85ED114\n\t"
+        "_081C28D8: .4byte sPageInfoTemplate\n\t"
         "_081C28DC: .4byte 0x082EBDC4\n\t"
         ".syntax divided\n\t"
     );
@@ -6971,7 +7055,7 @@ __attribute__((naked)) void PrintMonAbilityName(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C2928: .4byte gUnknown_203CBE8\n\t"
-        "_081C292C: .4byte gUnknown_85ED114\n\t"
+        "_081C292C: .4byte sPageInfoTemplate\n\t"
         "_081C2930: .4byte 0x082EC034\n\t"
         ".syntax divided\n\t"
     );
@@ -7127,7 +7211,7 @@ __attribute__((naked)) void PrintMonTrainerMemo(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C2A70: .4byte gUnknown_85ED114\n\t"
+        "_081C2A70: .4byte sPageInfoTemplate\n\t"
         "_081C2A74: .4byte gStringVar4\n\t"
         ".syntax divided\n\t"
     );
@@ -7437,7 +7521,7 @@ __attribute__((naked)) void PrintLeftColumnStats(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C2C7C: .4byte gUnknown_85ED114\n\t"
+        "_081C2C7C: .4byte sPageInfoTemplate\n\t"
         "_081C2C80: .4byte gText_FiveMarks\n\t"
         ".syntax divided\n\t"
     );
@@ -7466,7 +7550,7 @@ __attribute__((naked)) void PrintRightColumnStats(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C2CAC: .4byte gUnknown_85ED114\n\t"
+        "_081C2CAC: .4byte sPageInfoTemplate\n\t"
         "_081C2CB0: .4byte gText_FiveMarks\n\t"
         ".syntax divided\n\t"
     );
@@ -7531,7 +7615,7 @@ __attribute__((naked)) void PrintEggState(void)
         "	.align 2, 0\n\t"
         "_081C2D1C: .4byte gUnknown_85CA3D9 + 0x33\n\t"
         "_081C2D20: .4byte gUnknown_85CA3D9 + 0x4C\n\t"
-        "_081C2D24: .4byte gUnknown_85ED114\n\t"
+        "_081C2D24: .4byte sPageInfoTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7608,7 +7692,7 @@ __attribute__((naked)) void PrintEggMemo(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C2DB4: .4byte gUnknown_85CA593 + 0x23\n\t"
-        "_081C2DB8: .4byte gUnknown_85ED114\n\t"
+        "_081C2DB8: .4byte sPageInfoTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7777,7 +7861,7 @@ __attribute__((naked)) void PrintHeldItemName(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C2F00: .4byte gStringVar1\n\t"
-        "_081C2F04: .4byte gUnknown_85ED134\n\t"
+        "_081C2F04: .4byte sPageSkillsTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7831,7 +7915,7 @@ __attribute__((naked)) void PrintRibbonCount(void)
         "_081C2F64: .4byte gStringVar1\n\t"
         "_081C2F68: .4byte gStringVar4\n\t"
         "_081C2F6C: .4byte gText_Register + 0x67\n\t"
-        "_081C2F70: .4byte gUnknown_85ED134\n\t"
+        "_081C2F70: .4byte sPageSkillsTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7944,7 +8028,7 @@ __attribute__((naked)) void sub_081C303C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C3060: .4byte gUnknown_85ED134\n\t"
+        "_081C3060: .4byte sPageSkillsTemplate\n\t"
         "_081C3064: .4byte gStringVar4\n\t"
         ".syntax divided\n\t"
     );
@@ -8033,7 +8117,7 @@ __attribute__((naked)) void ShowPokemonSummaryScreenSet40EF(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C3114: .4byte gUnknown_85ED134\n\t"
+        "_081C3114: .4byte sPageSkillsTemplate\n\t"
         "_081C3118: .4byte gStringVar4\n\t"
         ".syntax divided\n\t"
     );
@@ -8100,7 +8184,7 @@ __attribute__((naked)) void PrintExpPointsNextLevel(void)
         "	b _081C31AE\n\t"
         "	.align 2, 0\n\t"
         "_081C3194: .4byte gUnknown_203CBE8\n\t"
-        "_081C3198: .4byte gUnknown_85ED134\n\t"
+        "_081C3198: .4byte sPageSkillsTemplate\n\t"
         "_081C319C: .4byte gStringVar1\n\t"
         "_081C31A0: .4byte gText_Register + 0x23\n\t"
         "_081C31A4: .4byte gExperienceTables\n\t"
@@ -8424,7 +8508,7 @@ __attribute__((naked)) void PrintMoveNameAndPP(void)
         "	b _081C3480\n\t"
         "	.align 2, 0\n\t"
         "_081C3438: .4byte gUnknown_203CBE8\n\t"
-        "_081C343C: .4byte gUnknown_85ED15C\n\t"
+        "_081C343C: .4byte sPageMovesTemplate\n\t"
         "_081C3440: .4byte gMoveNames\n\t"
         "_081C3444: .4byte gStringVar1\n\t"
         "_081C3448: .4byte gStringVar2\n\t"
@@ -8752,7 +8836,7 @@ __attribute__((naked)) void PrintContestMoveDescription(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C36C4: .4byte gUnknown_203CBE8\n\t"
-        "_081C36C8: .4byte gUnknown_85ED15C\n\t"
+        "_081C36C8: .4byte sPageMovesTemplate\n\t"
         "_081C36CC: .4byte gContestEffectDescriptionPointers\n\t"
         "_081C36D0: .4byte gContestMoves\n\t"
         ".syntax divided\n\t"
@@ -8801,7 +8885,7 @@ __attribute__((naked)) void PrintMoveDetails(void)
         "	bl SummaryScreen_PrintTextOnWindow\n\t"
         "	b _081C3758\n\t"
         "	.align 2, 0\n\t"
-        "_081C3728: .4byte gUnknown_85ED15C\n\t"
+        "_081C3728: .4byte sPageMovesTemplate\n\t"
         "_081C372C: .4byte gUnknown_203CBE8\n\t"
         "_081C3730: .4byte 0x000040C0\n\t"
         "_081C3734: .4byte gUnknown_85E7FFC\n\t"
@@ -8880,7 +8964,7 @@ __attribute__((naked)) void PrintNewMoveDetailsOrCancelText(void)
         "	bl SummaryScreen_PrintTextOnWindow\n\t"
         "	b _081C3866\n\t"
         "	.align 2, 0\n\t"
-        "_081C37C4: .4byte gUnknown_85ED15C\n\t"
+        "_081C37C4: .4byte sPageMovesTemplate\n\t"
         "_081C37C8: .4byte gUnknown_203CBE8\n\t"
         "_081C37CC: .4byte 0x000040C4\n\t"
         "_081C37D0: .4byte gText_Cancel\n\t"
@@ -8996,7 +9080,7 @@ __attribute__((naked)) void sub_081C3888(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C38C0: .4byte gUnknown_85ED15C\n\t"
+        "_081C38C0: .4byte sPageMovesTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9086,7 +9170,7 @@ __attribute__((naked)) void PrintEggOTName(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C3974: .4byte gUnknown_85ED15C\n\t"
+        "_081C3974: .4byte sPageMovesTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9119,7 +9203,7 @@ __attribute__((naked)) void PrintHMMovesCantBeForgotten(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C39AC: .4byte gUnknown_85ED15C\n\t"
+        "_081C39AC: .4byte sPageMovesTemplate\n\t"
         "_081C39B0: .4byte gUnknown_85CA3D9 + 0xAE\n\t"
         ".syntax divided\n\t"
     );
