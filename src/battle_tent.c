@@ -44,6 +44,7 @@ static void GiveSlateportTentPrize(void);
 static void SelectInitialRentalMons(void);
 static void SwapRentalMons(void);
 static void GenerateOpponentMons(void);
+void GenerateInitialRentalMons(void);
 // Kept as naked asm: agbcc cannot reproduce the JP register allocation
 // for the rental-mon generation loop (sb/r8 stack pointers).
 
@@ -62,13 +63,51 @@ extern u16 sRandMonId;
 // JP asm name for the still-asm frontier save helper; US: SaveGameFrontier.
 void sub_081A482C(void);
 
-// JP keeps the tent dispatch/reward tables in ROM.
-extern void (*const sVerdanturfTentFuncs[])(void);
-extern const u16 sVerdanturfTentRewards[1];
-extern void (*const sFallarborTentFuncs[])(void);
-extern const u16 sFallarborTentRewards[1];
-extern void (*const sSlateportTentFuncs[])(void);
-extern const u16 sSlateportTentRewards[1];
+#define BATTLE_TENT_DATA(name) __attribute__((section(".rodata.battle_tent_data." #name)))
+
+BATTLE_TENT_DATA(sVerdanturfTentFuncs) void (*const sVerdanturfTentFuncs[])(void) =
+{
+    [VERDANTURF_TENT_FUNC_INIT]               = InitVerdanturfTentChallenge,
+    [VERDANTURF_TENT_FUNC_GET_PRIZE]          = GetVerdanturfTentPrize,
+    [VERDANTURF_TENT_FUNC_SET_PRIZE]          = SetVerdanturfTentPrize,
+    [VERDANTURF_TENT_FUNC_SET_OPPONENT_GFX]   = SetVerdanturfTentTrainerGfx,
+    [VERDANTURF_TENT_FUNC_GET_OPPONENT_INTRO] = BufferVerdanturfTentTrainerIntro,
+    [VERDANTURF_TENT_FUNC_SAVE]               = SaveVerdanturfTentChallenge,
+    [VERDANTURF_TENT_FUNC_SET_RANDOM_PRIZE]   = SetRandomVerdanturfTentPrize,
+    [VERDANTURF_TENT_FUNC_GIVE_PRIZE]         = GiveVerdanturfTentPrize
+};
+
+BATTLE_TENT_DATA(sVerdanturfTentRewards) const u16 sVerdanturfTentRewards[] = {ITEM_NEST_BALL};
+
+BATTLE_TENT_DATA(sFallarborTentFuncs) void (*const sFallarborTentFuncs[])(void) =
+{
+    [FALLARBOR_TENT_FUNC_INIT]              = InitFallarborTentChallenge,
+    [FALLARBOR_TENT_FUNC_GET_PRIZE]         = GetFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_SET_PRIZE]         = SetFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_SAVE]              = SaveFallarborTentChallenge,
+    [FALLARBOR_TENT_FUNC_SET_RANDOM_PRIZE]  = SetRandomFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_GIVE_PRIZE]        = GiveFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_GET_OPPONENT_NAME] = BufferFallarborTentTrainerName
+};
+
+BATTLE_TENT_DATA(sFallarborTentRewards) const u16 sFallarborTentRewards[] = {ITEM_HYPER_POTION};
+
+BATTLE_TENT_DATA(sSlateportTentFuncs) void (*const sSlateportTentFuncs[])(void) =
+{
+    [SLATEPORT_TENT_FUNC_INIT]                   = InitSlateportTentChallenge,
+    [SLATEPORT_TENT_FUNC_GET_PRIZE]              = GetSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_SET_PRIZE]              = SetSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_SAVE]                   = SaveSlateportTentChallenge,
+    [SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE]       = SetRandomSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_GIVE_PRIZE]             = GiveSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_SELECT_RENT_MONS]       = SelectInitialRentalMons,
+    [SLATEPORT_TENT_FUNC_SWAP_RENT_MONS]         = SwapRentalMons,
+    [SLATEPORT_TENT_FUNC_GENERATE_OPPONENT_MONS] = GenerateOpponentMons,
+    [SLATEPORT_TENT_FUNC_GENERATE_RENTAL_MONS]   = GenerateInitialRentalMons
+};
+
+BATTLE_TENT_DATA(sSlateportTentRewards) const u16 sSlateportTentRewards[] = {ITEM_FULL_HEAL};
+
 
 // code
 // Kept as naked asm with the 2-byte placeholder: agbcc would place the

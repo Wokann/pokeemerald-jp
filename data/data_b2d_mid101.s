@@ -14,31 +14,6 @@
 
 
 
-	.globl sVerdanturfTentFuncs
-sVerdanturfTentFuncs: @ 0x85E196C
-	.4byte 0x081B9675, 0x081B96C9, 0x081B96E5, 0x081B9701
-	.4byte 0x081B9731, 0x081B975D, 0x081B97A1, 0x081B97C9
-
-	.globl sVerdanturfTentRewards
-sVerdanturfTentRewards: @ 0x85E198C
-	.hword 0x0008, 0x0000
-
-	.globl sFallarborTentFuncs
-sFallarborTentFuncs: @ 0x85E1990
-	.4byte 0x081B9841, 0x081B9895, 0x081B98B1, 0x081B98CD
-	.4byte 0x081B9911, 0x081B9939, 0x081B9991
-
-	.globl sFallarborTentRewards
-sFallarborTentRewards: @ 0x85E19AC
-	.hword 0x0015, 0x0000
-
-	.globl sSlateportTentFuncs
-sSlateportTentFuncs: @ 0x85E19B0
-	.incbin "baserom_jp.gba", 0x5e19b0, 0x28
-
-	.globl sSlateportTentRewards
-sSlateportTentRewards: @ 0x85E19D8
-	.hword 0x0017, 0x0000
 
 	.globl sScrollDistances
 sScrollDistances: @ 0x85E19DC
