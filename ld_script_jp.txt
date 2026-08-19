@@ -9027,13 +9027,13 @@ SECTIONS {
     {
   src/libgcnmultiboot.o(.text);
   src/m4a_1.o(.text);
-		src/m4a_tail8.o(.text);
-		src/m4a_tail7.o(.text);
-		src/m4a_tail6.o(.text);
-		src/m4a_tail5.o(.text);
-		src/m4a_tail4.o(.text);
-		src/m4a_tail3.o(.text);
-		src/m4a_tail2.o(.text);
+		src/m4a.o(.text.m4a_tail8);
+		src/m4a.o(.text.m4a_tail7);
+		src/m4a.o(.text.m4a_tail6);
+		src/m4a.o(.text.m4a_tail5);
+		src/m4a.o(.text.m4a_tail4);
+		src/m4a.o(.text.m4a_tail3);
+		src/m4a.o(.text.m4a_tail2);
 		src/m4a.o(.text);
         src/agb_flash.o(.text);
         src/agb_flash_1m.o(.text);
