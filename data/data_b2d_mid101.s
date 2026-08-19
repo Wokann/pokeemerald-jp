@@ -10,43 +10,7 @@
 	.include "constants/ribbon_constants.inc"
 
 
-	.section .rodata.mid101_after_factory
-
-	.globl gUnknown_85DDB4C
-gUnknown_85DDB4C: @ 0x85DDB4C
-	.incbin "baserom_jp.gba", 0x5ddb4c, 0x8
-
-	.globl gUnknown_85DDB54
-gUnknown_85DDB54: @ 0x85DDB54
-	.incbin "baserom_jp.gba", 0x5ddb54, 0xc8
-
-	.globl gUnknown_85DDC1C
-gUnknown_85DDC1C: @ 0x85DDC1C
-	.incbin "baserom_jp.gba", 0x5ddc1c, 0x1f8
-
-	.globl gUnknown_85DDE14
-gUnknown_85DDE14: @ 0x85DDE14
-	.incbin "baserom_jp.gba", 0x5dde14, 0x1c
-
-	.globl gUnknown_85DDE30
-gUnknown_85DDE30: @ 0x85DDE30
-	.incbin "baserom_jp.gba", 0x5dde30, 0x74
-
-	.globl gUnknown_85DDEA4
-gUnknown_85DDEA4: @ 0x85DDEA4
-	.incbin "baserom_jp.gba", 0x5ddea4, 0x9
-
-	.globl gUnknown_85DDEAD
-gUnknown_85DDEAD: @ 0x85DDEAD
-	.incbin "baserom_jp.gba", 0x5ddead, 0x13
-
-	.globl sStatusInflictionScreenFlashFuncs
-sStatusInflictionScreenFlashFuncs: @ 0x85DDEC0
-	.4byte StatusInflictionFadeOut + 1, StatusInflictionFadeIn + 1
-
-	.globl gUnknown_85DDEC8
-gUnknown_85DDEC8: @ 0x85DDEC8
-	.incbin "baserom_jp.gba", 0x5ddec8, 0x8
+	.section .rodata.mid101_after_pike
 
 	.globl sMovement_ShiftRight
 sMovement_ShiftRight: @ 0x85DDED0
