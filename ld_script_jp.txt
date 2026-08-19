@@ -7978,7 +7978,9 @@ SECTIONS {
         src/palette_util.o(.text.UpdatePulseBlend);
         src/palette_util.o(.text.FillTilemapRect);
         src/palette_util.o(.text.SetTilemapRect);
-        src/rom_81520A8.o(.text);
+        src/palette_util.o(.text.sub_08152084);
+        src/palette_util.o(.text.sub_08152110);
+        src/confetti_util.o(.text);
         src/save.o(.text);
         src/mystery_event_script.o(.text.CheckCompatibility);
         src/mystery_event_script.o(.text.SetIncompatible);
