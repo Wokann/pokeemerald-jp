@@ -1388,3 +1388,106 @@ gUnknown_85CA570: @ 0x85CA570
 gUnknown_85CA593: @ 0x85CA593
 	.incbin "baserom_jp.gba", 0x5ca593, 0x23
 	.globl gUnknown_85CA5B6
+
+	.section .rodata.mid83
+
+	.globl gText_Yes
+gText_Yes: @ 0x85CAAD8
+	.string "はい$"
+	.globl gText_No
+gText_No: @ 0x85CAADB
+	.string "いいえ$せつめい$シングルバトル$ダブルバトル$マルチバトル$ハギ$ちょうせんする$せつめいをきく$"
+	.globl gUnknown_85CAB0D
+gUnknown_85CAB0D: @ 0x85CAB0D
+	.string "レベル50$"
+
+	.globl gUnknown_85CAB13
+gUnknown_85CAB13: @ 0x85CAB13
+	.string "オープンレベル$おいしいみず　200¥$サイコソーダ　300¥$ミックスオレ　350¥$はしりかた$まがるコツ$すなのさか$ウイリー$ダニエル$ジャンプ$まんぞく$ふまん$しんかいのキバ$しんかいのウロコ$あおいビードロ$きいろビードロ$あかいビードロ$しろいビードロ$くろいビードロ$ガラスのいす$ガラスのつくえ$キモリドール　　　1000まい$アチャモドール　　1000まい$ミズゴロウドール　1000まい$　50まい　　1000¥$500まい　10000¥$ばつぐん$あんまり$あかいかけら$きいろいかけら$あおいかけら$みどりのかけら$バトルフロンティア$みぎ$ひだり$わざマシン32　　1500まい$わざマシン29　　3500まい$わざマシン35　　4000まい$わざマシン24　　4000まい$わざマシン13　　4000まい$"
+	.globl gUnknown_85CAC84
+
+	.section .rodata.mid85
+
+	.globl gUnknown_85CADC6
+gUnknown_85CADC6: @ 0x85CADC6
+	.string "レポート$"
+
+	.globl gUnknown_85CADCB
+gUnknown_85CADCB: @ 0x85CADCB
+	.string "せってい$"
+	.globl gUnknown_85CADD0
+gUnknown_85CADD0: @ 0x85CADD0
+	.string "とじる$　5BP$10BP$15BP$あかいテント$あおいテント$みなみのことう$たんじょうのしま$さいはてのことう$へそのいわ$ツメのかせき$ねっこのかせき$いいえ　$これからしょうぶだ！$しょうぶにかった！$しょうぶにまけた！$おしえない$トレードセンター$コロシアム$レコードコーナー$きのみクラッシュ$ぐるぐるこうかん$ミニポケモンでジャンプ$ドードリオのきのみどり$リーダーになる$グループにはいる$2つのコース$レベル50$オープンレベル$ポケモンのしゅるいとかず$もたせるどうぐ$シンボル$たいせんのきろく$バトルポイント$タワーについて$つれていくポケモン$バトルサロン$つうしんマルチ$バトルでの　ちゅうい$はんてい‘こころ'$はんてい‘わざ'$はんてい‘からだ'$くみあわせ$トーナメントひょう$ダブルノックアウト$きほんルール$トレード　あいて$トレード　かいすう$トレード　ちゅうい$オープンレベル$たたかいのきほん$ポケモンのせいかく$ポケモンのわざ$ちからをはっきできない$ピンチになったら$ピラミッドの　ポケモン$ピラミッドの　トレーナー$ピラミッドの　めいろ$バトルバッグ$ポケナビと　バッグ$もたせた　どうぐ$ポケモンの　じゅんばん$でてくるポケモン$たたかう　トレーナー$つづける$きろくする$やすむ$リタイア$"
+	.globl gUnknown_85CB00E
+
+	.section .rodata.mid94
+
+	.globl gUnknown_85CC874
+gUnknown_85CC874: @ 0x85CC874
+	.string "タマゴが　かえって\n"
+	.string "{B_COPY_VAR_1}が　うまれた！$"
+	.globl gUnknown_85CC888
+gUnknown_85CC888: @ 0x85CC888
+	.incbin "baserom_jp.gba", 0x5cc888, 0x140
+
+	.globl gUnknown_85CC9C8
+gUnknown_85CC9C8: @ 0x85CC9C8
+	.incbin "baserom_jp.gba", 0x5cc9c8, 0xc
+
+	.globl gUnknown_85CC9D4
+gUnknown_85CC9D4: @ 0x85CC9D4
+	.incbin "baserom_jp.gba", 0x5cc9d4, 0x1c
+
+	.globl gUnknown_85CC9F0
+gUnknown_85CC9F0: @ 0x85CC9F0
+	.string "じかん$"
+	.globl gUnknown_85CC9F4
+gUnknown_85CC9F4: @ 0x85CC9F4
+	.incbin "baserom_jp.gba", 0x5cc9f4, 0x8
+
+	.globl gUnknown_85CC9FC
+gUnknown_85CC9FC: @ 0x85CC9FC
+	.string "サラサラぐあい$"
+	.globl gUnknown_85CCA04
+gUnknown_85CCA04: @ 0x85CCA04
+	.string "{B_COPY_VAR_1}$　"
+
+	.globl gUnknown_85CCA08
+gUnknown_85CCA08: @ 0x85CCA08
+	.string "ふん$　"
+
+	.globl gUnknown_85CCA0C
+gUnknown_85CCA0C: @ 0x85CCA0C
+	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}$　　"
+
+	.globl gUnknown_85CCA14
+gUnknown_85CCA14: @ 0x85CCA14
+	.string "びょう$"
+	.globl gUnknown_85CCA18
+gUnknown_85CCA18: @ 0x85CCA18
+	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}$　　"
+
+	.globl gUnknown_85CCA20
+gUnknown_85CCA20: @ 0x85CCA20
+	.incbin "baserom_jp.gba", 0x5cca20, 0x8
+
+	.globl gUnknown_85CCA28
+gUnknown_85CCA28: @ 0x85CCA28
+	.string "{B_COPY_VAR_1}パーセント$"
+
+	.globl gText_PressesRankings
+gText_PressesRankings: @ 0x85CCA30
+	.string "おした　かいすう　ランキング$　"
+
+	.globl gText_CrushingResults
+gText_CrushingResults: @ 0x85CCA40
+	.string "つぶした　けっか$　　　ていねいさ　ランキング$たすけあい　ランキング$おすつよさ　ランキング$"
+	.globl gUnknown_85CCA70
+gUnknown_85CCA70: @ 0x85CCA70
+	.incbin "baserom_jp.gba", 0x5cca70, 0xc
+
+	.globl gUnknown_85CCA7C
+gUnknown_85CCA7C: @ 0x85CCA7C
+	.incbin "baserom_jp.gba", 0x5cca7c, 0x10
+
+	.globl gUnknown_85CCA8C
