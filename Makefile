@@ -47,6 +47,8 @@ UNPORTED_SRCS :=
 C_SRCS := $(filter-out $(UNPORTED_SRCS),$(wildcard src/*.c src/*/*.c src/*/*/*.c))
 C_BUILDDIR := $(OBJ_DIR)/src
 C_OBJECTS := $(patsubst src/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
+C_OBJECTS := $(filter-out $(C_BUILDDIR)/libisagbprn.o,$(C_OBJECTS))
+C_OBJECTS += $(C_BUILDDIR)/libisagbprn_a.o $(C_BUILDDIR)/libisagbprn_putc.o $(C_BUILDDIR)/libisagbprn_b.o
 
 # Match the official flash library builds: agb_flash uses -O (not -O2).
 $(C_BUILDDIR)/agb_flash.o: CFLAGS := -O -mthumb-interwork -fhex-asm
@@ -249,11 +251,19 @@ $(C_BUILDDIR)/libc/%.o: src/libc/%.c
 	@rm -f $(C_BUILDDIR)/libc/$*.gen.s
 
 # The JP AGBPrint library was built unoptimised (-O0); AGBPutc lives in its
-# own file compiled with -O2 because agbcc's -O0 naked-asm handling would
+# own object compiled from the unified source with -O2 because agbcc's -O0 naked-asm handling would
 # emit a spurious parameter spill before the function body.
 $(C_BUILDDIR)/libisagbprn_a.o: CFLAGS := -O0 -mthumb-interwork -fhex-asm
 $(C_BUILDDIR)/libisagbprn_putc.o: CFLAGS := -O2 -mthumb-interwork -fhex-asm
 $(C_BUILDDIR)/libisagbprn_b.o: CFLAGS := -O0 -mthumb-interwork -fhex-asm
+$(C_BUILDDIR)/libisagbprn_a.o: CPPFLAGS += -DLIBISAGBPRN_PART_A
+$(C_BUILDDIR)/libisagbprn_putc.o: CPPFLAGS += -DLIBISAGBPRN_PART_PUTC
+$(C_BUILDDIR)/libisagbprn_b.o: CPPFLAGS += -DLIBISAGBPRN_PART_B
+$(C_BUILDDIR)/libisagbprn_a.o $(C_BUILDDIR)/libisagbprn_putc.o $(C_BUILDDIR)/libisagbprn_b.o: src/libisagbprn.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $@.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $@.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $@.gen.s
 
 # battle_interface is wired function-by-function (see ld_script_jp.txt), so
 # each function gets its own section and the still-asm functions stay in
