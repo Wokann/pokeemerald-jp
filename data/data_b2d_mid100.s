@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.mid100_rest
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -8,42 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-
-	.globl gUnknown_85DC141
-gUnknown_85DC141: @ 0x85DC141
-	.incbin "baserom_jp.gba", 0x5dc141, 0x17
-
-	.globl gUnknown_85DC158
-gUnknown_85DC158: @ 0x85DC158
-	.incbin "baserom_jp.gba", 0x5dc158, 0xc
-
-	.globl gUnknown_85DC164
-gUnknown_85DC164: @ 0x85DC164
-	.incbin "baserom_jp.gba", 0x5dc164, 0x10
-
-	.globl gUnknown_85DC174
-gUnknown_85DC174: @ 0x85DC174
-	.incbin "baserom_jp.gba", 0x5dc174, 0x50
-
-	.globl gUnknown_85DC1C4
-gUnknown_85DC1C4: @ 0x85DC1C4
-	.incbin "baserom_jp.gba", 0x5dc1c4, 0xa
-
-	.globl gUnknown_85DC1CE
-gUnknown_85DC1CE: @ 0x85DC1CE
-	.incbin "baserom_jp.gba", 0x5dc1ce, 0x3
-
-	.globl gUnknown_85DC1D1
-gUnknown_85DC1D1: @ 0x85DC1D1
-	.incbin "baserom_jp.gba", 0x5dc1d1, 0x3
-
-	.globl gUnknown_85DC1D4
-gUnknown_85DC1D4: @ 0x85DC1D4
-	.incbin "baserom_jp.gba", 0x5dc1d4, 0x20
-
-	.globl gUnknown_85DC1F4
-gUnknown_85DC1F4: @ 0x85DC1F4
-	.incbin "baserom_jp.gba", 0x5dc1f4, 0x28
 
 	.globl gUnknown_85DC21C
 gUnknown_85DC21C: @ 0x85DC21C
