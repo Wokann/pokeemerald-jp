@@ -9473,7 +9473,7 @@ SECTIONS {
         src/data/text/region_texts33.o(.rodata);
         data/data_b2d_mid33.o(.rodata);
         src/data/text/region_texts63.o(.rodata);
-        data/data_b2d_mid63.o(.rodata);
+        src/field_specials.o(.rodata.field_specials_data_early);
         src/data/text/region_texts39.o(.rodata);
         src/field_specials.o(.rodata.field_specials_data);
         src/data/text/region_texts64.o(.rodata);
