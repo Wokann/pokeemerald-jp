@@ -953,3 +953,66 @@ gUnknown_82F4720: @ 0x82F4720
 	.globl gUnknown_82F5C54
 gUnknown_82F5C54: @ 0x82F5C54
 	.incbin "baserom_jp.gba", 0x2f5c54, 0x1a
+
+	.section .rodata.mid5
+
+
+	.globl gUnknown_82F495E
+gUnknown_82F495E: @ 0x82F495E
+	.incbin "baserom_jp.gba", 0x2f495e, 0x12
+	.globl gUnknown_82F4970
+gUnknown_82F4970: @ 0x82F4970
+	.incbin "baserom_jp.gba", 0x2f4970, 0x12
+	.globl gUnknown_82F4982
+
+	.section .rodata.mid2
+
+
+	.globl gUnknown_82F3E80
+gUnknown_82F3E80: @ 0x82F3E80
+	.incbin "baserom_jp.gba", 0x2f3e80, 0x14
+	.globl gUnknown_82F3E94
+gUnknown_82F3E94: @ 0x82F3E94
+	.incbin "baserom_jp.gba", 0x2f3e94, 0x16
+	.globl gUnknown_82F3EAA
+
+	.section .rodata.mid6
+
+
+	.globl gUnknown_82F414E
+gUnknown_82F414E: @ 0x82F414E
+	.incbin "baserom_jp.gba", 0x2f414e, 0x14
+	.globl gUnknown_82F4162
+gUnknown_82F4162: @ 0x82F4162
+	.incbin "baserom_jp.gba", 0x2f4162, 0x18
+
+	.section .rodata.mid12
+
+
+	.globl gUnknown_82F4250
+gUnknown_82F4250: @ 0x82F4250
+	.incbin "baserom_jp.gba", 0x2f4250, 0x16
+	.globl gUnknown_82F4266
+gUnknown_82F4266: @ 0x82F4266
+	.incbin "baserom_jp.gba", 0x2f4266, 0x1a
+	.globl gUnknown_82F4280
+
+	.section .rodata.mid11
+
+
+	.globl gUnknown_82F3F64
+gUnknown_82F3F64: @ 0x82F3F64
+	.incbin "baserom_jp.gba", 0x2f3f64, 0x1a
+	.globl gUnknown_82F3F7E
+gUnknown_82F3F7E: @ 0x82F3F7E
+	.incbin "baserom_jp.gba", 0x2f3f7e, 0x1a
+	.globl gUnknown_82F3F98
+
+	.section .rodata.mid43
+
+	.globl gUnknown_82F57C2
+gUnknown_82F57C2: @ 0x82F57C2
+	.incbin "baserom_jp.gba", 0x2f57c2, 0x18
+	.globl gUnknown_82F57DA
+gUnknown_82F57DA: @ 0x82F57DA
+	.incbin "baserom_jp.gba", 0x2f57da, 0x1e
