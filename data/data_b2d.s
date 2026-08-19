@@ -879,3 +879,49 @@ gUnknown_85CA3D9: @ 0x85CA3D9
 	.globl gUnknown_85CC497
 gUnknown_85CC497: @ 0x85CC497
 	.string "{HIGHLIGHT 0}{COLOR 255}"
+
+	.section .rodata.mid35
+
+	.globl gUnknown_8566D64
+gUnknown_8566D64: @ 0x8566D64
+	.incbin "baserom_jp.gba", 0x566d64, 0x10
+
+	.section .rodata.mid27
+
+	.globl gUnknown_846F9D6
+gUnknown_846F9D6: @ 0x846F9D6
+	.incbin "baserom_jp.gba", 0x46f9d6, 0x6
+
+	.globl gUnknown_846F9DC
+gUnknown_846F9DC: @ 0x846F9DC
+	.incbin "baserom_jp.gba", 0x46f9dc, 0xc
+
+	.section .rodata.mid10
+
+
+	.globl gUnknown_82F4AA2
+gUnknown_82F4AA2: @ 0x82F4AA2
+	.incbin "baserom_jp.gba", 0x2f4aa2, 0x16
+
+	.section .rodata.mid13
+
+
+	.globl gUnknown_82F51C6
+gUnknown_82F51C6: @ 0x82F51C6
+	.incbin "baserom_jp.gba", 0x2f51c6, 0x16
+	.globl gUnknown_82F51DC
+
+	.section .rodata.mid14
+
+
+	.globl gUnknown_82F521C
+gUnknown_82F521C: @ 0x82F521C
+	.incbin "baserom_jp.gba", 0x2f521c, 0x16
+	.globl gUnknown_82F5232
+
+	.section .rodata.mid4
+
+
+	.globl gUnknown_82F5196
+gUnknown_82F5196: @ 0x82F5196
+	.incbin "baserom_jp.gba", 0x2f5196, 0x16
