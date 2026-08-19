@@ -12,22 +12,6 @@
 
 	.section .rodata.mid101_after_item_menu
 
-	.globl gUnknown_85DFB60
-gUnknown_85DFB60: @ 0x85DFB60
-	.incbin "baserom_jp.gba", 0x5dfb60, 0x20
-
-	.globl gUnknown_85DFB80
-gUnknown_85DFB80: @ 0x85DFB80
-	.incbin "baserom_jp.gba", 0x5dfb80, 0x70
-
-	.globl gUnknown_85DFBF0
-gUnknown_85DFBF0: @ 0x85DFBF0
-	.incbin "baserom_jp.gba", 0x5dfbf0, 0x40
-
-	.globl gUnknown_85DFC30
-gUnknown_85DFC30: @ 0x85DFC30
-	.incbin "baserom_jp.gba", 0x5dfc30, 0x44
-
 	.globl sSaveLocationPokeCenterList
 sSaveLocationPokeCenterList: @ 0x85DFC74
 	.string "いいういあういうおえかええおおおえかおか　きあきえくおくさけしけおこかこおさかさいしうしかすきすうせえせいそうそしたすたこたせたゅはょはねのののはのひの$$"
