@@ -74,10 +74,19 @@ static u32 LoopedTask_RegionMapZoomOut(s32);
 static u32 LoopedTask_RegionMapZoomIn(s32);
 static u32 LoopedTask_ExitRegionMap(s32);
 
-extern const u16 gRegionMapCityZoomTiles_Pal[];
-extern const u32 gRegionMapCityZoomText_Gfx[];
-extern const u16 sMapSecInfoWindow_Pal[];
-extern const u32 sRegionMapCityZoomTiles_Gfx[];
+#define POKENAV_REGION_MAP_RESOURCES __attribute__((section(".rodata.pokenav_region_map_resources")))
+
+static const u16 sMapSecInfoWindow_Pal[] POKENAV_REGION_MAP_RESOURCES =
+    INCBIN_U16("graphics/pokenav/region_map/info_window.gbapal");
+const u16 gRegionMapCityZoomTiles_Pal[] POKENAV_REGION_MAP_RESOURCES =
+    INCBIN_U16("graphics/pokenav/region_map/zoom_tiles.gbapal");
+static const u32 sRegionMapCityZoomTiles_Gfx[] POKENAV_REGION_MAP_RESOURCES =
+    INCBIN_U32("graphics/pokenav/region_map/zoom_tiles.4bpp.lz");
+
+#include "data/region_map/city_map_tilemaps.h"
+
+const u32 gRegionMapCityZoomText_Gfx[] POKENAV_REGION_MAP_RESOURCES =
+    INCBIN_U32("graphics/pokenav/region_map/city_zoom_text.4bpp.lz");
 
 // JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
 static const struct BgTemplate sRegionMapBgTemplates[3] =
