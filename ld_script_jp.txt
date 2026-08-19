@@ -9597,7 +9597,9 @@ SECTIONS {
         src/mirage_tower.o(.rodata);
         src/pokemon_summary_screen.o(.rodata.move_descriptions_jp);
         src/data/text/nature_names.o(.rodata);
-        data/data_b2c_mid1.o(.rodata);
+        data/data_b2c_mid1.o(.rodata.mid1_prefix);
+        src/pokedex_area_region_map.o(.rodata.pokedex_area_region_map_data);
+        data/data_b2c_mid1.o(.rodata.mid1_suffix);
         src/pokenav.o(.rodata);
         data/data_b2c_mid2.o(.rodata);
         src/pokenav_menu_handler_gfx.o(.rodata);

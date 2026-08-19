@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.mid1_prefix
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -130,25 +130,7 @@ gUnknown_85ED558: @ 0x85ED558
 gUnknown_85ED570: @ 0x85ED570
 	.incbin "baserom_jp.gba", 0x5ed570, 0x20
 
-	.globl sPokedexAreaMap_Pal
-sPokedexAreaMap_Pal: @ 0x85ED590
-	.incbin "graphics/misc/sPokedexAreaMap_Pal.bin"
-
-	.globl sPokedexAreaMap_Gfx
-sPokedexAreaMap_Gfx: @ 0x85ED5F0
-	.incbin "graphics/misc/sPokedexAreaMap_Gfx.bin"
-
-	.globl sPokedexAreaMap_Tilemap
-sPokedexAreaMap_Tilemap: @ 0x85EE344
-	.incbin "graphics/misc/sPokedexAreaMap_Tilemap.bin"
-
-	.globl sPokedexAreaMapAffine_Gfx
-sPokedexAreaMapAffine_Gfx: @ 0x85EE658
-	.incbin "graphics/misc/sPokedexAreaMapAffine_Gfx.bin"
-
-	.globl sPokedexAreaMapAffine_Tilemap
-sPokedexAreaMapAffine_Tilemap: @ 0x85EF3B4
-	.incbin "graphics/misc/sPokedexAreaMapAffine_Tilemap.bin"
+	.section .rodata.mid1_suffix
 
 	.globl gUnknown_85EF704
 gUnknown_85EF704: @ 0x85EF704

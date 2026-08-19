@@ -9,12 +9,13 @@
 // JP EWRAM pointer at 0x0203CBF4, bound via ld alias.
 extern u8 *sPokedexAreaMapBgNum;
 
-// JP data tables stay in the ROM data region; bound via ld aliases.
-extern const u16 sPokedexAreaMap_Pal[];
-extern const u32 sPokedexAreaMap_Gfx[];
-extern const u32 sPokedexAreaMap_Tilemap[];
-extern const u32 sPokedexAreaMapAffine_Gfx[];
-extern const u32 sPokedexAreaMapAffine_Tilemap[];
+#define POKEDEX_AREA_MAP_DATA __attribute__((section(".rodata.pokedex_area_region_map_data")))
+
+static const u16 ALIGNED(4) sPokedexAreaMap_Pal[] POKEDEX_AREA_MAP_DATA = INCBIN_U16("graphics/pokedex/region_map.gbapal");
+static const u32 sPokedexAreaMap_Gfx[] POKEDEX_AREA_MAP_DATA = INCBIN_U32("graphics/pokedex/region_map.8bpp.lz");
+static const u32 sPokedexAreaMap_Tilemap[] POKEDEX_AREA_MAP_DATA = INCBIN_U32("graphics/pokedex/region_map.tilemap.lz");
+static const u32 sPokedexAreaMapAffine_Gfx[] POKEDEX_AREA_MAP_DATA = INCBIN_U32("graphics/pokedex/region_map_affine.8bpp.lz");
+static const u32 sPokedexAreaMapAffine_Tilemap[] POKEDEX_AREA_MAP_DATA = INCBIN_U32("graphics/pokedex/region_map_affine.tilemap.lz");
 
 void LoadPokedexAreaMapGfx(const struct PokedexAreaMapTemplate *template)
 {
