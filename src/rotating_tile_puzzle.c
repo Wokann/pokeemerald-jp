@@ -12,6 +12,8 @@
 #define ROTATE_CLOCKWISE        1
 #define ROTATE_NONE             2
 
+#define ROTATING_TILE_DATA __attribute__((section(".rodata.rotating_tile_data")))
+
 struct RotatingTileObject
 {
     u8 prevPuzzleTileNum;
@@ -27,15 +29,14 @@ struct RotatingTilePuzzle
     bool8 isTrickHouse; /*0x41*/
 };
 
-// JP data tables stay in the ROM data region; bound via ld aliases.
-extern const u8 sMovement_ShiftRight[];
-extern const u8 sMovement_ShiftDown[];
-extern const u8 sMovement_ShiftLeft[];
-extern const u8 sMovement_ShiftUp[];
-extern const u8 sMovement_FaceRight[];
-extern const u8 sMovement_FaceDown[];
-extern const u8 sMovement_FaceLeft[];
-extern const u8 sMovement_FaceUp[];
+ROTATING_TILE_DATA const u8 sMovement_ShiftRight[] = {0x94, 0x0B, 0x95, 0xFE};
+ROTATING_TILE_DATA const u8 sMovement_ShiftDown[] = {0x94, 0x08, 0x95, 0xFE};
+ROTATING_TILE_DATA const u8 sMovement_ShiftLeft[] = {0x94, 0x0A, 0x95, 0xFE};
+ROTATING_TILE_DATA const u8 sMovement_ShiftUp[] = {0x94, 0x09, 0x95, 0xFE};
+ROTATING_TILE_DATA const u8 sMovement_FaceRight[] = {0x03, 0xFE};
+ROTATING_TILE_DATA const u8 sMovement_FaceDown[] = {0x00, 0xFE};
+ROTATING_TILE_DATA const u8 sMovement_FaceLeft[] = {0x02, 0xFE};
+ROTATING_TILE_DATA const u8 sMovement_FaceUp[] = {0x01, 0xFE};
 
 static void SaveRotatingTileObject(u8, u8);
 static void TurnUnsavedRotatingTileObject(u8, u8);

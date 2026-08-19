@@ -9577,7 +9577,8 @@ SECTIONS {
         src/battle_arena.o(.rodata.battle_arena_data);
         src/battle_factory.o(.rodata.battle_factory_data);
         src/battle_pike.o(.rodata.battle_pike_data);
-        data/data_b2d_mid101.o(.rodata.mid101_after_pike);
+        src/rotating_tile_puzzle.o(.rodata.rotating_tile_data);
+        data/data_b2d_mid101.o(.rodata.mid101_after_rotating_tile);
         src/data/list_menu_data.o(.rodata);
         data/data_b2d_mid101.o(.rodata.mid101_tail);
         src/data/text/nature_names.o(.rodata);
