@@ -1206,3 +1206,73 @@ gUnknown_85C9738: @ 0x85C9738
 gUnknown_85C9742: @ 0x85C9742
 	.string "　ど　う　ぐ　　$モンスターボール$　わざマシン　　$　き　の　み　　$たいせつなもの　$"
 	.globl gUnknown_85C976F
+
+	.section .rodata.mid57_gap
+
+	.globl gUnknown_855A940
+gUnknown_855A940: @ 0x855A940
+	.incbin "baserom_jp.gba", 0x55a940, 0x90
+
+
+	.section .rodata.mid89
+
+	.globl gUnknown_85CBCAB
+gUnknown_85CBCAB: @ 0x85CBCAB
+	.string "クイズの　チャレンジを$"
+	.globl gUnknown_85CBCB7
+gUnknown_85CBCB7: @ 0x85CBCB7
+	.string "あきらめますか？$クイズは　これで　いいですか？$"
+	.globl gUnknown_85CBCD0
+gUnknown_85CBCD0: @ 0x85CBCD0
+	.string "もんだいを　つくってください！$"
+	.globl gUnknown_85CBCE0
+gUnknown_85CBCE0: @ 0x85CBCE0
+	.string "こたえを　えらんでください！$"
+	.globl gUnknown_85CBCEF
+gUnknown_85CBCEF: @ 0x85CBCEF
+	.string "かしを　けすことは　できません！$ポケモン　リーグ$ポケモンセンター$"
+	.globl gUnknown_85CBD12
+gUnknown_85CBD12: @ 0x85CBD12
+	.string "に　ポロックを　あげますか？$かっこよさ$うつくしさ$かわいさ$かしこさ$たくましさ$"
+	.globl gUnknown_85CBD3D
+
+	.section .rodata.mid97
+
+	.globl gJPText_WriteErrorUnableToSaveData
+gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
+	.string "かきこみ　エラー　です\n"
+	.string "データが　ほぞん　できませんでした$あか$あお$　"
+	.globl gUnknown_85CD068
+gUnknown_85CD068: @ 0x85CD068
+	.incbin "baserom_jp.gba", 0x5cd068, 0x10
+
+	.globl gUnknown_85CD078
+gUnknown_85CD078: @ 0x85CD078
+	.incbin "baserom_jp.gba", 0x5cd078, 0x20
+
+	.globl gUnknown_85CD098
+gUnknown_85CD098: @ 0x85CD098
+	.incbin "baserom_jp.gba", 0x5cd098, 0x8
+
+	.globl gUnknown_85CD0A0
+gUnknown_85CD0A0: @ 0x85CD0A0
+	.incbin "baserom_jp.gba", 0x5cd0a0, 0x28
+
+	.globl gUnknown_85CD0C8
+gUnknown_85CD0C8: @ 0x85CD0C8
+	.incbin "baserom_jp.gba", 0x5cd0c8, 0x14
+
+	.globl gUnknown_85CD0DC
+
+	.section .rodata.mid81
+
+.globl gUnknown_85CA6A4
+gUnknown_85CA6A4: @ 0x85CA6A4
+	.string "{B_COPY_VAR_3}{B_COPY_VAR_1}/{B_COPY_VAR_2}$グッズを　おく$グッズを　もどす$グッズを　すてる$"
+	.globl gUnknown_85CA6C6
+gUnknown_85CA6C6: @ 0x85CA6C6
+	.string "{COLOR 161}{SHADOW 161}$えらんだ　グッズを　へやに　おきます！$えらんだ　グッズを　パソコンに　もどします！$いらなくなった　グッズを　すてます！$"
+	.globl gUnknown_85CA70B
+gUnknown_85CA70B: @ 0x85CA70B
+	.string "グッズは　ありません！{PAUSE_UNTIL_PRESS}$つくえ$いす$はちうえ$おきもの$マット$ポスター$ぬいぐるみ$クッション$"
+	.globl gUnknown_85CA73F
