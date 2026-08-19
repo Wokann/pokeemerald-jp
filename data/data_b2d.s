@@ -1095,3 +1095,67 @@ gUnknown_82F5402: @ 0x82F5402
 	.globl gUnknown_82F541A
 gUnknown_82F541A: @ 0x82F541A
 	.incbin "baserom_jp.gba", 0x2f541a, 0x1e
+
+	.section .rodata.mid82
+
+	.globl gUnknown_85CA8B5
+gUnknown_85CA8B5: @ 0x85CA8B5
+	.string "メールボックス$どうぐを　あずける$"
+	.globl gUnknown_85CA8C7
+gUnknown_85CA8C7: @ 0x85CA8C7
+	.string "どうぐを　ひきだす$"
+	.globl gUnknown_85CA8D1
+gUnknown_85CA8D1: @ 0x85CA8D1
+	.string "どうぐを　すてる$パソコン　に\n"
+	.string "どうぐを　あずけます$パソコン　から\n"
+	.string "どうぐを　ひきだします$パソコン　に　あずけている\n"
+	.string "どうぐを　すてます$"
+	.globl gUnknown_85CA918
+
+	.section .rodata.mid34
+
+	.globl gUnknown_8566CC7
+gUnknown_8566CC7: @ 0x8566CC7
+	.incbin "baserom_jp.gba", 0x566cc7, 0x2
+
+	.globl gUnknown_8566CC9
+gUnknown_8566CC9: @ 0x8566CC9
+	.incbin "baserom_jp.gba", 0x566cc9, 0x6
+
+	.globl gUnknown_8566CCF
+gUnknown_8566CCF: @ 0x8566CCF
+	.incbin "baserom_jp.gba", 0x566ccf, 0x24
+
+	.globl gUnknown_8566CF3
+gUnknown_8566CF3: @ 0x8566CF3
+	.incbin "baserom_jp.gba", 0x566cf3, 0x6
+
+	.globl gUnknown_8566CF9
+gUnknown_8566CF9: @ 0x8566CF9
+	.incbin "baserom_jp.gba", 0x566cf9, 0xf
+
+	.globl gUnknown_8566D08
+gUnknown_8566D08: @ 0x8566D08
+	.incbin "baserom_jp.gba", 0x566d08, 0x4
+
+	.globl gUnknown_8566D0C
+gUnknown_8566D0C: @ 0x8566D0C
+	.incbin "baserom_jp.gba", 0x566d0c, 0x20
+
+	.section .rodata.mid36
+
+	.globl gUnknown_8566DF5
+gUnknown_8566DF5: @ 0x8566DF5
+	.incbin "baserom_jp.gba", 0x566df5, 0xb
+
+	.globl gUnknown_8566E00
+gUnknown_8566E00: @ 0x8566E00
+	.incbin "baserom_jp.gba", 0x566e00, 0x40
+
+	.globl gUnknown_8566E40
+gUnknown_8566E40: @ 0x8566E40
+	.incbin "baserom_jp.gba", 0x566e40, 0x18
+
+	.globl gUnknown_8566E58
+gUnknown_8566E58: @ 0x8566E58
+	.incbin "baserom_jp.gba", 0x566e58, 0x5
