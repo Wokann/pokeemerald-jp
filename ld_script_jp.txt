@@ -9365,7 +9365,7 @@ SECTIONS {
         src/data/text/region_texts53.o(.rodata);
         data/data_b2d.o(.rodata.mid53);
         src/data/text/region_texts8.o(.rodata);
-        data/data_b2d_mid7.o(.rodata);
+        src/berry_blender.o(.rodata.berry_blender_data);
         src/data/text/region_texts26.o(.rodata);
         data/data_b2d_mid30.o(.rodata);
         src/data/text/region_texts17.o(.rodata);
