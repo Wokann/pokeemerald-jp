@@ -1,3 +1,15 @@
+gText_PokenavRibbons_RibbonCheckButtons = 0x085CB79C;
+gText_PokenavRibbons_RibbonListButtons = 0x085CB78E;
+gText_PokenavRibbons_MonListButtons = 0x085CB77F;
+gText_PokenavMatchCall_CheckTrainerButtons = 0x085CB779;
+gText_PokenavMatchCall_CallMenuButtons = 0x085CB76C;
+gText_PokenavMatchCall_TrainerListButtons = 0x085CB75F;
+gText_PokenavCondition_MarkingButtons = 0x085CB74F;
+gText_PokenavCondition_MonStatusButtons = 0x085CB741;
+gText_PokenavCondition_MonListButtons = 0x085CB72E;
+gText_PokenavMap_ZoomedInButtons = 0x085CB721;
+gText_PokenavMap_ZoomedOutButtons = 0x085CB714;
+gText_Pokenav_ClearButtonList = 0x085CB703;
 gTypeNamesJP = gTypeNames;
 gPlayerPCItemPageInfo = gUnknown_203B984;
 gFrontierBannedSpecies = gUnknown_85DD48E;
@@ -9605,7 +9617,8 @@ SECTIONS {
         src/pokedex_area_region_map.o(.rodata.pokedex_area_region_map_data);
         src/battle_pyramid_bag.o(.rodata.battle_pyramid_bag_data);
         src/pokenav.o(.rodata);
-        data/data_b2c_mid2.o(.rodata.mid2_prefix);
+        src/graphics.o(.rodata.pokenav_main_graphics);
+        src/pokenav_main_menu.o(.rodata.pokenav_main_menu_data);
         src/pokenav_list.o(.rodata.pokenav_list_data);
         src/pokenav_menu_handler.o(.rodata.pokenav_menu_handler_data);
         data/data_b2c_mid2.o(.rodata.mid2_suffix);

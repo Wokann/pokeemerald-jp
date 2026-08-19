@@ -53,19 +53,244 @@ static void DrawHelpBar(u32);
 static void SpriteCB_SpinningPokenav(struct Sprite *);
 static u32 LoopedTask_InitPokenavMenu(s32);
 
-// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern const struct BgTemplate gPokenavMainMenuBgTemplates[1];
-extern const struct WindowTemplate sHelpBarWindowTemplate[2];
-extern const u8 *const sHelpBarTexts[HELPBAR_COUNT];
-extern const u8 sHelpBarTextColors[3];
-extern const struct CompressedSpriteSheet sSpinningPokenavSpriteSheet[1];
-extern const struct SpritePalette sSpinningNavgearPalettes[2];
-extern const struct CompressedSpriteSheet sMenuLeftHeaderSpriteSheet;
-extern const struct CompressedSpriteSheet sMenuLeftHeaderSpriteSheets[6];
-extern const struct CompressedSpriteSheetNoSize sPokenavSubMenuLeftHeaderSpriteSheets[7];
-extern const struct SpriteTemplate sSpinningPokenavSpriteTemplate;
-extern const struct SpriteTemplate sLeftHeaderSpriteTemplate;
-extern const struct SpriteTemplate sSubmenuLeftHeaderSpriteTemplate;
+#define POKENAV_MAIN_DATA __attribute__((section(".rodata.pokenav_main_menu_data")))
+
+extern const u16 sSpinningPokenav_Pal[];
+extern const u32 sSpinningPokenav_Gfx[];
+
+POKENAV_MAIN_DATA const struct BgTemplate gPokenavMainMenuBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 5,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    }
+};
+
+POKENAV_MAIN_DATA static const struct WindowTemplate sHelpBarWindowTemplate[] =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 22,
+        .width = 16,
+        .height = 2,
+        .paletteNum = 0,
+        .baseBlock = 0x36,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+POKENAV_MAIN_DATA static const u8 *const sHelpBarTexts[HELPBAR_COUNT] =
+{
+    [HELPBAR_NONE]                 = gText_Pokenav_ClearButtonList,
+    [HELPBAR_MAP_ZOOMED_OUT]       = gText_PokenavMap_ZoomedOutButtons,
+    [HELPBAR_MAP_ZOOMED_IN]        = gText_PokenavMap_ZoomedInButtons,
+    [HELPBAR_CONDITION_MON_LIST]   = gText_PokenavCondition_MonListButtons,
+    [HELPBAR_CONDITION_MON_STATUS] = gText_PokenavCondition_MonStatusButtons,
+    [HELPBAR_CONDITION_MARKINGS]   = gText_PokenavCondition_MarkingButtons,
+    [HELPBAR_MC_TRAINER_LIST]      = gText_PokenavMatchCall_TrainerListButtons,
+    [HELPBAR_MC_CALL_MENU]         = gText_PokenavMatchCall_CallMenuButtons,
+    [HELPBAR_MC_CHECK_PAGE]        = gText_PokenavMatchCall_CheckTrainerButtons,
+    [HELPBAR_RIBBONS_MON_LIST]     = gText_PokenavRibbons_MonListButtons,
+    [HELPBAR_RIBBONS_LIST]         = gText_PokenavRibbons_RibbonListButtons,
+    [HELPBAR_RIBBONS_CHECK]        = gText_PokenavRibbons_RibbonCheckButtons,
+};
+
+POKENAV_MAIN_DATA static const u8 sHelpBarTextColors[3] =
+{
+    TEXT_COLOR_RED, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY
+};
+
+POKENAV_MAIN_DATA static const struct CompressedSpriteSheet sSpinningPokenavSpriteSheet[] =
+{
+    {
+        .data = sSpinningPokenav_Gfx,
+        .size = 0x1000,
+        .tag = 0,
+    }
+};
+
+POKENAV_MAIN_DATA static const struct SpritePalette sSpinningNavgearPalettes[] =
+{
+    {
+        .data = sSpinningPokenav_Pal,
+        .tag = 0,
+    },
+    {}
+};
+
+POKENAV_MAIN_DATA static const struct CompressedSpriteSheet sMenuLeftHeaderSpriteSheet =
+{
+    .data = gPokenavLeftHeaderHoennMap_Gfx, // Hoenn map is the first of the headers listed
+    .size = 0xC00,
+    .tag = 2
+};
+
+POKENAV_MAIN_DATA static const struct CompressedSpriteSheet sMenuLeftHeaderSpriteSheets[] =
+{
+    [POKENAV_GFX_MAIN_MENU] = {
+        .data = gPokenavLeftHeaderMainMenu_Gfx,
+        .size = 0x20,
+        .tag = 3
+    },
+    [POKENAV_GFX_CONDITION_MENU] = {
+        .data = gPokenavLeftHeaderCondition_Gfx,
+        .size = 0x20,
+        .tag = 1
+    },
+    [POKENAV_GFX_RIBBONS_MENU] = {
+        .data = gPokenavLeftHeaderRibbons_Gfx,
+        .size = 0x20,
+        .tag = 2
+    },
+    [POKENAV_GFX_MATCH_CALL_MENU] = {
+        .data = gPokenavLeftHeaderMatchCall_Gfx,
+        .size = 0x20,
+        .tag = 4
+    },
+    [POKENAV_GFX_MAP_MENU_ZOOMED_OUT] = {
+        .data = gPokenavLeftHeaderHoennMap_Gfx,
+        .size = 0x20,
+        .tag = 0
+    },
+    [POKENAV_GFX_MAP_MENU_ZOOMED_IN] = {
+        .data = gPokenavLeftHeaderHoennMap_Gfx,
+        .size = 0x40,
+        .tag = 0
+    }
+};
+
+POKENAV_MAIN_DATA static const struct CompressedSpriteSheetNoSize sPokenavSubMenuLeftHeaderSpriteSheets[] =
+{
+    [POKENAV_GFX_PARTY_MENU - POKENAV_GFX_SUBMENUS_START] = {
+        .data = gPokenavLeftHeaderParty_Gfx,
+        .tag = 1
+    },
+    [POKENAV_GFX_SEARCH_MENU - POKENAV_GFX_SUBMENUS_START] = {
+        .data = gPokenavLeftHeaderSearch_Gfx,
+        .tag = 1
+    },
+    [POKENAV_GFX_COOL_MENU - POKENAV_GFX_SUBMENUS_START] = {
+        .data = gPokenavLeftHeaderCool_Gfx,
+        .tag = 4
+    },
+    [POKENAV_GFX_BEAUTY_MENU - POKENAV_GFX_SUBMENUS_START] = {
+        .data = gPokenavLeftHeaderBeauty_Gfx,
+        .tag = 1
+    },
+    [POKENAV_GFX_CUTE_MENU - POKENAV_GFX_SUBMENUS_START] = {
+        .data = gPokenavLeftHeaderCute_Gfx,
+        .tag = 2
+    },
+    [POKENAV_GFX_SMART_MENU - POKENAV_GFX_SUBMENUS_START] = {
+        .data = gPokenavLeftHeaderSmart_Gfx,
+        .tag = 0
+    },
+    [POKENAV_GFX_TOUGH_MENU - POKENAV_GFX_SUBMENUS_START] = {
+        .data = gPokenavLeftHeaderTough_Gfx,
+        .tag = 0
+    }
+};
+
+POKENAV_MAIN_DATA static const struct OamData sSpinningPokenavSpriteOam =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+POKENAV_MAIN_DATA static const union AnimCmd sSpinningPokenavAnims[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(16, 8),
+    ANIMCMD_FRAME(32, 8),
+    ANIMCMD_FRAME(48, 8),
+    ANIMCMD_FRAME(64, 8),
+    ANIMCMD_FRAME(80, 8),
+    ANIMCMD_FRAME(96, 8),
+    ANIMCMD_FRAME(112, 8),
+    ANIMCMD_JUMP(0)
+};
+
+POKENAV_MAIN_DATA static const union AnimCmd *const sSpinningPokenavAnimTable[] =
+{
+    sSpinningPokenavAnims
+};
+
+POKENAV_MAIN_DATA static const struct SpriteTemplate sSpinningPokenavSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &sSpinningPokenavSpriteOam,
+    .anims = sSpinningPokenavAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SpinningPokenav
+};
+
+POKENAV_MAIN_DATA static const struct OamData sOamData_LeftHeader =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+POKENAV_MAIN_DATA static const struct OamData sOamData_SubmenuLeftHeader =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+POKENAV_MAIN_DATA static const struct SpriteTemplate sLeftHeaderSpriteTemplate =
+{
+    .tileTag = 2,
+    .paletteTag = 1,
+    .oam = &sOamData_LeftHeader,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+POKENAV_MAIN_DATA static const struct SpriteTemplate sSubmenuLeftHeaderSpriteTemplate =
+{
+    .tileTag = 2,
+    .paletteTag = 2,
+    .oam = &sOamData_SubmenuLeftHeader,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
 
 bool32 InitPokenavMainMenu(void)
 {
