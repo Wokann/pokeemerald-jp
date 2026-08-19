@@ -120,6 +120,11 @@ extern void AddTextPrinterParameterized3(u8 windowId, u8 fontId, u8 left, u8 top
 #include "task.h"
 #include "trade.h"
 
+#define TUTOR_DATA(name) __attribute__((section(".rodata.party_menu_tutor." #name)))
+#include "data/pokemon/tutor_learnsets.h"
+
+__asm__(".global gUnknown_85E08C4\n.set gUnknown_85E08C4, gTutorMoves");
+
 static void Task_ExitPartyMenu(u8 taskId);
 static bool8 ShowPartyMenu(void);
 static void CB2_InitPartyMenu(void);
@@ -138,7 +143,6 @@ static u8 CanMonLearnTMTutor(struct Pokemon *mon, u16 item, u8 tutor);
 static u16 GetTutorMove(u8 tutor);
 static bool8 CanLearnTutorMove(u16 species, u8 tutor);
 bool32 IsSpeciesAllowedInPokemonJump(u16 species);
-extern const u32 sTutorLearnsets[];
 extern const struct WindowTemplate sSinglePartyMenuWindowTemplate[];
 extern const struct WindowTemplate sDoublePartyMenuWindowTemplate[];
 extern const struct WindowTemplate sMultiPartyMenuWindowTemplate[];

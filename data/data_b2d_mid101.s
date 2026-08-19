@@ -12,16 +12,6 @@
 
 	.section .rodata.mid101_after_item_menu
 
-	.globl gUnknown_85E08C4
-gUnknown_85E08C4: @ 0x85E08C4
-	.incbin "baserom_jp.gba", 0x5e08c4, 0x3c
-	.globl gTutorMoves
-	.set gTutorMoves, gUnknown_85E08C4
-
-	.globl sTutorLearnsets
-sTutorLearnsets: @ 0x85E0900
-	.incbin "baserom_jp.gba", 0x5e0900, 0x670
-
 	.globl gUnknown_85E0F70
 gUnknown_85E0F70: @ 0x85E0F70
 	.incbin "baserom_jp.gba", 0x5e0f70, 0x2c
