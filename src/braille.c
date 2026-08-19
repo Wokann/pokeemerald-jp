@@ -7,9 +7,17 @@
 // This file handles the braille font (JP Font6).
 // For printing braille messages, see ScrCmd_braillemessage
 
-// JP data tables stay in the ROM data region; bound via ld aliases.
-extern const u8 sScrollDistances[];
-extern const u16 sFont_Braille[];
+#define BRAILLE_DATA(name) __attribute__((section(".rodata.braille_data." #name)))
+
+ALIGNED(4)
+static const u8 sScrollDistances[] BRAILLE_DATA(scroll) =
+{
+    [OPTIONS_TEXT_SPEED_SLOW] = 1,
+    [OPTIONS_TEXT_SPEED_MID] = 2,
+    [OPTIONS_TEXT_SPEED_FAST] = 4,
+};
+static const u16 sFont_Braille[] = INCBIN_U16("graphics/fonts/braille.bin");
+
 
 static void DecompressGlyph_Braille(u16);
 

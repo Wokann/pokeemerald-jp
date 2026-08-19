@@ -9590,6 +9590,8 @@ SECTIONS {
         src/party_menu.o(.rodata.party_menu_tmhm);
         src/battle_tent.o(.rodata.battle_tent_data.*);
         . = ALIGN(4);
+        src/braille.o(.rodata.braille_data.scroll);
+        src/braille.o(.rodata);
         data/data_b2d_mid101.o(.rodata.mid101_after_item_menu);
         data/data_b2d_mid101.o(.rodata.mid101_tail);
         src/data/text/nature_names.o(.rodata);

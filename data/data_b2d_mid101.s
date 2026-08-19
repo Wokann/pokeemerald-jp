@@ -15,14 +15,6 @@
 
 
 
-	.globl sScrollDistances
-sScrollDistances: @ 0x85E19DC
-	.byte 0x01, 0x02, 0x04, 0x00
-
-	.globl sFont_Braille
-sFont_Braille: @ 0x85E19E0
-	.incbin "graphics/fonts/braille.bin"
-
 	.globl gUnknown_85E72E4
 gUnknown_85E72E4: @ 0x85E72E4
 	.incbin "baserom_jp.gba", 0x5e72e4, 0x48
