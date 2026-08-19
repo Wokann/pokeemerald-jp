@@ -10,35 +10,7 @@
 	.include "constants/ribbon_constants.inc"
 
 
-	.section .rodata.mid101_after_arena
-
-	.globl gUnknown_85DD7F8
-gUnknown_85DD7F8: @ 0x85DD7F8
-	.incbin "baserom_jp.gba", 0x5dd7f8, 0x144
-
-	.globl gUnknown_85DD93C
-gUnknown_85DD93C: @ 0x85DD93C
-	.incbin "baserom_jp.gba", 0x5dd93c, 0x1c
-
-	.globl gUnknown_85DD958
-gUnknown_85DD958: @ 0x85DD958
-	.incbin "baserom_jp.gba", 0x5dd958, 0x44
-
-	.globl gUnknown_85DD99C
-gUnknown_85DD99C: @ 0x85DD99C
-	.incbin "baserom_jp.gba", 0x5dd99c, 0x10
-
-	.globl gUnknown_85DD9AC
-gUnknown_85DD9AC: @ 0x85DD9AC
-	.string "$\n$$${STRING}$$$$$\n$$${STRING}"
-
-	.globl gUnknown_85DD9BC
-gUnknown_85DD9BC: @ 0x85DD9BC
-	.incbin "baserom_jp.gba", 0x5dd9bc, 0x10
-
-	.globl gUnknown_85DD9CC
-gUnknown_85DD9CC: @ 0x85DD9CC
-	.incbin "baserom_jp.gba", 0x5dd9cc, 0x180
+	.section .rodata.mid101_after_factory
 
 	.globl gUnknown_85DDB4C
 gUnknown_85DDB4C: @ 0x85DDB4C
