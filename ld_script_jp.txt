@@ -8513,7 +8513,6 @@ SECTIONS {
         src/trainer_pokemon_sprites.o(.text.PlayerGenderToFrontTrainerPicId_Debug);
         src/lilycove_lady.o(.text);
         src/battle_dome.o(.text);
-        src/battle_palace_jp_only.o(.text);
         src/battle_palace.o(.text);
         src/match_call.o(.text.InitMatchCallCounters);
         src/match_call.o(.text.GetCurrentTotalMinutes);
