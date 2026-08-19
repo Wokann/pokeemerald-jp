@@ -1,5 +1,295 @@
 #include "global.h"
 #include "battle_pyramid_bag.h"
+#include "bg.h"
+#include "graphics.h"
+#include "list_menu.h"
+#include "menu.h"
+#include "menu_helpers.h"
+#include "sprite.h"
+#include "strings.h"
+#include "text.h"
+
+#define TAG_PYRAMID_BAG 4132
+
+enum { WIN_LIST, WIN_INFO, WIN_MSG, WIN_TOSS_NUM };
+
+extern const u8 gUnknown_85C9398[];
+void PyramidBagMoveCursorFunc(void);
+void PrintItemQuantity(void);
+void BagAction_UseOnField(void);
+void BagAction_Toss(void);
+void BagAction_Give(void);
+void BagAction_Cancel(void);
+void BagAction_UseInBattle(void);
+void TossItem(void);
+void DontTossItem(void);
+#define gMenuText_Use (gUnknown_85C9398 + 0xB)
+#define gMenuText_Toss (gUnknown_85C9398 + 0xF)
+#define gMenuText_Give (gUnknown_85C9398 + 0x18)
+#define gText_Cancel2 gText_Exit
+#define PYRAMID_BAG_DATA __attribute__((section(".rodata.battle_pyramid_bag_data")))
+
+PYRAMID_BAG_DATA static const struct BgTemplate sBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+};
+
+PYRAMID_BAG_DATA static const struct ListMenuTemplate sListMenuTemplate =
+{
+    .items = NULL,
+    .moveCursorFunc = PyramidBagMoveCursorFunc,
+    .itemPrintFunc = PrintItemQuantity,
+    .totalItems = 0,
+    .maxShowed = 0,
+    .windowId = WIN_LIST,
+    .header_X = 0,
+    .item_X = 8,
+    .cursor_X = 0,
+    .upText_Y = 2,
+    .cursorPal = 2,
+    .fillValue = 0,
+    .cursorShadowPal = 3,
+    .lettersSpacing = 0,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
+    .fontId = 1,
+    .cursorKind = CURSOR_BLACK_ARROW
+};
+
+enum {
+    ACTION_USE_FIELD,
+    ACTION_TOSS,
+    ACTION_GIVE,
+    ACTION_CANCEL,
+    ACTION_USE_BATTLE,
+    ACTION_DUMMY,
+};
+
+PYRAMID_BAG_DATA static const struct MenuAction sMenuActions[] =
+{
+    [ACTION_USE_FIELD] =    { gMenuText_Use, {BagAction_UseOnField} },
+    [ACTION_TOSS] =         { gMenuText_Toss, {BagAction_Toss} },
+    [ACTION_GIVE] =         { gMenuText_Give, {BagAction_Give} },
+    [ACTION_CANCEL] =       { gText_Cancel2, {BagAction_Cancel} },
+    [ACTION_USE_BATTLE] =   { gMenuText_Use, {BagAction_UseInBattle} },
+    [ACTION_DUMMY] =        { gText_EmptyString2, {NULL} },
+};
+
+PYRAMID_BAG_DATA static const u8 sMenuActionIds_Field[] = {ACTION_USE_FIELD, ACTION_GIVE, ACTION_TOSS, ACTION_CANCEL};
+PYRAMID_BAG_DATA static const u8 sMenuActionIds_ChooseToss[] = {ACTION_TOSS, ACTION_CANCEL};
+PYRAMID_BAG_DATA static const u8 sMenuActionIds_Battle[] = {ACTION_USE_BATTLE, ACTION_CANCEL};
+PYRAMID_BAG_DATA static const u8 sMenuActionIds_BattleCannotUse[] = {ACTION_CANCEL};
+
+PYRAMID_BAG_DATA static const struct YesNoFuncTable sYesNoTossFuncions =
+{
+    TossItem, DontTossItem
+};
+
+enum {
+    COLORID_DARK_GRAY,
+    COLORID_LIGHT_GRAY,
+    COLORID_WHITE_BG,
+    COLORID_NONE = 0xFF
+};
+
+PYRAMID_BAG_DATA static const u8 sTextColors[][3] =
+{
+    [COLORID_DARK_GRAY]  = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY,  TEXT_COLOR_LIGHT_GRAY},
+    [COLORID_LIGHT_GRAY] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_WHITE},
+    [COLORID_WHITE_BG]   = {TEXT_COLOR_WHITE,       TEXT_COLOR_DARK_GRAY,  TEXT_COLOR_LIGHT_GRAY}, // Unused
+};
+
+PYRAMID_BAG_DATA static const struct WindowTemplate sWindowTemplates[] =
+{
+    [WIN_LIST] = {
+        .bg = 0,
+        .tilemapLeft = 14,
+        .tilemapTop = 2,
+        .width = 15,
+        .height = 16,
+        .paletteNum = 15,
+        .baseBlock = 30
+    },
+    [WIN_INFO] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 13,
+        .width = 12,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 270
+    },
+    [WIN_MSG] = {
+        .bg = 1,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 342
+    },
+    [WIN_TOSS_NUM] = {
+        .bg = 1,
+        .tilemapLeft = 24,
+        .tilemapTop = 17,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 430
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+enum {
+    MENU_WIN_1x1,
+    MENU_WIN_1x2,
+    MENU_WIN_2x2,
+    MENU_WIN_2x3,
+    MENU_WIN_YESNO,
+};
+
+PYRAMID_BAG_DATA static const struct WindowTemplate sWindowTemplates_MenuActions[] =
+{
+    [MENU_WIN_1x1] = {
+        .bg = 1,
+        .tilemapLeft = 24,
+        .tilemapTop = 17,
+        .width = 5,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 440
+    },
+    [MENU_WIN_1x2] = {
+        .bg = 1,
+        .tilemapLeft = 24,
+        .tilemapTop = 15,
+        .width = 5,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 440
+    },
+    [MENU_WIN_2x2] = {
+        .bg = 1,
+        .tilemapLeft = 17,
+        .tilemapTop = 15,
+        .width = 12,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 440
+    },
+    [MENU_WIN_2x3] = { // Unused
+        .bg = 1,
+        .tilemapLeft = 17,
+        .tilemapTop = 13,
+        .width = 12,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 440
+    },
+    [MENU_WIN_YESNO] = {
+        .bg = 1,
+        .tilemapLeft = 24,
+        .tilemapTop = 15,
+        .width = 5,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 440
+    },
+};
+
+PYRAMID_BAG_DATA static const struct OamData sOamData_PyramidBag =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+PYRAMID_BAG_DATA static const union AnimCmd sAnim_PyramidBag[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_END,
+};
+
+PYRAMID_BAG_DATA static const union AnimCmd *const sAnims_PyramidBag[] =
+{
+    sAnim_PyramidBag,
+};
+
+PYRAMID_BAG_DATA static const union AffineAnimCmd sAffineAnim_PyramidBag_Still[] =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+PYRAMID_BAG_DATA static const union AffineAnimCmd sAffineAnim_PyramidBag_Shake[] =
+{
+    AFFINEANIMCMD_FRAME(0, 0, 254, 2),
+    AFFINEANIMCMD_FRAME(0, 0, 2, 4),
+    AFFINEANIMCMD_FRAME(0, 0, 254, 4),
+    AFFINEANIMCMD_FRAME(0, 0, 2, 2),
+    AFFINEANIMCMD_END,
+};
+
+enum {
+    ANIM_BAG_STILL,
+    ANIM_BAG_SHAKE,
+};
+
+PYRAMID_BAG_DATA static const union AffineAnimCmd *const sAffineAnims_PyramidBag[] =
+{
+    [ANIM_BAG_STILL] = sAffineAnim_PyramidBag_Still,
+    [ANIM_BAG_SHAKE] = sAffineAnim_PyramidBag_Shake,
+};
+
+PYRAMID_BAG_DATA static const struct CompressedSpriteSheet sSpriteSheet_PyramidBag = {(const u32 *)0x08D9ABE4, 0x0800, TAG_PYRAMID_BAG};
+
+PYRAMID_BAG_DATA static const struct SpriteTemplate sSpriteTemplate_PyramidBag =
+{
+    .tileTag = TAG_PYRAMID_BAG,
+    .paletteTag = TAG_PYRAMID_BAG,
+    .oam = &sOamData_PyramidBag,
+    .anims = sAnims_PyramidBag,
+    .images = NULL,
+    .affineAnims = sAffineAnims_PyramidBag,
+    .callback = SpriteCallbackDummy
+};
+
 
 __attribute__((naked)) void InitBattlePyramidBagCursorPosition()
 {
@@ -446,7 +736,7 @@ __attribute__((naked)) void sub_081C49E4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C4A38: .4byte gUnknown_85EF704\n\t"
+        "_081C4A38: .4byte sBgTemplates\n\t"
         "_081C4A3C: .4byte gUnknown_203CBF8\n\t"
         ".syntax divided\n\t"
     );
@@ -522,7 +812,7 @@ __attribute__((naked)) void sub_081C4A40(void)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _081C4AE0\n\t"
         "	.align 2, 0\n\t"
-        "_081C4AD8: .4byte gUnknown_85EF81C\n\t"
+        "_081C4AD8: .4byte sSpriteSheet_PyramidBag\n\t"
         "_081C4ADC:\n\t"
         "	bl sub_081C6658\n\t"
         "_081C4AE0:\n\t"
@@ -676,7 +966,7 @@ __attribute__((naked)) void SetBagItemsListTemplate(void)
         "_081C4C00: .4byte 0x00000828\n\t"
         "_081C4C04: .4byte gUnknown_85C942E + 0x1A\n\t"
         "_081C4C08: .4byte gMultiuseListMenuTemplate\n\t"
-        "_081C4C0C: .4byte gUnknown_85EF710\n\t"
+        "_081C4C0C: .4byte sListMenuTemplate\n\t"
         "_081C4C10: .4byte 0x00000822\n\t"
         ".syntax divided\n\t"
     );
@@ -1939,7 +2229,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "_081C5560: .4byte gUnknown_203CBFC\n\t"
         "_081C5564: .4byte gUnknown_203CBF8\n\t"
         "_081C5568: .4byte 0x00000818\n\t"
-        "_081C556C: .4byte gUnknown_85EF758\n\t"
+        "_081C556C: .4byte sMenuActionIds_Field\n\t"
         "_081C5570:\n\t"
         "	ldr r0, _081C558C\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -1957,7 +2247,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "_081C558C: .4byte gSpecialVar_ItemId\n\t"
         "_081C5590: .4byte gUnknown_203CBF8\n\t"
         "_081C5594: .4byte 0x00000818\n\t"
-        "_081C5598: .4byte gUnknown_85EF75E\n\t"
+        "_081C5598: .4byte sMenuActionIds_Battle\n\t"
         "_081C559C:\n\t"
         "	ldr r0, _081C55B4\n\t"
         "	ldr r0, [r0]\n\t"
@@ -1973,7 +2263,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "	.align 2, 0\n\t"
         "_081C55B4: .4byte gUnknown_203CBF8\n\t"
         "_081C55B8: .4byte 0x00000818\n\t"
-        "_081C55BC: .4byte gUnknown_85EF760\n\t"
+        "_081C55BC: .4byte sMenuActionIds_BattleCannotUse\n\t"
         "_081C55C0:\n\t"
         "	ldr r0, _081C561C\n\t"
         "	ldr r1, [r0]\n\t"
@@ -2023,7 +2313,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "	.align 2, 0\n\t"
         "_081C561C: .4byte gUnknown_203CBF8\n\t"
         "_081C5620: .4byte 0x00000818\n\t"
-        "_081C5624: .4byte gUnknown_85EF75C\n\t"
+        "_081C5624: .4byte sMenuActionIds_ChooseToss\n\t"
         "_081C5628: .4byte gSpecialVar_ItemId\n\t"
         "_081C562C: .4byte gStringVar1\n\t"
         "_081C5630: .4byte gStringVar4\n\t"
@@ -2145,7 +2435,7 @@ __attribute__((naked)) void sub_081C56A8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C5718: .4byte gUnknown_203CBF8\n\t"
-        "_081C571C: .4byte gUnknown_85EF728\n\t"
+        "_081C571C: .4byte sMenuActions\n\t"
         "_081C5720: .4byte 0x00000818\n\t"
         ".syntax divided\n\t"
     );
@@ -2204,7 +2494,7 @@ __attribute__((naked)) void sub_081C5724(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C5788: .4byte gUnknown_85EF728\n\t"
+        "_081C5788: .4byte sMenuActions\n\t"
         "_081C578C: .4byte gUnknown_203CBF8\n\t"
         "_081C5790: .4byte 0x00000818\n\t"
         ".syntax divided\n\t"
@@ -2242,7 +2532,7 @@ __attribute__((naked)) void HandleFewMenuActionsInput(void)
         "	bl _call_via_r1\n\t"
         "	b _081C57FC\n\t"
         "	.align 2, 0\n\t"
-        "_081C57D0: .4byte gUnknown_85EF728\n\t"
+        "_081C57D0: .4byte sMenuActions\n\t"
         "_081C57D4:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2267,7 +2557,7 @@ __attribute__((naked)) void HandleFewMenuActionsInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C5804: .4byte gUnknown_85EF728\n\t"
+        "_081C5804: .4byte sMenuActions\n\t"
         "_081C5808: .4byte gUnknown_203CBF8\n\t"
         "_081C580C: .4byte 0x00000818\n\t"
         ".syntax divided\n\t"
@@ -2443,7 +2733,7 @@ __attribute__((naked)) void HandleMenuActionInput(void)
         "	bl _call_via_r1\n\t"
         "	b _081C598C\n\t"
         "	.align 2, 0\n\t"
-        "_081C5968: .4byte gUnknown_85EF728\n\t"
+        "_081C5968: .4byte sMenuActions\n\t"
         "_081C596C: .4byte gUnknown_203CBF8\n\t"
         "_081C5970: .4byte 0x00000818\n\t"
         "_081C5974:\n\t"
@@ -2462,7 +2752,7 @@ __attribute__((naked)) void HandleMenuActionInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C5994: .4byte gUnknown_85EF728\n\t"
+        "_081C5994: .4byte sMenuActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3848,7 +4138,7 @@ __attribute__((naked)) void sub_081C63F0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C644C: .4byte gUnknown_85EF778\n\t"
+        "_081C644C: .4byte sWindowTemplates\n\t"
         "_081C6450: .4byte gStandardMenuPalette\n\t"
         ".syntax divided\n\t"
     );
@@ -3900,7 +4190,7 @@ __attribute__((naked)) void PrintOnWindow_Font1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C64A8: .4byte gUnknown_85EF76C\n\t"
+        "_081C64A8: .4byte sTextColors\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3980,7 +4270,7 @@ __attribute__((naked)) void sub_081C64E4(void)
         "	.align 2, 0\n\t"
         "_081C6520: .4byte gUnknown_203CBF8\n\t"
         "_081C6524: .4byte 0x0000080F\n\t"
-        "_081C6528: .4byte gUnknown_85EF7A0\n\t"
+        "_081C6528: .4byte sWindowTemplates_MenuActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4045,7 +4335,7 @@ __attribute__((naked)) void sub_081C656C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C6594: .4byte gUnknown_85EF7C0\n\t"
+        "_081C6594: .4byte sWindowTemplates_MenuActions + 0x20\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4222,7 +4512,7 @@ __attribute__((naked)) void sub_081C66B4(void)
         "	.align 2, 0\n\t"
         "_081C66D4: .4byte gUnknown_203CBF8\n\t"
         "_081C66D8: .4byte 0x00000804\n\t"
-        "_081C66DC: .4byte gUnknown_85EF824\n\t"
+        "_081C66DC: .4byte sSpriteTemplate_PyramidBag\n\t"
         ".syntax divided\n\t"
     );
 }
