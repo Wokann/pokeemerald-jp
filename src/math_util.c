@@ -117,3 +117,8 @@ s16 MathUtil_Inv16Shift(u8 s, s16 y)
     x = 0x100 << s;
     return x / y;
 }
+s32 MathUtil_Inv32(s32 y)
+{
+    s64 dividend = 0x10000;
+    return (s32)(dividend / y);
+}

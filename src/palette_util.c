@@ -461,11 +461,3 @@ void SetTilemapRect(u16 *dest, u16 *src, u8 left, u8 top, u8 width, u8 height)
             *_dest++ = *_src++;
     }
 }
-
-s32 MathUtil_Inv32(s32 y)
-{
-    s64 dividend = 0x10000;
-    return (s32)(dividend / y);
-}
-
-
