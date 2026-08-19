@@ -292,6 +292,27 @@ const struct RibbonData sRibbonData[] =
     {1, 1, EARTH_RIBBON,         TRUE},
     {1, 1, WORLD_RIBBON,         TRUE},
 };
+#define POKENAV_CONDITION_RESOURCES __attribute__((section(".rodata.pokenav_condition_resources")))
+
+const u16 gPokenavCondition_Pal[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U16("graphics/pokenav/condition/graph.gbapal");
+const u16 gConditionGraphData_Pal[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U16("graphics/pokenav/condition/graph_data.gbapal");
+const u16 gConditionText_Pal[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U16("graphics/pokenav/condition/text.gbapal");
+const u32 gPokenavCondition_Gfx[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U32("graphics/pokenav/condition/graph.4bpp.lz");
+const u32 gPokenavCondition_Tilemap[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U32("graphics/pokenav/condition/graph.bin.lz");
+const u32 sConditionGraphData_Gfx[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U32("graphics/pokenav/condition/graph_data.4bpp.lz");
+const u32 sConditionGraphData_Tilemap[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U32("graphics/pokenav/condition/graph_data.bin.lz");
+const u16 gPokenavOptions_Tilemap[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U16("graphics/pokenav/options/options.bin");
+const u16 sPokenavMonMarkings_Pal[] POKENAV_CONDITION_RESOURCES =
+    INCBIN_U16("graphics/pokenav/condition/mon_markings.gbapal");
+
 #else
 #include "global.h"
 #include "bg.h"
@@ -510,8 +531,6 @@ void FreeRibbonsMonMenu(void);
 u32 LoopedTask_RibbonsListReturnToMainMenu(s32 state);
 u32 LoopedTask_RibbonsListOpenSummary(s32 state);
 
-// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern const struct BgTemplate sMenuBgTemplates[3];
 extern const u32 gPokenavCondition_Gfx[];
 extern const u32 sConditionGraphData_Gfx[];
 extern const u32 gPokenavCondition_Tilemap[];
@@ -520,6 +539,10 @@ extern const u16 gPokenavCondition_Pal[];
 extern const u16 gConditionText_Pal[];
 extern const u32 sConditionGraphData_Tilemap[];
 extern const u16 gConditionGraphData_Pal[];
+extern const u16 sPokenavMonMarkings_Pal[];
+
+// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
+extern const struct BgTemplate sMenuBgTemplates[3];
 extern const struct WindowTemplate sMonNameGenderWindowTemplate;
 extern const struct WindowTemplate sListIndexWindowTemplate;
 extern const struct WindowTemplate sUnusedWindowTemplate1;
@@ -544,7 +567,6 @@ extern const u8 gText_RibbonsMonListCount[];       // JP 0x085F5DCC
 extern const u8 sText_RibbonsMonListItemMale[];    // JP 0x085F5DD3
 extern const u8 sText_RibbonsMonListItemFemale[];  // JP 0x085F5DEB
 extern const u8 sText_RibbonsMonListItemUnknown[]; // JP 0x085F5E03
-extern const u16 sPokenavMonMarkings_Pal[];
 extern const LoopedTask sMonRibbonListLoopTaskFuncs[];
 extern const u16 sMonRibbonListFramePal[];
 extern const u32 sMonRibbonListFrameTiles[];

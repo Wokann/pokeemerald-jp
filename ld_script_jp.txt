@@ -9643,7 +9643,7 @@ SECTIONS {
         src/pokenav_match_call_gfx.o(.rodata);
         src/pokenav_region_map.o(.rodata.pokenav_region_map_resources);
         src/pokenav_region_map.o(.rodata);
-        data/data_b2c_mid6.o(.rodata);
+        src/pokenav_conditions_gfx.o(.rodata.pokenav_condition_resources);
         src/pokenav_conditions_gfx.o(.rodata);
         src/pokenav_ribbons_summary.o(.rodata);
         data/data_b2c_mid7.o(.rodata);
