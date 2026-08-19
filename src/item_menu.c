@@ -961,7 +961,7 @@ __attribute__((naked)) void LoadBagItemListBuffers(void)
         "	lsls r1, r6, #2\n\t"
         "	adds r1, r1, r2\n\t"
         "	ldrh r1, [r1]\n\t"
-        "	bl GetItemName\n\t"
+        "	bl BagMenu_GetItemName\n\t"
         "	ldr r0, _081AB064\n\t"
         "	ldr r0, [r0]\n\t"
         "	lsls r1, r6, #3\n\t"
@@ -1030,7 +1030,7 @@ __attribute__((naked)) void LoadBagItemListBuffers(void)
         "	lsls r1, r6, #2\n\t"
         "	adds r1, r1, r2\n\t"
         "	ldrh r1, [r1]\n\t"
-        "	bl GetItemName\n\t"
+        "	bl BagMenu_GetItemName\n\t"
         "	ldr r0, _081AB0F8\n\t"
         "	ldr r0, [r0]\n\t"
         "	lsls r1, r6, #3\n\t"
@@ -1090,7 +1090,7 @@ __attribute__((naked)) void LoadBagItemListBuffers(void)
     );
 }
 
-__attribute__((naked)) const u8 *GetItemName(u16 itemId)
+__attribute__((naked)) void BagMenu_GetItemName(u8 *dest, u16 itemId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
