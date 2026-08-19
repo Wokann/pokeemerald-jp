@@ -9499,7 +9499,7 @@ SECTIONS {
         src/diploma.o(.rodata.diploma);
         src/data/text/region_texts74.o(.rodata);
         src/data/text/region_texts75.o(.rodata);
-        data/data_b2d_mid72.o(.rodata);
+        src/strings.o(.rodata.strings_main_menu);
         src/data/text/region_texts76.o(.rodata);
         data/data_b2d.o(.rodata.mid73);
         src/data/text/region_texts77.o(.rodata);
