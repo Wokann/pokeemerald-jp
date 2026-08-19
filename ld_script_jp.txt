@@ -9536,7 +9536,7 @@ SECTIONS {
         data/data_b2d_mid86.o(.rodata);
         src/data/text/region_texts97.o(.rodata);
         src/data/text/region_texts98.o(.rodata);
-        data/data_b2d_mid88.o(.rodata);
+        src/strings.o(.rodata.strings_easy_chat);
         src/data/text/region_texts99.o(.rodata);
         data/data_b2d.o(.rodata.mid89);
         src/data/text/region_texts100.o(.rodata);
