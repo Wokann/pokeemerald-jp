@@ -6941,7 +6941,7 @@ SECTIONS {
         src/battle_anim_ghost.o(.text.AnimLick_Step);
         src/battle_anim_ghost.o(.text.AnimTask_NightmareClone);
         src/battle_anim_ghost.o(.text.AnimTask_NightmareClone_Step);
-        src/ghost_mid.o(.text);
+        src/battle_anim_ghost.o(.text.ghost_mid);
         src/battle_anim_ghost.o(.text.AnimTask_SpiteTargetShadow_Step1);
         src/battle_anim_ghost.o(.text.AnimTask_SpiteTargetShadow_Step2);
         src/battle_anim_ghost.o(.text.AnimTask_SpiteTargetShadow_Step3);
@@ -7110,7 +7110,7 @@ SECTIONS {
         src/bike.o(.text.MachBikeTransition_TurnDirection);
         src/bike.o(.text.MachBikeTransition_TrySpeedUp);
         src/bike.o(.text.MachBikeTransition_TrySlowDown);
-        src/bike_stub_44.o(.text);
+        src/bike.o(.text.bike_stub_44);
         src/bike.o(.text.CheckMovementInputAcroBike);
         src/bike.o(.text.AcroBikeHandleInputNormal);
         src/bike.o(.text.AcroBikeHandleInputTurning);
@@ -7934,10 +7934,10 @@ SECTIONS {
         src/battle_transition.o(.text.Phase2_32_Func4);
         src/battle_transition.o(.text.Phase2_32_Func5);
         src/battle_controller_link_partner.o(.text);
-        src/battle_message_tail.o(.text);
+        src/battle_message.o(.text.battle_message_tail);
         src/battle_message.o(.text.ChooseMoveUsedParticle);
         src/battle_message.o(.text.ChooseTypeOfMoveUsedString);
-        src/battle_message_tail2.o(.text);
+        src/battle_message.o(.text.battle_message_tail2);
         src/cable_car.o(.text.Task_LoadCableCar);
         src/cable_car.o(.text.CableCar);
         src/cable_car.o(.text.CB2_LoadCableCar);
