@@ -103,18 +103,23 @@ static void InitMenuOptionGlow(void);
 static void Task_CurrentMenuOptionGlow(u8);
 static void SetMenuOptionGlow(void);
 
-// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern const u16 sPokenavBgDotsPal[16];
-extern const u32 sPokenavBgDotsTiles[];
-extern const u32 sPokenavBgDotsTilemap[];
-extern const u16 sPokenavDeviceBgPal[16];
-extern const u32 sPokenavDeviceBgTiles[];
-extern const u32 sPokenavDeviceBgTilemap[];
-extern const u16 sMatchCallBlueLightPal[];
-extern const u32 sMatchCallBlueLightTiles[];
+#define POKENAV_HANDLER_DATA __attribute__((section(".rodata.pokenav_menu_handler_gfx_data")))
 
-static const struct BgTemplate sPokenavMainMenuBgTemplates[] =
-{
+POKENAV_HANDLER_DATA static const u16 sPokenavBgDotsPal[] = INCBIN_U16("graphics/pokenav/bg_dots.gbapal");
+POKENAV_HANDLER_DATA static const u32 sPokenavBgDotsTiles[] = INCBIN_U32("graphics/pokenav/bg_dots.4bpp.lz");
+POKENAV_HANDLER_DATA static const u32 sPokenavBgDotsTilemap[] = INCBIN_U32("graphics/pokenav/bg_dots.bin.lz");
+POKENAV_HANDLER_DATA const u16 gPokenavMessageBox_Pal[] = INCBIN_U16("graphics/pokenav/message_box.gbapal");
+POKENAV_HANDLER_DATA const u32 gPokenavMessageBox_Gfx[] = INCBIN_U32("graphics/pokenav/message_box.4bpp.lz");
+POKENAV_HANDLER_DATA const u32 gPokenavMessageBox_Tilemap[] = INCBIN_U32("graphics/pokenav/message_box.bin.lz");
+POKENAV_HANDLER_DATA static const u16 sPokenavDeviceBgPal[] = INCBIN_U16("graphics/pokenav/device_outline.gbapal");
+POKENAV_HANDLER_DATA static const u32 sPokenavDeviceBgTiles[] = INCBIN_U32("graphics/pokenav/device_outline.4bpp.lz");
+POKENAV_HANDLER_DATA static const u32 sPokenavDeviceBgTilemap[] = INCBIN_U32("graphics/pokenav/device_outline_map.bin.lz");
+POKENAV_HANDLER_DATA const u16 gPokenavOptions_Pal[] = INCBIN_U16("graphics/pokenav/options.gbapal");
+POKENAV_HANDLER_DATA const u32 gPokenavOptions_Gfx[] = INCBIN_U32("graphics/pokenav/options.4bpp.lz");
+POKENAV_HANDLER_DATA static const u16 sMatchCallBlueLightPal[] = INCBIN_U16("graphics/pokenav/blue_light.gbapal");
+POKENAV_HANDLER_DATA static const u32 sMatchCallBlueLightTiles[] = INCBIN_U32("graphics/pokenav/blue_light.4bpp.lz");
+
+POKENAV_HANDLER_DATA static const struct BgTemplate sPokenavMainMenuBgTemplates[] = {
     {
         .bg = 1,
         .charBaseIndex = 1,
@@ -142,7 +147,7 @@ static const struct BgTemplate sPokenavMainMenuBgTemplates[] =
     }
 };
 
-static const LoopedTask sMenuHandlerLoopTaskFuncs[] =
+POKENAV_HANDLER_DATA static const LoopedTask sMenuHandlerLoopTaskFuncs[] =
 {
     [POKENAV_MENU_FUNC_NONE]                  = NULL,
     [POKENAV_MENU_FUNC_MOVE_CURSOR]           = LoopedTask_MoveMenuCursor,
@@ -155,7 +160,7 @@ static const LoopedTask sMenuHandlerLoopTaskFuncs[] =
     [POKENAV_MENU_FUNC_OPEN_FEATURE]          = LoopedTask_OpenPokenavFeature
 };
 
-static const struct CompressedSpriteSheet sPokenavOptionsSpriteSheets[] =
+POKENAV_HANDLER_DATA static const struct CompressedSpriteSheet sPokenavOptionsSpriteSheets[] =
 {
     {
         .data = gPokenavOptions_Gfx,
@@ -168,39 +173,208 @@ static const struct CompressedSpriteSheet sPokenavOptionsSpriteSheets[] =
         .tag = GFXTAG_BLUE_LIGHT
     }
 };
-extern const struct SpritePalette sPokenavOptionsSpritePalettes[7];
-extern const u16 sOptionsLabelGfx_RegionMap[2];
-extern const u16 sOptionsLabelGfx_Condition[2];
-extern const u16 sOptionsLabelGfx_MatchCall[2];
-extern const u16 sOptionsLabelGfx_Ribbons[2];
-extern const u16 sOptionsLabelGfx_SwitchOff[2];
-extern const u16 sOptionsLabelGfx_Party[2];
-extern const u16 sOptionsLabelGfx_Search[2];
-extern const u16 sOptionsLabelGfx_Cool[2];
-extern const u16 sOptionsLabelGfx_Beauty[2];
-extern const u16 sOptionsLabelGfx_Cute[2];
-extern const u16 sOptionsLabelGfx_Smart[2];
-extern const u16 sOptionsLabelGfx_Tough[2];
-extern const u16 sOptionsLabelGfx_Cancel[2];
+
+POKENAV_HANDLER_DATA static const struct SpritePalette sPokenavOptionsSpritePalettes[] =
+{
+    {&gPokenavOptions_Pal[0x00], PALTAG_OPTIONS_DEFAULT},
+    {&gPokenavOptions_Pal[0x10], PALTAG_OPTIONS_BLUE},
+    {&gPokenavOptions_Pal[0x20], PALTAG_OPTIONS_PINK},
+    {&gPokenavOptions_Pal[0x30], PALTAG_OPTIONS_BEIGE},
+    {&gPokenavOptions_Pal[0x40], PALTAG_OPTIONS_RED},
+    {sMatchCallBlueLightPal, PALTAG_BLUE_LIGHT},
+    {}
+};
+
+// Tile number, palette tag offset
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_RegionMap[] = {0x000, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Condition[] = {0x020, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_MatchCall[] = {0x040, PALTAG_OPTIONS_RED - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Ribbons[]   = {0x060, PALTAG_OPTIONS_PINK - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_SwitchOff[] = {0x080, PALTAG_OPTIONS_BEIGE - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Party[]     = {0x0A0, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Search[]    = {0x0C0, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Cool[]      = {0x0E0, PALTAG_OPTIONS_RED - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Beauty[]    = {0x100, PALTAG_OPTIONS_BLUE - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Cute[]      = {0x120, PALTAG_OPTIONS_PINK - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Smart[]     = {0x140, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Tough[]     = {0x160, PALTAG_OPTIONS_DEFAULT - PALTAG_OPTIONS_START};
+POKENAV_HANDLER_DATA static const u16 sOptionsLabelGfx_Cancel[]    = {0x180, PALTAG_OPTIONS_BEIGE - PALTAG_OPTIONS_START};
+
 struct MenuOptionLabelGfx
 {
     u16 yStart;
     u16 deltaY;
     const u16 *gfx[MAX_POKENAV_MENUITEMS];
 };
-extern const struct MenuOptionLabelGfx sPokenavMenuOptionLabelGfx[5];
-extern const struct WindowTemplate sOptionDescWindowTemplate;
-extern const u8 *const sPageDescriptions[14];
-extern const u8 sOptionDescTextColors[3];
-extern const u8 sOptionDescTextColors2[3];
-extern const struct OamData sOamData_MenuOption;
-extern const union AffineAnimCmd sAffineAnim_MenuOption_Normal[];
-extern const union AffineAnimCmd sAffineAnim_MenuOption_Zoom[];
-extern const union AffineAnimCmd *const sAffineAnims_MenuOption[2];
-extern const struct SpriteTemplate sMenuOptionSpriteTemplate;
-extern const struct OamData sBlueLightOamData;
-extern const struct SpriteTemplate sMatchCallBlueLightSpriteTemplate;
-extern const struct ScanlineEffectParams sPokenavMainMenuScanlineEffectParams;
+
+POKENAV_HANDLER_DATA static const struct MenuOptionLabelGfx sPokenavMenuOptionLabelGfx[POKENAV_MENU_TYPE_COUNT] =
+{
+    [POKENAV_MENU_TYPE_DEFAULT] =
+    {
+        .yStart = 42,
+        .deltaY = 20,
+        .gfx = {
+            sOptionsLabelGfx_RegionMap,
+            sOptionsLabelGfx_Condition,
+            sOptionsLabelGfx_SwitchOff
+        }
+    },
+    [POKENAV_MENU_TYPE_UNLOCK_MC] =
+    {
+        .yStart = 42,
+        .deltaY = 20,
+        .gfx = {
+            sOptionsLabelGfx_RegionMap,
+            sOptionsLabelGfx_Condition,
+            sOptionsLabelGfx_MatchCall,
+            sOptionsLabelGfx_SwitchOff
+        }
+    },
+    [POKENAV_MENU_TYPE_UNLOCK_MC_RIBBONS] =
+    {
+        .yStart = 42,
+        .deltaY = 20,
+        .gfx = {
+            sOptionsLabelGfx_RegionMap,
+            sOptionsLabelGfx_Condition,
+            sOptionsLabelGfx_MatchCall,
+            sOptionsLabelGfx_Ribbons,
+            sOptionsLabelGfx_SwitchOff
+        }
+    },
+    [POKENAV_MENU_TYPE_CONDITION] =
+    {
+        .yStart = 56,
+        .deltaY = 20,
+        .gfx = {
+            sOptionsLabelGfx_Party,
+            sOptionsLabelGfx_Search,
+            sOptionsLabelGfx_Cancel
+        }
+    },
+    [POKENAV_MENU_TYPE_CONDITION_SEARCH] =
+    {
+        .yStart = 40,
+        .deltaY = 16,
+        .gfx = {
+            sOptionsLabelGfx_Cool,
+            sOptionsLabelGfx_Beauty,
+            sOptionsLabelGfx_Cute,
+            sOptionsLabelGfx_Smart,
+            sOptionsLabelGfx_Tough,
+            sOptionsLabelGfx_Cancel
+        }
+    },
+};
+
+POKENAV_HANDLER_DATA static const struct WindowTemplate sOptionDescWindowTemplate =
+{
+    .bg = 1,
+    .tilemapLeft = 4,
+    .tilemapTop = 17,
+    .width = 22,
+    .height = 2,
+    .paletteNum = 1,
+    .baseBlock = 8
+};
+
+POKENAV_HANDLER_DATA static const u8 *const sPageDescriptions[] =
+{
+    [POKENAV_MENUITEM_MAP]                     = gText_CheckMapOfHoenn,
+    [POKENAV_MENUITEM_CONDITION]               = gText_CheckPokemonInDetail,
+    [POKENAV_MENUITEM_MATCH_CALL]              = gText_CallRegisteredTrainer,
+    [POKENAV_MENUITEM_RIBBONS]                 = gText_CheckObtainedRibbons,
+    [POKENAV_MENUITEM_SWITCH_OFF]              = gText_PutAwayPokenav,
+    [POKENAV_MENUITEM_CONDITION_PARTY]         = gText_CheckPartyPokemonInDetail,
+    [POKENAV_MENUITEM_CONDITION_SEARCH]        = gText_CheckAllPokemonInDetail,
+    [POKENAV_MENUITEM_CONDITION_CANCEL]        = gText_ReturnToPokenavMenu,
+    [POKENAV_MENUITEM_CONDITION_SEARCH_COOL]   = gText_FindCoolPokemon,
+    [POKENAV_MENUITEM_CONDITION_SEARCH_BEAUTY] = gText_FindBeautifulPokemon,
+    [POKENAV_MENUITEM_CONDITION_SEARCH_CUTE]   = gText_FindCutePokemon,
+    [POKENAV_MENUITEM_CONDITION_SEARCH_SMART]  = gText_FindSmartPokemon,
+    [POKENAV_MENUITEM_CONDITION_SEARCH_TOUGH]  = gText_FindToughPokemon,
+    [POKENAV_MENUITEM_CONDITION_SEARCH_CANCEL] = gText_ReturnToConditionMenu
+};
+
+POKENAV_HANDLER_DATA static const u8 sOptionDescTextColors[]  = {TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, TEXT_COLOR_LIGHT_GREEN};
+POKENAV_HANDLER_DATA static const u8 sOptionDescTextColors2[] = {TEXT_COLOR_GREEN, TEXT_COLOR_BLUE, TEXT_COLOR_LIGHT_GREEN};
+
+POKENAV_HANDLER_DATA static const struct OamData sOamData_MenuOption =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+};
+
+POKENAV_HANDLER_DATA static const union AffineAnimCmd sAffineAnim_MenuOption_Normal[] =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+POKENAV_HANDLER_DATA static const union AffineAnimCmd sAffineAnim_MenuOption_Zoom[] =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0x10, 0x10, 0, 0x12),
+    AFFINEANIMCMD_END,
+};
+
+POKENAV_HANDLER_DATA static const union AffineAnimCmd *const sAffineAnims_MenuOption[] =
+{
+    sAffineAnim_MenuOption_Normal,
+    sAffineAnim_MenuOption_Zoom
+};
+
+POKENAV_HANDLER_DATA static const struct SpriteTemplate sMenuOptionSpriteTemplate =
+{
+    .tileTag = GFXTAG_OPTIONS,
+    .paletteTag = PALTAG_OPTIONS_START,
+    .oam = &sOamData_MenuOption,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_MenuOption,
+    .callback = SpriteCallbackDummy,
+};
+
+POKENAV_HANDLER_DATA static const struct OamData sBlueLightOamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+};
+
+POKENAV_HANDLER_DATA static const struct SpriteTemplate sMatchCallBlueLightSpriteTemplate =
+{
+    .tileTag = GFXTAG_BLUE_LIGHT,
+    .paletteTag = PALTAG_BLUE_LIGHT,
+    .oam = &sBlueLightOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+POKENAV_HANDLER_DATA static const struct ScanlineEffectParams sPokenavMainMenuScanlineEffectParams =
+{
+    &REG_WIN0H,
+    ((DMA_ENABLE | DMA_START_HBLANK | DMA_REPEAT | DMA_DEST_RELOAD) << 16) | 1,
+    1,
+    0
+};
 
 static bool32 AreAnyTrainerRematchesNearby(void)
 {
