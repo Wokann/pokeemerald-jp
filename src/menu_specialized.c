@@ -192,7 +192,8 @@ const struct ListMenuTemplate sMoveRelearnerMovesListTemplate =
     .cursorKind = CURSOR_BLACK_ARROW
 };
 extern void sub_08198D44(const struct WindowTemplate *template, u8 arg1, u8 arg2, u8 arg3);
-extern const u8 gUnknown_85E7FFC[]; // JP inline move-description table (0x38-byte entries)
+#define JP_MOVE_DESCRIPTION_LENGTH 56
+extern const u8 gMoveDescriptionsJP[]; // JP fixed-width move-description table (0x38-byte entries)
 extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898
 extern const struct SpriteTemplate sConditionMonPicTemplateDescriptor; // JP 0x085FA8A0
@@ -1164,7 +1165,7 @@ void sub_081D200C(u32 chosenMove, bool8 onInit)
             ConvertIntToDecimalStringN(buffer, gBattleMoves[chosenMove].accuracy, STR_CONV_MODE_LEFT_ALIGN, 3);
         AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, buffer, 0x78, 0x2A, TEXT_SKIP_DRAW, NULL);
 
-        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, (const u8 *)gUnknown_85E7FFC + chosenMove * 56, 0, 0x42, 0, NULL);
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gMoveDescriptionsJP + chosenMove * JP_MOVE_DESCRIPTION_LENGTH, 0, 0x42, 0, NULL);
 
         AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, gContestMoveTypeTextPointers[gContestMoves[chosenMove].contestCategory], 0x20, 0x1A, TEXT_SKIP_DRAW, NULL);
 

@@ -1,5 +1,6 @@
 #include "global.h"
 #include "pokemon_summary_screen.h"
+#include "data/text/move_descriptions.h"
 
 __attribute__((naked)) void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
 {

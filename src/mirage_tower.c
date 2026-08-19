@@ -249,8 +249,6 @@ static const struct SpriteTemplate sSpriteTemplate_CeilingCrumbleLarge =
     .callback = SpriteCB_CeilingCrumble
 };
 
-__asm__(".global gUnknown_85E7FFC\n.set gUnknown_85E7FFC, sSpriteTemplate_CeilingCrumbleSmall + 12");
-
 // JP state variables live at fixed addresses supplied by ld_script_jp.txt.
 extern u8 *sMirageTowerGfxBuffer;        // 0x0203CBD0
 extern u8 *sMirageTowerTilemapBuffer;    // 0x0203CBD4

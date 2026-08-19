@@ -25,7 +25,3 @@ gUnknown_85E732C: @ 0x85E732C
 
 
 	.section .rodata.mid101_after_mirage
-
-	.globl gUnknown_85E8034
-gUnknown_85E8034: @ 0x85E8034
-	.incbin "baserom_jp.gba", 0x5e8034, 0x4d70
