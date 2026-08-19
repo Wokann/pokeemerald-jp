@@ -113,16 +113,19 @@ static u32 ShowCheckPageDown(s32);
 static u32 ExitCheckPage(s32);
 static u32 ExitMatchCall(s32);
 
-// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern const u16 sMatchCallUI_Pal[];
-extern const u32 sMatchCallUI_Gfx[];
-extern const u32 sMatchCallUI_Tilemap[];
-extern const u16 sOptionsCursor_Pal[];
-extern const u32 sOptionsCursor_Gfx[];
-extern const u16 sCallWindow_Pal[];
-extern const u16 sListWindow_Pal[];
-extern const u16 sPokeball_Pal[];
-extern const u32 sPokeball_Gfx[];
+#define MATCH_CALL_GFX_DATA __attribute__((section(".rodata.pokenav_match_call_gfx_resources")))
+#define MATCH_CALL_GFX_DATA_ALIGNED __attribute__((section(".rodata.pokenav_match_call_gfx_resources"), aligned(4)))
+
+MATCH_CALL_GFX_DATA_ALIGNED static const u16 sMatchCallUI_Pal[] = INCBIN_U16("graphics/pokenav/match_call/ui.gbapal");
+MATCH_CALL_GFX_DATA static const u32 sMatchCallUI_Gfx[] = INCBIN_U32("graphics/pokenav/match_call/ui.4bpp.lz");
+MATCH_CALL_GFX_DATA static const u32 sMatchCallUI_Tilemap[] = INCBIN_U32("graphics/pokenav/match_call/ui.bin.lz");
+MATCH_CALL_GFX_DATA static const u16 sOptionsCursor_Pal[] = INCBIN_U16("graphics/pokenav/match_call/options_cursor.gbapal");
+MATCH_CALL_GFX_DATA static const u32 sOptionsCursor_Gfx[] = INCBIN_U32("graphics/pokenav/match_call/options_cursor.4bpp.lz");
+MATCH_CALL_GFX_DATA static const u16 sCallWindow_Pal[] = INCBIN_U16("graphics/pokenav/match_call/call_window.gbapal");
+MATCH_CALL_GFX_DATA static const u16 sListWindow_Pal[] = INCBIN_U16("graphics/pokenav/match_call/list_window.gbapal");
+MATCH_CALL_GFX_DATA static const u16 sPokeball_Pal[] = INCBIN_U16("graphics/pokenav/match_call/pokeball.gbapal");
+MATCH_CALL_GFX_DATA static const u32 sPokeball_Gfx[] = INCBIN_U32("graphics/pokenav/match_call/pokeball.4bpp.lz");
+
 
 static const struct BgTemplate sMatchCallBgTemplates[] =
 {

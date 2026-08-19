@@ -38,11 +38,9 @@ static bool32 ShouldDoNearbyMessage(void);
 
 #include "data/text/match_call_messages.h"
 
-#include "data/text/match_call_messages.h"
+#define MATCH_CALL_LIST_TEXT __attribute__((section(".rodata.match_call_list_text")))
 
-#include "data/text/match_call_messages.h"
-
-#include "data/text/match_call_messages.h"
+MATCH_CALL_LIST_TEXT const u8 gText_CallCantBeMadeHere[] = _("ここでは　よびだすことが　できないようだ");
 
 // JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
 static const u8 sMatchCallOptionsNoCheckPage[] =
