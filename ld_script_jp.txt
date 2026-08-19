@@ -9583,6 +9583,7 @@ SECTIONS {
         src/data/list_menu_data.o(.rodata);
         src/data/list_menu_data.o(.rodata.list_menu_extra);
         src/save_location.o(.rodata.save_location_data.*);
+        src/item_icon.o(.rodata.item_icon_data.*);
         data/data_b2d_mid101.o(.rodata.mid101_after_item_menu);
         data/data_b2d_mid101.o(.rodata.mid101_tail);
         src/data/text/nature_names.o(.rodata);

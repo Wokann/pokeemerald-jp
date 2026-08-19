@@ -8,8 +8,48 @@
 
 extern u8 *gItemIconDecompressionBuffer;
 extern u8 *gItemIcon4x4Buffer;
-extern const struct SpriteTemplate gItemIconSpriteTemplate;
-extern const void *const gItemIconTable[][2];
+#define ITEM_ICON_DATA(name) __attribute__((section(".rodata.item_icon_data." #name)))
+
+#include "data/item_icon_table.h"
+
+ITEM_ICON_DATA(sOamData_ItemIcon) static const struct OamData sOamData_ItemIcon =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 2,
+    .affineParam = 0
+};
+
+ITEM_ICON_DATA(sSpriteAnim_ItemIcon) static const union AnimCmd sSpriteAnim_ItemIcon[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+ITEM_ICON_DATA(sSpriteAnimTable_ItemIcon) static const union AnimCmd *const sSpriteAnimTable_ItemIcon[] =
+{
+    sSpriteAnim_ItemIcon
+};
+
+ITEM_ICON_DATA(gItemIconSpriteTemplate) const struct SpriteTemplate gItemIconSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &sOamData_ItemIcon,
+    .anims = sSpriteAnimTable_ItemIcon,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
 
 bool8 AllocItemIconTemporaryBuffers(void)
 {
