@@ -1159,3 +1159,50 @@ gUnknown_8566E40: @ 0x8566E40
 	.globl gUnknown_8566E58
 gUnknown_8566E58: @ 0x8566E58
 	.incbin "baserom_jp.gba", 0x566e58, 0x5
+
+	.section .rodata.mid66
+
+	.globl gUnknown_85ABBC9
+gUnknown_85ABBC9: @ 0x85ABBC9
+	.string "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}はい\n"
+	.string "いいえ$"
+	.globl gUnknown_85ABBD8
+gUnknown_85ABBD8: @ 0x85ABBD8
+	.string "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}いれかえる　わざを\n"
+	.string "えらんで　ください${PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}${ESCAPE 3}${ESCAPE 4}$ー$HP　　$こうげき$ぼうぎょ$とくこう$とくぼう$きBコくにBコくしBコくひBコくちBコくヘ⋯コく"
+
+	.globl gText_SafariBalls
+
+	.section .rodata.mid67
+
+	.globl gUnknown_85ABD18
+gUnknown_85ABD18: @ 0x85ABD18
+	.string "バトルトーナメント$1かい$2かい$じゅんけっしょう$けっしょう$　　　"
+
+	.globl gUnknown_85ABD3C
+gUnknown_85ABD3C: @ 0x85ABD3C
+	.string "めCコくよCコくれCコくぉCコくきたいの　おおがた　しんじん！\p"
+	.string "$ひがんの　はつ　ゆうしょう　なるか！？\p"
+	.string "$もと　チャンピオン！\p"
+	.string "$ぜんかい　チャンピオン！\p"
+	.string "$むてきの　チャンピオン！\p$"
+	.globl gUnknown_85ABD9A
+
+	.section .rodata.mid75
+
+.globl gUnknown_85C96F8
+gUnknown_85C96F8: @ 0x85C96F8
+	.incbin "baserom_jp.gba", 0x5c96f8, 0x30
+
+	.globl gUnknown_85C9728
+gUnknown_85C9728: @ 0x85C9728
+	.incbin "baserom_jp.gba", 0x5c9728, 0x10
+
+	.globl gUnknown_85C9738
+gUnknown_85C9738: @ 0x85C9738
+	.string "{B_COPY_VAR_1}へ\n"
+	.string "もどります$"
+	.globl gUnknown_85C9742
+gUnknown_85C9742: @ 0x85C9742
+	.string "　ど　う　ぐ　　$モンスターボール$　わざマシン　　$　き　の　み　　$たいせつなもの　$"
+	.globl gUnknown_85C976F

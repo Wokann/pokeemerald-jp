@@ -9485,9 +9485,9 @@ SECTIONS {
         src/data/text/region_texts.o(.rodata);
         data/data_b2d_rest.o(.rodata);
         src/data/text/region_texts67.o(.rodata);
-        data/data_b2d_mid66.o(.rodata);
+        data/data_b2d.o(.rodata.mid66);
         src/data/text/region_texts68.o(.rodata);
-        data/data_b2d_mid67.o(.rodata);
+        data/data_b2d.o(.rodata.mid67);
         src/data/text/region_texts69.o(.rodata);
         data/data_b2d_mid68.o(.rodata);
         src/data/text/region_texts72.o(.rodata);
@@ -9505,7 +9505,7 @@ SECTIONS {
         src/data/text/region_texts77.o(.rodata);
         src/strings.o(.rodata.strings_common);
         src/data/text/region_texts66.o(.rodata);
-        data/data_b2d_mid75.o(.rodata);
+        data/data_b2d.o(.rodata.mid75);
         src/data/text/region_texts78.o(.rodata);
         data/data_b2d_mid76.o(.rodata);
         src/data/text/region_texts79.o(.rodata);
