@@ -9568,7 +9568,9 @@ SECTIONS {
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data);
         src/data/text/region_texts114.o(.rodata);
         src/battle_factory_screen.o(.rodata.battle_factory_screen_data_late);
-        data/data_b2d_mid100.o(.rodata.mid100_rest);
+        data/data_b2d_mid100.o(.rodata.mid100_shared_prefix);
+        src/apprentice.o(.rodata.apprentice_data);
+        data/data_b2d_mid100.o(.rodata.mid100_frontier_rest);
         src/data/text/region_texts115.o(.rodata);
         src/data/text/region_texts116.o(.rodata);
         data/data_b2d_mid101.o(.rodata);
