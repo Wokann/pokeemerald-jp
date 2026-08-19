@@ -9593,6 +9593,8 @@ SECTIONS {
         src/braille.o(.rodata.braille_data.scroll);
         src/braille.o(.rodata);
         data/data_b2d_mid101.o(.rodata.mid101_after_item_menu);
+        src/mirage_tower.o(.rodata);
+        data/data_b2d_mid101.o(.rodata.mid101_after_mirage);
         data/data_b2d_mid101.o(.rodata.mid101_tail);
         src/data/text/nature_names.o(.rodata);
         data/data_b2c_mid1.o(.rodata);

@@ -388,6 +388,12 @@ $(C_BUILDDIR)/braille.o: src/braille.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/braille.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/braille.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/braille.gen.s
+$(C_BUILDDIR)/mirage_tower.o: src/mirage_tower.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mirage_tower.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mirage_tower.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/mirage_tower.gen.s
+
 
 
 $(C_BUILDDIR)/menu_specialized.o: src/menu_specialized.c charmap.txt

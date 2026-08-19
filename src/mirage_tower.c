@@ -72,19 +72,184 @@ static void SpriteCB_CeilingCrumble(struct Sprite *);
 static void DoMirageTowerDisintegration(u8);
 static void InitMirageTowerShake(u8);
 static void Task_FossilFallAndSink(u8);
+void SpriteCB_FallingFossil(struct Sprite *);
 
-// JP data tables (data/data.s)
-extern const u8 sMirageTower_Gfx[];
-extern const u16 sMirageTowerTilemap[];
-extern const u8 sFossil_Gfx[];
-extern const u8 sMirageTowerCrumbles_Gfx[];
-extern const s16 sCeilingCrumblePositions[][3];
-extern const struct SpriteSheet sCeilingCrumbleSpriteSheets[];
-extern const struct MetatileCoords sInvisibleMirageTowerMetatiles[];
-extern const struct SpriteTemplate sSpriteTemplate_FallingFossil;
-extern const struct PulseBlendPaletteSettings gMirageTowerPulseBlendSettings;
-extern const struct SpriteTemplate sSpriteTemplate_CeilingCrumbleSmall;
-extern const struct SpriteTemplate sSpriteTemplate_CeilingCrumbleLarge;
+static const ALIGNED(2) u8 sMirageTower_Gfx[] = INCBIN_U8("graphics/mirage_tower/sMirageTower_Gfx.bin");
+static const u16 sMirageTowerTilemap[] = INCBIN_U16("graphics/mirage_tower/sMirageTowerTilemap.bin");
+static const u8 sFossil_Gfx[] = INCBIN_U8("graphics/mirage_tower/sFossil_Gfx.bin");
+static const u8 sMirageTowerCrumbles_Gfx[] = INCBIN_U8("graphics/mirage_tower/sMirageTowerCrumbles_Gfx.bin");
+static const u16 sMirageTowerCrumbles_Palette[] = INCBIN_U16("graphics/mirage_tower/sMirageTowerCrumbles_Palette.bin");
+
+static const s16 sCeilingCrumblePositions[][3] =
+{
+    {  0,  10,  65},
+    { 17,   3,  50},
+    {-12,   0,  75},
+    { 10,  15,  90},
+    {  7,   8,  65},
+    {-18,   5,  75},
+    { 22, -10,  55},
+    {-24,  -4,  65},
+};
+
+static const struct SpriteSheet sCeilingCrumbleSpriteSheets[] =
+{
+    {sMirageTowerCrumbles_Gfx, sizeof(sMirageTowerCrumbles_Gfx), TAG_CEILING_CRUMBLE},
+    {}
+};
+
+static const struct MetatileCoords sInvisibleMirageTowerMetatiles[] =
+{
+    {18, 53, METATILE_Mauville_DeepSand_Center},
+    {19, 53, METATILE_Mauville_DeepSand_Center},
+    {20, 53, METATILE_Mauville_DeepSand_Center},
+    {18, 54, METATILE_Mauville_DeepSand_Center},
+    {19, 54, METATILE_Mauville_DeepSand_Center},
+    {20, 54, METATILE_Mauville_DeepSand_Center},
+    {18, 55, METATILE_Mauville_DeepSand_Center},
+    {19, 55, METATILE_Mauville_DeepSand_Center},
+    {20, 55, METATILE_Mauville_DeepSand_Center},
+    {18, 56, METATILE_Mauville_DeepSand_Center},
+    {19, 56, METATILE_Mauville_DeepSand_Center},
+    {20, 56, METATILE_Mauville_DeepSand_Center},
+    {18, 57, METATILE_Mauville_DeepSand_BottomMid},
+    {19, 57, METATILE_Mauville_DeepSand_BottomMid},
+    {20, 57, METATILE_Mauville_DeepSand_BottomMid},
+    {18, 58, METATILE_General_SandPit_Center},
+    {19, 58, METATILE_General_SandPit_Center},
+    {20, 58, METATILE_General_SandPit_Center},
+};
+
+static const union AnimCmd sAnim_FallingFossil[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const struct OamData sOamData_FallingFossil =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 3,
+    .affineParam = 0,
+};
+
+static const union AnimCmd *const sAnims_FallingFossil[] =
+{
+    sAnim_FallingFossil,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_FallingFossil =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_FallingFossil,
+    .anims = sAnims_FallingFossil,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+const struct PulseBlendSettings gMirageTowerPulseBlendSettings = {
+    .blendColor = RGB(27, 25, 16),
+    .paletteOffset = BG_PLTT_ID(6) + 1,
+    .numColors = 15,
+    .delay = 5,
+    .numFadeCycles = -1,
+    .maxBlendCoeff = 11,
+    .fadeType = 1,
+    .restorePaletteOnUnload = FALSE,
+    .unk7_7 = 1,
+};
+
+static const union AnimCmd sAnim_CeilingCrumbleSmall[] =
+{
+    ANIMCMD_FRAME(0, 12),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_CeilingCrumbleSmall[] =
+{
+    sAnim_CeilingCrumbleSmall,
+};
+
+static const struct OamData sOamData_CeilingCrumbleSmall =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_CeilingCrumbleSmall =
+{
+    .tileTag = TAG_CEILING_CRUMBLE,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_CeilingCrumbleSmall,
+    .anims = sAnims_CeilingCrumbleSmall,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_CeilingCrumble
+};
+
+static const union AnimCmd sAnim_CeilingCrumbleLarge[] =
+{
+    ANIMCMD_FRAME(0, 12),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_CeilingCrumbleLarge[] =
+{
+    sAnim_CeilingCrumbleLarge,
+};
+
+static const struct OamData sOamData_CeilingCrumbleLarge =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_CeilingCrumbleLarge =
+{
+    .tileTag = TAG_CEILING_CRUMBLE,
+    .paletteTag = TAG_NONE,
+    .oam = &sOamData_CeilingCrumbleLarge,
+    .anims = sAnims_CeilingCrumbleLarge,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_CeilingCrumble
+};
+
+__asm__(".global gUnknown_85E7FFC\n.set gUnknown_85E7FFC, sSpriteTemplate_CeilingCrumbleSmall + 12");
 
 // JP state variables live at fixed addresses supplied by ld_script_jp.txt.
 extern u8 *sMirageTowerGfxBuffer;        // 0x0203CBD0
