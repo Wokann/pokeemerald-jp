@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.mid2_prefix
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -119,58 +119,7 @@ sSubmenuLeftHeaderSpriteTemplate: @ 0x85F1508
 	.4byte sOamData_SubmenuLeftHeader, gDummySpriteAnimTable
 	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
-gUnknown_85F1520: @ 0x85F1520
-	.incbin "baserom_jp.gba", 0x5f1520, 0x88
-
-	.globl sPokenavCheckPageColors
-sPokenavCheckPageColors: @ 0x85F15A8
-	.byte 0x00, 0x02, 0x05, 0x00
-
-	.globl sPokenavMatchCallFieldNames
-sPokenavMatchCallFieldNames: @ 0x85F15AC
-	.4byte 0x085CB6EC, 0x085CB6F1, 0x085CB6FB
-
-	.globl sPokenavFieldNameColors
-sPokenavFieldNameColors: @ 0x85F15B8
-	.byte 0x01, 0x04, 0x05
-
-	.globl lineOffsets
-lineOffsets: @ 0x85F15BB
-	.byte 0x02, 0x04, 0x06, 0x07, 0x00
-
-	.globl sListArrowSpriteSheets
-sListArrowSpriteSheets: @ 0x85F15C0
-	.4byte 0x085F1540
-	.hword 0x00C0, 0x000A
-
-	.globl sListArrowPalettes
-sListArrowPalettes: @ 0x85F15C8
-	.incbin "graphics/list_ui/sListArrowPalettes.bin"
-
-	.globl sSpriteTemplate_RightArrow
-sSpriteTemplate_RightArrow: @ 0x85F15E0
-	.hword 0x000A, 0x0014
-	.4byte 0x085F15D8, gDummySpriteAnimTable
-	.4byte 0, gDummySpriteAffineAnimTable, 0x081C8835
-
-sOamData_RightArrow: @ 0x85F15F8
-	.byte 0x00, 0x40, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00
-
-	.globl sSpriteTemplate_UpDownArrow
-sSpriteTemplate_UpDownArrow: @ 0x85F1600
-	.hword 0x000A, 0x0014
-	.4byte 0x085F15F8, gDummySpriteAnimTable
-	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
-
-	.globl sLastCursorPositions
-sLastCursorPositions: @ 0x85F1618
-	.byte 0x02, 0x03, 0x04, 0x02, 0x05
-
-	.globl sMenuItems
-sMenuItems: @ 0x85F161D
-	.byte 0x00, 0x01, 0x04, 0x04, 0x04, 0x04, 0x00, 0x01, 0x02, 0x04, 0x04, 0x04
-	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x04, 0x05, 0x06, 0x07, 0x04, 0x04, 0x04
-	.byte 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x00
+	.section .rodata.mid2_suffix
 
 	.globl sPokenavBgDotsPal
 sPokenavBgDotsPal: @ 0x85F163C

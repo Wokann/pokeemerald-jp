@@ -31,9 +31,18 @@ static u32 HandleMainMenuInput(struct Pokenav_Menu *);
 static u32 (*GetMainMenuInputHandler(void))(struct Pokenav_Menu *);
 static void SetMenuInputHandler(struct Pokenav_Menu *);
 
-// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern const u8 sLastCursorPositions[5];
-extern const u8 sMenuItems[5][MAX_POKENAV_MENUITEMS];
+#define POKENAV_MENU_HANDLER_DATA __attribute__((section(".rodata.pokenav_menu_handler_data")))
+
+POKENAV_MENU_HANDLER_DATA static const u8 sLastCursorPositions[] = {2, 3, 4, 2, 5};
+POKENAV_MENU_HANDLER_DATA static const u8 sMenuItems[][MAX_POKENAV_MENUITEMS] =
+{
+    {0, 1, 4, 4, 4, 4},
+    {0, 1, 2, 4, 4, 4},
+    {0, 1, 2, 3, 4, 4},
+    {5, 6, 7, 4, 4, 4},
+    {8, 9, 10, 11, 12, 13},
+};
+
 
 static u8 GetPokenavMainMenuType(void)
 {

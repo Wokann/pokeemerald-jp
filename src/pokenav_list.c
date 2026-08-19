@@ -90,18 +90,61 @@ static u32 LoopedTask_EraseListForCheckPage(s32);
 static u32 LoopedTask_ReshowListFromCheckPage(s32);
 static u32 LoopedTask_PrintCheckPageInfo(s32);
 
-// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern u32 sMoveWindowDownIndex; // Read, but pointlessly
-extern const struct CompressedSpriteSheet sListArrowSpriteSheets[1];
-extern const struct SpritePalette sListArrowPalettes[2];
-extern const struct OamData sOamData_RightArrow;
-extern const struct SpriteTemplate sSpriteTemplate_RightArrow;
-extern const struct OamData sOamData_UpDownArrow;
-extern const struct SpriteTemplate sSpriteTemplate_UpDownArrow;
-extern const u8 lineOffsets[CHECK_PAGE_ENTRY_COUNT];
-extern const u8 sPokenavCheckPageColors[3];
-extern const u8 sPokenavFieldNameColors[3];
-extern const u8 *const sPokenavMatchCallFieldNames[3];
+#define POKENAV_LIST_DATA __attribute__((section(".rodata.pokenav_list_data")))
+
+POKENAV_LIST_DATA static const u16 sListArrow_Pal[] =
+    INCBIN_U16("graphics/pokenav/list_arrows.gbapal");
+POKENAV_LIST_DATA static const u32 sListArrow_Gfx[] =
+    INCBIN_U32("graphics/pokenav/list_arrows.4bpp.lz");
+
+POKENAV_LIST_DATA static const u8 sPokenavCheckPageColors[] = {0, 2, 5, 0};
+POKENAV_LIST_DATA static const u8 *const sPokenavMatchCallFieldNames[] =
+{
+    gText_PokenavMatchCall_Strategy,
+    gText_PokenavMatchCall_TrainerPokemon,
+    gText_PokenavMatchCall_SelfIntroduction,
+};
+POKENAV_LIST_DATA static const u8 sPokenavFieldNameColors[] = {1, 4, 5};
+POKENAV_LIST_DATA static const u8 lineOffsets[] = {2, 4, 6, 7, 0};
+
+POKENAV_LIST_DATA static const struct CompressedSpriteSheet sListArrowSpriteSheets[] =
+{
+    { .data = sListArrow_Gfx, .size = 0xC0, .tag = GFXTAG_ARROW },
+};
+POKENAV_LIST_DATA static const struct SpritePalette sListArrowPalettes[] =
+{
+    { .data = sListArrow_Pal, .tag = PALTAG_ARROW },
+    {},
+};
+POKENAV_LIST_DATA static const struct OamData sOamData_RightArrow =
+{
+    .y = 0, .affineMode = ST_OAM_AFFINE_OFF, .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP, .shape = SPRITE_SHAPE(8x16), .x = 0,
+    .size = SPRITE_SIZE(8x16), .tileNum = 0, .priority = 3, .paletteNum = 0,
+};
+POKENAV_LIST_DATA static const struct SpriteTemplate sSpriteTemplate_RightArrow =
+{
+    .tileTag = GFXTAG_ARROW, .paletteTag = PALTAG_ARROW,
+    .oam = &sOamData_RightArrow, .anims = gDummySpriteAnimTable,
+    .images = NULL, .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_RightArrow,
+};
+POKENAV_LIST_DATA static const struct OamData sOamData_UpDownArrow =
+{
+    .y = 0, .affineMode = ST_OAM_AFFINE_OFF, .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP, .shape = SPRITE_SHAPE(16x8), .x = 0,
+    .size = SPRITE_SIZE(16x8), .tileNum = 0, .priority = 2, .paletteNum = 0,
+};
+POKENAV_LIST_DATA static const struct SpriteTemplate sSpriteTemplate_UpDownArrow =
+{
+    .tileTag = GFXTAG_ARROW, .paletteTag = PALTAG_ARROW,
+    .oam = &sOamData_UpDownArrow, .anims = gDummySpriteAnimTable,
+    .images = NULL, .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+
+extern u32 sMoveWindowDownIndex;
 extern void ClearRematchPokeballIcon(u16 windowId, u32 tileOffset);
 
 bool32 CreatePokenavList(const struct BgTemplate *bgTemplate, struct PokenavListTemplate *listTemplate, u32 tileOffset)
