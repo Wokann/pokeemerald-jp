@@ -77,7 +77,7 @@ def main():
 
     print(f"\nJP asm functions: {len(jp_asm)}")
     print(f"Converted to C:   {len(converted)}")
-    print(f"asm -> C:         {len(converted) / max(len(jp_asm), 1):.2%}")
+    print(f"C conversion:     {len(converted)}/{len(converted) + len(jp_asm)} = {len(converted) / max(len(converted) + len(jp_asm), 1):.2%}")
 
 
 if __name__ == "__main__":
