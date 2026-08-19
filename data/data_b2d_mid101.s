@@ -12,16 +12,6 @@
 
 	.section .rodata.mid101_after_item_menu
 
-	.globl sSaveLocationPokeCenterList
-sSaveLocationPokeCenterList: @ 0x85DFC74
-	.string "いいういあういうおえかええおおおえかおか　きあきえくおくさけしけおこかこおさかさいしうしかすきすうせえせいそうそしたすたこたせたゅはょはねのののはのひの$$"
-	.globl sSaveLocationReloadLocList
-sSaveLocationReloadLocList: @ 0x85DFCC2
-	.string "おは$$"
-	.globl sEmptyMapList
-sEmptyMapList: @ 0x85DFCC6
-	.hword 0xFFFF
-
 	.globl gItemIconTable
 gItemIconTable: @ 0x85DFCC8
 	.incbin "baserom_jp.gba", 0x5dfcc8, 0xbd0
