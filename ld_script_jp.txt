@@ -2644,8 +2644,8 @@ SECTIONS {
         src/battle_controllers.o(.text.BtlController_EmitBallThrowAnim);
         src/battle_controllers.o(.text.BtlController_EmitPause);
         src/battle_controllers.o(.text.BtlController_EmitMoveAnimation);
-        src/battle_controllers_ps.o(.text.BtlController_EmitPrintString);
-        src/battle_controllers_ps.o(.text.BtlController_EmitPrintSelectionString);
+        src/battle_controllers.o(.text.BtlController_EmitPrintString);
+        src/battle_controllers.o(.text.BtlController_EmitPrintSelectionString);
         src/battle_controllers.o(.text.BtlController_EmitChooseAction);
         src/battle_controllers.o(.text.BtlController_EmitUnknownYesNoBox);
         src/battle_controllers.o(.text.BtlController_EmitChooseMove);
@@ -2779,7 +2779,7 @@ SECTIONS {
         src/battle_main.o(.text.TurnValuesCleanUp);
         src/battle_main.o(.text.SpecialStatusesClear);
         src/battle_main.o(.text.CheckFocusPunch_ClearVarsBeforeTurnStarts);
-        src/battle_main_turnfuncs.o(.text.RunBattleScriptCommands);
+        src/battle_main.o(.text.RunBattleScriptCommands);
         src/battle_main.o(.text.HandleEndTurn_BattleWon);
         src/battle_main.o(.text.HandleEndTurn_BattleLost);
         src/battle_main.o(.text.HandleEndTurn_RanFromBattle);
