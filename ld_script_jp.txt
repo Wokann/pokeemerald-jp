@@ -5442,6 +5442,7 @@ SECTIONS {
         src/field_effect.o(.text.FldEff_MoveDeoxysRock);
         src/field_effect.o(.text.Task_MoveDeoxysRock);
         src/scanline_effect.o(.text);
+        src/option_menu.o(.text);
         src/pokedex.o(.text);
         src/trainer_card.o(.text);
         src/frontier_pass.o(.text);
