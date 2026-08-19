@@ -9489,7 +9489,7 @@ SECTIONS {
         src/data/text/region_texts68.o(.rodata);
         data/data_b2d.o(.rodata.mid67);
         src/data/text/region_texts69.o(.rodata);
-        data/data_b2d_mid68.o(.rodata);
+        data/data_b2d.o(.rodata.mid68);
         src/data/text/region_texts72.o(.rodata);
         src/data/text/region_texts70.o(.rodata);
         data/data_b2d_mid69.o(.rodata);
@@ -9507,7 +9507,7 @@ SECTIONS {
         src/data/text/region_texts66.o(.rodata);
         data/data_b2d.o(.rodata.mid75);
         src/data/text/region_texts78.o(.rodata);
-        data/data_b2d_mid76.o(.rodata);
+        data/data_b2d.o(.rodata.mid76);
         src/data/text/region_texts79.o(.rodata);
         src/data/text/region_texts80.o(.rodata);
         src/data/text/region_texts81.o(.rodata);
