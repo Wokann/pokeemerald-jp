@@ -9592,11 +9592,10 @@ SECTIONS {
         . = ALIGN(4);
         src/braille.o(.rodata.braille_data.scroll);
         src/braille.o(.rodata);
-        data/data_b2d_mid101.o(.rodata.mid101_after_item_menu);
+        src/berry_fix_graphics.o(.rodata.berry_fix_graphics_data);
+        src/battle_controller_player_partner.o(.rodata.player_partner_data);
         src/mirage_tower.o(.rodata);
         src/pokemon_summary_screen.o(.rodata.move_descriptions_jp);
-        data/data_b2d_mid101.o(.rodata.mid101_after_mirage);
-        data/data_b2d_mid101.o(.rodata.mid101_tail);
         src/data/text/nature_names.o(.rodata);
         data/data_b2c_mid1.o(.rodata);
         src/pokenav.o(.rodata);

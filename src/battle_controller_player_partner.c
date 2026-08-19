@@ -56,7 +56,7 @@ __attribute__((naked)) void PlayerPartnerBufferRunCommand(void)
         "_081BAAE4: .4byte gBitTable\n\t"
         "_081BAAE8: .4byte gActiveBattler\n\t"
         "_081BAAEC: .4byte gBattleBufferA\n\t"
-        "_081BAAF0: .4byte gUnknown_85E732C\n\t"
+        "_081BAAF0: .4byte sPlayerPartnerBufferCommands\n\t"
         "_081BAAF4:\n\t"
         "	bl PlayerPartnerBufferExecCompleted\n\t"
         "_081BAAF8:\n\t"
@@ -7115,3 +7115,75 @@ __attribute__((naked)) void PlayerPartnerHandleCmd55(void)
 }
 
 void nullsub_77(void) {}
+
+#define PLAYER_PARTNER_DATA __attribute__((section(".rodata.player_partner_data")))
+
+PLAYER_PARTNER_DATA static void (*const sPlayerPartnerBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
+{
+    [CONTROLLER_GETMONDATA]               = PlayerPartnerHandleGetMonData,
+    [CONTROLLER_GETRAWMONDATA]            = PlayerPartnerHandleGetRawMonData,
+    [CONTROLLER_SETMONDATA]               = PlayerPartnerHandleSetMonData,
+    [CONTROLLER_SETRAWMONDATA]            = PlayerPartnerHandleSetRawMonData,
+    [CONTROLLER_LOADMONSPRITE]            = PlayerPartnerHandleLoadMonSprite,
+    [CONTROLLER_SWITCHINANIM]             = PlayerPartnerHandleSwitchInAnim,
+    [CONTROLLER_RETURNMONTOBALL]          = PlayerPartnerHandleReturnMonToBall,
+    [CONTROLLER_DRAWTRAINERPIC]           = PlayerPartnerHandleDrawTrainerPic,
+    [CONTROLLER_TRAINERSLIDE]             = PlayerPartnerHandleTrainerSlide,
+    [CONTROLLER_TRAINERSLIDEBACK]         = PlayerPartnerHandleTrainerSlideBack,
+    [CONTROLLER_FAINTANIMATION]           = PlayerPartnerHandleFaintAnimation,
+    [CONTROLLER_PALETTEFADE]              = PlayerPartnerHandlePaletteFade,
+    [CONTROLLER_SUCCESSBALLTHROWANIM]     = PlayerPartnerHandleSuccessBallThrowAnim,
+    [CONTROLLER_BALLTHROWANIM]            = PlayerPartnerHandleBallThrowAnim,
+    [CONTROLLER_PAUSE]                    = PlayerPartnerHandlePause,
+    [CONTROLLER_MOVEANIMATION]            = PlayerPartnerHandleMoveAnimation,
+    [CONTROLLER_PRINTSTRING]              = PlayerPartnerHandlePrintString,
+    [CONTROLLER_PRINTSTRINGPLAYERONLY]    = PlayerPartnerHandlePrintSelectionString,
+    [CONTROLLER_CHOOSEACTION]             = PlayerPartnerHandleChooseAction,
+    [CONTROLLER_YESNOBOX]                 = PlayerPartnerHandleUnknownYesNoBox,
+    [CONTROLLER_CHOOSEMOVE]               = PlayerPartnerHandleChooseMove,
+    [CONTROLLER_OPENBAG]                  = PlayerPartnerHandleChooseItem,
+    [CONTROLLER_CHOOSEPOKEMON]            = PlayerPartnerHandleChoosePokemon,
+    [CONTROLLER_23]                       = PlayerPartnerHandleCmd23,
+    [CONTROLLER_HEALTHBARUPDATE]          = PlayerPartnerHandleHealthBarUpdate,
+    [CONTROLLER_EXPUPDATE]                = PlayerPartnerHandleExpUpdate,
+    [CONTROLLER_STATUSICONUPDATE]         = PlayerPartnerHandleStatusIconUpdate,
+    [CONTROLLER_STATUSANIMATION]          = PlayerPartnerHandleStatusAnimation,
+    [CONTROLLER_STATUSXOR]                = PlayerPartnerHandleStatusXor,
+    [CONTROLLER_DATATRANSFER]             = PlayerPartnerHandleDataTransfer,
+    [CONTROLLER_DMA3TRANSFER]             = PlayerPartnerHandleDMA3Transfer,
+    [CONTROLLER_PLAYBGM]                  = PlayerPartnerHandlePlayBGM,
+    [CONTROLLER_32]                       = PlayerPartnerHandleCmd32,
+    [CONTROLLER_TWORETURNVALUES]          = PlayerPartnerHandleTwoReturnValues,
+    [CONTROLLER_CHOSENMONRETURNVALUE]     = PlayerPartnerHandleChosenMonReturnValue,
+    [CONTROLLER_ONERETURNVALUE]           = PlayerPartnerHandleOneReturnValue,
+    [CONTROLLER_ONERETURNVALUE_DUPLICATE] = PlayerPartnerHandleOneReturnValue_Duplicate,
+    [CONTROLLER_CLEARUNKVAR]              = PlayerPartnerHandleCmd37,
+    [CONTROLLER_SETUNKVAR]                = PlayerPartnerHandleCmd38,
+    [CONTROLLER_CLEARUNKFLAG]             = PlayerPartnerHandleCmd39,
+    [CONTROLLER_TOGGLEUNKFLAG]            = PlayerPartnerHandleCmd40,
+    [CONTROLLER_HITANIMATION]             = PlayerPartnerHandleHitAnimation,
+    [CONTROLLER_CANTSWITCH]               = PlayerPartnerHandleCmd42,
+    [CONTROLLER_PLAYSE]                   = PlayerPartnerHandlePlaySE,
+    [CONTROLLER_PLAYFANFAREORBGM]         = PlayerPartnerHandlePlayFanfareOrBGM,
+    [CONTROLLER_FAINTINGCRY]              = PlayerPartnerHandleFaintingCry,
+    [CONTROLLER_INTROSLIDE]               = PlayerPartnerHandleIntroSlide,
+    [CONTROLLER_INTROTRAINERBALLTHROW]    = PlayerPartnerHandleIntroTrainerBallThrow,
+    [CONTROLLER_DRAWPARTYSTATUSSUMMARY]   = PlayerPartnerHandleDrawPartyStatusSummary,
+    [CONTROLLER_HIDEPARTYSTATUSSUMMARY]   = PlayerPartnerHandleHidePartyStatusSummary,
+    [CONTROLLER_ENDBOUNCE]                = PlayerPartnerHandleEndBounceEffect,
+    [CONTROLLER_SPRITEINVISIBILITY]       = PlayerPartnerHandleSpriteInvisibility,
+    [CONTROLLER_BATTLEANIMATION]          = PlayerPartnerHandleBattleAnimation,
+    [CONTROLLER_LINKSTANDBYMSG]           = PlayerPartnerHandleLinkStandbyMsg,
+    [CONTROLLER_RESETACTIONMOVESELECTION] = PlayerPartnerHandleResetActionMoveSelection,
+    [CONTROLLER_ENDLINKBATTLE]            = PlayerPartnerHandleCmd55,
+    [CONTROLLER_TERMINATOR_NOP]           = nullsub_77
+};
+
+// unknown unused data
+PLAYER_PARTNER_DATA static const u8 sUnused[] =
+{
+    0x83, 0x4d, 0xf3, 0x5f, 0x6f, 0x4f, 0xeb, 0x3e,
+    0x67, 0x2e, 0x10, 0x46, 0x8c, 0x3d, 0x28, 0x35,
+    0xc5, 0x2c, 0x15, 0x7f, 0xb5, 0x56, 0x9d, 0x53,
+    0x3b, 0x43, 0xda, 0x36, 0x79, 0x2a, 0x0e, 0x53,
+};
