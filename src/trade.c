@@ -3545,19 +3545,10 @@ static void UpdatePokedexForReceivedMon(u8 partyIdx)
     }
 }
 
-__attribute__((naked)) void GetMultiplayerIdWrapper(void)
+static void GetMultiplayerIdWrapper(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetMultiplayerId\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    GetMultiplayerId();
 }
-
 
 static void TradeMons(u8 playerPartyIdx, u8 partnerPartyIdx)
 {
