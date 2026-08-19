@@ -20,41 +20,9 @@ gUnknown_85ECFBC: @ 0x85ECFBC
 
 	.section .rodata.mid1_sprite_data
 
-	.globl gUnknown_85ED17C
-gUnknown_85ED17C: @ 0x85ED17C
-	.incbin "baserom_jp.gba", 0x5ed17c, 0xa7
-
-	.globl gUnknown_85ED223
-gUnknown_85ED223: @ 0x85ED223
-	.incbin "baserom_jp.gba", 0x5ed223, 0x81
-
-	.globl sTextPrinterFunctions
-sTextPrinterFunctions: @ 0x85ED2A4
-	.4byte PrintInfoPageText + 1, PrintSkillsPageText + 1, PrintBattleMoves + 1, PrintContestMoves + 1
-
-	.globl sTextPrinterTasks
-sTextPrinterTasks: @ 0x85ED2B4
-	.4byte Task_PrintInfoPage + 1, Task_PrintSkillsPage + 1, Task_PrintBattleMoves + 1, Task_PrintContestMoves + 1
-
-	.globl gUnknown_85ED2C4
-gUnknown_85ED2C4: @ 0x85ED2C4
-	.string "{COLOR 5}{SHADOW 6}$"
-	.globl gUnknown_85ED2CB
-gUnknown_85ED2CB: @ 0x85ED2CB
-	.string "{COLOR 1}{SHADOW 2}$"
-	.globl gUnknown_85ED2D2
-gUnknown_85ED2D2: @ 0x85ED2D2
-	.string "{DYNAMIC 0}/{DYNAMIC 1}\n"
-	.string "{DYNAMIC 2}\n"
-	.string "{DYNAMIC 3}$"
-	.globl gUnknown_85ED2DE
-gUnknown_85ED2DE: @ 0x85ED2DE
-	.string "{DYNAMIC 0}\n"
-	.string "{DYNAMIC 1}\n"
-	.string "{DYNAMIC 2}$"
-	.globl gUnknown_85ED2E7
-gUnknown_85ED2E7: @ 0x85ED2E7
-	.incbin "baserom_jp.gba", 0x5ed2e7, 0x125
+	.globl gUnknown_85ED2EF
+gUnknown_85ED2EF: @ 0x85ED2EF
+	.incbin "baserom_jp.gba", 0x5ed2ef, 0x11d
 
 	.globl gUnknown_85ED40C
 gUnknown_85ED40C: @ 0x85ED40C

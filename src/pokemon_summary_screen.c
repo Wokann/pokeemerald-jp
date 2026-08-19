@@ -86,6 +86,51 @@ static const struct WindowTemplate sPageMovesTemplate[] =
 
 
 
+
+#define SUMMARY_TEXT_DATA __attribute__((section(".rodata.pokemon_summary_text_data")))
+
+void PrintInfoPageText(void);
+void PrintSkillsPageText(void);
+void PrintBattleMoves(void);
+void PrintContestMoves(void);
+void Task_PrintInfoPage(void);
+void Task_PrintSkillsPage(void);
+void Task_PrintBattleMoves(void);
+void Task_PrintContestMoves(void);
+
+SUMMARY_TEXT_DATA
+static const u8 sTextColors[][3] =
+{
+    {0, 1, 2}, {0, 3, 4}, {0, 5, 6}, {0, 7, 8}, {0, 9, 10},
+    {0, 11, 12}, {0, 13, 14}, {0, 7, 8}, {13, 15, 14},
+    {0, 1, 2}, {0, 3, 4}, {0, 5, 6}, {0, 7, 8},
+};
+
+SUMMARY_TEXT_DATA
+static const u8 sButtons_Gfx[][4 * TILE_SIZE_4BPP] =
+{
+    INCGFX_U8("graphics/summary_screen/a_button.png", ".4bpp"),
+    INCGFX_U8("graphics/summary_screen/b_button.png", ".4bpp"),
+};
+
+SUMMARY_TEXT_DATA
+static void (*const sTextPrinterFunctions[])(void) =
+{
+    PrintInfoPageText, PrintSkillsPageText, PrintBattleMoves, PrintContestMoves,
+};
+
+SUMMARY_TEXT_DATA
+static void (*const sTextPrinterTasks[])(void) =
+{
+    Task_PrintInfoPage, Task_PrintSkillsPage, Task_PrintBattleMoves, Task_PrintContestMoves,
+};
+
+SUMMARY_TEXT_DATA static const u8 sMemoNatureTextColor[] = _("{COLOR 5}{SHADOW 6}");
+SUMMARY_TEXT_DATA static const u8 sMemoMiscTextColor[] = _("{COLOR 1}{SHADOW 2}");
+SUMMARY_TEXT_DATA static const u8 sStatsLeftColumnLayout[] = _("{DYNAMIC 0}/{DYNAMIC 1}\n{DYNAMIC 2}\n{DYNAMIC 3}");
+SUMMARY_TEXT_DATA static const u8 sStatsRightColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
+SUMMARY_TEXT_DATA static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
+
 __attribute__((naked)) void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
 {
     __asm__(".syntax unified\n\t"
@@ -5777,7 +5822,7 @@ __attribute__((naked)) void SummaryScreen_PrintTextOnWindow(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C1F18: .4byte gUnknown_85ED17C\n\t"
+        "_081C1F18: .4byte sTextColors\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6120,7 +6165,7 @@ __attribute__((naked)) void PrintAOrBButtonIcon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C21C8: .4byte gUnknown_85ED223\n\t"
+        "_081C21C8: .4byte sButtons_Gfx + 0x80\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7100,8 +7145,8 @@ __attribute__((naked)) void BufferMonTrainerMemo(void)
         "	b _081C2A3A\n\t"
         "	.align 2, 0\n\t"
         "_081C2984: .4byte gUnknown_203CBE8\n\t"
-        "_081C2988: .4byte gUnknown_85ED2C4\n\t"
-        "_081C298C: .4byte gUnknown_85ED2CB\n\t"
+        "_081C2988: .4byte sMemoNatureTextColor\n\t"
+        "_081C298C: .4byte sMemoMiscTextColor\n\t"
         "_081C2990: .4byte gStringVar4\n\t"
         "_081C2994: .4byte gUnknown_85CA563\n\t"
         "_081C2998:\n\t"
@@ -8002,7 +8047,7 @@ __attribute__((naked)) void BufferLeftColumnStats(void)
         "	.align 2, 0\n\t"
         "_081C3030: .4byte gUnknown_203CBE8\n\t"
         "_081C3034: .4byte gStringVar4\n\t"
-        "_081C3038: .4byte gUnknown_85ED2D2\n\t"
+        "_081C3038: .4byte sStatsLeftColumnLayout\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8091,7 +8136,7 @@ __attribute__((naked)) void BufferRightColumnStats(void)
         "_081C30E0: .4byte gStringVar2\n\t"
         "_081C30E4: .4byte gStringVar3\n\t"
         "_081C30E8: .4byte gStringVar4\n\t"
-        "_081C30EC: .4byte gUnknown_85ED2DE\n\t"
+        "_081C30EC: .4byte sStatsRightColumnLayout\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8513,7 +8558,7 @@ __attribute__((naked)) void PrintMoveNameAndPP(void)
         "_081C3444: .4byte gStringVar1\n\t"
         "_081C3448: .4byte gStringVar2\n\t"
         "_081C344C: .4byte gStringVar4\n\t"
-        "_081C3450: .4byte gUnknown_85ED2E7\n\t"
+        "_081C3450: .4byte sMovesPPLayout\n\t"
         "_081C3454:\n\t"
         "	ldr r1, _081C3490\n\t"
         "	lsls r4, r7, #4\n\t"
@@ -9046,7 +9091,7 @@ __attribute__((naked)) void PrintNewMoveDetailsOrCancelText(void)
         "_081C3878: .4byte gStringVar1\n\t"
         "_081C387C: .4byte gBattleMoves\n\t"
         "_081C3880: .4byte gStringVar4\n\t"
-        "_081C3884: .4byte gUnknown_85ED2E7\n\t"
+        "_081C3884: .4byte sMovesPPLayout\n\t"
         ".syntax divided\n\t"
     );
 }
