@@ -9,31 +9,8 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.section .rodata.mid101_rest
 
-	.globl gUnknown_85DD5F8
-gUnknown_85DD5F8: @ 0x85DD5F8
-	.incbin "baserom_jp.gba", 0x5dd5f8, 0x19c
-
-	.globl gUnknown_85DD794
-gUnknown_85DD794: @ 0x85DD794
-	.incbin "baserom_jp.gba", 0x5dd794, 0x18
-
-	.globl gUnknown_85DD7AC
-gUnknown_85DD7AC: @ 0x85DD7AC
-	.incbin "baserom_jp.gba", 0x5dd7ac, 0x10
-
-	.globl gUnknown_85DD7BC
-gUnknown_85DD7BC: @ 0x85DD7BC
-	.incbin "baserom_jp.gba", 0x5dd7bc, 0x1c
-
-	.globl gUnknown_85DD7D8
-gUnknown_85DD7D8: @ 0x85DD7D8
-	.incbin "baserom_jp.gba", 0x5dd7d8, 0xc
-
-	.globl gUnknown_85DD7E4
-gUnknown_85DD7E4: @ 0x85DD7E4
-	.incbin "baserom_jp.gba", 0x5dd7e4, 0x14
+	.section .rodata.mid101_after_arena
 
 	.globl gUnknown_85DD7F8
 gUnknown_85DD7F8: @ 0x85DD7F8
