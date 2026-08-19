@@ -9646,9 +9646,9 @@ SECTIONS {
         src/pokenav_conditions_gfx.o(.rodata.pokenav_condition_resources);
         src/pokenav_conditions_gfx.o(.rodata);
         src/pokenav_ribbons_summary.o(.rodata);
-        data/data_b2c_mid7.o(.rodata.match_call_prefix);
+        src/pokenav_match_call_data.o(.rodata.match_call_struct_data);
         src/pokenav_match_call_data.o(.rodata.match_call_dispatch_tables);
-        data/data_b2c_mid7.o(.rodata.match_call_suffix);
+        src/pokenav_match_call_data.o(.rodata.match_call_check_page_overrides);
         src/menu_specialized.o(.rodata);
         data/data_b2c_mid8.o(.rodata);
         src/data/trainer_hill_templates.o(.rodata);

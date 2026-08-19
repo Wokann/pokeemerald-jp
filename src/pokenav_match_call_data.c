@@ -176,8 +176,548 @@ static void MatchCall_GetNameAndDescByRematchIdx(u32, const u8 **, const u8 **);
 
 // .rodata
 
-// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
-extern const match_call_t sMatchCallHeaders[MC_HEADER_COUNT];
+#define MATCH_CALL_STRUCT_DATA __attribute__((section(".rodata.match_call_struct_data")))
+
+static const u8 sText_MrStoneMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("デボンしゃちょう");
+static const u8 sText_MrStoneMatchCallName[] MATCH_CALL_STRUCT_DATA = _("ツワブキ");
+static const u8 sText_StevenMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("いしがかたいひと");
+static const u8 sText_StevenMatchCallName[] MATCH_CALL_STRUCT_DATA = _("ダイゴ");
+static const u8 sText_RivalMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("おとなりさん");
+static const u8 sText_NormanMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("つよくてたのもしい");
+static const u8 sText_MomMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("やさしくてきれい");
+static const u8 sText_WallyMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("ポケモンがだいすき");
+static const u8 sText_NormanMatchCallName[] MATCH_CALL_STRUCT_DATA = _("パパ");
+static const u8 sText_MomMatchCallName[] MATCH_CALL_STRUCT_DATA = _("ママ");
+static const u8 sText_ScottMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("しんしゅつきぼつ");
+static const u8 sText_ScottMatchCallName[] MATCH_CALL_STRUCT_DATA = _("エニシダ");
+static const u8 sText_RoxanneMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("いわのゆうとうせい");
+static const u8 sText_BrawlyMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("ビッグなウェーブ");
+static const u8 sText_WattsonMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("でんげきおやじ");
+static const u8 sText_FlanneryMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("じょうねつのひと");
+static const u8 sText_WinonaMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("せかいのとりつかい");
+static const u8 sText_TateLizaMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("しんぴてきなコンビ");
+static const u8 sText_JuanMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("みわくのダンディ");
+static const u8 sText_EliteFourMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("してんのう");
+static const u8 sText_ChampionMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("チャンピオン");
+static const u8 sText_ProfBirchMatchCallDesc[] MATCH_CALL_STRUCT_DATA = _("ポケモンはかせ");
+
+static const match_call_text_data_t sMrStoneTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826C287, 0xFFFF, 0x0158},
+    {(const u8 *)0x0826C35D, 0x0158, 0xFFFF},
+    {(const u8 *)0x0826C400, 0x00BD, 0xFFFF},
+    {(const u8 *)0x0826C465, 0x0110, 0xFFFF},
+    {(const u8 *)0x0826C4FB, 0x006A, 0xFFFF},
+    {(const u8 *)0x0826C547, 0x04F4, 0xFFFF},
+    {(const u8 *)0x0826C5A4, 0x0097, 0xFFFF},
+    {(const u8 *)0x0826C616, 0x006F, 0xFFFF},
+    {(const u8 *)0x0826C64D, 0x0070, 0xFFFF},
+    {(const u8 *)0x0826C687, 0x04F7, 0xFFFF},
+    {(const u8 *)0x0826C707, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructNPC sMrStoneMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 0,
+    .mapSec = 10,
+    .flag = 0xFFFF,
+    .desc = sText_MrStoneMatchCallDesc,
+    .name = sText_MrStoneMatchCallName,
+    .textData = sMrStoneTextScripts,
+};
+
+static const match_call_text_data_t sNormanTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826BCF0, 0x0132, 0xFFFF},
+    {(const u8 *)0x0826BD3E, 0x04F1, 0xFFFF},
+    {(const u8 *)0x0826BDA8, 0x04F3, 0xFFFF},
+    {(const u8 *)0x0826BDEC, 0x04F4, 0xFFFF},
+    {(const u8 *)0x0826BE3E, 0x00D4, 0xFFFF},
+    {(const u8 *)0x0826BE92, 0xFFFE, 0xFFFF},
+    {(const u8 *)0x0826BED3, 0x0864, 0xFFFF},
+    {(const u8 *)0x0826BF0E, 0x0864, 0xFFFF},
+    {(const u8 *)0x0826BF6C, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sNormanMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 7,
+    .flag = 0x0132,
+    .rematchTableIdx = 0x0045,
+    .desc = sText_NormanMatchCallDesc,
+    .name = sText_NormanMatchCallName,
+    .textData = sNormanTextScripts,
+};
+
+static const struct MatchCallBirch sProfBirchMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 3,
+    .mapSec = 0,
+    .flag = 0x0119,
+    .desc = sText_ProfBirchMatchCallDesc,
+    .name = (const u8 *)0x085C8C6B,
+};
+
+static const match_call_text_data_t sMomTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x08269D8F, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x08269DF1, 0x04F4, 0xFFFF},
+    {(const u8 *)0x08269E62, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructNPC sMomMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 0,
+    .mapSec = 0,
+    .flag = 0x00D8,
+    .desc = sText_MomMatchCallDesc,
+    .name = sText_MomMatchCallName,
+    .textData = sMomTextScripts,
+};
+
+static const match_call_text_data_t sStevenTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826BF8E, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826C00A, 0x00C7, 0xFFFF},
+    {(const u8 *)0x0826C05E, 0x00D4, 0xFFFF},
+    {(const u8 *)0x0826C0D6, 0x0070, 0xFFFF},
+    {(const u8 *)0x0826C118, 0x04F6, 0xFFFF},
+    {(const u8 *)0x0826C151, 0x0081, 0xFFFF},
+    {(const u8 *)0x0826C174, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructNPC sStevenMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 0,
+    .mapSec = 213,
+    .flag = 0x0131,
+    .desc = sText_StevenMatchCallDesc,
+    .name = sText_StevenMatchCallName,
+    .textData = sStevenTextScripts,
+};
+
+static const match_call_text_data_t sMayTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826AC61, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826ACBD, 0x04F1, 0xFFFF},
+    {(const u8 *)0x0826AD30, 0x0095, 0xFFFF},
+    {(const u8 *)0x0826ADB8, 0x0324, 0xFFFF},
+    {(const u8 *)0x0826ADF2, 0x006A, 0xFFFF},
+    {(const u8 *)0x0826AE48, 0x04F3, 0xFFFF},
+    {(const u8 *)0x0826AEA2, 0x04F4, 0xFFFF},
+    {(const u8 *)0x0826AEFF, 0x0097, 0xFFFF},
+    {(const u8 *)0x0826AF50, 0x00D4, 0xFFFF},
+    {(const u8 *)0x0826AFB3, 0x006F, 0xFFFF},
+    {(const u8 *)0x0826AFF8, 0x0061, 0xFFFF},
+    {(const u8 *)0x0826B066, 0x0070, 0xFFFF},
+    {(const u8 *)0x0826B0CD, 0x0081, 0xFFFF},
+    {(const u8 *)0x0826B149, 0x04F7, 0xFFFF},
+    {(const u8 *)0x0826B184, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallRival sMayMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 4,
+    .playerGender = 0,
+    .flag = 0x00FD,
+    .desc = sText_RivalMatchCallDesc,
+    .name = (const u8 *)0x085C8C5E,
+    .textData = sMayTextScripts,
+};
+
+static const match_call_text_data_t sBrendanTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826B1D9, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826B236, 0x04F1, 0xFFFF},
+    {(const u8 *)0x0826B2A4, 0x0095, 0xFFFF},
+    {(const u8 *)0x0826B329, 0x0324, 0xFFFF},
+    {(const u8 *)0x0826B36F, 0x006A, 0xFFFF},
+    {(const u8 *)0x0826B3DC, 0x04F3, 0xFFFF},
+    {(const u8 *)0x0826B433, 0x04F4, 0xFFFF},
+    {(const u8 *)0x0826B48A, 0x0097, 0xFFFF},
+    {(const u8 *)0x0826B4DC, 0x00D4, 0xFFFF},
+    {(const u8 *)0x0826B541, 0x006F, 0xFFFF},
+    {(const u8 *)0x0826B585, 0x0061, 0xFFFF},
+    {(const u8 *)0x0826B600, 0x0070, 0xFFFF},
+    {(const u8 *)0x0826B666, 0x0081, 0xFFFF},
+    {(const u8 *)0x0826B6E9, 0x04F7, 0xFFFF},
+    {(const u8 *)0x0826B721, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallRival sBrendanMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 4,
+    .playerGender = 1,
+    .flag = 0x00FD,
+    .desc = sText_RivalMatchCallDesc,
+    .name = (const u8 *)0x085C8C5A,
+    .textData = sBrendanTextScripts,
+};
+
+static const match_call_text_data_t sWallyTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826B773, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826B7BF, 0x00C7, 0xFFFF},
+    {(const u8 *)0x0826B7FF, 0x04F3, 0xFFFF},
+    {(const u8 *)0x0826B85D, 0x0097, 0xFFFF},
+    {(const u8 *)0x0826B8D1, 0x006F, 0xFFFF},
+    {(const u8 *)0x0826B942, 0x0081, 0xFFFF},
+    {(const u8 *)0x0826B978, 0x007E, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallLocationOverride sWallyLocationData[] MATCH_CALL_STRUCT_DATA =
+{
+    {0x0324, 5},
+    {0x006F, 213},
+    {0x035A, 70},
+    {0xFFFF, 213},
+};
+
+static const struct MatchCallWally sWallyMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 2,
+    .mapSec = 0,
+    .flag = 0x00D6,
+    .rematchTableIdx = 0x0040,
+    .desc = sText_WallyMatchCallDesc,
+    .textData = sWallyTextScripts,
+    .locationData = sWallyLocationData,
+};
+
+static const match_call_text_data_t sScottTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826B9D0, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826BA50, 0x008B, 0xFFFF},
+    {(const u8 *)0x0826BAC4, 0x0097, 0xFFFF},
+    {(const u8 *)0x0826BB36, 0x00D4, 0xFFFF},
+    {(const u8 *)0x0826BBA2, 0x0070, 0xFFFF},
+    {(const u8 *)0x0826BBFE, 0x04F7, 0xFFFF},
+    {(const u8 *)0x0826BCB9, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructNPC sScottMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 0,
+    .mapSec = 213,
+    .flag = 0x00D7,
+    .desc = sText_ScottMatchCallDesc,
+    .name = sText_ScottMatchCallName,
+    .textData = sScottTextScripts,
+};
+
+static const match_call_text_data_t sRoxanneTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x08269EA8, 0xFFFE, 0xFFFF},
+    {(const u8 *)0x08269F24, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x08269F8E, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x08269FC2, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sRoxanneMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 10,
+    .flag = 0x01D3,
+    .rematchTableIdx = 0x0041,
+    .desc = sText_RoxanneMatchCallDesc,
+    .name = NULL,
+    .textData = sRoxanneTextScripts,
+};
+
+static const match_call_text_data_t sBrawlyTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x08269FE9, 0xFFFE, 0xFFFF},
+    {(const u8 *)0x0826A07E, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A11E, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A156, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sBrawlyMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 2,
+    .flag = 0x01D4,
+    .rematchTableIdx = 0x0042,
+    .desc = sText_BrawlyMatchCallDesc,
+    .name = NULL,
+    .textData = sBrawlyTextScripts,
+};
+
+static const match_call_text_data_t sWattsonTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A176, 0xFFFE, 0xFFFF},
+    {(const u8 *)0x0826A1EB, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A280, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A2C0, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sWattsonMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 9,
+    .flag = 0x01D5,
+    .rematchTableIdx = 0x0043,
+    .desc = sText_WattsonMatchCallDesc,
+    .name = NULL,
+    .textData = sWattsonTextScripts,
+};
+
+static const match_call_text_data_t sFlanneryTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A2EF, 0xFFFE, 0xFFFF},
+    {(const u8 *)0x0826A377, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A3FC, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A43E, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sFlanneryMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 3,
+    .flag = 0x01D6,
+    .rematchTableIdx = 0x0044,
+    .desc = sText_FlanneryMatchCallDesc,
+    .name = NULL,
+    .textData = sFlanneryTextScripts,
+};
+
+static const match_call_text_data_t sWinonaTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A46B, 0xFFFE, 0xFFFF},
+    {(const u8 *)0x0826A4C7, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A527, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A557, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sWinonaMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 11,
+    .flag = 0x01D7,
+    .rematchTableIdx = 0x0046,
+    .desc = sText_WinonaMatchCallDesc,
+    .name = NULL,
+    .textData = sWinonaTextScripts,
+};
+
+static const match_call_text_data_t sTateLizaTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A5A4, 0xFFFE, 0xFFFF},
+    {(const u8 *)0x0826A633, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A6BD, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A716, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sTateLizaMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 13,
+    .flag = 0x01D8,
+    .rematchTableIdx = 0x0047,
+    .desc = sText_TateLizaMatchCallDesc,
+    .name = NULL,
+    .textData = sTateLizaTextScripts,
+};
+
+static const match_call_text_data_t sJuanTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A75D, 0xFFFE, 0xFFFF},
+    {(const u8 *)0x0826A7CD, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A82E, 0xFFFF, 0xFFFF},
+    {(const u8 *)0x0826A87D, 0x0864, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sJuanMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 14,
+    .flag = 0x01D9,
+    .rematchTableIdx = 0x0048,
+    .desc = sText_JuanMatchCallDesc,
+    .name = NULL,
+    .textData = sJuanTextScripts,
+};
+
+static const match_call_text_data_t sSidneyTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A8E9, 0xFFFF, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sSidneyMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 15,
+    .flag = 0x01A5,
+    .rematchTableIdx = 0x0049,
+    .desc = sText_EliteFourMatchCallDesc,
+    .name = NULL,
+    .textData = sSidneyTextScripts,
+};
+
+static const match_call_text_data_t sPhoebeTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A93A, 0xFFFF, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sPhoebeMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 15,
+    .flag = 0x01A6,
+    .rematchTableIdx = 0x004A,
+    .desc = sText_EliteFourMatchCallDesc,
+    .name = NULL,
+    .textData = sPhoebeTextScripts,
+};
+
+static const match_call_text_data_t sGlaciaTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A979, 0xFFFF, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sGlaciaMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 15,
+    .flag = 0x01A7,
+    .rematchTableIdx = 0x004B,
+    .desc = sText_EliteFourMatchCallDesc,
+    .name = NULL,
+    .textData = sGlaciaTextScripts,
+};
+
+static const match_call_text_data_t sDrakeTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826A9D4, 0xFFFF, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sDrakeMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 15,
+    .flag = 0x01A8,
+    .rematchTableIdx = 0x004C,
+    .desc = sText_EliteFourMatchCallDesc,
+    .name = NULL,
+    .textData = sDrakeTextScripts,
+};
+
+static const match_call_text_data_t sWallaceTextScripts[] MATCH_CALL_STRUCT_DATA =
+{
+    {(const u8 *)0x0826AA64, 0xFFFF, 0xFFFF},
+    MATCH_CALL_TEXT_END
+};
+
+static const struct MatchCallStructTrainer sWallaceMatchCallHeader MATCH_CALL_STRUCT_DATA =
+{
+    .type = 5,
+    .mapSec = 15,
+    .flag = 0x01A9,
+    .rematchTableIdx = 0x004D,
+    .desc = sText_ChampionMatchCallDesc,
+    .name = NULL,
+    .textData = sWallaceTextScripts,
+};
+
+static const match_call_t sMatchCallHeaders[] MATCH_CALL_STRUCT_DATA =
+{
+    [0] = {.npc = &sMrStoneMatchCallHeader},
+    [1] = {.birch = &sProfBirchMatchCallHeader},
+    [2] = {.rival = &sBrendanMatchCallHeader},
+    [3] = {.rival = &sMayMatchCallHeader},
+    [4] = {.wally = &sWallyMatchCallHeader},
+    [5] = {.leader = &sNormanMatchCallHeader},
+    [6] = {.npc = &sMomMatchCallHeader},
+    [7] = {.npc = &sStevenMatchCallHeader},
+    [8] = {.npc = &sScottMatchCallHeader},
+    [9] = {.leader = &sRoxanneMatchCallHeader},
+    [10] = {.leader = &sBrawlyMatchCallHeader},
+    [11] = {.leader = &sWattsonMatchCallHeader},
+    [12] = {.leader = &sFlanneryMatchCallHeader},
+    [13] = {.leader = &sWinonaMatchCallHeader},
+    [14] = {.leader = &sTateLizaMatchCallHeader},
+    [15] = {.leader = &sJuanMatchCallHeader},
+    [16] = {.leader = &sSidneyMatchCallHeader},
+    [17] = {.leader = &sPhoebeMatchCallHeader},
+    [18] = {.leader = &sGlaciaMatchCallHeader},
+    [19] = {.leader = &sDrakeMatchCallHeader},
+    [20] = {.leader = &sWallaceMatchCallHeader},
+};
+
+#define MATCH_CALL_CHECK_PAGE_OVERRIDES __attribute__((section(".rodata.match_call_check_page_overrides")))
+
+static const struct MatchCallCheckPageOverride sCheckPageOverrides[] MATCH_CALL_CHECK_PAGE_OVERRIDES =
+{
+    {
+        .idx = 7,
+        .facilityClass = 75,
+        .flag = 0x0000FFFF,
+        .flavorTexts =
+        {
+            (const u8 *)0x085CC79E,
+            (const u8 *)0x085CC7AE,
+            (const u8 *)0x085CC7BD,
+            (const u8 *)0x085CC7CC,
+        },
+    },
+    {
+        .idx = 7,
+        .facilityClass = 75,
+        .flag = 0x000004F6,
+        .flavorTexts =
+        {
+            (const u8 *)0x085CC79E,
+            (const u8 *)0x085CC7AE,
+            (const u8 *)0x085CC7DB,
+            (const u8 *)0x085CC7EA,
+        },
+    },
+    {
+        .idx = 2,
+        .facilityClass = 60,
+        .flag = 0x0000FFFF,
+        .flavorTexts =
+        {
+            (const u8 *)0x085CC7F7,
+            (const u8 *)0x085CC807,
+            (const u8 *)0x085CC817,
+            (const u8 *)0x085CC827,
+        },
+    },
+    {
+        .idx = 3,
+        .facilityClass = 63,
+        .flag = 0x0000FFFF,
+        .flavorTexts =
+        {
+            (const u8 *)0x085CC836,
+            (const u8 *)0x085CC846,
+            (const u8 *)0x085CC856,
+            (const u8 *)0x085CC866,
+        },
+    },
+};
+
 #define MATCH_CALL_DISPATCH_TABLES __attribute__((section(".rodata.match_call_dispatch_tables")))
 
 static bool32 (*const sMatchCallGetEnabledFuncs[])(match_call_t) MATCH_CALL_DISPATCH_TABLES =
@@ -217,7 +757,6 @@ static void (*const sMatchCall_GetNameAndDescFunctions[])(match_call_t, const u8
     MatchCall_GetNameAndDesc_Wally, MatchCall_GetNameAndDesc_Rival,
     MatchCall_GetNameAndDesc_NPC,
 };
-extern const struct MatchCallCheckPageOverride sCheckPageOverrides[4];
 extern void sub_08196C74(u8 *dest);
 
 
