@@ -1016,3 +1016,39 @@ gUnknown_82F57C2: @ 0x82F57C2
 	.globl gUnknown_82F57DA
 gUnknown_82F57DA: @ 0x82F57DA
 	.incbin "baserom_jp.gba", 0x2f57da, 0x1e
+
+	.section .rodata.mid_base
+
+
+	.globl gUnknown_82F4F2A
+gUnknown_82F4F2A: @ 0x82F4F2A
+	.incbin "baserom_jp.gba", 0x2f4f2a, 0x16
+	.globl gUnknown_82F4F40
+gUnknown_82F4F40: @ 0x82F4F40
+	.incbin "baserom_jp.gba", 0x2f4f40, 0x16
+	.globl gUnknown_82F4F56
+gUnknown_82F4F56: @ 0x82F4F56
+	.incbin "baserom_jp.gba", 0x2f4f56, 0x14
+
+	.section .rodata.mid41
+
+	.globl gUnknown_82F551C
+gUnknown_82F551C: @ 0x82F551C
+	.incbin "baserom_jp.gba", 0x2f551c, 0x1c
+	.globl gUnknown_82F5538
+gUnknown_82F5538: @ 0x82F5538
+	.incbin "baserom_jp.gba", 0x2f5538, 0x20
+
+	.section .rodata.mid90
+
+	.globl gUnknown_85CC341
+gUnknown_85CC341: @ 0x85CC341
+	.string "プレイじかん$ゲームポイント$"
+	.globl gUnknown_85CC350
+gUnknown_85CC350: @ 0x85CC350
+	.string "のトレーナーカード$"
+
+	.globl gUnknown_85CC35A
+gUnknown_85CC35A: @ 0x85CC35A
+	.string "はじめてのでんどういり　$つうしんたいせん$ケーブルたいせん$"
+	.globl gUnknown_85CC379
