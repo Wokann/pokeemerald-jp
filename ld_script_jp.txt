@@ -1960,10 +1960,10 @@ SECTIONS {
         src/mystery_event_server.o(.text.Client_Done);
         src/mystery_event_server.o(.text.Client_Recv);
         src/mystery_event_server.o(.text.Client_Send);
-        src/mevent_client.o(.text.mainseq_4);
-        src/mevent_client.o(.text.Client_Wait);
-        src/mevent_client.o(.text.mainseq_6);
-        src/mevent_client.o(.text.mainseq_7);
+        src/mystery_gift_client.o(.text.mainseq_4);
+        src/mystery_gift_client.o(.text.Client_Wait);
+        src/mystery_gift_client.o(.text.mainseq_6);
+        src/mystery_gift_client.o(.text.mainseq_7);
         src/mystery_event_server.o(.text.mevent_client_exec);
         src/mystery_event_server.o(.text.mevent_srv_sub_recv);
         src/mystery_event_server.o(.text.mevent_srv_sub_send);
