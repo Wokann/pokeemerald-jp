@@ -50,6 +50,7 @@ C_OBJECTS := $(patsubst src/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
 C_OBJECTS := $(filter-out $(C_BUILDDIR)/libisagbprn.o,$(C_OBJECTS))
 C_OBJECTS += $(C_BUILDDIR)/libisagbprn_a.o $(C_BUILDDIR)/libisagbprn_putc.o $(C_BUILDDIR)/libisagbprn_b.o
 C_OBJECTS += $(C_BUILDDIR)/field_player_avatar_tail.o
+C_OBJECTS += $(C_BUILDDIR)/pokenav_conditions_gfx_tail.o
 
 # Match the official flash library builds: agb_flash uses -O (not -O2).
 $(C_BUILDDIR)/agb_flash.o: CFLAGS := -O -mthumb-interwork -fhex-asm
@@ -362,6 +363,13 @@ $(C_BUILDDIR)/field_specials.o: src/field_specials.c
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_specials.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/field_specials.gen.s
 
+$(C_BUILDDIR)/pokenav_conditions_gfx_tail.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
+$(C_BUILDDIR)/pokenav_conditions_gfx_tail.o: CPPFLAGS += -DPOKENAV_CONDITIONS_GFX_TAIL
+$(C_BUILDDIR)/pokenav_conditions_gfx_tail.o: src/pokenav_conditions_gfx.c
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $@.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $@.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $@.gen.s
 $(C_BUILDDIR)/pokenav_conditions_gfx.o: src/pokenav_conditions_gfx.c
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_conditions_gfx.gen.s

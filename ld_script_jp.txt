@@ -8992,7 +8992,9 @@ SECTIONS {
         src/pokenav_match_call_gfx.o(.text);
         src/pokenav_region_map.o(.text);
         src/pokenav_conditions.o(.text);
-        src/pokenav_conditions_tail.o(.text);
+        src/pokenav_conditions_gfx_tail.o(.text);
+        src/pokenav_conditions_search_results.o(.text);
+        src/pokenav_ribbons_list.o(.text);
         src/pokenav_ribbons_summary.o(.text);
         src/pokenav_match_call_data.o(.text);
         src/menu_specialized.o(.text);
