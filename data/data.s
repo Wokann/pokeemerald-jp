@@ -461,3 +461,8 @@ sLinkTestDigitsGfx: @ 0x82BFB8C
 	.string "zz　\n"
 	.string "せ　　\n"
 	.string "せ　　l　　　せつぞく　ちゅうです$　せつぞく　できません$　かくにん　ちゅうです$　かくにん　できました$　かくにん　できません$　かくにん　を　かくにん$かくにん　は　しっぱい$"
+
+	.section .rodata.data_tail
+	.globl sCommErrorBg_Gfx
+sCommErrorBg_Gfx: @ 0x82BFEB8
+	.incbin "graphics/link/sCommErrorBg_Gfx.bin"

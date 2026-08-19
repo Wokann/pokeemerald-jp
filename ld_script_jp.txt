@@ -9228,7 +9228,7 @@ SECTIONS {
     {
         data/data.o(.rodata);
         src/data/text/comm_error_texts.o(.rodata);
-        data/data_tail.o(.rodata);
+        data/data.o(.rodata.data_tail);
         src/link.o(.rodata);
         data/data_b.o(.rodata);
         src/data/union_room.o(.rodata);
@@ -9303,7 +9303,7 @@ SECTIONS {
         src/data/unknown_table.o(.rodata);
         src/data/trainer_parties.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
-        data/data_b_tail.o(.rodata);
+        data/data_b.o(.rodata.data_b_tail);
         src/data/trainers.o(.rodata);
         src/data/text/species_names.o(.rodata);
         src/data/text/move_names.o(.rodata);

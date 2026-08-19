@@ -142,3 +142,7 @@ sAcceptedSerialNos: @ 0x82C0430
 sShutdownTasks: @ 0x82C0530
 	.4byte 0x0801034D, 0x080105A5, 0x080107FD
 
+
+	.section .rodata.data_b_tail
+gUnknown_82E383A: @ 0x82E383A
+	.incbin "baserom_jp.gba", 0x2e383a, 0x2
