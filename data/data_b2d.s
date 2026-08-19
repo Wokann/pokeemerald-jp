@@ -847,3 +847,35 @@ gUnknown_82F0D62: @ 0x82F0D62
 gUnknown_82F0D65: @ 0x82F0D65
 	.incbin "baserom_jp.gba", 0x2f0d65, 0x2cff
 	.globl gUnknown_82F3A64
+
+	.section .rodata.mid48
+
+	.globl gUnknown_8300A99
+gUnknown_8300A99: @ 0x8300A99
+	.incbin "baserom_jp.gba", 0x300A99, 0x2
+
+	.section .rodata.mid53
+
+	.globl gUnknown_830F760
+gUnknown_830F760: @ 0x830F760
+	.incbin "baserom_jp.gba", 0x30f760, 0x6
+
+	.globl gUnknown_830F766
+
+	.section .rodata.mid79
+
+	.globl gUnknown_85CA3D8
+gUnknown_85CA3D8: @ 0x85CA3D8
+	.incbin "baserom_jp.gba", 0x5ca3d8, 0x1
+
+	.globl gUnknown_85CA3D9
+gUnknown_85CA3D9: @ 0x85CA3D9
+	.string "$イベント$"
+
+	.globl gUnknown_85CA3DF
+
+	.section .rodata.mid92
+
+	.globl gUnknown_85CC497
+gUnknown_85CC497: @ 0x85CC497
+	.string "{HIGHLIGHT 0}{COLOR 255}"
