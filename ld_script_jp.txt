@@ -3244,7 +3244,7 @@ SECTIONS {
         src/trade.o(.text.RunTradeMenuCallback);
         src/trade.o(.text.SetSelectedMon);
         src/trade.o(.text.sub_080790C8);
-        src/trade.o(.text.sub_0807946C);
+        src/trade.o(.text.GetMonNicknameWidth);
         src/trade.o(.text.BufferMovesString);
         src/trade.o(.text.PrintPartyMonNickname);
         src/trade.o(.text.PrintPartyNicknames);

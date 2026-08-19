@@ -371,6 +371,9 @@ extern const u8 gUnknown_8300A8A[];
 extern const u8 gUnknown_8300A9E[];
 extern const u8 gUnknown_8300AA9[];
 extern const u8 gUnknown_8300AAE[];
+extern const u8 gUnknown_8300AA0[];
+extern const u8 gUnknown_8300AA2[];
+extern const u8 gUnknown_8300AA5[];
 extern const u8 gUnknown_8300AB1[];
 extern const u8 gUnknown_8300C00[];
 extern const u32 gUnknown_82FFFC8[];
@@ -2266,7 +2269,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "	add r0, sp, #0x14\n\t"
         "	ldr r1, [sp, #0x50]\n\t"
         "	mov r2, sl\n\t"
-        "	bl sub_0807946C\n\t"
+        "	bl GetMonNicknameWidth\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	asrs r0, r0, #0x18\n\t"
         "	lsls r4, r7, #1\n\t"
@@ -2382,124 +2385,49 @@ __attribute__((naked)) void sub_080790C8(u8 side)
     );
 }
 
-__attribute__((naked)) void sub_0807946C(void)
+u8 GetMonNicknameWidth(u8 *str, u8 whichParty, u8 partyIdx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _08079494\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _08079490\n\t"
-        "	b _0807949C\n\t"
-        "	.align 2, 0\n\t"
-        "_08079490: .4byte gPlayerParty\n\t"
-        "_08079494:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _0807952C\n\t"
-        "_0807949C:\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringCopy10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetMonGender\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, _08079530\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r7, #1\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	adds r4, #0x51\n\t"
-        "	adds r4, r4, r6\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080794F6\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	bl AppendGenderSymbol\n\t"
-        "_080794F6:\n\t"
-        "	ldr r1, _08079534\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	mov r1, sl\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, #0x51\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807953C\n\t"
-        "	ldr r1, _08079538\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StringAppend\n\t"
-        "	mov r0, sp\n\t"
-        "	mov r1, sb\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #3\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	mov r1, sp\n\t"
-        "	bl StringAppend\n\t"
-        "	b _08079544\n\t"
-        "	.align 2, 0\n\t"
-        "_0807952C: .4byte gEnemyParty\n\t"
-        "_08079530: .4byte sTradeMenu\n\t"
-        "_08079534: .4byte gUnknown_8300AA0\n\t"
-        "_08079538: .4byte gUnknown_8300AA2\n\t"
-        "_0807953C:\n\t"
-        "	ldr r1, _08079560\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StringAppend\n\t"
-        "_08079544:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StringLength\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08079560: .4byte gUnknown_8300AA5\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 nickname[POKEMON_NAME_STORAGE_LENGTH + 1];
+    register u32 monAddr asm("r4");
+    u8 gender;
+    register u32 level asm("r9");
+    register struct TradeMenu **tradeMenuPtr asm("sl");
+    register struct TradeMenu **tradeMenuPtr2 asm("r1");
+
+    if (whichParty == TRADE_PLAYER)
+    {
+        monAddr = partyIdx;
+        monAddr *= sizeof(struct Pokemon);
+        monAddr += (u32)gPlayerParty;
+    }
+    else
+    {
+        monAddr = partyIdx;
+        monAddr *= sizeof(struct Pokemon);
+        monAddr += (u32)gEnemyParty;
+    }
+
+    GetMonData3((struct Pokemon *)monAddr, MON_DATA_NICKNAME, nickname);
+    StringCopy10(str, nickname);
+    gender = GetMonGender((struct Pokemon *)monAddr);
+    level = (u8)GetMonData3((struct Pokemon *)monAddr, MON_DATA_LEVEL);
+    tradeMenuPtr = &sTradeMenu;
+
+    if (!(*tradeMenuPtr)->isEgg[whichParty][partyIdx % PARTY_SIZE])
+        AppendGenderSymbol(str, gender);
+    StringAppend(str, gUnknown_8300AA0);
+    tradeMenuPtr2 = tradeMenuPtr;
+    if (!(*tradeMenuPtr2)->isEgg[whichParty][partyIdx % PARTY_SIZE])
+    {
+        StringAppend(str, gUnknown_8300AA2);
+        ConvertIntToDecimalStringN(nickname, level, 0, 3);
+        StringAppend(str, nickname);
+    }
+    else
+    {
+        StringAppend(str, gUnknown_8300AA5);
+    }
+    return StringLength(str);
 }
 
 static void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx)
@@ -2787,58 +2715,36 @@ static bool8 LoadUISpriteGfx(void)
     return FALSE;
 }
 
-__attribute__((naked)) void DrawBottomRowText(const u8 *str, u8 *dest, u8 unused)
+void DrawBottomRowText(const u8 *str, u8 *dest, u8 width)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x24\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r4, r2, #0x18\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl StringFill\n\t"
-        "	movs r2, #0\n\t"
-        "	cmp r2, r4\n\t"
-        "	bge _08079D7C\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _08079D7C\n\t"
-        "	add r0, sp, #4\n\t"
-        "_08079D62:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, r4\n\t"
-        "	bge _08079D7C\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _08079D7C\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #4\n\t"
-        "	b _08079D62\n\t"
-        "_08079D7C:\n\t"
-        "	ldr r0, _08079D94\n\t"
-        "	str r0, [sp]\n\t"
-        "	add r0, sp, #4\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080C66A4\n\t"
-        "	add sp, #0x24\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08079D94: .4byte gDecompressionBuffer\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 buffer[32];
+    register s32 i asm("r2");
+    register u32 character asm("r1");
+    register u8 *bufferPos asm("r0");
+
+    StringFill(buffer, 0, width);
+    i = 0;
+    if (i < width)
+    {
+        character = *str;
+        asm("mov %0, %1" : "=r"(bufferPos) : "r"(character));
+        if ((u32)bufferPos == EOS)
+            goto draw;
+        bufferPos = buffer;
+copy:
+        *bufferPos = character;
+        i++;
+        if (i >= width)
+            goto draw;
+        character = str[i];
+        asm("mov %0, %1" : "=r"(bufferPos) : "r"(character));
+        if ((u32)bufferPos == EOS)
+            goto draw;
+        bufferPos = &buffer[i];
+        goto copy;
+    }
+draw:
+    sub_080C66A4(buffer, dest, 0, 0, gDecompressionBuffer);
 }
 
 static void ComputePartyTradeableFlags(u8 whichParty)
