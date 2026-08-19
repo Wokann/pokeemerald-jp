@@ -406,3 +406,11 @@ PARTY_ACTION_DATA(sMultiBattlePartnersPartyMask) const u8 sPartyActionRaw_sMulti
     0x74, 0xA3, 0x5C, 0x08, 0x79, 0xA3, 0x5C, 0x08, 0x7E, 0xA3, 0x5C, 0x08, 0x83, 0xA3, 0x5C, 0x08,
 };
 __asm__(".global sMultiBattlePartnersPartyMask\n.set sMultiBattlePartnersPartyMask, sPartyActionRaw_sMultiBattlePartnersPartyMask");
+
+#define TMHM_MOVE(id) CAT(MOVE_, id),
+PARTY_TMHM_DATA static const u16 sTMHMMoves[] =
+{
+    FOREACH_TMHM(TMHM_MOVE)
+};
+#undef TMHM_MOVE
+__asm__(".global gUnknown_85E18F8\n.set gUnknown_85E18F8, sTMHMMoves");

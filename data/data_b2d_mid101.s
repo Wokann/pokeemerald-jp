@@ -14,12 +14,6 @@
 
 
 
-	.globl gUnknown_85E18F8
-gUnknown_85E18F8: @ 0x85E18F8
-	.incbin "baserom_jp.gba", 0x5e18f8, 0x74
-	.globl sTMHMMoves
-	.set sTMHMMoves, gUnknown_85E18F8
-
 	.globl sVerdanturfTentFuncs
 sVerdanturfTentFuncs: @ 0x85E196C
 	.4byte 0x081B9675, 0x081B96C9, 0x081B96E5, 0x081B9701

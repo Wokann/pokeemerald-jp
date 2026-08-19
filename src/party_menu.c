@@ -13,7 +13,6 @@
 #include "malloc.h"
 #include "palette.h"
 
-extern const u16 sTMHMMoves[];
 extern const u8 sSlotTilemap_WideEmpty[];
 
 #define PARTY_PAL_SELECTED     (1 << 0)
@@ -124,6 +123,7 @@ extern void AddTextPrinterParameterized3(u8 windowId, u8 fontId, u8 left, u8 top
 #include "data/pokemon/tutor_learnsets.h"
 #define PARTY_LAYOUT_DATA(name) __attribute__((section(".rodata.party_menu_layouts." #name)))
 #define PARTY_ACTION_DATA(name) __attribute__((section(".rodata.party_menu_actions." #name)))
+#define PARTY_TMHM_DATA __attribute__((section(".rodata.party_menu_tmhm")))
 #include "data/party_menu.h"
 
 __asm__(".global gUnknown_85E08C4\n.set gUnknown_85E08C4, gTutorMoves");
