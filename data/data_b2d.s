@@ -1276,3 +1276,115 @@ gUnknown_85CA6C6: @ 0x85CA6C6
 gUnknown_85CA70B: @ 0x85CA70B
 	.string "グッズは　ありません！{PAUSE_UNTIL_PRESS}$つくえ$いす$はちうえ$おきもの$マット$ポスター$ぬいぐるみ$クッション$"
 	.globl gUnknown_85CA73F
+
+	.section .rodata.mid73
+
+.globl gUnknown_85C9299
+gUnknown_85C9299: @ 0x85C9299
+	.string "▶$　$"
+	.globl gUnknown_85C929D
+gUnknown_85C929D: @ 0x85C929D
+	.string "でんどういり　おめでとう！$みつけた　ポケモン　{B_COPY_VAR_1}！\n"
+	.string "つかまえた　ポケモン　{B_COPY_VAR_2}！\p"
+	.string "オダマキはかせの\n"
+	.string "ポケモンずかん　ひょうか！\p"
+	.string "オダマキ“どれどれ\p"
+	.string "$ここまでの　レポートを　かきしるしています！\n"
+	.string "でんげんを　きらないでください$"
+	.globl gUnknown_85C9311
+gUnknown_85C9311: @ 0x85C9311
+	.incbin "baserom_jp.gba", 0x5c9311, 0x17
+
+	.globl gUnknown_85C9328
+gUnknown_85C9328: @ 0x85C9328
+	.string "だい{B_COPY_VAR_1}かい　でんどういり！$"
+	.globl gUnknown_85C9337
+gUnknown_85C9337: @ 0x85C9337
+	.string "リーグ　チャンピオン！　おめでとう！$$"
+	.globl gUnknown_85C934B
+gUnknown_85C934B: @ 0x85C934B
+	.string "No,$"
+
+	.globl gUnknown_85C934F
+gUnknown_85C934F: @ 0x85C934F
+	.string "Lv$IDNo,/$"
+
+	.globl gUnknown_85C9359
+
+	.section .rodata.mid78
+
+	.globl gUnknown_85CA276
+gUnknown_85CA276: @ 0x85CA276
+	.incbin "baserom_jp.gba", 0x5ca276, 0x1e
+
+	.globl gUnknown_85CA294
+gUnknown_85CA294: @ 0x85CA294
+	.string "そのポケモンを　こうかんすると\n"
+	.string "せんとうできなくなっちゃうよ！$"
+	.globl gUnknown_85CA2B4
+gUnknown_85CA2B4: @ 0x85CA2B4
+	.string "その　ポケモンは　いま\n"
+	.string "こうかんに　だせません$"
+	.globl gUnknown_85CA2CC
+gUnknown_85CA2CC: @ 0x85CA2CC
+	.string "タマゴは　いま\n"
+	.string "こうかんに　だせません$あいての　ポケモンとは\n"
+	.string "いまは　こうかん　できません$　いまは　そのポケモンを　\n"
+	.string "あいては　うけとることが　できません$その　あいてとは　いまは　\n"
+	.string "こうかん　できません$　　　あいての　ほしがっている　タイプの\n"
+	.string "ポケモンでは　ありません$　それは　タマゴでは　ありません$"
+
+	.globl gText_Register
+gText_Register: @ 0x85CA368
+	.string "とうろくする$"
+	.globl gText_Attack3
+	.set gText_Attack3, gText_Register + 0x7
+	.globl gText_Defense3
+	.set gText_Defense3, gText_Register + 0xC
+	.globl gText_Speed2
+	.set gText_Speed2, gText_Register + 0x1B
+
+	.section .rodata.mid93
+
+	.globl gUnknown_85CC663
+gUnknown_85CC663: @ 0x85CC663
+	.string "{DYNAMIC 0}さんが　さんかしました！$"
+	.globl gUnknown_85CC672
+gUnknown_85CC672: @ 0x85CC672
+	.string "{DYNAMIC 0}さんが　ぬけました${DYNAMIC 0}の{DYNAMIC 1}ひきめ:${DYNAMIC 0}の{DYNAMIC 1}ひきめは　いません$さんかしゃが　いなくなったので\n"
+	.string "しゅうりょうします！$リーダーの　{DYNAMIC 0}さんが\n"
+	.string "ぬけたので　かいさんします！$とうろくが　かわりました\n"
+	.string "ポケモンレポートに　かきこみますか？$まえに　かかれた　レポートに\n"
+	.string "うえから　かいても　いいですか？$ポケモンレポートに　かきこんでいます\n"
+	.string "でんげんを　きらないで　ください${DYNAMIC 0}　は\n"
+	.string "レポートに　しっかり　かきのこした！$リーダーが　やめると　かいさん\n"
+	.string "になりますが　よろしいですか？$"
+	.globl gUnknown_85CC769
+
+	.section .rodata.mid80
+
+.globl gUnknown_85CA4A6
+gUnknown_85CA4A6: @ 0x85CA4A6
+	.incbin "baserom_jp.gba", 0x5ca4a6, 0x26
+	.globl gUnknown_85CA4CC
+gUnknown_85CA4CC: @ 0x85CA4CC
+	.incbin "baserom_jp.gba", 0x5ca4cc, 0x26
+	.globl gUnknown_85CA4F2
+gUnknown_85CA4F2: @ 0x85CA4F2
+	.incbin "baserom_jp.gba", 0x5ca4f2, 0x20
+	.globl gUnknown_85CA512
+gUnknown_85CA512: @ 0x85CA512
+	.incbin "baserom_jp.gba", 0x5ca512, 0x29
+	.globl gUnknown_85CA53B
+gUnknown_85CA53B: @ 0x85CA53B
+	.incbin "baserom_jp.gba", 0x5ca53b, 0x28
+	.globl gUnknown_85CA563
+gUnknown_85CA563: @ 0x85CA563
+	.incbin "baserom_jp.gba", 0x5ca563, 0xd
+	.globl gUnknown_85CA570
+gUnknown_85CA570: @ 0x85CA570
+	.incbin "baserom_jp.gba", 0x5ca570, 0x23
+	.globl gUnknown_85CA593
+gUnknown_85CA593: @ 0x85CA593
+	.incbin "baserom_jp.gba", 0x5ca593, 0x23
+	.globl gUnknown_85CA5B6

@@ -9501,7 +9501,7 @@ SECTIONS {
         src/data/text/region_texts75.o(.rodata);
         data/data_b2d_mid72.o(.rodata);
         src/data/text/region_texts76.o(.rodata);
-        data/data_b2d_mid73.o(.rodata);
+        data/data_b2d.o(.rodata.mid73);
         src/data/text/region_texts77.o(.rodata);
         src/strings.o(.rodata.strings_common);
         src/data/text/region_texts66.o(.rodata);
@@ -9514,11 +9514,11 @@ SECTIONS {
         src/data/text/region_texts82.o(.rodata);
         src/data/text/region_texts83.o(.rodata);
         src/data/text/region_texts84.o(.rodata);
-        data/data_b2d_mid78.o(.rodata);
+        data/data_b2d.o(.rodata.mid78);
         src/data/text/region_texts85.o(.rodata);
         data/data_b2d.o(.rodata.mid79);
         src/data/text/region_texts86.o(.rodata);
-        data/data_b2d_mid80.o(.rodata);
+        data/data_b2d.o(.rodata.mid80);
         src/data/text/region_texts87.o(.rodata);
         data/data_b2d.o(.rodata.mid81);
         src/data/text/region_texts88.o(.rodata);
@@ -9546,7 +9546,7 @@ SECTIONS {
         src/data/text/region_texts103.o(.rodata);
         data/data_b2d.o(.rodata.mid92);
         src/data/text/region_texts108.o(.rodata);
-        data/data_b2d_mid93.o(.rodata);
+        data/data_b2d.o(.rodata.mid93);
         src/data/text/region_texts104.o(.rodata);
         data/data_b2d_mid94.o(.rodata);
         src/data/text/region_texts105.o(.rodata);
