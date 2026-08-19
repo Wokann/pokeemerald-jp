@@ -9496,7 +9496,7 @@ SECTIONS {
         src/data/text/region_texts71.o(.rodata);
         data/data_b2d_mid70.o(.rodata);
         src/data/text/region_texts73.o(.rodata);
-        data/data_b2d_mid71.o(.rodata);
+        src/diploma.o(.rodata.diploma);
         src/data/text/region_texts74.o(.rodata);
         src/data/text/region_texts75.o(.rodata);
         data/data_b2d_mid72.o(.rodata);

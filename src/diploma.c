@@ -20,18 +20,43 @@
 extern const u16 sDiplomaPalettes[][16];
 extern const u32 sDiplomaTilemap[];
 extern const u32 sDiplomaTiles[];
-extern const struct BgTemplate sDiplomaBgTemplates[2];
-extern const struct WindowTemplate sDiplomaWinTemplates[2];
 extern const u16 gStandardMenuPalette[];
-extern const u8 sDiplomaTextColors[3];
 extern u8 *sDiplomaTilemapPtr;
 extern const u8 gText_Diploma_1[];
-extern const u8 gText_Diploma_NameTemplate[];
 extern const u8 gText_Diploma_2[];
 extern const u8 gText_Diploma_3[];
 extern const u8 gText_Diploma_National[];
 extern const u8 gText_Diploma_Hoenn[];
 extern const u8 gText_Diploma_4[];
+
+__attribute__((section(".rodata.diploma")))
+const u8 gText_Diploma_NameTemplate[] = {0xFC, 0x01, 0x04, 0xFC, 0x03, 0x05, EOS, 0};
+
+__attribute__((section(".rodata.diploma")))
+static const struct BgTemplate sDiplomaBgTemplates[2] =
+{
+    {0, 1, 31, 0, 0, 0, 0},
+    {1, 0, 6, 1, 0, 1, 0},
+};
+
+__attribute__((section(".rodata.diploma")))
+static const struct WindowTemplate sDiplomaWinTemplates[2] =
+{
+    {0, 8, 2, 13, 16, 15, 1},
+    DUMMY_WIN_TEMPLATE,
+};
+
+__attribute__((section(".rodata.diploma")))
+static const u8 sDiplomaTextColors[4] = {0, 2, 3, 0};
+
+__attribute__((section(".rodata.diploma")))
+const u8 gUnknown_85C8C24[] = {EOS};
+
+__attribute__((section(".rodata.diploma")))
+const u8 gUnknown_85C8C25[] = {0x08, 0x2E, EOS};
+
+__attribute__((section(".rodata.diploma")))
+const u8 gUnknown_85C8C28[] = {0x11, 0x34, 0x2E, EOS, 0x5B, 0x6C, 0x7F, 0x52, 0x51, EOS, 0x79, 0x97, 0xAE, EOS};
 void VBlankCB_SelectScreen(void);
 bool16 HasAllMons(void);
 
