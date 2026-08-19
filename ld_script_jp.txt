@@ -9636,7 +9636,7 @@ SECTIONS {
         src/pokenav_list.o(.rodata.pokenav_list_data);
         src/pokenav_menu_handler.o(.rodata.pokenav_menu_handler_data);
         src/pokenav_menu_handler_gfx.o(.rodata.pokenav_menu_handler_gfx_data);
-        data/data_b2c_mid3.o(.rodata.mid3_suffix);
+        src/pokenav_match_call_list.o(.rodata.match_call_messages_jp);
         src/pokenav_match_call_list.o(.rodata);
         data/data_b2c_mid4.o(.rodata);
         src/pokenav_match_call_gfx.o(.rodata);

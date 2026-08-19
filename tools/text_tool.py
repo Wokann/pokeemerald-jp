@@ -70,7 +70,12 @@ class Charmap:
                 name = m.group(1)
                 seq = self._parse_hex(m.group(2))
                 if seq:
-                    self.bytes_to_text[seq] = "{" + name + "}"
+                    # Many unrelated constants (notably song and sound IDs)
+                    # share byte values with JP glyphs. Keep a previously
+                    # loaded quoted character mapping for text decoding, while
+                    # still accepting the named token when encoding.
+                    self.bytes_to_text.setdefault(seq, "{" + name + "}")
+
                     self.text_to_bytes["{" + name + "}"] = seq
 
     @staticmethod
@@ -84,12 +89,21 @@ class Charmap:
         i = 0
         while i < len(data):
             matched = None
-            for size in (3, 2, 1):
-                if i + size <= len(data):
-                    seq = tuple(data[i : i + size])
-                    if seq in self.bytes_to_text:
-                        matched = (size, seq)
-                        break
+            # JP glyphs are single-byte values, and arbitrary adjacent glyphs
+            # can numerically equal unrelated two-byte constants (for example
+            # song IDs). Prefer a printable/escaped one-byte glyph first;
+            # otherwise use longest-match decoding for real control sequences.
+            single = (data[i],)
+            single_text = self.bytes_to_text.get(single)
+            if single_text is not None and not single_text.startswith("{"):
+                matched = (1, single)
+            else:
+                for size in (3, 2, 1):
+                    if i + size <= len(data):
+                        seq = tuple(data[i : i + size])
+                        if seq in self.bytes_to_text:
+                            matched = (size, seq)
+                            break
             if matched:
                 size, seq = matched
                 out.append(self.bytes_to_text[seq])

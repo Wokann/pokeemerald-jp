@@ -36,6 +36,14 @@ static u32 CB2_HandleCallExitInput(struct Pokenav_MatchCallMenu *);
 static u32 LoopedTask_BuildMatchCallList(s32);
 static bool32 ShouldDoNearbyMessage(void);
 
+#include "data/text/match_call_messages.h"
+
+#include "data/text/match_call_messages.h"
+
+#include "data/text/match_call_messages.h"
+
+#include "data/text/match_call_messages.h"
+
 // JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
 static const u8 sMatchCallOptionsNoCheckPage[] =
 {
@@ -50,7 +58,6 @@ static const u8 sMatchCallOptionsHasCheckPage[] =
     MATCH_CALL_OPTION_CANCEL
 };
 
-extern const u8 *const gMatchCallFlavorTexts[REMATCH_TABLE_ENTRIES][CHECK_PAGE_ENTRY_COUNT];
 extern void MatchCall_GetNameAndDesc(u32 headerId, const u8 **className, const u8 **trainerName);
 extern bool32 MatchCall_GetEnabled(u32 rematchIndex);
 extern int MatchCall_GetOverrideFacilityClass(u32 headerId);
