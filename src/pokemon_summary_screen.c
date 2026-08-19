@@ -3,12 +3,26 @@
 #include "data/text/move_descriptions.h"
 #include "bg.h"
 #include "window.h"
+#include "graphics.h"
 
 #define SUMMARY_LAYOUT_DATA __attribute__((section(".rodata.pokemon_summary_layout_data")))
+
+#define SUMMARY_PREFIX_DATA __attribute__((section(".rodata.pokemon_summary_prefix_data")))
+
+SUMMARY_PREFIX_DATA
+static const struct BgTemplate sBgTemplates[] =
+{
+    { .bg = 0, .charBaseIndex = 0, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 1, .charBaseIndex = 2, .mapBaseIndex = 27, .screenSize = 1, .paletteMode = 0, .priority = 1, .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 2, .mapBaseIndex = 25, .screenSize = 1, .paletteMode = 0, .priority = 2, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 2, .mapBaseIndex = 29, .screenSize = 1, .paletteMode = 0, .priority = 3, .baseTile = 0 },
+};
+
+SUMMARY_PREFIX_DATA
+static const u16 sStatusTilemap[] = INCBIN_U16("graphics/summary_screen/status_tilemap.bin");
+
 #define SUMMARY_WIN(bg_, left_, top_, width_, height_, pal_, base_) \
     { .bg = (bg_), .tilemapLeft = (left_), .tilemapTop = (top_), .width = (width_), .height = (height_), .paletteNum = (pal_), .baseBlock = (base_) }
-
-extern const u8 gUnknown_85ECE88[];
 
 struct SlidingWindow
 {
@@ -21,13 +35,13 @@ struct SlidingWindow
 };
 
 SUMMARY_LAYOUT_DATA static const struct SlidingWindow sStatusSlidingWindow1 =
-{ (const u16 *)(gUnknown_85ECE88 + 0x10), 1, 10, 2, 0, 17 };
+{ sStatusTilemap, 1, 10, 2, 0, 17 };
 SUMMARY_LAYOUT_DATA static const struct SlidingWindow sStatusSlidingWindow2 =
-{ (const u16 *)(gUnknown_85ECE88 + 0x10), 1, 10, 2, 0, 49 };
+{ sStatusTilemap, 1, 10, 2, 0, 49 };
 SUMMARY_LAYOUT_DATA static const struct SlidingWindow sPowerAccSlidingWindow =
-{ (const u16 *)(gUnknown_85ECE88 + 0x38), 0, 9, 7, 1, 45 };
+{ gSummaryScreen_MoveEffect_Battle_Tilemap, 0, 9, 7, 1, 45 };
 SUMMARY_LAYOUT_DATA static const struct SlidingWindow sAppealJamSlidingWindow =
-{ (const u16 *)(gUnknown_85ECE88 + 0xB6), 0, 9, 7, 1, 45 };
+{ gSummaryScreen_MoveEffect_Contest_Tilemap, 0, 9, 7, 1, 45 };
 SUMMARY_LAYOUT_DATA static const s8 sMultiBattleOrder[] = {0, 2, 3, 1, 4, 5};
 
 SUMMARY_LAYOUT_DATA
@@ -1167,7 +1181,7 @@ __attribute__((naked)) void InitBGs(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081BF800: .4byte gUnknown_85ECE88\n\t"
+        "_081BF800: .4byte sBgTemplates\n\t"
         "_081BF804: .4byte gUnknown_203CBE8\n\t"
         "_081BF808: .4byte 0x000020BC\n\t"
         "_081BF80C: .4byte 0x000010BC\n\t"
@@ -5626,7 +5640,7 @@ __attribute__((naked)) void sub_081C1AC8(void)
         "	b _081C1B50\n\t"
         "	.align 2, 0\n\t"
         "_081C1B10: .4byte 0x0000056A\n\t"
-        "_081C1B14: .4byte gUnknown_85ECFBC\n\t"
+        "_081C1B14: .4byte gSummaryScreen_MoveEffect_Cancel_Tilemap\n\t"
         "_081C1B18:\n\t"
         "	movs r3, #0\n\t"
         "	ldr r5, _081C1B58\n\t"
@@ -5662,7 +5676,7 @@ __attribute__((naked)) void sub_081C1AC8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C1B58: .4byte gUnknown_85ECFBC\n\t"
+        "_081C1B58: .4byte gSummaryScreen_MoveEffect_Cancel_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
