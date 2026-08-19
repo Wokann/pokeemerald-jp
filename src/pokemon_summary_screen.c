@@ -131,6 +131,368 @@ SUMMARY_TEXT_DATA static const u8 sStatsLeftColumnLayout[] = _("{DYNAMIC 0}/{DYN
 SUMMARY_TEXT_DATA static const u8 sStatsRightColumnLayout[] = _("{DYNAMIC 0}\n{DYNAMIC 1}\n{DYNAMIC 2}");
 SUMMARY_TEXT_DATA static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
 
+#define SUMMARY_SPRITE_DATA __attribute__((section(".rodata.pokemon_summary_sprite_data")))
+
+// JP graphics remain in their original packed resource block for now.
+#define gMoveTypes_Gfx         ((const u32 *)0x08D971CC)
+#define gSummaryMoveSelect_Gfx ((const u32 *)0x08D97CBC)
+#define gSummaryMoveSelect_Pal ((const u32 *)0x08D97DB8)
+#define gStatusGfx_Icons       ((const u32 *)0x08D96F44)
+#define gStatusPal_Icons       ((const u32 *)0x08D971A4)
+
+#define TAG_MOVE_SELECTOR 30000
+#define TAG_MON_STATUS 30001
+#define TAG_MOVE_TYPES 30002
+#define TAG_MON_MARKINGS 30003
+
+SUMMARY_SPRITE_DATA static const struct OamData sOamData_MoveTypes =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeNormal[] = {
+    ANIMCMD_FRAME(TYPE_NORMAL * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeFighting[] = {
+    ANIMCMD_FRAME(TYPE_FIGHTING * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeFlying[] = {
+    ANIMCMD_FRAME(TYPE_FLYING * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypePoison[] = {
+    ANIMCMD_FRAME(TYPE_POISON * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeGround[] = {
+    ANIMCMD_FRAME(TYPE_GROUND * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeRock[] = {
+    ANIMCMD_FRAME(TYPE_ROCK * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeBug[] = {
+    ANIMCMD_FRAME(TYPE_BUG * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeGhost[] = {
+    ANIMCMD_FRAME(TYPE_GHOST * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeSteel[] = {
+    ANIMCMD_FRAME(TYPE_STEEL * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeMystery[] = {
+    ANIMCMD_FRAME(TYPE_MYSTERY * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeFire[] = {
+    ANIMCMD_FRAME(TYPE_FIRE * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeWater[] = {
+    ANIMCMD_FRAME(TYPE_WATER * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeGrass[] = {
+    ANIMCMD_FRAME(TYPE_GRASS * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeElectric[] = {
+    ANIMCMD_FRAME(TYPE_ELECTRIC * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypePsychic[] = {
+    ANIMCMD_FRAME(TYPE_PSYCHIC * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeIce[] = {
+    ANIMCMD_FRAME(TYPE_ICE * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeDragon[] = {
+    ANIMCMD_FRAME(TYPE_DRAGON * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_TypeDark[] = {
+    ANIMCMD_FRAME(TYPE_DARK * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_CategoryCool[] = {
+    ANIMCMD_FRAME((CONTEST_CATEGORY_COOL + NUMBER_OF_MON_TYPES) * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_CategoryBeauty[] = {
+    ANIMCMD_FRAME((CONTEST_CATEGORY_BEAUTY + NUMBER_OF_MON_TYPES) * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_CategoryCute[] = {
+    ANIMCMD_FRAME((CONTEST_CATEGORY_CUTE + NUMBER_OF_MON_TYPES) * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_CategorySmart[] = {
+    ANIMCMD_FRAME((CONTEST_CATEGORY_SMART + NUMBER_OF_MON_TYPES) * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_CategoryTough[] = {
+    ANIMCMD_FRAME((CONTEST_CATEGORY_TOUGH + NUMBER_OF_MON_TYPES) * 8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd *const sSpriteAnimTable_MoveTypes[NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT] = {
+    sSpriteAnim_TypeNormal,
+    sSpriteAnim_TypeFighting,
+    sSpriteAnim_TypeFlying,
+    sSpriteAnim_TypePoison,
+    sSpriteAnim_TypeGround,
+    sSpriteAnim_TypeRock,
+    sSpriteAnim_TypeBug,
+    sSpriteAnim_TypeGhost,
+    sSpriteAnim_TypeSteel,
+    sSpriteAnim_TypeMystery,
+    sSpriteAnim_TypeFire,
+    sSpriteAnim_TypeWater,
+    sSpriteAnim_TypeGrass,
+    sSpriteAnim_TypeElectric,
+    sSpriteAnim_TypePsychic,
+    sSpriteAnim_TypeIce,
+    sSpriteAnim_TypeDragon,
+    sSpriteAnim_TypeDark,
+    sSpriteAnim_CategoryCool,
+    sSpriteAnim_CategoryBeauty,
+    sSpriteAnim_CategoryCute,
+    sSpriteAnim_CategorySmart,
+    sSpriteAnim_CategoryTough,
+};
+
+SUMMARY_SPRITE_DATA static const struct CompressedSpriteSheet sSpriteSheet_MoveTypes =
+{
+    .data = gMoveTypes_Gfx,
+    .size = (NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT) * 0x100,
+    .tag = TAG_MOVE_TYPES
+};
+SUMMARY_SPRITE_DATA static const struct SpriteTemplate sSpriteTemplate_MoveTypes =
+{
+    .tileTag = TAG_MOVE_TYPES,
+    .paletteTag = TAG_MOVE_TYPES,
+    .oam = &sOamData_MoveTypes,
+    .anims = sSpriteAnimTable_MoveTypes,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+SUMMARY_SPRITE_DATA static const u8 sMoveTypeToOamPaletteNum[NUMBER_OF_MON_TYPES + CONTEST_CATEGORIES_COUNT] =
+{
+    [TYPE_NORMAL] = 13,
+    [TYPE_FIGHTING] = 13,
+    [TYPE_FLYING] = 14,
+    [TYPE_POISON] = 14,
+    [TYPE_GROUND] = 13,
+    [TYPE_ROCK] = 13,
+    [TYPE_BUG] = 15,
+    [TYPE_GHOST] = 14,
+    [TYPE_STEEL] = 13,
+    [TYPE_MYSTERY] = 15,
+    [TYPE_FIRE] = 13,
+    [TYPE_WATER] = 14,
+    [TYPE_GRASS] = 15,
+    [TYPE_ELECTRIC] = 13,
+    [TYPE_PSYCHIC] = 14,
+    [TYPE_ICE] = 14,
+    [TYPE_DRAGON] = 15,
+    [TYPE_DARK] = 13,
+    [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_COOL] = 13,
+    [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_BEAUTY] = 14,
+    [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_CUTE] = 14,
+    [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_SMART] = 15,
+    [NUMBER_OF_MON_TYPES + CONTEST_CATEGORY_TOUGH] = 13,
+};
+SUMMARY_SPRITE_DATA static const struct OamData sOamData_MoveSelector =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelector0[] = {
+    ANIMCMD_FRAME(0, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelector1[] = {
+    ANIMCMD_FRAME(4, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelector2[] = {
+    ANIMCMD_FRAME(8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelector3[] = {
+    ANIMCMD_FRAME(12, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelectorLeft[] = {
+    ANIMCMD_FRAME(16, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelectorRight[] = {
+    ANIMCMD_FRAME(16, 0, TRUE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelectorMiddle[] = {
+    ANIMCMD_FRAME(20, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelector7[] = {
+    ANIMCMD_FRAME(24, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelector8[] = {
+    ANIMCMD_FRAME(24, 0, TRUE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_MoveSelector9[] = {
+    ANIMCMD_FRAME(28, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+// All except left, middle and right are unused
+SUMMARY_SPRITE_DATA static const union AnimCmd *const sSpriteAnimTable_MoveSelector[] = {
+    sSpriteAnim_MoveSelector0,
+    sSpriteAnim_MoveSelector1,
+    sSpriteAnim_MoveSelector2,
+    sSpriteAnim_MoveSelector3,
+    sSpriteAnim_MoveSelectorLeft,
+    sSpriteAnim_MoveSelectorRight,
+    sSpriteAnim_MoveSelectorMiddle,
+    sSpriteAnim_MoveSelector7,
+    sSpriteAnim_MoveSelector8,
+    sSpriteAnim_MoveSelector9,
+};
+SUMMARY_SPRITE_DATA static const struct CompressedSpriteSheet sMoveSelectorSpriteSheet =
+{
+    .data = gSummaryMoveSelect_Gfx,
+    .size = 0x400,
+    .tag = TAG_MOVE_SELECTOR
+};
+SUMMARY_SPRITE_DATA static const struct CompressedSpritePalette sMoveSelectorSpritePal =
+{
+    .data = gSummaryMoveSelect_Pal,
+    .tag = TAG_MOVE_SELECTOR
+};
+SUMMARY_SPRITE_DATA static const struct SpriteTemplate sMoveSelectorSpriteTemplate =
+{
+    .tileTag = TAG_MOVE_SELECTOR,
+    .paletteTag = TAG_MOVE_SELECTOR,
+    .oam = &sOamData_MoveSelector,
+    .anims = sSpriteAnimTable_MoveSelector,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+SUMMARY_SPRITE_DATA static const struct OamData sOamData_StatusCondition =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_StatusPoison[] = {
+    ANIMCMD_FRAME(0, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_StatusParalyzed[] = {
+    ANIMCMD_FRAME(4, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_StatusSleep[] = {
+    ANIMCMD_FRAME(8, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_StatusFrozen[] = {
+    ANIMCMD_FRAME(12, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_StatusBurn[] = {
+    ANIMCMD_FRAME(16, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_StatusPokerus[] = {
+    ANIMCMD_FRAME(20, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd sSpriteAnim_StatusFaint[] = {
+    ANIMCMD_FRAME(24, 0, FALSE, FALSE),
+    ANIMCMD_END
+};
+SUMMARY_SPRITE_DATA static const union AnimCmd *const sSpriteAnimTable_StatusCondition[] = {
+    sSpriteAnim_StatusPoison,
+    sSpriteAnim_StatusParalyzed,
+    sSpriteAnim_StatusSleep,
+    sSpriteAnim_StatusFrozen,
+    sSpriteAnim_StatusBurn,
+    sSpriteAnim_StatusPokerus,
+    sSpriteAnim_StatusFaint,
+};
+SUMMARY_SPRITE_DATA static const struct CompressedSpriteSheet sStatusIconsSpriteSheet =
+{
+    .data = gStatusGfx_Icons,
+    .size = 0x380,
+    .tag = TAG_MON_STATUS
+};
+SUMMARY_SPRITE_DATA static const struct CompressedSpritePalette sStatusIconsSpritePalette =
+{
+    .data = gStatusPal_Icons,
+    .tag = TAG_MON_STATUS
+};
+SUMMARY_SPRITE_DATA static const struct SpriteTemplate sSpriteTemplate_StatusCondition =
+{
+    .tileTag = TAG_MON_STATUS,
+    .paletteTag = TAG_MON_STATUS,
+    .oam = &sOamData_StatusCondition,
+    .anims = sSpriteAnimTable_StatusCondition,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+SUMMARY_SPRITE_DATA static const u16 sMarkings_Pal[] =
+{
+    0x0000, 0x6E54, 0x7675, 0x7FFF, 0x6739, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0,
+};
+
+
+
 __attribute__((naked)) void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 monIndex, u8 maxMonIndex, void (*callback)(void))
 {
     __asm__(".syntax unified\n\t"
@@ -955,7 +1317,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _081BF9A6\n\t"
         "	.align 2, 0\n\t"
-        "_081BF958: .4byte gUnknown_85ED40C\n\t"
+        "_081BF958: .4byte sSpriteSheet_MoveTypes\n\t"
         "_081BF95C:\n\t"
         "	ldr r0, _081BF96C\n\t"
         "	bl LoadCompressedSpriteSheet\n\t"
@@ -965,7 +1327,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	adds r1, r1, r2\n\t"
         "	b _081BF9AE\n\t"
         "	.align 2, 0\n\t"
-        "_081BF96C: .4byte gUnknown_85ED4C4\n\t"
+        "_081BF96C: .4byte sMoveSelectorSpriteSheet\n\t"
         "_081BF970: .4byte gUnknown_203CBE8\n\t"
         "_081BF974: .4byte 0x000040F0\n\t"
         "_081BF978:\n\t"
@@ -973,7 +1335,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _081BF9A6\n\t"
         "	.align 2, 0\n\t"
-        "_081BF980: .4byte gUnknown_85ED548\n\t"
+        "_081BF980: .4byte sStatusIconsSpriteSheet\n\t"
         "_081BF984:\n\t"
         "	ldr r0, _081BF994\n\t"
         "	bl LoadCompressedSpritePalette\n\t"
@@ -983,7 +1345,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	adds r1, r1, r2\n\t"
         "	b _081BF9AE\n\t"
         "	.align 2, 0\n\t"
-        "_081BF994: .4byte gUnknown_85ED550\n\t"
+        "_081BF994: .4byte sStatusIconsSpritePalette\n\t"
         "_081BF998: .4byte gUnknown_203CBE8\n\t"
         "_081BF99C: .4byte 0x000040F0\n\t"
         "_081BF9A0:\n\t"
@@ -1001,7 +1363,7 @@ __attribute__((naked)) void SummaryScreen_DecompressGraphics(void)
         "	strh r0, [r1]\n\t"
         "	b _081BF9EC\n\t"
         "	.align 2, 0\n\t"
-        "_081BF9B8: .4byte gUnknown_85ED4CC\n\t"
+        "_081BF9B8: .4byte sMoveSelectorSpritePal\n\t"
         "_081BF9BC: .4byte gUnknown_203CBE8\n\t"
         "_081BF9C0: .4byte 0x000040F0\n\t"
         "_081BF9C4:\n\t"
@@ -9482,7 +9844,7 @@ __attribute__((naked)) void CreateMoveTypeIcons(void)
         "	.align 2, 0\n\t"
         "_081C3B30: .4byte gUnknown_203CBE8\n\t"
         "_081C3B34: .4byte 0x000040D3\n\t"
-        "_081C3B38: .4byte gUnknown_85ED414\n\t"
+        "_081C3B38: .4byte sSpriteTemplate_MoveTypes\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9552,7 +9914,7 @@ __attribute__((naked)) void SetMoveTypeSpritePosAndType(void)
         "_081C3BB4: .4byte gUnknown_203CBE8\n\t"
         "_081C3BB8: .4byte 0x000040D3\n\t"
         "_081C3BBC: .4byte gSprites\n\t"
-        "_081C3BC0: .4byte gUnknown_85ED42C\n\t"
+        "_081C3BC0: .4byte sMoveTypeToOamPaletteNum\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10407,7 +10769,7 @@ __attribute__((naked)) void CreateMonMarkingsSprite(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C41DC: .4byte 0x00007533\n\t"
-        "_081C41E0: .4byte gUnknown_85ED570\n\t"
+        "_081C41E0: .4byte sMarkings_Pal\n\t"
         "_081C41E4: .4byte gUnknown_203CBE8\n\t"
         ".syntax divided\n\t"
     );
@@ -10543,7 +10905,7 @@ __attribute__((naked)) void CreateSetStatusSprite(void)
         "	.align 2, 0\n\t"
         "_081C42E0: .4byte gUnknown_203CBE8\n\t"
         "_081C42E4: .4byte 0x000040D5\n\t"
-        "_081C42E8: .4byte gUnknown_85ED558\n\t"
+        "_081C42E8: .4byte sSpriteTemplate_StatusCondition\n\t"
         "_081C42EC: .4byte gSprites\n\t"
         "_081C42F0:\n\t"
         "	movs r0, #2\n\t"
@@ -10619,7 +10981,7 @@ __attribute__((naked)) void sub_081C4300(void)
         "_081C436C: .4byte 0x000040D3\n\t"
         "_081C4370: .4byte 0x000040C0\n\t"
         "_081C4374: .4byte gSprites\n\t"
-        "_081C4378: .4byte gUnknown_85ED4D4\n\t"
+        "_081C4378: .4byte sMoveSelectorSpriteTemplate\n\t"
         "_081C437C:\n\t"
         "	cmp r5, #9\n\t"
         "	bne _081C4392\n\t"
