@@ -90,7 +90,6 @@ $(C_BUILDDIR)/m4a_tail5.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/m4a_tail6.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/m4a_tail7.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/m4a_tail8.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
-$(C_BUILDDIR)/scanline_effect_stub.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/ghost_mid.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/bike_stub_face.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/bike_stub_44.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
