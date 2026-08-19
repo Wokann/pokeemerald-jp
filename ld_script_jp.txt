@@ -9503,7 +9503,7 @@ SECTIONS {
         src/data/text/region_texts76.o(.rodata);
         data/data_b2d_mid73.o(.rodata);
         src/data/text/region_texts77.o(.rodata);
-        data/data_b2d_mid74.o(.rodata);
+        src/strings.o(.rodata.strings_common);
         src/data/text/region_texts66.o(.rodata);
         data/data_b2d_mid75.o(.rodata);
         src/data/text/region_texts78.o(.rodata);
