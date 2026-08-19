@@ -9573,7 +9573,8 @@ SECTIONS {
         src/frontier_util.o(.rodata.frontier_util_data);
         src/data/text/region_texts115.o(.rodata);
         src/data/text/region_texts116.o(.rodata);
-        data/data_b2d_mid101.o(.rodata);
+        src/frontier_util.o(.rodata.frontier_util_data_late);
+        data/data_b2d_mid101.o(.rodata.mid101_rest);
         src/data/list_menu_data.o(.rodata);
         data/data_b2d_mid101.o(.rodata.mid101_tail);
         src/data/text/nature_names.o(.rodata);

@@ -9,41 +9,7 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85DD47F
-gUnknown_85DD47F: @ 0x85DD47F
-	.incbin "baserom_jp.gba", 0x5dd47f, 0xf
-
-	.globl gUnknown_85DD48E
-gUnknown_85DD48E: @ 0x85DD48E
-	.string "ビ　バ　\l"
-	.string "　{UP_ARROW_2}\p"
-	.string "　デあドあバあベあボあ$$"
-	.globl gUnknown_85DD4A4
-gUnknown_85DD4A4: @ 0x85DD4A4
-	.string "もJシくシJシくもJシくトJシくもJシくフJシくれJシくシJシくぅJシくシJシくぢJシくワJシくぎJシくシJシくぼJシくワJシくイJシくワJシくもJシくヤJシく　レベル50$　オープンレベル$"
-	.globl gUnknown_85DD504
-gUnknown_85DD504: @ 0x85DD504
-	.incbin "baserom_jp.gba", 0x5dd504, 0x38
-
-	.globl gUnknown_85DD53C
-gUnknown_85DD53C: @ 0x85DD53C
-	.incbin "baserom_jp.gba", 0x5dd53c, 0x28
-
-	.globl gUnknown_85DD564
-gUnknown_85DD564: @ 0x85DD564
-	.string "1$2$3$"
-
-	.globl gUnknown_85DD56A
-gUnknown_85DD56A: @ 0x85DD56A
-	.incbin "baserom_jp.gba", 0x5dd56a, 0x7e
-
-	.globl gUnknown_85DD5E8
-gUnknown_85DD5E8: @ 0x85DD5E8
-	.incbin "baserom_jp.gba", 0x5dd5e8, 0x8
-
-	.globl gUnknown_85DD5F0
-gUnknown_85DD5F0: @ 0x85DD5F0
-	.incbin "baserom_jp.gba", 0x5dd5f0, 0x8
+	.section .rodata.mid101_rest
 
 	.globl gUnknown_85DD5F8
 gUnknown_85DD5F8: @ 0x85DD5F8
