@@ -178,13 +178,45 @@ static void MatchCall_GetNameAndDescByRematchIdx(u32, const u8 **, const u8 **);
 
 // JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
 extern const match_call_t sMatchCallHeaders[MC_HEADER_COUNT];
-extern bool32 (*const sMatchCallGetEnabledFuncs[])(match_call_t);
-extern mapsec_u8_t (*const sMatchCallGetMapSecFuncs[])(match_call_t);
-extern bool32 (*const sMatchCall_IsRematchableFunctions[])(match_call_t);
-extern bool32 (*const sMatchCall_HasCheckPageFunctions[])(match_call_t);
-extern u32 (*const sMatchCall_GetRematchTableIdxFunctions[])(match_call_t);
-extern void (*const sMatchCall_GetMessageFunctions[])(match_call_t, u8 *);
-extern void (*const sMatchCall_GetNameAndDescFunctions[])(match_call_t, const u8 **, const u8 **);
+#define MATCH_CALL_DISPATCH_TABLES __attribute__((section(".rodata.match_call_dispatch_tables")))
+
+static bool32 (*const sMatchCallGetEnabledFuncs[])(match_call_t) MATCH_CALL_DISPATCH_TABLES =
+{
+    MatchCall_GetEnabled_NPC, MatchCall_GetEnabled_Trainer, MatchCall_GetEnabled_Wally,
+    MatchCall_GetEnabled_Rival, MatchCall_GetEnabled_Birch,
+};
+static mapsec_u8_t (*const sMatchCallGetMapSecFuncs[])(match_call_t) MATCH_CALL_DISPATCH_TABLES =
+{
+    MatchCall_GetMapSec_NPC, MatchCall_GetMapSec_Trainer, MatchCall_GetMapSec_Wally,
+    MatchCall_GetMapSec_Rival, MatchCall_GetMapSec_Birch,
+};
+static bool32 (*const sMatchCall_IsRematchableFunctions[])(match_call_t) MATCH_CALL_DISPATCH_TABLES =
+{
+    MatchCall_IsRematchable_Birch, MatchCall_IsRematchable_Trainer, MatchCall_IsRematchable_Wally,
+    MatchCall_IsRematchable_Rival, MatchCall_HasCheckPage_NPC,
+};
+static bool32 (*const sMatchCall_HasCheckPageFunctions[])(match_call_t) MATCH_CALL_DISPATCH_TABLES =
+{
+    MatchCall_HasCheckPage_Trainer, MatchCall_HasCheckPage_Wally, MatchCall_HasCheckPage_Rival,
+    MatchCall_HasCheckPage_Birch, MatchCall_IsRematchable_NPC,
+};
+static u32 (*const sMatchCall_GetRematchTableIdxFunctions[])(match_call_t) MATCH_CALL_DISPATCH_TABLES =
+{
+    MatchCall_GetRematchTableIdx_Birch, MatchCall_GetRematchTableIdx_Trainer,
+    MatchCall_GetRematchTableIdx_Wally, MatchCall_GetRematchTableIdx_Rival,
+    MatchCall_GetRematchTableIdx_NPC,
+};
+static void (*const sMatchCall_GetMessageFunctions[])(match_call_t, u8 *) MATCH_CALL_DISPATCH_TABLES =
+{
+    MatchCall_GetMessage_NPC, MatchCall_GetMessage_Trainer, MatchCall_GetMessage_Wally,
+    MatchCall_GetMessage_Rival, MatchCall_GetMessage_Birch,
+};
+static void (*const sMatchCall_GetNameAndDescFunctions[])(match_call_t, const u8 **, const u8 **) MATCH_CALL_DISPATCH_TABLES =
+{
+    MatchCall_GetNameAndDesc_Birch, MatchCall_GetNameAndDesc_Trainer,
+    MatchCall_GetNameAndDesc_Wally, MatchCall_GetNameAndDesc_Rival,
+    MatchCall_GetNameAndDesc_NPC,
+};
 extern const struct MatchCallCheckPageOverride sCheckPageOverrides[4];
 extern void sub_08196C74(u8 *dest);
 
