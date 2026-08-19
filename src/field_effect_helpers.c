@@ -1009,3 +1009,18 @@ void SetSurfBlob_PlayerOffset(u8 spriteId, bool8 hasOffset, s16 offset)
     gSprites[spriteId].sBitfield = (gSprites[spriteId].sBitfield & ~0xF00) | ((hasOffset & 0xF) << 8);
     gSprites[spriteId].sPlayerOffset = offset;
 }
+u8 GetSurfBlob_BobState(struct Sprite *sprite)
+{
+    return sprite->sBitfield & 0xF;
+}
+
+// Never TRUE
+u8 GetSurfBlob_DontSyncAnim(struct Sprite *sprite)
+{
+    return (sprite->sBitfield & 0xF0) >> 4;
+}
+
+u8 GetSurfBlob_HasPlayerOffset(struct Sprite *sprite)
+{
+    return (sprite->sBitfield & 0xF00) >> 8;
+}
