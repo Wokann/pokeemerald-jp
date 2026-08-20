@@ -9687,7 +9687,7 @@ SECTIONS {
         data/multiboot_berry_glitch_fix.o(.rodata);
         data/rom_padding.o(.rodata);
         data/data_b2d_gfx_front.o(.rodata);
-        data/data_rest2.o(.rodata);
+        data/battle_textbox.o(.rodata);
         data/data_b2d_gfx_pokemon_none.o(.rodata);
         data/data_rest2b.o(.rodata);
         data/data_b2d_gfx_pokemon_main.o(.rodata);

@@ -21,6 +21,3 @@ gBattleTextboxPalette: @ 0x8C004EC
 	.globl gBattleTextboxTilemap
 gBattleTextboxTilemap: @ 0x8C00530
 	.incbin "baserom_jp.gba", 0xc00530, 0x228
-
-
-	.globl gUnknown_8C02308
