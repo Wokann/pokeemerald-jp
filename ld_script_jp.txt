@@ -9693,6 +9693,7 @@ SECTIONS {
         src/graphics.o(.rodata.battle_interface_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_healthbox);
         src/graphics.o(.rodata.jp_contest_graphics);
+        src/graphics.o(.rodata.battle_anim_post_contest_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_jp_contest);
         src/graphics.o(.rodata.battle_anim_mask_and_bg_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_battle_anim_masks);
