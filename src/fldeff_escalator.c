@@ -4,6 +4,7 @@
 #include "fieldmap.h"
 #include "fldeff.h"
 #include "task.h"
+#include "constants/metatile_labels.h"
 
 extern u8 sEscalatorAnim_TaskId;
 
@@ -13,14 +14,51 @@ static void Task_DrawEscalator(u8 taskId);
 #define ESCALATOR_STAGES     3
 #define LAST_ESCALATOR_STAGE (ESCALATOR_STAGES - 1)
 
-// JP ROM data (the seven 3-entry s16 tables stay in the ROM data region)
-extern const s16 sEscalatorMetatiles_1F_0[ESCALATOR_STAGES];
-extern const s16 sEscalatorMetatiles_1F_1[ESCALATOR_STAGES];
-extern const s16 sEscalatorMetatiles_1F_2[ESCALATOR_STAGES];
-extern const s16 sEscalatorMetatiles_1F_3[ESCALATOR_STAGES];
-extern const s16 sEscalatorMetatiles_2F_0[ESCALATOR_STAGES];
-extern const s16 sEscalatorMetatiles_2F_1[ESCALATOR_STAGES];
-extern const s16 sEscalatorMetatiles_2F_2[ESCALATOR_STAGES];
+#define ESCALATOR_DATA __attribute__((section(".rodata.fldeff_escalator_mid57b")))
+
+ESCALATOR_DATA const s16 sEscalatorMetatiles_1F_0[ESCALATOR_STAGES] = {
+    METATILE_PokemonCenter_Escalator1F_Tile0_Frame2,
+    METATILE_PokemonCenter_Escalator1F_Tile0_Frame1,
+    METATILE_PokemonCenter_Escalator1F_Tile0_Frame0
+};
+
+ESCALATOR_DATA const s16 sEscalatorMetatiles_1F_1[ESCALATOR_STAGES] = {
+    METATILE_PokemonCenter_Escalator1F_Tile1_Frame2,
+    METATILE_PokemonCenter_Escalator1F_Tile1_Frame1,
+    METATILE_PokemonCenter_Escalator1F_Tile1_Frame0
+};
+
+ESCALATOR_DATA const s16 sEscalatorMetatiles_1F_2[ESCALATOR_STAGES] = {
+    METATILE_PokemonCenter_Escalator1F_Tile2_Frame2,
+    METATILE_PokemonCenter_Escalator1F_Tile2_Frame1,
+    METATILE_PokemonCenter_Escalator1F_Tile2_Frame0
+};
+
+ESCALATOR_DATA const s16 sEscalatorMetatiles_1F_3[ESCALATOR_STAGES] = {
+    METATILE_PokemonCenter_Escalator1F_Tile3_Frame2,
+    METATILE_PokemonCenter_Escalator1F_Tile3_Frame1,
+    METATILE_PokemonCenter_Escalator1F_Tile3_Frame0
+};
+
+ESCALATOR_DATA const s16 sEscalatorMetatiles_2F_0[ESCALATOR_STAGES] = {
+    METATILE_PokemonCenter_Escalator2F_Tile0_Frame0,
+    METATILE_PokemonCenter_Escalator2F_Tile0_Frame1,
+    METATILE_PokemonCenter_Escalator2F_Tile0_Frame2
+};
+
+ESCALATOR_DATA const s16 sEscalatorMetatiles_2F_1[ESCALATOR_STAGES] = {
+    METATILE_PokemonCenter_Escalator2F_Tile1_Frame0,
+    METATILE_PokemonCenter_Escalator2F_Tile1_Frame1,
+    METATILE_PokemonCenter_Escalator2F_Tile1_Frame2
+};
+
+ESCALATOR_DATA const s16 sEscalatorMetatiles_2F_2[ESCALATOR_STAGES] = {
+    METATILE_PokemonCenter_Escalator2F_Tile2_Frame0,
+    METATILE_PokemonCenter_Escalator2F_Tile2_Frame1,
+    METATILE_PokemonCenter_Escalator2F_Tile2_Frame2
+};
+
+#undef ESCALATOR_DATA
 
 #define tState            data[0]
 #define tTransitionStage  data[1]
