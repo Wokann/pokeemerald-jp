@@ -13,7 +13,6 @@
 #include "string_util.h"
 
 extern const u8 sMEScrCmdEnableresetrtcText[];
-extern const u8 sMEScrCmdGivenationaldexText[];
 #include "text.h"
 #include "util.h"
 #include "mystery_event_msg.h"
@@ -289,7 +288,7 @@ bool8 MEScrCmd_initramscript(struct ScriptContext *ctx)
 bool8 MEScrCmd_givenationaldex(struct ScriptContext *ctx)
 {
     EnableResetRTC();
-    StringExpandPlaceholders(gStringVar4, sMEScrCmdGivenationaldexText);
+    StringExpandPlaceholders(gStringVar4, gText_InGameClockUsable);
     ctx->mStatus = MEVENT_STATUS_SUCCESS;
     return FALSE;
 }
