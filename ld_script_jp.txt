@@ -46,7 +46,6 @@ gBerryTag_Gfx = gUnknown_8D9C254;
 
 gBerryTag_Tilemap = gUnknown_8D9C3E4;
 
-gBerryCheck_Pal = gUnknown_8D9C1AC;
 
 
 
@@ -9424,7 +9423,7 @@ SECTIONS {
         src/fldeff_cut.o(.rodata.fldeff_cut_mid57a);
         src/map_name_popup.o(.rodata.map_name_popup_mid57a);
         src/map_name_popup.o(.rodata.map_name_popup_mid57a_pyramid);
-        data/data_b2d_mid57_a.o(.rodata.mid57a_suffix);
+        src/item_menu_icons.o(.rodata.item_menu_icons_mid57a);
         data/data_b2d.o(.rodata.mid57_gap);
         src/item.o(.rodata);
         data/data_b2d_mid57_b.o(.rodata);
@@ -9712,6 +9711,12 @@ SECTIONS {
         src/graphics.o(.rodata.pokemon_graphics_prefix);
         data/data_b2d_gfx_pokemon_main.o(.rodata);
         data/data_rest2c.o(.rodata);
+        data/data_rest2c.o(.rodata.data_rest2c_before_bag_graphics);
+        src/graphics.o(.rodata.bag_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_after_bag_graphics);
+        src/graphics.o(.rodata.berry_check_palette);
+        data/data_rest2c.o(.rodata.data_rest2c_before_berry_graphics);
+        src/graphics.o(.rodata.berry_graphics);
         src/graphics.o(.rodata.rayquaza_scene_1_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_rayquaza);
         src/graphics.o(.rodata.rayquaza_scene_2_smoke_graphics);

@@ -3,8 +3,8 @@
 
 Each gMonShinyPalette_<X> tail incbin (0x420 bytes) in
 data/data_b2d_gfx_pokemon_main.s is actually the species icon: 0x400 bytes of
-32x64 4bpp data followed by 0x20 leftover. gMonIconTable (data_b_mid57_a.s)
-points at these tails; icons match pokeemerald's
+32x64 4bpp data followed by 0x20 leftover. gMonIconTable in
+src/pokemon_icon.c points at these tails; icons match pokeemerald's
 graphics/pokemon/<species>/icon.4bpp byte-for-byte.
 
 Usage:
@@ -21,7 +21,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ROM_PATH = ROOT / "baserom_jp.gba"
 MAIN_S = ROOT / "data" / "data_b2d_gfx_pokemon_main.s"
-MID57A_S = ROOT / "data" / "data_b2d_mid57_a.s"
 OUT_DIR = ROOT / "graphics" / "pokemon"
 US_ICON_C = Path("/home/kenny/pokeemerald/src/pokemon_icon.c")
 
@@ -86,32 +85,6 @@ def main():
             sp = OUT_DIR / names[idx].lower()
             sp.mkdir(parents=True, exist_ok=True)
             (sp / "icon.4bpp").write_bytes(rom[p - 0x08000000 : p - 0x08000000 + 0x400])
-
-    # Rewrite gMonIconTable in mid57_a.s: label + first-pointer address comment.
-    raw = MID57A_S.read_bytes()
-    crlf = b"\r\n" in raw
-    lines = raw.decode("utf-8").split("\r\n" if crlf else "\n")
-    edits = {}
-    for i, line in enumerate(lines):
-        if re.match(r"^gMonIconTable:\s*@", line):
-            # duplicate label on the next line
-            if i + 1 < len(lines) and re.match(r"^gMonIconTable:\s*@", lines[i + 1]):
-                edits[i + 1] = None  # delete
-            # first .4byte data line right after the label(s)
-            j = i + 1
-            while j < len(lines) and re.match(r"^gMonIconTable:\s*@", lines[j]):
-                j += 1
-            rows = [f"\t.4byte gMonIcon_{pos_name[p]}" for p in ptrs]
-            edits[j] = rows
-            break
-    if not args.check:
-        new_lines = list(lines)
-        for idx in sorted(edits, reverse=True):
-            if edits[idx] is None:
-                del new_lines[idx]
-            else:
-                new_lines[idx : idx + 1] = edits[idx]
-        MID57A_S.write_bytes(("\r\n".join(new_lines) if crlf else "\n".join(new_lines)).encode("utf-8"))
 
     # Split icon data out of the containing incbins across all data/*.s.
     import glob as _glob

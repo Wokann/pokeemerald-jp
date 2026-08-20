@@ -8,6 +8,22 @@ MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(
     "graphics/pokemon/icon_palettes/icon_palette_2.pal.gbapal");
 #undef MON_ICON_PALETTES_DATA
 
+#define BAG_GRAPHICS __attribute__((section(".rodata.bag_graphics")))
+
+BAG_GRAPHICS const u32 gBagMaleTiles[] = INCBIN_U32("graphics/bag/bag_male.4bpp.lz");
+BAG_GRAPHICS const u32 gBagFemaleTiles[] = INCBIN_U32("graphics/bag/bag_female.4bpp.lz");
+BAG_GRAPHICS const u32 gBagPalette[] = INCBIN_U32("graphics/bag/bag.pal.gbapal.lz");
+
+#undef BAG_GRAPHICS
+
+#define BERRY_CHECK_PALETTE __attribute__((section(".rodata.berry_check_palette")))
+#define BERRY_GRAPHICS __attribute__((section(".rodata.berry_graphics")))
+
+#include "data/graphics/berries.h"
+
+#undef BERRY_CHECK_PALETTE
+#undef BERRY_GRAPHICS
+
 
 #define JP_CONTEST_GFX __attribute__((section(".rodata.jp_contest_graphics")))
 

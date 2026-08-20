@@ -1209,9 +1209,7 @@ gUnknown_85C9742: @ 0x85C9742
 
 	.section .rodata.mid57_gap
 
-	.globl gUnknown_855A940
-gUnknown_855A940: @ 0x855A940
-	.incbin "baserom_jp.gba", 0x55a940, 0x90
+	.incbin "baserom_jp.gba", 0x55a958, 0x78
 
 
 	.section .rodata.mid89
