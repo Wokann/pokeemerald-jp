@@ -862,8 +862,9 @@ gUnknown_8D9C254: @ 0x8D9C254
 	.globl gUnknown_8D9C3E4
 gUnknown_8D9C3E4: @ 0x8D9C3E4
 	.incbin "graphics/misc/gUnknown_8D9C3E4.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD9C4F1, 0x7177
+	.incbin "baserom_jp.gba", 0xD9C4F1, 0x5C2F
 
+	.section .rodata.data_rest2c_after_rayquaza
 
 	.globl gUnknown_8DA3668
 gUnknown_8DA3668: @ 0x8DA3668

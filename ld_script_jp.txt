@@ -9663,6 +9663,7 @@ SECTIONS {
         src/rayquaza_scene.o(.rodata.rayquaza_scene_tasks);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_oam);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_duo_pre);
+        src/rayquaza_scene.o(.rodata.rayquaza_scene_duo);
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
@@ -9673,6 +9674,8 @@ SECTIONS {
         data/data_rest2b.o(.rodata);
         data/data_b2d_gfx_pokemon_main.o(.rodata);
         data/data_rest2c.o(.rodata);
+        src/graphics.o(.rodata.rayquaza_scene_1_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_after_rayquaza);
     } =0
     /* DWARF debug sections.
     Symbols in the DWARF debugging sections are relative to the beginning
