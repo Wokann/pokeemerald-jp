@@ -1,6 +1,49 @@
 #include "global.h"
+#include "bg.h"
+#include "graphics.h"
 #include "naming_screen.h"
 #include "sprite.h"
+#include "strings.h"
+#include "window.h"
+
+enum
+{
+    WIN_KB_PAGE_1,
+    WIN_KB_PAGE_2,
+    WIN_TEXT_ENTRY,
+    WIN_TEXT_ENTRY_BOX,
+    WIN_BANNER,
+    WIN_COUNT,
+};
+
+enum
+{
+    KBPAGE_SYMBOLS,
+    KBPAGE_LETTERS_UPPER,
+    KBPAGE_LETTERS_LOWER,
+    KBPAGE_COUNT,
+};
+
+enum
+{
+    KEYBOARD_LETTERS_LOWER,
+    KEYBOARD_LETTERS_UPPER,
+    KEYBOARD_SYMBOLS,
+};
+
+enum
+{
+    PAGE_SWAP_UPPER,
+    PAGE_SWAP_OTHERS,
+    PAGE_SWAP_LOWER,
+};
+
+enum
+{
+    PAGE_MAPPING_BOX_OR_MON,
+    PAGE_MAPPING_PLAYER_OR_WALDA,
+    PAGE_MAPPING_COUNT,
+};
 
 __attribute__((naked)) void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback)
 {
@@ -497,8 +540,8 @@ __attribute__((naked)) void NamingScreen_InitBGs(void)
         "	.align 2, 0\n\t"
         "_080E2640: .4byte 0x040000D4\n\t"
         "_080E2644: .4byte 0x81000800\n\t"
-        "_080E2648: .4byte gUnknown_85659FC\n\t"
-        "_080E264C: .4byte gUnknown_8565A0C\n\t"
+        "_080E2648: .4byte sBgTemplates\n\t"
+        "_080E264C: .4byte sWindowTemplates\n\t"
         "_080E2650: .4byte gUnknown_2039C34\n\t"
         "_080E2654: .4byte 0x00001E11\n\t"
         "_080E2658: .4byte 0x0000080C\n\t"
@@ -643,7 +686,7 @@ __attribute__((naked)) void GetCurrentPageColumnCount(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E2754: .4byte gUnknown_8565A3C\n\t"
+        "_080E2754: .4byte sPageToNextGfxId\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -669,7 +712,7 @@ __attribute__((naked)) void sub_080E2758(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E277C: .4byte gUnknown_8565A42\n\t"
+        "_080E277C: .4byte sPageToNextKeyboardId\n\t"
         "_080E2780: .4byte gUnknown_2039C34\n\t"
         "_080E2784: .4byte 0x00001E22\n\t"
         ".syntax divided\n\t"
@@ -697,7 +740,7 @@ __attribute__((naked)) void sub_080E2788(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E27AC: .4byte gUnknown_8565A48\n\t"
+        "_080E27AC: .4byte sPageToKeyboardId\n\t"
         "_080E27B0: .4byte gUnknown_2039C34\n\t"
         "_080E27B4: .4byte 0x00001E22\n\t"
         ".syntax divided\n\t"
@@ -749,11 +792,11 @@ __attribute__((naked)) void MainState_BeginFadeIn(void)
         "	bl sub_080E44A4\n\t"
         "	b _080E287A\n\t"
         "	.align 2, 0\n\t"
-        "_080E2818: .4byte gUnknown_8565524\n\t"
+        "_080E2818: .4byte gNamingScreenBackground_Tilemap\n\t"
         "_080E281C: .4byte gUnknown_2039C34\n\t"
         "_080E2820: .4byte 0x00001E22\n\t"
-        "_080E2824: .4byte gUnknown_85656C8\n\t"
-        "_080E2828: .4byte gUnknown_8565600\n\t"
+        "_080E2824: .4byte gNamingScreenKeyboardLower_Tilemap\n\t"
+        "_080E2828: .4byte gNamingScreenKeyboardUpper_Tilemap\n\t"
         "_080E282C: .4byte 0x00001E12\n\t"
         "_080E2830: .4byte 0x00001E11\n\t"
         "_080E2834:\n\t"
@@ -825,8 +868,8 @@ __attribute__((naked)) void MainState_BeginFadeIn(void)
         "	.align 2, 0\n\t"
         "_080E28D4: .4byte gUnknown_2039C34\n\t"
         "_080E28D8: .4byte 0x00001E22\n\t"
-        "_080E28DC: .4byte gUnknown_85656C8\n\t"
-        "_080E28E0: .4byte gUnknown_8565600\n\t"
+        "_080E28DC: .4byte gNamingScreenKeyboardLower_Tilemap\n\t"
+        "_080E28E0: .4byte gNamingScreenKeyboardUpper_Tilemap\n\t"
         "_080E28E4: .4byte 0x00001E11\n\t"
         "_080E28E8: .4byte 0x00001E12\n\t"
         "_080E28EC: .4byte 0x00001E10\n\t"
@@ -1168,7 +1211,7 @@ __attribute__((naked)) void DisplaySentToPCMessage(void)
         "_080E2B84: .4byte gStringVar3\n\t"
         "_080E2B88: .4byte 0x000008AB\n\t"
         "_080E2B8C: .4byte gStringVar4\n\t"
-        "_080E2B90: .4byte gUnknown_85656C8 + 0x190\n\t"
+        "_080E2B90: .4byte gUnknown_8565858\n\t"
         "_080E2B94: .4byte gTextFlags\n\t"
         ".syntax divided\n\t"
     );
@@ -2040,7 +2083,7 @@ __attribute__((naked)) void sub_080E3144(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E318C: .4byte gUnknown_8565A60\n\t"
+        "_080E318C: .4byte sInputArrowXOffsets\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2067,7 +2110,7 @@ __attribute__((naked)) void sub_080E3190(void)
         "	strh r0, [r4, #0x30]\n\t"
         "	b _080E31E2\n\t"
         "	.align 2, 0\n\t"
-        "_080E31B8: .4byte gUnknown_8565A68\n\t"
+        "_080E31B8: .4byte sUnderscoreYOffsets\n\t"
         "_080E31BC:\n\t"
         "	movs r1, #0x30\n\t"
         "	ldrsh r0, [r4, r1]\n\t"
@@ -4800,7 +4843,7 @@ __attribute__((naked)) void choose_name_or_words_screen_load_bg_tile_patterns(vo
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E443C: .4byte gUnknown_8565318\n\t"
+        "_080E443C: .4byte gNamingScreenMenu_Gfx\n\t"
         "_080E4440: .4byte gUnknown_2039C34\n\t"
         "_080E4444: .4byte 0x00001810\n\t"
         "_080E4448: .4byte sSpriteSheets\n\t"
@@ -4844,8 +4887,8 @@ __attribute__((naked)) void choose_name_or_words_screen_apply_bg_pals(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E4488: .4byte gUnknown_8565258\n\t"
-        "_080E448C: .4byte gUnknown_8565218\n\t"
+        "_080E4488: .4byte gNamingScreenMenu_Pal\n\t"
+        "_080E448C: .4byte gNamingScreenKeyboard_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5209,7 +5252,7 @@ __attribute__((naked)) void sub_080E46E4(void)
         "_080E473C: .4byte sTextColor_Title\n\t"
         "_080E4740: .4byte gUnknown_2039C34\n\t"
         "_080E4744: .4byte 0x00001E15\n\t"
-        "_080E4748: .4byte gUnknown_85658A0\n\t"
+        "_080E4748: .4byte gText_NamingScreenInstructions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5373,7 +5416,7 @@ __attribute__((naked)) void sub_080E4830(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E4864: .4byte gUnknown_85658C1\n\t"
+        "_080E4864: .4byte gNamingScreenValidCharacters\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5483,7 +5526,9 @@ __attribute__((naked)) void sub_080E48E0(void)
 }
 
 // Naming Screen dispatch tables retain the JP ROM's mid59 layout.
+#define NAMING_SCREEN_PRE_PAGE_SWAP_ANIM __attribute__((section(".rodata.naming_screen_mid59_pre_page_swap_anim")))
 #define NAMING_SCREEN_PAGE_SWAP_ANIM __attribute__((section(".rodata.naming_screen_mid59_page_swap_anim")))
+#define NAMING_SCREEN_CURSOR_ANIM_OFFSETS __attribute__((section(".rodata.naming_screen_mid59_cursor_anim_offsets")))
 #define NAMING_SCREEN_BUTTON_KEY_ROLES __attribute__((section(".rodata.naming_screen_mid59_button_key_roles")))
 #define NAMING_SCREEN_PAGE_SWAP_SPRITE __attribute__((section(".rodata.naming_screen_mid59_page_swap_sprite")))
 #define NAMING_SCREEN_PAGE_SWAP_PAL_TAGS __attribute__((section(".rodata.naming_screen_mid59_page_swap_pal_tags")))
@@ -5497,12 +5542,125 @@ __attribute__((naked)) void sub_080E48E0(void)
 #define NAMING_SCREEN_DRAW_TEXT __attribute__((section(".rodata.naming_screen_mid59_draw_text")))
 #define NAMING_SCREEN_DRAW_GENDER __attribute__((section(".rodata.naming_screen_mid59_draw_gender")))
 
+NAMING_SCREEN_PRE_PAGE_SWAP_ANIM static const struct BgTemplate sBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .priority = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 29,
+        .priority = 1,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 28,
+        .priority = 2,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 31,
+        .priority = 3,
+    },
+};
+
+NAMING_SCREEN_PRE_PAGE_SWAP_ANIM static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] =
+{
+    [WIN_KB_PAGE_1] = {
+        .bg = 1,
+        .tilemapLeft = 3,
+        .tilemapTop = 10,
+        .width = 19,
+        .height = 8,
+        .paletteNum = 10,
+        .baseBlock = 0x030,
+    },
+    [WIN_KB_PAGE_2] = {
+        .bg = 2,
+        .tilemapLeft = 3,
+        .tilemapTop = 10,
+        .width = 19,
+        .height = 8,
+        .paletteNum = 10,
+        .baseBlock = 0x0C8,
+    },
+    [WIN_TEXT_ENTRY] = {
+        .bg = 3,
+        .tilemapLeft = 8,
+        .tilemapTop = 6,
+        .width = 17,
+        .height = 2,
+        .paletteNum = 10,
+        .baseBlock = 0x030,
+    },
+    [WIN_TEXT_ENTRY_BOX] = {
+        .bg = 3,
+        .tilemapLeft = 8,
+        .tilemapTop = 4,
+        .width = 17,
+        .height = 2,
+        .paletteNum = 10,
+        .baseBlock = 0x052,
+    },
+    [WIN_BANNER] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = DISPLAY_TILE_WIDTH,
+        .height = 2,
+        .paletteNum = 11,
+        .baseBlock = 0x074,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+// Player and Walda phrase screens use the second JP page-mapping row.
+NAMING_SCREEN_PRE_PAGE_SWAP_ANIM static const u8 sPageToNextGfxId[PAGE_MAPPING_COUNT][KBPAGE_COUNT] =
+{
+    [PAGE_MAPPING_BOX_OR_MON] = { PAGE_SWAP_UPPER, PAGE_SWAP_OTHERS, PAGE_SWAP_LOWER },
+    [PAGE_MAPPING_PLAYER_OR_WALDA] = { PAGE_SWAP_UPPER, PAGE_SWAP_LOWER, PAGE_SWAP_OTHERS },
+};
+
+NAMING_SCREEN_PRE_PAGE_SWAP_ANIM static const u8 sPageToNextKeyboardId[PAGE_MAPPING_COUNT][KBPAGE_COUNT] =
+{
+    [PAGE_MAPPING_BOX_OR_MON] = { KEYBOARD_LETTERS_UPPER, KEYBOARD_SYMBOLS, KEYBOARD_LETTERS_LOWER },
+    [PAGE_MAPPING_PLAYER_OR_WALDA] = { KEYBOARD_LETTERS_UPPER, KEYBOARD_LETTERS_LOWER, KEYBOARD_SYMBOLS },
+};
+
+NAMING_SCREEN_PRE_PAGE_SWAP_ANIM static const u8 sPageToKeyboardId[PAGE_MAPPING_COUNT][KBPAGE_COUNT] =
+{
+    [PAGE_MAPPING_BOX_OR_MON] = { KEYBOARD_LETTERS_LOWER, KEYBOARD_LETTERS_UPPER, KEYBOARD_SYMBOLS },
+    [PAGE_MAPPING_PLAYER_OR_WALDA] = { KEYBOARD_SYMBOLS, KEYBOARD_LETTERS_UPPER, KEYBOARD_LETTERS_LOWER },
+};
+
 NAMING_SCREEN_PAGE_SWAP_ANIM static void (*const sPageSwapAnimStateFuncs[])(void) =
 {
     PageSwapAnimState_Init,
     PageSwapAnimState_1,
     PageSwapAnimState_2,
     PageSwapAnimState_Done,
+};
+
+NAMING_SCREEN_CURSOR_ANIM_OFFSETS static const s16 sInputArrowXOffsets[] =
+{
+    0,
+    -4,
+    -2,
+    -1,
+};
+
+NAMING_SCREEN_CURSOR_ANIM_OFFSETS static const s16 sUnderscoreYOffsets[] =
+{
+    2,
+    3,
+    2,
+    1,
 };
 
 NAMING_SCREEN_BUTTON_KEY_ROLES static const u8 sButtonKeyRoles[] =
@@ -5574,16 +5732,10 @@ NAMING_SCREEN_DRAW_GENDER static void (*const sDrawGenderIconFuncs[])(void) =
 };
 
 // The JP page labels use both 16x8 and 24x8 subsprite layouts.
-extern const u8 gUnknown_8564698[];
-extern const u16 gUnknown_8565258[];
-extern const u8 gUnknown_8565600[];
-extern const u8 gUnknown_85656C8[];
 extern const u8 gUnknown_8565858[];
 extern const u8 gUnknown_8565858_sub1[];
 extern const u8 gUnknown_8565858_sub2[];
 extern const u8 gUnknown_8565858_sub3[];
-extern const u8 gUnknown_85658C1[];
-
 struct NamingScreenTemplate
 {
     u8 copyExistingString;
@@ -5625,12 +5777,12 @@ NAMING_SCREEN_UI_LAYOUT static const u8 *const sKeyboardTextColors[] =
 
 NAMING_SCREEN_UI_LAYOUT static const u8 *const sKeyboardPageTilemaps[] =
 {
-    gUnknown_8565600,
-    gUnknown_85656C8 + 0xC8,
-    gUnknown_85656C8,
-    gUnknown_8565600,
-    gUnknown_85656C8,
-    gUnknown_85656C8 + 0xC8,
+    (const u8 *)gNamingScreenKeyboardUpper_Tilemap,
+    (const u8 *)gNamingScreenKeyboardSymbols_Tilemap,
+    (const u8 *)gNamingScreenKeyboardLower_Tilemap,
+    (const u8 *)gNamingScreenKeyboardUpper_Tilemap,
+    (const u8 *)gNamingScreenKeyboardLower_Tilemap,
+    (const u8 *)gNamingScreenKeyboardSymbols_Tilemap,
 };
 
 NAMING_SCREEN_UI_LAYOUT static const u8 sTextColor_Title[] =
@@ -5800,8 +5952,8 @@ NAMING_SCREEN_SPRITE_LAYOUT static const struct SubspriteTable sSubspriteTable_P
 
 NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteFrameImage sImageTable_PCIcon[] =
 {
-    { gUnknown_8564698 + 0xA00, 0xC0 },
-    { gUnknown_8564698 + 0xAC0, 0xC0 },
+    { gNamingScreenPCIconOff_Gfx, sizeof(gNamingScreenPCIconOff_Gfx) },
+    { gNamingScreenPCIconOn_Gfx, sizeof(gNamingScreenPCIconOn_Gfx) },
 };
 
 NAMING_SCREEN_SPRITE_LAYOUT static const union AnimCmd sAnim_Loop[] =
@@ -5942,52 +6094,52 @@ NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_P
 NAMING_SCREEN_SPRITE_RESOURCES static const u8 *const sNamingScreenKeyboardText[][4] =
 {
     {
-        gUnknown_85658C1 + 0x36,
-        gUnknown_85658C1 + 0x4A,
-        gUnknown_85658C1 + 0x5E,
-        gUnknown_85658C1 + 0x72,
+        gText_NamingScreenKeyboard_Katakana1,
+        gText_NamingScreenKeyboard_Katakana2,
+        gText_NamingScreenKeyboard_Katakana3,
+        gText_NamingScreenKeyboard_Katakana4,
     },
     {
-        gUnknown_85658C1 + 0x86,
-        gUnknown_85658C1 + 0x9A,
-        gUnknown_85658C1 + 0xAE,
-        gUnknown_85658C1 + 0xC2,
+        gText_NamingScreenKeyboard_Hiragana1,
+        gText_NamingScreenKeyboard_Hiragana2,
+        gText_NamingScreenKeyboard_Hiragana3,
+        gText_NamingScreenKeyboard_Hiragana4,
     },
     {
-        gUnknown_85658C1 + 0xD6,
-        gUnknown_85658C1 + 0xEA,
-        gUnknown_85658C1 + 0xFE,
-        gUnknown_85658C1 + 0x112,
+        gText_NamingScreenKeyboard_LatinUpper1,
+        gText_NamingScreenKeyboard_LatinUpper2,
+        gText_NamingScreenKeyboard_LatinLower1,
+        gText_NamingScreenKeyboard_LatinLower2,
     },
 };
 
 NAMING_SCREEN_SPRITE_RESOURCES static const struct SpriteSheet sSpriteSheets[] =
 {
-    { gUnknown_8564698 + 0x000, 0x1E0, 0 },
-    { gUnknown_8564698 + 0x200, 0x1E0, 1 },
-    { gUnknown_8564698 + 0x400, 0x280, 2 },
-    { gUnknown_8564698 + 0x680, 0x100, 3 },
-    { gUnknown_8564698 + 0x780, 0x040, 4 },
-    { gUnknown_8564698 + 0x7C0, 0x040, 5 },
-    { gUnknown_8564698 + 0x800, 0x060, 6 },
-    { gUnknown_8564698 + 0x860, 0x080, 7 },
-    { gUnknown_8564698 + 0x8E0, 0x080, 8 },
-    { gUnknown_8564698 + 0x960, 0x080, 9 },
-    { gUnknown_8564698 + 0x1E0, 0x020, 10 },
-    { gUnknown_8564698 + 0x3E0, 0x020, 11 },
+    { gNamingScreenBackButton_Gfx, 0x1E0, 0 },
+    { gNamingScreenOKButton_Gfx, 0x1E0, 1 },
+    { gNamingScreenPageSwapFrame_Gfx, 0x280, 2 },
+    { gNamingScreenPageSwapButton_Gfx, 0x100, 3 },
+    { gNamingScreenPageSwapUpper_Gfx, 0x040, 4 },
+    { gNamingScreenPageSwapLower_Gfx, 0x040, 5 },
+    { gNamingScreenPageSwapOthers_Gfx, 0x060, 6 },
+    { gNamingScreenCursor_Gfx, 0x080, 7 },
+    { gNamingScreenCursorSquished_Gfx, 0x080, 8 },
+    { gNamingScreenCursorFilled_Gfx, 0x080, 9 },
+    { gNamingScreenInputArrow_Gfx, 0x020, 10 },
+    { gNamingScreenUnderscore_Gfx, 0x020, 11 },
     { NULL, 0, 0 },
 };
 
 NAMING_SCREEN_SPRITE_RESOURCES static const struct SpritePalette sSpritePalettes[] =
 {
-    { gUnknown_8565258 + 0x00, 0 },
-    { gUnknown_8565258 + 0x10, 1 },
-    { gUnknown_8565258 + 0x20, 2 },
-    { gUnknown_8565258 + 0x30, 3 },
-    { gUnknown_8565258 + 0x40, 4 },
-    { gUnknown_8565258 + 0x50, 5 },
-    { gUnknown_8565258 + 0x40, 6 },
-    { gUnknown_8565258 + 0x40, 7 },
+    { gNamingScreenMenu_Pal[0], 0 },
+    { gNamingScreenMenu_Pal[1], 1 },
+    { gNamingScreenMenu_Pal[2], 2 },
+    { gNamingScreenMenu_Pal[3], 3 },
+    { gNamingScreenMenu_Pal[4], 4 },
+    { gNamingScreenMenu_Pal[5], 5 },
+    { gNamingScreenMenu_Pal[4], 6 },
+    { gNamingScreenMenu_Pal[4], 7 },
     { NULL, 0 },
 };
 

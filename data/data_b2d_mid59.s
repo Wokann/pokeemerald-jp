@@ -9,43 +9,9 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-.globl gUnknown_85658A0
-gUnknown_85658A0: @ 0x85658A0
-	.incbin "baserom_jp.gba", 0x5658a0, 0x21
-
-	.globl gUnknown_85658C1
-gUnknown_85658C1: @ 0x85658C1
-	.incbin "baserom_jp.gba", 0x5658c1, 0x13b
-
-	.globl gUnknown_85659FC
-gUnknown_85659FC: @ 0x85659FC
-	.incbin "baserom_jp.gba", 0x5659fc, 0x10
-
-	.globl gUnknown_8565A0C
-gUnknown_8565A0C: @ 0x8565A0C
-	.incbin "baserom_jp.gba", 0x565a0c, 0x30
-
-	.globl gUnknown_8565A3C
-gUnknown_8565A3C: @ 0x8565A3C
-	.incbin "baserom_jp.gba", 0x565a3c, 0x6
-
-	.globl gUnknown_8565A42
-gUnknown_8565A42: @ 0x8565A42
-	.incbin "baserom_jp.gba", 0x565a42, 0x6
-
-	.globl gUnknown_8565A48
-gUnknown_8565A48: @ 0x8565A48
-	.incbin "baserom_jp.gba", 0x565a48, 0x8
-
-	.section .rodata.mid59_between_page_swap_anim_and_sprite
-
-	.globl gUnknown_8565A60
-gUnknown_8565A60: @ 0x8565A60
-	.incbin "baserom_jp.gba", 0x565a60, 0x8
-
-	.globl gUnknown_8565A68
-gUnknown_8565A68: @ 0x8565A68
-	.incbin "baserom_jp.gba", 0x565a68, 0x8
+	.globl gUnknown_85659E7
+gUnknown_85659E7: @ 0x85659E7
+	.incbin "baserom_jp.gba", 0x5659e7, 0x15
 
 	.section .rodata.mid59_between_page_swap_anim_and_button_key_roles
 

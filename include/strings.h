@@ -2686,6 +2686,20 @@ extern const u8 gEasyChatGroupName_TrendySaying[];
 extern const u8 gEasyChatGroupName_Pokemon2[];
 
 // Text Input Strings
+extern const u8 gText_NamingScreenInstructions[];
+extern const u8 gNamingScreenValidCharacters[];
+extern const u8 gText_NamingScreenKeyboard_Katakana1[];
+extern const u8 gText_NamingScreenKeyboard_Katakana2[];
+extern const u8 gText_NamingScreenKeyboard_Katakana3[];
+extern const u8 gText_NamingScreenKeyboard_Katakana4[];
+extern const u8 gText_NamingScreenKeyboard_Hiragana1[];
+extern const u8 gText_NamingScreenKeyboard_Hiragana2[];
+extern const u8 gText_NamingScreenKeyboard_Hiragana3[];
+extern const u8 gText_NamingScreenKeyboard_Hiragana4[];
+extern const u8 gText_NamingScreenKeyboard_LatinUpper1[];
+extern const u8 gText_NamingScreenKeyboard_LatinUpper2[];
+extern const u8 gText_NamingScreenKeyboard_LatinLower1[];
+extern const u8 gText_NamingScreenKeyboard_LatinLower2[];
 extern const u8 gText_EasyChatKeyboard_ABCDEFothers[];
 extern const u8 gText_EasyChatKeyboard_GHIJKL[];
 extern const u8 gText_EasyChatKeyboard_MNOPQRS[];

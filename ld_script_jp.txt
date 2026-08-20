@@ -9444,11 +9444,16 @@ SECTIONS {
         src/script_menu.o(.rodata.script_menu_mid58_multichoice);
         src/script_menu.o(.rodata.script_menu_mid58_std_strings);
         src/script_menu.o(.rodata.script_menu_mid58_link_services);
-        data/data_b2d_mid58.o(.rodata.mid58_post_link_services);
+        src/graphics.o(.rodata.graphics_naming_screen_jp_sprite_resources);
+        data/data_b2d_mid58.o(.rodata.mid58_naming_screen_sprite_padding);
+        src/graphics.o(.rodata.graphics_naming_screen_jp_pc_icons);
+        src/graphics.o(.rodata.graphics_naming_screen_jp_palettes);
+        src/graphics.o(.rodata.graphics_naming_screen_jp_resources);
         src/data/text/region_texts59.o(.rodata);
         data/data_b2d_mid59.o(.rodata.mid59_pre_page_swap_anim);
+        src/naming_screen.o(.rodata.naming_screen_mid59_pre_page_swap_anim);
         src/naming_screen.o(.rodata.naming_screen_mid59_page_swap_anim);
-        data/data_b2d_mid59.o(.rodata.mid59_between_page_swap_anim_and_sprite);
+        src/naming_screen.o(.rodata.naming_screen_mid59_cursor_anim_offsets);
         data/data_b2d_mid59.o(.rodata.mid59_between_page_swap_anim_and_button_key_roles);
         src/naming_screen.o(.rodata.naming_screen_mid59_button_key_roles);
         src/naming_screen.o(.rodata.naming_screen_mid59_page_swap_sprite);
