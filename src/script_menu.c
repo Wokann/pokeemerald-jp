@@ -1,4 +1,5 @@
 #include "global.h"
+#include "menu.h"
 #include "script_menu.h"
 #include "strings.h"
 
@@ -288,7 +289,7 @@ __attribute__((naked)) void DrawMultichoiceMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E14C8: .4byte gUnknown_8564218\n\t"
+        "_080E14C8: .4byte sMultichoiceLists\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -706,7 +707,7 @@ __attribute__((naked)) void sp106_CreateStartMenu(void)
         "	.align 2, 0\n\t"
         "_080E17C8: .4byte Task_HandleMultichoiceGridInput + 1\n\t"
         "_080E17CC: .4byte gSpecialVar_Result\n\t"
-        "_080E17D0: .4byte gUnknown_8564218\n\t"
+        "_080E17D0: .4byte sMultichoiceLists\n\t"
         "_080E17D4: .4byte gTasks\n\t"
         "_080E17D8:\n\t"
         "	movs r0, #0\n\t"

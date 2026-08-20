@@ -1,21 +1,4 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.mid58_pre_std_strings
-	.include "asm/macros.inc"
-	.include "constants/map_constants.inc"
-	.include "constants/trainers.inc"
-	.include "constants/battle_string_ids.inc"
-	.include "constants/species.inc"
-	.include "constants/moves.inc"
-	.include "constants/songs.inc"
-	.include "constants/ribbon_constants.inc"
-	.globl gUnknown_85636B8
-gUnknown_85636B8: @ 0x85636B8
-	.incbin "baserom_jp.gba", 0x5636b8, 0xb60
-
-	.globl gUnknown_8564218
-gUnknown_8564218: @ 0x8564218
-	.incbin "baserom_jp.gba", 0x564218, 0x388
-
 	.section .rodata.mid58_post_link_services
 
 	.globl gUnknown_8564698

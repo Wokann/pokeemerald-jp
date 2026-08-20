@@ -846,6 +846,98 @@ gUnknown_824C1F5: @ 0x824C1F5
 gUnknown_824C200: @ 0x824C200
 	.include "data/scripts/gUnknown_824C200.inc"
 
+	@ Script Menu semantic aliases for the embedded Trick House choice text.
+	.globl gTrickHouse_Mechadoll_Oddish
+	.set gTrickHouse_Mechadoll_Oddish, gUnknown_824C200 + 0x195
+	.globl gTrickHouse_Mechadoll_Poochyena
+	.set gTrickHouse_Mechadoll_Poochyena, gUnknown_824C200 + 0x19B
+	.globl gTrickHouse_Mechadoll_Taillow
+	.set gTrickHouse_Mechadoll_Taillow, gUnknown_824C200 + 0x1A0
+	.globl gTrickHouse_Mechadoll_Azurill
+	.set gTrickHouse_Mechadoll_Azurill, gUnknown_824C200 + 0x1A4
+	.globl gTrickHouse_Mechadoll_Lotad
+	.set gTrickHouse_Mechadoll_Lotad, gUnknown_824C200 + 0x1A8
+	.globl gTrickHouse_Mechadoll_Wingull
+	.set gTrickHouse_Mechadoll_Wingull, gUnknown_824C200 + 0x1AD
+	.globl gTrickHouse_Mechadoll_Dustox
+	.set gTrickHouse_Mechadoll_Dustox, gUnknown_824C200 + 0x1B2
+	.globl gTrickHouse_Mechadoll_Zubat
+	.set gTrickHouse_Mechadoll_Zubat, gUnknown_824C200 + 0x1B8
+	.globl gTrickHouse_Mechadoll_Nincada
+	.set gTrickHouse_Mechadoll_Nincada, gUnknown_824C200 + 0x1BD
+	.globl gTrickHouse_Mechadoll_Ralts
+	.set gTrickHouse_Mechadoll_Ralts, gUnknown_824C200 + 0x1C2
+	.globl gTrickHouse_Mechadoll_Zigzagoon
+	.set gTrickHouse_Mechadoll_Zigzagoon, gUnknown_824C200 + 0x1C7
+	.globl gTrickHouse_Mechadoll_Slakoth
+	.set gTrickHouse_Mechadoll_Slakoth, gUnknown_824C200 + 0x1CD
+	.globl gTrickHouse_Mechadoll_Poochyena2
+	.set gTrickHouse_Mechadoll_Poochyena2, gUnknown_824C200 + 0x1D2
+	.globl gTrickHouse_Mechadoll_Shroomish
+	.set gTrickHouse_Mechadoll_Shroomish, gUnknown_824C200 + 0x1D7
+	.globl gTrickHouse_Mechadoll_Zigzagoon2
+	.set gTrickHouse_Mechadoll_Zigzagoon2, gUnknown_824C200 + 0x1DC
+	.globl gTrickHouse_Mechadoll_Poochyena3
+	.set gTrickHouse_Mechadoll_Poochyena3, gUnknown_824C200 + 0x1E2
+	.globl gTrickHouse_Mechadoll_Zubat2
+	.set gTrickHouse_Mechadoll_Zubat2, gUnknown_824C200 + 0x1E7
+	.globl gTrickHouse_Mechadoll_Carvanha
+	.set gTrickHouse_Mechadoll_Carvanha, gUnknown_824C200 + 0x1EC
+	.globl gTrickHouse_Mechadoll_BurnHeal
+	.set gTrickHouse_Mechadoll_BurnHeal, gUnknown_824C200 + 0x1F1
+	.globl gTrickHouse_Mechadoll_HarborMail
+	.set gTrickHouse_Mechadoll_HarborMail, gUnknown_824C200 + 0x1F8
+	.globl gTrickHouse_Mechadoll_SamePrice
+	.set gTrickHouse_Mechadoll_SamePrice, gUnknown_824C200 + 0x200
+	.globl gTrickHouse_Mechadoll_60Yen
+	.set gTrickHouse_Mechadoll_60Yen, gUnknown_824C200 + 0x207
+	.globl gTrickHouse_Mechadoll_55Yen
+	.set gTrickHouse_Mechadoll_55Yen, gUnknown_824C200 + 0x20C
+	.globl gTrickHouse_Mechadoll_Nothing
+	.set gTrickHouse_Mechadoll_Nothing, gUnknown_824C200 + 0x211
+	.globl gTrickHouse_Mechadoll_CostMore
+	.set gTrickHouse_Mechadoll_CostMore, gUnknown_824C200 + 0x217
+	.globl gTrickHouse_Mechadoll_CostLess
+	.set gTrickHouse_Mechadoll_CostLess, gUnknown_824C200 + 0x21D
+	.globl gTrickHouse_Mechadoll_SamePrice2
+	.set gTrickHouse_Mechadoll_SamePrice2, gUnknown_824C200 + 0x223
+	.globl gTrickHouse_Mechadoll_Male
+	.set gTrickHouse_Mechadoll_Male, gUnknown_824C200 + 0x22A
+	.globl gTrickHouse_Mechadoll_Female
+	.set gTrickHouse_Mechadoll_Female, gUnknown_824C200 + 0x22F
+	.globl gTrickHouse_Mechadoll_Neither
+	.set gTrickHouse_Mechadoll_Neither, gUnknown_824C200 + 0x234
+	.globl gTrickHouse_Mechadoll_ElderlyMen
+	.set gTrickHouse_Mechadoll_ElderlyMen, gUnknown_824C200 + 0x23C
+	.globl gTrickHouse_Mechadoll_ElderlyLadies
+	.set gTrickHouse_Mechadoll_ElderlyLadies, gUnknown_824C200 + 0x242
+	.globl gTrickHouse_Mechadoll_SameNumber
+	.set gTrickHouse_Mechadoll_SameNumber, gUnknown_824C200 + 0x248
+	.globl gTrickHouse_Mechadoll_None
+	.set gTrickHouse_Mechadoll_None, gUnknown_824C200 + 0x24E
+	.globl gTrickHouse_Mechadoll_One
+	.set gTrickHouse_Mechadoll_One, gUnknown_824C200 + 0x252
+	.globl gTrickHouse_Mechadoll_Two
+	.set gTrickHouse_Mechadoll_Two, gUnknown_824C200 + 0x256
+	.globl gTrickHouse_Mechadoll_Two2
+	.set gTrickHouse_Mechadoll_Two2, gUnknown_824C200 + 0x25A
+	.globl gTrickHouse_Mechadoll_Three
+	.set gTrickHouse_Mechadoll_Three, gUnknown_824C200 + 0x25E
+	.globl gTrickHouse_Mechadoll_Four
+	.set gTrickHouse_Mechadoll_Four, gUnknown_824C200 + 0x262
+	.globl gTrickHouse_Mechadoll_Six
+	.set gTrickHouse_Mechadoll_Six, gUnknown_824C200 + 0x266
+	.globl gTrickHouse_Mechadoll_Seven
+	.set gTrickHouse_Mechadoll_Seven, gUnknown_824C200 + 0x269
+	.globl gTrickHouse_Mechadoll_Eight
+	.set gTrickHouse_Mechadoll_Eight, gUnknown_824C200 + 0x26C
+	.globl gTrickHouse_Mechadoll_Six2
+	.set gTrickHouse_Mechadoll_Six2, gUnknown_824C200 + 0x26F
+	.globl gTrickHouse_Mechadoll_Seven2
+	.set gTrickHouse_Mechadoll_Seven2, gUnknown_824C200 + 0x273
+	.globl gTrickHouse_Mechadoll_Eight2
+	.set gTrickHouse_Mechadoll_Eight2, gUnknown_824C200 + 0x277
+
 	.globl EventScript_TV
 EventScript_TV: @ 0x824C47B
 	.include "data/scripts/gUnknown_824C47B.inc"

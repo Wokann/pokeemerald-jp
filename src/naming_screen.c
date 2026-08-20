@@ -1,5 +1,6 @@
 #include "global.h"
 #include "naming_screen.h"
+#include "sprite.h"
 
 __attribute__((naked)) void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpecies, u16 monGender, u32 monPersonality, MainCallback returnCallback)
 {
@@ -258,7 +259,7 @@ __attribute__((naked)) void NamingScreen_Init(void)
         "_080E2444: .4byte 0x00001E1E\n\t"
         "_080E2448: .4byte 0x00001E21\n\t"
         "_080E244C: .4byte 0x00001E28\n\t"
-        "_080E2450: .4byte gUnknown_8565CE8\n\t"
+        "_080E2450: .4byte sNamingScreenTemplates\n\t"
         "_080E2454: .4byte 0x00001E2C\n\t"
         "_080E2458: .4byte 0x00001E22\n\t"
         "_080E245C: .4byte 0x00001E16\n\t"
@@ -2182,7 +2183,7 @@ __attribute__((naked)) void CursorInit(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E328C: .4byte gUnknown_8565E50\n\t"
+        "_080E328C: .4byte sSpriteTemplate_Cursor\n\t"
         "_080E3290: .4byte gUnknown_2039C34\n\t"
         "_080E3294: .4byte 0x00001E23\n\t"
         "_080E3298: .4byte gSprites\n\t"
@@ -2439,7 +2440,7 @@ __attribute__((naked)) void GetKeyRoleAtCursorPos(void)
         "	ldrb r0, [r1]\n\t"
         "	b _080E3442\n\t"
         "	.align 2, 0\n\t"
-        "_080E343C: .4byte gUnknown_8565A70\n\t"
+        "_080E343C: .4byte sButtonKeyRoles\n\t"
         "_080E3440:\n\t"
         "	movs r0, #0\n\t"
         "_080E3442:\n\t"
@@ -2533,14 +2534,14 @@ __attribute__((naked)) void CreatePageSwitcherSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E34F0: .4byte gUnknown_8565DD8\n\t"
+        "_080E34F0: .4byte sSpriteTemplate_PageSwapFrame\n\t"
         "_080E34F4: .4byte gUnknown_2039C34\n\t"
         "_080E34F8: .4byte 0x00001E24\n\t"
         "_080E34FC: .4byte gSprites\n\t"
-        "_080E3500: .4byte gUnknown_8565D68\n\t"
-        "_080E3504: .4byte gUnknown_8565E08\n\t"
-        "_080E3508: .4byte gUnknown_8565D70\n\t"
-        "_080E350C: .4byte gUnknown_8565DF0\n\t"
+        "_080E3500: .4byte sSubspriteTable_PageSwapFrame\n\t"
+        "_080E3504: .4byte sSpriteTemplate_PageSwapText\n\t"
+        "_080E3508: .4byte sSubspriteTable_PageSwapText\n\t"
+        "_080E350C: .4byte sSpriteTemplate_PageSwapButton\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2597,7 +2598,7 @@ __attribute__((naked)) void sub_080E3544(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3568: .4byte gUnknown_8565A74\n\t"
+        "_080E3568: .4byte sPageSwapSpriteFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2808,8 +2809,8 @@ __attribute__((naked)) void sub_080E3678(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E36D0: .4byte gUnknown_8565A84\n\t"
-        "_080E36D4: .4byte gUnknown_8565A8A\n\t"
+        "_080E36D0: .4byte sPageSwapPalTags\n\t"
+        "_080E36D4: .4byte sPageSwapGfxTags\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2867,10 +2868,10 @@ __attribute__((naked)) void CreateBackOkSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3740: .4byte gUnknown_8565E20\n\t"
+        "_080E3740: .4byte sSpriteTemplate_BackButton\n\t"
         "_080E3744: .4byte gSprites\n\t"
-        "_080E3748: .4byte gUnknown_8565D88\n\t"
-        "_080E374C: .4byte gUnknown_8565E38\n\t"
+        "_080E3748: .4byte sSubspriteTable_Button\n\t"
+        "_080E374C: .4byte sSpriteTemplate_OkButton\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2973,10 +2974,10 @@ __attribute__((naked)) void CreateUnderscoreSprites(void)
         "	.align 2, 0\n\t"
         "_080E3808: .4byte gUnknown_2039C34\n\t"
         "_080E380C: .4byte 0x00001E16\n\t"
-        "_080E3810: .4byte gUnknown_8565E68\n\t"
+        "_080E3810: .4byte sSpriteTemplate_InputArrow\n\t"
         "_080E3814: .4byte gSprites\n\t"
         "_080E3818: .4byte 0x00001E28\n\t"
-        "_080E381C: .4byte gUnknown_8565E80\n\t"
+        "_080E381C: .4byte sSpriteTemplate_Underscore\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3008,7 +3009,7 @@ __attribute__((naked)) void TaskDummy3(void)
         ".code 16\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3840: .4byte gUnknown_8565A90\n\t"
+        "_080E3840: .4byte sIconFunctions\n\t"
         "_080E3844: .4byte gUnknown_2039C34\n\t"
         "_080E3848: .4byte 0x00001E28\n\t"
         ".syntax divided\n\t"
@@ -3091,9 +3092,9 @@ __attribute__((naked)) void NamingScreen_CreatePCIcon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E38E0: .4byte gUnknown_8565E98\n\t"
+        "_080E38E0: .4byte sSpriteTemplate_PCIcon\n\t"
         "_080E38E4: .4byte gSprites\n\t"
-        "_080E38E8: .4byte gUnknown_8565D90\n\t"
+        "_080E38E8: .4byte sSubspriteTable_PCIcon\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3477,7 +3478,7 @@ __attribute__((naked)) void sub_080E3B34(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3B5C: .4byte gUnknown_8565AB4\n\t"
+        "_080E3B5C: .4byte sInputFuncs\n\t"
         "_080E3B60: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3903,7 +3904,7 @@ __attribute__((naked)) void nullsub_10(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3E40: .4byte gUnknown_8565AE4\n\t"
+        "_080E3E40: .4byte sDrawTextEntryBoxFuncs\n\t"
         "_080E3E44: .4byte gUnknown_2039C34\n\t"
         "_080E3E48: .4byte 0x00001E2C\n\t"
         ".syntax divided\n\t"
@@ -3937,7 +3938,7 @@ __attribute__((naked)) void InputState_Disabled(void)
         ".code 16\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3E6C: .4byte gUnknown_8565AF8\n\t"
+        "_080E3E6C: .4byte sDrawGenderIconFuncs\n\t"
         "_080E3E70: .4byte gUnknown_2039C34\n\t"
         "_080E3E74: .4byte 0x00001E28\n\t"
         ".syntax divided\n\t"
@@ -4030,7 +4031,7 @@ __attribute__((naked)) void GetCharAtKeyboardPos(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E3F1C: .4byte gUnknown_8565EB0\n\t"
+        "_080E3F1C: .4byte sNamingScreenKeyboardText\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4802,8 +4803,8 @@ __attribute__((naked)) void choose_name_or_words_screen_load_bg_tile_patterns(vo
         "_080E443C: .4byte gUnknown_8565318\n\t"
         "_080E4440: .4byte gUnknown_2039C34\n\t"
         "_080E4444: .4byte 0x00001810\n\t"
-        "_080E4448: .4byte gUnknown_8565EE0\n\t"
-        "_080E444C: .4byte gUnknown_8565F48\n\t"
+        "_080E4448: .4byte sSpriteSheets\n\t"
+        "_080E444C: .4byte sSpritePalettes\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5080,9 +5081,9 @@ __attribute__((naked)) void sub_080E45D0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E463C: .4byte gUnknown_8565C8C\n\t"
-        "_080E4640: .4byte gUnknown_8565C90\n\t"
-        "_080E4644: .4byte gUnknown_8565EB0\n\t"
+        "_080E463C: .4byte sFillValues\n\t"
+        "_080E4640: .4byte sKeyboardTextColors\n\t"
+        "_080E4644: .4byte sNamingScreenKeyboardText\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5155,7 +5156,7 @@ __attribute__((naked)) void sub_080E4648(void)
         "	.align 2, 0\n\t"
         "_080E46D4: .4byte gUnknown_2039C34\n\t"
         "_080E46D8: .4byte 0x00001E12\n\t"
-        "_080E46DC: .4byte gUnknown_8565C9C\n\t"
+        "_080E46DC: .4byte sKeyboardPageTilemaps\n\t"
         "_080E46E0: .4byte 0x00001E22\n\t"
         ".syntax divided\n\t"
     );
@@ -5205,7 +5206,7 @@ __attribute__((naked)) void sub_080E46E4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E473C: .4byte gUnknown_8565CB4\n\t"
+        "_080E473C: .4byte sTextColor_Title\n\t"
         "_080E4740: .4byte gUnknown_2039C34\n\t"
         "_080E4744: .4byte 0x00001E15\n\t"
         "_080E4748: .4byte gUnknown_85658A0\n\t"
@@ -5480,3 +5481,526 @@ __attribute__((naked)) void sub_080E48E0(void)
         ".syntax divided\n\t"
     );
 }
+
+// Naming Screen dispatch tables retain the JP ROM's mid59 layout.
+#define NAMING_SCREEN_PAGE_SWAP_ANIM __attribute__((section(".rodata.naming_screen_mid59_page_swap_anim")))
+#define NAMING_SCREEN_BUTTON_KEY_ROLES __attribute__((section(".rodata.naming_screen_mid59_button_key_roles")))
+#define NAMING_SCREEN_PAGE_SWAP_SPRITE __attribute__((section(".rodata.naming_screen_mid59_page_swap_sprite")))
+#define NAMING_SCREEN_PAGE_SWAP_PAL_TAGS __attribute__((section(".rodata.naming_screen_mid59_page_swap_pal_tags")))
+#define NAMING_SCREEN_PAGE_SWAP_GFX_TAGS __attribute__((section(".rodata.naming_screen_mid59_page_swap_gfx_tags")))
+#define NAMING_SCREEN_UI_LAYOUT __attribute__((section(".rodata.naming_screen_mid59_ui_layout")))
+#define NAMING_SCREEN_SPRITE_LAYOUT __attribute__((section(".rodata.naming_screen_mid59_sprite_layout")))
+#define NAMING_SCREEN_SPRITE_RESOURCES __attribute__((section(".rodata.naming_screen_mid59_sprite_resources")))
+#define NAMING_SCREEN_ICON_FUNCS __attribute__((section(".rodata.naming_screen_mid59_icon_funcs")))
+#define NAMING_SCREEN_KEY_HANDLERS __attribute__((section(".rodata.naming_screen_mid59_key_handlers")))
+#define NAMING_SCREEN_INPUT_FUNCS __attribute__((section(".rodata.naming_screen_mid59_input_funcs")))
+#define NAMING_SCREEN_DRAW_TEXT __attribute__((section(".rodata.naming_screen_mid59_draw_text")))
+#define NAMING_SCREEN_DRAW_GENDER __attribute__((section(".rodata.naming_screen_mid59_draw_gender")))
+
+NAMING_SCREEN_PAGE_SWAP_ANIM static void (*const sPageSwapAnimStateFuncs[])(void) =
+{
+    PageSwapAnimState_Init,
+    PageSwapAnimState_1,
+    PageSwapAnimState_2,
+    PageSwapAnimState_Done,
+};
+
+NAMING_SCREEN_BUTTON_KEY_ROLES static const u8 sButtonKeyRoles[] =
+{
+    1,
+    2,
+    3,
+};
+
+NAMING_SCREEN_PAGE_SWAP_SPRITE static void (*const sPageSwapSpriteFuncs[])(void) =
+{
+    sub_080E356C,
+    sub_080E35C0,
+    sub_080E35C4,
+    sub_080E3638,
+};
+
+NAMING_SCREEN_PAGE_SWAP_PAL_TAGS static const u16 sPageSwapPalTags[] =
+{
+    1,
+    3,
+    2,
+};
+
+NAMING_SCREEN_PAGE_SWAP_GFX_TAGS static const u16 sPageSwapGfxTags[] =
+{
+    4,
+    6,
+    5,
+};
+
+NAMING_SCREEN_ICON_FUNCS static void (*const sIconFunctions[])(void) =
+{
+    TaskDummy2,
+    NamingScreen_CreatePlayerIcon,
+    NamingScreen_CreatePCIcon,
+    NamingScreen_CreateMonIcon,
+    NamingScreen_CreateWandaDadIcon,
+};
+
+NAMING_SCREEN_KEY_HANDLERS static void (*const sKeyboardKeyHandlers[])(void) =
+{
+    KeyboardKeyHandler_Character,
+    KeyboardKeyHandler_Page,
+    KeyboardKeyHandler_Backspace,
+    KeyboardKeyHandler_OK,
+};
+
+NAMING_SCREEN_INPUT_FUNCS static void (*const sInputFuncs[])(void) =
+{
+    InputState_2,
+    InputState_Enabled,
+    sub_080E3BD0,
+};
+
+NAMING_SCREEN_DRAW_TEXT static void (*const sDrawTextEntryBoxFuncs[])(void) =
+{
+    sub_080E3D50,
+    sub_080E3D50,
+    sub_080E3DA4,
+    sub_080E3DA4,
+    sub_080E3D50,
+};
+
+NAMING_SCREEN_DRAW_GENDER static void (*const sDrawGenderIconFuncs[])(void) =
+{
+    sub_080E3E78,
+    sub_080E3E7C,
+};
+
+// The JP page labels use both 16x8 and 24x8 subsprite layouts.
+extern const u8 gUnknown_8564698[];
+extern const u16 gUnknown_8565258[];
+extern const u8 gUnknown_8565600[];
+extern const u8 gUnknown_85656C8[];
+extern const u8 gUnknown_8565858[];
+extern const u8 gUnknown_8565858_sub1[];
+extern const u8 gUnknown_8565858_sub2[];
+extern const u8 gUnknown_8565858_sub3[];
+extern const u8 gUnknown_85658C1[];
+
+struct NamingScreenTemplate
+{
+    u8 copyExistingString;
+    u8 maxChars;
+    u8 iconFunction;
+    u8 addGenderIcon;
+    u8 initialPage;
+    u8 unused;
+    const u8 *title;
+};
+
+struct TextColor
+{
+    u8 colors[3][4];
+};
+
+NAMING_SCREEN_UI_LAYOUT static const struct TextColor sTextColorStruct =
+{
+    {
+        { 0x0D, 1, 2, 0 },
+        { 0x0E, 1, 2, 0 },
+        { 0x0F, 1, 2, 0 },
+    },
+};
+
+NAMING_SCREEN_UI_LAYOUT static const u8 sFillValues[] =
+{
+    0xEE,
+    0xDD,
+    0xFF,
+};
+
+NAMING_SCREEN_UI_LAYOUT static const u8 *const sKeyboardTextColors[] =
+{
+    sTextColorStruct.colors[1],
+    sTextColorStruct.colors[0],
+    sTextColorStruct.colors[2],
+};
+
+NAMING_SCREEN_UI_LAYOUT static const u8 *const sKeyboardPageTilemaps[] =
+{
+    gUnknown_8565600,
+    gUnknown_85656C8 + 0xC8,
+    gUnknown_85656C8,
+    gUnknown_8565600,
+    gUnknown_85656C8,
+    gUnknown_85656C8 + 0xC8,
+};
+
+NAMING_SCREEN_UI_LAYOUT static const u8 sTextColor_Title[] =
+{
+    0x0F,
+    1,
+    2,
+};
+
+NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sPlayerNamingScreenTemplate =
+{
+    .copyExistingString = FALSE,
+    .maxChars = 5,
+    .iconFunction = 1,
+    .addGenderIcon = FALSE,
+    .initialPage = 1,
+    .unused = 0x23,
+    .title = gUnknown_8565858 + 0x10,
+};
+
+NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sPCBoxNamingTemplate =
+{
+    .copyExistingString = FALSE,
+    .maxChars = 8,
+    .iconFunction = 2,
+    .addGenderIcon = FALSE,
+    .initialPage = 0,
+    .unused = 0x13,
+    .title = gUnknown_8565858_sub1,
+};
+
+NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sMonNamingScreenTemplate =
+{
+    .copyExistingString = FALSE,
+    .maxChars = 5,
+    .iconFunction = 3,
+    .addGenderIcon = TRUE,
+    .initialPage = 0,
+    .unused = 0x23,
+    .title = gUnknown_8565858_sub2,
+};
+
+NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate sWaldaWordsScreenTemplate =
+{
+    .copyExistingString = TRUE,
+    .maxChars = 12,
+    .iconFunction = 4,
+    .addGenderIcon = FALSE,
+    .initialPage = 1,
+    .unused = 0x0B,
+    .title = gUnknown_8565858_sub3,
+};
+
+NAMING_SCREEN_UI_LAYOUT static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
+{
+    &sPlayerNamingScreenTemplate,
+    &sPCBoxNamingTemplate,
+    &sMonNamingScreenTemplate,
+    &sMonNamingScreenTemplate,
+    &sWaldaWordsScreenTemplate,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct OamData sOam_8x8 =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct OamData sOam_16x16 =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct OamData sOam_32x16 =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct Subsprite sSubsprites_PageSwapFrame[] =
+{
+    { .x = -20, .y = -16, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 0,  .priority = 1 },
+    { .x =  12, .y = -16, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8),  .tileOffset = 4,  .priority = 1 },
+    { .x = -20, .y =  -8, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 5,  .priority = 1 },
+    { .x =  12, .y =  -8, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8),  .tileOffset = 9,  .priority = 1 },
+    { .x = -20, .y =   0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 10, .priority = 1 },
+    { .x =  12, .y =   0, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8),  .tileOffset = 14, .priority = 1 },
+    { .x = -20, .y =   8, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 15, .priority = 1 },
+    { .x =  12, .y =   8, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8),  .tileOffset = 19, .priority = 1 },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct Subsprite sSubsprites_PageSwapText16x8[] =
+{
+    { .x = -12, .y = -4, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8), .tileOffset = 0, .priority = 1 },
+    { .x =   4, .y = -4, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8), .tileOffset = 1, .priority = 1 },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct Subsprite sSubsprites_PageSwapText24x8[] =
+{
+    { .x = -12, .y = -4, .shape = SPRITE_SHAPE(16x8), .size = SPRITE_SIZE(16x8), .tileOffset = 0, .priority = 1 },
+    { .x =   4, .y = -4, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8),  .tileOffset = 2, .priority = 1 },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct Subsprite sSubsprites_Button[] =
+{
+    { .x = -20, .y = -12, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 0,  .priority = 1 },
+    { .x =  12, .y = -12, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8),  .tileOffset = 4,  .priority = 1 },
+    { .x = -20, .y =  -4, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 5,  .priority = 1 },
+    { .x =  12, .y =  -4, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8),  .tileOffset = 9,  .priority = 1 },
+    { .x = -20, .y =   4, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 10, .priority = 1 },
+    { .x =  12, .y =   4, .shape = SPRITE_SHAPE(8x8),  .size = SPRITE_SIZE(8x8),  .tileOffset = 14, .priority = 1 },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct Subsprite sSubsprites_PCIcon[] =
+{
+    { .x = -8, .y = -12, .shape = SPRITE_SHAPE(16x8), .size = SPRITE_SIZE(16x8), .tileOffset = 0, .priority = 3 },
+    { .x = -8, .y =  -4, .shape = SPRITE_SHAPE(16x8), .size = SPRITE_SIZE(16x8), .tileOffset = 2, .priority = 3 },
+    { .x = -8, .y =   4, .shape = SPRITE_SHAPE(16x8), .size = SPRITE_SIZE(16x8), .tileOffset = 4, .priority = 3 },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SubspriteTable sSubspriteTable_PageSwapFrame[] =
+{
+    { ARRAY_COUNT(sSubsprites_PageSwapFrame), sSubsprites_PageSwapFrame },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SubspriteTable sSubspriteTable_PageSwapText[] =
+{
+    { ARRAY_COUNT(sSubsprites_PageSwapText16x8), sSubsprites_PageSwapText16x8 },
+    { ARRAY_COUNT(sSubsprites_PageSwapText24x8), sSubsprites_PageSwapText24x8 },
+    { ARRAY_COUNT(sSubsprites_PageSwapText16x8), sSubsprites_PageSwapText16x8 },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SubspriteTable sSubspriteTable_Button[] =
+{
+    { ARRAY_COUNT(sSubsprites_Button), sSubsprites_Button },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SubspriteTable sSubspriteTable_PCIcon[] =
+{
+    { ARRAY_COUNT(sSubsprites_PCIcon), sSubsprites_PCIcon },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteFrameImage sImageTable_PCIcon[] =
+{
+    { gUnknown_8564698 + 0xA00, 0xC0 },
+    { gUnknown_8564698 + 0xAC0, 0xC0 },
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const union AnimCmd sAnim_Loop[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_JUMP(0),
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const union AnimCmd sAnim_CursorSquish[] =
+{
+    ANIMCMD_FRAME(4, 8),
+    ANIMCMD_FRAME(8, 8),
+    ANIMCMD_END,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const union AnimCmd sAnim_PCIcon[] =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(1, 2),
+    ANIMCMD_JUMP(0),
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const union AnimCmd *const sAnims_Loop[] =
+{
+    sAnim_Loop,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const union AnimCmd *const sAnims_Cursor[] =
+{
+    sAnim_Loop,
+    sAnim_CursorSquish,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const union AnimCmd *const sAnims_PCIcon[] =
+{
+    sAnim_PCIcon,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_PageSwapFrame =
+{
+    .tileTag = 2,
+    .paletteTag = 4,
+    .oam = &sOam_8x8,
+    .anims = sAnims_Loop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_080E3544,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_PageSwapButton =
+{
+    .tileTag = 3,
+    .paletteTag = 1,
+    .oam = &sOam_32x16,
+    .anims = sAnims_Loop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_PageSwapText =
+{
+    .tileTag = 4,
+    .paletteTag = 4,
+    .oam = &sOam_8x8,
+    .anims = sAnims_Loop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_BackButton =
+{
+    .tileTag = 0,
+    .paletteTag = 6,
+    .oam = &sOam_8x8,
+    .anims = sAnims_Loop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_OkButton =
+{
+    .tileTag = 1,
+    .paletteTag = 7,
+    .oam = &sOam_8x8,
+    .anims = sAnims_Loop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_Cursor =
+{
+    .tileTag = 7,
+    .paletteTag = 5,
+    .oam = &sOam_16x16,
+    .anims = sAnims_Cursor,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_080E3060,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_InputArrow =
+{
+    .tileTag = 10,
+    .paletteTag = 3,
+    .oam = &sOam_8x8,
+    .anims = sAnims_Loop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_080E3144,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_Underscore =
+{
+    .tileTag = 11,
+    .paletteTag = 3,
+    .oam = &sOam_8x8,
+    .anims = sAnims_Loop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (SpriteCallback)sub_080E3190,
+};
+
+NAMING_SCREEN_SPRITE_LAYOUT static const struct SpriteTemplate sSpriteTemplate_PCIcon =
+{
+    .tileTag = 0xFFFF,
+    .paletteTag = 0,
+    .oam = &sOam_8x8,
+    .anims = sAnims_PCIcon,
+    .images = sImageTable_PCIcon,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+NAMING_SCREEN_SPRITE_RESOURCES static const u8 *const sNamingScreenKeyboardText[][4] =
+{
+    {
+        gUnknown_85658C1 + 0x36,
+        gUnknown_85658C1 + 0x4A,
+        gUnknown_85658C1 + 0x5E,
+        gUnknown_85658C1 + 0x72,
+    },
+    {
+        gUnknown_85658C1 + 0x86,
+        gUnknown_85658C1 + 0x9A,
+        gUnknown_85658C1 + 0xAE,
+        gUnknown_85658C1 + 0xC2,
+    },
+    {
+        gUnknown_85658C1 + 0xD6,
+        gUnknown_85658C1 + 0xEA,
+        gUnknown_85658C1 + 0xFE,
+        gUnknown_85658C1 + 0x112,
+    },
+};
+
+NAMING_SCREEN_SPRITE_RESOURCES static const struct SpriteSheet sSpriteSheets[] =
+{
+    { gUnknown_8564698 + 0x000, 0x1E0, 0 },
+    { gUnknown_8564698 + 0x200, 0x1E0, 1 },
+    { gUnknown_8564698 + 0x400, 0x280, 2 },
+    { gUnknown_8564698 + 0x680, 0x100, 3 },
+    { gUnknown_8564698 + 0x780, 0x040, 4 },
+    { gUnknown_8564698 + 0x7C0, 0x040, 5 },
+    { gUnknown_8564698 + 0x800, 0x060, 6 },
+    { gUnknown_8564698 + 0x860, 0x080, 7 },
+    { gUnknown_8564698 + 0x8E0, 0x080, 8 },
+    { gUnknown_8564698 + 0x960, 0x080, 9 },
+    { gUnknown_8564698 + 0x1E0, 0x020, 10 },
+    { gUnknown_8564698 + 0x3E0, 0x020, 11 },
+    { NULL, 0, 0 },
+};
+
+NAMING_SCREEN_SPRITE_RESOURCES static const struct SpritePalette sSpritePalettes[] =
+{
+    { gUnknown_8565258 + 0x00, 0 },
+    { gUnknown_8565258 + 0x10, 1 },
+    { gUnknown_8565258 + 0x20, 2 },
+    { gUnknown_8565258 + 0x30, 3 },
+    { gUnknown_8565258 + 0x40, 4 },
+    { gUnknown_8565258 + 0x50, 5 },
+    { gUnknown_8565258 + 0x40, 6 },
+    { gUnknown_8565258 + 0x40, 7 },
+    { NULL, 0 },
+};
+
+#undef NAMING_SCREEN_PAGE_SWAP_ANIM
+#undef NAMING_SCREEN_BUTTON_KEY_ROLES
+#undef NAMING_SCREEN_PAGE_SWAP_SPRITE
+#undef NAMING_SCREEN_PAGE_SWAP_PAL_TAGS
+#undef NAMING_SCREEN_PAGE_SWAP_GFX_TAGS
+#undef NAMING_SCREEN_UI_LAYOUT
+#undef NAMING_SCREEN_SPRITE_LAYOUT
+#undef NAMING_SCREEN_SPRITE_RESOURCES
+#undef NAMING_SCREEN_ICON_FUNCS
+#undef NAMING_SCREEN_KEY_HANDLERS
+#undef NAMING_SCREEN_INPUT_FUNCS
+#undef NAMING_SCREEN_DRAW_TEXT
+#undef NAMING_SCREEN_DRAW_GENDER

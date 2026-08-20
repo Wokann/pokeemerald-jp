@@ -1198,6 +1198,10 @@ gUnknown_85C9742: @ 0x85C9742
 gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
 	.string "かきこみ　エラー　です\n"
 	.string "データが　ほぞん　できませんでした$あか$あお$　"
+	.globl gText_Red
+	.set gText_Red, gJPText_WriteErrorUnableToSaveData + 0x1E
+	.globl gText_Blue
+	.set gText_Blue, gJPText_WriteErrorUnableToSaveData + 0x21
 	.globl gUnknown_85CD068
 gUnknown_85CD068: @ 0x85CD068
 	.incbin "baserom_jp.gba", 0x5cd068, 0x10
