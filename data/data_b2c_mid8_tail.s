@@ -9,12 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85FBE40
-gUnknown_85FBE40: @ 0x85FBE40
-	.hword 0x01F8, 0x0000
-	.hword 0x11E5, 0x0000
-	.hword 0x21DA, 0x0000
-	.hword 0x31CF, 0x0000
 	.hword 0x0000, 0x0001
 	.hword 0xFFFF, 0x0000
 	.hword 0x0000, 0x0030
@@ -22,20 +16,20 @@ gUnknown_85FBE40: @ 0x85FBE40
 	.hword 0x0000, 0x0030
 	.hword 0x0080, 0x0020
 	.hword 0xFFFE, 0x0000
-	.4byte gUnknown_85FBE40 + 0x10
-	.4byte gUnknown_85FBE40 + 0x18
+	.4byte sBgTemplates_Charges + 0x10
+	.4byte sBgTemplates_Charges + 0x18
 	.hword 0x0000, 0x0001
 	.hword 0xFFFF, 0x0000
-	.4byte gUnknown_85FBE40 + 0x34
+	.4byte sBgTemplates_Charges + 0x34
 	.hword 0x0000, 0x0001
 	.hword 0xFFFF, 0x0000
 	.hword 0x0010, 0x0001
 	.hword 0xFFFF, 0x0000
 	.hword 0x0020, 0x0001
 	.hword 0xFFFF, 0x0000
-	.4byte gUnknown_85FBE40 + 0x40
-	.4byte gUnknown_85FBE40 + 0x48
-	.4byte gUnknown_85FBE40 + 0x50
+	.4byte sBgTemplates_Charges + 0x40
+	.4byte sBgTemplates_Charges + 0x48
+	.4byte sBgTemplates_Charges + 0x50
 	.hword 0x0000, 0x0001
 	.hword 0xFFFF, 0x0000
 	.hword 0x0040, 0x0001
@@ -44,10 +38,10 @@ gUnknown_85FBE40: @ 0x85FBE40
 	.hword 0xFFFF, 0x0000
 	.hword 0x00C0, 0x0001
 	.hword 0xFFFF, 0x0000
-	.4byte gUnknown_85FBE40 + 0x64
-	.4byte gUnknown_85FBE40 + 0x6C
-	.4byte gUnknown_85FBE40 + 0x74
-	.4byte gUnknown_85FBE40 + 0x7C
+	.4byte sBgTemplates_Charges + 0x64
+	.4byte sBgTemplates_Charges + 0x6C
+	.4byte sBgTemplates_Charges + 0x74
+	.4byte sBgTemplates_Charges + 0x7C
 	.hword 0x0000, 0x0001
 	.hword 0xFFFF, 0x0000
 	.hword 0x0010, 0x0001
@@ -56,10 +50,10 @@ gUnknown_85FBE40: @ 0x85FBE40
 	.hword 0xFFFF, 0x0000
 	.hword 0x0030, 0x0001
 	.hword 0xFFFF, 0x0000
-	.4byte gUnknown_85FBE40 + 0x94
-	.4byte gUnknown_85FBE40 + 0x9C
-	.4byte gUnknown_85FBE40 + 0xA4
-	.4byte gUnknown_85FBE40 + 0xAC
+	.4byte sBgTemplates_Charges + 0x94
+	.4byte sBgTemplates_Charges + 0x9C
+	.4byte sBgTemplates_Charges + 0xA4
+	.4byte sBgTemplates_Charges + 0xAC
 	.hword 0x0000, 0x0008
 	.hword 0x0004, 0x0008
 	.hword 0x0008, 0x0008
@@ -67,7 +61,7 @@ gUnknown_85FBE40: @ 0x85FBE40
 	.hword 0x0010, 0x0008
 	.hword 0x0014, 0x0008
 	.hword 0xFFFE, 0x0000
-	.4byte gUnknown_85FBE40 + 0xC4
+	.4byte sBgTemplates_Charges + 0xC4
 
 	.globl gUnknown_85FBF24
 gUnknown_85FBF24: @ 0x005FBF24
@@ -122,32 +116,32 @@ gUnknown_85FBF6C: @ 0x005FBF6C
 	.globl gUnknown_85FBF74
 gUnknown_85FBF74: @ 0x005FBF74
 	.hword 0x7765, 0x7765
-	.4byte sOam_64x64, gUnknown_85FBE40 + 0x2C, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.4byte sOam_64x64, sBgTemplates_Charges + 0x2C, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FBF8C
 gUnknown_85FBF8C: @ 0x005FBF8C
 	.hword 0x7766, 0x7765
-	.4byte sOam_16x16, gUnknown_85FBE40 + 0x3C, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.4byte sOam_16x16, sBgTemplates_Charges + 0x3C, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FBFA4
 gUnknown_85FBFA4: @ 0x005FBFA4
 	.hword 0x7768, 0x7768
-	.4byte sOam_32x32, gUnknown_85FBE40 + 0x58, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.4byte sOam_32x32, sBgTemplates_Charges + 0x58, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FBFBC
 gUnknown_85FBFBC: @ 0x005FBFBC
 	.hword 0x7769, 0x7769
-	.4byte sOam_64x64, gUnknown_85FBE40 + 0x84, 0, gDummySpriteAffineAnimTable, 0x081D8F59
+	.4byte sOam_64x64, sBgTemplates_Charges + 0x84, 0, gDummySpriteAffineAnimTable, 0x081D8F59
 
 	.globl gUnknown_85FBFD4
 gUnknown_85FBFD4: @ 0x005FBFD4
 	.hword 0x776A, 0x7769
-	.4byte sOam_32x32, gUnknown_85FBE40 + 0xB4, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.4byte sOam_32x32, sBgTemplates_Charges + 0xB4, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FBFEC
 gUnknown_85FBFEC: @ 0x005FBFEC
 	.hword 0x776B, 0x776B
-	.4byte sOam_32x8, gUnknown_85FBE40 + 0xE0, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+	.4byte sOam_32x8, sBgTemplates_Charges + 0xE0, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FC004
 gUnknown_85FC004: @ 0x005FC004

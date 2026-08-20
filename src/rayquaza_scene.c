@@ -747,6 +747,18 @@ const struct SpriteTemplate sSpriteTemplate_Descends_RayquazaTail RAYQUAZA_SCENE
 
 #undef RAYQUAZA_SCENE_DESCENDS_DATA
 
+#define RAYQUAZA_SCENE_CHARGES_DATA __attribute__((section(".rodata.rayquaza_scene_charges")))
+
+const struct BgTemplate sBgTemplates_Charges[] RAYQUAZA_SCENE_CHARGES_DATA =
+{
+    { .bg = 0, .charBaseIndex = 2, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 },
+    { .bg = 1, .charBaseIndex = 1, .mapBaseIndex = 30, .screenSize = 0, .paletteMode = 0, .priority = 1, .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 2, .mapBaseIndex = 29, .screenSize = 0, .paletteMode = 0, .priority = 2, .baseTile = 0 },
+    { .bg = 3, .charBaseIndex = 3, .mapBaseIndex = 28, .screenSize = 0, .paletteMode = 0, .priority = 3, .baseTile = 0 }
+};
+
+#undef RAYQUAZA_SCENE_CHARGES_DATA
+
 __attribute__((naked)) void DoRayquazaScene(u8 animId, bool8 endEarly, MainCallback exitCallback)
 {
     __asm__(".syntax unified\n\t"
@@ -5093,7 +5105,7 @@ __attribute__((naked)) void sub_081D8164(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D81F8: .4byte gUnknown_85FBE40\n\t"
+        "_081D81F8: .4byte sBgTemplates_Charges\n\t"
         "_081D81FC: .4byte gUnknown_203CC2C\n\t"
         "_081D8200: .4byte 0x00000804\n\t"
         "_081D8204: .4byte 0x00001004\n\t"
@@ -5162,18 +5174,18 @@ __attribute__((naked)) void sub_081D820C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D828C: .4byte gUnknown_8DA8364\n\t"
-        "_081D8290: .4byte gUnknown_8DA8154\n\t"
-        "_081D8294: .4byte gUnknown_8DA7ED8\n\t"
-        "_081D8298: .4byte gUnknown_8DA9014\n\t"
+        "_081D828C: .4byte gRaySceneCharges_Rayquaza_Gfx\n\t"
+        "_081D8290: .4byte gRaySceneCharges_Streaks_Gfx\n\t"
+        "_081D8294: .4byte gRaySceneCharges_Bg_Gfx\n\t"
+        "_081D8298: .4byte gRaySceneCharges_Orbs_Tilemap\n\t"
         "_081D829C: .4byte gUnknown_203CC2C\n\t"
-        "_081D82A0: .4byte gUnknown_8DA8DE8\n\t"
+        "_081D82A0: .4byte gRaySceneCharges_Rayquaza_Tilemap\n\t"
         "_081D82A4: .4byte 0x00000804\n\t"
-        "_081D82A8: .4byte gUnknown_8DA825C\n\t"
+        "_081D82A8: .4byte gRaySceneCharges_Streaks_Tilemap\n\t"
         "_081D82AC: .4byte 0x00001004\n\t"
-        "_081D82B0: .4byte gUnknown_8DA8014\n\t"
+        "_081D82B0: .4byte gRaySceneCharges_Bg_Tilemap\n\t"
         "_081D82B4: .4byte 0x00001804\n\t"
-        "_081D82B8: .4byte gUnknown_8DA912C\n\t"
+        "_081D82B8: .4byte gRaySceneCharges_Bg_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5603,7 +5615,7 @@ __attribute__((naked)) void sub_081D8574(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D85F0: .4byte gUnknown_85FBE40 + 0x1C4\n\t"
+        "_081D85F0: .4byte sBgTemplates_Charges + 0x1C4\n\t"
         "_081D85F4: .4byte gUnknown_203CC2C\n\t"
         "_081D85F8: .4byte 0x00000804\n\t"
         "_081D85FC: .4byte 0x00001004\n\t"
@@ -5689,16 +5701,16 @@ __attribute__((naked)) void sub_081D8600(void)
         "_081D86BC: .4byte gUnknown_8DAB240\n\t"
         "_081D86C0: .4byte 0x00001004\n\t"
         "_081D86C4: .4byte gUnknown_8DAB294\n\t"
-        "_081D86C8: .4byte gUnknown_85FBE40 + 0xE4\n\t"
-        "_081D86CC: .4byte gUnknown_85FBE40 + 0xEC\n\t"
-        "_081D86D0: .4byte gUnknown_85FBE40 + 0xF4\n\t"
-        "_081D86D4: .4byte gUnknown_85FBE40 + 0xFC\n\t"
-        "_081D86D8: .4byte gUnknown_85FBE40 + 0x104\n\t"
-        "_081D86DC: .4byte gUnknown_85FBE40 + 0x10C\n\t"
-        "_081D86E0: .4byte gUnknown_85FBE40 + 0x114\n\t"
-        "_081D86E4: .4byte gUnknown_85FBE40 + 0x11C\n\t"
-        "_081D86E8: .4byte gUnknown_85FBE40 + 0x124\n\t"
-        "_081D86EC: .4byte gUnknown_85FBE40 + 0x12C\n\t"
+        "_081D86C8: .4byte sBgTemplates_Charges + 0xE4\n\t"
+        "_081D86CC: .4byte sBgTemplates_Charges + 0xEC\n\t"
+        "_081D86D0: .4byte sBgTemplates_Charges + 0xF4\n\t"
+        "_081D86D4: .4byte sBgTemplates_Charges + 0xFC\n\t"
+        "_081D86D8: .4byte sBgTemplates_Charges + 0x104\n\t"
+        "_081D86DC: .4byte sBgTemplates_Charges + 0x10C\n\t"
+        "_081D86E0: .4byte sBgTemplates_Charges + 0x114\n\t"
+        "_081D86E4: .4byte sBgTemplates_Charges + 0x11C\n\t"
+        "_081D86E8: .4byte sBgTemplates_Charges + 0x124\n\t"
+        "_081D86EC: .4byte sBgTemplates_Charges + 0x12C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6306,12 +6318,12 @@ __attribute__((naked)) void sub_081D89E4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081D8B94: .4byte gUnknown_3005B68\n\t"
-        "_081D8B98: .4byte gUnknown_85FBE40 + 0x134\n\t"
+        "_081D8B98: .4byte sBgTemplates_Charges + 0x134\n\t"
         "_081D8B9C: .4byte gUnknown_20205DA\n\t"
-        "_081D8BA0: .4byte gUnknown_85FBE40 + 0x14C\n\t"
-        "_081D8BA4: .4byte gUnknown_85FBE40 + 0x164\n\t"
-        "_081D8BA8: .4byte gUnknown_85FBE40 + 0x17C\n\t"
-        "_081D8BAC: .4byte gUnknown_85FBE40 + 0x194\n\t"
+        "_081D8BA0: .4byte sBgTemplates_Charges + 0x14C\n\t"
+        "_081D8BA4: .4byte sBgTemplates_Charges + 0x164\n\t"
+        "_081D8BA8: .4byte sBgTemplates_Charges + 0x17C\n\t"
+        "_081D8BAC: .4byte sBgTemplates_Charges + 0x194\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6802,7 +6814,7 @@ __attribute__((naked)) void sub_081D8E64(void)
         "	strh r0, [r7, #0x26]\n\t"
         "	b _081D8F38\n\t"
         "	.align 2, 0\n\t"
-        "_081D8F2C: .4byte gUnknown_85FBE40 + 0x1AC\n\t"
+        "_081D8F2C: .4byte sBgTemplates_Charges + 0x1AC\n\t"
         "_081D8F30: .4byte gSprites\n\t"
         "_081D8F34:\n\t"
         "	adds r0, r1, #1\n\t"
@@ -7315,4 +7327,3 @@ __attribute__((naked)) void sub_081D91F0(void)
         ".syntax divided\n\t"
     );
 }
-

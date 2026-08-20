@@ -941,44 +941,44 @@ gUnknown_8DA7D54: @ 0x8DA7D54
 	.incbin "graphics/misc/gUnknown_8DA7D54.4bpp.lz"
 
 
-	.globl gUnknown_8DA7ED8
-gUnknown_8DA7ED8: @ 0x8DA7ED8
-	.incbin "graphics/misc/gUnknown_8DA7ED8.4bpp.lz"
+	.globl gRaySceneCharges_Bg_Gfx
+gRaySceneCharges_Bg_Gfx: @ 0x8DA7ED8
+	.incbin "graphics/rayquaza_scene/scene_4/bg.4bpp.lz"
 
 
-	.globl gUnknown_8DA8014
-gUnknown_8DA8014: @ 0x8DA8014
-	.incbin "graphics/misc/gUnknown_8DA8014.4bpp.lz"
+	.globl gRaySceneCharges_Bg_Tilemap
+gRaySceneCharges_Bg_Tilemap: @ 0x8DA8014
+	.incbin "graphics/rayquaza_scene/scene_4/bg.bin.lz"
 
 
-	.globl gUnknown_8DA8154
-gUnknown_8DA8154: @ 0x8DA8154
-	.incbin "graphics/misc/gUnknown_8DA8154.4bpp.lz"
+	.globl gRaySceneCharges_Streaks_Gfx
+gRaySceneCharges_Streaks_Gfx: @ 0x8DA8154
+	.incbin "graphics/rayquaza_scene/scene_4/streaks.4bpp.lz"
 
 
-	.globl gUnknown_8DA825C
-gUnknown_8DA825C: @ 0x8DA825C
-	.incbin "graphics/misc/gUnknown_8DA825C.4bpp.lz"
+	.globl gRaySceneCharges_Streaks_Tilemap
+gRaySceneCharges_Streaks_Tilemap: @ 0x8DA825C
+	.incbin "graphics/rayquaza_scene/scene_4/streaks.bin.lz"
 
 
-	.globl gUnknown_8DA8364
-gUnknown_8DA8364: @ 0x8DA8364
-	.incbin "graphics/misc/gUnknown_8DA8364.4bpp.lz"
+	.globl gRaySceneCharges_Rayquaza_Gfx
+gRaySceneCharges_Rayquaza_Gfx: @ 0x8DA8364
+	.incbin "graphics/rayquaza_scene/scene_4/rayquaza.4bpp.lz"
 
 
-	.globl gUnknown_8DA8DE8
-gUnknown_8DA8DE8: @ 0x8DA8DE8
-	.incbin "graphics/misc/gUnknown_8DA8DE8.4bpp.lz"
+	.globl gRaySceneCharges_Rayquaza_Tilemap
+gRaySceneCharges_Rayquaza_Tilemap: @ 0x8DA8DE8
+	.incbin "graphics/rayquaza_scene/scene_4/rayquaza.bin.lz"
 
 
-	.globl gUnknown_8DA9014
-gUnknown_8DA9014: @ 0x8DA9014
-	.incbin "graphics/misc/gUnknown_8DA9014.4bpp.lz"
+	.globl gRaySceneCharges_Orbs_Tilemap
+gRaySceneCharges_Orbs_Tilemap: @ 0x8DA9014
+	.incbin "graphics/rayquaza_scene/scene_4/orbs.bin.lz"
 
 
-	.globl gUnknown_8DA912C
-gUnknown_8DA912C: @ 0x8DA912C
-	.incbin "graphics/misc/gUnknown_8DA912C.4bpp.lz"
+	.globl gRaySceneCharges_Bg_Pal
+gRaySceneCharges_Bg_Pal: @ 0x8DA912C
+	.incbin "graphics/rayquaza_scene/scene_4/bg.gbapal.lz"
 	.incbin "baserom_jp.gba", 0xDA917D, 0x19DF
 
 
