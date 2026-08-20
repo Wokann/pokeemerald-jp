@@ -9401,7 +9401,7 @@ SECTIONS {
         src/data/text/region_texts18.o(.rodata);
         data/data_b2d_mid28.o(.rodata);
         src/data/text/region_texts25.o(.rodata);
-        data/data_b2d_mid29.o(.rodata);
+        src/data/reset_rtc_screen.o(.rodata.reset_rtc_screen_data);
         src/data/text/region_texts31.o(.rodata);
         src/start_menu.o(.rodata.start_menu_resources);
         src/data/text/region_texts24.o(.rodata);
