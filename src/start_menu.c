@@ -1,6 +1,7 @@
 #include "global.h"
 #include "constants/songs.h"
 #include "start_menu.h"
+#include "data/start_menu.h"
 
 enum
 {
