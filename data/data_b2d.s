@@ -874,12 +874,6 @@ gUnknown_85CA3D9: @ 0x85CA3D9
 
 	.globl gUnknown_85CA3DF
 
-	.section .rodata.mid92
-
-	.globl gUnknown_85CC497
-gUnknown_85CC497: @ 0x85CC497
-	.string "{HIGHLIGHT 0}{COLOR 255}"
-
 	.section .rodata.mid35
 
 	.globl gUnknown_8566D64
