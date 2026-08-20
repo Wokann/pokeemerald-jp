@@ -20,7 +20,6 @@
 #include "constants/weather.h"
 
 extern u8 sPopupTaskId;
-extern const u8 *const sBattlePyramid_MapHeaderStrings[];
 
 enum MapPopUp_Themes
 {
@@ -92,6 +91,31 @@ MAP_NAME_POPUP_DATA static const u8 sMapSectionToThemeId[] =
 };
 
 #undef MAP_NAME_POPUP_DATA
+
+#define MAP_NAME_POPUP_PYRAMID_DATA __attribute__((section(".rodata.map_name_popup_mid57a_pyramid")))
+
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 sText_PyramidFloor1[] = _("ピラミッド1だんめ");
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 sText_PyramidFloor2[] = _("ピラミッド2だんめ");
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 sText_PyramidFloor3[] = _("ピラミッド3だんめ");
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 sText_PyramidFloor4[] = _("ピラミッド4だんめ");
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 sText_PyramidFloor5[] = _("ピラミッド5だんめ");
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 sText_PyramidFloor6[] = _("ピラミッド6だんめ");
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 sText_PyramidFloor7[] = _("ピラミッド7だんめ");
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 sText_Pyramid[] = _("ピラミッド");
+
+MAP_NAME_POPUP_PYRAMID_DATA static const u8 *const sBattlePyramid_MapHeaderStrings[FRONTIER_STAGES_PER_CHALLENGE + 1] =
+{
+    sText_PyramidFloor1,
+    sText_PyramidFloor2,
+    sText_PyramidFloor3,
+    sText_PyramidFloor4,
+    sText_PyramidFloor5,
+    sText_PyramidFloor6,
+    sText_PyramidFloor7,
+    sText_Pyramid,
+};
+
+#undef MAP_NAME_POPUP_PYRAMID_DATA
 
 // JP ROM uses different map section indices than the US-derived constants.
 #define KANTO_MAPSEC_START_JP 0x57

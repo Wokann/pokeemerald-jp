@@ -9,12 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.incbin "baserom_jp.gba", 0x55a028, 0x4c
-
-	.globl sBattlePyramid_MapHeaderStrings
-sBattlePyramid_MapHeaderStrings: @ 0x855A074
-	.4byte 0x0855A028, 0x0855A032, 0x0855A03C, 0x0855A046
-	.4byte 0x0855A050, 0x0855A05A, 0x0855A064, 0x0855A06E
 	.incbin "baserom_jp.gba", 0x55a094, 0x5d0
 
 	.globl gUnknown_855A664
