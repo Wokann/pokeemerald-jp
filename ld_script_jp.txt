@@ -9430,7 +9430,7 @@ SECTIONS {
         src/item.o(.rodata);
         src/contest.o(.rodata.contest_mid57b_graphics);
         src/contest.o(.rodata.contest_mid57b_text_tables);
-        data/data_b2d_mid57_b.o(.rodata.mid57b_contest_pre_ui);
+        src/contest.o(.rodata.contest_mid57b_pre_ui);
         src/contest.o(.rodata.contest_mid57b_ui);
         src/contest.o(.rodata.contest_mid57b_default_winners);
         src/contest.o(.rodata.contest_mid57b_opponents);
