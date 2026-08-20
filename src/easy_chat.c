@@ -3726,7 +3726,7 @@ __attribute__((naked)) void GetEasyChatConfirmExitText(const u8 **str1, const u8
         "	b _0811C37E\n\t"
         "	.align 2, 0\n\t"
         "_0811C358: .4byte sEasyChatScreen\n\t"
-        "_0811C35C: .4byte gUnknown_85CBA71\n\t"
+        "_0811C35C: .4byte gText_StopGivingPkmnMail\n\t"
         "_0811C360:\n\t"
         "	cmp r0, #4\n\t"
         "	blt _0811C37C\n\t"
@@ -3751,7 +3751,7 @@ __attribute__((naked)) void GetEasyChatConfirmExitText(const u8 **str1, const u8
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811C388: .4byte gUnknown_85CBA63\n\t"
+        "_0811C388: .4byte gText_QuitEditing\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4171,8 +4171,8 @@ __attribute__((naked)) void sub_0811C5F4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811C63C: .4byte gUnknown_85CBB4E + 0x137\n\t"
-        "_0811C640: .4byte gUnknown_85CBB4E + 0x12D\n\t"
+        "_0811C63C: .4byte gUnknown_85CBC85\n\t"
+        "_0811C640: .4byte gUnknown_85CBC7B\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6933,8 +6933,8 @@ __attribute__((naked)) void sub_0811D9D8(void)
         "	ldr r0, _0811DA6C\n\t"
         "	b _0811DA8E\n\t"
         "	.align 2, 0\n\t"
-        "_0811DA68: .4byte gUnknown_85CBB1B\n\t"
-        "_0811DA6C: .4byte gUnknown_85CBB2F\n\t"
+        "_0811DA68: .4byte gText_OnlyOnePhrase\n\t"
+        "_0811DA6C: .4byte gText_OriginalSongWillBeUsed\n\t"
         "_0811DA70:\n\t"
         "	ldr r0, _0811DA78\n\t"
         "	str r0, [sp, #0xc]\n\t"
@@ -6946,7 +6946,7 @@ __attribute__((naked)) void sub_0811D9D8(void)
         "	str r0, [sp, #0xc]\n\t"
         "	b _0811DA90\n\t"
         "	.align 2, 0\n\t"
-        "_0811DA84: .4byte gUnknown_85CBB4E\n\t"
+        "_0811DA84: .4byte gText_CombineTwoWordsOrPhrases3\n\t"
         "_0811DA88:\n\t"
         "	ldr r0, _0811DADC\n\t"
         "	str r0, [sp, #0xc]\n\t"
@@ -6991,8 +6991,8 @@ __attribute__((naked)) void sub_0811D9D8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811DADC: .4byte gUnknown_85CBB4E + 0x114\n\t"
-        "_0811DAE0: .4byte gUnknown_85CBB4E + 0x11F\n\t"
+        "_0811DADC: .4byte gUnknown_85CBC62\n\t"
+        "_0811DAE0: .4byte gUnknown_85CBC6D\n\t"
         ".syntax divided\n\t"
     );
 }
