@@ -332,20 +332,51 @@ BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_SweatDrop[] = INCBIN_
 
 #define BATTLE_ANIM_STAT_CHANGE_GFX __attribute__((section(".rodata.battle_anim_stat_change_graphics")))
 
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Gfx[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Gfx.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Increase_Tilemap[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Increase_Tilemap.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Decrease_Tilemap[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Decrease_Tilemap.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Defense_Pal[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Defense_Pal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Attack_Pal[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Attack_Pal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Accuracy_Pal[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Accuracy_Pal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Speed_Pal[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Speed_Pal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Multiple_Pal[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Multiple_Pal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Evasion_Pal[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Evasion_Pal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_SpAttack_Pal[] = INCBIN_U32("graphics/battle_anims/gStatAnim_SpAttack_Pal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_SpDefense_Pal[] = INCBIN_U32("graphics/battle_anims/gStatAnim_SpDefense_Pal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gCureBubblesGfx[] = INCBIN_U32("graphics/misc/gCureBubblesGfx.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gCureBubblesPal[] = INCBIN_U32("graphics/misc/gCureBubblesPal.bin");
-BATTLE_ANIM_STAT_CHANGE_GFX const u32 gCureBubblesTilemap[] = INCBIN_U32("graphics/misc/gCureBubblesTilemap.bin");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Gfx[] = INCBIN_U32("graphics/battle_anims/stat_change/tiles.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Increase_Tilemap[] = INCBIN_U32("graphics/battle_anims/stat_change/increase.bin.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Decrease_Tilemap[] = INCBIN_U32("graphics/battle_anims/stat_change/decrease.bin.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Defense_Pal[] = INCBIN_U32("graphics/battle_anims/stat_change/defense.pal.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Attack_Pal[] = INCBIN_U32("graphics/battle_anims/stat_change/attack.pal.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Accuracy_Pal[] = INCBIN_U32("graphics/battle_anims/stat_change/accuracy.pal.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Speed_Pal[] = INCBIN_U32("graphics/battle_anims/stat_change/speed.pal.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Multiple_Pal[] = INCBIN_U32("graphics/battle_anims/stat_change/multiple.pal.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Evasion_Pal[] = INCBIN_U32("graphics/battle_anims/stat_change/evasion.pal.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_SpAttack_Pal[] = INCBIN_U32("graphics/battle_anims/stat_change/sp_attack.pal.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_SpDefense_Pal[] = INCBIN_U32("graphics/battle_anims/stat_change/sp_defense.pal.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gCureBubblesGfx[] = INCBIN_U32("graphics/battle_anims/masks/cure_bubbles.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gCureBubblesPal[] = INCBIN_U32("graphics/battle_anims/masks/cure_bubbles.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gCureBubblesTilemap[] = INCBIN_U32("graphics/battle_anims/masks/cure_bubbles.bin.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_PurpleScratch[] = INCBIN_U32("graphics/battle_anims/sprites/purple_scratch.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_PurpleScratch[] = INCBIN_U32("graphics/battle_anims/sprites/purple_scratch.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_PurpleSwipe[] = INCBIN_U32("graphics/battle_anims/sprites/purple_swipe.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_GuardRing[] = INCBIN_U32("graphics/battle_anims/sprites/guard_ring.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_GuardRing[] = INCBIN_U32("graphics/battle_anims/sprites/guard_ring.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_TagHand[] = INCBIN_U32("graphics/battle_anims/sprites/tag_hand.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_NoiseLine[] = INCBIN_U32("graphics/battle_anims/sprites/noise_line.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 UnusedLevelupAnimationGfx[] = INCBIN_U32("graphics/battle_anims/masks/unused_level_up.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 UnusedLevelupAnimationTilemap[] = INCBIN_U32("graphics/battle_anims/masks/unused_level_up.bin.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_SmallRedEye[] = INCBIN_U32("graphics/battle_anims/sprites/small_red_eye.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_SmallRedEye[] = INCBIN_U32("graphics/battle_anims/sprites/small_red_eye.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_HollowOrb[] = INCBIN_U32("graphics/battle_anims/sprites/hollow_orb.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_HollowOrb[] = INCBIN_U32("graphics/battle_anims/sprites/hollow_orb.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_XSign[] = INCBIN_U32("graphics/battle_anims/sprites/x_sign.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_BluegreenOrb[] = INCBIN_U32("graphics/battle_anims/sprites/bluegreen_orb.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_BluegreenOrb[] = INCBIN_U32("graphics/battle_anims/sprites/bluegreen_orb.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_PawPrint[] = INCBIN_U32("graphics/battle_anims/sprites/paw_print.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_PawPrint[] = INCBIN_U32("graphics/battle_anims/sprites/paw_print.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_PurpleFlame[] = INCBIN_U32("graphics/battle_anims/sprites/purple_flame.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_PurpleFlame[] = INCBIN_U32("graphics/battle_anims/sprites/purple_flame.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_RedBall[] = INCBIN_U32("graphics/battle_anims/sprites/red_ball.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_RedBall[] = INCBIN_U32("graphics/battle_anims/sprites/red_ball.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_SmellingsaltEffect[] = INCBIN_U32("graphics/battle_anims/sprites/smellingsalt_effect.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_SmellingsaltEffect[] = INCBIN_U32("graphics/battle_anims/sprites/smellingsalt_effect.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_MagnifyingGlass[] = INCBIN_U32("graphics/battle_anims/sprites/magnifying_glass.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_MagnifyingGlass[] = INCBIN_U32("graphics/battle_anims/sprites/magnifying_glass.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_Meteor[] = INCBIN_U32("graphics/battle_anims/sprites/meteor.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_Meteor[] = INCBIN_U32("graphics/battle_anims/sprites/meteor.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpriteGfx_FlatRock[] = INCBIN_U32("graphics/battle_anims/sprites/flat_rock.png.4bpp.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimSpritePal_FlatRock[] = INCBIN_U32("graphics/battle_anims/sprites/flat_rock.png.gbapal.lz");
+BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimUnusedPal_Unknown2[] = INCBIN_U32("graphics/battle_anims/unused/unknown_2.pal.gbapal.lz");
 
 #undef BATTLE_ANIM_STAT_CHANGE_GFX
 

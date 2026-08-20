@@ -9696,9 +9696,7 @@ SECTIONS {
         src/graphics.o(.rodata.battle_anim_post_contest_graphics);
         data/data_rest2b.o(.rodata.data_rest2b_after_jp_contest);
         src/graphics.o(.rodata.battle_anim_mask_and_bg_graphics);
-        data/data_rest2b.o(.rodata.data_rest2b_after_battle_anim_masks);
         src/graphics.o(.rodata.battle_anim_stat_change_graphics);
-        data/data_rest2b.o(.rodata.data_rest2b_after_stat_change);
         data/data_b2d_gfx_pokemon_main.o(.rodata);
         data/data_rest2c.o(.rodata);
         src/graphics.o(.rodata.rayquaza_scene_1_graphics);
@@ -9769,3 +9767,5 @@ gUnknown_8C1C700 = gContest2Pal;
 gUnknown_8C2CF60 = gSubstituteDollPal;
 gUnknown_8C2CF84 = gSubstituteDollFrontGfx;
 gUnknown_8C2D1C4 = gSubstituteDollBackGfx;
+gUnknown_8C2EAF4 = UnusedLevelupAnimationGfx;
+gUnknown_8C2EB40 = UnusedLevelupAnimationTilemap;
