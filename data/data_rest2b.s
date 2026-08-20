@@ -168,76 +168,7 @@ gUnknown_8C2D1C4: @ 0x8C2D1C4
 	.incbin "baserom_jp.gba", 0xc2d1c4, 0x600
 
 
-	.globl gStatAnim_Gfx
-gStatAnim_Gfx: @ 0x8C2D7C4
-	.incbin "graphics/battle_anims/gStatAnim_Gfx.bin"
-
-
-	.globl gStatAnim_Increase_Tilemap
-gStatAnim_Increase_Tilemap: @ 0x8C2D9D4
-	.incbin "graphics/battle_anims/gStatAnim_Increase_Tilemap.bin"
-
-
-	.globl gStatAnim_Decrease_Tilemap
-gStatAnim_Decrease_Tilemap: @ 0x8C2DAF0
-	.incbin "graphics/battle_anims/gStatAnim_Decrease_Tilemap.bin"
-
-
-	.globl gStatAnim_Defense_Pal
-gStatAnim_Defense_Pal: @ 0x8C2DC0C
-	.incbin "graphics/battle_anims/gStatAnim_Defense_Pal.bin"
-
-
-	.globl gStatAnim_Attack_Pal
-gStatAnim_Attack_Pal: @ 0x8C2DC2C
-	.incbin "graphics/battle_anims/gStatAnim_Attack_Pal.bin"
-
-
-	.globl gStatAnim_Accuracy_Pal
-gStatAnim_Accuracy_Pal: @ 0x8C2DC4C
-	.incbin "graphics/battle_anims/gStatAnim_Accuracy_Pal.bin"
-
-
-	.globl gStatAnim_Speed_Pal
-gStatAnim_Speed_Pal: @ 0x8C2DC6C
-	.incbin "graphics/battle_anims/gStatAnim_Speed_Pal.bin"
-
-
-	.globl gStatAnim_Multiple_Pal
-gStatAnim_Multiple_Pal: @ 0x8C2DC8C
-	.incbin "graphics/battle_anims/gStatAnim_Multiple_Pal.bin"
-
-
-	.globl gStatAnim_Evasion_Pal
-gStatAnim_Evasion_Pal: @ 0x8C2DCAC
-	.incbin "graphics/battle_anims/gStatAnim_Evasion_Pal.bin"
-
-
-	.globl gStatAnim_SpAttack_Pal
-gStatAnim_SpAttack_Pal: @ 0x8C2DCCC
-	.incbin "graphics/battle_anims/gStatAnim_SpAttack_Pal.bin"
-
-
-	.globl gStatAnim_SpDefense_Pal
-gStatAnim_SpDefense_Pal: @ 0x8C2DCEC
-	.incbin "graphics/battle_anims/gStatAnim_SpDefense_Pal.bin"
-
-
-	.globl gCureBubblesGfx
-gCureBubblesGfx: @ 0x8C2DD0C
-	.incbin "graphics/misc/gCureBubblesGfx.bin"
-
-
-	.globl gCureBubblesPal
-gCureBubblesPal: @ 0x8C2DE48
-	.incbin "graphics/misc/gCureBubblesPal.bin"
-
-
-	.globl gCureBubblesTilemap
-gCureBubblesTilemap: @ 0x8C2DE68
-	.incbin "graphics/misc/gCureBubblesTilemap.bin"
-
-
+	.section .rodata.data_rest2b_after_stat_change
 	.globl gUnknown_8C2EAF4
 gUnknown_8C2EAF4: @ 0x8C2EAF4
 	.incbin "baserom_jp.gba", 0xc2eaf4, 0x4c

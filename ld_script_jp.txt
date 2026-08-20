@@ -9690,6 +9690,8 @@ SECTIONS {
         data/battle_textbox.o(.rodata);
         data/data_b2d_gfx_pokemon_none.o(.rodata);
         data/data_rest2b.o(.rodata);
+        src/graphics.o(.rodata.battle_anim_stat_change_graphics);
+        data/data_rest2b.o(.rodata.data_rest2b_after_stat_change);
         data/data_b2d_gfx_pokemon_main.o(.rodata);
         data/data_rest2c.o(.rodata);
         src/graphics.o(.rodata.rayquaza_scene_1_graphics);
