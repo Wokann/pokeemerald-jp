@@ -3621,7 +3621,7 @@ __attribute__((naked)) void sub_08021758(void)
         "	bl StringCopy\n\t"
         "	b _08021A44\n\t"
         "	.align 2, 0\n\t"
-        "_08021A20: .4byte gUnknown_8563150\n\t"
+        "_08021A20: .4byte gBerries\n\t"
         "_08021A24: .4byte gStringVar1\n\t"
         "_08021A28: .4byte sResultsTexts\n\t"
         "_08021A2C: .4byte gStringVar4\n\t"

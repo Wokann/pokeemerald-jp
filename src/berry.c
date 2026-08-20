@@ -1,5 +1,930 @@
 #include "global.h"
 #include "berry.h"
+#include "constants/berry.h"
+#include "constants/items.h"
+
+// BEGIN JP BERRY DATA (generated; do not edit by hand)
+#define BERRY_DESCRIPTION_DATA __attribute__((section(".rodata.berry_mid57b_descriptions")))
+
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Cheri[] = _("とても　かわいい　はなが　さく。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Cheri[] = _("まっかな　みは　とても　からい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Chesto[] = _("そとの　かわの　ぶぶんも　なかみも　すべてが");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Chesto[] = _("かたい。　どこを　たべても　しぶい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Pecha[] = _("とても　あまくて　おいしい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Pecha[] = _("やわらかいので　はこぶときは　ちゅうい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Rawst[] = _("はっぱの　ぶぶんが　ながく　まるまっていると");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Rawst[] = _("みが　とても　にがく　なるらしい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Aspear[] = _("かたい　みの　なかには　すいぶんが　とても");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Aspear[] = _("おおく　ふくまれている。　かなり　すっぱい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Leppa[] = _("クラボなどに　くらべて　すこし　そだつのが");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Leppa[] = _("おそい。　みが　ちいさいほど　おいしい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Oran[] = _("いろいろな　あじが　まざった　ふしぎな　み。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Oran[] = _("みを　つけるのに　はんにち　かかる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Persim[] = _("たいようが　だいすき。　ひに　あたると");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Persim[] = _("どんどん　いろが　あざやかに　なる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Lum[] = _("そだつのに　じかんが　かかるが　たいせつに");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Lum[] = _("そだてると　みが　2つ　つくことも　ある。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Sitrus[] = _("オレンとは　きょうだいの　ような　そんざい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Sitrus[] = _("おおきくて　あじも　ととのっている。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Figy[] = _("たべられた　あとのような　かたちの　なかには");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Figy[] = _("からい　せいぶんが　つまっている。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Wiki[] = _("まわりに　ついている　イボイボは　ポケモンが");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Wiki[] = _("もちやすいように　できたと　いわれている。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Mago[] = _("おおきく　なれば　なるほど　みが　まがる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Mago[] = _("まがるほど　あまくて　おいしい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Aguav[] = _("ちいさい　サイズの　はなで　しかも　ひかりを");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Aguav[] = _("ひつようと　しない　めずらしい　きのみ。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Iapapa[] = _("とても　おおきな　すっぱい　きのみ。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Iapapa[] = _("そだてるには　みじかくても　1にち　かかる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Razz[] = _("あかい　みは　たべると　ちょっぴり　からい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Razz[] = _("そだつのが　はやく　4じかんで　みを　つける");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Bluk[] = _("そとがわは　あおいいろだが　たべると");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Bluk[] = _("くちの　なかが　まっくろに　なる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Nanab[] = _("せかいで　7ばんめに　はっけん　されたので");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Nanab[] = _("ナナという　せつが　ゆうりょく。　あまい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Wepear[] = _("ちいさな　しろい　はなが　さく。　にがさと");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Wepear[] = _("すっぱさが　まざりあった　びみょうな　あじ。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Pinap[] = _("かぜに　よわく　さむさにも　よわい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Pinap[] = _("みの　なかが　からく　そとがわが　すっぱい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Pomeg[] = _("どんなに　みずを　あげても　えいようが");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Pomeg[] = _("あっても　6つの　み　しか　つけない。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Kelpsy[] = _("ねっこの　ような　かたちの　めずらしい");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Kelpsy[] = _("しゅるい。　とても　おおきな　はなが　さく。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Qualot[] = _("みずが　だいすき。　ずっと　あめが　ふる");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Qualot[] = _("ばしょでも　しっかりと　そだつ。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Hondew[] = _("とても　こうかで　なかなか　めに　することが");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Hondew[] = _("できない　きのみ。　とても　おいしい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Grepa[] = _("やわらかさと　まるい　かたちからは");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Grepa[] = _("そうぞうが　できないほど　すっぱい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Tamato[] = _("くちびるが　まがって　しまうほど　からい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Tamato[] = _("そだてるにも　じかんが　かかる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Cornn[] = _("おおむかしから　はえていた。　たくさん");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Cornn[] = _("うえないと　みが　つかないときも　ある。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Magost[] = _("とても　あじの　バランスが　よいと");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Magost[] = _("ひょうばんの　きのみ。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Rabuta[] = _("たくさんの　けが　はえている　めずらしい");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Rabuta[] = _("しゅるい。　かなり　にがい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Nomel[] = _("かなり　すっぱい。　1くち　たべると");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Nomel[] = _("3にちかん　ほかの　あじが　しなくなる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Spelon[] = _("まっかになった　みは　とてつもなく　からい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Spelon[] = _("イボからも　からい　せいぶんが　でている。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Pamtre[] = _("どこからともなく　うみを　ただよってくる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Pamtre[] = _("せかいの　どこかで　そだっている　らしい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Watmel[] = _("とても　おおきく　50センチを　こえるものも");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Watmel[] = _("はっけん　された。　ものすごく　あまい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Durin[] = _("みただけで　にがい。　あまりにも　にがいので");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Durin[] = _("そのままで　たべたひとは　だれもいない。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Belue[] = _("つるつるとして　おいしそうだが　とてつもなく");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Belue[] = _("すっぱい。　そだてるにも　じかんが　かかる。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Liechi[] = _("なぞのタネ。　チイラのみには　うみの");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Liechi[] = _("ちからが　やどるという　うわさが　ある。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Ganlon[] = _("なぞのタネ。　リュガのみには　りくの");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Ganlon[] = _("ちからが　やどるという　うわさが　ある。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Salac[] = _("なぞのタネ。　カムラのみには　そらの");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Salac[] = _("ちからが　やどるという　うわさが　ある。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Petaya[] = _("なぞのタネ。　ヤタピのみには　すべての");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Petaya[] = _("いきものの　ちからが　やどると　いわれている");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Apicot[] = _("ふしぎな　ふしぎな　きのみ。　なにが");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Apicot[] = _("おこるのか　なにが　できるのか　わからない。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Lansat[] = _("でんせつのみ　と　いわれている。　この　みを");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Lansat[] = _("もつと　とても　しあわせに　なるらしい。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Starf[] = _("あまりにも　ちからが　つよすぎるため");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Starf[] = _("せかいの　はてに　すてた　まぼろしのみ。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart1_Enigma[] = _("しょうたい　ふめいの　きのみ。");
+BERRY_DESCRIPTION_DATA static const u8 sBerryDescriptionPart2_Enigma[] = _("ほしの　ちからを　もっている　らしい。");
+
+#undef BERRY_DESCRIPTION_DATA
+
+#define BERRY_DATA __attribute__((section(".rodata.berry_mid58_data")))
+
+// JP name fields are EOS-filled, so explicit bytes avoid C's zero padding.
+BERRY_DATA const struct Berry gBerries[] =
+{
+    [ITEM_CHERI_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x58, 0x77, 0x9A, 0xFF, 0xFF, 0xFF, 0xFF }, // クラボ
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 20,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Cheri,
+        .description2 = sBerryDescriptionPart2_Cheri,
+        .stageDuration = 3,
+        .spicy = 10,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 25,
+    },
+
+    [ITEM_CHESTO_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x56, 0x8B, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // カゴ
+        .firmness = BERRY_FIRMNESS_SUPER_HARD,
+        .size = 80,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Chesto,
+        .description2 = sBerryDescriptionPart2_Chesto,
+        .stageDuration = 3,
+        .spicy = 0,
+        .dry = 10,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 25,
+    },
+
+    [ITEM_PECHA_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x73, 0x73, 0x7E, 0xFF, 0xFF, 0xFF, 0xFF }, // モモン
+        .firmness = BERRY_FIRMNESS_VERY_SOFT,
+        .size = 40,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Pecha,
+        .description2 = sBerryDescriptionPart2_Pecha,
+        .stageDuration = 3,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 10,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 25,
+    },
+
+    [ITEM_RAWST_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x61, 0xAE, 0x8B, 0xFF, 0xFF, 0xFF, 0xFF }, // チーゴ
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 32,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Rawst,
+        .description2 = sBerryDescriptionPart2_Rawst,
+        .stageDuration = 3,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 10,
+        .sour = 0,
+        .smoothness = 25,
+    },
+
+    [ITEM_ASPEAR_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x65, 0x65, 0x5C, 0xFF, 0xFF, 0xFF, 0xFF }, // ナナシ
+        .firmness = BERRY_FIRMNESS_SUPER_HARD,
+        .size = 50,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Aspear,
+        .description2 = sBerryDescriptionPart2_Aspear,
+        .stageDuration = 3,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 10,
+        .smoothness = 25,
+    },
+
+    [ITEM_LEPPA_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x6B, 0x72, 0x78, 0xFF, 0xFF, 0xFF, 0xFF }, // ヒメリ
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 28,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Leppa,
+        .description2 = sBerryDescriptionPart2_Leppa,
+        .stageDuration = 4,
+        .spicy = 10,
+        .dry = 0,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_ORAN_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x55, 0x7A, 0x7E, 0xFF, 0xFF, 0xFF, 0xFF }, // オレン
+        .firmness = BERRY_FIRMNESS_SUPER_HARD,
+        .size = 35,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Oran,
+        .description2 = sBerryDescriptionPart2_Oran,
+        .stageDuration = 3,
+        .spicy = 10,
+        .dry = 10,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_PERSIM_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x57, 0xAE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // キー
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 47,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Persim,
+        .description2 = sBerryDescriptionPart2_Persim,
+        .stageDuration = 3,
+        .spicy = 10,
+        .dry = 10,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_LUM_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x77, 0x71, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ラム
+        .firmness = BERRY_FIRMNESS_SUPER_HARD,
+        .size = 34,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Lum,
+        .description2 = sBerryDescriptionPart2_Lum,
+        .stageDuration = 12,
+        .spicy = 10,
+        .dry = 10,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_SITRUS_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x55, 0x9A, 0x7E, 0xFF, 0xFF, 0xFF, 0xFF }, // オボン
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 95,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Sitrus,
+        .description2 = sBerryDescriptionPart2_Sitrus,
+        .stageDuration = 6,
+        .spicy = 10,
+        .dry = 10,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_FIGY_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x6C, 0x80, 0x77, 0xFF, 0xFF, 0xFF, 0xFF }, // フィラ
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 100,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Figy,
+        .description2 = sBerryDescriptionPart2_Figy,
+        .stageDuration = 6,
+        .spicy = 10,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 25,
+    },
+
+    [ITEM_WIKI_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x53, 0x52, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ウイ
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 115,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Wiki,
+        .description2 = sBerryDescriptionPart2_Wiki,
+        .stageDuration = 6,
+        .spicy = 0,
+        .dry = 10,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 25,
+    },
+
+    [ITEM_MAGO_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x6F, 0x8B, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // マゴ
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 126,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Mago,
+        .description2 = sBerryDescriptionPart2_Mago,
+        .stageDuration = 6,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 10,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 25,
+    },
+
+    [ITEM_AGUAV_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x96, 0x7E, 0x8D, 0xFF, 0xFF, 0xFF, 0xFF }, // バンジ
+        .firmness = BERRY_FIRMNESS_SUPER_HARD,
+        .size = 64,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Aguav,
+        .description2 = sBerryDescriptionPart2_Aguav,
+        .stageDuration = 6,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 10,
+        .sour = 0,
+        .smoothness = 25,
+    },
+
+    [ITEM_IAPAPA_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x52, 0x51, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // イア
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 223,
+        .maxYield = 3,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Iapapa,
+        .description2 = sBerryDescriptionPart2_Iapapa,
+        .stageDuration = 6,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 10,
+        .smoothness = 25,
+    },
+
+    [ITEM_RAZZ_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x8E, 0x78, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ズリ
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 120,
+        .maxYield = 6,
+        .minYield = 3,
+        .description1 = sBerryDescriptionPart1_Razz,
+        .description2 = sBerryDescriptionPart2_Razz,
+        .stageDuration = 1,
+        .spicy = 10,
+        .dry = 10,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 20,
+    },
+
+    [ITEM_BLUK_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x98, 0x78, 0xAE, 0xFF, 0xFF, 0xFF, 0xFF }, // ブリー
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 108,
+        .maxYield = 6,
+        .minYield = 3,
+        .description1 = sBerryDescriptionPart1_Bluk,
+        .description2 = sBerryDescriptionPart2_Bluk,
+        .stageDuration = 1,
+        .spicy = 0,
+        .dry = 10,
+        .sweet = 10,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 20,
+    },
+
+    [ITEM_NANAB_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x65, 0x65, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ナナ
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 77,
+        .maxYield = 6,
+        .minYield = 3,
+        .description1 = sBerryDescriptionPart1_Nanab,
+        .description2 = sBerryDescriptionPart2_Nanab,
+        .stageDuration = 1,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 0,
+        .smoothness = 20,
+    },
+
+    [ITEM_WEPEAR_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x5E, 0x5C, 0x65, 0xFF, 0xFF, 0xFF, 0xFF }, // セシナ
+        .firmness = BERRY_FIRMNESS_SUPER_HARD,
+        .size = 74,
+        .maxYield = 6,
+        .minYield = 3,
+        .description1 = sBerryDescriptionPart1_Wepear,
+        .description2 = sBerryDescriptionPart2_Wepear,
+        .stageDuration = 1,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_PINAP_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x9B, 0x52, 0x79, 0xFF, 0xFF, 0xFF, 0xFF }, // パイル
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 80,
+        .maxYield = 6,
+        .minYield = 3,
+        .description1 = sBerryDescriptionPart1_Pinap,
+        .description2 = sBerryDescriptionPart2_Pinap,
+        .stageDuration = 1,
+        .spicy = 10,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_POMEG_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x8C, 0x7B, 0x58, 0xFF, 0xFF, 0xFF, 0xFF }, // ザロク
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 135,
+        .maxYield = 6,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Pomeg,
+        .description2 = sBerryDescriptionPart2_Pomeg,
+        .stageDuration = 3,
+        .spicy = 10,
+        .dry = 0,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 0,
+        .smoothness = 20,
+    },
+
+    [ITEM_KELPSY_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x68, 0x5A, 0x98, 0xFF, 0xFF, 0xFF, 0xFF }, // ネコブ
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 150,
+        .maxYield = 6,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Kelpsy,
+        .description2 = sBerryDescriptionPart2_Kelpsy,
+        .stageDuration = 3,
+        .spicy = 0,
+        .dry = 10,
+        .sweet = 0,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_QUALOT_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x60, 0x9F, 0x79, 0xFF, 0xFF, 0xFF, 0xFF }, // タポル
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 110,
+        .maxYield = 6,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Qualot,
+        .description2 = sBerryDescriptionPart2_Qualot,
+        .stageDuration = 3,
+        .spicy = 10,
+        .dry = 0,
+        .sweet = 10,
+        .bitter = 0,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_HONDEW_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x7B, 0x72, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ロメ
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 162,
+        .maxYield = 6,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Hondew,
+        .description2 = sBerryDescriptionPart2_Hondew,
+        .stageDuration = 3,
+        .spicy = 10,
+        .dry = 10,
+        .sweet = 0,
+        .bitter = 10,
+        .sour = 0,
+        .smoothness = 20,
+    },
+
+    [ITEM_GREPA_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x53, 0x98, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ウブ
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 149,
+        .maxYield = 6,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Grepa,
+        .description2 = sBerryDescriptionPart2_Grepa,
+        .stageDuration = 3,
+        .spicy = 0,
+        .dry = 10,
+        .sweet = 10,
+        .bitter = 0,
+        .sour = 10,
+        .smoothness = 20,
+    },
+
+    [ITEM_TAMATO_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x6F, 0x64, 0x6F, 0xFF, 0xFF, 0xFF, 0xFF }, // マトマ
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 200,
+        .maxYield = 4,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Tamato,
+        .description2 = sBerryDescriptionPart2_Tamato,
+        .stageDuration = 6,
+        .spicy = 20,
+        .dry = 10,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 30,
+    },
+
+    [ITEM_CORNN_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x73, 0x5A, 0x5C, 0xFF, 0xFF, 0xFF, 0xFF }, // モコシ
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 75,
+        .maxYield = 4,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Cornn,
+        .description2 = sBerryDescriptionPart2_Cornn,
+        .stageDuration = 6,
+        .spicy = 0,
+        .dry = 20,
+        .sweet = 10,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 30,
+    },
+
+    [ITEM_MAGOST_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x8B, 0x5D, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ゴス
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 140,
+        .maxYield = 4,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Magost,
+        .description2 = sBerryDescriptionPart2_Magost,
+        .stageDuration = 6,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 20,
+        .bitter = 10,
+        .sour = 0,
+        .smoothness = 30,
+    },
+
+    [ITEM_RABUTA_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x77, 0x98, 0x60, 0xFF, 0xFF, 0xFF, 0xFF }, // ラブタ
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 226,
+        .maxYield = 4,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Rabuta,
+        .description2 = sBerryDescriptionPart2_Rabuta,
+        .stageDuration = 6,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 20,
+        .sour = 10,
+        .smoothness = 30,
+    },
+
+    [ITEM_NOMEL_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x69, 0x72, 0x79, 0xFF, 0xFF, 0xFF, 0xFF }, // ノメル
+        .firmness = BERRY_FIRMNESS_SUPER_HARD,
+        .size = 285,
+        .maxYield = 4,
+        .minYield = 2,
+        .description1 = sBerryDescriptionPart1_Nomel,
+        .description2 = sBerryDescriptionPart2_Nomel,
+        .stageDuration = 6,
+        .spicy = 10,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 20,
+        .smoothness = 30,
+    },
+
+    [ITEM_SPELON_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x69, 0x7C, 0x57, 0xFF, 0xFF, 0xFF, 0xFF }, // ノワキ
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 133,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Spelon,
+        .description2 = sBerryDescriptionPart2_Spelon,
+        .stageDuration = 18,
+        .spicy = 40,
+        .dry = 10,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 70,
+    },
+
+    [ITEM_PAMTRE_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x5C, 0xAE, 0x74, 0xFF, 0xFF, 0xFF, 0xFF }, // シーヤ
+        .firmness = BERRY_FIRMNESS_VERY_SOFT,
+        .size = 244,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Pamtre,
+        .description2 = sBerryDescriptionPart2_Pamtre,
+        .stageDuration = 18,
+        .spicy = 0,
+        .dry = 40,
+        .sweet = 10,
+        .bitter = 0,
+        .sour = 0,
+        .smoothness = 70,
+    },
+
+    [ITEM_WATMEL_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x56, 0x52, 0x5D, 0xFF, 0xFF, 0xFF, 0xFF }, // カイス
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 250,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Watmel,
+        .description2 = sBerryDescriptionPart2_Watmel,
+        .stageDuration = 18,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 40,
+        .bitter = 10,
+        .sour = 0,
+        .smoothness = 70,
+    },
+
+    [ITEM_DURIN_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x95, 0x78, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ドリ
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 280,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Durin,
+        .description2 = sBerryDescriptionPart2_Durin,
+        .stageDuration = 18,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 40,
+        .sour = 10,
+        .smoothness = 70,
+    },
+
+    [ITEM_BELUE_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x99, 0x78, 0x98, 0xFF, 0xFF, 0xFF, 0xFF }, // ベリブ
+        .firmness = BERRY_FIRMNESS_VERY_SOFT,
+        .size = 300,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Belue,
+        .description2 = sBerryDescriptionPart2_Belue,
+        .stageDuration = 18,
+        .spicy = 10,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 40,
+        .smoothness = 70,
+    },
+
+    [ITEM_LIECHI_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x61, 0x52, 0x77, 0xFF, 0xFF, 0xFF, 0xFF }, // チイラ
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 111,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Liechi,
+        .description2 = sBerryDescriptionPart2_Liechi,
+        .stageDuration = 24,
+        .spicy = 40,
+        .dry = 0,
+        .sweet = 40,
+        .bitter = 0,
+        .sour = 10,
+        .smoothness = 80,
+    },
+
+    [ITEM_GANLON_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x78, 0x85, 0x87, 0xFF, 0xFF, 0xFF, 0xFF }, // リュガ
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 33,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Ganlon,
+        .description2 = sBerryDescriptionPart2_Ganlon,
+        .stageDuration = 24,
+        .spicy = 0,
+        .dry = 40,
+        .sweet = 0,
+        .bitter = 40,
+        .sour = 0,
+        .smoothness = 80,
+    },
+
+    [ITEM_SALAC_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x56, 0x71, 0x77, 0xFF, 0xFF, 0xFF, 0xFF }, // カムラ
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 95,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Salac,
+        .description2 = sBerryDescriptionPart2_Salac,
+        .stageDuration = 24,
+        .spicy = 0,
+        .dry = 0,
+        .sweet = 40,
+        .bitter = 0,
+        .sour = 40,
+        .smoothness = 80,
+    },
+
+    [ITEM_PETAYA_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x74, 0x60, 0x9C, 0xFF, 0xFF, 0xFF, 0xFF }, // ヤタピ
+        .firmness = BERRY_FIRMNESS_VERY_HARD,
+        .size = 237,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Petaya,
+        .description2 = sBerryDescriptionPart2_Petaya,
+        .stageDuration = 24,
+        .spicy = 40,
+        .dry = 0,
+        .sweet = 0,
+        .bitter = 40,
+        .sour = 0,
+        .smoothness = 80,
+    },
+
+    [ITEM_APICOT_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x8E, 0x51, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ズア
+        .firmness = BERRY_FIRMNESS_HARD,
+        .size = 75,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Apicot,
+        .description2 = sBerryDescriptionPart2_Apicot,
+        .stageDuration = 24,
+        .spicy = 0,
+        .dry = 40,
+        .sweet = 0,
+        .bitter = 0,
+        .sour = 40,
+        .smoothness = 80,
+    },
+
+    [ITEM_LANSAT_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x5B, 0x7E, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // サン
+        .firmness = BERRY_FIRMNESS_SOFT,
+        .size = 97,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Lansat,
+        .description2 = sBerryDescriptionPart2_Lansat,
+        .stageDuration = 24,
+        .spicy = 10,
+        .dry = 10,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 30,
+    },
+
+    [ITEM_STARF_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x5D, 0x60, 0xAE, 0xFF, 0xFF, 0xFF, 0xFF }, // スター
+        .firmness = BERRY_FIRMNESS_SUPER_HARD,
+        .size = 153,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Starf,
+        .description2 = sBerryDescriptionPart2_Starf,
+        .stageDuration = 24,
+        .spicy = 10,
+        .dry = 10,
+        .sweet = 10,
+        .bitter = 10,
+        .sour = 10,
+        .smoothness = 30,
+    },
+
+    [ITEM_ENIGMA_BERRY - FIRST_BERRY_INDEX] =
+    {
+        .name = { 0x65, 0x90, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }, // ナゾ
+        .firmness = BERRY_FIRMNESS_UNKNOWN,
+        .size = 0,
+        .maxYield = 2,
+        .minYield = 1,
+        .description1 = sBerryDescriptionPart1_Enigma,
+        .description2 = sBerryDescriptionPart2_Enigma,
+        .stageDuration = 24,
+        .spicy = 40,
+        .dry = 40,
+        .sweet = 40,
+        .bitter = 40,
+        .sour = 40,
+        .smoothness = 40,
+    },
+};
+
+BERRY_DATA const struct BerryCrushBerryData gBerryCrush_BerryData[] = {
+    [ITEM_CHERI_BERRY - FIRST_BERRY_INDEX]  = {.difficulty =  50, .powder =  20},
+    [ITEM_CHESTO_BERRY - FIRST_BERRY_INDEX] = {.difficulty =  50, .powder =  20},
+    [ITEM_PECHA_BERRY - FIRST_BERRY_INDEX]  = {.difficulty =  50, .powder =  20},
+    [ITEM_RAWST_BERRY - FIRST_BERRY_INDEX]  = {.difficulty =  50, .powder =  20},
+    [ITEM_ASPEAR_BERRY - FIRST_BERRY_INDEX] = {.difficulty =  50, .powder =  20},
+    [ITEM_LEPPA_BERRY - FIRST_BERRY_INDEX]  = {.difficulty =  50, .powder =  30},
+    [ITEM_ORAN_BERRY - FIRST_BERRY_INDEX]   = {.difficulty =  50, .powder =  30},
+    [ITEM_PERSIM_BERRY - FIRST_BERRY_INDEX] = {.difficulty =  50, .powder =  30},
+    [ITEM_LUM_BERRY - FIRST_BERRY_INDEX]    = {.difficulty =  50, .powder =  30},
+    [ITEM_SITRUS_BERRY - FIRST_BERRY_INDEX] = {.difficulty =  50, .powder =  30},
+    [ITEM_FIGY_BERRY - FIRST_BERRY_INDEX]   = {.difficulty =  60, .powder =  50},
+    [ITEM_WIKI_BERRY - FIRST_BERRY_INDEX]   = {.difficulty =  60, .powder =  50},
+    [ITEM_MAGO_BERRY - FIRST_BERRY_INDEX]   = {.difficulty =  60, .powder =  50},
+    [ITEM_AGUAV_BERRY - FIRST_BERRY_INDEX]  = {.difficulty =  60, .powder =  50},
+    [ITEM_IAPAPA_BERRY - FIRST_BERRY_INDEX] = {.difficulty =  60, .powder =  50},
+    [ITEM_RAZZ_BERRY - FIRST_BERRY_INDEX]   = {.difficulty =  80, .powder =  70},
+    [ITEM_BLUK_BERRY - FIRST_BERRY_INDEX]   = {.difficulty =  80, .powder =  70},
+    [ITEM_NANAB_BERRY - FIRST_BERRY_INDEX]  = {.difficulty =  80, .powder =  70},
+    [ITEM_WEPEAR_BERRY - FIRST_BERRY_INDEX] = {.difficulty =  80, .powder =  70},
+    [ITEM_PINAP_BERRY - FIRST_BERRY_INDEX]  = {.difficulty =  80, .powder =  70},
+    [ITEM_POMEG_BERRY - FIRST_BERRY_INDEX]  = {.difficulty = 100, .powder = 100},
+    [ITEM_KELPSY_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 100, .powder = 100},
+    [ITEM_QUALOT_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 100, .powder = 100},
+    [ITEM_HONDEW_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 100, .powder = 100},
+    [ITEM_GREPA_BERRY - FIRST_BERRY_INDEX]  = {.difficulty = 100, .powder = 100},
+    [ITEM_TAMATO_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 130, .powder = 150},
+    [ITEM_CORNN_BERRY - FIRST_BERRY_INDEX]  = {.difficulty = 130, .powder = 150},
+    [ITEM_MAGOST_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 130, .powder = 150},
+    [ITEM_RABUTA_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 130, .powder = 150},
+    [ITEM_NOMEL_BERRY - FIRST_BERRY_INDEX]  = {.difficulty = 130, .powder = 150},
+    [ITEM_SPELON_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 160, .powder = 250},
+    [ITEM_PAMTRE_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 160, .powder = 250},
+    [ITEM_WATMEL_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 160, .powder = 250},
+    [ITEM_DURIN_BERRY - FIRST_BERRY_INDEX]  = {.difficulty = 160, .powder = 250},
+    [ITEM_BELUE_BERRY - FIRST_BERRY_INDEX]  = {.difficulty = 160, .powder = 250},
+    [ITEM_LIECHI_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 180, .powder = 500},
+    [ITEM_GANLON_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 180, .powder = 500},
+    [ITEM_SALAC_BERRY - FIRST_BERRY_INDEX]  = {.difficulty = 180, .powder = 500},
+    [ITEM_PETAYA_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 180, .powder = 500},
+    [ITEM_APICOT_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 180, .powder = 500},
+    [ITEM_LANSAT_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 200, .powder = 750},
+    [ITEM_STARF_BERRY - FIRST_BERRY_INDEX]  = {.difficulty = 200, .powder = 750},
+    [ITEM_ENIGMA_BERRY - FIRST_BERRY_INDEX] = {.difficulty = 150, .powder = 200}
+};
+
+BERRY_DATA const struct BerryTree gBlankBerryTree = {};
+
+#undef BERRY_DATA
+// END JP BERRY DATA
 
 __attribute__((naked)) void ClearEnigmaBerries()
 {
@@ -324,7 +1249,7 @@ __attribute__((naked)) void ClearBerryTrees()
         "	.align 2, 0\n\t"
         "_080E0D08: .4byte gSaveBlock1Ptr\n\t"
         "_080E0D0C: .4byte 0x0000169C\n\t"
-        "_080E0D10: .4byte gUnknown_85636B0\n\t"
+        "_080E0D10: .4byte gBlankBerryTree\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -417,7 +1342,7 @@ __attribute__((naked)) void BerryTreeGrow(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E0DB8: .4byte gUnknown_85636B0\n\t"
+        "_080E0DB8: .4byte gBlankBerryTree\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -468,7 +1393,7 @@ __attribute__((naked)) void BerryTreeTimeUpdate(s32 minutes)
         "	.align 2, 0\n\t"
         "_080E0E0C: .4byte gSaveBlock1Ptr\n\t"
         "_080E0E10: .4byte 0x0000169C\n\t"
-        "_080E0E14: .4byte gUnknown_85636B0\n\t"
+        "_080E0E14: .4byte gBlankBerryTree\n\t"
         "_080E0E18:\n\t"
         "	adds r5, r6, #0\n\t"
         "	cmp r5, #0\n\t"
@@ -570,7 +1495,7 @@ __attribute__((naked)) void PlantBerryTree(u8 id, u8 berry, u8 stage, bool8 allo
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E0ECC: .4byte gUnknown_85636B0\n\t"
+        "_080E0ECC: .4byte gBlankBerryTree\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -595,7 +1520,7 @@ __attribute__((naked)) void RemoveBerryTree(u8 id)
         "	.align 2, 0\n\t"
         "_080E0EEC: .4byte gSaveBlock1Ptr\n\t"
         "_080E0EF0: .4byte 0x0000169C\n\t"
-        "_080E0EF4: .4byte gUnknown_85636B0\n\t"
+        "_080E0EF4: .4byte gBlankBerryTree\n\t"
         ".syntax divided\n\t"
     );
 }

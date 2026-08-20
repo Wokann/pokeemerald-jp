@@ -512,6 +512,12 @@ $(C_BUILDDIR)/contest.o: src/contest.c src/data/contest_opponents.h src/data/con
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/contest.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/contest.gen.s
 
+$(C_BUILDDIR)/berry.o: src/berry.c charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/berry.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/berry.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/berry.gen.s
+
 $(C_BUILDDIR)/data/battle_records.o: src/data/battle_records.c src/data/battle_records.h $(wildcard graphics/trainer_hill/* data/battle_records/jp/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/battle_records.gen.s

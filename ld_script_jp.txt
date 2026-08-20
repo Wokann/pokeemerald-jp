@@ -9437,8 +9437,8 @@ SECTIONS {
         src/contest.o(.rodata.contest_mid57b_excitement);
         src/shop.o(.rodata.shop_mid57b);
         src/fldeff_escalator.o(.rodata.fldeff_escalator_mid57b);
-        data/data_b2d_mid57_b.o(.rodata.mid57b_escalator);
-        src/data/text/region_texts58.o(.rodata);
+        src/berry.o(.rodata.berry_mid57b_descriptions);
+        src/berry.o(.rodata.berry_mid58_data);
         data/data_b2d_mid58.o(.rodata);
         src/data/text/region_texts59.o(.rodata);
         data/data_b2d_mid59.o(.rodata);
