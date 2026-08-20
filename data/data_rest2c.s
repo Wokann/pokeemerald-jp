@@ -898,10 +898,7 @@ gUnknown_8DA3F3C: @ 0x8DA3F3C
 	.incbin "graphics/misc/gUnknown_8DA3F3C.4bpp.lz"
 
 
-	.globl gUnknown_8DA5050
-gUnknown_8DA5050: @ 0x8DA5050
-	.incbin "graphics/misc/gUnknown_8DA5050.4bpp.lz"
-
+	.section .rodata.data_rest2c_after_descends_palette
 
 	.globl gUnknown_8DA5094
 gUnknown_8DA5094: @ 0x8DA5094
@@ -916,8 +913,8 @@ gUnknown_8DA5218: @ 0x8DA5218
 	.globl gUnknown_8DA6360
 gUnknown_8DA6360: @ 0x8DA6360
 	.incbin "graphics/misc/gUnknown_8DA6360.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xDA66E8, 0x57C
 
+	.section .rodata.data_rest2c_after_descends
 
 	.globl gUnknown_8DA6C64
 gUnknown_8DA6C64: @ 0x8DA6C64

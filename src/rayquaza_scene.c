@@ -13,6 +13,8 @@
 #define TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN 30509
 #define TAG_DUOFIGHT_KYOGRE_DORSAL_FIN   30510
 #define TAG_FLIGHT_SMOKE                 30555
+#define TAG_DESCENDS_RAYQUAZA            30556
+#define TAG_DESCENDS_RAYQUAZA_TAIL       30557
 
 #define MAX_SMOKE 10
 
@@ -639,6 +641,111 @@ const s8 sTakesFlight_SmokeCoords[MAX_SMOKE][2] RAYQUAZA_SCENE_TAKES_FLIGHT_DATA
 };
 
 #undef RAYQUAZA_SCENE_TAKES_FLIGHT_DATA
+
+#define RAYQUAZA_SCENE_DESCENDS_DATA __attribute__((section(".rodata.rayquaza_scene_descends")))
+
+const struct BgTemplate sBgTemplates_Descends[] RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
+const union AnimCmd sAnim_Descends_Rayquaza[] RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    ANIMCMD_FRAME(0, 32),
+    ANIMCMD_FRAME(64, 32),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const sAnims_Descends_Rayquaza[] RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    sAnim_Descends_Rayquaza
+};
+
+const union AnimCmd sAnim_Descends_RayquazaTail[] RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    ANIMCMD_FRAME(0, 32),
+    ANIMCMD_FRAME(8, 32),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const sAnims_Descends_RayquazaTail[] RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    sAnim_Descends_RayquazaTail
+};
+
+const struct CompressedSpriteSheet sSpriteSheet_Descends_Rayquaza RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    gRaySceneDescends_Rayquaza_Gfx, 0x1000, TAG_DESCENDS_RAYQUAZA
+};
+
+const struct CompressedSpriteSheet sSpriteSheet_Descends_RayquazaTail RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    gRaySceneDescends_RayquazaTail_Gfx, 0x200, TAG_DESCENDS_RAYQUAZA_TAIL
+};
+
+const struct CompressedSpritePalette sSpritePal_Descends_Rayquaza RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    gRaySceneTakesFlight_Rayquaza_Pal, TAG_DESCENDS_RAYQUAZA // "Takes flight" palette re-used here
+};
+
+const struct SpriteTemplate sSpriteTemplate_Descends_Rayquaza RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    .tileTag = TAG_DESCENDS_RAYQUAZA,
+    .paletteTag = TAG_DESCENDS_RAYQUAZA,
+    .oam = &sOam_64x64,
+    .anims = sAnims_Descends_Rayquaza,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const struct SpriteTemplate sSpriteTemplate_Descends_RayquazaTail RAYQUAZA_SCENE_DESCENDS_DATA =
+{
+    .tileTag = TAG_DESCENDS_RAYQUAZA_TAIL,
+    .paletteTag = TAG_DESCENDS_RAYQUAZA,
+    .oam = &sOam_16x32,
+    .anims = sAnims_Descends_RayquazaTail,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+#undef RAYQUAZA_SCENE_DESCENDS_DATA
 
 __attribute__((naked)) void DoRayquazaScene(u8 animId, bool8 endEarly, MainCallback exitCallback)
 {
@@ -3768,7 +3875,7 @@ __attribute__((naked)) void sub_081D77D8(void)
         "_081D7870: .4byte 0x00000804\n\t"
         "_081D7874: .4byte gUnknown_8DA5094\n\t"
         "_081D7878: .4byte 0x00001004\n\t"
-        "_081D787C: .4byte gUnknown_8DA5050\n\t"
+        "_081D787C: .4byte gRaySceneTakesFlight_Rayquaza_Pal\n\t"
         "_081D7880: .4byte sSpriteSheet_TakesFlight_Smoke\n\t"
         "_081D7884: .4byte sSpritePal_TakesFlight_Smoke\n\t"
         ".syntax divided\n\t"
@@ -4295,7 +4402,7 @@ __attribute__((naked)) void sub_081D7BEC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D7C80: .4byte gUnknown_85FBDC8\n\t"
+        "_081D7C80: .4byte sBgTemplates_Descends\n\t"
         "_081D7C84: .4byte gUnknown_203CC2C\n\t"
         "_081D7C88: .4byte 0x00000804\n\t"
         "_081D7C8C: .4byte 0x00001004\n\t"
@@ -4398,9 +4505,9 @@ __attribute__((naked)) void sub_081D7C94(void)
         "_081D7D70: .4byte gPlttBufferUnfaded\n\t"
         "_081D7D74: .4byte 0x00007FFF\n\t"
         "_081D7D78: .4byte gPlttBufferFaded\n\t"
-        "_081D7D7C: .4byte gUnknown_85FBDF8\n\t"
-        "_081D7D80: .4byte gUnknown_85FBE00\n\t"
-        "_081D7D84: .4byte gUnknown_85FBE08\n\t"
+        "_081D7D7C: .4byte sSpriteSheet_Descends_Rayquaza\n\t"
+        "_081D7D80: .4byte sSpriteSheet_Descends_RayquazaTail\n\t"
+        "_081D7D84: .4byte sSpritePal_Descends_Rayquaza\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4792,9 +4899,9 @@ __attribute__((naked)) void sub_081D8008(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081D8078: .4byte gUnknown_85FBE10\n\t"
+        "_081D8078: .4byte sSpriteTemplate_Descends_Rayquaza\n\t"
         "_081D807C: .4byte gUnknown_20205DA\n\t"
-        "_081D8080: .4byte gUnknown_85FBE28\n\t"
+        "_081D8080: .4byte sSpriteTemplate_Descends_RayquazaTail\n\t"
         "_081D8084: .4byte sub_081D8088 + 1\n\t"
         ".syntax divided\n\t"
     );
