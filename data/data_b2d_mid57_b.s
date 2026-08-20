@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.mid57b_contest_a
+	.section .rodata.mid57b_contest_b
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -8,76 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-
-	.globl gUnknown_85609D0
-gUnknown_85609D0: @ 0x85609D0
-	.incbin "baserom_jp.gba", 0x5609d0, 0x4
-
-	.globl gUnknown_85609D4
-gUnknown_85609D4: @ 0x85609D4
-	.incbin "baserom_jp.gba", 0x5609d4, 0x4
-
-	.globl gUnknown_85609D8
-gUnknown_85609D8: @ 0x85609D8
-	.incbin "baserom_jp.gba", 0x5609d8, 0x5c
-
-	.globl gUnknown_8560A34
-gUnknown_8560A34: @ 0x8560A34
-	.incbin "baserom_jp.gba", 0x560a34, 0x18
-
-	.globl gUnknown_8560A4C
-gUnknown_8560A4C: @ 0x8560A4C
-	.incbin "baserom_jp.gba", 0x560a4c, 0x20
-
-	.globl gUnknown_8560A6C
-gUnknown_8560A6C: @ 0x8560A6C
-	.incbin "baserom_jp.gba", 0x560a6c, 0x10
-
-	.globl gUnknown_8560A7C
-gUnknown_8560A7C: @ 0x8560A7C
-	.incbin "baserom_jp.gba", 0x560a7c, 0x68
-
-	.globl gUnknown_8560AE4
-gUnknown_8560AE4: @ 0x8560AE4
-	.incbin "baserom_jp.gba", 0x560ae4, 0x30
-
-	.globl gUnknown_8560B14
-gUnknown_8560B14: @ 0x8560B14
-	.incbin "baserom_jp.gba", 0x560b14, 0x8
-
-	.globl gUnknown_8560B1C
-gUnknown_8560B1C: @ 0x8560B1C
-	.incbin "baserom_jp.gba", 0x560b1c, 0x10
-
-	.globl gUnknown_8560B2C
-gUnknown_8560B2C: @ 0x8560B2C
-	.incbin "baserom_jp.gba", 0x560b2c, 0x20
-
-	.globl gUnknown_8560B4C
-gUnknown_8560B4C: @ 0x8560B4C
-	.incbin "baserom_jp.gba", 0x560b4c, 0x18
-
-	.globl gUnknown_8560B64
-gUnknown_8560B64: @ 0x8560B64
-	.incbin "baserom_jp.gba", 0x560b64, 0x8
-
-	.globl gUnknown_8560B6C
-gUnknown_8560B6C: @ 0x8560B6C
-	.incbin "baserom_jp.gba", 0x560b6c, 0x8
-
-	.globl gUnknown_8560B74
-gUnknown_8560B74: @ 0x8560B74
-	.incbin "baserom_jp.gba", 0x560b74, 0x8
-
-	.globl gUnknown_8560B7C
-gUnknown_8560B7C: @ 0x8560B7C
-	.incbin "baserom_jp.gba", 0x560b7c, 0x18
-
-	.globl gUnknown_8560B94
-gUnknown_8560B94: @ 0x8560B94
-	.incbin "baserom_jp.gba", 0x560b94, 0x20
-
-	.section .rodata.mid57b_contest_b
 
 	.globl gUnknown_8560CF4
 gUnknown_8560CF4: @ 0x8560CF4

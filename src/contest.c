@@ -1,14 +1,261 @@
 #include "global.h"
+#include "bg.h"
 #include "contest.h"
 #include "contest_effect.h"
+#include "graphics.h"
+#include "sprite.h"
 #include "constants/moves.h"
 #include "data/contest_text_tables.h"
 
 extern u8 sContestBgCopyFlags;
+extern const struct OamData gOamData_AffineOff_ObjNormal_16x16;
 
 // An index into a palette where the text color for each contestant is stored.
 // Contestant 0 will use palette color 10, contestant 1 will use color 11, etc.
 #define CONTESTANT_TEXT_COLOR_START 10
+
+enum {
+    TAG_SLIDER_HEART = 0x4E20,
+    TAG_JUDGE = 0x4E21,
+    TAG_NEXT_TURN_1_GFX = 0x4E22,
+    TAG_NEXT_TURN_2_GFX,
+    TAG_NEXT_TURN_3_GFX,
+    TAG_NEXT_TURN_4_GFX,
+    TAG_NEXT_TURN_PAL = TAG_NEXT_TURN_1_GFX,
+    TAG_CONTEST_SYMBOLS_PAL = 0xABE0,
+    TAG_FACES_GFX,
+    TAG_APPLAUSE_METER,
+    TAG_JUDGE_SYMBOLS_GFX = TAG_CONTEST_SYMBOLS_PAL,
+};
+
+#define CONTEST_GRAPHICS_DATA __attribute__((section(".rodata.contest_mid57b_graphics")))
+
+CONTEST_GRAPHICS_DATA static const u8 sSliderHeartYPositions[CONTESTANT_COUNT] = {
+    36, 76, 116, 156
+};
+
+CONTEST_GRAPHICS_DATA static const u8 sNextTurnSpriteYPositions[CONTESTANT_COUNT] = {
+    36, 76, 116, 156
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpriteSheet sSpriteSheet_SliderHeart = {
+    .data = gContestSliderHeart_Gfx,
+    .size = 0x20,
+    .tag = TAG_SLIDER_HEART,
+};
+
+CONTEST_GRAPHICS_DATA static const struct OamData sOam_SliderHeart = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+CONTEST_GRAPHICS_DATA static const union AffineAnimCmd sAffineAnim_SliderHeart_Normal[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+CONTEST_GRAPHICS_DATA static const union AffineAnimCmd sAffineAnim_SliderHeart_SpinDisappear[] = {
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(-10, -10, -20, 20),
+    AFFINEANIMCMD_END,
+};
+
+CONTEST_GRAPHICS_DATA static const union AffineAnimCmd sAffineAnim_SliderHeart_SpinAppear[] = {
+    AFFINEANIMCMD_FRAME(56, 56, 0, 0),
+    AFFINEANIMCMD_FRAME(10, 10, 20, 20),
+    AFFINEANIMCMD_END,
+};
+
+CONTEST_GRAPHICS_DATA static const union AffineAnimCmd *const sAffineAnims_SliderHeart[] = {
+    [0] = sAffineAnim_SliderHeart_Normal,
+    [1] = sAffineAnim_SliderHeart_SpinDisappear,
+    [2] = sAffineAnim_SliderHeart_SpinAppear,
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpriteTemplate sSpriteTemplate_SliderHeart = {
+    .tileTag = TAG_SLIDER_HEART,
+    .paletteTag = TAG_CONTEST_SYMBOLS_PAL,
+    .oam = &sOam_SliderHeart,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_SliderHeart,
+    .callback = SpriteCallbackDummy,
+};
+
+CONTEST_GRAPHICS_DATA static const struct CompressedSpriteSheet sSpriteSheet_NextTurn[CONTESTANT_COUNT] = {
+    { .data = gContestNextTurnGfx, .size = 0xA0, .tag = TAG_NEXT_TURN_1_GFX },
+    { .data = gContestNextTurnGfx, .size = 0xA0, .tag = TAG_NEXT_TURN_2_GFX },
+    { .data = gContestNextTurnGfx, .size = 0xA0, .tag = TAG_NEXT_TURN_3_GFX },
+    { .data = gContestNextTurnGfx, .size = 0xA0, .tag = TAG_NEXT_TURN_4_GFX },
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpritePalette sSpritePalette_NextTurn = {
+    .data = gContestPal,
+    .tag = TAG_NEXT_TURN_PAL,
+};
+
+CONTEST_GRAPHICS_DATA static const struct OamData sOam_NextTurn = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpriteTemplate sSpriteTemplates_NextTurn[CONTESTANT_COUNT] = {
+    { TAG_NEXT_TURN_1_GFX, TAG_NEXT_TURN_PAL, &sOam_NextTurn, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy },
+    { TAG_NEXT_TURN_2_GFX, TAG_NEXT_TURN_PAL, &sOam_NextTurn, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy },
+    { TAG_NEXT_TURN_3_GFX, TAG_NEXT_TURN_PAL, &sOam_NextTurn, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy },
+    { TAG_NEXT_TURN_4_GFX, TAG_NEXT_TURN_PAL, &sOam_NextTurn, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy },
+};
+
+CONTEST_GRAPHICS_DATA static const struct Subsprite sSubsprites_NextTurn[] = {
+    { .x = -20, .y = -4, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 0, .priority = 0 },
+    { .x = 12, .y = -4, .shape = SPRITE_SHAPE(8x8), .size = SPRITE_SIZE(8x8), .tileOffset = 4, .priority = 0 },
+};
+
+CONTEST_GRAPHICS_DATA static const struct SubspriteTable sSubspriteTable_NextTurn[] = {
+    { .subspriteCount = ARRAY_COUNT(sSubsprites_NextTurn), .subsprites = sSubsprites_NextTurn },
+};
+
+CONTEST_GRAPHICS_DATA static const struct CompressedSpriteSheet sSpriteSheet_Faces = {
+    .data = gContestFaces_Gfx,
+    .size = 0x180,
+    .tag = TAG_FACES_GFX,
+};
+
+CONTEST_GRAPHICS_DATA static const struct OamData sOam_Faces = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpriteTemplate sSpriteTemplate_Faces = {
+    .tileTag = TAG_FACES_GFX,
+    .paletteTag = TAG_CONTEST_SYMBOLS_PAL,
+    .oam = &sOam_Faces,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+CONTEST_GRAPHICS_DATA static const struct CompressedSpriteSheet sSpriteSheet_ApplauseMeter = {
+    .data = gContestApplauseGfx,
+    .size = 0x400,
+    .tag = TAG_APPLAUSE_METER,
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpritePalette sSpritePalette_ApplauseMeter = {
+    .data = gContestPal,
+    .tag = TAG_APPLAUSE_METER,
+};
+
+CONTEST_GRAPHICS_DATA static const struct OamData sOam_ApplauseMeter = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpriteTemplate sSpriteTemplate_ApplauseMeter = {
+    .tileTag = TAG_APPLAUSE_METER,
+    .paletteTag = TAG_APPLAUSE_METER,
+    .oam = &sOam_ApplauseMeter,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+CONTEST_GRAPHICS_DATA static const struct OamData sOam_Judge = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 2,
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpriteTemplate sSpriteTemplate_Judge = {
+    .tileTag = TAG_JUDGE,
+    .paletteTag = TAG_JUDGE,
+    .oam = &sOam_Judge,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+CONTEST_GRAPHICS_DATA static const struct CompressedSpriteSheet sSpriteSheet_Judge = {
+    .data = gContestJudgeGfx,
+    .size = 0x800,
+    .tag = TAG_JUDGE,
+};
+
+CONTEST_GRAPHICS_DATA static const struct CompressedSpriteSheet sSpriteSheet_JudgeSymbols = {
+    .data = gContestJudgeSymbolsGfx,
+    .size = 0x380,
+    .tag = TAG_CONTEST_SYMBOLS_PAL,
+};
+
+CONTEST_GRAPHICS_DATA static const struct CompressedSpritePalette sSpritePalette_JudgeSymbols = {
+    .data = gContestJudgeSymbolsPal,
+    .tag = TAG_CONTEST_SYMBOLS_PAL,
+};
+
+CONTEST_GRAPHICS_DATA static const struct SpriteTemplate sSpriteTemplate_JudgeSpeechBubble = {
+    .tileTag = TAG_JUDGE_SYMBOLS_GFX,
+    .paletteTag = TAG_CONTEST_SYMBOLS_PAL,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+CONTEST_GRAPHICS_DATA static const u16 sText_Pal[] = {
+    0x0000, 0x2529, 0x001F, 0x03E0, 0x7C00, 0x03FF, 0x7FE0, 0x7C1F,
+    0x675A, 0x0000, 0x0000, 0x779C, 0x7FFF, 0x7F33, 0x72EF, 0x7FFF,
+};
+
+#undef CONTEST_GRAPHICS_DATA
 
 void TaskDummy1(void) {}
 void ResetLinkContestBoolean(void)
@@ -260,7 +507,7 @@ __attribute__((naked)) void sub_080D7058(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D709C: .4byte gUnknown_8560B94\n\t"
+        "_080D709C: .4byte sText_Pal\n\t"
         "_080D70A0: .4byte gUnknown_2037596\n\t"
         "_080D70A4: .4byte 0x00007E3F\n\t"
         ".syntax divided\n\t"
@@ -7365,9 +7612,9 @@ __attribute__((naked)) void sub_080DA828(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080DA870: .4byte gUnknown_8560B64\n\t"
+        "_080DA870: .4byte sSpriteSheet_Judge\n\t"
         "_080DA874: .4byte gUnknown_8C1C700\n\t"
-        "_080DA878: .4byte gUnknown_8560B4C\n\t"
+        "_080DA878: .4byte sSpriteTemplate_Judge\n\t"
         "_080DA87C: .4byte gSprites\n\t"
         "_080DA880: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
@@ -7410,9 +7657,9 @@ __attribute__((naked)) void sub_080DA884(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080DA8C8: .4byte gUnknown_8560B6C\n\t"
-        "_080DA8CC: .4byte gUnknown_8560B74\n\t"
-        "_080DA8D0: .4byte gUnknown_8560B7C\n\t"
+        "_080DA8C8: .4byte sSpriteSheet_JudgeSymbols\n\t"
+        "_080DA8CC: .4byte sSpritePalette_JudgeSymbols\n\t"
+        "_080DA8D0: .4byte sSpriteTemplate_JudgeSpeechBubble\n\t"
         "_080DA8D4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -9885,10 +10132,10 @@ __attribute__((naked)) void sub_080DBA20(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DBA58: .4byte gUnknown_85609D8\n\t"
-        "_080DBA5C: .4byte gUnknown_85609D0\n\t"
+        "_080DBA58: .4byte sSpriteSheet_SliderHeart\n\t"
+        "_080DBA5C: .4byte sSliderHeartYPositions\n\t"
         "_080DBA60: .4byte gContestantTurnOrder\n\t"
-        "_080DBA64: .4byte gUnknown_8560A34\n\t"
+        "_080DBA64: .4byte sSpriteTemplate_SliderHeart\n\t"
         "_080DBA68: .4byte gContestResources\n\t"
         ".syntax divided\n\t"
     );
@@ -10126,7 +10373,7 @@ __attribute__((naked)) void sub_080DBBB0(void)
         "	.align 2, 0\n\t"
         "_080DBBE4: .4byte gSprites\n\t"
         "_080DBBE8: .4byte gContestResources\n\t"
-        "_080DBBEC: .4byte gUnknown_85609D0\n\t"
+        "_080DBBEC: .4byte sSliderHeartYPositions\n\t"
         "_080DBBF0: .4byte gContestantTurnOrder\n\t"
         ".syntax divided\n\t"
     );
@@ -10258,14 +10505,14 @@ __attribute__((naked)) void sub_080DBC54(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DBCD8: .4byte gUnknown_8560A6C\n\t"
+        "_080DBCD8: .4byte sSpritePalette_NextTurn\n\t"
         "_080DBCDC: .4byte gContestResources\n\t"
         "_080DBCE0: .4byte gSprites\n\t"
-        "_080DBCE4: .4byte gUnknown_8560A4C\n\t"
-        "_080DBCE8: .4byte gUnknown_8560A7C\n\t"
-        "_080DBCEC: .4byte gUnknown_85609D4\n\t"
+        "_080DBCE4: .4byte sSpriteSheet_NextTurn\n\t"
+        "_080DBCE8: .4byte sSpriteTemplates_NextTurn\n\t"
+        "_080DBCEC: .4byte sNextTurnSpriteYPositions\n\t"
         "_080DBCF0: .4byte gContestantTurnOrder\n\t"
-        "_080DBCF4: .4byte gUnknown_8560AE4\n\t"
+        "_080DBCF4: .4byte sSubspriteTable_NextTurn\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10304,9 +10551,9 @@ __attribute__((naked)) void CreateApplauseMeterSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DBD38: .4byte gUnknown_8560B14\n\t"
-        "_080DBD3C: .4byte gUnknown_8560B1C\n\t"
-        "_080DBD40: .4byte gUnknown_8560B2C\n\t"
+        "_080DBD38: .4byte sSpriteSheet_ApplauseMeter\n\t"
+        "_080DBD3C: .4byte sSpritePalette_ApplauseMeter\n\t"
+        "_080DBD40: .4byte sSpriteTemplate_ApplauseMeter\n\t"
         "_080DBD44: .4byte gSprites\n\t"
         "_080DBD48: .4byte gContestResources\n\t"
         ".syntax divided\n\t"
@@ -13966,7 +14213,7 @@ __attribute__((naked)) void sub_080DD76C(void)
         "_080DD80C: .4byte gSprites\n\t"
         "_080DD810: .4byte 0x06010040\n\t"
         "_080DD814: .4byte 0x04000008\n\t"
-        "_080DD818: .4byte gUnknown_85609D4\n\t"
+        "_080DD818: .4byte sNextTurnSpriteYPositions\n\t"
         "_080DD81C: .4byte gContestantTurnOrder\n\t"
         "_080DD820:\n\t"
         "	mov r1, sb\n\t"

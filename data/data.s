@@ -268,6 +268,9 @@ gUnknown_82BF304: @ 0x82BF304
 gDummySpriteAffineAnimTable: @ 0x82BF310
 	.4byte 0x082BF308
 
+	.globl gOamData_AffineOff_ObjNormal_16x16
+	.set gOamData_AffineOff_ObjNormal_16x16, 0x084FD018
+
 	.globl gDummySpriteTemplate
 gDummySpriteTemplate: @ 0x82BF314
 	.hword 0x0000, 0xFFFF

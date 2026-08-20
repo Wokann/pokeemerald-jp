@@ -640,6 +640,15 @@ gUnknown_8D8E9FC: @ 0x8D8E9FC
 gUnknown_8D8EBD8: @ 0x8D8EBD8
 	.incbin "baserom_jp.gba", 0xd8ebd8, 0xf78
 
+	.globl gContestNextTurnGfx
+	.set gContestNextTurnGfx, gUnknown_8D8E97C - 0x5c
+
+	.globl gContestApplauseGfx
+	.set gContestApplauseGfx, gUnknown_8D8E9FC + 0xb0
+
+	.globl gContestPal
+	.set gContestPal, gUnknown_8D8EBD8 + 0x80
+
 
 	.globl gBattleAnimBackgroundImageMuddyWater_Pal
 gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50
