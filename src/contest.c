@@ -1,6 +1,8 @@
 #include "global.h"
 #include "contest.h"
+#include "contest_effect.h"
 #include "constants/moves.h"
+#include "data/contest_text_tables.h"
 
 extern u8 sContestBgCopyFlags;
 

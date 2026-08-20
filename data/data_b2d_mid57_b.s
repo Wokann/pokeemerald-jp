@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.mid57b_contest
+	.section .rodata.mid57b_contest_a
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -77,13 +77,7 @@ gUnknown_8560B7C: @ 0x8560B7C
 gUnknown_8560B94: @ 0x8560B94
 	.incbin "baserom_jp.gba", 0x560b94, 0x20
 
-	.globl gContestEffectDescriptionPointers
-gContestEffectDescriptionPointers: @ 0x8560BB4
-	.incbin "baserom_jp.gba", 0x560bb4, 0xf8
-
-	.globl gContestMoveTypeTextPointers
-gContestMoveTypeTextPointers: @ 0x8560CAC
-	.incbin "baserom_jp.gba", 0x560cac, 0x48
+	.section .rodata.mid57b_contest_b
 
 	.globl gUnknown_8560CF4
 gUnknown_8560CF4: @ 0x8560CF4

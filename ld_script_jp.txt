@@ -9426,7 +9426,9 @@ SECTIONS {
         src/item_menu_icons.o(.rodata.item_menu_icons_mid57a);
         data/data_b2d.o(.rodata.mid57_gap);
         src/item.o(.rodata);
-        data/data_b2d_mid57_b.o(.rodata.mid57b_contest);
+        data/data_b2d_mid57_b.o(.rodata.mid57b_contest_a);
+        src/contest.o(.rodata.contest_mid57b_text_tables);
+        data/data_b2d_mid57_b.o(.rodata.mid57b_contest_b);
         src/shop.o(.rodata.shop_mid57b);
         src/fldeff_escalator.o(.rodata.fldeff_escalator_mid57b);
         data/data_b2d_mid57_b.o(.rodata.mid57b_escalator);
