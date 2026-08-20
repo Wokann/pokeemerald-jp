@@ -302,7 +302,31 @@ BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgTilemap_HighspeedPlayer[] = I
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskImage_LightBeam[] = INCBIN_U32("graphics/battle_anims/masks/light_beam.png.4bpp.lz");
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskPalette_LightBeam[] = INCBIN_U32("graphics/battle_anims/masks/light_beam.png.gbapal.lz");
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskTilemap_LightBeam[] = INCBIN_U32("graphics/battle_anims/masks/light_beam.bin.lz");
-BATTLE_ANIM_MASK_AND_BG_GFX static const u32 sBattleAnimDataAfterLightBeam[] = INCBIN_U32("graphics/battle_anims/unknown/jp/after_light_beam.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgTilemap_GuillotineOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine_opponent.bin.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgTilemap_GuillotinePlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine_player.bin.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgTilemap_GuillotineContests[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine_contests.bin.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgImage_Guillotine[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgPalette_Guillotine[] = INCBIN_U32("graphics/battle_anims/backgrounds/guillotine.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgImage_Thunder[] = INCBIN_U32("graphics/battle_anims/backgrounds/thunder.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgPalette_Thunder[] = INCBIN_U32("graphics/battle_anims/backgrounds/thunder.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgTilemap_Thunder[] = INCBIN_U32("graphics/battle_anims/backgrounds/thunder.bin.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_PainSplit[] = INCBIN_U32("graphics/battle_anims/sprites/pain_split.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_PainSplit[] = INCBIN_U32("graphics/battle_anims/sprites/pain_split.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_HandsAndFeet[] = INCBIN_U32("graphics/battle_anims/sprites/hands_and_feet.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_HandsAndFeet[] = INCBIN_U32("graphics/battle_anims/sprites/hands_and_feet.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_Confetti[] = INCBIN_U32("graphics/battle_anims/sprites/confetti.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_Confetti[] = INCBIN_U32("graphics/battle_anims/sprites/confetti.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gSubstituteDollPal[] = INCBIN_U32("graphics/battle_anims/sprites/substitute.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gSubstituteDollFrontGfx[] = INCBIN_U32("graphics/battle_anims/sprites/substitute.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gSubstituteDollBackGfx[] = INCBIN_U32("graphics/battle_anims/sprites/substitute_back.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_GreenStar[] = INCBIN_U32("graphics/battle_anims/sprites/green_star.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_GreenStar[] = INCBIN_U32("graphics/battle_anims/sprites/green_star.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gConfetti_Gfx[] = INCBIN_U32("graphics/misc/confetti.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gConfetti_Pal[] = INCBIN_U32("graphics/misc/confetti.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_PinkCloud[] = INCBIN_U32("graphics/battle_anims/sprites/pink_cloud.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_PinkCloud[] = INCBIN_U32("graphics/battle_anims/sprites/pink_cloud.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpriteGfx_SweatDrop[] = INCBIN_U32("graphics/battle_anims/sprites/sweat_drop.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_SweatDrop[] = INCBIN_U32("graphics/battle_anims/sprites/sweat_drop.png.gbapal.lz");
 
 #undef BATTLE_ANIM_MASK_AND_BG_GFX
 
