@@ -66,8 +66,80 @@ extern u8 sTileCountFromPlayer_X;
 extern u8 sTileCountFromPlayer_Y;
 extern bool8 sHyperCutTiles[CUT_HYPER_AREA];
 extern u8 *sCutGrassSpriteArrayPtr;
-extern const struct HyperCutterUnk sHyperCutStruct[];
-extern const struct SpriteTemplate sSpriteTemplate_CutGrass;
+
+#define FLDEFF_CUT_DATA __attribute__((section(".rodata.fldeff_cut_mid57a")))
+
+FLDEFF_CUT_DATA static const struct HyperCutterUnk sHyperCutStruct[] =
+{
+    {-2, -2, {1}},
+    {-1, -2, {1}},
+    {0, -2, {2}},
+    {1, -2, {3}},
+    {2, -2, {3}},
+    {-2, -1, {1}},
+    {2, -1, {3}},
+    {-2, 0, {4}},
+    {2, 0, {6}},
+    {-2, 1, {7}},
+    {2, 1, {9}},
+    {-2, 2, {7}},
+    {-1, 2, {7}},
+    {0, 2, {8}},
+    {1, 2, {9}},
+    {2, 2, {9}},
+};
+
+FLDEFF_CUT_DATA static const struct OamData sOamData_CutGrass =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 1,
+    .priority = 1,
+    .paletteNum = 1,
+    .affineParam = 0,
+};
+
+FLDEFF_CUT_DATA static const union AnimCmd sSpriteAnim_CutGrass[] =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_JUMP(0),
+};
+
+FLDEFF_CUT_DATA static const union AnimCmd *const sSpriteAnimTable_CutGrass[] =
+{
+    sSpriteAnim_CutGrass,
+};
+
+FLDEFF_CUT_DATA static const struct SpriteFrameImage sSpriteImageTable_CutGrass[] =
+{
+    {gFieldEffectPic_CutGrass, 0x20},
+};
+
+FLDEFF_CUT_DATA const struct SpritePalette gSpritePalette_CutGrass =
+{
+    gFieldEffectPal_CutGrass,
+    FLDEFF_PAL_TAG_CUT_GRASS,
+};
+
+FLDEFF_CUT_DATA static const struct SpriteTemplate sSpriteTemplate_CutGrass =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_CUT_GRASS,
+    .oam = &sOamData_CutGrass,
+    .anims = sSpriteAnimTable_CutGrass,
+    .images = sSpriteImageTable_CutGrass,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = CutGrassSpriteCallback1,
+};
+
+#undef FLDEFF_CUT_DATA
 
 bool8 SetUpFieldMove_Cut(void)
 {
