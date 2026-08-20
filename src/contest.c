@@ -3,6 +3,7 @@
 #include "contest.h"
 #include "contest_effect.h"
 #include "graphics.h"
+#include "malloc.h"
 #include "sprite.h"
 #include "window.h"
 #include "constants/event_objects.h"
@@ -30,6 +31,11 @@ enum {
     TAG_APPLAUSE_METER,
     TAG_JUDGE_SYMBOLS_GFX = TAG_CONTEST_SYMBOLS_PAL,
 };
+
+#define TAG_BLINK_EFFECT_CONTESTANT0 0x80E8
+#define TAG_BLINK_EFFECT_CONTESTANT1 0x80E9
+#define TAG_BLINK_EFFECT_CONTESTANT2 0x80EA
+#define TAG_BLINK_EFFECT_CONTESTANT3 0x80EB
 
 #define CONTEST_GRAPHICS_DATA __attribute__((section(".rodata.contest_mid57b_graphics")))
 
@@ -322,6 +328,165 @@ CONTEST_UI_DATA static const struct WindowTemplate sContestWindowTemplates[] = {
 };
 
 #undef CONTEST_UI_DATA
+
+#define CONTEST_BLINK_EFFECT_DATA __attribute__((section(".rodata.contest_mid57b_blink_effect")))
+
+CONTEST_BLINK_EFFECT_DATA static const struct CompressedSpriteSheet sSpriteSheets_ContestantsTurnBlinkEffect[CONTESTANT_COUNT] = {
+    {
+        .data = gBlankGfxCompressed,
+        .size = 0x1000,
+        .tag = TAG_BLINK_EFFECT_CONTESTANT0,
+    },
+    {
+        .data = gBlankGfxCompressed,
+        .size = 0x1000,
+        .tag = TAG_BLINK_EFFECT_CONTESTANT1,
+    },
+    {
+        .data = gBlankGfxCompressed,
+        .size = 0x1000,
+        .tag = TAG_BLINK_EFFECT_CONTESTANT2,
+    },
+    {
+        .data = gBlankGfxCompressed,
+        .size = 0x1000,
+        .tag = TAG_BLINK_EFFECT_CONTESTANT3,
+    },
+};
+
+CONTEST_BLINK_EFFECT_DATA static const struct SpritePalette sSpritePalettes_ContestantsTurnBlinkEffect[CONTESTANT_COUNT] = {
+    {
+        .data = eContestTempSave.cachedWindowPalettes[5],
+        .tag = TAG_BLINK_EFFECT_CONTESTANT0,
+    },
+    {
+        .data = eContestTempSave.cachedWindowPalettes[6],
+        .tag = TAG_BLINK_EFFECT_CONTESTANT1,
+    },
+    {
+        .data = eContestTempSave.cachedWindowPalettes[7],
+        .tag = TAG_BLINK_EFFECT_CONTESTANT2,
+    },
+    {
+        .data = eContestTempSave.cachedWindowPalettes[8],
+        .tag = TAG_BLINK_EFFECT_CONTESTANT3,
+    },
+};
+
+CONTEST_BLINK_EFFECT_DATA static const struct OamData sOam_ContestantsTurnBlinkEffect = {
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+CONTEST_BLINK_EFFECT_DATA static const union AffineAnimCmd sAffineAnim_ContestantsTurnBlinkEffect_0[] = {
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+CONTEST_BLINK_EFFECT_DATA static const union AffineAnimCmd sAffineAnim_ContestantsTurnBlinkEffect_1[] = {
+    AFFINEANIMCMD_FRAME(3, 3, 0, 15),
+    AFFINEANIMCMD_FRAME(-3, -3, 0, 15),
+    AFFINEANIMCMD_FRAME(3, 3, 0, 15),
+    AFFINEANIMCMD_FRAME(-3, -3, 0, 15),
+    AFFINEANIMCMD_END,
+};
+
+CONTEST_BLINK_EFFECT_DATA static const union AffineAnimCmd *const sAffineAnims_ContestantsTurnBlinkEffect[] = {
+    sAffineAnim_ContestantsTurnBlinkEffect_0,
+    sAffineAnim_ContestantsTurnBlinkEffect_1,
+};
+
+CONTEST_BLINK_EFFECT_DATA static const struct SpriteTemplate sSpriteTemplates_ContestantsTurnBlinkEffect[CONTESTANT_COUNT] = {
+    {
+        .tileTag = TAG_BLINK_EFFECT_CONTESTANT0,
+        .paletteTag = TAG_BLINK_EFFECT_CONTESTANT0,
+        .oam = &sOam_ContestantsTurnBlinkEffect,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = sAffineAnims_ContestantsTurnBlinkEffect,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_BLINK_EFFECT_CONTESTANT1,
+        .paletteTag = TAG_BLINK_EFFECT_CONTESTANT1,
+        .oam = &sOam_ContestantsTurnBlinkEffect,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = sAffineAnims_ContestantsTurnBlinkEffect,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_BLINK_EFFECT_CONTESTANT2,
+        .paletteTag = TAG_BLINK_EFFECT_CONTESTANT2,
+        .oam = &sOam_ContestantsTurnBlinkEffect,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = sAffineAnims_ContestantsTurnBlinkEffect,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_BLINK_EFFECT_CONTESTANT3,
+        .paletteTag = TAG_BLINK_EFFECT_CONTESTANT3,
+        .oam = &sOam_ContestantsTurnBlinkEffect,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = sAffineAnims_ContestantsTurnBlinkEffect,
+        .callback = SpriteCallbackDummy,
+    },
+};
+
+#undef CONTEST_BLINK_EFFECT_DATA
+
+#define CONTEST_EXCITEMENT_DATA __attribute__((section(".rodata.contest_mid57b_excitement")))
+
+CONTEST_EXCITEMENT_DATA static const s8 sContestExcitementTable[CONTEST_CATEGORIES_COUNT][CONTEST_CATEGORIES_COUNT] = {
+    [CONTEST_CATEGORY_COOL] = {
+        [CONTEST_CATEGORY_COOL] = +1,
+        [CONTEST_CATEGORY_BEAUTY] = 0,
+        [CONTEST_CATEGORY_CUTE] = -1,
+        [CONTEST_CATEGORY_SMART] = -1,
+        [CONTEST_CATEGORY_TOUGH] = 0,
+    },
+    [CONTEST_CATEGORY_BEAUTY] = {
+        [CONTEST_CATEGORY_COOL] = 0,
+        [CONTEST_CATEGORY_BEAUTY] = +1,
+        [CONTEST_CATEGORY_CUTE] = 0,
+        [CONTEST_CATEGORY_SMART] = -1,
+        [CONTEST_CATEGORY_TOUGH] = -1,
+    },
+    [CONTEST_CATEGORY_CUTE] = {
+        [CONTEST_CATEGORY_COOL] = -1,
+        [CONTEST_CATEGORY_BEAUTY] = 0,
+        [CONTEST_CATEGORY_CUTE] = +1,
+        [CONTEST_CATEGORY_SMART] = 0,
+        [CONTEST_CATEGORY_TOUGH] = -1,
+    },
+    [CONTEST_CATEGORY_SMART] = {
+        [CONTEST_CATEGORY_COOL] = -1,
+        [CONTEST_CATEGORY_BEAUTY] = -1,
+        [CONTEST_CATEGORY_CUTE] = 0,
+        [CONTEST_CATEGORY_SMART] = +1,
+        [CONTEST_CATEGORY_TOUGH] = 0,
+    },
+    [CONTEST_CATEGORY_TOUGH] = {
+        [CONTEST_CATEGORY_COOL] = 0,
+        [CONTEST_CATEGORY_BEAUTY] = -1,
+        [CONTEST_CATEGORY_CUTE] = -1,
+        [CONTEST_CATEGORY_SMART] = 0,
+        [CONTEST_CATEGORY_TOUGH] = +1,
+    },
+};
+
+#undef CONTEST_EXCITEMENT_DATA
 
 void TaskDummy1(void) {}
 void ResetLinkContestBoolean(void)
@@ -6969,7 +7134,7 @@ __attribute__((naked)) void sub_080DA330(void)
         "_080DA380: .4byte 0x00000864\n\t"
         "_080DA384: .4byte gLinkContestFlags\n\t"
         "_080DA388: .4byte gContestOpponents\n\t"
-        "_080DA38C: .4byte gUnknown_8562828\n\t"
+        "_080DA38C: .4byte gPostgameContestOpponentFilter\n\t"
         "_080DA390:\n\t"
         "	ldrb r0, [r3]\n\t"
         "	cmp r0, #2\n\t"
@@ -7121,7 +7286,7 @@ __attribute__((naked)) void sub_080DA460(void)
         "	.align 2, 0\n\t"
         "_080DA49C: .4byte gNumLinkContestPlayers\n\t"
         "_080DA4A0: .4byte gContestOpponents\n\t"
-        "_080DA4A4: .4byte gUnknown_8562828\n\t"
+        "_080DA4A4: .4byte gPostgameContestOpponentFilter\n\t"
         "_080DA4A8:\n\t"
         "	ldrb r0, [r2]\n\t"
         "	cmp r0, #2\n\t"
@@ -11384,9 +11549,9 @@ __attribute__((naked)) void sub_080DC150(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080DC2AC: .4byte gContestantTurnOrder\n\t"
-        "_080DC2B0: .4byte gUnknown_8562888\n\t"
-        "_080DC2B4: .4byte gUnknown_85628A8\n\t"
-        "_080DC2B8: .4byte gUnknown_8562910\n\t"
+        "_080DC2B0: .4byte sSpriteSheets_ContestantsTurnBlinkEffect\n\t"
+        "_080DC2B4: .4byte sSpritePalettes_ContestantsTurnBlinkEffect\n\t"
+        "_080DC2B8: .4byte sSpriteTemplates_ContestantsTurnBlinkEffect\n\t"
         "_080DC2BC: .4byte gSprites\n\t"
         "_080DC2C0: .4byte 0x000003FF\n\t"
         "_080DC2C4: .4byte 0xFFFFFC00\n\t"
@@ -13348,7 +13513,7 @@ __attribute__((naked)) s8 Contest_GetMoveExcitement(u16 move)
         "	ldrsb r0, [r1, r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080DD178: .4byte gUnknown_8562970\n\t"
+        "_080DD178: .4byte sContestExcitementTable\n\t"
         "_080DD17C: .4byte gContestMoves\n\t"
         "_080DD180: .4byte gSpecialVar_ContestCategory\n\t"
         ".syntax divided\n\t"

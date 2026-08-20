@@ -10,7 +10,11 @@
 	.include "constants/ribbon_constants.inc"
 	.globl gUnknown_8C02308
 gUnknown_8C02308: @ 0x8C02308
-	.incbin "baserom_jp.gba", 0xc02308, 0x70f0
+	.incbin "baserom_jp.gba", 0xc02308, 0x7c
+
+	.globl gBlankGfxCompressed
+gBlankGfxCompressed: @ 0x8C02384
+	.incbin "baserom_jp.gba", 0xc02384, 0x7074
 
 
 	.globl gUnknown_8C093F8

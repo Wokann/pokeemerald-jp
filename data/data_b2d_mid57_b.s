@@ -25,28 +25,6 @@ gUnknown_8560E6C: @ 0x8560E6C
 gUnknown_8560E80: @ 0x8560E80
 	.incbin "baserom_jp.gba", 0x560e80, 0x18
 
-	.section .rodata.mid57b_contest_post_opponents
-
-	.globl gUnknown_8562828
-gUnknown_8562828: @ 0x8562828
-	.incbin "baserom_jp.gba", 0x562828, 0x60
-
-	.globl gUnknown_8562888
-gUnknown_8562888: @ 0x8562888
-	.incbin "baserom_jp.gba", 0x562888, 0x20
-
-	.globl gUnknown_85628A8
-gUnknown_85628A8: @ 0x85628A8
-	.incbin "baserom_jp.gba", 0x5628a8, 0x68
-
-	.globl gUnknown_8562910
-gUnknown_8562910: @ 0x8562910
-	.incbin "baserom_jp.gba", 0x562910, 0x60
-
-	.globl gUnknown_8562970
-gUnknown_8562970: @ 0x8562970
-	.incbin "baserom_jp.gba", 0x562970, 0x1c
-
 	.section .rodata.mid57b_escalator
 
 	.hword 0x1314, 0x0023, 0x2C06, 0x0202, 0x1A00, 0x3715, 0x0B00, 0xAD08, 0x1FFF
