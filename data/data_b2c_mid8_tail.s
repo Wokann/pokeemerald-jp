@@ -9,108 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sAnim_TrainerHillRayquaza
-sAnim_TrainerHillRayquaza: @ 0x85FB9F8
-	.hword 0x0000, 0x001E
-	.hword 0x0040, 0x001E
-	.hword 0x0080, 0x001E
-	.hword 0x0040, 0x001E
-	.hword 0xFFFE, 0x0000
-
-	.globl sAnim_TrainerHillRayquaza_1
-sAnim_TrainerHillRayquaza_1: @ 0x85FBA0C
-	.hword 0x00C0, 0x001E
-	.hword 0x0100, 0x001E
-	.hword 0x0140, 0x001E
-	.hword 0x0100, 0x001E
-	.hword 0xFFFE, 0x0000
-
-	.globl sAnims_TrainerHillRayquaza
-sAnims_TrainerHillRayquaza: @ 0x85FBA20
-	.4byte sAnim_TrainerHillRayquaza, sAnim_TrainerHillRayquaza_1
-
-	.globl gUnknown_85FBA28
-gUnknown_85FBA28: @ 0x085FBA28
-	.hword 0x7729, 0x7729
-	.4byte sOam_64x64, sAnims_TrainerHillRayquaza, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-	.hword 0x0000, 0x0001
-	.hword 0xFFFF, 0x0000
-sAnims_85FBA48: @ 0x085FBA48
-	.4byte gUnknown_85FBA28 + 0x18
-
-	.globl gUnknown_85FBA4C
-gUnknown_85FBA4C: @ 0x085FBA4C
-	.hword 0x772A, 0x7729
-	.4byte sOam_32x32, sAnims_85FBA48, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-	.hword 0x0000, 0x0001
-	.hword 0xFFFF, 0x0000
-sAnims_85FBA6C: @ 0x085FBA6C
-	.4byte gUnknown_85FBA28 + 0x3C
-
-	.globl gUnknown_85FBA70
-gUnknown_85FBA70: @ 0x085FBA70
-	.hword 0x772B, 0x7729
-	.4byte sOam_64x32, sAnims_85FBA6C, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-	.hword 0x0000, 0x0001
-	.hword 0xFFFF, 0x0000
-	.hword 0x0008, 0x0001
-	.hword 0xFFFF, 0x0000
-	.hword 0x0010, 0x0001
-	.hword 0xFFFF, 0x0000
-	.hword 0x0018, 0x0001
-	.hword 0xFFFF, 0x0000
-	.hword 0x0020, 0x0001
-	.hword 0xFFFF, 0x0000
-	.hword 0x0028, 0x0001
-	.hword 0xFFFF, 0x0000
-	.hword 0x0030, 0x0024
-	.hword 0x0040, 0x0024
-	.hword 0x0050, 0x0024
-	.hword 0x0040, 0x0024
-	.hword 0xFFFE, 0x0000
-	.hword 0x0038, 0x0024
-	.hword 0x0048, 0x0024
-	.hword 0x0058, 0x0024
-	.hword 0x0048, 0x0024
-	.hword 0xFFFE, 0x0000
-	.hword 0x0060, 0x0024
-	.hword 0x0068, 0x0024
-	.hword 0x0070, 0x0024
-	.hword 0x0068, 0x0024
-	.hword 0xFFFE, 0x0000
-sAnims_85FBAF4: @ 0x085FBAF4
-	.4byte gUnknown_85FBA28 + 0x60
-	.4byte gUnknown_85FBA28 + 0x68
-	.4byte gUnknown_85FBA28 + 0x70
-	.4byte gUnknown_85FBA28 + 0x78
-	.4byte gUnknown_85FBA28 + 0x80
-	.4byte gUnknown_85FBA28 + 0x88
-	.4byte gUnknown_85FBA28 + 0x90
-	.4byte gUnknown_85FBA28 + 0xA4
-	.4byte gUnknown_85FBA28 + 0xB8
-
-	.globl gUnknown_85FBB18
-gUnknown_85FBB18: @ 0x085FBB18
-	.hword 0x772C, 0x772C
-	.4byte sOam_32x16, sAnims_85FBAF4, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-	.hword 0x0000, 0x0024
-	.hword 0x0002, 0x0024
-	.hword 0x0004, 0x0024
-	.hword 0x0002, 0x0024
-	.hword 0xFFFE, 0x0000
-sAnims_85FBB44: @ 0x085FBB44
-	.4byte gUnknown_85FBA28 + 0x108
-
-	.globl gUnknown_85FBB48
-gUnknown_85FBB48: @ 0x085FBB48
-	.hword 0x772D, 0x772C
-	.4byte sOam_16x8, sAnims_85FBB44, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-
-	.globl gUnknown_85FBB60
-gUnknown_85FBB60: @ 0x085FBB60
-	.hword 0x772E, 0x772C
-	.4byte sOam_32x32, sAnims_85FBA48, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
-
 	.globl gUnknown_85FBB78
 gUnknown_85FBB78: @ 0x085FBB78
 	.hword 0x0014, 0x0400
@@ -133,8 +31,8 @@ gUnknown_85FBB84: @ 0x085FBB84
 	.hword 0x0100, 0x0014
 	.hword 0xFFFE, 0x0000
 sAnims_85FBBB8: @ 0x085FBBB8
-	.4byte gUnknown_85FBA28 + 0x168
-	.4byte gUnknown_85FBA28 + 0x17C
+	.4byte sSpriteTemplate_DuoFightPre_Groudon + 0x168
+	.4byte sSpriteTemplate_DuoFightPre_Groudon + 0x17C
 
 	.globl gUnknown_85FBBC0
 gUnknown_85FBBC0: @ 0x085FBBC0
@@ -153,7 +51,7 @@ gUnknown_85FBBD0: @ 0x085FBBD0
 	.hword 0x0000, 0x0001
 	.hword 0xFFFF, 0x0000
 sAnims_85FBBF0: @ 0x085FBBF0
-	.4byte gUnknown_85FBA28 + 0x1C0
+	.4byte sSpriteTemplate_DuoFightPre_Groudon + 0x1C0
 
 	.globl gUnknown_85FBBF4
 gUnknown_85FBBF4: @ 0x085FBBF4
@@ -167,7 +65,7 @@ gUnknown_85FBBFC: @ 0x085FBBFC
 	.hword 0x0000, 0x0001
 	.hword 0xFFFF, 0x0000
 sAnims_85FBC1C: @ 0x085FBC1C
-	.4byte gUnknown_85FBA28 + 0x1EC
+	.4byte sSpriteTemplate_DuoFightPre_Groudon + 0x1EC
 
 	.globl gUnknown_85FBC20
 gUnknown_85FBC20: @ 0x085FBC20
@@ -206,15 +104,15 @@ gUnknown_85FBC28: @ 0x085FBC28
 	.hword 0x0068, 0x0018
 	.hword 0xFFFE, 0x0000
 sAnims_85FBCAC: @ 0x085FBCAC
-	.4byte gUnknown_85FBA4C + 0x1F4
-	.4byte gUnknown_85FBA4C + 0x1FC
-	.4byte gUnknown_85FBA70 + 0x1E0
-	.4byte gUnknown_85FBA70 + 0x1E8
-	.4byte gUnknown_85FBA70 + 0x1F0
-	.4byte gUnknown_85FBA70 + 0x1F8
-	.4byte gUnknown_85FBB18 + 0x158
-	.4byte gUnknown_85FBB18 + 0x16C
-	.4byte gUnknown_85FBB18 + 0x180
+	.4byte sSpriteTemplate_DuoFightPre_GroudonShoulder + 0x1F4
+	.4byte sSpriteTemplate_DuoFightPre_GroudonShoulder + 0x1FC
+	.4byte sSpriteTemplate_DuoFightPre_GroudonClaw + 0x1E0
+	.4byte sSpriteTemplate_DuoFightPre_GroudonClaw + 0x1E8
+	.4byte sSpriteTemplate_DuoFightPre_GroudonClaw + 0x1F0
+	.4byte sSpriteTemplate_DuoFightPre_GroudonClaw + 0x1F8
+	.4byte sSpriteTemplate_DuoFightPre_Kyogre + 0x158
+	.4byte sSpriteTemplate_DuoFightPre_Kyogre + 0x16C
+	.4byte sSpriteTemplate_DuoFightPre_Kyogre + 0x180
 
 	.globl gUnknown_85FBCD0
 gUnknown_85FBCD0: @ 0x085FBCD0
@@ -236,7 +134,7 @@ gUnknown_85FBCE0: @ 0x085FBCE0
 	.hword 0x0002, 0x0018
 	.hword 0xFFFE, 0x0000
 sAnims_85FBD0C: @ 0x085FBD0C
-	.4byte gUnknown_85FBB18 + 0x1E0
+	.4byte sSpriteTemplate_DuoFightPre_Kyogre + 0x1E0
 
 	.globl gUnknown_85FBD10
 gUnknown_85FBD10: @ 0x085FBD10
@@ -266,7 +164,7 @@ gUnknown_85FBD50: @ 0x085FBD50
 	.hword 0x0000, 0x0001
 	.hword 0xFFFF, 0x0000
 sAnims_85FBD64: @ 0x085FBD64
-	.4byte gUnknown_85FBB60 + 0x1FC
+	.4byte sSpriteTemplate_DuoFightPre_KyogreDorsalFin + 0x1FC
 	.hword 0xFFC0, 0xFFC0
 	.hword 0x0100, 0x0000
 	.hword 0x0020, 0x0020

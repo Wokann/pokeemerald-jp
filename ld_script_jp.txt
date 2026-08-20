@@ -9662,6 +9662,7 @@ SECTIONS {
         src/trainer_hill.o(.rodata.trainer_hill_ui_tail);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_tasks);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_oam);
+        src/rayquaza_scene.o(.rodata.rayquaza_scene_duo_pre);
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);

@@ -3,6 +3,14 @@
 #include "sprite.h"
 
 
+#define TAG_DUOFIGHT_GROUDON             30505
+#define TAG_DUOFIGHT_GROUDON_SHOULDER    30506
+#define TAG_DUOFIGHT_GROUDON_CLAW        30507
+#define TAG_DUOFIGHT_KYOGRE              30508
+#define TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN 30509
+#define TAG_DUOFIGHT_KYOGRE_DORSAL_FIN   30510
+
+
 void Task_DuoFightAnim(void);
 void Task_RayTakesFlightAnim(void);
 void Task_RayDescendsAnim(void);
@@ -39,6 +47,213 @@ RAYQUAZA_SCENE_OAM(sOam_16x16, 16x16);
 RAYQUAZA_SCENE_OAM(sOam_32x8, 32x8);
 
 #undef RAYQUAZA_SCENE_OAM
+
+#define RAYQUAZA_SCENE_DUO_PRE_DATA __attribute__((section(".rodata.rayquaza_scene_duo_pre")))
+
+const union AnimCmd sAnim_DuoFightPre_Groudon_Head[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_FRAME(64, 30),
+    ANIMCMD_FRAME(128, 30),
+    ANIMCMD_FRAME(64, 30),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd sAnim_DuoFightPre_Groudon_Body[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(192, 30),
+    ANIMCMD_FRAME(256, 30),
+    ANIMCMD_FRAME(320, 30),
+    ANIMCMD_FRAME(256, 30),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const sAnims_DuoFightPre_Groudon[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    sAnim_DuoFightPre_Groudon_Head,
+    sAnim_DuoFightPre_Groudon_Body
+};
+
+const struct SpriteTemplate sSpriteTemplate_DuoFightPre_Groudon RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    .tileTag = TAG_DUOFIGHT_GROUDON,
+    .paletteTag = TAG_DUOFIGHT_GROUDON,
+    .oam = &sOam_64x64,
+    .anims = sAnims_DuoFightPre_Groudon,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const union AnimCmd sAnim_DuoFightPre_GroudonShoulderKyogreDorsalFin[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd *const sAnims_DuoFightPre_GroudonShoulderKyogreDorsalFin[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    sAnim_DuoFightPre_GroudonShoulderKyogreDorsalFin
+};
+
+const struct SpriteTemplate sSpriteTemplate_DuoFightPre_GroudonShoulder RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    .tileTag = TAG_DUOFIGHT_GROUDON_SHOULDER,
+    .paletteTag = TAG_DUOFIGHT_GROUDON,
+    .oam = &sOam_32x32,
+    .anims = sAnims_DuoFightPre_GroudonShoulderKyogreDorsalFin,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const union AnimCmd sAnim_DuoFightPre_GroudonClaw[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd *const sAnims_DuoFightPre_GroudonClaw[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    sAnim_DuoFightPre_GroudonClaw
+};
+
+const struct SpriteTemplate sSpriteTemplate_DuoFightPre_GroudonClaw RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    .tileTag = TAG_DUOFIGHT_GROUDON_CLAW,
+    .paletteTag = TAG_DUOFIGHT_GROUDON,
+    .oam = &sOam_64x32,
+    .anims = sAnims_DuoFightPre_GroudonClaw,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_TopLeft[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_TopRight[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(8, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_FaceLeft[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_FaceRight[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(24, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_ChinLeft[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(32, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_ChinRight[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(40, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_LeftPectoralFin[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(48, 36),
+    ANIMCMD_FRAME(64, 36),
+    ANIMCMD_FRAME(80, 36),
+    ANIMCMD_FRAME(64, 36),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_LeftShoulder[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(56, 36),
+    ANIMCMD_FRAME(72, 36),
+    ANIMCMD_FRAME(88, 36),
+    ANIMCMD_FRAME(72, 36),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd sAnim_DuoFightPre_Kyogre_RightShoulder[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(96, 36),
+    ANIMCMD_FRAME(104, 36),
+    ANIMCMD_FRAME(112, 36),
+    ANIMCMD_FRAME(104, 36),
+    ANIMCMD_JUMP(0),
+};
+
+// Edge of the right pectoral fin is its own sprite (see KyogrePectoralFin)
+const union AnimCmd *const sAnims_DuoFightPre_Kyogre[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    sAnim_DuoFightPre_Kyogre_TopLeft,
+    sAnim_DuoFightPre_Kyogre_TopRight,
+    sAnim_DuoFightPre_Kyogre_FaceLeft,
+    sAnim_DuoFightPre_Kyogre_FaceRight,
+    sAnim_DuoFightPre_Kyogre_ChinLeft,
+    sAnim_DuoFightPre_Kyogre_ChinRight,
+    sAnim_DuoFightPre_Kyogre_LeftPectoralFin,
+    sAnim_DuoFightPre_Kyogre_LeftShoulder,
+    sAnim_DuoFightPre_Kyogre_RightShoulder
+};
+
+const struct SpriteTemplate sSpriteTemplate_DuoFightPre_Kyogre RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    .tileTag = TAG_DUOFIGHT_KYOGRE,
+    .paletteTag = TAG_DUOFIGHT_KYOGRE,
+    .oam = &sOam_32x16,
+    .anims = sAnims_DuoFightPre_Kyogre,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const union AnimCmd sAnim_DuoFightPre_KyogrePectoralFin[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    ANIMCMD_FRAME(0, 36),
+    ANIMCMD_FRAME(2, 36),
+    ANIMCMD_FRAME(4, 36),
+    ANIMCMD_FRAME(2, 36),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const sAnims_DuoFightPre_KyogrePectoralFin[] RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    sAnim_DuoFightPre_KyogrePectoralFin
+};
+
+const struct SpriteTemplate sSpriteTemplate_DuoFightPre_KyogrePectoralFin RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    .tileTag = TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN,
+    .paletteTag = TAG_DUOFIGHT_KYOGRE,
+    .oam = &sOam_16x8,
+    .anims = sAnims_DuoFightPre_KyogrePectoralFin,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+const struct SpriteTemplate sSpriteTemplate_DuoFightPre_KyogreDorsalFin RAYQUAZA_SCENE_DUO_PRE_DATA =
+{
+    .tileTag = TAG_DUOFIGHT_KYOGRE_DORSAL_FIN,
+    .paletteTag = TAG_DUOFIGHT_KYOGRE,
+    .oam = &sOam_32x32,
+    .anims = sAnims_DuoFightPre_GroudonShoulderKyogreDorsalFin,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+#undef RAYQUAZA_SCENE_DUO_PRE_DATA
 
 __attribute__((naked)) void DoRayquazaScene(u8 animId, bool8 endEarly, MainCallback exitCallback)
 {
@@ -438,11 +653,11 @@ __attribute__((naked)) void sub_081D62C0(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081D6348: .4byte gUnknown_85FBA28\n\t"
+        "_081D6348: .4byte sSpriteTemplate_DuoFightPre_Groudon\n\t"
         "_081D634C: .4byte gSprites\n\t"
         "_081D6350: .4byte sub_081D635C + 1\n\t"
-        "_081D6354: .4byte gUnknown_85FBA4C\n\t"
-        "_081D6358: .4byte gUnknown_85FBA70\n\t"
+        "_081D6354: .4byte sSpriteTemplate_DuoFightPre_GroudonShoulder\n\t"
+        "_081D6358: .4byte sSpriteTemplate_DuoFightPre_GroudonClaw\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -819,11 +1034,11 @@ __attribute__((naked)) void sub_081D64B8(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081D6648: .4byte gUnknown_85FBB18\n\t"
+        "_081D6648: .4byte sSpriteTemplate_DuoFightPre_Kyogre\n\t"
         "_081D664C: .4byte gSprites\n\t"
         "_081D6650: .4byte sub_081D665C + 1\n\t"
-        "_081D6654: .4byte gUnknown_85FBB48\n\t"
-        "_081D6658: .4byte gUnknown_85FBB60\n\t"
+        "_081D6654: .4byte sSpriteTemplate_DuoFightPre_KyogrePectoralFin\n\t"
+        "_081D6658: .4byte sSpriteTemplate_DuoFightPre_KyogreDorsalFin\n\t"
         ".syntax divided\n\t"
     );
 }
