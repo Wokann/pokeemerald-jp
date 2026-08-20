@@ -3,21 +3,42 @@
 #include "event_data.h"
 #include "battle_setup.h"
 #include "gym_leader_rematch.h"
+#include "constants/rematches.h"
 
 static void UpdateGymLeaderRematchFromArray(const u16 *data, size_t size, u32 maxRematch);
 static s32 GetRematchIndex(u32 trainerIdx);
 
-extern const u16 GymLeaderRematches_AfterNewMauville[];   // ROM @ 0x085FC01C
-extern const u16 GymLeaderRematches_BeforeNewMauville[];  // ROM @ 0x085FC02C
+static const u16 GymLeaderRematches_AfterNewMauville[] __attribute__((section(".rodata.gym_leader_rematch_tables"))) =
+{
+    REMATCH_ROXANNE,
+    REMATCH_BRAWLY,
+    REMATCH_WATTSON,
+    REMATCH_FLANNERY,
+    REMATCH_NORMAN,
+    REMATCH_WINONA,
+    REMATCH_TATE_AND_LIZA,
+    REMATCH_JUAN
+};
+
+static const u16 GymLeaderRematches_BeforeNewMauville[] __attribute__((section(".rodata.gym_leader_rematch_tables"))) =
+{
+    REMATCH_ROXANNE,
+    REMATCH_BRAWLY,
+    REMATCH_FLANNERY,
+    REMATCH_NORMAN,
+    REMATCH_WINONA,
+    REMATCH_TATE_AND_LIZA,
+    REMATCH_JUAN
+};
 
 void UpdateGymLeaderRematch(void)
 {
     if (FlagGet(FLAG_SYS_GAME_CLEAR) && (Random() % 100) <= 30)
     {
         if (FlagGet(FLAG_WATTSON_REMATCH_AVAILABLE))
-            UpdateGymLeaderRematchFromArray(GymLeaderRematches_AfterNewMauville, 8, 5);
+            UpdateGymLeaderRematchFromArray(GymLeaderRematches_AfterNewMauville, ARRAY_COUNT(GymLeaderRematches_AfterNewMauville), 5);
         else
-            UpdateGymLeaderRematchFromArray(GymLeaderRematches_BeforeNewMauville, 7, 1);
+            UpdateGymLeaderRematchFromArray(GymLeaderRematches_BeforeNewMauville, ARRAY_COUNT(GymLeaderRematches_BeforeNewMauville), 1);
     }
 }
 

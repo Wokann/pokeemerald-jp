@@ -9668,6 +9668,10 @@ SECTIONS {
         src/rayquaza_scene.o(.rodata.rayquaza_scene_descends);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_charges);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_chases_away);
+        src/walda_phrase.o(.rodata.walda_phrase_peekaboo);
+        . = ALIGN(4);
+        src/gym_leader_rematch.o(.rodata.gym_leader_rematch_tables);
+        . = ALIGN(4);
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);

@@ -9,18 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gText_Peekaboo
-gText_Peekaboo: @ 0x85FC010
-	.string "いないいないばあー$　　"
-
-	.globl GymLeaderRematches_AfterNewMauville
-GymLeaderRematches_AfterNewMauville: @ 0x85FC01C
-	.hword 0x0041, 0x0042, 0x0043, 0x0044, 0x0045, 0x0046, 0x0047, 0x0048
-
-	.globl GymLeaderRematches_BeforeNewMauville
-GymLeaderRematches_BeforeNewMauville: @ 0x85FC02C
-	.hword 0x0041, 0x0042, 0x0044, 0x0045, 0x0046, 0x0047, 0x0048, 0x0000
-
 	.globl gUnknown_85FC03C
 gUnknown_85FC03C: @ 0x85FC03C
 	.incbin "baserom_jp.gba", 0x5fc03c, 0x1dc

@@ -11,8 +11,10 @@
 #include "field_screen_effect.h"
 
 // Default phrase used when the player confirms an empty naming screen.
-// Defined in ld_script_jp.txt (JP ROM data at 0x085FC010).
-extern const u8 gText_Peekaboo[];
+const u8 gText_Peekaboo[] __attribute__((section(".rodata.walda_phrase_peekaboo"))) =
+{
+    0x02, 0x15, 0x02, 0x02, 0x15, 0x02, 0x46, 0x01, 0xAE, EOS
+};
 
 static void CB2_HandleGivenWaldaPhrase(void);
 static u32 GetWaldaPhraseInputCase(u8 *);
