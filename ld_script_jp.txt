@@ -9677,6 +9677,7 @@ SECTIONS {
         data/mystery_gift.o(.rodata);
         src/m4a_tables.o(.rodata);
         data/sound_data.o(.rodata);
+        INCLUDE ../../sound/song_order.ld
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
