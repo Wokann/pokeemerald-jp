@@ -130,23 +130,26 @@ BATTLE_INTERFACE_GFX const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8(
 
 #define BATTLE_ANIM_MASK_AND_BG_GFX __attribute__((section(".rodata.battle_anim_mask_and_bg_graphics")))
 
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShineGfx[] = INCBIN_U32("graphics/misc/gMetalShineGfx.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShinePalette[] = {
-    0x00002010, 0xFF7EAA00, 0x0C46547F, 0x226F0016, 0x3B352ED2,
-    0xFB004798, 0xCC02AA53, 0x001B0F0E, 0x33752752, 0x4BFB3FB8,
-};
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShineTilemap[] = INCBIN_U32("graphics/misc/gMetalShineTilemap.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskImage_Curse[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskImage_Curse.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskTilemap_Curse[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskTilemap_Curse.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_MusicNotes2[] = INCBIN_U32("graphics/battle_anims/gBattleAnimSpritePal_MusicNotes2.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgImage_Attract[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgImage_Attract.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgPalette_Attract[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgPalette_Attract.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgTilemap_Attract[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgTilemap_Attract.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgPalette_ScaryFace[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgPalette_ScaryFace.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgImage_ScaryFace[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgImage_ScaryFace.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskImage_LightBeam[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskImage_LightBeam.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskPalette_LightBeam[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskPalette_LightBeam.bin");
-BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskTilemap_LightBeam[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskTilemap_LightBeam.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShineGfx[] = INCBIN_U32("graphics/battle_anims/masks/metal_shine.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShinePalette[] = INCBIN_U32("graphics/battle_anims/masks/metal_shine.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShineTilemap[] = INCBIN_U32("graphics/battle_anims/masks/metal_shine.bin.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX static const u32 sBattleAnimDataAfterMetalShine[] = INCBIN_U32("graphics/battle_anims/unknown/jp/after_metal_shine.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskImage_Curse[] = INCBIN_U32("graphics/battle_anims/masks/curse.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskTilemap_Curse[] = INCBIN_U32("graphics/battle_anims/masks/curse.bin.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX static const u32 sBattleAnimDataAfterCurse[] = INCBIN_U32("graphics/battle_anims/unknown/jp/after_curse.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_MusicNotes2[] = INCBIN_U32("graphics/battle_anims/sprites/music_notes_2.pal.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX static const u32 sBattleAnimDataAfterMusicNotes2[] = INCBIN_U32("graphics/battle_anims/unknown/jp/after_music_notes_2.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgImage_Attract[] = INCBIN_U32("graphics/battle_anims/backgrounds/attract.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgPalette_Attract[] = INCBIN_U32("graphics/battle_anims/backgrounds/attract.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgTilemap_Attract[] = INCBIN_U32("graphics/battle_anims/backgrounds/attract.bin.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX static const u32 sBattleAnimDataAfterAttract[] = INCBIN_U32("graphics/battle_anims/unknown/jp/after_attract.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgPalette_ScaryFace[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgImage_ScaryFace[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX static const u32 sBattleAnimDataAfterScaryFace[] = INCBIN_U32("graphics/battle_anims/unknown/jp/after_scary_face.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskImage_LightBeam[] = INCBIN_U32("graphics/battle_anims/masks/light_beam.png.4bpp.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskPalette_LightBeam[] = INCBIN_U32("graphics/battle_anims/masks/light_beam.png.gbapal.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskTilemap_LightBeam[] = INCBIN_U32("graphics/battle_anims/masks/light_beam.bin.lz");
+BATTLE_ANIM_MASK_AND_BG_GFX static const u32 sBattleAnimDataAfterLightBeam[] = INCBIN_U32("graphics/battle_anims/unknown/jp/after_light_beam.bin");
 
 #undef BATTLE_ANIM_MASK_AND_BG_GFX
 
