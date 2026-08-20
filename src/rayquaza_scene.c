@@ -1,6 +1,25 @@
 #include "global.h"
 #include "rayquaza_scene.h"
 
+
+void Task_DuoFightAnim(void);
+void Task_RayTakesFlightAnim(void);
+void Task_RayDescendsAnim(void);
+void Task_RayChargesAnim(void);
+void Task_RayChasesAwayAnim(void);
+void Task_EndAfterFadeScreen(void);
+
+static void (*const sTasksForAnimations[])(void) __attribute__((section(".rodata.rayquaza_scene_tasks"))) =
+{
+    Task_DuoFightAnim,
+    Task_DuoFightAnim,
+    Task_RayTakesFlightAnim,
+    Task_RayDescendsAnim,
+    Task_RayChargesAnim,
+    Task_RayChasesAwayAnim,
+    Task_EndAfterFadeScreen,
+};
+
 __attribute__((naked)) void DoRayquazaScene(u8 animId, bool8 endEarly, MainCallback exitCallback)
 {
     __asm__(".syntax unified\n\t"
@@ -77,7 +96,7 @@ __attribute__((naked)) void CB2_InitRayquazaScene(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D60FC: .4byte gUnknown_85FB99C\n\t"
+        "_081D60FC: .4byte sTasksForAnimations\n\t"
         "_081D6100: .4byte gUnknown_203CC2C\n\t"
         "_081D6104: .4byte 0x00002006\n\t"
         "_081D6108: .4byte CB2_RayquazaScene + 1\n\t"
@@ -218,7 +237,7 @@ __attribute__((naked)) void Task_SetNextAnim(void)
         "_081D61F4: .4byte 0x00002006\n\t"
         "_081D61F8: .4byte 0x00002004\n\t"
         "_081D61FC: .4byte gTasks\n\t"
-        "_081D6200: .4byte gUnknown_85FB99C\n\t"
+        "_081D6200: .4byte sTasksForAnimations\n\t"
         ".syntax divided\n\t"
     );
 }

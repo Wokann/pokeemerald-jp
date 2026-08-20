@@ -9,11 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85FB99C
-gUnknown_85FB99C: @ 0x85FB99C
-	.4byte Task_DuoFightAnim, Task_DuoFightAnim, Task_RayTakesFlightAnim, Task_RayDescendsAnim
-	.4byte Task_RayChargesAnim, Task_RayChasesAwayAnim, Task_EndAfterFadeScreen
-
 	.globl sOam_TrainerHillRayquaza
 sOam_TrainerHillRayquaza: @ 0x85FB9B8
 	.4byte 0xC0000000
