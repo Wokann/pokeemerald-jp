@@ -54,4 +54,62 @@ TRAINER_CARD_MID55_RESOURCE(gUnknown_85467B6, 0x2, "data/trainer_card/jp/trainer
 #undef TRAINER_CARD_MID55_RESOURCE
 #undef TRAINER_CARD_MID55_DATA
 
+// These tables follow the Trainer Card text block immediately before the
+// Frontier Pass data. They use external linkage because the still-naked
+// Trainer Card implementation resides in a separate object.
+#define TRAINER_CARD_MID56_TEXT_COLORS_DATA __attribute__((section(".rodata.trainer_card_mid56_text_colors"), aligned(1)))
+#define TRAINER_CARD_MID56_LINK_TEXTS_DATA __attribute__((section(".rodata.trainer_card_mid56_link_texts")))
+#define TRAINER_CARD_MID56_SUFFIX_DATA __attribute__((section(".rodata.trainer_card_mid56_suffix"), aligned(1)))
+
+const u8 sTrainerCardTextColors[] TRAINER_CARD_MID56_TEXT_COLORS_DATA =
+{
+    0x0A, 0x10, 0x00,
+};
+
+const u8 *const sLinkBattleTexts[] TRAINER_CARD_MID56_LINK_TEXTS_DATA =
+{
+    gText_LinkBattles,
+    gText_LinkCableBattles,
+    gText_LinkBattles,
+};
+
+const u8 sTrainerCardIconPaletteSlots[] TRAINER_CARD_MID56_SUFFIX_DATA =
+{
+    5, 6, 7, 8, 9, 10,
+};
+
+const u8 sTrainerCardIconXOffsets[] TRAINER_CARD_MID56_SUFFIX_DATA =
+{
+    0, 4, 8, 12, 16, 20,
+};
+
+const u8 sTrainerCardStickerPaletteSlots[] TRAINER_CARD_MID56_SUFFIX_DATA =
+{
+    11, 12, 13, 14,
+};
+
+// The first two bytes are the card-type offsets. The explicit trailing zeros
+// retain the original four-byte boundary before the Frontier Pass section.
+const u8 sTrainerCardStarYOffsets[4] TRAINER_CARD_MID56_SUFFIX_DATA =
+{
+    7, 7, 0, 0,
+};
+
+__asm__(".global gUnknown_85467C1\n"
+        ".set gUnknown_85467C1, sTrainerCardTextColors\n"
+        ".global gUnknown_85467C4\n"
+        ".set gUnknown_85467C4, sLinkBattleTexts\n"
+        ".global gUnknown_85467D0\n"
+        ".set gUnknown_85467D0, sTrainerCardIconPaletteSlots\n"
+        ".global gUnknown_85467D6\n"
+        ".set gUnknown_85467D6, sTrainerCardIconXOffsets\n"
+        ".global gUnknown_85467DC\n"
+        ".set gUnknown_85467DC, sTrainerCardStickerPaletteSlots\n"
+        ".global gUnknown_85467E0\n"
+        ".set gUnknown_85467E0, sTrainerCardStarYOffsets");
+
+#undef TRAINER_CARD_MID56_SUFFIX_DATA
+#undef TRAINER_CARD_MID56_LINK_TEXTS_DATA
+#undef TRAINER_CARD_MID56_TEXT_COLORS_DATA
+
 #endif // GUARD_DATA_TRAINER_CARD_H
