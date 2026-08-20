@@ -401,6 +401,11 @@ $(C_BUILDDIR)/mirage_tower.o: src/mirage_tower.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mirage_tower.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mirage_tower.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/mirage_tower.gen.s
+$(C_BUILDDIR)/battle_transition_frontier.o: src/battle_transition_frontier.c $(wildcard graphics/battle_transitions/frontier_logo_center.* graphics/battle_transitions/frontier_logo_circles.*)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_transition_frontier.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_transition_frontier.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/battle_transition_frontier.gen.s
 graphics/summary_screen/%.png.4bpp: graphics/summary_screen/%.png
 	tools/gbagfx/gbagfx $< $@
 $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/summary_screen/a_button.png.4bpp graphics/summary_screen/b_button.png.4bpp

@@ -9672,6 +9672,7 @@ SECTIONS {
         . = ALIGN(4);
         src/gym_leader_rematch.o(.rodata.gym_leader_rematch_tables);
         . = ALIGN(4);
+        src/battle_transition_frontier.o(.rodata.battle_transition_frontier_circles);
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
