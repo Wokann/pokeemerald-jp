@@ -9667,6 +9667,7 @@ SECTIONS {
         src/rayquaza_scene.o(.rodata.rayquaza_scene_takes_flight);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_descends);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_charges);
+        src/rayquaza_scene.o(.rodata.rayquaza_scene_chases_away);
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);

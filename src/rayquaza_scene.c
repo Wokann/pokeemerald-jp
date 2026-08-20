@@ -15,6 +15,12 @@
 #define TAG_FLIGHT_SMOKE                 30555
 #define TAG_DESCENDS_RAYQUAZA            30556
 #define TAG_DESCENDS_RAYQUAZA_TAIL       30557
+#define TAG_CHASE_GROUDON                 30565
+#define TAG_CHASE_GROUDON_TAIL            30566
+#define TAG_CHASE_KYOGRE                  30568
+#define TAG_CHASE_RAYQUAZA                30569
+#define TAG_CHASE_RAYQUAZA_TAIL           30570
+#define TAG_CHASE_SPLASH                  30571
 
 #define MAX_SMOKE 10
 
@@ -26,6 +32,7 @@ void Task_RayChargesAnim(void);
 void Task_RayChasesAwayAnim(void);
 void Task_EndAfterFadeScreen(void);
 void SpriteCB_TakesFlight_Smoke(struct Sprite *sprite);
+void SpriteCB_ChasesAway_Rayquaza(struct Sprite *sprite);
 
 static void (*const sTasksForAnimations[])(void) __attribute__((section(".rodata.rayquaza_scene_tasks"))) =
 {
@@ -758,6 +765,123 @@ const struct BgTemplate sBgTemplates_Charges[] RAYQUAZA_SCENE_CHARGES_DATA =
 };
 
 #undef RAYQUAZA_SCENE_CHARGES_DATA
+
+#define RAYQUAZA_SCENE_CHASES_AWAY_DATA __attribute__((section(".rodata.rayquaza_scene_chases_away")))
+
+const union AnimCmd sAnim_ChasesAway_Groudon_Still[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    ANIMCMD_FRAME(0, 1), ANIMCMD_END
+};
+
+const union AnimCmd sAnim_ChasesAway_Groudon_Moving[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    ANIMCMD_FRAME(0, 48), ANIMCMD_FRAME(64, 32), ANIMCMD_FRAME(0, 48),
+    ANIMCMD_FRAME(128, 32), ANIMCMD_JUMP(0)
+};
+
+const union AnimCmd *const sAnims_ChasesAway_Groudon[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    sAnim_ChasesAway_Groudon_Still, sAnim_ChasesAway_Groudon_Moving
+};
+
+const union AnimCmd sAnim_ChasesAway_GroudonTail[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    ANIMCMD_FRAME(0, 1), ANIMCMD_END
+};
+
+const union AnimCmd *const sAnims_ChasesAway_GroudonTail[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    sAnim_ChasesAway_GroudonTail
+};
+
+const union AnimCmd sAnim_ChasesAway_Kyogre_Front[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+const union AnimCmd sAnim_ChasesAway_Kyogre_Back[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
+const union AnimCmd sAnim_ChasesAway_Kyogre_Tail[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
+
+const union AnimCmd *const sAnims_ChasesAway_Kyogre[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    sAnim_ChasesAway_Kyogre_Front, sAnim_ChasesAway_Kyogre_Back, sAnim_ChasesAway_Kyogre_Tail
+};
+
+const union AnimCmd sAnim_ChasesAway_Rayquaza_FlyingDown[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+const union AnimCmd sAnim_ChasesAway_Rayquaza_Arriving[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(64, 1), ANIMCMD_END };
+const union AnimCmd sAnim_ChasesAway_Rayquaza_Floating[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(128, 1), ANIMCMD_END };
+const union AnimCmd sAnim_ChasesAway_Rayquaza_Shouting[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(192, 1), ANIMCMD_END };
+
+const union AnimCmd *const sAnims_ChasesAway_Rayquaza[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    sAnim_ChasesAway_Rayquaza_FlyingDown, sAnim_ChasesAway_Rayquaza_Arriving,
+    sAnim_ChasesAway_Rayquaza_Floating, sAnim_ChasesAway_Rayquaza_Shouting
+};
+
+const union AnimCmd sAnim_ChasesAway_RayquazaTail_FlyingDown[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(0, 1), ANIMCMD_END };
+const union AnimCmd sAnim_ChasesAway_RayquazaTail_Arriving[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(16, 1), ANIMCMD_END };
+const union AnimCmd sAnim_ChasesAway_RayquazaTail_Floating[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(32, 1), ANIMCMD_END };
+const union AnimCmd sAnim_ChasesAway_RayquazaTail_Shouting[] RAYQUAZA_SCENE_CHASES_AWAY_DATA = { ANIMCMD_FRAME(48, 1), ANIMCMD_END };
+
+const union AnimCmd *const sAnims_ChasesAway_RayquazaTail[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    sAnim_ChasesAway_RayquazaTail_FlyingDown, sAnim_ChasesAway_RayquazaTail_Arriving,
+    sAnim_ChasesAway_RayquazaTail_Floating, sAnim_ChasesAway_RayquazaTail_Shouting
+};
+
+const union AnimCmd sAnim_ChasesAway_KyogreSplash[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    ANIMCMD_FRAME(0, 8), ANIMCMD_FRAME(4, 8), ANIMCMD_FRAME(8, 8),
+    ANIMCMD_FRAME(12, 8), ANIMCMD_FRAME(16, 8), ANIMCMD_FRAME(20, 8), ANIMCMD_JUMP(0)
+};
+
+const union AnimCmd *const sAnims_ChasesAway_KyogreSplash[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    sAnim_ChasesAway_KyogreSplash
+};
+
+#define CHASE_SHEET(name, gfx, size, tag) \
+const struct CompressedSpriteSheet name RAYQUAZA_SCENE_CHASES_AWAY_DATA = { gfx, size, tag }
+
+CHASE_SHEET(sSpriteSheet_ChasesAway_Groudon, gRaySceneChasesAway_Groudon_Gfx, 0x1800, TAG_CHASE_GROUDON);
+CHASE_SHEET(sSpriteSheet_ChasesAway_GroudonTail, gRaySceneChasesAway_GroudonTail_Gfx, 0x80, TAG_CHASE_GROUDON_TAIL);
+CHASE_SHEET(sSpriteSheet_ChasesAway_Kyogre, gRaySceneChasesAway_Kyogre_Gfx, 0x600, TAG_CHASE_KYOGRE);
+CHASE_SHEET(sSpriteSheet_ChasesAway_Rayquaza, gRaySceneChasesAway_Rayquaza_Gfx, 0x2000, TAG_CHASE_RAYQUAZA);
+CHASE_SHEET(sSpriteSheet_ChasesAway_RayquazaTail, gRaySceneChasesAway_RayquazaTail_Gfx, 0x800, TAG_CHASE_RAYQUAZA_TAIL);
+CHASE_SHEET(sSpriteSheet_ChasesAway_KyogreSplash, gRaySceneChasesAway_KyogreSplash_Gfx, 0x300, TAG_CHASE_SPLASH);
+
+#undef CHASE_SHEET
+
+#define CHASE_PAL(name, pal, tag) \
+const struct CompressedSpritePalette name RAYQUAZA_SCENE_CHASES_AWAY_DATA = { pal, tag }
+
+CHASE_PAL(sSpritePal_ChasesAway_Groudon, gRaySceneChasesAway_Groudon_Pal, TAG_CHASE_GROUDON);
+CHASE_PAL(sSpritePal_ChasesAway_Kyogre, gRaySceneChasesAway_Kyogre_Pal, TAG_CHASE_KYOGRE);
+CHASE_PAL(sSpritePal_ChasesAway_Rayquaza, gRaySceneChasesAway_Rayquaza_Pal, TAG_CHASE_RAYQUAZA);
+CHASE_PAL(sSpritePal_ChasesAway_KyogreSplash, gRaySceneChasesAway_KyogreSplash_Pal, TAG_CHASE_SPLASH);
+
+#undef CHASE_PAL
+
+#define CHASE_TEMPLATE(name, tileTag_, palTag_, oam_, anims_, callback_) \
+const struct SpriteTemplate name RAYQUAZA_SCENE_CHASES_AWAY_DATA = \
+{ \
+    .tileTag = tileTag_, .paletteTag = palTag_, .oam = &oam_, .anims = anims_, .images = NULL, \
+    .affineAnims = gDummySpriteAffineAnimTable, .callback = callback_ \
+}
+
+CHASE_TEMPLATE(sSpriteTemplate_ChasesAway_Groudon, TAG_CHASE_GROUDON, TAG_CHASE_GROUDON, sOam_64x64, sAnims_ChasesAway_Groudon, SpriteCallbackDummy);
+CHASE_TEMPLATE(sSpriteTemplate_ChasesAway_GroudonTail, TAG_CHASE_GROUDON_TAIL, TAG_CHASE_GROUDON, sOam_16x16, sAnims_ChasesAway_GroudonTail, SpriteCallbackDummy);
+CHASE_TEMPLATE(sSpriteTemplate_ChasesAway_Kyogre, TAG_CHASE_KYOGRE, TAG_CHASE_KYOGRE, sOam_32x32, sAnims_ChasesAway_Kyogre, SpriteCallbackDummy);
+CHASE_TEMPLATE(sSpriteTemplate_ChasesAway_Rayquaza, TAG_CHASE_RAYQUAZA, TAG_CHASE_RAYQUAZA, sOam_64x64, sAnims_ChasesAway_Rayquaza, SpriteCB_ChasesAway_Rayquaza);
+CHASE_TEMPLATE(sSpriteTemplate_ChasesAway_RayquazaTail, TAG_CHASE_RAYQUAZA_TAIL, TAG_CHASE_RAYQUAZA, sOam_32x32, sAnims_ChasesAway_RayquazaTail, SpriteCallbackDummy);
+CHASE_TEMPLATE(sSpriteTemplate_ChasesAway_KyogreSplash, TAG_CHASE_SPLASH, TAG_CHASE_SPLASH, sOam_32x8, sAnims_ChasesAway_KyogreSplash, SpriteCallbackDummy);
+
+#undef CHASE_TEMPLATE
+
+const struct BgTemplate sBgTemplates_ChasesAway[] RAYQUAZA_SCENE_CHASES_AWAY_DATA =
+{
+    { .bg = 0, .charBaseIndex = 1, .mapBaseIndex = 31, .screenSize = 0, .paletteMode = 0, .priority = 1, .baseTile = 0 },
+    { .bg = 1, .charBaseIndex = 1, .mapBaseIndex = 30, .screenSize = 0, .paletteMode = 0, .priority = 2, .baseTile = 0 },
+    { .bg = 2, .charBaseIndex = 0, .mapBaseIndex = 29, .screenSize = 0, .paletteMode = 0, .priority = 0, .baseTile = 0 }
+};
+
+#undef RAYQUAZA_SCENE_CHASES_AWAY_DATA
 
 __attribute__((naked)) void DoRayquazaScene(u8 animId, bool8 endEarly, MainCallback exitCallback)
 {
@@ -5615,7 +5739,7 @@ __attribute__((naked)) void sub_081D8574(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D85F0: .4byte sBgTemplates_Charges + 0x1C4\n\t"
+        "_081D85F0: .4byte sBgTemplates_ChasesAway\n\t"
         "_081D85F4: .4byte gUnknown_203CC2C\n\t"
         "_081D85F8: .4byte 0x00000804\n\t"
         "_081D85FC: .4byte 0x00001004\n\t"
@@ -5692,25 +5816,25 @@ __attribute__((naked)) void sub_081D8600(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D86A4: .4byte gUnknown_8DAADCC\n\t"
-        "_081D86A8: .4byte gUnknown_8DAAB5C\n\t"
-        "_081D86AC: .4byte gUnknown_8DAB0FC\n\t"
+        "_081D86A4: .4byte gRaySceneChasesAway_Ring_Gfx\n\t"
+        "_081D86A8: .4byte gRaySceneChasesAway_Light_Gfx\n\t"
+        "_081D86AC: .4byte gRaySceneChasesAway_Bg_Tilemap\n\t"
         "_081D86B0: .4byte gUnknown_203CC2C\n\t"
         "_081D86B4: .4byte 0x00000804\n\t"
-        "_081D86B8: .4byte gUnknown_8DAAEC4\n\t"
-        "_081D86BC: .4byte gUnknown_8DAB240\n\t"
+        "_081D86B8: .4byte gRaySceneChasesAway_Light_Tilemap\n\t"
+        "_081D86BC: .4byte gRaySceneChasesAway_Ring_Tilemap\n\t"
         "_081D86C0: .4byte 0x00001004\n\t"
-        "_081D86C4: .4byte gUnknown_8DAB294\n\t"
-        "_081D86C8: .4byte sBgTemplates_Charges + 0xE4\n\t"
-        "_081D86CC: .4byte sBgTemplates_Charges + 0xEC\n\t"
-        "_081D86D0: .4byte sBgTemplates_Charges + 0xF4\n\t"
-        "_081D86D4: .4byte sBgTemplates_Charges + 0xFC\n\t"
-        "_081D86D8: .4byte sBgTemplates_Charges + 0x104\n\t"
-        "_081D86DC: .4byte sBgTemplates_Charges + 0x10C\n\t"
-        "_081D86E0: .4byte sBgTemplates_Charges + 0x114\n\t"
-        "_081D86E4: .4byte sBgTemplates_Charges + 0x11C\n\t"
-        "_081D86E8: .4byte sBgTemplates_Charges + 0x124\n\t"
-        "_081D86EC: .4byte sBgTemplates_Charges + 0x12C\n\t"
+        "_081D86C4: .4byte gRaySceneChasesAway_Bg_Pal\n\t"
+        "_081D86C8: .4byte sSpriteSheet_ChasesAway_Groudon\n\t"
+        "_081D86CC: .4byte sSpriteSheet_ChasesAway_GroudonTail\n\t"
+        "_081D86D0: .4byte sSpriteSheet_ChasesAway_Kyogre\n\t"
+        "_081D86D4: .4byte sSpriteSheet_ChasesAway_Rayquaza\n\t"
+        "_081D86D8: .4byte sSpriteSheet_ChasesAway_RayquazaTail\n\t"
+        "_081D86DC: .4byte sSpriteSheet_ChasesAway_KyogreSplash\n\t"
+        "_081D86E0: .4byte sSpritePal_ChasesAway_Groudon\n\t"
+        "_081D86E4: .4byte sSpritePal_ChasesAway_Kyogre\n\t"
+        "_081D86E8: .4byte sSpritePal_ChasesAway_Rayquaza\n\t"
+        "_081D86EC: .4byte sSpritePal_ChasesAway_KyogreSplash\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6318,12 +6442,12 @@ __attribute__((naked)) void sub_081D89E4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081D8B94: .4byte gUnknown_3005B68\n\t"
-        "_081D8B98: .4byte sBgTemplates_Charges + 0x134\n\t"
+        "_081D8B98: .4byte sSpriteTemplate_ChasesAway_Groudon\n\t"
         "_081D8B9C: .4byte gUnknown_20205DA\n\t"
-        "_081D8BA0: .4byte sBgTemplates_Charges + 0x14C\n\t"
-        "_081D8BA4: .4byte sBgTemplates_Charges + 0x164\n\t"
-        "_081D8BA8: .4byte sBgTemplates_Charges + 0x17C\n\t"
-        "_081D8BAC: .4byte sBgTemplates_Charges + 0x194\n\t"
+        "_081D8BA0: .4byte sSpriteTemplate_ChasesAway_GroudonTail\n\t"
+        "_081D8BA4: .4byte sSpriteTemplate_ChasesAway_Kyogre\n\t"
+        "_081D8BA8: .4byte sSpriteTemplate_ChasesAway_Rayquaza\n\t"
+        "_081D8BAC: .4byte sSpriteTemplate_ChasesAway_RayquazaTail\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6814,7 +6938,7 @@ __attribute__((naked)) void sub_081D8E64(void)
         "	strh r0, [r7, #0x26]\n\t"
         "	b _081D8F38\n\t"
         "	.align 2, 0\n\t"
-        "_081D8F2C: .4byte sBgTemplates_Charges + 0x1AC\n\t"
+        "_081D8F2C: .4byte sSpriteTemplate_ChasesAway_KyogreSplash\n\t"
         "_081D8F30: .4byte gSprites\n\t"
         "_081D8F34:\n\t"
         "	adds r0, r1, #1\n\t"
@@ -6840,7 +6964,7 @@ __attribute__((naked)) void sub_081D8E64(void)
     );
 }
 
-__attribute__((naked)) void sub_081D8F58(void)
+__attribute__((naked)) void SpriteCB_ChasesAway_Rayquaza(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

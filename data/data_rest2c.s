@@ -979,37 +979,77 @@ gRaySceneCharges_Orbs_Tilemap: @ 0x8DA9014
 	.globl gRaySceneCharges_Bg_Pal
 gRaySceneCharges_Bg_Pal: @ 0x8DA912C
 	.incbin "graphics/rayquaza_scene/scene_4/bg.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xDA917D, 0x19DF
+	.incbin "baserom_jp.gba", 0xDA917D, 0x3
+
+	.globl gRaySceneChasesAway_Groudon_Gfx
+gRaySceneChasesAway_Groudon_Gfx: @ 0x8DA9180
+	.incbin "graphics/rayquaza_scene/scene_5/groudon.4bpp.lz"
+
+	.globl gRaySceneChasesAway_GroudonTail_Gfx
+gRaySceneChasesAway_GroudonTail_Gfx: @ 0x8DA9918
+	.incbin "graphics/rayquaza_scene/scene_5/groudon_tail.4bpp.lz"
+
+	.globl gRaySceneChasesAway_Kyogre_Gfx
+gRaySceneChasesAway_Kyogre_Gfx: @ 0x8DA995C
+	.incbin "graphics/rayquaza_scene/scene_5/kyogre.4bpp.lz"
+
+	.globl gRaySceneChasesAway_Rayquaza_Gfx
+gRaySceneChasesAway_Rayquaza_Gfx: @ 0x8DA9BA4
+	.incbin "graphics/rayquaza_scene/scene_5/rayquaza.4bpp.lz"
+
+	.globl gRaySceneChasesAway_RayquazaTail_Gfx
+gRaySceneChasesAway_RayquazaTail_Gfx: @ 0x8DAA84C
+	.incbin "graphics/rayquaza_scene/scene_5/rayquaza_tail.4bpp.lz"
+
+	.globl gRaySceneChasesAway_KyogreSplash_Gfx
+gRaySceneChasesAway_KyogreSplash_Gfx: @ 0x8DAAA3C
+	.incbin "graphics/rayquaza_scene/scene_5/kyogre_splash.4bpp.lz"
+
+	.globl gRaySceneChasesAway_Groudon_Pal
+gRaySceneChasesAway_Groudon_Pal: @ 0x8DAAAD4
+	.incbin "graphics/rayquaza_scene/scene_5/groudon.gbapal.lz"
+
+	.globl gRaySceneChasesAway_Kyogre_Pal
+gRaySceneChasesAway_Kyogre_Pal: @ 0x8DAAAFC
+	.incbin "graphics/rayquaza_scene/scene_5/kyogre.gbapal.lz"
+
+	.globl gRaySceneChasesAway_Rayquaza_Pal
+gRaySceneChasesAway_Rayquaza_Pal: @ 0x8DAAB24
+	.incbin "graphics/rayquaza_scene/scene_5/rayquaza.gbapal.lz"
+
+	.globl gRaySceneChasesAway_KyogreSplash_Pal
+gRaySceneChasesAway_KyogreSplash_Pal: @ 0x8DAAB4C
+	.incbin "graphics/rayquaza_scene/scene_5/kyogre_splash.gbapal.lz"
 
 
-	.globl gUnknown_8DAAB5C
-gUnknown_8DAAB5C: @ 0x8DAAB5C
-	.incbin "graphics/misc/gUnknown_8DAAB5C.4bpp.lz"
+	.globl gRaySceneChasesAway_Light_Gfx
+gRaySceneChasesAway_Light_Gfx: @ 0x8DAAB5C
+	.incbin "graphics/rayquaza_scene/scene_5/light.4bpp.lz"
 
 
-	.globl gUnknown_8DAADCC
-gUnknown_8DAADCC: @ 0x8DAADCC
-	.incbin "graphics/misc/gUnknown_8DAADCC.4bpp.lz"
+	.globl gRaySceneChasesAway_Ring_Gfx
+gRaySceneChasesAway_Ring_Gfx: @ 0x8DAADCC
+	.incbin "graphics/rayquaza_scene/scene_5/ring.8bpp.lz"
 
 
-	.globl gUnknown_8DAAEC4
-gUnknown_8DAAEC4: @ 0x8DAAEC4
-	.incbin "graphics/misc/gUnknown_8DAAEC4.4bpp.lz"
+	.globl gRaySceneChasesAway_Light_Tilemap
+gRaySceneChasesAway_Light_Tilemap: @ 0x8DAAEC4
+	.incbin "graphics/rayquaza_scene/scene_5/light.bin.lz"
 
 
-	.globl gUnknown_8DAB0FC
-gUnknown_8DAB0FC: @ 0x8DAB0FC
-	.incbin "graphics/misc/gUnknown_8DAB0FC.4bpp.lz"
+	.globl gRaySceneChasesAway_Bg_Tilemap
+gRaySceneChasesAway_Bg_Tilemap: @ 0x8DAB0FC
+	.incbin "graphics/rayquaza_scene/scene_5/bg.bin.lz"
 
 
-	.globl gUnknown_8DAB240
-gUnknown_8DAB240: @ 0x8DAB240
-	.incbin "graphics/misc/gUnknown_8DAB240.4bpp.lz"
+	.globl gRaySceneChasesAway_Ring_Tilemap
+gRaySceneChasesAway_Ring_Tilemap: @ 0x8DAB240
+	.incbin "graphics/rayquaza_scene/scene_5/ring.bin.lz"
 
 
-	.globl gUnknown_8DAB294
-gUnknown_8DAB294: @ 0x8DAB294
-	.incbin "graphics/misc/gUnknown_8DAB294.4bpp.lz"
+	.globl gRaySceneChasesAway_Bg_Pal
+gRaySceneChasesAway_Bg_Pal: @ 0x8DAB294
+	.incbin "graphics/rayquaza_scene/scene_5/bg.gbapal.lz"
 	.incbin "baserom_jp.gba", 0xDAB2FD, 0xF4C3
 
 
