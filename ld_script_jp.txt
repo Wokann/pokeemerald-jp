@@ -9411,7 +9411,8 @@ SECTIONS {
         src/data/text/region_texts54.o(.rodata);
         data/data_b2d_mid54.o(.rodata);
         src/data/text/region_texts55.o(.rodata);
-        data/data_b2d_mid55.o(.rodata);
+        src/data/pokedex.o(.rodata.pokedex_mid55);
+        src/data/trainer_card.o(.rodata.trainer_card_mid55);
         src/data/text/region_texts56.o(.rodata);
         data/data_b2d_mid56.o(.rodata);
         src/data/text/region_texts57.o(.rodata);
