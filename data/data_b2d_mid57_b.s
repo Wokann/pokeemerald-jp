@@ -25,11 +25,7 @@ gUnknown_8560E6C: @ 0x8560E6C
 gUnknown_8560E80: @ 0x8560E80
 	.incbin "baserom_jp.gba", 0x560e80, 0x18
 
-	.section .rodata.mid57b_contest_post_ui
-
-	.globl gUnknown_8560F28
-gUnknown_8560F28: @ 0x8560F28
-	.incbin "baserom_jp.gba", 0x560f28, 0x100
+	.section .rodata.mid57b_contest_post_winners
 
 	.globl gUnknown_8561028
 gUnknown_8561028: @ 0x8561028

@@ -6,6 +6,7 @@
 #include "sprite.h"
 #include "window.h"
 #include "constants/moves.h"
+#include "data/contest_opponents.h"
 #include "data/contest_text_tables.h"
 
 extern u8 sContestBgCopyFlags;
@@ -16374,7 +16375,7 @@ __attribute__((naked)) void ClearContestWinnerPicsInContestHall(void)
         "	.align 2, 0\n\t"
         "_080DE77C: .4byte gSaveBlock1Ptr\n\t"
         "_080DE780: .4byte 0x00002E90\n\t"
-        "_080DE784: .4byte gUnknown_8560F28\n\t"
+        "_080DE784: .4byte gDefaultContestWinners\n\t"
         ".syntax divided\n\t"
     );
 }
