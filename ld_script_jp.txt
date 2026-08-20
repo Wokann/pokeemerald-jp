@@ -9753,3 +9753,7 @@ gText_ExpandedPlaceholder_Kun = gUnknown_85C8C25;
 gText_ExpandedPlaceholder_Chan = gUnknown_85C8C28;
 gText_ExpandedPlaceholder_May = gUnknown_85C8C5E;
 gText_ExpandedPlaceholder_Brendan = gUnknown_85C8C5A;
+gUnknown_8C16E98 = gContestInterfaceAudiencePalette;
+gUnknown_8C16FB0 = gContestAudienceTilemap;
+gUnknown_8C17178 = gContestInterfaceTilemap;
+gUnknown_8C17988 = gContestCurtainTilemap;

@@ -7,6 +7,12 @@ JP_CONTEST_GFX const u32 gJPContestPal[] = INCBIN_U32("graphics/contest/japanese
 JP_CONTEST_GFX const u32 gJPContestBgTilemap[] = INCBIN_U32("graphics/contest/japanese/bg.bin.lz");
 JP_CONTEST_GFX const u32 gJPContestWindowsTilemap[] = INCBIN_U32("graphics/contest/japanese/windows.bin.lz");
 JP_CONTEST_GFX const u32 gJPContestGfx2[] = INCBIN_U32("graphics/contest/japanese/composite_2.4bpp.lz");
+JP_CONTEST_GFX const u32 gContestInterfaceAudiencePalette[] = INCBIN_U32("graphics/contest/interface.png.gbapal.lz");
+JP_CONTEST_GFX const u32 gContestAudienceTilemap[] = INCBIN_U32("graphics/contest/audience.bin.lz");
+JP_CONTEST_GFX const u32 gContestInterfaceTilemap[] = INCBIN_U32("graphics/contest/interface.bin.lz");
+JP_CONTEST_GFX const u32 gJPContestInterfaceTilemap[] = INCBIN_U32("graphics/contest/japanese/interface.bin.lz");
+JP_CONTEST_GFX const u32 gJPContestAudienceTilemap[] = INCBIN_U32("graphics/contest/japanese/audience.bin.lz");
+JP_CONTEST_GFX const u32 gContestCurtainTilemap[] = INCBIN_U32("graphics/contest/curtain.bin.lz");
 
 #undef JP_CONTEST_GFX
 
