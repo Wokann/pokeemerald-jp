@@ -1,5 +1,8 @@
 #include "global.h"
 #include "script_menu.h"
+#include "strings.h"
+
+#include "data/script_menu.h"
 
 __attribute__((naked)) bool8 ScriptMenu_Multichoice(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress)
 {
@@ -2076,4 +2079,3 @@ __attribute__((naked)) void sub_080E21F8(void)
         ".syntax divided\n\t"
     );
 }
-

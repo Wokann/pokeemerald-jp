@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.mid58_pre_std_strings
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -16,16 +16,7 @@ gUnknown_85636B8: @ 0x85636B8
 gUnknown_8564218: @ 0x8564218
 	.incbin "baserom_jp.gba", 0x564218, 0x388
 
-	.globl gStdStrings
-gStdStrings: @ 0x85645A0
-	.4byte 0x085CAC84, 0x085CAC8A, 0x085CAC90, 0x085CAC95
-	.4byte 0x085CAC9A, 0x085CACA0, 0x085CACA5, 0x085CACAA
-	.4byte 0x085CACAF, 0x085CACB4, 0x085CACBA, 0x085CACC0
-	.4byte 0x085CACC5, 0x085CACCC, 0x085CACD2, 0x085CACD6
-	.4byte 0x085CACDE, 0x085CACE2, 0x085CACE8, 0x085CAD53
-	.4byte 0x085CAD58, 0x085CAD5C, 0x085CAD60, 0x085CC423
-	.4byte 0x085CC42A, 0x085CC438, 0x085CC431, 0x085CC442
-	.4byte 0x085CC44A, 0x085CC452
+	.section .rodata.mid58_post_std_strings
 
 	.globl gUnknown_8564618
 gUnknown_8564618: @ 0x8564618
