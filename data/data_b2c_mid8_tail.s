@@ -9,52 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85FBD50
-gUnknown_85FBD50: @ 0x085FBD50
-	.hword 0x01F8, 0x0000
-	.hword 0x21E1, 0x0000
-	.hword 0x13D6, 0x0000
-	.hword 0x0000, 0x0001
-	.hword 0xFFFF, 0x0000
-sAnims_85FBD64: @ 0x085FBD64
-	.4byte sSpriteTemplate_DuoFightPre_KyogreDorsalFin + 0x1FC
-	.hword 0xFFC0, 0xFFC0
-	.hword 0x0100, 0x0000
-	.hword 0x0020, 0x0020
-	.hword 0x0E00, 0x0000
-	.hword 0x0100, 0x0100
-	.hword 0x0000, 0x0000
-	.hword 0x7FFE, 0x0000
-	.hword 0x0000, 0x0000
-	.4byte sScanlineParams_DuoFight_Clouds + 0x1F0
-
-	.globl gUnknown_85FBD8C
-gUnknown_85FBD8C: @ 0x085FBD8C
-	.4byte 0x08DA3E68
-	.hword 0x0100, 0x775B
-
-	.globl gUnknown_85FBD94
-gUnknown_85FBD94: @ 0x085FBD94
-	.4byte 0x08DA3F24
-	.hword 0x775B, 0x0000
-
-	.globl gUnknown_85FBD9C
-gUnknown_85FBD9C: @ 0x085FBD9C
-	.hword 0x775B, 0x775B
-	.4byte sOam_32x16
-	.4byte sAnims_85FBD64
-	.hword 0x0000, 0x0000
-	.4byte sSpriteSheet_DuoFight_Groudon + 0x1C8
-	.4byte sub_081D7B9C
-
-	.globl gUnknown_85FBDB4
-gUnknown_85FBDB4: @ 0x085FBDB4
-	.hword 0x05FF, 0xFCFD
-	.hword 0xFD05, 0x02F9
-	.hword 0xFFF7, 0xFB01
-	.hword 0x0403, 0x03FB
-	.hword 0xFE07, 0x0109
-
 	.globl gUnknown_85FBDC8
 gUnknown_85FBDC8: @ 0x85FBDC8
 	.4byte 0x000001F0, 0x000011E5, 0x000021DA, 0x000031C7

@@ -889,8 +889,9 @@ gUnknown_8DA3C30: @ 0x8DA3C30
 	.globl gUnknown_8DA3D30
 gUnknown_8DA3D30: @ 0x8DA3D30
 	.incbin "graphics/misc/gUnknown_8DA3D30.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xDA3E65, 0xD7
+	.incbin "baserom_jp.gba", 0xDA3E65, 0x3
 
+	.section .rodata.data_rest2c_after_takes_flight
 
 	.globl gUnknown_8DA3F3C
 gUnknown_8DA3F3C: @ 0x8DA3F3C

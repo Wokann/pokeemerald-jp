@@ -12,6 +12,9 @@
 #define TAG_DUOFIGHT_KYOGRE              30508
 #define TAG_DUOFIGHT_KYOGRE_PECTORAL_FIN 30509
 #define TAG_DUOFIGHT_KYOGRE_DORSAL_FIN   30510
+#define TAG_FLIGHT_SMOKE                 30555
+
+#define MAX_SMOKE 10
 
 
 void Task_DuoFightAnim(void);
@@ -20,6 +23,7 @@ void Task_RayDescendsAnim(void);
 void Task_RayChargesAnim(void);
 void Task_RayChasesAwayAnim(void);
 void Task_EndAfterFadeScreen(void);
+void SpriteCB_TakesFlight_Smoke(struct Sprite *sprite);
 
 static void (*const sTasksForAnimations[])(void) __attribute__((section(".rodata.rayquaza_scene_tasks"))) =
 {
@@ -541,6 +545,100 @@ const struct SpriteTemplate sSpriteTemplate_DuoFight_KyogreDorsalFin RAYQUAZA_SC
 };
 
 #undef RAYQUAZA_SCENE_DUO_DATA
+
+#define RAYQUAZA_SCENE_TAKES_FLIGHT_DATA __attribute__((section(".rodata.rayquaza_scene_takes_flight")))
+
+const struct BgTemplate sBgTemplates_TakesFlight[] RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 29,
+        .screenSize = 1,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    }
+};
+
+const union AnimCmd sAnim_TakesFlight_Smoke[] RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END
+};
+
+const union AnimCmd *const sAnims_TakesFlight_Smoke[] RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    sAnim_TakesFlight_Smoke
+};
+
+const union AffineAnimCmd sAffineAnim_TakesFlight_Smoke[] RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    AFFINEANIMCMD_FRAME(-64, -64, 0, 1),
+    AFFINEANIMCMD_FRAME(32, 32, 0, 14),
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_JUMP(0)
+};
+
+const union AffineAnimCmd *const sAffineAnims_TakesFlight_Smoke[] RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    sAffineAnim_TakesFlight_Smoke
+};
+
+const struct CompressedSpriteSheet sSpriteSheet_TakesFlight_Smoke RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    gRaySceneTakesFlight_Smoke_Gfx, 0x100, TAG_FLIGHT_SMOKE
+};
+
+const struct CompressedSpritePalette sSpritePal_TakesFlight_Smoke RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    gRaySceneTakesFlight_Smoke_Pal, TAG_FLIGHT_SMOKE
+};
+
+const struct SpriteTemplate sSpriteTemplate_TakesFlight_Smoke RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    .tileTag = TAG_FLIGHT_SMOKE,
+    .paletteTag = TAG_FLIGHT_SMOKE,
+    .oam = &sOam_32x16,
+    .anims = sAnims_TakesFlight_Smoke,
+    .images = NULL,
+    .affineAnims = sAffineAnims_TakesFlight_Smoke,
+    .callback = SpriteCB_TakesFlight_Smoke,
+};
+
+const s8 sTakesFlight_SmokeCoords[MAX_SMOKE][2] RAYQUAZA_SCENE_TAKES_FLIGHT_DATA =
+{
+    {-1,  5},
+    {-3, -4},
+    { 5, -3},
+    {-7,  2},
+    {-9, -1},
+    { 1, -5},
+    { 3,  4},
+    {-5,  3},
+    { 7, -2},
+    { 9,  1}
+};
+
+#undef RAYQUAZA_SCENE_TAKES_FLIGHT_DATA
 
 __attribute__((naked)) void DoRayquazaScene(u8 animId, bool8 endEarly, MainCallback exitCallback)
 {
@@ -3594,7 +3692,7 @@ __attribute__((naked)) void sub_081D774C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D77C8: .4byte gUnknown_85FBD50\n\t"
+        "_081D77C8: .4byte sBgTemplates_TakesFlight\n\t"
         "_081D77CC: .4byte gUnknown_203CC2C\n\t"
         "_081D77D0: .4byte 0x00000804\n\t"
         "_081D77D4: .4byte 0x00001004\n\t"
@@ -3671,8 +3769,8 @@ __attribute__((naked)) void sub_081D77D8(void)
         "_081D7874: .4byte gUnknown_8DA5094\n\t"
         "_081D7878: .4byte 0x00001004\n\t"
         "_081D787C: .4byte gUnknown_8DA5050\n\t"
-        "_081D7880: .4byte gUnknown_85FBD8C\n\t"
-        "_081D7884: .4byte gUnknown_85FBD94\n\t"
+        "_081D7880: .4byte sSpriteSheet_TakesFlight_Smoke\n\t"
+        "_081D7884: .4byte sSpritePal_TakesFlight_Smoke\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4070,8 +4168,8 @@ __attribute__((naked)) void sub_081D7AE0(void)
         "	b _081D7B96\n\t"
         "	.align 2, 0\n\t"
         "_081D7B7C: .4byte gUnknown_3005B68\n\t"
-        "_081D7B80: .4byte gUnknown_85FBD9C\n\t"
-        "_081D7B84: .4byte gUnknown_85FBDB4\n\t"
+        "_081D7B80: .4byte sSpriteTemplate_TakesFlight_Smoke\n\t"
+        "_081D7B84: .4byte sTakesFlight_SmokeCoords\n\t"
         "_081D7B88: .4byte gSprites\n\t"
         "_081D7B8C:\n\t"
         "	adds r0, r1, #1\n\t"
@@ -4088,7 +4186,7 @@ __attribute__((naked)) void sub_081D7AE0(void)
     );
 }
 
-__attribute__((naked)) void sub_081D7B9C(void)
+__attribute__((naked)) void SpriteCB_TakesFlight_Smoke(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4132,7 +4230,7 @@ __attribute__((naked)) void sub_081D7B9C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D7BE8: .4byte gUnknown_85FBDB4\n\t"
+        "_081D7BE8: .4byte sTakesFlight_SmokeCoords\n\t"
         ".syntax divided\n\t"
     );
 }

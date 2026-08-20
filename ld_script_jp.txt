@@ -9664,6 +9664,7 @@ SECTIONS {
         src/rayquaza_scene.o(.rodata.rayquaza_scene_oam);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_duo_pre);
         src/rayquaza_scene.o(.rodata.rayquaza_scene_duo);
+        src/rayquaza_scene.o(.rodata.rayquaza_scene_takes_flight);
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
@@ -9676,6 +9677,8 @@ SECTIONS {
         data/data_rest2c.o(.rodata);
         src/graphics.o(.rodata.rayquaza_scene_1_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_rayquaza);
+        src/graphics.o(.rodata.rayquaza_scene_2_smoke_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_after_takes_flight);
     } =0
     /* DWARF debug sections.
     Symbols in the DWARF debugging sections are relative to the beginning
