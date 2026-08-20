@@ -9685,7 +9685,7 @@ SECTIONS {
         src/libc/libc_rodata.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
-        data/data_rest.o(.rodata);
+        data/rom_padding.o(.rodata);
         data/data_b2d_gfx_front.o(.rodata);
         data/data_rest2.o(.rodata);
         data/data_b2d_gfx_pokemon_none.o(.rodata);
