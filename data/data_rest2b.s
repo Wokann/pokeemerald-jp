@@ -15,7 +15,7 @@ gUnknown_8C02308: @ 0x8C02308
 
 	.globl gUnknown_8C093F8
 gUnknown_8C093F8: @ 0x8C093F8
-	.incbin "baserom_jp.gba", 0xc093f8, 0x87ec
+	.incbin "baserom_jp.gba", 0xc093f8, 0x87ac
 
 
 	.section .rodata.data_rest2b_after_healthbox

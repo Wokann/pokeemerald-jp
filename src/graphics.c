@@ -2,6 +2,8 @@
 
 #define BATTLE_INTERFACE_GFX __attribute__((section(".rodata.battle_interface_graphics")))
 
+BATTLE_INTERFACE_GFX const u16 gBattleInterface_BallStatusBarPal[] = INCBIN_U16("graphics/battle_interface/ball_status_bar.gbapal");
+BATTLE_INTERFACE_GFX const u16 gBattleInterface_BallDisplayPal[] = INCBIN_U16("graphics/battle_interface/ball_display.gbapal");
 BATTLE_INTERFACE_GFX const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8(
     "graphics/battle_interface/hpbar.4bpp",
     "graphics/battle_interface/expbar.4bpp",
