@@ -9,60 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gText_TimeBoard
-gText_TimeBoard: @ 0x85FB8E3
-	.string "タイムボード$"
-
-	.globl gText_ClearTime
-gText_ClearTime: @ 0x85FB8EA
-	.string "クリアタイム$"
-
-	.globl sText_TimeRecordFormat
-sText_TimeRecordFormat: @ 0x85FB8F1
-	.string "{B_COPY_VAR_1}ふん　{B_COPY_VAR_2}びょう　{B_COPY_VAR_3}$"
-
-	.globl gText_TrainerHill1F
-gText_TrainerHill1F: @ 0x85FB8FF
-	.string "1F$"
-	.globl gText_TrainerHill2F
-gText_TrainerHill2F: @ 0x85FB902
-	.string "2F$"
-	.globl gText_TrainerHill3F
-gText_TrainerHill3F: @ 0x85FB905
-	.string "3F$"
-	.globl gText_TrainerHill4F
-gText_TrainerHill4F: @ 0x85FB908
-	.string "4F$"
-	.byte 0
-
-	.globl gUnknown_85FB90C
-gUnknown_85FB90C: @ 0x85FB90C
-	.4byte gText_TrainerHill1F, gText_TrainerHill2F, gText_TrainerHill3F, gText_TrainerHill4F
-
-	.globl gUnknown_85FB91C
-gUnknown_85FB91C: @ 0x85FB91C
-	.4byte TrainerHillStartChallenge, sub_081D4F2C, sub_081D4F78, sub_081D5024
-	.4byte TrainerHillResumeTimer, TrainerHillSetPlayerLost, TrainerHillGetChallengeStatus, sub_081D5164
-	.4byte sub_081D51F4, sub_081D5238, sub_081D5334, sub_081D5C50
-	.4byte sub_081D5E4C, sub_081D5E7C, sub_081D5E9C, nullsub_2
-	.4byte sub_081D5F08
-
-	.globl sText_TimeRecordEmpty
-sText_TimeRecordEmpty: @ 0x85FB960
-	.string "ーーーーーーーーー$　　"
-
-	.globl gUnknown_85FB96C
-gUnknown_85FB96C: @ 0x85FB96C
-	.4byte 0x00006400, 0x00000000, 0x00110103, 0x00000001, 0x00000000, 0x00000000
-
-	.globl gUnknown_85FB984
-gUnknown_85FB984: @ 0x85FB984
-	.4byte 0x0000003E, 0x0000003F, 0x00000040, 0x00000041
-
-	.globl gUnknown_85FB994
-gUnknown_85FB994: @ 0x85FB994
-	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x00, 0x00
-
 	.globl gUnknown_85FB99C
 gUnknown_85FB99C: @ 0x85FB99C
 	.4byte Task_DuoFightAnim, Task_DuoFightAnim, Task_RayTakesFlightAnim, Task_RayDescendsAnim

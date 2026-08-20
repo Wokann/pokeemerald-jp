@@ -8,10 +8,29 @@
 #include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/trainers.h"
+#include "constants/trainer_types.h"
 #include "constants/tms_hms.h"
 #include "constants/trainer_hill.h"
 
 #include "data/battle_frontier/trainer_hill.h"
+
+void TrainerHillStartChallenge(void);
+void sub_081D4F2C(void);
+void sub_081D4F78(void);
+void sub_081D5024(void);
+void TrainerHillResumeTimer(void);
+void TrainerHillSetPlayerLost(void);
+void TrainerHillGetChallengeStatus(void);
+void sub_081D5164(void);
+void sub_081D51F4(void);
+void sub_081D5238(void);
+void sub_081D5334(void);
+void sub_081D5C50(void);
+void sub_081D5E4C(void);
+void sub_081D5E7C(void);
+void sub_081D5E9C(void);
+void nullsub_2(void);
+void sub_081D5F08(void);
 
 struct
 {
@@ -134,6 +153,75 @@ static const u16 *const *const sPrizeListSets[] =
 static const u16 sEReader_Pal[] = INCBIN_U16("graphics/trainer_hill/ereader.gbapal");
 static const u8 sRecordWinColors[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 
+
+const u8 gText_TimeBoard[] = _("タイムボード");
+const u8 gText_TimeCleared[] = _("クリアタイム");
+const u8 gText_XMinYDotZSec[] = _("{B_COPY_VAR_1}ふん　{B_COPY_VAR_2}びょう　{B_COPY_VAR_3}");
+const u8 gText_TrainerHill1F[] = _("1F");
+const u8 gText_TrainerHill2F[] = _("2F");
+const u8 gText_TrainerHill3F[] = _("3F");
+const u8 gText_TrainerHill4F[] = _("4F");
+
+// Unused
+static const u8 *const sFloorStrings[] =
+{
+    gText_TrainerHill1F,
+    gText_TrainerHill2F,
+    gText_TrainerHill3F,
+    gText_TrainerHill4F,
+};
+
+// JP has 17 dispatch entries and no TRAINER_HILL_FUNC_SET_MODE slot.
+static void (*const sHillFunctions[])(void) =
+{
+    TrainerHillStartChallenge,
+    sub_081D4F2C,
+    sub_081D4F78,
+    sub_081D5024,
+    TrainerHillResumeTimer,
+    TrainerHillSetPlayerLost,
+    TrainerHillGetChallengeStatus,
+    sub_081D5164,
+    sub_081D51F4,
+    sub_081D5238,
+    sub_081D5334,
+    sub_081D5C50,
+    sub_081D5E4C,
+    sub_081D5E7C,
+    sub_081D5E9C,
+    nullsub_2,
+    sub_081D5F08,
+};
+
+static const u8 sText_TimeRecordEmpty[] = _("ーーーーーーーーー");
+
+// This template is byte-backed so agbcc keeps the original JP 4-byte placement.
+static const u8 sTrainerObjectEventTemplate[sizeof(struct ObjectEventTemplate)] __attribute__((section(".rodata.trainer_hill_ui_tail"), aligned(4))) =
+{
+    0, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL, 0, 0,
+    0, 0, 0, 0,
+    ELEVATION_DEFAULT, MOVEMENT_TYPE_LOOK_AROUND, 0x11, 0,
+    TRAINER_TYPE_NORMAL, 0, 0, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
+};
+
+static const u32 sNextFloorMapNum[NUM_TRAINER_HILL_FLOORS] __attribute__((section(".rodata.trainer_hill_ui_tail"))) =
+{
+    MAP_NUM(MAP_TRAINER_HILL_2F),
+    MAP_NUM(MAP_TRAINER_HILL_3F),
+    MAP_NUM(MAP_TRAINER_HILL_4F),
+    MAP_NUM(MAP_TRAINER_HILL_ROOF),
+};
+
+static const u8 sTrainerPartySlots[HILL_TRAINERS_PER_FLOOR][PARTY_SIZE / 2] __attribute__((section(".rodata.trainer_hill_ui_tail"))) =
+{
+    {0, 1, 2},
+    {3, 4, 5},
+};
+
+static const u8 sTrainerHillUiTailPadding[2] __attribute__((section(".rodata.trainer_hill_ui_tail"))) = {0};
+
 __attribute__((naked)) void CallTrainerHillFunction()
 {
     __asm__(".syntax unified\n\t"
@@ -151,7 +239,7 @@ __attribute__((naked)) void CallTrainerHillFunction()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D4B34: .4byte gUnknown_85FB91C\n\t"
+        "_081D4B34: .4byte sHillFunctions\n\t"
         "_081D4B38: .4byte gSpecialVar_0x8004\n\t"
         ".syntax divided\n\t"
     );
@@ -1533,7 +1621,7 @@ __attribute__((naked)) void PrintOnTrainerHillRecordsWindow()
         "_081D5560: .4byte sText_TimeRecordEmpty\n\t"
         "_081D5564: .4byte sRecordWinColors\n\t"
         "_081D5568: .4byte gText_TimeBoard\n\t"
-        "_081D556C: .4byte gText_ClearTime\n\t"
+        "_081D556C: .4byte gText_TimeCleared\n\t"
         "_081D5570: .4byte gUnknown_203CC20\n\t"
         "_081D5574: .4byte gSaveBlock1Ptr\n\t"
         "_081D5578: .4byte 0x00003D68\n\t"
@@ -1541,10 +1629,10 @@ __attribute__((naked)) void PrintOnTrainerHillRecordsWindow()
         "_081D5580: .4byte gStringVar2\n\t"
         "_081D5584: .4byte gStringVar3\n\t"
         "_081D5588: .4byte gStringVar4\n\t"
-        "_081D558C: .4byte sText_TimeRecordFormat\n\t"
+        "_081D558C: .4byte gText_XMinYDotZSec\n\t"
         "_081D5590: .4byte gSaveBlock2Ptr\n\t"
         "_081D5594: .4byte 0x00000EF9\n\t"
-        "_081D5598: .4byte gUnknown_85FB90C\n\t"
+        "_081D5598: .4byte sFloorStrings\n\t"
         "_081D559C: .4byte 0x00034BBF\n\t"
         "_081D55A0:\n\t"
         "	movs r5, #0\n\t"
@@ -1706,7 +1794,7 @@ __attribute__((naked)) void PrintOnTrainerHillRecordsWindow()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D56E4: .4byte gUnknown_85FB90C\n\t"
+        "_081D56E4: .4byte sFloorStrings\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1879,7 +1967,7 @@ __attribute__((naked)) void sub_081D56F0(void)
         "_081D5824: .4byte 0x0000FFFF\n\t"
         "_081D5828: .4byte 0x05000180\n\t"
         "_081D582C: .4byte gUnknown_203CC20\n\t"
-        "_081D5830: .4byte gUnknown_85FB96C\n\t"
+        "_081D5830: .4byte sTrainerObjectEventTemplate\n\t"
         "_081D5834: .4byte 0x000003BA\n\t"
         "_081D5838: .4byte 0x000003BB\n\t"
         "_081D583C: .4byte TrainerHill_EventScript_TrainerBattle\n\t"
@@ -2296,7 +2384,7 @@ __attribute__((naked)) void sub_081D5AD0(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081D5B18: .4byte gUnknown_85FB984\n\t"
+        "_081D5B18: .4byte sNextFloorMapNum\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2587,7 +2675,7 @@ __attribute__((naked)) void sub_081D5C68(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D5D14: .4byte gUnknown_85FB994\n\t"
+        "_081D5D14: .4byte sTrainerPartySlots\n\t"
         "_081D5D18: .4byte gEnemyParty\n\t"
         "_081D5D1C: .4byte gUnknown_203CC20\n\t"
         ".syntax divided\n\t"

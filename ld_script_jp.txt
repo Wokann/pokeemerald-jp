@@ -9659,6 +9659,7 @@ SECTIONS {
         src/faraway_island.o(.rodata.faraway_island_rock_coords);
         src/trainer_hill.o(.rodata.trainer_hill_jp_default_data);
         src/trainer_hill.o(.rodata);
+        src/trainer_hill.o(.rodata.trainer_hill_ui_tail);
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
