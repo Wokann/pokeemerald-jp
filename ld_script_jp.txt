@@ -9443,7 +9443,8 @@ SECTIONS {
         src/berry.o(.rodata.berry_mid58_data);
         data/data_b2d_mid58.o(.rodata.mid58_pre_std_strings);
         src/script_menu.o(.rodata.script_menu_mid58_std_strings);
-        data/data_b2d_mid58.o(.rodata.mid58_post_std_strings);
+        src/script_menu.o(.rodata.script_menu_mid58_link_services);
+        data/data_b2d_mid58.o(.rodata.mid58_post_link_services);
         src/data/text/region_texts59.o(.rodata);
         data/data_b2d_mid59.o(.rodata);
         src/data/text/region_texts34.o(.rodata);

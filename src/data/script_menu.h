@@ -35,3 +35,76 @@ SCRIPT_MENU_STD_STRINGS const u8 *const gStdStrings[] = {
 };
 
 #undef SCRIPT_MENU_STD_STRINGS
+
+// Link-service menus used by cable, wireless, and S.S. Tidal script commands.
+#define SCRIPT_MENU_LINK_SERVICES __attribute__((section(".rodata.script_menu_mid58_link_services")))
+
+SCRIPT_MENU_LINK_SERVICES static const u8 sLinkServicesMultichoiceIds[] =
+{
+    MULTI_CABLE_CLUB_NO_RECORD_MIX,
+    MULTI_WIRELESS_NO_RECORD_BERRY,
+    MULTI_CABLE_CLUB_WITH_RECORD_MIX,
+    MULTI_WIRELESS_NO_BERRY,
+    MULTI_WIRELESS_NO_RECORD,
+    MULTI_WIRELESS_ALL_SERVICES,
+};
+
+SCRIPT_MENU_LINK_SERVICES static const u8 *const sLilycoveSSTidalDestinations[SSTIDAL_SELECTION_COUNT] =
+{
+    [SSTIDAL_SELECTION_SLATEPORT]       = gText_SlateportCity,
+    [SSTIDAL_SELECTION_BATTLE_FRONTIER] = gText_BattleFrontier,
+    [SSTIDAL_SELECTION_SOUTHERN_ISLAND] = gText_SouthernIsland,
+    [SSTIDAL_SELECTION_NAVEL_ROCK]      = gText_NavelRock,
+    [SSTIDAL_SELECTION_BIRTH_ISLAND]    = gText_BirthIsland,
+    [SSTIDAL_SELECTION_FARAWAY_ISLAND]  = gText_FarawayIsland,
+    [SSTIDAL_SELECTION_EXIT]            = gText_Exit,
+};
+
+SCRIPT_MENU_LINK_SERVICES static const u8 *const sCableClubOptions_WithRecordMix[] =
+{
+    CableClub_Text_TradeUsingLinkCable,
+    CableClub_Text_BattleUsingLinkCable,
+    CableClub_Text_RecordCornerUsingLinkCable,
+    CableClub_Text_CancelSelectedItem,
+};
+
+SCRIPT_MENU_LINK_SERVICES static const u8 *const sWirelessOptionsNoBerryCrush[] =
+{
+    CableClub_Text_YouMayTradeHere,
+    CableClub_Text_YouMayBattleHere,
+    CableClub_Text_CanMixRecords,
+    CableClub_Text_CancelSelectedItem,
+};
+
+SCRIPT_MENU_LINK_SERVICES static const u8 *const sWirelessOptions_NoRecordMix[] =
+{
+    CableClub_Text_YouMayTradeHere,
+    CableClub_Text_YouMayBattleHere,
+    CableClub_Text_CanMakeBerryPowder,
+    CableClub_Text_CancelSelectedItem,
+};
+
+SCRIPT_MENU_LINK_SERVICES static const u8 *const sWirelessOptions_AllServices[] =
+{
+    CableClub_Text_YouMayTradeHere,
+    CableClub_Text_YouMayBattleHere,
+    CableClub_Text_CanMixRecords,
+    CableClub_Text_CanMakeBerryPowder,
+    CableClub_Text_CancelSelectedItem,
+};
+
+SCRIPT_MENU_LINK_SERVICES static const u8 *const sCableClubOptions_NoRecordMix[] =
+{
+    CableClub_Text_TradeUsingLinkCable,
+    CableClub_Text_BattleUsingLinkCable,
+    CableClub_Text_CancelSelectedItem,
+};
+
+SCRIPT_MENU_LINK_SERVICES static const u8 *const sWirelessOptions_NoRecordMixBerryCrush[] =
+{
+    CableClub_Text_YouMayTradeHere,
+    CableClub_Text_YouMayBattleHere,
+    CableClub_Text_CancelSelectedItem,
+};
+
+#undef SCRIPT_MENU_LINK_SERVICES

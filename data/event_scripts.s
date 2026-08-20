@@ -572,6 +572,23 @@ gUnknown_8247CDA: @ 0x8247CDA
 	.globl gText_AwaitingLinkup
 	.set gText_AwaitingLinkup, gUnknown_8247CDA
 
+	.globl CableClub_Text_TradeUsingLinkCable
+	.set CableClub_Text_TradeUsingLinkCable, EventScript_WirelessBoxResults + 0x34A
+	.globl CableClub_Text_BattleUsingLinkCable
+	.set CableClub_Text_BattleUsingLinkCable, EventScript_WirelessBoxResults + 0x36C
+	.globl CableClub_Text_RecordCornerUsingLinkCable
+	.set CableClub_Text_RecordCornerUsingLinkCable, EventScript_WirelessBoxResults + 0x38E
+	.globl CableClub_Text_CancelSelectedItem
+	.set CableClub_Text_CancelSelectedItem, EventScript_WirelessBoxResults + 0x834
+	.globl CableClub_Text_YouMayTradeHere
+	.set CableClub_Text_YouMayTradeHere, EventScript_WirelessBoxResults + 0x7AB
+	.globl CableClub_Text_YouMayBattleHere
+	.set CableClub_Text_YouMayBattleHere, EventScript_WirelessBoxResults + 0x7C4
+	.globl CableClub_Text_CanMixRecords
+	.set CableClub_Text_CanMixRecords, EventScript_WirelessBoxResults + 0x7FD
+	.globl CableClub_Text_CanMakeBerryPowder
+	.set CableClub_Text_CanMakeBerryPowder, EventScript_WirelessBoxResults + 0x7DD
+
 	.globl gText_HighlyAppealingMove
 	.set gText_HighlyAppealingMove, gUnknown_8247CDA + 0x2FEF
 	.globl gText_UserMoreEasilyStartled

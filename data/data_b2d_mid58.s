@@ -16,39 +16,11 @@ gUnknown_85636B8: @ 0x85636B8
 gUnknown_8564218: @ 0x8564218
 	.incbin "baserom_jp.gba", 0x564218, 0x388
 
-	.section .rodata.mid58_post_std_strings
+	.section .rodata.mid58_post_link_services
 
-	.globl gUnknown_8564618
-gUnknown_8564618: @ 0x8564618
-	.incbin "baserom_jp.gba", 0x564618, 0x8
-
-	.globl gUnknown_8564620
-gUnknown_8564620: @ 0x8564620
-	.incbin "baserom_jp.gba", 0x564620, 0x1c
-
-	.globl gUnknown_856463C
-gUnknown_856463C: @ 0x856463C
-	.incbin "baserom_jp.gba", 0x56463c, 0x10
-
-	.globl gUnknown_856464C
-gUnknown_856464C: @ 0x856464C
-	.incbin "baserom_jp.gba", 0x56464c, 0x10
-
-	.globl gUnknown_856465C
-gUnknown_856465C: @ 0x856465C
-	.incbin "baserom_jp.gba", 0x56465c, 0x10
-
-	.globl gUnknown_856466C
-gUnknown_856466C: @ 0x856466C
-	.incbin "baserom_jp.gba", 0x56466c, 0x14
-
-	.globl gUnknown_8564680
-gUnknown_8564680: @ 0x8564680
-	.incbin "baserom_jp.gba", 0x564680, 0xc
-
-	.globl gUnknown_856468C
-gUnknown_856468C: @ 0x856468C
-	.incbin "baserom_jp.gba", 0x56468c, 0xb8c
+	.globl gUnknown_8564698
+gUnknown_8564698: @ 0x8564698
+	.incbin "baserom_jp.gba", 0x564698, 0xb80
 
 	.globl gUnknown_8565218
 gUnknown_8565218: @ 0x8565218
