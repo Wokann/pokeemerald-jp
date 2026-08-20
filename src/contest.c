@@ -4,6 +4,7 @@
 #include "contest_effect.h"
 #include "graphics.h"
 #include "sprite.h"
+#include "window.h"
 #include "constants/moves.h"
 #include "data/contest_text_tables.h"
 
@@ -257,6 +258,69 @@ CONTEST_GRAPHICS_DATA static const u16 sText_Pal[] = {
 
 #undef CONTEST_GRAPHICS_DATA
 
+#define CONTEST_UI_DATA __attribute__((section(".rodata.contest_mid57b_ui")))
+
+CONTEST_UI_DATA static const struct BgTemplate sContestBgTemplates[] = {
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 0x18,
+        .screenSize = 2,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 0x1E,
+        .screenSize = 2,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 0x1C,
+        .screenSize = 2,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 0x1A,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+};
+
+// JP displays the contestant's Pokémon and trainer names in adjacent windows.
+CONTEST_UI_DATA static const struct WindowTemplate sContestWindowTemplates[] = {
+    { .bg = 0, .tilemapLeft = 19, .tilemapTop = 0,  .width = 5,  .height = 2, .paletteNum = 15, .baseBlock = 0x200 },
+    { .bg = 0, .tilemapLeft = 19, .tilemapTop = 5,  .width = 5,  .height = 2, .paletteNum = 15, .baseBlock = 0x214 },
+    { .bg = 0, .tilemapLeft = 19, .tilemapTop = 10, .width = 5,  .height = 2, .paletteNum = 15, .baseBlock = 0x228 },
+    { .bg = 0, .tilemapLeft = 19, .tilemapTop = 15, .width = 5,  .height = 2, .paletteNum = 15, .baseBlock = 0x23C },
+    { .bg = 0, .tilemapLeft = 24, .tilemapTop = 0,  .width = 6,  .height = 2, .paletteNum = 15, .baseBlock = 0x250 },
+    { .bg = 0, .tilemapLeft = 24, .tilemapTop = 5,  .width = 6,  .height = 2, .paletteNum = 15, .baseBlock = 0x266 },
+    { .bg = 0, .tilemapLeft = 24, .tilemapTop = 10, .width = 6,  .height = 2, .paletteNum = 15, .baseBlock = 0x27C },
+    { .bg = 0, .tilemapLeft = 24, .tilemapTop = 15, .width = 6,  .height = 2, .paletteNum = 15, .baseBlock = 0x292 },
+    { .bg = 0, .tilemapLeft = 1,  .tilemapTop = 15, .width = 17, .height = 4, .paletteNum = 15, .baseBlock = 0x2A8 },
+    { .bg = 0, .tilemapLeft = 2,  .tilemapTop = 31, .width = 7,  .height = 2, .paletteNum = 15, .baseBlock = 0x2EC },
+    { .bg = 0, .tilemapLeft = 2,  .tilemapTop = 33, .width = 7,  .height = 2, .paletteNum = 15, .baseBlock = 0x2FA },
+    { .bg = 0, .tilemapLeft = 2,  .tilemapTop = 35, .width = 7,  .height = 2, .paletteNum = 15, .baseBlock = 0x308 },
+    { .bg = 0, .tilemapLeft = 2,  .tilemapTop = 37, .width = 7,  .height = 2, .paletteNum = 15, .baseBlock = 0x316 },
+    { .bg = 0, .tilemapLeft = 16, .tilemapTop = 31, .width = 1,  .height = 2, .paletteNum = 15, .baseBlock = 0x324 },
+    { .bg = 0, .tilemapLeft = 11, .tilemapTop = 35, .width = 18, .height = 4, .paletteNum = 15, .baseBlock = 0x326 },
+    DUMMY_WIN_TEMPLATE,
+};
+
+#undef CONTEST_UI_DATA
+
 void TaskDummy1(void) {}
 void ResetLinkContestBoolean(void)
 {
@@ -426,7 +490,7 @@ __attribute__((naked)) void InitContestInfoBgs(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D7008: .4byte gUnknown_8560E98\n\t"
+        "_080D7008: .4byte sContestBgTemplates\n\t"
         "_080D700C: .4byte gContestResources\n\t"
         ".syntax divided\n\t"
     );
@@ -454,7 +518,7 @@ __attribute__((naked)) void InitContestWindows(void)
         "	strb r0, [r2]\n\t"
         "	b _080D704E\n\t"
         "	.align 2, 0\n\t"
-        "_080D7038: .4byte gUnknown_8560EA8\n\t"
+        "_080D7038: .4byte sContestWindowTemplates\n\t"
         "_080D703C: .4byte gLinkContestFlags\n\t"
         "_080D7040: .4byte gTextFlags\n\t"
         "_080D7044:\n\t"

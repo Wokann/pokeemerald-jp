@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.mid57b_contest_b
+	.section .rodata.mid57b_contest_pre_ui
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -25,13 +25,7 @@ gUnknown_8560E6C: @ 0x8560E6C
 gUnknown_8560E80: @ 0x8560E80
 	.incbin "baserom_jp.gba", 0x560e80, 0x18
 
-	.globl gUnknown_8560E98
-gUnknown_8560E98: @ 0x8560E98
-	.incbin "baserom_jp.gba", 0x560e98, 0x10
-
-	.globl gUnknown_8560EA8
-gUnknown_8560EA8: @ 0x8560EA8
-	.incbin "baserom_jp.gba", 0x560ea8, 0x80
+	.section .rodata.mid57b_contest_post_ui
 
 	.globl gUnknown_8560F28
 gUnknown_8560F28: @ 0x8560F28
