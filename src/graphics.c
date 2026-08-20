@@ -1,5 +1,24 @@
 #include "global.h"
 
+#define BATTLE_INTERFACE_GFX __attribute__((section(".rodata.battle_interface_graphics")))
+
+BATTLE_INTERFACE_GFX const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8(
+    "graphics/battle_interface/hpbar.4bpp",
+    "graphics/battle_interface/expbar.4bpp",
+    "graphics/battle_interface/status.4bpp",
+    "graphics/battle_interface/misc.4bpp",
+    "graphics/battle_interface/hpbar_anim.4bpp",
+    "graphics/battle_interface/misc_frameend.4bpp",
+    "graphics/battle_interface/ball_display.4bpp",
+    "graphics/battle_interface/ball_caught_indicator.4bpp",
+    "graphics/battle_interface/status2.4bpp",
+    "graphics/battle_interface/status3.4bpp",
+    "graphics/battle_interface/status4.4bpp",
+    "graphics/battle_interface/healthbox_doubles_frameend.4bpp",
+    "graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp");
+
+#undef BATTLE_INTERFACE_GFX
+
 #define BATTLE_ANIM_MASK_AND_BG_GFX __attribute__((section(".rodata.battle_anim_mask_and_bg_graphics")))
 
 BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShineGfx[] = INCBIN_U32("graphics/misc/gMetalShineGfx.bin");
