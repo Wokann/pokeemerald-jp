@@ -24,7 +24,17 @@ extern u8 sMewDirectionCandidates[4];
 
 extern const struct SpritePalette gSpritePalette_GeneralFieldEffect1;
 extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[];
-extern const s16 sFarawayIslandRockCoords[4][2];
+
+
+#define FARAWAY_ISLAND_ROCK_COORDS __attribute__((section(".rodata.faraway_island_rock_coords")))
+
+static const s16 sFarawayIslandRockCoords[4][2] FARAWAY_ISLAND_ROCK_COORDS =
+{
+    {21, 16},
+    {25, 16},
+    {16, 17},
+    {20, 20},
+};
 
 static u8 GetMewObjectEventId(void)
 {

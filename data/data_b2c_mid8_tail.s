@@ -9,23 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85FAEF4
-gUnknown_85FAEF4: @ 0x85FAEF4
-	.asciz "cereader_tool.c"
-
-	.globl gUnknown_85FAF04
-gUnknown_85FAF04: @ 0x85FAF04
-	.asciz "ttdata->dummy == 0"
-	.byte 0
-
-	.globl gUnknown_85FAF18
-gUnknown_85FAF18: @ 0x85FAF18
-	.asciz "ttdata->id == 0"
-
-	.globl sFarawayIslandRockCoords
-sFarawayIslandRockCoords: @ 0x85FAF28
-	.hword 21, 16, 25, 16, 16, 17, 20, 20
-
 	.globl gUnknown_85FAF38
 gUnknown_85FAF38: @ 0x85FAF38
 	.incbin "baserom_jp.gba", 0x5faf38, 0x768

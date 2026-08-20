@@ -12,6 +12,13 @@
 #include "trainer_hill.h"
 
 #include "constants/trainers.h"
+
+
+#define EREADER_ASSERT_STRINGS __attribute__((section(".rodata.ereader_assert_strings")))
+
+static const u8 sEReaderToolFileName[] EREADER_ASSERT_STRINGS = "cereader_tool.c";
+static const u8 sEReaderTrainerHillDummyAssert[] EREADER_ASSERT_STRINGS = "ttdata->dummy == 0\0";
+static const u8 sEReaderTrainerHillIdAssert[] EREADER_ASSERT_STRINGS = "ttdata->id == 0";
 #include "constants/moves.h"
 #include "constants/items.h"
 #include "constants/trainer_hill.h"
@@ -206,9 +213,9 @@ __attribute__((naked)) static bool32 TryWriteTrainerHill_Internal(struct EReader
             "bl memcpy\n\t"
             "b _081D30B2\n\t"
             ".align 2, 0\n\t"
-            "_081D3080: .4byte gUnknown_85FAEF4\n\t"
-            "_081D3084: .4byte gUnknown_85FAF04\n\t"
-            "_081D3088: .4byte gUnknown_85FAF18\n\t"
+            "_081D3080: .4byte sEReaderToolFileName\n\t"
+            "_081D3084: .4byte sEReaderTrainerHillDummyAssert\n\t"
+            "_081D3088: .4byte sEReaderTrainerHillIdAssert\n\t"
             "_081D308C:\n\t"
             "lsrs r1, r5, #0x1f\n\t"
             "adds r1, r5, r1\n\t"

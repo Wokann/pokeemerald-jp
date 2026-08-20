@@ -9655,6 +9655,8 @@ SECTIONS {
         src/graphics.o(.rodata.unused_jp_menu_specialized_middle);
         src/menu_specialized.o(.rodata.menu_specialized_condition_data);
         src/data/trainer_hill_templates.o(.rodata);
+        src/ereader_helpers.o(.rodata.ereader_assert_strings);
+        src/faraway_island.o(.rodata.faraway_island_rock_coords);
         data/data_b2c_mid8_tail.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
