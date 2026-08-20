@@ -535,7 +535,7 @@ __attribute__((naked, section(".text.m4a_tail2"))) void ply_xswee(void)
     );
 }
 
-__attribute__((naked, section(".text.m4a_tail2"))) void ply_xcmd_0C(void)
+__attribute__((naked, section(".text.m4a_tail2"))) void ply_xwait(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1217,7 +1217,7 @@ __attribute__((naked, section(".text.m4a_tail3"))) void ply_xcmd(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0828FA64: .4byte gUnknown_85FD7EC\n\t"
+        "_0828FA64: .4byte gXcmdTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1254,7 +1254,7 @@ __attribute__((naked, section(".text.m4a_tail4"))) void MidiKeyToCgbFreq(void)
         "	ldrb r0, [r0]\n\t"
         "	b _0828F156\n\t"
         "	.align 2, 0\n\t"
-        "_0828F0F0: .4byte gUnknown_85FD738\n\t"
+        "_0828F0F0: .4byte gNoiseTable\n\t"
         "_0828F0F4:\n\t"
         "	cmp r5, #0x23\n\t"
         "	bhi _0828F100\n\t"
@@ -1312,8 +1312,8 @@ __attribute__((naked, section(".text.m4a_tail4"))) void MidiKeyToCgbFreq(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0828F15C: .4byte gUnknown_85FD69C\n\t"
-        "_0828F160: .4byte gUnknown_85FD720\n\t"
+        "_0828F15C: .4byte gCgbScaleTable\n\t"
+        "_0828F160: .4byte gCgbFreqTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1984,7 +1984,7 @@ __attribute__((naked, section(".text.m4a_tail4"))) void CgbSound(void)
         "	b _0828F65C\n\t"
         "	.align 2, 0\n\t"
         "_0828F620: .4byte 0x04000081\n\t"
-        "_0828F624: .4byte gUnknown_85FD774\n\t"
+        "_0828F624: .4byte gCgb3Vol\n\t"
         "_0828F628:\n\t"
         "	movs r0, #0xf\n\t"
         "	mov r1, r8\n\t"
@@ -2949,7 +2949,7 @@ __attribute__((naked, section(".text.m4a_tail6"))) void SampleFreqSet(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0828EBDC: .4byte 0x03007FF0\n\t"
-        "_0828EBE0: .4byte gUnknown_85FD684\n\t"
+        "_0828EBE0: .4byte gPcmSamplesPerVBlankTable\n\t"
         "_0828EBE4: .4byte 0x00091D1B\n\t"
         "_0828EBE8: .4byte 0x00001388\n\t"
         "_0828EBEC: .4byte 0x00002710\n\t"
@@ -3222,8 +3222,8 @@ __attribute__((naked, section(".text.m4a_tail7"))) void MidiKeyToFreq(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0828E5B0: .4byte gUnknown_85FD5A0\n\t"
-        "_0828E5B4: .4byte gUnknown_85FD654\n\t"
+        "_0828E5B0: .4byte gScaleTable\n\t"
+        "_0828E5B4: .4byte gFreqTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3359,7 +3359,7 @@ __attribute__((naked, section(".text.m4a_tail7"))) void m4aSoundInit(void)
         "_0828E694: .4byte gUnknown_863C27C\n\t"
         "_0828E698: .4byte 0x03007590\n\t"
         "_0828E69C: .4byte 0x03007490\n\t"
-        "_0828E6A0: .4byte gUnknown_85FD7B8\n\t"
+        "_0828E6A0: .4byte gPokemonCrySongTemplate\n\t"
         "_0828E6A4: .4byte 0x03007140\n\t"
         "_0828E6A8: .4byte 0x03007350\n\t"
         ".syntax divided\n\t"
@@ -4446,7 +4446,7 @@ __attribute__((naked, section(".text.m4a_tail8"))) void sub_0828E23C(void)
         ".code 16\n\t"
         "	bx r3\n\t"
         "	.align 2, 0\n\t"
-        "_0828E240: .4byte gUnknown_85FD784\n\t"
+        "_0828E240: .4byte gClockTable\n\t"
         "_0828E244: .4byte 0x03007FF0\n\t"
         "_0828E248: .4byte 0x68736D53\n\t"
         ".syntax divided\n\t"
@@ -4813,7 +4813,7 @@ __attribute__((naked, section(".text.m4a_tail8"))) void ply_note(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0828E4BC: .4byte 0x03007FF0\n\t"
-        "_0828E4C0: .4byte gUnknown_85FD784\n\t"
+        "_0828E4C0: .4byte gClockTable\n\t"
         ".syntax divided\n\t"
     );
 }
