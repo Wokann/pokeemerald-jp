@@ -526,6 +526,12 @@ $(C_BUILDDIR)/data/trainer_card.o: src/data/trainer_card.c src/data/trainer_card
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trainer_card.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/trainer_card.gen.s
 
+$(C_BUILDDIR)/data/frontier_pass.o: src/data/frontier_pass.c src/data/frontier_pass.h $(wildcard graphics/frontier_pass/* data/frontier_pass/jp/*)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/frontier_pass.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/frontier_pass.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/data/frontier_pass.gen.s
+
 $(C_BUILDDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/$*.gen.s

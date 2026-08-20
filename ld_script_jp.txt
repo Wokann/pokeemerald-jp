@@ -9414,7 +9414,9 @@ SECTIONS {
         src/data/pokedex.o(.rodata.pokedex_mid55);
         src/data/trainer_card.o(.rodata.trainer_card_mid55);
         src/data/text/region_texts56.o(.rodata);
-        data/data_b2d_mid56.o(.rodata);
+        data/data_b2d_mid56.o(.rodata.mid56_prefix);
+        src/data/frontier_pass.o(.rodata.frontier_pass_mid56);
+        data/data_b2d_mid56.o(.rodata.mid56_suffix);
         src/data/text/region_texts57.o(.rodata);
         data/data_b2d_mid57_a.o(.rodata);
         data/data_b2d.o(.rodata.mid57_gap);
