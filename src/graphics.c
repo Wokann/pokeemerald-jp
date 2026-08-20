@@ -13,6 +13,14 @@ JP_CONTEST_GFX const u32 gContestInterfaceTilemap[] = INCBIN_U32("graphics/conte
 JP_CONTEST_GFX const u32 gJPContestInterfaceTilemap[] = INCBIN_U32("graphics/contest/japanese/interface.bin.lz");
 JP_CONTEST_GFX const u32 gJPContestAudienceTilemap[] = INCBIN_U32("graphics/contest/japanese/audience.bin.lz");
 JP_CONTEST_GFX const u32 gContestCurtainTilemap[] = INCBIN_U32("graphics/contest/curtain.bin.lz");
+JP_CONTEST_GFX const u32 gContestInterfaceGfx[] = INCBIN_U32("graphics/contest/interface.png.4bpp.lz");
+JP_CONTEST_GFX const u32 gContestAudienceGfx[] = INCBIN_U32("graphics/contest/audience.png.4bpp.lz");
+JP_CONTEST_GFX const u32 gContestFaces_Gfx[] = INCBIN_U32("graphics/contest/faces.png.4bpp.lz");
+JP_CONTEST_GFX const u32 gContestJudgeSymbolsGfx[] = INCBIN_U32("graphics/contest/judge_symbols.png.4bpp.lz");
+JP_CONTEST_GFX const u32 gContestJudgeSymbolsPal[] = INCBIN_U32("graphics/contest/judge_symbols.png.gbapal.lz");
+JP_CONTEST_GFX const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/slider_heart.4bpp");
+JP_CONTEST_GFX const u32 gJPContestVoltageGfx[] = INCBIN_U32("graphics/contest/japanese/voltage.4bpp.lz");
+JP_CONTEST_GFX const u32 gJPContestVoltagePal[] = INCBIN_U32("graphics/contest/japanese/voltage.gbapal.lz");
 
 #undef JP_CONTEST_GFX
 

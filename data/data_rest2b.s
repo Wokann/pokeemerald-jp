@@ -22,16 +22,6 @@ gUnknown_8C093F8: @ 0x8C093F8
 	.incbin "baserom_jp.gba", 0xc12aa4, 0x2588
 
 	.section .rodata.data_rest2b_after_jp_contest
-	.globl gUnknown_8C17AB8
-gUnknown_8C17AB8: @ 0x8C17AB8
-	.incbin "baserom_jp.gba", 0xc17ab8, 0xb98
-
-
-	.globl gUnknown_8C18650
-gUnknown_8C18650: @ 0x8C18650
-	.incbin "baserom_jp.gba", 0xc18650, 0x107c
-
-
 	.globl gUnknown_8C196CC
 gUnknown_8C196CC: @ 0x8C196CC
 	.incbin "baserom_jp.gba", 0xc196cc, 0x868

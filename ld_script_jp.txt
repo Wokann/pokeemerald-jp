@@ -9757,3 +9757,5 @@ gUnknown_8C16E98 = gContestInterfaceAudiencePalette;
 gUnknown_8C16FB0 = gContestAudienceTilemap;
 gUnknown_8C17178 = gContestInterfaceTilemap;
 gUnknown_8C17988 = gContestCurtainTilemap;
+gUnknown_8C17AB8 = gContestInterfaceGfx;
+gUnknown_8C18650 = gContestAudienceGfx;
