@@ -1,5 +1,27 @@
 #include "global.h"
 
+#define BATTLE_ANIM_MASK_AND_BG_GFX __attribute__((section(".rodata.battle_anim_mask_and_bg_graphics")))
+
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShineGfx[] = INCBIN_U32("graphics/misc/gMetalShineGfx.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShinePalette[] = {
+    0x00002010, 0xFF7EAA00, 0x0C46547F, 0x226F0016, 0x3B352ED2,
+    0xFB004798, 0xCC02AA53, 0x001B0F0E, 0x33752752, 0x4BFB3FB8,
+};
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gMetalShineTilemap[] = INCBIN_U32("graphics/misc/gMetalShineTilemap.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskImage_Curse[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskImage_Curse.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskTilemap_Curse[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskTilemap_Curse.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimSpritePal_MusicNotes2[] = INCBIN_U32("graphics/battle_anims/gBattleAnimSpritePal_MusicNotes2.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgImage_Attract[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgImage_Attract.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgPalette_Attract[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgPalette_Attract.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgTilemap_Attract[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgTilemap_Attract.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgPalette_ScaryFace[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgPalette_ScaryFace.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimBgImage_ScaryFace[] = INCBIN_U32("graphics/battle_anims/gBattleAnimBgImage_ScaryFace.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskImage_LightBeam[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskImage_LightBeam.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskPalette_LightBeam[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskPalette_LightBeam.bin");
+BATTLE_ANIM_MASK_AND_BG_GFX const u32 gBattleAnimMaskTilemap_LightBeam[] = INCBIN_U32("graphics/battle_anims/gBattleAnimMaskTilemap_LightBeam.bin");
+
+#undef BATTLE_ANIM_MASK_AND_BG_GFX
+
 #define BATTLE_ANIM_STAT_CHANGE_GFX __attribute__((section(".rodata.battle_anim_stat_change_graphics")))
 
 BATTLE_ANIM_STAT_CHANGE_GFX const u32 gStatAnim_Gfx[] = INCBIN_U32("graphics/battle_anims/gStatAnim_Gfx.bin");

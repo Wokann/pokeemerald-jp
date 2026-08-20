@@ -83,76 +83,7 @@ gUnknown_8C1C700: @ 0x8C1C700
 	.incbin "baserom_jp.gba", 0xc1c700, 0x9f4
 
 
-	.globl gMetalShineGfx
-gMetalShineGfx: @ 0x8C1D0F4
-	.incbin "graphics/misc/gMetalShineGfx.bin"
-
-
-	.globl gMetalShinePalette
-gMetalShinePalette: @ 0x8C1D230
-	.4byte 0x00002010, 0xFF7EAA00, 0x0C46547F, 0x226F0016, 0x3B352ED2, 0xFB004798, 0xCC02AA53, 0x001B0F0E, 0x33752752, 0x4BFB3FB8
-
-
-	.globl gMetalShineTilemap
-gMetalShineTilemap: @ 0x8C1D258
-	.incbin "graphics/misc/gMetalShineTilemap.bin"
-
-
-	.globl gBattleAnimMaskImage_Curse
-gBattleAnimMaskImage_Curse: @ 0x8C2070C
-	.incbin "graphics/battle_anims/gBattleAnimMaskImage_Curse.bin"
-
-
-	.globl gBattleAnimMaskTilemap_Curse
-gBattleAnimMaskTilemap_Curse: @ 0x8C20728
-	.incbin "graphics/battle_anims/gBattleAnimMaskTilemap_Curse.bin"
-
-
-	.globl gBattleAnimSpritePal_MusicNotes2
-gBattleAnimSpritePal_MusicNotes2: @ 0x8C226B4
-	.incbin "graphics/battle_anims/gBattleAnimSpritePal_MusicNotes2.bin"
-
-
-	.globl gBattleAnimBgImage_Attract
-gBattleAnimBgImage_Attract: @ 0x8C23384
-	.incbin "graphics/battle_anims/gBattleAnimBgImage_Attract.bin"
-
-
-	.globl gBattleAnimBgPalette_Attract
-gBattleAnimBgPalette_Attract: @ 0x8C23DF4
-	.incbin "graphics/battle_anims/gBattleAnimBgPalette_Attract.bin"
-
-
-	.globl gBattleAnimBgTilemap_Attract
-gBattleAnimBgTilemap_Attract: @ 0x8C23E1C
-	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_Attract.bin"
-
-
-	.globl gBattleAnimBgPalette_ScaryFace
-gBattleAnimBgPalette_ScaryFace: @ 0x8C24A74
-	.incbin "graphics/battle_anims/gBattleAnimBgPalette_ScaryFace.bin"
-
-
-	.globl gBattleAnimBgImage_ScaryFace
-gBattleAnimBgImage_ScaryFace: @ 0x8C24A9C
-	.incbin "graphics/battle_anims/gBattleAnimBgImage_ScaryFace.bin"
-
-
-	.globl gBattleAnimMaskImage_LightBeam
-gBattleAnimMaskImage_LightBeam: @ 0x8C2A6D8
-	.incbin "graphics/battle_anims/gBattleAnimMaskImage_LightBeam.bin"
-
-
-	.globl gBattleAnimMaskPalette_LightBeam
-gBattleAnimMaskPalette_LightBeam: @ 0x8C2A778
-	.incbin "graphics/battle_anims/gBattleAnimMaskPalette_LightBeam.bin"
-
-
-	.globl gBattleAnimMaskTilemap_LightBeam
-gBattleAnimMaskTilemap_LightBeam: @ 0x8C2A790
-	.incbin "graphics/battle_anims/gBattleAnimMaskTilemap_LightBeam.bin"
-
-
+	.section .rodata.data_rest2b_after_battle_anim_masks
 	.globl gUnknown_8C2CF60
 gUnknown_8C2CF60: @ 0x8C2CF60
 	.incbin "baserom_jp.gba", 0xc2cf60, 0x24
