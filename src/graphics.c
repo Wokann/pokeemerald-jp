@@ -1,5 +1,15 @@
 #include "global.h"
 
+#define JP_CONTEST_GFX __attribute__((section(".rodata.jp_contest_graphics")))
+
+JP_CONTEST_GFX const u32 gJPContestGfx1[] = INCBIN_U32("graphics/contest/japanese/composite_1.4bpp.lz");
+JP_CONTEST_GFX const u32 gJPContestPal[] = INCBIN_U32("graphics/contest/japanese/palette.pal.gbapal.lz");
+JP_CONTEST_GFX const u32 gJPContestBgTilemap[] = INCBIN_U32("graphics/contest/japanese/bg.bin.lz");
+JP_CONTEST_GFX const u32 gJPContestWindowsTilemap[] = INCBIN_U32("graphics/contest/japanese/windows.bin.lz");
+JP_CONTEST_GFX const u32 gJPContestGfx2[] = INCBIN_U32("graphics/contest/japanese/composite_2.4bpp.lz");
+
+#undef JP_CONTEST_GFX
+
 #define BATTLE_INTERFACE_GFX __attribute__((section(".rodata.battle_interface_graphics")))
 
 BATTLE_INTERFACE_GFX const u16 gBattleInterface_BallStatusBarPal[] = INCBIN_U16("graphics/battle_interface/ball_status_bar.gbapal");
