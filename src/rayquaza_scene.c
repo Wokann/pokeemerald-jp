@@ -1,5 +1,6 @@
 #include "global.h"
 #include "rayquaza_scene.h"
+#include "sprite.h"
 
 
 void Task_DuoFightAnim(void);
@@ -19,6 +20,25 @@ static void (*const sTasksForAnimations[])(void) __attribute__((section(".rodata
     Task_RayChasesAwayAnim,
     Task_EndAfterFadeScreen,
 };
+
+#define RAYQUAZA_SCENE_OAM(name, dimensions) \
+const struct OamData name __attribute__((section(".rodata.rayquaza_scene_oam"))) = \
+{ \
+    .shape = SPRITE_SHAPE(dimensions), \
+    .size = SPRITE_SIZE(dimensions), \
+    .priority = 2, \
+}
+
+RAYQUAZA_SCENE_OAM(sOam_64x64, 64x64);
+RAYQUAZA_SCENE_OAM(sOam_32x32, 32x32);
+RAYQUAZA_SCENE_OAM(sOam_64x32, 64x32);
+RAYQUAZA_SCENE_OAM(sOam_32x16, 32x16);
+RAYQUAZA_SCENE_OAM(sOam_16x8, 16x8);
+RAYQUAZA_SCENE_OAM(sOam_16x32, 16x32);
+RAYQUAZA_SCENE_OAM(sOam_16x16, 16x16);
+RAYQUAZA_SCENE_OAM(sOam_32x8, 32x8);
+
+#undef RAYQUAZA_SCENE_OAM
 
 __attribute__((naked)) void DoRayquazaScene(u8 animId, bool8 endEarly, MainCallback exitCallback)
 {
