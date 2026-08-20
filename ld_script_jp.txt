@@ -9422,6 +9422,7 @@ SECTIONS {
         src/graphics.o(.rodata.mon_icon_palettes_mid57a);
         src/pokemon_icon.o(.rodata.pokemon_icon_mid57a);
         src/fldeff_cut.o(.rodata.fldeff_cut_mid57a);
+        src/map_name_popup.o(.rodata.map_name_popup_mid57a);
         data/data_b2d_mid57_a.o(.rodata.mid57a_suffix);
         data/data_b2d.o(.rodata.mid57_gap);
         src/item.o(.rodata);
