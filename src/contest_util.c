@@ -2425,7 +2425,7 @@ __attribute__((naked)) void sub_080F72C0(void)
         "	.align 2, 0\n\t"
         "_080F7300: .4byte gMonIconPaletteIndices\n\t"
         "_080F7304: .4byte gContestMons\n\t"
-        "_080F7308: .4byte gUnknown_85567A4\n\t"
+        "_080F7308: .4byte gMonIconPalettes\n\t"
         ".syntax divided\n\t"
     );
 }

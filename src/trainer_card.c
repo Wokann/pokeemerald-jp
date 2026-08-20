@@ -3909,7 +3909,7 @@ __attribute__((naked)) void sub_080C3B0C(void)
         "	beq _080C3B7C\n\t"
         "	b _080C3B84\n\t"
         "	.align 2, 0\n\t"
-        "_080C3B3C: .4byte gUnknown_85567A4\n\t"
+        "_080C3B3C: .4byte gMonIconPalettes\n\t"
         "_080C3B40: .4byte gUnknown_2039988\n\t"
         "_080C3B44: .4byte 0x00000454\n\t"
         "_080C3B48: .4byte 0x0000056E\n\t"

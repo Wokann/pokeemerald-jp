@@ -1,5 +1,14 @@
 #include "global.h"
 
+#define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
+
+MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(
+    "graphics/pokemon/icon_palettes/icon_palette_0.pal.gbapal",
+    "graphics/pokemon/icon_palettes/icon_palette_1.pal.gbapal",
+    "graphics/pokemon/icon_palettes/icon_palette_2.pal.gbapal");
+#undef MON_ICON_PALETTES_DATA
+
+
 #define JP_CONTEST_GFX __attribute__((section(".rodata.jp_contest_graphics")))
 
 JP_CONTEST_GFX const u32 gJPContestGfx1[] = INCBIN_U32("graphics/contest/japanese/composite_1.4bpp.lz");
