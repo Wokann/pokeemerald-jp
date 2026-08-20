@@ -446,6 +446,12 @@ $(C_BUILDDIR)/pokenav_match_call_data.o: src/pokenav_match_call_data.c charmap.t
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_match_call_data.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_match_call_data.gen.s
 
+$(C_BUILDDIR)/trainer_hill.o: src/trainer_hill.c src/data/battle_frontier/trainer_hill.h charmap.txt $(wildcard graphics/trainer_hill/maps_jp/floor_1/*)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/trainer_hill.gen.s
+	@awk '/^\.Lfe[0-9]:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/trainer_hill.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/trainer_hill.gen.s
+
 $(C_BUILDDIR)/data/trainer_hill_templates.o: src/data/trainer_hill_templates.c charmap.txt
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/trainer_hill_templates.gen.s

@@ -9,9 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85FAF38
-gUnknown_85FAF38: @ 0x85FAF38
-	.incbin "baserom_jp.gba", 0x5faf38, 0x768
 	.globl gUnknown_85FB6A0
 gUnknown_85FB6A0: @ 0x85FB6A0
 	.4byte 0x00000603, 0x0000060B, 0x0000060D, 0x0000010F, 0x0000042B, 0x0000012D

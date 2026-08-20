@@ -1,5 +1,15 @@
 #include "global.h"
+#include "battle_tower.h"
 #include "trainer_hill.h"
+#include "constants/battle_ai.h"
+#include "constants/event_object_movement.h"
+#include "constants/event_objects.h"
+#include "constants/items.h"
+#include "constants/moves.h"
+#include "constants/trainers.h"
+#include "constants/trainer_hill.h"
+
+#include "data/battle_frontier/trainer_hill.h"
 
 __attribute__((naked)) void CallTrainerHillFunction()
 {
@@ -336,7 +346,7 @@ __attribute__((naked)) void SetUpDataStruct(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D4D5C: .4byte gUnknown_85FAF38\n\t"
+        "_081D4D5C: .4byte sChallenge_JPDefault\n\t"
         "_081D4D60: .4byte 0x040003B2\n\t"
         ".syntax divided\n\t"
     );
