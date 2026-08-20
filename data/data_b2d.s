@@ -1039,20 +1039,6 @@ gUnknown_82F551C: @ 0x82F551C
 gUnknown_82F5538: @ 0x82F5538
 	.incbin "baserom_jp.gba", 0x2f5538, 0x20
 
-	.section .rodata.mid90
-
-	.globl gUnknown_85CC341
-gUnknown_85CC341: @ 0x85CC341
-	.string "プレイじかん$ゲームポイント$"
-	.globl gUnknown_85CC350
-gUnknown_85CC350: @ 0x85CC350
-	.string "のトレーナーカード$"
-
-	.globl gUnknown_85CC35A
-gUnknown_85CC35A: @ 0x85CC35A
-	.string "はじめてのでんどういり　$つうしんたいせん$ケーブルたいせん$"
-	.globl gUnknown_85CC379
-
 	.section .rodata.mid44
 
 	.globl gUnknown_82F5934
