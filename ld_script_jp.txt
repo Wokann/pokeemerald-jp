@@ -9650,9 +9650,9 @@ SECTIONS {
         src/pokenav_match_call_data.o(.rodata.match_call_dispatch_tables);
         src/pokenav_match_call_data.o(.rodata.match_call_check_page_overrides);
         src/menu_specialized.o(.rodata);
-        data/data_b2c_mid8.o(.rodata.menu_specialized_mid8_prefix);
+        src/graphics.o(.rodata.unused_jp_menu_specialized_prefix);
         src/menu_specialized.o(.rodata.menu_specialized_condition_resources);
-        data/data_b2c_mid8.o(.rodata.menu_specialized_mid8_middle);
+        src/graphics.o(.rodata.unused_jp_menu_specialized_middle);
         src/menu_specialized.o(.rodata.menu_specialized_condition_data);
         src/data/trainer_hill_templates.o(.rodata);
         data/data_b2c_mid8_tail.o(.rodata);
