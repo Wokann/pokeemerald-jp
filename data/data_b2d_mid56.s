@@ -32,17 +32,3 @@ gUnknown_85467DC: @ 0x85467DC
 	.globl gUnknown_85467E0
 gUnknown_85467E0: @ 0x85467E0
 	.incbin "baserom_jp.gba", 0x5467e0, 0x4
-
-	.section .rodata.mid56_suffix
-
-.globl gUnknown_854B1E4
-gUnknown_854B1E4: @ 0x854B1E4
-	.incbin "baserom_jp.gba", 0x54b1e4, 0x28
-
-	.globl gUnknown_854B20C
-gUnknown_854B20C: @ 0x854B20C
-	.incbin "baserom_jp.gba", 0x54b20c, 0x28
-
-	.globl gUnknown_854B234
-gUnknown_854B234: @ 0x854B234
-	.incbin "baserom_jp.gba", 0x54b234, 0x24

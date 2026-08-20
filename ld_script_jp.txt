@@ -9416,9 +9416,10 @@ SECTIONS {
         src/data/text/region_texts56.o(.rodata);
         data/data_b2d_mid56.o(.rodata.mid56_prefix);
         src/data/frontier_pass.o(.rodata.frontier_pass_mid56);
-        data/data_b2d_mid56.o(.rodata.mid56_suffix);
+        src/data/pokemon_storage_system.o(.rodata.pokemon_storage_mid56);
         src/data/text/region_texts57.o(.rodata);
-        data/data_b2d_mid57_a.o(.rodata);
+        src/data/pokemon_storage_system.o(.rodata.pokemon_storage_mid57a);
+        data/data_b2d_mid57_a.o(.rodata.mid57a_suffix);
         data/data_b2d.o(.rodata.mid57_gap);
         src/item.o(.rodata);
         data/data_b2d_mid57_b.o(.rodata);

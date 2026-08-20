@@ -532,6 +532,12 @@ $(C_BUILDDIR)/data/frontier_pass.o: src/data/frontier_pass.c src/data/frontier_p
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/frontier_pass.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/frontier_pass.gen.s
 
+$(C_BUILDDIR)/data/pokemon_storage_system.o: src/data/pokemon_storage_system.c src/data/pokemon_storage_system.h $(shell find graphics/pokemon_storage data/pokemon_storage/jp -type f 2>/dev/null)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokemon_storage_system.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokemon_storage_system.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/data/pokemon_storage_system.gen.s
+
 $(C_BUILDDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/$*.gen.s
