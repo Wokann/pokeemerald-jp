@@ -1,8 +1,8 @@
-const u8 gUnknown_85CBD3D[] = _("に　みがきが　かかった！");
+const u8 gText_WasEnhanced[] = _("に　みがきが　かかった！");
 
-const u8 gUnknown_85CBD4A[] = _("なにも　かわらなかった！");
+const u8 gText_NothingChanged[] = _("なにも　かわらなかった！");
 
-const u8 gUnknown_85CBD57[] = _("もう　これいじょう　たべない　みたい⋯");
+const u8 gText_WontEatAnymore[] = _("もう　これいじょう　たべない　みたい⋯");
 
 const u8 gText_SaveFailedCheckingBackup[] = _(
     "レポートの　かきこみに　しっぱいしました\n"

@@ -1212,28 +1212,6 @@ gUnknown_85C9742: @ 0x85C9742
 	.incbin "baserom_jp.gba", 0x55a958, 0x78
 
 
-	.section .rodata.mid89
-
-	.globl gUnknown_85CBCAB
-gUnknown_85CBCAB: @ 0x85CBCAB
-	.string "クイズの　チャレンジを$"
-	.globl gUnknown_85CBCB7
-gUnknown_85CBCB7: @ 0x85CBCB7
-	.string "あきらめますか？$クイズは　これで　いいですか？$"
-	.globl gUnknown_85CBCD0
-gUnknown_85CBCD0: @ 0x85CBCD0
-	.string "もんだいを　つくってください！$"
-	.globl gUnknown_85CBCE0
-gUnknown_85CBCE0: @ 0x85CBCE0
-	.string "こたえを　えらんでください！$"
-	.globl gUnknown_85CBCEF
-gUnknown_85CBCEF: @ 0x85CBCEF
-	.string "かしを　けすことは　できません！$ポケモン　リーグ$ポケモンセンター$"
-	.globl gUnknown_85CBD12
-gUnknown_85CBD12: @ 0x85CBD12
-	.string "に　ポロックを　あげますか？$かっこよさ$うつくしさ$かわいさ$かしこさ$たくましさ$"
-	.globl gUnknown_85CBD3D
-
 	.section .rodata.mid97
 
 	.globl gJPText_WriteErrorUnableToSaveData

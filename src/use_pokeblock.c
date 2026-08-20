@@ -1440,7 +1440,7 @@ __attribute__((naked)) void sub_08166B50(void)
         "_08166BD8: .4byte gUnknown_203B978\n\t"
         "_08166BDC: .4byte 0x00008041\n\t"
         "_08166BE0: .4byte gPlayerParty\n\t"
-        "_08166BE4: .4byte gUnknown_85CBD12\n\t"
+        "_08166BE4: .4byte gText_GetsAPokeBlockQuestion\n\t"
         "_08166BE8: .4byte gStringVar4\n\t"
         "_08166BEC: .4byte gUnknown_85C09E0\n\t"
         ".syntax divided\n\t"
@@ -1673,7 +1673,7 @@ __attribute__((naked)) void sub_08166D5C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08166D94: .4byte gUnknown_85CBD12 + 0x45\n\t"
+        "_08166D94: .4byte gText_WontEatAnymore\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1752,7 +1752,7 @@ __attribute__((naked)) void Pokeblock_BufferEnhancedStatText(void)
         "	b _08166E1C\n\t"
         "	.align 2, 0\n\t"
         "_08166E0C: .4byte gUnknown_85C09E8\n\t"
-        "_08166E10: .4byte gUnknown_85CBD12 + 0x2B\n\t"
+        "_08166E10: .4byte gText_WasEnhanced\n\t"
         "_08166E14:\n\t"
         "	ldr r1, _08166E24\n\t"
         "	adds r0, r4, #0\n\t"
@@ -1762,7 +1762,7 @@ __attribute__((naked)) void Pokeblock_BufferEnhancedStatText(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08166E24: .4byte gUnknown_85CBD12 + 0x38\n\t"
+        "_08166E24: .4byte gText_NothingChanged\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4332,4 +4332,3 @@ __attribute__((naked)) void sub_0816817C(void)
         ".syntax divided\n\t"
     );
 }
-
