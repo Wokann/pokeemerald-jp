@@ -22,7 +22,7 @@ gUnknown_8C093F8: @ 0x8C093F8
 	.incbin "baserom_jp.gba", 0xc12aa4, 0x2588
 
 	.section .rodata.data_rest2b_after_jp_contest
-	.incbin "baserom_jp.gba", 0xc1ad74, 0x198c
+	.incbin "baserom_jp.gba", 0xc1b558, 0x11a8
 
 
 	.globl gUnknown_8C1C700
