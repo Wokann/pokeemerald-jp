@@ -21,6 +21,11 @@ JP_CONTEST_GFX const u32 gContestJudgeSymbolsPal[] = INCBIN_U32("graphics/contes
 JP_CONTEST_GFX const u8 gContestSliderHeart_Gfx[] = INCBIN_U8("graphics/contest/slider_heart.4bpp");
 JP_CONTEST_GFX const u32 gJPContestVoltageGfx[] = INCBIN_U32("graphics/contest/japanese/voltage.4bpp.lz");
 JP_CONTEST_GFX const u32 gJPContestVoltagePal[] = INCBIN_U32("graphics/contest/japanese/voltage.gbapal.lz");
+JP_CONTEST_GFX const u32 gContestResults_Gfx[] = INCBIN_U32("graphics/contest/results_screen/tiles.4bpp.lz");
+JP_CONTEST_GFX const u32 gContestResults_WinnerBanner_Tilemap[] = INCBIN_U32("graphics/contest/results_screen/winner_banner.bin.lz");
+JP_CONTEST_GFX const u32 gContestResults_Interface_Tilemap[] = INCBIN_U32("graphics/contest/results_screen/interface.bin.lz");
+JP_CONTEST_GFX const u32 gContestResults_Bg_Tilemap[] = INCBIN_U32("graphics/contest/results_screen/bg.bin.lz");
+JP_CONTEST_GFX const u32 gContestResults_Pal[] = INCBIN_U32("graphics/contest/results_screen/tiles.png.gbapal.lz");
 
 #undef JP_CONTEST_GFX
 
