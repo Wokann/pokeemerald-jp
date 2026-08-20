@@ -10,44 +10,7 @@
 	.include "constants/ribbon_constants.inc"
 
 
-	.globl gText_MysteryEventBerry
-gText_MysteryEventBerry: @ 0x85FCAF8
-	.string "{B_COPY_VAR_2}のみを　てに　いれた！\n"
-	.string "トウカジムの　パパから　うけとろう！$"
-	.globl gText_MysteryEventBerryTransform
-gText_MysteryEventBerryTransform: @ 0x85FCB19
-	.string "{B_COPY_VAR_1}のみは\n"
-	.string "{B_COPY_VAR_2}のみに　へんかした！$"
-	.globl gText_MysteryEventBerryObtained
-gText_MysteryEventBerryObtained: @ 0x85FCB2C
-	.string "{B_COPY_VAR_1}のみは　すでに\n"
-	.string "はいっていた$"
-	.globl gText_MysteryEventSpecialRibbon
-gText_MysteryEventSpecialRibbon: @ 0x85FCB3D
-	.string "てもちのポケモンに\n"
-	.string "とくべつなリボンが　あたえられた！$"
-	.globl sMEScrCmdEnableresetrtcText
-sMEScrCmdEnableresetrtcText: @ 0x85FCB59
-	.string "ずかんに　ぜんこくモードが\n"
-	.string "ついか　された！$"
-	.globl gText_MysteryEventRareWord
-gText_MysteryEventRareWord: @ 0x85FCB70
-	.string "めずらしい　ことばを　ついかしました$"
-	.globl gText_MysteryEventSentOver
-gText_MysteryEventSentOver: @ 0x85FCB83
-	.string "{B_COPY_VAR_1}が　おくられてきた！$"
-	.globl gText_MysteryEventFullParty
-gText_MysteryEventFullParty: @ 0x85FCB90
-	.string "てもちが　いっぱいなので\n"
-	.string "{B_COPY_VAR_1}は　もらえなかった⋯$"
-	.globl gText_MysteryEventNewTrainer
-gText_MysteryEventNewTrainer: @ 0x85FCBAA
-	.string "あらたな　トレーナーが\n"
-	.string "ホウエンに　やってきた$バトルタワーに　あらたな\n"
-	.string "たいせんしゃが　あらわれた！$"
-	.globl gText_MysteryEventCantBeUsed
-gText_MysteryEventCantBeUsed: @ 0x85FCBDE
-	.string "このデータは　このバージョンでは\nしよう　できません$"
+
 	.globl gUnknown_85FCBF9
 gUnknown_85FCBF9: @ 0x85FCBF9
 	.hword 0x0000, 0xB800
