@@ -9697,6 +9697,7 @@ SECTIONS {
         data/data_rest2b.o(.rodata.data_rest2b_after_jp_contest);
         src/graphics.o(.rodata.battle_anim_mask_and_bg_graphics);
         src/graphics.o(.rodata.battle_anim_stat_change_graphics);
+        src/graphics.o(.rodata.pokemon_graphics_prefix);
         data/data_b2d_gfx_pokemon_main.o(.rodata);
         data/data_rest2c.o(.rodata);
         src/graphics.o(.rodata.rayquaza_scene_1_graphics);

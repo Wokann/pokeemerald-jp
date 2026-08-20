@@ -380,6 +380,12 @@ BATTLE_ANIM_STAT_CHANGE_GFX const u32 gBattleAnimUnusedPal_Unknown2[] = INCBIN_U
 
 #undef BATTLE_ANIM_STAT_CHANGE_GFX
 
+#define POKEMON_GRAPHICS_PREFIX __attribute__((section(".rodata.pokemon_graphics_prefix")))
+
+#include "data/graphics/pokemon.h"
+
+#undef POKEMON_GRAPHICS_PREFIX
+
 #define SUMMARY_EFFECT_DATA __attribute__((section(".rodata.summary_screen_effect_data")))
 
 SUMMARY_EFFECT_DATA const u16 gSummaryScreen_MoveEffect_Battle_Tilemap[] =
