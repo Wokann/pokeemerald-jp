@@ -7547,7 +7547,7 @@ contest.s
 080dede0 ContestDebugToggleBitfields ContestDebugToggleBitfields
 080dee2c contest.s ContestDebugPrintBitStrings
 shop.s
-080deff0 shop.s CB2_BuyMenu
+080deff0 shop.s CreateShopMenu
 080df098 shop.s SetShopMenuCallback
 080df0a4 SetShopItemsForSale SetShopItemsForSale
 080df0d4 Task_ShopMenu Task_ShopMenu
@@ -7559,14 +7559,14 @@ shop.s
 080df22c MapPostLoadHook_ReturnToShopMenu MapPostLoadHook_ReturnToShopMenu
 080df244 Task_ReturnToShopMenu Task_ReturnToShopMenu
 080df290 ShowShopMenuAfterExitingBuyOrSellMenu ShowShopMenuAfterExitingBuyOrSellMenu
-080df2b0 BuyMenuPrintPriceInList CB2_StarterChoose
+080df2b0 BuyMenuPrintPriceInList CB2_BuyMenu
 080df2cc VBlankCB_BuyMenu VBlankCB_MailRead
 080df2e0 CB2_InitBuyMenu CB2_InitBuyMenu
 080df448 BuyMenuFreeMemory BuyMenuFreeMemory
 080df478 shop.s BuyMenuBuildListMenuTemplate
 080df554 shop.s BuyMenuSetListEntry
 080df594 shop.s BuyMenuPrintItemDescriptionAndShowItemIcon
-080df670 shop.s CreateShopMenu
+080df670 shop.s BuyMenuPrintPriceInList
 080df70c BuyMenuAddScrollIndicatorArrows BuyMenuAddScrollIndicatorArrows
 080df768 BuyMenuRemoveScrollIndicatorArrows BuyMenuRemoveScrollIndicatorArrows
 080df794 BuyMenuPrintCursor BuyMenuPrintCursor

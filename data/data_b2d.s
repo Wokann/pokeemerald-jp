@@ -1549,6 +1549,12 @@ gUnknown_85C97BD: @ 0x85C97BD
 	.set gText_CantSwitchWithAlly, gUnknown_85C97BD + 0x3B9
 	.globl gText_EggCantBattle
 	.set gText_EggCantBattle, gUnknown_85C97BD + 0x3E0
+	.globl gText_ShopBuy
+	.set gText_ShopBuy, gUnknown_85C97BD + 0x101
+	.globl gText_ShopSell
+	.set gText_ShopSell, gUnknown_85C97BD + 0x108
+	.globl gText_ShopQuit
+	.set gText_ShopQuit, gUnknown_85C97BD + 0x10F
 	.globl gUnknown_85C983E
 
 	.section .rodata.mid68

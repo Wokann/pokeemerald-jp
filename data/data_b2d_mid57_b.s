@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.mid57b_contest
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -137,45 +137,7 @@ gUnknown_8562910: @ 0x8562910
 gUnknown_8562970: @ 0x8562970
 	.incbin "baserom_jp.gba", 0x562970, 0x1c
 
-	.globl sShopPurchaseYesNoFuncs
-sShopPurchaseYesNoFuncs: @ 0x856298C
-	.4byte BuyMenuTryMakePurchase + 1, BuyMenuReturnToItemList + 1
-
-	.globl gUnknown_8562994
-gUnknown_8562994: @ 0x8562994
-	.incbin "baserom_jp.gba", 0x562994, 0x18
-
-	.globl gUnknown_85629AC
-gUnknown_85629AC: @ 0x85629AC
-	.incbin "baserom_jp.gba", 0x5629ac, 0x10
-
-	.globl gUnknown_85629BC
-gUnknown_85629BC: @ 0x85629BC
-	.incbin "baserom_jp.gba", 0x5629bc, 0x8
-
-	.globl gUnknown_85629C4
-gUnknown_85629C4: @ 0x85629C4
-	.incbin "baserom_jp.gba", 0x5629c4, 0x8
-
-	.globl gUnknown_85629CC
-gUnknown_85629CC: @ 0x85629CC
-	.incbin "baserom_jp.gba", 0x5629cc, 0x18
-
-	.globl gUnknown_85629E4
-gUnknown_85629E4: @ 0x85629E4
-	.incbin "baserom_jp.gba", 0x5629e4, 0x10
-
-	.globl gUnknown_85629F4
-gUnknown_85629F4: @ 0x85629F4
-	.incbin "baserom_jp.gba", 0x5629f4, 0x38
-
-	.globl gUnknown_8562A2C
-gUnknown_8562A2C: @ 0x8562A2C
-	.incbin "baserom_jp.gba", 0x562a2c, 0x8
-
-	.globl gUnknown_8562A34
-gUnknown_8562A34: @ 0x8562A34
-	.incbin "baserom_jp.gba", 0x562a34, 0xa
+	.section .rodata.mid57b_escalator
 
 	.globl sEscalatorMetatiles_1F_0
 sEscalatorMetatiles_1F_0: @ 0x8562A3E

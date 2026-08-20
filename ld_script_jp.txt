@@ -9426,7 +9426,9 @@ SECTIONS {
         src/item_menu_icons.o(.rodata.item_menu_icons_mid57a);
         data/data_b2d.o(.rodata.mid57_gap);
         src/item.o(.rodata);
-        data/data_b2d_mid57_b.o(.rodata);
+        data/data_b2d_mid57_b.o(.rodata.mid57b_contest);
+        src/shop.o(.rodata.shop_mid57b);
+        data/data_b2d_mid57_b.o(.rodata.mid57b_escalator);
         src/data/text/region_texts58.o(.rodata);
         data/data_b2d_mid58.o(.rodata);
         src/data/text/region_texts59.o(.rodata);

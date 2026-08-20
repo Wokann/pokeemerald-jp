@@ -1,7 +1,231 @@
 #include "global.h"
+#include "bg.h"
+#include "list_menu.h"
+#include "menu.h"
+#include "menu_helpers.h"
 #include "shop.h"
+#include "strings.h"
+#include "text.h"
+#include "window.h"
 
-__attribute__((naked)) void CB2_BuyMenu(void)
+enum
+{
+    WIN_BUY_SELL_QUIT,
+    WIN_BUY_QUIT,
+};
+
+enum
+{
+    WIN_MONEY,
+    WIN_ITEM_LIST,
+    WIN_ITEM_DESCRIPTION,
+    WIN_QUANTITY_IN_BAG,
+    WIN_QUANTITY_PRICE,
+    WIN_MESSAGE,
+};
+
+enum
+{
+    COLORID_NORMAL,
+    COLORID_ITEM_LIST,
+    COLORID_GRAY_CURSOR,
+};
+
+void Task_HandleShopMenuBuy(u8 taskId);
+void Task_HandleShopMenuSell(u8 taskId);
+void Task_HandleShopMenuQuit(u8 taskId);
+void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y);
+void BuyMenuPrintItemDescriptionAndShowItemIcon(s32 item, bool8 onInit, struct ListMenu *list);
+void BuyMenuTryMakePurchase(u8 taskId);
+void BuyMenuReturnToItemList(u8 taskId);
+
+#define SHOP_DATA __attribute__((section(".rodata.shop_mid57b")))
+
+SHOP_DATA static const struct YesNoFuncTable sShopPurchaseYesNoFuncs =
+{
+    BuyMenuTryMakePurchase,
+    BuyMenuReturnToItemList,
+};
+
+SHOP_DATA static const struct MenuAction sShopMenuActions_BuySellQuit[] =
+{
+    { gText_ShopBuy,  {.void_u8 = Task_HandleShopMenuBuy} },
+    { gText_ShopSell, {.void_u8 = Task_HandleShopMenuSell} },
+    { gText_ShopQuit, {.void_u8 = Task_HandleShopMenuQuit} },
+};
+
+SHOP_DATA static const struct MenuAction sShopMenuActions_BuyQuit[] =
+{
+    { gText_ShopBuy,  {.void_u8 = Task_HandleShopMenuBuy} },
+    { gText_ShopQuit, {.void_u8 = Task_HandleShopMenuQuit} },
+};
+
+SHOP_DATA static const struct WindowTemplate sShopMenuWindowTemplates[] =
+{
+    [WIN_BUY_SELL_QUIT] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 1,
+        .width = 9,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 0x0008,
+    },
+    [WIN_BUY_QUIT] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 1,
+        .width = 9,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x0008,
+    },
+};
+
+SHOP_DATA static const struct ListMenuTemplate sShopBuyMenuListTemplate =
+{
+    .items = NULL,
+    .moveCursorFunc = BuyMenuPrintItemDescriptionAndShowItemIcon,
+    .itemPrintFunc = BuyMenuPrintPriceInList,
+    .totalItems = 0,
+    .maxShowed = 0,
+    .windowId = WIN_ITEM_LIST,
+    .header_X = 0,
+    .item_X = 8,
+    .cursor_X = 0,
+    .upText_Y = 2,
+    .cursorPal = 2,
+    .fillValue = 0,
+    .cursorShadowPal = 3,
+    .lettersSpacing = 0,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
+    .fontId = FONT_NORMAL,
+    .cursorKind = CURSOR_BLACK_ARROW,
+};
+
+SHOP_DATA static const struct BgTemplate sShopBuyMenuBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+};
+
+SHOP_DATA static const struct WindowTemplate sShopBuyMenuWindowTemplates[] =
+{
+    [WIN_MONEY] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 12,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x001E,
+    },
+    [WIN_ITEM_LIST] = {
+        .bg = 0,
+        .tilemapLeft = 14,
+        .tilemapTop = 2,
+        .width = 15,
+        .height = 16,
+        .paletteNum = 15,
+        .baseBlock = 0x0036,
+    },
+    [WIN_ITEM_DESCRIPTION] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 13,
+        .width = 12,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 0x0126,
+    },
+    [WIN_QUANTITY_IN_BAG] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 11,
+        .width = 12,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x016E,
+    },
+    [WIN_QUANTITY_PRICE] = {
+        .bg = 0,
+        .tilemapLeft = 18,
+        .tilemapTop = 11,
+        .width = 11,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x0186,
+    },
+    [WIN_MESSAGE] = {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x019C,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+SHOP_DATA static const struct WindowTemplate sShopBuyMenuYesNoWindowTemplates =
+{
+    .bg = 0,
+    .tilemapLeft = 21,
+    .tilemapTop = 9,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x01F4,
+};
+
+SHOP_DATA static const u8 sShopBuyMenuTextColors[][3] =
+{
+    [COLORID_NORMAL] = {1, 2, 3},
+    [COLORID_ITEM_LIST] = {0, 2, 3},
+    [COLORID_GRAY_CURSOR] = {0, 3, 2},
+};
+
+SHOP_DATA static const u8 sShopBuyMenuTextColorsPadding = 0;
+
+#undef SHOP_DATA
+
+__attribute__((naked)) u8 CreateShopMenu(u8 martType)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -24,8 +248,8 @@ __attribute__((naked)) void CB2_BuyMenu(void)
         "	b _080DF032\n\t"
         "	.align 2, 0\n\t"
         "_080DF018: .4byte gUnknown_2039C00\n\t"
-        "_080DF01C: .4byte gUnknown_85629BC\n\t"
-        "_080DF020: .4byte gUnknown_8562994\n\t"
+        "_080DF01C: .4byte sShopMenuWindowTemplates\n\t"
+        "_080DF020: .4byte sShopMenuActions_BuySellQuit\n\t"
         "_080DF024:\n\t"
         "	ldr r0, _080DF088\n\t"
         "	bl AddWindow\n\t"
@@ -72,8 +296,8 @@ __attribute__((naked)) void CB2_BuyMenu(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080DF088: .4byte gUnknown_85629C4\n\t"
-        "_080DF08C: .4byte gUnknown_85629AC\n\t"
+        "_080DF088: .4byte sShopMenuWindowTemplates + 8\n\t"
+        "_080DF08C: .4byte sShopMenuActions_BuyQuit\n\t"
         "_080DF090: .4byte gUnknown_2039C00\n\t"
         "_080DF094: .4byte Task_ShopMenu + 1\n\t"
         ".syntax divided\n\t"
@@ -168,7 +392,7 @@ __attribute__((naked)) void Task_ShopMenu(void)
     );
 }
 
-__attribute__((naked)) void Task_HandleShopMenuBuy(void)
+__attribute__((naked)) void Task_HandleShopMenuBuy(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -202,7 +426,7 @@ __attribute__((naked)) void Task_HandleShopMenuBuy(void)
     );
 }
 
-__attribute__((naked)) void Task_HandleShopMenuSell(void)
+__attribute__((naked)) void Task_HandleShopMenuSell(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -256,7 +480,7 @@ __attribute__((naked)) void CB2_ExitSellMenu()
     );
 }
 
-__attribute__((naked)) void Task_HandleShopMenuQuit(void)
+__attribute__((naked)) void Task_HandleShopMenuQuit(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -393,7 +617,7 @@ __attribute__((naked)) void ShowShopMenuAfterExitingBuyOrSellMenu(void)
         "	lsrs r4, r4, #0x18\n\t"
         "	ldr r0, _080DF2AC\n\t"
         "	ldrb r0, [r0, #0xf]\n\t"
-        "	bl CB2_BuyMenu\n\t"
+        "	bl CreateShopMenu\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl DestroyTask\n\t"
         "	pop {r4}\n\t"
@@ -405,7 +629,7 @@ __attribute__((naked)) void ShowShopMenuAfterExitingBuyOrSellMenu(void)
     );
 }
 
-__attribute__((naked)) void BuyMenuPrintPriceInList(void)
+__attribute__((naked)) void CB2_BuyMenu(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -498,7 +722,7 @@ __attribute__((naked)) void CB2_InitBuyMenu(void)
         "_080DF35C: .4byte gMultiuseListMenuTemplate\n\t"
         "_080DF360: .4byte gTasks\n\t"
         "_080DF364: .4byte VBlankCB_BuyMenu + 1\n\t"
-        "_080DF368: .4byte BuyMenuPrintPriceInList + 1\n\t"
+        "_080DF368: .4byte CB2_BuyMenu + 1\n\t"
         "_080DF36C:\n\t"
         "	bl SetVBlankHBlankCallbacksToNull\n\t"
         "	str r4, [sp, #8]\n\t"
@@ -706,7 +930,7 @@ __attribute__((naked)) void BuyMenuBuildListMenuTemplate(void)
         "_080DF520: .4byte gUnknown_2039C18\n\t"
         "_080DF524: .4byte gText_Exit\n\t"
         "_080DF528: .4byte gMultiuseListMenuTemplate\n\t"
-        "_080DF52C: .4byte gUnknown_85629CC\n\t"
+        "_080DF52C: .4byte sShopBuyMenuListTemplate\n\t"
         "_080DF530:\n\t"
         "	strh r1, [r3, #0xe]\n\t"
         "_080DF532:\n\t"
@@ -767,7 +991,7 @@ __attribute__((naked)) void BuyMenuSetListEntry(void)
     );
 }
 
-__attribute__((naked)) void BuyMenuPrintItemDescriptionAndShowItemIcon(void)
+__attribute__((naked)) void BuyMenuPrintItemDescriptionAndShowItemIcon(s32 item, bool8 onInit, struct ListMenu *list)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -880,7 +1104,7 @@ __attribute__((naked)) void BuyMenuPrintItemDescriptionAndShowItemIcon(void)
     );
 }
 
-__attribute__((naked)) void CreateShopMenu(void)
+__attribute__((naked)) void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1264,7 +1488,7 @@ __attribute__((naked)) void BuyMenuInitBgs(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF960: .4byte gUnknown_85629E4\n\t"
+        "_080DF960: .4byte sShopBuyMenuBgTemplates\n\t"
         "_080DF964: .4byte gUnknown_2039C10\n\t"
         ".syntax divided\n\t"
     );
@@ -1330,7 +1554,7 @@ __attribute__((naked)) void BuyMenuInitWindows(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF9E4: .4byte gUnknown_85629F4\n\t"
+        "_080DF9E4: .4byte sShopBuyMenuWindowTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1370,7 +1594,7 @@ __attribute__((naked)) void BuyMenuPrint(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DFA28: .4byte gUnknown_8562A34\n\t"
+        "_080DFA28: .4byte sShopBuyMenuTextColors\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2667,13 +2891,13 @@ __attribute__((naked)) void BuyMenuConfirmPurchase(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E0420: .4byte gUnknown_8562A2C\n\t"
+        "_080E0420: .4byte sShopBuyMenuYesNoWindowTemplates\n\t"
         "_080E0424: .4byte sShopPurchaseYesNoFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void BuyMenuTryMakePurchase(void)
+__attribute__((naked)) void BuyMenuTryMakePurchase(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2907,7 +3131,7 @@ __attribute__((naked)) void Task_ReturnToItemListAfterDecorationPurchase(void)
     );
 }
 
-__attribute__((naked)) void BuyMenuReturnToItemList(void)
+__attribute__((naked)) void BuyMenuReturnToItemList(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3178,7 +3402,7 @@ __attribute__((naked)) void CreatePokemartMenu(const u16 *itemsForSale)
         "	push {r4, lr}\n\t"
         "	adds r4, r0, #0\n\t"
         "	movs r0, #0\n\t"
-        "	bl CB2_BuyMenu\n\t"
+        "	bl CreateShopMenu\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl SetShopItemsForSale\n\t"
         "	bl ClearItemPurchases\n\t"
@@ -3200,7 +3424,7 @@ __attribute__((naked)) void CreateDecorationShop1Menu(const u16 *itemsForSale)
         "	push {r4, lr}\n\t"
         "	adds r4, r0, #0\n\t"
         "	movs r0, #1\n\t"
-        "	bl CB2_BuyMenu\n\t"
+        "	bl CreateShopMenu\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl SetShopItemsForSale\n\t"
         "	ldr r0, _080E0810\n\t"
@@ -3221,7 +3445,7 @@ __attribute__((naked)) void CreateDecorationShop2Menu(const u16 *itemsForSale)
         "	push {r4, lr}\n\t"
         "	adds r4, r0, #0\n\t"
         "	movs r0, #2\n\t"
-        "	bl CB2_BuyMenu\n\t"
+        "	bl CreateShopMenu\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl SetShopItemsForSale\n\t"
         "	ldr r0, _080E0830\n\t"
