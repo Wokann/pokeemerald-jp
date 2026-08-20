@@ -25,6 +25,7 @@ extern void Task_PCTurnOnEffect(u8 taskId);
 #include "tv.h"
 #include "battle.h"
 #include "string_util.h"
+#include "data/field_specials.h"
 extern u32 sBikeCyclingTimer;
 extern void Task_DeoxysRockInteraction(u8 taskId);
 extern const u8 gText_BigGuy[];

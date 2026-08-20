@@ -9505,7 +9505,8 @@ SECTIONS {
         src/data/text/region_texts39.o(.rodata);
         src/field_specials.o(.rodata.field_specials_data);
         src/data/text/region_texts64.o(.rodata);
-        data/data_b2d_mid64.o(.rodata);
+        src/field_specials.o(.rodata.field_specials_fan_club_data);
+        src/data/battle_records.o(.rodata.battle_records_data);
         src/data/text/region_texts32.o(.rodata);
         data/data_b2d_mid32.o(.rodata);
         src/data/text/region_texts65.o(.rodata);
