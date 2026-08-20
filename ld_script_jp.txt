@@ -9380,12 +9380,14 @@ SECTIONS {
         data/data_b2d_mid47.o(.rodata);
         src/data/text/region_texts51.o(.rodata);
         data/data_b2d_mid51.o(.rodata);
+        src/data/trade.o(.rodata.trade_menu_resources);
         src/data/text/region_texts48.o(.rodata);
         data/data_b2d.o(.rodata.mid48);
         src/data/text/region_texts50.o(.rodata);
-        data/data_b2d_mid49.o(.rodata);
+        src/data/trade.o(.rodata.trade_animation_resources);
         src/data/text/region_texts49.o(.rodata);
-        data/data_b2d_mid50.o(.rodata);
+        src/data/trade.o(.rodata.trade_post_animation_resources);
+        src/data/berry_blender.o(.rodata.berry_blender_resources);
         src/data/text/region_texts52.o(.rodata);
         data/data_b2d.o(.rodata.mid52);
         src/data/text/region_texts53.o(.rodata);
