@@ -20,10 +20,26 @@ POKEDEX_LIST_MAIN_PREFIX_RESOURCE(gPokedexListBg3Tilemap, 0xBC, "graphics/pokede
 #undef POKEDEX_LIST_MAIN_PREFIX_RESOURCE
 #undef POKEDEX_LIST_MAIN_PREFIX_DATA
 
+#define POKEDEX_SCREEN_TILEMAPS_DATA __attribute__((section(".rodata.pokedex_screen_tilemaps"), aligned(1)))
+#define POKEDEX_SCREEN_TILEMAP_RESOURCE(symbol, size, path) \
+    const u8 symbol[size] POKEDEX_SCREEN_TILEMAPS_DATA = INCBIN_U8(path)
+
+// 0x08537A10-0x08537E44.  The sources use the same resource names and
+// hierarchy as pokeemerald; gbagfx reproduces every corresponding JP LZ77
+// stream exactly.
+POKEDEX_SCREEN_TILEMAP_RESOURCE(gPokedexInfoScreen_Tilemap, 0x134, "graphics/pokedex/info_screen.bin.lz");
+POKEDEX_SCREEN_TILEMAP_RESOURCE(gPokedexCryScreen_Tilemap, 0xEC, "graphics/pokedex/cry_screen.bin.lz");
+POKEDEX_SCREEN_TILEMAP_RESOURCE(gPokedexSizeScreen_Tilemap, 0xF4, "graphics/pokedex/size_screen.bin.lz");
+POKEDEX_SCREEN_TILEMAP_RESOURCE(gPokedexScreenSelectBarMain_Tilemap, 0x90, "graphics/pokedex/screen_select_bar_main.bin.lz");
+POKEDEX_SCREEN_TILEMAP_RESOURCE(gPokedexScreenSelectBarSubmenu_Tilemap, 0x90, "graphics/pokedex/screen_select_bar_submenu.bin.lz");
+
+#undef POKEDEX_SCREEN_TILEMAP_RESOURCE
+#undef POKEDEX_SCREEN_TILEMAPS_DATA
+
 #define POKEDEX_LIST_MAIN_TILES_DATA __attribute__((section(".rodata.pokedex_list_main_tiles"), aligned(1)))
 
-// 0x08537E8C-0x08538FF4.  The preceding 0x47C-byte data group stays in its
-// original section until its separate screen ownership is decoded.
+// 0x08537E8C-0x08538FF4.  A separate unreferenced JP LZ77 stream at
+// 0x08537E44-0x08537E8C remains in its original assembly section.
 const u8 gPokedexListBgTiles[0x1168] POKEDEX_LIST_MAIN_TILES_DATA = INCBIN_U8("graphics/pokedex/list_bg_tiles.4bpp.lz");
 
 #undef POKEDEX_LIST_MAIN_TILES_DATA

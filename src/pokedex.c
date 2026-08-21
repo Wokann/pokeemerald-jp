@@ -7172,7 +7172,7 @@ __attribute__((naked)) void sub_080BE1C8(void)
         "	b _080BE5F4\n\t"
         "	.align 2, 0\n\t"
         "_080BE2E4: .4byte gPokedexListBgTiles\n\t"
-        "_080BE2E8: .4byte gUnknown_8537A10\n\t"
+        "_080BE2E8: .4byte gPokedexInfoScreen_Tilemap\n\t"
         "_080BE2EC: .4byte gUnknown_20397F4\n\t"
         "_080BE2F0: .4byte gMain\n\t"
         "_080BE2F4:\n\t"
@@ -8275,7 +8275,7 @@ __attribute__((naked)) void sub_080BEAD4(void)
         "	b _080BEE1E\n\t"
         "	.align 2, 0\n\t"
         "_080BEBD8: .4byte gPokedexListBgTiles\n\t"
-        "_080BEBDC: .4byte gUnknown_8537B44\n\t"
+        "_080BEBDC: .4byte gPokedexCryScreen_Tilemap\n\t"
         "_080BEBE0: .4byte gMain\n\t"
         "_080BEBE4:\n\t"
         "	movs r0, #0xd\n\t"
@@ -8960,7 +8960,7 @@ __attribute__((naked)) void sub_080BF0C8(void)
         "	b _080BF40A\n\t"
         "	.align 2, 0\n\t"
         "_080BF1A4: .4byte gPokedexListBgTiles\n\t"
-        "_080BF1A8: .4byte gUnknown_8537C30\n\t"
+        "_080BF1A8: .4byte gPokedexSizeScreen_Tilemap\n\t"
         "_080BF1AC:\n\t"
         "	movs r0, #0xd\n\t"
         "	bl sub_080BF5B0\n\t"
@@ -9440,7 +9440,7 @@ __attribute__((naked)) void sub_080BF598(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BF5AC: .4byte gUnknown_8537D24\n\t"
+        "_080BF5AC: .4byte gPokedexScreenSelectBarMain_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9458,7 +9458,7 @@ __attribute__((naked)) void sub_080BF5B0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BF5C4: .4byte gUnknown_8537DB4\n\t"
+        "_080BF5C4: .4byte gPokedexScreenSelectBarSubmenu_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9767,7 +9767,7 @@ __attribute__((naked)) void sub_080BF6F4(void)
         "	b _080BF9D0\n\t"
         "	.align 2, 0\n\t"
         "_080BF828: .4byte gPokedexListBgTiles\n\t"
-        "_080BF82C: .4byte gUnknown_8537A10\n\t"
+        "_080BF82C: .4byte gPokedexInfoScreen_Tilemap\n\t"
         "_080BF830: .4byte gTasks\n\t"
         "_080BF834:\n\t"
         "	lsls r0, r7, #2\n\t"

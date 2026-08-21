@@ -360,6 +360,11 @@ clean: clean-tools
 # safely use `make -j` without racing the C/asset rules against tool builds.
 $(OBJFILE) $(ELF) $(ROM): | tools
 
+# Match pokeemerald's generic LZ77 asset rule.  Individual C targets declare
+# their generated .lz prerequisites so a clean checkout rebuilds them safely.
+%.lz: %
+	$(GFX) $< $@
+
 $(ROM): $(ELF)
 	$(OBJCOPY) -O binary $< $@
 
@@ -582,7 +587,11 @@ $(C_BUILDDIR)/data/slot_machine.o: src/data/slot_machine.c src/data/slot_machine
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/slot_machine.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/slot_machine.gen.s
 
-$(C_BUILDDIR)/data/pokedex.o: src/data/pokedex.c src/data/pokedex.h $(wildcard data/pokedex/jp/*)
+$(C_BUILDDIR)/data/pokedex.o: src/data/pokedex.c src/data/pokedex.h \
+	graphics/pokedex/info_screen.bin.lz graphics/pokedex/cry_screen.bin.lz \
+	graphics/pokedex/size_screen.bin.lz graphics/pokedex/screen_select_bar_main.bin.lz \
+	graphics/pokedex/screen_select_bar_submenu.bin.lz \
+	$(wildcard graphics/pokedex/* data/pokedex/jp/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokedex.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokedex.gen.s | $(AS) $(ASFLAGS) -o $@ -
