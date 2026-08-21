@@ -519,6 +519,13 @@ NAMING_SCREEN_JP_SPRITE_RESOURCES const u32 gNamingScreenCursorFilled_Gfx[] = IN
 
 #undef NAMING_SCREEN_JP_SPRITE_RESOURCES
 
+// JP ROM has unreferenced zero padding between the cursor tiles and PC icons.
+#define NAMING_SCREEN_JP_SPRITE_PADDING __attribute__((section(".rodata.graphics_naming_screen_jp_sprite_padding"), aligned(1), used))
+
+NAMING_SCREEN_JP_SPRITE_PADDING static const u8 sNamingScreenSpritePadding[0x20] = {0};
+
+#undef NAMING_SCREEN_JP_SPRITE_PADDING
+
 #define NAMING_SCREEN_JP_PC_ICONS __attribute__((section(".rodata.graphics_naming_screen_jp_pc_icons"), aligned(1)))
 
 NAMING_SCREEN_JP_PC_ICONS const u8 gNamingScreenPCIconOff_Gfx[] = INCBIN_U8("graphics/naming_screen/pc_icon_off.4bpp");

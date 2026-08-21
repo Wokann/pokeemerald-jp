@@ -57,6 +57,11 @@ static void JamContestant(u8, u8);
 static s16 RoundTowardsZero(s16);
 static s16 RoundUp(s16);
 
+#define CONTEST_EFFECT_DATA __attribute__((section(".rodata.contest_effect_data")))
+
+#include "data/contest_moves.h"
+
+#undef CONTEST_EFFECT_DATA
 
 bool8 AreMovesContestCombo(u16 lastMove, u16 nextMove)
 {

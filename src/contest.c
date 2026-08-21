@@ -12460,7 +12460,7 @@ __attribute__((naked)) void sub_080DC7E4(void)
         "	.align 2, 0\n\t"
         "_080DC944: .4byte gContestResources\n\t"
         "_080DC948: .4byte gContestEffects\n\t"
-        "_080DC94C: .4byte gUnknown_8566BE4\n\t"
+        "_080DC94C: .4byte gContestEffectFuncs\n\t"
         "_080DC950:\n\t"
         "	ldrb r1, [r2, #0x11]\n\t"
         "	movs r0, #0x20\n\t"

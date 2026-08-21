@@ -9445,7 +9445,7 @@ SECTIONS {
         src/script_menu.o(.rodata.script_menu_mid58_std_strings);
         src/script_menu.o(.rodata.script_menu_mid58_link_services);
         src/graphics.o(.rodata.graphics_naming_screen_jp_sprite_resources);
-        data/data_b2d_mid58.o(.rodata.mid58_naming_screen_sprite_padding);
+        src/graphics.o(.rodata.graphics_naming_screen_jp_sprite_padding);
         src/graphics.o(.rodata.graphics_naming_screen_jp_pc_icons);
         src/graphics.o(.rodata.graphics_naming_screen_jp_palettes);
         src/graphics.o(.rodata.graphics_naming_screen_jp_resources);
@@ -9453,10 +9453,8 @@ SECTIONS {
         src/naming_screen.o(.rodata.naming_screen_mid59_pre_page_swap_anim);
         src/naming_screen.o(.rodata.naming_screen_mid59_page_swap_anim);
         src/naming_screen.o(.rodata.naming_screen_mid59_cursor_anim_offsets);
-        data/data_b2d_mid59.o(.rodata.mid59_between_page_swap_anim_and_button_key_roles);
         src/naming_screen.o(.rodata.naming_screen_mid59_button_key_roles);
         src/naming_screen.o(.rodata.naming_screen_mid59_page_swap_sprite);
-        data/data_b2d_mid59.o(.rodata.mid59_between_page_swap_sprite_and_icon);
         src/naming_screen.o(.rodata.naming_screen_mid59_page_swap_pal_tags);
         src/naming_screen.o(.rodata.naming_screen_mid59_page_swap_gfx_tags);
         src/naming_screen.o(.rodata.naming_screen_mid59_icon_funcs);
@@ -9471,7 +9469,7 @@ SECTIONS {
         src/naming_screen.o(.rodata.naming_screen_mid59_sprite_layout);
         src/naming_screen.o(.rodata.naming_screen_mid59_sprite_resources);
         src/money.o(.rodata.money_label_data);
-        data/data_b2d_mid59.o(.rodata.mid59_post_sprite_resources);
+        src/contest_effect.o(.rodata.contest_effect_data);
         src/data/text/region_texts34.o(.rodata);
         data/data_b2d.o(.rodata.mid34);
         src/data/text/region_texts35.o(.rodata);

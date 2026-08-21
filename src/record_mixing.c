@@ -763,7 +763,7 @@ __attribute__((naked)) void Task_RecordMixing_Main(void)
         "	.align 2, 0\n\t"
         "_080E6A78: .4byte gTasks\n\t"
         "_080E6A7C: .4byte gWirelessCommType\n\t"
-        "_080E6A80: .4byte gUnknown_8566BE4 + 0xCD\n\t"
+        "_080E6A80: .4byte gContestEffectFuncs + 0xCD\n\t"
         "_080E6A84:\n\t"
         "	ldrh r0, [r5, #0x10]\n\t"
         "	adds r0, #1\n\t"
@@ -890,7 +890,7 @@ __attribute__((naked)) void Task_MixingRecordsRecv(void)
         "	bl ClearLinkCallback_2\n\t"
         "	b _080E6D3E\n\t"
         "	.align 2, 0\n\t"
-        "_080E6B74: .4byte gUnknown_8566BE4 + 0xC0\n\t"
+        "_080E6B74: .4byte gContestEffectFuncs + 0xC0\n\t"
         "_080E6B78:\n\t"
         "	ldrh r0, [r5, #0x20]\n\t"
         "	adds r0, #1\n\t"
@@ -6696,4 +6696,3 @@ __attribute__((naked)) void sub_080E9750(void)
         ".syntax divided\n\t"
     );
 }
-
