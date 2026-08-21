@@ -1,5 +1,268 @@
 #include "global.h"
+#include "bg.h"
+#include "graphics.h"
+#include "menu.h"
+#include "menu_helpers.h"
 #include "pokeblock.h"
+#include "pokemon.h"
+#include "sprite.h"
+#include "strings.h"
+#include "constants/characters.h"
+
+#define POKEBLOCK_FLAVOR_DATA __attribute__((section(".rodata.pokeblock_flavor_data")))
+#define POKEBLOCK_MENU_BG_DATA __attribute__((section(".rodata.pokeblock_menu_bg_data")))
+#define POKEBLOCK_NAME_TABLE_DATA __attribute__((section(".rodata.pokeblock_name_table_data")))
+#define POKEBLOCK_MENU_ACTION_DATA __attribute__((section(".rodata.pokeblock_menu_action_data")))
+#define POKEBLOCK_CASE_ANIM_DATA __attribute__((section(".rodata.pokeblock_case_anim_data")))
+#define POKEBLOCK_CASE_AFFINE_ANIM_DATA __attribute__((section(".rodata.pokeblock_case_affine_anim_data")))
+#define POKEBLOCK_CASE_GRAPHICS_DATA __attribute__((section(".rodata.pokeblock_case_graphics_data")))
+#define POKEBLOCK_CASE_FAVORITE_DATA __attribute__((section(".rodata.pokeblock_case_favorite_data")))
+#define POKEBLOCK_NAME_TEXT_DATA __attribute__((section(".rodata.pokeblock_name_text_data")))
+
+#define TAG_POKEBLOCK_CASE 14800
+
+enum
+{
+    PKBL_USE_ON_FIELD,
+    PKBL_TOSS,
+    PKBL_CANCEL,
+    PKBL_USE_IN_BATTLE,
+    PKBL_USE_ON_FEEDER,
+    PKBL_GIVE_TO_LADY,
+};
+
+void sub_08136AC0(void);
+void sub_08136B24(void);
+void sub_08136CFC(void);
+void sub_08136D9C(void);
+void sub_08136E00(void);
+void sub_08136E58(void);
+void sub_08136BE8(void);
+void sub_08136CC4(void);
+
+const s8 gPokeblockFlavorCompatibilityTable[NUM_NATURES * FLAVOR_COUNT] POKEBLOCK_FLAVOR_DATA =
+{
+     // Spicy,  Dry, Sweet, Bitter, Sour
+          0,      0,    0,     0,     0, // Hardy
+          1,      0,    0,     0,    -1, // Lonely
+          1,      0,   -1,     0,     0, // Brave
+          1,     -1,    0,     0,     0, // Adamant
+          1,      0,    0,    -1,     0, // Naughty
+         -1,      0,    0,     0,     1, // Bold
+          0,      0,    0,     0,     0, // Docile
+          0,      0,   -1,     0,     1, // Relaxed
+          0,     -1,    0,     0,     1, // Impish
+          0,      0,    0,    -1,     1, // Lax
+         -1,      0,    1,     0,     0, // Timid
+          0,      0,    1,     0,    -1, // Hasty
+          0,      0,    0,     0,     0, // Serious
+          0,     -1,    1,     0,     0, // Jolly
+          0,      0,    1,    -1,     0, // Naive
+         -1,      1,    0,     0,     0, // Modest
+          0,      1,    0,     0,    -1, // Mild
+          0,      1,   -1,     0,     0, // Quiet
+          0,      0,    0,     0,     0, // Bashful
+          0,      1,    0,    -1,     0, // Rash
+         -1,      0,    0,     1,     0, // Calm
+          0,      0,    0,     1,    -1, // Gentle
+          0,      0,   -1,     1,     0, // Sassy
+          0,     -1,    0,     1,     0, // Careful
+          0,      0,    0,     0,     0  // Quirky
+};
+
+static const u8 sPokeblockFlavorCompatibilityTablePadding[3] POKEBLOCK_FLAVOR_DATA __attribute__((used)) = {0};
+
+static const struct BgTemplate sBgTemplatesForPokeblockMenu[] POKEBLOCK_MENU_BG_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    }
+};
+
+const u8 gText_RedPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("あかいポロック");
+const u8 gText_BluePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("あおいポロック");
+const u8 gText_PinkPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("ももいろポロック");
+const u8 gText_GreenPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("みどりのポロック");
+const u8 gText_YellowPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("きいろのポロック");
+const u8 gText_PurplePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("むらさきポロック");
+const u8 gText_IndigoPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("こんいろポロック");
+const u8 gText_BrownPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("ちゃいろポロック");
+const u8 gText_LiteBluePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("そらいろポロック");
+const u8 gText_OlivePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("きみどりポロック");
+const u8 gText_GrayPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("はいいろポロック");
+const u8 gText_BlackPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("くろいポロック");
+const u8 gText_WhitePokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("しろいポロック");
+const u8 gText_GoldPokeblock[] POKEBLOCK_NAME_TEXT_DATA = _("きんいろポロック");
+
+const u8 *const gPokeblockNames[] POKEBLOCK_NAME_TABLE_DATA =
+{
+    [PBLOCK_CLR_NONE]      = NULL,
+    [PBLOCK_CLR_RED]       = gText_RedPokeblock,
+    [PBLOCK_CLR_BLUE]      = gText_BluePokeblock,
+    [PBLOCK_CLR_PINK]      = gText_PinkPokeblock,
+    [PBLOCK_CLR_GREEN]     = gText_GreenPokeblock,
+    [PBLOCK_CLR_YELLOW]    = gText_YellowPokeblock,
+    [PBLOCK_CLR_PURPLE]    = gText_PurplePokeblock,
+    [PBLOCK_CLR_INDIGO]    = gText_IndigoPokeblock,
+    [PBLOCK_CLR_BROWN]     = gText_BrownPokeblock,
+    [PBLOCK_CLR_LITE_BLUE] = gText_LiteBluePokeblock,
+    [PBLOCK_CLR_OLIVE]     = gText_OlivePokeblock,
+    [PBLOCK_CLR_GRAY]      = gText_GrayPokeblock,
+    [PBLOCK_CLR_BLACK]     = gText_BlackPokeblock,
+    [PBLOCK_CLR_WHITE]     = gText_WhitePokeblock,
+    [PBLOCK_CLR_GOLD]      = gText_GoldPokeblock,
+};
+
+static const struct MenuAction sPokeblockMenuActions[] POKEBLOCK_MENU_ACTION_DATA =
+{
+    [PKBL_USE_ON_FIELD]  = {gMenuText_Use, {(void (*)(u8))sub_08136AC0}},
+    [PKBL_TOSS]          = {gMenuText_Toss, {(void (*)(u8))sub_08136B24}},
+    [PKBL_CANCEL]        = {gText_Cancel2, {(void (*)(u8))sub_08136E58}},
+    [PKBL_USE_IN_BATTLE] = {gMenuText_Use, {(void (*)(u8))sub_08136CFC}},
+    [PKBL_USE_ON_FEEDER] = {gMenuText_Use, {(void (*)(u8))sub_08136D9C}},
+    [PKBL_GIVE_TO_LADY]  = {gMenuText_Give2, {(void (*)(u8))sub_08136E00}},
+};
+
+static const u8 sActionsOnField[] POKEBLOCK_MENU_ACTION_DATA = {PKBL_USE_ON_FIELD, PKBL_TOSS, PKBL_CANCEL};
+static const u8 sActionsInBattle[] POKEBLOCK_MENU_ACTION_DATA = {PKBL_USE_IN_BATTLE, PKBL_CANCEL};
+static const u8 sActionsOnPokeblockFeeder[] POKEBLOCK_MENU_ACTION_DATA = {PKBL_USE_ON_FEEDER, PKBL_CANCEL};
+static const u8 sActionsWhenGivingToLady[] POKEBLOCK_MENU_ACTION_DATA = {PKBL_GIVE_TO_LADY, PKBL_CANCEL};
+static const u8 sPokeblockMenuActionDataPadding[3] POKEBLOCK_MENU_ACTION_DATA = {0};
+
+static const struct YesNoFuncTable sTossYesNoFuncTable POKEBLOCK_CASE_ANIM_DATA =
+{
+    (TaskFunc)sub_08136BE8,
+    (TaskFunc)sub_08136CC4,
+};
+
+static const u8 sContestStatsMonData[] POKEBLOCK_CASE_ANIM_DATA =
+{
+    MON_DATA_COOL,
+    MON_DATA_BEAUTY,
+    MON_DATA_CUTE,
+    MON_DATA_SMART,
+    MON_DATA_TOUGH,
+};
+
+static const u8 sContestStatsMonDataPadding[3] POKEBLOCK_CASE_ANIM_DATA = {0};
+
+static const struct OamData sOamData_PokeblockCase POKEBLOCK_CASE_ANIM_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sSpriteAnim_PokeblockCase[] POKEBLOCK_CASE_ANIM_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_PokeblockCase[] POKEBLOCK_CASE_ANIM_DATA =
+{
+    sSpriteAnim_PokeblockCase,
+};
+
+static const union AffineAnimCmd sAffineAnim_PokeblockCaseShake[] POKEBLOCK_CASE_AFFINE_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(0, 0, -2, 2),
+    AFFINEANIMCMD_FRAME(0, 0, 2, 4),
+    AFFINEANIMCMD_FRAME(0, 0, -2, 4),
+    AFFINEANIMCMD_FRAME(0, 0, 2, 2),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_PokeblockCaseShake[] POKEBLOCK_CASE_AFFINE_ANIM_DATA =
+{
+    sAffineAnim_PokeblockCaseShake,
+};
+
+const struct CompressedSpriteSheet gPokeblockCase_SpriteSheet POKEBLOCK_CASE_GRAPHICS_DATA =
+{
+    .data = gMenuPokeblockDevice_Gfx,
+    .size = 0x800,
+    .tag = TAG_POKEBLOCK_CASE,
+};
+
+const struct CompressedSpritePalette gPokeblockCase_SpritePal POKEBLOCK_CASE_GRAPHICS_DATA =
+{
+    .data = gMenuPokeblockDevice_Pal,
+    .tag = TAG_POKEBLOCK_CASE,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_PokeblockCase POKEBLOCK_CASE_GRAPHICS_DATA =
+{
+    .tileTag = TAG_POKEBLOCK_CASE,
+    .paletteTag = TAG_POKEBLOCK_CASE,
+    .oam = &sOamData_PokeblockCase,
+    .anims = sSpriteAnimTable_PokeblockCase,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const u8 sTextColor[3] POKEBLOCK_CASE_FAVORITE_DATA =
+{
+    TEXT_COLOR_TRANSPARENT,
+    TEXT_COLOR_DARK_GRAY,
+    TEXT_COLOR_LIGHT_GRAY,
+};
+
+static const u8 sTextColorPadding[1] POKEBLOCK_CASE_FAVORITE_DATA = {0};
+
+static const struct Pokeblock sFavoritePokeblocksTable[FLAVOR_COUNT] POKEBLOCK_CASE_FAVORITE_DATA =
+{
+    [FLAVOR_SPICY]  = {PBLOCK_CLR_RED,    20,  0,  0,  0,  0, 20},
+    [FLAVOR_DRY]    = {PBLOCK_CLR_BLUE,    0, 20,  0,  0,  0, 20},
+    [FLAVOR_SWEET]  = {PBLOCK_CLR_PINK,    0,  0, 20,  0,  0, 20},
+    [FLAVOR_BITTER] = {PBLOCK_CLR_GREEN,   0,  0,  0, 20,  0, 20},
+    [FLAVOR_SOUR]   = {PBLOCK_CLR_YELLOW,  0,  0,  0,  0, 20, 20},
+};
+
+#undef POKEBLOCK_FLAVOR_DATA
+#undef POKEBLOCK_MENU_BG_DATA
+#undef POKEBLOCK_NAME_TABLE_DATA
+#undef POKEBLOCK_MENU_ACTION_DATA
+#undef POKEBLOCK_CASE_ANIM_DATA
+#undef POKEBLOCK_CASE_AFFINE_ANIM_DATA
+#undef POKEBLOCK_CASE_GRAPHICS_DATA
+#undef POKEBLOCK_CASE_FAVORITE_DATA
+#undef POKEBLOCK_NAME_TEXT_DATA
 
 __attribute__((naked)) void sub_08135850(void)
 {
@@ -65,7 +328,7 @@ __attribute__((naked)) void sub_08135850(void)
         "	b _08135922\n\t"
         "	.align 2, 0\n\t"
         "_081358CC: .4byte 0x00000804\n\t"
-        "_081358D0: .4byte gUnknown_85920E7\n\t"
+        "_081358D0: .4byte sActionsInBattle\n\t"
         "_081358D4: .4byte 0x00000808\n\t"
         "_081358D8:\n\t"
         "	ldr r1, _081358E8\n\t"
@@ -78,7 +341,7 @@ __attribute__((naked)) void sub_08135850(void)
         "	b _08135924\n\t"
         "	.align 2, 0\n\t"
         "_081358E8: .4byte 0x00000804\n\t"
-        "_081358EC: .4byte gUnknown_85920E9\n\t"
+        "_081358EC: .4byte sActionsOnPokeblockFeeder\n\t"
         "_081358F0: .4byte 0x00000808\n\t"
         "_081358F4:\n\t"
         "	ldr r0, _08135904\n\t"
@@ -91,7 +354,7 @@ __attribute__((naked)) void sub_08135850(void)
         "	b _08135922\n\t"
         "	.align 2, 0\n\t"
         "_08135904: .4byte 0x00000804\n\t"
-        "_08135908: .4byte gUnknown_85920EB\n\t"
+        "_08135908: .4byte sActionsWhenGivingToLady\n\t"
         "_0813590C: .4byte 0x00000808\n\t"
         "_08135910:\n\t"
         "	ldr r0, _08135930\n\t"
@@ -114,7 +377,7 @@ __attribute__((naked)) void sub_08135850(void)
         "	.align 2, 0\n\t"
         "_08135930: .4byte gUnknown_203A81C\n\t"
         "_08135934: .4byte 0x00000804\n\t"
-        "_08135938: .4byte gUnknown_85920E4\n\t"
+        "_08135938: .4byte sActionsOnField\n\t"
         "_0813593C: .4byte 0x00000808\n\t"
         "_08135940: .4byte sub_0813599C + 1\n\t"
         ".syntax divided\n\t"
@@ -526,7 +789,7 @@ __attribute__((naked)) void sub_08135C2C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08135C80: .4byte gUnknown_859206C\n\t"
+        "_08135C80: .4byte sBgTemplatesForPokeblockMenu\n\t"
         "_08135C84: .4byte gUnknown_203A81C\n\t"
         ".syntax divided\n\t"
     );
@@ -573,7 +836,7 @@ __attribute__((naked)) void sub_08135C88(void)
         "	bl DecompressAndCopyTileDataToVram\n\t"
         "	b _08135D2E\n\t"
         "	.align 2, 0\n\t"
-        "_08135CE4: .4byte gUnknown_8D9B4B4\n\t"
+        "_08135CE4: .4byte gMenuPokeblock_Gfx\n\t"
         "_08135CE8:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -587,7 +850,7 @@ __attribute__((naked)) void sub_08135C88(void)
         "	ldr r1, [r4]\n\t"
         "	b _08135D32\n\t"
         "	.align 2, 0\n\t"
-        "_08135D04: .4byte gUnknown_8D9BA14\n\t"
+        "_08135D04: .4byte gMenuPokeblock_Tilemap\n\t"
         "_08135D08: .4byte gUnknown_203A81C\n\t"
         "_08135D0C:\n\t"
         "	ldr r0, _08135D18\n\t"
@@ -596,13 +859,13 @@ __attribute__((naked)) void sub_08135C88(void)
         "	bl LoadCompressedPalette\n\t"
         "	b _08135D2E\n\t"
         "	.align 2, 0\n\t"
-        "_08135D18: .4byte gUnknown_8D9B6BC\n\t"
+        "_08135D18: .4byte gMenuPokeblock_Pal\n\t"
         "_08135D1C:\n\t"
         "	ldr r0, _08135D24\n\t"
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _08135D2E\n\t"
         "	.align 2, 0\n\t"
-        "_08135D24: .4byte gUnknown_8592140\n\t"
+        "_08135D24: .4byte gPokeblockCase_SpriteSheet\n\t"
         "_08135D28:\n\t"
         "	ldr r0, _08135D40\n\t"
         "	bl LoadCompressedSpritePalette\n\t"
@@ -617,7 +880,7 @@ __attribute__((naked)) void sub_08135C88(void)
         "	strh r0, [r1]\n\t"
         "	b _08135D68\n\t"
         "	.align 2, 0\n\t"
-        "_08135D40: .4byte gUnknown_8592148\n\t"
+        "_08135D40: .4byte gPokeblockCase_SpritePal\n\t"
         "_08135D44: .4byte gUnknown_203A81C\n\t"
         "_08135D48: .4byte 0x00000D36\n\t"
         "_08135D4C:\n\t"
@@ -712,7 +975,7 @@ __attribute__((naked)) void sub_08135DCC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08135DF4: .4byte gUnknown_8592168\n\t"
+        "_08135DF4: .4byte sTextColor\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1639,7 +1902,7 @@ __attribute__((naked)) void sub_08136484(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081364AC: .4byte gUnknown_8592150\n\t"
+        "_081364AC: .4byte sSpriteTemplate_PokeblockCase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1681,7 +1944,7 @@ __attribute__((naked)) void sub_081364B0(void)
         "	strh r5, [r4, #0x30]\n\t"
         "	b _08136520\n\t"
         "	.align 2, 0\n\t"
-        "_081364F0: .4byte gUnknown_859213C\n\t"
+        "_081364F0: .4byte sAffineAnims_PokeblockCaseShake\n\t"
         "_081364F4:\n\t"
         "	ldrh r0, [r4, #0x30]\n\t"
         "	adds r0, #1\n\t"
@@ -2346,7 +2609,7 @@ __attribute__((naked)) void sub_08136978(void)
         "	.align 2, 0\n\t"
         "_08136A38: .4byte gUnknown_203A81C\n\t"
         "_08136A3C: .4byte 0x00000808\n\t"
-        "_08136A40: .4byte gUnknown_85920B4\n\t"
+        "_08136A40: .4byte sPokeblockMenuActions\n\t"
         "_08136A44: .4byte 0x00000804\n\t"
         "_08136A48: .4byte gTasks\n\t"
         "_08136A4C: .4byte sub_08136A50 + 1\n\t"
@@ -2404,7 +2667,7 @@ __attribute__((naked)) void sub_08136A50(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08136AB4: .4byte gUnknown_85920B4\n\t"
+        "_08136AB4: .4byte sPokeblockMenuActions\n\t"
         "_08136AB8: .4byte gUnknown_203A81C\n\t"
         "_08136ABC: .4byte 0x00000804\n\t"
         ".syntax divided\n\t"
@@ -2571,7 +2834,7 @@ __attribute__((naked)) void sub_08136BB8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08136BE0: .4byte gUnknown_85921F4\n\t"
-        "_08136BE4: .4byte gUnknown_85920F0\n\t"
+        "_08136BE4: .4byte sTossYesNoFuncTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3265,7 +3528,7 @@ __attribute__((naked)) void sub_08137054(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081370B0: .4byte gUnknown_8591FEC\n\t"
+        "_081370B0: .4byte gPokeblockFlavorCompatibilityTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3323,7 +3586,7 @@ __attribute__((naked)) void sub_081370D8(void)
         "	b _0813711C\n\t"
         "	.align 2, 0\n\t"
         "_08137108: .4byte gPokeblockNames\n\t"
-        "_0813710C: .4byte gUnknown_859216C\n\t"
+        "_0813710C: .4byte sFavoritePokeblocksTable\n\t"
         "_08137110:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3383,4 +3646,3 @@ __attribute__((naked)) void sub_08137124(void)
         ".syntax divided\n\t"
     );
 }
-

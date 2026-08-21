@@ -14458,7 +14458,7 @@ __attribute__((naked)) void sub_0806E2E4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806E308: .4byte gUnknown_8591FEC\n\t"
+        "_0806E308: .4byte gPokeblockFlavorCompatibilityTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14484,7 +14484,7 @@ __attribute__((naked)) void sub_0806E30C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806E330: .4byte gUnknown_8591FEC\n\t"
+        "_0806E330: .4byte gPokeblockFlavorCompatibilityTable\n\t"
         ".syntax divided\n\t"
     );
 }

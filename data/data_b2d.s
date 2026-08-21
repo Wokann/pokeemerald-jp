@@ -1462,7 +1462,7 @@ gUnknown_85CCA7C: @ 0x85CCA7C
 
 	.globl gUnknown_85CCA8C
 
-	.section .rodata.mid76
+	.section .rodata.mid76_pokeblock_name_text_prefix
 
 	.globl gUnknown_85C97B5
 gUnknown_85C97B5: @ 0x85C97B5
@@ -1470,7 +1470,7 @@ gUnknown_85C97B5: @ 0x85C97B5
 
 	.globl gUnknown_85C97BD
 gUnknown_85C97BD: @ 0x85C97BD
-	.string "きのみのタグ$あかいポロック$あおいポロック$ももいろポロック$みどりのポロック$きいろのポロック$むらさきポロック$こんいろポロック$ちゃいろポロック$そらいろポロック$きみどりポロック$はいいろポロック$くろいポロック$しろいポロック$きんいろポロック$"
+	.string "きのみのタグ$"
 	.globl gText_HP3
 	.set gText_HP3, gUnknown_85C97BD + 0x32A
 	.globl gText_SpAtk3

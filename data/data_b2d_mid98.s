@@ -64,34 +64,6 @@ gUnknown_85CD9F8: @ 0x85CD9F8
 	.byte 0x00, 0x01, 0x0F, 0x1C, 0x04, 0x0F, 0x0A, 0x00
 	.byte 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 
-	.globl gUnknown_85CDA08
-gUnknown_85CDA08: @ 0x85CDA08
-	.incbin "baserom_jp.gba", 0x5cda08, 0x48
-
-	.globl gUnknown_85CDA50
-gUnknown_85CDA50: @ 0x85CDA50
-	.incbin "baserom_jp.gba", 0x5cda50, 0xb4
-
-	.globl gUnknown_85CDB04
-gUnknown_85CDB04: @ 0x85CDB04
-	.incbin "baserom_jp.gba", 0x5cdb04, 0x4
-
-	.globl gUnknown_85CDB08
-gUnknown_85CDB08: @ 0x85CDB08
-	.incbin "baserom_jp.gba", 0x5cdb08, 0x4
-
-	.globl gUnknown_85CDB0C
-gUnknown_85CDB0C: @ 0x85CDB0C
-	.incbin "baserom_jp.gba", 0x5cdb0c, 0x34
-
-	.globl gUnknown_85CDB40
-gUnknown_85CDB40: @ 0x85CDB40
-	.incbin "baserom_jp.gba", 0x5cdb40, 0x8
-
-	.globl gUnknown_85CDB48
-gUnknown_85CDB48: @ 0x85CDB48
-	.incbin "baserom_jp.gba", 0x5cdb48, 0x18
-
 	.section .rodata.mid98_suffix
 
 	.globl gUnknown_85CDBB0

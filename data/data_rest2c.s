@@ -451,7 +451,47 @@ gUnknown_8D85E56: @ 0x8D85E56
 
 	.globl gUnknown_8D85E60
 gUnknown_8D85E60: @ 0x8D85E60
-	.incbin "baserom_jp.gba", 0xd85e60, 0x2618
+	.incbin "baserom_jp.gba", 0xd85e60, 0x54
+
+
+	.globl gIntroVolbeat_Pal
+gIntroVolbeat_Pal: @ 0x8D85EB4
+	.incbin "graphics/intro/scene_2/volbeat.png.gbapal"
+
+
+	.globl gIntroTorchic_Pal
+gIntroTorchic_Pal: @ 0x8D85ED4
+	.incbin "graphics/intro/scene_2/torchic.png.gbapal"
+
+
+	.globl gIntroManectric_Pal
+gIntroManectric_Pal: @ 0x8D85EF4
+	.incbin "graphics/intro/scene_2/manectric.png.gbapal"
+
+
+	.globl gUnknown_8D85F14
+gUnknown_8D85F14: @ 0x8D85F14
+	.incbin "baserom_jp.gba", 0xd85f14, 0x20
+
+
+	.globl gIntroVolbeat_Gfx
+gIntroVolbeat_Gfx: @ 0x8D85F34
+	.incbin "graphics/intro/scene_2/volbeat.png.4bpp.lz"
+
+
+	.globl gIntroTorchic_Gfx
+gIntroTorchic_Gfx: @ 0x8D86114
+	.incbin "graphics/intro/scene_2/torchic.png.4bpp.lz"
+
+
+	.globl gIntroManectric_Gfx
+gIntroManectric_Gfx: @ 0x8D86534
+	.incbin "graphics/intro/scene_2/manectric.png.4bpp.lz"
+
+
+	.globl gUnknown_8D87010
+gUnknown_8D87010: @ 0x8D87010
+	.incbin "baserom_jp.gba", 0xd87010, 0x1468
 
 
 	.globl gUnknown_8D88478
@@ -507,7 +547,16 @@ gUnknown_8D8B424: @ 0x8D8B424
 	.globl gUnknown_8D8B6CC
 gUnknown_8D8B6CC: @ 0x8D8B6CC
 	.incbin "graphics/misc/gUnknown_8D8B6CC.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD8B7F0, 0x268
+
+
+	.globl gIntroLightning_Gfx
+gIntroLightning_Gfx: @ 0x8D8B7F0
+	.incbin "graphics/intro/scene_3/lightning.png.4bpp.lz"
+
+
+	.globl gIntroLightning_Pal
+gIntroLightning_Pal: @ 0x8D8BA38
+	.incbin "graphics/intro/scene_3/lightning.png.gbapal"
 
 
 	.globl gUnknown_8D8BA58
@@ -529,7 +578,31 @@ gUnknown_8D8C81C: @ 0x8D8C81C
 	.globl gUnknown_8D8CCAC
 gUnknown_8D8CCAC: @ 0x8D8CCAC
 	.incbin "graphics/misc/gUnknown_8D8CCAC.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD8CF26, 0x4CE
+
+
+	.globl gUnknown_8D8CF26
+gUnknown_8D8CF26: @ 0x8D8CF26
+	.incbin "baserom_jp.gba", 0xD8CF26, 0x2
+
+
+	.globl gIntroBubbles_Gfx
+gIntroBubbles_Gfx: @ 0x8D8CF28
+	.incbin "graphics/intro/scene_3/bubbles.png.4bpp.lz"
+
+
+	.globl gIntroBubbles_Pal
+gIntroBubbles_Pal: @ 0x8D8D0F4
+	.incbin "graphics/intro/scene_3/bubbles.png.gbapal"
+
+
+	.globl gIntroFlygonSilhouette_Gfx
+gIntroFlygonSilhouette_Gfx: @ 0x8D8D114
+	.incbin "graphics/intro/scene_1/flygon.png.4bpp.lz"
+
+
+	.globl gIntroSparkle_Gfx
+gIntroSparkle_Gfx: @ 0x8D8D1EC
+	.incbin "graphics/intro/scene_1/sparkle.png.4bpp.lz"
 
 
 	.globl gBattleAnimBgTilemap_Sandstorm
@@ -840,244 +913,13 @@ gUnknown_8D9B2E8: @ 0x8D9B2E8
 gShopMenuMoney_Gfx: @ 0x8D9B428
 	.incbin "baserom_jp.gba", 0xD9B428, 0x8C
 
-
-	.globl gUnknown_8D9B4B4
-gUnknown_8D9B4B4: @ 0x8D9B4B4
-	.incbin "graphics/misc/gUnknown_8D9B4B4.4bpp.lz"
-
-
-	.globl gUnknown_8D9B6BC
-gUnknown_8D9B6BC: @ 0x8D9B6BC
-	.incbin "graphics/misc/gUnknown_8D9B6BC.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD9B72A, 0x2EA
-
-
-	.globl gUnknown_8D9BA14
-gUnknown_8D9BA14: @ 0x8D9BA14
-	.incbin "graphics/misc/gUnknown_8D9BA14.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD9BB5C, 0x134
-
-
-	.globl gUnknown_8D9BC90
-gUnknown_8D9BC90: @ 0x8D9BC90
-	.incbin "graphics/misc/gUnknown_8D9BC90.4bpp.lz"
-
-
-	.globl gUnknown_8D9BD90
-gUnknown_8D9BD90: @ 0x8D9BD90
-	.incbin "graphics/misc/gUnknown_8D9BD90.4bpp.lz"
-
-
-	.section .rodata.data_rest2c_before_berry_graphics
-
-	.globl gUnknown_8D9C254
-gUnknown_8D9C254: @ 0x8D9C254
-	.incbin "graphics/misc/gUnknown_8D9C254.4bpp.lz"
-
-
-	.globl gUnknown_8D9C3E4
-gUnknown_8D9C3E4: @ 0x8D9C3E4
-	.incbin "graphics/misc/gUnknown_8D9C3E4.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD9C4F1, 0x3
-
-	.section .rodata.data_rest2c_after_rayquaza
-
-	.globl gUnknown_8DA3668
-gUnknown_8DA3668: @ 0x8DA3668
-	.incbin "graphics/misc/gUnknown_8DA3668.4bpp.lz"
-
-
-	.globl gUnknown_8DA3A90
-gUnknown_8DA3A90: @ 0x8DA3A90
-	.incbin "graphics/misc/gUnknown_8DA3A90.4bpp.lz"
-
-
-	.globl gUnknown_8DA3ACC
-gUnknown_8DA3ACC: @ 0x8DA3ACC
-	.incbin "graphics/misc/gUnknown_8DA3ACC.4bpp.lz"
-
-
-	.globl gUnknown_8DA3C30
-gUnknown_8DA3C30: @ 0x8DA3C30
-	.incbin "graphics/misc/gUnknown_8DA3C30.4bpp.lz"
-
-
-	.globl gUnknown_8DA3D30
-gUnknown_8DA3D30: @ 0x8DA3D30
-	.incbin "graphics/misc/gUnknown_8DA3D30.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xDA3E65, 0x3
-
-	.section .rodata.data_rest2c_after_takes_flight
-
-	.globl gUnknown_8DA3F3C
-gUnknown_8DA3F3C: @ 0x8DA3F3C
-	.incbin "graphics/misc/gUnknown_8DA3F3C.4bpp.lz"
-
-
-	.section .rodata.data_rest2c_after_descends_palette
-
-	.globl gUnknown_8DA5094
-gUnknown_8DA5094: @ 0x8DA5094
-	.incbin "graphics/misc/gUnknown_8DA5094.4bpp.lz"
-
-
-	.globl gUnknown_8DA5218
-gUnknown_8DA5218: @ 0x8DA5218
-	.incbin "graphics/misc/gUnknown_8DA5218.4bpp.lz"
-
-
-	.globl gUnknown_8DA6360
-gUnknown_8DA6360: @ 0x8DA6360
-	.incbin "graphics/misc/gUnknown_8DA6360.4bpp.lz"
-
-	.section .rodata.data_rest2c_after_descends
-
-	.globl gUnknown_8DA6C64
-gUnknown_8DA6C64: @ 0x8DA6C64
-	.incbin "graphics/misc/gUnknown_8DA6C64.4bpp.lz"
-
-
-	.globl gUnknown_8DA77D0
-gUnknown_8DA77D0: @ 0x8DA77D0
-	.incbin "graphics/misc/gUnknown_8DA77D0.4bpp.lz"
-
-
-	.globl gUnknown_8DA79EC
-gUnknown_8DA79EC: @ 0x8DA79EC
-	.incbin "graphics/misc/gUnknown_8DA79EC.4bpp.lz"
-
-
-	.globl gUnknown_8DA7A2C
-gUnknown_8DA7A2C: @ 0x8DA7A2C
-	.incbin "graphics/misc/gUnknown_8DA7A2C.4bpp.lz"
-
-
-	.globl gUnknown_8DA7D54
-gUnknown_8DA7D54: @ 0x8DA7D54
-	.incbin "graphics/misc/gUnknown_8DA7D54.4bpp.lz"
-
-
-	.globl gRaySceneCharges_Bg_Gfx
-gRaySceneCharges_Bg_Gfx: @ 0x8DA7ED8
-	.incbin "graphics/rayquaza_scene/scene_4/bg.4bpp.lz"
-
-
-	.globl gRaySceneCharges_Bg_Tilemap
-gRaySceneCharges_Bg_Tilemap: @ 0x8DA8014
-	.incbin "graphics/rayquaza_scene/scene_4/bg.bin.lz"
-
-
-	.globl gRaySceneCharges_Streaks_Gfx
-gRaySceneCharges_Streaks_Gfx: @ 0x8DA8154
-	.incbin "graphics/rayquaza_scene/scene_4/streaks.4bpp.lz"
-
-
-	.globl gRaySceneCharges_Streaks_Tilemap
-gRaySceneCharges_Streaks_Tilemap: @ 0x8DA825C
-	.incbin "graphics/rayquaza_scene/scene_4/streaks.bin.lz"
-
-
-	.globl gRaySceneCharges_Rayquaza_Gfx
-gRaySceneCharges_Rayquaza_Gfx: @ 0x8DA8364
-	.incbin "graphics/rayquaza_scene/scene_4/rayquaza.4bpp.lz"
-
-
-	.globl gRaySceneCharges_Rayquaza_Tilemap
-gRaySceneCharges_Rayquaza_Tilemap: @ 0x8DA8DE8
-	.incbin "graphics/rayquaza_scene/scene_4/rayquaza.bin.lz"
-
-
-	.globl gRaySceneCharges_Orbs_Tilemap
-gRaySceneCharges_Orbs_Tilemap: @ 0x8DA9014
-	.incbin "graphics/rayquaza_scene/scene_4/orbs.bin.lz"
-
-
-	.globl gRaySceneCharges_Bg_Pal
-gRaySceneCharges_Bg_Pal: @ 0x8DA912C
-	.incbin "graphics/rayquaza_scene/scene_4/bg.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xDA917D, 0x3
-
-	.globl gRaySceneChasesAway_Groudon_Gfx
-gRaySceneChasesAway_Groudon_Gfx: @ 0x8DA9180
-	.incbin "graphics/rayquaza_scene/scene_5/groudon.4bpp.lz"
-
-	.globl gRaySceneChasesAway_GroudonTail_Gfx
-gRaySceneChasesAway_GroudonTail_Gfx: @ 0x8DA9918
-	.incbin "graphics/rayquaza_scene/scene_5/groudon_tail.4bpp.lz"
-
-	.globl gRaySceneChasesAway_Kyogre_Gfx
-gRaySceneChasesAway_Kyogre_Gfx: @ 0x8DA995C
-	.incbin "graphics/rayquaza_scene/scene_5/kyogre.4bpp.lz"
-
-	.globl gRaySceneChasesAway_Rayquaza_Gfx
-gRaySceneChasesAway_Rayquaza_Gfx: @ 0x8DA9BA4
-	.incbin "graphics/rayquaza_scene/scene_5/rayquaza.4bpp.lz"
-
-	.globl gRaySceneChasesAway_RayquazaTail_Gfx
-gRaySceneChasesAway_RayquazaTail_Gfx: @ 0x8DAA84C
-	.incbin "graphics/rayquaza_scene/scene_5/rayquaza_tail.4bpp.lz"
-
-	.globl gRaySceneChasesAway_KyogreSplash_Gfx
-gRaySceneChasesAway_KyogreSplash_Gfx: @ 0x8DAAA3C
-	.incbin "graphics/rayquaza_scene/scene_5/kyogre_splash.4bpp.lz"
-
-	.globl gRaySceneChasesAway_Groudon_Pal
-gRaySceneChasesAway_Groudon_Pal: @ 0x8DAAAD4
-	.incbin "graphics/rayquaza_scene/scene_5/groudon.gbapal.lz"
-
-	.globl gRaySceneChasesAway_Kyogre_Pal
-gRaySceneChasesAway_Kyogre_Pal: @ 0x8DAAAFC
-	.incbin "graphics/rayquaza_scene/scene_5/kyogre.gbapal.lz"
-
-	.globl gRaySceneChasesAway_Rayquaza_Pal
-gRaySceneChasesAway_Rayquaza_Pal: @ 0x8DAAB24
-	.incbin "graphics/rayquaza_scene/scene_5/rayquaza.gbapal.lz"
-
-	.globl gRaySceneChasesAway_KyogreSplash_Pal
-gRaySceneChasesAway_KyogreSplash_Pal: @ 0x8DAAB4C
-	.incbin "graphics/rayquaza_scene/scene_5/kyogre_splash.gbapal.lz"
-
-
-	.globl gRaySceneChasesAway_Light_Gfx
-gRaySceneChasesAway_Light_Gfx: @ 0x8DAAB5C
-	.incbin "graphics/rayquaza_scene/scene_5/light.4bpp.lz"
-
-
-	.globl gRaySceneChasesAway_Ring_Gfx
-gRaySceneChasesAway_Ring_Gfx: @ 0x8DAADCC
-	.incbin "graphics/rayquaza_scene/scene_5/ring.8bpp.lz"
-
-
-	.globl gRaySceneChasesAway_Light_Tilemap
-gRaySceneChasesAway_Light_Tilemap: @ 0x8DAAEC4
-	.incbin "graphics/rayquaza_scene/scene_5/light.bin.lz"
-
-
-	.globl gRaySceneChasesAway_Bg_Tilemap
-gRaySceneChasesAway_Bg_Tilemap: @ 0x8DAB0FC
-	.incbin "graphics/rayquaza_scene/scene_5/bg.bin.lz"
-
-
-	.globl gRaySceneChasesAway_Ring_Tilemap
-gRaySceneChasesAway_Ring_Tilemap: @ 0x8DAB240
-	.incbin "graphics/rayquaza_scene/scene_5/ring.bin.lz"
-
-
-	.globl gRaySceneChasesAway_Bg_Pal
-gRaySceneChasesAway_Bg_Pal: @ 0x8DAB294
-	.incbin "graphics/rayquaza_scene/scene_5/bg.gbapal.lz"
+	.section .rodata.data_rest2c_after_chases_away
 	.incbin "baserom_jp.gba", 0xDAB2FD, 0xF4C3
 
+	.section .rodata.data_rest2c_after_cable_car_bg_palette
+	.incbin "baserom_jp.gba", 0xDBC236, 0x2
 
-	.globl gUnknown_8DBA7C0
-gUnknown_8DBA7C0: @ 0x8DBA7C0
-	.incbin "baserom_jp.gba", 0xdba7c0, 0xa0
-
-
-	.globl gUnknown_8DBA860
-gUnknown_8DBA860: @ 0x8DBA860
-	.incbin "graphics/misc/gUnknown_8DBA860.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xDBC236, 0x35A
+	.section .rodata.data_rest2c_after_cable_car_sprite_gfx
 
 
 	.globl gRouletteMenu_Gfx

@@ -219,6 +219,9 @@ $(C_BUILDDIR)/diploma.o: CC1 = $(PREPROC) -i src/diploma.c charmap.txt | $(CC)
 $(C_BUILDDIR)/landmark.o: CC1 = $(PREPROC) -i src/landmark.c charmap.txt | $(CC)
 $(C_BUILDDIR)/pokedex_area_region_map.o: CC1 = $(PREPROC) -i src/pokedex_area_region_map.c charmap.txt | $(CC)
 $(C_BUILDDIR)/pokedex_cry_screen.o: CC1 = $(PREPROC) -i src/pokedex_cry_screen.c charmap.txt | $(CC)
+$(C_BUILDDIR)/move_relearner.o: CC1 = $(PREPROC) -i src/move_relearner.c charmap.txt | $(CC)
+$(C_BUILDDIR)/pokeblock.o: CC1 = $(PREPROC) -i src/pokeblock.c charmap.txt | $(CC)
+$(C_BUILDDIR)/battle_tower.o: CC1 = $(PREPROC) -i src/battle_tower.c charmap.txt | $(CC)
 $(C_BUILDDIR)/braille.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/libc/libc_rest_1b3.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/libc/libc_rest_2.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
@@ -453,7 +456,7 @@ $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/su
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_summary_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon_summary_screen.gen.s
-$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin $(wildcard graphics/bag/* graphics/berries/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
+$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin $(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
@@ -612,11 +615,73 @@ $(C_BUILDDIR)/pokedex_cry_screen.o: \
 	graphics/pokedex/cry_screen_bg.gbapal \
 	graphics/pokedex/cry_screen_bg.4bpp
 
+$(C_BUILDDIR)/move_relearner.o: \
+	graphics/interface/ui_learn_move.4bpp \
+	graphics/interface/ui_learn_move.gbapal
+
+$(C_BUILDDIR)/cable_car.o: src/cable_car.c $(wildcard graphics/cable_car/*)
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/cable_car.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/cable_car.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/cable_car.gen.s
+
+$(C_BUILDDIR)/intro.o: src/intro.c \
+	graphics/intro/scene_1/drops.png.gbapal \
+	graphics/intro/scene_1/logo.png.gbapal \
+	graphics/intro/scene_1/drops_logo.png.4bpp.lz \
+	graphics/intro/scene_1/bg.png.gbapal \
+	graphics/intro/scene_1/bg0_map.bin.lz \
+	graphics/intro/scene_1/bg1_map.bin.lz \
+	graphics/intro/scene_1/bg2_map.bin.lz \
+	graphics/intro/scene_1/bg3_map.bin.lz \
+	graphics/intro/scene_1/bg.png.4bpp.lz \
+	graphics/intro/scene_3/pokeball.png.gbapal \
+	graphics/intro/scene_3/pokeball_map.bin.lz \
+	graphics/intro/scene_3/pokeball.png.8bpp.lz \
+	graphics/intro/scene_3/streaks.png.gbapal \
+	graphics/intro/scene_3/streaks.png.4bpp.lz \
+	graphics/intro/scene_3/streaks_map.bin.lz \
+	graphics/intro/scene_3/rayquaza_orb.png.gbapal \
+	graphics/intro/scene_3/misc.png.gbapal \
+	graphics/intro/scene_3/misc.png.4bpp.lz \
+	graphics/intro/scene_1/flygon.png.gbapal \
+	graphics/intro/scene_1/lati.png.4bpp.lz
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/intro.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/intro.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/intro.gen.s
+
+$(C_BUILDDIR)/field_region_map.o: src/field_region_map.c charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/field_region_map.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_region_map.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/field_region_map.gen.s
+
+$(C_BUILDDIR)/hall_of_fame.o: src/hall_of_fame.c charmap.txt \
+	graphics/misc/japanese_hof.gbapal \
+	graphics/misc/japanese_hof.4bpp.lz
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/hall_of_fame.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/hall_of_fame.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/hall_of_fame.gen.s
+
+$(C_BUILDDIR)/credits.o: src/credits.c src/data/credits.h charmap.txt \
+	graphics/credits/credits.gbapal \
+	graphics/credits/the_end_copyright.4bpp.lz
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/credits.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/credits.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/credits.gen.s
+
 $(C_BUILDDIR)/diploma.o: src/diploma.c charmap.txt \
 	graphics/diploma/national.gbapal \
 	graphics/diploma/hoenn.gbapal \
 	graphics/diploma/tilemap.bin.lz \
 	graphics/diploma/tiles.4bpp.lz
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/diploma.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/diploma.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/diploma.gen.s
 
 $(C_BUILDDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
@@ -1197,7 +1262,7 @@ $(OBJ_DIR)/data/data_rest2b.o: data/data_rest2b.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/data_rest2c.o: data/data_rest2c.s baserom_jp.gba
+$(OBJ_DIR)/data/data_rest2c.o: data/data_rest2c.s baserom_jp.gba graphics/intro/scene_1/flygon.png.4bpp.lz
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 

@@ -1,5 +1,10 @@
 // JP ROM physical order differs from the logical berry-item order used by sBerryPicTable.
+BERRY_CHECK_GRAPHICS const u32 gBerryCheck_Gfx[] = INCBIN_U32("graphics/bag/check_berry.4bpp.lz");
 BERRY_CHECK_PALETTE const u32 gBerryCheck_Pal[] = INCBIN_U32("graphics/bag/check_berry.pal.gbapal.lz");
+
+BERRY_TAG_GRAPHICS const u32 gBerryTag_Gfx[] = INCBIN_U32("graphics/bag/berry_tag.bin.lz");
+BERRY_TAG_GRAPHICS const u8 gBerryTag_Tilemap[] = INCBIN_U8("graphics/bag/berry_tag_title.bin.lz");
+static const u8 sBerryTagGraphicsPadding[3] BERRY_TAG_GRAPHICS __attribute__((used)) = {0, 0, 0};
 
 BERRY_GRAPHICS const u32 gBerryCheckCircle_Gfx[] = INCBIN_U32("graphics/bag/check_berry_circle.4bpp.lz");
 BERRY_GRAPHICS const u32 gBerryPic_Cheri[] = INCBIN_U32("graphics/berries/cheri.4bpp.lz");

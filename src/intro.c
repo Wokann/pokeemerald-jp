@@ -1,6 +1,19 @@
 #include "global.h"
 #include "intro.h"
 
+static void SpriteCB_Sparkle(struct Sprite *sprite);
+static void SpriteCB_Volbeat(struct Sprite *sprite);
+static void SpriteCB_Torchic(struct Sprite *sprite);
+static void SpriteCB_Manectric(struct Sprite *sprite);
+static void SpriteCB_Lightning(struct Sprite *sprite);
+static void SpriteCB_KyogreBubbles(struct Sprite *sprite);
+static void SpriteCB_WaterDrop(struct Sprite *sprite);
+static void SpriteCB_PlayerOnBicycle(struct Sprite *sprite);
+static void SpriteCB_LogoLetter(struct Sprite *sprite);
+static void SpriteCB_GameFreakLogo(struct Sprite *sprite);
+static void SpriteCB_FlygonSilhouette(struct Sprite *sprite);
+static void SpriteCB_RayquazaOrb(struct Sprite *sprite);
+
 __attribute__((naked)) void VBlankCB_Intro(void)
 {
     __asm__(".syntax unified\n\t"
@@ -113,9 +126,9 @@ __attribute__((naked)) void LoadCopyrightGraphics(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816CABC: .4byte gUnknown_85C0C94\n\t"
-        "_0816CAC0: .4byte gUnknown_85C0EF8\n\t"
-        "_0816CAC4: .4byte gUnknown_85C0C74\n\t"
+        "_0816CABC: .4byte gIntroCopyright_Gfx\n\t"
+        "_0816CAC0: .4byte gIntroCopyright_Tilemap\n\t"
+        "_0816CAC4: .4byte gIntroCopyright_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -571,36 +584,1056 @@ __attribute__((naked)) void Task_IntroLoadPart1Graphics(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816CEA0: .4byte gUnknown_203B994\n\t"
-        "_0816CEA4: .4byte gUnknown_85C2468\n\t"
-        "_0816CEA8: .4byte gUnknown_85C1878\n\t"
+        "_0816CEA4: .4byte sIntro1Bg_Gfx\n\t"
+        "_0816CEA8: .4byte sIntro1Bg0_Tilemap\n\t"
         "_0816CEAC: .4byte 0x06008000\n\t"
         "_0816CEB0: .4byte 0x06008800\n\t"
         "_0816CEB4: .4byte 0x040000D4\n\t"
         "_0816CEB8: .4byte 0x81000400\n\t"
-        "_0816CEBC: .4byte gUnknown_85C1C2C\n\t"
+        "_0816CEBC: .4byte sIntro1Bg1_Tilemap\n\t"
         "_0816CEC0: .4byte 0x06009000\n\t"
         "_0816CEC4: .4byte 0x06009800\n\t"
-        "_0816CEC8: .4byte gUnknown_85C1F60\n\t"
+        "_0816CEC8: .4byte sIntro1Bg2_Tilemap\n\t"
         "_0816CECC: .4byte 0x0600A000\n\t"
         "_0816CED0: .4byte 0x0600A800\n\t"
-        "_0816CED4: .4byte gUnknown_85C2250\n\t"
+        "_0816CED4: .4byte sIntro1Bg3_Tilemap\n\t"
         "_0816CED8: .4byte 0x0600B000\n\t"
         "_0816CEDC: .4byte 0x0600B800\n\t"
-        "_0816CEE0: .4byte gUnknown_85C1678\n\t"
+        "_0816CEE0: .4byte sIntro1Bg_Pal\n\t"
         "_0816CEE4: .4byte 0x00009603\n\t"
         "_0816CEE8: .4byte 0x00009402\n\t"
         "_0816CEEC: .4byte 0x00009201\n\t"
-        "_0816CEF0: .4byte gUnknown_85C6090\n\t"
-        "_0816CEF4: .4byte gUnknown_85C60A0\n\t"
-        "_0816CEF8: .4byte gUnknown_85C60B0\n\t"
-        "_0816CEFC: .4byte gUnknown_85C5B28\n\t"
-        "_0816CF00: .4byte gUnknown_85C5B38\n\t"
+        "_0816CEF0: .4byte sSpriteSheet_WaterDropsAndLogo\n\t"
+        "_0816CEF4: .4byte sSpriteSheet_FlygonSilhouette\n\t"
+        "_0816CEF8: .4byte sSpritePalettes_Intro1\n\t"
+        "_0816CEFC: .4byte sSpriteSheet_Sparkle\n\t"
+        "_0816CF00: .4byte sSpritePalette_Sparkle\n\t"
         "_0816CF04: .4byte gUnknown_20375B4\n\t"
         "_0816CF08: .4byte gTasks\n\t"
         "_0816CF0C: .4byte Task_IntroFadeIn + 1\n\t"
         ".syntax divided\n\t"
     );
 }
+
+#define INTRO_SCENE_1_LOGO_GRAPHICS __attribute__((section(".rodata.intro_scene_1_logo_graphics")))
+
+static const u16 sIntroDrops_Pal[] INTRO_SCENE_1_LOGO_GRAPHICS = INCBIN_U16("graphics/intro/scene_1/drops.png.gbapal");
+static const u16 sIntroLogo_Pal[] INTRO_SCENE_1_LOGO_GRAPHICS = INCBIN_U16("graphics/intro/scene_1/logo.png.gbapal");
+static const u32 sIntroDropsLogo_Gfx[] INTRO_SCENE_1_LOGO_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/drops_logo.png.4bpp.lz");
+
+#undef INTRO_SCENE_1_LOGO_GRAPHICS
+
+#define INTRO_SCENE_1_GRAPHICS __attribute__((section(".rodata.intro_scene_1_graphics")))
+
+static const u16 sIntro1Bg_Pal[] INTRO_SCENE_1_GRAPHICS = INCBIN_U16("graphics/intro/scene_1/bg.png.gbapal");
+static const u32 sIntro1Bg0_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg0_map.bin.lz");
+static const u32 sIntro1Bg1_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg1_map.bin.lz");
+static const u32 sIntro1Bg2_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg2_map.bin.lz");
+static const u32 sIntro1Bg3_Tilemap[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg3_map.bin.lz");
+static const u32 sIntro1Bg_Gfx[] INTRO_SCENE_1_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/bg.png.4bpp.lz");
+
+#undef INTRO_SCENE_1_GRAPHICS
+
+#define INTRO_SCENE_3_POKEBALL_GRAPHICS __attribute__((section(".rodata.intro_scene_3_pokeball_graphics")))
+
+static const u16 sIntroPokeball_Pal[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCBIN_U16("graphics/intro/scene_3/pokeball.png.gbapal");
+static const u32 sIntroPokeball_Tilemap[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/pokeball_map.bin.lz");
+static const u32 sIntroPokeball_Gfx[] INTRO_SCENE_3_POKEBALL_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/pokeball.png.8bpp.lz");
+
+#undef INTRO_SCENE_3_POKEBALL_GRAPHICS
+
+#define INTRO_SCENE_3_AUXILIARY_GRAPHICS __attribute__((section(".rodata.intro_scene_3_auxiliary_graphics")))
+
+static const u16 sIntroStreaks_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U16("graphics/intro/scene_3/streaks.png.gbapal");
+static const u32 sIntroStreaks_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/streaks.png.4bpp.lz");
+static const u32 sIntroStreaks_Tilemap[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/streaks_map.bin.lz");
+static const u16 sIntroRayquzaOrb_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U16("graphics/intro/scene_3/rayquaza_orb.png.gbapal");
+static const u16 sIntroMisc_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U16("graphics/intro/scene_3/misc.png.gbapal");
+static const u32 sIntroMisc_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U32("graphics/intro/scene_3/misc.png.4bpp.lz");
+static const u16 sIntroFlygonSilhouette_Pal[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U16("graphics/intro/scene_1/flygon.png.gbapal");
+static const u32 sIntroLati_Gfx[] INTRO_SCENE_3_AUXILIARY_GRAPHICS = INCBIN_U32("graphics/intro/scene_1/lati.png.4bpp.lz");
+static const u8 sUnusedData[] INTRO_SCENE_3_AUXILIARY_GRAPHICS =
+{
+    0x02, 0x03, 0x04, 0x05, 0x01, 0x01, 0x01, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x02, 0x0D,
+    0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x02, 0x0D, 0x0E, 0x0F,
+    0x10, 0x11, 0x12, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x21, 0x02, 0x0D, 0x0E, 0x0F, 0x10,
+    0x11, 0x12, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x00,
+};
+
+#undef INTRO_SCENE_3_AUXILIARY_GRAPHICS
+
+#define TAG_VOLBEAT 0x5DC
+#define TAG_TORCHIC 0x5DD
+#define TAG_MANECTRIC 0x5DE
+#define TAG_LIGHTNING 0x5DF
+#define TAG_BUBBLES 0x5E0
+#define TAG_SPARKLE 0x5E1
+#define TAG_FLYGON_SILHOUETTE 0x7D2
+#define TAG_RAYQUAZA_ORB 0x7D3
+#define INTRO_SPARKLE_DATA __attribute__((section(".rodata.intro_sparkle_data")))
+
+extern const u32 gIntroSparkle_Gfx[];
+extern const u32 gIntroLightning_Gfx[];
+extern const u16 gIntroLightning_Pal[];
+extern const u32 gIntroBubbles_Gfx[];
+extern const u16 gIntroBubbles_Pal[];
+extern const u32 gIntroVolbeat_Gfx[];
+extern const u32 gIntroTorchic_Gfx[];
+extern const u32 gIntroManectric_Gfx[];
+extern const u16 gIntroVolbeat_Pal[];
+extern const u16 gIntroTorchic_Pal[];
+extern const u16 gIntroManectric_Pal[];
+extern const u32 gIntroFlygonSilhouette_Gfx[];
+
+static const struct CompressedSpriteSheet sSpriteSheet_Sparkle[] INTRO_SPARKLE_DATA =
+{
+    {gIntroSparkle_Gfx, 0x400, TAG_SPARKLE},
+    {},
+};
+
+static const struct SpritePalette sSpritePalette_Sparkle[] INTRO_SPARKLE_DATA =
+{
+    {gIntroLightning_Pal, TAG_SPARKLE},
+    {},
+};
+
+static const struct OamData sOamData_Sparkle INTRO_SPARKLE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Sparkle[] INTRO_SPARKLE_DATA =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(4, 2),
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(12, 2),
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_Sparkle[] INTRO_SPARKLE_DATA =
+{
+    sAnim_Sparkle,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Sparkle INTRO_SPARKLE_DATA =
+{
+    .tileTag = TAG_SPARKLE,
+    .paletteTag = TAG_SPARKLE,
+    .oam = &sOamData_Sparkle,
+    .anims = sAnims_Sparkle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Sparkle,
+};
+
+static const u8 sSparkleCoords[][2] INTRO_SPARKLE_DATA =
+{
+    {124, 40},
+    {102, 30},
+    { 77, 30},
+    { 54, 15},
+    {148,  9},
+    { 63, 28},
+    { 93, 40},
+    {148, 32},
+    {173, 41},
+    { 94, 20},
+    {208, 38},
+    {},
+};
+
+#undef INTRO_SPARKLE_DATA
+
+#define INTRO_RUNNING_POKEMON_DATA __attribute__((section(".rodata.intro_running_pokemon_data")))
+
+static const struct CompressedSpriteSheet sSpriteSheet_RunningPokemon[] INTRO_RUNNING_POKEMON_DATA =
+{
+    {gIntroVolbeat_Gfx, 0x400, TAG_VOLBEAT},
+    {gIntroTorchic_Gfx, 0xC00, TAG_TORCHIC},
+    {gIntroManectric_Gfx, 0x2000, TAG_MANECTRIC},
+    {},
+};
+
+static const struct SpritePalette sSpritePalettes_RunningPokemon[] INTRO_RUNNING_POKEMON_DATA =
+{
+    {gIntroVolbeat_Pal, TAG_VOLBEAT},
+    {gIntroTorchic_Pal, TAG_TORCHIC},
+    {gIntroManectric_Pal, TAG_MANECTRIC},
+    {},
+};
+
+static const struct OamData sOamData_Volbeat INTRO_RUNNING_POKEMON_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Volbeat[] INTRO_RUNNING_POKEMON_DATA =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_Volbeat[] INTRO_RUNNING_POKEMON_DATA =
+{
+    sAnim_Volbeat,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Volbeat INTRO_RUNNING_POKEMON_DATA =
+{
+    .tileTag = TAG_VOLBEAT,
+    .paletteTag = TAG_VOLBEAT,
+    .oam = &sOamData_Volbeat,
+    .anims = sAnims_Volbeat,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Volbeat,
+};
+
+static const struct OamData sOamData_Torchic INTRO_RUNNING_POKEMON_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Torchic_Walk[] INTRO_RUNNING_POKEMON_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_Torchic_Run[] INTRO_RUNNING_POKEMON_DATA =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(16, 3),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_Torchic_Trip[] INTRO_RUNNING_POKEMON_DATA =
+{
+    ANIMCMD_FRAME(48, 4),
+    ANIMCMD_FRAME(64, 6),
+    ANIMCMD_FRAME(80, 0),
+    ANIMCMD_END,
+};
+
+enum
+{
+    TORCHIC_ANIM_WALK,
+    TORCHIC_ANIM_RUN,
+    TORCHIC_ANIM_TRIP,
+};
+
+static const union AnimCmd *const sAnims_Torchic[] INTRO_RUNNING_POKEMON_DATA =
+{
+    [TORCHIC_ANIM_WALK] = sAnim_Torchic_Walk,
+    [TORCHIC_ANIM_RUN] = sAnim_Torchic_Run,
+    [TORCHIC_ANIM_TRIP] = sAnim_Torchic_Trip,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Torchic INTRO_RUNNING_POKEMON_DATA =
+{
+    .tileTag = TAG_TORCHIC,
+    .paletteTag = TAG_TORCHIC,
+    .oam = &sOamData_Torchic,
+    .anims = sAnims_Torchic,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Torchic,
+};
+
+static const struct OamData sOamData_Manectric INTRO_RUNNING_POKEMON_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Manectric[] INTRO_RUNNING_POKEMON_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(128, 4),
+    ANIMCMD_FRAME(192, 4),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_Manectric[] INTRO_RUNNING_POKEMON_DATA =
+{
+    sAnim_Manectric,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Manectric INTRO_RUNNING_POKEMON_DATA =
+{
+    .tileTag = TAG_MANECTRIC,
+    .paletteTag = TAG_MANECTRIC,
+    .oam = &sOamData_Manectric,
+    .anims = sAnims_Manectric,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Manectric,
+};
+
+#undef INTRO_RUNNING_POKEMON_DATA
+
+#define INTRO_SCENE_3_SPRITE_DATA __attribute__((section(".rodata.intro_scene_3_sprite_data")))
+
+static const struct CompressedSpriteSheet sSpriteSheet_Lightning[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    {gIntroLightning_Gfx, 0xC00, TAG_LIGHTNING},
+    {},
+};
+
+static const struct SpritePalette sSpritePalette_Lightning[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    {gIntroLightning_Pal, TAG_LIGHTNING},
+    {},
+};
+
+static const struct OamData sOamData_Lightning INTRO_SCENE_3_SPRITE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Lightning_Top[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(48, 2),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Lightning_Middle[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_FRAME(64, 2),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Lightning_Bottom[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(32, 2),
+    ANIMCMD_FRAME(80, 2),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_Lightning[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    sAnim_Lightning_Top,
+    sAnim_Lightning_Middle,
+    sAnim_Lightning_Bottom,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Lightning INTRO_SCENE_3_SPRITE_DATA =
+{
+    .tileTag = TAG_LIGHTNING,
+    .paletteTag = TAG_LIGHTNING,
+    .oam = &sOamData_Lightning,
+    .anims = sAnims_Lightning,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Lightning,
+};
+
+static const s16 sGroudonRockData[][3] INTRO_SCENE_3_SPRITE_DATA =
+{
+    {104, 0, 0x0C0},
+    {142, 3, 0x280},
+    { 83, 1, 0x180},
+    {155, 0, 0x080},
+    { 56, 2, 0x200},
+    {174, 1, 0x100},
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_Bubbles[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    {gIntroBubbles_Gfx, 0x600, TAG_BUBBLES},
+    {},
+};
+
+static const struct SpritePalette sSpritePalette_Bubbles[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    {gIntroBubbles_Pal, TAG_BUBBLES},
+    {},
+};
+
+#define NUM_BUBBLES_IN_SET 6
+
+static const s16 sKyogreBubbleData[NUM_BUBBLES_IN_SET * 2][3] INTRO_SCENE_3_SPRITE_DATA =
+{
+    { 66,  64, 1},
+    { 96,  96, 8},
+    {128,  64, 1},
+    {144,  48, 8},
+    {160,  72, 1},
+    {176,  96, 8},
+    { 96,  96, 4},
+    {112, 104, 8},
+    {128,  96, 4},
+    { 88,  32, 4},
+    {104,  24, 8},
+    {120,  32, 4},
+};
+
+#undef NUM_BUBBLES_IN_SET
+
+static const struct OamData sOamData_Bubbles INTRO_SCENE_3_SPRITE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Bubbles[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_FRAME(16, 4),
+    ANIMCMD_FRAME(24, 4),
+    ANIMCMD_FRAME(32, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_Bubbles[] INTRO_SCENE_3_SPRITE_DATA =
+{
+    sAnim_Bubbles,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Bubbles INTRO_SCENE_3_SPRITE_DATA =
+{
+    .tileTag = TAG_BUBBLES,
+    .paletteTag = TAG_BUBBLES,
+    .oam = &sOamData_Bubbles,
+    .anims = sAnims_Bubbles,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_KyogreBubbles,
+};
+
+#undef INTRO_SCENE_3_SPRITE_DATA
+
+#define GFXTAG_DROPS_LOGO 0x7D0
+#define PALTAG_DROPS 0x7D0
+#define PALTAG_LOGO 0x7D1
+#define INTRO_WATER_DROP_AND_BICYCLE_DATA __attribute__((section(".rodata.intro_water_drop_and_bicycle_data")))
+
+static const struct OamData sOamData_WaterDrop INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+enum
+{
+    DROP_ANIM_UPPER_HALF,
+    DROP_ANIM_LOWER_HALF,
+    DROP_ANIM_REFLECTION,
+    DROP_ANIM_RIPPLE,
+};
+
+static const union AnimCmd sAnim_WaterDrop_UpperHalf[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    ANIMCMD_FRAME(16, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_WaterDrop_LowerHalf[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    ANIMCMD_FRAME(24, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_WaterDrop_Reflection[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_WaterDrop_Ripple[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    ANIMCMD_FRAME(48, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_WaterDrop[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    [DROP_ANIM_UPPER_HALF] = sAnim_WaterDrop_UpperHalf,
+    [DROP_ANIM_LOWER_HALF] = sAnim_WaterDrop_LowerHalf,
+    [DROP_ANIM_REFLECTION] = sAnim_WaterDrop_Reflection,
+    [DROP_ANIM_RIPPLE] = sAnim_WaterDrop_Ripple,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_WaterDrop INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    .tileTag = GFXTAG_DROPS_LOGO,
+    .paletteTag = PALTAG_DROPS,
+    .oam = &sOamData_WaterDrop,
+    .anims = sAnims_WaterDrop,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_WaterDrop,
+};
+
+static const union AnimCmd sAnim_PlayerBicycle_Fast[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(128, 4),
+    ANIMCMD_FRAME(192, 4),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_PlayerBicycle_Slow[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(64, 8),
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_FRAME(192, 8),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sAnim_PlayerBicycle_LookBack[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    ANIMCMD_FRAME(256, 4),
+    ANIMCMD_FRAME(320, 4),
+    ANIMCMD_FRAME(384, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_PlayerBicycle_LookForward[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    ANIMCMD_FRAME(384, 16),
+    ANIMCMD_FRAME(320, 16),
+    ANIMCMD_FRAME(256, 16),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_PlayerBicycle[] INTRO_WATER_DROP_AND_BICYCLE_DATA =
+{
+    sAnim_PlayerBicycle_Fast,
+    sAnim_PlayerBicycle_Slow,
+    sAnim_PlayerBicycle_LookBack,
+    sAnim_PlayerBicycle_LookForward,
+};
+
+#undef INTRO_WATER_DROP_AND_BICYCLE_DATA
+
+#define INTRO_GAME_FREAK_LETTER_ANIM_DATA __attribute__((section(".rodata.intro_game_freak_letter_anim_data")))
+
+static const struct OamData sOamData_GameFreakLetter INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_PresentsLetter INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_GameFreakLogo INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_BLEND,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_GameFreakLetter_G[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(80, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_GameFreakLetter_A[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(84, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_GameFreakLetter_M[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(88, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_GameFreakLetter_E[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(92, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_GameFreakLetter_F[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(96, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_GameFreakLetter_R[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(100, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_GameFreakLetter_K[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(104, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_PresentsLetter_P[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(112, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_PresentsLetter_R[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(113, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_PresentsLetter_E[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(114, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_PresentsLetter_S[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(115, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_PresentsLetter_N[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(116, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_PresentsLetter_T[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(117, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_GameFreakLogo[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_END,
+};
+
+enum
+{
+    GAMEFREAK_G,
+    GAMEFREAK_A,
+    GAMEFREAK_M,
+    GAMEFREAK_E,
+    GAMEFREAK_F,
+    GAMEFREAK_R,
+    GAMEFREAK_K,
+};
+
+enum
+{
+    PRESENTS_P,
+    PRESENTS_R,
+    PRESENTS_E,
+    PRESENTS_S,
+    PRESENTS_N,
+    PRESENTS_T,
+};
+
+static const union AnimCmd *const sAnims_GameFreakLetter[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    [GAMEFREAK_G] = sAnim_GameFreakLetter_G,
+    [GAMEFREAK_A] = sAnim_GameFreakLetter_A,
+    [GAMEFREAK_M] = sAnim_GameFreakLetter_M,
+    [GAMEFREAK_E] = sAnim_GameFreakLetter_E,
+    [GAMEFREAK_F] = sAnim_GameFreakLetter_F,
+    [GAMEFREAK_R] = sAnim_GameFreakLetter_R,
+    [GAMEFREAK_K] = sAnim_GameFreakLetter_K,
+};
+
+static const union AnimCmd *const sAnims_PresentsLetter[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    [PRESENTS_P] = sAnim_PresentsLetter_P,
+    [PRESENTS_R] = sAnim_PresentsLetter_R,
+    [PRESENTS_E] = sAnim_PresentsLetter_E,
+    [PRESENTS_S] = sAnim_PresentsLetter_S,
+    [PRESENTS_N] = sAnim_PresentsLetter_N,
+    [PRESENTS_T] = sAnim_PresentsLetter_T,
+};
+
+static const union AnimCmd *const sAnims_GameFreakLogo[] INTRO_GAME_FREAK_LETTER_ANIM_DATA =
+{
+    sAnim_GameFreakLogo,
+};
+
+#undef INTRO_GAME_FREAK_LETTER_ANIM_DATA
+
+#define NUM_GF_LETTERS 9
+#define INTRO_GAME_FREAK_LETTER_DATA __attribute__((section(".rodata.intro_game_freak_letter_data")))
+
+static const s16 sGameFreakLetterData[NUM_GF_LETTERS][2] INTRO_GAME_FREAK_LETTER_DATA =
+{
+    {GAMEFREAK_G, -72},
+    {GAMEFREAK_A, -56},
+    {GAMEFREAK_M, -40},
+    {GAMEFREAK_E, -24},
+    {GAMEFREAK_F,   8},
+    {GAMEFREAK_R,  24},
+    {GAMEFREAK_E,  40},
+    {GAMEFREAK_A,  56},
+    {GAMEFREAK_K,  72},
+};
+
+static const s16 sPresentsLetterData[][2] INTRO_GAME_FREAK_LETTER_DATA =
+{
+    {PRESENTS_P, -28},
+    {PRESENTS_R, -20},
+    {PRESENTS_E, -12},
+    {PRESENTS_S,  -4},
+    {PRESENTS_E,   4},
+    {PRESENTS_N,  12},
+    {PRESENTS_T,  20},
+    {PRESENTS_S,  28},
+};
+
+static const union AffineAnimCmd sAffineAnim_GameFreak_Small[] INTRO_GAME_FREAK_LETTER_DATA =
+{
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_GameFreak_GrowAndShrink[] INTRO_GAME_FREAK_LETTER_DATA =
+{
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+    AFFINEANIMCMD_FRAME(16, 16, 0, 16),
+    AFFINEANIMCMD_FRAME(-16, -16, 0, 8),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_GameFreak_GrowBig[] INTRO_GAME_FREAK_LETTER_DATA =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(8, 8, 0, 48),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_GameFreak_GrowMedium[] INTRO_GAME_FREAK_LETTER_DATA =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(2, 2, 0, 48),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_GameFreak[] INTRO_GAME_FREAK_LETTER_DATA =
+{
+    sAffineAnim_GameFreak_Small,
+    sAffineAnim_GameFreak_GrowAndShrink,
+    sAffineAnim_GameFreak_GrowBig,
+    sAffineAnim_GameFreak_GrowMedium,
+};
+
+static const u16 sGameFreakLettersMoveSpeed[NUM_GF_LETTERS] INTRO_GAME_FREAK_LETTER_DATA =
+{
+    256,
+    192,
+    128,
+     64,
+      0,
+     64,
+    128,
+    192,
+    256,
+};
+
+static const u8 sGameFreakLettersMoveSpeedPadding[2] INTRO_GAME_FREAK_LETTER_DATA = {};
+
+#undef INTRO_GAME_FREAK_LETTER_DATA
+
+#define INTRO_GAME_FREAK_LETTER_TEMPLATE_DATA __attribute__((section(".rodata.intro_game_freak_letter_template_data")))
+
+static const struct SpriteTemplate sSpriteTemplate_GameFreakLetter INTRO_GAME_FREAK_LETTER_TEMPLATE_DATA =
+{
+    .tileTag = GFXTAG_DROPS_LOGO,
+    .paletteTag = PALTAG_LOGO,
+    .oam = &sOamData_GameFreakLetter,
+    .anims = sAnims_GameFreakLetter,
+    .images = NULL,
+    .affineAnims = sAffineAnims_GameFreak,
+    .callback = SpriteCB_LogoLetter,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_PresentsLetter INTRO_GAME_FREAK_LETTER_TEMPLATE_DATA =
+{
+    .tileTag = GFXTAG_DROPS_LOGO,
+    .paletteTag = PALTAG_LOGO,
+    .oam = &sOamData_PresentsLetter,
+    .anims = sAnims_PresentsLetter,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_LogoLetter,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_GameFreakLogo INTRO_GAME_FREAK_LETTER_TEMPLATE_DATA =
+{
+    .tileTag = GFXTAG_DROPS_LOGO,
+    .paletteTag = PALTAG_LOGO,
+    .oam = &sOamData_GameFreakLogo,
+    .anims = sAnims_GameFreakLogo,
+    .images = NULL,
+    .affineAnims = sAffineAnims_GameFreak,
+    .callback = SpriteCB_GameFreakLogo,
+};
+
+static const u8 sGameFreakLetterStartDelays[NUM_GF_LETTERS] INTRO_GAME_FREAK_LETTER_TEMPLATE_DATA =
+{
+    0,
+    23,
+    23,
+    49,
+    62,
+    36,
+    36,
+    10,
+    10,
+};
+
+static const u8 sGameFreakLetterStartDelaysPadding[3] INTRO_GAME_FREAK_LETTER_TEMPLATE_DATA = {};
+
+#undef INTRO_GAME_FREAK_LETTER_TEMPLATE_DATA
+
+#define INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA __attribute__((section(".rodata.intro_flygon_and_rayquaza_sprite_data")))
+
+static const struct OamData sOamData_FlygonSilhouette INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_FlygonSilhouette[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(0, 10),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_FlygonSilhouette[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    sAnim_FlygonSilhouette,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_FlygonSilhouette INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    .tileTag = TAG_FLYGON_SILHOUETTE,
+    .paletteTag = TAG_FLYGON_SILHOUETTE,
+    .oam = &sOamData_FlygonSilhouette,
+    .anims = sAnims_FlygonSilhouette,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_FlygonSilhouette,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_WaterDropsAndLogo[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    {sIntroDropsLogo_Gfx, 0x1400, GFXTAG_DROPS_LOGO},
+    {},
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_FlygonSilhouette[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    {gIntroFlygonSilhouette_Gfx, 0x400, TAG_FLYGON_SILHOUETTE},
+    {},
+};
+
+static const struct SpritePalette sSpritePalettes_Intro1[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    {sIntroDrops_Pal, PALTAG_DROPS},
+    {sIntroLogo_Pal, PALTAG_LOGO},
+    {sIntroFlygonSilhouette_Pal, TAG_FLYGON_SILHOUETTE},
+    {},
+};
+
+static const struct OamData sOamData_RayquazaOrb INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_RayquazaOrb[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    ANIMCMD_FRAME(16, 8),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_RayquazaOrb[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    sAnim_RayquazaOrb,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_RayquazaOrb INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    .tileTag = TAG_RAYQUAZA_ORB,
+    .paletteTag = TAG_RAYQUAZA_ORB,
+    .oam = &sOamData_RayquazaOrb,
+    .anims = sAnims_RayquazaOrb,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_RayquazaOrb,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_RayquazaOrb[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    {sIntroMisc_Gfx, 0xA00, TAG_RAYQUAZA_ORB},
+    {},
+};
+
+static const struct SpritePalette sSpritePalette_RayquazaOrb[] INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA =
+{
+    {sIntroRayquzaOrb_Pal, TAG_RAYQUAZA_ORB},
+    {},
+};
+
+#undef INTRO_FLYGON_AND_RAYQUAZA_SPRITE_DATA
 
 __attribute__((naked)) void Task_IntroFadeIn(void)
 {
@@ -850,8 +1883,8 @@ __attribute__((naked)) void Task_IntroWaterDrops_3(void)
         "	strh r0, [r4, #8]\n\t"
         "	b _0816D108\n\t"
         "	.align 2, 0\n\t"
-        "_0816D0F0: .4byte gUnknown_85C5B6C\n\t"
-        "_0816D0F4: .4byte gUnknown_85C5B84\n\t"
+        "_0816D0F0: .4byte sSpriteTemplate_Sparkle\n\t"
+        "_0816D0F4: .4byte sSparkleCoords\n\t"
         "_0816D0F8:\n\t"
         "	ldrh r0, [r4, #2]\n\t"
         "	subs r0, #1\n\t"
@@ -876,7 +1909,7 @@ __attribute__((naked)) void Task_IntroWaterDrops_3(void)
     );
 }
 
-__attribute__((naked)) void sub_0816D11C(void)
+__attribute__((naked)) static void SpriteCB_Sparkle(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -986,7 +2019,7 @@ __attribute__((naked)) void Task_IntroScrollDownAndShowFlygon(void)
         "_0816D1E8: .4byte 0xFFFFA000\n\t"
         "_0816D1EC: .4byte 0xFFFF8000\n\t"
         "_0816D1F0: .4byte 0xFFFF4000\n\t"
-        "_0816D1F4: .4byte gUnknown_85C6078\n\t"
+        "_0816D1F4: .4byte sSpriteTemplate_FlygonSilhouette\n\t"
         "_0816D1F8: .4byte gSprites\n\t"
         "_0816D1FC:\n\t"
         "	ldr r0, _0816D22C\n\t"
@@ -1161,11 +2194,11 @@ __attribute__((naked)) void Task_IntroStartBikeRide(void)
         "_0816D350: .4byte gUnknown_85D279C\n\t"
         "_0816D354: .4byte gUnknown_85D27AC\n\t"
         "_0816D358: .4byte gUnknown_85D27CC\n\t"
-        "_0816D35C: .4byte gUnknown_85C5B9C\n\t"
+        "_0816D35C: .4byte sSpriteSheet_RunningPokemon\n\t"
         "_0816D360: .4byte gUnknown_85D27DC\n\t"
-        "_0816D364: .4byte gUnknown_85C5BBC\n\t"
-        "_0816D368: .4byte gUnknown_85C5C90\n\t"
-        "_0816D36C: .4byte gUnknown_85C5C58\n\t"
+        "_0816D364: .4byte sSpritePalettes_RunningPokemon\n\t"
+        "_0816D368: .4byte sSpriteTemplate_Manectric\n\t"
+        "_0816D36C: .4byte sSpriteTemplate_Torchic\n\t"
         "_0816D370: .4byte gUnknown_203B994\n\t"
         "_0816D374:\n\t"
         "	adds r0, r5, #0\n\t"
@@ -1241,10 +2274,10 @@ __attribute__((naked)) void Task_IntroStartBikeRide(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816D410: .4byte gSprites\n\t"
-        "_0816D414: .4byte SpriteCB_IntroGraphicsBicycle + 1\n\t"
-        "_0816D418: .4byte gUnknown_85C5E78\n\t"
+        "_0816D414: .4byte SpriteCB_PlayerOnBicycle + 1\n\t"
+        "_0816D418: .4byte sAnims_PlayerBicycle\n\t"
         "_0816D41C: .4byte gTasks\n\t"
-        "_0816D420: .4byte gUnknown_85C5BF4\n\t"
+        "_0816D420: .4byte sSpriteTemplate_Volbeat\n\t"
         "_0816D424: .4byte SpriteCB_IntroGraphicsFlygon + 1\n\t"
         "_0816D428: .4byte 0x0000FFFF\n\t"
         "_0816D42C: .4byte 0x0816C9F9\n\t"
@@ -1487,7 +2520,7 @@ __attribute__((naked)) void Task_IntroWaitToSetupPart2(void)
     );
 }
 
-__attribute__((naked)) void sub_0816D600(void)
+__attribute__((naked)) static void SpriteCB_Volbeat(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1706,7 +2739,7 @@ __attribute__((naked)) void sub_0816D600(void)
     );
 }
 
-__attribute__((naked)) void sub_0816D7A4(void)
+__attribute__((naked)) static void SpriteCB_Torchic(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1865,7 +2898,7 @@ __attribute__((naked)) void sub_0816D7A4(void)
     );
 }
 
-__attribute__((naked)) void sub_0816D8CC(void)
+__attribute__((naked)) static void SpriteCB_Manectric(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2042,10 +3075,10 @@ __attribute__((naked)) void Task_IntroLoadPart3Graphics(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816DA20: .4byte gUnknown_85C4908\n\t"
-        "_0816DA24: .4byte gUnknown_85C47D8\n\t"
+        "_0816DA20: .4byte sIntroPokeball_Gfx\n\t"
+        "_0816DA24: .4byte sIntroPokeball_Tilemap\n\t"
         "_0816DA28: .4byte 0x06004000\n\t"
-        "_0816DA2C: .4byte gUnknown_85C45D8\n\t"
+        "_0816DA2C: .4byte sIntroPokeball_Pal\n\t"
         "_0816DA30: .4byte gTasks\n\t"
         "_0816DA34: .4byte 0x0000FFFF\n\t"
         "_0816DA38: .4byte 0x00004883\n\t"
@@ -2772,7 +3805,7 @@ __attribute__((naked)) void CreateGroudonRockSprites(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816DFCC: .4byte gSprites\n\t"
-        "_0816DFD0: .4byte gUnknown_85C5D18\n\t"
+        "_0816DFD0: .4byte sGroudonRockData\n\t"
         "_0816DFD4: .4byte gAncientPowerRockSpriteTemplate\n\t"
         "_0816DFD8: .4byte SpriteCB_IntroGroudonRocks + 1\n\t"
         ".syntax divided\n\t"
@@ -2846,7 +3879,7 @@ __attribute__((naked)) void SpriteCB_IntroGroudonRocks(void)
         "	strh r0, [r3, #0x2e]\n\t"
         "	b _0816E080\n\t"
         "	.align 2, 0\n\t"
-        "_0816E054: .4byte gUnknown_85C5D18\n\t"
+        "_0816E054: .4byte sGroudonRockData\n\t"
         "_0816E058: .4byte gTasks\n\t"
         "_0816E05C:\n\t"
         "	ldrh r1, [r3, #0x20]\n\t"
@@ -2951,8 +3984,8 @@ __attribute__((naked)) void Task_IntroLoadKyogreScene(void)
         "_0816E11C: .4byte 0x0600C000\n\t"
         "_0816E120: .4byte gUnknown_8D8A918\n\t"
         "_0816E124: .4byte 0x0600E000\n\t"
-        "_0816E128: .4byte gUnknown_85C5D3C\n\t"
-        "_0816E12C: .4byte gUnknown_85C5D4C\n\t"
+        "_0816E128: .4byte sSpriteSheet_Bubbles\n\t"
+        "_0816E12C: .4byte sSpritePalette_Bubbles\n\t"
         "_0816E130: .4byte 0x0000FFFF\n\t"
         "_0816E134: .4byte gTasks\n\t"
         "_0816E138: .4byte Task_IntroKyogreScene + 1\n\t"
@@ -3459,9 +4492,9 @@ __attribute__((naked)) void CreateKyogreBubbleSprites_0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816E524: .4byte gUnknown_85C5D5C\n\t"
+        "_0816E524: .4byte sKyogreBubbleData\n\t"
         "_0816E528: .4byte gSprites\n\t"
-        "_0816E52C: .4byte gUnknown_85C5DC8\n\t"
+        "_0816E52C: .4byte sSpriteTemplate_Bubbles\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3517,14 +4550,14 @@ __attribute__((naked)) void CreateKyogreBubbleSprites_1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816E58C: .4byte gUnknown_85C5D5C\n\t"
+        "_0816E58C: .4byte sKyogreBubbleData\n\t"
         "_0816E590: .4byte gSprites\n\t"
-        "_0816E594: .4byte gUnknown_85C5DC8\n\t"
+        "_0816E594: .4byte sSpriteTemplate_Bubbles\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void SpriteCB_IntroKyogreBubbles(void)
+__attribute__((naked)) static void SpriteCB_KyogreBubbles(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3968,8 +5001,8 @@ __attribute__((naked)) void Task_IntroLoadRayquazaLightningScene(void)
         "_0816E914: .4byte gUnknown_8D8C81C\n\t"
         "_0816E918: .4byte gTasks\n\t"
         "_0816E91C: .4byte Task_IntroRayquazaLightningScene + 1\n\t"
-        "_0816E920: .4byte gUnknown_85C5CA8\n\t"
-        "_0816E924: .4byte gUnknown_85C5CB8\n\t"
+        "_0816E920: .4byte sSpriteSheet_Lightning\n\t"
+        "_0816E924: .4byte sSpritePalette_Lightning\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4048,7 +5081,7 @@ __attribute__((naked)) void Task_IntroRayquazaLightningScene(void)
         "	strh r0, [r6, #0xc]\n\t"
         "	b _0816EA46\n\t"
         "	.align 2, 0\n\t"
-        "_0816E9BC: .4byte gUnknown_85C5D00\n\t"
+        "_0816E9BC: .4byte sSpriteTemplate_Lightning\n\t"
         "_0816E9C0: .4byte gSprites\n\t"
         "_0816E9C4:\n\t"
         "	ldrh r0, [r6, #0xc]\n\t"
@@ -4097,7 +5130,7 @@ __attribute__((naked)) void Task_IntroRayquazaLightningScene(void)
         "	strh r0, [r6, #0xc]\n\t"
         "	b _0816EA46\n\t"
         "	.align 2, 0\n\t"
-        "_0816EA28: .4byte gUnknown_85C5D00\n\t"
+        "_0816EA28: .4byte sSpriteTemplate_Lightning\n\t"
         "_0816EA2C: .4byte gSprites\n\t"
         "_0816EA30:\n\t"
         "	ldrh r0, [r6, #0xc]\n\t"
@@ -4121,7 +5154,7 @@ __attribute__((naked)) void Task_IntroRayquazaLightningScene(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_IntroRayquazaLightning(void)
+__attribute__((naked)) static void SpriteCB_Lightning(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4276,8 +5309,8 @@ __attribute__((naked)) void Task_IntroLoadRayquazaGlowScene(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816EB74: .4byte gUnknown_85C60FC\n\t"
-        "_0816EB78: .4byte gUnknown_85C610C\n\t"
+        "_0816EB74: .4byte sSpriteSheet_RayquazaOrb\n\t"
+        "_0816EB78: .4byte sSpritePalette_RayquazaOrb\n\t"
         "_0816EB7C: .4byte gTasks\n\t"
         "_0816EB80: .4byte Task_IntroRayquazaGlowScene_0 + 1\n\t"
         "_0816EB84: .4byte 0x0000FFDE\n\t"
@@ -4601,7 +5634,7 @@ __attribute__((naked)) void Task_IntroRayquazaGlowScene_1(void)
         "	.align 2, 0\n\t"
         "_0816EDD8: .4byte gUnknown_8D85E36\n\t"
         "_0816EDDC: .4byte gUnknown_203786C\n\t"
-        "_0816EDE0: .4byte gUnknown_85C60E4\n\t"
+        "_0816EDE0: .4byte sSpriteTemplate_RayquazaOrb\n\t"
         "_0816EDE4: .4byte gSprites\n\t"
         "_0816EDE8:\n\t"
         "	subs r0, r1, #1\n\t"
@@ -5171,7 +6204,7 @@ __attribute__((naked)) void sub_0816F188(void)
     );
 }
 
-__attribute__((naked)) void sub_0816F238(void)
+__attribute__((naked)) static void SpriteCB_WaterDrop(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5766,9 +6799,9 @@ __attribute__((naked)) void CreateWaterDrop(void)
         "	ldr r1, _0816F678\n\t"
         "	b _0816F684\n\t"
         "	.align 2, 0\n\t"
-        "_0816F670: .4byte gUnknown_85C5E18\n\t"
+        "_0816F670: .4byte sSpriteTemplate_WaterDrop\n\t"
         "_0816F674: .4byte gSprites\n\t"
-        "_0816F678: .4byte sub_0816F238 + 1\n\t"
+        "_0816F678: .4byte SpriteCB_WaterDrop + 1\n\t"
         "_0816F67C:\n\t"
         "	mov r0, sb\n\t"
         "	adds r0, #0x1c\n\t"
@@ -5913,7 +6946,7 @@ __attribute__((naked)) void CreateWaterDrop(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0816F7A4: .4byte SpriteCB_WaterDropFall + 1\n\t"
-        "_0816F7A8: .4byte gUnknown_85C5E18\n\t"
+        "_0816F7A8: .4byte sSpriteTemplate_WaterDrop\n\t"
         "_0816F7AC: .4byte gSprites\n\t"
         "_0816F7B0: .4byte gUnknown_20205C8\n\t"
         "_0816F7B4: .4byte sub_0816F188 + 1\n\t"
@@ -5921,7 +6954,7 @@ __attribute__((naked)) void CreateWaterDrop(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_IntroGraphicsBicycle(void)
+__attribute__((naked)) static void SpriteCB_PlayerOnBicycle(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6124,7 +7157,7 @@ __attribute__((naked)) void SpriteCB_IntroGraphicsFlygon(void)
     );
 }
 
-__attribute__((naked)) void sub_0816F91C(void)
+__attribute__((naked)) static void SpriteCB_LogoLetter(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6388,7 +7421,7 @@ __attribute__((naked)) void sub_0816F91C(void)
     );
 }
 
-__attribute__((naked)) void sub_0816FB3C(void)
+__attribute__((naked)) static void SpriteCB_GameFreakLogo(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6592,17 +7625,17 @@ __attribute__((naked)) void CreatePart1Animations(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0816FCBC: .4byte gUnknown_85C5F48\n\t"
+        "_0816FCBC: .4byte sGameFreakLetterData\n\t"
         "_0816FCC0: .4byte 0xFFFC0000\n\t"
-        "_0816FCC4: .4byte gUnknown_85C6010\n\t"
+        "_0816FCC4: .4byte sSpriteTemplate_GameFreakLetter\n\t"
         "_0816FCC8: .4byte gSprites\n\t"
         "_0816FCCC: .4byte sGameFreakLetterStartDelays\n\t"
-        "_0816FCD0: .4byte gUnknown_85C6040\n\t"
+        "_0816FCD0: .4byte sSpriteTemplate_GameFreakLogo\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_0816FCD4(void)
+__attribute__((naked)) static void SpriteCB_FlygonSilhouette(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6790,7 +7823,7 @@ __attribute__((naked)) void sub_0816FCD4(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_IntroRayquazaHyperbeam(void)
+__attribute__((naked)) static void SpriteCB_RayquazaOrb(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

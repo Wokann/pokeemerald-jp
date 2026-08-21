@@ -69,24 +69,12 @@ extern void CB2_LoadCableCar(void);
 
 
 
-extern const struct BgTemplate sCableCarBgTemplates[];
-extern const u16 sCableCarGround_Tilemap[];
-extern const u16 sCableCarTrees_Tilemap[];
-extern const u16 sCableCarBgMountains_Tilemap[];
-extern const u16 sCableCarPylonTop_Tilemap[];
-extern const u16 sCableCarPylonPole_Tilemap[];
-extern const struct CompressedSpriteSheet sCableCarSpriteSheets[];
-extern const struct SpritePalette sCableCarSpritePalettes[];
-extern const u32 gCableCarBg_Gfx[];
+extern const u8 gCableCarBg_Gfx[];
 extern const u16 gCableCarBg_Pal[];
-
-extern const u8 sCableCarPlayerGraphicsIds[2];
-extern const u8 sCableCarHikerGraphicsIds[4];
-extern const s16 sCableCarHikerCoords[2][2];
-extern const u8 sCableCarHikerMovementDelayTable[4];
-extern void (*sCableCarHikerCallbacks[2])(struct Sprite *);
-extern const struct SpriteTemplate sSpriteTemplates_CableCar[2];
-extern const struct SpriteTemplate sSpriteTemplate_Cable;
+extern const u8 gCableCar_Gfx[];
+extern const u32 gCableCarDoor_Gfx[];
+extern const u32 gCableCarCable_Gfx[];
+extern const u16 gCableCar_Pal[];
 extern u8 AddPseudoEventObject(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority);
 extern u8 sGroundX_Up;
 extern u8 sGroundY_Up;
@@ -105,6 +93,189 @@ extern void SetBgRegs(bool8 value);
 extern void InitGroundTilemapData(u8 mode);
 extern void DrawNextGroundSegmentGoingUp(void);
 extern void DrawNextGroundSegmentGoingDown(void);
+
+void nullsub_58(void);
+static void SpriteCB_CableCar(struct Sprite *sprite);
+void SpriteCB_HikerGoingUp(struct Sprite *sprite);
+void SpriteCB_HikerGoingDown(struct Sprite *sprite);
+
+#define CABLE_CAR_TILEMAP_DATA __attribute__((section(".rodata.cable_car_tilemap_data")))
+
+CABLE_CAR_TILEMAP_DATA const struct BgTemplate sCableCarBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+};
+
+CABLE_CAR_TILEMAP_DATA const u16 sCableCarGround_Tilemap[] = INCBIN_U16("graphics/cable_car/ground.bin.lz");
+CABLE_CAR_TILEMAP_DATA const u16 sCableCarTrees_Tilemap[] = INCBIN_U16("graphics/cable_car/trees.bin.lz");
+
+// JP ROM has two bytes of alignment padding after the Trees stream.
+CABLE_CAR_TILEMAP_DATA const u16 sCableCarTreesPadding = 0;
+
+CABLE_CAR_TILEMAP_DATA const u16 sCableCarBgMountains_Tilemap[] = INCBIN_U16("graphics/cable_car/bg_mountains.bin.lz");
+
+// JP ROM has two bytes of alignment padding after the Mountains stream.
+CABLE_CAR_TILEMAP_DATA const u16 sCableCarBgMountainsPadding = 0;
+
+CABLE_CAR_TILEMAP_DATA const u16 sCableCarPylonTop_Tilemap[] = INCBIN_U16("graphics/cable_car/pylon_top.bin");
+CABLE_CAR_TILEMAP_DATA const u16 sCableCarPylonPole_Tilemap[] = INCBIN_U16("graphics/cable_car/pylon_pole.bin.lz");
+
+#undef CABLE_CAR_TILEMAP_DATA
+
+#define CABLE_CAR_SPRITE_DATA __attribute__((section(".rodata.cable_car_sprite_data")))
+
+CABLE_CAR_SPRITE_DATA const struct CompressedSpriteSheet sCableCarSpriteSheets[] =
+{
+    { gCableCar_Gfx,      0x800, 1 },
+    { gCableCarDoor_Gfx,  0x040, 2 },
+    { gCableCarCable_Gfx, 0x080, 3 },
+    { NULL,                 0, 0 },
+};
+
+CABLE_CAR_SPRITE_DATA const struct SpritePalette sCableCarSpritePalettes[] =
+{
+    { gCableCar_Pal, 1 },
+    { NULL,          0 },
+};
+
+CABLE_CAR_SPRITE_DATA const struct OamData sOam_CableCar =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+};
+
+CABLE_CAR_SPRITE_DATA const struct OamData sOam_CableCarDoor =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x8),
+    .x = 0,
+    .size = SPRITE_SIZE(16x8),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+};
+
+CABLE_CAR_SPRITE_DATA const struct OamData sOam_Cable =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+};
+
+CABLE_CAR_SPRITE_DATA const struct SpriteTemplate sSpriteTemplates_CableCar[] =
+{
+    {
+        .tileTag = 1,
+        .paletteTag = 1,
+        .oam = &sOam_CableCar,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_CableCar,
+    },
+    {
+        .tileTag = 2,
+        .paletteTag = 1,
+        .oam = &sOam_CableCarDoor,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_CableCar,
+    },
+};
+
+CABLE_CAR_SPRITE_DATA const struct SpriteTemplate sSpriteTemplate_Cable =
+{
+    .tileTag = 3,
+    .paletteTag = 1,
+    .oam = &sOam_Cable,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = (void (*)(struct Sprite *))nullsub_58,
+};
+
+CABLE_CAR_SPRITE_DATA const u8 sCableCarPlayerGraphicsIds[] =
+{
+    100, 105,
+};
+
+CABLE_CAR_SPRITE_DATA const u8 sCableCarHikerGraphicsIds[] =
+{
+    55, 31, 32, 98,
+};
+
+CABLE_CAR_SPRITE_DATA const s16 sCableCarHikerCoords[][2] =
+{
+    { 0, 80 },
+    { 240, 146 },
+};
+
+CABLE_CAR_SPRITE_DATA const u8 sCableCarHikerMovementDelayTable[] =
+{
+    0, 60, 120, 170,
+};
+
+CABLE_CAR_SPRITE_DATA void (*const sCableCarHikerCallbacks[])(struct Sprite *) =
+{
+    SpriteCB_HikerGoingUp,
+    SpriteCB_HikerGoingDown,
+};
+
+#undef CABLE_CAR_SPRITE_DATA
 
 void CB2_LoadCableCar(void)
 {

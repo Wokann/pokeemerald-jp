@@ -1,5 +1,13 @@
 #include "global.h"
 
+#define INTRO_COPYRIGHT_GRAPHICS __attribute__((section(".rodata.intro_copyright_graphics")))
+
+INTRO_COPYRIGHT_GRAPHICS const u16 gIntroCopyright_Pal[16] = INCBIN_U16("graphics/intro/copyright.gbapal");
+INTRO_COPYRIGHT_GRAPHICS const u32 gIntroCopyright_Gfx[] = INCBIN_U32("graphics/intro/copyright.4bpp.lz");
+INTRO_COPYRIGHT_GRAPHICS const u32 gIntroCopyright_Tilemap[] = INCBIN_U32("graphics/intro/copyright.bin.lz");
+
+#undef INTRO_COPYRIGHT_GRAPHICS
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(
@@ -7,6 +15,33 @@ MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(
     "graphics/pokemon/icon_palettes/icon_palette_1.pal.gbapal",
     "graphics/pokemon/icon_palettes/icon_palette_2.pal.gbapal");
 #undef MON_ICON_PALETTES_DATA
+
+#define POKEBLOCK_GRAPHICS __attribute__((section(".rodata.pokeblock_graphics")))
+
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblock_Gfx[] = INCBIN_U32("graphics/pokeblock/menu.png.4bpp.lz");
+POKEBLOCK_GRAPHICS const u8 gMenuPokeblock_Pal[] = INCBIN_U8("graphics/pokeblock/menu.pal.gbapal.lz");
+static const u16 sPokeblockGraphicsPadding POKEBLOCK_GRAPHICS __attribute__((used)) = 0;
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblockDevice_Gfx[] = INCBIN_U32("graphics/pokeblock/device.png.4bpp.lz");
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblockDevice_Pal[] = INCBIN_U32("graphics/pokeblock/device.png.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gMenuPokeblock_Tilemap[] = INCBIN_U32("graphics/pokeblock/menu.bin.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblock_Gfx[] = INCBIN_U32("graphics/pokeblock/pokeblock.png.4bpp.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockRed_Pal[] = INCBIN_U32("graphics/pokeblock/red.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockBlue_Pal[] = INCBIN_U32("graphics/pokeblock/blue.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockPink_Pal[] = INCBIN_U32("graphics/pokeblock/pink.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockGreen_Pal[] = INCBIN_U32("graphics/pokeblock/green.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockYellow_Pal[] = INCBIN_U32("graphics/pokeblock/yellow.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockPurple_Pal[] = INCBIN_U32("graphics/pokeblock/purple.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockIndigo_Pal[] = INCBIN_U32("graphics/pokeblock/indigo.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockBrown_Pal[] = INCBIN_U32("graphics/pokeblock/brown.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockLiteBlue_Pal[] = INCBIN_U32("graphics/pokeblock/liteblue.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockOlive_Pal[] = INCBIN_U32("graphics/pokeblock/olive.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockGray_Pal[] = INCBIN_U32("graphics/pokeblock/gray.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockBlack_Pal[] = INCBIN_U32("graphics/pokeblock/black.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockWhite_Pal[] = INCBIN_U32("graphics/pokeblock/white.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockGold_Pal[] = INCBIN_U32("graphics/pokeblock/gold.pal.gbapal.lz");
+POKEBLOCK_GRAPHICS const u32 gPokeblockFeedBg_Tilemap[] = INCBIN_U32("graphics/pokeblock/feeding_bg.bin.lz");
+
+#undef POKEBLOCK_GRAPHICS
 
 #define BAG_GRAPHICS __attribute__((section(".rodata.bag_graphics")))
 
@@ -16,12 +51,16 @@ BAG_GRAPHICS const u32 gBagPalette[] = INCBIN_U32("graphics/bag/bag.pal.gbapal.l
 
 #undef BAG_GRAPHICS
 
+#define BERRY_CHECK_GRAPHICS __attribute__((section(".rodata.berry_check_graphics")))
 #define BERRY_CHECK_PALETTE __attribute__((section(".rodata.berry_check_palette")))
+#define BERRY_TAG_GRAPHICS __attribute__((section(".rodata.berry_tag_graphics")))
 #define BERRY_GRAPHICS __attribute__((section(".rodata.berry_graphics")))
 
 #include "data/graphics/berries.h"
 
+#undef BERRY_CHECK_GRAPHICS
 #undef BERRY_CHECK_PALETTE
+#undef BERRY_TAG_GRAPHICS
 #undef BERRY_GRAPHICS
 
 #define BERRY_CRUSH_GRAPHICS __attribute__((section(".rodata.berry_crush_graphics")))
@@ -483,6 +522,12 @@ RAYQUAZA_SCENE_1_GFX const u32 gRaySceneDuoFight_KyogrePectoralFin_Gfx[] = INCBI
 RAYQUAZA_SCENE_1_GFX const u32 gRaySceneDuoFight_KyogreDorsalFin_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_1/kyogre_dorsal_fin.4bpp.lz");
 RAYQUAZA_SCENE_1_GFX const u32 gRaySceneDuoFight_Groudon_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_1/groudon.gbapal.lz");
 RAYQUAZA_SCENE_1_GFX const u32 gRaySceneDuoFight_Kyogre_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_1/kyogre.gbapal.lz");
+RAYQUAZA_SCENE_1_GFX const u32 gRaySceneDuoFight_Clouds_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_1/clouds.4bpp.lz");
+RAYQUAZA_SCENE_1_GFX const u32 gRaySceneDuoFight_Clouds_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_1/clouds.gbapal.lz");
+RAYQUAZA_SCENE_1_GFX const u32 gRaySceneDuoFight_Clouds1_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_1/clouds1.bin.lz");
+RAYQUAZA_SCENE_1_GFX const u32 gRaySceneDuoFight_Clouds2_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_1/clouds2.bin.lz");
+RAYQUAZA_SCENE_1_GFX const u8 gRaySceneDuoFight_Clouds3_Tilemap[] = INCBIN_U8("graphics/rayquaza_scene/scene_1/clouds3.bin.lz");
+static const u8 sRaySceneDuoFightCloudsPadding[3] RAYQUAZA_SCENE_1_GFX __attribute__((used)) = {0, 0, 0};
 
 #undef RAYQUAZA_SCENE_1_GFX
 
@@ -495,17 +540,122 @@ RAYQUAZA_SCENE_2_SMOKE_GFX const u32 gRaySceneTakesFlight_Smoke_Pal[] = INCBIN_U
 
 #undef RAYQUAZA_SCENE_2_SMOKE_GFX
 
+#define RAYQUAZA_SCENE_2_BG_GFX __attribute__((section(".rodata.rayquaza_scene_2_bg_graphics")))
+
+RAYQUAZA_SCENE_2_BG_GFX const u32 gRaySceneTakesFlight_Bg_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_2/bg.4bpp.lz");
+
+#undef RAYQUAZA_SCENE_2_BG_GFX
 
 // Rayquaza scene 2 shared palette and scene 3 sprites (RAY_ANIM_DESCENDS)
 #define RAYQUAZA_SCENE_DESCENDS_SHARED_PAL __attribute__((section(".rodata.rayquaza_scene_descends_shared_pal")))
+#define RAYQUAZA_SCENE_2_REMAINING_GFX __attribute__((section(".rodata.rayquaza_scene_2_remaining_graphics")))
 #define RAYQUAZA_SCENE_3_SPRITE_GFX __attribute__((section(".rodata.rayquaza_scene_3_sprite_graphics")))
+#define RAYQUAZA_SCENE_3_BG_GFX __attribute__((section(".rodata.rayquaza_scene_3_bg_graphics")))
 
 RAYQUAZA_SCENE_DESCENDS_SHARED_PAL const u32 gRaySceneTakesFlight_Rayquaza_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_2/rayquaza.gbapal.lz");
+RAYQUAZA_SCENE_2_REMAINING_GFX const u32 gRaySceneTakesFlight_Bg_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_2/bg.bin.lz");
+RAYQUAZA_SCENE_2_REMAINING_GFX const u32 gRaySceneTakesFlight_Rayquaza_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_2/rayquaza.8bpp.lz");
+RAYQUAZA_SCENE_2_REMAINING_GFX const u32 gRaySceneTakesFlight_Rayquaza_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_2/rayquaza.bin.lz");
 RAYQUAZA_SCENE_3_SPRITE_GFX const u32 gRaySceneDescends_Rayquaza_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_3/rayquaza.4bpp.lz");
 RAYQUAZA_SCENE_3_SPRITE_GFX const u32 gRaySceneDescends_RayquazaTail_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_3/rayquaza_tail.4bpp.lz");
+RAYQUAZA_SCENE_3_BG_GFX const u32 gRaySceneDescends_Bg_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_3/bg.4bpp.lz");
+RAYQUAZA_SCENE_3_BG_GFX const u32 gRaySceneDescends_Light_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_3/light.4bpp.lz");
+RAYQUAZA_SCENE_3_BG_GFX const u32 gRaySceneDescends_Bg_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_3/bg.gbapal.lz");
+RAYQUAZA_SCENE_3_BG_GFX const u32 gRaySceneDescends_Bg_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_3/bg.bin.lz");
+RAYQUAZA_SCENE_3_BG_GFX const u32 gRaySceneDescends_Light_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_3/light.bin.lz");
 
 #undef RAYQUAZA_SCENE_DESCENDS_SHARED_PAL
+#undef RAYQUAZA_SCENE_2_REMAINING_GFX
 #undef RAYQUAZA_SCENE_3_SPRITE_GFX
+#undef RAYQUAZA_SCENE_3_BG_GFX
+
+
+// Rayquaza scene 4 (RAY_ANIM_CHARGES) and scene 5 (RAY_ANIM_CHASES_AWAY).
+// Scene 4's compressed palette is 81 bytes followed by three ROM padding
+// bytes. Scene 5 ends on an unaligned 105-byte compressed palette, so both
+// use byte arrays where preserving the exact boundary matters.
+#define RAYQUAZA_SCENE_4_GFX __attribute__((section(".rodata.rayquaza_scene_4_graphics")))
+#define RAYQUAZA_SCENE_5_GFX __attribute__((section(".rodata.rayquaza_scene_5_graphics"), aligned(1)))
+
+RAYQUAZA_SCENE_4_GFX const u32 gRaySceneCharges_Bg_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_4/bg.4bpp.lz");
+RAYQUAZA_SCENE_4_GFX const u32 gRaySceneCharges_Bg_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_4/bg.bin.lz");
+RAYQUAZA_SCENE_4_GFX const u32 gRaySceneCharges_Streaks_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_4/streaks.4bpp.lz");
+RAYQUAZA_SCENE_4_GFX const u32 gRaySceneCharges_Streaks_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_4/streaks.bin.lz");
+RAYQUAZA_SCENE_4_GFX const u32 gRaySceneCharges_Rayquaza_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_4/rayquaza.4bpp.lz");
+RAYQUAZA_SCENE_4_GFX const u32 gRaySceneCharges_Rayquaza_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_4/rayquaza.bin.lz");
+RAYQUAZA_SCENE_4_GFX const u32 gRaySceneCharges_Orbs_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_4/orbs.bin.lz");
+RAYQUAZA_SCENE_4_GFX const u8 gRaySceneCharges_Bg_Pal[] = INCBIN_U8("graphics/rayquaza_scene/scene_4/bg.gbapal.lz");
+static const u8 sRaySceneChargesBgPalPadding[3] RAYQUAZA_SCENE_4_GFX __attribute__((used)) = {0, 0, 0};
+
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Groudon_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/groudon.4bpp.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_GroudonTail_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/groudon_tail.4bpp.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Kyogre_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/kyogre.4bpp.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Rayquaza_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/rayquaza.4bpp.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_RayquazaTail_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/rayquaza_tail.4bpp.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_KyogreSplash_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/kyogre_splash.4bpp.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Groudon_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/groudon.gbapal.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Kyogre_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/kyogre.gbapal.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Rayquaza_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/rayquaza.gbapal.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_KyogreSplash_Pal[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/kyogre_splash.gbapal.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Light_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/light.4bpp.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Ring_Gfx[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/ring.8bpp.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Light_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/light.bin.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Bg_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/bg.bin.lz");
+RAYQUAZA_SCENE_5_GFX const u32 gRaySceneChasesAway_Ring_Tilemap[] = INCBIN_U32("graphics/rayquaza_scene/scene_5/ring.bin.lz");
+RAYQUAZA_SCENE_5_GFX const u8 gRaySceneChasesAway_Bg_Pal[] = INCBIN_U8("graphics/rayquaza_scene/scene_5/bg.gbapal.lz");
+
+#undef RAYQUAZA_SCENE_4_GFX
+#undef RAYQUAZA_SCENE_5_GFX
+
+#define CABLE_CAR_BG_PALETTE __attribute__((section(".rodata.cable_car_bg_palette")))
+
+CABLE_CAR_BG_PALETTE const u16 gCableCarBg_Pal[] =
+{
+    0x0000, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x479F,
+    0x3F3D, 0x3AFB, 0x36B9, 0x3277, 0x2E36, 0x5DBC, 0x5DBC, 0x5DBC,
+    0x0000, 0x4BF7, 0x3373, 0x2710, 0x1A8D, 0x0DCA, 0x0147, 0x5DBC,
+    0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC, 0x5DBC,
+    0x0000, 0x7FBA, 0x7F97, 0x7F74, 0x7F51, 0x7F2E, 0x7F2C, 0x6F38,
+    0x62F7, 0x5296, 0x4213, 0x2D70, 0x210F, 0x5DBC, 0x5DBC, 0x5DBC,
+    0x0000, 0x7B38, 0x76F5, 0x76B3, 0x7270, 0x722E, 0x71EC, 0x3528,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+#undef CABLE_CAR_BG_PALETTE
+
+#define CABLE_CAR_BG_GFX __attribute__((section(".rodata.cable_car_bg_gfx"), aligned(1)))
+
+CABLE_CAR_BG_GFX const u8 gCableCarBg_Gfx[] = INCBIN_U8("graphics/cable_car/bg.4bpp.lz");
+
+#undef CABLE_CAR_BG_GFX
+
+#define CABLE_CAR_SPRITE_PALETTE __attribute__((section(".rodata.cable_car_sprite_palette")))
+
+CABLE_CAR_SPRITE_PALETTE const u16 gCableCar_Pal[] =
+{
+    0x0000, 0x7FFF, 0x6F74, 0x462C, 0x5AD1, 0x4610, 0x3D8C, 0x3528,
+    0x2CC5, 0x7B31, 0x76AC, 0x4BFF, 0x2B5D, 0x0ABA, 0x01B6, 0x0111,
+};
+
+#undef CABLE_CAR_SPRITE_PALETTE
+
+#define CABLE_CAR_SPRITE_GFX __attribute__((section(".rodata.cable_car_sprite_gfx"), aligned(1)))
+
+CABLE_CAR_SPRITE_GFX const u8 gCableCar_Gfx[] = INCBIN_U8("graphics/cable_car/cable_car.4bpp.lz");
+
+#undef CABLE_CAR_SPRITE_GFX
+
+#define CABLE_CAR_DOOR_GFX __attribute__((section(".rodata.cable_car_door_gfx")))
+
+CABLE_CAR_DOOR_GFX const u32 gCableCarDoor_Gfx[] = INCBIN_U32("graphics/cable_car/door.4bpp.lz");
+
+#undef CABLE_CAR_DOOR_GFX
+
+#define CABLE_CAR_CABLE_GFX __attribute__((section(".rodata.cable_car_cable_gfx")))
+
+CABLE_CAR_CABLE_GFX const u32 gCableCarCable_Gfx[] = INCBIN_U32("graphics/cable_car/cable.4bpp.lz");
+
+#undef CABLE_CAR_CABLE_GFX
 
 // Naming Screen assets retain the JP ROM's physical order, which differs from
 // the semantic declaration order in the US source.

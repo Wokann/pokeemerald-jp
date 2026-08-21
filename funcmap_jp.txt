@@ -12287,7 +12287,7 @@ intro.s
 0816d5cc Task_Scene2_End Task_Scene2_End
 0816d600 SpriteCB_Volbeat SpriteCB_Volbeat
 0816d7a4 SpriteCB_Torchic SpriteCB_Torchic
-0816d8cc sub_0816D8CC SpriteCB_Manectric
+0816d8cc SpriteCB_Manectric SpriteCB_Manectric
 0816d990 Task_Scene3_Load Task_Scene3_Load
 0816da48 Task_Scene3_SpinPokeball Task_Scene3_SpinPokeball
 0816dae0 Task_Scene3_WaitGroudon Task_Scene3_WaitGroudon
@@ -12330,8 +12330,8 @@ intro.s
 0816f5b4 CreateWaterDrop CreateWaterDrop
 0816f7b8 SpriteCB_PlayerOnBicycle SpriteCB_PlayerOnBicycle
 0816f894 SpriteCB_Flygon SpriteCB_Flygon
-0816f91c intro.s sub_0816F91C_jp
-0816fb3c sub_0816FB3C SpriteCB_GameFreakLogo
+0816f91c SpriteCB_LogoLetter SpriteCB_LogoLetter
+0816fb3c SpriteCB_GameFreakLogo SpriteCB_GameFreakLogo
 0816fbb0 CreateGameFreakLogoSprites CreateGameFreakLogoSprites
 0816fcd4 SpriteCB_FlygonSilhouette SpriteCB_FlygonSilhouette
 0816fe38 SpriteCB_RayquazaOrb SpriteCB_RayquazaOrb

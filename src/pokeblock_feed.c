@@ -1,4 +1,146 @@
 #include "global.h"
+#include "graphics.h"
+#include "pokeblock.h"
+#include "sprite.h"
+
+#define POKEBLOCK_FEED_DATA __attribute__((section(".rodata.pokeblock_feed_data")))
+
+void SpriteCB_ThrownPokeblock(struct Sprite *sprite);
+
+// - 1 excludes PBLOCK_CLR_NONE.
+static const u32 *const sPokeblocksPals[] POKEBLOCK_FEED_DATA =
+{
+    [PBLOCK_CLR_RED - 1]       = gPokeblockRed_Pal,
+    [PBLOCK_CLR_BLUE - 1]      = gPokeblockBlue_Pal,
+    [PBLOCK_CLR_PINK - 1]      = gPokeblockPink_Pal,
+    [PBLOCK_CLR_GREEN - 1]     = gPokeblockGreen_Pal,
+    [PBLOCK_CLR_YELLOW - 1]    = gPokeblockYellow_Pal,
+    [PBLOCK_CLR_PURPLE - 1]    = gPokeblockPurple_Pal,
+    [PBLOCK_CLR_INDIGO - 1]    = gPokeblockIndigo_Pal,
+    [PBLOCK_CLR_BROWN - 1]     = gPokeblockBrown_Pal,
+    [PBLOCK_CLR_LITE_BLUE - 1] = gPokeblockLiteBlue_Pal,
+    [PBLOCK_CLR_OLIVE - 1]     = gPokeblockOlive_Pal,
+    [PBLOCK_CLR_GRAY - 1]      = gPokeblockGray_Pal,
+    [PBLOCK_CLR_BLACK - 1]     = gPokeblockBlack_Pal,
+    [PBLOCK_CLR_WHITE - 1]     = gPokeblockWhite_Pal,
+    [PBLOCK_CLR_GOLD - 1]      = gPokeblockGold_Pal,
+};
+
+static const union AffineAnimCmd sAffineAnim_Still[] POKEBLOCK_FEED_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_MonNoFlip[] POKEBLOCK_FEED_DATA =
+{
+    sAffineAnim_Still,
+};
+
+static const union AffineAnimCmd sAffineAnim_PokeblockCase_ThrowFromVertical[] POKEBLOCK_FEED_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0, 0, -8, 1),
+    AFFINEANIMCMD_FRAME(0, 0, -8, 1),
+    AFFINEANIMCMD_FRAME(0, 0, -8, 1),
+    AFFINEANIMCMD_FRAME(0, 0, -8, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 0, 8),
+    AFFINEANIMCMD_FRAME(0, 0, 16, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 16, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 16, 1),
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd sAffineAnim_PokeblockCase_ThrowFromHorizontal[] POKEBLOCK_FEED_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(0, 0, 8, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 8, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 8, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 8, 1),
+    AFFINEANIMCMD_FRAME(0, 0, 0, 8),
+    AFFINEANIMCMD_FRAME(0, 0, -16, 1),
+    AFFINEANIMCMD_FRAME(0, 0, -16, 1),
+    AFFINEANIMCMD_FRAME(0, 0, -16, 1),
+    AFFINEANIMCMD_FRAME(-0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_END,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_PokeblockCase_Still[] POKEBLOCK_FEED_DATA =
+{
+    sAffineAnim_Still,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_PokeblockCase_ThrowFromVertical[] POKEBLOCK_FEED_DATA =
+{
+    sAffineAnim_PokeblockCase_ThrowFromVertical,
+};
+
+static const union AffineAnimCmd *const sAffineAnims_PokeblockCase_ThrowFromHorizontal[] POKEBLOCK_FEED_DATA =
+{
+    sAffineAnim_PokeblockCase_ThrowFromHorizontal,
+};
+
+static const struct OamData sOamData_Pokeblock POKEBLOCK_FEED_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_DOUBLE,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Pokeblock[] POKEBLOCK_FEED_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_Pokeblock[] POKEBLOCK_FEED_DATA =
+{
+    sAnim_Pokeblock,
+};
+
+static const union AffineAnimCmd sAffineAnim_Pokeblock[] POKEBLOCK_FEED_DATA =
+{
+    AFFINEANIMCMD_FRAME(0x100, 0x100, 0, 0),
+    AFFINEANIMCMD_FRAME(-8, -8, 0, 1),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_Pokeblock[] POKEBLOCK_FEED_DATA =
+{
+    sAffineAnim_Pokeblock,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_Pokeblock POKEBLOCK_FEED_DATA =
+{
+    .data = gPokeblock_Gfx,
+    .size = 0x20,
+    .tag = TAG_POKEBLOCK,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Pokeblock POKEBLOCK_FEED_DATA =
+{
+    .tileTag = TAG_POKEBLOCK,
+    .paletteTag = TAG_POKEBLOCK,
+    .oam = &sOamData_Pokeblock,
+    .anims = sAnims_Pokeblock,
+    .images = NULL,
+    .affineAnims = sAffineAnims_Pokeblock,
+    .callback = SpriteCB_ThrownPokeblock,
+};
+
+#undef POKEBLOCK_FEED_DATA
 
 __attribute__((naked)) void CB2_PokeblockFeed(void)
 {
@@ -416,7 +558,7 @@ __attribute__((naked)) void LoadMonAndSceneGfx(void)
         "	ldr r1, [r0]\n\t"
         "	b _08179E16\n\t"
         "	.align 2, 0\n\t"
-        "_08179D88: .4byte gUnknown_8592140\n\t"
+        "_08179D88: .4byte gPokeblockCase_SpriteSheet\n\t"
         "_08179D8C: .4byte gUnknown_203B9E4\n\t"
         "_08179D90:\n\t"
         "	ldr r0, _08179D9C\n\t"
@@ -425,7 +567,7 @@ __attribute__((naked)) void LoadMonAndSceneGfx(void)
         "	ldr r1, [r0]\n\t"
         "	b _08179E16\n\t"
         "	.align 2, 0\n\t"
-        "_08179D9C: .4byte gUnknown_8592148\n\t"
+        "_08179D9C: .4byte gPokeblockCase_SpritePal\n\t"
         "_08179DA0: .4byte gUnknown_203B9E4\n\t"
         "_08179DA4:\n\t"
         "	ldr r0, _08179DB0\n\t"
@@ -434,7 +576,7 @@ __attribute__((naked)) void LoadMonAndSceneGfx(void)
         "	ldr r1, [r0]\n\t"
         "	b _08179E16\n\t"
         "	.align 2, 0\n\t"
-        "_08179DB0: .4byte gUnknown_85CDB40\n\t"
+        "_08179DB0: .4byte sSpriteSheet_Pokeblock\n\t"
         "_08179DB4: .4byte gUnknown_203B9E4\n\t"
         "_08179DB8:\n\t"
         "	ldr r0, _08179DCC\n\t"
@@ -484,7 +626,7 @@ __attribute__((naked)) void LoadMonAndSceneGfx(void)
         "	strh r0, [r1]\n\t"
         "	b _08179E58\n\t"
         "	.align 2, 0\n\t"
-        "_08179E24: .4byte gUnknown_8D9BC90\n\t"
+        "_08179E24: .4byte gPokeblockFeedBg_Tilemap\n\t"
         "_08179E28: .4byte gUnknown_203B9E4\n\t"
         "_08179E2C: .4byte 0x0000107E\n\t"
         "_08179E30:\n\t"
@@ -579,7 +721,7 @@ __attribute__((naked)) void SetPokeblockSpritePal(void)
         "_08179ED4: .4byte gSaveBlock1Ptr\n\t"
         "_08179ED8: .4byte 0x00000848\n\t"
         "_08179EDC: .4byte gUnknown_203B9E8\n\t"
-        "_08179EE0: .4byte gUnknown_85CDA08\n\t"
+        "_08179EE0: .4byte sPokeblocksPals\n\t"
         "_08179EE4: .4byte 0x000039E2\n\t"
         ".syntax divided\n\t"
     );
@@ -1091,7 +1233,7 @@ __attribute__((naked)) void CreateMonSprite(void)
         "_0817A2DC: .4byte gSprites\n\t"
         "_0817A2E0: .4byte SpriteCallbackDummy + 1\n\t"
         "_0817A2E4: .4byte 0x00001053\n\t"
-        "_0817A2E8: .4byte gUnknown_85CDA50\n\t"
+        "_0817A2E8: .4byte sSpriteAffineAnimTable_MonNoFlip\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1207,7 +1349,7 @@ __attribute__((naked)) void CreatePokeblockCaseSpriteForFeeding(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0817A3A4: .4byte gSprites\n\t"
-        "_0817A3A8: .4byte gUnknown_85CDB04\n\t"
+        "_0817A3A8: .4byte sAffineAnims_PokeblockCase_Still\n\t"
         "_0817A3AC: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -1249,7 +1391,7 @@ __attribute__((naked)) void DoPokeblockCaseThrowEffect(void)
         "	b _0817A400\n\t"
         "	.align 2, 0\n\t"
         "_0817A3F0: .4byte gSprites\n\t"
-        "_0817A3F4: .4byte gUnknown_85CDB08\n\t"
+        "_0817A3F4: .4byte sAffineAnims_PokeblockCase_ThrowFromVertical\n\t"
         "_0817A3F8:\n\t"
         "	mov r0, r8\n\t"
         "	adds r0, #0x10\n\t"
@@ -1269,7 +1411,7 @@ __attribute__((naked)) void DoPokeblockCaseThrowEffect(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817A41C: .4byte gUnknown_85CDB0C\n\t"
+        "_0817A41C: .4byte sAffineAnims_PokeblockCase_ThrowFromHorizontal\n\t"
         "_0817A420: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -1299,14 +1441,14 @@ __attribute__((naked)) void CreatePokeblockSprite(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817A44C: .4byte gUnknown_85CDB48\n\t"
+        "_0817A44C: .4byte sSpriteTemplate_Pokeblock\n\t"
         "_0817A450: .4byte gSprites\n\t"
         "_0817A454: .4byte 0x0000FFF4\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void SpriteCB_ThrownPokeblock(void)
+__attribute__((naked)) void SpriteCB_ThrownPokeblock(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2157,4 +2299,3 @@ __attribute__((naked)) void sub_0817AA20(void)
         ".syntax divided\n\t"
     );
 }
-

@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.data_b2d_mid33_pokeblock_flavor_prefix, "a", %progbits
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -156,65 +156,7 @@ sClockHandCoords: @ 0x8591D1C
 	.byte 0xFB, 0xE8, 0xFC, 0xE8, 0xFC, 0xE8, 0xFC, 0xE8, 0xFC, 0xE7, 0xFD, 0xE7
 	.byte 0xFE, 0xE7, 0xFE, 0xE8, 0xFE, 0xE8, 0xFF, 0xE7, 0xFF, 0xE7, 0x00, 0xE7
 
-	.globl gUnknown_8591FEC
-gUnknown_8591FEC: @ 0x8591FEC
-	.incbin "baserom_jp.gba", 0x591fec, 0x80
-
-	.globl gUnknown_859206C
-gUnknown_859206C: @ 0x859206C
-	.incbin "baserom_jp.gba", 0x59206c, 0xc
-
-	.globl gPokeblockNames
-gPokeblockNames: @ 0x8592078
-	.incbin "baserom_jp.gba", 0x592078, 0x3c
-
-	.globl gUnknown_85920B4
-gUnknown_85920B4: @ 0x85920B4
-	.incbin "baserom_jp.gba", 0x5920b4, 0x30
-
-	.globl gUnknown_85920E4
-gUnknown_85920E4: @ 0x85920E4
-	.incbin "baserom_jp.gba", 0x5920e4, 0x3
-
-	.globl gUnknown_85920E7
-gUnknown_85920E7: @ 0x85920E7
-	.incbin "baserom_jp.gba", 0x5920e7, 0x2
-
-	.globl gUnknown_85920E9
-gUnknown_85920E9: @ 0x85920E9
-	.incbin "baserom_jp.gba", 0x5920e9, 0x2
-
-	.globl gUnknown_85920EB
-gUnknown_85920EB: @ 0x85920EB
-	.incbin "baserom_jp.gba", 0x5920eb, 0x5
-
-	.globl gUnknown_85920F0
-gUnknown_85920F0: @ 0x85920F0
-	.incbin "baserom_jp.gba", 0x5920f0, 0x4c
-
-	.globl gUnknown_859213C
-gUnknown_859213C: @ 0x859213C
-	.incbin "baserom_jp.gba", 0x59213c, 0x4
-
-	.globl gUnknown_8592140
-gUnknown_8592140: @ 0x8592140
-	.incbin "baserom_jp.gba", 0x592140, 0x8
-
-	.globl gUnknown_8592148
-gUnknown_8592148: @ 0x8592148
-	.incbin "baserom_jp.gba", 0x592148, 0x8
-
-	.globl gUnknown_8592150
-gUnknown_8592150: @ 0x8592150
-	.incbin "baserom_jp.gba", 0x592150, 0x18
-
-	.globl gUnknown_8592168
-gUnknown_8592168: @ 0x8592168
-	.incbin "baserom_jp.gba", 0x592168, 0x4
-
-	.globl gUnknown_859216C
-gUnknown_859216C: @ 0x859216C
-	.incbin "baserom_jp.gba", 0x59216c, 0x28
+	.section .rodata.data_b2d_mid33_pokeblock_case_favorite_suffix, "a", %progbits
 
 	.globl gUnknown_8592194
 gUnknown_8592194: @ 0x8592194

@@ -3071,7 +3071,7 @@ extern const u32 gTrainerBackPicPalette_Leaf[];
 
 // pokeblock
 extern const u32 gMenuPokeblock_Gfx[];
-extern const u32 gMenuPokeblock_Pal[];
+extern const u8 gMenuPokeblock_Pal[];
 extern const u32 gMenuPokeblock_Tilemap[];
 extern const u32 gMenuPokeblockDevice_Gfx[];
 extern const u32 gMenuPokeblockDevice_Pal[];
@@ -3307,7 +3307,7 @@ extern const u16 gPokedexSearchMenu_Pal[];
 extern const u32 gBerryCheck_Gfx[];
 extern const u32 gBerryCheck_Pal[];
 extern const u32 gBerryTag_Gfx[];
-extern const u32 gBerryTag_Tilemap[];
+extern const u8 gBerryTag_Tilemap[];
 
 // rayquaza scene gfx
 extern const u32 gRaySceneDuoFight_Groudon_Gfx[];
@@ -3322,7 +3322,7 @@ extern const u32 gRaySceneDuoFight_Clouds_Gfx[];
 extern const u32 gRaySceneDuoFight_Clouds_Pal[];
 extern const u32 gRaySceneDuoFight_Clouds1_Tilemap[];
 extern const u32 gRaySceneDuoFight_Clouds2_Tilemap[];
-extern const u32 gRaySceneDuoFight_Clouds3_Tilemap[];
+extern const u8 gRaySceneDuoFight_Clouds3_Tilemap[];
 extern const u32 gRaySceneTakesFlight_Smoke_Gfx[];
 extern const u32 gRaySceneTakesFlight_Smoke_Pal[];
 extern const u32 gRaySceneTakesFlight_Rayquaza_Pal[];
@@ -3344,7 +3344,7 @@ extern const u32 gRaySceneCharges_Orbs_Tilemap[];
 extern const u32 gRaySceneCharges_Rayquaza_Tilemap[];
 extern const u32 gRaySceneCharges_Streaks_Tilemap[];
 extern const u32 gRaySceneCharges_Bg_Tilemap[];
-extern const u32 gRaySceneCharges_Bg_Pal[];
+extern const u8 gRaySceneCharges_Bg_Pal[];
 extern const u32 gRaySceneChasesAway_Groudon_Gfx[];
 extern const u32 gRaySceneChasesAway_GroudonTail_Gfx[];
 extern const u32 gRaySceneChasesAway_Kyogre_Gfx[];
@@ -3358,7 +3358,7 @@ extern const u32 gRaySceneChasesAway_KyogreSplash_Pal[];
 extern const u32 gRaySceneChasesAway_Bg_Tilemap[];
 extern const u32 gRaySceneChasesAway_Light_Tilemap[];
 extern const u32 gRaySceneChasesAway_Ring_Tilemap[];
-extern const u32 gRaySceneChasesAway_Bg_Pal[];
+extern const u8 gRaySceneChasesAway_Bg_Pal[];
 extern const u32 gRaySceneChasesAway_Light_Gfx[];
 extern const u32 gRaySceneChasesAway_Ring_Gfx[];
 
@@ -4902,9 +4902,9 @@ extern const u32 gWallpaperTilemap_Horizontal[];
 extern const u16 gWallpaperPalettes_Horizontal[][16];
 
 // Cable Car
-extern const u32 gCableCarBg_Gfx[];
+extern const u8 gCableCarBg_Gfx[];
 extern const u16 gCableCarBg_Pal[];
-extern const u32 gCableCar_Gfx[];
+extern const u8 gCableCar_Gfx[];
 extern const u32 gCableCarDoor_Gfx[];
 extern const u32 gCableCarCable_Gfx[];
 extern const u16 gCableCar_Pal[];

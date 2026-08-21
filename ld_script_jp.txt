@@ -9552,7 +9552,16 @@ SECTIONS {
         src/data/text/region_texts38.o(.rodata.gText_ReelTimeHelp);
         data/data_b2d_mid38.o(.rodata);
         src/data/text/region_texts33.o(.rodata);
-        data/data_b2d_mid33.o(.rodata);
+        data/data_b2d_mid33.o(.rodata.data_b2d_mid33_pokeblock_flavor_prefix);
+        src/pokeblock.o(.rodata.pokeblock_flavor_data);
+        src/pokeblock.o(.rodata.pokeblock_menu_bg_data);
+        src/pokeblock.o(.rodata.pokeblock_name_table_data);
+        src/pokeblock.o(.rodata.pokeblock_menu_action_data);
+        src/pokeblock.o(.rodata.pokeblock_case_anim_data);
+        src/pokeblock.o(.rodata.pokeblock_case_affine_anim_data);
+        src/pokeblock.o(.rodata.pokeblock_case_graphics_data);
+        src/pokeblock.o(.rodata.pokeblock_case_favorite_data);
+        data/data_b2d_mid33.o(.rodata.data_b2d_mid33_pokeblock_case_favorite_suffix);
         src/data/text/region_texts63.o(.rodata);
         src/field_specials.o(.rodata.field_specials_data_early);
         src/data/text/region_texts39.o(.rodata);
@@ -9608,7 +9617,8 @@ SECTIONS {
         src/data/text/region_texts66.o(.rodata);
         data/data_b2d.o(.rodata.mid75);
         src/data/text/region_texts78.o(.rodata);
-        data/data_b2d.o(.rodata.mid76);
+        data/data_b2d.o(.rodata.mid76_pokeblock_name_text_prefix);
+        src/pokeblock.o(.rodata.pokeblock_name_text_data);
         src/data/text/region_texts79.o(.rodata);
         src/data/text/region_texts80.o(.rodata);
         src/data/text/region_texts81.o(.rodata);
@@ -9658,6 +9668,7 @@ SECTIONS {
         data/data_b2d_mid98.o(.rodata.mid98_prefix);
         src/save_failed_screen.o(.rodata.save_failed_screen_data);
         data/data_b2d_mid98.o(.rodata.mid98_between);
+        src/pokeblock_feed.o(.rodata.pokeblock_feed_data);
         src/strings.o(.rodata.strings_clear_save);
         src/clear_save_data_screen.o(.rodata.clear_save_data_screen_data);
         data/data_b2d_mid98.o(.rodata.mid98_suffix);
@@ -9774,17 +9785,29 @@ SECTIONS {
         data/data_rest2c.o(.rodata.data_rest2c_before_bag_graphics);
         src/graphics.o(.rodata.bag_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_bag_graphics);
+        src/graphics.o(.rodata.pokeblock_graphics);
+        src/graphics.o(.rodata.berry_check_graphics);
         src/graphics.o(.rodata.berry_check_palette);
-        data/data_rest2c.o(.rodata.data_rest2c_before_berry_graphics);
+        src/graphics.o(.rodata.berry_tag_graphics);
         src/graphics.o(.rodata.berry_graphics);
         src/graphics.o(.rodata.rayquaza_scene_1_graphics);
-        data/data_rest2c.o(.rodata.data_rest2c_after_rayquaza);
         src/graphics.o(.rodata.rayquaza_scene_2_smoke_graphics);
-        data/data_rest2c.o(.rodata.data_rest2c_after_takes_flight);
+        src/graphics.o(.rodata.rayquaza_scene_2_bg_graphics);
         src/graphics.o(.rodata.rayquaza_scene_descends_shared_pal);
-        data/data_rest2c.o(.rodata.data_rest2c_after_descends_palette);
+        src/graphics.o(.rodata.rayquaza_scene_2_remaining_graphics);
         src/graphics.o(.rodata.rayquaza_scene_3_sprite_graphics);
-        data/data_rest2c.o(.rodata.data_rest2c_after_descends);
+        src/graphics.o(.rodata.rayquaza_scene_3_bg_graphics);
+        src/graphics.o(.rodata.rayquaza_scene_4_graphics);
+        src/graphics.o(.rodata.rayquaza_scene_5_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_after_chases_away);
+        src/graphics.o(.rodata.cable_car_bg_palette);
+        src/graphics.o(.rodata.cable_car_sprite_palette);
+        src/graphics.o(.rodata.cable_car_bg_gfx);
+        data/data_rest2c.o(.rodata.data_rest2c_after_cable_car_bg_palette);
+        src/graphics.o(.rodata.cable_car_sprite_gfx);
+        src/graphics.o(.rodata.cable_car_door_gfx);
+        src/graphics.o(.rodata.cable_car_cable_gfx);
+        data/data_rest2c.o(.rodata.data_rest2c_after_cable_car_sprite_gfx);
     } =0
     /* DWARF debug sections.
     Symbols in the DWARF debugging sections are relative to the beginning
