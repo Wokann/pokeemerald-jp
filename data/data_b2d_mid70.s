@@ -834,18 +834,4 @@ gUnknown_85C79D8: @ 0x85C79D8
 gUnknown_85C7A14: @ 0x85C7A14
 	.incbin "baserom_jp.gba", 0x5c7a14, 0x18
 
-	.globl sLotteryPrizes
-sLotteryPrizes: @ 0x85C7A2C
-	.hword 0x0045, 0x00B6, 0x0019, 0x0001
-
-	.globl sDiplomaPalettes
-sDiplomaPalettes: @ 0x85C7A34
-	.incbin "graphics/diploma/sDiplomaPalettes.bin"
-
-	.globl sDiplomaTilemap
-sDiplomaTilemap: @ 0x85C7A74
-	.incbin "graphics/diploma/sDiplomaTilemap.bin"
-
-	.globl sDiplomaTiles
-sDiplomaTiles: @ 0x85C81B0
-	.incbin "graphics/diploma/sDiplomaTiles.bin"
+	.section .rodata.data_b2d_mid70_after_diploma_assets

@@ -9572,6 +9572,9 @@ SECTIONS {
         data/data_b2d_mid69.o(.rodata);
         src/data/text/region_texts71.o(.rodata);
         data/data_b2d_mid70.o(.rodata);
+        src/lottery_corner.o(.rodata.lottery_static_data);
+        src/diploma.o(.rodata.diploma_assets);
+        data/data_b2d_mid70.o(.rodata.data_b2d_mid70_after_diploma_assets);
         src/data/text/region_texts73.o(.rodata);
         src/diploma.o(.rodata.diploma);
         src/data/text/region_texts74.o(.rodata);

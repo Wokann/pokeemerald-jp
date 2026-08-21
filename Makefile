@@ -201,6 +201,7 @@ $(C_BUILDDIR)/battle_tv.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-
 $(C_BUILDDIR)/tv.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/bard_music.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/pokedex_area_region_map.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
+$(C_BUILDDIR)/diploma.o: CC1 = $(PREPROC) -i src/diploma.c charmap.txt | $(CC)
 $(C_BUILDDIR)/pokedex_area_region_map.o: CC1 = $(PREPROC) -i src/pokedex_area_region_map.c charmap.txt | $(CC)
 $(C_BUILDDIR)/braille.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/libc/libc_rest_1b3.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
@@ -577,6 +578,12 @@ $(C_BUILDDIR)/data/pokemon_storage_system.o: src/data/pokemon_storage_system.c s
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokemon_storage_system.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokemon_storage_system.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/pokemon_storage_system.gen.s
+
+$(C_BUILDDIR)/diploma.o: src/diploma.c charmap.txt \
+	graphics/diploma/national.gbapal \
+	graphics/diploma/hoenn.gbapal \
+	graphics/diploma/tilemap.bin.lz \
+	graphics/diploma/tiles.4bpp.lz
 
 $(C_BUILDDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)

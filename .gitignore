@@ -16,6 +16,10 @@ baserom_jp.gba
 *.lz
 !graphics/pokemon/**/*.lz
 !graphics/misc/*.lz
+!graphics/diploma/national.gbapal
+!graphics/diploma/hoenn.gbapal
+!graphics/diploma/tilemap.bin.lz
+!graphics/diploma/tiles.4bpp.lz
 !graphics/trainers/**/*.lz
 !graphics/battle_frontier/*.lz
 !graphics/unknown_lz/*.lz

@@ -17,9 +17,21 @@
 #include "constants/rgb.h"
 #include "gba/macro.h"
 
-extern const u16 sDiplomaPalettes[][16];
-extern const u32 sDiplomaTilemap[];
-extern const u32 sDiplomaTiles[];
+#define DIPLOMA_ASSETS __attribute__((section(".rodata.diploma_assets")))
+
+DIPLOMA_ASSETS
+static const u16 sDiplomaPalettes[][16] =
+{
+    INCBIN_U16("graphics/diploma/national.gbapal"),
+    INCBIN_U16("graphics/diploma/hoenn.gbapal"),
+};
+
+DIPLOMA_ASSETS
+static const u32 sDiplomaTilemap[] = INCBIN_U32("graphics/diploma/tilemap.bin.lz");
+
+DIPLOMA_ASSETS
+static const u32 sDiplomaTiles[] = INCBIN_U32("graphics/diploma/tiles.4bpp.lz");
+
 extern const u16 gStandardMenuPalette[];
 extern u8 *sDiplomaTilemapPtr;
 extern const u8 gText_Diploma_1[];

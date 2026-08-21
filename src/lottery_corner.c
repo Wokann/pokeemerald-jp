@@ -8,9 +8,19 @@
 #include "text.h"
 #include "pokemon_storage_system.h"
 
+#define LOTTERY_STATIC_DATA __attribute__((section(".rodata.lottery_static_data")))
+
 extern u16 sWinNumberDigit;
 extern u16 sOtIdDigit;
-extern const u16 sLotteryPrizes[4];
+
+LOTTERY_STATIC_DATA
+static const u16 sLotteryPrizes[] =
+{
+    ITEM_PP_UP,
+    ITEM_EXP_SHARE,
+    ITEM_MAX_REVIVE,
+    ITEM_MASTER_BALL,
+};
 
 static u8 GetMatchingDigits(u16, u16);
 
