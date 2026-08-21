@@ -29,6 +29,18 @@
 
 #define TAG_NEEDLE 0x2000
 
+#define POKEDEX_CRY_SCREEN_DATA __attribute__((section(".rodata.pokedex_cry_screen_data")))
+#define WAVEFORM_OFFSET_ROW(offset) \
+    (offset) + 0x0000, (offset) + 0x0004, (offset) + 0x0008, (offset) + 0x000C, (offset) + 0x0010, (offset) + 0x0014, (offset) + 0x0018, (offset) + 0x001C, \
+    (offset) + 0x0400, (offset) + 0x0404, (offset) + 0x0408, (offset) + 0x040C, (offset) + 0x0410, (offset) + 0x0414, (offset) + 0x0418, (offset) + 0x041C, \
+    (offset) + 0x0800, (offset) + 0x0804, (offset) + 0x0808, (offset) + 0x080C, (offset) + 0x0810, (offset) + 0x0814, (offset) + 0x0818, (offset) + 0x081C, \
+    (offset) + 0x0C00, (offset) + 0x0C04, (offset) + 0x0C08, (offset) + 0x0C0C, (offset) + 0x0C10, (offset) + 0x0C14, (offset) + 0x0C18, (offset) + 0x0C1C, \
+    (offset) + 0x1000, (offset) + 0x1004, (offset) + 0x1008, (offset) + 0x100C, (offset) + 0x1010, (offset) + 0x1014, (offset) + 0x1018, (offset) + 0x101C, \
+    (offset) + 0x1400, (offset) + 0x1404, (offset) + 0x1408, (offset) + 0x140C, (offset) + 0x1410, (offset) + 0x1414, (offset) + 0x1418, (offset) + 0x141C, \
+    (offset) + 0x1800, (offset) + 0x1804, (offset) + 0x1808, (offset) + 0x180C, (offset) + 0x1810, (offset) + 0x1814, (offset) + 0x1818, (offset) + 0x181C, \
+    (offset) + 0x1C00, (offset) + 0x1C04, (offset) + 0x1C08, (offset) + 0x1C0C, (offset) + 0x1C10, (offset) + 0x1C14, (offset) + 0x1C18, (offset) + 0x1C1C, \
+    (offset) + 0x2000, (offset) + 0x2004, (offset) + 0x2008, (offset) + 0x200C, (offset) + 0x2010, (offset) + 0x2014, (offset) + 0x2018, (offset) + 0x201C
+
 struct PokedexCryMeterNeedle {
     s8 rotation;
     s8 targetRotation;
@@ -67,16 +79,91 @@ extern EWRAM_DATA struct PokedexCryScreen *sDexCryScreen;
 extern EWRAM_DATA u8 *sCryWaveformWindowTiledata;
 extern EWRAM_DATA struct PokedexCryMeterNeedle *sCryMeterNeedle;
 
-extern const u16 sCryMeter_Pal[];
-extern const u8 sCryMeter_Gfx[];
-extern const u16 sWaveformOffsets[][72];
-extern const u16 sCryScreenBg_Pal[];
-extern const u8 sCryScreenBg_Gfx[];
-extern const u8 sWaveformTileDataNybbleMasks[];
-extern const u8 sWaveformColor[][16];
-extern const struct SpriteTemplate sCryMeterNeedleSpriteTemplate;
-extern const struct SpriteSheet sCryMeterNeedleSpriteSheets[];
-extern const struct SpritePalette sCryMeterNeedleSpritePalettes[];
+static const u16 ALIGNED(4) sCryMeterNeedle_Pal[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U16("graphics/pokedex/cry_meter_needle.gbapal");
+static const u8 sCryMeterNeedle_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U8("graphics/pokedex/cry_meter_needle.4bpp");
+static const u16 sCryMeter_Tilemap[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U16("graphics/pokedex/cry_meter_map.bin"); // Unused
+static const u16 sCryMeter_Pal[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U16("graphics/pokedex/cry_meter.gbapal");
+static const u8 sCryMeter_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U8("graphics/pokedex/cry_meter.4bpp.lz");
+
+static const u16 sWaveformOffsets[][72] POKEDEX_CRY_SCREEN_DATA =
+{
+    { WAVEFORM_OFFSET_ROW(0x0000) },
+    { WAVEFORM_OFFSET_ROW(0x0000) },
+    { WAVEFORM_OFFSET_ROW(0x0001) },
+    { WAVEFORM_OFFSET_ROW(0x0001) },
+    { WAVEFORM_OFFSET_ROW(0x0002) },
+    { WAVEFORM_OFFSET_ROW(0x0002) },
+    { WAVEFORM_OFFSET_ROW(0x0003) },
+    { WAVEFORM_OFFSET_ROW(0x0003) },
+};
+
+static const u16 sCryScreenBg_Pal[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U16("graphics/pokedex/cry_screen_bg.gbapal");
+static const u8 sCryScreenBg_Gfx[] POKEDEX_CRY_SCREEN_DATA = INCBIN_U8("graphics/pokedex/cry_screen_bg.4bpp");
+
+static const u8 sWaveformTileDataNybbleMasks[] POKEDEX_CRY_SCREEN_DATA = {0xF0, 0x0F};
+
+// Waveform is blue in the middle (8) grading to white at peaks (15).
+// Split into two arrays for the two vertical slice halves.
+static const u8 sWaveformColor[][16] POKEDEX_CRY_SCREEN_DATA =
+{
+    {
+        15,      14,      13,      12,      11,      10,       9,       8,
+         8,       9,      10,      11,      12,      13,      14,      15,
+    }, {
+        15 << 4, 14 << 4, 13 << 4, 12 << 4, 11 << 4, 10 << 4,  9 << 4,  8 << 4,
+         8 << 4,  9 << 4, 10 << 4, 11 << 4, 12 << 4, 13 << 4, 14 << 4, 15 << 4,
+    }
+};
+
+static const union AnimCmd sSpriteAnim_CryMeterNeedle[] POKEDEX_CRY_SCREEN_DATA =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sSpriteAnimTable_CryMeterNeedle[] POKEDEX_CRY_SCREEN_DATA =
+{
+    sSpriteAnim_CryMeterNeedle
+};
+
+static const struct OamData sOamData_CryMeterNeedle POKEDEX_CRY_SCREEN_DATA =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+static const struct SpriteTemplate sCryMeterNeedleSpriteTemplate POKEDEX_CRY_SCREEN_DATA =
+{
+    .tileTag = TAG_NEEDLE,
+    .paletteTag = TAG_NEEDLE,
+    .oam = &sOamData_CryMeterNeedle,
+    .anims = sSpriteAnimTable_CryMeterNeedle,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_CryMeterNeedle
+};
+
+static const struct SpriteSheet sCryMeterNeedleSpriteSheets[] POKEDEX_CRY_SCREEN_DATA =
+{
+    {sCryMeterNeedle_Gfx, sizeof(sCryMeterNeedle_Gfx), TAG_NEEDLE},
+    {}
+};
+
+static const struct SpritePalette sCryMeterNeedleSpritePalettes[] POKEDEX_CRY_SCREEN_DATA =
+{
+    {sCryMeterNeedle_Pal, TAG_NEEDLE},
+    {}
+};
+
+#undef WAVEFORM_OFFSET_ROW
 
 
 bool8 LoadCryWaveformWindow(struct CryScreenWindow *window, u8 windowId)

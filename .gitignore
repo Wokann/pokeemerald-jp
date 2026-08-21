@@ -20,6 +20,12 @@ baserom_jp.gba
 !graphics/diploma/hoenn.gbapal
 !graphics/diploma/tilemap.bin.lz
 !graphics/diploma/tiles.4bpp.lz
+!graphics/pokedex/cry_meter_needle.4bpp
+!graphics/pokedex/cry_meter_needle.gbapal
+!graphics/pokedex/cry_meter.gbapal
+!graphics/pokedex/cry_meter.4bpp.lz
+!graphics/pokedex/cry_screen_bg.gbapal
+!graphics/pokedex/cry_screen_bg.4bpp
 !graphics/trainers/**/*.lz
 !graphics/battle_frontier/*.lz
 !graphics/unknown_lz/*.lz
