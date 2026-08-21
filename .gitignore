@@ -30,6 +30,11 @@ baserom_jp.gba
 !graphics/pokedex/cry_meter.4bpp.lz
 !graphics/pokedex/cry_screen_bg.gbapal
 !graphics/pokedex/cry_screen_bg.4bpp
+!graphics/pokedex/bg_hoenn.gbapal
+!graphics/pokedex/search_results_bg.gbapal
+!graphics/pokedex/bg_national.gbapal
+!graphics/pokedex/menu.4bpp
+!graphics/pokedex/interface.4bpp
 !graphics/interface/ui_learn_move.4bpp
 !graphics/interface/ui_learn_move.gbapal
 !graphics/intro/copyright.gbapal

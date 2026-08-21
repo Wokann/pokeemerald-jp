@@ -11,7 +11,7 @@
 
 	.globl gUnknown_853741E
 gUnknown_853741E: @ 0x853741E
-	.incbin "baserom_jp.gba", 0x53741e, 0x4
+	.incbin "baserom_jp.gba", 0x53741e, 0x2
 
 	.section .rodata.data_b2d_mid15_pokedex_unused_lz
 

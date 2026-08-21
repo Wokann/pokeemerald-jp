@@ -461,7 +461,15 @@ $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/su
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_summary_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon_summary_screen.gen.s
-$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin $(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
+$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h \
+	graphics/summary_screen/effect_battle.bin graphics/summary_screen/effect_contest.bin graphics/summary_screen/effect_cancel.bin \
+	graphics/pokedex/start_menu_main.bin.lz graphics/pokedex/start_menu_search_results.bin.lz \
+	graphics/pokedex/list.bin.lz graphics/pokedex/list_underlay.bin.lz \
+	graphics/pokedex/info_screen.bin.lz graphics/pokedex/cry_screen.bin.lz \
+	graphics/pokedex/size_screen.bin.lz graphics/pokedex/screen_select_bar_main.bin.lz \
+	graphics/pokedex/screen_select_bar_submenu.bin.lz graphics/pokedex/menu.4bpp.lz \
+	graphics/pokedex/interface.4bpp.lz \
+	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/graphics.gen.s | $(AS) $(ASFLAGS) -o $@ -
@@ -588,10 +596,7 @@ $(C_BUILDDIR)/data/slot_machine.o: src/data/slot_machine.c src/data/slot_machine
 	@rm -f $(C_BUILDDIR)/data/slot_machine.gen.s
 
 $(C_BUILDDIR)/data/pokedex.o: src/data/pokedex.c src/data/pokedex.h src/data/pokemon/pokedex_orders.h \
-	graphics/pokedex/info_screen.bin.lz graphics/pokedex/cry_screen.bin.lz \
-	graphics/pokedex/size_screen.bin.lz graphics/pokedex/screen_select_bar_main.bin.lz \
-	graphics/pokedex/screen_select_bar_submenu.bin.lz \
-	$(wildcard graphics/pokedex/* data/pokedex/jp/*)
+	$(wildcard data/pokedex/jp/*)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/pokedex.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokedex.gen.s | $(AS) $(ASFLAGS) -o $@ -

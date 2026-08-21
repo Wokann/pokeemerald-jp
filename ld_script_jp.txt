@@ -9439,10 +9439,10 @@ SECTIONS {
         data/data_b2d_mid26.o(.rodata);
         src/option_menu.o(.rodata.option_menu_static_data);
         data/data_b2d_mid15.o(.rodata.option_menu_suffix);
-        src/data/pokedex.o(.rodata.pokedex_list_main_prefix);
-        src/data/pokedex.o(.rodata.pokedex_screen_tilemaps);
+        src/graphics.o(.rodata.pokedex_graphics_prefix);
+        src/graphics.o(.rodata.pokedex_graphics_screen_tilemaps);
         data/data_b2d_mid15.o(.rodata.data_b2d_mid15_pokedex_unused_lz);
-        src/data/pokedex.o(.rodata.pokedex_list_main_tiles);
+        src/graphics.o(.rodata.pokedex_graphics_menu_interface);
         src/data/pokedex.o(.rodata.pokedex_orders);
         data/data_b2d_mid15.o(.rodata.data_b2d_mid15_suffix);
         src/data/text/region_texts54.o(.rodata);
