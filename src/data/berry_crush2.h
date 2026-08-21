@@ -9,8 +9,8 @@
 
 // Berry-crush sprite/table data (0x82C7A08..0x82C7C40)
 
-extern const u8 gBerryCrush_Crusher_Gfx[]; // packed LZ streams, 0x82C6104 (asm)
-extern const u16 gBerryCrush_Crusher_Pal[]; // packed palettes, 0x82C5F84 (asm)
+extern const u8 gBerryCrush_Crusher_Gfx[]; // packed LZ streams, 0x82C6104 (src/graphics.c)
+extern const u16 gBerryCrush_Crusher_Pal[]; // packed palettes, 0x82C5F84 (src/graphics.c)
 extern const struct OamData gUnknown_84FD010[]; // 0x84FD010 OamData table (asm)
 extern const struct OamData gUnknown_84FD040[]; // 0x84FD040 OamData table (asm)
 extern void SpriteCB_Impact(struct Sprite *sprite); // src/berry_crush.c

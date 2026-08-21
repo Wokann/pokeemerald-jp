@@ -24,6 +24,13 @@ BAG_GRAPHICS const u32 gBagPalette[] = INCBIN_U32("graphics/bag/bag.pal.gbapal.l
 #undef BERRY_CHECK_PALETTE
 #undef BERRY_GRAPHICS
 
+#define BERRY_CRUSH_GRAPHICS __attribute__((section(".rodata.berry_crush_graphics")))
+
+BERRY_CRUSH_GRAPHICS const u16 gBerryCrush_Crusher_Pal[] = INCBIN_U16("graphics/berry_crush/gBerryCrush_Crusher_Pal.bin");
+BERRY_CRUSH_GRAPHICS const u32 gBerryCrush_Crusher_Gfx[] = INCBIN_U32("graphics/berry_crush/gBerryCrush_Crusher_Gfx.bin");
+
+#undef BERRY_CRUSH_GRAPHICS
+
 
 #define JP_CONTEST_GFX __attribute__((section(".rodata.jp_contest_graphics")))
 

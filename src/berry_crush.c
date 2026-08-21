@@ -256,9 +256,13 @@ void RunOrScheduleCommand(u16, u8, u8 *);
 extern void SetPaletteFadeArgs(u8 *, bool8, u32, s8, u8, u8, u16);
 extern void GetBerryFromBag(void);
 extern const struct BgTemplate sBgTemplates[4];
-extern const u8 sCrusherTop_Tilemap[];
-extern const u8 sContainerCap_Tilemap[];
-extern const u8 sBg_Tilemap[];
+
+#define BERRY_CRUSH_RESOURCE_DATA __attribute__((section(".rodata.berry_crush_resources")))
+
+BERRY_CRUSH_RESOURCE_DATA const u8 sCrusherTop_Tilemap[] = INCBIN_U8("graphics/berry_crush/sCrusherTop_Tilemap.bin");
+BERRY_CRUSH_RESOURCE_DATA const u8 sContainerCap_Tilemap[] = INCBIN_U8("graphics/misc/sContainerCap_Tilemap.bin");
+BERRY_CRUSH_RESOURCE_DATA const u8 sBg_Tilemap[] = INCBIN_U8("graphics/misc/sBg_Tilemap.bin");
+
 extern const u16 sPlayerBerrySpriteTags[MAX_RFU_PLAYERS];
 extern const struct SpriteTemplate sSpriteTemplate_PlayerBerry;
 extern const s8 sImpactCoords[3][2];
@@ -268,7 +272,10 @@ extern const u8 sTextColorTable[][3];
 extern const struct BerryCrushPlayerCoords sPlayerCoords[];
 extern const u8 sPlayerIdToPosId[][MAX_RFU_PLAYERS];
 extern const struct WindowTemplate sWindowTemplates_PlayerNames[];
-extern const u32 sPlayerNameWindowGfx[];
+BERRY_CRUSH_RESOURCE_DATA const u32 sPlayerNameWindowGfx[] = INCBIN_U32("graphics/naming_screen/sPlayerNameWindowGfx.bin");
+
+#undef BERRY_CRUSH_RESOURCE_DATA
+
 extern const struct CompressedSpriteSheet sSpriteSheets[];
 extern const struct SpritePalette sSpritePals[];
 extern const struct SpriteTemplate sSpriteTemplate_CrusherBase;
