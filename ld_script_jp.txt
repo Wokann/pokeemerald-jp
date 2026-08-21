@@ -9300,7 +9300,7 @@ SECTIONS {
         src/data/berry_crush3.o(.rodata);
         src/data/berry_crush4.o(.rodata);
         src/data/dodrio1.o(.rodata);
-        data/data_b_mid2b.o(.rodata);
+        src/dodrio_berry_picking.o(.rodata.dodrio_graphics);
         src/data/dodrio2.o(.rodata);
         src/data/pokejump1.o(.rodata);
         src/data/pokejump2.o(.rodata);

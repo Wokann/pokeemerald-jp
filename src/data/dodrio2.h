@@ -9,10 +9,11 @@
 // Dodrio sprite/rank data (0x82CEA6C..0x82CECF0)
 
 extern const u8 gUnknown_85CCA7C[];        // JP text region (asm)
-extern const u16 sDodrioNormalPal[];       // 0x82CB6BC (asm)
-extern const u16 sDodrioShinyPal[];        // 0x82CB6DC (asm)
-extern const u8 gUnknown_82CB6FC[];        // 0x82CB6FC: status pal + berry pal (asm)
-extern const u32 sBerry_Gfx[];             // 0x82CB73C (asm); cloud pal is its last 0x20 bytes
+extern const u16 sDodrioNormalPal[];       // 0x82CB6BC (Dodrio graphics section)
+extern const u16 sDodrioShinyPal[];        // 0x82CB6DC (Dodrio graphics section)
+extern const u16 sStatus_Pal[];             // 0x82CB6FC
+extern const u16 sBerries_Pal[];            // 0x82CB71C
+extern const u32 sBerry_Gfx[];              // 0x82CB73C; cloud pal is its last 0x20 bytes
 
 void LoadGfx(void);
 void ShowNames(void);
@@ -201,7 +202,7 @@ const struct SpritePalette sDodrioShinySpritePalette =
 };
 const struct SpritePalette sStatusPalette =
 {
-    .data = (const u16 *)gUnknown_82CB6FC,
+    .data = sStatus_Pal,
     .tag = 2,
 };
 
@@ -223,10 +224,10 @@ const u8 gUnknown_82CEB94[] =
     0xD4, 0x3E, 0x3F, 0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0xFB, 0x00, 0x00
 };
 
-// 0x82CEBA0 - berry palette data is the second half of gUnknown_82CB6FC.
+// 0x82CEBA0 - berry palette data is the second half of the former aggregate.
 const struct SpritePalette sBerryPalette =
 {
-    .data = (const u16 *)(gUnknown_82CB6FC + 0x20),
+    .data = sBerries_Pal,
     .tag = 3,
 };
 
@@ -271,11 +272,13 @@ const s16 sCloudPositions[NUM_CLOUDS][2] =
 const u8 gUnknown_82CEBEA[] = { 0x00, 0x00 };
 
 // 0x82CEBEC - cloud palette data is the last 0x20 bytes of sBerry_Gfx.
+#define sCloud_Pal ((const u16 *)((const u8 *)sBerry_Gfx + 0x1B4))
 const struct SpritePalette sCloudPalette =
 {
-    .data = (const u16 *)((const u8 *)sBerry_Gfx + 0x1B4),
+    .data = sCloud_Pal,
     .tag = 6,
 };
+#undef sCloud_Pal
 
 // 0x82CEBF4
 const struct SpriteTemplate sCloudSpriteTemplate =

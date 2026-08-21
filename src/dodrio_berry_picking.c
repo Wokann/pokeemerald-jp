@@ -5197,3 +5197,39 @@ __attribute__((naked)) void sub_080295A4(void)
         ".syntax divided\n\t"
     );
 }
+
+#define DODRIO_GRAPHICS_DATA __attribute__((section(".rodata.dodrio_graphics")))
+
+// 0x82CB67C-0x82CEA6C: Dodrio Berry Picking graphics and palettes.
+// Keep this in the data-layer slot between dodrio1 and dodrio2 so the JP ROM
+// layout remains stable while matching the upstream module ownership.
+DODRIO_GRAPHICS_DATA const u8 sBg_Pal[] = INCBIN_U8("graphics/misc/sBg_Pal.bin");
+DODRIO_GRAPHICS_DATA const u16 sDodrioNormalPal[] = INCBIN_U16("graphics/dodrio/sDodrioNormalPal.bin");
+DODRIO_GRAPHICS_DATA const u16 sDodrioShinyPal[] = INCBIN_U16("graphics/dodrio/sDodrioShinyPal.bin");
+
+// These two palettes were one anonymous 0x40-byte aggregate in the raw data.
+DODRIO_GRAPHICS_DATA const u16 sStatus_Pal[] =
+{
+    0x7FFC, 0x2108, 0x5FFF, 0x3BBF, 0x031F, 0x6B18, 0x5A94, 0x4A10,
+    0x631F, 0x463F, 0x18DF, 0x0000, 0x0000, 0x0000, 0x0000, 0x00DF,
+};
+
+DODRIO_GRAPHICS_DATA const u16 sBerries_Pal[] =
+{
+    0x7FFC, 0x2108, 0x7273, 0x5DCE, 0x6BD1, 0x574C, 0x1F5F, 0x1EBE,
+    0x77BD, 0x6A40, 0x1A1C, 0x5E60, 0x465F, 0x7F80, 0x2D9A, 0x7FA0,
+};
+
+// The final 0x20 bytes of this JP resource remain the cloud palette, matching
+// the existing cloud palette descriptor's internal offset.
+DODRIO_GRAPHICS_DATA const u32 sBerry_Gfx[] = INCBIN_U32("graphics/misc/sBerry_Gfx.bin");
+DODRIO_GRAPHICS_DATA const u8 sBg_Gfx[] = INCBIN_U8("graphics/misc/sBg_Gfx.bin");
+DODRIO_GRAPHICS_DATA const u8 sTreeBorder_Gfx[] = INCBIN_U8("graphics/misc/sTreeBorder_Gfx.bin");
+DODRIO_GRAPHICS_DATA const u32 sStatus_Gfx[] = INCBIN_U32("graphics/battle_anims/sStatus_Gfx.bin");
+DODRIO_GRAPHICS_DATA const u32 sCloud_Gfx[] = INCBIN_U32("graphics/misc/sCloud_Gfx.bin");
+DODRIO_GRAPHICS_DATA const u32 sDodrio_Gfx[] = INCBIN_U32("graphics/dodrio/sDodrio_Gfx.bin");
+DODRIO_GRAPHICS_DATA const u16 sDodrioBg_Tilemap[] = INCBIN_U16("graphics/dodrio/sDodrioBg_Tilemap.bin");
+DODRIO_GRAPHICS_DATA const u16 sTreeBorderRight_Tilemap[] = INCBIN_U16("graphics/misc/sTreeBorderRight_Tilemap.bin");
+DODRIO_GRAPHICS_DATA const u16 sTreeBorderLeft_Tilemap[] = INCBIN_U16("graphics/misc/sTreeBorderLeft_Tilemap.bin");
+
+#undef DODRIO_GRAPHICS_DATA
