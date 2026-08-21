@@ -2,8 +2,19 @@ AS := tools/binutils/bin/arm-none-eabi-as
 LD := tools/binutils/bin/arm-none-eabi-ld
 OBJCOPY := tools/binutils/bin/arm-none-eabi-objcopy
 SHA1SUM := sha1sum -c
-GBAFIX := tools/gbafix/gbafix
-PREPROC := tools/preproc/preproc
+TOOLS_DIR := tools
+BIN2C := $(TOOLS_DIR)/bin2c/bin2c
+GBAFIX := $(TOOLS_DIR)/gbafix/gbafix
+GFX := $(TOOLS_DIR)/gbagfx/gbagfx
+JSONPROC := $(TOOLS_DIR)/jsonproc/jsonproc
+MAPJSON := $(TOOLS_DIR)/mapjson/mapjson
+MID := $(TOOLS_DIR)/mid2agb/mid2agb
+PREPROC := $(TOOLS_DIR)/preproc/preproc
+RAMSCRGEN := $(TOOLS_DIR)/ramscrgen/ramscrgen
+RSFONT := $(TOOLS_DIR)/rsfont/rsfont
+SCANINC := $(TOOLS_DIR)/scaninc/scaninc
+WAV2AGB := $(TOOLS_DIR)/wav2agb/wav2agb
+AIF2PCM := $(TOOLS_DIR)/aif2pcm/aif2pcm
 CPP := cpp
 CC := tools/agbcc/bin/agbcc
 CPPFLAGS := -iquote include -Wno-trigraphs \
@@ -24,6 +35,9 @@ CFLAGS := -mthumb-interwork -O2 -fhex-asm
 # The per-file CFLAGS rules below would otherwise become the default goal;
 # keep `make` (no target) building the ROM like the US pokeemerald Makefile.
 .DEFAULT_GOAL := all
+
+# Build host tools through the same dedicated makefile chain as pokeemerald.
+include make_tools.mk
 
 # Build flavor.  Keep the current decompilation build under
 # build/pokeemerald-jp/; alternate builds (e.g. BUILD_NAME=pokeemerald-jp-rev10)
@@ -332,8 +346,12 @@ all: $(ROM)
 compare: $(ROM)
 	$(SHA1SUM) rom_jp.sha1
 
-clean:
+clean: clean-tools
 	rm -rf build $(ROM) $(ELF)
+
+# All build artifacts wait for the host-tool chain, so a fresh checkout can
+# safely use `make -j` without racing the C/asset rules against tool builds.
+$(OBJFILE) $(ELF) $(ROM): | tools
 
 $(ROM): $(ELF)
 	$(OBJCOPY) -O binary $< $@
@@ -425,7 +443,7 @@ $(C_BUILDDIR)/mystery_event_msg.o: src/mystery_event_msg.c charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mystery_event_msg.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/mystery_event_msg.gen.s
 graphics/summary_screen/%.png.4bpp: graphics/summary_screen/%.png
-	tools/gbagfx/gbagfx $< $@
+	$(GFX) $< $@
 $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/summary_screen/a_button.png.4bpp graphics/summary_screen/b_button.png.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_summary_screen.gen.s
