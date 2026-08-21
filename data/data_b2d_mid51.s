@@ -8,6 +8,7 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
+	.section .rodata.battle_interface_before_healthbox
 
 	.globl gUnknown_82FC0FE
 gUnknown_82FC0FE: @ 0x82FC0FE
@@ -83,23 +84,10 @@ gUnknown_82FCB00: @ 0x82FCB00
 
 	.globl gUnknown_82FCB20
 gUnknown_82FCB20: @ 0x82FCB20
-	.incbin "baserom_jp.gba", 0x2fcb20, 0x18
+	.incbin "baserom_jp.gba", 0x2fcb20, 0x10
 
-	.globl gUnknown_82FCB38
-gUnknown_82FCB38: @ 0x82FCB38
-	.incbin "baserom_jp.gba", 0x2fcb38, 0x30
-
-	.globl gUnknown_82FCB68
-gUnknown_82FCB68: @ 0x82FCB68
-	.incbin "baserom_jp.gba", 0x2fcb68, 0x30
-
-	.globl gUnknown_82FCB98
-gUnknown_82FCB98: @ 0x82FCB98
-	.incbin "baserom_jp.gba", 0x2fcb98, 0x20
-
-	.globl gUnknown_82FCBB8
-gUnknown_82FCBB8: @ 0x82FCBB8
-	.incbin "baserom_jp.gba", 0x2fcbb8, 0xcc
+	.section .rodata.battle_interface_after_healthbar
+	.incbin "baserom_jp.gba", 0x2fcc18, 0x6c
 
 	.globl gUnknown_82FCC84
 gUnknown_82FCC84: @ 0x82FCC84

@@ -9378,7 +9378,10 @@ SECTIONS {
         src/data/text/region_texts47.o(.rodata);
         data/data_b2d_mid47.o(.rodata);
         src/data/text/region_texts51.o(.rodata);
-        data/data_b2d_mid51.o(.rodata);
+        data/data_b2d_mid51.o(.rodata.battle_interface_before_healthbox);
+        src/battle_interface.o(.rodata.battle_interface_healthbox);
+        src/battle_interface.o(.rodata.battle_interface_healthbar);
+        data/data_b2d_mid51.o(.rodata.battle_interface_after_healthbar);
         src/data/trade.o(.rodata.trade_menu_resources);
         src/data/text/region_texts48.o(.rodata);
         data/data_b2d.o(.rodata.mid48);

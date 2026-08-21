@@ -198,15 +198,139 @@ enum
     PAL_STATUS_BRN
 };
 
-// JP const data lives in data.s (battle_interface region 0x082FCB30-0x082FCE0C).
-extern const struct SpriteTemplate gUnknown_82FCB38[2];
-#define sHealthboxPlayerSpriteTemplates gUnknown_82FCB38
-extern const struct SpriteTemplate gUnknown_82FCB68[2];
-#define sHealthboxOpponentSpriteTemplates gUnknown_82FCB68
-extern const struct SpriteTemplate gUnknown_82FCB98[1];
-#define sHealthboxSafariSpriteTemplate gUnknown_82FCB98
-extern const struct SpriteTemplate gUnknown_82FCBB8[4];
-#define sHealthbarSpriteTemplates gUnknown_82FCBB8
+#define BATTLE_INTERFACE_HEALTHBOX_DATA __attribute__((section(".rodata.battle_interface_healthbox")))
+#define BATTLE_INTERFACE_HEALTHBAR_DATA __attribute__((section(".rodata.battle_interface_healthbar")))
+
+static const struct OamData sOamData_64x32 BATTLE_INTERFACE_HEALTHBOX_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sHealthboxPlayerSpriteTemplates[2] BATTLE_INTERFACE_HEALTHBOX_DATA =
+{
+    {
+        .tileTag = TAG_HEALTHBOX_PLAYER1_TILE,
+        .paletteTag = TAG_HEALTHBOX_PAL,
+        .oam = &sOamData_64x32,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_HEALTHBOX_PLAYER2_TILE,
+        .paletteTag = TAG_HEALTHBOX_PAL,
+        .oam = &sOamData_64x32,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+};
+
+static const struct SpriteTemplate sHealthboxOpponentSpriteTemplates[2] BATTLE_INTERFACE_HEALTHBOX_DATA =
+{
+    {
+        .tileTag = TAG_HEALTHBOX_OPPONENT1_TILE,
+        .paletteTag = TAG_HEALTHBOX_PAL,
+        .oam = &sOamData_64x32,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    {
+        .tileTag = TAG_HEALTHBOX_OPPONENT2_TILE,
+        .paletteTag = TAG_HEALTHBOX_PAL,
+        .oam = &sOamData_64x32,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+};
+
+static const struct SpriteTemplate sHealthboxSafariSpriteTemplate BATTLE_INTERFACE_HEALTHBOX_DATA =
+{
+    .tileTag = TAG_HEALTHBOX_SAFARI_TILE,
+    .paletteTag = TAG_HEALTHBOX_PAL,
+    .oam = &sOamData_64x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct OamData sOamData_Healthbar BATTLE_INTERFACE_HEALTHBOX_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sHealthbarSpriteTemplates[MAX_BATTLERS_COUNT] BATTLE_INTERFACE_HEALTHBAR_DATA =
+{
+    {
+        .tileTag = TAG_HEALTHBAR_PLAYER1_TILE,
+        .paletteTag = TAG_HEALTHBAR_PAL,
+        .oam = &sOamData_Healthbar,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_HealthBar,
+    },
+    {
+        .tileTag = TAG_HEALTHBAR_OPPONENT1_TILE,
+        .paletteTag = TAG_HEALTHBAR_PAL,
+        .oam = &sOamData_Healthbar,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_HealthBar,
+    },
+    {
+        .tileTag = TAG_HEALTHBAR_PLAYER2_TILE,
+        .paletteTag = TAG_HEALTHBAR_PAL,
+        .oam = &sOamData_Healthbar,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_HealthBar,
+    },
+    {
+        .tileTag = TAG_HEALTHBAR_OPPONENT2_TILE,
+        .paletteTag = TAG_HEALTHBAR_PAL,
+        .oam = &sOamData_Healthbar,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_HealthBar,
+    },
+};
+
+// The remaining JP battle-interface data starts at 0x082FCC18 in data_b2d_mid51.s.
 extern const struct SubspriteTable gUnknown_82FCC84[2];
 #define sHealthBar_SubspriteTables gUnknown_82FCC84
 extern const struct SubspriteTable gUnknown_82FCCBC[1];
