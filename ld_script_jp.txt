@@ -9450,7 +9450,6 @@ SECTIONS {
         src/graphics.o(.rodata.graphics_naming_screen_jp_palettes);
         src/graphics.o(.rodata.graphics_naming_screen_jp_resources);
         src/data/text/region_texts59.o(.rodata);
-        data/data_b2d_mid59.o(.rodata.mid59_pre_page_swap_anim);
         src/naming_screen.o(.rodata.naming_screen_mid59_pre_page_swap_anim);
         src/naming_screen.o(.rodata.naming_screen_mid59_page_swap_anim);
         src/naming_screen.o(.rodata.naming_screen_mid59_cursor_anim_offsets);
@@ -9463,10 +9462,11 @@ SECTIONS {
         src/naming_screen.o(.rodata.naming_screen_mid59_icon_funcs);
         src/naming_screen.o(.rodata.naming_screen_mid59_key_handlers);
         src/naming_screen.o(.rodata.naming_screen_mid59_input_funcs);
-        data/data_b2d_mid59.o(.rodata.mid59_between_input_and_draw_text);
+        src/naming_screen.o(.rodata.naming_screen_mid59_dpad_movement);
         src/naming_screen.o(.rodata.naming_screen_mid59_draw_text);
         src/naming_screen.o(.rodata.naming_screen_mid59_draw_gender);
-        data/data_b2d_mid59.o(.rodata.mid59_post_draw_gender);
+        src/naming_screen.o(.rodata.naming_screen_mid59_gender_colors);
+        src/naming_screen.o(.rodata.naming_screen_mid59_character_transform);
         src/naming_screen.o(.rodata.naming_screen_mid59_ui_layout);
         src/naming_screen.o(.rodata.naming_screen_mid59_sprite_layout);
         src/naming_screen.o(.rodata.naming_screen_mid59_sprite_resources);

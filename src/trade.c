@@ -8691,7 +8691,7 @@ static void Task_AnimateWirelessSignal(u8 taskId)
 //     data[0]++;
 //     gUnknown_2031F40->wirelessWinLeft -= 5;
 //     gUnknown_2031F40->wirelessWinRight += 5;
-//     if (gUnknown_2031F40->wirelessWinLeft > 0x4F)
+//     if (gUnknown_2031F40->wirelessWinLeft <= 0x4F)
 //         DestroyTask(taskId);
 // }
 __attribute__((naked)) void Task_OpenCenterWhiteColumn(u8 taskId)

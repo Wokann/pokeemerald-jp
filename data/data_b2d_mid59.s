@@ -1,5 +1,4 @@
 .include "sound/MPlayDef.s"
-	.section .rodata.mid59_pre_page_swap_anim
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -9,48 +8,9 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gUnknown_85659E7
-gUnknown_85659E7: @ 0x85659E7
-	.incbin "baserom_jp.gba", 0x5659e7, 0x15
-
 	.section .rodata.mid59_between_page_swap_anim_and_button_key_roles
 
 	.section .rodata.mid59_between_page_swap_sprite_and_icon
-
-	.section .rodata.mid59_between_input_and_draw_text
-
-	.globl gUnknown_8565AC0
-gUnknown_8565AC0: @ 0x8565AC0
-	.incbin "baserom_jp.gba", 0x565ac0, 0xa
-
-	.globl gUnknown_8565ACA
-gUnknown_8565ACA: @ 0x8565ACA
-	.incbin "baserom_jp.gba", 0x565aca, 0xa
-
-	.globl gUnknown_8565AD4
-gUnknown_8565AD4: @ 0x8565AD4
-	.incbin "baserom_jp.gba", 0x565ad4, 0x8
-
-	.globl gUnknown_8565ADC
-gUnknown_8565ADC: @ 0x8565ADC
-	.incbin "baserom_jp.gba", 0x565adc, 0x8
-
-	.section .rodata.mid59_post_draw_gender
-
-	.globl gUnknown_8565B00
-gUnknown_8565B00: @ 0x8565B00
-	.incbin "baserom_jp.gba", 0x565b00, 0x6
-
-	.globl gUnknown_8565B06
-gUnknown_8565B06: @ 0x8565B06
-	.incbin "baserom_jp.gba", 0x565B06, 0xBB
-	.globl gUnknown_8565BC1
-gUnknown_8565BC1: @ 0x8565BC1
-	.incbin "baserom_jp.gba", 0x565bc1, 0xba
-
-	.globl gUnknown_8565C7B
-gUnknown_8565C7B: @ 0x8565C7B
-	.incbin "baserom_jp.gba", 0x565c7b, 0x5
 
 	.section .rodata.mid59_post_sprite_resources
 

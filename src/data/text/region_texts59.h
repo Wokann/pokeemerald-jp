@@ -27,3 +27,6 @@ const u8 gText_NamingScreenKeyboard_LatinUpper1[] = _("ABCDEFGHIJKLMNOPQRS");
 const u8 gText_NamingScreenKeyboard_LatinUpper2[] = _("TUVWXYZ　0123456789　");
 const u8 gText_NamingScreenKeyboard_LatinLower1[] = _("abcdefghijklmnopqrs");
 const u8 gText_NamingScreenKeyboard_LatinLower2[] = _("tuvwxyz　.·…“”‘’/♂♀　");
+
+// Retained legacy Naming Screen text; the JP baserom has no direct pointer to it.
+const u8 gJPText_NamingScreenTransferredToPC[] = _("{STR_VAR_1}は　パソコンへ　てんそうされた！");
