@@ -726,6 +726,12 @@ gUnknown_8D8EBD8: @ 0x8D8EBD8
 	.globl gBattleAnimBackgroundImageMuddyWater_Pal
 gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50
 	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0, 0xD8
+
+	@ Referenced by the status-summary sprite-sheet descriptor in battle_interface.c.
+	@ Keep the asset itself in this mixed legacy block until its wider graphics
+	@ ownership can be migrated without perturbing the surrounding ROM layout.
+	.globl gBattleInterface_BallStatusBarGfx
+	.set gBattleInterface_BallStatusBarGfx, gBattleAnimBackgroundImageMuddyWater_Pal + 0x54
 	.globl gMonIcon_Egg
 gMonIcon_Egg: @ 0x8D8FC28
 	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0xD8, 0x400

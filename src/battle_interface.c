@@ -200,6 +200,7 @@ enum
 
 #define BATTLE_INTERFACE_HEALTHBOX_DATA __attribute__((section(".rodata.battle_interface_healthbox")))
 #define BATTLE_INTERFACE_HEALTHBAR_DATA __attribute__((section(".rodata.battle_interface_healthbar")))
+#define BATTLE_INTERFACE_SUBSPRITES_DATA __attribute__((section(".rodata.battle_interface_subsprites"), aligned(1)))
 
 static const struct OamData sOamData_64x32 BATTLE_INTERFACE_HEALTHBOX_DATA =
 {
@@ -330,32 +331,240 @@ static const struct SpriteTemplate sHealthbarSpriteTemplates[MAX_BATTLERS_COUNT]
     },
 };
 
-// The remaining JP battle-interface data starts at 0x082FCC18 in data_b2d_mid51.s.
-extern const struct SubspriteTable gUnknown_82FCC84[2];
-#define sHealthBar_SubspriteTables gUnknown_82FCC84
-extern const struct SubspriteTable gUnknown_82FCCBC[1];
-#define sStatusSummaryBar_SubspriteTable_Enter gUnknown_82FCCBC
-extern const struct SubspriteTable gUnknown_82FCCC4[1];
-#define sStatusSummaryBar_SubspriteTable_Exit gUnknown_82FCCC4
-extern const struct CompressedSpriteSheet gUnknown_82FCD2C;
-#define sStatusSummaryBarSpriteSheet gUnknown_82FCD2C
-extern const struct SpritePalette gUnknown_82FCD34;
-#define sStatusSummaryBarSpritePal gUnknown_82FCD34
-extern const struct SpritePalette gUnknown_82FCD3C;
-#define sStatusSummaryBallsSpritePal gUnknown_82FCD3C
-extern const struct SpriteSheet gUnknown_82FCD44;
-#define sStatusSummaryBallsSpriteSheet gUnknown_82FCD44
-extern const struct SpriteTemplate gUnknown_82FCD5C[2];
-#define sStatusSummaryBarSpriteTemplates gUnknown_82FCD5C
-extern const struct SpriteTemplate gUnknown_82FCD8C[2];
-#define sStatusSummaryBallsSpriteTemplates gUnknown_82FCD8C
+// JP battle-interface subsprite/status-summary data at 0x082FCC18-0x082FCE0C.
+static const struct Subsprite sUnused_Subsprites_0[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {.x = -16, .y = 0, .shape = SPRITE_SHAPE(64x32), .size = SPRITE_SIZE(64x32), .tileOffset = 0, .priority = 1},
+    {.x = 48, .y = 0, .shape = SPRITE_SHAPE(32x32), .size = SPRITE_SIZE(32x32), .tileOffset = 32, .priority = 1},
+    {.x = -16, .y = 32, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 48, .priority = 1},
+    {.x = 16, .y = 32, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 52, .priority = 1},
+    {.x = 48, .y = 32, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 56, .priority = 1},
+};
+
+static const struct Subsprite sUnused_Subsprites_2[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {.x = -16, .y = 0, .shape = SPRITE_SHAPE(64x32), .size = SPRITE_SIZE(64x32), .tileOffset = 64, .priority = 1},
+    {.x = 48, .y = 0, .shape = SPRITE_SHAPE(32x32), .size = SPRITE_SIZE(32x32), .tileOffset = 96, .priority = 1},
+    {.x = -16, .y = 32, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 112, .priority = 1},
+    {.x = 16, .y = 32, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 116, .priority = 1},
+    {.x = 48, .y = 32, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 120, .priority = 1},
+};
+
+static const struct Subsprite sUnused_Subsprites_1[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {.x = -16, .y = 0, .shape = SPRITE_SHAPE(64x32), .size = SPRITE_SIZE(64x32), .tileOffset = 0, .priority = 1},
+    {.x = 48, .y = 0, .shape = SPRITE_SHAPE(32x32), .size = SPRITE_SIZE(32x32), .tileOffset = 32, .priority = 1},
+};
+
+static const struct Subsprite sUnused_Subsprites_3[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {.x = -16, .y = 0, .shape = SPRITE_SHAPE(64x32), .size = SPRITE_SIZE(64x32), .tileOffset = 0, .priority = 1},
+    {.x = 48, .y = 0, .shape = SPRITE_SHAPE(32x32), .size = SPRITE_SIZE(32x32), .tileOffset = 32, .priority = 1},
+};
+
+static const struct Subsprite sHealthBar_Subsprites_Player[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {.x = -16, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 0, .priority = 1},
+    {.x = 16, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 4, .priority = 1},
+};
+
+static const struct Subsprite sHealthBar_Subsprites_Opponent[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {.x = -16, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 0, .priority = 1},
+    {.x = 16, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 4, .priority = 1},
+    {.x = -32, .y = 0, .shape = SPRITE_SHAPE(8x8), .size = SPRITE_SIZE(8x8), .tileOffset = 8, .priority = 1},
+};
+
+static const struct SubspriteTable sUnused_SubspriteTable[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {ARRAY_COUNT(sUnused_Subsprites_0), sUnused_Subsprites_0},
+    {ARRAY_COUNT(sUnused_Subsprites_1), sUnused_Subsprites_1},
+    {ARRAY_COUNT(sUnused_Subsprites_2), sUnused_Subsprites_2},
+    {ARRAY_COUNT(sUnused_Subsprites_3), sUnused_Subsprites_3},
+};
+
+static const struct SubspriteTable sHealthBar_SubspriteTables[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    [B_SIDE_PLAYER] = {ARRAY_COUNT(sHealthBar_Subsprites_Player), sHealthBar_Subsprites_Player},
+    [B_SIDE_OPPONENT] = {ARRAY_COUNT(sHealthBar_Subsprites_Opponent), sHealthBar_Subsprites_Opponent},
+};
+
+static const struct Subsprite sStatusSummaryBar_Subsprites_Enter[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {.x = 32 * -3, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 0, .priority = 1},
+    {.x = 32 * -2, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 4, .priority = 1},
+    {.x = 32 * -1, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 8, .priority = 1},
+    {.x = 0, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 12, .priority = 1},
+};
+
+static const struct Subsprite sStatusSummaryBar_Subsprites_Exit[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {.x = 32 * -3, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 0, .priority = 1},
+    {.x = 32 * -2, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 4, .priority = 1},
+    {.x = 32 * -1, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 8, .priority = 1},
+    {.x = 32 * 0, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 8, .priority = 1},
+    {.x = 32 * 1, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 8, .priority = 1},
+    {.x = 32 * 2, .y = 0, .shape = SPRITE_SHAPE(32x8), .size = SPRITE_SIZE(32x8), .tileOffset = 12, .priority = 1},
+};
+
+static const struct SubspriteTable sStatusSummaryBar_SubspriteTable_Enter[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {ARRAY_COUNT(sStatusSummaryBar_Subsprites_Enter), sStatusSummaryBar_Subsprites_Enter},
+};
+
+static const struct SubspriteTable sStatusSummaryBar_SubspriteTable_Exit[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {ARRAY_COUNT(sStatusSummaryBar_Subsprites_Exit), sStatusSummaryBar_Subsprites_Exit},
+};
+
+static const u8 sUnusedStatusSummary[] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    0x00, 0x00, 0x00, 0x00, 0x33, 0x33, 0x33, 0x33, 0x44, 0x44, 0x44, 0x44, 0x22, 0x22, 0x22, 0x22,
+    0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x77,
+    0x00, 0x00, 0x00, 0x00, 0x33, 0x33, 0x33, 0x33, 0x44, 0x44, 0x44, 0x44, 0x22, 0x22, 0x22, 0x22,
+    0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x17, 0x77, 0x77, 0x17, 0x77, 0x71, 0x77, 0x77, 0x71, 0x77,
+    0x00, 0x00, 0x00, 0x00, 0x33, 0x33, 0x33, 0x33, 0x44, 0x44, 0x44, 0x44, 0x22, 0x22, 0x22, 0x22,
+    0x77, 0x77, 0x77, 0x77, 0x77, 0x77, 0x11, 0x71, 0x77, 0x77, 0x71, 0x71, 0x77, 0x77, 0x11, 0x71,
+};
+
+static const struct CompressedSpriteSheet sStatusSummaryBarSpriteSheet BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    gBattleInterface_BallStatusBarGfx, 0x200, TAG_STATUS_SUMMARY_BAR_TILE,
+};
+
+static const struct SpritePalette sStatusSummaryBarSpritePal BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    gBattleInterface_BallStatusBarPal, TAG_STATUS_SUMMARY_BAR_PAL,
+};
+
+static const struct SpritePalette sStatusSummaryBallsSpritePal BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    gBattleInterface_BallDisplayPal, TAG_STATUS_SUMMARY_BALLS_PAL,
+};
+
+static const struct SpriteSheet sStatusSummaryBallsSpriteSheet BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    &gHealthboxElementsGfxTable[HEALTHBOX_GFX_STATUS_BALL], 0x80, TAG_STATUS_SUMMARY_BALLS_TILE,
+};
+
+static const struct OamData sOamData_Unused64x32 BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sOamData_StatusSummaryBalls BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sStatusSummaryBarSpriteTemplates[2] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {
+        .tileTag = TAG_STATUS_SUMMARY_BAR_TILE,
+        .paletteTag = TAG_STATUS_SUMMARY_BAR_PAL,
+        .oam = &sOamData_64x32,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_StatusSummaryBar_Enter,
+    },
+    {
+        .tileTag = TAG_STATUS_SUMMARY_BAR_TILE,
+        .paletteTag = TAG_STATUS_SUMMARY_BAR_PAL,
+        .oam = &sOamData_64x32,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_StatusSummaryBar_Enter,
+    },
+};
+
+static const struct SpriteTemplate sStatusSummaryBallsSpriteTemplates[2] BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {
+        .tileTag = TAG_STATUS_SUMMARY_BALLS_TILE,
+        .paletteTag = TAG_STATUS_SUMMARY_BALLS_PAL,
+        .oam = &sOamData_StatusSummaryBalls,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_StatusSummaryBalls_Enter,
+    },
+    {
+        .tileTag = TAG_STATUS_SUMMARY_BALLS_TILE,
+        .paletteTag = TAG_STATUS_SUMMARY_BALLS_PAL,
+        .oam = &sOamData_StatusSummaryBalls,
+        .anims = gDummySpriteAnimTable,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCB_StatusSummaryBalls_Enter,
+    },
+};
+
+struct StatusSummaryTextData
+{
+    u8 lv[0x1E];
+    u8 emptyWhiteGray[0x14];
+    u8 emptyWhiteTransparent[0x14];
+    u16 statusIconColors[5];
+};
+
+// This target aligns each C symbol to four bytes, while the JP text fields do
+// not. Keep them in one object to preserve their byte-exact original offsets.
+const struct StatusSummaryTextData gStatusSummaryTextData BATTLE_INTERFACE_SUBSPRITES_DATA =
+{
+    {
+        0xFC, 0x01, 0x01, 0xFC, 0x02, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    },
+    {
+        0xFC, 0x01, 0x01, 0xFC, 0x02, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00,
+    },
+    {
+        0xFC, 0x01, 0x01, 0xFC, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00,
+    },
+    {
+        [PAL_STATUS_PSN] = RGB(24, 12, 24),
+        [PAL_STATUS_PAR] = RGB(23, 23, 3),
+        [PAL_STATUS_SLP] = RGB(20, 20, 17),
+        [PAL_STATUS_FRZ] = RGB(17, 22, 28),
+        [PAL_STATUS_BRN] = RGB(28, 14, 10),
+    },
+};
+
 extern const u8 gUnknown_82FCDBC[0x1E];
-#define sLvTextTemplate gUnknown_82FCDBC
 extern const u8 gUnknown_82FCDDA[0x14];
-#define sEmptyWhiteText_GrayHighlight gUnknown_82FCDDA
 extern const u8 gUnknown_82FCDEE[0x14];
-#define sEmptyWhiteText_TransparentHighlight gUnknown_82FCDEE
 extern const u16 gUnknown_82FCE02[5];
+#define sLvTextTemplate gUnknown_82FCDBC
+#define sEmptyWhiteText_GrayHighlight gUnknown_82FCDDA
+#define sEmptyWhiteText_TransparentHighlight gUnknown_82FCDEE
 #define sStatusIconColors gUnknown_82FCE02
 
 static s32 DummiedOutFunction(s16 unused1, s16 unused2, s32 unused3)
