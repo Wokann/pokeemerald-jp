@@ -13,37 +13,7 @@
 gUnknown_853741E: @ 0x853741E
 	.incbin "baserom_jp.gba", 0x53741e, 0x4
 
-	.globl gUnknown_8537422
-gUnknown_8537422: @ 0x8537422
-	.incbin "baserom_jp.gba", 0x537422, 0x60
-
-	.globl gUnknown_8537482
-gUnknown_8537482: @ 0x8537482
-	.incbin "baserom_jp.gba", 0x537482, 0x60
-
-	.globl gUnknown_85374E2
-gUnknown_85374E2: @ 0x85374E2
-	.incbin "baserom_jp.gba", 0x5374e2, 0xc0
-
-	.globl gUnknown_85375A2
-gUnknown_85375A2: @ 0x85375A2
-	.incbin "baserom_jp.gba", 0x5375a2, 0xbe
-
-	.globl gUnknown_8537660
-gUnknown_8537660: @ 0x8537660
-	.incbin "baserom_jp.gba", 0x537660, 0xd0
-
-	.globl gUnknown_8537730
-gUnknown_8537730: @ 0x8537730
-	.incbin "baserom_jp.gba", 0x537730, 0xd4
-
-	.globl gUnknown_8537804
-gUnknown_8537804: @ 0x8537804
-	.incbin "baserom_jp.gba", 0x537804, 0x150
-
-	.globl gUnknown_8537954
-gUnknown_8537954: @ 0x8537954
-	.incbin "baserom_jp.gba", 0x537954, 0xbc
+	.section .rodata.data_b2d_mid15_pokedex_list_gap
 
 	.globl gUnknown_8537A10
 gUnknown_8537A10: @ 0x8537A10
@@ -65,9 +35,7 @@ gUnknown_8537D24: @ 0x8537D24
 gUnknown_8537DB4: @ 0x8537DB4
 	.incbin "baserom_jp.gba", 0x537db4, 0xd8
 
-	.globl gUnknown_8537E8C
-gUnknown_8537E8C: @ 0x8537E8C
-	.incbin "baserom_jp.gba", 0x537e8c, 0x1168
+	.section .rodata.data_b2d_mid15_suffix
 
 	.globl gUnknown_8538FF4
 gUnknown_8538FF4: @ 0x8538FF4
