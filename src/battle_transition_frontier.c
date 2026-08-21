@@ -776,7 +776,7 @@ __attribute__((naked)) bool8 WaitForLogoCirclesAnim(struct Task *task)
     );
 }
 
-__attribute__((naked)) void Phase2Task_34(void)
+__attribute__((naked)) void Task_FrontierCirclesMeet(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -894,12 +894,12 @@ __attribute__((naked)) bool8 CirclesMeet_End(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA4FC: .4byte gPaletteFade\n\t"
-        "_081DA500: .4byte Phase2Task_34 + 1\n\t"
+        "_081DA500: .4byte Task_FrontierCirclesMeet + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Phase2Task_35(void)
+__attribute__((naked)) void Task_FrontierCirclesCross(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1017,12 +1017,12 @@ __attribute__((naked)) bool8 CirclesCross_End(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA5D4: .4byte gPaletteFade\n\t"
-        "_081DA5D8: .4byte Phase2Task_35 + 1\n\t"
+        "_081DA5D8: .4byte Task_FrontierCirclesCross + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Phase2Task_36(void)
+__attribute__((naked)) void Task_FrontierCirclesAsymmetricSpiral(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1150,12 +1150,12 @@ __attribute__((naked)) bool8 CirclesAsymmetricSpiral_End(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA6C0: .4byte gPaletteFade\n\t"
-        "_081DA6C4: .4byte Phase2Task_36 + 1\n\t"
+        "_081DA6C4: .4byte Task_FrontierCirclesAsymmetricSpiral + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Phase2Task_37(void)
+__attribute__((naked)) void Task_FrontierCirclesSymmetricSpiral(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1285,12 +1285,12 @@ __attribute__((naked)) bool8 CirclesSymmetricSpiral_End(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA7B0: .4byte gPaletteFade\n\t"
-        "_081DA7B4: .4byte Phase2Task_37 + 1\n\t"
+        "_081DA7B4: .4byte Task_FrontierCirclesSymmetricSpiral + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Phase2Task_38(void)
+__attribute__((naked)) void Task_FrontierCirclesMeetInSeq(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1427,12 +1427,12 @@ __attribute__((naked)) bool8 CirclesMeetInSeq_End(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA8A8: .4byte gPaletteFade\n\t"
-        "_081DA8AC: .4byte Phase2Task_38 + 1\n\t"
+        "_081DA8AC: .4byte Task_FrontierCirclesMeetInSeq + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Phase2Task_39(void)
+__attribute__((naked)) void Task_FrontierCirclesCrossInSeq(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1569,12 +1569,12 @@ __attribute__((naked)) bool8 CirclesCrossInSeq_End(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA9A0: .4byte gPaletteFade\n\t"
-        "_081DA9A4: .4byte Phase2Task_39 + 1\n\t"
+        "_081DA9A4: .4byte Task_FrontierCirclesCrossInSeq + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Phase2Task_40(void)
+__attribute__((naked)) void Task_FrontierCirclesAsymmetricSpiralInSeq(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1715,12 +1715,12 @@ __attribute__((naked)) bool8 CirclesAsymmetricSpiralInSeq_End(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DAAA0: .4byte gPaletteFade\n\t"
-        "_081DAAA4: .4byte Phase2Task_40 + 1\n\t"
+        "_081DAAA4: .4byte Task_FrontierCirclesAsymmetricSpiralInSeq + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Phase2Task_41(void)
+__attribute__((naked)) void Task_FrontierCirclesSymmetricSpiralInSeq(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1863,7 +1863,7 @@ __attribute__((naked)) bool8 CirclesSymmetricSpiralInSeq_End(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DABA4: .4byte gPaletteFade\n\t"
-        "_081DABA8: .4byte Phase2Task_41 + 1\n\t"
+        "_081DABA8: .4byte Task_FrontierCirclesSymmetricSpiralInSeq + 1\n\t"
         ".syntax divided\n\t"
     );
 }

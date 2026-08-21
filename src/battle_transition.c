@@ -1,10 +1,14 @@
 #include "global.h"
 #include "scanline_effect.h"
 #include "battle_transition.h"
+#include "battle_transition_frontier.h"
 #include "main.h"
 #include "task.h"
 #include "sprite.h"
+#include "constants/trainers.h"
+#include "constants/field_effects.h"
 
+#define PALTAG_UNUSED_MUGSHOT 0x100A
 
 // Sprite data aliases matching the US battle_transition.c field names.
 #define sState       data[0]
@@ -18,6 +22,453 @@ struct RectangularSpiralLine
     s16 reboundPosition;
     bool8 outward;
 };
+
+typedef bool8 (*TransitionStateFunc)(struct Task *task);
+
+bool8 Slice_Init(struct Task *task);
+bool8 Slice_Main(struct Task *task);
+bool8 Slice_End(struct Task *task);
+bool8 ShredSplit_Init(struct Task *task);
+bool8 ShredSplit_Main(struct Task *task);
+bool8 ShredSplit_BrokenCheck(struct Task *task);
+bool8 ShredSplit_End(struct Task *task);
+bool8 Blackhole_Init(struct Task *task);
+bool8 Blackhole_Vibrate(struct Task *task);
+bool8 Blackhole_GrowEnd(struct Task *task);
+bool8 BlackholePulsate_Main(struct Task *task);
+bool8 RectangularSpiral_Init(struct Task *task);
+bool8 RectangularSpiral_Main(struct Task *task);
+bool8 RectangularSpiral_End(struct Task *task);
+bool8 WeatherTrio_BgFadeBlack(struct Task *task);
+bool8 WeatherTrio_WaitFade(struct Task *task);
+bool8 Groudon_Init(struct Task *task);
+bool8 Groudon_PaletteFlash(struct Task *task);
+bool8 Groudon_PaletteBrighten(struct Task *task);
+bool8 FramesCountdown(struct Task *task);
+bool8 WeatherDuo_FadeOut(struct Task *task);
+bool8 WeatherDuo_End(struct Task *task);
+bool8 Rayquaza_Init(struct Task *task);
+bool8 Rayquaza_SetGfx(struct Task *task);
+bool8 Rayquaza_PaletteFlash(struct Task *task);
+bool8 Rayquaza_FadeToBlack(struct Task *task);
+bool8 Rayquaza_WaitFade(struct Task *task);
+bool8 Rayquaza_SetBlack(struct Task *task);
+bool8 Rayquaza_TriRing(struct Task *task);
+bool8 WhiteBarsFade_Init(struct Task *task);
+bool8 WhiteBarsFade_StartBars(struct Task *task);
+bool8 WhiteBarsFade_WaitBars(struct Task *task);
+bool8 WhiteBarsFade_BlendToBlack(struct Task *task);
+bool8 WhiteBarsFade_End(struct Task *task);
+bool8 GridSquares_Init(struct Task *task);
+bool8 GridSquares_Main(struct Task *task);
+bool8 GridSquares_End(struct Task *task);
+bool8 AngledWipes_Init(struct Task *task);
+bool8 AngledWipes_SetWipeData(struct Task *task);
+bool8 AngledWipes_DoWipe(struct Task *task);
+bool8 AngledWipes_TryEnd(struct Task *task);
+bool8 AngledWipes_StartNext(struct Task *task);
+bool8 TransitionIntro_FadeToGray(struct Task *task);
+bool8 TransitionIntro_FadeFromGray(struct Task *task);
+bool8 FrontierLogoWiggle_Init(struct Task *task);
+bool8 FrontierLogoWiggle_SetGfx(struct Task *task);
+bool8 PatternWeave_Blend1(struct Task *task);
+bool8 PatternWeave_Blend2(struct Task *task);
+bool8 PatternWeave_FinishAppear(struct Task *task);
+bool8 PatternWeave_CircularMask(struct Task *task);
+bool8 FrontierLogoWave_Init(struct Task *task);
+bool8 FrontierLogoWave_SetGfx(struct Task *task);
+bool8 FrontierLogoWave_InitScanline(struct Task *task);
+bool8 FrontierLogoWave_Main(struct Task *task);
+bool8 FrontierSquares_Init(struct Task *task);
+bool8 FrontierSquares_Draw(struct Task *task);
+bool8 FrontierSquares_Shrink(struct Task *task);
+bool8 FrontierSquares_End(struct Task *task);
+bool8 FrontierSquaresSpiral_Init(struct Task *task);
+bool8 FrontierSquaresSpiral_Outward(struct Task *task);
+bool8 FrontierSquaresSpiral_SetBlack(struct Task *task);
+bool8 FrontierSquaresSpiral_Inward(struct Task *task);
+bool8 FrontierSquaresScroll_Init(struct Task *task);
+bool8 FrontierSquaresScroll_Draw(struct Task *task);
+bool8 FrontierSquaresScroll_SetBlack(struct Task *task);
+bool8 FrontierSquaresScroll_Erase(struct Task *task);
+bool8 FrontierSquaresScroll_End(struct Task *task);
+
+extern const u8 sPokeball_Gfx[];
+
+#define BATTLE_TRANSITION_STATE_DATA __attribute__((section(".rodata.battle_transition_state_data")))
+
+// One element per slide direction.
+static const s16 sTrainerPicSlideSpeeds[2] BATTLE_TRANSITION_STATE_DATA = {12, -12};
+static const s16 sTrainerPicSlideAccels[2] BATTLE_TRANSITION_STATE_DATA = {-1, 1};
+
+static const TransitionStateFunc sSlice_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    Slice_Init,
+    Slice_Main,
+    Slice_End,
+};
+
+static const TransitionStateFunc sShredSplit_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    ShredSplit_Init,
+    ShredSplit_Main,
+    ShredSplit_BrokenCheck,
+    ShredSplit_End,
+};
+
+static const u8 sShredSplit_SectionYCoords[] BATTLE_TRANSITION_STATE_DATA = {39, 119};
+static const s16 sShredSplit_SectionMoveDirs[] BATTLE_TRANSITION_STATE_DATA = {1, -1};
+
+static const TransitionStateFunc sBlackhole_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    Blackhole_Init,
+    Blackhole_Vibrate,
+    Blackhole_GrowEnd,
+};
+
+static const TransitionStateFunc sBlackholePulsate_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    Blackhole_Init,
+    BlackholePulsate_Main,
+};
+
+static const s16 sBlackhole_Vibrations[] BATTLE_TRANSITION_STATE_DATA = {-6, 4};
+
+static const TransitionStateFunc sRectangularSpiral_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    RectangularSpiral_Init,
+    RectangularSpiral_Main,
+    RectangularSpiral_End,
+};
+
+enum
+{
+    BATTLE_TRANSITION_MOVE_RIGHT = 1,
+    BATTLE_TRANSITION_MOVE_LEFT,
+    BATTLE_TRANSITION_MOVE_UP,
+    BATTLE_TRANSITION_MOVE_DOWN,
+};
+
+#define BATTLE_TRANSITION_SPIRAL_END (-1)
+#define BATTLE_TRANSITION_SPIRAL_REBOUND (-2)
+
+static const s16 sRectangularSpiral_Major_InwardRight[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_RIGHT, 27, 275, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Major_InwardLeft[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_LEFT, 486, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Major_InwardUp[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_UP, 262, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Major_InwardDown[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_DOWN, 507, BATTLE_TRANSITION_SPIRAL_REBOUND};
+
+static const s16 sRectangularSpiral_Minor_InwardRight[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_RIGHT, 213, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Minor_InwardLeft[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_LEFT, 548, BATTLE_TRANSITION_SPIRAL_REBOUND};
+static const s16 sRectangularSpiral_Minor_InwardUp[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_UP, 196, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Minor_InwardDown[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_DOWN, 573, 309, BATTLE_TRANSITION_SPIRAL_END};
+
+static const s16 sRectangularSpiral_Minor_OutwardRight[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_RIGHT, 474, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Minor_OutwardLeft[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_LEFT, 295, 32, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Minor_OutwardUp[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_UP, 58, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Minor_OutwardDown[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_DOWN, 455, BATTLE_TRANSITION_SPIRAL_END};
+
+static const s16 sRectangularSpiral_Major_OutwardRight[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_RIGHT, 540, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Major_OutwardLeft[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_LEFT, 229, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Major_OutwardUp[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_UP, 244, 28, BATTLE_TRANSITION_SPIRAL_END};
+static const s16 sRectangularSpiral_Major_OutwardDown[] BATTLE_TRANSITION_STATE_DATA = {BATTLE_TRANSITION_MOVE_DOWN, 517, BATTLE_TRANSITION_SPIRAL_END};
+
+static const s16 *const sRectangularSpiral_MoveDataTable_MajorDiagonal[] BATTLE_TRANSITION_STATE_DATA =
+{
+    sRectangularSpiral_Major_InwardRight,
+    sRectangularSpiral_Major_InwardDown,
+    sRectangularSpiral_Major_InwardLeft,
+    sRectangularSpiral_Major_InwardUp,
+    sRectangularSpiral_Major_OutwardUp,
+    sRectangularSpiral_Major_OutwardLeft,
+    sRectangularSpiral_Major_OutwardDown,
+    sRectangularSpiral_Major_OutwardRight,
+};
+
+static const s16 *const sRectangularSpiral_MoveDataTable_MinorDiagonal[] BATTLE_TRANSITION_STATE_DATA =
+{
+    sRectangularSpiral_Minor_InwardDown,
+    sRectangularSpiral_Minor_InwardLeft,
+    sRectangularSpiral_Minor_InwardUp,
+    sRectangularSpiral_Minor_InwardRight,
+    sRectangularSpiral_Minor_OutwardLeft,
+    sRectangularSpiral_Minor_OutwardDown,
+    sRectangularSpiral_Minor_OutwardRight,
+    sRectangularSpiral_Minor_OutwardUp,
+};
+
+static const s16 *const *const sRectangularSpiral_MoveDataTables[] BATTLE_TRANSITION_STATE_DATA =
+{
+    sRectangularSpiral_MoveDataTable_MajorDiagonal,
+    sRectangularSpiral_MoveDataTable_MinorDiagonal,
+};
+
+static const TransitionStateFunc sGroudon_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    WeatherTrio_BgFadeBlack,
+    WeatherTrio_WaitFade,
+    Groudon_Init,
+    Groudon_PaletteFlash,
+    Groudon_PaletteBrighten,
+    FramesCountdown,
+    WeatherDuo_FadeOut,
+    WeatherDuo_End,
+};
+
+static const TransitionStateFunc sRayquaza_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    WeatherTrio_BgFadeBlack,
+    WeatherTrio_WaitFade,
+    Rayquaza_Init,
+    Rayquaza_SetGfx,
+    Rayquaza_PaletteFlash,
+    Rayquaza_FadeToBlack,
+    Rayquaza_WaitFade,
+    Rayquaza_SetBlack,
+    Rayquaza_TriRing,
+    Blackhole_Vibrate,
+    Blackhole_GrowEnd,
+};
+
+static const TransitionStateFunc sWhiteBarsFade_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    WhiteBarsFade_Init,
+    WhiteBarsFade_StartBars,
+    WhiteBarsFade_WaitBars,
+    WhiteBarsFade_BlendToBlack,
+    WhiteBarsFade_End,
+};
+
+static const s16 sWhiteBarsFade_StartDelays[8] BATTLE_TRANSITION_STATE_DATA = {0, 20, 15, 40, 10, 25, 35, 5};
+
+static const TransitionStateFunc sGridSquares_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    GridSquares_Init,
+    GridSquares_Main,
+    GridSquares_End,
+};
+
+static const TransitionStateFunc sAngledWipes_Funcs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    AngledWipes_Init,
+    AngledWipes_SetWipeData,
+    AngledWipes_DoWipe,
+    AngledWipes_TryEnd,
+    AngledWipes_StartNext,
+};
+
+static const s16 sAngledWipes_MoveData[7][5] BATTLE_TRANSITION_STATE_DATA =
+{
+    {56, 0, 0, 160, 0},
+    {104, 160, 240, 88, 1},
+    {240, 72, 56, 0, 1},
+    {0, 32, 144, 160, 0},
+    {144, 160, 184, 0, 1},
+    {56, 0, 168, 160, 0},
+    {168, 160, 48, 0, 1},
+};
+
+static const s16 sAngledWipes_EndDelays[7] BATTLE_TRANSITION_STATE_DATA = {8, 4, 2, 1, 1, 1, 0};
+
+static const TransitionStateFunc sTransitionIntroFuncs[] BATTLE_TRANSITION_STATE_DATA =
+{
+    TransitionIntro_FadeToGray,
+    TransitionIntro_FadeFromGray,
+};
+
+static const struct SpriteFrameImage sSpriteImage_Pokeball[] BATTLE_TRANSITION_STATE_DATA =
+{
+    {sPokeball_Gfx, 0x200},
+};
+
+static const union AnimCmd sSpriteAnim_Pokeball[] BATTLE_TRANSITION_STATE_DATA =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_Pokeball[] BATTLE_TRANSITION_STATE_DATA =
+{
+    sSpriteAnim_Pokeball,
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_Pokeball1[] BATTLE_TRANSITION_STATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0, 0, -4, 1),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd sSpriteAffineAnim_Pokeball2[] BATTLE_TRANSITION_STATE_DATA =
+{
+    AFFINEANIMCMD_FRAME(0, 0, 4, 1),
+    AFFINEANIMCMD_JUMP(0),
+};
+
+static const union AffineAnimCmd *const sSpriteAffineAnimTable_Pokeball[] BATTLE_TRANSITION_STATE_DATA =
+{
+    sSpriteAffineAnim_Pokeball1,
+    sSpriteAffineAnim_Pokeball2,
+};
+
+#undef BATTLE_TRANSITION_STATE_DATA
+
+#define BATTLE_TRANSITION_PALETTE_DATA __attribute__((section(".rodata.battle_transition_palette_data")))
+
+static const u16 sFieldEffectPal_Pokeball[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x76AC, 0x003E, 0x5B5D, 0x4ADB, 0x7FFF, 0x779B, 0x7337, 0x6ED3,
+    0x5A6C, 0x0012, 0x6318, 0x539D, 0x433B, 0x36DA, 0x2A79, 0x0000,
+};
+
+const struct SpritePalette gSpritePalette_Pokeball BATTLE_TRANSITION_PALETTE_DATA =
+{
+    .data = sFieldEffectPal_Pokeball,
+    .tag = FLDEFF_PAL_TAG_POKEBALL_TRAIL,
+};
+
+static const u16 sMugshotPal_Sidney[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x5C17, 0x6459, 0x6C9B,
+    0x74DD, 0x7D1F, 0x6ACD, 0x730F, 0x7B51, 0x7F93, 0x7FD5, 0x7FFF,
+};
+
+static const u16 sMugshotPal_Phoebe[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x0741, 0x13A4, 0x1BC6,
+    0x27E9, 0x3FEF, 0x45FC, 0x4E3E, 0x567F, 0x5EBF, 0x66FF, 0x45FC,
+};
+
+static const u16 sMugshotPal_Glacia[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x555F, 0x5D9F, 0x65DF,
+    0x6E1F, 0x765F, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+static const u16 sMugshotPal_Drake[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x4000, 0x4842, 0x5084,
+    0x58C6, 0x6108, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+static const u16 sMugshotPal_Champion[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x18D5, 0x39CE, 0x4A52, 0x5AD6, 0x6B5A, 0x2318, 0x2B5A, 0x339C,
+    0x3BDE, 0x43FF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+static const u16 sMugshotPal_Brendan[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x6ACD, 0x730F, 0x7B51, 0x7F93, 0x7FD5, 0x7FFF, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+static const u16 sMugshotPal_May[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x45FC, 0x4E3E, 0x567F, 0x5EBF, 0x66FF, 0x7FFF, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+static const u16 *const sOpponentMugshotsPals[MUGSHOTS_COUNT] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    [MUGSHOT_SIDNEY] = sMugshotPal_Sidney,
+    [MUGSHOT_PHOEBE] = sMugshotPal_Phoebe,
+    [MUGSHOT_GLACIA] = sMugshotPal_Glacia,
+    [MUGSHOT_DRAKE] = sMugshotPal_Drake,
+    [MUGSHOT_CHAMPION] = sMugshotPal_Champion,
+};
+
+static const u16 *const sPlayerMugshotsPals[GENDER_COUNT] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    [MALE] = sMugshotPal_Brendan,
+    [FEMALE] = sMugshotPal_May,
+};
+
+static const u16 sUnusedTrainerPalette[] BATTLE_TRANSITION_PALETTE_DATA =
+{
+    0x530E, 0x677F, 0x4A9B, 0x3A19, 0x296F, 0x3D27, 0x30E5, 0x28A3,
+    0x1C82, 0x779B, 0x2F1F, 0x2E77, 0x2D9F, 0x2118, 0x7FFF, 0x0000,
+};
+
+static const struct SpritePalette sSpritePalette_UnusedTrainer BATTLE_TRANSITION_PALETTE_DATA =
+{
+    .data = sUnusedTrainerPalette,
+    .tag = PALTAG_UNUSED_MUGSHOT,
+};
+
+#undef BATTLE_TRANSITION_PALETTE_DATA
+
+#define BATTLE_TRANSITION_FRONTIER_STATE_DATA __attribute__((section(".rodata.battle_transition_frontier_state_data")))
+
+static const TransitionStateFunc sFrontierLogoWiggle_Funcs[] BATTLE_TRANSITION_FRONTIER_STATE_DATA =
+{
+    FrontierLogoWiggle_Init,
+    FrontierLogoWiggle_SetGfx,
+    PatternWeave_Blend1,
+    PatternWeave_Blend2,
+    PatternWeave_FinishAppear,
+    PatternWeave_CircularMask,
+};
+
+static const TransitionStateFunc sFrontierLogoWave_Funcs[] BATTLE_TRANSITION_FRONTIER_STATE_DATA =
+{
+    FrontierLogoWave_Init,
+    FrontierLogoWave_SetGfx,
+    FrontierLogoWave_InitScanline,
+    FrontierLogoWave_Main,
+};
+
+static const TransitionStateFunc sFrontierSquares_Funcs[] BATTLE_TRANSITION_FRONTIER_STATE_DATA =
+{
+    FrontierSquares_Init,
+    FrontierSquares_Draw,
+    FrontierSquares_Shrink,
+    FrontierSquares_End,
+};
+
+static const TransitionStateFunc sFrontierSquaresSpiral_Funcs[] BATTLE_TRANSITION_FRONTIER_STATE_DATA =
+{
+    FrontierSquaresSpiral_Init,
+    FrontierSquaresSpiral_Outward,
+    FrontierSquaresSpiral_SetBlack,
+    FrontierSquaresSpiral_Inward,
+    FrontierSquares_End,
+};
+
+static const TransitionStateFunc sFrontierSquaresScroll_Funcs[] BATTLE_TRANSITION_FRONTIER_STATE_DATA =
+{
+    FrontierSquaresScroll_Init,
+    FrontierSquaresScroll_Draw,
+    FrontierSquaresScroll_SetBlack,
+    FrontierSquaresScroll_Erase,
+    FrontierSquaresScroll_End,
+};
+
+static const u8 sFrontierSquaresSpiral_Positions[] BATTLE_TRANSITION_FRONTIER_STATE_DATA =
+{
+    28, 29, 30, 31, 32, 33, 34,
+    27, 20, 13,  6,  5,  4,  3,
+     2,  1,  0,  7, 14, 21, 22,
+    23, 24, 25, 26, 19, 12, 11,
+    10,  9,  8, 15, 16, 17, 18,
+};
+
+static const u8 sFrontierSquaresScroll_Positions[] BATTLE_TRANSITION_FRONTIER_STATE_DATA =
+{
+     0, 16, 41, 22, 44,  2, 43, 21,
+    46, 27,  9, 48, 38,  5, 57, 59,
+    12, 63, 35, 28, 10, 53,  7, 49,
+    39, 23, 55,  1, 62, 17, 61, 30,
+     6, 34, 15, 51, 32, 58, 13, 45,
+    37, 52, 11, 24, 60, 19, 56, 33,
+    29, 50, 40, 54, 14,  3, 47, 20,
+    18, 25,  4, 36, 26, 42, 31,  8,
+};
+
+// The original object aligns the following aggregate data to four bytes.
+static const u8 sFrontierSquaresScroll_Padding BATTLE_TRANSITION_FRONTIER_STATE_DATA = 0;
+
+#undef BATTLE_TRANSITION_FRONTIER_STATE_DATA
+#undef BATTLE_TRANSITION_SPIRAL_REBOUND
+#undef BATTLE_TRANSITION_SPIRAL_END
 
 __attribute__((naked)) void CB2_TestBattleTransition(void)
 {
@@ -321,7 +772,7 @@ __attribute__((naked)) bool8 Transition_StartMain(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146148: .4byte gUnknown_85A84A0\n\t"
+        "_08146148: .4byte sTasks_Main\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -353,7 +804,7 @@ __attribute__((naked)) bool8 Transition_WaitForMain(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146178: .4byte gUnknown_85A84A0\n\t"
+        "_08146178: .4byte sTasks_Main\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1274,8 +1725,8 @@ __attribute__((naked)) bool8 Aqua_Init(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08146814: .4byte 0x01000400\n\t"
-        "_08146818: .4byte gUnknown_859A980\n\t"
-        "_0814681C: .4byte gUnknown_859A960\n\t"
+        "_08146818: .4byte sTeamAqua_Tileset\n\t"
+        "_0814681C: .4byte sEvilTeam_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1317,8 +1768,8 @@ __attribute__((naked)) bool8 Magma_Init(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08146868: .4byte 0x01000400\n\t"
-        "_0814686C: .4byte gUnknown_859AF54\n\t"
-        "_08146870: .4byte gUnknown_859A960\n\t"
+        "_0814686C: .4byte sTeamMagma_Tileset\n\t"
+        "_08146870: .4byte sEvilTeam_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1358,7 +1809,7 @@ __attribute__((naked)) bool8 Regi_Init(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081468B8: .4byte 0x01000400\n\t"
-        "_081468BC: .4byte gUnknown_859B6C4\n\t"
+        "_081468BC: .4byte sRegis_Tileset\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1400,8 +1851,8 @@ __attribute__((naked)) bool8 BigPokeball_Init(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08146908: .4byte 0x01000400\n\t"
-        "_0814690C: .4byte gUnknown_8598DE0\n\t"
-        "_08146910: .4byte gUnknown_85A8984\n\t"
+        "_0814690C: .4byte sBigPokeball_Tileset\n\t"
+        "_08146910: .4byte sFieldEffectPal_Pokeball\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1479,7 +1930,7 @@ __attribute__((naked)) bool8 BigPokeball_SetGfx(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814699C: .4byte gUnknown_85A8AD0\n\t"
+        "_0814699C: .4byte sBigPokeball_Tilemap\n\t"
         "_081469A0: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
@@ -1518,7 +1969,7 @@ __attribute__((naked)) bool8 Aqua_SetGfx(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081469E4: .4byte gUnknown_859ACF8\n\t"
+        "_081469E4: .4byte sTeamAqua_Tilemap\n\t"
         "_081469E8: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
@@ -1558,7 +2009,7 @@ __attribute__((naked)) bool8 Magma_SetGfx(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146A2C: .4byte gUnknown_859B3E0\n\t"
+        "_08146A2C: .4byte sTeamMagma_Tilemap\n\t"
         "_08146A30: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
@@ -1603,8 +2054,8 @@ __attribute__((naked)) bool8 Regice_SetGfx(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146A80: .4byte gUnknown_859BD64\n\t"
-        "_08146A84: .4byte gUnknown_859BDC4\n\t"
+        "_08146A80: .4byte sRegice_Palette\n\t"
+        "_08146A84: .4byte sRegice_Tilemap\n\t"
         "_08146A88: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
@@ -1649,8 +2100,8 @@ __attribute__((naked)) bool8 Registeel_SetGfx(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146AD8: .4byte gUnknown_859BD84\n\t"
-        "_08146ADC: .4byte gUnknown_859C5C4\n\t"
+        "_08146AD8: .4byte sRegisteel_Palette\n\t"
+        "_08146ADC: .4byte sRegisteel_Tilemap\n\t"
         "_08146AE0: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
@@ -1695,8 +2146,8 @@ __attribute__((naked)) bool8 Regirock_SetGfx(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146B30: .4byte gUnknown_859BDA4\n\t"
-        "_08146B34: .4byte gUnknown_859CDC4\n\t"
+        "_08146B30: .4byte sRegirock_Palette\n\t"
+        "_08146B34: .4byte sRegirock_Tilemap\n\t"
         "_08146B38: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
@@ -1735,8 +2186,8 @@ __attribute__((naked)) bool8 Kyogre_Init(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08146B7C: .4byte 0x01000400\n\t"
-        "_08146B80: .4byte gUnknown_859D5E4\n\t"
-        "_08146B84: .4byte gUnknown_859DC98\n\t"
+        "_08146B80: .4byte sKyogre_Tileset\n\t"
+        "_08146B84: .4byte sKyogre_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1788,7 +2239,7 @@ __attribute__((naked)) bool8 Kyogre_PaletteFlash(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146BE0: .4byte gUnknown_859E850\n\t"
+        "_08146BE0: .4byte sKyogre1_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1838,7 +2289,7 @@ __attribute__((naked)) bool8 Kyogre_PaletteBrighten(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146C38: .4byte gUnknown_859E990\n\t"
+        "_08146C38: .4byte sKyogre2_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2495,9 +2946,9 @@ __attribute__((naked)) bool8 PokeballsTrail_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081470CC: .4byte gUnknown_8599360\n\t"
+        "_081470CC: .4byte sPokeballTrail_Tileset\n\t"
         "_081470D0: .4byte 0x05000200\n\t"
-        "_081470D4: .4byte gUnknown_85A8984\n\t"
+        "_081470D4: .4byte sFieldEffectPal_Pokeball\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2568,8 +3019,8 @@ __attribute__((naked)) bool8 PokeballsTrail_Main(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147158: .4byte gUnknown_85A8638\n\t"
-        "_0814715C: .4byte gUnknown_85A863C\n\t"
+        "_08147158: .4byte sPokeballsTrail_StartXCoords\n\t"
+        "_0814715C: .4byte sPokeballsTrail_Delays\n\t"
         "_08147160: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
@@ -2677,7 +3128,7 @@ __attribute__((naked)) void SpriteCB_FldEffPokeballTrail(struct Sprite *sprite)
         "	strh r0, [r4, #0x30]\n\t"
         "	b _081472B2\n\t"
         "	.align 2, 0\n\t"
-        "_0814721C: .4byte gUnknown_85A8646\n\t"
+        "_0814721C: .4byte sPokeballsTrail_Speeds\n\t"
         "_08147220:\n\t"
         "	ldrh r0, [r4, #0x20]\n\t"
         "	lsls r1, r0, #0x10\n\t"
@@ -4254,10 +4705,10 @@ __attribute__((naked)) bool8 Mugshot_SetGfx(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147D8C: .4byte gUnknown_85A8F80\n\t"
-        "_08147D90: .4byte gUnknown_85995A0\n\t"
-        "_08147D94: .4byte gUnknown_85A8A8C\n\t"
-        "_08147D98: .4byte gUnknown_85A8AA0\n\t"
+        "_08147D8C: .4byte sMugshotsTilemap\n\t"
+        "_08147D90: .4byte sEliteFour_Tileset\n\t"
+        "_08147D94: .4byte sOpponentMugshotsPals\n\t"
+        "_08147D98: .4byte sPlayerMugshotsPals\n\t"
         "_08147D9C: .4byte gSaveBlock2Ptr\n\t"
         "_08147DA0: .4byte HBlankCB_Mugshots + 1\n\t"
         ".syntax divided\n\t"
@@ -5139,13 +5590,13 @@ __attribute__((naked)) void Mugshots_CreateTrainerPics(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08148420: .4byte gUnknown_85A86A4\n\t"
-        "_08148424: .4byte gUnknown_85A86BE\n\t"
+        "_08148420: .4byte sMugshotsTrainerPicIDsTable\n\t"
+        "_08148424: .4byte sMugshotsOpponentCoords\n\t"
         "_08148428: .4byte gDecompressionBuffer\n\t"
         "_0814842C: .4byte gSaveBlock2Ptr\n\t"
         "_08148430: .4byte gSprites\n\t"
         "_08148434: .4byte SpriteCB_MugshotTrainerPic + 1\n\t"
-        "_08148438: .4byte gUnknown_85A86AA\n\t"
+        "_08148438: .4byte sMugshotsOpponentRotationScales\n\t"
         "_0814843C: .4byte 0xFFFFFE00\n\t"
         ".syntax divided\n\t"
     );
@@ -5173,12 +5624,12 @@ __attribute__((naked)) void SpriteCB_MugshotTrainerPic(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08148464: .4byte gUnknown_85A86D4\n\t"
+        "_08148464: .4byte sMugshotTrainerPicFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_08148468(void)
+__attribute__((naked)) bool8 MugshotTrainerPic_Pause(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5225,13 +5676,13 @@ __attribute__((naked)) bool8 MugshotTrainerPic_Init(struct Sprite *sprite)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081484B0: .4byte gUnknown_85A86D4 + 0x1C\n\t"
-        "_081484B4: .4byte gUnknown_85A86F4\n\t"
+        "_081484B0: .4byte sTrainerPicSlideSpeeds\n\t"
+        "_081484B4: .4byte sTrainerPicSlideAccels\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void sub_081484B8(void)
+__attribute__((naked)) bool8 MugshotTrainerPic_Slide(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5299,7 +5750,7 @@ __attribute__((naked)) bool8 MugshotTrainerPic_SlideSlow(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) void sub_08148518(void)
+__attribute__((naked)) bool8 MugshotTrainerPic_SlideOffscreen(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5924,8 +6375,8 @@ __attribute__((naked)) bool8 ShredSplit_Main(struct Task *task)
         "	str r0, [sp, #8]\n\t"
         "	b _08148A00\n\t"
         "	.align 2, 0\n\t"
-        "_081489CC: .4byte gUnknown_85A8714\n\t"
-        "_081489D0: .4byte gUnknown_85A8716\n\t"
+        "_081489CC: .4byte sShredSplit_SectionYCoords\n\t"
+        "_081489D0: .4byte sShredSplit_SectionMoveDirs\n\t"
         "_081489D4: .4byte gUnknown_203A86C\n\t"
         "_081489D8: .4byte gUnknown_2038B48\n\t"
         "_081489DC: .4byte gUnknown_2038DC8\n\t"
@@ -6527,7 +6978,7 @@ __attribute__((naked)) bool8 Blackhole_Vibrate(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08148E20: .4byte gUnknown_203A86C\n\t"
-        "_08148E24: .4byte gUnknown_85A8730\n\t"
+        "_08148E24: .4byte sBlackhole_Vibrations\n\t"
         "_08148E28: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
@@ -6684,7 +7135,7 @@ __attribute__((naked)) void Task_RectangularSpiral(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08148F44: .4byte gUnknown_85A8734\n\t"
+        "_08148F44: .4byte sRectangularSpiral_Funcs\n\t"
         "_08148F48: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6773,9 +7224,9 @@ __attribute__((naked)) bool8 RectangularSpiral_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08148FF0: .4byte gUnknown_859A780\n\t"
+        "_08148FF0: .4byte sShrinkingBoxTileset\n\t"
         "_08148FF4: .4byte 0x01000400\n\t"
-        "_08148FF8: .4byte gUnknown_85A8984\n\t"
+        "_08148FF8: .4byte sFieldEffectPal_Pokeball\n\t"
         "_08148FFC: .4byte gUnknown_3001210\n\t"
         "_08149000: .4byte 0x0000FFFF\n\t"
         "_08149004: .4byte 0x0000FFFD\n\t"
@@ -6879,7 +7330,7 @@ __attribute__((naked)) bool8 RectangularSpiral_Main(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081490B8: .4byte gUnknown_85A87E8\n\t"
+        "_081490B8: .4byte sRectangularSpiral_MoveDataTables\n\t"
         "_081490BC: .4byte gUnknown_3001210\n\t"
         "_081490C0: .4byte 0x0000027D\n\t"
         "_081490C4: .4byte 0x0000F002\n\t"
@@ -6992,8 +7443,8 @@ __attribute__((naked)) bool8 Groudon_Init(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0814927C: .4byte 0x01000400\n\t"
-        "_08149280: .4byte gUnknown_859DFCC\n\t"
-        "_08149284: .4byte gUnknown_859E538\n\t"
+        "_08149280: .4byte sGroudon_Tileset\n\t"
+        "_08149284: .4byte sGroudon_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7046,7 +7497,7 @@ __attribute__((naked)) bool8 Groudon_PaletteFlash(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081492E0: .4byte gUnknown_859EB50\n\t"
+        "_081492E0: .4byte sGroudon1_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7097,7 +7548,7 @@ __attribute__((naked)) bool8 Groudon_PaletteBrighten(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149338: .4byte gUnknown_859ED50\n\t"
+        "_08149338: .4byte sGroudon2_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7205,9 +7656,9 @@ __attribute__((naked)) bool8 Rayquaza_Init(struct Task *task)
         "	.align 2, 0\n\t"
         "_081493FC: .4byte 0x00009A08\n\t"
         "_08149400: .4byte 0x01000400\n\t"
-        "_08149404: .4byte gUnknown_859F150\n\t"
+        "_08149404: .4byte sRayquaza_Tileset\n\t"
         "_08149408: .4byte gUnknown_203A86C\n\t"
-        "_0814940C: .4byte gUnknown_859EFF0\n\t"
+        "_0814940C: .4byte sRayquaza_Palette + 0xA0\n\t"
         "_08149410: .4byte gScanlineEffectRegBuffers\n\t"
         "_08149414: .4byte VBlankCB_Rayquaza + 1\n\t"
         ".syntax divided\n\t"
@@ -7239,7 +7690,7 @@ __attribute__((naked)) bool8 Rayquaza_SetGfx(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149444: .4byte gUnknown_85A6690\n\t"
+        "_08149444: .4byte sRayquaza_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7290,7 +7741,7 @@ __attribute__((naked)) bool8 Rayquaza_PaletteFlash(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149494: .4byte gUnknown_859EF50\n\t"
+        "_08149494: .4byte sRayquaza_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7465,7 +7916,7 @@ __attribute__((naked)) bool8 Rayquaza_TriRing(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081495B8: .4byte gUnknown_859EF50\n\t"
+        "_081495B8: .4byte sRayquaza_Palette\n\t"
         "_081495BC: .4byte gUnknown_203A86C\n\t"
         "_081495C0: .4byte VBlankCB_CircularMask + 1\n\t"
         "_081495C4: .4byte gUnknown_2039048\n\t"
@@ -7825,7 +8276,7 @@ __attribute__((naked)) bool8 WhiteBarsFade_StartBars(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149750: .4byte gUnknown_85A8850\n\t"
+        "_08149750: .4byte sWhiteBarsFade_StartDelays\n\t"
         "_08149754: .4byte SpriteCB_WhiteBarFade + 1\n\t"
         "_08149758: .4byte gSprites\n\t"
         ".syntax divided\n\t"
@@ -8275,9 +8726,9 @@ __attribute__((naked)) bool8 GridSquares_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149A9C: .4byte gUnknown_859A780\n\t"
+        "_08149A9C: .4byte sShrinkingBoxTileset\n\t"
         "_08149AA0: .4byte 0x01000400\n\t"
-        "_08149AA4: .4byte gUnknown_85A8984\n\t"
+        "_08149AA4: .4byte sFieldEffectPal_Pokeball\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8328,7 +8779,7 @@ __attribute__((naked)) bool8 GridSquares_Main(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149AFC: .4byte gUnknown_859A780\n\t"
+        "_08149AFC: .4byte sShrinkingBoxTileset\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8512,7 +8963,7 @@ __attribute__((naked)) bool8 AngledWipes_SetWipeData(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08149C3C: .4byte gUnknown_203A86C\n\t"
-        "_08149C40: .4byte gUnknown_85A8880\n\t"
+        "_08149C40: .4byte sAngledWipes_MoveData\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8694,7 +9145,7 @@ __attribute__((naked)) bool8 AngledWipes_TryEnd(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149D88: .4byte gUnknown_85A88C6\n\t"
+        "_08149D88: .4byte sAngledWipes_EndDelays\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8907,14 +9358,14 @@ __attribute__((naked)) void Phase2Task_Magma(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08149EEC: .4byte gUnknown_85A88D4\n\t"
+        "_08149EEC: .4byte sTransitionIntroFuncs\n\t"
         "_08149EF0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) bool8 Phase1_TransitionAll_Func1(struct Task *task)
+__attribute__((naked)) bool8 TransitionIntro_FadeToGray(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8971,7 +9422,7 @@ __attribute__((naked)) bool8 Phase1_TransitionAll_Func1(struct Task *task)
 }
 
 
-__attribute__((naked)) bool8 Phase1_TransitionAll_Func2(struct Task *task)
+__attribute__((naked)) bool8 TransitionIntro_FadeFromGray(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9663,7 +10114,7 @@ __attribute__((naked)) void sub_0814A2E8(void)
     );
 }
 
-__attribute__((naked)) void Phase2_29_Func1(void)
+__attribute__((naked)) bool8 FrontierLogoWiggle_Init(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9698,14 +10149,14 @@ __attribute__((naked)) void Phase2_29_Func1(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0814A428: .4byte 0x01000400\n\t"
-        "_0814A42C: .4byte gUnknown_85A76B0\n\t"
-        "_0814A430: .4byte gUnknown_85A7690\n\t"
+        "_0814A42C: .4byte sFrontierLogo_Tileset\n\t"
+        "_0814A430: .4byte sFrontierLogo_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_29_Func2(void)
+__attribute__((naked)) bool8 FrontierLogoWiggle_SetGfx(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9738,14 +10189,14 @@ __attribute__((naked)) void Phase2_29_Func2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814A474: .4byte gUnknown_85A7D3C\n\t"
+        "_0814A474: .4byte sFrontierLogo_Tilemap\n\t"
         "_0814A478: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2Task_Swirl(void)
+__attribute__((naked)) void Task_FrontierLogoWiggle(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9773,14 +10224,14 @@ __attribute__((naked)) void Phase2Task_Swirl(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814A4AC: .4byte gUnknown_85A9480\n\t"
+        "_0814A4AC: .4byte sFrontierLogoWiggle_Funcs\n\t"
         "_0814A4B0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2Task_Wave(void)
+__attribute__((naked)) void Task_FrontierLogoWave(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9808,14 +10259,14 @@ __attribute__((naked)) void Phase2Task_Wave(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814A4E4: .4byte gUnknown_85A9498\n\t"
+        "_0814A4E4: .4byte sFrontierLogoWave_Funcs\n\t"
         "_0814A4E8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_30_Func1(void)
+__attribute__((naked)) bool8 FrontierLogoWave_Init(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9886,14 +10337,14 @@ __attribute__((naked)) void Phase2_30_Func1(void)
         "_0814A580: .4byte 0x04000050\n\t"
         "_0814A584: .4byte 0x04000052\n\t"
         "_0814A588: .4byte 0x01000400\n\t"
-        "_0814A58C: .4byte gUnknown_85A76B0\n\t"
-        "_0814A590: .4byte gUnknown_85A7690\n\t"
+        "_0814A58C: .4byte sFrontierLogo_Tileset\n\t"
+        "_0814A590: .4byte sFrontierLogo_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_30_Func2(void)
+__attribute__((naked)) bool8 FrontierLogoWave_SetGfx(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9915,13 +10366,13 @@ __attribute__((naked)) void Phase2_30_Func2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814A5BC: .4byte gUnknown_85A7D3C\n\t"
+        "_0814A5BC: .4byte sFrontierLogo_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_30_Func3(void)
+__attribute__((naked)) bool8 FrontierLogoWave_InitScanline(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -9956,16 +10407,16 @@ __attribute__((naked)) void Phase2_30_Func3(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814A600: .4byte VBlankCB_Phase2_30 + 1\n\t"
+        "_0814A600: .4byte VBlankCB_FrontierLogoWave + 1\n\t"
         "_0814A604: .4byte gUnknown_2039048\n\t"
         "_0814A608: .4byte gUnknown_203A86C\n\t"
-        "_0814A60C: .4byte HBlankCB_Phase2_30 + 1\n\t"
+        "_0814A60C: .4byte HBlankCB_FrontierLogoWave + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_30_Func4(void)
+__attribute__((naked)) bool8 FrontierLogoWave_Main(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10121,13 +10572,13 @@ __attribute__((naked)) void Phase2_30_Func4(void)
         "_0814A734: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814A738: .4byte gUnknown_203A86C\n\t"
         "_0814A73C: .4byte gPaletteFade\n\t"
-        "_0814A740: .4byte Phase2Task_Wave + 1\n\t"
+        "_0814A740: .4byte Task_FrontierLogoWave + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void VBlankCB_Phase2_30(void)
+__attribute__((naked)) void VBlankCB_FrontierLogoWave(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10168,7 +10619,7 @@ __attribute__((naked)) void VBlankCB_Phase2_30(void)
 }
 
 
-__attribute__((naked)) void HBlankCB_Phase2_30(void)
+__attribute__((naked)) void HBlankCB_FrontierLogoWave(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10193,7 +10644,7 @@ __attribute__((naked)) void HBlankCB_Phase2_30(void)
 }
 
 
-__attribute__((naked)) void Phase2Task_WhiteFade(void)
+__attribute__((naked)) void Task_FrontierSquares(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10221,14 +10672,14 @@ __attribute__((naked)) void Phase2Task_WhiteFade(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814A7E0: .4byte gUnknown_85A94A8\n\t"
+        "_0814A7E0: .4byte sFrontierSquares_Funcs\n\t"
         "_0814A7E4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Task_BattleTransitionMain(void)
+__attribute__((naked)) void Task_FrontierSquaresSpiral(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10256,14 +10707,14 @@ __attribute__((naked)) void Task_BattleTransitionMain(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814A818: .4byte gUnknown_85A94B8\n\t"
+        "_0814A818: .4byte sFrontierSquaresSpiral_Funcs\n\t"
         "_0814A81C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void TransitionPhase1_Task_RunFuncs(void)
+__attribute__((naked)) void Task_FrontierSquaresScroll(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10291,14 +10742,14 @@ __attribute__((naked)) void TransitionPhase1_Task_RunFuncs(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814A850: .4byte gUnknown_85A94CC\n\t"
+        "_0814A850: .4byte sFrontierSquaresScroll_Funcs\n\t"
         "_0814A854: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_31_Func1(void)
+__attribute__((naked)) bool8 FrontierSquares_Init(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10363,14 +10814,14 @@ __attribute__((naked)) void Phase2_31_Func1(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814A8E0: .4byte gUnknown_85A8048\n\t"
-        "_0814A8E4: .4byte gUnknown_85A8028\n\t"
+        "_0814A8E0: .4byte sFrontierSquares_FilledBg_Tileset\n\t"
+        "_0814A8E4: .4byte sFrontierSquares_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_31_Func2(void)
+__attribute__((naked)) bool8 FrontierSquares_Draw(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10428,13 +10879,13 @@ __attribute__((naked)) void Phase2_31_Func2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814A954: .4byte gUnknown_85A83D8\n\t"
+        "_0814A954: .4byte sFrontierSquares_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_31_Func3(void)
+__attribute__((naked)) bool8 FrontierSquares_Shrink(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10497,12 +10948,12 @@ __attribute__((naked)) void Phase2_31_Func3(void)
         "	b _0814A9DE\n\t"
         "	.align 2, 0\n\t"
         "_0814A9CC: .4byte 0xFFFF7FFF\n\t"
-        "_0814A9D0: .4byte gUnknown_85A81A4\n\t"
+        "_0814A9D0: .4byte sFrontierSquares_EmptyBg_Tileset\n\t"
         "_0814A9D4:\n\t"
         "	ldr r0, _0814A9D8\n\t"
         "	b _0814A9DE\n\t"
         "	.align 2, 0\n\t"
-        "_0814A9D8: .4byte gUnknown_85A82A4\n\t"
+        "_0814A9D8: .4byte sFrontierSquares_Shrink1_Tileset\n\t"
         "_0814A9DC:\n\t"
         "	ldr r0, _0814A9E8\n\t"
         "_0814A9DE:\n\t"
@@ -10510,7 +10961,7 @@ __attribute__((naked)) void Phase2_31_Func3(void)
         "	bl LZ77UnCompVram\n\t"
         "	b _0814AA0C\n\t"
         "	.align 2, 0\n\t"
-        "_0814A9E8: .4byte gUnknown_85A8354\n\t"
+        "_0814A9E8: .4byte sFrontierSquares_Shrink2_Tileset\n\t"
         "_0814A9EC:\n\t"
         "	movs r0, #0x20\n\t"
         "	str r0, [sp]\n\t"
@@ -10543,7 +10994,7 @@ __attribute__((naked)) void Phase2_31_Func3(void)
 }
 
 
-__attribute__((naked)) void Phase2_33_Func1(void)
+__attribute__((naked)) bool8 FrontierSquaresSpiral_Init(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10616,14 +11067,14 @@ __attribute__((naked)) void Phase2_33_Func1(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814AABC: .4byte gUnknown_85A8048\n\t"
-        "_0814AAC0: .4byte gUnknown_85A8028\n\t"
+        "_0814AABC: .4byte sFrontierSquares_FilledBg_Tileset\n\t"
+        "_0814AAC0: .4byte sFrontierSquares_Palette\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_33_Func2(void)
+__attribute__((naked)) bool8 FrontierSquaresSpiral_Outward(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10685,13 +11136,13 @@ __attribute__((naked)) void Phase2_33_Func2(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0814AB3C: .4byte sFrontierSquaresSpiral_Positions\n\t"
-        "_0814AB40: .4byte gUnknown_85A83D8\n\t"
+        "_0814AB40: .4byte sFrontierSquares_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_33_Func3(void)
+__attribute__((naked)) bool8 FrontierSquaresSpiral_SetBlack(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10723,7 +11174,7 @@ __attribute__((naked)) void Phase2_33_Func3(void)
 }
 
 
-__attribute__((naked)) void Phase2_33_Func4(void)
+__attribute__((naked)) bool8 FrontierSquaresSpiral_Inward(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10779,7 +11230,7 @@ __attribute__((naked)) void Phase2_33_Func4(void)
         "	bl CopyRectToBgTilemapBufferRect\n\t"
         "	b _0814AC38\n\t"
         "	.align 2, 0\n\t"
-        "_0814ABE4: .4byte gUnknown_85A83D8\n\t"
+        "_0814ABE4: .4byte sFrontierSquares_Tilemap\n\t"
         "_0814ABE8: .4byte sFrontierSquaresSpiral_Positions\n\t"
         "_0814ABEC:\n\t"
         "	movs r1, #0xc\n\t"
@@ -10843,7 +11294,7 @@ __attribute__((naked)) void Phase2_33_Func4(void)
 }
 
 
-__attribute__((naked)) void Phase2_31_33_Func5(void)
+__attribute__((naked)) bool8 FrontierSquares_End(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10881,7 +11332,7 @@ __attribute__((naked)) void Phase2_31_33_Func5(void)
 }
 
 
-__attribute__((naked)) void sub_0814ACA4(void)
+__attribute__((naked)) void Task_ScrollBg(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10928,7 +11379,7 @@ __attribute__((naked)) void sub_0814ACA4(void)
 }
 
 
-__attribute__((naked)) void Phase2_32_Func1(void)
+__attribute__((naked)) bool8 FrontierSquaresScroll_Init(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -10986,11 +11437,11 @@ __attribute__((naked)) void Phase2_32_Func1(void)
         "	beq _0814AD8E\n\t"
         "	b _0814ADDC\n\t"
         "	.align 2, 0\n\t"
-        "_0814AD74: .4byte gUnknown_85A8048\n\t"
-        "_0814AD78: .4byte gUnknown_85A8028\n\t"
+        "_0814AD74: .4byte sFrontierSquares_FilledBg_Tileset\n\t"
+        "_0814AD78: .4byte sFrontierSquares_Palette\n\t"
         "_0814AD7C: .4byte gBattle_BG0_X\n\t"
         "_0814AD80: .4byte gBattle_BG0_Y\n\t"
-        "_0814AD84: .4byte sub_0814ACA4 + 1\n\t"
+        "_0814AD84: .4byte Task_ScrollBg + 1\n\t"
         "_0814AD88:\n\t"
         "	cmp r1, #2\n\t"
         "	beq _0814ADC0\n\t"
@@ -11062,7 +11513,7 @@ __attribute__((naked)) void Phase2_32_Func1(void)
 }
 
 
-__attribute__((naked)) void Phase2_32_Func2(void)
+__attribute__((naked)) bool8 FrontierSquaresScroll_Draw(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -11115,14 +11566,14 @@ __attribute__((naked)) void Phase2_32_Func2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814AE6C: .4byte gUnknown_85A9503\n\t"
-        "_0814AE70: .4byte gUnknown_85A83D8\n\t"
+        "_0814AE6C: .4byte sFrontierSquaresScroll_Positions\n\t"
+        "_0814AE70: .4byte sFrontierSquares_Tilemap\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_32_Func3(void)
+__attribute__((naked)) bool8 FrontierSquaresScroll_SetBlack(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -11148,7 +11599,7 @@ __attribute__((naked)) void Phase2_32_Func3(void)
 }
 
 
-__attribute__((naked)) void Phase2_32_Func4(void)
+__attribute__((naked)) bool8 FrontierSquaresScroll_Erase(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -11198,14 +11649,14 @@ __attribute__((naked)) void Phase2_32_Func4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814AEF8: .4byte gUnknown_85A9503\n\t"
-        "_0814AEFC: .4byte sub_0814ACA4 + 1\n\t"
+        "_0814AEF8: .4byte sFrontierSquaresScroll_Positions\n\t"
+        "_0814AEFC: .4byte Task_ScrollBg + 1\n\t"
         ".syntax divided\n\t"
     );
 }
 
 
-__attribute__((naked)) void Phase2_32_Func5(void)
+__attribute__((naked)) bool8 FrontierSquaresScroll_End(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -11257,3 +11708,249 @@ __attribute__((naked)) void Phase2_32_Func5(void)
         ".syntax divided\n\t"
     );
 }
+
+#define BATTLE_TRANSITION_TASK_DATA __attribute__((section(".rodata.battle_transition_task_data")))
+
+typedef bool8 (*TransitionSpriteCallback)(struct Sprite *);
+
+// All battle transitions use the same intro.
+static const TaskFunc sTasks_Intro[B_TRANSITION_COUNT] BATTLE_TRANSITION_TASK_DATA =
+{
+    [0 ... B_TRANSITION_COUNT - 1] = &Task_Intro,
+};
+
+// After the intro each transition has a unique main task.
+static const TaskFunc sTasks_Main[B_TRANSITION_COUNT] BATTLE_TRANSITION_TASK_DATA =
+{
+    [B_TRANSITION_BLUR] = Task_Blur,
+    [B_TRANSITION_SWIRL] = Task_Swirl,
+    [B_TRANSITION_SHUFFLE] = Task_Shuffle,
+    [B_TRANSITION_BIG_POKEBALL] = Task_BigPokeball,
+    [B_TRANSITION_POKEBALLS_TRAIL] = Task_PokeballsTrail,
+    [B_TRANSITION_CLOCKWISE_WIPE] = Task_ClockwiseWipe,
+    [B_TRANSITION_RIPPLE] = Task_Ripple,
+    [B_TRANSITION_WAVE] = Task_Wave,
+    [B_TRANSITION_SLICE] = Task_Slice,
+    [B_TRANSITION_WHITE_BARS_FADE] = Task_WhiteBarsFade,
+    [B_TRANSITION_GRID_SQUARES] = Task_GridSquares,
+    [B_TRANSITION_ANGLED_WIPES] = Task_AngledWipes,
+    [B_TRANSITION_SIDNEY] = Task_Sidney,
+    [B_TRANSITION_PHOEBE] = Task_Phoebe,
+    [B_TRANSITION_GLACIA] = Task_Glacia,
+    [B_TRANSITION_DRAKE] = Task_Drake,
+    [B_TRANSITION_CHAMPION] = Task_Champion,
+    [B_TRANSITION_AQUA] = Task_Aqua,
+    [B_TRANSITION_MAGMA] = Task_Magma,
+    [B_TRANSITION_REGICE] = Task_Regice,
+    [B_TRANSITION_REGISTEEL] = Task_Registeel,
+    [B_TRANSITION_REGIROCK] = Task_Regirock,
+    [B_TRANSITION_KYOGRE] = Task_Kyogre,
+    [B_TRANSITION_GROUDON] = Task_Groudon,
+    [B_TRANSITION_RAYQUAZA] = Task_Rayquaza,
+    [B_TRANSITION_SHRED_SPLIT] = Task_ShredSplit,
+    [B_TRANSITION_BLACKHOLE] = Task_Blackhole,
+    [B_TRANSITION_BLACKHOLE_PULSATE] = Task_BlackholePulsate,
+    [B_TRANSITION_RECTANGULAR_SPIRAL] = Task_RectangularSpiral,
+    [B_TRANSITION_FRONTIER_LOGO_WIGGLE] = Task_FrontierLogoWiggle,
+    [B_TRANSITION_FRONTIER_LOGO_WAVE] = Task_FrontierLogoWave,
+    [B_TRANSITION_FRONTIER_SQUARES] = Task_FrontierSquares,
+    [B_TRANSITION_FRONTIER_SQUARES_SCROLL] = Task_FrontierSquaresScroll,
+    [B_TRANSITION_FRONTIER_SQUARES_SPIRAL] = Task_FrontierSquaresSpiral,
+    [B_TRANSITION_FRONTIER_CIRCLES_MEET] = Task_FrontierCirclesMeet,
+    [B_TRANSITION_FRONTIER_CIRCLES_CROSS] = Task_FrontierCirclesCross,
+    [B_TRANSITION_FRONTIER_CIRCLES_ASYMMETRIC_SPIRAL] = Task_FrontierCirclesAsymmetricSpiral,
+    [B_TRANSITION_FRONTIER_CIRCLES_SYMMETRIC_SPIRAL] = Task_FrontierCirclesSymmetricSpiral,
+    [B_TRANSITION_FRONTIER_CIRCLES_MEET_IN_SEQ] = Task_FrontierCirclesMeetInSeq,
+    [B_TRANSITION_FRONTIER_CIRCLES_CROSS_IN_SEQ] = Task_FrontierCirclesCrossInSeq,
+    [B_TRANSITION_FRONTIER_CIRCLES_ASYMMETRIC_SPIRAL_IN_SEQ] = Task_FrontierCirclesAsymmetricSpiralInSeq,
+    [B_TRANSITION_FRONTIER_CIRCLES_SYMMETRIC_SPIRAL_IN_SEQ] = Task_FrontierCirclesSymmetricSpiralInSeq,
+};
+
+static const TransitionStateFunc sTaskHandlers[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Transition_StartIntro,
+    Transition_WaitForIntro,
+    Transition_StartMain,
+    Transition_WaitForMain,
+};
+
+static const TransitionStateFunc sBlur_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Blur_Init,
+    Blur_Main,
+    Blur_End,
+};
+
+static const TransitionStateFunc sSwirl_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Swirl_Init,
+    Swirl_End,
+};
+
+static const TransitionStateFunc sShuffle_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Shuffle_Init,
+    Shuffle_End,
+};
+
+static const TransitionStateFunc sAqua_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Aqua_Init,
+    Aqua_SetGfx,
+    PatternWeave_Blend1,
+    PatternWeave_Blend2,
+    PatternWeave_FinishAppear,
+    FramesCountdown,
+    PatternWeave_CircularMask,
+};
+
+static const TransitionStateFunc sMagma_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Magma_Init,
+    Magma_SetGfx,
+    PatternWeave_Blend1,
+    PatternWeave_Blend2,
+    PatternWeave_FinishAppear,
+    FramesCountdown,
+    PatternWeave_CircularMask,
+};
+
+static const TransitionStateFunc sBigPokeball_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    BigPokeball_Init,
+    BigPokeball_SetGfx,
+    PatternWeave_Blend1,
+    PatternWeave_Blend2,
+    PatternWeave_FinishAppear,
+    PatternWeave_CircularMask,
+};
+
+static const TransitionStateFunc sRegice_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Regi_Init,
+    Regice_SetGfx,
+    PatternWeave_Blend1,
+    PatternWeave_Blend2,
+    PatternWeave_FinishAppear,
+    PatternWeave_CircularMask,
+};
+
+static const TransitionStateFunc sRegisteel_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Regi_Init,
+    Registeel_SetGfx,
+    PatternWeave_Blend1,
+    PatternWeave_Blend2,
+    PatternWeave_FinishAppear,
+    PatternWeave_CircularMask,
+};
+
+static const TransitionStateFunc sRegirock_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Regi_Init,
+    Regirock_SetGfx,
+    PatternWeave_Blend1,
+    PatternWeave_Blend2,
+    PatternWeave_FinishAppear,
+    PatternWeave_CircularMask,
+};
+
+static const TransitionStateFunc sKyogre_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    WeatherTrio_BgFadeBlack,
+    WeatherTrio_WaitFade,
+    Kyogre_Init,
+    Kyogre_PaletteFlash,
+    Kyogre_PaletteBrighten,
+    FramesCountdown,
+    WeatherDuo_FadeOut,
+    WeatherDuo_End,
+};
+
+static const TransitionStateFunc sPokeballsTrail_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    PokeballsTrail_Init,
+    PokeballsTrail_Main,
+    PokeballsTrail_End,
+};
+
+#define NUM_POKEBALL_TRAILS 5
+static const s16 sPokeballsTrail_StartXCoords[2] BATTLE_TRANSITION_TASK_DATA = {-16, DISPLAY_WIDTH + 16};
+static const s16 sPokeballsTrail_Delays[NUM_POKEBALL_TRAILS] BATTLE_TRANSITION_TASK_DATA = {0, 32, 64, 18, 48};
+static const s16 sPokeballsTrail_Speeds[2] BATTLE_TRANSITION_TASK_DATA = {8, -8};
+
+static const TransitionStateFunc sClockwiseWipe_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    ClockwiseWipe_Init,
+    ClockwiseWipe_TopRight,
+    ClockwiseWipe_Right,
+    ClockwiseWipe_Bottom,
+    ClockwiseWipe_Left,
+    ClockwiseWipe_TopLeft,
+    ClockwiseWipe_End,
+};
+
+static const TransitionStateFunc sRipple_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Ripple_Init,
+    Ripple_Main,
+};
+
+static const TransitionStateFunc sWave_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Wave_Init,
+    Wave_Main,
+    Wave_End,
+};
+
+static const TransitionStateFunc sMugshot_Funcs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    Mugshot_Init,
+    Mugshot_SetGfx,
+    Mugshot_ShowBanner,
+    Mugshot_StartOpponentSlide,
+    Mugshot_WaitStartPlayerSlide,
+    Mugshot_WaitPlayerSlide,
+    Mugshot_GradualWhiteFade,
+    Mugshot_InitFadeWhiteToBlack,
+    Mugshot_FadeToBlack,
+    Mugshot_End,
+};
+
+static const u8 sMugshotsTrainerPicIDsTable[MUGSHOTS_COUNT] BATTLE_TRANSITION_TASK_DATA =
+{
+    [MUGSHOT_SIDNEY] = TRAINER_PIC_ELITE_FOUR_SIDNEY,
+    [MUGSHOT_PHOEBE] = TRAINER_PIC_ELITE_FOUR_PHOEBE,
+    [MUGSHOT_GLACIA] = TRAINER_PIC_ELITE_FOUR_GLACIA,
+    [MUGSHOT_DRAKE] = TRAINER_PIC_ELITE_FOUR_DRAKE,
+    [MUGSHOT_CHAMPION] = TRAINER_PIC_CHAMPION_WALLACE,
+};
+
+static const s16 sMugshotsOpponentRotationScales[MUGSHOTS_COUNT][2] BATTLE_TRANSITION_TASK_DATA =
+{
+    [MUGSHOT_SIDNEY] = {0x200, 0x200},
+    [MUGSHOT_PHOEBE] = {0x200, 0x200},
+    [MUGSHOT_GLACIA] = {0x1B0, 0x1B0},
+    [MUGSHOT_DRAKE] = {0x1A0, 0x1A0},
+    [MUGSHOT_CHAMPION] = {0x188, 0x188},
+};
+
+static const s16 sMugshotsOpponentCoords[MUGSHOTS_COUNT][2] BATTLE_TRANSITION_TASK_DATA =
+{
+    [MUGSHOT_SIDNEY] = {0, 0},
+    [MUGSHOT_PHOEBE] = {0, 0},
+    [MUGSHOT_GLACIA] = {-4, 4},
+    [MUGSHOT_DRAKE] = {0, 5},
+    [MUGSHOT_CHAMPION] = {-8, 7},
+};
+
+static const TransitionSpriteCallback sMugshotTrainerPicFuncs[] BATTLE_TRANSITION_TASK_DATA =
+{
+    MugshotTrainerPic_Pause,
+    MugshotTrainerPic_Init,
+    MugshotTrainerPic_Slide,
+    MugshotTrainerPic_SlideSlow,
+    MugshotTrainerPic_Pause,
+    MugshotTrainerPic_SlideOffscreen,
+    MugshotTrainerPic_Pause,
+};
