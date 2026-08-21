@@ -9478,6 +9478,7 @@ SECTIONS {
         data/data_b2d.o(.rodata.mid36);
         src/data/text/region_texts37.o(.rodata);
         data/data_b2d_mid37.o(.rodata);
+        src/pokemon_size_record.o(.rodata.pokemon_size_record_data);
         src/data/text/region_texts60.o(.rodata);
         data/data_b2d_mid60.o(.rodata);
         src/fldeff_misc.o(.rodata);

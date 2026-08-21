@@ -18,8 +18,28 @@ struct UnknownStruct
     u16 unk4;
 };
 
-// JP ROM data (the 16-entry size table stays in the ROM data region)
-extern const struct UnknownStruct sBigMonSizeTable[];
+#define POKEMON_SIZE_RECORD_DATA __attribute__((section(".rodata.pokemon_size_record_data")))
+
+static POKEMON_SIZE_RECORD_DATA const struct UnknownStruct sBigMonSizeTable[] =
+{
+    {  290,   1,      0 },
+    {  300,   1,     10 },
+    {  400,   2,    110 },
+    {  500,   4,    310 },
+    {  600,  20,    710 },
+    {  700,  50,   2710 },
+    {  800, 100,   7710 },
+    {  900, 150,  17710 },
+    { 1000, 150,  32710 },
+    { 1100, 100, -17826 },
+    { 1200,  50,  -7826 },
+    { 1300,  20,  -2826 },
+    { 1400,   5,   -826 },
+    { 1500,   2,   -326 },
+    { 1600,   1,   -126 },
+    { 1700,   1,    -26 },
+};
+
 extern const u8 gText_DecimalPoint[];
 extern const u8 gText_Marco[];
 // JP species-name table uses 5 kana + EOS per entry (6 bytes), unlike US
