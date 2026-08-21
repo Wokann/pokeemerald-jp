@@ -14,24 +14,6 @@
 
 	.section .rodata.mid59_post_sprite_resources
 
-	.incbin "baserom_jp.gba", 0x565f90, 0x14
-
-	.globl sSpriteTemplate_MoneyLabel
-sSpriteTemplate_MoneyLabel: @ 0x8565FA4
-	.hword 0x2722, 0x2722
-	.4byte 0x08565F90, 0x08565FA0
-	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
-
-	.globl sSpriteSheet_MoneyLabel
-sSpriteSheet_MoneyLabel: @ 0x8565FBC
-	.4byte 0x08D9B428
-	.hword 0x0100, 0x2722
-
-	.globl sSpritePalette_MoneyLabel
-sSpritePalette_MoneyLabel: @ 0x8565FC4
-	.4byte 0x08D9B2C0
-	.hword 0x2722, 0
-
 	.globl gContestMoves
 gContestMoves: @ 0x8565FCC
 	.incbin "baserom_jp.gba", 0x565fcc, 0xb18

@@ -9470,6 +9470,7 @@ SECTIONS {
         src/naming_screen.o(.rodata.naming_screen_mid59_ui_layout);
         src/naming_screen.o(.rodata.naming_screen_mid59_sprite_layout);
         src/naming_screen.o(.rodata.naming_screen_mid59_sprite_resources);
+        src/money.o(.rodata.money_label_data);
         data/data_b2d_mid59.o(.rodata.mid59_post_sprite_resources);
         src/data/text/region_texts34.o(.rodata);
         data/data_b2d.o(.rodata.mid34);

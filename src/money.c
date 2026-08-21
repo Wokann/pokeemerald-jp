@@ -1,20 +1,73 @@
 #include "global.h"
 #include "money.h"
 #include "event_data.h"
+#include "graphics.h"
 #include "text.h"
 #include "window.h"
 #include "strings.h"
 #include "string_util.h"
 #include "sprite.h"
+#include "decompress.h"
 
 #define MAX_MONEY 999999
+#define MONEY_LABEL_TAG 0x2722
+#define MONEY_LABEL_DATA __attribute__((section(".rodata.money_label_data")))
 
 extern u8 sMoneyBoxWindowId;
 extern u8 sMoneyLabelSpriteId;
-extern const struct CompressedSpriteSheet sSpriteSheet_MoneyLabel;
-extern const struct CompressedSpritePalette sSpritePalette_MoneyLabel;
-extern const struct SpriteTemplate sSpriteTemplate_MoneyLabel;
 extern const u8 gText_PokedollarVar1[];
+
+MONEY_LABEL_DATA static const struct OamData sOamData_MoneyLabel =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+MONEY_LABEL_DATA static const union AnimCmd sSpriteAnim_MoneyLabel[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+MONEY_LABEL_DATA static const union AnimCmd *const sSpriteAnimTable_MoneyLabel[] =
+{
+    sSpriteAnim_MoneyLabel,
+};
+
+MONEY_LABEL_DATA static const struct SpriteTemplate sSpriteTemplate_MoneyLabel =
+{
+    .tileTag = MONEY_LABEL_TAG,
+    .paletteTag = MONEY_LABEL_TAG,
+    .oam = &sOamData_MoneyLabel,
+    .anims = sSpriteAnimTable_MoneyLabel,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+MONEY_LABEL_DATA static const struct CompressedSpriteSheet sSpriteSheet_MoneyLabel =
+{
+    .data = gShopMenuMoney_Gfx,
+    .size = 256,
+    .tag = MONEY_LABEL_TAG,
+};
+
+MONEY_LABEL_DATA static const struct CompressedSpritePalette sSpritePalette_MoneyLabel =
+{
+    .data = gShopMenu_Pal,
+    .tag = MONEY_LABEL_TAG,
+};
 
 void PrintMoneyAmountInMoneyBoxWithBorder(u8 windowId, u8 tileStart, u8 pallete, int amount, u8 speed);
 void PrintMoneyAmountInMoneyBox(u8 windowId, int amount, u8 speed);

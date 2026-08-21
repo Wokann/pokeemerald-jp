@@ -8670,123 +8670,26 @@ static void Task_AnimateWirelessSignal(u8 taskId)
     }
 }
 
-// JP-specific variant of the US Task_OpenCenterWhiteColumn.  The C below is
-// the intended readable version; it is kept as naked asm because agbcc
-// allocates data[0] to a different register than the original build.
-// static void Task_OpenCenterWhiteColumn(u8 taskId)
-// {
-//     s16 *data = gTasks[taskId].data;
-//     if (data[0] == 0)
-//     {
-//         gUnknown_2031F40->wirelessWinRight = 0x78;
-//         gUnknown_2031F40->wirelessWinLeft = 0x78;
-//         gUnknown_2031F40->wirelessWinTop = 0;
-//         gUnknown_2031F40->wirelessWinBottom = 0xA0;
-//         SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
-//         SetGpuReg(REG_OFFSET_WINOUT, 0x10);
-//         SetGpuReg(REG_OFFSET_WININ, 0x13);
-//     }
-//     SetGpuReg(REG_OFFSET_WIN0H, gUnknown_2031F40->wirelessWinRight | (gUnknown_2031F40->wirelessWinLeft << 8));
-//     SetGpuReg(REG_OFFSET_WIN0V, gUnknown_2031F40->wirelessWinBottom | (gUnknown_2031F40->wirelessWinTop << 8));
-//     data[0]++;
-//     gUnknown_2031F40->wirelessWinLeft -= 5;
-//     gUnknown_2031F40->wirelessWinRight += 5;
-//     if (gUnknown_2031F40->wirelessWinLeft <= 0x4F)
-//         DestroyTask(taskId);
-// }
-__attribute__((naked)) void Task_OpenCenterWhiteColumn(u8 taskId)
+static void Task_OpenCenterWhiteColumn(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "\tpush {r4, r5, r6, lr}\n\t"
-        "\tlsls r0, r0, #0x18\n\t"
-        "\tlsrs r0, r0, #0x18\n\t"
-        "\tadds r6, r0, #0\n\t"
-        "\tlsls r0, r6, #2\n\t"
-        "\tadds r0, r0, r6\n\t"
-        "\tlsls r0, r0, #3\n\t"
-        "\tldr r1, _0807EDCC\n\t"
-        "\tadds r5, r0, r1\n\t"
-        "\tmovs r0, #0\n\t"
-        "\tldrsh r4, [r5, r0]\n\t"
-        "\tcmp r4, #0\n\t"
-        "\tbne _0807ED6E\n\t"
-        "\tldr r2, _0807EDD0\n\t"
-        "\tldr r0, [r2]\n\t"
-        "\tadds r3, r0, #0\n\t"
-        "\tadds r3, #0xfd\n\t"
-        "\tmovs r1, #0x78\n\t"
-        "\tstrb r1, [r3]\n\t"
-        "\tadds r0, #0xfb\n\t"
-        "\tstrb r1, [r0]\n\t"
-        "\tldr r0, [r2]\n\t"
-        "\tadds r0, #0xfc\n\t"
-        "\tstrb r4, [r0]\n\t"
-        "\tldr r0, [r2]\n\t"
-        "\tadds r0, #0xfe\n\t"
-        "\tmovs r1, #0xa0\n\t"
-        "\tstrb r1, [r0]\n\t"
-        "\tmovs r1, #0x80\n\t"
-        "\tlsls r1, r1, #6\n\t"
-        "\tmovs r0, #0\n\t"
-        "\tbl SetGpuRegBits\n\t"
-        "\tmovs r0, #0x4a\n\t"
-        "\tmovs r1, #0x10\n\t"
-        "\tbl SetGpuReg\n\t"
-        "\tmovs r0, #0x48\n\t"
-        "\tmovs r1, #0x13\n\t"
-        "\tbl SetGpuReg\n\t"
-        "_0807ED6E:\n\t"
-        "\tldr r4, _0807EDD0\n\t"
-        "\tldr r0, [r4]\n\t"
-        "\tadds r1, r0, #0\n\t"
-        "\tadds r1, #0xfd\n\t"
-        "\tldrb r1, [r1]\n\t"
-        "\tadds r0, #0xfb\n\t"
-        "\tldrb r0, [r0]\n\t"
-        "\tlsls r0, r0, #8\n\t"
-        "\torrs r1, r0\n\t"
-        "\tmovs r0, #0x40\n\t"
-        "\tbl SetGpuReg\n\t"
-        "\tldr r0, [r4]\n\t"
-        "\tadds r1, r0, #0\n\t"
-        "\tadds r1, #0xfe\n\t"
-        "\tldrb r1, [r1]\n\t"
-        "\tadds r0, #0xfc\n\t"
-        "\tldrb r0, [r0]\n\t"
-        "\tlsls r0, r0, #8\n\t"
-        "\torrs r1, r0\n\t"
-        "\tmovs r0, #0x44\n\t"
-        "\tbl SetGpuReg\n\t"
-        "\tldrh r0, [r5]\n\t"
-        "\tadds r0, #1\n\t"
-        "\tstrh r0, [r5]\n\t"
-        "\tldr r1, [r4]\n\t"
-        "\tadds r1, #0xfb\n\t"
-        "\tldrb r0, [r1]\n\t"
-        "\tsubs r0, #5\n\t"
-        "\tstrb r0, [r1]\n\t"
-        "\tldr r1, [r4]\n\t"
-        "\tadds r1, #0xfd\n\t"
-        "\tldrb r0, [r1]\n\t"
-        "\tadds r0, #5\n\t"
-        "\tstrb r0, [r1]\n\t"
-        "\tldr r0, [r4]\n\t"
-        "\tadds r0, #0xfb\n\t"
-        "\tldrb r0, [r0]\n\t"
-        "\tcmp r0, #0x4f\n\t"
-        "\tbhi _0807EDC6\n\t"
-        "\tadds r0, r6, #0\n\t"
-        "\tbl DestroyTask\n\t"
-        "_0807EDC6:\n\t"
-        "\tpop {r4, r5, r6}\n\t"
-        "\tpop {r0}\n\t"
-        "\tbx r0\n\t"
-        "\t.align 2, 0\n\t"
-        "_0807EDCC: .4byte gUnknown_3005B68\n\t"
-        "_0807EDD0: .4byte gUnknown_2031F40\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+
+    if (data[0] == 0)
+    {
+        gUnknown_2031F40->wirelessWinLeft = gUnknown_2031F40->wirelessWinRight = 0x78;
+        gUnknown_2031F40->wirelessWinTop = 0;
+        gUnknown_2031F40->wirelessWinBottom = 0xA0;
+        SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        SetGpuReg(REG_OFFSET_WINOUT, 0x10);
+        SetGpuReg(REG_OFFSET_WININ, 0x13);
+    }
+    SetGpuReg(REG_OFFSET_WIN0H, gUnknown_2031F40->wirelessWinRight | (gUnknown_2031F40->wirelessWinLeft << 8));
+    SetGpuReg(REG_OFFSET_WIN0V, gUnknown_2031F40->wirelessWinBottom | (gUnknown_2031F40->wirelessWinTop << 8));
+    data[0]++;
+    gUnknown_2031F40->wirelessWinLeft -= 5;
+    gUnknown_2031F40->wirelessWinRight += 5;
+    if (gUnknown_2031F40->wirelessWinLeft <= 0x4F)
+        DestroyTask(taskId);
 }
 
 static void Task_CloseCenterWhiteColumn(u8 taskId)

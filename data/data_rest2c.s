@@ -827,12 +827,18 @@ gUnknown_8D9B1B4: @ 0x8D9B1B4
 	.globl gUnknown_8D9B2C0
 gUnknown_8D9B2C0: @ 0x8D9B2C0
 	.incbin "graphics/misc/gUnknown_8D9B2C0.4bpp.lz"
+	.globl gShopMenu_Pal
+	.set gShopMenu_Pal, gUnknown_8D9B2C0
 
 
 	.globl gUnknown_8D9B2E8
 gUnknown_8D9B2E8: @ 0x8D9B2E8
 	.incbin "graphics/misc/gUnknown_8D9B2E8.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD9B426, 0x8E
+	.incbin "baserom_jp.gba", 0xD9B426, 0x2
+
+	.globl gShopMenuMoney_Gfx
+gShopMenuMoney_Gfx: @ 0x8D9B428
+	.incbin "baserom_jp.gba", 0xD9B428, 0x8C
 
 
 	.globl gUnknown_8D9B4B4
