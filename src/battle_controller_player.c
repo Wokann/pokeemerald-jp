@@ -11117,7 +11117,7 @@ __attribute__((naked)) void PlayerHandleIntroTrainerBallThrow(void)
         "_0805C7EC: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
         "_0805C7F0: .4byte sub_0805C81C + 1\n\t"
         "_0805C7F4: .4byte 0x0000D6F8\n\t"
-        "_0805C7F8: .4byte gUnknown_82D961C\n\t"
+        "_0805C7F8: .4byte gTrainerBackPicPaletteTable\n\t"
         "_0805C7FC: .4byte gSaveBlock2Ptr\n\t"
         "_0805C800: .4byte task05_08033660 + 1\n\t"
         "_0805C804: .4byte gTasks\n\t"

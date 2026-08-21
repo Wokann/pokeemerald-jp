@@ -9320,9 +9320,8 @@ SECTIONS {
         src/data/shiny_palette_table.o(.rodata);
         src/data/trainer_front_anims.o(.rodata);
         src/data/trainer_front_pic_coords.o(.rodata);
-        data/data_b_mid2b5.o(.rodata);
         src/data/trainer_back_pic_coords.o(.rodata);
-        data/data_b_mid2b6.o(.rodata);
+        src/data/trainer_back_pic_coords.o(.rodata.trainer_back_pic_tables);
         src/data/enemy_mon_elevation.o(.rodata);
         src/data/front_pic_anims.o(.rodata);
         src/data/front_pic_table.o(.rodata);

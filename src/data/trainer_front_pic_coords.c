@@ -1,5 +1,7 @@
 #include "global.h"
 #include "constants/trainers.h"
+#include "sprite.h"
+#include "battle_affine.h"
 #include "trainer_front_pic_coords.h"
 
 // 0x82D8D70
@@ -99,3 +101,6 @@ const struct MonCoords gTrainerFrontPicCoords[] =
     [TRAINER_PIC_RS_BRENDAN] = { .size = 8, .y_offset = 1 },
     [TRAINER_PIC_RS_MAY] = { .size = 8, .y_offset = 1 }
 };
+
+#include "trainer_graphics/front_pic_tables.h"
+#include "trainer_graphics/back_pic_anims.h"

@@ -4964,7 +4964,7 @@ __attribute__((naked)) void SetMultiuseSpriteTemplateToTrainerBack(u16 trainerPi
         "	.align 2, 0\n\t"
         "_08069CA4: .4byte gMultiuseSpriteTemplate\n\t"
         "_08069CA8: .4byte gUnknown_82FA784\n\t"
-        "_08069CAC: .4byte gUnknown_82D959C\n\t"
+        "_08069CAC: .4byte gTrainerBackAnimsPtrTable\n\t"
         "_08069CB0:\n\t"
         "	ldr r0, _08069CD0\n\t"
         "	ldr r1, [r0]\n\t"

@@ -6400,7 +6400,7 @@ __attribute__((naked)) void RecordedPlayerHandleIntroTrainerBallThrow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0818C920: .4byte gSaveBlock2Ptr\n\t"
-        "_0818C924: .4byte gUnknown_82D961C\n\t"
+        "_0818C924: .4byte gTrainerBackPicPaletteTable\n\t"
         "_0818C928: .4byte gSprites\n\t"
         "_0818C92C: .4byte gBattlerSpriteIds\n\t"
         "_0818C930: .4byte gActiveBattler\n\t"

@@ -4897,7 +4897,7 @@ __attribute__((naked)) void WallyHandleIntroTrainerBallThrow(void)
         "_0816A85C: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
         "_0816A860: .4byte sub_0805C81C + 1\n\t"
         "_0816A864: .4byte 0x0000D6F8\n\t"
-        "_0816A868: .4byte gUnknown_82D961C\n\t"
+        "_0816A868: .4byte gTrainerBackPicPaletteTable\n\t"
         "_0816A86C: .4byte sub_0816AA0C + 1\n\t"
         "_0816A870: .4byte gTasks\n\t"
         "_0816A874: .4byte gBattleSpritesDataPtr\n\t"

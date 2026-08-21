@@ -1923,7 +1923,7 @@ __attribute__((naked)) void DecompressTrainerBackPic(u16 backPicId, u8 battler)
         "	.align 2, 0\n\t"
         "_0805DBF0: .4byte gTrainerBackPicTable\n\t"
         "_0805DBF4: .4byte gMonSpritesGfxPtr\n\t"
-        "_0805DBF8: .4byte gUnknown_82D961C\n\t"
+        "_0805DBF8: .4byte gTrainerBackPicPaletteTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4245,4 +4245,3 @@ __attribute__((naked)) bool32 ShouldPlayNormalMonCry(struct Pokemon *mon)
         ".syntax divided\n\t"
     );
 }
-

@@ -6538,7 +6538,7 @@ __attribute__((naked)) void PlayerPartnerHandleIntroTrainerBallThrow(void)
         "_081BDE88: .4byte 0x0000D6F9\n\t"
         "_081BDE8C: .4byte gPartnerTrainerId\n\t"
         "_081BDE90: .4byte 0x00000C03\n\t"
-        "_081BDE94: .4byte gUnknown_82D961C\n\t"
+        "_081BDE94: .4byte gTrainerBackPicPaletteTable\n\t"
         "_081BDE98:\n\t"
         "	ldrh r0, [r2]\n\t"
         "	bl GetFrontierTrainerFrontSpriteId\n\t"

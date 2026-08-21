@@ -5764,7 +5764,7 @@ __attribute__((naked)) void LinkPartnerHandleIntroTrainerBallThrow(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814DD60: .4byte gUnknown_82D961C\n\t"
+        "_0814DD60: .4byte gTrainerBackPicPaletteTable\n\t"
         "_0814DD64: .4byte gSprites\n\t"
         "_0814DD68: .4byte gBattlerSpriteIds\n\t"
         "_0814DD6C: .4byte gActiveBattler\n\t"

@@ -312,7 +312,7 @@ SONG_OBJS := $(patsubst sound/songs/midi/%.s,$(OBJ_DIR)/sound/songs/midi/%.o,$(S
 
 DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_b_mid1.o $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b.o $(OBJ_DIR)/data/data_b_mid2b3.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2b.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/data_b2d_mid47.o $(OBJ_DIR)/data/data_b2d_mid51.o $(OBJ_DIR)/data/data_b2d_mid30.o $(OBJ_DIR)/data/data_b2d_mid28.o $(OBJ_DIR)/data/data_b2d_mid26.o $(OBJ_DIR)/data/data_b2d_mid15.o $(OBJ_DIR)/data/data_b2d_mid54.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid37.o $(OBJ_DIR)/data/data_b2d_mid60.o $(OBJ_DIR)/data/data_b2d_mid61.o $(OBJ_DIR)/data/data_b2d_mid62.o $(OBJ_DIR)/data/data_b2d_mid38.o $(OBJ_DIR)/data/data_b2d_mid33.o $(OBJ_DIR)/data/data_b2d_mid32.o $(OBJ_DIR)/data/data_b2d_mid65.o $(OBJ_DIR)/data/data_b2d_rest.o $(OBJ_DIR)/data/data_b2d_mid69.o $(OBJ_DIR)/data/data_b2d_mid70.o $(OBJ_DIR)/data/data_b2d_mid98.o $(OBJ_DIR)/data/data_b2d_mid100.o $(OBJ_DIR)/data/mystery_gift.o $(OBJ_DIR)/data/sound_data.o $(OBJ_DIR)/data/rom_padding.o $(OBJ_DIR)/data/battle_textbox.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_none.o $(OBJ_DIR)/data/data_rest2b.o $(OBJ_DIR)/data/data_b2d_gfx_pokemon_main.o $(OBJ_DIR)/data/data_rest2c.o $(OBJ_DIR)/data/data_b2d_gfx_front.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 # Migrated data files now build from C or no longer contribute data.
-DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
+DATA_OBJS := $(filter-out $(OBJ_DIR)/data/data_b_mid2a.o $(OBJ_DIR)/data/data_b_mid2b5.o $(OBJ_DIR)/data/data_b_mid2b6.o $(OBJ_DIR)/data/data_b2d_mid55.o $(OBJ_DIR)/data/data_b2d_mid56.o $(OBJ_DIR)/data/data_b2d_mid57_b.o $(OBJ_DIR)/data/data_b2d_mid58.o $(OBJ_DIR)/data/data_b2d_mid59.o $(OBJ_DIR)/data/data_b2d_mid62.o,$(DATA_OBJS))
 
 OBJFILE := $(AS_OBJS) $(C_ASM_OBJS) $(C_OBJECTS) $(SONG_OBJS) $(DATA_OBJS)
 OBJFILE_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJFILE))
@@ -612,12 +612,6 @@ $(OBJ_DIR)/data/data_b_mid2b3.o: data/data_b_mid2b3.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/data_b_mid2b5.o: data/data_b_mid2b5.s baserom_jp.gba
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
-$(OBJ_DIR)/data/data_b_mid2b6.o: data/data_b_mid2b6.s baserom_jp.gba
-	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 # Union-room texts/RFU debug strings are _() charmap strings, so they go
 # through the same preproc pipeline as the region_texts files.
 $(C_BUILDDIR)/data/union_room.o: src/data/union_room.c src/data/union_room.h
@@ -944,13 +938,13 @@ $(C_BUILDDIR)/data/trainer_front_anims.o: src/data/trainer_front_anims.c src/dat
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trainer_front_anims.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/trainer_front_anims.gen.s
 
-$(C_BUILDDIR)/data/trainer_front_pic_coords.o: src/data/trainer_front_pic_coords.c src/data/trainer_front_pic_coords.h
+$(C_BUILDDIR)/data/trainer_front_pic_coords.o: src/data/trainer_front_pic_coords.c src/data/trainer_front_pic_coords.h src/data/trainer_graphics/front_pic_tables.h src/data/trainer_graphics/back_pic_anims.h
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/trainer_front_pic_coords.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trainer_front_pic_coords.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/trainer_front_pic_coords.gen.s
 
-$(C_BUILDDIR)/data/trainer_back_pic_coords.o: src/data/trainer_back_pic_coords.c src/data/trainer_back_pic_coords.h
+$(C_BUILDDIR)/data/trainer_back_pic_coords.o: src/data/trainer_back_pic_coords.c src/data/trainer_back_pic_coords.h src/data/trainer_graphics/back_pic_tables.h
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/trainer_back_pic_coords.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/trainer_back_pic_coords.gen.s | $(AS) $(ASFLAGS) -o $@ -
