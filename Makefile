@@ -202,6 +202,7 @@ $(C_BUILDDIR)/tv.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-section
 $(C_BUILDDIR)/bard_music.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/pokedex_area_region_map.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/diploma.o: CC1 = $(PREPROC) -i src/diploma.c charmap.txt | $(CC)
+$(C_BUILDDIR)/landmark.o: CC1 = $(PREPROC) -i src/landmark.c charmap.txt | $(CC)
 $(C_BUILDDIR)/pokedex_area_region_map.o: CC1 = $(PREPROC) -i src/pokedex_area_region_map.c charmap.txt | $(CC)
 $(C_BUILDDIR)/pokedex_cry_screen.o: CC1 = $(PREPROC) -i src/pokedex_cry_screen.c charmap.txt | $(CC)
 $(C_BUILDDIR)/braille.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
