@@ -23,17 +23,64 @@ enum {
     TAG_CURSOR,
 };
 
-// JP ROM data (the handler pointer and the bg/window templates stay in the
-// ROM data region at their JP addresses)
+#define FIELD_REGION_MAP_STATIC_DATA __attribute__((section(".rodata.field_region_map_static_data")))
+
+// The JP handler pointer remains in its original EWRAM location.
 extern EWRAM_DATA struct {
     MainCallback callback;
     u32 unused;
     struct RegionMap regionMap;
     u16 state;
 } *sFieldRegionMapHandler;
-extern const struct BgTemplate sFieldRegionMapBgTemplates[2];
-extern const struct WindowTemplate sFieldRegionMapWindowTemplates[3];
-extern const u8 gText_Hoenn[];
+
+// This is a normal, EOS-terminated UI string with no fixed-size padding.
+FIELD_REGION_MAP_STATIC_DATA
+const u8 gText_Hoenn[] = _("ホウエンちほう");
+
+FIELD_REGION_MAP_STATIC_DATA static const struct BgTemplate sFieldRegionMapBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 28,
+        .screenSize = 2,
+        .paletteMode = 1,
+        .priority = 2,
+        .baseTile = 0,
+    },
+};
+
+FIELD_REGION_MAP_STATIC_DATA static const struct WindowTemplate sFieldRegionMapWindowTemplates[] =
+{
+    [WIN_MAPSEC_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 19,
+        .tilemapTop = 17,
+        .width = 10,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    [WIN_TITLE] = {
+        .bg = 0,
+        .tilemapLeft = 22,
+        .tilemapTop = 1,
+        .width = 7,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 21,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
 
 static void MCB2_InitRegionMapRegisters(void);
 static void VBCB_FieldUpdateRegionMap(void);

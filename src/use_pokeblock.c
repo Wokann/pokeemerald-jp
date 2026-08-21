@@ -1,4 +1,270 @@
 #include "global.h"
+#include "bg.h"
+#include "menu_specialized.h"
+#include "pokemon.h"
+#include "sprite.h"
+#include "strings.h"
+#include "window.h"
+#include "constants/berry.h"
+#include "constants/characters.h"
+
+#define USE_POKEBLOCK_STATIC_DATA __attribute__((section(".rodata.use_pokeblock_static_data")))
+
+enum
+{
+    WIN_NAME,
+    WIN_NATURE,
+    WIN_TEXT,
+    WIN_COUNT,
+};
+
+#define TAG_UP_DOWN   0
+#define TAG_CONDITION 1
+
+// These three resources stay in the preceding JP raw resource block for now.
+#define USE_POKEBLOCK_UP_DOWN_PAL    ((const u16 *)(gUnknown_85BE99E + 2))
+#define USE_POKEBLOCK_UP_DOWN_GFX    (gUnknown_85BE99E + 0x22)
+#define USE_POKEBLOCK_CONDITION_PAL  ((const u16 *)(gUnknown_85BEBC0 + 0x174))
+
+extern const u8 gUnknown_85BE99E[];
+extern const u8 gUnknown_85BEBC0[];
+
+void SpriteCB_Condition(struct Sprite *sprite);
+
+// The condition/flavors are ordered counter-clockwise as displayed on the graph.
+static const u32 sConditionToMonData[CONDITION_COUNT] USE_POKEBLOCK_STATIC_DATA =
+{
+    [CONDITION_COOL]   = MON_DATA_COOL,
+    [CONDITION_TOUGH]  = MON_DATA_TOUGH,
+    [CONDITION_SMART]  = MON_DATA_SMART,
+    [CONDITION_CUTE]   = MON_DATA_CUTE,
+    [CONDITION_BEAUTY] = MON_DATA_BEAUTY,
+};
+
+static const u8 sConditionToFlavor[CONDITION_COUNT] USE_POKEBLOCK_STATIC_DATA =
+{
+    [CONDITION_COOL]   = FLAVOR_SPICY,
+    [CONDITION_TOUGH]  = FLAVOR_SOUR,
+    [CONDITION_SMART]  = FLAVOR_BITTER,
+    [CONDITION_CUTE]   = FLAVOR_SWEET,
+    [CONDITION_BEAUTY] = FLAVOR_DRY,
+};
+
+static const u8 sNatureTextColors[] USE_POKEBLOCK_STATIC_DATA =
+{
+    TEXT_COLOR_TRANSPARENT,
+    TEXT_COLOR_BLUE,
+    TEXT_COLOR_WHITE,
+};
+
+static const struct BgTemplate sBgTemplates[4] USE_POKEBLOCK_STATIC_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 0x1F,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 0x1E,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 3,
+        .mapBaseIndex = 0x1D,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0x100,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 0x17,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+};
+
+static const struct WindowTemplate sWindowTemplates[WIN_COUNT + 1] USE_POKEBLOCK_STATIC_DATA =
+{
+    [WIN_NAME] = {
+        .bg = 0,
+        .tilemapLeft = 13,
+        .tilemapTop = 1,
+        .width = 12,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    [WIN_NATURE] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 14,
+        .width = 10,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x31,
+    },
+    [WIN_TEXT] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 17,
+        .width = 28,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x45,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+static const struct WindowTemplate sUsePokeblockYesNoWinTemplate USE_POKEBLOCK_STATIC_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 24,
+    .tilemapTop = 11,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x7D,
+};
+
+static const u8 *const sConditionNames[CONDITION_COUNT] USE_POKEBLOCK_STATIC_DATA =
+{
+    [CONDITION_COOL]   = gText_Coolness,
+    [CONDITION_TOUGH]  = gText_Toughness,
+    [CONDITION_SMART]  = gText_Smartness,
+    [CONDITION_CUTE]   = gText_Cuteness,
+    [CONDITION_BEAUTY] = gText_Beauty3,
+};
+
+static const struct SpriteSheet sSpriteSheet_UpDown USE_POKEBLOCK_STATIC_DATA =
+{
+    USE_POKEBLOCK_UP_DOWN_GFX, 0x200, TAG_UP_DOWN,
+};
+
+static const struct SpritePalette sSpritePalette_UpDown USE_POKEBLOCK_STATIC_DATA =
+{
+    USE_POKEBLOCK_UP_DOWN_PAL, TAG_UP_DOWN,
+};
+
+static const s16 sUpDownCoordsOnGraph[CONDITION_COUNT][2] USE_POKEBLOCK_STATIC_DATA =
+{
+    [CONDITION_COOL]   = {156,  36},
+    [CONDITION_TOUGH]  = {117,  59},
+    [CONDITION_SMART]  = {117, 118},
+    [CONDITION_CUTE]   = {197, 118},
+    [CONDITION_BEAUTY] = {197,  59},
+};
+
+static const struct OamData sOam_UpDown USE_POKEBLOCK_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x16),
+    .x = 0,
+    .size = SPRITE_SIZE(32x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+static const union AnimCmd sAnim_Up[] USE_POKEBLOCK_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Down[] USE_POKEBLOCK_STATIC_DATA =
+{
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_UpDown[] USE_POKEBLOCK_STATIC_DATA =
+{
+    sAnim_Up,
+    sAnim_Down,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_UpDown USE_POKEBLOCK_STATIC_DATA =
+{
+    .tileTag = TAG_UP_DOWN,
+    .paletteTag = TAG_UP_DOWN,
+    .oam = &sOam_UpDown,
+    .anims = sAnims_UpDown,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct OamData sOam_Condition USE_POKEBLOCK_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+};
+
+static const union AnimCmd sAnim_Condition_0[] USE_POKEBLOCK_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Condition_1[] USE_POKEBLOCK_STATIC_DATA =
+{
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_Condition_2[] USE_POKEBLOCK_STATIC_DATA =
+{
+    ANIMCMD_FRAME(64, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_Condition[] USE_POKEBLOCK_STATIC_DATA =
+{
+    sAnim_Condition_0,
+    sAnim_Condition_1,
+    sAnim_Condition_2,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_Condition USE_POKEBLOCK_STATIC_DATA =
+{
+    .tileTag = TAG_CONDITION,
+    .paletteTag = TAG_CONDITION,
+    .oam = &sOam_Condition,
+    .anims = sAnims_Condition,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Condition,
+};
+
+static const struct SpritePalette sSpritePalette_Condition USE_POKEBLOCK_STATIC_DATA =
+{
+    USE_POKEBLOCK_CONDITION_PAL, TAG_CONDITION,
+};
 
 __attribute__((naked)) void ChooseMonToGivePokeblock(void)
 {
@@ -307,8 +573,8 @@ __attribute__((naked)) void sub_0816618C(void)
         "	bl LoadUserWindowBorderGfx\n\t"
         "	b _08166348\n\t"
         "	.align 2, 0\n\t"
-        "_08166268: .4byte gUnknown_85C09B0\n\t"
-        "_0816626C: .4byte gUnknown_85C09C0\n\t"
+        "_08166268: .4byte sBgTemplates\n\t"
+        "_0816626C: .4byte sWindowTemplates\n\t"
         "_08166270:\n\t"
         "	ldr r1, [r2]\n\t"
         "	b _0816634C\n\t"
@@ -1442,7 +1708,7 @@ __attribute__((naked)) void sub_08166B50(void)
         "_08166BE0: .4byte gPlayerParty\n\t"
         "_08166BE4: .4byte gText_GetsAPokeBlockQuestion\n\t"
         "_08166BE8: .4byte gStringVar4\n\t"
-        "_08166BEC: .4byte gUnknown_85C09E0\n\t"
+        "_08166BEC: .4byte sUsePokeblockYesNoWinTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1751,7 +2017,7 @@ __attribute__((naked)) void Pokeblock_BufferEnhancedStatText(void)
         "	bl StringAppend\n\t"
         "	b _08166E1C\n\t"
         "	.align 2, 0\n\t"
-        "_08166E0C: .4byte gUnknown_85C09E8\n\t"
+        "_08166E0C: .4byte sConditionNames\n\t"
         "_08166E10: .4byte gText_WasEnhanced\n\t"
         "_08166E14:\n\t"
         "	ldr r1, _08166E24\n\t"
@@ -1793,7 +2059,7 @@ __attribute__((naked)) void Pokeblock_GetMonContestStats(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08166E54: .4byte gUnknown_85C0994\n\t"
+        "_08166E54: .4byte sConditionToMonData\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1886,7 +2152,7 @@ __attribute__((naked)) void sub_08166E58(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08166F00: .4byte gUnknown_85C0994\n\t"
+        "_08166F00: .4byte sConditionToMonData\n\t"
         "_08166F04: .4byte gUnknown_203B95C\n\t"
         ".syntax divided\n\t"
     );
@@ -2073,7 +2339,7 @@ __attribute__((naked)) void sub_08166F88(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08167064: .4byte gUnknown_203B95C\n\t"
-        "_08167068: .4byte gUnknown_85C09A8\n\t"
+        "_08167068: .4byte sConditionToFlavor\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2290,12 +2556,12 @@ __attribute__((naked)) void sub_0816713C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081671C4: .4byte gUnknown_85C09FC\n\t"
-        "_081671C8: .4byte gUnknown_85C0A04\n\t"
+        "_081671C4: .4byte sSpriteSheet_UpDown\n\t"
+        "_081671C8: .4byte sSpritePalette_UpDown\n\t"
         "_081671CC: .4byte gUnknown_203B95C\n\t"
-        "_081671D0: .4byte gUnknown_85C0A0C\n\t"
+        "_081671D0: .4byte sUpDownCoordsOnGraph\n\t"
         "_081671D4: .4byte gUnknown_20205C8\n\t"
-        "_081671D8: .4byte gUnknown_85C0A40\n\t"
+        "_081671D8: .4byte sSpriteTemplate_UpDown\n\t"
         "_081671DC: .4byte sub_081671E0 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -3355,7 +3621,7 @@ __attribute__((naked)) void sub_081679A4(void)
         "_08167A7C: .4byte 0x0000804A\n\t"
         "_08167A80: .4byte gText_NumberOfBattles + 0xEA\n\t"
         "_08167A84: .4byte gNatureNamePointers\n\t"
-        "_08167A88: .4byte gUnknown_85C09AD\n\t"
+        "_08167A88: .4byte sNatureTextColors\n\t"
         "_08167A8C:\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #2\n\t"
@@ -4159,7 +4425,7 @@ __attribute__((naked)) void sub_08168050(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816808C: .4byte gUnknown_85C0A9C\n\t"
+        "_0816808C: .4byte sSpritePalette_Condition\n\t"
         "_08168090: .4byte gUnknown_85BEBC0\n\t"
         "_08168094: .4byte 0xFFFF0000\n\t"
         "_08168098: .4byte 0x0000FFFF\n\t"
@@ -4239,7 +4505,7 @@ __attribute__((naked)) void sub_0816809C(void)
         "	.align 2, 0\n\t"
         "_08168120: .4byte gUnknown_203B978\n\t"
         "_08168124: .4byte 0x00007B44\n\t"
-        "_08168128: .4byte gUnknown_85C0A84\n\t"
+        "_08168128: .4byte sSpriteTemplate_Condition\n\t"
         "_0816812C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -4291,7 +4557,7 @@ __attribute__((naked)) void sub_08168130(void)
     );
 }
 
-__attribute__((naked)) void sub_0816817C(void)
+__attribute__((naked)) void SpriteCB_Condition(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -1,5 +1,350 @@
 #include "global.h"
 #include "battle_anim.h"
+#include "graphics.h"
+#include "pokeball.h"
+#include "sprite.h"
+#include "task.h"
+#include "constants/battle_anim.h"
+#include "constants/rgb.h"
+
+#define BATTLE_ANIM_THROW_STATIC_DATA __attribute__((section(".rodata.battle_anim_throw_static_data")))
+
+struct CaptureStar
+{
+    s8 xOffset;
+    s8 yOffset;
+    s8 amplitude;
+};
+
+extern void PokeBallOpenParticleAnimation(u8 taskId);
+extern void GreatBallOpenParticleAnimation(u8 taskId);
+extern void SafariBallOpenParticleAnimation(u8 taskId);
+extern void UltraBallOpenParticleAnimation(u8 taskId);
+extern void MasterBallOpenParticleAnimation(u8 taskId);
+extern void DiveBallOpenParticleAnimation(u8 taskId);
+extern void RepeatBallOpenParticleAnimation(u8 taskId);
+extern void TimerBallOpenParticleAnimation(u8 taskId);
+extern void PremierBallOpenParticleAnimation(u8 taskId);
+extern void SpriteCB_PokeBlock_Throw(struct Sprite *sprite);
+
+BATTLE_ANIM_THROW_STATIC_DATA static const struct CaptureStar sCaptureStars[] =
+{
+    {
+        .xOffset = 10,
+        .yOffset = 2,
+        .amplitude = -3,
+    },
+    {
+        .xOffset = 15,
+        .yOffset = 0,
+        .amplitude = -4,
+    },
+    {
+        .xOffset = -10,
+        .yOffset = 2,
+        .amplitude = -4,
+    },
+};
+
+#define TAG_PARTICLES_POKEBALL    55020
+#define TAG_PARTICLES_GREATBALL   55021
+#define TAG_PARTICLES_SAFARIBALL  55022
+#define TAG_PARTICLES_ULTRABALL   55023
+#define TAG_PARTICLES_MASTERBALL  55024
+#define TAG_PARTICLES_NETBALL     55025
+#define TAG_PARTICLES_DIVEBALL    55026
+#define TAG_PARTICLES_NESTBALL    55027
+#define TAG_PARTICLES_REPEATBALL  55028
+#define TAG_PARTICLES_TIMERBALL   55029
+#define TAG_PARTICLES_LUXURYBALL  55030
+#define TAG_PARTICLES_PREMIERBALL 55031
+
+BATTLE_ANIM_THROW_STATIC_DATA static const struct CompressedSpriteSheet sBallParticleSpriteSheets[POKEBALL_COUNT] =
+{
+    [BALL_POKE]    = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_POKEBALL},
+    [BALL_GREAT]   = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_GREATBALL},
+    [BALL_SAFARI]  = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_SAFARIBALL},
+    [BALL_ULTRA]   = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_ULTRABALL},
+    [BALL_MASTER]  = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_MASTERBALL},
+    [BALL_NET]     = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_NETBALL},
+    [BALL_DIVE]    = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_DIVEBALL},
+    [BALL_NEST]    = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_NESTBALL},
+    [BALL_REPEAT]  = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_REPEATBALL},
+    [BALL_TIMER]   = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_TIMERBALL},
+    [BALL_LUXURY]  = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_LUXURYBALL},
+    [BALL_PREMIER] = {gBattleAnimSpriteGfx_Particles, 0x100, TAG_PARTICLES_PREMIERBALL},
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const struct CompressedSpritePalette sBallParticlePalettes[POKEBALL_COUNT] =
+{
+    [BALL_POKE]    = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_POKEBALL},
+    [BALL_GREAT]   = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_GREATBALL},
+    [BALL_SAFARI]  = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_SAFARIBALL},
+    [BALL_ULTRA]   = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_ULTRABALL},
+    [BALL_MASTER]  = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_MASTERBALL},
+    [BALL_NET]     = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_NETBALL},
+    [BALL_DIVE]    = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_DIVEBALL},
+    [BALL_NEST]    = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_NESTBALL},
+    [BALL_REPEAT]  = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_REPEATBALL},
+    [BALL_TIMER]   = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_TIMERBALL},
+    [BALL_LUXURY]  = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_LUXURYBALL},
+    [BALL_PREMIER] = {gBattleAnimSpritePal_CircleImpact, TAG_PARTICLES_PREMIERBALL},
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd sAnim_RegularBall[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_FRAME(1, 1),
+    ANIMCMD_FRAME(2, 1),
+    ANIMCMD_FRAME(0, 1, .hFlip = TRUE),
+    ANIMCMD_FRAME(2, 1),
+    ANIMCMD_FRAME(1, 1),
+    ANIMCMD_JUMP(0),
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd sAnim_MasterBall[] =
+{
+    ANIMCMD_FRAME(3, 1),
+    ANIMCMD_END,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd sAnim_NetDiveBall[] =
+{
+    ANIMCMD_FRAME(4, 1),
+    ANIMCMD_END,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd sAnim_NestBall[] =
+{
+    ANIMCMD_FRAME(5, 1),
+    ANIMCMD_END,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd sAnim_LuxuryPremierBall[] =
+{
+    ANIMCMD_FRAME(6, 4),
+    ANIMCMD_FRAME(7, 4),
+    ANIMCMD_JUMP(0),
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd sAnim_UltraRepeatTimerBall[] =
+{
+    ANIMCMD_FRAME(7, 4),
+    ANIMCMD_END,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd *const sAnims_BallParticles[] =
+{
+    sAnim_RegularBall,
+    sAnim_MasterBall,
+    sAnim_NetDiveBall,
+    sAnim_NestBall,
+    sAnim_LuxuryPremierBall,
+    sAnim_UltraRepeatTimerBall,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const u8 sBallParticleAnimNums[POKEBALL_COUNT] =
+{
+    [BALL_POKE]    = 0,
+    [BALL_GREAT]   = 0,
+    [BALL_SAFARI]  = 0,
+    [BALL_ULTRA]   = 5,
+    [BALL_MASTER]  = 1,
+    [BALL_NET]     = 2,
+    [BALL_DIVE]    = 2,
+    [BALL_NEST]    = 3,
+    [BALL_REPEAT]  = 5,
+    [BALL_TIMER]   = 5,
+    [BALL_LUXURY]  = 4,
+    [BALL_PREMIER] = 4,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const TaskFunc sBallParticleAnimationFuncs[POKEBALL_COUNT] =
+{
+    [BALL_POKE]    = PokeBallOpenParticleAnimation,
+    [BALL_GREAT]   = GreatBallOpenParticleAnimation,
+    [BALL_SAFARI]  = SafariBallOpenParticleAnimation,
+    [BALL_ULTRA]   = UltraBallOpenParticleAnimation,
+    [BALL_MASTER]  = MasterBallOpenParticleAnimation,
+    [BALL_NET]     = SafariBallOpenParticleAnimation,
+    [BALL_DIVE]    = DiveBallOpenParticleAnimation,
+    [BALL_NEST]    = UltraBallOpenParticleAnimation,
+    [BALL_REPEAT]  = RepeatBallOpenParticleAnimation,
+    [BALL_TIMER]   = TimerBallOpenParticleAnimation,
+    [BALL_LUXURY]  = GreatBallOpenParticleAnimation,
+    [BALL_PREMIER] = PremierBallOpenParticleAnimation,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const struct SpriteTemplate sBallParticleSpriteTemplates[POKEBALL_COUNT] =
+{
+    [BALL_POKE] = {
+        .tileTag = TAG_PARTICLES_POKEBALL,
+        .paletteTag = TAG_PARTICLES_POKEBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_GREAT] = {
+        .tileTag = TAG_PARTICLES_GREATBALL,
+        .paletteTag = TAG_PARTICLES_GREATBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_SAFARI] = {
+        .tileTag = TAG_PARTICLES_SAFARIBALL,
+        .paletteTag = TAG_PARTICLES_SAFARIBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_ULTRA] = {
+        .tileTag = TAG_PARTICLES_ULTRABALL,
+        .paletteTag = TAG_PARTICLES_ULTRABALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_MASTER] = {
+        .tileTag = TAG_PARTICLES_MASTERBALL,
+        .paletteTag = TAG_PARTICLES_MASTERBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_NET] = {
+        .tileTag = TAG_PARTICLES_NETBALL,
+        .paletteTag = TAG_PARTICLES_NETBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_DIVE] = {
+        .tileTag = TAG_PARTICLES_DIVEBALL,
+        .paletteTag = TAG_PARTICLES_DIVEBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_NEST] = {
+        .tileTag = TAG_PARTICLES_NESTBALL,
+        .paletteTag = TAG_PARTICLES_NESTBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_REPEAT] = {
+        .tileTag = TAG_PARTICLES_REPEATBALL,
+        .paletteTag = TAG_PARTICLES_REPEATBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_TIMER] = {
+        .tileTag = TAG_PARTICLES_TIMERBALL,
+        .paletteTag = TAG_PARTICLES_TIMERBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_LUXURY] = {
+        .tileTag = TAG_PARTICLES_LUXURYBALL,
+        .paletteTag = TAG_PARTICLES_LUXURYBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+    [BALL_PREMIER] = {
+        .tileTag = TAG_PARTICLES_PREMIERBALL,
+        .paletteTag = TAG_PARTICLES_PREMIERBALL,
+        .oam = &gOamData_AffineOff_ObjNormal_8x8,
+        .anims = sAnims_BallParticles,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = SpriteCallbackDummy,
+    },
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA const u16 gBallOpenFadeColors[] =
+{
+    [BALL_POKE] = RGB(31, 22, 30),
+    [BALL_GREAT] = RGB(16, 23, 30),
+    [BALL_SAFARI] = RGB(23, 30, 20),
+    [BALL_ULTRA] = RGB(31, 31, 15),
+    [BALL_MASTER] = RGB(23, 20, 28),
+    [BALL_NET] = RGB(21, 31, 25),
+    [BALL_DIVE] = RGB(12, 25, 30),
+    [BALL_NEST] = RGB(30, 27, 10),
+    [BALL_REPEAT] = RGB(31, 24, 16),
+    [BALL_TIMER] = RGB(29, 30, 30),
+    [BALL_LUXURY] = RGB(31, 17, 10),
+    [BALL_PREMIER] = RGB(31, 9, 10),
+
+    // ROM-resident unused values immediately following the Poké Ball colours.
+    RGB_BLACK,
+    RGB(1, 16, 0),
+    RGB(3, 0, 1),
+    RGB(1, 8, 0),
+    RGB(0, 8, 0),
+    RGB(3, 8, 1),
+    RGB(6, 8, 1),
+    RGB(4, 0, 0),
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA const struct SpriteTemplate gPokeblockSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_POKEBLOCK,
+    .paletteTag = ANIM_TAG_POKEBLOCK,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_PokeBlock_Throw,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd sAnim_SafariRock[] =
+{
+    ANIMCMD_FRAME(64, 1),
+    ANIMCMD_END,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const union AnimCmd *const sAnims_SafariRock[] =
+{
+    sAnim_SafariRock,
+};
+
+BATTLE_ANIM_THROW_STATIC_DATA static const struct SpriteTemplate sSafariRockSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_ROCKS,
+    .paletteTag = ANIM_TAG_ROCKS,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_SafariRock,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_PokeBlock_Throw,
+};
 
 __attribute__((naked)) void unref_sub_8170478(void)
 {
@@ -2926,10 +3271,10 @@ __attribute__((naked)) void sub_081717D0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817187C: .4byte gSprites\n\t"
-        "_08171880: .4byte gUnknown_85C630C\n\t"
-        "_08171884: .4byte gUnknown_85C6144\n\t"
+        "_08171880: .4byte sBallParticleSpriteTemplates + 0x60\n\t"
+        "_08171884: .4byte sCaptureStars\n\t"
         "_08171888: .4byte sub_08171890 + 1\n\t"
-        "_0817188C: .4byte gUnknown_85C6270\n\t"
+        "_0817188C: .4byte sBallParticleAnimNums\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3327,9 +3672,9 @@ __attribute__((naked)) void sub_08171B44(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08171B70: .4byte gUnknown_85C6150\n\t"
+        "_08171B70: .4byte sBallParticleSpriteSheets\n\t"
         "_08171B74: .4byte 0xFFFF0000\n\t"
-        "_08171B78: .4byte gUnknown_85C61B0\n\t"
+        "_08171B78: .4byte sBallParticlePalettes\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3435,7 +3780,7 @@ __attribute__((naked)) void sub_08171C04(void)
     );
 }
 
-__attribute__((naked)) void PokeBallOpenParticleAnimation(void)
+__attribute__((naked)) void PokeBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3549,9 +3894,9 @@ __attribute__((naked)) void PokeBallOpenParticleAnimation(void)
         "	b _08171D3C\n\t"
         "	.align 2, 0\n\t"
         "_08171D10: .4byte gTasks\n\t"
-        "_08171D14: .4byte gUnknown_85C62AC\n\t"
+        "_08171D14: .4byte sBallParticleSpriteTemplates\n\t"
         "_08171D18: .4byte gSprites\n\t"
-        "_08171D1C: .4byte gUnknown_85C6270\n\t"
+        "_08171D1C: .4byte sBallParticleAnimNums\n\t"
         "_08171D20: .4byte PokeBallOpenParticleAnimation_Step1 + 1\n\t"
         "_08171D24: .4byte gMain\n\t"
         "_08171D28: .4byte 0x00000439\n\t"
@@ -3639,7 +3984,7 @@ __attribute__((naked)) void PokeBallOpenParticleAnimation_Step2(void)
     );
 }
 
-__attribute__((naked)) void TimerBallOpenParticleAnimation(void)
+__attribute__((naked)) void TimerBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3759,8 +4104,8 @@ __attribute__((naked)) void TimerBallOpenParticleAnimation(void)
         "	.align 2, 0\n\t"
         "_08171E8C: .4byte gTasks\n\t"
         "_08171E90: .4byte gSprites\n\t"
-        "_08171E94: .4byte gUnknown_85C62AC\n\t"
-        "_08171E98: .4byte gUnknown_85C6270\n\t"
+        "_08171E94: .4byte sBallParticleSpriteTemplates\n\t"
+        "_08171E98: .4byte sBallParticleAnimNums\n\t"
         "_08171E9C: .4byte gUnknown_20205C8\n\t"
         "_08171EA0: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_08171EA4: .4byte gMain\n\t"
@@ -3769,7 +4114,7 @@ __attribute__((naked)) void TimerBallOpenParticleAnimation(void)
     );
 }
 
-__attribute__((naked)) void DiveBallOpenParticleAnimation(void)
+__attribute__((naked)) void DiveBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3889,8 +4234,8 @@ __attribute__((naked)) void DiveBallOpenParticleAnimation(void)
         "	.align 2, 0\n\t"
         "_08171F90: .4byte gTasks\n\t"
         "_08171F94: .4byte gSprites\n\t"
-        "_08171F98: .4byte gUnknown_85C62AC\n\t"
-        "_08171F9C: .4byte gUnknown_85C6270\n\t"
+        "_08171F98: .4byte sBallParticleSpriteTemplates\n\t"
+        "_08171F9C: .4byte sBallParticleAnimNums\n\t"
         "_08171FA0: .4byte gUnknown_20205C8\n\t"
         "_08171FA4: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_08171FA8: .4byte gMain\n\t"
@@ -3899,7 +4244,7 @@ __attribute__((naked)) void DiveBallOpenParticleAnimation(void)
     );
 }
 
-__attribute__((naked)) void SafariBallOpenParticleAnimation(void)
+__attribute__((naked)) void SafariBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4017,8 +4362,8 @@ __attribute__((naked)) void SafariBallOpenParticleAnimation(void)
         "	.align 2, 0\n\t"
         "_08172090: .4byte gTasks\n\t"
         "_08172094: .4byte gSprites\n\t"
-        "_08172098: .4byte gUnknown_85C6270\n\t"
-        "_0817209C: .4byte gUnknown_85C62AC\n\t"
+        "_08172098: .4byte sBallParticleAnimNums\n\t"
+        "_0817209C: .4byte sBallParticleSpriteTemplates\n\t"
         "_081720A0: .4byte gUnknown_20205C8\n\t"
         "_081720A4: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_081720A8: .4byte gMain\n\t"
@@ -4027,7 +4372,7 @@ __attribute__((naked)) void SafariBallOpenParticleAnimation(void)
     );
 }
 
-__attribute__((naked)) void UltraBallOpenParticleAnimation(void)
+__attribute__((naked)) void UltraBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4149,8 +4494,8 @@ __attribute__((naked)) void UltraBallOpenParticleAnimation(void)
         "	.align 2, 0\n\t"
         "_08172198: .4byte gTasks\n\t"
         "_0817219C: .4byte gSprites\n\t"
-        "_081721A0: .4byte gUnknown_85C62AC\n\t"
-        "_081721A4: .4byte gUnknown_85C6270\n\t"
+        "_081721A0: .4byte sBallParticleSpriteTemplates\n\t"
+        "_081721A4: .4byte sBallParticleAnimNums\n\t"
         "_081721A8: .4byte gUnknown_20205C8\n\t"
         "_081721AC: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_081721B0: .4byte gMain\n\t"
@@ -4159,7 +4504,7 @@ __attribute__((naked)) void UltraBallOpenParticleAnimation(void)
     );
 }
 
-__attribute__((naked)) void GreatBallOpenParticleAnimation(void)
+__attribute__((naked)) void GreatBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4303,8 +4648,8 @@ __attribute__((naked)) void GreatBallOpenParticleAnimation(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081722CC: .4byte gSprites\n\t"
-        "_081722D0: .4byte gUnknown_85C6270\n\t"
-        "_081722D4: .4byte gUnknown_85C62AC\n\t"
+        "_081722D0: .4byte sBallParticleAnimNums\n\t"
+        "_081722D4: .4byte sBallParticleSpriteTemplates\n\t"
         "_081722D8: .4byte gUnknown_20205C8\n\t"
         "_081722DC: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_081722E0: .4byte gTasks\n\t"
@@ -4364,7 +4709,7 @@ __attribute__((naked)) void FanOutBallOpenParticles_Step1(void)
     );
 }
 
-__attribute__((naked)) void RepeatBallOpenParticleAnimation(void)
+__attribute__((naked)) void RepeatBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4480,8 +4825,8 @@ __attribute__((naked)) void RepeatBallOpenParticleAnimation(void)
         "	.align 2, 0\n\t"
         "_08172420: .4byte gTasks\n\t"
         "_08172424: .4byte gSprites\n\t"
-        "_08172428: .4byte gUnknown_85C6270\n\t"
-        "_0817242C: .4byte gUnknown_85C62AC\n\t"
+        "_08172428: .4byte sBallParticleAnimNums\n\t"
+        "_0817242C: .4byte sBallParticleSpriteTemplates\n\t"
         "_08172430: .4byte gUnknown_20205C8\n\t"
         "_08172434: .4byte RepeatBallOpenParticleAnimation_Step1 + 1\n\t"
         "_08172438: .4byte gMain\n\t"
@@ -4543,7 +4888,7 @@ __attribute__((naked)) void RepeatBallOpenParticleAnimation_Step1(void)
     );
 }
 
-__attribute__((naked)) void MasterBallOpenParticleAnimation(void)
+__attribute__((naked)) void MasterBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4637,9 +4982,9 @@ __attribute__((naked)) void MasterBallOpenParticleAnimation(void)
         "	b _08172572\n\t"
         "	.align 2, 0\n\t"
         "_08172554: .4byte gTasks\n\t"
-        "_08172558: .4byte gUnknown_85C62AC\n\t"
+        "_08172558: .4byte sBallParticleSpriteTemplates\n\t"
         "_0817255C: .4byte gSprites\n\t"
-        "_08172560: .4byte gUnknown_85C6270\n\t"
+        "_08172560: .4byte sBallParticleAnimNums\n\t"
         "_08172564: .4byte gUnknown_20205C8\n\t"
         "_08172568: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_0817256C:\n\t"
@@ -4694,7 +5039,7 @@ __attribute__((naked)) void MasterBallOpenParticleAnimation(void)
     );
 }
 
-__attribute__((naked)) void PremierBallOpenParticleAnimation(void)
+__attribute__((naked)) void PremierBallOpenParticleAnimation(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4807,8 +5152,8 @@ __attribute__((naked)) void PremierBallOpenParticleAnimation(void)
         "	.align 2, 0\n\t"
         "_081726A4: .4byte gTasks\n\t"
         "_081726A8: .4byte gSprites\n\t"
-        "_081726AC: .4byte gUnknown_85C6270\n\t"
-        "_081726B0: .4byte gUnknown_85C62AC\n\t"
+        "_081726AC: .4byte sBallParticleAnimNums\n\t"
+        "_081726B0: .4byte sBallParticleSpriteTemplates\n\t"
         "_081726B4: .4byte gUnknown_20205C8\n\t"
         "_081726B8: .4byte PremierBallOpenParticleAnimation_Step1 + 1\n\t"
         "_081726BC: .4byte gMain\n\t"
@@ -4947,8 +5292,8 @@ __attribute__((naked)) void DestroyBallOpenAnimationParticle(void)
         "	bl DestroySprite\n\t"
         "	b _081727C6\n\t"
         "	.align 2, 0\n\t"
-        "_081727B8: .4byte gUnknown_85C6150\n\t"
-        "_081727BC: .4byte gUnknown_85C61B0\n\t"
+        "_081727B8: .4byte sBallParticleSpriteSheets\n\t"
+        "_081727BC: .4byte sBallParticlePalettes\n\t"
         "_081727C0:\n\t"
         "	adds r0, r7, #0\n\t"
         "	bl DestroySprite\n\t"
@@ -5015,7 +5360,7 @@ __attribute__((naked)) u8 LaunchBallFadeMonTask(bool8 unfadeLater, u8 spritePalN
         "	.align 2, 0\n\t"
         "_08172830: .4byte sub_08172894 + 1\n\t"
         "_08172834: .4byte gTasks\n\t"
-        "_08172838: .4byte gUnknown_85C63CC\n\t"
+        "_08172838: .4byte gBallOpenFadeColors\n\t"
         "_0817283C:\n\t"
         "	lsls r0, r6, #0x14\n\t"
         "	movs r1, #0x80\n\t"
@@ -5052,7 +5397,7 @@ __attribute__((naked)) u8 LaunchBallFadeMonTask(bool8 unfadeLater, u8 spritePalN
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08172884: .4byte gUnknown_85C63CC\n\t"
+        "_08172884: .4byte gBallOpenFadeColors\n\t"
         "_08172888: .4byte 0x0000FFFF\n\t"
         "_0817288C: .4byte sub_08172924 + 1\n\t"
         "_08172890: .4byte 0x00007FFF\n\t"
@@ -5105,7 +5450,7 @@ __attribute__((naked)) void sub_08172894(void)
         "	b _08172914\n\t"
         "	.align 2, 0\n\t"
         "_081728E4: .4byte gTasks\n\t"
-        "_081728E8: .4byte gUnknown_85C63CC\n\t"
+        "_081728E8: .4byte gBallOpenFadeColors\n\t"
         "_081728EC:\n\t"
         "	ldr r0, _0817291C\n\t"
         "	ldrb r1, [r0, #7]\n\t"
@@ -5225,7 +5570,7 @@ __attribute__((naked)) void sub_08172974(void)
         "	b _081729CE\n\t"
         "	.align 2, 0\n\t"
         "_081729C0: .4byte gTasks\n\t"
-        "_081729C4: .4byte gUnknown_85C63CC\n\t"
+        "_081729C4: .4byte gBallOpenFadeColors\n\t"
         "_081729C8:\n\t"
         "	adds r0, r2, #0\n\t"
         "	bl DestroyTask\n\t"
@@ -5829,7 +6174,7 @@ __attribute__((naked)) void sub_08172DD0(void)
         "	b _08172EBA\n\t"
         "	.align 2, 0\n\t"
         "_08172E50: .4byte gBattleSpritesDataPtr\n\t"
-        "_08172E54: .4byte gUnknown_85AD190\n\t"
+        "_08172E54: .4byte gWishStarSpriteTemplate\n\t"
         "_08172E58:\n\t"
         "	cmp r0, #0\n\t"
         "	blt _08172E8C\n\t"
@@ -6185,7 +6530,7 @@ __attribute__((naked)) void AnimTask_FreePokeblockGfx(void)
     );
 }
 
-__attribute__((naked)) void sub_081730F0(void)
+__attribute__((naked)) void SpriteCB_PokeBlock_Throw(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

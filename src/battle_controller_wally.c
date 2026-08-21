@@ -71,7 +71,7 @@ __attribute__((naked)) void WallyBufferRunCommand(void)
         "_08168234: .4byte gBitTable\n\t"
         "_08168238: .4byte gActiveBattler\n\t"
         "_0816823C: .4byte gBattleBufferA\n\t"
-        "_08168240: .4byte gUnknown_85C0AA4\n\t"
+        "_08168240: .4byte sWallyBufferCommands\n\t"
         "_08168244:\n\t"
         "	bl WallyBufferExecCompleted\n\t"
         "_08168248:\n\t"
@@ -5348,3 +5348,66 @@ __attribute__((naked)) void WallyHandleCmd55(void)
 }
 
 void SpriteCB_Null7(void) {}
+
+#define WALLY_COMMANDS_DATA __attribute__((section(".rodata.wally_commands_data")))
+
+WALLY_COMMANDS_DATA static void (*const sWallyBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
+{
+    [CONTROLLER_GETMONDATA]               = WallyHandleGetMonData,
+    [CONTROLLER_GETRAWMONDATA]            = sub_081691C8,
+    [CONTROLLER_SETMONDATA]               = WallyHandleSetMonData,
+    [CONTROLLER_SETRAWMONDATA]            = WallyHandleSetRawMonData,
+    [CONTROLLER_LOADMONSPRITE]            = WallyHandleLoadMonSprite,
+    [CONTROLLER_SWITCHINANIM]             = WallyHandleSwitchInAnim,
+    [CONTROLLER_RETURNMONTOBALL]          = WallyHandleReturnMonToBall,
+    [CONTROLLER_DRAWTRAINERPIC]           = WallyHandleDrawTrainerPic,
+    [CONTROLLER_TRAINERSLIDE]             = WallyHandleTrainerSlide,
+    [CONTROLLER_TRAINERSLIDEBACK]         = WallyHandleTrainerSlideBack,
+    [CONTROLLER_FAINTANIMATION]           = WallyHandleFaintAnimation,
+    [CONTROLLER_PALETTEFADE]              = WallyHandlePaletteFade,
+    [CONTROLLER_SUCCESSBALLTHROWANIM]     = WallyHandleSuccessBallThrowAnim,
+    [CONTROLLER_BALLTHROWANIM]            = WallyHandleBallThrowAnim,
+    [CONTROLLER_PAUSE]                    = WallyHandlePause,
+    [CONTROLLER_MOVEANIMATION]            = WallyHandleMoveAnimation,
+    [CONTROLLER_PRINTSTRING]              = WallyHandlePrintString,
+    [CONTROLLER_PRINTSTRINGPLAYERONLY]    = WallyHandlePrintSelectionString,
+    [CONTROLLER_CHOOSEACTION]             = WallyHandleChooseAction,
+    [CONTROLLER_YESNOBOX]                 = WallyHandleUnknownYesNoBox,
+    [CONTROLLER_CHOOSEMOVE]               = WallyHandleChooseMove,
+    [CONTROLLER_OPENBAG]                  = WallyHandleChooseItem,
+    [CONTROLLER_CHOOSEPOKEMON]            = WallyHandleChoosePokemon,
+    [CONTROLLER_23]                       = WallyHandleCmd23,
+    [CONTROLLER_HEALTHBARUPDATE]          = WallyHandleHealthBarUpdate,
+    [CONTROLLER_EXPUPDATE]                = WallyHandleExpUpdate,
+    [CONTROLLER_STATUSICONUPDATE]         = WallyHandleStatusIconUpdate,
+    [CONTROLLER_STATUSANIMATION]          = WallyHandleStatusAnimation,
+    [CONTROLLER_STATUSXOR]                = WallyHandleStatusXor,
+    [CONTROLLER_DATATRANSFER]             = WallyHandleDataTransfer,
+    [CONTROLLER_DMA3TRANSFER]             = WallyHandleDMA3Transfer,
+    [CONTROLLER_PLAYBGM]                  = WallyHandlePlayBGM,
+    [CONTROLLER_32]                       = WallyHandleCmd32,
+    [CONTROLLER_TWORETURNVALUES]          = WallyHandleTwoReturnValues,
+    [CONTROLLER_CHOSENMONRETURNVALUE]     = sub_0816A548,
+    [CONTROLLER_ONERETURNVALUE]           = sub_0816A554,
+    [CONTROLLER_ONERETURNVALUE_DUPLICATE] = WallyHandleOneReturnValue_Duplicate,
+    [CONTROLLER_CLEARUNKVAR]              = WallyHandleCmd37,
+    [CONTROLLER_SETUNKVAR]                = WallyHandleCmd38,
+    [CONTROLLER_CLEARUNKFLAG]             = sub_0816A584,
+    [CONTROLLER_TOGGLEUNKFLAG]            = WallyHandleCmd40,
+    [CONTROLLER_HITANIMATION]             = WallyHandleHitAnimation,
+    [CONTROLLER_CANTSWITCH]               = WallyHandleCmd42,
+    [CONTROLLER_PLAYSE]                   = WallyHandlePlaySE,
+    [CONTROLLER_PLAYFANFAREORBGM]         = WallyHandlePlayFanfareOrBGM,
+    [CONTROLLER_FAINTINGCRY]              = WallyHandleFaintingCry,
+    [CONTROLLER_INTROSLIDE]               = WallyHandleIntroSlide,
+    [CONTROLLER_INTROTRAINERBALLTHROW]    = WallyHandleIntroTrainerBallThrow,
+    [CONTROLLER_DRAWPARTYSTATUSSUMMARY]   = WallyHandleDrawPartyStatusSummary,
+    [CONTROLLER_HIDEPARTYSTATUSSUMMARY]   = WallyHandleHidePartyStatusSummary,
+    [CONTROLLER_ENDBOUNCE]                = WallyHandleEndBounceEffect,
+    [CONTROLLER_SPRITEINVISIBILITY]       = WallyHandleSpriteInvisibility,
+    [CONTROLLER_BATTLEANIMATION]          = WallyHandleBattleAnimation,
+    [CONTROLLER_LINKSTANDBYMSG]           = WallyHandleLinkStandbyMsg,
+    [CONTROLLER_RESETACTIONMOVESELECTION] = WallyHandleResetActionMoveSelection,
+    [CONTROLLER_ENDLINKBATTLE]            = WallyHandleCmd55,
+    [CONTROLLER_TERMINATOR_NOP]           = SpriteCB_Null7,
+};

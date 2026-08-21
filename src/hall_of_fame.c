@@ -1,5 +1,241 @@
 #include "global.h"
+#include "bg.h"
+#include "graphics.h"
 #include "hall_of_fame.h"
+#include "pokemon.h"
+#include "sprite.h"
+#include "text.h"
+#include "window.h"
+#include "constants/rgb.h"
+
+#define HALL_OF_FAME_STATIC_DATA __attribute__((section(".rodata.hall_of_fame_static_data")))
+#define HALL_OF_FAME_MON_NICKNAME_LENGTH 10
+#define TAG_CONFETTI 1001
+
+struct HallofFameMon
+{
+    u32 tid;
+    u32 personality;
+    u16 species:9;
+    u16 lvl:7;
+    // Hall of Fame save records retain ten bytes even in the JP release.
+    u8 nickname[HALL_OF_FAME_MON_NICKNAME_LENGTH];
+};
+
+extern void SpriteCB_HofConfetti(struct Sprite *sprite);
+
+HALL_OF_FAME_STATIC_DATA
+static const struct BgTemplate sHof_BgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0,
+    },
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const struct WindowTemplate sHof_WindowTemplate =
+{
+    .bg = 0,
+    .tilemapLeft = 2,
+    .tilemapTop = 2,
+    .width = 14,
+    .height = 6,
+    .paletteNum = 14,
+    .baseBlock = 1,
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
+
+HALL_OF_FAME_STATIC_DATA
+static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
+
+HALL_OF_FAME_STATIC_DATA
+static const u8 sUnusedTextColors[4] = {TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_TRANSPARENT};
+
+HALL_OF_FAME_STATIC_DATA
+static const struct CompressedSpriteSheet sSpriteSheet_Confetti[] =
+{
+    {.data = gConfetti_Gfx, .size = 0x220, .tag = TAG_CONFETTI},
+    {},
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const struct CompressedSpritePalette sSpritePalette_Confetti[] =
+{
+    {.data = gConfetti_Pal, .tag = TAG_CONFETTI},
+    {},
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const s16 sHallOfFame_MonFullTeamPositions[PARTY_SIZE][4] =
+{
+    {120,   210,    120,    40},
+    {326,   220,    56,     40},
+    {-86,   220,    184,    40},
+    {120,   -62,    120,    88},
+    {-70,   -92,    200,    88},
+    {310,   -92,    40,     88},
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const s16 sHallOfFame_MonHalfTeamPositions[PARTY_SIZE / 2][4] =
+{
+    {120,   234,    120,    64},
+    {326,   244,    56,     64},
+    {-86,   244,    184,    64},
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const struct OamData sOamData_Confetti =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_PinkConfettiA[] = {ANIMCMD_FRAME(0, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_RedConfettiA[] = {ANIMCMD_FRAME(1, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_BlueConfettiA[] = {ANIMCMD_FRAME(2, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_RedConfettiB[] = {ANIMCMD_FRAME(3, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_BlueConfettiB[] = {ANIMCMD_FRAME(4, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_YellowConfettiA[] = {ANIMCMD_FRAME(5, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_WhiteConfettiA[] = {ANIMCMD_FRAME(6, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_GreenConfettiA[] = {ANIMCMD_FRAME(7, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_PinkConfettiB[] = {ANIMCMD_FRAME(8, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_BlueConfettiC[] = {ANIMCMD_FRAME(9, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_YellowConfettiB[] = {ANIMCMD_FRAME(10, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_WhiteConfettiB[] = {ANIMCMD_FRAME(11, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_GreenConfettiB[] = {ANIMCMD_FRAME(12, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_PinkConfettiC[] = {ANIMCMD_FRAME(13, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_RedConfettiC[] = {ANIMCMD_FRAME(14, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_YellowConfettiC[] = {ANIMCMD_FRAME(15, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd sAnim_WhiteConfettiC[] = {ANIMCMD_FRAME(16, 30), ANIMCMD_END};
+
+HALL_OF_FAME_STATIC_DATA
+static const union AnimCmd *const sAnims_Confetti[] =
+{
+    sAnim_PinkConfettiA,
+    sAnim_RedConfettiA,
+    sAnim_BlueConfettiA,
+    sAnim_RedConfettiB,
+    sAnim_BlueConfettiB,
+    sAnim_YellowConfettiA,
+    sAnim_WhiteConfettiA,
+    sAnim_GreenConfettiA,
+    sAnim_PinkConfettiB,
+    sAnim_BlueConfettiC,
+    sAnim_YellowConfettiB,
+    sAnim_WhiteConfettiB,
+    sAnim_GreenConfettiB,
+    sAnim_PinkConfettiC,
+    sAnim_RedConfettiC,
+    sAnim_YellowConfettiC,
+    sAnim_WhiteConfettiC,
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const struct SpriteTemplate sSpriteTemplate_HofConfetti =
+{
+    .tileTag = TAG_CONFETTI,
+    .paletteTag = TAG_CONFETTI,
+    .oam = &sOamData_Confetti,
+    .anims = sAnims_Confetti,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_HofConfetti,
+};
+
+HALL_OF_FAME_STATIC_DATA
+static const u16 sHallOfFame_Pal[] = INCBIN_U16("graphics/misc/japanese_hof.gbapal");
+
+HALL_OF_FAME_STATIC_DATA
+static const u32 sHallOfFame_Gfx[] = INCBIN_U32("graphics/misc/japanese_hof.4bpp.lz");
+
+HALL_OF_FAME_STATIC_DATA
+static const struct HallofFameMon sDummyFameMon =
+{
+    .tid = 0x3EA03EA,
+    .personality = 0,
+    .species = SPECIES_NONE,
+    .lvl = 0,
+    .nickname = {0},
+};
+
+// Unused, order of party slots on Hall of Fame screen.
+HALL_OF_FAME_STATIC_DATA
+static const u8 sHallOfFame_SlotOrder[] = {2, 1, 3, 6, 4, 5};
+
+// Preserve the original four-byte section boundary before the following data owner.
+HALL_OF_FAME_STATIC_DATA
+static const u8 sHallOfFame_StaticDataPadding[2] = {0};
 
 __attribute__((naked)) void VBlankCB_HallOfFame(void)
 {
@@ -737,7 +973,7 @@ __attribute__((naked)) void Task_Hof_DisplayMon(void)
         "	.align 2, 0\n\t"
         "_081738C4: .4byte gTasks\n\t"
         "_081738C8: .4byte gUnknown_203B9A4\n\t"
-        "_081738CC: .4byte gUnknown_85C6470\n\t"
+        "_081738CC: .4byte sHallOfFame_MonFullTeamPositions\n\t"
         "_081738D0:\n\t"
         "	ldr r1, _08173988\n\t"
         "_081738D2:\n\t"
@@ -832,7 +1068,7 @@ __attribute__((naked)) void Task_Hof_DisplayMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08173988: .4byte gUnknown_85C64A0\n\t"
+        "_08173988: .4byte sHallOfFame_MonHalfTeamPositions\n\t"
         "_0817398C: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_08173990: .4byte 0x0000FFFF\n\t"
         "_08173994: .4byte gSprites\n\t"
@@ -1331,7 +1567,7 @@ __attribute__((naked)) void sub_08173CC8(void)
         "_08173D50: .4byte gSaveBlock2Ptr\n\t"
         "_08173D54: .4byte 0x0000FFFF\n\t"
         "_08173D58: .4byte gTasks\n\t"
-        "_08173D5C: .4byte gUnknown_85C643C\n\t"
+        "_08173D5C: .4byte sHof_WindowTemplate\n\t"
         "_08173D60: .4byte 0x0000021D\n\t"
         "_08173D64: .4byte Task_Hof_WaitAndPrintPlayerInfo + 1\n\t"
         ".syntax divided\n\t"
@@ -1712,7 +1948,7 @@ __attribute__((naked)) void CB2_DoHallOfFamePC(void)
         "	b _08174086\n\t"
         "	.align 2, 0\n\t"
         "_08174054: .4byte gDecompressionBuffer\n\t"
-        "_08174058: .4byte gUnknown_85C6790\n\t"
+        "_08174058: .4byte sDummyFameMon\n\t"
         "_0817405C: .4byte 0x08173331\n\t"
         "_08174060: .4byte gMain\n\t"
         "_08174064:\n\t"
@@ -1996,8 +2232,8 @@ __attribute__((naked)) void Task_HofPC_DrawSpritesPrintText(void)
         "_08174288: .4byte gTasks\n\t"
         "_0817428C: .4byte gUnknown_203B9A0\n\t"
         "_08174290: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08174294: .4byte gUnknown_85C6470\n\t"
-        "_08174298: .4byte gUnknown_85C6476\n\t"
+        "_08174294: .4byte sHallOfFame_MonFullTeamPositions\n\t"
+        "_08174298: .4byte sHallOfFame_MonFullTeamPositions + 6\n\t"
         "_0817429C:\n\t"
         "	ldr r0, _08174314\n\t"
         "	lsls r2, r5, #3\n\t"
@@ -2060,7 +2296,7 @@ __attribute__((naked)) void Task_HofPC_DrawSpritesPrintText(void)
         "	strh r0, [r1]\n\t"
         "	b _08174332\n\t"
         "	.align 2, 0\n\t"
-        "_08174314: .4byte gUnknown_85C64A0\n\t"
+        "_08174314: .4byte sHallOfFame_MonHalfTeamPositions\n\t"
         "_08174318: .4byte 0x0000FFFF\n\t"
         "_0817431C: .4byte gSprites\n\t"
         "_08174320: .4byte gUnknown_3005B68\n\t"
@@ -2521,7 +2757,7 @@ __attribute__((naked)) void Task_HofPC_HandlePaletteOnExit(void)
         "_081746BC: .4byte gPlttBufferFaded\n\t"
         "_081746C0: .4byte gPlttBufferUnfaded\n\t"
         "_081746C4: .4byte gDecompressionBuffer\n\t"
-        "_081746C8: .4byte gUnknown_85C6790\n\t"
+        "_081746C8: .4byte sDummyFameMon\n\t"
         "_081746CC: .4byte gTasks\n\t"
         "_081746D0: .4byte Task_HofPC_HandleExit + 1\n\t"
         ".syntax divided\n\t"
@@ -2739,7 +2975,7 @@ __attribute__((naked)) void HallOfFame_PrintWelcomeText(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08174874: .4byte gUnknown_85C929D\n\t"
-        "_08174878: .4byte gUnknown_85C6444\n\t"
+        "_08174878: .4byte sMonInfoTextColors\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2810,7 +3046,7 @@ __attribute__((naked)) void HallOfFame_PrintMonInfo(void)
         "	b _08174922\n\t"
         "	.align 2, 0\n\t"
         "_08174904: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08174908: .4byte gUnknown_85C6444\n\t"
+        "_08174908: .4byte sMonInfoTextColors\n\t"
         "_0817490C: .4byte gUnknown_85C934B\n\t"
         "_08174910: .4byte 0x0000FFFF\n\t"
         "_08174914:\n\t"
@@ -2903,7 +3139,7 @@ __attribute__((naked)) void HallOfFame_PrintMonInfo(void)
         "	bl CopyWindowToVram\n\t"
         "	b _08174B58\n\t"
         "	.align 2, 0\n\t"
-        "_081749C8: .4byte gUnknown_85C6444\n\t"
+        "_081749C8: .4byte sMonInfoTextColors\n\t"
         "_081749CC: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_081749D0:\n\t"
         "	movs r2, #1\n\t"
@@ -2992,7 +3228,7 @@ __attribute__((naked)) void HallOfFame_PrintMonInfo(void)
         "	beq _08174A8E\n\t"
         "	b _08174AAC\n\t"
         "	.align 2, 0\n\t"
-        "_08174A7C: .4byte gUnknown_85C6444\n\t"
+        "_08174A7C: .4byte sMonInfoTextColors\n\t"
         "_08174A80: .4byte gSpeciesNames\n\t"
         "_08174A84: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_08174A88:\n\t"
@@ -3102,7 +3338,7 @@ __attribute__((naked)) void HallOfFame_PrintMonInfo(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08174B60: .4byte gUnknown_85C6444\n\t"
+        "_08174B60: .4byte sMonInfoTextColors\n\t"
         "_08174B64: .4byte gUnknown_85C934F\n\t"
         "_08174B68: .4byte gStringVar1\n\t"
         "_08174B6C: .4byte gUnknown_85C934F + 0xE\n\t"
@@ -3186,7 +3422,7 @@ __attribute__((naked)) void HallOfFame_PrintPlayerInfo(void)
         "	b _08174C2E\n\t"
         "	.align 2, 0\n\t"
         "_08174C04: .4byte 0x0000021D\n\t"
-        "_08174C08: .4byte gUnknown_85C6448\n\t"
+        "_08174C08: .4byte sPlayerInfoTextColors\n\t"
         "_08174C0C: .4byte gUnknown_85C934F + 0xA\n\t"
         "_08174C10: .4byte gSaveBlock2Ptr\n\t"
         "_08174C14:\n\t"
@@ -3377,7 +3613,7 @@ __attribute__((naked)) void HallOfFame_PrintPlayerInfo(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08174DB0: .4byte gUnknown_85C6448\n\t"
+        "_08174DB0: .4byte sPlayerInfoTextColors\n\t"
         "_08174DB4: .4byte gSaveBlock2Ptr\n\t"
         "_08174DB8: .4byte gUnknown_85C934F + 0xE\n\t"
         "_08174DBC: .4byte 0x000186A0\n\t"
@@ -3472,7 +3708,7 @@ __attribute__((naked)) void ClearVramOamPltt_LoadHofPal(void)
         "	.align 2, 0\n\t"
         "_08174E68: .4byte 0x040000D4\n\t"
         "_08174E6C: .4byte 0x81000800\n\t"
-        "_08174E70: .4byte gUnknown_85C65A4\n\t"
+        "_08174E70: .4byte sHallOfFame_Pal\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3499,8 +3735,8 @@ __attribute__((naked)) void sub_08174E74(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08174EA4: .4byte gReservedSpritePaletteCount\n\t"
-        "_08174EA8: .4byte gUnknown_85C6450\n\t"
-        "_08174EAC: .4byte gUnknown_85C6460\n\t"
+        "_08174EA8: .4byte sSpriteSheet_Confetti\n\t"
+        "_08174EAC: .4byte sSpritePalette_Confetti\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3554,7 +3790,7 @@ __attribute__((naked)) void sub_08174EB0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08174F1C: .4byte gUnknown_85C6430\n\t"
+        "_08174F1C: .4byte sHof_BgTemplates\n\t"
         "_08174F20: .4byte gUnknown_203B9A8\n\t"
         "_08174F24: .4byte 0x00001012\n\t"
         ".syntax divided\n\t"
@@ -3596,7 +3832,7 @@ __attribute__((naked)) void sub_08174F28(void)
         "	bl DecompressAndCopyTileDataToVram\n\t"
         "	b _0817500C\n\t"
         "	.align 2, 0\n\t"
-        "_08174F70: .4byte gUnknown_85C65C4\n\t"
+        "_08174F70: .4byte sHallOfFame_Gfx\n\t"
         "_08174F74:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3760,7 +3996,7 @@ __attribute__((naked)) void SpriteCB_GetOnScreenAndAnimate(void)
     );
 }
 
-__attribute__((naked)) void sub_081750A8(void)
+__attribute__((naked)) void SpriteCB_HofConfetti(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3866,7 +4102,7 @@ __attribute__((naked)) void sub_08175100(void)
         "	movs r0, #0\n\t"
         "	b _0817517A\n\t"
         "	.align 2, 0\n\t"
-        "_08175170: .4byte gUnknown_85C658C\n\t"
+        "_08175170: .4byte sSpriteTemplate_HofConfetti\n\t"
         "_08175174: .4byte gSprites\n\t"
         "_08175178:\n\t"
         "	movs r0, #1\n\t"
@@ -4068,8 +4304,8 @@ __attribute__((naked)) void sub_08175268(void)
         "_081752D0: .4byte gSpecialVar_0x8004\n\t"
         "_081752D4: .4byte gSpecialVar_0x8005\n\t"
         "_081752D8: .4byte 0x0000FFFF\n\t"
-        "_081752DC: .4byte gUnknown_85C6450\n\t"
-        "_081752E0: .4byte gUnknown_85C6460\n\t"
+        "_081752DC: .4byte sSpriteSheet_Confetti\n\t"
+        "_081752E0: .4byte sSpritePalette_Confetti\n\t"
         "_081752E4:\n\t"
         "	ldrh r0, [r6, #2]\n\t"
         "	cmp r0, #0\n\t"
@@ -4146,7 +4382,7 @@ __attribute__((naked)) void sub_08175268(void)
         "	strh r0, [r6, #2]\n\t"
         "	b _081753B4\n\t"
         "	.align 2, 0\n\t"
-        "_0817538C: .4byte gUnknown_85C64B8\n\t"
+        "_0817538C: .4byte sOamData_Confetti\n\t"
         "_08175390: .4byte 0x000003E9\n\t"
         "_08175394: .4byte sub_081751F8 + 1\n\t"
         "_08175398:\n\t"

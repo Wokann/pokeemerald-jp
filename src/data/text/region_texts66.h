@@ -1,5 +1,9 @@
 const u8 gUnknown_85C943C[] = _("×{STR_VAR_1}");
 
+// The JP "Give" menu text immediately precedes this independently owned text block.
+__asm__(".global gMenuText_Give2\n"
+        ".set gMenuText_Give2, gUnknown_85C943C - 4");
+
 const u8 gUnknown_85C9440[] = _("のみ");
 
 const u8 gText_Coins[] = _("{STR_VAR_1}まい");

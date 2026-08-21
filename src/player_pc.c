@@ -1,5 +1,13 @@
 #include "global.h"
+#include "constants/characters.h"
+#include "constants/items.h"
+#include "list_menu.h"
+#include "menu.h"
+#include "menu_helpers.h"
 #include "player_pc.h"
+#include "strings.h"
+#include "text.h"
+#include "window.h"
 
 __attribute__((naked)) void NewGameInitPCItems()
 {
@@ -52,7 +60,7 @@ __attribute__((naked)) void NewGameInitPCItems()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816AC58: .4byte gSaveBlock1Ptr\n\t"
-        "_0816AC5C: .4byte gUnknown_85C0BE0\n\t"
+        "_0816AC5C: .4byte sNewGamePCItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -80,7 +88,7 @@ __attribute__((naked)) void BedroomPC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816AC88: .4byte gUnknown_203B97C\n\t"
-        "_0816AC8C: .4byte gUnknown_85C0BB8\n\t"
+        "_0816AC8C: .4byte sBedroomPC_OptionOrder\n\t"
         "_0816AC90: .4byte gUnknown_203B980\n\t"
         "_0816AC94: .4byte TaskDummy + 1\n\t"
         "_0816AC98: .4byte gUnknown_85C942E\n\t"
@@ -112,7 +120,7 @@ __attribute__((naked)) void PlayerPC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816ACC8: .4byte gUnknown_203B97C\n\t"
-        "_0816ACCC: .4byte gUnknown_85C0BBC\n\t"
+        "_0816ACCC: .4byte sPlayerPC_OptionOrder\n\t"
         "_0816ACD0: .4byte gUnknown_203B980\n\t"
         "_0816ACD4: .4byte TaskDummy + 1\n\t"
         "_0816ACD8: .4byte gUnknown_85C942E\n\t"
@@ -146,7 +154,7 @@ __attribute__((naked)) void InitPlayerPCMenu(void)
         "	.align 2, 0\n\t"
         "_0816AD04: .4byte gUnknown_3005B68\n\t"
         "_0816AD08: .4byte gUnknown_203B980\n\t"
-        "_0816AD0C: .4byte gUnknown_85C0C08\n\t"
+        "_0816AD0C: .4byte sWindowTemplates_MainMenus\n\t"
         "_0816AD10:\n\t"
         "	ldr r0, _0816AD98\n\t"
         "_0816AD12:\n\t"
@@ -210,9 +218,9 @@ __attribute__((naked)) void InitPlayerPCMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816AD98: .4byte gUnknown_85C0C10\n\t"
+        "_0816AD98: .4byte sWindowTemplates_MainMenus + 8\n\t"
         "_0816AD9C: .4byte gUnknown_203B980\n\t"
-        "_0816ADA0: .4byte gUnknown_85C0B98\n\t"
+        "_0816ADA0: .4byte sPlayerPCMenuActions\n\t"
         "_0816ADA4: .4byte gUnknown_203B97C\n\t"
         "_0816ADA8: .4byte gTasks\n\t"
         "_0816ADAC: .4byte PlayerPCProcessMenuInput + 1\n\t"
@@ -308,7 +316,7 @@ __attribute__((naked)) void PlayerPCProcessMenuInput(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816AE6C: .4byte gTasks\n\t"
-        "_0816AE70: .4byte gUnknown_85C0B98\n\t"
+        "_0816AE70: .4byte sPlayerPCMenuActions\n\t"
         "_0816AE74: .4byte gUnknown_203B97C\n\t"
         ".syntax divided\n\t"
     );
@@ -553,9 +561,9 @@ __attribute__((naked)) void InitItemStorageMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B030: .4byte gUnknown_3005B68\n\t"
-        "_0816B034: .4byte gUnknown_85C0C18\n\t"
-        "_0816B038: .4byte gUnknown_85C0BC0\n\t"
-        "_0816B03C: .4byte gUnknown_85C0B88\n\t"
+        "_0816B034: .4byte sWindowTemplates_MainMenus + 0x10\n\t"
+        "_0816B038: .4byte sItemStorage_MenuActions\n\t"
+        "_0816B03C: .4byte sItemStorage_OptionDescriptions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -625,7 +633,7 @@ __attribute__((naked)) void ItemStorageMenuProcessInput(void)
         "	bl _call_via_r1\n\t"
         "	b _0816B0E4\n\t"
         "	.align 2, 0\n\t"
-        "_0816B0B8: .4byte gUnknown_85C0BC0\n\t"
+        "_0816B0B8: .4byte sItemStorage_MenuActions\n\t"
         "_0816B0BC:\n\t"
         "	lsls r1, r5, #0x18\n\t"
         "	lsls r0, r2, #0x18\n\t"
@@ -639,7 +647,7 @@ __attribute__((naked)) void ItemStorageMenuProcessInput(void)
         "	bl ItemStorageMenuPrint\n\t"
         "	b _0816B0E4\n\t"
         "	.align 2, 0\n\t"
-        "_0816B0D4: .4byte gUnknown_85C0B88\n\t"
+        "_0816B0D4: .4byte sItemStorage_OptionDescriptions\n\t"
         "_0816B0D8:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -1413,7 +1421,7 @@ __attribute__((naked)) void Mailbox_PrintMailOptions(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816B660: .4byte gUnknown_85C0BE8\n\t"
+        "_0816B660: .4byte gMailboxMailOptions\n\t"
         "_0816B664: .4byte gTasks\n\t"
         "_0816B668: .4byte Mailbox_MailOptionsProcessInput + 1\n\t"
         ".syntax divided\n\t"
@@ -1458,7 +1466,7 @@ __attribute__((naked)) void Mailbox_MailOptionsProcessInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816B6B4: .4byte gUnknown_85C0BE8\n\t"
+        "_0816B6B4: .4byte gMailboxMailOptions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2080,7 +2088,7 @@ __attribute__((naked)) void sub_0816BABC(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0816BAFC: .4byte gUnknown_203B990\n\t"
-        "_0816BB00: .4byte gUnknown_85C0C40\n\t"
+        "_0816BB00: .4byte sWindowTemplates_ItemStorage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2215,7 +2223,7 @@ __attribute__((naked)) void ItemStorage_RefreshListMenu(void)
         "_0816BBF8: .4byte gSaveBlock1Ptr\n\t"
         "_0816BBFC: .4byte gText_Exit\n\t"
         "_0816BC00: .4byte gMultiuseListMenuTemplate\n\t"
-        "_0816BC04: .4byte gUnknown_85C0C28\n\t"
+        "_0816BC04: .4byte sListMenuTemplate_ItemStorage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2578,7 +2586,7 @@ __attribute__((naked)) void sub_0816BE14(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816BE8C: .4byte gUnknown_85C0C70\n\t"
+        "_0816BE8C: .4byte sSwapArrowTextColors\n\t"
         "_0816BE90: .4byte gText_SelectorArrow2\n\t"
         ".syntax divided\n\t"
     );
@@ -3840,8 +3848,8 @@ __attribute__((naked)) void ItemStorage_DoItemToss(void)
         "_0816C860: .4byte gStringVar1\n\t"
         "_0816C864: .4byte gStringVar2\n\t"
         "_0816C868: .4byte 0x0000FFF8\n\t"
-        "_0816C86C: .4byte gUnknown_85C0C68\n\t"
-        "_0816C870: .4byte gUnknown_85C0C20\n\t"
+        "_0816C86C: .4byte sItemTossYesNoWindowTemplate\n\t"
+        "_0816C870: .4byte sItemTossYesNoFuncs\n\t"
         "_0816C874:\n\t"
         "	movs r0, #0\n\t"
         "	strh r0, [r7, #4]\n\t"
@@ -4053,3 +4061,221 @@ __attribute__((naked)) void ItemStorage_StartScrollIndicatorAndProcessInput(void
     );
 }
 
+enum
+{
+    MENU_ITEMSTORAGE,
+    MENU_MAILBOX,
+    MENU_DECORATION,
+    MENU_TURNOFF,
+};
+
+enum
+{
+    MENU_WITHDRAW,
+    MENU_DEPOSIT,
+    MENU_TOSS,
+    MENU_EXIT,
+};
+
+enum
+{
+    WIN_MAIN_MENU,
+    WIN_MAIN_MENU_BEDROOM,
+    WIN_ITEM_STORAGE_MENU,
+};
+
+enum
+{
+    ITEMPC_WIN_LIST,
+    ITEMPC_WIN_MESSAGE,
+    ITEMPC_WIN_ICON,
+    ITEMPC_WIN_TITLE,
+    ITEMPC_WIN_QUANTITY,
+    ITEMPC_WIN_COUNT,
+};
+
+#define PLAYER_PC_STATIC_DATA __attribute__((section(".rodata.player_pc_static_data")))
+
+static const u8 *const sItemStorage_OptionDescriptions[] PLAYER_PC_STATIC_DATA =
+{
+    [MENU_WITHDRAW] = gText_TakeOutItemsFromPC,
+    [MENU_DEPOSIT]  = gText_StoreItemsInPC,
+    [MENU_TOSS]     = gText_ThrowAwayItemsInPC,
+    [MENU_EXIT]     = gText_GoBackPrevMenu,
+};
+
+static const struct MenuAction sPlayerPCMenuActions[] PLAYER_PC_STATIC_DATA =
+{
+    [MENU_ITEMSTORAGE] = {gText_ItemStorage, {(void (*)(u8))PlayerPC_ItemStorage}},
+    [MENU_MAILBOX]     = {gText_Mailbox,     {(void (*)(u8))PlayerPC_Mailbox}},
+    [MENU_DECORATION]  = {gText_Decoration,  {(void (*)(u8))PlayerPC_Decoration}},
+    [MENU_TURNOFF]     = {gText_TurnOff,     {(void (*)(u8))PlayerPC_TurnOff}},
+};
+
+static const u8 sBedroomPC_OptionOrder[] PLAYER_PC_STATIC_DATA =
+{
+    MENU_ITEMSTORAGE,
+    MENU_MAILBOX,
+    MENU_DECORATION,
+    MENU_TURNOFF,
+};
+
+static const u8 sPlayerPC_OptionOrder[] PLAYER_PC_STATIC_DATA =
+{
+    MENU_ITEMSTORAGE,
+    MENU_MAILBOX,
+    MENU_TURNOFF,
+};
+
+static const u8 sPlayerPC_OptionOrderPadding PLAYER_PC_STATIC_DATA = 0;
+
+static const struct MenuAction sItemStorage_MenuActions[] PLAYER_PC_STATIC_DATA =
+{
+    [MENU_WITHDRAW] = {gText_WithdrawItem, {(void (*)(u8))ItemStorage_Withdraw}},
+    [MENU_DEPOSIT]  = {gText_DepositItem,  {(void (*)(u8))ItemStorage_Deposit}},
+    [MENU_TOSS]     = {gText_TossItem,     {(void (*)(u8))ItemStorage_Toss}},
+    [MENU_EXIT]     = {gText_Cancel,       {(void (*)(u8))ItemStorage_Exit}},
+};
+
+static const u16 sNewGamePCItems[][2] PLAYER_PC_STATIC_DATA =
+{
+    {ITEM_POTION, 1},
+    {ITEM_NONE, 0},
+};
+
+PLAYER_PC_STATIC_DATA const struct MenuAction gMailboxMailOptions[] =
+{
+    {gText_Read,      {(void (*)(u8))Mailbox_DoMailRead}},
+    {gText_MoveToBag, {(void (*)(u8))Mailbox_MoveToBag}},
+    {gText_Give2,     {(void (*)(u8))Mailbox_Give}},
+    {gText_Exit,      {(void (*)(u8))Mailbox_Cancel}}, // JP uses やめる rather than the US Cancel2 alias.
+};
+
+static const struct WindowTemplate sWindowTemplates_MainMenus[] PLAYER_PC_STATIC_DATA =
+{
+    [WIN_MAIN_MENU] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 9,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    [WIN_MAIN_MENU_BEDROOM] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 9,
+        .height = 8,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    [WIN_ITEM_STORAGE_MENU] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 10,
+        .height = 8,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+};
+
+static const struct YesNoFuncTable sItemTossYesNoFuncs PLAYER_PC_STATIC_DATA =
+{
+    (TaskFunc)ItemStorage_ResumeInputFromYesToss,
+    (TaskFunc)ItemStorage_ResumeInputFromNoToss,
+};
+
+static const struct ListMenuTemplate sListMenuTemplate_ItemStorage PLAYER_PC_STATIC_DATA =
+{
+    .items = NULL,
+    .moveCursorFunc = (void (*)(s32, bool8, struct ListMenu *))ItemStorage_MoveCursor,
+    .itemPrintFunc = (void (*)(u8, u32, u8))fish4_goto_x5_or_x6,
+    .totalItems = 0,
+    .maxShowed = 0,
+    .windowId = 0,
+    .header_X = 0,
+    .item_X = 8,
+    .cursor_X = 0,
+    .upText_Y = 10,
+    .cursorPal = 2,
+    .fillValue = 1,
+    .cursorShadowPal = 3,
+    .lettersSpacing = FALSE,
+    .itemVerticalPadding = 0,
+    .scrollMultiple = LIST_NO_MULTIPLE_SCROLL,
+    // The JP ROM uses font 1 here; FONT_NARROW is a US-only font ID.
+    .fontId = FONT_NORMAL,
+    .cursorKind = CURSOR_BLACK_ARROW,
+};
+
+static const struct WindowTemplate sWindowTemplates_ItemStorage[ITEMPC_WIN_COUNT] PLAYER_PC_STATIC_DATA =
+{
+    [ITEMPC_WIN_LIST] = {
+        .bg = 0,
+        .tilemapLeft = 15,
+        .tilemapTop = 1,
+        .width = 14,
+        .height = 18,
+        .paletteNum = 15,
+        .baseBlock = 0x51,
+    },
+    [ITEMPC_WIN_MESSAGE] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 13,
+        .width = 12,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 0x14D,
+    },
+    [ITEMPC_WIN_ICON] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 8,
+        .width = 3,
+        .height = 3,
+        .paletteNum = 15,
+        .baseBlock = 0x1A7,
+    },
+    [ITEMPC_WIN_TITLE] = {
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 1,
+        .width = 9,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x195,
+    },
+    [ITEMPC_WIN_QUANTITY] = {
+        .bg = 0,
+        .tilemapLeft = 7,
+        .tilemapTop = 9,
+        .width = 6,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x1B0,
+    },
+};
+
+static const struct WindowTemplate sItemTossYesNoWindowTemplate PLAYER_PC_STATIC_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 8,
+    .tilemapTop = 7,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x1BC,
+};
+
+static const u8 sSwapArrowTextColors[] PLAYER_PC_STATIC_DATA =
+{
+    TEXT_COLOR_WHITE,
+    TEXT_COLOR_LIGHT_GRAY,
+    TEXT_COLOR_DARK_GRAY,
+};
+
+static const u8 sSwapArrowTextColorsPadding PLAYER_PC_STATIC_DATA = 0;

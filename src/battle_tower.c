@@ -1,5 +1,418 @@
 #include "global.h"
 #include "battle_tower.h"
+#include "strings.h"
+#include "constants/apprentice.h"
+#include "constants/battle_frontier.h"
+#include "constants/battle_tower.h"
+#include "constants/battle_frontier_mons.h"
+#include "constants/battle_frontier_trainers.h"
+#include "constants/battle_tent_mons.h"
+#include "constants/battle_tent_trainers.h"
+#include "constants/easy_chat.h"
+#include "constants/event_objects.h"
+#include "constants/frontier_util.h"
+#include "constants/items.h"
+#include "constants/moves.h"
+#include "constants/pokemon.h"
+#include "constants/species.h"
+#include "constants/trainers.h"
+
+#define BATTLE_FRONTIER_HELD_ITEMS_DATA __attribute__((section(".rodata.battle_frontier_held_items_data")))
+#define BATTLE_FRONTIER_TRAINER_MONS_DATA __attribute__((section(".rodata.battle_frontier_trainer_mons_data")))
+#define BATTLE_FRONTIER_TRAINERS_DATA __attribute__((section(".rodata.battle_frontier_trainers_data")))
+#define BATTLE_FRONTIER_MONS_DATA __attribute__((section(".rodata.battle_frontier_mons_data")))
+#define BATTLE_FRONTIER_TRAINER_GFX_DATA __attribute__((section(".rodata.battle_frontier_trainer_gfx_data")))
+#define BATTLE_FRONTIER_RUBY_FACILITY_CLASS_DATA __attribute__((section(".rodata.battle_frontier_ruby_facility_class_data")))
+#define BATTLE_TOWER_PARTNER_TEXT_DATA __attribute__((section(".rodata.battle_tower_partner_text_data")))
+#define BATTLE_TOWER_STEVEN_MONS_DATA __attribute__((section(".rodata.battle_tower_steven_mons_data")))
+#define BATTLE_TOWER_BATTLE_TENT_DATA __attribute__((section(".rodata.battle_tower_battle_tent_data")))
+#define BATTLE_TOWER_FUNCS_DATA __attribute__((section(".rodata.battle_tower_funcs_data")))
+#define BATTLE_TOWER_SMALL_DATA __attribute__((section(".rodata.battle_tower_small_data")))
+
+const u16 gBattleFrontierHeldItems[] BATTLE_FRONTIER_HELD_ITEMS_DATA =
+{
+    [BATTLE_FRONTIER_ITEM_NONE]           = ITEM_NONE,
+    [BATTLE_FRONTIER_ITEM_KINGS_ROCK]     = ITEM_KINGS_ROCK,
+    [BATTLE_FRONTIER_ITEM_SITRUS_BERRY]   = ITEM_SITRUS_BERRY,
+    [BATTLE_FRONTIER_ITEM_ORAN_BERRY]     = ITEM_ORAN_BERRY,
+    [BATTLE_FRONTIER_ITEM_CHESTO_BERRY]   = ITEM_CHESTO_BERRY,
+    [BATTLE_FRONTIER_ITEM_HARD_STONE]     = ITEM_HARD_STONE,
+    [BATTLE_FRONTIER_ITEM_FOCUS_BAND]     = ITEM_FOCUS_BAND,
+    [BATTLE_FRONTIER_ITEM_PERSIM_BERRY]   = ITEM_PERSIM_BERRY,
+    [BATTLE_FRONTIER_ITEM_MIRACLE_SEED]   = ITEM_MIRACLE_SEED,
+    [BATTLE_FRONTIER_ITEM_BERRY_JUICE]    = ITEM_BERRY_JUICE,
+    [BATTLE_FRONTIER_ITEM_MACHO_BRACE]    = ITEM_MACHO_BRACE,
+    [BATTLE_FRONTIER_ITEM_SILVER_POWDER]  = ITEM_SILVER_POWDER,
+    [BATTLE_FRONTIER_ITEM_CHERI_BERRY]    = ITEM_CHERI_BERRY,
+    [BATTLE_FRONTIER_ITEM_BLACK_GLASSES]  = ITEM_BLACK_GLASSES,
+    [BATTLE_FRONTIER_ITEM_BLACK_BELT]     = ITEM_BLACK_BELT,
+    [BATTLE_FRONTIER_ITEM_SOUL_DEW]       = ITEM_SOUL_DEW,
+    [BATTLE_FRONTIER_ITEM_CHOICE_BAND]    = ITEM_CHOICE_BAND,
+    [BATTLE_FRONTIER_ITEM_MAGNET]         = ITEM_MAGNET,
+    [BATTLE_FRONTIER_ITEM_SILK_SCARF]     = ITEM_SILK_SCARF,
+    [BATTLE_FRONTIER_ITEM_WHITE_HERB]     = ITEM_WHITE_HERB,
+    [BATTLE_FRONTIER_ITEM_DEEP_SEA_SCALE] = ITEM_DEEP_SEA_SCALE,
+    [BATTLE_FRONTIER_ITEM_DEEP_SEA_TOOTH] = ITEM_DEEP_SEA_TOOTH,
+    [BATTLE_FRONTIER_ITEM_MYSTIC_WATER]   = ITEM_MYSTIC_WATER,
+    [BATTLE_FRONTIER_ITEM_SHARP_BEAK]     = ITEM_SHARP_BEAK,
+    [BATTLE_FRONTIER_ITEM_QUICK_CLAW]     = ITEM_QUICK_CLAW,
+    [BATTLE_FRONTIER_ITEM_LEFTOVERS]      = ITEM_LEFTOVERS,
+    [BATTLE_FRONTIER_ITEM_RAWST_BERRY]    = ITEM_RAWST_BERRY,
+    [BATTLE_FRONTIER_ITEM_LIGHT_BALL]     = ITEM_LIGHT_BALL,
+    [BATTLE_FRONTIER_ITEM_POISON_BARB]    = ITEM_POISON_BARB,
+    [BATTLE_FRONTIER_ITEM_NEVER_MELT_ICE] = ITEM_NEVER_MELT_ICE,
+    [BATTLE_FRONTIER_ITEM_ASPEAR_BERRY]   = ITEM_ASPEAR_BERRY,
+    [BATTLE_FRONTIER_ITEM_SPELL_TAG]      = ITEM_SPELL_TAG,
+    [BATTLE_FRONTIER_ITEM_BRIGHT_POWDER]  = ITEM_BRIGHT_POWDER,
+    [BATTLE_FRONTIER_ITEM_LEPPA_BERRY]    = ITEM_LEPPA_BERRY,
+    [BATTLE_FRONTIER_ITEM_SCOPE_LENS]     = ITEM_SCOPE_LENS,
+    [BATTLE_FRONTIER_ITEM_TWISTED_SPOON]  = ITEM_TWISTED_SPOON,
+    [BATTLE_FRONTIER_ITEM_METAL_COAT]     = ITEM_METAL_COAT,
+    [BATTLE_FRONTIER_ITEM_MENTAL_HERB]    = ITEM_MENTAL_HERB,
+    [BATTLE_FRONTIER_ITEM_CHARCOAL]       = ITEM_CHARCOAL,
+    [BATTLE_FRONTIER_ITEM_PECHA_BERRY]    = ITEM_PECHA_BERRY,
+    [BATTLE_FRONTIER_ITEM_SOFT_SAND]      = ITEM_SOFT_SAND,
+    [BATTLE_FRONTIER_ITEM_LUM_BERRY]      = ITEM_LUM_BERRY,
+    [BATTLE_FRONTIER_ITEM_DRAGON_SCALE]   = ITEM_DRAGON_SCALE,
+    [BATTLE_FRONTIER_ITEM_DRAGON_FANG]    = ITEM_DRAGON_FANG,
+    [BATTLE_FRONTIER_ITEM_IAPAPA_BERRY]   = ITEM_IAPAPA_BERRY,
+    [BATTLE_FRONTIER_ITEM_WIKI_BERRY]     = ITEM_WIKI_BERRY,
+    [BATTLE_FRONTIER_ITEM_SEA_INCENSE]    = ITEM_SEA_INCENSE,
+    [BATTLE_FRONTIER_ITEM_SHELL_BELL]     = ITEM_SHELL_BELL,
+    [BATTLE_FRONTIER_ITEM_SALAC_BERRY]    = ITEM_SALAC_BERRY,
+    [BATTLE_FRONTIER_ITEM_LANSAT_BERRY]   = ITEM_LANSAT_BERRY,
+    [BATTLE_FRONTIER_ITEM_APICOT_BERRY]   = ITEM_APICOT_BERRY,
+    [BATTLE_FRONTIER_ITEM_STARF_BERRY]    = ITEM_STARF_BERRY,
+    [BATTLE_FRONTIER_ITEM_LIECHI_BERRY]   = ITEM_LIECHI_BERRY,
+    [BATTLE_FRONTIER_ITEM_STICK]          = ITEM_STICK,
+    [BATTLE_FRONTIER_ITEM_LAX_INCENSE]    = ITEM_LAX_INCENSE,
+    [BATTLE_FRONTIER_ITEM_AGUAV_BERRY]    = ITEM_AGUAV_BERRY,
+    [BATTLE_FRONTIER_ITEM_FIGY_BERRY]     = ITEM_FIGY_BERRY,
+    [BATTLE_FRONTIER_ITEM_THICK_CLUB]     = ITEM_THICK_CLUB,
+    [BATTLE_FRONTIER_ITEM_MAGO_BERRY]     = ITEM_MAGO_BERRY,
+    [BATTLE_FRONTIER_ITEM_METAL_POWDER]   = ITEM_METAL_POWDER,
+    [BATTLE_FRONTIER_ITEM_PETAYA_BERRY]   = ITEM_PETAYA_BERRY,
+    [BATTLE_FRONTIER_ITEM_LUCKY_PUNCH]    = ITEM_LUCKY_PUNCH,
+    [BATTLE_FRONTIER_ITEM_GANLON_BERRY]   = ITEM_GANLON_BERRY,
+};
+
+#include "data/battle_frontier/battle_frontier_trainer_mons.h"
+
+// The original trainer-mon lists are followed by two explicit alignment bytes.
+static const u8 sBattleFrontierTrainerMonsPadding[2] BATTLE_FRONTIER_TRAINER_MONS_DATA = {0};
+
+#include "data/battle_frontier/battle_frontier_trainers.h"
+
+#include "data/battle_frontier/battle_frontier_mons.h"
+
+const u8 gTowerMaleFacilityClasses[30] BATTLE_FRONTIER_TRAINER_GFX_DATA =
+{
+    FACILITY_CLASS_RUIN_MANIAC,
+    FACILITY_CLASS_TUBER_M,
+    FACILITY_CLASS_COOLTRAINER_M,
+    FACILITY_CLASS_RICH_BOY,
+    FACILITY_CLASS_POKEMANIAC,
+    FACILITY_CLASS_SWIMMER_M,
+    FACILITY_CLASS_BLACK_BELT,
+    FACILITY_CLASS_GUITARIST,
+    FACILITY_CLASS_KINDLER,
+    FACILITY_CLASS_CAMPER,
+    FACILITY_CLASS_BUG_MANIAC,
+    FACILITY_CLASS_PSYCHIC_M,
+    FACILITY_CLASS_GENTLEMAN,
+    FACILITY_CLASS_SCHOOL_KID_M,
+    FACILITY_CLASS_POKEFAN_M,
+    FACILITY_CLASS_EXPERT_M,
+    FACILITY_CLASS_YOUNGSTER,
+    FACILITY_CLASS_FISHERMAN,
+    FACILITY_CLASS_CYCLING_TRIATHLETE_M,
+    FACILITY_CLASS_RUNNING_TRIATHLETE_M,
+    FACILITY_CLASS_SWIMMING_TRIATHLETE_M,
+    FACILITY_CLASS_DRAGON_TAMER,
+    FACILITY_CLASS_BIRD_KEEPER,
+    FACILITY_CLASS_NINJA_BOY,
+    FACILITY_CLASS_SAILOR,
+    FACILITY_CLASS_COLLECTOR,
+    FACILITY_CLASS_PKMN_BREEDER_M,
+    FACILITY_CLASS_PKMN_RANGER_M,
+    FACILITY_CLASS_BUG_CATCHER,
+    FACILITY_CLASS_HIKER
+};
+
+const u8 gTowerFemaleFacilityClasses[20] BATTLE_FRONTIER_TRAINER_GFX_DATA =
+{
+    FACILITY_CLASS_AROMA_LADY,
+    FACILITY_CLASS_TUBER_F,
+    FACILITY_CLASS_COOLTRAINER_F,
+    FACILITY_CLASS_HEX_MANIAC,
+    FACILITY_CLASS_LADY,
+    FACILITY_CLASS_BEAUTY,
+    FACILITY_CLASS_PSYCHIC_F,
+    FACILITY_CLASS_SCHOOL_KID_F,
+    FACILITY_CLASS_POKEFAN_F,
+    FACILITY_CLASS_EXPERT_F,
+    FACILITY_CLASS_CYCLING_TRIATHLETE_F,
+    FACILITY_CLASS_RUNNING_TRIATHLETE_F,
+    FACILITY_CLASS_SWIMMING_TRIATHLETE_F,
+    FACILITY_CLASS_BATTLE_GIRL,
+    FACILITY_CLASS_PARASOL_LADY,
+    FACILITY_CLASS_SWIMMER_F,
+    FACILITY_CLASS_PICNICKER,
+    FACILITY_CLASS_PKMN_BREEDER_F,
+    FACILITY_CLASS_PKMN_RANGER_F,
+    FACILITY_CLASS_LASS
+};
+
+const u8 gTowerMaleTrainerGfxIds[30] BATTLE_FRONTIER_TRAINER_GFX_DATA =
+{
+    OBJ_EVENT_GFX_HIKER,
+    OBJ_EVENT_GFX_TUBER_M,
+    OBJ_EVENT_GFX_MAN_3,
+    OBJ_EVENT_GFX_RICH_BOY,
+    OBJ_EVENT_GFX_MANIAC,
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_M,
+    OBJ_EVENT_GFX_BLACK_BELT,
+    OBJ_EVENT_GFX_MAN_5,
+    OBJ_EVENT_GFX_MAN_5,
+    OBJ_EVENT_GFX_CAMPER,
+    OBJ_EVENT_GFX_MANIAC,
+    OBJ_EVENT_GFX_PSYCHIC_M,
+    OBJ_EVENT_GFX_GENTLEMAN,
+    OBJ_EVENT_GFX_SCHOOL_KID_M,
+    OBJ_EVENT_GFX_POKEFAN_M,
+    OBJ_EVENT_GFX_EXPERT_M,
+    OBJ_EVENT_GFX_YOUNGSTER,
+    OBJ_EVENT_GFX_FISHERMAN,
+    OBJ_EVENT_GFX_CYCLING_TRIATHLETE_M,
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_M,
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_M,
+    OBJ_EVENT_GFX_MAN_3,
+    OBJ_EVENT_GFX_MAN_5,
+    OBJ_EVENT_GFX_NINJA_BOY,
+    OBJ_EVENT_GFX_SAILOR,
+    OBJ_EVENT_GFX_MANIAC,
+    OBJ_EVENT_GFX_MAN_4,
+    OBJ_EVENT_GFX_CAMPER,
+    OBJ_EVENT_GFX_BUG_CATCHER,
+    OBJ_EVENT_GFX_HIKER
+};
+
+const u8 gTowerFemaleTrainerGfxIds[20] BATTLE_FRONTIER_TRAINER_GFX_DATA =
+{
+    OBJ_EVENT_GFX_WOMAN_2,
+    OBJ_EVENT_GFX_TUBER_F,
+    OBJ_EVENT_GFX_WOMAN_5,
+    OBJ_EVENT_GFX_HEX_MANIAC,
+    OBJ_EVENT_GFX_WOMAN_2,
+    OBJ_EVENT_GFX_BEAUTY,
+    OBJ_EVENT_GFX_LASS,
+    OBJ_EVENT_GFX_GIRL_3,
+    OBJ_EVENT_GFX_POKEFAN_F,
+    OBJ_EVENT_GFX_EXPERT_F,
+    OBJ_EVENT_GFX_CYCLING_TRIATHLETE_F,
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_F,
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_F,
+    OBJ_EVENT_GFX_GIRL_3,
+    OBJ_EVENT_GFX_WOMAN_5,
+    OBJ_EVENT_GFX_RUNNING_TRIATHLETE_F,
+    OBJ_EVENT_GFX_PICNICKER,
+    OBJ_EVENT_GFX_WOMAN_2,
+    OBJ_EVENT_GFX_PICNICKER,
+    OBJ_EVENT_GFX_LASS
+};
+
+// Excludes the unused RS_FACILITY_CLASS_BOARDER_1 and _2.
+static const u8 sRubyFacilityClassToEmerald[RS_FACILITY_CLASSES_COUNT - 2][2] BATTLE_FRONTIER_RUBY_FACILITY_CLASS_DATA =
+{
+    {RS_FACILITY_CLASS_AQUA_LEADER_ARCHIE, FACILITY_CLASS_AQUA_LEADER_ARCHIE},
+    {RS_FACILITY_CLASS_AQUA_GRUNT_M, FACILITY_CLASS_AQUA_GRUNT_M},
+    {RS_FACILITY_CLASS_AQUA_GRUNT_F, FACILITY_CLASS_AQUA_GRUNT_F},
+    {RS_FACILITY_CLASS_AROMA_LADY, FACILITY_CLASS_AROMA_LADY},
+    {RS_FACILITY_CLASS_RUIN_MANIAC, FACILITY_CLASS_RUIN_MANIAC},
+    {RS_FACILITY_CLASS_INTERVIEWER, FACILITY_CLASS_INTERVIEWER},
+    {RS_FACILITY_CLASS_TUBER_F, FACILITY_CLASS_TUBER_F},
+    {RS_FACILITY_CLASS_TUBER_M, FACILITY_CLASS_TUBER_M},
+    {RS_FACILITY_CLASS_COOLTRAINER_M, FACILITY_CLASS_COOLTRAINER_M},
+    {RS_FACILITY_CLASS_COOLTRAINER_F, FACILITY_CLASS_COOLTRAINER_F},
+    {RS_FACILITY_CLASS_HEX_MANIAC, FACILITY_CLASS_HEX_MANIAC},
+    {RS_FACILITY_CLASS_LADY, FACILITY_CLASS_LADY},
+    {RS_FACILITY_CLASS_BEAUTY, FACILITY_CLASS_BEAUTY},
+    {RS_FACILITY_CLASS_RICH_BOY, FACILITY_CLASS_RICH_BOY},
+    {RS_FACILITY_CLASS_POKEMANIAC, FACILITY_CLASS_POKEMANIAC},
+    {RS_FACILITY_CLASS_SWIMMER_M, FACILITY_CLASS_SWIMMER_M},
+    {RS_FACILITY_CLASS_BLACK_BELT, FACILITY_CLASS_BLACK_BELT},
+    {RS_FACILITY_CLASS_GUITARIST, FACILITY_CLASS_GUITARIST},
+    {RS_FACILITY_CLASS_KINDLER, FACILITY_CLASS_KINDLER},
+    {RS_FACILITY_CLASS_CAMPER, FACILITY_CLASS_CAMPER},
+    {RS_FACILITY_CLASS_BUG_MANIAC, FACILITY_CLASS_BUG_MANIAC},
+    {RS_FACILITY_CLASS_PSYCHIC_M, FACILITY_CLASS_PSYCHIC_M},
+    {RS_FACILITY_CLASS_PSYCHIC_F, FACILITY_CLASS_PSYCHIC_F},
+    {RS_FACILITY_CLASS_GENTLEMAN, FACILITY_CLASS_GENTLEMAN},
+    {RS_FACILITY_CLASS_ELITE_FOUR_M, FACILITY_CLASS_ELITE_FOUR_SIDNEY},
+    {RS_FACILITY_CLASS_ELITE_FOUR_F, FACILITY_CLASS_ELITE_FOUR_PHOEBE},
+    {RS_FACILITY_CLASS_LEADER_F, FACILITY_CLASS_LEADER_ROXANNE},
+    {RS_FACILITY_CLASS_LEADER_M, FACILITY_CLASS_LEADER_BRAWLY},
+    {RS_FACILITY_CLASS_LEADER_MF, FACILITY_CLASS_LEADER_TATE_AND_LIZA},
+    {RS_FACILITY_CLASS_SCHOOL_KID_M, FACILITY_CLASS_SCHOOL_KID_M},
+    {RS_FACILITY_CLASS_SCHOOL_KID_F, FACILITY_CLASS_SCHOOL_KID_F},
+    {RS_FACILITY_CLASS_SR_AND_JR, FACILITY_CLASS_SR_AND_JR},
+    {RS_FACILITY_CLASS_POKEFAN_M, FACILITY_CLASS_POKEFAN_M},
+    {RS_FACILITY_CLASS_POKEFAN_F, FACILITY_CLASS_POKEFAN_F},
+    {RS_FACILITY_CLASS_EXPERT_M, FACILITY_CLASS_EXPERT_M},
+    {RS_FACILITY_CLASS_EXPERT_F, FACILITY_CLASS_EXPERT_F},
+    {RS_FACILITY_CLASS_YOUNGSTER, FACILITY_CLASS_YOUNGSTER},
+    {RS_FACILITY_CLASS_CHAMPION, FACILITY_CLASS_CHAMPION_WALLACE},
+    {RS_FACILITY_CLASS_FISHERMAN, FACILITY_CLASS_FISHERMAN},
+    {RS_FACILITY_CLASS_CYCLING_TRIATHLETE_M, FACILITY_CLASS_CYCLING_TRIATHLETE_M},
+    {RS_FACILITY_CLASS_CYCLING_TRIATHLETE_F, FACILITY_CLASS_CYCLING_TRIATHLETE_F},
+    {RS_FACILITY_CLASS_RUNNING_TRIATHLETE_M, FACILITY_CLASS_RUNNING_TRIATHLETE_M},
+    {RS_FACILITY_CLASS_RUNNING_TRIATHLETE_F, FACILITY_CLASS_RUNNING_TRIATHLETE_F},
+    {RS_FACILITY_CLASS_SWIMMING_TRIATHLETE_M, FACILITY_CLASS_SWIMMING_TRIATHLETE_M},
+    {RS_FACILITY_CLASS_SWIMMING_TRIATHLETE_F, FACILITY_CLASS_SWIMMING_TRIATHLETE_F},
+    {RS_FACILITY_CLASS_DRAGON_TAMER, FACILITY_CLASS_DRAGON_TAMER},
+    {RS_FACILITY_CLASS_BIRD_KEEPER, FACILITY_CLASS_BIRD_KEEPER},
+    {RS_FACILITY_CLASS_NINJA_BOY, FACILITY_CLASS_NINJA_BOY},
+    {RS_FACILITY_CLASS_BATTLE_GIRL, FACILITY_CLASS_BATTLE_GIRL},
+    {RS_FACILITY_CLASS_PARASOL_LADY, FACILITY_CLASS_PARASOL_LADY},
+    {RS_FACILITY_CLASS_SWIMMER_F, FACILITY_CLASS_SWIMMER_F},
+    {RS_FACILITY_CLASS_PICNICKER, FACILITY_CLASS_PICNICKER},
+    {RS_FACILITY_CLASS_TWINS, FACILITY_CLASS_TWINS},
+    {RS_FACILITY_CLASS_SAILOR, FACILITY_CLASS_SAILOR},
+    {RS_FACILITY_CLASS_COLLECTOR, FACILITY_CLASS_COLLECTOR},
+    {RS_FACILITY_CLASS_WALLY, FACILITY_CLASS_WALLY},
+    {RS_FACILITY_CLASS_BRENDAN_1, FACILITY_CLASS_BRENDAN},
+    {RS_FACILITY_CLASS_BRENDAN_2, FACILITY_CLASS_BRENDAN_2},
+    {RS_FACILITY_CLASS_BRENDAN_3, FACILITY_CLASS_BRENDAN_3},
+    {RS_FACILITY_CLASS_MAY_1, FACILITY_CLASS_MAY},
+    {RS_FACILITY_CLASS_MAY_2, FACILITY_CLASS_MAY_2},
+    {RS_FACILITY_CLASS_MAY_3, FACILITY_CLASS_MAY_3},
+    {RS_FACILITY_CLASS_PKMN_BREEDER_M, FACILITY_CLASS_PKMN_BREEDER_M},
+    {RS_FACILITY_CLASS_PKMN_BREEDER_F, FACILITY_CLASS_PKMN_BREEDER_F},
+    {RS_FACILITY_CLASS_PKMN_RANGER_M, FACILITY_CLASS_PKMN_RANGER_M},
+    {RS_FACILITY_CLASS_PKMN_RANGER_F, FACILITY_CLASS_PKMN_RANGER_F},
+    {RS_FACILITY_CLASS_MAGMA_LEADER, FACILITY_CLASS_MAGMA_LEADER_MAXIE},
+    {RS_FACILITY_CLASS_MAGMA_GRUNT_M, FACILITY_CLASS_MAGMA_GRUNT_M},
+    {RS_FACILITY_CLASS_MAGMA_GRUNT_F, FACILITY_CLASS_MAGMA_GRUNT_F},
+    {RS_FACILITY_CLASS_LASS, FACILITY_CLASS_LASS},
+    {RS_FACILITY_CLASS_BUG_CATCHER, FACILITY_CLASS_BUG_CATCHER},
+    {RS_FACILITY_CLASS_HIKER, FACILITY_CLASS_HIKER},
+    {RS_FACILITY_CLASS_YOUNG_COUPLE, FACILITY_CLASS_YOUNG_COUPLE},
+    {RS_FACILITY_CLASS_OLD_COUPLE, FACILITY_CLASS_OLD_COUPLE},
+    {RS_FACILITY_CLASS_SIS_AND_BRO, FACILITY_CLASS_SIS_AND_BRO},
+};
+
+static const u32 sWinStreakFlags[][2] BATTLE_TOWER_SMALL_DATA =
+{
+    {STREAK_TOWER_SINGLES_50,     STREAK_TOWER_SINGLES_OPEN},
+    {STREAK_TOWER_DOUBLES_50,     STREAK_TOWER_DOUBLES_OPEN},
+    {STREAK_TOWER_MULTIS_50,      STREAK_TOWER_MULTIS_OPEN},
+    {STREAK_TOWER_LINK_MULTIS_50, STREAK_TOWER_LINK_MULTIS_OPEN},
+};
+
+static const u32 sWinStreakMasks[][2] BATTLE_TOWER_SMALL_DATA =
+{
+    {~(STREAK_TOWER_SINGLES_50),     ~(STREAK_TOWER_SINGLES_OPEN)},
+    {~(STREAK_TOWER_DOUBLES_50),     ~(STREAK_TOWER_DOUBLES_OPEN)},
+    {~(STREAK_TOWER_MULTIS_50),      ~(STREAK_TOWER_MULTIS_OPEN)},
+    {~(STREAK_TOWER_LINK_MULTIS_50), ~(STREAK_TOWER_LINK_MULTIS_OPEN)},
+};
+
+// The challenge number at which an Apprentice can appear, by answered-question count.
+static const u8 sApprenticeChallengeThreshold[MAX_APPRENTICE_QUESTIONS] BATTLE_TOWER_SMALL_DATA =
+{
+    1, 2, 3, 4, 5, 8, 9, 10, 11, 12
+};
+
+// The JP build shares this physical table for the tower party-size lookup.
+static const u8 sBattleTowerPartySizes2[] BATTLE_TOWER_SMALL_DATA =
+{
+    [FRONTIER_MODE_SINGLES]     = FRONTIER_PARTY_SIZE,
+    [FRONTIER_MODE_DOUBLES]     = FRONTIER_DOUBLES_PARTY_SIZE,
+    [FRONTIER_MODE_MULTIS]      = FRONTIER_MULTI_PARTY_SIZE,
+    [FRONTIER_MODE_LINK_MULTIS] = FRONTIER_MULTI_PARTY_SIZE,
+};
+
+static const u16 sFrontierTrainerIdRanges[][2] BATTLE_TOWER_SMALL_DATA =
+{
+    {FRONTIER_TRAINER_BRADY,   FRONTIER_TRAINER_JILL},
+    {FRONTIER_TRAINER_TREVIN,  FRONTIER_TRAINER_CHLOE},
+    {FRONTIER_TRAINER_ERIK,    FRONTIER_TRAINER_SOFIA},
+    {FRONTIER_TRAINER_NORTON,  FRONTIER_TRAINER_JAZLYN},
+    {FRONTIER_TRAINER_BRADEN,  FRONTIER_TRAINER_ALISON},
+    {FRONTIER_TRAINER_ZACHERY, FRONTIER_TRAINER_LAMAR},
+    {FRONTIER_TRAINER_HANK,    FRONTIER_TRAINER_TESS},
+    {FRONTIER_TRAINER_JAXON,   FRONTIER_TRAINER_GRETEL},
+};
+
+static const u16 sFrontierTrainerIdRangesHard[][2] BATTLE_TOWER_SMALL_DATA =
+{
+    {FRONTIER_TRAINER_ERIK,    FRONTIER_TRAINER_CHLOE},
+    {FRONTIER_TRAINER_NORTON,  FRONTIER_TRAINER_SOFIA},
+    {FRONTIER_TRAINER_BRADEN,  FRONTIER_TRAINER_JAZLYN},
+    {FRONTIER_TRAINER_ZACHERY, FRONTIER_TRAINER_ALISON},
+    {FRONTIER_TRAINER_HANK,    FRONTIER_TRAINER_LAMAR},
+    {FRONTIER_TRAINER_JAXON,   FRONTIER_TRAINER_TESS},
+    {FRONTIER_TRAINER_LEON,    FRONTIER_TRAINER_RAUL},
+    {FRONTIER_TRAINER_JAXON,   FRONTIER_TRAINER_GRETEL},
+};
+
+// Unused data retained in its original contiguous position.
+static const u16 sUnused[] BATTLE_TOWER_SMALL_DATA = {179, 141, 200, 183};
+
+// Easy Chat IDs are JP-specific; retain their exact encoded group/index pairs.
+static const u16 sRecordTrainerSpeechWon[] BATTLE_TOWER_SMALL_DATA =
+{
+    EC_WORD(9, 60), EC_WORD(6, 1), EC_EMPTY_WORD,
+    EC_WORD(3, 7), EC_WORD(3, 7), EC_WORD(6, 1)
+};
+
+static const u16 sRecordTrainerSpeechLost[] BATTLE_TOWER_SMALL_DATA =
+{
+    EC_WORD(9, 27), EC_WORD(6, 6), EC_EMPTY_WORD,
+    EC_WORD(3, 48), EC_WORD(9, 31), EC_WORD(6, 6)
+};
+
+#include "data/battle_frontier/battle_tower_partner_text_tables.h"
+
+#include "data/battle_frontier/battle_tent.h"
+
+void sub_08161EA8(void);
+void sub_08161F68(void);
+void sub_08162008(void);
+void ChooseNextBattleTowerTrainer(void);
+void sub_081620D4(void);
+void AwardBattleTowerRibbons(void);
+void SaveBattleTowerProgress(void);
+void sub_0816383C(void);
+void SpriteCB_Null6(void);
+void sub_081641C8(void);
+void sub_08164718(void);
+void sub_08164A54(void);
+void sub_08164CAC(void);
+void sub_08164CC4(void);
+void sub_08164CE4(void);
+
+// Entries use the standard Battle Tower function IDs while retaining JP function
+// symbols until their corresponding naked functions are fully named.
+static void (*const sBattleTowerFuncs[])(void) BATTLE_TOWER_FUNCS_DATA =
+{
+    [BATTLE_TOWER_FUNC_INIT]                = sub_08161EA8,
+    [BATTLE_TOWER_FUNC_GET_DATA]            = sub_08161F68,
+    [BATTLE_TOWER_FUNC_SET_DATA]            = sub_08162008,
+    [BATTLE_TOWER_FUNC_SET_OPPONENT]        = ChooseNextBattleTowerTrainer,
+    [BATTLE_TOWER_FUNC_SET_BATTLE_WON]      = sub_081620D4,
+    [BATTLE_TOWER_FUNC_GIVE_RIBBONS]        = AwardBattleTowerRibbons,
+    [BATTLE_TOWER_FUNC_SAVE]                = SaveBattleTowerProgress,
+    [BATTLE_TOWER_FUNC_GET_OPPONENT_INTRO]  = sub_0816383C,
+    [BATTLE_TOWER_FUNC_NOP]                 = SpriteCB_Null6,
+    [BATTLE_TOWER_FUNC_NOP2]                = (void (*)(void))GetEreaderTrainerFrontSpriteId,
+    [BATTLE_TOWER_FUNC_LOAD_PARTNERS]       = sub_081641C8,
+    [BATTLE_TOWER_FUNC_PARTNER_MSG]         = sub_08164718,
+    [BATTLE_TOWER_FUNC_LOAD_LINK_OPPONENTS] = sub_08164A54,
+    [BATTLE_TOWER_FUNC_TRY_CLOSE_LINK]      = sub_08164CAC,
+    [BATTLE_TOWER_FUNC_SET_PARTNER_GFX]     = sub_08164CC4,
+    [BATTLE_TOWER_FUNC_SET_INTERVIEW_DATA]  = sub_08164CE4,
+};
 
 __attribute__((naked)) void sub_08161E88(void)
 {
@@ -24,7 +437,7 @@ __attribute__((naked)) void nullsub_61(void)
         ".code 16\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08161EA0: .4byte gUnknown_85BE8B0\n\t"
+        "_08161EA0: .4byte sBattleTowerFuncs\n\t"
         "_08161EA4: .4byte gSpecialVar_0x8004\n\t"
         ".syntax divided\n\t"
     );
@@ -116,7 +529,7 @@ __attribute__((naked)) void sub_08161EA8(void)
         "_08161F50: .4byte 0x000040CE\n\t"
         "_08161F54: .4byte 0x00000CA8\n\t"
         "_08161F58: .4byte 0x00000CDC\n\t"
-        "_08161F5C: .4byte gUnknown_85BE8F0\n\t"
+        "_08161F5C: .4byte sWinStreakFlags\n\t"
         "_08161F60: .4byte gSaveBlock1Ptr\n\t"
         "_08161F64: .4byte gTrainerBattleOpponent_A\n\t"
         ".syntax divided\n\t"
@@ -186,7 +599,7 @@ __attribute__((naked)) void sub_08161F68(void)
         "	.align 2, 0\n\t"
         "_08161FE0: .4byte gSpecialVar_Result\n\t"
         "_08161FE4: .4byte 0x00000CDC\n\t"
-        "_08161FE8: .4byte gUnknown_85BE8F0\n\t"
+        "_08161FE8: .4byte sWinStreakFlags\n\t"
         "_08161FEC:\n\t"
         "	ldr r1, [r5]\n\t"
         "	adds r0, r1, r4\n\t"
@@ -274,7 +687,7 @@ __attribute__((naked)) void sub_08162008(void)
         "	.align 2, 0\n\t"
         "_08162088: .4byte gSpecialVar_0x8006\n\t"
         "_0816208C: .4byte 0x00000CDC\n\t"
-        "_08162090: .4byte gUnknown_85BE8F0\n\t"
+        "_08162090: .4byte sWinStreakFlags\n\t"
         "_08162094:\n\t"
         "	ldr r2, [r6]\n\t"
         "	ldr r1, _081620B0\n\t"
@@ -291,7 +704,7 @@ __attribute__((naked)) void sub_08162008(void)
         "	b _081620C8\n\t"
         "	.align 2, 0\n\t"
         "_081620B0: .4byte 0x00000CDC\n\t"
-        "_081620B4: .4byte gUnknown_85BE910\n\t"
+        "_081620B4: .4byte sWinStreakMasks\n\t"
         "_081620B8:\n\t"
         "	ldr r1, [r6]\n\t"
         "	adds r0, r1, r7\n\t"
@@ -567,7 +980,7 @@ __attribute__((naked)) void ChooseSpecialBattleTowerTrainer(void)
         "_081622BC: .4byte 0x000040CE\n\t"
         "_081622C0: .4byte 0x000040CF\n\t"
         "_081622C4: .4byte 0x0000076C\n\t"
-        "_081622C8: .4byte gUnknown_85BE93A\n\t"
+        "_081622C8: .4byte sBattleTowerPartySizes2\n\t"
         "_081622CC: .4byte 0x0000073A\n\t"
         "_081622D0: .4byte sApprenticeChallengeThreshold\n\t"
         "_081622D4:\n\t"
@@ -784,7 +1197,7 @@ __attribute__((naked)) void sub_0816245C(void)
         "	ldrh r4, [r1]\n\t"
         "	b _0816249E\n\t"
         "	.align 2, 0\n\t"
-        "_08162480: .4byte gUnknown_85BE95E\n\t"
+        "_08162480: .4byte sFrontierTrainerIdRangesHard\n\t"
         "_08162484:\n\t"
         "	ldr r2, _08162494\n\t"
         "	lsls r1, r3, #2\n\t"
@@ -795,7 +1208,7 @@ __attribute__((naked)) void sub_0816245C(void)
         "	ldrh r4, [r1]\n\t"
         "	b _0816249E\n\t"
         "	.align 2, 0\n\t"
-        "_08162494: .4byte gUnknown_85BE93E\n\t"
+        "_08162494: .4byte sFrontierTrainerIdRanges\n\t"
         "_08162498:\n\t"
         "	ldr r1, _081624C4\n\t"
         "	ldrh r0, [r1, #0x1e]\n\t"
@@ -818,7 +1231,7 @@ __attribute__((naked)) void sub_0816245C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081624C4: .4byte gUnknown_85BE93E\n\t"
+        "_081624C4: .4byte sFrontierTrainerIdRanges\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -842,7 +1255,7 @@ __attribute__((naked)) void sub_081624C8(void)
         "	lsls r2, r0, #2\n\t"
         "	b _081624EC\n\t"
         "	.align 2, 0\n\t"
-        "_081624E4: .4byte gUnknown_85BE95E\n\t"
+        "_081624E4: .4byte sFrontierTrainerIdRangesHard\n\t"
         "_081624E8:\n\t"
         "	ldr r1, _08162504\n\t"
         "	lsls r2, r2, #2\n\t"
@@ -859,7 +1272,7 @@ __attribute__((naked)) void sub_081624C8(void)
         "	ldrh r0, [r2]\n\t"
         "	b _08162518\n\t"
         "	.align 2, 0\n\t"
-        "_08162504: .4byte gUnknown_85BE93E\n\t"
+        "_08162504: .4byte sFrontierTrainerIdRanges\n\t"
         "_08162508:\n\t"
         "	ldr r0, _08162524\n\t"
         "	ldrh r1, [r0, #0x1e]\n\t"
@@ -876,7 +1289,7 @@ __attribute__((naked)) void sub_081624C8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08162524: .4byte gUnknown_85BE93E\n\t"
+        "_08162524: .4byte sFrontierTrainerIdRanges\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5285,7 +5698,7 @@ __attribute__((naked)) void sub_08164718(void)
         "_0816475C: .4byte gSpecialVar_LastTalked\n\t"
         "_08164760: .4byte gSaveBlock2Ptr\n\t"
         "_08164764: .4byte 0x00000CB4\n\t"
-        "_08164768: .4byte gUnknown_85BC444\n\t"
+        "_08164768: .4byte sPartnerTrainerTextTables\n\t"
         "_0816476C:\n\t"
         "	adds r4, #8\n\t"
         "	ldr r0, [sp]\n\t"
@@ -5580,7 +5993,7 @@ __attribute__((naked)) void sub_08164718(void)
         "_081649C8: .4byte gPartnerTrainerId\n\t"
         "_081649CC: .4byte 0x00000CB4\n\t"
         "_081649D0: .4byte 0x00000CD6\n\t"
-        "_081649D4: .4byte gUnknown_85BC444\n\t"
+        "_081649D4: .4byte sPartnerTrainerTextTables\n\t"
         "_081649D8:\n\t"
         "	ldr r0, _081649FC\n\t"
         "	cmp r7, r0\n\t"
@@ -5601,7 +6014,7 @@ __attribute__((naked)) void sub_08164718(void)
         "	b _08164A34\n\t"
         "	.align 2, 0\n\t"
         "_081649FC: .4byte SPECIAL_sub_0818E59C\n\t"
-        "_08164A00: .4byte gUnknown_85BC444\n\t"
+        "_08164A00: .4byte sPartnerTrainerTextTables\n\t"
         "_08164A04: .4byte gSpecialVar_0x8005\n\t"
         "_08164A08:\n\t"
         "	ldr r0, _08164A44\n\t"
@@ -5637,7 +6050,7 @@ __attribute__((naked)) void sub_08164718(void)
         "	.align 2, 0\n\t"
         "_08164A44: .4byte gSaveBlock2Ptr\n\t"
         "_08164A48: .4byte 0xFFFFFE70\n\t"
-        "_08164A4C: .4byte gUnknown_85BC5D4\n\t"
+        "_08164A4C: .4byte sPartnerApprenticeTextTables\n\t"
         "_08164A50: .4byte gSpecialVar_0x8005\n\t"
         ".syntax divided\n\t"
     );
@@ -6905,11 +7318,11 @@ __attribute__((naked)) void FillPartnerParty(void)
         "	b _081656A6\n\t"
         "	.align 2, 0\n\t"
         "_081653AC: .4byte 0x00000C03\n\t"
-        "_081653B0: .4byte gUnknown_85BC614\n\t"
+        "_081653B0: .4byte sStevenMons\n\t"
         "_081653B4: .4byte 0x0000EF2A\n\t"
         "_081653B8: .4byte gUnknown_20242BC\n\t"
-        "_081653BC: .4byte gUnknown_85BC619\n\t"
-        "_081653C0: .4byte gUnknown_85BC620\n\t"
+        "_081653BC: .4byte sStevenMons + 5\n\t"
+        "_081653C0: .4byte sStevenMons + 0xC\n\t"
         "_081653C4: .4byte 0x082E9CC0\n\t"
         "_081653C8:\n\t"
         "	movs r0, #0xfa\n\t"
@@ -7359,7 +7772,7 @@ __attribute__((naked)) bool32 RubyBattleTowerRecordToEmerald(struct RSBattleTowe
         "	ldrb r0, [r0]\n\t"
         "	b _0816575E\n\t"
         "	.align 2, 0\n\t"
-        "_08165758: .4byte gUnknown_85BBE84\n\t"
+        "_08165758: .4byte sRubyFacilityClassToEmerald\n\t"
         "_0816575C:\n\t"
         "	movs r0, #0x2b\n\t"
         "_0816575E:\n\t"
@@ -7459,8 +7872,8 @@ __attribute__((naked)) bool32 RubyBattleTowerRecordToEmerald(struct RSBattleTowe
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08165814: .4byte gUnknown_85BE986\n\t"
-        "_08165818: .4byte gUnknown_85BE992\n\t"
+        "_08165814: .4byte sRecordTrainerSpeechWon\n\t"
+        "_08165818: .4byte sRecordTrainerSpeechLost\n\t"
         "_0816581C: .4byte 0x0500000B\n\t"
         ".syntax divided\n\t"
     );
@@ -7539,7 +7952,7 @@ __attribute__((naked)) bool32 EmeraldBattleTowerRecordToRuby(struct EmeraldBattl
         "	ldrb r0, [r0]\n\t"
         "	b _081658A6\n\t"
         "	.align 2, 0\n\t"
-        "_081658A0: .4byte gUnknown_85BBE84\n\t"
+        "_081658A0: .4byte sRubyFacilityClassToEmerald\n\t"
         "_081658A4:\n\t"
         "	movs r0, #0x24\n\t"
         "_081658A6:\n\t"
@@ -8002,9 +8415,9 @@ __attribute__((naked)) void SetTentPtrsGetLevel(void)
         "	b _08165BFE\n\t"
         "	.align 2, 0\n\t"
         "_08165BC4: .4byte gFacilityTrainers\n\t"
-        "_08165BC8: .4byte gUnknown_85BD554\n\t"
+        "_08165BC8: .4byte gVerdanturfBattleTentTrainers\n\t"
         "_08165BCC: .4byte gFacilityTrainerMons\n\t"
-        "_08165BD0: .4byte gUnknown_85BDB6C\n\t"
+        "_08165BD0: .4byte gVerdanturfBattleTentMons\n\t"
         "_08165BD4:\n\t"
         "	cmp r0, #3\n\t"
         "	bne _08165BF4\n\t"
@@ -8016,9 +8429,9 @@ __attribute__((naked)) void SetTentPtrsGetLevel(void)
         "	b _08165BFE\n\t"
         "	.align 2, 0\n\t"
         "_08165BE4: .4byte gFacilityTrainers\n\t"
-        "_08165BE8: .4byte gUnknown_85BDFC8\n\t"
+        "_08165BE8: .4byte gFallarborBattleTentTrainers\n\t"
         "_08165BEC: .4byte gFacilityTrainerMons\n\t"
-        "_08165BF0: .4byte gUnknown_85BE5E0\n\t"
+        "_08165BF0: .4byte gFallarborBattleTentMons\n\t"
         "_08165BF4:\n\t"
         "	ldr r1, _08165C14\n\t"
         "	ldr r0, _08165C18\n\t"
@@ -8584,4 +8997,3 @@ __attribute__((naked)) void sub_08165F94(void)
         ".syntax divided\n\t"
     );
 }
-

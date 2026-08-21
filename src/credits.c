@@ -1,5 +1,273 @@
 #include "global.h"
 #include "credits.h"
+#include "bg.h"
+#include "window.h"
+#include "decompress.h"
+
+#define CREDITS_STATIC_DATA __attribute__((section(".rodata.credits_static_data")))
+
+#define TAG_MON_BG 1001
+#define MONBG_OFFSET (MON_PIC_SIZE * 3)
+
+struct CreditsEntry
+{
+    u8 unk;
+    bool8 isTitle;
+    const u8 *text;
+};
+
+void SpriteCB_CreditsMonBg(struct Sprite *sprite);
+
+CREDITS_STATIC_DATA
+static const u16 sCredits_Pal[] = INCBIN_U16("graphics/credits/credits.gbapal");
+
+CREDITS_STATIC_DATA
+static const u32 sCreditsCopyrightEnd_Gfx[] = INCBIN_U32("graphics/credits/the_end_copyright.4bpp.lz");
+
+CREDITS_STATIC_DATA
+static const u8 sTheEnd_LetterMap_T[] =
+{
+    0,    1, 0,
+    0xFF, 1, 0xFF,
+    0xFF, 1, 0xFF,
+    0xFF, 1, 0xFF,
+    0xFF, 1, 0xFF,
+};
+
+CREDITS_STATIC_DATA
+static const u8 sTheEnd_LetterMap_H[] =
+{
+    1, 0xFF, 1,
+    1, 0xFF, 1,
+    1, 2,    1,
+    1, 0xFF, 1,
+    1, 0xFF, 1,
+};
+
+CREDITS_STATIC_DATA
+static const u8 sTheEnd_LetterMap_E[] =
+{
+    1, 0, 0,
+    1, 0xFF, 0xFF,
+    1, 2,    2,
+    1, 0xFF, 0xFF,
+    1, 0x80, 0x80,
+};
+
+CREDITS_STATIC_DATA
+static const u8 sTheEnd_LetterMap_N[] =
+{
+    1, 3, 1,
+    1, 4, 1,
+    1, 5, 1,
+    1, 0xC4, 1,
+    1, 0xC3, 1,
+};
+
+CREDITS_STATIC_DATA
+static const u8 sTheEnd_LetterMap_D[] =
+{
+    1, 6, 7,
+    1, 8, 9,
+    1, 0xFF, 1,
+    1, 0x88, 0x89,
+    1, 0x86, 0x87,
+};
+
+#include "data/credits.h"
+
+CREDITS_STATIC_DATA
+static const struct BgTemplate sBackgroundTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+};
+
+CREDITS_STATIC_DATA
+static const struct WindowTemplate sWindowTemplates[] =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 9,
+        .width = DISPLAY_TILE_WIDTH,
+        .height = 12,
+        .paletteNum = 8,
+        .baseBlock = 1,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+CREDITS_STATIC_DATA
+static const u8 sMonSpritePos[][2] =
+{
+    {104, 36},
+    {120, 36},
+    {136, 36},
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_Player_Slow[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(64, 8),
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_FRAME(192, 8),
+    ANIMCMD_JUMP(0),
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_Player_Fast[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(128, 4),
+    ANIMCMD_FRAME(192, 4),
+    ANIMCMD_JUMP(0),
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_Player_LookBack[] =
+{
+    ANIMCMD_FRAME(256, 4),
+    ANIMCMD_FRAME(320, 4),
+    ANIMCMD_FRAME(384, 4),
+    ANIMCMD_END,
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_Player_LookForward[] =
+{
+    ANIMCMD_FRAME(384, 30),
+    ANIMCMD_FRAME(320, 30),
+    ANIMCMD_FRAME(256, 30),
+    ANIMCMD_FRAME(256, 30),
+    ANIMCMD_END,
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd *const sAnims_Player[] =
+{
+    sAnim_Player_Slow,
+    sAnim_Player_Fast,
+    sAnim_Player_LookBack,
+    sAnim_Player_LookForward,
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_Rival_Slow[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(64, 8),
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_FRAME(192, 8),
+    ANIMCMD_JUMP(0),
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_Rival_Fast[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(64, 4),
+    ANIMCMD_FRAME(128, 4),
+    ANIMCMD_FRAME(192, 4),
+    ANIMCMD_JUMP(0),
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_Rival_Still[] =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_END,
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd *const sAnims_Rival[] =
+{
+    sAnim_Rival_Slow,
+    sAnim_Rival_Fast,
+    sAnim_Rival_Still,
+};
+
+CREDITS_STATIC_DATA
+static const struct SpriteSheet sSpriteSheet_MonBg[] =
+{
+    { gDecompressionBuffer, MONBG_OFFSET, TAG_MON_BG },
+    {},
+};
+
+CREDITS_STATIC_DATA
+static const struct SpritePalette sSpritePalette_MonBg[] =
+{
+    { (const u16 *)&gDecompressionBuffer[MONBG_OFFSET], TAG_MON_BG },
+    {},
+};
+
+CREDITS_STATIC_DATA
+static const struct OamData sOamData_MonBg =
+{
+    .y = DISPLAY_HEIGHT,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_MonBg_Yellow[] =
+{
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_END,
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_MonBg_Red[] =
+{
+    ANIMCMD_FRAME(64, 8),
+    ANIMCMD_END,
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd sAnim_MonBg_Blue[] =
+{
+    ANIMCMD_FRAME(128, 8),
+    ANIMCMD_END,
+};
+
+CREDITS_STATIC_DATA
+static const union AnimCmd *const sAnims_MonBg[] =
+{
+    sAnim_MonBg_Yellow,
+    sAnim_MonBg_Red,
+    sAnim_MonBg_Blue,
+};
+
+CREDITS_STATIC_DATA
+static const struct SpriteTemplate sSpriteTemplate_CreditsMonBg =
+{
+    .tileTag = TAG_MON_BG,
+    .paletteTag = TAG_MON_BG,
+    .oam = &sOamData_MonBg,
+    .anims = sAnims_MonBg,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_CreditsMonBg,
+};
 
 __attribute__((naked)) void VBlankCB_Credits(void)
 {
@@ -100,9 +368,9 @@ __attribute__((naked)) void InitCreditsBgsAndWindows(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817549C: .4byte gUnknown_85C7914\n\t"
-        "_081754A0: .4byte gUnknown_85C67AC\n\t"
-        "_081754A4: .4byte gUnknown_85C7918\n\t"
+        "_0817549C: .4byte sBackgroundTemplates\n\t"
+        "_081754A0: .4byte sCredits_Pal\n\t"
+        "_081754A4: .4byte sWindowTemplates\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -661,13 +929,13 @@ __attribute__((naked)) void Task_LoadShowMons(void)
         "_081758D0: .4byte gDecompressionBuffer\n\t"
         "_081758D4: .4byte 0x000007FF\n\t"
         "_081758D8: .4byte gUnknown_201D800\n\t"
-        "_081758DC: .4byte gUnknown_85C79C8\n\t"
+        "_081758DC: .4byte sSpriteSheet_MonBg\n\t"
         "_081758E0: .4byte 0xFFFFF000\n\t"
         "_081758E4: .4byte gUnknown_201D000\n\t"
         "_081758E8: .4byte 0x000053FF\n\t"
         "_081758EC: .4byte 0x0000529F\n\t"
         "_081758F0: .4byte 0x00007E94\n\t"
-        "_081758F4: .4byte gUnknown_85C79D8\n\t"
+        "_081758F4: .4byte sSpritePalette_MonBg\n\t"
         "_081758F8:\n\t"
         "	ldr r0, _08175990\n\t"
         "	movs r1, #0\n\t"
@@ -1320,7 +1588,7 @@ __attribute__((naked)) void Task_UpdatePage(void)
         "	b _08175DFE\n\t"
         "	.align 2, 0\n\t"
         "_08175DE8: .4byte Task_CreditsMain + 1\n\t"
-        "_08175DEC: .4byte gUnknown_85C7590\n\t"
+        "_08175DEC: .4byte sCreditsEntryPointerTable\n\t"
         "_08175DF0: .4byte gTasks\n\t"
         "_08175DF4: .4byte 0x0000328D\n\t"
         "_08175DF8:\n\t"
@@ -1732,7 +2000,7 @@ __attribute__((naked)) void Task_ShowMons(void)
         "	.align 2, 0\n\t"
         "_081760E8: .4byte gUnknown_203B9B4\n\t"
         "_081760EC: .4byte Task_CreditsMain + 1\n\t"
-        "_081760F0: .4byte gUnknown_85C7928\n\t"
+        "_081760F0: .4byte sMonSpritePos\n\t"
         "_081760F4: .4byte gSprites\n\t"
         "_081760F8:\n\t"
         "	movs r0, #0\n\t"
@@ -2829,7 +3097,7 @@ __attribute__((naked)) void LoadBikeScene(void)
         "_081769D0: .4byte gTasks\n\t"
         "_081769D4: .4byte gSprites\n\t"
         "_081769D8: .4byte SpriteCB_Player + 1\n\t"
-        "_081769DC: .4byte gUnknown_85C797C\n\t"
+        "_081769DC: .4byte sAnims_Player\n\t"
         "_081769E0:\n\t"
         "	ldr r0, _08176A5C\n\t"
         "	bl LoadCompressedSpriteSheet\n\t"
@@ -2896,9 +3164,9 @@ __attribute__((naked)) void LoadBikeScene(void)
         "_08176A6C: .4byte gTasks\n\t"
         "_08176A70: .4byte gSprites\n\t"
         "_08176A74: .4byte SpriteCB_Player + 1\n\t"
-        "_08176A78: .4byte gUnknown_85C797C\n\t"
+        "_08176A78: .4byte sAnims_Player\n\t"
         "_08176A7C: .4byte SpriteCB_Rival + 1\n\t"
-        "_08176A80: .4byte gUnknown_85C79BC\n\t"
+        "_08176A80: .4byte sAnims_Rival\n\t"
         "_08176A84: .4byte gMain\n\t"
         "_08176A88:\n\t"
         "	adds r0, r4, #0\n\t"
@@ -3095,8 +3363,8 @@ __attribute__((naked)) void LoadTheEndScreen(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08176BE8: .4byte gUnknown_85C682C\n\t"
-        "_08176BEC: .4byte gUnknown_85C0C74\n\t"
+        "_08176BE8: .4byte sCreditsCopyrightEnd_Gfx\n\t"
+        "_08176BEC: .4byte gIntroCopyright_Pal\n\t"
         "_08176BF0: .4byte 0x000003FF\n\t"
         "_08176BF4: .4byte 0x060001C8\n\t"
         "_08176BF8: .4byte 0x06000248\n\t"
@@ -3298,12 +3566,12 @@ __attribute__((naked)) void DrawTheEnd(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08176D5C: .4byte gUnknown_85C6C68\n\t"
+        "_08176D5C: .4byte sTheEnd_LetterMap_T\n\t"
         "_08176D60: .4byte 0x000003FF\n\t"
-        "_08176D64: .4byte gUnknown_85C6C77\n\t"
-        "_08176D68: .4byte gUnknown_85C6C86\n\t"
-        "_08176D6C: .4byte gUnknown_85C6C95\n\t"
-        "_08176D70: .4byte gUnknown_85C6CA4\n\t"
+        "_08176D64: .4byte sTheEnd_LetterMap_H\n\t"
+        "_08176D68: .4byte sTheEnd_LetterMap_E\n\t"
+        "_08176D6C: .4byte sTheEnd_LetterMap_N\n\t"
+        "_08176D70: .4byte sTheEnd_LetterMap_D\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3814,12 +4082,12 @@ __attribute__((naked)) void CreateCreditsMonSprite(void)
         "	.align 2, 0\n\t"
         "_08177138: .4byte gSprites\n\t"
         "_0817713C: .4byte SpriteCB_CreditsMon + 1\n\t"
-        "_08177140: .4byte gUnknown_85C7A14\n\t"
+        "_08177140: .4byte sSpriteTemplate_CreditsMonBg\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void SpriteCB_CreditsMonBg(void)
+__attribute__((naked)) void SpriteCB_CreditsMonBg(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4179,4 +4447,3 @@ __attribute__((naked)) void DeterminePokemonToShow(void)
         ".syntax divided\n\t"
     );
 }
-

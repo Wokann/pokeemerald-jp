@@ -72,6 +72,14 @@ enum {
 #define PALTAG_UI       5526
 
 #define MAX_RELEARNER_MOVES max(MAX_LEVEL_UP_MOVES, 25)
+#define MOVE_RELEARNER_UI_DATA __attribute__((section(".rodata.move_relearner_ui_data")))
+#define MOVE_RELEARNER_STATIC_DATA __attribute__((section(".rodata.move_relearner_static_data")))
+
+// The UI art is byte-identical to pokeemerald's graphics/interface asset.
+// These remain global while the later JP ROM-resident SpriteSheet and
+// SpritePalette records refer to them from data_b2d_mid70.s.
+const u16 sUI_Pal[16] MOVE_RELEARNER_UI_DATA = INCBIN_U16("graphics/interface/ui_learn_move.gbapal");
+const u8 sUI_Tiles[0x180] MOVE_RELEARNER_UI_DATA = INCBIN_U8("graphics/interface/ui_learn_move.4bpp");
 
 // JP note: the EWRAM state structs and all static tables live in the JP
 // ROM data region; they are bound via ld aliases (sMoveRelearner*).
@@ -97,12 +105,118 @@ extern struct {
     bool8 showContestInfo;
 } sMoveRelearnerMenuState;
 
-extern const struct SpriteSheet sMoveRelearnerSpriteSheet;
-extern const struct SpritePalette sMoveRelearnerPalette;
-extern const struct BgTemplate sMoveRelearnerMenuBackgroundTemplates[];
-extern const struct ScrollArrowsTemplate sDisplayModeArrowsTemplate;
-extern const struct ScrollArrowsTemplate sMoveListScrollArrowsTemplate;
-extern const struct SpriteTemplate sConstestMoveHeartSprite;
+// The JP fixed-width tail of gText_MoveRelearnerWhichMoveToForget overlaps
+// the three upstream OAM records.  Only the first is referenced at runtime;
+// it remains a linker alias rather than duplicating or moving those bytes.
+extern const struct OamData sHeartSpriteOamData;
+
+static const struct SpriteSheet sMoveRelearnerSpriteSheet MOVE_RELEARNER_STATIC_DATA =
+{
+    .data = sUI_Tiles,
+    .size = sizeof(sUI_Tiles),
+    .tag = GFXTAG_UI,
+};
+
+static const struct SpritePalette sMoveRelearnerPalette MOVE_RELEARNER_STATIC_DATA =
+{
+    .data = sUI_Pal,
+    .tag = PALTAG_UI,
+};
+
+static const struct ScrollArrowsTemplate sDisplayModeArrowsTemplate MOVE_RELEARNER_STATIC_DATA =
+{
+    .firstArrowType = SCROLL_ARROW_LEFT,
+    .firstX = 48,
+    .firstY = 16,
+    .secondArrowType = SCROLL_ARROW_RIGHT,
+    .secondX = 112,
+    .secondY = 16,
+    .fullyUpThreshold = -1,
+    .fullyDownThreshold = -1,
+    .tileTag = TAG_MODE_ARROWS,
+    .palTag = TAG_MODE_ARROWS,
+    .palNum = 0,
+};
+
+static const struct ScrollArrowsTemplate sMoveListScrollArrowsTemplate MOVE_RELEARNER_STATIC_DATA =
+{
+    .firstArrowType = SCROLL_ARROW_UP,
+    .firstX = 200,
+    .firstY = 8,
+    .secondArrowType = SCROLL_ARROW_DOWN,
+    .secondX = 200,
+    .secondY = 104,
+    .fullyUpThreshold = 0,
+    .fullyDownThreshold = 0,
+    .tileTag = TAG_LIST_ARROWS,
+    .palTag = TAG_LIST_ARROWS,
+    .palNum = 0,
+};
+
+static const union AnimCmd sHeartSprite_AppealEmptyFrame[] MOVE_RELEARNER_STATIC_DATA =
+{
+    ANIMCMD_FRAME(8, 5, FALSE, FALSE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sHeartSprite_AppealFullFrame[] MOVE_RELEARNER_STATIC_DATA =
+{
+    ANIMCMD_FRAME(9, 5, FALSE, FALSE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sHeartSprite_JamEmptyFrame[] MOVE_RELEARNER_STATIC_DATA =
+{
+    ANIMCMD_FRAME(10, 5, FALSE, FALSE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sHeartSprite_JamFullFrame[] MOVE_RELEARNER_STATIC_DATA =
+{
+    ANIMCMD_FRAME(11, 5, FALSE, FALSE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sHeartSpriteAnimationCommands[] MOVE_RELEARNER_STATIC_DATA =
+{
+    [APPEAL_HEART_EMPTY] = sHeartSprite_AppealEmptyFrame,
+    [APPEAL_HEART_FULL] = sHeartSprite_AppealFullFrame,
+    [JAM_HEART_EMPTY] = sHeartSprite_JamEmptyFrame,
+    [JAM_HEART_FULL] = sHeartSprite_JamFullFrame,
+};
+
+static const struct SpriteTemplate sConstestMoveHeartSprite MOVE_RELEARNER_STATIC_DATA =
+{
+    .tileTag = GFXTAG_UI,
+    .paletteTag = PALTAG_UI,
+    .oam = &sHeartSpriteOamData,
+    .anims = sHeartSpriteAnimationCommands,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct BgTemplate sMoveRelearnerMenuBackgroundTemplates[] MOVE_RELEARNER_STATIC_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+};
 
 // JP note: the JP move-name table stores 8 bytes per move (7 kana + EOS),
 // unlike US pokeemerald's MOVE_NAME_LENGTH+1 (13) layout (0x082EACC4).

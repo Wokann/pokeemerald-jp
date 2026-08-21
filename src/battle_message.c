@@ -6,10 +6,31 @@
 #include "data.h"
 #include "string_util.h"
 #include "strings.h"
+#include "text.h"
+#include "window.h"
 #include "constants/battle_string_ids.h"
 #include "constants/characters.h"
 #include "constants/moves.h"
 #include "constants/trainers.h"
+
+struct BattleWindowText
+{
+    u8 fillValue;
+    u8 fontId;
+    u8 x;
+    u8 y;
+    u8 letterSpacing;
+    u8 lineSpacing;
+    u8 speed;
+    u8 fgColor;
+    u8 bgColor;
+    u8 shadowColor;
+};
+
+#define BATTLE_MESSAGE_NORMAL_WINDOW_TEXT_DATA __attribute__((section(".rodata.battle_message_normal_window_text_data")))
+#define BATTLE_MESSAGE_ARENA_WINDOW_TEXT_DATA __attribute__((section(".rodata.battle_message_arena_window_text_data")))
+#define BATTLE_MESSAGE_WINDOW_TEXT_POINTER_DATA __attribute__((section(".rodata.battle_message_window_text_pointer_data")))
+#define BATTLE_MESSAGE_RECORDED_TEXT_SPEED_DATA __attribute__((section(".rodata.battle_message_recorded_text_speed_data")))
 
 // JP text-expand helper (US: BattleStringExpandPlaceholdersToDisplayedString)
 extern void TryGetStatusString(const u8 *text);
@@ -77,6 +98,401 @@ extern const u8 sText_ExclamationMark2[];
 extern const u8 sText_ExclamationMark3[];
 extern const u8 sText_ExclamationMark4[];
 extern const u8 sText_ExclamationMark5[];
+
+// JP uses its own text metrics and FONT_SHORT entries where the US build uses
+// the unavailable narrow font. The two padding bytes in each entry are emitted
+// by this ABI and remain zero-initialized.
+BATTLE_MESSAGE_NORMAL_WINDOW_TEXT_DATA const struct BattleWindowText sTextOnWindowsInfo_Normal[] =
+{
+    [B_WIN_MSG] = {
+        .fillValue = PIXEL_FILL(0xF),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .speed = 1,
+        .fgColor = 1,
+        .bgColor = 15,
+        .shadowColor = 6,
+    },
+    [B_WIN_ACTION_PROMPT] = {
+        .fillValue = PIXEL_FILL(0xF),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 1,
+        .bgColor = 15,
+        .shadowColor = 6,
+    },
+    [B_WIN_ACTION_MENU] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_MOVE_NAME_1] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_MOVE_NAME_2] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_MOVE_NAME_3] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_MOVE_NAME_4] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_PP] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 12,
+        .bgColor = 14,
+        .shadowColor = 11,
+    },
+    [B_WIN_DUMMY] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_PP_REMAINING] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 12,
+        .bgColor = 14,
+        .shadowColor = 11,
+    },
+    [B_WIN_MOVE_TYPE] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_SWITCH_PROMPT] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_YESNO] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_LEVEL_UP_BOX] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_LEVEL_UP_BANNER] = {
+        .fontId = FONT_SHORT,
+        .x = 32,
+        .fgColor = 1,
+        .shadowColor = 2,
+    },
+    [B_WIN_VS_PLAYER] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_SHORT,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_VS_OPPONENT] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_SHORT,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_VS_MULTI_PLAYER_1] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_SHORT,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_VS_MULTI_PLAYER_2] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_SHORT,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_VS_MULTI_PLAYER_3] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_SHORT,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_VS_MULTI_PLAYER_4] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_SHORT,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_VS_OUTCOME_DRAW] = {
+        .fontId = FONT_SHORT,
+        .x = 4,
+        .y = 2,
+        .fgColor = 1,
+        .shadowColor = 6,
+    },
+    [B_WIN_VS_OUTCOME_LEFT] = {
+        .fontId = FONT_SHORT,
+        .x = 2,
+        .y = 2,
+        .fgColor = 1,
+        .shadowColor = 6,
+    },
+    [B_WIN_VS_OUTCOME_RIGHT] = {
+        .fontId = FONT_SHORT,
+        .x = 2,
+        .y = 2,
+        .fgColor = 1,
+        .shadowColor = 6,
+    },
+};
+
+BATTLE_MESSAGE_ARENA_WINDOW_TEXT_DATA const struct BattleWindowText sTextOnWindowsInfo_Arena[] =
+{
+    [B_WIN_MSG] = {
+        .fillValue = PIXEL_FILL(0xF),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .speed = 1,
+        .fgColor = 1,
+        .bgColor = 15,
+        .shadowColor = 6,
+    },
+    [B_WIN_ACTION_PROMPT] = {
+        .fillValue = PIXEL_FILL(0xF),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 1,
+        .bgColor = 15,
+        .shadowColor = 6,
+    },
+    [B_WIN_ACTION_MENU] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_MOVE_NAME_1] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_MOVE_NAME_2] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_MOVE_NAME_3] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_MOVE_NAME_4] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_PP] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 12,
+        .bgColor = 14,
+        .shadowColor = 11,
+    },
+    [B_WIN_DUMMY] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_PP_REMAINING] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 12,
+        .bgColor = 14,
+        .shadowColor = 11,
+    },
+    [B_WIN_MOVE_TYPE] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_SWITCH_PROMPT] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_YESNO] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_LEVEL_UP_BOX] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [B_WIN_LEVEL_UP_BANNER] = {
+        .fontId = FONT_SHORT,
+        .x = 32,
+        .fgColor = 1,
+        .shadowColor = 2,
+    },
+    [ARENA_WIN_PLAYER_NAME] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 1,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [ARENA_WIN_VS] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .x = 8,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [ARENA_WIN_OPPONENT_NAME] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [ARENA_WIN_MIND] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .x = 4,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [ARENA_WIN_SKILL] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .x = 8,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [ARENA_WIN_BODY] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .x = 4,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [ARENA_WIN_JUDGMENT_TITLE] = {
+        .fillValue = PIXEL_FILL(0xE),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .fgColor = 13,
+        .bgColor = 14,
+        .shadowColor = 15,
+    },
+    [ARENA_WIN_JUDGMENT_TEXT] = {
+        .fillValue = PIXEL_FILL(1),
+        .fontId = FONT_NORMAL,
+        .y = 2,
+        .speed = 1,
+        .fgColor = 2,
+        .bgColor = 1,
+        .shadowColor = 3,
+    },
+};
+
+BATTLE_MESSAGE_WINDOW_TEXT_POINTER_DATA const struct BattleWindowText *const sBattleTextOnWindowsInfo[] =
+{
+    [B_WIN_TYPE_NORMAL] = sTextOnWindowsInfo_Normal,
+    [B_WIN_TYPE_ARENA] = sTextOnWindowsInfo_Arena,
+};
+
+BATTLE_MESSAGE_RECORDED_TEXT_SPEED_DATA const u8 sRecordedBattleTextSpeeds[] = {8, 4, 1, 0};
 
 void ChooseMoveUsedParticle(u8 *textBuff)
 {
@@ -3070,7 +3486,7 @@ __attribute__((naked, section(".text.battle_message_tail2"))) void sub_0814FA04(
         "	ands r7, r0\n\t"
         "	b _0814FA56\n\t"
         "	.align 2, 0\n\t"
-        "_0814FA30: .4byte gUnknown_85AC468\n\t"
+        "_0814FA30: .4byte sBattleTextOnWindowsInfo\n\t"
         "_0814FA34: .4byte 0x02024118\n\t"
         "_0814FA38:\n\t"
         "	lsls r0, r7, #1\n\t"
@@ -3203,7 +3619,7 @@ __attribute__((naked, section(".text.battle_message_tail2"))) void sub_0814FA04(
         "	ldrb r6, [r0]\n\t"
         "	b _0814FB48\n\t"
         "	.align 2, 0\n\t"
-        "_0814FB3C: .4byte gUnknown_85AC470\n\t"
+        "_0814FB3C: .4byte sRecordedBattleTextSpeeds\n\t"
         "_0814FB40:\n\t"
         "	bl GetPlayerTextSpeedDelay\n\t"
         "	lsls r0, r0, #0x18\n\t"

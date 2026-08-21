@@ -28,3 +28,17 @@ const u8 gText_MoveRelearnerPkmnForgotMoveAndLearnedNew[] = _(
     "{STR_VAR_2}を　おぼえた！");
 
 const u8 gText_MoveRelearnerPkmnForgotMoveAndLearnedNew_sub1[] = _("{STR_VAR_1}は　{STR_VAR_2}を　おぼえずに　おわった！");
+
+// This JP-only physical tail ends with OAM-shaped fixed padding.  The second
+// string has its real EOS before that padding, so it must not get an extra
+// automatic terminator.
+#define REGION_TEXTS71_MOVE_RELEARNER_TAIL __attribute__((section(".rodata.region_texts71_move_relearner_tail")))
+
+const u8 gText_MoveRelearnerGiveUp[] REGION_TEXTS71_MOVE_RELEARNER_TAIL = _(
+    "{B_COPY_VAR_1}に　わざを　おぼえさせるのを\n"
+    "あきらめますか？");
+
+const u8 gText_MoveRelearnerWhichMoveToForget[] REGION_TEXTS71_MOVE_RELEARNER_TAIL = __(
+    "どの　わざを\n"
+    "わすれさせたい？\p"
+    "$　　　　　　　　　　　ィ　　　　　　　ぞ　　　　　　");
