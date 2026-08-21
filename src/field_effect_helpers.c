@@ -27,6 +27,88 @@ static void UpdateAshFieldEffect_Wait(struct Sprite *);
 static void UpdateAshFieldEffect_Show(struct Sprite *);
 static void UpdateAshFieldEffect_End(struct Sprite *);
 
+#define FIELD_EFFECT_HELPERS_DATA __attribute__((section(".rodata.field_effect_helpers_data")))
+
+FIELD_EFFECT_HELPERS_DATA const u16 sBridgeReflectionVerticalOffsets[] =
+{
+    12, 28, 44,
+};
+
+FIELD_EFFECT_HELPERS_DATA const u8 sShadowEffectTemplateIds[] =
+{
+    FLDEFFOBJ_SHADOW_S,
+    FLDEFFOBJ_SHADOW_M,
+    FLDEFFOBJ_SHADOW_L,
+    FLDEFFOBJ_SHADOW_XL,
+};
+
+FIELD_EFFECT_HELPERS_DATA const u16 gShadowVerticalOffsets[] =
+{
+    4, 4, 4, 16,
+};
+
+// JP ROM aligns the following callback table to four bytes.
+FIELD_EFFECT_HELPERS_DATA const u16 sShadowVerticalOffsetsPadding = 0;
+
+FIELD_EFFECT_HELPERS_DATA void (*const gFadeFootprintsTireTracksFuncs[])(struct Sprite *) =
+{
+    FadeFootprintsTireTracks_Step0,
+    FadeFootprintsTireTracks_Step1,
+};
+
+FIELD_EFFECT_HELPERS_DATA void (*const gAshFieldEffectFuncs[])(struct Sprite *) =
+{
+    UpdateAshFieldEffect_Wait,
+    UpdateAshFieldEffect_Show,
+    UpdateAshFieldEffect_End,
+};
+
+FIELD_EFFECT_HELPERS_DATA const u8 sSurfBlobDirectionAnims[] =
+{
+    0, 0, 1, 2, 3, 0, 0, 1, 1,
+};
+
+// JP ROM aligns the following u16 table to two bytes.
+FIELD_EFFECT_HELPERS_DATA const u8 sSurfBlobDirectionAnimsPadding = 0;
+
+FIELD_EFFECT_HELPERS_DATA const u16 sBobbingIntervals[] =
+{
+    3, 7,
+};
+
+#undef FIELD_EFFECT_HELPERS_DATA
+
+#define FIELD_EFFECT_HELPERS_FIGURE8_DATA __attribute__((section(".rodata.field_effect_helpers_figure8_data")))
+
+// JP keeps these unused Figure-8 lookup tables in ROM for field effects.
+FIELD_EFFECT_HELPERS_FIGURE8_DATA const s8 sFigure8XOffsets[FIGURE_8_LENGTH] =
+{
+    1, 2, 2, 2, 2, 2, 2, 2,
+    2, 2, 2, 1, 2, 2, 1, 2,
+    2, 1, 2, 2, 1, 2, 1, 1,
+    2, 1, 1, 2, 1, 1, 2, 1,
+    1, 2, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    0, 1, 1, 1, 0, 1, 1, 0,
+    1, 0, 1, 0, 1, 0, 0, 0,
+    0, 1, 0, 0, 0, 0, 0, 0,
+};
+
+FIELD_EFFECT_HELPERS_FIGURE8_DATA const s8 sFigure8YOffsets[FIGURE_8_LENGTH] =
+{
+     0,  0,  1,  0,  0,  1,  0,  0,
+     1,  0,  1,  1,  0,  1,  1,  0,
+     1,  1,  0,  1,  1,  0,  1,  1,
+     0,  0,  1,  0,  0,  1,  0,  0,
+     1,  0,  0,  0,  0,  0,  0,  0,
+     0,  0,  0,  0,  0,  0,  0,  0,
+     0,  0, -1,  0,  0, -1,  0,  0,
+    -1,  0, -1, -1,  0, -1, -1,  0,
+    -1, -1, -1, -1, -1, -1, -1, -2,
+};
+
+#undef FIELD_EFFECT_HELPERS_FIGURE8_DATA
+
 // Data used by all the field effects that share UpdateJumpImpactEffect
 #define sJumpElevation  data[0]
 #define sJumpFldEff     data[1]

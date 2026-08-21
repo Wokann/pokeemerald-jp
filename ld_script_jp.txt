@@ -9399,6 +9399,8 @@ SECTIONS {
         data/data_b2d.o(.rodata.mid27);
         src/data/text/region_texts18.o(.rodata);
         data/data_b2d_mid28.o(.rodata);
+        src/field_effect_helpers.o(.rodata.field_effect_helpers_figure8_data);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_helpers_figure8);
         src/data/text/region_texts25.o(.rodata);
         src/data/reset_rtc_screen.o(.rodata.reset_rtc_screen_data);
         src/data/text/region_texts31.o(.rodata);
@@ -9570,6 +9572,8 @@ SECTIONS {
         src/data/text/region_texts72.o(.rodata);
         src/data/text/region_texts70.o(.rodata);
         data/data_b2d_mid69.o(.rodata);
+        src/field_effect_helpers.o(.rodata.field_effect_helpers_data);
+        data/data_b2d_mid69.o(.rodata.data_b2d_mid69_after_field_effect_helpers);
         src/data/text/region_texts71.o(.rodata);
         data/data_b2d_mid70.o(.rodata);
         src/lottery_corner.o(.rodata.lottery_static_data);
