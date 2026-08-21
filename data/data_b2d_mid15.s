@@ -1,5 +1,5 @@
 .include "sound/MPlayDef.s"
-	.section .rodata
+	.section .rodata.option_menu_suffix
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
@@ -9,21 +9,9 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-.globl gUnknown_85373EE
-gUnknown_85373EE: @ 0x85373EE
-	.incbin "baserom_jp.gba", 0x5373ee, 0xe
-
-	.globl gUnknown_85373FC
-gUnknown_85373FC: @ 0x85373FC
-	.incbin "baserom_jp.gba", 0x5373fc, 0x18
-
-	.globl gUnknown_8537414
-gUnknown_8537414: @ 0x8537414
-	.incbin "baserom_jp.gba", 0x537414, 0x8
-
-	.globl gUnknown_853741C
-gUnknown_853741C: @ 0x853741C
-	.incbin "baserom_jp.gba", 0x53741c, 0x6
+	.globl gUnknown_853741E
+gUnknown_853741E: @ 0x853741E
+	.incbin "baserom_jp.gba", 0x53741e, 0x4
 
 	.globl gUnknown_8537422
 gUnknown_8537422: @ 0x8537422

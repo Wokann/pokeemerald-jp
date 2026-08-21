@@ -1,7 +1,13 @@
 #include "global.h"
+#include "bg.h"
+#include "palette.h"
+#include "strings.h"
+#include "window.h"
 #define ScanlineEffect_SetParams ScanlineEffect_SetParams_Prototype
 #include "scanline_effect.h"
 #undef ScanlineEffect_SetParams
+
+#define OPTION_MENU_STATIC_DATA __attribute__((section(".rodata.option_menu_static_data")))
 __attribute__((naked)) void BattleScene_ProcessInput(void)
 {
     __asm__(".syntax unified\n\t"
@@ -221,8 +227,8 @@ __attribute__((naked)) void CB2_InitOptionMenu(void)
         "	.align 2, 0\n\t"
         "_080B9DE4: .4byte 0x040000D4\n\t"
         "_080B9DE8: .4byte 0x81000800\n\t"
-        "_080B9DEC: .4byte gUnknown_8537414\n\t"
-        "_080B9DF0: .4byte gUnknown_85373FC\n\t"
+        "_080B9DEC: .4byte sOptionMenuBgTemplates\n\t"
+        "_080B9DF0: .4byte sOptionMenuWinTemplates\n\t"
         "_080B9DF4:\n\t"
         "	bl ResetPaletteFade\n\t"
         "	bl ScanlineEffect_Stop\n\t"
@@ -271,7 +277,7 @@ __attribute__((naked)) void CB2_InitOptionMenu(void)
         "	adds r1, r1, r0\n\t"
         "	b _080B9F4C\n\t"
         "	.align 2, 0\n\t"
-        "_080B9E64: .4byte gUnknown_853741C\n\t"
+        "_080B9E64: .4byte sOptionMenuBg_Pal\n\t"
         "_080B9E68: .4byte gSaveBlock2Ptr\n\t"
         "_080B9E6C: .4byte gMain\n\t"
         "_080B9E70:\n\t"
@@ -1006,9 +1012,9 @@ __attribute__((naked)) void BattleScene_DrawChoices(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA3D8: .4byte gUnknown_8537350 + 0x1C\n\t"
-        "_080BA3DC: .4byte gUnknown_8537350 + 0x26\n\t"
-        "_080BA3E0: .4byte gUnknown_8537350 + 0x30\n\t"
+        "_080BA3D8: .4byte gText_TextSpeedSlow\n\t"
+        "_080BA3DC: .4byte gText_TextSpeedMid\n\t"
+        "_080BA3E0: .4byte gText_TextSpeedFast\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1084,8 +1090,8 @@ __attribute__((naked)) void Sound_DrawChoices(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA460: .4byte gUnknown_8537350 + 0x3A\n\t"
-        "_080BA464: .4byte gUnknown_8537350 + 0x43\n\t"
+        "_080BA460: .4byte gText_BattleSceneOn\n\t"
+        "_080BA464: .4byte gText_BattleSceneOff\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1161,8 +1167,8 @@ __attribute__((naked)) void TextSpeed_ProcessInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA4E4: .4byte gUnknown_8537350 + 0x4D\n\t"
-        "_080BA4E8: .4byte gUnknown_8537350 + 0x58\n\t"
+        "_080BA4E4: .4byte gText_BattleStyleShift\n\t"
+        "_080BA4E8: .4byte gText_BattleStyleSet\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1247,8 +1253,8 @@ __attribute__((naked)) void TextSpeed_DrawChoices(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA57C: .4byte gUnknown_8537350 + 0x63\n\t"
-        "_080BA580: .4byte gUnknown_8537350 + 0x6E\n\t"
+        "_080BA57C: .4byte gText_SoundMono\n\t"
+        "_080BA580: .4byte gText_SoundStereo\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1405,8 +1411,8 @@ __attribute__((naked)) void FrameType_DrawChoices(void)
         "	strb r0, [r4]\n\t"
         "	b _080BA6CC\n\t"
         "	.align 2, 0\n\t"
-        "_080BA6A8: .4byte gUnknown_8537350 + 0x83\n\t"
-        "_080BA6AC: .4byte gUnknown_8537350 + 0x79\n\t"
+        "_080BA6A8: .4byte gText_FrameTypeNumber\n\t"
+        "_080BA6AC: .4byte gText_FrameType\n\t"
         "_080BA6B0:\n\t"
         "	mov r2, sp\n\t"
         "	adds r4, r2, r5\n\t"
@@ -1579,9 +1585,9 @@ __attribute__((naked)) void sub_080BA780(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA7F4: .4byte gUnknown_8537350 + 0x8A\n\t"
-        "_080BA7F8: .4byte gUnknown_8537350 + 0x95\n\t"
-        "_080BA7FC: .4byte gUnknown_85373EE\n\t"
+        "_080BA7F4: .4byte gText_ButtonTypeNormal\n\t"
+        "_080BA7F8: .4byte gText_ButtonTypeLR\n\t"
+        "_080BA7FC: .4byte gText_ButtonTypeLEqualsA\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1612,7 +1618,7 @@ __attribute__((naked)) void DrawTextOption(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA830: .4byte gUnknown_8537310\n\t"
+        "_080BA830: .4byte gText_Option\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1662,7 +1668,7 @@ __attribute__((naked)) void sub_080BA834(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA88C: .4byte gUnknown_8537350\n\t"
+        "_080BA88C: .4byte sOptionMenuItemsNames\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1844,3 +1850,90 @@ __attribute__((naked)) void sub_080BA890(void)
         ".syntax divided\n\t"
     );
 }
+
+const u8 gText_Option[] OPTION_MENU_STATIC_DATA = _("せっていを　かえる");
+const u8 gText_TextSpeed[] OPTION_MENU_STATIC_DATA = _("はなしの　はやさ");
+const u8 gText_BattleScene[] OPTION_MENU_STATIC_DATA = _("せんとうエフェクト");
+const u8 gText_BattleStyle[] OPTION_MENU_STATIC_DATA = _("しあいの　ルール");
+const u8 gText_Sound[] OPTION_MENU_STATIC_DATA = _("サウンド");
+const u8 gText_Frame[] OPTION_MENU_STATIC_DATA = _("ウインドウ");
+const u8 gText_OptionMenuCancel[] OPTION_MENU_STATIC_DATA = _("おわる");
+const u8 gText_ButtonMode[] OPTION_MENU_STATIC_DATA = _("ボタンの　モード");
+const u8 sOptionMenuTextPadding[2] OPTION_MENU_STATIC_DATA = {0};
+
+const u8 *const sOptionMenuItemsNames[] OPTION_MENU_STATIC_DATA =
+{
+    gText_TextSpeed,
+    gText_BattleScene,
+    gText_BattleStyle,
+    gText_Sound,
+    gText_ButtonMode,
+    gText_Frame,
+    gText_OptionMenuCancel,
+};
+
+const u8 gText_TextSpeedSlow[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きおそい");
+const u8 gText_TextSpeedMid[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きふつう");
+const u8 gText_TextSpeedFast[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きはやい");
+const u8 gText_BattleSceneOn[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きみる");
+const u8 gText_BattleSceneOff[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きみない");
+const u8 gText_BattleStyleShift[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きいれかえ");
+const u8 gText_BattleStyleSet[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きかちぬき");
+const u8 gText_SoundMono[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きモノラル");
+const u8 gText_SoundStereo[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きステレオ");
+const u8 gText_FrameType[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きタイプ");
+const u8 gText_FrameTypeNumber[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}き");
+const u8 gText_ButtonTypeNormal[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きノーマル");
+const u8 gText_ButtonTypeLR[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きLR");
+const u8 gText_ButtonTypeLEqualsA[] OPTION_MENU_STATIC_DATA = _("{COLOR}か{SHADOW}きL{EMOJI_EQUALS}A");
+const u8 sOptionMenuButtonModePadding[3] OPTION_MENU_STATIC_DATA = {0};
+
+const struct WindowTemplate sOptionMenuWinTemplates[] OPTION_MENU_STATIC_DATA =
+{
+    {
+        .bg = 1,
+        .tilemapLeft = 2,
+        .tilemapTop = 1,
+        .width = 26,
+        .height = 2,
+        .paletteNum = 1,
+        .baseBlock = 2,
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 5,
+        .width = 26,
+        .height = 14,
+        .paletteNum = 1,
+        .baseBlock = 0x36,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+const struct BgTemplate sOptionMenuBgTemplates[] OPTION_MENU_STATIC_DATA =
+{
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 0,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+};
+
+const u16 sOptionMenuBg_Pal[] OPTION_MENU_STATIC_DATA =
+{
+    0x7E51,
+};

@@ -9437,8 +9437,8 @@ SECTIONS {
         src/start_menu.o(.rodata.start_menu_resources);
         src/data/text/region_texts24.o(.rodata);
         data/data_b2d_mid26.o(.rodata);
-        src/data/text/region_texts16.o(.rodata);
-        data/data_b2d_mid15.o(.rodata);
+        src/option_menu.o(.rodata.option_menu_static_data);
+        data/data_b2d_mid15.o(.rodata.option_menu_suffix);
         src/data/text/region_texts54.o(.rodata);
         data/data_b2d_mid54.o(.rodata);
         src/data/text/region_texts55.o(.rodata);

@@ -7356,11 +7356,3 @@ gUnknown_8537298: @ 0x8537298
 	.globl gUnknown_85372B0
 gUnknown_85372B0: @ 0x85372B0
 	.incbin "baserom_jp.gba", 0x5372b0, 0x60
-
-	.globl gUnknown_8537310
-gUnknown_8537310: @ 0x8537310
-	.incbin "baserom_jp.gba", 0x537310, 0x40
-
-	.globl gUnknown_8537350
-gUnknown_8537350: @ 0x8537350
-	.incbin "baserom_jp.gba", 0x537350, 0x1c

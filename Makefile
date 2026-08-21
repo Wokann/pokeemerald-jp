@@ -657,6 +657,12 @@ $(C_BUILDDIR)/field_region_map.o: src/field_region_map.c charmap.txt
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/field_region_map.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/field_region_map.gen.s
 
+$(C_BUILDDIR)/option_menu.o: src/option_menu.c charmap.txt
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/option_menu.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/option_menu.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/option_menu.gen.s
+
 $(C_BUILDDIR)/hall_of_fame.o: src/hall_of_fame.c charmap.txt \
 	graphics/misc/japanese_hof.gbapal \
 	graphics/misc/japanese_hof.4bpp.lz
