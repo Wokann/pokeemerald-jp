@@ -9443,6 +9443,7 @@ SECTIONS {
         src/data/pokedex.o(.rodata.pokedex_screen_tilemaps);
         data/data_b2d_mid15.o(.rodata.data_b2d_mid15_pokedex_unused_lz);
         src/data/pokedex.o(.rodata.pokedex_list_main_tiles);
+        src/data/pokedex.o(.rodata.pokedex_orders);
         data/data_b2d_mid15.o(.rodata.data_b2d_mid15_suffix);
         src/data/text/region_texts54.o(.rodata);
         data/data_b2d_mid54.o(.rodata);

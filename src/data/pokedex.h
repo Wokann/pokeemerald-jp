@@ -44,6 +44,10 @@ const u8 gPokedexListBgTiles[0x1168] POKEDEX_LIST_MAIN_TILES_DATA = INCBIN_U8("g
 
 #undef POKEDEX_LIST_MAIN_TILES_DATA
 
+// 0x08538FF4-0x08539932.  This follows pokeemerald's data/pokemon source
+// hierarchy while preserving the JP alphabetical order.
+#include "pokemon/pokedex_orders.h"
+
 // Pokédex Search tables retained in original JP ROM order.
 
 #define POKEDEX_MID55_DATA __attribute__((section(".rodata.pokedex_mid55"), aligned(1)))

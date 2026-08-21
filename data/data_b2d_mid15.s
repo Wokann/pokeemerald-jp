@@ -21,17 +21,9 @@ gUnknown_8537E44: @ 0x8537E44
 
 	.section .rodata.data_b2d_mid15_suffix
 
-	.globl gUnknown_8538FF4
-gUnknown_8538FF4: @ 0x8538FF4
-	.incbin "baserom_jp.gba", 0x538ff4, 0x336
-
-	.globl gUnknown_853932A
-gUnknown_853932A: @ 0x853932A
-	.incbin "baserom_jp.gba", 0x53932a, 0x304
-
-	.globl gUnknown_853962E
-gUnknown_853962E: @ 0x853962E
-	.incbin "baserom_jp.gba", 0x53962e, 0x4b6
+	.globl gUnknown_8539932
+gUnknown_8539932: @ 0x8539932
+	.incbin "baserom_jp.gba", 0x539932, 0x1b2
 
 	.globl gUnknown_8539AE4
 gUnknown_8539AE4: @ 0x8539AE4
