@@ -529,103 +529,12 @@ gUnknown_82ECC6C: @ 0x82ECC6C
 gUnknown_82ECD44: @ 0x82ECD44
 	.incbin "baserom_jp.gba", 0x2ecd44, 0x18
 
-	.globl sProtectSuccessRates
-sProtectSuccessRates: @ 0x82ECD5C
-	.hword 0xFFFF @ protect use 0
-	.hword 0x7FFF @ protect use 1
-	.hword 0x3FFF @ protect use 2
-	.hword 0x1FFF @ protect use 3
-
-	.globl sMovesForbiddenToCopy
-sMovesForbiddenToCopy: @ 0x82ECD64
-	.hword MOVE_METRONOME @ 0x0076
-	.hword MOVE_STRUGGLE @ 0x00A5
-	.hword MOVE_SKETCH @ 0x00A6
-	.hword MOVE_MIMIC @ 0x0066
-	.hword 0xFFFE @ MIMIC_FORBIDDEN_END
-	.hword MOVE_COUNTER @ 0x0044
-	.hword MOVE_MIRROR_COAT @ 0x00F3
-	.hword MOVE_PROTECT @ 0x00B6
-	.hword MOVE_DETECT @ 0x00C5
-	.hword MOVE_ENDURE @ 0x00CB
-	.hword MOVE_DESTINY_BOND @ 0x00C2
-	.hword MOVE_SLEEP_TALK @ 0x00D6
-	.hword MOVE_THIEF @ 0x00A8
-	.hword MOVE_FOLLOW_ME @ 0x010A
-	.hword MOVE_SNATCH @ 0x0121
-	.hword MOVE_HELPING_HAND @ 0x010E
-	.hword MOVE_COVET @ 0x0157
-	.hword MOVE_TRICK @ 0x010F
-	.hword MOVE_FOCUS_PUNCH @ 0x0108
-	.hword 0xFFFF @ METRONOME_FORBIDDEN_END
-	.globl sFlailHpScaleToPowerTable
-sFlailHpScaleToPowerTable: @ 0x82ECD8C
-	.byte 1, 200 @ hp<= 1% -> power 200
-	.byte 4, 150 @ hp<= 4% -> power 150
-	.byte 9, 100 @ hp<= 9% -> power 100
-	.byte 16, 80 @ hp<= 16% -> power 80
-	.byte 32, 40 @ hp<= 32% -> power 40
-	.byte 48, 20 @ hp<= 48% -> power 20
-
-	.globl sNaturePowerMoves
-sNaturePowerMoves: @ 0x82ECD98
-	.hword MOVE_STUN_SPORE @ BATTLE_ENVIRONMENT_GRASS
-	.hword MOVE_RAZOR_LEAF @ BATTLE_ENVIRONMENT_LONG_GRASS
-	.hword MOVE_EARTHQUAKE @ BATTLE_ENVIRONMENT_SAND
-	.hword MOVE_HYDRO_PUMP @ BATTLE_ENVIRONMENT_UNDERWATER
-	.hword MOVE_SURF @ BATTLE_ENVIRONMENT_WATER
-	.hword MOVE_BUBBLE_BEAM @ BATTLE_ENVIRONMENT_POND
-	.hword MOVE_ROCK_SLIDE @ BATTLE_ENVIRONMENT_MOUNTAIN
-	.hword MOVE_SHADOW_BALL @ BATTLE_ENVIRONMENT_CAVE
-	.hword MOVE_SWIFT @ BATTLE_ENVIRONMENT_BUILDING
-	.hword MOVE_SWIFT @ BATTLE_ENVIRONMENT_PLAIN
+	.section .rodata.data_b2d_between_battle_script_commands_data
 
 	.globl gUnknown_82ECDAC
 gUnknown_82ECDAC: @ 0x82ECDAC
 	.string "ト　と　\l"
 	.string "　り　äあざ　tうっ　Vきト　$$$$"
-	.globl gUnknown_82ECDC4
-gUnknown_82ECDC4: @ 0x82ECDC4
-	.incbin "baserom_jp.gba", 0x2ecdc4, 0x24
-
-	.globl gUnknown_82ECDE8
-gUnknown_82ECDE8: @ 0x82ECDE8
-	.incbin "baserom_jp.gba", 0x2ecde8, 0x16
-
-	.globl sPickupProbabilities
-sPickupProbabilities: @ 0x82ECDFE
-	.byte 30
-	.byte 40
-	.byte 50
-	.byte 60
-	.byte 70
-	.byte 80
-	.byte 90
-	.byte 94
-	.byte 98
-
-	.globl sEnvironmentToType
-sEnvironmentToType: @ 0x82ECE07
-	.byte 12 @ BATTLE_ENVIRONMENT_GRASS -> TYPE_GRASS
-	.byte 12 @ BATTLE_ENVIRONMENT_LONG_GRASS -> TYPE_GRASS
-	.byte 4 @ BATTLE_ENVIRONMENT_SAND -> TYPE_GROUND
-	.byte 11 @ BATTLE_ENVIRONMENT_UNDERWATER -> TYPE_WATER
-	.byte 11 @ BATTLE_ENVIRONMENT_WATER -> TYPE_WATER
-	.byte 11 @ BATTLE_ENVIRONMENT_POND -> TYPE_WATER
-	.byte 5 @ BATTLE_ENVIRONMENT_MOUNTAIN -> TYPE_ROCK
-	.byte 5 @ BATTLE_ENVIRONMENT_CAVE -> TYPE_ROCK
-	.byte 0 @ BATTLE_ENVIRONMENT_BUILDING -> TYPE_NORMAL
-	.byte 0 @ BATTLE_ENVIRONMENT_PLAIN -> TYPE_NORMAL
-
-	.globl sBallCatchBonuses
-sBallCatchBonuses: @ 0x82ECE11
-	.byte 20 @ ITEM_ULTRA_BALL
-	.byte 15 @ ITEM_GREAT_BALL
-	.byte 10 @ ITEM_POKE_BALL
-	.byte 15 @ ITEM_SAFARI_BALL
-	.byte 0 @ JP trailing entry 4
-	.byte 0 @ JP trailing entry 5
-	.byte 0 @ JP trailing entry 6
 
 	.section .rodata.data_b2d_after_battle_palace_likelihood
 

@@ -59,6 +59,7 @@
 #define DEFENDER_IS_PROTECTED ((gProtectStructs[gBattlerTarget].protected) && (gBattleMoves[gCurrentMove].flags & FLAG_PROTECT_AFFECTED))
 
 #define BATTLE_SCRIPT_COMMANDS_PALACE_DATA __attribute__((section(".rodata.battle_script_commands_palace_data")))
+#define BATTLE_SCRIPT_COMMANDS_DATA(name) __attribute__((section(".rodata.battle_script_commands_data." #name)))
 
 static void JumpIfMoveFailed(u8 adder, u16 move);
 bool8 JumpIfMoveAffectedByProtect(u16 move);
@@ -79,12 +80,132 @@ extern const struct StatFractions sAccuracyStageRatios[];
 extern const u16 gUnknown_82ECC4C[];
 extern const u8 gUnknown_82ECC6C[];
 extern const u16 gUnknown_82ECDAC[];
-extern const u16 sPickupItems[];
-extern const u16 sRarePickupItems[];
-extern const u8 sPickupProbabilities[];
-extern const u8 sEnvironmentToType[];
-extern const u8 sBallCatchBonuses[];
 extern const struct SpriteTemplate gUnknown_82ECD44;
+
+#define METRONOME_FORBIDDEN_END 0xFFFF
+#define ASSIST_FORBIDDEN_END    0xFFFF
+#define MIMIC_FORBIDDEN_END     0xFFFE
+
+static const u16 sProtectSuccessRates[] BATTLE_SCRIPT_COMMANDS_DATA(sProtectSuccessRates) =
+{
+    0xFFFF,
+    0x7FFF,
+    0x3FFF,
+    0x1FFF,
+};
+
+static const u16 sMovesForbiddenToCopy[] BATTLE_SCRIPT_COMMANDS_DATA(sMovesForbiddenToCopy) =
+{
+    MOVE_METRONOME,
+    MOVE_STRUGGLE,
+    MOVE_SKETCH,
+    MOVE_MIMIC,
+    MIMIC_FORBIDDEN_END,
+    MOVE_COUNTER,
+    MOVE_MIRROR_COAT,
+    MOVE_PROTECT,
+    MOVE_DETECT,
+    MOVE_ENDURE,
+    MOVE_DESTINY_BOND,
+    MOVE_SLEEP_TALK,
+    MOVE_THIEF,
+    MOVE_FOLLOW_ME,
+    MOVE_SNATCH,
+    MOVE_HELPING_HAND,
+    MOVE_COVET,
+    MOVE_TRICK,
+    MOVE_FOCUS_PUNCH,
+    METRONOME_FORBIDDEN_END,
+};
+
+static const u8 sFlailHpScaleToPowerTable[] BATTLE_SCRIPT_COMMANDS_DATA(sFlailHpScaleToPowerTable) =
+{
+    1, 200,
+    4, 150,
+    9, 100,
+    16, 80,
+    32, 40,
+    48, 20,
+};
+
+static const u16 sNaturePowerMoves[] BATTLE_SCRIPT_COMMANDS_DATA(sNaturePowerMoves) =
+{
+    [BATTLE_ENVIRONMENT_GRASS]      = MOVE_STUN_SPORE,
+    [BATTLE_ENVIRONMENT_LONG_GRASS] = MOVE_RAZOR_LEAF,
+    [BATTLE_ENVIRONMENT_SAND]       = MOVE_EARTHQUAKE,
+    [BATTLE_ENVIRONMENT_UNDERWATER] = MOVE_HYDRO_PUMP,
+    [BATTLE_ENVIRONMENT_WATER]      = MOVE_SURF,
+    [BATTLE_ENVIRONMENT_POND]       = MOVE_BUBBLE_BEAM,
+    [BATTLE_ENVIRONMENT_MOUNTAIN]   = MOVE_ROCK_SLIDE,
+    [BATTLE_ENVIRONMENT_CAVE]       = MOVE_SHADOW_BALL,
+    [BATTLE_ENVIRONMENT_BUILDING]   = MOVE_SWIFT,
+    [BATTLE_ENVIRONMENT_PLAIN]      = MOVE_SWIFT,
+};
+
+const u16 sPickupItems[] BATTLE_SCRIPT_COMMANDS_DATA(sPickupItems) =
+{
+    ITEM_POTION,
+    ITEM_ANTIDOTE,
+    ITEM_SUPER_POTION,
+    ITEM_GREAT_BALL,
+    ITEM_REPEL,
+    ITEM_ESCAPE_ROPE,
+    ITEM_X_ATTACK,
+    ITEM_FULL_HEAL,
+    ITEM_ULTRA_BALL,
+    ITEM_HYPER_POTION,
+    ITEM_RARE_CANDY,
+    ITEM_PROTEIN,
+    ITEM_REVIVE,
+    ITEM_HP_UP,
+    ITEM_FULL_RESTORE,
+    ITEM_MAX_REVIVE,
+    ITEM_PP_UP,
+    ITEM_MAX_ELIXIR,
+};
+
+const u16 sRarePickupItems[] BATTLE_SCRIPT_COMMANDS_DATA(sRarePickupItems) =
+{
+    ITEM_HYPER_POTION,
+    ITEM_NUGGET,
+    ITEM_KINGS_ROCK,
+    ITEM_FULL_RESTORE,
+    ITEM_ETHER,
+    ITEM_WHITE_HERB,
+    ITEM_TM_REST,
+    ITEM_ELIXIR,
+    ITEM_TM_FOCUS_PUNCH,
+    ITEM_LEFTOVERS,
+    ITEM_TM_EARTHQUAKE,
+};
+
+static const u8 sPickupProbabilities[] BATTLE_SCRIPT_COMMANDS_DATA(sPickupProbabilities) =
+{
+    30, 40, 50, 60, 70, 80, 90, 94, 98,
+};
+
+static const u8 sEnvironmentToType[] BATTLE_SCRIPT_COMMANDS_DATA(sEnvironmentToType) =
+{
+    [BATTLE_ENVIRONMENT_GRASS]      = TYPE_GRASS,
+    [BATTLE_ENVIRONMENT_LONG_GRASS] = TYPE_GRASS,
+    [BATTLE_ENVIRONMENT_SAND]       = TYPE_GROUND,
+    [BATTLE_ENVIRONMENT_UNDERWATER] = TYPE_WATER,
+    [BATTLE_ENVIRONMENT_WATER]      = TYPE_WATER,
+    [BATTLE_ENVIRONMENT_POND]       = TYPE_WATER,
+    [BATTLE_ENVIRONMENT_MOUNTAIN]   = TYPE_ROCK,
+    [BATTLE_ENVIRONMENT_CAVE]       = TYPE_ROCK,
+    [BATTLE_ENVIRONMENT_BUILDING]   = TYPE_NORMAL,
+    [BATTLE_ENVIRONMENT_PLAIN]      = TYPE_NORMAL,
+};
+
+// ITEM_ULTRA_BALL skips Master Ball and ITEM_NONE.
+static const u8 sBallCatchBonuses[] BATTLE_SCRIPT_COMMANDS_DATA(sBallCatchBonuses) =
+{
+    [ITEM_ULTRA_BALL - ITEM_ULTRA_BALL]  = 20,
+    [ITEM_GREAT_BALL - ITEM_ULTRA_BALL]  = 15,
+    [ITEM_POKE_BALL - ITEM_ULTRA_BALL]   = 10,
+    [ITEM_SAFARI_BALL - ITEM_ULTRA_BALL] = 15,
+};
 
 // Battle Palace move-group thresholds, in nature order.
 #define PALACE_STYLE(atk, def, atkLow, defLow) {atk, atk + def, atkLow, atkLow + defLow}
@@ -120,6 +241,7 @@ const ALIGNED(4) u8 gBattlePalaceNatureToMoveGroupLikelihood[NUM_NATURES][4] BAT
 
 #undef PALACE_STYLE
 #undef BATTLE_SCRIPT_COMMANDS_PALACE_DATA
+#undef BATTLE_SCRIPT_COMMANDS_DATA
 
 void Cmd_drawlvlupbox(void);
 static void DrawLevelUpWindow1(void);
@@ -152,7 +274,6 @@ extern void TryGetStatusString(const u8 *text); // JP text-expand helper (US: Ba
 extern void sub_0814FA04(const u8 *text, u8 windowId); // JP BattlePutTextOnWindow equivalent
 extern void BtlController_EmitUnknownYesNoBox(u8 bufferId);
 void Cmd_various(void);
-extern const u16 sProtectSuccessRates[];
 void Cmd_setprotectlike(void);
 void Cmd_tryexplosion(void);
 void Cmd_setatkhptozero(void);
@@ -1527,10 +1648,6 @@ static bool8 IsMoveUncopyableByMimic(u16 move);
 static bool8 IsTwoTurnsMove(u16 move);
 static bool8 IsInvalidForSleepTalkOrAssist(u16 move);
 void Cmd_mimicattackcopy(void);
-#define METRONOME_FORBIDDEN_END         0xFFFF
-#define ASSIST_FORBIDDEN_END              0xFFFF
-#define MIMIC_FORBIDDEN_END               0xFFFE
-extern const u16 sMovesForbiddenToCopy[];
 void Cmd_metronome(void);
 void Cmd_dmgtolevel(void);
 void Cmd_psywavedamageeffect(void);
@@ -1546,7 +1663,6 @@ void Cmd_trychoosesleeptalkmove(void);
 void Cmd_setdestinybond(void);
 void TrySetDestinyBondToHappen(void);
 void TrySetDestinyBondToHappen(void);
-extern const u8 sFlailHpScaleToPowerTable[];
 void Cmd_trysetdestinybondtohappen(void);
 void Cmd_remaininghptopower(void);
 void Cmd_tryspiteppreduce(void);
@@ -1580,7 +1696,6 @@ void Cmd_sethail(void);
 void Cmd_jumpifattackandspecialattackcannotfall(void);
 void Cmd_setforcedtarget(void);
 void Cmd_setcharge(void);
-extern const u16 sNaturePowerMoves[];
 void Cmd_callenvironmentattack(void);
 void Cmd_cureifburnedparalyzedorpoisoned(void);
 void Cmd_settorment(void);
