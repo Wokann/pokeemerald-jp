@@ -9401,6 +9401,9 @@ SECTIONS {
         data/data_b2d.o(.rodata.data_b2d_after_battle_palace_likelihood);
         src/battle_anim_smokescreen.o(.rodata.battle_anim_smokescreen_data);
         data/data_b2d.o(.rodata.data_b2d_after_smokescreen_data);
+        src/data/pokemon/battle_moves.o(.rodata);
+        gUnknown_82ED224 = gBattleMoves + 4;
+        data/data_b2d.o(.rodata.data_b2d_after_battle_moves);
         src/data/pokemon/item_effects.o(.rodata);
         data/data_b2d.o(.rodata.data_b2d_after_item_effects);
         src/data/text/region_texts3.o(.rodata);

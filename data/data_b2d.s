@@ -651,13 +651,9 @@ gUnknown_82ED050: @ 0x82ED050
 gUnknown_82ED13C: @ 0x82ED13C
 	.incbin "baserom_jp.gba", 0x2ed13c, 0xe4
 
-	.globl gBattleMoves
-gBattleMoves: @ 0x82ED220
-	.byte 0x00, 0x00, 0x00, 0x00
+	.section .rodata.data_b2d_after_battle_moves
 
-	.globl gUnknown_82ED224
-gUnknown_82ED224: @ 0x82ED224
-	.incbin "baserom_jp.gba", 0x2ed224, 0x10b0
+	.incbin "baserom_jp.gba", 0x2ee2c4, 0x10
 
 	.globl gUnknown_82EE2D4
 gUnknown_82EE2D4: @ 0x82EE2D4
