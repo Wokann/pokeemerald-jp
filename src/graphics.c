@@ -85,6 +85,19 @@ INTRO_SCENE_3_GRAPHICS const u32 gIntroCloudsSun_Tilemap[] = INCBIN_U32("graphic
 
 #undef INTRO_SCENE_3_GRAPHICS
 
+#define INTRO_SCENE_3_RAYQUAZA_GRAPHICS __attribute__((section(".rodata.intro_scene_3_rayquaza_graphics")))
+
+// The JP LZ77 files retain their original stream-alignment padding.
+INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroRayquaza_Gfx[] = INCBIN_U32("graphics/intro/scene_3/rayquaza.4bpp.lz");
+INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroRayquaza_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/rayquaza.bin.lz");
+INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroUnused1_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/unused_1.bin.lz");
+INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroUnused2_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/unused_2.bin.lz");
+INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroRayquazaClouds_Gfx[] = INCBIN_U32("graphics/intro/scene_3/rayquaza_clouds.4bpp.lz");
+// The JP stream is 0x27A bytes; the following two ROM bytes are unrelated data.
+INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u8 gIntroRayquazaClouds_Tilemap[] = INCBIN_U8("graphics/intro/scene_3/rayquaza_clouds.bin.lz");
+
+#undef INTRO_SCENE_3_RAYQUAZA_GRAPHICS
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

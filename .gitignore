@@ -88,6 +88,12 @@ baserom_jp.gba
 !graphics/intro/scene_3/clouds_left.bin.lz
 !graphics/intro/scene_3/clouds_right.bin.lz
 !graphics/intro/scene_3/clouds_sun.bin.lz
+!graphics/intro/scene_3/rayquaza.4bpp.lz
+!graphics/intro/scene_3/rayquaza.bin.lz
+!graphics/intro/scene_3/unused_1.bin.lz
+!graphics/intro/scene_3/unused_2.bin.lz
+!graphics/intro/scene_3/rayquaza_clouds.4bpp.lz
+!graphics/intro/scene_3/rayquaza_clouds.bin.lz
 !graphics/diploma/national.gbapal
 !graphics/diploma/hoenn.gbapal
 !graphics/diploma/tilemap.bin.lz

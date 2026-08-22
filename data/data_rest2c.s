@@ -466,27 +466,7 @@ gIntroLightning_Gfx: @ 0x8D8B7F0
 gIntroLightning_Pal: @ 0x8D8BA38
 	.incbin "graphics/intro/scene_3/lightning.png.gbapal"
 
-
-	.globl gUnknown_8D8BA58
-gUnknown_8D8BA58: @ 0x8D8BA58
-	.incbin "graphics/misc/gUnknown_8D8BA58.4bpp.lz"
-
-
-	.globl gUnknown_8D8C150
-gUnknown_8D8C150: @ 0x8D8C150
-	.incbin "graphics/misc/gUnknown_8D8C150.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD8C358, 0x4C4
-
-
-	.globl gUnknown_8D8C81C
-gUnknown_8D8C81C: @ 0x8D8C81C
-	.incbin "graphics/misc/gUnknown_8D8C81C.4bpp.lz"
-
-
-	.globl gUnknown_8D8CCAC
-gUnknown_8D8CCAC: @ 0x8D8CCAC
-	.incbin "graphics/misc/gUnknown_8D8CCAC.4bpp.lz"
-
+	.section .rodata.data_rest2c_after_intro_scene_3_rayquaza_graphics
 
 	.globl gUnknown_8D8CF26
 gUnknown_8D8CF26: @ 0x8D8CF26

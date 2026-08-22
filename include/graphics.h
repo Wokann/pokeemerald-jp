@@ -3904,7 +3904,7 @@ extern const u32 gIntroCloudsSun_Tilemap[];
 extern const u32 gIntroRayquaza_Tilemap[];
 extern const u32 gIntroRayquaza_Gfx[];
 extern const u32 gIntroRayquazaClouds_Gfx[];
-extern const u32 gIntroRayquazaClouds_Tilemap[];
+extern const u8 gIntroRayquazaClouds_Tilemap[];
 extern const u16 gIntroGameFreakTextFade_Pal[];
 extern const u32 gIntroBrendan_Gfx[];
 extern const u32 gIntroMay_Gfx[];
