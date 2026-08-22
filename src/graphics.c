@@ -301,6 +301,49 @@ __asm__(
 
 #undef PARTY_MENU_AND_STATUS_ICON_RESOURCES
 
+#define MOVE_TYPES_RESOURCES __attribute__((section(".rodata.move_types_resources"), aligned(1)))
+
+// JP type-label graphics retain their region-specific glyphs.
+MOVE_TYPES_RESOURCES const u32 gMoveTypes_Gfx[] = INCBIN_U32("graphics/types/move_types.4bpp.lz");
+MOVE_TYPES_RESOURCES const u32 gMoveTypes_Pal[] = INCBIN_U32("graphics/types/move_types.gbapal.lz");
+
+#undef MOVE_TYPES_RESOURCES
+
+#define SUMMARY_SCREEN_RESOURCES __attribute__((section(".rodata.summary_screen_resources"), aligned(1)))
+
+// The JP Summary Screen streams retain their original region-specific graphics and tilemaps.
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryMoveSelect_Gfx[] = INCBIN_U32("graphics/summary_screen/move_select.4bpp.lz");
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryMoveSelect_Pal[] = INCBIN_U32("graphics/summary_screen/move_select.gbapal.lz");
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryScreen_Gfx[] = INCBIN_U32("graphics/summary_screen/tiles.4bpp.lz");
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryScreen_Pal[] = INCBIN_U32("graphics/summary_screen/tiles.gbapal.lz");
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_Info_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_info.bin.lz");
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_Skills_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_skills.bin.lz");
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_BattleMoves_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_battle_moves.bin.lz");
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_ContestMoves_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_contest_moves.bin.lz");
+SUMMARY_SCREEN_RESOURCES const u32 gSummaryPage_InfoEgg_Tilemap[] = INCBIN_U32("graphics/summary_screen/page_info_egg.bin.lz");
+
+// Keep the ROM-locked Summary Screen literal pools on their original names.
+__asm__(
+    ".global gUnknown_8D97C54\n"
+    ".set gUnknown_8D97C54, gMoveTypes_Pal\n"
+    ".global gUnknown_8D97DD0\n"
+    ".set gUnknown_8D97DD0, gSummaryScreen_Gfx\n"
+    ".global gUnknown_8D9879C\n"
+    ".set gUnknown_8D9879C, gSummaryScreen_Pal\n"
+    ".global gUnknown_8D9888C\n"
+    ".set gUnknown_8D9888C, gSummaryPage_Info_Tilemap\n"
+    ".global gUnknown_8D98A44\n"
+    ".set gUnknown_8D98A44, gSummaryPage_Skills_Tilemap\n"
+    ".global gUnknown_8D98BA8\n"
+    ".set gUnknown_8D98BA8, gSummaryPage_BattleMoves_Tilemap\n"
+    ".global gUnknown_8D98D14\n"
+    ".set gUnknown_8D98D14, gSummaryPage_ContestMoves_Tilemap\n"
+    ".global gUnknown_8D98E8C\n"
+    ".set gUnknown_8D98E8C, gSummaryPage_InfoEgg_Tilemap\n"
+);
+
+#undef SUMMARY_SCREEN_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

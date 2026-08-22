@@ -554,6 +554,12 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/party_menu/bg.4bpp.lz graphics/party_menu/bg.gbapal.lz graphics/party_menu/bg.bin.lz \
 	graphics/party_menu/pokeball.4bpp.lz graphics/party_menu/pokeball_small.4bpp.lz graphics/party_menu/pokeball.gbapal.lz \
 	graphics/interface/status_icons.4bpp.lz graphics/interface/status_icons.gbapal.lz \
+	graphics/types/move_types.4bpp.lz graphics/types/move_types.gbapal.lz \
+	graphics/summary_screen/move_select.4bpp.lz graphics/summary_screen/move_select.gbapal.lz \
+	graphics/summary_screen/tiles.4bpp.lz graphics/summary_screen/tiles.gbapal.lz \
+	graphics/summary_screen/page_info.bin.lz graphics/summary_screen/page_skills.bin.lz \
+	graphics/summary_screen/page_battle_moves.bin.lz graphics/summary_screen/page_contest_moves.bin.lz \
+	graphics/summary_screen/page_info_egg.bin.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
