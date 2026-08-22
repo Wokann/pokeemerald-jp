@@ -1,5 +1,127 @@
 #include "global.h"
 #include "battle_controllers.h"
+#include "constants/battle.h"
+
+#define BATTLE_CONTROLLER_LINK_OPPONENT_COMMANDS_DATA __attribute__((section(".rodata.battle_controller_link_opponent_commands")))
+
+void sub_08064CC4(void);
+void LinkOpponentHandleGetRawMonData(void);
+void LinkOpponentHandleSetMonData(void);
+void LinkOpponentHandleSetRawMonData(void);
+void LinkOpponentHandleLoadMonSprite(void);
+void LinkOpponentHandleSwitchInAnim(void);
+void LinkOpponentHandleReturnMonToBall(void);
+void LinkOpponentHandleDrawTrainerPic(void);
+void LinkOpponentHandleTrainerSlide(void);
+void LinkOpponentHandleTrainerSlideBack(void);
+void LinkOpponentHandleFaintAnimation(void);
+void LinkOpponentHandlePaletteFade(void);
+void LinkOpponentHandleSuccessBallThrowAnim(void);
+void LinkOpponentHandleBallThrowAnim(void);
+void LinkOpponentHandlePause(void);
+void LinkOpponentHandleMoveAnimation(void);
+void LinkOpponentHandlePrintString(void);
+void LinkOpponentHandlePrintSelectionString(void);
+void LinkOpponentHandleChooseAction(void);
+void LinkOpponentHandleYesNoBox(void);
+void LinkOpponentHandleChooseMove(void);
+void LinkOpponentHandleChooseItem(void);
+void LinkOpponentHandleChoosePokemon(void);
+void LinkOpponentHandleCmd23(void);
+void LinkOpponentHandleHealthBarUpdate(void);
+void LinkOpponentHandleExpUpdate(void);
+void LinkOpponentHandleStatusIconUpdate(void);
+void LinkOpponentHandleStatusAnimation(void);
+void LinkOpponentHandleStatusXor(void);
+void LinkOpponentHandleDataTransfer(void);
+void LinkOpponentHandleDMA3Transfer(void);
+void LinkOpponentHandlePlayBGM(void);
+void LinkOpponentHandleCmd32(void);
+void LinkOpponentHandleTwoReturnValues(void);
+void LinkOpponentHandleChosenMonReturnValue(void);
+void LinkOpponentHandleOneReturnValue(void);
+void LinkOpponentHandleOneReturnValue_Duplicate(void);
+void sub_08066ECC(void);
+void LinkOpponentHandleCmd38(void);
+void LinkOpponentHandleCmd39(void);
+void LinkOpponentHandleCmd40(void);
+void LinkOpponentHandleHitAnimation(void);
+void LinkOpponentHandleCantSwitch(void);
+void LinkOpponentHandlePlaySE(void);
+void LinkOpponentHandlePlayFanfareOrBGM(void);
+void sub_0806707C(void);
+void LinkOpponentHandleIntroSlide(void);
+void LinkOpponentHandleIntroTrainerBallThrow(void);
+void sub_080672FC(void);
+void LinkOpponentHandleHidePartyStatusSummary(void);
+void LinkOpponentHandleEndBounceEffect(void);
+void LinkOpponentHandleSpriteInvisibility(void);
+void LinkOpponentHandleBattleAnimation(void);
+void LinkOpponentHandleLinkStandbyMsg(void);
+void LinkOpponentHandleResetActionMoveSelection(void);
+void LinkOpponentHandleCmd55(void);
+void LinkOpponentCmdEnd(void);
+
+BATTLE_CONTROLLER_LINK_OPPONENT_COMMANDS_DATA static void (*const sLinkOpponentBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
+{
+    /* 00 */ sub_08064CC4,
+    /* 01 */ LinkOpponentHandleGetRawMonData,
+    /* 02 */ LinkOpponentHandleSetMonData,
+    /* 03 */ LinkOpponentHandleSetRawMonData,
+    /* 04 */ LinkOpponentHandleLoadMonSprite,
+    /* 05 */ LinkOpponentHandleSwitchInAnim,
+    /* 06 */ LinkOpponentHandleReturnMonToBall,
+    /* 07 */ LinkOpponentHandleDrawTrainerPic,
+    /* 08 */ LinkOpponentHandleTrainerSlide,
+    /* 09 */ LinkOpponentHandleTrainerSlideBack,
+    /* 10 */ LinkOpponentHandleFaintAnimation,
+    /* 11 */ LinkOpponentHandlePaletteFade,
+    /* 12 */ LinkOpponentHandleSuccessBallThrowAnim,
+    /* 13 */ LinkOpponentHandleBallThrowAnim,
+    /* 14 */ LinkOpponentHandlePause,
+    /* 15 */ LinkOpponentHandleMoveAnimation,
+    /* 16 */ LinkOpponentHandlePrintString,
+    /* 17 */ LinkOpponentHandlePrintSelectionString,
+    /* 18 */ LinkOpponentHandleChooseAction,
+    /* 19 */ LinkOpponentHandleYesNoBox,
+    /* 20 */ LinkOpponentHandleChooseMove,
+    /* 21 */ LinkOpponentHandleChooseItem,
+    /* 22 */ LinkOpponentHandleChoosePokemon,
+    /* 23 */ LinkOpponentHandleCmd23,
+    /* 24 */ LinkOpponentHandleHealthBarUpdate,
+    /* 25 */ LinkOpponentHandleExpUpdate,
+    /* 26 */ LinkOpponentHandleStatusIconUpdate,
+    /* 27 */ LinkOpponentHandleStatusAnimation,
+    /* 28 */ LinkOpponentHandleStatusXor,
+    /* 29 */ LinkOpponentHandleDataTransfer,
+    /* 30 */ LinkOpponentHandleDMA3Transfer,
+    /* 31 */ LinkOpponentHandlePlayBGM,
+    /* 32 */ LinkOpponentHandleCmd32,
+    /* 33 */ LinkOpponentHandleTwoReturnValues,
+    /* 34 */ LinkOpponentHandleChosenMonReturnValue,
+    /* 35 */ LinkOpponentHandleOneReturnValue,
+    /* 36 */ LinkOpponentHandleOneReturnValue_Duplicate,
+    /* 37 */ sub_08066ECC,
+    /* 38 */ LinkOpponentHandleCmd38,
+    /* 39 */ LinkOpponentHandleCmd39,
+    /* 40 */ LinkOpponentHandleCmd40,
+    /* 41 */ LinkOpponentHandleHitAnimation,
+    /* 42 */ LinkOpponentHandleCantSwitch,
+    /* 43 */ LinkOpponentHandlePlaySE,
+    /* 44 */ LinkOpponentHandlePlayFanfareOrBGM,
+    /* 45 */ sub_0806707C,
+    /* 46 */ LinkOpponentHandleIntroSlide,
+    /* 47 */ LinkOpponentHandleIntroTrainerBallThrow,
+    /* 48 */ sub_080672FC,
+    /* 49 */ LinkOpponentHandleHidePartyStatusSummary,
+    /* 50 */ LinkOpponentHandleEndBounceEffect,
+    /* 51 */ LinkOpponentHandleSpriteInvisibility,
+    /* 52 */ LinkOpponentHandleBattleAnimation,
+    /* 53 */ LinkOpponentHandleLinkStandbyMsg,
+    /* 54 */ LinkOpponentHandleResetActionMoveSelection,
+    /* 55 */ LinkOpponentHandleCmd55,
+    /* 56 */ LinkOpponentCmdEnd,
+};
 
 void nullsub_28(void) {}
 __attribute__((naked)) void SetControllerToLinkOpponent(void)
@@ -56,7 +178,7 @@ __attribute__((naked)) void LinkOpponentBufferRunCommand(void)
         "_08063FCC: .4byte gBitTable\n\t"
         "_08063FD0: .4byte gActiveBattler\n\t"
         "_08063FD4: .4byte gBattleBufferA\n\t"
-        "_08063FD8: .4byte gUnknown_82ED13C\n\t"
+        "_08063FD8: .4byte sLinkOpponentBufferCommands\n\t"
         "_08063FDC:\n\t"
         "	bl LinkOpponentBufferExecCompleted\n\t"
         "_08063FE0:\n\t"

@@ -1,5 +1,135 @@
 #include "global.h"
 #include "battle_controllers.h"
+#include "constants/battle.h"
+
+#define BATTLE_CONTROLLER_OPPONENT_COMMANDS_DATA __attribute__((section(".rodata.battle_controller_opponent_commands")))
+
+void OpponentHandleGetMonData(void);
+void OpponentHandleGetRawMonData(void);
+void OpponentHandleSetMonData(void);
+void OpponentHandleSetRawMonData(void);
+void OpponentHandleLoadMonSprite(void);
+void OpponentHandleSwitchInAnim(void);
+void OpponentHandleReturnMonToBall(void);
+void OpponentHandleDrawTrainerPic(void);
+void OpponentHandleTrainerSlide(void);
+void OpponentHandleTrainerSlideBack(void);
+void OpponentHandleFaintAnimation(void);
+void OpponentHandlePaletteFade(void);
+void OpponentHandlePause(void);
+void OpponentHandleSuccessBallThrowAnim(void);
+void OpponentHandleChosenMonReturnValue(void);
+void OpponentHandleMoveAnimation(void);
+void OpponentHandlePrintString(void);
+void OpponentHandleCmd23(void);
+void OpponentHandleChooseAction(void);
+void OpponentHandleCmd32(void);
+void OpponentHandleChooseMove(void);
+void OpponentHandleCmd40(void);
+void OpponentHandleChoosePokemon(void);
+void OpponentHandleCmd42(void);
+void OpponentHandleHealthBarUpdate(void);
+void OpponentHandleDMA3Transfer(void);
+void OpponentHandleStatusIconUpdate(void);
+void OpponentHandleStatusAnimation(void);
+void OpponentHandleDataTransfer(void);
+void OpponentHandleEndBounceEffect(void);
+void OpponentHandleExpUpdate(void);
+void OpponentHandleLinkStandbyMsg(void);
+void OpponentHandleOneReturnValue(void);
+void OpponentHandleOneReturnValue_Duplicate(void);
+void OpponentHandlePlayBGM(void);
+void OpponentHandlePrintSelectionString(void);
+void OpponentHandleResetActionMoveSelection(void);
+void OpponentHandleStatusXor(void);
+void OpponentHandleTwoReturnValues(void);
+void OpponentHandleUnknownYesNoBox(void);
+void sub_0806212C(void);
+void sub_08062154(void);
+void OpponentCmdEnd(void);
+void OpponentHandlePlaySE(void);
+void OpponentHandlePlayFanfareOrBGM(void);
+void OpponentHandleFaintingCry(void);
+void nullsub_26(void);
+void OpponentHandleIntroTrainerBallThrow(void);
+void sub_080624FC(void);
+void sub_08062658(void);
+void sub_080626A8(void);
+void OpponentHandleSpriteInvisibility(void);
+void OpponentHandleBattleAnimation(void);
+void sub_0806277C(void);
+void sub_08062788(void);
+void OpponentHandleCmd55(void);
+void sub_080627D8(void);
+
+// The JP controller protocol uses a different command-slot order from the US build.
+// Keep this dispatch order byte-identical until individual command handlers are converted.
+BATTLE_CONTROLLER_OPPONENT_COMMANDS_DATA static void (*const sOpponentBufferCommands[CONTROLLER_CMDS_COUNT])(void) =
+{
+    /* 00 */ OpponentHandleGetMonData,
+    /* 01 */ OpponentHandleGetRawMonData,
+    /* 02 */ OpponentHandleSetMonData,
+    /* 03 */ OpponentHandleSetRawMonData,
+    /* 04 */ OpponentHandleLoadMonSprite,
+    /* 05 */ OpponentHandleSwitchInAnim,
+    /* 06 */ OpponentHandleReturnMonToBall,
+    /* 07 */ OpponentHandleDrawTrainerPic,
+    /* 08 */ OpponentHandleTrainerSlide,
+    /* 09 */ OpponentHandleTrainerSlideBack,
+    /* 10 */ OpponentHandleFaintAnimation,
+    /* 11 */ OpponentHandlePaletteFade,
+    /* 12 */ OpponentHandlePause,
+    /* 13 */ OpponentHandleSuccessBallThrowAnim,
+    /* 14 */ OpponentHandleChosenMonReturnValue,
+    /* 15 */ OpponentHandleMoveAnimation,
+    /* 16 */ OpponentHandlePrintString,
+    /* 17 */ OpponentHandleCmd23,
+    /* 18 */ OpponentHandleChooseAction,
+    /* 19 */ OpponentHandleCmd32,
+    /* 20 */ OpponentHandleChooseMove,
+    /* 21 */ OpponentHandleCmd40,
+    /* 22 */ OpponentHandleChoosePokemon,
+    /* 23 */ OpponentHandleCmd42,
+    /* 24 */ OpponentHandleHealthBarUpdate,
+    /* 25 */ OpponentHandleDMA3Transfer,
+    /* 26 */ OpponentHandleStatusIconUpdate,
+    /* 27 */ OpponentHandleStatusAnimation,
+    /* 28 */ OpponentHandleDataTransfer,
+    /* 29 */ OpponentHandleEndBounceEffect,
+    /* 30 */ OpponentHandleExpUpdate,
+    /* 31 */ OpponentHandleLinkStandbyMsg,
+    /* 32 */ OpponentHandleOneReturnValue,
+    /* 33 */ OpponentHandleOneReturnValue_Duplicate,
+    /* 34 */ OpponentHandlePlayBGM,
+    /* 35 */ OpponentHandlePrintSelectionString,
+    /* 36 */ OpponentHandleResetActionMoveSelection,
+    /* 37 */ OpponentHandleStatusXor,
+    /* 38 */ OpponentHandleTwoReturnValues,
+    /* 39 */ OpponentHandleUnknownYesNoBox,
+    /* 40 */ sub_0806212C,
+    /* 41 */ sub_08062154,
+    /* 42 */ OpponentCmdEnd,
+    /* 43 */ OpponentHandlePlaySE,
+    /* 44 */ OpponentHandlePlayFanfareOrBGM,
+    /* 45 */ OpponentHandleFaintingCry,
+    /* 46 */ nullsub_26,
+    /* 47 */ OpponentHandleIntroTrainerBallThrow,
+    /* 48 */ sub_080624FC,
+    /* 49 */ sub_08062658,
+    /* 50 */ sub_080626A8,
+    /* 51 */ OpponentHandleSpriteInvisibility,
+    /* 52 */ OpponentHandleBattleAnimation,
+    /* 53 */ sub_0806277C,
+    /* 54 */ sub_08062788,
+    /* 55 */ OpponentHandleCmd55,
+    /* 56 */ sub_080627D8,
+};
+
+// Unknown unused data.
+BATTLE_CONTROLLER_OPPONENT_COMMANDS_DATA static const u8 sUnused[] =
+{
+    0xB0, 0xB0, 0xC8, 0x98, 0x28, 0x28, 0x28, 0x20,
+};
 
 void sub_0805ED7C(void) {}
 __attribute__((naked)) void SetControllerToOpponent(void)
@@ -56,7 +186,7 @@ __attribute__((naked)) void OpponentBufferRunCommand(void)
         "_0805EDD4: .4byte gBitTable\n\t"
         "_0805EDD8: .4byte gActiveBattler\n\t"
         "_0805EDDC: .4byte gBattleBufferA\n\t"
-        "_0805EDE0: .4byte gUnknown_82ED050\n\t"
+        "_0805EDE0: .4byte sOpponentBufferCommands\n\t"
         "_0805EDE4:\n\t"
         "	bl OpponentBufferExecCompleted\n\t"
         "_0805EDE8:\n\t"

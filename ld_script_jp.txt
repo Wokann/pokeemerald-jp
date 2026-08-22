@@ -9421,7 +9421,8 @@ SECTIONS {
         data/data_b2d.o(.rodata.data_b2d_after_battle_palace_likelihood);
         src/battle_controller_player.o(.rodata.battle_controller_player_commands);
         src/battle_anim_smokescreen.o(.rodata.battle_anim_smokescreen_data);
-        data/data_b2d.o(.rodata.data_b2d_after_smokescreen_data);
+        src/battle_controller_opponent.o(.rodata.battle_controller_opponent_commands);
+        src/battle_controller_link_opponent.o(.rodata.battle_controller_link_opponent_commands);
         src/data/pokemon/battle_moves.o(.rodata);
         gUnknown_82ED224 = gBattleMoves + 4;
         data/data_b2d.o(.rodata.data_b2d_after_battle_moves);
