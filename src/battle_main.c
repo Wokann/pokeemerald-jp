@@ -66,14 +66,13 @@ extern u8 gBattleTerrain;
 extern struct MusicPlayerInfo gMPlayInfo_SE1;
 extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MultiPartnerMenuPokemon *sMultiPartnerPartyBuffer;
-extern struct ScanlineEffectParams sIntroScanlineParams16Bit;
+extern const struct ScanlineEffectParams sIntroScanlineParams16Bit;
 extern void sub_08185CDC(void); // JP recorded-battle helper (US: RecordedBattle_ClearFrontierPassFlag)
 extern void sub_08184D04(void); // JP recorded-battle helper (US: RecordedBattle_SetTrainerInfo)
 extern void sub_0814FA04(const u8 *text, u8 windowId); // JP BattlePutTextOnWindow equivalent
 extern void TryGetStatusString(const u8 *text); // JP text-expand helper (US: BattleStringExpandPlaceholdersToDisplayedString)
 extern const struct BgTemplate gBattleBgTemplates[];
 extern const struct MonCoords gCastformFrontSpriteCoords[];
-extern const s8 sCenterToCornerVecXs[];
 extern u32 sFlickerArray[];
 extern u8 sUnusedBattlersArray[];
 void TurnValuesCleanUp(bool8 var0);
@@ -82,7 +81,91 @@ extern void RunBattleScriptCommands(void); // JP asm 0x0803D45C (register-sensit
 extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC600 (14 B_ACTION_* entries)
 extern void (*const gBattleScriptingCommandsTable[])(void); // JP data 0x082EC694 (249 B_SCR_OP_* entries)
 extern void (*gCB2_AfterEvolution)(void); // JP IWRAM 0x03005F28
+static void SpriteCB_UnusedBattleInit(struct Sprite *sprite);
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
+
+#define BATTLE_MAIN_INIT_DATA __attribute__((section(".rodata.battle_main_init_data")))
+#define BATTLE_MAIN_OAM_DATA __attribute__((section(".rodata.battle_main_oam_data")))
+#define BATTLE_MAIN_ANIM_DATA __attribute__((section(".rodata.battle_main_anim_data")))
+
+const struct ScanlineEffectParams sIntroScanlineParams16Bit BATTLE_MAIN_INIT_DATA =
+{
+    &REG_BG3HOFS, SCANLINE_EFFECT_DMACNT_16BIT, 1
+};
+
+const struct ScanlineEffectParams sIntroScanlineParams32Bit BATTLE_MAIN_INIT_DATA =
+{
+    &REG_BG3HOFS, SCANLINE_EFFECT_DMACNT_32BIT, 1
+};
+
+const struct SpriteTemplate gUnusedBattleInitSprite BATTLE_MAIN_INIT_DATA =
+{
+    .tileTag = 0,
+    .paletteTag = 0,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_UnusedBattleInit,
+};
+
+const struct OamData gOamData_BattleSpriteOpponentSide BATTLE_MAIN_OAM_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const struct OamData gOamData_BattleSpritePlayerSide BATTLE_MAIN_OAM_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 2,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_Unused[] BATTLE_MAIN_ANIM_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnims_Unused[] BATTLE_MAIN_ANIM_DATA =
+{
+    sAnim_Unused,
+};
+
+static const union AffineAnimCmd sAffineAnim_Unused[] BATTLE_MAIN_ANIM_DATA =
+{
+    AFFINEANIMCMD_FRAME(-0x10, 0x0, 0, 4),
+    AFFINEANIMCMD_FRAME(0x0, 0x0, 0, 0x3C),
+    AFFINEANIMCMD_JUMP(1),
+};
+
+static const union AffineAnimCmd *const sAffineAnims_Unused[] BATTLE_MAIN_ANIM_DATA =
+{
+    sAffineAnim_Unused,
+};
+
+static const s8 sCenterToCornerVecXs[8] BATTLE_MAIN_ANIM_DATA =
+{
+    -32, -16, -16, -32, -32,
+};
 
 static void CB2_InitBattleInternal(void);
 static void CB2_PreInitIngamePlayerPartnerBattle(void);

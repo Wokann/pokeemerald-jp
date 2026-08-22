@@ -90,32 +90,7 @@ gBattleWindowTemplates: @ 0x82EB9F8
 sBattleEnvironmentTable: @ 0x82EBA00 (10 * struct BattleBackground)
 	.incbin "baserom_jp.gba", 0x2eba00, 0xc8
 
-	.globl sIntroScanlineParams16Bit
-sIntroScanlineParams16Bit: @ 0x82EBAC8 (JP: battle_main.c)
-	.incbin "baserom_jp.gba", 0x2ebac8, 0xc
-
-	.globl sIntroScanlineParams32Bit
-sIntroScanlineParams32Bit: @ 0x82EBAD4
-	.incbin "baserom_jp.gba", 0x2ebad4, 0xc
-
-	.globl gUnusedBattleInitSprite
-gUnusedBattleInitSprite: @ 0x82EBAE0 (JP: struct SpriteTemplate)
-	.incbin "baserom_jp.gba", 0x2ebae0, 0x18
-
-	.globl gUnknown_82EBAEF8
-gUnknown_82EBAEF8: @ 0x82EBAEF8
-	.incbin "baserom_jp.gba", 0x2ebaf8, 0x38
-
-	.globl sCenterToCornerVecXs
-sCenterToCornerVecXs: @ 0x82EBB30
-	.byte -32 @ sprite animCmdIndex 0
-	.byte -16 @ sprite animCmdIndex 1
-	.byte -16 @ sprite animCmdIndex 2
-	.byte -32 @ sprite animCmdIndex 3
-	.byte -32 @ sprite animCmdIndex 4
-	.byte 0 @ zero padding
-	.byte 0 @ zero padding
-	.byte 0 @ zero padding
+	.section .rodata.battle_main_static_tail
 
 	.globl gTypeEffectiveness
 gTypeEffectiveness: @ 0x82EBB38
