@@ -608,7 +608,6 @@ EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA static const u8 sDirectionCompo
 #undef EVENT_OBJECT_MOVEMENT_ACTION_FUNCTION_TABLES
 
 extern const struct Coords16 sDirectionToVectors[];
-extern const u8 sElevationToPriority[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
 extern const struct PairedPalettes sPlayerReflectionPaletteSets[];
 extern const struct PairedPalettes sSpecialObjectReflectionPaletteSets[];
@@ -618,8 +617,6 @@ static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
 extern u32 state_to_direction(u8, u8, u8);
 extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);
-extern const char gUnknown_84E6CA8[];
-extern const char gUnknown_84E6CB4[];
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
@@ -687,6 +684,12 @@ enum
     JUMP_DISTANCE_NORMAL,
     JUMP_DISTANCE_FAR,
 };
+
+#define EVENT_OBJECT_MOVEMENT_GROUND_EFFECT_DATA __attribute__((section(".rodata.event_object_movement_ground_effect_data"), aligned(1)))
+#define EVENT_OBJECT_MOVEMENT_JUMP_DATA __attribute__((section(".rodata.event_object_movement_jump_data"), aligned(1)))
+#include "data/object_events/movement_ground_effect_data.h"
+#undef EVENT_OBJECT_MOVEMENT_JUMP_DATA
+#undef EVENT_OBJECT_MOVEMENT_GROUND_EFFECT_DATA
 
 #define FIGURE_8_LENGTH 72
 
@@ -13461,7 +13464,7 @@ __attribute__((naked)) void GetGroundEffectFlags_Reflection(struct ObjectEvent *
         "	str r1, [r5]\n\t"
         "	b _08096112\n\t"
         "	.align 2, 0\n\t"
-        "_08096104: .4byte gUnknown_84E6A30\n\t"
+        "_08096104: .4byte sReflectionFlags\n\t"
         "_08096108:\n\t"
         "	ldrb r1, [r4, #2]\n\t"
         "	movs r0, #3\n\t"
@@ -13933,8 +13936,8 @@ __attribute__((naked)) void GetGroundEffectFlags_JumpLanding(struct ObjectEvent 
         "	b _080963F2\n\t"
         "	.align 2, 0\n\t"
         "_080963DC: .4byte gUnknown_2000020\n\t"
-        "_080963E0: .4byte metatileFuncs\n\t"
-        "_080963E4: .4byte gUnknown_84E6A50\n\t"
+        "_080963E0: .4byte sJumpLandingMetatileFuncs\n\t"
+        "_080963E4: .4byte sJumpLandingFlags\n\t"
         "_080963E8:\n\t"
         "	adds r0, r5, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -14195,7 +14198,7 @@ __attribute__((naked)) u8 GetLedgeJumpDirection(s16 x, s16 y, u8 direction)
         "	movs r0, #0\n\t"
         "	b _080965D2\n\t"
         "	.align 2, 0\n\t"
-        "_080965C8: .4byte ledgeBehaviorFuncs\n\t"
+        "_080965C8: .4byte sLedgeBehaviorFuncs\n\t"
         "_080965CC:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -14347,8 +14350,8 @@ __attribute__((naked)) void UpdateEventObjectZCoordAndPriority(struct ObjectEven
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080966C4: .4byte gUnknown_84E6A98\n\t"
-        "_080966C8: .4byte gUnknown_84E6A88\n\t"
+        "_080966C4: .4byte sElevationToSubspriteTableNum\n\t"
+        "_080966C8: .4byte sElevationToPriority\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14392,8 +14395,8 @@ __attribute__((naked)) void InitObjectPriorityByZCoord(struct ObjectEvent *objec
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096710: .4byte gUnknown_84E6A98\n\t"
-        "_08096714: .4byte gUnknown_84E6A88\n\t"
+        "_08096710: .4byte sElevationToSubspriteTableNum\n\t"
+        "_08096714: .4byte sElevationToPriority\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14490,7 +14493,7 @@ __attribute__((naked)) void SetObjectSubpriorityByElevation(u8 elevation, struct
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080967BC: .4byte gSpriteCoordOffsetY\n\t"
-        "_080967C0: .4byte gUnknown_84E6A78\n\t"
+        "_080967C0: .4byte sElevationToSubpriority\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14799,7 +14802,7 @@ __attribute__((naked)) void DoTracksGroundEffect_Footprints(struct ObjectEvent *
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080969FC: .4byte gUnknown_84E6AB4\n\t"
+        "_080969FC: .4byte sSandFootprintsFieldEffectIds\n\t"
         "_08096A00: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
@@ -14847,7 +14850,7 @@ __attribute__((naked)) void DoTracksGroundEffect_BikeTireTracks(struct ObjectEve
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08096A4C: .4byte gFieldEffectArguments\n\t"
-        "_08096A50: .4byte gUnknown_84E6AB8\n\t"
+        "_08096A50: .4byte sBikeTireTracksTransitions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15122,7 +15125,7 @@ __attribute__((naked)) void DoFlaggedGroundEffects(struct ObjectEvent *objEvent,
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096C28: .4byte gUnknown_84E6AC8\n\t"
+        "_08096C28: .4byte sGroundEffectFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15606,8 +15609,8 @@ __attribute__((naked)) bool8 obj_npc_ministep(struct Sprite *sprite)
         "	movs r0, #1\n\t"
         "	b _08097046\n\t"
         "	.align 2, 0\n\t"
-        "_0809703C: .4byte gUnknown_84E6BBC\n\t"
-        "_08097040: .4byte gUnknown_84E6BA8\n\t"
+        "_0809703C: .4byte sStepTimes\n\t"
+        "_08097040: .4byte sNpcStepFuncTables\n\t"
         "_08097044:\n\t"
         "	movs r0, #0\n\t"
         "_08097046:\n\t"
@@ -15718,7 +15721,7 @@ __attribute__((naked)) s16 sub_08097190(s16 a, u8 b)
         "	ldrsb r0, [r1, r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080971A8: .4byte gUnknown_84E6C88\n\t"
+        "_080971A8: .4byte sJumpYTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15815,8 +15818,8 @@ __attribute__((naked)) void sub_080971CC(struct ObjectEvent *objectEvent)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809724C: .4byte gUnknown_84E6C94\n\t"
-        "_08097250: .4byte gUnknown_84E6C9A\n\t"
+        "_0809724C: .4byte sJumpDistanceToTime\n\t"
+        "_08097250: .4byte sJumpDistanceToShift\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15894,8 +15897,8 @@ __attribute__((naked)) void sub_08097254(struct ObjectEvent *objectEvent)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080972E0: .4byte gUnknown_84E6C9E\n\t"
-        "_080972E4: .4byte gUnknown_84E6CA4\n\t"
+        "_080972E0: .4byte sJumpSpecialDistanceToTime\n\t"
+        "_080972E4: .4byte sJumpSpecialDistanceToShift\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -16189,9 +16192,9 @@ __attribute__((naked)) bool8 sub_080976D8(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08097718: .4byte gUnknown_84E6CA8\n\t"
+        "_08097718: .4byte sEventObjectMovementSourceFile\n\t"
         "_0809771C: .4byte 0x00003106\n\t"
-        "_08097720: .4byte gUnknown_84E6CB4\n\t"
+        "_08097720: .4byte sVirtualObjectAnimAssertExpression\n\t"
         ".syntax divided\n\t"
     );
 }
