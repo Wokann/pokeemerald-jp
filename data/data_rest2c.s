@@ -553,26 +553,7 @@ gUnknown_8D9B13C: @ 0x8D9B13C
 	.section .rodata.data_rest2c_after_swap_line_graphics
 
 
-	.globl gUnknown_8D9B1B4
-gUnknown_8D9B1B4: @ 0x8D9B1B4
-	.incbin "graphics/misc/gUnknown_8D9B1B4.4bpp.lz"
-
-
-	.globl gUnknown_8D9B2C0
-gUnknown_8D9B2C0: @ 0x8D9B2C0
-	.incbin "graphics/misc/gUnknown_8D9B2C0.4bpp.lz"
-	.globl gShopMenu_Pal
-	.set gShopMenu_Pal, gUnknown_8D9B2C0
-
-
-	.globl gUnknown_8D9B2E8
-gUnknown_8D9B2E8: @ 0x8D9B2E8
-	.incbin "graphics/misc/gUnknown_8D9B2E8.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD9B426, 0x2
-
-	.globl gShopMenuMoney_Gfx
-gShopMenuMoney_Gfx: @ 0x8D9B428
-	.incbin "baserom_jp.gba", 0xD9B428, 0x8C
+	.section .rodata.data_rest2c_after_shop_menu_resources
 
 	.section .rodata.data_rest2c_after_chases_away
 	.incbin "baserom_jp.gba", 0xDAB2FD, 0xF4C3

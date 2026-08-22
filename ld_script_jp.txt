@@ -9951,6 +9951,8 @@ SECTIONS {
         data/data_rest2c.o(.rodata.data_rest2c_before_swap_line_graphics);
         src/graphics.o(.rodata.swap_line_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_swap_line_graphics);
+        src/graphics.o(.rodata.shop_menu_resources);
+        data/data_rest2c.o(.rodata.data_rest2c_after_shop_menu_resources);
         src/graphics.o(.rodata.pokeblock_graphics);
         src/graphics.o(.rodata.berry_check_graphics);
         src/graphics.o(.rodata.berry_check_palette);

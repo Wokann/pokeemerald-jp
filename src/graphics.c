@@ -344,6 +344,26 @@ __asm__(
 
 #undef SUMMARY_SCREEN_RESOURCES
 
+#define SHOP_MENU_RESOURCES __attribute__((section(".rodata.shop_menu_resources"), aligned(1)))
+
+// Retain the JP Shop Menu graphics streams and their original alignment padding.
+SHOP_MENU_RESOURCES const u32 gShopMenu_Gfx[] = INCBIN_U32("graphics/shop/menu.4bpp.lz");
+SHOP_MENU_RESOURCES const u32 gShopMenu_Pal[] = INCBIN_U32("graphics/shop/menu.gbapal.lz");
+SHOP_MENU_RESOURCES const u32 gShopMenu_Tilemap[] = INCBIN_U32("graphics/shop/menu.bin.lz");
+SHOP_MENU_RESOURCES const u32 gShopMenuMoney_Gfx[] = INCBIN_U32("graphics/shop/money.4bpp.lz");
+
+// Keep the ROM-locked Shop loader on its original symbol names.
+__asm__(
+    ".global gUnknown_8D9B1B4\n"
+    ".set gUnknown_8D9B1B4, gShopMenu_Gfx\n"
+    ".global gUnknown_8D9B2C0\n"
+    ".set gUnknown_8D9B2C0, gShopMenu_Pal\n"
+    ".global gUnknown_8D9B2E8\n"
+    ".set gUnknown_8D9B2E8, gShopMenu_Tilemap\n"
+);
+
+#undef SHOP_MENU_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(
