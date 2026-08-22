@@ -9503,6 +9503,11 @@ SECTIONS {
         data/data_b2d_mid28.o(.rodata);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
+        gUnknown_84DD88C = .;
+        src/event_object_movement.o(.rodata.event_object_movement_core_data);
+        gUnknown_84DD9D0 = gUnknown_84DD88C + 0x144;
+        gUnknown_84DDA21 = gUnknown_84DD88C + 0x195;
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_event_object_movement_core_data);
         src/field_effect_helpers.o(.rodata.field_effect_helpers_figure8_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_helpers_figure8);
         src/coord_event_weather.o(.rodata.coord_event_weather_data.sCoordEventWeatherFuncs);

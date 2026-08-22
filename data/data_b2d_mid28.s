@@ -45,19 +45,7 @@ gUnknown_847D90C: @ 0x847D90C
 
 	.incbin "baserom_jp.gba", 0x4cf30c, 0xe580
 
-	.globl gUnknown_84DD88C
-gUnknown_84DD88C: @ 0x84DD88C
-	.incbin "baserom_jp.gba", 0x4dd88c, 0x144
-
-	.globl gUnknown_84DD9D0
-gUnknown_84DD9D0: @ 0x84DD9D0
-	.incbin "baserom_jp.gba", 0x4dd9d0, 0x51
-
-	.globl gUnknown_84DDA21
-gUnknown_84DDA21: @ 0x84DDA21
-	.incbin "baserom_jp.gba", 0x4dda21, 0x53
-	.globl gInitialMovementTypeFacingDirections
-	.set gInitialMovementTypeFacingDirections, gUnknown_84DDA21
+	.section .rodata.data_b2d_mid28_after_event_object_movement_core_data
 
 	.globl gUnknown_84DDA74
 gUnknown_84DDA74: @ 0x84DDA74
