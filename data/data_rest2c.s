@@ -858,7 +858,7 @@ gUnknown_8D98E8C: @ 0x8D98E8C
 	.section .rodata.data_rest2c_before_bag_graphics
 	.incbin "baserom_jp.gba", 0xD9902F, 0x1
 
-	.section .rodata.data_rest2c_after_bag_graphics
+	.section .rodata.data_rest2c_before_swap_line_graphics
 
 
 	.globl gUnknown_8D9A734
@@ -895,7 +895,8 @@ gUnknown_8D9AFFC: @ 0x8D9AFFC
 	.globl gUnknown_8D9B13C
 gUnknown_8D9B13C: @ 0x8D9B13C
 	.incbin "graphics/misc/gUnknown_8D9B13C.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD9B164, 0x50
+
+	.section .rodata.data_rest2c_after_swap_line_graphics
 
 
 	.globl gUnknown_8D9B1B4

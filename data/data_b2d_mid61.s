@@ -258,23 +258,9 @@ sMailLayouts_Tall: @ 0x857B054
 
 	.globl sMailFromText
 sMailFromText: @ 0x857B0B4
-	.incbin "baserom_jp.gba", 0x57b0b4, 0x30
+	.incbin "baserom_jp.gba", 0x57b0b4, 0x4
 
-	.globl gUnknown_857B0E4
-gUnknown_857B0E4: @ 0x857B0E4
-	.incbin "baserom_jp.gba", 0x57b0e4, 0x8
-
-	.globl gUnknown_857B0EC
-gUnknown_857B0EC: @ 0x857B0EC
-	.incbin "baserom_jp.gba", 0x57b0ec, 0x8
-
-	.globl gUnknown_857B0F4
-gUnknown_857B0F4: @ 0x857B0F4
-	.incbin "baserom_jp.gba", 0x57b0f4, 0x10
-
-	.globl sHealLocations
-sHealLocations: @ 0x857B104
-	.4byte gDummySpriteAffineAnimTable, 0x08007141
+	.section .rodata.data_b2d_mid61_after_swap_line
 
 	.globl gUnknown_857B10C
 gUnknown_857B10C: @ 0x857B10C

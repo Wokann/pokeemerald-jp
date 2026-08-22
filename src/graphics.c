@@ -88,6 +88,13 @@ BAG_GRAPHICS const u32 gBagPalette[] = INCBIN_U32("graphics/bag/bag.pal.gbapal.l
 
 #undef BAG_GRAPHICS
 
+#define SWAP_LINE_GRAPHICS __attribute__((section(".rodata.swap_line_graphics"), aligned(1)))
+
+SWAP_LINE_GRAPHICS const u32 gSwapLineGfx[] = INCBIN_U32("graphics/interface/swap_line.4bpp.lz");
+SWAP_LINE_GRAPHICS const u32 gSwapLinePal[] = INCBIN_U32("graphics/interface/swap_line.gbapal.lz");
+
+#undef SWAP_LINE_GRAPHICS
+
 #define BERRY_CHECK_GRAPHICS __attribute__((section(".rodata.berry_check_graphics")))
 #define BERRY_CHECK_PALETTE __attribute__((section(".rodata.berry_check_palette")))
 #define BERRY_TAG_GRAPHICS __attribute__((section(".rodata.berry_tag_graphics")))

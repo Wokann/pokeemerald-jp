@@ -18,6 +18,7 @@
 #include "constants/items.h"
 
 #define TAG_SWAP_LINE 109
+#define MENU_HELPERS_SWAP_LINE_DATA __attribute__((section(".rodata.menu_helpers_swap_line_data")))
 
 static void Task_ContinueTaskAfterMessagePrints(u8 taskId);
 static void Task_CallYesOrNoCallback(u8 taskId);
@@ -27,14 +28,70 @@ extern EWRAM_DATA struct YesNoFuncTable sYesNo;
 extern EWRAM_DATA u8 sMessageWindowId;
 extern IWRAM_DATA TaskFunc sMessageNextTask;
 
-// JP const data lives in data.s.
-extern const struct CompressedSpriteSheet gUnknown_857B0E4;
-extern const struct CompressedSpritePalette gUnknown_857B0EC;
-extern const struct SpriteTemplate gUnknown_857B0F4;
+static const struct OamData sOamData_SwapLine MENU_HELPERS_SWAP_LINE_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
 
-#define sSpriteSheet_SwapLine  gUnknown_857B0E4
-#define sSpritePalette_SwapLine gUnknown_857B0EC
-#define sSpriteTemplate_SwapLine gUnknown_857B0F4
+static const union AnimCmd sAnim_SwapLine_RightArrow[] MENU_HELPERS_SWAP_LINE_DATA =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SwapLine_Line[] MENU_HELPERS_SWAP_LINE_DATA =
+{
+    ANIMCMD_FRAME(4, 0),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SwapLine_LeftArrow[] MENU_HELPERS_SWAP_LINE_DATA =
+{
+    ANIMCMD_FRAME(0, 0, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_SwapLine[] MENU_HELPERS_SWAP_LINE_DATA =
+{
+    sAnim_SwapLine_RightArrow,
+    sAnim_SwapLine_Line,
+    sAnim_SwapLine_LeftArrow,
+};
+
+const struct CompressedSpriteSheet sSpriteSheet_SwapLine MENU_HELPERS_SWAP_LINE_DATA =
+{
+    gSwapLineGfx, 0x100, TAG_SWAP_LINE,
+};
+
+const struct CompressedSpritePalette sSpritePalette_SwapLine MENU_HELPERS_SWAP_LINE_DATA =
+{
+    gSwapLinePal, TAG_SWAP_LINE,
+};
+
+const struct SpriteTemplate sSpriteTemplate_SwapLine MENU_HELPERS_SWAP_LINE_DATA =
+{
+    .tileTag = TAG_SWAP_LINE,
+    .paletteTag = TAG_SWAP_LINE,
+    .oam = &sOamData_SwapLine,
+    .anims = sAnims_SwapLine,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+#undef MENU_HELPERS_SWAP_LINE_DATA
 
 void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 
