@@ -132,6 +132,14 @@ BATTLE_ANIM_SANDSTORM_RESOURCES const u32 gBattleAnimSpritePal_FlyingDirt[] = IN
 
 #undef BATTLE_ANIM_SANDSTORM_RESOURCES
 
+#define BATTLE_ANIM_METAL_SOUND_RESOURCES __attribute__((section(".rodata.battle_anim_metal_sound_resources")))
+
+// The JP LZ77 palette stream retains its original two-byte alignment padding.
+BATTLE_ANIM_METAL_SOUND_RESOURCES const u32 gBattleAnimSpriteGfx_MetalSoundWaves[] = INCBIN_U32("graphics/battle_anims/sprites/metal_sound_waves.4bpp.lz");
+BATTLE_ANIM_METAL_SOUND_RESOURCES const u32 gBattleAnimSpritePal_MetalSoundWaves[] = INCBIN_U32("graphics/battle_anims/sprites/metal_sound_waves.gbapal.lz");
+
+#undef BATTLE_ANIM_METAL_SOUND_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(
