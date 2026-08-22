@@ -51,8 +51,7 @@ extern COMMON_DATA struct RfuManager gRfu;
 extern EWRAM_DATA INIT_PARAM sRfuReqConfig;
 extern EWRAM_DATA struct RfuDebug sRfuDebug;
 
-// JP: ROM data bound via ld_script_jp.txt.
-extern const INIT_PARAM sRfuReqConfigTemplate;
+// JP: the remaining RFU strings and shutdown callbacks stay in the ROM data block.
 extern const u8 sPlayerBitsToNewChildIdx[];
 extern const u16 sAcceptedSerialNos[];
 extern const TaskFunc sShutdownTasks[3];
@@ -75,10 +74,7 @@ extern const char sAssertFile_rfu[];
 extern const char sAssertExpr_RfuFuncNull[];
 extern const char sAssertExpr_SizeLe252[];
 
-// JP: ROM data bound via ld_script_jp.txt.
-extern const u32 sAllBlocksReceived[];
 extern const u8 sPlayerBitsToCount[];
-extern const struct BlockRequest sBlockRequests[];
 extern const u8 sSlotToLinkPlayerTableId[];
 extern const char sASCII_PokemonSioInfo[sizeof("PokemonSioInfo")];
 extern const char sASCII_LinkLossDisconnect[];
@@ -87,7 +83,89 @@ extern const char sASCII_30Spaces[];
 extern const char sASCII_15Spaces[];
 extern const char sASCII_8Spaces[];
 extern const char sASCII_NowSlot[];
-extern const u8 sAvailSlots[];
+
+const INIT_PARAM sRfuReqConfigTemplate
+    __attribute__((section(".rodata.link_rfu_2_rfu_req_config_template"))) =
+{
+    .maxMFrame = 4,
+    .MC_TimerCount = 32,
+    .availSlot_flag = 0,
+    .mboot_flag = 0,
+    .serialNo = RFU_SERIAL_GAME,
+    .gameName = (void *)&gHostRfuGameData,
+    .userName = gHostRfuUsername,
+    .fastSearchParent_flag = TRUE,
+    .linkRecovery_enable = FALSE,
+    .linkRecovery_period = 600,
+    .NI_failCounter_limit = 300,
+};
+
+const u8 sAvailSlots[]
+    __attribute__((section(".rodata.link_rfu_2_avail_slots"))) =
+{
+    [1] = AVAIL_SLOT1,
+    [2] = AVAIL_SLOT2,
+    [3] = AVAIL_SLOT3,
+    [4] = AVAIL_SLOT4,
+};
+
+#define BLOCK_MASK(bitNum) ((1 << (bitNum)) - 1)
+const u32 sAllBlocksReceived[]
+    __attribute__((section(".rodata.link_rfu_2_all_blocks_received"))) =
+{
+    BLOCK_MASK(0),
+    BLOCK_MASK(1),
+    BLOCK_MASK(2),
+    BLOCK_MASK(3),
+    BLOCK_MASK(4),
+    BLOCK_MASK(5),
+    BLOCK_MASK(6),
+    BLOCK_MASK(7),
+    BLOCK_MASK(8),
+    BLOCK_MASK(9),
+    BLOCK_MASK(10),
+    BLOCK_MASK(11),
+    BLOCK_MASK(12),
+    BLOCK_MASK(13),
+    BLOCK_MASK(14),
+    BLOCK_MASK(15),
+    BLOCK_MASK(16),
+    BLOCK_MASK(17),
+    BLOCK_MASK(18),
+    BLOCK_MASK(19),
+    BLOCK_MASK(20),
+    BLOCK_MASK(21),
+    BLOCK_MASK(22),
+    BLOCK_MASK(23),
+    BLOCK_MASK(24),
+};
+#undef BLOCK_MASK
+
+// JP packs these three byte tables together at unaligned internal offsets.
+struct RfuCoreByteTables
+{
+    u8 slotToLinkPlayerTableId[9];
+    u8 playerBitsToCount[1 << (MAX_RFU_PLAYERS - 1)];
+    u8 playerBitsToNewChildIdx[1 << (MAX_RFU_PLAYERS - 1)];
+};
+
+const struct RfuCoreByteTables sRfuCoreByteTables
+    __attribute__((section(".rodata.link_rfu_2_core_byte_tables"))) =
+{
+    .slotToLinkPlayerTableId = { 0, 0, 1, 1, 2, 2, 2, 2, 3 },
+    .playerBitsToCount = { 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4 },
+    .playerBitsToNewChildIdx = { 0, 0, 1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 2, 0, 1, 0 },
+};
+
+const struct BlockRequest sBlockRequests[]
+    __attribute__((section(".rodata.link_rfu_2_block_requests"))) =
+{
+    [BLOCK_REQ_SIZE_NONE] = { gBlockSendBuffer, 200 },
+    [BLOCK_REQ_SIZE_200]  = { gBlockSendBuffer, 200 },
+    [BLOCK_REQ_SIZE_100]  = { gBlockSendBuffer, 100 },
+    [BLOCK_REQ_SIZE_220]  = { gBlockSendBuffer, 220 },
+    [BLOCK_REQ_SIZE_40]   = { gBlockSendBuffer,  40 },
+};
 
 struct SioInfoMagic
 {
