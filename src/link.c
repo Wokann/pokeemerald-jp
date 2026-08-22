@@ -148,6 +148,20 @@ extern const u8 gText_MoveCloserToLinkPartner[];
 extern const u8 gText_CommErrorCheckConnections[];
 extern const u8 gText_ABtnTitleScreen[];
 extern const u8 gText_ABtnRegistrationCounter[];
+
+struct LinkErrorTextData
+{
+    u8 textColors[3];
+    u8 unusedData[5];
+};
+
+const struct LinkErrorTextData sLinkErrorTextData
+    __attribute__((section(".rodata.link_error_text_data"))) =
+{
+    .textColors = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY},
+    .unusedData = {0x00, 0xFF, 0xFE, 0xFF, 0x00},
+};
+
 static const struct BlockRequest sBlockRequests[] = {
     [BLOCK_REQ_SIZE_NONE] = {gBlockSendBuffer, 200},
     [BLOCK_REQ_SIZE_200]  = {gBlockSendBuffer, 200},

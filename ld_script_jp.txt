@@ -9286,7 +9286,10 @@ SECTIONS {
         src/data/text/comm_error_texts.o(.rodata);
         data/data.o(.rodata.data_tail);
         src/link.o(.rodata);
-        data/data_b.o(.rodata);
+        src/link.o(.rodata.link_error_text_data);
+        sTextColors = sLinkErrorTextData;
+        sUnusedData = sLinkErrorTextData + 3;
+        data/data_b.o(.rodata.data_b_after_link_error_text_data);
         src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_oam);
         src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_3_bars);
         src/link_rfu_3.o(.rodata.link_rfu_3_wireless_status_indicator_2_bars);

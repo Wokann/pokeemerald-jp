@@ -9,9 +9,8 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sTextColors
-sTextColors: @ 0x82BFF74
-	.incbin "baserom_jp.gba", 0x2bff74, 0x14c
+	.section .rodata.data_b_after_link_error_text_data
+	.incbin "baserom_jp.gba", 0x2bff7c, 0x144
 
 	.globl sWireless_ASCIItoRSETable
 sWireless_ASCIItoRSETable: @ 0x82C00C0
