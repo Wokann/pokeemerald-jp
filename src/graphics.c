@@ -114,6 +114,14 @@ INTRO_SCENE_3_BUBBLES_GRAPHICS const u16 gIntroBubbles_Pal[] = INCBIN_U16("graph
 
 #undef INTRO_SCENE_3_BUBBLES_GRAPHICS
 
+#define INTRO_SCENE_1_EFFECTS_GRAPHICS __attribute__((section(".rodata.intro_scene_1_effects_graphics")))
+
+// The JP LZ77 graphics streams retain their original stream-alignment padding.
+INTRO_SCENE_1_EFFECTS_GRAPHICS const u32 gIntroFlygonSilhouette_Gfx[] = INCBIN_U32("graphics/intro/scene_1/flygon.png.4bpp.lz");
+INTRO_SCENE_1_EFFECTS_GRAPHICS const u32 gIntroSparkle_Gfx[] = INCBIN_U32("graphics/intro/scene_1/sparkle.png.4bpp.lz");
+
+#undef INTRO_SCENE_1_EFFECTS_GRAPHICS
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

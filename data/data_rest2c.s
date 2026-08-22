@@ -469,14 +469,8 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 	.section .rodata.data_rest2c_after_intro_scene_3_bubbles_graphics
 
 
-	.globl gIntroFlygonSilhouette_Gfx
-gIntroFlygonSilhouette_Gfx: @ 0x8D8D114
-	.incbin "graphics/intro/scene_1/flygon.png.4bpp.lz"
-
-
-	.globl gIntroSparkle_Gfx
-gIntroSparkle_Gfx: @ 0x8D8D1EC
-	.incbin "graphics/intro/scene_1/sparkle.png.4bpp.lz"
+	.section .rodata.data_rest2c_after_intro_scene_1_effects_graphics
+	.incbin "baserom_jp.gba", 0xD8D288, 0x16C
 
 
 	.globl gBattleAnimBgTilemap_Sandstorm
