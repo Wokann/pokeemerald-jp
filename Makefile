@@ -506,6 +506,8 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/intro/scene_3/rayquaza.4bpp.lz graphics/intro/scene_3/rayquaza.bin.lz \
 	graphics/intro/scene_3/unused_1.bin.lz graphics/intro/scene_3/unused_2.bin.lz \
 	graphics/intro/scene_3/rayquaza_clouds.4bpp.lz graphics/intro/scene_3/rayquaza_clouds.bin.lz \
+	graphics/intro/scene_3/lightning.png.4bpp.lz graphics/intro/scene_3/lightning.png.gbapal \
+	graphics/intro/scene_3/bubbles.png.4bpp.lz graphics/intro/scene_3/bubbles.png.gbapal \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s

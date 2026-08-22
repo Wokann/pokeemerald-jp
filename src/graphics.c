@@ -85,6 +85,14 @@ INTRO_SCENE_3_GRAPHICS const u32 gIntroCloudsSun_Tilemap[] = INCBIN_U32("graphic
 
 #undef INTRO_SCENE_3_GRAPHICS
 
+#define INTRO_SCENE_3_LIGHTNING_GRAPHICS __attribute__((section(".rodata.intro_scene_3_lightning_graphics")))
+
+// The JP LZ77 graphics stream retains its original stream-alignment padding.
+INTRO_SCENE_3_LIGHTNING_GRAPHICS const u32 gIntroLightning_Gfx[] = INCBIN_U32("graphics/intro/scene_3/lightning.png.4bpp.lz");
+INTRO_SCENE_3_LIGHTNING_GRAPHICS const u16 gIntroLightning_Pal[] = INCBIN_U16("graphics/intro/scene_3/lightning.png.gbapal");
+
+#undef INTRO_SCENE_3_LIGHTNING_GRAPHICS
+
 #define INTRO_SCENE_3_RAYQUAZA_GRAPHICS __attribute__((section(".rodata.intro_scene_3_rayquaza_graphics")))
 
 // The JP LZ77 files retain their original stream-alignment padding.
@@ -97,6 +105,14 @@ INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u32 gIntroRayquazaClouds_Gfx[] = INCBIN_U3
 INTRO_SCENE_3_RAYQUAZA_GRAPHICS const u8 gIntroRayquazaClouds_Tilemap[] = INCBIN_U8("graphics/intro/scene_3/rayquaza_clouds.bin.lz");
 
 #undef INTRO_SCENE_3_RAYQUAZA_GRAPHICS
+
+#define INTRO_SCENE_3_BUBBLES_GRAPHICS __attribute__((section(".rodata.intro_scene_3_bubbles_graphics")))
+
+// The JP LZ77 graphics stream retains its original stream-alignment padding.
+INTRO_SCENE_3_BUBBLES_GRAPHICS const u32 gIntroBubbles_Gfx[] = INCBIN_U32("graphics/intro/scene_3/bubbles.png.4bpp.lz");
+INTRO_SCENE_3_BUBBLES_GRAPHICS const u16 gIntroBubbles_Pal[] = INCBIN_U16("graphics/intro/scene_3/bubbles.png.gbapal");
+
+#undef INTRO_SCENE_3_BUBBLES_GRAPHICS
 
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 

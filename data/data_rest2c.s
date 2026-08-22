@@ -457,14 +457,7 @@ gUnknown_8D85E60: @ 0x8D85E60
 	.section .rodata.data_rest2c_after_intro_scene_3_graphics
 
 
-	.globl gIntroLightning_Gfx
-gIntroLightning_Gfx: @ 0x8D8B7F0
-	.incbin "graphics/intro/scene_3/lightning.png.4bpp.lz"
-
-
-	.globl gIntroLightning_Pal
-gIntroLightning_Pal: @ 0x8D8BA38
-	.incbin "graphics/intro/scene_3/lightning.png.gbapal"
+	.section .rodata.data_rest2c_after_intro_scene_3_lightning_graphics
 
 	.section .rodata.data_rest2c_after_intro_scene_3_rayquaza_graphics
 
@@ -473,14 +466,7 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 	.incbin "baserom_jp.gba", 0xD8CF26, 0x2
 
 
-	.globl gIntroBubbles_Gfx
-gIntroBubbles_Gfx: @ 0x8D8CF28
-	.incbin "graphics/intro/scene_3/bubbles.png.4bpp.lz"
-
-
-	.globl gIntroBubbles_Pal
-gIntroBubbles_Pal: @ 0x8D8D0F4
-	.incbin "graphics/intro/scene_3/bubbles.png.gbapal"
+	.section .rodata.data_rest2c_after_intro_scene_3_bubbles_graphics
 
 
 	.globl gIntroFlygonSilhouette_Gfx
