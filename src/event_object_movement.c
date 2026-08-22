@@ -516,9 +516,67 @@ EVENT_OBJECT_MOVEMENT_DIRECTION_DATA static const struct EventObjectMovementDire
 
 #undef EVENT_OBJECT_MOVEMENT_DIRECTION_DATA
 
+// These five-direction movement-action tables are distinct from the preceding
+// JP nine-direction sprite-animation lookup tables. Keep their names local
+// until the legacy animation accessors can be renamed without ambiguity.
+#define EVENT_OBJECT_MOVEMENT_MOVEMENT_ACTION_DATA __attribute__((section(".rodata.event_object_movement_movement_action_data"), aligned(1)))
+
+#define MOVEMENT_ACTION_DIRECTION_TABLE(name, south, north, west, east) \
+    EVENT_OBJECT_MOVEMENT_MOVEMENT_ACTION_DATA static const u8 name[] = \
+    { \
+        [DIR_NONE] = south, \
+        [DIR_SOUTH] = south, \
+        [DIR_NORTH] = north, \
+        [DIR_WEST] = west, \
+        [DIR_EAST] = east, \
+    }
+
+MOVEMENT_ACTION_DIRECTION_TABLE(sFaceDirectionMovementActions, MOVEMENT_ACTION_FACE_DOWN, MOVEMENT_ACTION_FACE_UP, MOVEMENT_ACTION_FACE_LEFT, MOVEMENT_ACTION_FACE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sWalkSlowMovementActions, MOVEMENT_ACTION_WALK_SLOW_DOWN, MOVEMENT_ACTION_WALK_SLOW_UP, MOVEMENT_ACTION_WALK_SLOW_LEFT, MOVEMENT_ACTION_WALK_SLOW_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sWalkNormalMovementActions, MOVEMENT_ACTION_WALK_NORMAL_DOWN, MOVEMENT_ACTION_WALK_NORMAL_UP, MOVEMENT_ACTION_WALK_NORMAL_LEFT, MOVEMENT_ACTION_WALK_NORMAL_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sWalkFastMovementActions, MOVEMENT_ACTION_WALK_FAST_DOWN, MOVEMENT_ACTION_WALK_FAST_UP, MOVEMENT_ACTION_WALK_FAST_LEFT, MOVEMENT_ACTION_WALK_FAST_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sRideWaterCurrentMovementActions, MOVEMENT_ACTION_RIDE_WATER_CURRENT_DOWN, MOVEMENT_ACTION_RIDE_WATER_CURRENT_UP, MOVEMENT_ACTION_RIDE_WATER_CURRENT_LEFT, MOVEMENT_ACTION_RIDE_WATER_CURRENT_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sWalkFasterMovementActions, MOVEMENT_ACTION_WALK_FASTER_DOWN, MOVEMENT_ACTION_WALK_FASTER_UP, MOVEMENT_ACTION_WALK_FASTER_LEFT, MOVEMENT_ACTION_WALK_FASTER_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sSlideMovementActions, MOVEMENT_ACTION_SLIDE_DOWN, MOVEMENT_ACTION_SLIDE_UP, MOVEMENT_ACTION_SLIDE_LEFT, MOVEMENT_ACTION_SLIDE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sPlayerRunMovementActions, MOVEMENT_ACTION_PLAYER_RUN_DOWN, MOVEMENT_ACTION_PLAYER_RUN_UP, MOVEMENT_ACTION_PLAYER_RUN_LEFT, MOVEMENT_ACTION_PLAYER_RUN_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sJump2MovementActions, MOVEMENT_ACTION_JUMP_2_DOWN, MOVEMENT_ACTION_JUMP_2_UP, MOVEMENT_ACTION_JUMP_2_LEFT, MOVEMENT_ACTION_JUMP_2_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sJumpInPlaceMovementActions, MOVEMENT_ACTION_JUMP_IN_PLACE_DOWN, MOVEMENT_ACTION_JUMP_IN_PLACE_UP, MOVEMENT_ACTION_JUMP_IN_PLACE_LEFT, MOVEMENT_ACTION_JUMP_IN_PLACE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sJumpInPlaceTurnAroundMovementActions, MOVEMENT_ACTION_JUMP_IN_PLACE_UP_DOWN, MOVEMENT_ACTION_JUMP_IN_PLACE_DOWN_UP, MOVEMENT_ACTION_JUMP_IN_PLACE_RIGHT_LEFT, MOVEMENT_ACTION_JUMP_IN_PLACE_LEFT_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sJumpMovementActions, MOVEMENT_ACTION_JUMP_DOWN, MOVEMENT_ACTION_JUMP_UP, MOVEMENT_ACTION_JUMP_LEFT, MOVEMENT_ACTION_JUMP_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sJumpSpecialMovementActions, MOVEMENT_ACTION_JUMP_SPECIAL_DOWN, MOVEMENT_ACTION_JUMP_SPECIAL_UP, MOVEMENT_ACTION_JUMP_SPECIAL_LEFT, MOVEMENT_ACTION_JUMP_SPECIAL_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sWalkInPlaceSlowMovementActions, MOVEMENT_ACTION_WALK_IN_PLACE_SLOW_DOWN, MOVEMENT_ACTION_WALK_IN_PLACE_SLOW_UP, MOVEMENT_ACTION_WALK_IN_PLACE_SLOW_LEFT, MOVEMENT_ACTION_WALK_IN_PLACE_SLOW_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sWalkInPlaceNormalMovementActions, MOVEMENT_ACTION_WALK_IN_PLACE_NORMAL_DOWN, MOVEMENT_ACTION_WALK_IN_PLACE_NORMAL_UP, MOVEMENT_ACTION_WALK_IN_PLACE_NORMAL_LEFT, MOVEMENT_ACTION_WALK_IN_PLACE_NORMAL_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sWalkInPlaceFastMovementActions, MOVEMENT_ACTION_WALK_IN_PLACE_FAST_DOWN, MOVEMENT_ACTION_WALK_IN_PLACE_FAST_UP, MOVEMENT_ACTION_WALK_IN_PLACE_FAST_LEFT, MOVEMENT_ACTION_WALK_IN_PLACE_FAST_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sWalkInPlaceFasterMovementActions, MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_DOWN, MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_UP, MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_LEFT, MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroWheelieFaceDirectionMovementActions, MOVEMENT_ACTION_ACRO_WHEELIE_FACE_DOWN, MOVEMENT_ACTION_ACRO_WHEELIE_FACE_UP, MOVEMENT_ACTION_ACRO_WHEELIE_FACE_LEFT, MOVEMENT_ACTION_ACRO_WHEELIE_FACE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroPopWheelieFaceDirectionMovementActions, MOVEMENT_ACTION_ACRO_POP_WHEELIE_DOWN, MOVEMENT_ACTION_ACRO_POP_WHEELIE_UP, MOVEMENT_ACTION_ACRO_POP_WHEELIE_LEFT, MOVEMENT_ACTION_ACRO_POP_WHEELIE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroEndWheelieFaceDirectionMovementActions, MOVEMENT_ACTION_ACRO_END_WHEELIE_FACE_DOWN, MOVEMENT_ACTION_ACRO_END_WHEELIE_FACE_UP, MOVEMENT_ACTION_ACRO_END_WHEELIE_FACE_LEFT, MOVEMENT_ACTION_ACRO_END_WHEELIE_FACE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroWheelieHopFaceDirectionMovementActions, MOVEMENT_ACTION_ACRO_WHEELIE_HOP_FACE_DOWN, MOVEMENT_ACTION_ACRO_WHEELIE_HOP_FACE_UP, MOVEMENT_ACTION_ACRO_WHEELIE_HOP_FACE_LEFT, MOVEMENT_ACTION_ACRO_WHEELIE_HOP_FACE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroWheelieHopDirectionMovementActions, MOVEMENT_ACTION_ACRO_WHEELIE_HOP_DOWN, MOVEMENT_ACTION_ACRO_WHEELIE_HOP_UP, MOVEMENT_ACTION_ACRO_WHEELIE_HOP_LEFT, MOVEMENT_ACTION_ACRO_WHEELIE_HOP_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroWheelieJumpDirectionMovementActions, MOVEMENT_ACTION_ACRO_WHEELIE_JUMP_DOWN, MOVEMENT_ACTION_ACRO_WHEELIE_JUMP_UP, MOVEMENT_ACTION_ACRO_WHEELIE_JUMP_LEFT, MOVEMENT_ACTION_ACRO_WHEELIE_JUMP_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroWheelieInPlaceDirectionMovementActions, MOVEMENT_ACTION_ACRO_WHEELIE_IN_PLACE_DOWN, MOVEMENT_ACTION_ACRO_WHEELIE_IN_PLACE_UP, MOVEMENT_ACTION_ACRO_WHEELIE_IN_PLACE_LEFT, MOVEMENT_ACTION_ACRO_WHEELIE_IN_PLACE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroPopWheelieMoveDirectionMovementActions, MOVEMENT_ACTION_ACRO_POP_WHEELIE_MOVE_DOWN, MOVEMENT_ACTION_ACRO_POP_WHEELIE_MOVE_UP, MOVEMENT_ACTION_ACRO_POP_WHEELIE_MOVE_LEFT, MOVEMENT_ACTION_ACRO_POP_WHEELIE_MOVE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroWheelieMoveDirectionMovementActions, MOVEMENT_ACTION_ACRO_WHEELIE_MOVE_DOWN, MOVEMENT_ACTION_ACRO_WHEELIE_MOVE_UP, MOVEMENT_ACTION_ACRO_WHEELIE_MOVE_LEFT, MOVEMENT_ACTION_ACRO_WHEELIE_MOVE_RIGHT);
+MOVEMENT_ACTION_DIRECTION_TABLE(sAcroEndWheelieMoveDirectionMovementActions, MOVEMENT_ACTION_ACRO_END_WHEELIE_MOVE_DOWN, MOVEMENT_ACTION_ACRO_END_WHEELIE_MOVE_UP, MOVEMENT_ACTION_ACRO_END_WHEELIE_MOVE_LEFT, MOVEMENT_ACTION_ACRO_END_WHEELIE_MOVE_RIGHT);
+
+#undef MOVEMENT_ACTION_DIRECTION_TABLE
+
+EVENT_OBJECT_MOVEMENT_MOVEMENT_ACTION_DATA const u8 sOppositeDirections[] =
+{
+    DIR_NORTH,
+    DIR_SOUTH,
+    DIR_EAST,
+    DIR_WEST,
+    DIR_NORTHEAST,
+    DIR_NORTHWEST,
+    DIR_SOUTHEAST,
+    DIR_SOUTHWEST,
+};
+
+#undef EVENT_OBJECT_MOVEMENT_MOVEMENT_ACTION_DATA
+
 extern const struct Coords16 sDirectionToVectors[];
 extern const u8 sElevationToPriority[];
-extern const u8 sOppositeDirections[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
 extern const struct PairedPalettes sPlayerReflectionPaletteSets[];
 extern const struct PairedPalettes sSpecialObjectReflectionPaletteSets[];
@@ -8817,7 +8875,7 @@ __attribute__((naked)) u8 GetFaceDirectionMovementAction(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092CC8: .4byte gUnknown_84E5FF4\n\t"
+        "_08092CC8: .4byte sFaceDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8846,7 +8904,7 @@ __attribute__((naked)) u8 sub_08092CCC(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092CF4: .4byte gUnknown_84E5FF9\n\t"
+        "_08092CF4: .4byte sWalkSlowMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8875,7 +8933,7 @@ __attribute__((naked)) u8 sub_08092CF8(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092D20: .4byte gUnknown_84E5FFE\n\t"
+        "_08092D20: .4byte sWalkNormalMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8904,7 +8962,7 @@ __attribute__((naked)) u8 sub_08092D24(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092D4C: .4byte gUnknown_84E6003\n\t"
+        "_08092D4C: .4byte sWalkFastMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8933,7 +8991,7 @@ __attribute__((naked)) u8 sub_08092D50(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092D78: .4byte gUnknown_84E6008\n\t"
+        "_08092D78: .4byte sRideWaterCurrentMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8962,7 +9020,7 @@ __attribute__((naked)) u8 sub_08092D7C(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092DA4: .4byte gUnknown_84E600D\n\t"
+        "_08092DA4: .4byte sWalkFasterMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8991,7 +9049,7 @@ __attribute__((naked)) u8 sub_08092DA8(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092DD0: .4byte gUnknown_84E6012\n\t"
+        "_08092DD0: .4byte sSlideMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9020,7 +9078,7 @@ __attribute__((naked)) u8 sub_08092DD4(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092DFC: .4byte gUnknown_84E6017\n\t"
+        "_08092DFC: .4byte sPlayerRunMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9049,7 +9107,7 @@ __attribute__((naked)) u8 sub_08092E00(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092E28: .4byte gUnknown_84E601C\n\t"
+        "_08092E28: .4byte sJump2MovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9078,7 +9136,7 @@ __attribute__((naked)) u8 sub_08092E2C(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092E54: .4byte gUnknown_84E6021\n\t"
+        "_08092E54: .4byte sJumpInPlaceMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9107,7 +9165,7 @@ __attribute__((naked)) u8 sub_08092E58(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092E80: .4byte gUnknown_84E6026\n\t"
+        "_08092E80: .4byte sJumpInPlaceTurnAroundMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9136,7 +9194,7 @@ __attribute__((naked)) u8 sub_08092E84(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092EAC: .4byte gUnknown_84E602B\n\t"
+        "_08092EAC: .4byte sJumpMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9165,7 +9223,7 @@ __attribute__((naked)) u8 sub_08092EB0(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092ED8: .4byte gUnknown_84E6030\n\t"
+        "_08092ED8: .4byte sJumpSpecialMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9194,7 +9252,7 @@ __attribute__((naked)) u8 sub_08092EDC(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092F04: .4byte gUnknown_84E6035\n\t"
+        "_08092F04: .4byte sWalkInPlaceSlowMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9223,7 +9281,7 @@ __attribute__((naked)) u8 sub_08092F08(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092F30: .4byte gUnknown_84E603A\n\t"
+        "_08092F30: .4byte sWalkInPlaceNormalMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9252,7 +9310,7 @@ __attribute__((naked)) u8 sub_08092F34(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092F5C: .4byte gUnknown_84E603F\n\t"
+        "_08092F5C: .4byte sWalkInPlaceFastMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9281,7 +9339,7 @@ __attribute__((naked)) u8 sub_08092F60(u8 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092F88: .4byte gUnknown_84E6044\n\t"
+        "_08092F88: .4byte sWalkInPlaceFasterMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9316,7 +9374,7 @@ __attribute__((naked)) u8 sub_08092FB8(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08092FE0: .4byte gUnknown_84E6049\n\t"
+        "_08092FE0: .4byte sAcroWheelieFaceDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9345,7 +9403,7 @@ __attribute__((naked)) u8 sub_08092FE4(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809300C: .4byte gUnknown_84E604E\n\t"
+        "_0809300C: .4byte sAcroPopWheelieFaceDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9374,7 +9432,7 @@ __attribute__((naked)) u8 EventObjectExecSingleMovementAction(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08093038: .4byte gUnknown_84E6053\n\t"
+        "_08093038: .4byte sAcroEndWheelieFaceDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9403,7 +9461,7 @@ __attribute__((naked)) u8 sub_0809303C(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08093064: .4byte gUnknown_84E6058\n\t"
+        "_08093064: .4byte sAcroWheelieHopFaceDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9432,7 +9490,7 @@ __attribute__((naked)) u8 GetAcroEndWheelieFaceDirectionMovementAction(u32 direc
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08093090: .4byte gUnknown_84E605D\n\t"
+        "_08093090: .4byte sAcroWheelieHopDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9461,7 +9519,7 @@ __attribute__((naked)) u8 sub_08093094(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080930BC: .4byte gUnknown_84E6062\n\t"
+        "_080930BC: .4byte sAcroWheelieJumpDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9490,7 +9548,7 @@ __attribute__((naked)) u8 sub_080930C0(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080930E8: .4byte gUnknown_84E6067\n\t"
+        "_080930E8: .4byte sAcroWheelieInPlaceDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9519,7 +9577,7 @@ __attribute__((naked)) u8 sub_080930EC(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08093114: .4byte gUnknown_84E606C\n\t"
+        "_08093114: .4byte sAcroPopWheelieMoveDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9548,7 +9606,7 @@ __attribute__((naked)) u8 sub_08093118(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08093140: .4byte gUnknown_84E6071\n\t"
+        "_08093140: .4byte sAcroWheelieMoveDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9577,7 +9635,7 @@ __attribute__((naked)) u8 sub_08093144(u32 direction)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809316C: .4byte gUnknown_84E6076\n\t"
+        "_0809316C: .4byte sAcroEndWheelieMoveDirectionMovementActions\n\t"
         ".syntax divided\n\t"
     );
 }
