@@ -9303,6 +9303,11 @@ SECTIONS {
         sPlayerBitsToCount = sRfuCoreByteTables + 9;
         sPlayerBitsToNewChildIdx = sRfuCoreByteTables + 25;
         src/link_rfu_2.o(.rodata.link_rfu_2_block_requests);
+        src/link_rfu_2.o(.rodata.link_rfu_2_accepted_serial_nos);
+        src/link_rfu_2.o(.rodata.link_rfu_2_debug_cmd_strings);
+        sASCII_RfuCmds = sRfuDebugCmdStrings;
+        sASCII_RecoverCmds = sRfuDebugCmdStrings + 165;
+        src/link_rfu_2.o(.rodata.link_rfu_2_shutdown_tasks);
         data/data_b.o(.rodata.data_b_after_link_rfu_2_core_tables);
         src/data/union_room.o(.rodata);
         data/data_b_mid1.o(.rodata);

@@ -51,10 +51,47 @@ extern COMMON_DATA struct RfuManager gRfu;
 extern EWRAM_DATA INIT_PARAM sRfuReqConfig;
 extern EWRAM_DATA struct RfuDebug sRfuDebug;
 
-// JP: the remaining RFU strings and shutdown callbacks stay in the ROM data block.
 extern const u8 sPlayerBitsToNewChildIdx[];
-extern const u16 sAcceptedSerialNos[];
-extern const TaskFunc sShutdownTasks[3];
+
+const u16 sAcceptedSerialNos[]
+    __attribute__((section(".rodata.link_rfu_2_accepted_serial_nos"))) =
+{
+    RFU_SERIAL_GAME,
+    RFU_SERIAL_WONDER_DISTRIBUTOR,
+    RFU_SERIAL_UNKNOWN,
+    RFU_SERIAL_END,
+};
+
+struct RfuDebugCmdStrings
+{
+    char rfuCmds[11][15];
+    char recoverCmds[5][16];
+};
+
+const struct RfuDebugCmdStrings sRfuDebugCmdStrings
+    __attribute__((section(".rodata.link_rfu_2_debug_cmd_strings"))) =
+{
+    .rfuCmds = {
+        "RFU WAIT",
+        "RFU BOOT",
+        "RFU ERROR",
+        "RFU RESET",
+        "RFU CONFIG",
+        "RFU START",
+        "RFU SC POLL",
+        "RFU SP POLL",
+        "RFU START",
+        "RFU SEND ERR",
+        "RFU CP POLL",
+    },
+    .recoverCmds = {
+        "              ",
+        "RECOVER START ",
+        "DISSCONECT    ",
+        "RECOVER SUUSES",
+        "RECOVER FAILED",
+    },
+};
 
 // JP: RFU debugging helpers are the empty nullsub stubs (bound via ld_script).
 extern void Debug_PrintNum(u32 num, u8 x, u8 y, u8 color);
@@ -281,6 +318,14 @@ void CreateTask_ParentSearchForChildren(void);
 void CreateTask_ChildSearchForParent(void);
 bool8 CanTryReconnectParent(void);
 bool32 TryReconnectParent(void);
+
+const TaskFunc sShutdownTasks[3]
+    __attribute__((section(".rodata.link_rfu_2_shutdown_tasks"))) =
+{
+    Task_PlayerExchange,
+    Task_PlayerExchangeUpdate,
+    Task_PlayerExchangeChat,
+};
 
 void nullsub_13(void)
 {
