@@ -17,6 +17,7 @@
 #define POKEBLOCK_CASE_AFFINE_ANIM_DATA __attribute__((section(".rodata.pokeblock_case_affine_anim_data")))
 #define POKEBLOCK_CASE_GRAPHICS_DATA __attribute__((section(".rodata.pokeblock_case_graphics_data")))
 #define POKEBLOCK_CASE_FAVORITE_DATA __attribute__((section(".rodata.pokeblock_case_favorite_data")))
+#define POKEBLOCK_WINDOW_TEMPLATE_DATA __attribute__((section(".rodata.pokeblock_window_template_data")))
 #define POKEBLOCK_NAME_TEXT_DATA __attribute__((section(".rodata.pokeblock_name_text_data")))
 
 #define TAG_POKEBLOCK_CASE 14800
@@ -29,6 +30,21 @@ enum
     PKBL_USE_IN_BATTLE,
     PKBL_USE_ON_FEEDER,
     PKBL_GIVE_TO_LADY,
+};
+
+enum
+{
+    WIN_TITLE,
+    WIN_LIST,
+    WIN_SPICY,
+    WIN_DRY,
+    WIN_SWEET,
+    WIN_BITTER,
+    WIN_SOUR,
+    WIN_FEEL,
+    WIN_ACTIONS_TALL,
+    WIN_ACTIONS,
+    WIN_TOSS_MSG,
 };
 
 void sub_08136AC0(void);
@@ -254,6 +270,110 @@ static const struct Pokeblock sFavoritePokeblocksTable[FLAVOR_COUNT] POKEBLOCK_C
     [FLAVOR_SOUR]   = {PBLOCK_CLR_YELLOW,  0,  0,  0,  0, 20, 20},
 };
 
+static const struct WindowTemplate sWindowTemplates[] POKEBLOCK_WINDOW_TEMPLATE_DATA =
+{
+    [WIN_TITLE] = {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 1,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x1E,
+    },
+    [WIN_LIST] = {
+        .bg = 0,
+        .tilemapLeft = 16,
+        .tilemapTop = 1,
+        .width = 13,
+        .height = 18,
+        .paletteNum = 15,
+        .baseBlock = 0x2E,
+    },
+    [WIN_SPICY] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 13,
+        .width = 3,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x118,
+    },
+    [WIN_DRY] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 15,
+        .width = 3,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x11E,
+    },
+    [WIN_SWEET] = {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 17,
+        .width = 3,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x124,
+    },
+    [WIN_BITTER] = {
+        .bg = 0,
+        .tilemapLeft = 8,
+        .tilemapTop = 13,
+        .width = 3,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x12A,
+    },
+    [WIN_SOUR] = {
+        .bg = 0,
+        .tilemapLeft = 8,
+        .tilemapTop = 15,
+        .width = 4,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x130,
+    },
+    [WIN_FEEL] = {
+        .bg = 0,
+        .tilemapLeft = 11,
+        .tilemapTop = 17,
+        .width = 2,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 0x138,
+    },
+    [WIN_ACTIONS_TALL] = {
+        .bg = 1,
+        .tilemapLeft = 8,
+        .tilemapTop = 5,
+        .width = 5,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 0x13C,
+    },
+    [WIN_ACTIONS] = {
+        .bg = 1,
+        .tilemapLeft = 8,
+        .tilemapTop = 7,
+        .width = 5,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x15A,
+    },
+    [WIN_TOSS_MSG] = {
+        .bg = 1,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x16E,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
 #undef POKEBLOCK_FLAVOR_DATA
 #undef POKEBLOCK_MENU_BG_DATA
 #undef POKEBLOCK_NAME_TABLE_DATA
@@ -262,6 +382,7 @@ static const struct Pokeblock sFavoritePokeblocksTable[FLAVOR_COUNT] POKEBLOCK_C
 #undef POKEBLOCK_CASE_AFFINE_ANIM_DATA
 #undef POKEBLOCK_CASE_GRAPHICS_DATA
 #undef POKEBLOCK_CASE_FAVORITE_DATA
+#undef POKEBLOCK_WINDOW_TEMPLATE_DATA
 #undef POKEBLOCK_NAME_TEXT_DATA
 
 __attribute__((naked)) void sub_08135850(void)
@@ -946,7 +1067,7 @@ __attribute__((naked)) void sub_08135D74(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08135DC4: .4byte gUnknown_8592194\n\t"
+        "_08135DC4: .4byte sWindowTemplates\n\t"
         "_08135DC8: .4byte gStandardMenuPalette\n\t"
         ".syntax divided\n\t"
     );

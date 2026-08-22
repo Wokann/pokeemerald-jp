@@ -158,10 +158,6 @@ sClockHandCoords: @ 0x8591D1C
 
 	.section .rodata.data_b2d_mid33_pokeblock_case_favorite_suffix, "a", %progbits
 
-	.globl gUnknown_8592194
-gUnknown_8592194: @ 0x8592194
-	.incbin "baserom_jp.gba", 0x592194, 0x60
-
 	.globl gUnknown_85921F4
 gUnknown_85921F4: @ 0x85921F4
 	.incbin "baserom_jp.gba", 0x5921f4, 0x8

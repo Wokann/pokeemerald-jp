@@ -9598,6 +9598,8 @@ SECTIONS {
         src/pokeblock.o(.rodata.pokeblock_case_affine_anim_data);
         src/pokeblock.o(.rodata.pokeblock_case_graphics_data);
         src/pokeblock.o(.rodata.pokeblock_case_favorite_data);
+        gUnknown_8592194 = .;
+        src/pokeblock.o(.rodata.pokeblock_window_template_data);
         data/data_b2d_mid33.o(.rodata.data_b2d_mid33_pokeblock_case_favorite_suffix);
         src/data/text/region_texts63.o(.rodata);
         src/field_specials.o(.rodata.field_specials_data_early);
