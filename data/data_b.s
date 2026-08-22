@@ -63,9 +63,7 @@ sWireless_RSEtoASCIITable: @ 0x82C01C0
 	.byte 0x20, 0x2B, 0x5B, 0x5C, 0x5D, 0x5E, 0x5F, 0x20, 0x20, 0x20, 0x20, 0x20
 	.byte 0x20, 0x20, 0x20, 0x00
 
-	.globl sWirelessStatusIndicatorOamData
-sWirelessStatusIndicatorOamData: @ 0x82C02C0
-	.incbin "baserom_jp.gba", 0x2c02c0, 0x70
+	.section .rodata.data_b_after_wireless_status_indicator_anims
 
 	.globl sWirelessStatusIndicatorSpriteSheet
 sWirelessStatusIndicatorSpriteSheet: @ 0x82C0330
@@ -79,7 +77,7 @@ sWirelessStatusIndicatorSpritePalette: @ 0x82C0338
 	.globl sWirelessStatusIndicatorSpriteTemplate
 sWirelessStatusIndicatorSpriteTemplate: @ 0x82C0340
 	.hword 0xD431, 0xD432
-	.4byte 0x082C02C0, 0x082C031C
+	.4byte sWirelessStatusIndicatorOamData, sWirelessStatusIndicatorAnims
 	.4byte 0, gDummySpriteAffineAnimTable, 0x08007141
 
 	.globl sRfuReqConfigTemplate

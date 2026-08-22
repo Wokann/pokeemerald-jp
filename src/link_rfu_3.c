@@ -16,9 +16,7 @@ extern IWRAM_DATA u8 sSequenceArrayValOffset;
 extern const u8 sWireless_ASCIItoRSETable[256];
 extern const u8 sWireless_RSEtoASCIITable[256];
 
-// JP: the wireless status indicator sprite data lives at fixed JP ROM
-// addresses (bound in ld_script_jp.txt) instead of being defined in C.
-extern const struct OamData sWirelessStatusIndicatorOamData;
+// JP: the sheet and palette descriptors remain in their fixed ROM data block.
 extern const struct CompressedSpriteSheet sWirelessStatusIndicatorSpriteSheet;
 extern const struct SpritePalette sWirelessStatusIndicatorSpritePalette;
 extern const struct SpriteTemplate sWirelessStatusIndicatorSpriteTemplate;
@@ -29,6 +27,77 @@ enum {
     WIRELESS_STATUS_ANIM_1_BAR,
     WIRELESS_STATUS_ANIM_SEARCHING,
     WIRELESS_STATUS_ANIM_ERROR,
+};
+
+const struct OamData sWirelessStatusIndicatorOamData
+    __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_oam"))) =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
+static const union AnimCmd sWirelessStatusIndicator_3Bars[]
+    __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_3_bars"))) =
+{
+    ANIMCMD_FRAME( 4,  5),
+    ANIMCMD_FRAME( 8,  5),
+    ANIMCMD_FRAME(12,  5),
+    ANIMCMD_FRAME(16, 10),
+    ANIMCMD_FRAME(12,  5),
+    ANIMCMD_FRAME( 8,  5),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sWirelessStatusIndicator_2Bars[]
+    __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_2_bars"))) =
+{
+    ANIMCMD_FRAME( 4,  5),
+    ANIMCMD_FRAME( 8,  5),
+    ANIMCMD_FRAME(12, 10),
+    ANIMCMD_FRAME( 8,  5),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sWirelessStatusIndicator_1Bar[]
+    __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_1_bar"))) =
+{
+    ANIMCMD_FRAME(4, 5),
+    ANIMCMD_FRAME(8, 5),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sWirelessStatusIndicator_Searching[]
+    __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_searching"))) =
+{
+    ANIMCMD_FRAME( 4, 10),
+    ANIMCMD_FRAME(20, 10),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd sWirelessStatusIndicator_Error[]
+    __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_error"))) =
+{
+    ANIMCMD_FRAME(24, 10),
+    ANIMCMD_FRAME( 4, 10),
+    ANIMCMD_JUMP(0),
+};
+
+const union AnimCmd *const sWirelessStatusIndicatorAnims[]
+    __attribute__((section(".rodata.link_rfu_3_wireless_status_indicator_anims"))) =
+{
+    [WIRELESS_STATUS_ANIM_3_BARS]    = sWirelessStatusIndicator_3Bars,
+    [WIRELESS_STATUS_ANIM_2_BARS]    = sWirelessStatusIndicator_2Bars,
+    [WIRELESS_STATUS_ANIM_1_BAR]     = sWirelessStatusIndicator_1Bar,
+    [WIRELESS_STATUS_ANIM_SEARCHING] = sWirelessStatusIndicator_Searching,
+    [WIRELESS_STATUS_ANIM_ERROR]     = sWirelessStatusIndicator_Error,
 };
 
 #define STATUS_INDICATOR_ACTIVE 0x1234 // Used to validate active indicator
