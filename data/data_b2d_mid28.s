@@ -104,23 +104,7 @@ gUnknown_84E4D5C: @ 0x84E4D5C
 gSpritePalette_GeneralFieldEffect1: @ 0x84E4E1C
 	.incbin "graphics/misc/gSpritePalette_GeneralFieldEffect1.bin"
 
-	.section .rodata.data_b2d_mid28_after_event_object_movement_direction_composition_data
-
-	.globl gUnknown_84E60A4
-gUnknown_84E60A4: @ 0x84E60A4
-	.incbin "baserom_jp.gba", 0x4e60a4, 0x298
-
-	.globl gUnknown_84E633C
-gUnknown_84E633C: @ 0x84E633C
-	.incbin "baserom_jp.gba", 0x4e633c, 0xd4
-
-	.globl gUnknown_84E6410
-gUnknown_84E6410: @ 0x84E6410
-	.incbin "baserom_jp.gba", 0x4e6410, 0x6
-
-	.globl gUnknown_84E6416
-gUnknown_84E6416: @ 0x84E6416
-	.incbin "baserom_jp.gba", 0x4e6416, 0x61a
+	.section .rodata.data_b2d_mid28_after_event_object_movement_action_function_tables_before_field_effect_helpers_figure8
 
 	.globl gUnknown_84E6A30
 gUnknown_84E6A30: @ 0x84E6A30
@@ -176,7 +160,7 @@ gUnknown_84E6BA8: @ 0x84E6BA8
 gUnknown_84E6BBC: @ 0x84E6BBC
 	.incbin "baserom_jp.gba", 0x4e6bbc, 0xa
 
-	.section .rodata.data_b2d_mid28_after_field_effect_helpers_figure8
+	.section .rodata.data_b2d_mid28_after_field_effect_helpers_figure8_before_event_object_movement_action_function_tables
 	.incbin "baserom_jp.gba", 0x4e6c56, 0x32
 
 	.globl gUnknown_84E6C88
@@ -205,7 +189,9 @@ gUnknown_84E6CA8: @ 0x84E6CA8
 
 	.globl gUnknown_84E6CB4
 gUnknown_84E6CB4: @ 0x84E6CB4
-	.incbin "baserom_jp.gba", 0x4e6cb4, 0x2c
+	.incbin "baserom_jp.gba", 0x4e6cb4, 0x4
+
+	.section .rodata.data_b2d_mid28_after_event_object_movement_action_function_tables_tail
 
 	.globl gTextWindowFrame1_Gfx
 gTextWindowFrame1_Gfx: @ 0x84E6CE0

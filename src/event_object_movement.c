@@ -599,6 +599,14 @@ EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA static const u8 sDirectionCompo
 
 #undef EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA
 
+#define EVENT_OBJECT_MOVEMENT_ACTION_FUNCTION_TABLES __attribute__((section(".rodata.event_object_movement_action_function_tables"), aligned(1)))
+#define EVENT_OBJECT_MOVEMENT_ACTION_FUNCTION_TABLES_TAIL __attribute__((section(".rodata.event_object_movement_action_function_tables_tail"), aligned(1)))
+
+#include "data/object_events/movement_action_func_tables.h"
+
+#undef EVENT_OBJECT_MOVEMENT_ACTION_FUNCTION_TABLES_TAIL
+#undef EVENT_OBJECT_MOVEMENT_ACTION_FUNCTION_TABLES
+
 extern const struct Coords16 sDirectionToVectors[];
 extern const u8 sElevationToPriority[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
@@ -9766,7 +9774,7 @@ __attribute__((naked)) u8 EventObjectExecHeldMovementAction(struct ObjectEvent *
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08093230: .4byte gUnknown_84E60A4\n\t"
+        "_08093230: .4byte gMovementActionFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9797,7 +9805,7 @@ __attribute__((naked)) u8 ObjectEventExecSingleMovementAction(struct ObjectEvent
         "	movs r0, #0\n\t"
         "	b _0809326E\n\t"
         "	.align 2, 0\n\t"
-        "_08093260: .4byte gUnknown_84E60A4\n\t"
+        "_08093260: .4byte gMovementActionFuncs\n\t"
         "_08093264:\n\t"
         "	movs r0, #0xff\n\t"
         "	strb r0, [r4, #0x1c]\n\t"
