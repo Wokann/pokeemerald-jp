@@ -65,21 +65,9 @@ gUnknown_84E1900: @ 0x84E1900
 
 	.section .rodata.data_b2d_mid28_after_event_object_movement_palette_data
 
-	.globl gUnknown_84E429C
-gUnknown_84E429C: @ 0x84E429C
-	.incbin "baserom_jp.gba", 0x4e429c, 0x968
-
-	.globl gUnknown_84E4C04
-gUnknown_84E4C04: @ 0x84E4C04
-	.incbin "baserom_jp.gba", 0x4e4c04, 0xac
-
-	.globl gUnknown_84E4CB0
-gUnknown_84E4CB0: @ 0x84E4CB0
-	.incbin "baserom_jp.gba", 0x4e4cb0, 0xac
-
-	.globl gUnknown_84E4D5C
-gUnknown_84E4D5C: @ 0x84E4D5C
-	.incbin "baserom_jp.gba", 0x4e4d5c, 0xc0
+	.globl gUnknown_84E4E14
+gUnknown_84E4E14: @ 0x84E4E14
+	.incbin "baserom_jp.gba", 0x4e4e14, 0x8
 
 	.globl gSpritePalette_GeneralFieldEffect1
 gSpritePalette_GeneralFieldEffect1: @ 0x84E4E1C

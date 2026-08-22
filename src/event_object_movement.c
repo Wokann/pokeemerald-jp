@@ -11,6 +11,7 @@
 #include "palette.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
+#include "constants/items.h"
 
 extern void MovementType_Hidden(struct Sprite *sprite);
 
@@ -644,6 +645,10 @@ struct Sprite;
 #define EVENT_OBJECT_MOVEMENT_PALETTE_DATA __attribute__((section(".rodata.event_object_movement_palette_data"), aligned(1)))
 #include "data/object_events/movement_palette_data.h"
 #undef EVENT_OBJECT_MOVEMENT_PALETTE_DATA
+
+#define EVENT_OBJECT_MOVEMENT_BERRY_TREE_DATA __attribute__((section(".rodata.event_object_movement_berry_tree_graphics_data")))
+#include "data/object_events/berry_tree_graphics_tables.h"
+#undef EVENT_OBJECT_MOVEMENT_BERRY_TREE_DATA
 
 enum {
     CAMERA_STATE_INIT,
@@ -2781,9 +2786,9 @@ __attribute__((naked)) void get_berry_tree_graphics(struct ObjectEvent *objectEv
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DFF8: .4byte gUnknown_84E4D5C\n\t"
-        "_0808DFFC: .4byte gUnknown_84E4C04\n\t"
-        "_0808E000: .4byte gUnknown_84E4CB0\n\t"
+        "_0808DFF8: .4byte gBerryTreeObjectEventGraphicsIdTablePointers\n\t"
+        "_0808DFFC: .4byte gBerryTreePicTablePointers\n\t"
+        "_0808E000: .4byte gBerryTreePaletteSlotTablePointers\n\t"
         ".syntax divided\n\t"
     );
 }
