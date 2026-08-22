@@ -101,6 +101,20 @@ ENEMY_SHADOW_GRAPHICS const u32 gEnemyMonShadow_Gfx[] = INCBIN_U32("graphics/bat
 
 #undef ENEMY_SHADOW_GRAPHICS
 
+#define TRADE_MENU_GRAPHICS __attribute__((section(".rodata.trade_menu_graphics"), aligned(1)))
+
+TRADE_MENU_GRAPHICS const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal");
+TRADE_MENU_GRAPHICS const u8 gTradeMenu_Gfx[] = INCBIN_U8("graphics/trade/menu.4bpp");
+TRADE_MENU_GRAPHICS const u16 gTradeMenu_Tilemap[] = INCBIN_U16("graphics/trade/menu.bin");
+
+#undef TRADE_MENU_GRAPHICS
+
+#define TRADE_MENU_MON_BOX_GRAPHICS __attribute__((section(".rodata.trade_menu_mon_box_graphics"), aligned(1)))
+
+TRADE_MENU_MON_BOX_GRAPHICS const u16 gTradeMenuMonBox_Tilemap[] = INCBIN_U16("graphics/trade/menu_mon_box.bin");
+
+#undef TRADE_MENU_MON_BOX_GRAPHICS
+
 #define SWAP_LINE_GRAPHICS __attribute__((section(".rodata.swap_line_graphics"), aligned(1)))
 
 SWAP_LINE_GRAPHICS const u32 gSwapLineGfx[] = INCBIN_U32("graphics/interface/swap_line.4bpp.lz");

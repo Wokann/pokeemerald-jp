@@ -1,27 +1,28 @@
-// JP trade resources retained in original ROM order.  Filenames use their
-// original addresses until each resource's semantic name is verified.
+// JP Trade resources retain original ROM order. Verified menu resources use
+// their semantic names; only the unclassified JP-only suffix remains address-named.
 
 #define TRADE_MENU_RESOURCES __attribute__((section(".rodata.trade_menu_resources"), aligned(1)))
+#define TRADE_MENU_RESOURCES_AFTER_MON_BOX __attribute__((section(".rodata.trade_menu_resources_after_mon_box"), aligned(1)))
 #define TRADE_ANIMATION_RESOURCES __attribute__((section(".rodata.trade_animation_resources"), aligned(1)))
 #define TRADE_POST_ANIMATION_RESOURCES __attribute__((section(".rodata.trade_post_animation_resources"), aligned(1)))
 
-const u8 gUnknown_82FD0CC[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/82fd0cc.bin");
-const u8 gUnknown_82FD14C[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/82fd14c.bin");
-const u8 gUnknown_82FE3CC[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/82fe3cc.bin");
-const u8 gUnknown_82FEBCC[0x1FE] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/82febcc.bin");
-const u8 gUnknown_82FEDCA[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/82fedca.bin");
-const u8 gUnknown_82FEFC8[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/82fefc8.bin");
-const u8 gUnknown_82FF7C8[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/82ff7c8.bin");
-const u8 gUnknown_82FFFC8[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/82fffc8.bin");
-const u8 gUnknown_8300834[0x8] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/8300834.bin");
-const u8 gUnknown_830083C[0x50] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/830083c.bin");
-const u8 gUnknown_830088C[0x18] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/830088c.bin");
-const u8 gUnknown_83008A4[0x38] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/83008a4.bin");
-const u8 gUnknown_83008DC[0x8] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/83008dc.bin");
-const u8 gUnknown_83008E4[13][4][6] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/83008e4.bin");
-const u8 gUnknown_8300A1C[13][2] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/8300a1c.bin");
-const u8 gUnknown_8300A36[12][2] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/8300a36.bin");
-const u8 gUnknown_8300A4E[30][2] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/jp/menu/8300a4e.bin");
+const u16 sTradeMovesBoxTilemap[] TRADE_MENU_RESOURCES = INCBIN_U16("graphics/trade/moves_box_map.bin");
+const u16 sTradePartyBoxTilemap[] TRADE_MENU_RESOURCES = INCBIN_U16("graphics/trade/party_box_map.bin");
+const u8 sTradeStripesBG2Tilemap[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/stripes_bg2_map.bin");
+const u8 sTradeStripesBG3Tilemap[] TRADE_MENU_RESOURCES = INCBIN_U8("graphics/trade/stripes_bg3_map.bin");
+
+// The first 0x24 bytes of the preceding block are gTradeMenuMonBox_Tilemap.
+// Its remaining JP-only 0x848 bytes have no confirmed semantic owner yet.
+const u8 gUnknown_82FFFEC[] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/82fffec.bin");
+const u8 gUnknown_8300834[0x8] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/8300834.bin");
+const u8 gUnknown_830083C[0x50] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/830083c.bin");
+const u8 gUnknown_830088C[0x18] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/830088c.bin");
+const u8 gUnknown_83008A4[0x38] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/83008a4.bin");
+const u8 gUnknown_83008DC[0x8] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/83008dc.bin");
+const u8 gUnknown_83008E4[13][4][6] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/83008e4.bin");
+const u8 gUnknown_8300A1C[13][2] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/8300a1c.bin");
+const u8 gUnknown_8300A36[12][2] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/8300a36.bin");
+const u8 gUnknown_8300A4E[30][2] TRADE_MENU_RESOURCES_AFTER_MON_BOX = INCBIN_U8("graphics/trade/jp/menu/8300a4e.bin");
 
 const u8 gUnknown_8300AB1[] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300ab1.bin");
 const u8 gUnknown_8300AFC[0x2C] TRADE_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/8300afc.bin");
@@ -75,5 +76,6 @@ const u8 gUnknown_830D2A4[0x6C] TRADE_POST_ANIMATION_RESOURCES = INCBIN_U8("grap
 const u8 gUnknown_830D310[0x44] TRADE_POST_ANIMATION_RESOURCES = INCBIN_U8("graphics/trade/jp/animation/830d310.bin");
 
 #undef TRADE_MENU_RESOURCES
+#undef TRADE_MENU_RESOURCES_AFTER_MON_BOX
 #undef TRADE_ANIMATION_RESOURCES
 #undef TRADE_POST_ANIMATION_RESOURCES

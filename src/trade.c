@@ -108,11 +108,10 @@ static void RedrawPartyWindow(u8 whichParty);
 extern const struct BgTemplate gUnknown_8300C04[];
 extern const struct WindowTemplate gUnknown_8300C14[];
 extern void VBlankCB_TradeMenu(void);
-extern const u16 gUnknown_82FD0CC[];
-extern const u32 gUnknown_82FD14C[];
-extern const u32 gUnknown_82FE3CC[];
-extern const u16 gUnknown_82FEFC8[];
-extern const u16 gUnknown_82FF7C8[];
+extern const u16 sTradeMovesBoxTilemap[];
+extern const u16 sTradePartyBoxTilemap[];
+extern const u8 sTradeStripesBG2Tilemap[];
+extern const u8 sTradeStripesBG3Tilemap[];
 
 static bool32 IsWirelessTrade(void);
 static void CB2_CreateTradeMenu(void);
@@ -376,11 +375,9 @@ extern const u8 gUnknown_8300AA2[];
 extern const u8 gUnknown_8300AA5[];
 extern const u8 gUnknown_8300AB1[];
 extern const u8 gUnknown_8300C00[];
-extern const u32 gUnknown_82FFFC8[];
 extern const u8 gUnknown_8300A36[][2];
 extern const u8 gUnknown_8300A4E[][2];
 extern const u8 gUnknown_8300A1C[][2];
-extern const u8 gUnknown_82FEDCA[];
 extern const struct MenuAction sSelectTradeMonActions[];
 extern const struct WindowTemplate sTradeYesNoWindowTemplate;
 static void LoadTradeBgGfx(u8 state);
@@ -1053,13 +1050,13 @@ static void LoadTradeBgGfx(u8 state)
     switch (state)
     {
     case 0:
-        LoadPalette(gUnknown_82FD0CC, 0, 3 * PLTT_SIZE_4BPP);
-        LoadBgTiles(1, gUnknown_82FD14C, 0x1280, 0);
-        CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_82FE3CC, 0, 0, 32, 20, 0);
-        LoadBgTilemap(2, gUnknown_82FEFC8, 0x800, 0);
+        LoadPalette(gTradeMenu_Pal, 0, 3 * PLTT_SIZE_4BPP);
+        LoadBgTiles(1, gTradeMenu_Gfx, 0x1280, 0);
+        CopyToBgTilemapBufferRect_ChangePalette(1, gTradeMenu_Tilemap, 0, 0, 32, 20, 0);
+        LoadBgTilemap(2, sTradeStripesBG2Tilemap, 0x800, 0);
         break;
     case 1:
-        LoadBgTilemap(3, gUnknown_82FF7C8, 0x800, 0);
+        LoadBgTilemap(3, sTradeStripesBG3Tilemap, 0x800, 0);
         PrintPartyLevelsAndGenders(TRADE_PLAYER);
         PrintPartyLevelsAndGenders(TRADE_PARTNER);
         CopyBgTilemapBufferToVram(1);
@@ -2164,7 +2161,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "_08079290: .4byte sTradeMenu\n\t"
         "_08079294: .4byte gUnknown_8300A1C\n\t"
         "_08079298: .4byte SpriteCB_MonIcon + 1\n\t"
-        "_0807929C: .4byte gUnknown_82FEDCA\n\t"
+        "_0807929C: .4byte sTradePartyBoxTilemap\n\t"
         "_080792A0:\n\t"
         "	ldr r2, _080792D0\n\t"
         "	ldr r1, [sp, #0x50]\n\t"
@@ -2334,7 +2331,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         "	ldr r1, [r0]\n\t"
         "	b _0807944A\n\t"
         "	.align 2, 0\n\t"
-        "_08079404: .4byte gUnknown_82FEBCC\n\t"
+        "_08079404: .4byte sTradeMovesBoxTilemap\n\t"
         "_08079408: .4byte gSprites\n\t"
         "_0807940C: .4byte sTradeMenu\n\t"
         "_08079410: .4byte gUnknown_8300A1C\n\t"
@@ -2494,7 +2491,7 @@ static void PrintLevelAndGender(u8 whichParty, u8 monIdx, u8 x, u8 y, u8 width, 
     u8 level;
     u8 tens;
 
-    CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_82FFFC8, width, height, 6, 3, 0);
+    CopyToBgTilemapBufferRect_ChangePalette(1, gTradeMenuMonBox_Tilemap, width, height, 6, 3, 0);
     CopyBgTilemapBufferToVram(1);
 
     if (whichParty == TRADE_PLAYER)
@@ -2554,7 +2551,7 @@ static void PrintTradePartnerPartyNicknames(void)
 
 static void RedrawPartyWindow(u8 whichParty)
 {
-    CopyToBgTilemapBufferRect_ChangePalette(1, gUnknown_82FEDCA, whichParty * 15, 0, 15, 17, 0);
+    CopyToBgTilemapBufferRect_ChangePalette(1, sTradePartyBoxTilemap, whichParty * 15, 0, 15, 17, 0);
     CopyBgTilemapBufferToVram(1);
     PrintPartyLevelsAndGenders(whichParty);
     PrintPartyNicknames(whichParty);
