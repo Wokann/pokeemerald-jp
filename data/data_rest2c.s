@@ -741,19 +741,7 @@ gMonIcon_Egg: @ 0x8D8FC28
 	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0x4D8, 0x1524
 
 
-	.globl gUnknown_8D9154C
-gUnknown_8D9154C: @ 0x8D9154C
-	.incbin "graphics/misc/gUnknown_8D9154C.4bpp.lz"
-
-
-	.globl gUnknown_8D91D6C
-gUnknown_8D91D6C: @ 0x8D91D6C
-	.incbin "graphics/misc/gUnknown_8D91D6C.4bpp.lz"
-
-
-	.globl gUnknown_8D927A0
-gUnknown_8D927A0: @ 0x8D927A0
-	.incbin "graphics/misc/gUnknown_8D927A0.4bpp.lz"
+	.section .rodata.data_rest2c_after_berry_blender_background_graphics
 	.incbin "baserom_jp.gba", 0xD92AB1, 0x7E3
 
 

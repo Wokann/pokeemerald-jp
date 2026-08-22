@@ -101,6 +101,14 @@ ENEMY_SHADOW_GRAPHICS const u32 gEnemyMonShadow_Gfx[] = INCBIN_U32("graphics/bat
 
 #undef ENEMY_SHADOW_GRAPHICS
 
+#define BERRY_BLENDER_BACKGROUND_GRAPHICS __attribute__((section(".rodata.berry_blender_background_graphics"), aligned(1)))
+
+BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderCenter_Gfx[] = INCBIN_U32("graphics/berry_blender/center.8bpp.lz");
+BERRY_BLENDER_BACKGROUND_GRAPHICS const u32 gBerryBlenderOuter_Gfx[] = INCBIN_U32("graphics/berry_blender/outer.4bpp.lz");
+BERRY_BLENDER_BACKGROUND_GRAPHICS const u8 gBerryBlenderOuter_Tilemap[] = INCBIN_U8("graphics/berry_blender/outer_map.bin.lz");
+
+#undef BERRY_BLENDER_BACKGROUND_GRAPHICS
+
 #define TRADE_MENU_GRAPHICS __attribute__((section(".rodata.trade_menu_graphics"), aligned(1)))
 
 TRADE_MENU_GRAPHICS const u16 gTradeMenu_Pal[] = INCBIN_U16("graphics/trade/menu.gbapal");

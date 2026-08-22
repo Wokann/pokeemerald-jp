@@ -1,10 +1,18 @@
-// JP Berry Blender resources retained in original ROM order.  Filenames use
-// their original addresses until each resource's semantic name is verified.
+// These have Berry Blender semantics, but this dedicated data object supplies
+// the binary initializer because the implementation's generic agbcc rule does
+// not run the INCBIN preprocessor. External linkage preserves old ROM aliases.
+#define BERRY_BLENDER_BACKGROUND_DATA __attribute__((section(".rodata.berry_blender_background_data"), aligned(1)))
 
-#define BERRY_BLENDER_RESOURCES __attribute__((section(".rodata.berry_blender_resources"), aligned(1)))
+const u16 sBlenderCenter_Pal[] BERRY_BLENDER_BACKGROUND_DATA = INCBIN_U16("graphics/berry_blender/center.gbapal");
+const u16 sBlenderCenter_Tilemap[] BERRY_BLENDER_BACKGROUND_DATA = INCBIN_U16("graphics/berry_blender/center_map.bin");
+const u16 sBlenderOuter_Pal[] BERRY_BLENDER_BACKGROUND_DATA = INCBIN_U16("graphics/berry_blender/outer.gbapal");
 
-const u8 gUnknown_830D354[0x20] BERRY_BLENDER_RESOURCES = INCBIN_U8("graphics/berry_blender/jp/830d354.bin");
-const u8 gUnknown_830D374[0x400] BERRY_BLENDER_RESOURCES = INCBIN_U8("graphics/berry_blender/jp/830d374.bin");
-const u8 gUnknown_830D774[0x1F3A] BERRY_BLENDER_RESOURCES = INCBIN_U8("graphics/berry_blender/jp/830d774.bin");
+#undef BERRY_BLENDER_BACKGROUND_DATA
 
-#undef BERRY_BLENDER_RESOURCES
+// Keep the unclassified suffix separate so it cannot be accidentally assigned
+// the same semantics as the verified Berry Blender background resources.
+#define BERRY_BLENDER_RESOURCES_AFTER_BACKGROUND_DATA __attribute__((section(".rodata.berry_blender_resources_after_background_data"), aligned(1)))
+
+const u8 gUnknown_830D794[0x1F1A] BERRY_BLENDER_RESOURCES_AFTER_BACKGROUND_DATA = INCBIN_U8("graphics/berry_blender/jp/830d794.bin");
+
+#undef BERRY_BLENDER_RESOURCES_AFTER_BACKGROUND_DATA
