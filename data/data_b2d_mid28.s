@@ -67,10 +67,6 @@ gFieldEffectObjectTemplatePointers: @ 0x84DDE4C
 gUnknown_84E1900: @ 0x84E1900
 	.incbin "baserom_jp.gba", 0x4e1900, 0x271c
 
-	.section .rodata.data_b2d_mid28_after_event_object_movement_field_effect_palette_data
-
-	.incbin "baserom_jp.gba", 0x4e4e24, 0xd0c
-
 	.section .rodata.data_b2d_mid28_after_event_object_movement_action_function_tables_tail
 
 	.globl gTextWindowFrame1_Gfx

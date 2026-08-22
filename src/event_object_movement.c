@@ -7,6 +7,7 @@
 #undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES
 #include "event_object_movement.h"
 #include "field_effect.h"
+#include "field_effect_helpers.h"
 #include "overworld.h"
 #include "field_camera.h"
 #include "metatile_behavior.h"
@@ -17,6 +18,52 @@
 #include "constants/items.h"
 
 extern void MovementType_Hidden(struct Sprite *sprite);
+
+extern const u8 gFieldEffectObjectPic_Arrow[];
+extern const u8 gFieldEffectObjectPic_Ash[];
+extern const u8 gFieldEffectObjectPic_AshLaunch[];
+extern const u8 gFieldEffectObjectPic_AshPuff[];
+extern const u8 gFieldEffectObjectPic_BikeTireTracks[];
+extern const u8 gFieldEffectObjectPic_Bird[0x200];
+extern const u8 gFieldEffectObjectPic_Bubbles[];
+extern const u8 gFieldEffectObjectPic_DeepSandFootprints[];
+extern const u8 gFieldEffectObjectPic_GroundImpactDust[];
+extern const u8 gFieldEffectObjectPic_HotSpringsWater[0x80];
+extern const u8 gFieldEffectObjectPic_JumpBigSplash[];
+extern const u8 gFieldEffectObjectPic_JumpLongGrass[];
+extern const u8 gFieldEffectObjectPic_JumpSmallSplash[];
+extern const u8 gFieldEffectObjectPic_JumpTallGrass[];
+extern const u8 gFieldEffectObjectPic_LongGrass[];
+extern const u8 gFieldEffectObjectPic_MountainDisguise[];
+extern const u8 gFieldEffectObjectPic_Ripple[];
+extern const u8 gFieldEffectObjectPic_SandDisguisePlaceholder[];
+extern const u8 gFieldEffectObjectPic_SandFootprints[];
+extern const u8 gFieldEffectObjectPic_SandPile[];
+extern const u8 gFieldEffectObjectPic_ShadowExtraLarge[0x400];
+extern const u8 gFieldEffectObjectPic_ShadowLarge[0x80];
+extern const u8 gFieldEffectObjectPic_ShadowMedium[0x40];
+extern const u8 gFieldEffectObjectPic_ShadowSmall[0x20];
+extern const u8 gFieldEffectObjectPic_ShortGrass[];
+extern const u8 gFieldEffectObjectPic_SmallSparkle[];
+extern const u8 gFieldEffectObjectPic_Sparkle[];
+extern const u8 gFieldEffectObjectPic_Splash[];
+extern const u8 gFieldEffectObjectPic_SurfBlob[];
+extern const u8 gFieldEffectObjectPic_TallGrass[];
+extern const u8 gFieldEffectObjectPic_TreeDisguise[];
+extern const u8 gFieldEffectObjectPic_Unknown17[];
+extern const u8 gFieldEffectObjectPic_UnusedGrass2[];
+extern const u8 gFieldEffectObjectPic_UnusedSand[];
+extern const u8 gFieldEffectObjectPic_WaterSurfacing[];
+extern const u16 gFieldEffectPal_Ash[];
+extern const u16 gFieldEffectPal_SmallSparkle[];
+extern const struct OamData gObjectEventBaseOam_8x8;
+extern const struct OamData gObjectEventBaseOam_16x8;
+extern const struct OamData gObjectEventBaseOam_16x16;
+extern const struct OamData gObjectEventBaseOam_32x8;
+extern const struct OamData gObjectEventBaseOam_64x32;
+extern const struct OamData gObjectEventBaseOam_16x32;
+extern const struct OamData gObjectEventBaseOam_32x32;
+extern const u8 gObjectEventPic_Rayquaza[];
 
 #define EVENT_OBJECT_MOVEMENT_CORE_DATA __attribute__((section(".rodata.event_object_movement_core_data"), aligned(1)))
 
@@ -653,9 +700,9 @@ struct Sprite;
 #include "data/object_events/berry_tree_graphics_tables.h"
 #undef EVENT_OBJECT_MOVEMENT_BERRY_TREE_DATA
 
-#define EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_PALETTE_DATA __attribute__((section(".rodata.event_object_movement_field_effect_palette_data")))
+#define EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA __attribute__((section(".rodata.event_object_movement_field_effect_objects_data")))
 #include "data/field_effects/field_effect_objects.h"
-#undef EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_PALETTE_DATA
+#undef EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_OBJECT_DATA
 
 enum {
     CAMERA_STATE_INIT,
