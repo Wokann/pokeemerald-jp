@@ -37,14 +37,64 @@ static void SootopolisGymIcePerStepCallback(u8);
 static void CrackedFloorPerStepCallback(u8);
 static void Task_MuddySlope(u8);
 
-// JP ROM data (the callback table, bridge offset tables, ice row vars and
-// muddy slope metatile table stay in the ROM data region)
-extern const TaskFunc sPerStepCallbacks[8];
-extern const struct PacifidlogMetatileOffsets sHalfSubmergedBridgeMetatileOffsets[];
-extern const struct PacifidlogMetatileOffsets sFullySubmergedBridgeMetatileOffsets[];
-extern const struct PacifidlogMetatileOffsets sFloatingBridgeMetatileOffsets[];
-extern const u16 sSootopolisGymIceRowVars[];
-extern const u16 sMuddySlopeMetatiles[4];
+#define FIELD_TASKS_DATA(name) __attribute__((section(".rodata.field_tasks_data." #name)))
+
+static const TaskFunc sPerStepCallbacks[] FIELD_TASKS_DATA(sPerStepCallbacks) =
+{
+    [STEP_CB_DUMMY]             = DummyPerStepCallback,
+    [STEP_CB_ASH]               = AshGrassPerStepCallback,
+    [STEP_CB_FORTREE_BRIDGE]    = FortreeBridgePerStepCallback,
+    [STEP_CB_PACIFIDLOG_BRIDGE] = PacifidlogBridgePerStepCallback,
+    [STEP_CB_SOOTOPOLIS_ICE]    = SootopolisGymIcePerStepCallback,
+    [STEP_CB_TRUCK]             = EndTruckSequence,
+    [STEP_CB_SECRET_BASE]       = SecretBasePerStepCallback,
+    [STEP_CB_CRACKED_FLOOR]     = CrackedFloorPerStepCallback,
+};
+
+static const struct PacifidlogMetatileOffsets sHalfSubmergedBridgeMetatileOffsets[] FIELD_TASKS_DATA(sHalfSubmergedBridgeMetatileOffsets) =
+{
+    { 0,  0, METATILE_Pacifidlog_HalfSubmergedLogs_VerticalTop}, {0, 1, METATILE_Pacifidlog_HalfSubmergedLogs_VerticalBottom},
+    { 0, -1, METATILE_Pacifidlog_HalfSubmergedLogs_VerticalTop}, {0, 0, METATILE_Pacifidlog_HalfSubmergedLogs_VerticalBottom},
+    { 0,  0, METATILE_Pacifidlog_HalfSubmergedLogs_HorizontalLeft}, {1, 0, METATILE_Pacifidlog_HalfSubmergedLogs_HorizontalRight},
+    {-1,  0, METATILE_Pacifidlog_HalfSubmergedLogs_HorizontalLeft}, {0, 0, METATILE_Pacifidlog_HalfSubmergedLogs_HorizontalRight},
+};
+
+static const struct PacifidlogMetatileOffsets sFullySubmergedBridgeMetatileOffsets[] FIELD_TASKS_DATA(sFullySubmergedBridgeMetatileOffsets) =
+{
+    { 0,  0, METATILE_Pacifidlog_SubmergedLogs_VerticalTop}, {0, 1, METATILE_Pacifidlog_SubmergedLogs_VerticalBottom},
+    { 0, -1, METATILE_Pacifidlog_SubmergedLogs_VerticalTop}, {0, 0, METATILE_Pacifidlog_SubmergedLogs_VerticalBottom},
+    { 0,  0, METATILE_Pacifidlog_SubmergedLogs_HorizontalLeft}, {1, 0, METATILE_Pacifidlog_SubmergedLogs_HorizontalRight},
+    {-1,  0, METATILE_Pacifidlog_SubmergedLogs_HorizontalLeft}, {0, 0, METATILE_Pacifidlog_SubmergedLogs_HorizontalRight},
+};
+
+static const struct PacifidlogMetatileOffsets sFloatingBridgeMetatileOffsets[] FIELD_TASKS_DATA(sFloatingBridgeMetatileOffsets) =
+{
+    { 0,  0, METATILE_Pacifidlog_FloatingLogs_VerticalTop}, {0, 1, METATILE_Pacifidlog_FloatingLogs_VerticalBottom},
+    { 0, -1, METATILE_Pacifidlog_FloatingLogs_VerticalTop}, {0, 0, METATILE_Pacifidlog_FloatingLogs_VerticalBottom},
+    { 0,  0, METATILE_Pacifidlog_FloatingLogs_HorizontalLeft}, {1, 0, METATILE_Pacifidlog_FloatingLogs_HorizontalRight},
+    {-1,  0, METATILE_Pacifidlog_FloatingLogs_HorizontalLeft}, {0, 0, METATILE_Pacifidlog_FloatingLogs_HorizontalRight},
+};
+
+static const u16 sSootopolisGymIceRowVars[] FIELD_TASKS_DATA(sSootopolisGymIceRowVars) =
+{
+    0, 0, 0, 0, 0, 0,
+    VAR_TEMP_1, VAR_TEMP_2, VAR_TEMP_3, VAR_TEMP_4,
+    0, 0,
+    VAR_TEMP_5, VAR_TEMP_6, VAR_TEMP_7,
+    0, 0,
+    VAR_TEMP_8, VAR_TEMP_9, VAR_TEMP_A,
+    0, 0, 0, 0, 0, 0,
+};
+
+static const u16 sMuddySlopeMetatiles[] FIELD_TASKS_DATA(sMuddySlopeMetatiles) =
+{
+    METATILE_General_MuddySlope_Frame0,
+    METATILE_General_MuddySlope_Frame3,
+    METATILE_General_MuddySlope_Frame2,
+    METATILE_General_MuddySlope_Frame1,
+};
+
+#undef FIELD_TASKS_DATA
 
 #define tCallbackId data[0]
 

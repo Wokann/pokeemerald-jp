@@ -9501,6 +9501,14 @@ SECTIONS {
         data/data_b2d_mid28.o(.rodata);
         src/field_effect_helpers.o(.rodata.field_effect_helpers_figure8_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_helpers_figure8);
+        src/coord_event_weather.o(.rodata.coord_event_weather_data.sCoordEventWeatherFuncs);
+        src/field_tasks.o(.rodata.field_tasks_data.sPerStepCallbacks);
+        src/field_tasks.o(.rodata.field_tasks_data.sHalfSubmergedBridgeMetatileOffsets);
+        src/field_tasks.o(.rodata.field_tasks_data.sFullySubmergedBridgeMetatileOffsets);
+        src/field_tasks.o(.rodata.field_tasks_data.sFloatingBridgeMetatileOffsets);
+        src/field_tasks.o(.rodata.field_tasks_data.sSootopolisGymIceRowVars);
+        src/field_tasks.o(.rodata.field_tasks_data.sMuddySlopeMetatiles);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_tasks_static_data);
         src/data/text/region_texts25.o(.rodata);
         src/data/reset_rtc_screen.o(.rodata.reset_rtc_screen_data);
         src/data/text/region_texts31.o(.rodata);
