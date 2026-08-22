@@ -508,20 +508,8 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 	.section .rodata.data_rest2c_after_battle_anim_surf_and_white_shadow_resources
 
 
-	.globl gUnknown_8D967A0
-gUnknown_8D967A0: @ 0x8D967A0
-	.incbin "graphics/misc/gUnknown_8D967A0.4bpp.lz"
-
-
-	.globl gUnknown_8D96A68
-gUnknown_8D96A68: @ 0x8D96A68
-	.incbin "graphics/misc/gUnknown_8D96A68.4bpp.lz"
-
-
-	.globl gUnknown_8D96B54
-gUnknown_8D96B54: @ 0x8D96B54
-	.incbin "graphics/misc/gUnknown_8D96B54.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD96C8C, 0xFC8
+	.section .rodata.data_rest2c_after_party_menu_and_status_icon_resources
+	.incbin "baserom_jp.gba", 0xD971CC, 0xA88
 
 
 	.globl gUnknown_8D97C54

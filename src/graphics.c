@@ -277,6 +277,30 @@ BATTLE_ANIM_SURF_AND_WHITE_SHADOW_RESOURCES const u32 gBattleAnimSpritePal_White
 
 #undef BATTLE_ANIM_SURF_AND_WHITE_SHADOW_RESOURCES
 
+#define PARTY_MENU_AND_STATUS_ICON_RESOURCES __attribute__((section(".rodata.party_menu_and_status_icon_resources"), aligned(1)))
+
+// The JP LZ77 streams retain their original stream-alignment padding.
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Gfx[] = INCBIN_U32("graphics/party_menu/bg.4bpp.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Pal[] = INCBIN_U32("graphics/party_menu/bg.gbapal.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuBg_Tilemap[] = INCBIN_U32("graphics/party_menu/bg.bin.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Gfx[] = INCBIN_U32("graphics/party_menu/pokeball.4bpp.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeballSmall_Gfx[] = INCBIN_U32("graphics/party_menu/pokeball_small.4bpp.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gPartyMenuPokeball_Pal[] = INCBIN_U32("graphics/party_menu/pokeball.gbapal.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusGfx_Icons[] = INCBIN_U32("graphics/interface/status_icons.4bpp.lz");
+PARTY_MENU_AND_STATUS_ICON_RESOURCES const u32 gStatusPal_Icons[] = INCBIN_U32("graphics/interface/status_icons.gbapal.lz");
+
+// Keep ROM-locked Party Menu consumers on their original symbol names.
+__asm__(
+    ".global gUnknown_8D967A0\n"
+    ".set gUnknown_8D967A0, gPartyMenuBg_Gfx\n"
+    ".global gUnknown_8D96A68\n"
+    ".set gUnknown_8D96A68, gPartyMenuBg_Pal\n"
+    ".global gUnknown_8D96B54\n"
+    ".set gUnknown_8D96B54, gPartyMenuBg_Tilemap\n"
+);
+
+#undef PARTY_MENU_AND_STATUS_ICON_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

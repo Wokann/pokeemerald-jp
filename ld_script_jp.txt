@@ -9942,6 +9942,8 @@ SECTIONS {
         data/data_rest2c.o(.rodata.data_rest2c_after_battle_anim_fog_through_cross_impact_resources);
         src/graphics.o(.rodata.battle_anim_surf_and_white_shadow_resources);
         data/data_rest2c.o(.rodata.data_rest2c_after_battle_anim_surf_and_white_shadow_resources);
+        src/graphics.o(.rodata.party_menu_and_status_icon_resources);
+        data/data_rest2c.o(.rodata.data_rest2c_after_party_menu_and_status_icon_resources);
         data/data_rest2c.o(.rodata.data_rest2c_before_bag_graphics);
         src/graphics.o(.rodata.bag_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_before_swap_line_graphics);
