@@ -233,6 +233,25 @@ EVENT_OBJECT_MOVEMENT_CORE_DATA const u8 gInitialMovementTypeFacingDirections[NU
 EVENT_OBJECT_MOVEMENT_CORE_DATA static const u8 sMovementTypeCoreDataPadding[] = {0, 0};
 
 #undef EVENT_OBJECT_MOVEMENT_CORE_DATA
+
+#define EVENT_OBJECT_MOVEMENT_FUNCTION_TABLES __attribute__((section(".rodata.event_object_movement_function_tables"), aligned(1)))
+
+// JP names retained by the function-pointer tables below.  The US header uses
+// later semantic names for several of these handlers.
+extern bool8 MovementType_BerryTreeGrowth_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementType_BerryTreeGrowth_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementType_BerryTreeGrowth_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementType_BerryTreeGrowth_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementType_Hidden_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8));
+extern bool8 CopyablePlayerMovement_GoSpeed1(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8));
+extern bool8 CopyablePlayerMovement_GoSpeed2(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8));
+extern bool8 cph_IM_DIFFERENT(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8));
+extern bool8 CopyablePlayerMovement_GoSpeed4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8));
+
+#include "data/object_events/movement_type_func_tables.h"
+#undef EVENT_OBJECT_MOVEMENT_FUNCTION_TABLES
+
 #include "constants/field_effects.h"
 #include "constants/union_room.h"
 
@@ -253,45 +272,7 @@ extern const u8 gWalkInPlaceSlowMovementActions[];
 extern const u8 gWalkNormalMovementActions[];
 extern const u8 gWalkSlowMovementActions[];
 extern const u8 sElevationToPriority[];
-extern const s16 sMovementDelaysMedium[];
-extern const u8 gStandardDirections[];
 extern const u8 sOppositeDirections[];
-extern const u8 gUpAndDownDirections[];
-extern const u8 gLeftAndRightDirections[];
-extern const u8 gUpAndLeftDirections[];
-extern const u8 gUpAndRightDirections[];
-extern const u8 gDownAndLeftDirections[];
-extern const u8 gDownAndRightDirections[];
-extern const u8 gDownUpAndLeftDirections[];
-extern const u8 gDownUpAndRightDirections[];
-extern const u8 gUpLeftAndRightDirections[];
-extern const u8 gDownLeftAndRightDirections[];
-extern const u8 gCounterclockwiseDirections[];
-extern const u8 gClockwiseDirections[];
-extern const u8 gUpRightLeftDownDirections[];
-extern const u8 gRightLeftDownUpDirections[];
-extern const u8 gDownUpRightLeftDirections[];
-extern const u8 gLeftDownUpRightDirections[];
-extern const u8 gUpLeftRightDownDirections[];
-extern const u8 gLeftRightDownUpDirections[];
-extern const u8 gRightDownUpLeftDirections[];
-extern const u8 gLeftUpDownRightDirections[];
-extern const u8 gUpDownRightLeftDirections[];
-extern const u8 gRightLeftUpDownDirections[];
-extern const u8 gDownRightLeftUpDirections[];
-extern const u8 gRightUpDownLeftDirections[];
-extern const u8 gUpDownLeftRightDirections[];
-extern const u8 gLeftRightUpDownDirections[];
-extern const u8 gDownLeftRightUpDirections[];
-extern const u8 gUpLeftDownRightDirections[];
-extern const u8 gDownRightUpLeftDirections[];
-extern const u8 gLeftDownRightUpDirections[];
-extern const u8 gRightUpLeftDownDirections[];
-extern const u8 gUpRightDownLeftDirections[];
-extern const u8 gDownLeftUpRightDirections[];
-extern const u8 gLeftUpRightDownDirections[];
-extern const u8 gRightDownLeftUpDirections[];
-extern const s16 sMovementDelaysLong[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
 extern const struct PairedPalettes sPlayerReflectionPaletteSets[];
 extern const struct PairedPalettes sSpecialObjectReflectionPaletteSets[];
@@ -299,56 +280,6 @@ extern u8 gUnknown_2037254; // sCurrentReflectionType
 extern u16 gUnknown_2037256; // sCurrentSpecialObjectPaletteTag
 static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
 extern u32 state_to_direction(u8, u8, u8);
-extern u8 (*const gMovementTypeFuncs_CopyPlayer[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_CopyPlayerInGrass[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceDownUpAndRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_JogInPlace[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_RunInPlace[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkInPlace[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceDownLeftUpRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceLeftUpRightDown[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceRightDownLeftUp[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceUpRightDownLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceUpRightLeftDown[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSlowlyInPlace[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceDirection[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceDownAndLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceDownAndRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceDownAndUp[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceDownLeftAndRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceDownUpAndLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceLeftAndRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceUpAndLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceUpAndRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_FaceUpLeftAndRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_Invisible[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_LookAround[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_RotateClockwise[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_RotateCounterclockwise[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkBackAndForth[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceDownLeftRightUp[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceDownRightLeftUp[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceDownRightUpLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceDownUpLeftRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceDownUpRightLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceLeftDownRightUp[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceLeftDownUpRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceLeftRightDownUp[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceLeftRightUpDown[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceLeftUpDownRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceRightDownUpLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceRightLeftDownUp[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceRightLeftUpDown[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceRightUpDownLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceRightUpLeftDown[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceUpDownLeftRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceUpDownRightLeft[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceUpLeftDownRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WalkSequenceUpLeftRightDown[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WanderAround[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WanderLeftAndRight[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gMovementTypeFuncs_WanderUpAndDown[])(struct ObjectEvent *, struct Sprite *);
-extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);
 extern const char gUnknown_84E6CA8[];
