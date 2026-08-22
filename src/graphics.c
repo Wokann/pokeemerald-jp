@@ -140,6 +140,17 @@ BATTLE_ANIM_METAL_SOUND_RESOURCES const u32 gBattleAnimSpritePal_MetalSoundWaves
 
 #undef BATTLE_ANIM_METAL_SOUND_RESOURCES
 
+#define BATTLE_ANIM_ICE_RESOURCES __attribute__((section(".rodata.battle_anim_ice_resources")))
+
+// The JP LZ77 streams retain their original stream-alignment padding.
+BATTLE_ANIM_ICE_RESOURCES const u32 gBattleAnimBgImage_Ice[] = INCBIN_U32("graphics/battle_anims/backgrounds/ice.4bpp.lz");
+BATTLE_ANIM_ICE_RESOURCES const u32 gBattleAnimBgPalette_Ice[] = INCBIN_U32("graphics/battle_anims/backgrounds/ice.gbapal.lz");
+BATTLE_ANIM_ICE_RESOURCES const u32 gBattleAnimBgTilemap_Ice[] = INCBIN_U32("graphics/battle_anims/backgrounds/ice.bin.lz");
+BATTLE_ANIM_ICE_RESOURCES const u32 gBattleAnimSpriteGfx_IcicleSpear[] = INCBIN_U32("graphics/battle_anims/sprites/icicle_spear.4bpp.lz");
+BATTLE_ANIM_ICE_RESOURCES const u32 gBattleAnimSpritePal_IcicleSpear[] = INCBIN_U32("graphics/battle_anims/sprites/icicle_spear.gbapal.lz");
+
+#undef BATTLE_ANIM_ICE_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

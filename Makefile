@@ -512,6 +512,9 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/sprites/flying_dirt.4bpp.lz graphics/battle_anims/sprites/flying_dirt.gbapal.lz \
 	graphics/battle_anims/backgrounds/sandstorm_brew.bin.lz graphics/battle_anims/backgrounds/sandstorm_brew.4bpp.lz \
 	graphics/battle_anims/sprites/metal_sound_waves.4bpp.lz graphics/battle_anims/sprites/metal_sound_waves.gbapal.lz \
+	graphics/battle_anims/backgrounds/ice.4bpp.lz graphics/battle_anims/backgrounds/ice.gbapal.lz \
+	graphics/battle_anims/backgrounds/ice.bin.lz graphics/battle_anims/sprites/icicle_spear.4bpp.lz \
+	graphics/battle_anims/sprites/icicle_spear.gbapal.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
