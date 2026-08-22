@@ -356,9 +356,7 @@ sBrailleFont: @ 0x82BF474
 sBrailleGotoLine2: @ 0x82BF478
 	.byte 0xFE, 0xFC, 0x0E, 0x02, 0xFF, 0x00, 0x00, 0x00
 
-	.globl sPlaceholderFuncs
-sPlaceholderFuncs: @ 0x82BF480
-	.incbin "baserom_jp.gba", 0x2bf480, 0x38
+	.section .rodata.data_after_string_util_placeholder_funcs
 
 	.globl sWirelessLinkDisplayPal
 sWirelessLinkDisplayPal: @ 0x82BF4B8

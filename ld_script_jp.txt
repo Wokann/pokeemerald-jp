@@ -9281,6 +9281,8 @@ SECTIONS {
         data/data.o(.rodata);
         src/sprite.o(.rodata.sprite_oam_dimensions);
         data/data.o(.rodata.data_after_sprite_oam_dimensions);
+        src/string_util.o(.rodata.string_util_placeholder_funcs);
+        data/data.o(.rodata.data_after_string_util_placeholder_funcs);
         src/data/text/comm_error_texts.o(.rodata);
         data/data.o(.rodata.data_tail);
         src/link.o(.rodata);
