@@ -9397,6 +9397,7 @@ SECTIONS {
         gUnknown_82EBAEF8 = .;
         src/battle_main.o(.rodata.battle_main_oam_data);
         src/battle_main.o(.rodata.battle_main_anim_data);
+        src/battle_main.o(.rodata.battle_main_type_data);
         data/data_b2.o(.rodata.battle_main_static_tail);
         src/data/text/type_names.o(.rodata);
         data/data_b2b.o(.rodata);
