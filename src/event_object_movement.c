@@ -608,9 +608,6 @@ EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA static const u8 sDirectionCompo
 #undef EVENT_OBJECT_MOVEMENT_ACTION_FUNCTION_TABLES
 
 extern const struct Coords16 sDirectionToVectors[];
-extern const struct SpritePalette sObjectEventSpritePalettes[];
-extern const struct PairedPalettes sPlayerReflectionPaletteSets[];
-extern const struct PairedPalettes sSpecialObjectReflectionPaletteSets[];
 extern u8 gUnknown_2037254; // sCurrentReflectionType
 extern u16 gUnknown_2037256; // sCurrentSpecialObjectPaletteTag
 static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
@@ -643,6 +640,10 @@ struct Sprite;
 #define BERRY_FLAG_SPARKLING   (1 << 1)
 #define BERRY_FLAG_JUST_PICKED (1 << 2)
 #define OBJ_EVENT_PAL_TAG_NONE 0x11FF
+
+#define EVENT_OBJECT_MOVEMENT_PALETTE_DATA __attribute__((section(".rodata.event_object_movement_palette_data"), aligned(1)))
+#include "data/object_events/movement_palette_data.h"
+#undef EVENT_OBJECT_MOVEMENT_PALETTE_DATA
 
 enum {
     CAMERA_STATE_INIT,
@@ -3014,7 +3015,7 @@ __attribute__((naked)) void LoadEventObjectPalette(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0808E228: .4byte 0x000011FF\n\t"
-        "_0808E22C: .4byte gUnknown_84E401C\n\t"
+        "_0808E22C: .4byte sObjectEventSpritePalettes\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4176,7 +4177,7 @@ __attribute__((naked)) u16 GetObjectPaletteTag(u8 palSlot)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808ED44: .4byte gUnknown_84E41CC\n\t"
+        "_0808ED44: .4byte sSpecialObjectReflectionPaletteSets\n\t"
         "_0808ED48: .4byte 0x000011FF\n\t"
         "_0808ED4C: .4byte gUnknown_2037256\n\t"
         ".syntax divided\n\t"

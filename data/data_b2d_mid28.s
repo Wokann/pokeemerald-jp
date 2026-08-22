@@ -63,26 +63,11 @@ gFieldEffectObjectTemplatePointers: @ 0x84DDE4C
 gUnknown_84E1900: @ 0x84E1900
 	.incbin "baserom_jp.gba", 0x4e1900, 0x271c
 
-	.globl gUnknown_84E401C
-gUnknown_84E401C: @ 0x84E401C
-	.incbin "baserom_jp.gba", 0x4e401c, 0x138
+	.section .rodata.data_b2d_mid28_after_event_object_movement_palette_data
 
-	.globl sObjectEventSpritePalettes
-	.set sObjectEventSpritePalettes, gUnknown_84E401C
-
-	.globl gUnknown_84E4154
-gUnknown_84E4154: @ 0x84E4154
-	.incbin "baserom_jp.gba", 0x4e4154, 0x78
-
-	.globl sPlayerReflectionPaletteSets
-	.set sPlayerReflectionPaletteSets, gUnknown_84E4154
-
-	.globl gUnknown_84E41CC
-gUnknown_84E41CC: @ 0x84E41CC
-	.incbin "baserom_jp.gba", 0x4e41cc, 0xc0
-
-	.globl sSpecialObjectReflectionPaletteSets
-	.set sSpecialObjectReflectionPaletteSets, gUnknown_84E41CC
+	.globl gUnknown_84E423C
+gUnknown_84E423C: @ 0x84E423C
+	.incbin "baserom_jp.gba", 0x4e423c, 0x50
 
 	.globl gUnknown_84E428C
 gUnknown_84E428C: @ 0x84E428C
