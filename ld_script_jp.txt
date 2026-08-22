@@ -9289,6 +9289,7 @@ SECTIONS {
         data/data_b.o(.rodata);
         src/data/union_room.o(.rodata);
         data/data_b_mid1.o(.rodata);
+        src/union_room.o(.rodata.union_room_players_needed_or_mode_texts);
         src/data/union_room2.o(.rodata);
         src/data/union_room3.o(.rodata);
         src/data/union_room4.o(.rodata);

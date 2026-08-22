@@ -209,8 +209,54 @@ extern IWRAM_DATA struct WirelessLink_Group *sGroup;
 extern IWRAM_DATA struct WirelessLink_URoom *sURoom;
 extern EWRAM_DATA struct UnionRoomTrade sUnionRoomTrade;
 
-// JP: ROM data bound via ld_script_jp.txt.
-extern const u8 *const sPlayersNeededOrModeTexts[][5];
+extern const u8 sText_1PlayerNeeded[];
+extern const u8 sText_2PlayersNeeded[];
+extern const u8 sText_3PlayersNeeded[];
+extern const u8 sText_4PlayerMode[];
+extern const u8 sText_2PlayerMode[];
+extern const u8 sText_3PlayerMode[];
+extern const u8 sText_5PlayerMode[];
+
+const u8 *const sPlayersNeededOrModeTexts[][5]
+    __attribute__((section(".rodata.union_room_players_needed_or_mode_texts"))) =
+{
+    // 2 players required
+    {
+        sText_1PlayerNeeded,
+        sText_2PlayerMode,
+    },
+    // 4 players required
+    {
+        sText_3PlayersNeeded,
+        sText_2PlayersNeeded,
+        sText_1PlayerNeeded,
+        sText_4PlayerMode,
+    },
+    // 2-5 players required
+    {
+        sText_1PlayerNeeded,
+        sText_2PlayerMode,
+        sText_3PlayerMode,
+        sText_4PlayerMode,
+        sText_5PlayerMode,
+    },
+    // 3-5 players required
+    {
+        sText_2PlayersNeeded,
+        sText_1PlayerNeeded,
+        sText_3PlayerMode,
+        sText_4PlayerMode,
+        sText_5PlayerMode,
+    },
+    // 2-4 players required
+    {
+        sText_1PlayerNeeded,
+        sText_2PlayerMode,
+        sText_3PlayerMode,
+        sText_4PlayerMode,
+    },
+};
+
 extern const u8 sText_ID[];
 extern const u8 sText_AwaitingCommunication[];
 extern const u8 sText_AwaitingLinkPressStart[];
