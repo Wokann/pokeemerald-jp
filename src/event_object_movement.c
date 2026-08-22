@@ -1,8 +1,10 @@
 #include "global.h"
 
 #define OBJECT_EVENT_GRAPHICS_CUT_GRASS __attribute__((section(".rodata.object_event_graphics_cut_grass"), aligned(1)))
+#define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES __attribute__((section(".rodata.object_event_graphics_field_effect_palettes")))
 #include "data/object_events/object_event_graphics.h"
 #undef OBJECT_EVENT_GRAPHICS_CUT_GRASS
+#undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES
 #include "event_object_movement.h"
 #include "field_effect.h"
 #include "overworld.h"
@@ -11,6 +13,7 @@
 #include "palette.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
+#include "constants/field_effects.h"
 #include "constants/items.h"
 
 extern void MovementType_Hidden(struct Sprite *sprite);
@@ -649,6 +652,10 @@ struct Sprite;
 #define EVENT_OBJECT_MOVEMENT_BERRY_TREE_DATA __attribute__((section(".rodata.event_object_movement_berry_tree_graphics_data")))
 #include "data/object_events/berry_tree_graphics_tables.h"
 #undef EVENT_OBJECT_MOVEMENT_BERRY_TREE_DATA
+
+#define EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_PALETTE_DATA __attribute__((section(".rodata.event_object_movement_field_effect_palette_data")))
+#include "data/field_effects/field_effect_objects.h"
+#undef EVENT_OBJECT_MOVEMENT_FIELD_EFFECT_PALETTE_DATA
 
 enum {
     CAMERA_STATE_INIT,
