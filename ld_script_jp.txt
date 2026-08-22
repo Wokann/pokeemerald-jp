@@ -9912,6 +9912,8 @@ SECTIONS {
         data/data_rest2c.o(.rodata.data_rest2c_after_intro_scene_3_bubbles_graphics);
         src/graphics.o(.rodata.intro_scene_1_effects_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_intro_scene_1_effects_graphics);
+        src/graphics.o(.rodata.battle_anim_sandstorm_resources);
+        data/data_rest2c.o(.rodata.data_rest2c_after_battle_anim_sandstorm_resources);
         src/graphics.o(.rodata.enemy_shadow_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_enemy_shadow);
         src/graphics.o(.rodata.berry_blender_background_graphics);

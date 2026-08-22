@@ -122,6 +122,16 @@ INTRO_SCENE_1_EFFECTS_GRAPHICS const u32 gIntroSparkle_Gfx[] = INCBIN_U32("graph
 
 #undef INTRO_SCENE_1_EFFECTS_GRAPHICS
 
+#define BATTLE_ANIM_SANDSTORM_RESOURCES __attribute__((section(".rodata.battle_anim_sandstorm_resources")))
+
+// The JP LZ77 streams retain their original stream-alignment padding.
+BATTLE_ANIM_SANDSTORM_RESOURCES const u32 gBattleAnimSpriteGfx_FlyingDirt[] = INCBIN_U32("graphics/battle_anims/sprites/flying_dirt.4bpp.lz");
+BATTLE_ANIM_SANDSTORM_RESOURCES const u32 gBattleAnimBgTilemap_Sandstorm[] = INCBIN_U32("graphics/battle_anims/backgrounds/sandstorm_brew.bin.lz");
+BATTLE_ANIM_SANDSTORM_RESOURCES const u32 gBattleAnimBgImage_Sandstorm[] = INCBIN_U32("graphics/battle_anims/backgrounds/sandstorm_brew.4bpp.lz");
+BATTLE_ANIM_SANDSTORM_RESOURCES const u32 gBattleAnimSpritePal_FlyingDirt[] = INCBIN_U32("graphics/battle_anims/sprites/flying_dirt.gbapal.lz");
+
+#undef BATTLE_ANIM_SANDSTORM_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

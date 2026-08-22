@@ -470,22 +470,10 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 
 
 	.section .rodata.data_rest2c_after_intro_scene_1_effects_graphics
-	.incbin "baserom_jp.gba", 0xD8D288, 0x16C
 
 
-	.globl gBattleAnimBgTilemap_Sandstorm
-gBattleAnimBgTilemap_Sandstorm: @ 0x8D8D3F4
-	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_Sandstorm.bin"
-
-
-	.globl gBattleAnimBgImage_Sandstorm
-gBattleAnimBgImage_Sandstorm: @ 0x8D8D570
-	.incbin "graphics/battle_anims/gBattleAnimBgImage_Sandstorm.bin"
-
-
-	.globl gBattleAnimSpritePal_FlyingDirt
-gBattleAnimSpritePal_FlyingDirt: @ 0x8D8DA9C
-	.4byte 0x00002010, 0xFF325C00, 0x3A639C6F, 0x4AD70057, 0x36133E75, 0x10800000, 0x3E4F9F01, 0x5C3EDE47, 0x25FA3200, 0x00001D98, 0x00040010, 0xF000003F
+	.section .rodata.data_rest2c_after_battle_anim_sandstorm_resources
+	.4byte 0x00040010, 0xF000003F
 	.4byte 0xF001F001, 0xF001F001, 0xF001F001, 0x01F001F0, 0x018001F0, 0x00000120, 0x00124000, 0x01423200, 0x32320500, 0x90332024, 0x0300021C, 0x00000400
 	.4byte 0x00002310, 0x00230121, 0x02332410, 0xE80A0042, 0x01F001F0, 0x00220120, 0x20004203, 0x00200204, 0x4A002420, 0x00001442, 0x30334100, 0x00331133
 	.4byte 0x23333320, 0x12233310, 0x22331200, 0x12333411, 0x23312100, 0x00010310, 0x03002233, 0x03331100, 0x02333332, 0x33320021, 0x33221101, 0x21000021
