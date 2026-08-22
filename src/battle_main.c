@@ -78,8 +78,8 @@ extern u8 sUnusedBattlersArray[];
 void TurnValuesCleanUp(bool8 var0);
 extern void RunTurnActionsFunctions(void); // JP asm 0x0803D488 (US: same name)
 extern void RunBattleScriptCommands(void); // JP asm 0x0803D45C (register-sensitive, kept in asm)
-extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC600 (14 B_ACTION_* entries)
 extern void (*const gBattleScriptingCommandsTable[])(void); // JP data 0x082EC694 (249 B_SCR_OP_* entries)
+extern void sub_080454F4(void); // JP HandleAction_RunBattleScript equivalent
 extern void (*gCB2_AfterEvolution)(void); // JP IWRAM 0x03005F28
 static void SpriteCB_UnusedBattleInit(struct Sprite *sprite);
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -89,6 +89,7 @@ static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
 #define BATTLE_MAIN_ANIM_DATA __attribute__((section(".rodata.battle_main_anim_data")))
 #define BATTLE_MAIN_TYPE_DATA __attribute__((section(".rodata.battle_main_type_data")))
 #define BATTLE_MAIN_TRAINER_MONEY_DATA __attribute__((section(".rodata.battle_main_trainer_money_data")))
+#define BATTLE_MAIN_TURN_ACTION_DATA __attribute__((section(".rodata.battle_main_turn_action_data")))
 
 const struct ScanlineEffectParams sIntroScanlineParams16Bit BATTLE_MAIN_INIT_DATA =
 {
@@ -10847,3 +10848,36 @@ __attribute__((naked)) void RunBattleScriptCommands(void)
         ".syntax divided\n\t"
     );
 }
+
+void (*const sTurnActionsFuncsTable[])(void) BATTLE_MAIN_TURN_ACTION_DATA =
+{
+    [B_ACTION_USE_MOVE]               = HandleAction_UseMove,
+    [B_ACTION_USE_ITEM]               = HandleAction_UseItem,
+    [B_ACTION_SWITCH]                 = HandleAction_Switch,
+    [B_ACTION_RUN]                    = HandleAction_Run,
+    [B_ACTION_SAFARI_WATCH_CAREFULLY] = HandleAction_WatchesCarefully,
+    [B_ACTION_SAFARI_BALL]            = HandleAction_SafariZoneBallThrow,
+    [B_ACTION_SAFARI_POKEBLOCK]       = HandleAction_ThrowPokeblock,
+    [B_ACTION_SAFARI_GO_NEAR]         = HandleAction_GoNear,
+    [B_ACTION_SAFARI_RUN]             = HandleAction_SafariZoneRun,
+    [B_ACTION_WALLY_THROW]            = HandleAction_WallyBallThrow,
+    [B_ACTION_EXEC_SCRIPT]            = sub_080454F4,
+    [B_ACTION_TRY_FINISH]             = sub_0803EEE4,
+    [B_ACTION_FINISHED]               = HandleAction_ActionFinished,
+    [B_ACTION_NOTHING_FAINTED]        = HandleAction_NothingIsFainted,
+};
+
+void (*const sEndTurnFuncsTable[])(void) BATTLE_MAIN_TURN_ACTION_DATA =
+{
+    [0]                           = HandleEndTurn_ContinueBattle,
+    [B_OUTCOME_WON]               = HandleEndTurn_BattleWon,
+    [B_OUTCOME_LOST]              = HandleEndTurn_BattleLost,
+    [B_OUTCOME_DREW]              = HandleEndTurn_BattleLost,
+    [B_OUTCOME_RAN]               = HandleEndTurn_RanFromBattle,
+    [B_OUTCOME_PLAYER_TELEPORTED] = HandleEndTurn_FinishBattle,
+    [B_OUTCOME_MON_FLED]          = HandleEndTurn_MonFled,
+    [B_OUTCOME_CAUGHT]            = HandleEndTurn_FinishBattle,
+    [B_OUTCOME_NO_SAFARI_BALLS]   = HandleEndTurn_FinishBattle,
+    [B_OUTCOME_FORFEITED]         = HandleEndTurn_FinishBattle,
+    [B_OUTCOME_MON_TELEPORTED]    = HandleEndTurn_FinishBattle,
+};

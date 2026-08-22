@@ -27,14 +27,30 @@
 #include "constants/songs.h"
 #include "constants/weather.h"
 
-extern const u16 sSoundMovesTable[];
+#define BATTLE_UTIL_SAFARI_DATA __attribute__((section(".rodata.battle_util_safari_data")))
+
+static const u8 sPkblToEscapeFactor[][3] BATTLE_UTIL_SAFARI_DATA =
+{
+    {0, 0, 0},
+    {3, 5, 0},
+    {2, 3, 0},
+    {1, 2, 0},
+    {1, 1, 0},
+};
+
+static const u8 sGoNearCounterToCatchFactor[] BATTLE_UTIL_SAFARI_DATA = {4, 3, 2, 1};
+static const u8 sGoNearCounterToEscapeFactor[] BATTLE_UTIL_SAFARI_DATA = {4, 4, 4, 4, 0};
+
+static const u16 sSoundMovesTable[] BATTLE_UTIL_SAFARI_DATA =
+{
+    MOVE_GROWL, MOVE_ROAR, MOVE_SING, MOVE_SUPERSONIC, MOVE_SCREECH, MOVE_SNORE,
+    MOVE_UPROAR, MOVE_METAL_SOUND, MOVE_GRASS_WHISTLE, MOVE_HYPER_VOICE, 0xFFFF, 0,
+};
+
 extern const u8 *const gBattlescriptsForBallThrow[];
 extern const u8 *const gBattlescriptsForRunningByItem[];
 extern const u8 *const gBattlescriptsForUsingItem[];
 extern const u8 *const gBattlescriptsForSafariActions[];
-extern const u8 sPkblToEscapeFactor[][3];
-extern const u8 sGoNearCounterToCatchFactor[];
-extern const u8 sGoNearCounterToEscapeFactor[];
 extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC600 (14 B_ACTION_* entries)
 void sub_0803DCCC(void);
 

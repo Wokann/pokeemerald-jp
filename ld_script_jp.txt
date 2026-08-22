@@ -9404,6 +9404,9 @@ SECTIONS {
         src/battle_main.o(.rodata.battle_main_trainer_money_data);
         src/data/text/abilities.o(.rodata);
         data/data_b2d.o(.rodata);
+        src/battle_main.o(.rodata.battle_main_turn_action_data);
+        src/battle_util.o(.rodata.battle_util_safari_data);
+        data/data_b2d.o(.rodata.data_b2d_battle_command_table);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sAccuracyStageRatios);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sCriticalHitChance);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sStatusFlagsForMoveEffects);
