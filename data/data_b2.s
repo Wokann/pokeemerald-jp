@@ -86,8 +86,4 @@ sBattleArenaWindowTemplates: @ 0x82EB938
 gBattleWindowTemplates: @ 0x82EB9F8
 	.4byte sStandardBattleWindowTemplates, sBattleArenaWindowTemplates
 
-	.globl sBattleEnvironmentTable
-sBattleEnvironmentTable: @ 0x82EBA00 (10 * struct BattleBackground)
-	.incbin "baserom_jp.gba", 0x2eba00, 0xc8
-
 	.section .rodata.battle_main_static_tail

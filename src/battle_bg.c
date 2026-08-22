@@ -1,4 +1,5 @@
 #include "global.h"
+#include "graphics.h"
 #include "battle.h"
 #include "battle_bg.h"
 #include "battle_main.h"
@@ -33,12 +34,10 @@ struct BattleBackground
 };
 
 #define TAG_VS_LETTERS 10000
+#define BATTLE_BG_ENVIRONMENT_DATA __attribute__((section(".rodata.battle_bg_environment_data")))
 
-// JP: the environment/graphics tables below live in the raw data files
-// (data/data_b.s, data/data_rest.s); the C code only indexes them.
 extern const struct BgTemplate gBattleBgTemplates[];
 extern const struct WindowTemplate *const gBattleWindowTemplates[];
-extern const struct BattleBackground sBattleEnvironmentTable[];
 extern const struct SpriteTemplate sVsLetter_V_SpriteTemplate;
 extern const struct SpriteTemplate sVsLetter_S_SpriteTemplate;
 extern const struct CompressedSpriteSheet sVsLettersSpriteSheet;
@@ -47,29 +46,6 @@ extern const u32 gBattleTextboxTilemap[];
 extern const u32 gBattleTextboxPalette[];
 extern const u32 gBattleWindowTextPalette[];
 extern const u8 gGameVersion; // JP: 0x03 = VERSION_EMERALD
-extern const u32 gBattleEnvironmentTiles_Building[];
-extern const u32 gBattleEnvironmentTilemap_Building[];
-extern const u32 gBattleEnvironmentPalette_Frontier[];
-extern const u32 gBattleEnvironmentTiles_Cave[];
-extern const u32 gBattleEnvironmentTilemap_Cave[];
-extern const u32 gBattleEnvironmentPalette_Groudon[];
-extern const u32 gBattleEnvironmentTiles_Water[];
-extern const u32 gBattleEnvironmentTilemap_Water[];
-extern const u32 gBattleEnvironmentPalette_Kyogre[];
-extern const u32 gBattleEnvironmentTiles_Stadium[];
-extern const u32 gBattleEnvironmentTilemap_Stadium[];
-extern const u32 gBattleEnvironmentTiles_Rayquaza[];
-extern const u32 gBattleEnvironmentTilemap_Rayquaza[];
-extern const u32 gBattleEnvironmentPalette_Rayquaza[];
-extern const u32 gBattleEnvironmentPalette_BuildingLeader[];
-extern const u32 gBattleEnvironmentPalette_StadiumWallace[];
-extern const u32 gBattleEnvironmentPalette_BuildingGym[];
-extern const u32 gBattleEnvironmentPalette_StadiumMagma[];
-extern const u32 gBattleEnvironmentPalette_StadiumAqua[];
-extern const u32 gBattleEnvironmentPalette_StadiumSidney[];
-extern const u32 gBattleEnvironmentPalette_StadiumPhoebe[];
-extern const u32 gBattleEnvironmentPalette_StadiumGlacia[];
-extern const u32 gBattleEnvironmentPalette_StadiumDrake[];
 extern const u32 gBattleVSFrame_Gfx[];
 extern const u32 gVsLettersGfx[];
 extern const u32 gBattleVSFrame_Pal[];
@@ -87,6 +63,92 @@ extern const u32 gMultiBattleIntroBg_Player_Tilemap[];
 extern const u8 gText_Win[];
 extern const u8 gText_Loss[];
 extern const u8 gText_Draw[];
+
+static const struct BattleBackground sBattleEnvironmentTable[] BATTLE_BG_ENVIRONMENT_DATA =
+{
+    [BATTLE_ENVIRONMENT_GRASS] =
+    {
+        .tileset = gBattleEnvironmentTiles_TallGrass,
+        .tilemap = gBattleEnvironmentTilemap_TallGrass,
+        .entryTileset = gBattleEnvironmentAnimTiles_TallGrass,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_TallGrass,
+        .palette = gBattleEnvironmentPalette_TallGrass,
+    },
+    [BATTLE_ENVIRONMENT_LONG_GRASS] =
+    {
+        .tileset = gBattleEnvironmentTiles_LongGrass,
+        .tilemap = gBattleEnvironmentTilemap_LongGrass,
+        .entryTileset = gBattleEnvironmentAnimTiles_LongGrass,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_LongGrass,
+        .palette = gBattleEnvironmentPalette_LongGrass,
+    },
+    [BATTLE_ENVIRONMENT_SAND] =
+    {
+        .tileset = gBattleEnvironmentTiles_Sand,
+        .tilemap = gBattleEnvironmentTilemap_Sand,
+        .entryTileset = gBattleEnvironmentAnimTiles_Sand,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_Sand,
+        .palette = gBattleEnvironmentPalette_Sand,
+    },
+    [BATTLE_ENVIRONMENT_UNDERWATER] =
+    {
+        .tileset = gBattleEnvironmentTiles_Underwater,
+        .tilemap = gBattleEnvironmentTilemap_Underwater,
+        .entryTileset = gBattleEnvironmentAnimTiles_Underwater,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_Underwater,
+        .palette = gBattleEnvironmentPalette_Underwater,
+    },
+    [BATTLE_ENVIRONMENT_WATER] =
+    {
+        .tileset = gBattleEnvironmentTiles_Water,
+        .tilemap = gBattleEnvironmentTilemap_Water,
+        .entryTileset = gBattleEnvironmentAnimTiles_Water,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_Water,
+        .palette = gBattleEnvironmentPalette_Water,
+    },
+    [BATTLE_ENVIRONMENT_POND] =
+    {
+        .tileset = gBattleEnvironmentTiles_PondWater,
+        .tilemap = gBattleEnvironmentTilemap_PondWater,
+        .entryTileset = gBattleEnvironmentAnimTiles_PondWater,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_PondWater,
+        .palette = gBattleEnvironmentPalette_PondWater,
+    },
+    [BATTLE_ENVIRONMENT_MOUNTAIN] =
+    {
+        .tileset = gBattleEnvironmentTiles_Rock,
+        .tilemap = gBattleEnvironmentTilemap_Rock,
+        .entryTileset = gBattleEnvironmentAnimTiles_Rock,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_Rock,
+        .palette = gBattleEnvironmentPalette_Rock,
+    },
+    [BATTLE_ENVIRONMENT_CAVE] =
+    {
+        .tileset = gBattleEnvironmentTiles_Cave,
+        .tilemap = gBattleEnvironmentTilemap_Cave,
+        .entryTileset = gBattleEnvironmentAnimTiles_Cave,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_Cave,
+        .palette = gBattleEnvironmentPalette_Cave,
+    },
+    [BATTLE_ENVIRONMENT_BUILDING] =
+    {
+        .tileset = gBattleEnvironmentTiles_Building,
+        .tilemap = gBattleEnvironmentTilemap_Building,
+        .entryTileset = gBattleEnvironmentAnimTiles_Building,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
+        .palette = gBattleEnvironmentPalette_Building,
+    },
+    [BATTLE_ENVIRONMENT_PLAIN] =
+    {
+        .tileset = gBattleEnvironmentTiles_Building,
+        .tilemap = gBattleEnvironmentTilemap_Building,
+        .entryTileset = gBattleEnvironmentAnimTiles_Building,
+        .entryTilemap = gBattleEnvironmentAnimTilemap_Building,
+        .palette = gBattleEnvironmentPalette_Plain,
+    },
+};
+
+#undef BATTLE_BG_ENVIRONMENT_DATA
 
 // JP globals (sym files) and helpers still in asm.
 extern u8 gBattleTerrain;

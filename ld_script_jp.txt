@@ -9396,6 +9396,8 @@ SECTIONS {
         src/data/text/species_names.o(.rodata);
         src/data/text/move_names.o(.rodata);
         data/data_b2.o(.rodata);
+        sBattleEnvironmentTable = .;
+        src/battle_bg.o(.rodata.battle_bg_environment_data);
         src/battle_main.o(.rodata.battle_main_init_data);
         gUnknown_82EBAEF8 = .;
         src/battle_main.o(.rodata.battle_main_oam_data);
@@ -9964,6 +9966,8 @@ SECTIONS {
         src/graphics.o(.rodata.pokemon_graphics_prefix);
         data/data_b2d_gfx_pokemon_main.o(.rodata);
         data/data_rest2c.o(.rodata);
+        src/graphics.o(.rodata.battle_environment_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_after_battle_environment_graphics);
         src/graphics.o(.rodata.intro_scene_2_player_palette);
         data/data_rest2c.o(.rodata.data_rest2c_after_intro_scene_2_player_palette);
         src/graphics.o(.rodata.intro_scene_2_character_graphics);
