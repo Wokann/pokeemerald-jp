@@ -547,6 +547,10 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/backgrounds/fissure.bin.lz graphics/battle_anims/sprites/bird.4bpp.lz \
 	graphics/battle_anims/sprites/bird.gbapal.lz graphics/battle_anims/sprites/cross_impact.4bpp.lz \
 	graphics/battle_anims/sprites/cross_impact.gbapal.lz \
+	graphics/battle_anims/backgrounds/water.4bpp.lz graphics/battle_anims/backgrounds/water.gbapal.lz \
+	graphics/battle_anims/backgrounds/water_opponent.bin.lz graphics/battle_anims/backgrounds/water_player.bin.lz \
+	graphics/battle_anims/backgrounds/water_contest.bin.lz graphics/battle_anims/sprites/slash_2.gbapal.lz \
+	graphics/battle_anims/sprites/white_shadow.4bpp.lz graphics/battle_anims/sprites/white_shadow.gbapal.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s

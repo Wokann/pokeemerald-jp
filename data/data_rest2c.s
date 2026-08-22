@@ -505,29 +505,7 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 	.section .rodata.data_rest2c_after_battle_anim_fog_through_cross_impact_resources
 
 
-	.globl gBattleAnimBgImage_Surf
-gBattleAnimBgImage_Surf: @ 0x8D94A6C
-	.incbin "graphics/battle_anims/gBattleAnimBgImage_Surf.bin"
-
-
-	.globl gBattleAnimBgPalette_Surf
-gBattleAnimBgPalette_Surf: @ 0x8D95D8C
-	.incbin "graphics/battle_anims/gBattleAnimBgPalette_Surf.bin"
-
-
-	.globl gBattleAnimBgTilemap_SurfOpponent
-gBattleAnimBgTilemap_SurfOpponent: @ 0x8D95DB4
-	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_SurfOpponent.bin"
-
-
-	.globl gBattleAnimBgTilemap_SurfPlayer
-gBattleAnimBgTilemap_SurfPlayer: @ 0x8D96084
-	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_SurfPlayer.bin"
-
-
-	.globl gBattleAnimBgTilemap_SurfContest
-gBattleAnimBgTilemap_SurfContest: @ 0x8D96358
-	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_SurfContest.bin"
+	.section .rodata.data_rest2c_after_battle_anim_surf_and_white_shadow_resources
 
 
 	.globl gUnknown_8D967A0
