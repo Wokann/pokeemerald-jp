@@ -232,6 +232,37 @@ BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES const u32 gBattleAnimSpriteGfx_SlamH
 
 #undef BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES
 
+#define BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES __attribute__((section(".rodata.battle_anim_fog_through_cross_impact_resources"), aligned(1)))
+
+// The JP LZ77 streams retain their original stream-alignment padding.
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimFogTilemap[] = INCBIN_U32("graphics/battle_anims/backgrounds/fog.bin.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_WeatherBall[] = INCBIN_U32("graphics/battle_anims/sprites/weather_ball.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpriteGfx_WeatherBall[] = INCBIN_U32("graphics/battle_anims/sprites/weather_ball.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimBgTilemap_ScaryFacePlayer[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face_player.bin.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimBgTilemap_ScaryFaceOpponent[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face_opponent.bin.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimBgTilemap_ScaryFaceContest[] = INCBIN_U32("graphics/battle_anims/backgrounds/scary_face_contest.bin.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpriteGfx_Hail[] = INCBIN_U32("graphics/battle_anims/sprites/hail.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_Hail[] = INCBIN_U32("graphics/battle_anims/sprites/hail.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpriteGfx_GreenSpike[] = INCBIN_U32("graphics/battle_anims/sprites/green_spike.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_GreenSpike[] = INCBIN_U32("graphics/battle_anims/sprites/green_spike.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_WhiteCircleOfLight[] = INCBIN_U32("graphics/battle_anims/sprites/white_circle_of_light.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_GlowyBlueOrb[] = INCBIN_U32("graphics/battle_anims/sprites/glowy_blue_orb.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpriteGfx_Recycle[] = INCBIN_U32("graphics/battle_anims/sprites/recycle.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_Recycle[] = INCBIN_U32("graphics/battle_anims/sprites/recycle.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpriteGfx_RedParticles[] = INCBIN_U32("graphics/battle_anims/sprites/red_particles.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_RedParticles[] = INCBIN_U32("graphics/battle_anims/sprites/red_particles.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpriteGfx_DirtMound[] = INCBIN_U32("graphics/battle_anims/sprites/dirt_mound.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_DirtMound[] = INCBIN_U32("graphics/battle_anims/sprites/dirt_mound.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimBgImage_Fissure[] = INCBIN_U32("graphics/battle_anims/backgrounds/fissure.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimBgPalette_Fissure[] = INCBIN_U32("graphics/battle_anims/backgrounds/fissure.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimBgTilemap_Fissure[] = INCBIN_U32("graphics/battle_anims/backgrounds/fissure.bin.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpriteGfx_Bird[] = INCBIN_U32("graphics/battle_anims/sprites/bird.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_Bird[] = INCBIN_U32("graphics/battle_anims/sprites/bird.gbapal.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpriteGfx_CrossImpact[] = INCBIN_U32("graphics/battle_anims/sprites/cross_impact.4bpp.lz");
+BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES const u32 gBattleAnimSpritePal_CrossImpact[] = INCBIN_U32("graphics/battle_anims/sprites/cross_impact.gbapal.lz");
+
+#undef BATTLE_ANIM_FOG_THROUGH_CROSS_IMPACT_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

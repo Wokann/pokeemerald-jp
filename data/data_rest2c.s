@@ -502,25 +502,7 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 
 	.section .rodata.data_rest2c_after_battle_anim_cosmic_and_slam_hit_2_resources
 
-
-	.globl gBattleAnimFogTilemap
-gBattleAnimFogTilemap: @ 0x8D93294
-	.incbin "graphics/battle_anims/gBattleAnimFogTilemap.bin"
-
-
-	.globl gBattleAnimBgTilemap_ScaryFacePlayer
-gBattleAnimBgTilemap_ScaryFacePlayer: @ 0x8D9354C
-	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_ScaryFacePlayer.bin"
-
-
-	.globl gBattleAnimBgTilemap_ScaryFaceOpponent
-gBattleAnimBgTilemap_ScaryFaceOpponent: @ 0x8D93730
-	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_ScaryFaceOpponent.bin"
-
-
-	.globl gBattleAnimBgTilemap_ScaryFaceContest
-gBattleAnimBgTilemap_ScaryFaceContest: @ 0x8D93914
-	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_ScaryFaceContest.bin"
+	.section .rodata.data_rest2c_after_battle_anim_fog_through_cross_impact_resources
 
 
 	.globl gBattleAnimBgImage_Surf

@@ -534,6 +534,19 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/backgrounds/cosmic.gbapal.lz graphics/battle_anims/backgrounds/cosmic.4bpp.lz \
 	graphics/battle_anims/backgrounds/cosmic.bin.lz graphics/battle_anims/sprites/slam_hit_2.gbapal.lz \
 	graphics/battle_anims/sprites/slam_hit_2.4bpp.lz \
+	graphics/battle_anims/backgrounds/fog.bin.lz graphics/battle_anims/sprites/weather_ball.gbapal.lz \
+	graphics/battle_anims/sprites/weather_ball.4bpp.lz graphics/battle_anims/backgrounds/scary_face_player.bin.lz \
+	graphics/battle_anims/backgrounds/scary_face_opponent.bin.lz graphics/battle_anims/backgrounds/scary_face_contest.bin.lz \
+	graphics/battle_anims/sprites/hail.4bpp.lz graphics/battle_anims/sprites/hail.gbapal.lz \
+	graphics/battle_anims/sprites/green_spike.4bpp.lz graphics/battle_anims/sprites/green_spike.gbapal.lz \
+	graphics/battle_anims/sprites/white_circle_of_light.gbapal.lz graphics/battle_anims/sprites/glowy_blue_orb.gbapal.lz \
+	graphics/battle_anims/sprites/recycle.4bpp.lz graphics/battle_anims/sprites/recycle.gbapal.lz \
+	graphics/battle_anims/sprites/red_particles.4bpp.lz graphics/battle_anims/sprites/red_particles.gbapal.lz \
+	graphics/battle_anims/sprites/dirt_mound.4bpp.lz graphics/battle_anims/sprites/dirt_mound.gbapal.lz \
+	graphics/battle_anims/backgrounds/fissure.4bpp.lz graphics/battle_anims/backgrounds/fissure.gbapal.lz \
+	graphics/battle_anims/backgrounds/fissure.bin.lz graphics/battle_anims/sprites/bird.4bpp.lz \
+	graphics/battle_anims/sprites/bird.gbapal.lz graphics/battle_anims/sprites/cross_impact.4bpp.lz \
+	graphics/battle_anims/sprites/cross_impact.gbapal.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
