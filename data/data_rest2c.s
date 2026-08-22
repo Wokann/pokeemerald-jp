@@ -497,7 +497,10 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 
 
 	.section .rodata.data_rest2c_after_berry_blender_background_graphics
-	.incbin "baserom_jp.gba", 0xD92AB1, 0x7E3
+	@ The preceding Berry Blender tilemap stream is 0x311 bytes long; retain its ROM padding.
+	.incbin "baserom_jp.gba", 0xD92AB1, 0x3
+
+	.section .rodata.data_rest2c_after_battle_anim_cosmic_and_slam_hit_2_resources
 
 
 	.globl gBattleAnimFogTilemap

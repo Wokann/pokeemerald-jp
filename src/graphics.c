@@ -221,6 +221,17 @@ BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES const u32 gBattleAnimBgTilemap_SolarBe
 
 #undef BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES
 
+#define BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES __attribute__((section(".rodata.battle_anim_cosmic_and_slam_hit_2_resources"), aligned(1)))
+
+// The JP LZ77 streams retain their original stream-alignment padding.
+BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES const u32 gBattleAnimBgPalette_Cosmic[] = INCBIN_U32("graphics/battle_anims/backgrounds/cosmic.gbapal.lz");
+BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES const u32 gBattleAnimBgImage_Cosmic[] = INCBIN_U32("graphics/battle_anims/backgrounds/cosmic.4bpp.lz");
+BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES const u32 gBattleAnimBgTilemap_Cosmic[] = INCBIN_U32("graphics/battle_anims/backgrounds/cosmic.bin.lz");
+BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES const u32 gBattleAnimSpritePal_SlamHit2[] = INCBIN_U32("graphics/battle_anims/sprites/slam_hit_2.gbapal.lz");
+BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES const u32 gBattleAnimSpriteGfx_SlamHit2[] = INCBIN_U32("graphics/battle_anims/sprites/slam_hit_2.4bpp.lz");
+
+#undef BATTLE_ANIM_COSMIC_AND_SLAM_HIT_2_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

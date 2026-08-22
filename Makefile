@@ -531,6 +531,9 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/backgrounds/ghost.gbapal.lz graphics/battle_anims/backgrounds/ghost.bin.lz \
 	graphics/battle_anims/sprites/whip_hit.gbapal.lz graphics/battle_anims/backgrounds/solarbeam.gbapal.lz \
 	graphics/battle_anims/backgrounds/solarbeam.bin.lz \
+	graphics/battle_anims/backgrounds/cosmic.gbapal.lz graphics/battle_anims/backgrounds/cosmic.4bpp.lz \
+	graphics/battle_anims/backgrounds/cosmic.bin.lz graphics/battle_anims/sprites/slam_hit_2.gbapal.lz \
+	graphics/battle_anims/sprites/slam_hit_2.4bpp.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
