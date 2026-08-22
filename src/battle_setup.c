@@ -1769,13 +1769,10 @@ u16 CountBattledRematchTeams(u16 trainerId)
     return i;
 }
 
-// JP: SetUpTrainerMovement uses GroundEffect_DeepSandTracks instead of the US
-// GetTrainerFacingDirectionMovementType helper.
-extern u8 GroundEffect_DeepSandTracks(u8 metatileBehavior);
 extern bool8 sub_080FB730(void);
 
 void SetUpTrainerMovement(void)
 {
     struct ObjectEvent *objectEvent = &gObjectEvents[gSelectedObjectEvent];
-    SetTrainerMovementType(objectEvent, GroundEffect_DeepSandTracks(objectEvent->facingDirection));
+    SetTrainerMovementType(objectEvent, GetTrainerFacingDirectionMovementType(objectEvent->facingDirection));
 }

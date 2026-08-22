@@ -7,6 +7,7 @@
 #include "field_effect.h"
 #include "overworld.h"
 #include "field_camera.h"
+#include "metatile_behavior.h"
 #include "palette.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
@@ -457,6 +458,65 @@ EVENT_OBJECT_MOVEMENT_ACTION_TABLES const u8 gWalkSlowMovementActions[] =
 
 #undef EVENT_OBJECT_MOVEMENT_ACTION_TABLES
 
+#define EVENT_OBJECT_MOVEMENT_DIRECTION_DATA __attribute__((section(".rodata.event_object_movement_direction_data"), aligned(1)))
+
+// Keep this packed: the original ROM places a 9-byte lookup directly before
+// two function-pointer tables, without the normal C alignment padding.
+struct EventObjectMovementDirectionData
+{
+    u8 trainerFacingDirectionMovementTypes[9];
+    bool8 (*directionBlockedMetatileFuncs[4])(u8);
+    bool8 (*oppositeDirectionBlockedMetatileFuncs[4])(u8);
+    struct Coords16 directionToVectors[9];
+} __attribute__((packed));
+
+// The JP collision implementation uses these names in the opposite order from
+// the current US source, so retain the actual JP pointer sequences.
+EVENT_OBJECT_MOVEMENT_DIRECTION_DATA static const struct EventObjectMovementDirectionData sEventObjectMovementDirectionData =
+{
+    .trainerFacingDirectionMovementTypes =
+    {
+        [DIR_NONE] = MOVEMENT_TYPE_FACE_DOWN,
+        [DIR_SOUTH] = MOVEMENT_TYPE_FACE_DOWN,
+        [DIR_NORTH] = MOVEMENT_TYPE_FACE_UP,
+        [DIR_WEST] = MOVEMENT_TYPE_FACE_LEFT,
+        [DIR_EAST] = MOVEMENT_TYPE_FACE_RIGHT,
+        [DIR_SOUTHWEST] = MOVEMENT_TYPE_FACE_DOWN,
+        [DIR_SOUTHEAST] = MOVEMENT_TYPE_FACE_DOWN,
+        [DIR_NORTHWEST] = MOVEMENT_TYPE_FACE_UP,
+        [DIR_NORTHEAST] = MOVEMENT_TYPE_FACE_UP,
+    },
+    .directionBlockedMetatileFuncs =
+    {
+        MetatileBehavior_IsSouthBlocked,
+        MetatileBehavior_IsNorthBlocked,
+        MetatileBehavior_IsWestBlocked,
+        MetatileBehavior_IsEastBlocked,
+    },
+    .oppositeDirectionBlockedMetatileFuncs =
+    {
+        MetatileBehavior_IsNorthBlocked,
+        MetatileBehavior_IsSouthBlocked,
+        MetatileBehavior_IsEastBlocked,
+        MetatileBehavior_IsWestBlocked,
+    },
+    .directionToVectors =
+    {
+        [DIR_NONE] = {  0,  0 },
+        [DIR_SOUTH] = {  0,  1 },
+        [DIR_NORTH] = {  0, -1 },
+        [DIR_WEST] = { -1,  0 },
+        [DIR_EAST] = {  1,  0 },
+        [DIR_SOUTHWEST] = { -1,  1 },
+        [DIR_SOUTHEAST] = {  1,  1 },
+        [DIR_NORTHWEST] = { -1, -1 },
+        [DIR_NORTHEAST] = {  1, -1 },
+    },
+};
+
+#undef EVENT_OBJECT_MOVEMENT_DIRECTION_DATA
+
+extern const struct Coords16 sDirectionToVectors[];
 extern const u8 sElevationToPriority[];
 extern const u8 sOppositeDirections[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
@@ -473,7 +533,6 @@ extern const char gUnknown_84E6CB4[];
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
-extern const struct Coords16 sDirectionToVectors[];
 extern const s8 sFigure8YOffsets[];
 struct ObjectEvent;
 struct Sprite;
@@ -7824,7 +7883,7 @@ void SetTrainerMovementType(struct ObjectEvent *objectEvent, u8 movementType)
     gSprites[objectEvent->spriteId].sTypeFuncId = 0;
 }
 
-__attribute__((naked)) void GroundEffect_DeepSandTracks(struct ObjectEvent *objEvent, struct Sprite *sprite)
+__attribute__((naked, section(".text.GroundEffect_DeepSandTracks"))) u8 GetTrainerFacingDirectionMovementType(u8 direction)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7835,7 +7894,7 @@ __attribute__((naked)) void GroundEffect_DeepSandTracks(struct ObjectEvent *objE
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080924F4: .4byte gUnknown_84E5FA7\n\t"
+        "_080924F4: .4byte gTrainerFacingDirectionMovementTypes\n\t"
         ".syntax divided\n\t"
     );
 }

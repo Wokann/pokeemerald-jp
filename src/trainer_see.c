@@ -27,7 +27,6 @@ u8 sub_08092CF8(u32 direction);   // JP: walk normal movement action
 u8 sub_08092E2C(u32 direction);   // JP: jump in place movement action
 void CancelPlayerForcedMovement(void);
 void sub_0809B720(u8 localId);    // JP: SetMovingNpcId
-u8 GroundEffect_DeepSandTracks(u8 metatileBehavior); // JP: returns movement type
 
 static u8 CheckTrainer(u8 objectEventId);
 static u8 GetTrainerApproachDistance(struct ObjectEvent *trainerObj);
@@ -409,9 +408,8 @@ static bool8 PlayerFaceApproachingTrainer(u8 taskId, struct Task *task, struct O
     if (ObjectEventIsMovementOverridden(trainerObj) && !ObjectEventClearHeldMovementIfFinished(trainerObj))
         return FALSE;
 
-    // JP: uses GroundEffect_DeepSandTracks instead of GetTrainerFacingDirectionMovementType
-    SetTrainerMovementType(trainerObj, GroundEffect_DeepSandTracks(trainerObj->facingDirection));
-    TryOverrideTemplateCoordsForObjectEvent(trainerObj, GroundEffect_DeepSandTracks(trainerObj->facingDirection));
+    SetTrainerMovementType(trainerObj, GetTrainerFacingDirectionMovementType(trainerObj->facingDirection));
+    TryOverrideTemplateCoordsForObjectEvent(trainerObj, GetTrainerFacingDirectionMovementType(trainerObj->facingDirection));
     OverrideTemplateCoordsForObjectEvent(trainerObj);
 
     playerObj = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -532,9 +530,8 @@ static void Task_SetBuriedTrainerMovement(u8 taskId)
     sTrainerSeeFuncList2[task->tFuncId](taskId, task, objEvent);
     if (task->tFuncId == ((int)ARRAY_COUNT(sTrainerSeeFuncList2) - 1) && !FieldEffectActiveListContains(FLDEFF_ASH_PUFF))
     {
-        // JP: uses GroundEffect_DeepSandTracks instead of GetTrainerFacingDirectionMovementType
-        SetTrainerMovementType(objEvent, GroundEffect_DeepSandTracks(objEvent->facingDirection));
-        TryOverrideTemplateCoordsForObjectEvent(objEvent, GroundEffect_DeepSandTracks(objEvent->facingDirection));
+        SetTrainerMovementType(objEvent, GetTrainerFacingDirectionMovementType(objEvent->facingDirection));
+        TryOverrideTemplateCoordsForObjectEvent(objEvent, GetTrainerFacingDirectionMovementType(objEvent->facingDirection));
         DestroyTask(taskId);
     }
     else

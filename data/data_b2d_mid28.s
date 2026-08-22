@@ -104,25 +104,8 @@ gUnknown_84E4D5C: @ 0x84E4D5C
 gSpritePalette_GeneralFieldEffect1: @ 0x84E4E1C
 	.incbin "graphics/misc/gSpritePalette_GeneralFieldEffect1.bin"
 
-	.section .rodata.data_b2d_mid28_after_event_object_movement_action_tables
+	.section .rodata.data_b2d_mid28_after_event_object_movement_direction_data
 
-	.globl gUnknown_84E5FA7
-gUnknown_84E5FA7: @ 0x84E5FA7
-	.incbin "baserom_jp.gba", 0x4e5fa7, 0x9
-
-	.globl gDirectionBlockedMetatileFuncs
-gDirectionBlockedMetatileFuncs: @ 0x84E5FB0
-	.4byte MetatileBehavior_IsSouthBlocked + 1, MetatileBehavior_IsNorthBlocked + 1, MetatileBehavior_IsWestBlocked + 1, MetatileBehavior_IsEastBlocked + 1
-
-	.globl gOppositeDirectionBlockedMetatileFuncs
-gOppositeDirectionBlockedMetatileFuncs: @ 0x84E5FC0
-	.4byte MetatileBehavior_IsNorthBlocked + 1, MetatileBehavior_IsSouthBlocked + 1, MetatileBehavior_IsEastBlocked + 1, MetatileBehavior_IsWestBlocked + 1
-
-	.globl gUnknown_84E5FD0
-gUnknown_84E5FD0: @ 0x84E5FD0
-	.incbin "baserom_jp.gba", 0x4E5FD0, 0x24
-	.globl sDirectionToVectors
-	.set sDirectionToVectors, gUnknown_84E5FD0
 	.globl gUnknown_84E5FF4
 gUnknown_84E5FF4: @ 0x84E5FF4
 	.incbin "baserom_jp.gba", 0x4e5ff4, 0x5
