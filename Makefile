@@ -515,6 +515,10 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/backgrounds/ice.4bpp.lz graphics/battle_anims/backgrounds/ice.gbapal.lz \
 	graphics/battle_anims/backgrounds/ice.bin.lz graphics/battle_anims/sprites/icicle_spear.4bpp.lz \
 	graphics/battle_anims/sprites/icicle_spear.gbapal.lz \
+	graphics/contest/nextturn.4bpp.lz graphics/contest/nextturn_numbers.4bpp \
+	graphics/contest/nextturn_random.4bpp \
+	graphics/contest/applause.4bpp.lz graphics/contest/applause_meter.4bpp \
+	graphics/contest/nextturn.gbapal \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s

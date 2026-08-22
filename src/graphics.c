@@ -151,6 +151,24 @@ BATTLE_ANIM_ICE_RESOURCES const u32 gBattleAnimSpritePal_IcicleSpear[] = INCBIN_
 
 #undef BATTLE_ANIM_ICE_RESOURCES
 
+#define CONTEST_NEXT_TURN_RESOURCES __attribute__((section(".rodata.contest_next_turn_resources")))
+
+// The JP Next Turn banner is 32 pixels wide, unlike the 64-pixel US source asset.
+CONTEST_NEXT_TURN_RESOURCES const u32 gContestNextTurnGfx[] = INCBIN_U32("graphics/contest/nextturn.4bpp.lz");
+CONTEST_NEXT_TURN_RESOURCES const u8 gContestNextTurnNumbersGfx[] = INCBIN_U8("graphics/contest/nextturn_numbers.4bpp");
+CONTEST_NEXT_TURN_RESOURCES const u8 gContestNextTurnRandomGfx[] = INCBIN_U8("graphics/contest/nextturn_random.4bpp");
+
+#undef CONTEST_NEXT_TURN_RESOURCES
+
+#define CONTEST_APPLAUSE_RESOURCES __attribute__((section(".rodata.contest_applause_resources")))
+
+// The JP applause artwork retains its original compressed stream.
+CONTEST_APPLAUSE_RESOURCES const u32 gContestApplauseGfx[] = INCBIN_U32("graphics/contest/applause.4bpp.lz");
+CONTEST_APPLAUSE_RESOURCES const u8 gContestApplauseMeterGfx[] = INCBIN_U8("graphics/contest/applause_meter.4bpp");
+CONTEST_APPLAUSE_RESOURCES const u16 gContestPal[] = INCBIN_U16("graphics/contest/nextturn.gbapal");
+
+#undef CONTEST_APPLAUSE_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

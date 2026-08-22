@@ -13486,7 +13486,7 @@ __attribute__((naked)) void UpdateApplauseMeter(void)
         "_080DD144: .4byte gSprites\n\t"
         "_080DD148: .4byte 0x06010000\n\t"
         "_080DD14C: .4byte 0x04000008\n\t"
-        "_080DD150: .4byte gUnknown_8D8EBD8\n\t"
+        "_080DD150: .4byte gContestApplauseMeterGfx\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14504,14 +14504,14 @@ __attribute__((naked)) void GetTurnOrderNumberGfx(void)
         "	b _080DD886\n\t"
         "	.align 2, 0\n\t"
         "_080DD87C: .4byte gContestResources\n\t"
-        "_080DD880: .4byte gUnknown_8D8E97C\n\t"
+        "_080DD880: .4byte gContestNextTurnNumbersGfx\n\t"
         "_080DD884:\n\t"
         "	ldr r0, _080DD88C\n\t"
         "_080DD886:\n\t"
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080DD88C: .4byte gUnknown_8D8E9FC\n\t"
+        "_080DD88C: .4byte gContestNextTurnRandomGfx\n\t"
         ".syntax divided\n\t"
     );
 }

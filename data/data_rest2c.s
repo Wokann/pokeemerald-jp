@@ -477,31 +477,12 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 	.section .rodata.data_rest2c_after_battle_anim_metal_sound_resources
 
 	.section .rodata.data_rest2c_after_battle_anim_ice_resources
-	.incbin "baserom_jp.gba", 0xD8E920, 0x5C
 
-	.globl gUnknown_8D8E97C
-gUnknown_8D8E97C: @ 0x8D8E97C
-	.incbin "baserom_jp.gba", 0xd8e97c, 0x80
+	.section .rodata.data_rest2c_after_contest_next_turn_resources
+	.incbin "baserom_jp.gba", 0xD8EA1C, 0x90
 
-
-	.globl gUnknown_8D8E9FC
-gUnknown_8D8E9FC: @ 0x8D8E9FC
-	.incbin "baserom_jp.gba", 0xd8e9fc, 0x1dc
-
-
-	.globl gUnknown_8D8EBD8
-gUnknown_8D8EBD8: @ 0x8D8EBD8
-	.incbin "baserom_jp.gba", 0xd8ebd8, 0xf78
-
-	.globl gContestNextTurnGfx
-	.set gContestNextTurnGfx, gUnknown_8D8E97C - 0x5c
-
-	.globl gContestApplauseGfx
-	.set gContestApplauseGfx, gUnknown_8D8E9FC + 0xb0
-
-	.globl gContestPal
-	.set gContestPal, gUnknown_8D8EBD8 + 0x80
-
+	.section .rodata.data_rest2c_after_contest_applause_resources
+	.incbin "baserom_jp.gba", 0xD8EC78, 0xED8
 
 	.globl gBattleAnimBackgroundImageMuddyWater_Pal
 gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50
