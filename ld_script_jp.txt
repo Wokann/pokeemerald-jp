@@ -9601,7 +9601,10 @@ SECTIONS {
         gUnknown_84E6071 = gUnknown_84E5FF4 + 0x7D;
         gUnknown_84E6076 = gUnknown_84E5FF4 + 0x82;
         gUnknown_84E607B = gUnknown_84E5FF4 + 0x87;
-        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_event_object_movement_movement_action_data);
+        gUnknown_84E6083 = .;
+        src/event_object_movement.o(.rodata.event_object_movement_direction_composition_data);
+        gUnknown_84E6093 = gUnknown_84E6083 + 0x10;
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_event_object_movement_direction_composition_data);
         src/field_effect_helpers.o(.rodata.field_effect_helpers_figure8_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_helpers_figure8);
         src/coord_event_weather.o(.rodata.coord_event_weather_data.sCoordEventWeatherFuncs);

@@ -575,6 +575,30 @@ EVENT_OBJECT_MOVEMENT_MOVEMENT_ACTION_DATA const u8 sOppositeDirections[] =
 
 #undef EVENT_OBJECT_MOVEMENT_MOVEMENT_ACTION_DATA
 
+#define EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA __attribute__((section(".rodata.event_object_movement_direction_composition_data"), aligned(1)))
+
+// These two 4x4 tables compose the initial movement direction with the
+// direction sequence used by state_to_direction. The final byte is ROM padding.
+EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA static const u8 sDirectionCompositionOffsets[4][4] =
+{
+    { DIR_NORTH, DIR_SOUTH, DIR_EAST, DIR_WEST },
+    { DIR_SOUTH, DIR_NORTH, DIR_WEST, DIR_EAST },
+    { DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH },
+    { DIR_EAST, DIR_WEST, DIR_SOUTH, DIR_NORTH },
+};
+
+EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA static const u8 sDirectionCompositionResults[4][4] =
+{
+    { DIR_NORTH, DIR_SOUTH, DIR_EAST, DIR_WEST },
+    { DIR_SOUTH, DIR_NORTH, DIR_WEST, DIR_EAST },
+    { DIR_EAST, DIR_WEST, DIR_SOUTH, DIR_NORTH },
+    { DIR_WEST, DIR_EAST, DIR_NORTH, DIR_SOUTH },
+};
+
+EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA static const u8 sDirectionCompositionPadding[] = {0};
+
+#undef EVENT_OBJECT_MOVEMENT_DIRECTION_COMPOSITION_DATA
+
 extern const struct Coords16 sDirectionToVectors[];
 extern const u8 sElevationToPriority[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
@@ -9665,7 +9689,7 @@ __attribute__((naked)) u8 zffu_offset_calc(u8 a, u8 b)
         "	ldrb r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080931B8: .4byte gUnknown_84E6083\n\t"
+        "_080931B8: .4byte sDirectionCompositionOffsets\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9707,7 +9731,7 @@ __attribute__((naked)) u32 state_to_direction(u8 a, u8 b, u8 c)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080931F8: .4byte gUnknown_84E6093\n\t"
+        "_080931F8: .4byte sDirectionCompositionResults\n\t"
         ".syntax divided\n\t"
     );
 }
