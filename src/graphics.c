@@ -68,6 +68,23 @@ INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroMay_Gfx[] = INCBIN_U32("graphic
 
 #undef INTRO_SCENE_2_CHARACTER_GRAPHICS
 
+#define INTRO_SCENE_3_GRAPHICS __attribute__((section(".rodata.intro_scene_3_graphics")))
+
+// The JP LZ77 files retain their original stream-alignment padding.
+INTRO_SCENE_3_GRAPHICS const u32 gIntroGroudon_Gfx[] = INCBIN_U32("graphics/intro/scene_3/groudon.8bpp.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroGroudon_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/groudon.bin.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroKyogre_Gfx[] = INCBIN_U32("graphics/intro/scene_3/kyogre.8bpp.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroKyogre_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/kyogre.bin.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroLegendBg_Gfx[] = INCBIN_U32("graphics/intro/scene_3/legend_bg.4bpp.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroGroudonBg_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/groudon_bg.bin.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroKyogreBg_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/kyogre_bg.bin.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroClouds_Gfx[] = INCBIN_U32("graphics/intro/scene_3/clouds.4bpp.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroCloudsLeft_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/clouds_left.bin.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroCloudsRight_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/clouds_right.bin.lz");
+INTRO_SCENE_3_GRAPHICS const u32 gIntroCloudsSun_Tilemap[] = INCBIN_U32("graphics/intro/scene_3/clouds_sun.bin.lz");
+
+#undef INTRO_SCENE_3_GRAPHICS
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

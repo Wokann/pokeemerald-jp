@@ -77,6 +77,17 @@ baserom_jp.gba
 !graphics/intro/scene_3/lightning.png.gbapal
 !graphics/intro/scene_3/bubbles.png.4bpp.lz
 !graphics/intro/scene_3/bubbles.png.gbapal
+!graphics/intro/scene_3/groudon.8bpp.lz
+!graphics/intro/scene_3/groudon.bin.lz
+!graphics/intro/scene_3/kyogre.8bpp.lz
+!graphics/intro/scene_3/kyogre.bin.lz
+!graphics/intro/scene_3/legend_bg.4bpp.lz
+!graphics/intro/scene_3/groudon_bg.bin.lz
+!graphics/intro/scene_3/kyogre_bg.bin.lz
+!graphics/intro/scene_3/clouds.4bpp.lz
+!graphics/intro/scene_3/clouds_left.bin.lz
+!graphics/intro/scene_3/clouds_right.bin.lz
+!graphics/intro/scene_3/clouds_sun.bin.lz
 !graphics/diploma/national.gbapal
 !graphics/diploma/hoenn.gbapal
 !graphics/diploma/tilemap.bin.lz

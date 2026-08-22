@@ -454,59 +454,7 @@ gUnknown_8D85E60: @ 0x8D85E60
 	.section .rodata.data_rest2c_after_intro_scene_2_character_graphics
 
 
-	.globl gUnknown_8D88478
-gUnknown_8D88478: @ 0x8D88478
-	.incbin "graphics/misc/gUnknown_8D88478.4bpp.lz"
-
-
-	.globl gUnknown_8D88D24
-gUnknown_8D88D24: @ 0x8D88D24
-	.incbin "graphics/misc/gUnknown_8D88D24.4bpp.lz"
-
-
-	.globl gUnknown_8D89208
-gUnknown_8D89208: @ 0x8D89208
-	.incbin "graphics/misc/gUnknown_8D89208.4bpp.lz"
-
-
-	.globl gUnknown_8D89AA0
-gUnknown_8D89AA0: @ 0x8D89AA0
-	.incbin "graphics/misc/gUnknown_8D89AA0.4bpp.lz"
-
-
-	.globl gUnknown_8D89F60
-gUnknown_8D89F60: @ 0x8D89F60
-	.incbin "graphics/misc/gUnknown_8D89F60.4bpp.lz"
-
-
-	.globl gUnknown_8D8A7FC
-gUnknown_8D8A7FC: @ 0x8D8A7FC
-	.incbin "graphics/misc/gUnknown_8D8A7FC.4bpp.lz"
-
-
-	.globl gUnknown_8D8A918
-gUnknown_8D8A918: @ 0x8D8A918
-	.incbin "graphics/misc/gUnknown_8D8A918.4bpp.lz"
-
-
-	.globl gUnknown_8D8AA38
-gUnknown_8D8AA38: @ 0x8D8AA38
-	.incbin "graphics/misc/gUnknown_8D8AA38.4bpp.lz"
-
-
-	.globl gUnknown_8D8B164
-gUnknown_8D8B164: @ 0x8D8B164
-	.incbin "graphics/misc/gUnknown_8D8B164.4bpp.lz"
-
-
-	.globl gUnknown_8D8B424
-gUnknown_8D8B424: @ 0x8D8B424
-	.incbin "graphics/misc/gUnknown_8D8B424.4bpp.lz"
-
-
-	.globl gUnknown_8D8B6CC
-gUnknown_8D8B6CC: @ 0x8D8B6CC
-	.incbin "graphics/misc/gUnknown_8D8B6CC.4bpp.lz"
+	.section .rodata.data_rest2c_after_intro_scene_3_graphics
 
 
 	.globl gIntroLightning_Gfx

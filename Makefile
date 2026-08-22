@@ -497,6 +497,12 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/intro/scene_2/volbeat.png.4bpp.lz graphics/intro/scene_2/torchic.png.4bpp.lz \
 	graphics/intro/scene_2/manectric.png.4bpp.lz graphics/intro/scene_2/flygon.png.4bpp.lz \
 	graphics/intro/scene_2/brendan.png.4bpp.lz graphics/intro/scene_2/may.png.4bpp.lz \
+	graphics/intro/scene_3/groudon.8bpp.lz graphics/intro/scene_3/groudon.bin.lz \
+	graphics/intro/scene_3/kyogre.8bpp.lz graphics/intro/scene_3/kyogre.bin.lz \
+	graphics/intro/scene_3/legend_bg.4bpp.lz graphics/intro/scene_3/groudon_bg.bin.lz \
+	graphics/intro/scene_3/kyogre_bg.bin.lz graphics/intro/scene_3/clouds.4bpp.lz \
+	graphics/intro/scene_3/clouds_left.bin.lz graphics/intro/scene_3/clouds_right.bin.lz \
+	graphics/intro/scene_3/clouds_sun.bin.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
