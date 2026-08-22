@@ -1,5 +1,232 @@
 #include "global.h"
 #include "egg_hatch.h"
+#include "bg.h"
+#include "sprite.h"
+#include "window.h"
+
+#define GFXTAG_EGG       12345
+#define GFXTAG_EGG_SHARD 23456
+#define PALTAG_EGG       54321
+
+#define EGG_HATCH_STATIC_DATA __attribute__((section(".rodata.egg_hatch_static_data"), aligned(1)))
+
+// These resources remain in the preceding JP-only raw block. Linker aliases
+// retain their semantic ownership without moving unrelated graphics here.
+extern const u16 sEggPalette[];
+extern const u8 sEggHatchTiles[];
+extern const u8 sEggShardTiles[];
+
+static void SpriteCB_EggShard(struct Sprite *sprite);
+
+static const struct OamData sOamData_Egg EGG_HATCH_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sSpriteAnim_Egg_Normal[] EGG_HATCH_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_Egg_Cracked1[] EGG_HATCH_STATIC_DATA =
+{
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_Egg_Cracked2[] EGG_HATCH_STATIC_DATA =
+{
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_Egg_Cracked3[] EGG_HATCH_STATIC_DATA =
+{
+    ANIMCMD_FRAME(48, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_Egg[] EGG_HATCH_STATIC_DATA =
+{
+    sSpriteAnim_Egg_Normal,
+    sSpriteAnim_Egg_Cracked1,
+    sSpriteAnim_Egg_Cracked2,
+    sSpriteAnim_Egg_Cracked3,
+};
+
+const struct SpriteSheet sEggHatch_Sheet EGG_HATCH_STATIC_DATA =
+{
+    .data = sEggHatchTiles,
+    .size = 0x800,
+    .tag = GFXTAG_EGG,
+};
+
+const struct SpriteSheet sEggShards_Sheet EGG_HATCH_STATIC_DATA =
+{
+    .data = sEggShardTiles,
+    .size = 0x80,
+    .tag = GFXTAG_EGG_SHARD,
+};
+
+const struct SpritePalette sEgg_SpritePalette EGG_HATCH_STATIC_DATA =
+{
+    .data = sEggPalette,
+    .tag = PALTAG_EGG,
+};
+
+const struct SpriteTemplate sSpriteTemplate_Egg EGG_HATCH_STATIC_DATA =
+{
+    .tileTag = GFXTAG_EGG,
+    .paletteTag = PALTAG_EGG,
+    .oam = &sOamData_Egg,
+    .anims = sSpriteAnimTable_Egg,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static const struct OamData sOamData_EggShard EGG_HATCH_STATIC_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(8x8),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sSpriteAnim_EggShard0[] EGG_HATCH_STATIC_DATA =
+{
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_EggShard1[] EGG_HATCH_STATIC_DATA =
+{
+    ANIMCMD_FRAME(1, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_EggShard2[] EGG_HATCH_STATIC_DATA =
+{
+    ANIMCMD_FRAME(2, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sSpriteAnim_EggShard3[] EGG_HATCH_STATIC_DATA =
+{
+    ANIMCMD_FRAME(3, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sSpriteAnimTable_EggShard[] EGG_HATCH_STATIC_DATA =
+{
+    sSpriteAnim_EggShard0,
+    sSpriteAnim_EggShard1,
+    sSpriteAnim_EggShard2,
+    sSpriteAnim_EggShard3,
+};
+
+const struct SpriteTemplate sSpriteTemplate_EggShard EGG_HATCH_STATIC_DATA =
+{
+    .tileTag = GFXTAG_EGG_SHARD,
+    .paletteTag = PALTAG_EGG,
+    .oam = &sOamData_EggShard,
+    .anims = sSpriteAnimTable_EggShard,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_EggShard,
+};
+
+const struct BgTemplate sBgTemplates_EggHatch[] EGG_HATCH_STATIC_DATA =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 24,
+        .screenSize = 3,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 8,
+        .screenSize = 1,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
+};
+
+const struct WindowTemplate sWinTemplates_EggHatch[] EGG_HATCH_STATIC_DATA =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 2,
+        .tilemapTop = 15,
+        .width = 26,
+        .height = 4,
+        .paletteNum = 0,
+        .baseBlock = 64,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+const struct WindowTemplate sYesNoWinTemplate EGG_HATCH_STATIC_DATA =
+{
+    .bg = 0,
+    .tilemapLeft = 21,
+    .tilemapTop = 9,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 424,
+};
+
+const s16 sEggShardVelocities[][2] EGG_HATCH_STATIC_DATA =
+{
+    {Q_8_8(-1.5),       Q_8_8(-3.75)},
+    {Q_8_8(-5),         Q_8_8(-3)},
+    {Q_8_8(3.5),        Q_8_8(-3)},
+    {Q_8_8(-4),         Q_8_8(-3.75)},
+    {Q_8_8(2),          Q_8_8(-1.5)},
+    {Q_8_8(-0.5),       Q_8_8(-6.75)},
+    {Q_8_8(5),          Q_8_8(-2.25)},
+    {Q_8_8(-1.5),       Q_8_8(-3.75)},
+    {Q_8_8(4.5),        Q_8_8(-1.5)},
+    {Q_8_8(-1),         Q_8_8(-6.75)},
+    {Q_8_8(4),          Q_8_8(-2.25)},
+    {Q_8_8(-3.5),       Q_8_8(-3.75)},
+    {Q_8_8(1),          Q_8_8(-1.5)},
+    {Q_8_8(-3.515625),  Q_8_8(-6.75)},
+    {Q_8_8(4.5),        Q_8_8(-2.25)},
+    {Q_8_8(-0.5),       Q_8_8(-7.5)},
+    {Q_8_8(1),          Q_8_8(-4.5)},
+    {Q_8_8(-2.5),       Q_8_8(-2.25)},
+    {Q_8_8(2.5),        Q_8_8(-7.5)},
+};
 
 __attribute__((naked)) void CreatedHatchedMon(void)
 {
@@ -658,7 +885,7 @@ __attribute__((naked)) void CB2_EggHatch_0(void)
         "_080712B0: .4byte gSpecialVar_0x8004\n\t"
         "_080712B4: .4byte VBlankCB_EggHatch + 1\n\t"
         "_080712B8: .4byte gSpecialVar_0x8005\n\t"
-        "_080712BC: .4byte gUnknown_82FCA5C\n\t"
+        "_080712BC: .4byte sBgTemplates_EggHatch\n\t"
         "_080712C0:\n\t"
         "	ldr r0, _080712D0\n\t"
         "	bl InitWindows\n\t"
@@ -668,7 +895,7 @@ __attribute__((naked)) void CB2_EggHatch_0(void)
         "	strb r0, [r1, #8]\n\t"
         "	b _080713AA\n\t"
         "	.align 2, 0\n\t"
-        "_080712D0: .4byte gUnknown_82FCA64\n\t"
+        "_080712D0: .4byte sWinTemplates_EggHatch\n\t"
         "_080712D4: .4byte gUnknown_3000DE0\n\t"
         "_080712D8:\n\t"
         "	movs r1, #0x8c\n\t"
@@ -700,9 +927,9 @@ __attribute__((naked)) void CB2_EggHatch_0(void)
         "	bl LoadSpritePalette\n\t"
         "	b _080713AA\n\t"
         "	.align 2, 0\n\t"
-        "_0807131C: .4byte gUnknown_82FC9DC\n\t"
-        "_08071320: .4byte gUnknown_82FC9E4\n\t"
-        "_08071324: .4byte gUnknown_82FC9EC\n\t"
+        "_0807131C: .4byte sEggHatch_Sheet\n\t"
+        "_08071320: .4byte sEggShards_Sheet\n\t"
+        "_08071324: .4byte sEgg_SpritePalette\n\t"
         "_08071328:\n\t"
         "	movs r0, #0\n\t"
         "	bl CopyBgTilemapBufferToVram\n\t"
@@ -947,7 +1174,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "	bl CreateTask\n\t"
         "	b _08071816\n\t"
         "	.align 2, 0\n\t"
-        "_08071538: .4byte gUnknown_82FC9F4\n\t"
+        "_08071538: .4byte sSpriteTemplate_Egg\n\t"
         "_0807153C: .4byte gUnknown_3000DE0\n\t"
         "_08071540: .4byte Task_EggHatchPlayBGM + 1\n\t"
         "_08071544:\n\t"
@@ -1177,7 +1404,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "	ldr r1, [r5]\n\t"
         "	b _080717D8\n\t"
         "	.align 2, 0\n\t"
-        "_08071728: .4byte gUnknown_82FCA74\n\t"
+        "_08071728: .4byte sYesNoWinTemplate\n\t"
         "_0807172C:\n\t"
         "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1685,7 +1912,7 @@ __attribute__((naked)) void SpriteCB_Egg_5(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_EggShard(void)
+__attribute__((naked)) void SpriteCB_EggShard(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1780,7 +2007,7 @@ __attribute__((naked)) void CreateRandomEggShardSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08071B9C: .4byte gUnknown_82FCA7C\n\t"
+        "_08071B9C: .4byte sEggShardVelocities\n\t"
         "_08071BA0: .4byte gUnknown_3000DE0\n\t"
         ".syntax divided\n\t"
     );
@@ -1849,7 +2076,7 @@ __attribute__((naked)) void CreateEggShardSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08071C1C: .4byte gUnknown_82FCA44\n\t"
+        "_08071C1C: .4byte sSpriteTemplate_EggShard\n\t"
         "_08071C20: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -1995,4 +2222,3 @@ __attribute__((naked)) void sub_08071CF0(void)
         ".syntax divided\n\t"
     );
 }
-

@@ -9405,6 +9405,8 @@ SECTIONS {
         src/data/text/region_texts47.o(.rodata);
         data/data_b2d_mid47.o(.rodata);
         src/data/text/region_texts51.o(.rodata);
+        data/data_b2d_mid51.o(.rodata.battle_interface_before_egg_hatch);
+        src/egg_hatch.o(.rodata.egg_hatch_static_data);
         data/data_b2d_mid51.o(.rodata.battle_interface_before_healthbox);
         src/battle_interface.o(.rodata.battle_interface_healthbox);
         src/battle_interface.o(.rodata.battle_interface_healthbar);
@@ -9945,6 +9947,19 @@ gUnknown_82FCDBC = gStatusSummaryTextData;
 gUnknown_82FCDDA = gStatusSummaryTextData + 0x1E;
 gUnknown_82FCDEE = gStatusSummaryTextData + 0x32;
 gUnknown_82FCE02 = gStatusSummaryTextData + 0x46;
+/* Egg Hatch static tables; their graphics remain in the preceding raw block. */
+sEggPalette = gUnknown_82FC0FE + 0x4;
+sEggHatchTiles = gUnknown_82FC0FE + 0x24;
+sEggShardTiles = gUnknown_82FC0FE + 0x824;
+gUnknown_82FC9DC = sEggHatch_Sheet;
+gUnknown_82FC9E4 = sEggShards_Sheet;
+gUnknown_82FC9EC = sEgg_SpritePalette;
+gUnknown_82FC9F4 = sSpriteTemplate_Egg;
+gUnknown_82FCA44 = sSpriteTemplate_EggShard;
+gUnknown_82FCA5C = sBgTemplates_EggHatch;
+gUnknown_82FCA64 = sWinTemplates_EggHatch;
+gUnknown_82FCA74 = sYesNoWinTemplate;
+gUnknown_82FCA7C = sEggShardVelocities;
 gUnknown_82FCE0C = gBallSpriteSheets;
 gUnknown_82FCE6C = gBallSpritePalettes;
 gUnknown_82FCF94 = gBallSpriteTemplates;

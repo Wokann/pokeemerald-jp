@@ -8,47 +8,13 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.section .rodata.battle_interface_before_healthbox
+	.section .rodata.battle_interface_before_egg_hatch
 
 	.globl gUnknown_82FC0FE
 gUnknown_82FC0FE: @ 0x82FC0FE
-	.incbin "baserom_jp.gba", 0x2fc0fe, 0x8de
+	.incbin "baserom_jp.gba", 0x2fc0fe, 0x8a6
 
-	.globl gUnknown_82FC9DC
-gUnknown_82FC9DC: @ 0x82FC9DC
-	.incbin "baserom_jp.gba", 0x2fc9dc, 0x8
-
-	.globl gUnknown_82FC9E4
-gUnknown_82FC9E4: @ 0x82FC9E4
-	.incbin "baserom_jp.gba", 0x2fc9e4, 0x8
-
-	.globl gUnknown_82FC9EC
-gUnknown_82FC9EC: @ 0x82FC9EC
-	.incbin "baserom_jp.gba", 0x2fc9ec, 0x8
-
-	.globl gUnknown_82FC9F4
-gUnknown_82FC9F4: @ 0x82FC9F4
-	.incbin "baserom_jp.gba", 0x2fc9f4, 0x50
-
-	.globl gUnknown_82FCA44
-gUnknown_82FCA44: @ 0x82FCA44
-	.incbin "baserom_jp.gba", 0x2fca44, 0x18
-
-	.globl gUnknown_82FCA5C
-gUnknown_82FCA5C: @ 0x82FCA5C
-	.incbin "baserom_jp.gba", 0x2fca5c, 0x8
-
-	.globl gUnknown_82FCA64
-gUnknown_82FCA64: @ 0x82FCA64
-	.incbin "baserom_jp.gba", 0x2fca64, 0x10
-
-	.globl gUnknown_82FCA74
-gUnknown_82FCA74: @ 0x82FCA74
-	.incbin "baserom_jp.gba", 0x2fca74, 0x8
-
-	.globl gUnknown_82FCA7C
-gUnknown_82FCA7C: @ 0x82FCA7C
-	.incbin "baserom_jp.gba", 0x2fca7c, 0x4c
+	.section .rodata.battle_interface_before_healthbox
 
 	.globl gUnknown_82FCAC8
 gUnknown_82FCAC8: @ 0x82FCAC8
