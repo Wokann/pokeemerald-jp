@@ -4090,7 +4090,7 @@ __attribute__((naked)) void InitEventObjectPalettes(void)
         "_0808ECA0: .4byte gUnknown_2037256\n\t"
         "_0808ECA4: .4byte 0x000011FF\n\t"
         "_0808ECA8: .4byte gUnknown_2037254\n\t"
-        "_0808ECAC: .4byte gUnknown_84E428C\n\t"
+        "_0808ECAC: .4byte sObjectPaletteTagSets\n\t"
         "_0808ECB0: .4byte gReservedSpritePaletteCount\n\t"
         "_0808ECB4:\n\t"
         "	ldr r0, _0808ECCC\n\t"
@@ -4106,7 +4106,7 @@ __attribute__((naked)) void InitEventObjectPalettes(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808ECCC: .4byte gUnknown_84E428C\n\t"
+        "_0808ECCC: .4byte sObjectPaletteTagSets\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4129,7 +4129,7 @@ __attribute__((naked)) u16 GetObjectPaletteTag(u8 palSlot)
         "	lsls r0, r2, #1\n\t"
         "	b _0808ED00\n\t"
         "	.align 2, 0\n\t"
-        "_0808ECEC: .4byte gUnknown_84E428C\n\t"
+        "_0808ECEC: .4byte sObjectPaletteTagSets\n\t"
         "_0808ECF0: .4byte gUnknown_2037254\n\t"
         "_0808ECF4:\n\t"
         "	adds r1, r4, #4\n\t"

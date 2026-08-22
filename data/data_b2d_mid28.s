@@ -65,13 +65,9 @@ gUnknown_84E1900: @ 0x84E1900
 
 	.section .rodata.data_b2d_mid28_after_event_object_movement_palette_data
 
-	.globl gUnknown_84E423C
-gUnknown_84E423C: @ 0x84E423C
-	.incbin "baserom_jp.gba", 0x4e423c, 0x50
-
-	.globl gUnknown_84E428C
-gUnknown_84E428C: @ 0x84E428C
-	.incbin "baserom_jp.gba", 0x4e428c, 0x978
+	.globl gUnknown_84E429C
+gUnknown_84E429C: @ 0x84E429C
+	.incbin "baserom_jp.gba", 0x4e429c, 0x968
 
 	.globl gUnknown_84E4C04
 gUnknown_84E4C04: @ 0x84E4C04
