@@ -9458,6 +9458,12 @@ SECTIONS {
         data/data_b2d.o(.rodata.mid46);
         src/data/text/region_texts47.o(.rodata);
         data/data_b2d_mid47.o(.rodata);
+        src/data/pokemon/evolution.o(.rodata);
+        gUnknown_82F5CA4 = gEvolutionTable;
+        data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_evolution_table);
+        src/data/pokemon/egg_moves.o(.rodata);
+        gUnknown_82FB764 = gEggMoves;
+        data/data_b2d_mid47.o(.rodata.data_b2d_mid47_after_egg_moves);
         src/data/text/region_texts51.o(.rodata);
         data/data_b2d_mid51.o(.rodata.battle_interface_before_egg_hatch);
         src/egg_hatch.o(.rodata.egg_hatch_static_data);

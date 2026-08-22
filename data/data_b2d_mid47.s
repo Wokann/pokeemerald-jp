@@ -12,9 +12,7 @@
 gUnknown_82F5C88: @ 0x82F5C88
 	.incbin "baserom_jp.gba", 0x2f5c88, 0x1c
 
-	.globl gUnknown_82F5CA4
-gUnknown_82F5CA4: @ 0x82F5CA4
-	.incbin "baserom_jp.gba", 0x2f5ca4, 0x4060
+	.section .rodata.data_b2d_mid47_after_evolution_table
 
 	.globl gUnknown_82F9D04
 gUnknown_82F9D04: @ 0x82F9D04
@@ -682,9 +680,8 @@ sCrc16Table: @ 0x82FAD64
 	.hword 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000
 	.hword 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000
 
-	.globl gUnknown_82FB764
-gUnknown_82FB764: @ 0x82FB764
-	.incbin "baserom_jp.gba", 0x2fb764, 0x8e8
+	.section .rodata.data_b2d_mid47_after_egg_moves
+	.incbin "baserom_jp.gba", 0x2fc04a, 0x2
 
 	.globl gUnknown_82FC04C
 gUnknown_82FC04C: @ 0x82FC04C
