@@ -1,5 +1,52 @@
 #include "global.h"
+#include "battle.h"
+#include "battle_interface.h"
 #include "battle_gfx_sfx_util.h"
+#include "graphics.h"
+#include "sprite.h"
+
+#define BATTLE_GFX_SFX_UTIL_HEALTHBOX_DATA __attribute__((section(".rodata.battle_gfx_sfx_util_healthbox")))
+
+const struct CompressedSpriteSheet sSpriteSheet_SinglesPlayerHealthbox BATTLE_GFX_SFX_UTIL_HEALTHBOX_DATA =
+{
+    gHealthboxSinglesPlayerGfx, 0x1000, TAG_HEALTHBOX_PLAYER1_TILE,
+};
+
+const struct CompressedSpriteSheet sSpriteSheet_SinglesOpponentHealthbox BATTLE_GFX_SFX_UTIL_HEALTHBOX_DATA =
+{
+    gHealthboxSinglesOpponentGfx, 0x1000, TAG_HEALTHBOX_OPPONENT1_TILE,
+};
+
+const struct CompressedSpriteSheet sSpriteSheets_DoublesPlayerHealthbox[2] BATTLE_GFX_SFX_UTIL_HEALTHBOX_DATA =
+{
+    {gHealthboxDoublesPlayerGfx, 0x0800, TAG_HEALTHBOX_PLAYER1_TILE},
+    {gHealthboxDoublesPlayerGfx, 0x0800, TAG_HEALTHBOX_PLAYER2_TILE},
+};
+
+const struct CompressedSpriteSheet sSpriteSheets_DoublesOpponentHealthbox[2] BATTLE_GFX_SFX_UTIL_HEALTHBOX_DATA =
+{
+    {gHealthboxDoublesOpponentGfx, 0x0800, TAG_HEALTHBOX_OPPONENT1_TILE},
+    {gHealthboxDoublesOpponentGfx, 0x0800, TAG_HEALTHBOX_OPPONENT2_TILE},
+};
+
+const struct CompressedSpriteSheet sSpriteSheet_SafariHealthbox BATTLE_GFX_SFX_UTIL_HEALTHBOX_DATA =
+{
+    gHealthboxSafariGfx, 0x1000, TAG_HEALTHBOX_SAFARI_TILE,
+};
+
+const struct CompressedSpriteSheet sSpriteSheets_HealthBar[MAX_BATTLERS_COUNT] BATTLE_GFX_SFX_UTIL_HEALTHBOX_DATA =
+{
+    {gBlankGfxCompressed, 0x0100, TAG_HEALTHBAR_PLAYER1_TILE},
+    {gBlankGfxCompressed, 0x0120, TAG_HEALTHBAR_OPPONENT1_TILE},
+    {gBlankGfxCompressed, 0x0100, TAG_HEALTHBAR_PLAYER2_TILE},
+    {gBlankGfxCompressed, 0x0120, TAG_HEALTHBAR_OPPONENT2_TILE},
+};
+
+const struct SpritePalette sSpritePalettes_HealthBoxHealthBar[2] BATTLE_GFX_SFX_UTIL_HEALTHBOX_DATA =
+{
+    {gBattleInterface_BallStatusBarPal, TAG_HEALTHBOX_PAL},
+    {gBattleInterface_BallDisplayPal, TAG_HEALTHBAR_PAL},
+};
 
 __attribute__((naked)) void AllocateBattleSpritesData()
 {
@@ -1970,9 +2017,9 @@ __attribute__((naked)) void BattleLoadAllHealthBoxesGfxAtOnce(void)
         "	movs r5, #2\n\t"
         "	b _0805DC72\n\t"
         "	.align 2, 0\n\t"
-        "_0805DC44: .4byte gUnknown_82FCB20\n\t"
-        "_0805DC48: .4byte gUnknown_82FCAC8\n\t"
-        "_0805DC4C: .4byte gUnknown_82FCAD0\n\t"
+        "_0805DC44: .4byte sSpritePalettes_HealthBoxHealthBar\n\t"
+        "_0805DC48: .4byte sSpriteSheet_SinglesPlayerHealthbox\n\t"
+        "_0805DC4C: .4byte sSpriteSheet_SinglesOpponentHealthbox\n\t"
         "_0805DC50:\n\t"
         "	ldr r4, _0805DC98\n\t"
         "	adds r0, r4, #0\n\t"
@@ -2009,10 +2056,10 @@ __attribute__((naked)) void BattleLoadAllHealthBoxesGfxAtOnce(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0805DC98: .4byte gUnknown_82FCAD8\n\t"
-        "_0805DC9C: .4byte gUnknown_82FCAE8\n\t"
+        "_0805DC98: .4byte sSpriteSheets_DoublesPlayerHealthbox\n\t"
+        "_0805DC9C: .4byte sSpriteSheets_DoublesOpponentHealthbox\n\t"
         "_0805DCA0: .4byte gBattlerPositions\n\t"
-        "_0805DCA4: .4byte gUnknown_82FCB00\n\t"
+        "_0805DCA4: .4byte sSpriteSheets_HealthBar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2040,7 +2087,7 @@ __attribute__((naked)) bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         "	bl LoadSpritePalette\n\t"
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
-        "_0805DCD0: .4byte gUnknown_82FCB20\n\t"
+        "_0805DCD0: .4byte sSpritePalettes_HealthBoxHealthBar\n\t"
         "_0805DCD4:\n\t"
         "	bl IsDoubleBattle\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2059,13 +2106,13 @@ __attribute__((naked)) bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
         "_0805DCF8: .4byte gBattleTypeFlags\n\t"
-        "_0805DCFC: .4byte gUnknown_82FCAF8\n\t"
+        "_0805DCFC: .4byte sSpriteSheet_SafariHealthbox\n\t"
         "_0805DD00:\n\t"
         "	ldr r0, _0805DD08\n\t"
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
-        "_0805DD08: .4byte gUnknown_82FCAC8\n\t"
+        "_0805DD08: .4byte sSpriteSheet_SinglesPlayerHealthbox\n\t"
         "_0805DD0C:\n\t"
         "	cmp r4, #3\n\t"
         "	bne _0805DD1C\n\t"
@@ -2073,7 +2120,7 @@ __attribute__((naked)) bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
-        "_0805DD18: .4byte gUnknown_82FCAD0\n\t"
+        "_0805DD18: .4byte sSpriteSheet_SinglesOpponentHealthbox\n\t"
         "_0805DD1C:\n\t"
         "	cmp r4, #4\n\t"
         "	bne _0805DD2C\n\t"
@@ -2097,7 +2144,7 @@ __attribute__((naked)) bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
-        "_0805DD48: .4byte gUnknown_82FCAD8\n\t"
+        "_0805DD48: .4byte sSpriteSheets_DoublesPlayerHealthbox\n\t"
         "_0805DD4C:\n\t"
         "	cmp r4, #3\n\t"
         "	bne _0805DD5C\n\t"
@@ -2105,7 +2152,7 @@ __attribute__((naked)) bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
-        "_0805DD58: .4byte gUnknown_82FCAE0\n\t"
+        "_0805DD58: .4byte sSpriteSheets_DoublesPlayerHealthbox + 8\n\t"
         "_0805DD5C:\n\t"
         "	cmp r4, #4\n\t"
         "	bne _0805DD6C\n\t"
@@ -2113,7 +2160,7 @@ __attribute__((naked)) bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
-        "_0805DD68: .4byte gUnknown_82FCAE8\n\t"
+        "_0805DD68: .4byte sSpriteSheets_DoublesOpponentHealthbox\n\t"
         "_0805DD6C:\n\t"
         "	cmp r4, #5\n\t"
         "	bne _0805DD7C\n\t"
@@ -2121,7 +2168,7 @@ __attribute__((naked)) bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
-        "_0805DD78: .4byte gUnknown_82FCAF0\n\t"
+        "_0805DD78: .4byte sSpriteSheets_DoublesOpponentHealthbox + 8\n\t"
         "_0805DD7C:\n\t"
         "	cmp r4, #6\n\t"
         "	bne _0805DD8C\n\t"
@@ -2159,7 +2206,7 @@ __attribute__((naked)) bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         "	b _0805DDCA\n\t"
         "	.align 2, 0\n\t"
         "_0805DDC0: .4byte gBattlerPositions\n\t"
-        "_0805DDC4: .4byte gUnknown_82FCB00\n\t"
+        "_0805DDC4: .4byte sSpriteSheets_HealthBar\n\t"
         "_0805DDC8:\n\t"
         "	movs r6, #1\n\t"
         "_0805DDCA:\n\t"
