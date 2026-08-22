@@ -9409,6 +9409,9 @@ SECTIONS {
     src/data/pokemon/trainer_class_lookups.o(.rodata);
     gUnknown_82EFF52 = gFacilityClassToTrainerClass;
     data/data_b2d.o(.rodata.data_b2d_after_trainer_class_lookups);
+    src/data/pokemon/cry_ids.o(.rodata);
+    gUnknown_82EFFA4 = gSpeciesIdToCryId;
+    data/data_b2d.o(.rodata.data_b2d_after_cry_ids);
     src/data/pokemon/experience_tables.o(.rodata);
         data/data_b2d.o(.rodata.data_b2d_after_experience_tables);
         src/data/text/region_texts3.o(.rodata);

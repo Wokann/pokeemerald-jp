@@ -688,9 +688,9 @@ gUnknown_82EF220: @ 0x82EF220
 	.section .rodata.data_b2d_after_trainer_class_lookups
 
 
-	.globl gUnknown_82EFFA4
-gUnknown_82EFFA4: @ 0x82EFFA4
-	.incbin "baserom_jp.gba", 0x2effa4, 0x110
+	.section .rodata.data_b2d_after_cry_ids
+	.incbin "baserom_jp.gba", 0x2f00b2, 0x2
+
 
 	.section .rodata.data_b2d_after_experience_tables
 
