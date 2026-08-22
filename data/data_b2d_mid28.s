@@ -41,17 +41,7 @@ gUnknown_847C6CC: @ 0x847C6CC
 gUnknown_847D90C: @ 0x847D90C
 	.incbin "baserom_jp.gba", 0x47d90c, 0x519a0
 
-	.globl gFieldEffectPic_CutGrass
-gFieldEffectPic_CutGrass: @ 0x84CF2AC
-	.incbin "baserom_jp.gba", 0x4cf2ac, 0x20
-
-	.globl gFieldEffectPic_CutGrass_Copy
-gFieldEffectPic_CutGrass_Copy: @ 0x84CF2CC
-	.incbin "baserom_jp.gba", 0x4cf2cc, 0x20
-
-	.globl gFieldEffectPal_CutGrass
-gFieldEffectPal_CutGrass: @ 0x84CF2EC
-	.incbin "baserom_jp.gba", 0x4cf2ec, 0x20
+	.section .rodata.data_b2d_mid28_after_cut_grass_graphics
 
 	.incbin "baserom_jp.gba", 0x4cf30c, 0xe580
 

@@ -9501,6 +9501,8 @@ SECTIONS {
         data/data_b2d.o(.rodata.mid27);
         src/data/text/region_texts18.o(.rodata);
         data/data_b2d_mid28.o(.rodata);
+        src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/field_effect_helpers.o(.rodata.field_effect_helpers_figure8_data);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_effect_helpers_figure8);
         src/coord_event_weather.o(.rodata.coord_event_weather_data.sCoordEventWeatherFuncs);

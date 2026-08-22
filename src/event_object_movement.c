@@ -1,4 +1,8 @@
 #include "global.h"
+
+#define OBJECT_EVENT_GRAPHICS_CUT_GRASS __attribute__((section(".rodata.object_event_graphics_cut_grass"), aligned(1)))
+#include "data/object_events/object_event_graphics.h"
+#undef OBJECT_EVENT_GRAPHICS_CUT_GRASS
 #include "event_object_movement.h"
 #include "field_effect.h"
 #include "overworld.h"
