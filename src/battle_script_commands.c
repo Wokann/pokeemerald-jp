@@ -65,7 +65,6 @@ static void JumpIfMoveFailed(u8 adder, u16 move);
 bool8 JumpIfMoveAffectedByProtect(u16 move);
 static bool8 AccuracyCalcHelper(u16 move);
 static void CheckWonderGuardAndLevitate(void);
-extern const u16 sCriticalHitChance[];
 u8 AttacksThisTurn(u8 battler, u16 move);
 
 struct StatFractions
@@ -75,12 +74,92 @@ struct StatFractions
     u16 filler;
 };
 
-extern const struct StatFractions sAccuracyStageRatios[];
-
 extern const u16 gUnknown_82ECC4C[];
 extern const u8 gUnknown_82ECC6C[];
 extern const u16 gUnknown_82ECDAC[];
 extern const struct SpriteTemplate gUnknown_82ECD44;
+
+static const struct StatFractions sAccuracyStageRatios[] BATTLE_SCRIPT_COMMANDS_DATA(sAccuracyStageRatios) =
+{
+    { 33, 100 }, // -6
+    { 36, 100 }, // -5
+    { 43, 100 }, // -4
+    { 50, 100 }, // -3
+    { 60, 100 }, // -2
+    { 75, 100 }, // -1
+    {  1,   1 }, //  0
+    {133, 100 }, // +1
+    {166, 100 }, // +2
+    {  2,   1 }, // +3
+    {233, 100 }, // +4
+    {133,  50 }, // +5
+    {  3,   1 }, // +6
+};
+
+// The chance is 1/N for each stage.
+static const u16 sCriticalHitChance[] BATTLE_SCRIPT_COMMANDS_DATA(sCriticalHitChance) = {16, 8, 4, 3, 2};
+
+static const u32 sStatusFlagsForMoveEffects[NUM_MOVE_EFFECTS] BATTLE_SCRIPT_COMMANDS_DATA(sStatusFlagsForMoveEffects) =
+{
+    [MOVE_EFFECT_SLEEP]          = STATUS1_SLEEP,
+    [MOVE_EFFECT_POISON]         = STATUS1_POISON,
+    [MOVE_EFFECT_BURN]           = STATUS1_BURN,
+    [MOVE_EFFECT_FREEZE]         = STATUS1_FREEZE,
+    [MOVE_EFFECT_PARALYSIS]      = STATUS1_PARALYSIS,
+    [MOVE_EFFECT_TOXIC]          = STATUS1_TOXIC_POISON,
+    [MOVE_EFFECT_CONFUSION]      = STATUS2_CONFUSION,
+    [MOVE_EFFECT_FLINCH]         = STATUS2_FLINCHED,
+    [MOVE_EFFECT_UPROAR]         = STATUS2_UPROAR,
+    [MOVE_EFFECT_CHARGING]       = STATUS2_MULTIPLETURNS,
+    [MOVE_EFFECT_WRAP]           = STATUS2_WRAPPED,
+    [MOVE_EFFECT_RECHARGE]       = STATUS2_RECHARGE,
+    [MOVE_EFFECT_PREVENT_ESCAPE] = STATUS2_ESCAPE_PREVENTION,
+    [MOVE_EFFECT_NIGHTMARE]      = STATUS2_NIGHTMARE,
+    [MOVE_EFFECT_THRASH]         = STATUS2_LOCK_CONFUSE,
+};
+
+static const u8 *const sMoveEffectBS_Ptrs[] BATTLE_SCRIPT_COMMANDS_DATA(sMoveEffectBS_Ptrs) =
+{
+    [0]                            = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_SLEEP]            = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_POISON]           = BattleScript_MoveEffectPoison,
+    [MOVE_EFFECT_BURN]             = BattleScript_MoveEffectBurn,
+    [MOVE_EFFECT_FREEZE]           = BattleScript_MoveEffectFreeze,
+    [MOVE_EFFECT_PARALYSIS]        = BattleScript_MoveEffectParalysis,
+    [MOVE_EFFECT_TOXIC]            = BattleScript_MoveEffectToxic,
+    [MOVE_EFFECT_CONFUSION]        = BattleScript_MoveEffectConfusion,
+    [MOVE_EFFECT_FLINCH]           = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_TRI_ATTACK]       = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_UPROAR]           = BattleScript_MoveEffectUproar,
+    [MOVE_EFFECT_PAYDAY]           = BattleScript_MoveEffectPayDay,
+    [MOVE_EFFECT_CHARGING]         = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_WRAP]             = BattleScript_MoveEffectWrap,
+    [MOVE_EFFECT_RECOIL_25]        = BattleScript_MoveEffectRecoil,
+    [MOVE_EFFECT_ATK_PLUS_1]       = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_DEF_PLUS_1]       = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_SPD_PLUS_1]       = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_SP_ATK_PLUS_1]    = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_SP_DEF_PLUS_1]    = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_ACC_PLUS_1]       = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_EVS_PLUS_1]       = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_ATK_MINUS_1]      = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_DEF_MINUS_1]      = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_SPD_MINUS_1]      = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_SP_ATK_MINUS_1]   = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_SP_DEF_MINUS_1]   = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_ACC_MINUS_1]      = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_EVS_MINUS_1]      = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_RECHARGE]         = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_RAGE]             = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_STEAL_ITEM]       = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_PREVENT_ESCAPE]   = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_NIGHTMARE]        = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_ALL_STATS_UP]     = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_RAPIDSPIN]        = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_REMOVE_PARALYSIS] = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_ATK_DEF_DOWN]     = BattleScript_MoveEffectSleep,
+    [MOVE_EFFECT_RECOIL_33]        = BattleScript_MoveEffectRecoil,
+};
 
 #define METRONOME_FORBIDDEN_END 0xFFFF
 #define ASSIST_FORBIDDEN_END    0xFFFF
@@ -1617,8 +1696,6 @@ u8 GetBattlerTurnOrderNum(u8 battler)
     return;                                     \
 }
 
-extern const u32 sStatusFlagsForMoveEffects[];
-extern const u8 *const sMoveEffectBS_Ptrs[];
 extern const u16 gTrappingMoves[];
 extern const u8 *const gBattleScriptsForMoveEffects[];
 u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr);
