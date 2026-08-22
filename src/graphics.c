@@ -189,6 +189,38 @@ BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpritePal_Prot
 
 #undef BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES
 
+#define BATTLE_ANIM_MUDDY_WATER_RESOURCES __attribute__((section(".rodata.battle_anim_muddy_water_resources"), aligned(1)))
+
+// The JP LZ77 stream retains its original stream-alignment padding.
+BATTLE_ANIM_MUDDY_WATER_RESOURCES const u32 gBattleAnimBackgroundImageMuddyWater_Pal[] = INCBIN_U32("graphics/battle_anims/backgrounds/water_muddy.gbapal.lz");
+
+#undef BATTLE_ANIM_MUDDY_WATER_RESOURCES
+
+#define BATTLE_INTERFACE_BALL_STATUS_BAR_GRAPHICS __attribute__((section(".rodata.battle_interface_ball_status_bar_graphics"), aligned(1)))
+
+// The JP LZ77 stream retains its original stream-alignment padding.
+BATTLE_INTERFACE_BALL_STATUS_BAR_GRAPHICS const u32 gBattleInterface_BallStatusBarGfx[] = INCBIN_U32("graphics/battle_interface/ball_status_bar.4bpp.lz");
+
+#undef BATTLE_INTERFACE_BALL_STATUS_BAR_GRAPHICS
+
+#define EGG_ICON_GRAPHICS __attribute__((section(".rodata.egg_icon_graphics"), aligned(1)))
+
+EGG_ICON_GRAPHICS const u8 gMonIcon_Egg[] = INCBIN_U8("graphics/pokemon/egg/icon.4bpp");
+
+#undef EGG_ICON_GRAPHICS
+
+#define BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES __attribute__((section(".rodata.battle_anim_ghost_and_solarbeam_resources"), aligned(1)))
+
+// The JP LZ77 streams retain their original stream-alignment padding.
+BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES const u32 gBattleAnimBgImage_Ghost[] = INCBIN_U32("graphics/battle_anims/backgrounds/ghost.4bpp.lz");
+BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES const u32 gBattleAnimBgPalette_Ghost[] = INCBIN_U32("graphics/battle_anims/backgrounds/ghost.gbapal.lz");
+BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES const u32 gBattleAnimBgTilemap_Ghost[] = INCBIN_U32("graphics/battle_anims/backgrounds/ghost.bin.lz");
+BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES const u32 gBattleAnimSpritePal_WhipHit[] = INCBIN_U32("graphics/battle_anims/sprites/whip_hit.gbapal.lz");
+BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES const u32 gBattleAnimBgPalette_SolarBeam[] = INCBIN_U32("graphics/battle_anims/backgrounds/solarbeam.gbapal.lz");
+BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES const u32 gBattleAnimBgTilemap_SolarBeam[] = INCBIN_U32("graphics/battle_anims/backgrounds/solarbeam.bin.lz");
+
+#undef BATTLE_ANIM_GHOST_AND_SOLARBEAM_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

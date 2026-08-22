@@ -485,22 +485,15 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 
 	.section .rodata.data_rest2c_after_battle_anim_splash_through_protect_resources
 
-	.globl gBattleAnimBackgroundImageMuddyWater_Pal
-gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50
-	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0, 0x24
-
-	@ Referenced by the status-summary sprite-sheet descriptor in battle_interface.c.
-	@ The symbol begins after the Enemy Shadow graphics stream.
-	.globl gBattleInterface_BallStatusBarGfx
-	.set gBattleInterface_BallStatusBarGfx, gBattleAnimBackgroundImageMuddyWater_Pal + 0x54
+	.section .rodata.data_rest2c_after_battle_anim_muddy_water_resources
 
 	.section .rodata.data_rest2c_after_enemy_shadow
-	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0x54, 0x84
 
-	.globl gMonIcon_Egg
-gMonIcon_Egg: @ 0x8D8FC28
-	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0xD8, 0x400
-	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0x4D8, 0x1524
+	.section .rodata.data_rest2c_after_battle_interface_ball_status_bar_graphics
+
+	.section .rodata.data_rest2c_after_egg_icon_graphics
+
+	.section .rodata.data_rest2c_after_battle_anim_ghost_and_solarbeam_resources
 
 
 	.section .rodata.data_rest2c_after_berry_blender_background_graphics

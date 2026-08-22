@@ -9924,8 +9924,16 @@ SECTIONS {
         data/data_rest2c.o(.rodata.data_rest2c_after_contest_applause_resources);
         src/graphics.o(.rodata.battle_anim_splash_through_protect_resources);
         data/data_rest2c.o(.rodata.data_rest2c_after_battle_anim_splash_through_protect_resources);
+        src/graphics.o(.rodata.battle_anim_muddy_water_resources);
+        data/data_rest2c.o(.rodata.data_rest2c_after_battle_anim_muddy_water_resources);
         src/graphics.o(.rodata.enemy_shadow_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_enemy_shadow);
+        src/graphics.o(.rodata.battle_interface_ball_status_bar_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_after_battle_interface_ball_status_bar_graphics);
+        src/graphics.o(.rodata.egg_icon_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_after_egg_icon_graphics);
+        src/graphics.o(.rodata.battle_anim_ghost_and_solarbeam_resources);
+        data/data_rest2c.o(.rodata.data_rest2c_after_battle_anim_ghost_and_solarbeam_resources);
         src/graphics.o(.rodata.berry_blender_background_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_berry_blender_background_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_before_bag_graphics);

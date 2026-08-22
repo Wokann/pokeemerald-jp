@@ -526,6 +526,11 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/battle_anims/sprites/gem_1.gbapal.lz graphics/battle_anims/backgrounds/in_air.4bpp.lz \
 	graphics/battle_anims/backgrounds/in_air.gbapal.lz graphics/battle_anims/backgrounds/in_air.bin.lz \
 	graphics/battle_anims/sprites/protect.4bpp.lz graphics/battle_anims/sprites/protect.gbapal.lz \
+	graphics/battle_anims/backgrounds/water_muddy.gbapal.lz graphics/battle_interface/ball_status_bar.4bpp.lz \
+	graphics/pokemon/egg/icon.4bpp graphics/battle_anims/backgrounds/ghost.4bpp.lz \
+	graphics/battle_anims/backgrounds/ghost.gbapal.lz graphics/battle_anims/backgrounds/ghost.bin.lz \
+	graphics/battle_anims/sprites/whip_hit.gbapal.lz graphics/battle_anims/backgrounds/solarbeam.gbapal.lz \
+	graphics/battle_anims/backgrounds/solarbeam.bin.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
