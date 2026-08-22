@@ -59,6 +59,11 @@ baserom_jp.gba
 !graphics/intro/scene_2/volbeat.png.4bpp.lz
 !graphics/intro/scene_2/torchic.png.4bpp.lz
 !graphics/intro/scene_2/manectric.png.4bpp.lz
+!graphics/intro/scene_2/player.pal.gbapal
+!graphics/intro/scene_2/flygon.png.gbapal
+!graphics/intro/scene_2/flygon.png.4bpp.lz
+!graphics/intro/scene_2/brendan.png.4bpp.lz
+!graphics/intro/scene_2/may.png.4bpp.lz
 !graphics/intro/scene_3/pokeball.png.gbapal
 !graphics/intro/scene_3/pokeball_map.bin.lz
 !graphics/intro/scene_3/pokeball.png.8bpp.lz

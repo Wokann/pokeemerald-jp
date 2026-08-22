@@ -418,10 +418,7 @@ gMultiBattleIntroBg_Player_Tilemap: @ 0x8D85A00
 gUnknown_8D85C34: @ 0x8D85C34
 	.incbin "baserom_jp.gba", 0xd85c34, 0x20
 
-
-	.globl gUnknown_8D85C54
-gUnknown_8D85C54: @ 0x8D85C54
-	.incbin "baserom_jp.gba", 0xd85c54, 0x20
+	.section .rodata.data_rest2c_after_intro_scene_2_player_palette
 
 
 	.globl gUnknown_8D85C74
@@ -454,44 +451,7 @@ gUnknown_8D85E60: @ 0x8D85E60
 	.incbin "baserom_jp.gba", 0xd85e60, 0x54
 
 
-	.globl gIntroVolbeat_Pal
-gIntroVolbeat_Pal: @ 0x8D85EB4
-	.incbin "graphics/intro/scene_2/volbeat.png.gbapal"
-
-
-	.globl gIntroTorchic_Pal
-gIntroTorchic_Pal: @ 0x8D85ED4
-	.incbin "graphics/intro/scene_2/torchic.png.gbapal"
-
-
-	.globl gIntroManectric_Pal
-gIntroManectric_Pal: @ 0x8D85EF4
-	.incbin "graphics/intro/scene_2/manectric.png.gbapal"
-
-
-	.globl gUnknown_8D85F14
-gUnknown_8D85F14: @ 0x8D85F14
-	.incbin "baserom_jp.gba", 0xd85f14, 0x20
-
-
-	.globl gIntroVolbeat_Gfx
-gIntroVolbeat_Gfx: @ 0x8D85F34
-	.incbin "graphics/intro/scene_2/volbeat.png.4bpp.lz"
-
-
-	.globl gIntroTorchic_Gfx
-gIntroTorchic_Gfx: @ 0x8D86114
-	.incbin "graphics/intro/scene_2/torchic.png.4bpp.lz"
-
-
-	.globl gIntroManectric_Gfx
-gIntroManectric_Gfx: @ 0x8D86534
-	.incbin "graphics/intro/scene_2/manectric.png.4bpp.lz"
-
-
-	.globl gUnknown_8D87010
-gUnknown_8D87010: @ 0x8D87010
-	.incbin "baserom_jp.gba", 0xd87010, 0x1468
+	.section .rodata.data_rest2c_after_intro_scene_2_character_graphics
 
 
 	.globl gUnknown_8D88478

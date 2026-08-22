@@ -45,6 +45,29 @@ INTRO_COPYRIGHT_GRAPHICS const u32 gIntroCopyright_Tilemap[] = INCBIN_U32("graph
 
 #undef INTRO_COPYRIGHT_GRAPHICS
 
+#define INTRO_SCENE_2_PLAYER_PALETTE __attribute__((section(".rodata.intro_scene_2_player_palette")))
+
+// JP uses a different player palette from the current US source image.
+INTRO_SCENE_2_PLAYER_PALETTE const u16 gIntroPlayer_Pal[] = INCBIN_U16("graphics/intro/scene_2/player.pal.gbapal");
+
+#undef INTRO_SCENE_2_PLAYER_PALETTE
+
+#define INTRO_SCENE_2_CHARACTER_GRAPHICS __attribute__((section(".rodata.intro_scene_2_character_graphics")))
+
+// The JP LZ77 files retain their original stream-alignment padding.
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u16 gIntroVolbeat_Pal[] = INCBIN_U16("graphics/intro/scene_2/volbeat.png.gbapal");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u16 gIntroTorchic_Pal[] = INCBIN_U16("graphics/intro/scene_2/torchic.png.gbapal");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u16 gIntroManectric_Pal[] = INCBIN_U16("graphics/intro/scene_2/manectric.png.gbapal");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u16 gIntroFlygon_Pal[] = INCBIN_U16("graphics/intro/scene_2/flygon.png.gbapal");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroVolbeat_Gfx[] = INCBIN_U32("graphics/intro/scene_2/volbeat.png.4bpp.lz");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroTorchic_Gfx[] = INCBIN_U32("graphics/intro/scene_2/torchic.png.4bpp.lz");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroManectric_Gfx[] = INCBIN_U32("graphics/intro/scene_2/manectric.png.4bpp.lz");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroFlygon_Gfx[] = INCBIN_U32("graphics/intro/scene_2/flygon.png.4bpp.lz");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroBrendan_Gfx[] = INCBIN_U32("graphics/intro/scene_2/brendan.png.4bpp.lz");
+INTRO_SCENE_2_CHARACTER_GRAPHICS const u32 gIntroMay_Gfx[] = INCBIN_U32("graphics/intro/scene_2/may.png.4bpp.lz");
+
+#undef INTRO_SCENE_2_CHARACTER_GRAPHICS
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(

@@ -491,6 +491,12 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/pokedex/size_screen.bin.lz graphics/pokedex/screen_select_bar_main.bin.lz \
 	graphics/pokedex/screen_select_bar_submenu.bin.lz graphics/pokedex/menu.4bpp.lz \
 	graphics/pokedex/interface.4bpp.lz \
+	graphics/intro/scene_2/player.pal.gbapal \
+	graphics/intro/scene_2/volbeat.png.gbapal graphics/intro/scene_2/torchic.png.gbapal \
+	graphics/intro/scene_2/manectric.png.gbapal graphics/intro/scene_2/flygon.png.gbapal \
+	graphics/intro/scene_2/volbeat.png.4bpp.lz graphics/intro/scene_2/torchic.png.4bpp.lz \
+	graphics/intro/scene_2/manectric.png.4bpp.lz graphics/intro/scene_2/flygon.png.4bpp.lz \
+	graphics/intro/scene_2/brendan.png.4bpp.lz graphics/intro/scene_2/may.png.4bpp.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s
