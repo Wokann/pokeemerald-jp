@@ -9413,8 +9413,12 @@ SECTIONS {
     gUnknown_82EFFA4 = gSpeciesIdToCryId;
     data/data_b2d.o(.rodata.data_b2d_after_cry_ids);
     src/data/pokemon/experience_tables.o(.rodata);
-        data/data_b2d.o(.rodata.data_b2d_after_experience_tables);
-        src/data/text/region_texts3.o(.rodata);
+    data/data_b2d.o(.rodata.data_b2d_after_experience_tables);
+    src/data/pokemon/species_info.o(.rodata);
+    gUnknown_82F0D60 = gSpeciesInfo + 0xC;
+    gUnknown_82F0D62 = gSpeciesInfo + 0xE;
+    gUnknown_82F0D65 = gSpeciesInfo + 0x11;
+    src/data/text/region_texts3.o(.rodata);
         data/data_b2d.o(.rodata.mid2);
         src/data/text/region_texts12.o(.rodata);
         data/data_b2d.o(.rodata.mid11);

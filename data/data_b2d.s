@@ -694,22 +694,6 @@ gUnknown_82EF220: @ 0x82EF220
 
 	.section .rodata.data_b2d_after_experience_tables
 
-	.globl gSpeciesInfo
-gSpeciesInfo: @ 0x82F0D54
-	.4byte 0, 0, 0
-
-	.globl gUnknown_82F0D60
-gUnknown_82F0D60: @ 0x82F0D60
-	.incbin "baserom_jp.gba", 0x2f0d60, 0x2
-
-	.globl gUnknown_82F0D62
-gUnknown_82F0D62: @ 0x82F0D62
-	.incbin "baserom_jp.gba", 0x2f0d62, 0x3
-
-	.globl gUnknown_82F0D65
-gUnknown_82F0D65: @ 0x82F0D65
-	.incbin "baserom_jp.gba", 0x2f0d65, 0x2cff
-	.globl gUnknown_82F3A64
 
 	.section .rodata.mid48
 
