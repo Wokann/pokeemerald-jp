@@ -341,13 +341,6 @@ gBattleScriptingCommandsTable: @ 0x82EC694
 	.4byte Cmd_finishturn @ B_SCR_OP_FINISHTURN
 	.4byte Cmd_trainerslideout @ B_SCR_OP_TRAINERSLIDEOUT
 
-	.section .rodata.data_b2d_between_battle_script_commands_data
-
-	.globl gUnknown_82ECDAC
-gUnknown_82ECDAC: @ 0x82ECDAC
-	.string "ト　と　\l"
-	.string "　り　äあざ　tうっ　Vきト　$$$$"
-
 	.section .rodata.data_b2d_after_battle_palace_likelihood
 
 	.globl gUnknown_82ECE7C

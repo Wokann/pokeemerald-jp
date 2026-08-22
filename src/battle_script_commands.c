@@ -75,8 +75,6 @@ struct StatFractions
     u16 filler;
 };
 
-extern const u16 gUnknown_82ECDAC[];
-
 static void SpriteCB_MonIconOnLvlUpBanner(struct Sprite *sprite);
 
 static const struct StatFractions sAccuracyStageRatios[] BATTLE_SCRIPT_COMMANDS_DATA(sAccuracyStageRatios) =
@@ -274,6 +272,17 @@ static const u16 sNaturePowerMoves[] BATTLE_SCRIPT_COMMANDS_DATA(sNaturePowerMov
     [BATTLE_ENVIRONMENT_CAVE]       = MOVE_SHADOW_BALL,
     [BATTLE_ENVIRONMENT_BUILDING]   = MOVE_SWIFT,
     [BATTLE_ENVIRONMENT_PLAIN]      = MOVE_SWIFT,
+};
+
+// Format: minimum weight (hectograms), base power.
+static const u16 sWeightToDamageTable[] BATTLE_SCRIPT_COMMANDS_DATA(sWeightToDamageTable) =
+{
+    100, 20,
+    250, 40,
+    500, 60,
+    1000, 80,
+    2000, 100,
+    0xFFFF, 0xFFFF,
 };
 
 const u16 sPickupItems[] BATTLE_SCRIPT_COMMANDS_DATA(sPickupItems) =
@@ -9039,14 +9048,14 @@ void Cmd_trysetgrudge(void)
 void Cmd_weightdamagecalculation(void)
 {
     s32 i;
-    for (i = 0; gUnknown_82ECDAC[i] != 0xFFFF; i += 2)
+    for (i = 0; sWeightToDamageTable[i] != 0xFFFF; i += 2)
     {
-        if (gUnknown_82ECDAC[i] > GetPokedexHeightWeight(HoennToNationalOrder(gBattleMons[gBattlerTarget].species), 1))
+        if (sWeightToDamageTable[i] > GetPokedexHeightWeight(HoennToNationalOrder(gBattleMons[gBattlerTarget].species), 1))
             break;
     }
 
-    if (gUnknown_82ECDAC[i] != 0xFFFF)
-        gDynamicBasePower = gUnknown_82ECDAC[i + 1];
+    if (sWeightToDamageTable[i] != 0xFFFF)
+        gDynamicBasePower = sWeightToDamageTable[i + 1];
     else
         gDynamicBasePower = 120;
 

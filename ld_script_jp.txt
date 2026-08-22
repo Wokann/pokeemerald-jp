@@ -9411,7 +9411,7 @@ SECTIONS {
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sMovesForbiddenToCopy);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sFlailHpScaleToPowerTable);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sNaturePowerMoves);
-        data/data_b2d.o(.rodata.data_b2d_between_battle_script_commands_data);
+        src/battle_script_commands.o(.rodata.battle_script_commands_data.sWeightToDamageTable);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sPickupItems);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sRarePickupItems);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sPickupProbabilities);
