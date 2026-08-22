@@ -1,5 +1,11 @@
 #include "global.h"
 
+#define POKEBALL_GRAPHICS __attribute__((section(".rodata.pokeball_graphics"), aligned(1)))
+#define POKEBALL_OPEN_GRAPHICS __attribute__((section(".rodata.pokeball_open_graphics"), aligned(1)))
+#include "data/graphics/pokeballs.h"
+#undef POKEBALL_OPEN_GRAPHICS
+#undef POKEBALL_GRAPHICS
+
 // Pokédex.  These custom sections retain the JP ROM order while assigning the
 // resources to pokeemerald's graphics owner and source hierarchy.
 #define POKEDEX_GRAPHICS_PREFIX __attribute__((section(".rodata.pokedex_graphics_prefix"), aligned(1)))

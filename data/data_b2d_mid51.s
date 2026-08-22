@@ -86,16 +86,5 @@ gUnknown_82FCB00: @ 0x82FCB00
 gUnknown_82FCB20: @ 0x82FCB20
 	.incbin "baserom_jp.gba", 0x2fcb20, 0x10
 
-	.section .rodata.battle_interface_after_healthbar
-
-	.globl gUnknown_82FCE0C
-gUnknown_82FCE0C: @ 0x82FCE0C
-	.incbin "baserom_jp.gba", 0x2fce0c, 0x60
-
-	.globl gUnknown_82FCE6C
-gUnknown_82FCE6C: @ 0x82FCE6C
-	.incbin "baserom_jp.gba", 0x2fce6c, 0x128
-
-	.globl gUnknown_82FCF94
-gUnknown_82FCF94: @ 0x82FCF94
-	.incbin "baserom_jp.gba", 0x2fcf94, 0x138
+	.section .rodata.pokeball_static_suffix
+	.incbin "baserom_jp.gba", 0x2fd0b4, 0x18
