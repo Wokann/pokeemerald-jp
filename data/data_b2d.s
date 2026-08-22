@@ -347,14 +347,6 @@ gBattleScriptingCommandsTable: @ 0x82EC694
 gUnknown_82ECE7C: @ 0x82ECE7C
 	.incbin "baserom_jp.gba", 0x2ece7c, 0x20
 
-	.globl gUnknown_82ECE9C
-gUnknown_82ECE9C: @ 0x82ECE9C
-	.incbin "baserom_jp.gba", 0x2ece9c, 0xe4
-
-	.globl gUnknown_82ECF80
-gUnknown_82ECF80: @ 0x82ECF80
-	.incbin "baserom_jp.gba", 0x2ecf80, 0xc
-
 	.section .rodata.data_b2d_after_smokescreen_data
 
 	.globl gUnknown_82ED050
