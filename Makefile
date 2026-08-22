@@ -413,6 +413,14 @@ $(C_BUILDDIR)/pokenav_match_call_gfx.o: src/pokenav_match_call_gfx.c $(wildcard 
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokenav_match_call_gfx.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokenav_match_call_gfx.gen.s
 
+$(C_BUILDDIR)/battle_script_commands.o: src/battle_script_commands.c charmap.txt \
+	graphics/battle_interface/level_up_banner.png.4bpp.lz \
+	graphics/battle_interface/level_up_banner.png.gbapal
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/battle_script_commands.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/battle_script_commands.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/battle_script_commands.gen.s
+
 $(C_BUILDDIR)/pokenav_region_map.o: src/pokenav_region_map.c src/data/region_map/city_map_tilemaps.h $(wildcard graphics/pokenav/region_map/*.lz graphics/pokenav/region_map/*.gbapal graphics/pokenav/region_map/city_maps/*.lz)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokenav_region_map.gen.s

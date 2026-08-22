@@ -60,6 +60,7 @@
 
 #define BATTLE_SCRIPT_COMMANDS_PALACE_DATA __attribute__((section(".rodata.battle_script_commands_palace_data")))
 #define BATTLE_SCRIPT_COMMANDS_DATA(name) __attribute__((section(".rodata.battle_script_commands_data." #name)))
+#define TAG_LVLUP_BANNER_MON_ICON 55130
 
 static void JumpIfMoveFailed(u8 adder, u16 move);
 bool8 JumpIfMoveAffectedByProtect(u16 move);
@@ -74,10 +75,9 @@ struct StatFractions
     u16 filler;
 };
 
-extern const u16 gUnknown_82ECC4C[];
-extern const u8 gUnknown_82ECC6C[];
 extern const u16 gUnknown_82ECDAC[];
-extern const struct SpriteTemplate gUnknown_82ECD44;
+
+static void SpriteCB_MonIconOnLvlUpBanner(struct Sprite *sprite);
 
 static const struct StatFractions sAccuracyStageRatios[] BATTLE_SCRIPT_COMMANDS_DATA(sAccuracyStageRatios) =
 {
@@ -159,6 +159,61 @@ static const u8 *const sMoveEffectBS_Ptrs[] BATTLE_SCRIPT_COMMANDS_DATA(sMoveEff
     [MOVE_EFFECT_REMOVE_PARALYSIS] = BattleScript_MoveEffectSleep,
     [MOVE_EFFECT_ATK_DEF_DOWN]     = BattleScript_MoveEffectSleep,
     [MOVE_EFFECT_RECOIL_33]        = BattleScript_MoveEffectRecoil,
+};
+
+static const struct WindowTemplate sUnusedWinTemplate BATTLE_SCRIPT_COMMANDS_DATA(sUnusedWinTemplate) =
+{
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 3,
+    .width = 7,
+    .height = 15,
+    .paletteNum = 31,
+    .baseBlock = 0x3F,
+};
+
+static const u16 sLevelUpBanner_Pal[] BATTLE_SCRIPT_COMMANDS_DATA(sLevelUpBanner_Pal) =
+    INCBIN_U16("graphics/battle_interface/level_up_banner.png.gbapal");
+static const u32 sLevelUpBanner_Gfx[] BATTLE_SCRIPT_COMMANDS_DATA(sLevelUpBanner_Gfx) =
+    INCBIN_U32("graphics/battle_interface/level_up_banner.png.4bpp.lz");
+
+// Unused.
+static const u8 sRubyLevelUpStatBoxStats[] BATTLE_SCRIPT_COMMANDS_DATA(sRubyLevelUpStatBoxStats) =
+{
+    MON_DATA_MAX_HP,
+    MON_DATA_SPATK,
+    MON_DATA_ATK,
+    MON_DATA_SPDEF,
+    MON_DATA_DEF,
+    MON_DATA_SPEED,
+};
+
+static const struct OamData sOamData_MonIconOnLvlUpBanner BATTLE_SCRIPT_COMMANDS_DATA(sOamData_MonIconOnLvlUpBanner) =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct SpriteTemplate sSpriteTemplate_MonIconOnLvlUpBanner BATTLE_SCRIPT_COMMANDS_DATA(sSpriteTemplate_MonIconOnLvlUpBanner) =
+{
+    .tileTag = TAG_LVLUP_BANNER_MON_ICON,
+    .paletteTag = TAG_LVLUP_BANNER_MON_ICON,
+    .oam = &sOamData_MonIconOnLvlUpBanner,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_MonIconOnLvlUpBanner,
 };
 
 #define METRONOME_FORBIDDEN_END 0xFFFF
@@ -330,7 +385,6 @@ static bool8 SlideInLevelUpBanner(void);
 static void DrawLevelUpBannerText(void);
 static bool8 SlideOutLevelUpBanner(void);
 static void PutMonIconOnLvlUpBanner(void);
-static void SpriteCB_MonIconOnLvlUpBanner(struct Sprite *sprite);
 static bool32 IsMonGettingExpSentOut(void);
 void Cmd_resetsentmonsvalue(void);
 void Cmd_setatktoplayer0(void);
@@ -5520,8 +5574,6 @@ void Cmd_atknameinbuff1(void)
 
 #define LEVEL_UP_BANNER_START 416
 #define LEVEL_UP_BANNER_END   512
-#define TAG_LVLUP_BANNER_MON_ICON 55130
-
 void Cmd_drawlvlupbox(void)
 {
     if (gBattleScripting.drawlvlupboxState == 0)
@@ -5644,8 +5696,8 @@ static void InitLevelUpBanner(void)
     gBattle_BG2_Y = 0;
     gBattle_BG2_X = LEVEL_UP_BANNER_START;
 
-    LoadPalette(gUnknown_82ECC4C, BG_PLTT_ID(6), 0x20);
-    CopyToWindowPixelBuffer(B_WIN_LEVEL_UP_BANNER, gUnknown_82ECC6C, 0, 0);
+    LoadPalette(sLevelUpBanner_Pal, BG_PLTT_ID(6), 0x20);
+    CopyToWindowPixelBuffer(B_WIN_LEVEL_UP_BANNER, sLevelUpBanner_Gfx, 0, 0);
     PutWindowTilemap(B_WIN_LEVEL_UP_BANNER);
     CopyWindowToVram(B_WIN_LEVEL_UP_BANNER, COPYWIN_FULL);
 
@@ -5766,7 +5818,7 @@ static void PutMonIconOnLvlUpBanner(void)
     LoadSpriteSheet(&iconSheet);
     LoadSpritePalette(&iconPalSheet);
 
-    spriteId = CreateSprite(&gUnknown_82ECD44, 256, 10, 0);
+    spriteId = CreateSprite(&sSpriteTemplate_MonIconOnLvlUpBanner, 256, 10, 0);
     gSprites[spriteId].sDestroy = FALSE;
     gSprites[spriteId].sXOffset = gBattle_BG2_X;
 }

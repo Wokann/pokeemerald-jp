@@ -9401,7 +9401,12 @@ SECTIONS {
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sCriticalHitChance);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sStatusFlagsForMoveEffects);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sMoveEffectBS_Ptrs);
-        data/data_b2d.o(.rodata.data_b2d_after_battle_script_command_effect_data);
+        src/battle_script_commands.o(.rodata.battle_script_commands_data.sUnusedWinTemplate);
+        src/battle_script_commands.o(.rodata.battle_script_commands_data.sLevelUpBanner_Pal);
+        src/battle_script_commands.o(.rodata.battle_script_commands_data.sLevelUpBanner_Gfx);
+        src/battle_script_commands.o(.rodata.battle_script_commands_data.sRubyLevelUpStatBoxStats);
+        src/battle_script_commands.o(.rodata.battle_script_commands_data.sOamData_MonIconOnLvlUpBanner);
+        src/battle_script_commands.o(.rodata.battle_script_commands_data.sSpriteTemplate_MonIconOnLvlUpBanner);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sProtectSuccessRates);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sMovesForbiddenToCopy);
         src/battle_script_commands.o(.rodata.battle_script_commands_data.sFlailHpScaleToPowerTable);
