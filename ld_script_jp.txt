@@ -9406,6 +9406,9 @@ SECTIONS {
         data/data_b2d.o(.rodata.data_b2d_after_battle_moves);
     src/data/pokemon/item_effects.o(.rodata);
     data/data_b2d.o(.rodata.data_b2d_after_item_effects);
+    src/data/pokemon/tmhm_learnsets.o(.rodata);
+    gUnknown_82EF220 = gTMHMLearnsets;
+    data/data_b2d.o(.rodata.data_b2d_after_tmhm_learnsets);
     src/data/pokemon/trainer_class_lookups.o(.rodata);
     gUnknown_82EFF52 = gFacilityClassToTrainerClass;
     data/data_b2d.o(.rodata.data_b2d_after_trainer_class_lookups);

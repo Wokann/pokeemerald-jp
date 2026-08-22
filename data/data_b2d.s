@@ -681,9 +681,7 @@ gUnknown_82EEC7A: @ 0x82EEC7A
 gUnknown_82EF1A0: @ 0x82EF1A0
 	.incbin "baserom_jp.gba", 0x2ef1a0, 0x80
 
-	.globl gUnknown_82EF220
-gUnknown_82EF220: @ 0x82EF220
-	.incbin "baserom_jp.gba", 0x2ef220, 0xce0
+	.section .rodata.data_b2d_after_tmhm_learnsets
 
 	.section .rodata.data_b2d_after_trainer_class_lookups
 
