@@ -132,7 +132,30 @@ extern const AnimFunc sAffineAnimFuncs[];
 extern const AnimCmdFunc sAnimCmdFuncs[];
 extern const AffineAnimCmdFunc sAffineAnimCmdFuncs[];
 extern const struct OamDimensions32 sOamDimensions32[3][4];
-extern const struct OamDimensions sOamDimensions[3][4];
+const struct OamDimensions sOamDimensions[3][4] __attribute__((section(".rodata.sprite_oam_dimensions"))) =
+{
+    [ST_OAM_SQUARE] =
+    {
+        [SPRITE_SIZE(8x8)]   = {  8,  8 },
+        [SPRITE_SIZE(16x16)] = { 16, 16 },
+        [SPRITE_SIZE(32x32)] = { 32, 32 },
+        [SPRITE_SIZE(64x64)] = { 64, 64 },
+    },
+    [ST_OAM_H_RECTANGLE] =
+    {
+        [SPRITE_SIZE(16x8)]  = { 16,  8 },
+        [SPRITE_SIZE(32x8)]  = { 32,  8 },
+        [SPRITE_SIZE(32x16)] = { 32, 16 },
+        [SPRITE_SIZE(64x32)] = { 64, 32 },
+    },
+    [ST_OAM_V_RECTANGLE] =
+    {
+        [SPRITE_SIZE(8x16)]  = {  8, 16 },
+        [SPRITE_SIZE(8x32)]  = {  8, 32 },
+        [SPRITE_SIZE(16x32)] = { 16, 32 },
+        [SPRITE_SIZE(32x64)] = { 32, 64 },
+    },
+};
 extern const union AnimCmd *const gDummySpriteAnimTable[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
 extern const struct SpriteTemplate gDummySpriteTemplate;

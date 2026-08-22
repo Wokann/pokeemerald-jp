@@ -9279,6 +9279,8 @@ SECTIONS {
     ALIGN(4)
     {
         data/data.o(.rodata);
+        src/sprite.o(.rodata.sprite_oam_dimensions);
+        data/data.o(.rodata.data_after_sprite_oam_dimensions);
         src/data/text/comm_error_texts.o(.rodata);
         data/data.o(.rodata.data_tail);
         src/link.o(.rodata);

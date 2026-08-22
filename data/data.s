@@ -329,9 +329,8 @@ sOamDimensions32: @ 0x82BF35C
 	.4byte 16, 32
 	.4byte 32, 64
 
-	.globl sOamDimensions
-sOamDimensions: @ 0x82BF3BC
-	.incbin "baserom_jp.gba", 0x2bf3bc, 0x70
+	.section .rodata.data_after_sprite_oam_dimensions
+	.incbin "baserom_jp.gba", 0x2bf3ec, 0x40
 
 	.globl gUnknown_82BF42C
 gUnknown_82BF42C: @ 0x82BF42C
