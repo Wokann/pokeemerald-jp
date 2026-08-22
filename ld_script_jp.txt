@@ -9280,6 +9280,9 @@ SECTIONS {
     {
         data/data.o(.rodata);
         src/sprite.o(.rodata.sprite_oam_dimensions);
+        src/io_reg.o(.rodata.io_reg_data.sUnused);
+        src/io_reg.o(.rodata.io_reg_data.gOverworldBackgroundLayerFlags);
+        src/io_reg.o(.rodata.io_reg_data.gOrbEffectBackgroundLayerFlags);
         data/data.o(.rodata.data_after_sprite_oam_dimensions);
         src/string_util.o(.rodata.string_util_placeholder_funcs);
         data/data.o(.rodata.data_after_string_util_placeholder_funcs);

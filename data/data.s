@@ -330,15 +330,6 @@ sOamDimensions32: @ 0x82BF35C
 	.4byte 32, 64
 
 	.section .rodata.data_after_sprite_oam_dimensions
-	.incbin "baserom_jp.gba", 0x2bf3ec, 0x40
-
-	.globl gUnknown_82BF42C
-gUnknown_82BF42C: @ 0x82BF42C
-	.incbin "baserom_jp.gba", 0x2bf42c, 0x8
-
-	.globl gOrbEffectBackgroundLayerFlags
-gOrbEffectBackgroundLayerFlags: @ 0x82BF434
-	.incbin "baserom_jp.gba", 0x2bf434, 0x8
 
 	.globl sDigits
 sDigits: @ 0x82BF43C

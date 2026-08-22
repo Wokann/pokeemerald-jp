@@ -4281,7 +4281,7 @@ __attribute__((naked)) void InitOverworldGraphicsRegisters(void)
         "_080862D4: .4byte 0x00001F1F\n\t"
         "_080862D8: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
         "_080862DC: .4byte 0x0000FFFF\n\t"
-        "_080862E0: .4byte gUnknown_82BF42C\n\t"
+        "_080862E0: .4byte gOverworldBackgroundLayerFlags\n\t"
         "_080862E4: .4byte 0x0000070D\n\t"
         "_080862E8: .4byte 0x00007060\n\t"
         ".syntax divided\n\t"
