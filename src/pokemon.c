@@ -2,8 +2,6 @@
 #include "pokemon.h"
 #include "constants/trainers.h"
 
-extern const u16 *const gUnknown_82F9D04[];
-
 __attribute__((naked)) void ZeroBoxMonData(struct BoxPokemon *boxMon)
 {
     __asm__(".syntax unified\n\t"
@@ -3049,16 +3047,16 @@ void GiveBoxMonInitialMoveset(struct BoxPokemon *boxMon)
     s32 level = GetLevelFromBoxMonExp(boxMon);
     s32 i;
 
-    for (i = 0; gUnknown_82F9D04[species][i] != LEVEL_UP_END; i++)
+    for (i = 0; gLevelUpLearnsets[species][i] != LEVEL_UP_END; i++)
     {
         u16 moveLevel;
         u16 move;
 
-        moveLevel = gUnknown_82F9D04[species][i] & LEVEL_UP_MOVE_LV;
+        moveLevel = gLevelUpLearnsets[species][i] & LEVEL_UP_MOVE_LV;
         if (moveLevel > (level << 9))
             break;
 
-        move = gUnknown_82F9D04[species][i] & LEVEL_UP_MOVE_ID;
+        move = gLevelUpLearnsets[species][i] & LEVEL_UP_MOVE_ID;
         if (GiveMoveToBoxMon(boxMon, move) == MON_HAS_MAX_MOVES)
             DeleteFirstMoveAndGiveMoveToBoxMon(boxMon, move);
     }
