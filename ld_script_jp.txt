@@ -9993,7 +9993,9 @@ SECTIONS {
         src/graphics.o(.rodata.summary_screen_resources);
         data/data_rest2c.o(.rodata.data_rest2c_before_bag_graphics);
         src/graphics.o(.rodata.bag_graphics);
-        data/data_rest2c.o(.rodata.data_rest2c_before_swap_line_graphics);
+        data/data_rest2c.o(.rodata.data_rest2c_before_bag_menu_resources);
+        src/graphics.o(.rodata.bag_menu_resources);
+        data/data_rest2c.o(.rodata.data_rest2c_after_bag_menu_resources);
         src/graphics.o(.rodata.swap_line_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_swap_line_graphics);
         src/graphics.o(.rodata.shop_menu_resources);

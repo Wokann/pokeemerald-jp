@@ -277,7 +277,7 @@ PYRAMID_BAG_DATA static const union AffineAnimCmd *const sAffineAnims_PyramidBag
     [ANIM_BAG_SHAKE] = sAffineAnim_PyramidBag_Shake,
 };
 
-PYRAMID_BAG_DATA static const struct CompressedSpriteSheet sSpriteSheet_PyramidBag = {(const u32 *)0x08D9ABE4, 0x0800, TAG_PYRAMID_BAG};
+PYRAMID_BAG_DATA static const struct CompressedSpriteSheet sSpriteSheet_PyramidBag = {gBattlePyramidBag_Gfx, 0x0800, TAG_PYRAMID_BAG};
 
 PYRAMID_BAG_DATA static const struct SpriteTemplate sSpriteTemplate_PyramidBag =
 {

@@ -512,43 +512,10 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 
 	.section .rodata.data_rest2c_before_bag_graphics
 
-	.section .rodata.data_rest2c_before_swap_line_graphics
+	.section .rodata.data_rest2c_before_bag_menu_resources
 
 
-	.globl gUnknown_8D9A734
-gUnknown_8D9A734: @ 0x8D9A734
-	.incbin "graphics/misc/gUnknown_8D9A734.4bpp.lz"
-
-
-	.globl gUnknown_8D9A780
-gUnknown_8D9A780: @ 0x8D9A780
-	.incbin "graphics/misc/gUnknown_8D9A780.4bpp.lz"
-
-
-	.globl gUnknown_8D9A7CC
-gUnknown_8D9A7CC: @ 0x8D9A7CC
-	.incbin "graphics/misc/gUnknown_8D9A7CC.4bpp.lz"
-
-
-	.globl gUnknown_8D9AA84
-gUnknown_8D9AA84: @ 0x8D9AA84
-	.incbin "graphics/misc/gUnknown_8D9AA84.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD9ABE1, 0x3E7
-
-
-	.globl gUnknown_8D9AFC8
-gUnknown_8D9AFC8: @ 0x8D9AFC8
-	.incbin "graphics/misc/gUnknown_8D9AFC8.4bpp.lz"
-
-
-	.globl gUnknown_8D9AFFC
-gUnknown_8D9AFFC: @ 0x8D9AFFC
-	.incbin "graphics/misc/gUnknown_8D9AFFC.4bpp.lz"
-
-
-	.globl gUnknown_8D9B13C
-gUnknown_8D9B13C: @ 0x8D9B13C
-	.incbin "graphics/misc/gUnknown_8D9B13C.4bpp.lz"
+	.section .rodata.data_rest2c_after_bag_menu_resources
 
 	.section .rodata.data_rest2c_after_swap_line_graphics
 
