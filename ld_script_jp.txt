@@ -9922,6 +9922,8 @@ SECTIONS {
         data/data_rest2c.o(.rodata.data_rest2c_after_contest_next_turn_resources);
         src/graphics.o(.rodata.contest_applause_resources);
         data/data_rest2c.o(.rodata.data_rest2c_after_contest_applause_resources);
+        src/graphics.o(.rodata.battle_anim_splash_through_protect_resources);
+        data/data_rest2c.o(.rodata.data_rest2c_after_battle_anim_splash_through_protect_resources);
         src/graphics.o(.rodata.enemy_shadow_graphics);
         data/data_rest2c.o(.rodata.data_rest2c_after_enemy_shadow);
         src/graphics.o(.rodata.berry_blender_background_graphics);

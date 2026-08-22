@@ -482,7 +482,8 @@ gUnknown_8D8CF26: @ 0x8D8CF26
 	.incbin "baserom_jp.gba", 0xD8EA1C, 0x90
 
 	.section .rodata.data_rest2c_after_contest_applause_resources
-	.incbin "baserom_jp.gba", 0xD8EC78, 0xED8
+
+	.section .rodata.data_rest2c_after_battle_anim_splash_through_protect_resources
 
 	.globl gBattleAnimBackgroundImageMuddyWater_Pal
 gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50

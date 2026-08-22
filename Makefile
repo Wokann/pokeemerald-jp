@@ -519,6 +519,13 @@ $(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/gr
 	graphics/contest/nextturn_random.4bpp \
 	graphics/contest/applause.4bpp.lz graphics/contest/applause_meter.4bpp \
 	graphics/contest/nextturn.gbapal \
+	graphics/battle_anims/sprites/splash.4bpp.lz graphics/battle_anims/sprites/splash.gbapal.lz \
+	graphics/battle_anims/sprites/sweat_bead.4bpp.lz graphics/battle_anims/sprites/pokeblock.4bpp.lz \
+	graphics/battle_anims/sprites/pokeblock.gbapal.lz graphics/battle_anims/sprites/gem_1.4bpp.lz \
+	graphics/battle_anims/sprites/gem_2.4bpp.lz graphics/battle_anims/sprites/gem_3.4bpp.lz \
+	graphics/battle_anims/sprites/gem_1.gbapal.lz graphics/battle_anims/backgrounds/in_air.4bpp.lz \
+	graphics/battle_anims/backgrounds/in_air.gbapal.lz graphics/battle_anims/backgrounds/in_air.bin.lz \
+	graphics/battle_anims/sprites/protect.4bpp.lz graphics/battle_anims/sprites/protect.gbapal.lz \
 	$(wildcard graphics/bag/* graphics/berries/* graphics/pokeblock/* graphics/pokenav/*.lz graphics/pokenav/*.gbapal graphics/pokenav/left_headers/*.lz graphics/pokenav/left_headers/*.gbapal graphics/unused/cherry.* graphics/unused/jp/menu_specialized/* graphics/pokemon/icon_palettes/*.gbapal)
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/graphics.gen.s

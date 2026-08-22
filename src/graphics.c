@@ -169,6 +169,26 @@ CONTEST_APPLAUSE_RESOURCES const u16 gContestPal[] = INCBIN_U16("graphics/contes
 
 #undef CONTEST_APPLAUSE_RESOURCES
 
+#define BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES __attribute__((section(".rodata.battle_anim_splash_through_protect_resources")))
+
+// The JP LZ77 streams retain their original stream-alignment padding.
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpriteGfx_Splash[] = INCBIN_U32("graphics/battle_anims/sprites/splash.4bpp.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpritePal_Splash[] = INCBIN_U32("graphics/battle_anims/sprites/splash.gbapal.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpriteGfx_SweatBead[] = INCBIN_U32("graphics/battle_anims/sprites/sweat_bead.4bpp.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpriteGfx_Pokeblock[] = INCBIN_U32("graphics/battle_anims/sprites/pokeblock.4bpp.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpritePal_Pokeblock[] = INCBIN_U32("graphics/battle_anims/sprites/pokeblock.gbapal.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpriteGfx_Gem1[] = INCBIN_U32("graphics/battle_anims/sprites/gem_1.4bpp.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpriteGfx_Gem2[] = INCBIN_U32("graphics/battle_anims/sprites/gem_2.4bpp.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpriteGfx_Gem3[] = INCBIN_U32("graphics/battle_anims/sprites/gem_3.4bpp.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpritePal_Gem1[] = INCBIN_U32("graphics/battle_anims/sprites/gem_1.gbapal.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimBgImage_InAir[] = INCBIN_U32("graphics/battle_anims/backgrounds/in_air.4bpp.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimBgPalette_InAir[] = INCBIN_U32("graphics/battle_anims/backgrounds/in_air.gbapal.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimBgTilemap_InAir[] = INCBIN_U32("graphics/battle_anims/backgrounds/in_air.bin.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpriteGfx_Protect[] = INCBIN_U32("graphics/battle_anims/sprites/protect.4bpp.lz");
+BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES const u32 gBattleAnimSpritePal_Protect[] = INCBIN_U32("graphics/battle_anims/sprites/protect.gbapal.lz");
+
+#undef BATTLE_ANIM_SPLASH_THROUGH_PROTECT_RESOURCES
+
 #define MON_ICON_PALETTES_DATA __attribute__((section(".rodata.mon_icon_palettes_mid57a")))
 
 MON_ICON_PALETTES_DATA const u16 gMonIconPalettes[][16] = INCBIN_U16(
