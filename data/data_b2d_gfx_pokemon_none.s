@@ -25,5 +25,5 @@ gMonPalette_CircledQuestionMark: @ 0x8C00BE8
 gMonShinyPalette_CircledQuestionMark: @ 0x8C00C00
 	.incbin "graphics/pokemon/question_mark/circled/shiny.gbapal.lz"
 
-	.section .rodata.data_b2d_gfx_pokemon_none_before_pokeballs
-	.incbin "baserom_jp.gba", 0xc00c16, 0xb2e
+	.section .rodata.data_b2d_gfx_pokemon_none_before_smokescreen_impact
+	.incbin "baserom_jp.gba", 0xc00c16, 0xa36

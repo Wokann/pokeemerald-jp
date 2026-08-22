@@ -1,15 +1,168 @@
 #include "global.h"
+#include "battle_gfx_sfx_util.h"
+#include "data.h"
 #include "decompress.h"
+#include "graphics.h"
 #include "sprite.h"
 #include "util.h"
+#include "constants/battle_palace.h"
+
+#define TAG_SMOKESCREEN 55019
+
+#define PALTAG_SHADOW 55039
+#define GFXTAG_SHADOW 55129
+
+#define BATTLE_ANIM_SMOKESCREEN_DATA __attribute__((section(".rodata.battle_anim_smokescreen_data")))
 
 static void SpriteCB_SmokescreenImpactMain(struct Sprite *);
 static void SpriteCB_SmokescreenImpact(struct Sprite *);
 
-// These tables live in the JP ROM data region and are bound via ld aliases.
-extern const struct CompressedSpriteSheet sSmokescreenImpactSpriteSheet;
-extern const struct CompressedSpritePalette sSmokescreenImpactSpritePalette;
-extern const struct SpriteTemplate sSmokescreenImpactSpriteTemplate;
+const u8 gBattlePalaceNatureToMoveTarget[NUM_NATURES] BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    [NATURE_HARDY]   = PALACE_TARGET_STRONGER,
+    [NATURE_LONELY]  = PALACE_TARGET_STRONGER,
+    [NATURE_BRAVE]   = PALACE_TARGET_WEAKER,
+    [NATURE_ADAMANT] = PALACE_TARGET_STRONGER,
+    [NATURE_NAUGHTY] = PALACE_TARGET_WEAKER,
+    [NATURE_BOLD]    = PALACE_TARGET_WEAKER,
+    [NATURE_DOCILE]  = PALACE_TARGET_RANDOM,
+    [NATURE_RELAXED] = PALACE_TARGET_STRONGER,
+    [NATURE_IMPISH]  = PALACE_TARGET_STRONGER,
+    [NATURE_LAX]     = PALACE_TARGET_STRONGER,
+    [NATURE_TIMID]   = PALACE_TARGET_WEAKER,
+    [NATURE_HASTY]   = PALACE_TARGET_WEAKER,
+    [NATURE_SERIOUS] = PALACE_TARGET_WEAKER,
+    [NATURE_JOLLY]   = PALACE_TARGET_STRONGER,
+    [NATURE_NAIVE]   = PALACE_TARGET_RANDOM,
+    [NATURE_MODEST]  = PALACE_TARGET_WEAKER,
+    [NATURE_MILD]    = PALACE_TARGET_STRONGER,
+    [NATURE_QUIET]   = PALACE_TARGET_WEAKER,
+    [NATURE_BASHFUL] = PALACE_TARGET_WEAKER,
+    [NATURE_RASH]    = PALACE_TARGET_STRONGER,
+    [NATURE_CALM]    = PALACE_TARGET_STRONGER,
+    [NATURE_GENTLE]  = PALACE_TARGET_STRONGER,
+    [NATURE_SASSY]   = PALACE_TARGET_WEAKER,
+    [NATURE_CAREFUL] = PALACE_TARGET_WEAKER,
+    [NATURE_QUIRKY]  = PALACE_TARGET_STRONGER,
+};
+
+static const struct CompressedSpriteSheet sSmokescreenImpactSpriteSheet BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    .data = gSmokescreenImpactTiles,
+    .size = 0x180,
+    .tag = TAG_SMOKESCREEN,
+};
+
+static const struct CompressedSpritePalette sSmokescreenImpactSpritePalette BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    .data = gSmokescreenImpactPalette,
+    .tag = TAG_SMOKESCREEN,
+};
+
+static const struct OamData sOamData_SmokescreenImpact BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sAnim_SmokescreenImpact_0[] BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(4, 4),
+    ANIMCMD_FRAME(8, 4),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SmokescreenImpact_1[] BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    ANIMCMD_FRAME(0, 4, .hFlip = TRUE),
+    ANIMCMD_FRAME(4, 4, .hFlip = TRUE),
+    ANIMCMD_FRAME(8, 4, .hFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SmokescreenImpact_2[] BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    ANIMCMD_FRAME(0, 4, .vFlip = TRUE),
+    ANIMCMD_FRAME(4, 4, .vFlip = TRUE),
+    ANIMCMD_FRAME(8, 4, .vFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sAnim_SmokescreenImpact_3[] BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    ANIMCMD_FRAME(0, 4, .hFlip = TRUE, .vFlip = TRUE),
+    ANIMCMD_FRAME(4, 4, .hFlip = TRUE, .vFlip = TRUE),
+    ANIMCMD_FRAME(8, 4, .hFlip = TRUE, .vFlip = TRUE),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_SmokescreenImpact[] BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    sAnim_SmokescreenImpact_0,
+    sAnim_SmokescreenImpact_1,
+    sAnim_SmokescreenImpact_2,
+    sAnim_SmokescreenImpact_3,
+};
+
+static const struct SpriteTemplate sSmokescreenImpactSpriteTemplate BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    .tileTag = TAG_SMOKESCREEN,
+    .paletteTag = TAG_SMOKESCREEN,
+    .oam = &sOamData_SmokescreenImpact,
+    .anims = sAnims_SmokescreenImpact,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SmokescreenImpact,
+};
+
+const struct CompressedSpriteSheet gSpriteSheet_EnemyShadow BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    .data = gEnemyMonShadow_Gfx,
+    .size = 0x80,
+    .tag = GFXTAG_SHADOW,
+};
+
+static const struct OamData sOamData_EnemyShadow BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x8),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x8),
+    .tileNum = 0,
+    .priority = 3,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const struct SpriteTemplate gSpriteTemplate_EnemyShadow BATTLE_ANIM_SMOKESCREEN_DATA =
+{
+    .tileTag = GFXTAG_SHADOW,
+    .paletteTag = PALTAG_SHADOW,
+    .oam = &sOamData_EnemyShadow,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_SetInvisible,
+};
+
+#undef BATTLE_ANIM_SMOKESCREEN_DATA
 
 // JP stores the active-sprite count in data[0] and the persist flag in
 // data[1], unlike US pokeemerald which uses data[1] for both.

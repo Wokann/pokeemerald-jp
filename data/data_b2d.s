@@ -627,9 +627,7 @@ sBallCatchBonuses: @ 0x82ECE11
 	.byte 0 @ JP trailing entry 5
 	.byte 0 @ JP trailing entry 6
 
-	.globl gUnknown_82ECE18
-gUnknown_82ECE18: @ 0x82ECE18
-	.incbin "baserom_jp.gba", 0x2ece18, 0x64
+	.section .rodata.data_b2d_after_battle_palace_likelihood
 
 	.globl gUnknown_82ECE7C
 gUnknown_82ECE7C: @ 0x82ECE7C
@@ -643,48 +641,7 @@ gUnknown_82ECE9C: @ 0x82ECE9C
 gUnknown_82ECF80: @ 0x82ECF80
 	.incbin "baserom_jp.gba", 0x2ecf80, 0xc
 
-	.globl gUnknown_82ECF8C
-gUnknown_82ECF8C: @ 0x82ECF8C
-	.incbin "baserom_jp.gba", 0x2ecf8c, 0x1c
-
-	.globl sSmokescreenImpactSpriteSheet
-sSmokescreenImpactSpriteSheet: @ 0x82ECFA8
-	.4byte 0x08C0164C
-	.hword 0x0180, 0xD6EB
-
-	.globl sSmokescreenImpactSpritePalette
-sSmokescreenImpactSpritePalette: @ 0x82ECFB0
-	.4byte 0x08C0172C
-	.hword 0xD6EB, 0
-
-sOamData_SmokescreenImpact: @ 0x82ECFB8
-	.byte 0x00, 0x00, 0x00, 0x40, 0x00, 0x04, 0x00, 0x00
-
-sAnim_SmokescreenImpact_0: @ 0x82ECFC0
-	.hword 0x0000, 0x0004, 0x0004, 0x0004, 0x0008, 0x0004, 0xFFFF, 0x0000
-sAnim_SmokescreenImpact_1: @ 0x82ECFD0
-	.hword 0x0000, 0x0044, 0x0004, 0x0044, 0x0008, 0x0044, 0xFFFF, 0x0000
-sAnim_SmokescreenImpact_2: @ 0x82ECFE0
-	.hword 0x0000, 0x0084, 0x0004, 0x0084, 0x0008, 0x0084, 0xFFFF, 0x0000
-sAnim_SmokescreenImpact_3: @ 0x82ECFF0
-	.hword 0x0000, 0x00C4, 0x0004, 0x00C4, 0x0008, 0x00C4, 0xFFFF, 0x0000
-
-sAnims_SmokescreenImpact: @ 0x82ED000
-	.4byte sAnim_SmokescreenImpact_0, sAnim_SmokescreenImpact_1, sAnim_SmokescreenImpact_2, sAnim_SmokescreenImpact_3
-
-	.globl sSmokescreenImpactSpriteTemplate
-sSmokescreenImpactSpriteTemplate: @ 0x82ED010
-	.hword 0xD6EB, 0xD6EB
-	.4byte sOamData_SmokescreenImpact, sAnims_SmokescreenImpact
-	.4byte 0, gDummySpriteAffineAnimTable, 0x08074DBD
-
-	.globl gUnknown_82ED028
-gUnknown_82ED028: @ 0x82ED028
-	.incbin "baserom_jp.gba", 0x2ed028, 0x10
-
-	.globl gUnknown_82ED038
-gUnknown_82ED038: @ 0x82ED038
-	.incbin "baserom_jp.gba", 0x2ed038, 0x18
+	.section .rodata.data_b2d_after_smokescreen_data
 
 	.globl gUnknown_82ED050
 gUnknown_82ED050: @ 0x82ED050

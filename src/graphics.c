@@ -88,6 +88,19 @@ BAG_GRAPHICS const u32 gBagPalette[] = INCBIN_U32("graphics/bag/bag.pal.gbapal.l
 
 #undef BAG_GRAPHICS
 
+#define SMOKESCREEN_IMPACT_GRAPHICS __attribute__((section(".rodata.smokescreen_impact_graphics"), aligned(1)))
+
+SMOKESCREEN_IMPACT_GRAPHICS const u32 gSmokescreenImpactTiles[] = INCBIN_U32("graphics/battle_anims/sprites/smokescreen_impact.4bpp.lz");
+SMOKESCREEN_IMPACT_GRAPHICS const u32 gSmokescreenImpactPalette[] = INCBIN_U32("graphics/battle_anims/sprites/smokescreen_impact.gbapal.lz");
+
+#undef SMOKESCREEN_IMPACT_GRAPHICS
+
+#define ENEMY_SHADOW_GRAPHICS __attribute__((section(".rodata.enemy_shadow_graphics"), aligned(1)))
+
+ENEMY_SHADOW_GRAPHICS const u32 gEnemyMonShadow_Gfx[] = INCBIN_U32("graphics/battle_interface/enemy_mon_shadow.4bpp.lz");
+
+#undef ENEMY_SHADOW_GRAPHICS
+
 #define SWAP_LINE_GRAPHICS __attribute__((section(".rodata.swap_line_graphics"), aligned(1)))
 
 SWAP_LINE_GRAPHICS const u32 gSwapLineGfx[] = INCBIN_U32("graphics/interface/swap_line.4bpp.lz");

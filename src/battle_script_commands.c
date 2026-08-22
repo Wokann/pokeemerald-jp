@@ -43,6 +43,7 @@
 #include "data.h"
 #include "constants/abilities.h"
 #include "constants/battle_anim.h"
+#include "constants/battle_palace.h"
 #include "constants/battle_move_effects.h"
 #include "constants/battle_string_ids.h"
 #include "constants/hold_effects.h"
@@ -56,6 +57,8 @@
 #include "constants/trainers.h"
 
 #define DEFENDER_IS_PROTECTED ((gProtectStructs[gBattlerTarget].protected) && (gBattleMoves[gCurrentMove].flags & FLAG_PROTECT_AFFECTED))
+
+#define BATTLE_SCRIPT_COMMANDS_PALACE_DATA __attribute__((section(".rodata.battle_script_commands_palace_data")))
 
 static void JumpIfMoveFailed(u8 adder, u16 move);
 bool8 JumpIfMoveAffectedByProtect(u16 move);
@@ -82,6 +85,41 @@ extern const u8 sPickupProbabilities[];
 extern const u8 sEnvironmentToType[];
 extern const u8 sBallCatchBonuses[];
 extern const struct SpriteTemplate gUnknown_82ECD44;
+
+// Battle Palace move-group thresholds, in nature order.
+#define PALACE_STYLE(atk, def, atkLow, defLow) {atk, atk + def, atkLow, atkLow + defLow}
+
+const ALIGNED(4) u8 gBattlePalaceNatureToMoveGroupLikelihood[NUM_NATURES][4] BATTLE_SCRIPT_COMMANDS_PALACE_DATA =
+{
+    [NATURE_HARDY]   = PALACE_STYLE(61,  7, 61,  7),
+    [NATURE_LONELY]  = PALACE_STYLE(20, 25, 84,  8),
+    [NATURE_BRAVE]   = PALACE_STYLE(70, 15, 32, 60),
+    [NATURE_ADAMANT] = PALACE_STYLE(38, 31, 70, 15),
+    [NATURE_NAUGHTY] = PALACE_STYLE(20, 70, 70, 22),
+    [NATURE_BOLD]    = PALACE_STYLE(30, 20, 32, 58),
+    [NATURE_DOCILE]  = PALACE_STYLE(56, 22, 56, 22),
+    [NATURE_RELAXED] = PALACE_STYLE(25, 15, 75, 15),
+    [NATURE_IMPISH]  = PALACE_STYLE(69,  6, 28, 55),
+    [NATURE_LAX]     = PALACE_STYLE(35, 10, 29,  6),
+    [NATURE_TIMID]   = PALACE_STYLE(62, 10, 30, 20),
+    [NATURE_HASTY]   = PALACE_STYLE(58, 37, 88,  6),
+    [NATURE_SERIOUS] = PALACE_STYLE(34, 11, 29, 11),
+    [NATURE_JOLLY]   = PALACE_STYLE(35,  5, 35, 60),
+    [NATURE_NAIVE]   = PALACE_STYLE(56, 22, 56, 22),
+    [NATURE_MODEST]  = PALACE_STYLE(35, 45, 34, 60),
+    [NATURE_MILD]    = PALACE_STYLE(44, 50, 34,  6),
+    [NATURE_QUIET]   = PALACE_STYLE(56, 22, 56, 22),
+    [NATURE_BASHFUL] = PALACE_STYLE(30, 58, 30, 58),
+    [NATURE_RASH]    = PALACE_STYLE(30, 13, 27,  6),
+    [NATURE_CALM]    = PALACE_STYLE(40, 50, 25, 62),
+    [NATURE_GENTLE]  = PALACE_STYLE(18, 70, 90,  5),
+    [NATURE_SASSY]   = PALACE_STYLE(88,  6, 22, 20),
+    [NATURE_CAREFUL] = PALACE_STYLE(42, 50, 42,  5),
+    [NATURE_QUIRKY]  = PALACE_STYLE(56, 22, 56, 22),
+};
+
+#undef PALACE_STYLE
+#undef BATTLE_SCRIPT_COMMANDS_PALACE_DATA
 
 void Cmd_drawlvlupbox(void);
 static void DrawLevelUpWindow1(void);
@@ -9786,4 +9824,3 @@ __attribute__((naked)) void atk7C_trymirrormove(void)
         ".syntax divided\n\t"
     );
 }
-
