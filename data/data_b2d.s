@@ -778,9 +778,7 @@ gUnknown_82EFF52: @ 0x82EFF52
 gUnknown_82EFFA4: @ 0x82EFFA4
 	.incbin "baserom_jp.gba", 0x2effa4, 0x110
 
-	.globl gExperienceTables
-gExperienceTables: @ 0x82F00B4
-	.incbin "baserom_jp.gba", 0x2f00b4, 0xca0
+	.section .rodata.data_b2d_after_experience_tables
 
 	.globl gSpeciesInfo
 gSpeciesInfo: @ 0x82F0D54
