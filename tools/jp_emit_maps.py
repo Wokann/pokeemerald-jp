@@ -40,6 +40,12 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
 # US map source.  They are referenced by ``applymovement`` rather than being
 # event scripts, so the event-script parser deliberately does not follow them.
 MAP_MOVEMENT_SCRIPT_LABELS = {
+    'Route116': {
+        0x081EBBEC: 'Route116_Movement_DevonEmployeeExit',
+        0x081EBBF5: 'Route116_Movement_DevonEmployeeExitEast',
+        0x081EBD1D: 'Route116_Movement_GlassesManExit',
+        0x081EBD27: 'Route116_Movement_GlassesManExitEast',
+    },
     'RusturfTunnel': {
         0x082137E0: 'RusturfTunnel_Movement_WandaExit1',
         0x082137EC: 'RusturfTunnel_Movement_WandaExit',
@@ -452,7 +458,11 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         text_ranges.append((a, b))
         for x in range(a, b):
             covered[x] = 'text'
-    emitted_text_label_map = dict(text_label_map)
+    # A pointer found through another map's script graph is not necessarily
+    # defined by a checked-in gJPText_* label yet.  Render only labels emitted
+    # by this map; leave external text pointers numeric until their owning
+    # source range has been converted and defines the symbol.
+    emitted_text_label_map = {}
     for tp, _ in text_ranges:
         emitted_text_label_map[tp] = 'gJPText_%08X' % (tp & 0xFFFFFF)
     # build segments in address order
