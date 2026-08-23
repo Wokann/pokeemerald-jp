@@ -113,6 +113,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/FallarborTown_BattleTentBattleRoom/scripts.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_2F/scripts.inc"
+	.include "data/maps/FallarborTown_CozmosHouse/scripts.inc"
+	.include "data/maps/FallarborTown_MoveRelearnersHouse/scripts.inc"
 	.include "data/maps/VerdanturfTown_BattleTentLobby/scripts.inc"
 	.include "data/maps/VerdanturfTown_BattleTentCorridor/scripts.inc"
 	.include "data/maps/VerdanturfTown_BattleTentBattleRoom/scripts.inc"
