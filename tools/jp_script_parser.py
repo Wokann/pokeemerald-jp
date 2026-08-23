@@ -378,9 +378,11 @@ def parse_script(addr, maxlen=0x4000):
     return out
 
 
-def decode_script_lines(script, label_map, text_label_map=None):
+def decode_script_lines(script, label_map, text_label_map=None, symbol_formatter=None):
     """Turn a parsed script into assembly macro lines. 4-byte pointer args
-    that match a known script label are rendered as that label."""
+    that match a known script label are rendered as that label.  A caller may
+    provide ``symbol_formatter(name, index, value, args)`` for independently
+    verified non-pointer constants."""
     text_label_map = text_label_map or {}
     out = []
     for off, name, args, refs in script:
@@ -404,6 +406,14 @@ def decode_script_lines(script, label_map, text_label_map=None):
                 parts.append(text_label_map[a])
             elif isinstance(a, int) and a in label_map:
                 parts.append(label_map[a])
+            elif isinstance(a, int) and symbol_formatter is not None:
+                symbol = symbol_formatter(name, i, a, args)
+                if symbol is not None:
+                    parts.append(symbol)
+                elif a >= 0x08000000:
+                    parts.append('0x%08X' % a)
+                else:
+                    parts.append('0x%X' % a)
             elif isinstance(a, int) and a >= 0x08000000:
                 parts.append('0x%08X' % a)
             else:

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import shutil
 import subprocess
 import tempfile
 from functools import lru_cache
@@ -26,6 +27,7 @@ AS = ROOT / "tools" / "binutils" / "bin" / "arm-none-eabi-as"
 NM = ROOT / "tools" / "binutils" / "bin" / "arm-none-eabi-nm"
 LD = ROOT / "tools" / "binutils" / "bin" / "arm-none-eabi-ld"
 OBJCOPY = ROOT / "tools" / "binutils" / "bin" / "arm-none-eabi-objcopy"
+CPP = "cpp"
 
 UNDEFINED_RE = re.compile(r"^\s*U\s+(\S+)\s*$")
 ADDRESS_SUFFIX_RE = re.compile(r"_([0-9A-Fa-f]{6,8})$")
@@ -35,8 +37,21 @@ class VerificationError(ValueError):
     """A generated source range cannot be proven byte-exact."""
 
 
-def _run(command: list[str], *, cwd: Path, description: str) -> subprocess.CompletedProcess:
-    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, check=False)
+def _run(
+    command: list[str],
+    *,
+    cwd: Path,
+    description: str,
+    input_text: str | None = None,
+) -> subprocess.CompletedProcess:
+    result = subprocess.run(
+        command,
+        cwd=cwd,
+        input=input_text,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
     if result.returncode:
         detail = (result.stderr or result.stdout).strip()
         raise VerificationError(f"{description} failed: {detail}")
@@ -44,12 +59,37 @@ def _run(command: list[str], *, cwd: Path, description: str) -> subprocess.Compl
 
 
 def _preprocess(source: Path, output: Path) -> None:
-    result = _run(
+    expanded = _run(
         [str(PREPROC), str(source), str(ROOT / "charmap.txt")],
         cwd=ROOT,
         description="preproc",
     )
-    output.write_text(result.stdout, encoding="utf-8")
+    cpp = _run(
+        [
+            CPP,
+            "-iquote",
+            "include",
+            "-Wno-trigraphs",
+            "-I",
+            "tools/agbcc/include",
+            "-I",
+            "tools/agbcc",
+            "-nostdinc",
+            "-undef",
+            "-std=gnu89",
+            "-",
+        ],
+        cwd=ROOT,
+        description="C preprocessor",
+        input_text=expanded.stdout,
+    )
+    encoded = _run(
+        [str(PREPROC), "-ie", str(source), str(ROOT / "charmap.txt")],
+        cwd=ROOT,
+        description="post-cpp preproc",
+        input_text=cpp.stdout,
+    )
+    output.write_text(encoded.stdout, encoding="utf-8")
 
 
 def _assemble(source: Path, object_path: Path) -> None:
@@ -102,12 +142,20 @@ def _resolve_address(symbol: str, known: dict[str, int]) -> int | None:
 
 
 def _wrapper(source_path: Path, aliases: dict[str, int]) -> str:
-    lines = [
+    event_script_source = ROOT / "data" / "event_scripts.s"
+    cpp_headers = []
+    for line in event_script_source.read_text(encoding="utf-8").splitlines():
+        if line.startswith("#include "):
+            cpp_headers.append(line)
+        elif cpp_headers and line.strip():
+            break
+    if not cpp_headers:
+        raise VerificationError(f"missing C constant includes in {event_script_source}")
+    lines = cpp_headers + [
         '.include "asm/macros.inc"',
         '.include "asm/macros/event.inc"',
-        '.include "constants/constants.inc"',
-        '.include "constants/map_scripts.inc"',
-        '.include "constants/specials_constants.inc"',
+        '.include "constants/gba_constants.inc"',
+        '.include "constants/global.inc"',
     ]
     for name, address in sorted(aliases.items()):
         lines.append(f".set {name}, 0x{address:08X}")
@@ -124,6 +172,8 @@ def assemble_candidate(source: str, origin: int) -> bytes:
     for tool in (PREPROC, AS, NM, LD, OBJCOPY):
         if not tool.is_file():
             raise VerificationError(f"missing host tool: {tool}")
+    if shutil.which(CPP) is None:
+        raise VerificationError(f"missing host tool: {CPP}")
     known = _external_label_addresses()
     with tempfile.TemporaryDirectory(prefix="jp-map-script-") as directory:
         tempdir = Path(directory)

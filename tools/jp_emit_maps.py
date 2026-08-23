@@ -136,6 +136,105 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
     },
 }
 
+# Reviewed JP-to-US names for maps whose event positions, control-flow shape,
+# and text/movement ordering have all been checked against the US source.  This
+# is intentionally an allowlist: unreviewed addresses keep deterministic
+# address labels instead of receiving a plausible-but-unproven semantic name.
+MAP_VERIFIED_SEMANTIC_LABELS = {
+    'RustboroCity_DevonCorp_3F': {
+        'scripts': {
+            0x08201C39: 'RustboroCity_DevonCorp_3F_OnTransition',
+            0x08201C45: 'RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos',
+            0x08201C5B: 'RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast',
+            0x08201C6A: 'RustboroCity_DevonCorp_3F_EventScript_MeetPresident',
+            0x08201D68: 'RustboroCity_DevonCorp_3F_EventScript_MrStone',
+            0x08201D91: 'RustboroCity_DevonCorp_3F_EventScript_GiveExpShare',
+            0x08201DC8: 'RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor',
+            0x08201DDD: 'RustboroCity_DevonCorp_3F_EventScript_Employee',
+            0x08201DF2: 'RustboroCity_DevonCorp_3F_EventScript_EmployeeBalls',
+            0x08201DFC: 'RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay',
+        },
+        'tables': {
+            0x08201C51: 'RustboroCity_DevonCorp_3F_OnWarp',
+            0x08201C60: 'RustboroCity_DevonCorp_3F_OnFrame',
+        },
+        'texts': {
+            0x08201E05: 'RustboroCity_DevonCorp_3F_Text_MrStoneIHaveFavor',
+            0x08201EE9: 'RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis',
+            0x08201F3E: 'RustboroCity_DevonCorp_3F_Text_ReceivedPokenav',
+            0x08201F4F: 'RustboroCity_DevonCorp_3F_Text_MrStoneExplainPokenavRestUp',
+            0x08202015: 'RustboroCity_DevonCorp_3F_Text_MrStoneGoWithCautionAndCare',
+            0x08202037: 'RustboroCity_DevonCorp_3F_Text_CountingOnYou',
+            0x08202047: 'RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter',
+            0x0820208A: 'RustboroCity_DevonCorp_3F_Text_ExplainExpShare',
+            0x082020E6: 'RustboroCity_DevonCorp_3F_Text_NotFamiliarWithTrends',
+            0x0820213E: 'RustboroCity_DevonCorp_3F_Text_ThisIs3rdFloorWaitHere',
+            0x08202212: 'RustboroCity_DevonCorp_3F_Text_WordWithPresidentComeWithMe',
+            0x08202239: 'RustboroCity_DevonCorp_3F_Text_PleaseGoAhead',
+            0x08202241: 'RustboroCity_DevonCorp_3F_Text_VisitCaptSternShipyard',
+            0x08202277: 'RustboroCity_DevonCorp_3F_Text_RepeatAndTimerHugelyPopular',
+            0x082022A7: 'RustboroCity_DevonCorp_3F_Text_RareRocksDisplay',
+        },
+        # FD nn is context-sensitive.  These two are field messages whose
+        # exact US counterparts establish the intended field placeholders.
+        'field_placeholders': {
+            0x08201F3E: {0x01: 'PLAYER'},
+            0x08202015: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        # These constants are emitted only in argument positions whose US
+        # counterpart proves the type (flag, variable, item, song, etc.).
+        'symbols': {
+            'vars': {
+                0x405A: 'VAR_RUSTBORO_CITY_STATE',
+                0x408F: 'VAR_DEVON_CORP_3F_STATE',
+                0x4096: 'VAR_BRINEY_LOCATION',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'flags': {
+                0x00BC: 'FLAG_RECEIVED_POKENAV',
+                0x00BD: 'FLAG_DELIVERED_STEVEN_LETTER',
+                0x0100: 'FLAG_RECEIVED_REPEAT_BALL',
+                0x0110: 'FLAG_RECEIVED_EXP_SHARE',
+                0x02E3: 'FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY',
+                0x0327: 'FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND',
+                0x032E: 'FLAG_HIDE_RUSTBORO_CITY_RIVAL',
+                0x0371: 'FLAG_HIDE_BRINEYS_HOUSE_PEEKO',
+                0x037E: 'FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND',
+                0x03D7: 'FLAG_HIDE_RUSTURF_TUNNEL_WANDA',
+                0x03E7: 'FLAG_HIDE_RUSTBORO_CITY_POKEMON_SCHOOL_SCOTT',
+                0x0862: 'FLAG_SYS_POKENAV_GET',
+            },
+            'items': {
+                0x00B6: 'ITEM_EXP_SHARE',
+                0x0112: 'ITEM_LETTER',
+            },
+            'songs': {
+                0x0172: 'MUS_OBTAIN_ITEM',
+                0x01A4: 'MUS_FOLLOW_ME',
+            },
+            'local_ids': {
+                0x02: 'LOCALID_DEVON_CORP_3F_EMPLOYEE',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {0x04: 'DIR_EAST'},
+            'movement_types': {0x09: 'MOVEMENT_TYPE_FACE_LEFT'},
+        },
+    },
+}
+
+MSGBOX_TYPES = {
+    2: 'MSGBOX_NPC',
+    3: 'MSGBOX_SIGN',
+    4: 'MSGBOX_DEFAULT',
+    5: 'MSGBOX_YESNO',
+    6: 'MSGBOX_AUTOCLOSE',
+    9: 'MSGBOX_GETPOINTS',
+    10: 'MSGBOX_POKENAV',
+}
+
 TEXT_POINTER_ARGUMENTS = {
     'loadword': (1,),
     'message': (0,),
@@ -200,12 +299,132 @@ def decode_movement_script(addr, region_end):
             return actions, pos
     return None
 
-def decode_text(data):
+def decode_text(data, placeholder_names=None):
     """Return safe source text, or None when a byte sequence is not proved."""
     try:
-        return TEXT_CODEC.verify(data)
+        return TEXT_CODEC.verify(data, placeholder_names)
     except (TextDecodeError, TextRoundTripError):
         return None
+
+
+def collapse_msgbox_macros(lines):
+    """Restore the source-level ``msgbox`` macro for a proven two-op sequence."""
+    out = []
+    index = 0
+    while index < len(lines):
+        name, argstr = lines[index]
+        if name == 'loadword' and index + 1 < len(lines):
+            next_name, next_argstr = lines[index + 1]
+            parts = [part.strip() for part in argstr.split(',', 1)]
+            try:
+                message_type = int(next_argstr, 0)
+            except ValueError:
+                message_type = None
+            if (next_name == 'callstd' and len(parts) == 2
+                    and parts[0] in ('0', '0x0')
+                    and message_type in MSGBOX_TYPES):
+                out.append(('msgbox', '%s, %s' % (parts[1], MSGBOX_TYPES[message_type])))
+                index += 2
+                continue
+        out.append((name, argstr))
+        index += 1
+    return out
+
+
+def collapse_condition_macros(lines):
+    """Restore exact two-instruction comparison and flag-test macros."""
+    out = []
+    index = 0
+    while index < len(lines):
+        name, argstr = lines[index]
+        if index + 1 < len(lines):
+            next_name, next_argstr = lines[index + 1]
+            parts = [part.strip() for part in argstr.split(',', 1)]
+            next_parts = [part.strip() for part in next_argstr.split(',', 1)]
+            try:
+                condition = int(next_parts[0], 0)
+            except (IndexError, ValueError):
+                condition = None
+            if (name == 'checkflag' and next_name in ('goto_if', 'call_if')
+                    and len(next_parts) == 2):
+                suffix = {0: 'unset', 1: 'set'}.get(condition)
+                if suffix is not None:
+                    out.append(('%s_if_%s' % (next_name[:-3], suffix),
+                                '%s, %s' % (argstr, next_parts[1])))
+                    index += 2
+                    continue
+            if (name in ('compare_var_to_value', 'compare_var_to_var')
+                    and next_name in ('goto_if', 'call_if')
+                    and len(parts) == 2 and len(next_parts) == 2):
+                suffix = {
+                    0: 'lt',
+                    1: 'eq',
+                    2: 'gt',
+                    3: 'le',
+                    4: 'ge',
+                    5: 'ne',
+                }.get(condition)
+                if suffix is not None:
+                    out.append(('%s_if_%s' % (next_name[:-3], suffix),
+                                '%s, %s, %s' % (parts[0], parts[1], next_parts[1])))
+                    index += 2
+                    continue
+        out.append((name, argstr))
+        index += 1
+    return out
+
+
+VARIABLE_ARGUMENTS = {
+    'compare_var_to_value': {0},
+    'compare_var_to_var': {0, 1},
+    'setvar': {0},
+    'addvar': {0},
+    'subvar': {0},
+    'copyvar': {0, 1},
+    'setorcopyvar': {0},
+}
+FLAG_ARGUMENTS = {'setflag', 'clearflag', 'checkflag'}
+LOCAL_ID_ARGUMENTS = {
+    'applymovement': {0},
+    'setobjectxyperm': {0},
+    'setobjectmovementtype': {0},
+    'turnobject': {0},
+}
+
+
+def semantic_symbol_formatter(mname):
+    """Return a conservative formatter for reviewed map-script constants."""
+    symbols = MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {}).get('symbols', {})
+    if not symbols:
+        return None
+
+    def format_symbol(name, index, value, args):
+        if name in FLAG_ARGUMENTS and index == 0:
+            return symbols.get('flags', {}).get(value)
+        if index in VARIABLE_ARGUMENTS.get(name, ()):
+            return symbols.get('vars', {}).get(value)
+        if name == 'setorcopyvar' and index == 1 and args and args[0] == 0x8000:
+            return symbols.get('items', {}).get(value)
+        if name in ('playbgm', 'playfanfare') and index == 0:
+            return symbols.get('songs', {}).get(value)
+        if index in LOCAL_ID_ARGUMENTS.get(name, ()):
+            local = symbols.get('local_ids', {}).get(value)
+            if local is not None:
+                return local
+            return symbols.get('vars', {}).get(value)
+        if name == 'turnobject' and index == 1:
+            return symbols.get('directions', {}).get(value)
+        if name == 'setobjectmovementtype' and index == 1:
+            return symbols.get('movement_types', {}).get(value)
+        return None
+
+    return format_symbol
+
+
+def semantic_map_variable(mname, value):
+    """Render a reviewed map-script table variable, if one is available."""
+    return (MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {})
+            .get('symbols', {}).get('vars', {}).get(value))
 
 
 def map_entries(include_empty=False):
@@ -402,12 +621,23 @@ def text_range(tp, region_end):
 def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
              text_label_map, region_labels=None, std_addrs=None, events_addr=None):
     std_addrs = std_addrs or set()
+    semantic = MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {})
+    verified_script_labels = semantic.get('scripts', {})
+    verified_table_labels = semantic.get('tables', {})
+    verified_text_labels = semantic.get('texts', {})
+    field_placeholders = semantic.get('field_placeholders', {})
+    symbol_formatter = semantic_symbol_formatter(mname)
     extra = [
         a
         for a in (*std_addrs, *MAP_AUXILIARY_SCRIPT_ADDRESSES.get(mname, ()))
         if ms <= a < region_end
     ]
     scripts, text_ptrs = collect_map_scripts(ms, mname, extra, events_addr, region_end)
+    missing_scripts = set(verified_script_labels) - set(scripts)
+    if missing_scripts:
+        raise RuntimeError(
+            'verified semantic script labels are not reachable for %s: %s' % (
+                mname, ', '.join('0x%08X' % addr for addr in sorted(missing_scripts))))
     text_ptrs.update(
         addr for addr in MAP_AUXILIARY_TEXT_ADDRESSES.get(mname, ())
         if ms <= addr < region_end)
@@ -430,7 +660,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         if addr in std_addrs:
             label_map[addr] = region_labels.get(addr, 'gUnknown_%08X' % (addr & 0xFFFFFF))
         else:
-            label_map[addr] = '%s_EventScript_%08X' % (mname, addr & 0xFFFFFF)
+            label_map[addr] = verified_script_labels.get(
+                addr, '%s_EventScript_%08X' % (mname, addr & 0xFFFFFF))
     label_map.update(movement_labels)
     # byte coverage
     covered = collections.defaultdict(str)
@@ -464,6 +695,11 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             if ms <= ta < region_end:
                 for b in frame_table_bytes(ta):
                     covered[b] = 'table'
+    missing_tables = set(verified_table_labels) - set(table_addrs)
+    if missing_tables:
+        raise RuntimeError(
+            'verified semantic map-table labels are absent for %s: %s' % (
+                mname, ', '.join('0x%08X' % addr for addr in sorted(missing_tables))))
     text_ranges = []
     for tp in sorted(global_text_ptrs | text_ptrs):
         if not (ms <= tp < region_end):
@@ -483,7 +719,19 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     # source range has been converted and defines the symbol.
     emitted_text_label_map = {}
     for tp, _ in text_ranges:
-        emitted_text_label_map[tp] = 'gJPText_%08X' % (tp & 0xFFFFFF)
+        emitted_text_label_map[tp] = verified_text_labels.get(
+            tp, 'gJPText_%08X' % (tp & 0xFFFFFF))
+    missing_texts = set(verified_text_labels) - set(emitted_text_label_map)
+    if missing_texts:
+        raise RuntimeError(
+            'verified semantic text labels are not emitted for %s: %s' % (
+                mname, ', '.join('0x%08X' % addr for addr in sorted(missing_texts))))
+    missing_placeholder_texts = set(field_placeholders) - set(emitted_text_label_map)
+    if missing_placeholder_texts:
+        raise RuntimeError(
+            'field placeholder metadata has no emitted text for %s: %s' % (
+                mname,
+                ', '.join('0x%08X' % addr for addr in sorted(missing_placeholder_texts))))
     # build segments in address order
     segs = []
     segs.append((ms, 'map_table', 0))
@@ -528,7 +776,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 t, p = toi(tag), toi(ptr)
                 if t in (2, 4):
                     if ms <= p < region_end:
-                        tbl = '%s_MapScriptTable_%08X' % (mname, p & 0xFFFFFF)
+                        tbl = verified_table_labels.get(
+                            p, '%s_MapScriptTable_%08X' % (mname, p & 0xFFFFFF))
                         lines.append('\tmap_script %s, %s' % (MAP_SCRIPT_NAMES.get(t, str(t)), tbl))
                     else:
                         lines.append('\tmap_script %s, 0x%08X' % (MAP_SCRIPT_NAMES.get(t, str(t)), p))
@@ -539,12 +788,17 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             lines.append('\t.byte 0')
             lines.append('')
         elif kind == 'frame_table':
-            lines.append('%s_MapScriptTable_%08X::' % (mname, start & 0xFFFFFF))
+            table_label = verified_table_labels.get(
+                start, '%s_MapScriptTable_%08X' % (mname, start & 0xFFFFFF))
+            lines.append('%s::' % table_label)
             for var, cmp, sptr in parse_frame_table(start):
+                rendered_var = semantic_map_variable(mname, var) or '0x%X' % var
                 if sptr in label_map:
-                    lines.append('\tmap_script_2 0x%X, 0x%X, %s' % (var, cmp, label_map[sptr]))
+                    lines.append('\tmap_script_2 %s, 0x%X, %s' % (
+                        rendered_var, cmp, label_map[sptr]))
                 else:
-                    lines.append('\tmap_script_2 0x%X, 0x%X, 0x%08X' % (var, cmp, sptr))
+                    lines.append('\tmap_script_2 %s, 0x%X, 0x%08X' % (
+                        rendered_var, cmp, sptr))
             lines.append('\t.2byte 0')
             lines.append('')
         elif kind == 'script':
@@ -553,8 +807,10 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             if old:
                 lines.append('%s:: @ 0x%08X' % (old, addr))
             lines.append('%s::' % label_map[addr])
-            for name, argstr in sp.decode_script_lines(
-                    scripts[addr], label_map, emitted_text_label_map):
+            decoded_lines = sp.decode_script_lines(
+                scripts[addr], label_map, emitted_text_label_map, symbol_formatter)
+            decoded_lines = collapse_msgbox_macros(decoded_lines)
+            for name, argstr in collapse_condition_macros(decoded_lines):
                 if argstr:
                     lines.append('\t%s %s' % (name, argstr))
                 else:
@@ -570,14 +826,15 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             tp = payload
             end = text_ranges[[x[0] for x in text_ranges].index(tp)][1]
             raw = ROM[tp - 0x08000000:end - 0x08000000]
-            dec = decode_text(raw)
+            dec = decode_text(raw, field_placeholders.get(tp))
             if dec is None:
                 lines.append('\t.incbin "baserom_jp.gba", 0x%x, 0x%x' % (
                     tp - 0x08000000, end - tp))
                 nraw += 1
                 continue
-            label = 'gJPText_%08X' % (tp & 0xFFFFFF)
-            lines.append('\t.globl %s' % label)
+            label = emitted_text_label_map[tp]
+            if label.startswith('gJPText_'):
+                lines.append('\t.globl %s' % label)
             lines.append('%s: @ 0x%08X' % (label, tp))
             old = region_labels.get(tp)
             if old and old != label:

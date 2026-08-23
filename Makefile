@@ -938,9 +938,15 @@ $(C_BUILDDIR)/link.o: src/link.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
+$(OBJ_DIR)/data/event_scripts.d: data/event_scripts.s | tools
+	@mkdir -p $(dir $@)
+	$(SCANINC) -M $@ -I include -I "" $<
+
+-include $(OBJ_DIR)/data/event_scripts.d
+
 $(OBJ_DIR)/data/event_scripts.o: data/event_scripts.s baserom_jp.gba
 	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(CPP) $(CPPFLAGS) - | $(PREPROC) -ie $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/data.o: data/data.s charmap.txt baserom_jp.gba
 	@mkdir -p $(dir $@)

@@ -1,85 +1,77 @@
 @ RustboroCity_DevonCorp_3F scripts (JP map g11 m2 @ 0x08201C29)
 
 RustboroCity_DevonCorp_3F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_DevonCorp_3F_EventScript_00201C39
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, RustboroCity_DevonCorp_3F_MapScriptTable_00201C51
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, RustboroCity_DevonCorp_3F_MapScriptTable_00201C60
+	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_DevonCorp_3F_OnTransition
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, RustboroCity_DevonCorp_3F_OnWarp
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, RustboroCity_DevonCorp_3F_OnFrame
 	.byte 0
 
-RustboroCity_DevonCorp_3F_EventScript_00201C39::
-	compare_var_to_value 0x408F, 0x0
-	call_if 0x1, RustboroCity_DevonCorp_3F_EventScript_00201C45
+RustboroCity_DevonCorp_3F_OnTransition::
+	call_if_eq VAR_DEVON_CORP_3F_STATE, 0x0, RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_00201C45::
-	setobjectxyperm 0x2, 0x3, 0x2
-	setobjectmovementtype 0x2, 0x9
+RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos::
+	setobjectxyperm LOCALID_DEVON_CORP_3F_EMPLOYEE, 0x3, 0x2
+	setobjectmovementtype LOCALID_DEVON_CORP_3F_EMPLOYEE, MOVEMENT_TYPE_FACE_LEFT
 	return
 
-RustboroCity_DevonCorp_3F_MapScriptTable_00201C51::
-	map_script_2 0x408F, 0x0, RustboroCity_DevonCorp_3F_EventScript_00201C5B
+RustboroCity_DevonCorp_3F_OnWarp::
+	map_script_2 VAR_DEVON_CORP_3F_STATE, 0x0, RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast
 	.2byte 0
 
-RustboroCity_DevonCorp_3F_EventScript_00201C5B::
-	turnobject 0xFF, 0x4
+RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast::
+	turnobject LOCALID_PLAYER, DIR_EAST
 	end
 
-RustboroCity_DevonCorp_3F_MapScriptTable_00201C60::
-	map_script_2 0x408F, 0x0, RustboroCity_DevonCorp_3F_EventScript_00201C6A
+RustboroCity_DevonCorp_3F_OnFrame::
+	map_script_2 VAR_DEVON_CORP_3F_STATE, 0x0, RustboroCity_DevonCorp_3F_EventScript_MeetPresident
 	.2byte 0
 
-RustboroCity_DevonCorp_3F_EventScript_00201C6A::
+RustboroCity_DevonCorp_3F_EventScript_MeetPresident::
 	lockall
-	loadword 0x0, gJPText_0020213E
-	callstd 0x4
+	msgbox RustboroCity_DevonCorp_3F_Text_ThisIs3rdFloorWaitHere, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x2, RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen
+	applymovement LOCALID_DEVON_CORP_3F_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen
 	waitmovement 0x0
 	delay 0x50
-	applymovement 0x2, RustboroCity_DevonCorp_3F_Movement_EmployeeReturnToPlayer
+	applymovement LOCALID_DEVON_CORP_3F_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeReturnToPlayer
 	waitmovement 0x0
-	loadword 0x0, gJPText_00202212
-	callstd 0x4
+	msgbox RustboroCity_DevonCorp_3F_Text_WordWithPresidentComeWithMe, MSGBOX_DEFAULT
 	closemessage
-	playbgm 0x1A4, 0x0
-	applymovement 0x2, RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident
-	applymovement 0xFF, RustboroCity_DevonCorp_3F_Movement_PlayerFollowToPresident
+	playbgm MUS_FOLLOW_ME, 0x0
+	applymovement LOCALID_DEVON_CORP_3F_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident
+	applymovement LOCALID_PLAYER, RustboroCity_DevonCorp_3F_Movement_PlayerFollowToPresident
 	waitmovement 0x0
-	loadword 0x0, gJPText_00202239
-	callstd 0x4
+	msgbox RustboroCity_DevonCorp_3F_Text_PleaseGoAhead, MSGBOX_DEFAULT
 	closemessage
 	fadedefaultbgm
-	applymovement 0x2, RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk
-	applymovement 0xFF, RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk
+	applymovement LOCALID_DEVON_CORP_3F_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk
+	applymovement LOCALID_PLAYER, RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk
 	waitmovement 0x0
-	loadword 0x0, gJPText_00201E05
-	callstd 0x4
-	setorcopyvar 0x8000, 0x112
-	setorcopyvar 0x8001, 0x1
+	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneIHaveFavor, MSGBOX_DEFAULT
+	setorcopyvar VAR_0x8000, ITEM_LETTER
+	setorcopyvar VAR_0x8001, 0x1
 	callstd 0x0
-	loadword 0x0, gJPText_00201EE9
-	callstd 0x4
-	playfanfare 0x172
-	message gJPText_00201F3E
+	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_ITEM
+	message RustboroCity_DevonCorp_3F_Text_ReceivedPokenav
 	waitfanfare
-	setflag 0x862
-	setflag 0xBC
-	setflag 0x3E7
-	loadword 0x0, gJPText_00201F4F
-	callstd 0x4
+	setflag FLAG_SYS_POKENAV_GET
+	setflag FLAG_RECEIVED_POKENAV
+	setflag FLAG_HIDE_RUSTBORO_CITY_POKEMON_SCHOOL_SCOTT
+	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneExplainPokenavRestUp, MSGBOX_DEFAULT
 	closemessage
 	call 0x0824310F
-	loadword 0x0, gJPText_00202015
-	callstd 0x4
-	setflag 0x37E
-	clearflag 0x327
-	clearflag 0x3D7
-	clearflag 0x2E3
-	clearflag 0x371
-	setvar 0x4096, 0x1
-	clearflag 0x32E
-	setvar 0x408F, 0x1
-	setvar 0x405A, 0x6
+	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneGoWithCautionAndCare, MSGBOX_DEFAULT
+	setflag FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND
+	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND
+	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDA
+	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
+	setvar VAR_BRINEY_LOCATION, 0x1
+	clearflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
+	setvar VAR_DEVON_CORP_3F_STATE, 0x1
+	setvar VAR_RUSTBORO_CITY_STATE, 0x6
 	releaseall
 	end
 
@@ -158,70 +150,58 @@ RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk:
 	walk_in_place_faster_right
 	step_end
 
-RustboroCity_DevonCorp_3F_EventScript_00201D68::
+RustboroCity_DevonCorp_3F_EventScript_MrStone::
 	lock
 	faceplayer
-	checkflag 0x110
-	goto_if 0x1, RustboroCity_DevonCorp_3F_EventScript_00201DC8
-	checkflag 0xBD
-	goto_if 0x1, RustboroCity_DevonCorp_3F_EventScript_00201D91
-	loadword 0x0, gJPText_00202037
-	callstd 0x4
+	goto_if_set FLAG_RECEIVED_EXP_SHARE, RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor
+	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, RustboroCity_DevonCorp_3F_EventScript_GiveExpShare
+	msgbox RustboroCity_DevonCorp_3F_Text_CountingOnYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x08243625
+	applymovement VAR_LAST_TALKED, 0x08243625
 	waitmovement 0x0
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_00201D91::
-	loadword 0x0, gJPText_00202047
-	callstd 0x4
-	setorcopyvar 0x8000, 0xB6
-	setorcopyvar 0x8001, 0x1
+RustboroCity_DevonCorp_3F_EventScript_GiveExpShare::
+	msgbox RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter, MSGBOX_DEFAULT
+	setorcopyvar VAR_0x8000, ITEM_EXP_SHARE
+	setorcopyvar VAR_0x8001, 0x1
 	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0x110
-	loadword 0x0, gJPText_0020208A
-	callstd 0x4
+	goto_if_eq VAR_RESULT, 0x0, 0x082430E0
+	setflag FLAG_RECEIVED_EXP_SHARE
+	msgbox RustboroCity_DevonCorp_3F_Text_ExplainExpShare, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x08243625
+	applymovement VAR_LAST_TALKED, 0x08243625
 	waitmovement 0x0
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_00201DC8::
-	loadword 0x0, gJPText_002020E6
-	callstd 0x4
+RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor::
+	msgbox RustboroCity_DevonCorp_3F_Text_NotFamiliarWithTrends, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x08243625
+	applymovement VAR_LAST_TALKED, 0x08243625
 	waitmovement 0x0
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_00201DDD::
+RustboroCity_DevonCorp_3F_EventScript_Employee::
 	lock
 	faceplayer
-	checkflag 0x100
-	goto_if 0x1, RustboroCity_DevonCorp_3F_EventScript_00201DF2
-	loadword 0x0, gJPText_00202241
-	callstd 0x4
+	goto_if_set FLAG_RECEIVED_REPEAT_BALL, RustboroCity_DevonCorp_3F_EventScript_EmployeeBalls
+	msgbox RustboroCity_DevonCorp_3F_Text_VisitCaptSternShipyard, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_00201DF2::
-	loadword 0x0, gJPText_00202277
-	callstd 0x4
+RustboroCity_DevonCorp_3F_EventScript_EmployeeBalls::
+	msgbox RustboroCity_DevonCorp_3F_Text_RepeatAndTimerHugelyPopular, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_00201DFC::
-	loadword 0x0, gJPText_002022A7
-	callstd 0x3
+RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay::
+	msgbox RustboroCity_DevonCorp_3F_Text_RareRocksDisplay, MSGBOX_SIGN
 	end
 
-	.globl gJPText_00201E05
-gJPText_00201E05: @ 0x08201E05
+RustboroCity_DevonCorp_3F_Text_MrStoneIHaveFavor: @ 0x08201E05
 	.string "わしが　デボン　コーポレーション\n"
 	.string "しゃちょうの　ツワブキ　だ！\p"
 	.string "きみの　ことは　さっき　きいたよ！\p"
@@ -237,21 +217,18 @@ gJPText_00201E05: @ 0x08201E05
 	.string "ダイゴという　おとこが　いるはずでね\l"
 	.string "ちょいと　てがみを　とどけてほしいのだ！$"
 
-	.globl gJPText_00201EE9
-gJPText_00201EE9: @ 0x08201EE9
+RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis: @ 0x08201EE9
 	.string "ツワブキ“もちろん　わしは\n"
 	.string "すごーい　しゃちょうで　あるからな！\p"
 	.string "ただで　おねがいすると　いうような\n"
 	.string "ケチな　まねは　しないのだ！\p"
 	.string "きみに　こいつを　プレゼントしよう！$"
 
-	.globl gJPText_00201F3E
-gJPText_00201F3E: @ 0x08201F3E
-	.string "{STRING 0x01}は\n"
+RustboroCity_DevonCorp_3F_Text_ReceivedPokenav: @ 0x08201F3E
+	.string "{PLAYER}は\n"
 	.string "ポケナビを　てにいれた！$"
 
-	.globl gJPText_00201F4F
-gJPText_00201F4F: @ 0x08201F4F
+RustboroCity_DevonCorp_3F_Text_MrStoneExplainPokenavRestUp: @ 0x08201F4F
 	.string "ツワブキ“そいつは⋯⋯\p"
 	.string "ポケモン　ナビゲーター！\n"
 	.string "りゃくして　ポケナビ　といってな\p"
@@ -265,40 +242,34 @@ gJPText_00201F4F: @ 0x08201F4F
 	.string "あちこちで　わるさを　してるらしい\p"
 	.string "まずは　ひとやすみ　していきなさい！$"
 
-	.globl gJPText_00202015
-gJPText_00202015: @ 0x08202015
-	.string "ツワブキ“それでは　{STRING 0x01}{STRING 0x05}\n"
+RustboroCity_DevonCorp_3F_Text_MrStoneGoWithCautionAndCare: @ 0x08202015
+	.string "ツワブキ“それでは　{PLAYER}{KUN}\n"
 	.string "じゅうぶん　きをつけて　いくのだよ！$"
 
-	.globl gJPText_00202037
-gJPText_00202037: @ 0x08202037
+RustboroCity_DevonCorp_3F_Text_CountingOnYou: @ 0x08202037
 	.string "ツワブキ“よろしく　たのむよ！$"
 
-	.globl gJPText_00202047
-gJPText_00202047: @ 0x08202047
+RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter: @ 0x08202047
 	.string "ツワブキ“てがみを　とどけて　くれたんだね\n"
 	.string "いやいや　ありがとう！\p"
 	.string "こいつは　おれい　だよ\n"
 	.string "トレーナーの　きみに　やくだつ　はずだ！$"
 
-	.globl gJPText_0020208A
-gJPText_0020208A: @ 0x0820208A
+RustboroCity_DevonCorp_3F_Text_ExplainExpShare: @ 0x0820208A
 	.string "ツワブキ“がくしゅうそうちを　もたせた\n"
 	.string "ポケモンは　しょうぶを　しなくても\l"
 	.string "けいけんちを　わけて　もらえる！\p"
 	.string "よわい　ポケモンを　そだてるのに\n"
 	.string "なかなか　べんりな　どうぐ　なのだよ！$"
 
-	.globl gJPText_002020E6
-gJPText_002020E6: @ 0x082020E6
+RustboroCity_DevonCorp_3F_Text_NotFamiliarWithTrends: @ 0x082020E6
 	.string "ツワブキ“わたしは　わかいころ　から\n"
 	.string "しごと　ばかり　だったから\l"
 	.string "いまいち　わからんのだが⋯⋯\p"
 	.string "わかものは　やはり　トレーナーとして\n"
 	.string "ポケモンリーグを　めざす　もの　なのかね$"
 
-	.globl gJPText_0020213E
-gJPText_0020213E: @ 0x0820213E
+RustboroCity_DevonCorp_3F_Text_ThisIs3rdFloorWaitHere: @ 0x0820213E
 	.string "ここが　デボン　コーポレーション　3かい\n"
 	.string "しゃちょうの　おへや　なのよね！\p"
 	.string "いやー！　きみには\n"
@@ -314,29 +285,24 @@ gJPText_0020213E: @ 0x0820213E
 	.string "よろしく　おねがい　しますよ\p"
 	.string "ちょっと　まっていて　くださいね$"
 
-	.globl gJPText_00202212
-gJPText_00202212: @ 0x08202212
+RustboroCity_DevonCorp_3F_Text_WordWithPresidentComeWithMe: @ 0x08202212
 	.string "しゃちょうが　ぜひ\n"
 	.string "おはなし　したいそうです\p"
 	.string "わたしに　ついて　きてください$"
 
-	.globl gJPText_00202239
-gJPText_00202239: @ 0x08202239
+RustboroCity_DevonCorp_3F_Text_PleaseGoAhead: @ 0x08202239
 	.string "ささ　どうぞ！$"
 
-	.globl gJPText_00202241
-gJPText_00202241: @ 0x08202241
+RustboroCity_DevonCorp_3F_Text_VisitCaptSternShipyard: @ 0x08202241
 	.string "カイナの　ぞうせんじょ　には\n"
 	.string "クスノキさん　という　ひとが　いるから\l"
 	.string "かれを　たずねていくと　いいですよ！$"
 
-	.globl gJPText_00202277
-gJPText_00202277: @ 0x08202277
+RustboroCity_DevonCorp_3F_Text_RepeatAndTimerHugelyPopular: @ 0x08202277
 	.string "デボンの　しんせいひん\n"
 	.string "リピートボールと　タイマーボール\l"
 	.string "トレーナーに　だいにんき　なのよね！$"
 
-	.globl gJPText_002022A7
-gJPText_002022A7: @ 0x082022A7
+RustboroCity_DevonCorp_3F_Text_RareRocksDisplay: @ 0x082022A7
 	.string "しゃちょうの　あつめた\n"
 	.string "めずらしい　いしが　かざってある！$"

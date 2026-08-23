@@ -3981,16 +3981,16 @@ gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F: @ 0x08508BD4
 	map_events RUSTBORO_CITY_DEVON_CORP_2F_EventObjects, RUSTBORO_CITY_DEVON_CORP_2F_EventWarps, 0, 0
 	.globl RUSTBORO_CITY_DEVON_CORP_3F_EventObjects
 RUSTBORO_CITY_DEVON_CORP_3F_EventObjects: @ 0x08508BE8
-	object_event 1, 48, 0, 17, 5, 3, 9, 0, 0, 0, 0, RustboroCity_DevonCorp_3F_EventScript_00201D68, 0x0000
-	object_event 2, 23, 0, 3, 5, 3, 10, 0, 0, 0, 0, RustboroCity_DevonCorp_3F_EventScript_00201DDD, 0x03B5
-	object_event 3, 48, 0, 15, 5, 3, 76, 1, 1, 0, 0, RustboroCity_DevonCorp_3F_EventScript_00201D68, 0x0000
+	object_event 1, 48, 0, 17, 5, 3, 9, 0, 0, 0, 0, RustboroCity_DevonCorp_3F_EventScript_MrStone, 0x0000
+	object_event 2, 23, 0, 3, 5, 3, 10, 0, 0, 0, 0, RustboroCity_DevonCorp_3F_EventScript_Employee, 0x03B5
+	object_event 3, 48, 0, 15, 5, 3, 76, 1, 1, 0, 0, RustboroCity_DevonCorp_3F_EventScript_MrStone, 0x0000
 	.globl RUSTBORO_CITY_DEVON_CORP_3F_EventWarps
 RUSTBORO_CITY_DEVON_CORP_3F_EventWarps: @ 0x08508C30
 	warp_def 2, 1, 0, 1, MAP_RUSTBORO_CITY_DEVON_CORP_2F
 	.globl RUSTBORO_CITY_DEVON_CORP_3F_EventBgEvents
 RUSTBORO_CITY_DEVON_CORP_3F_EventBgEvents: @ 0x08508C38
-	bg_event 1, 5, 3, 0, RustboroCity_DevonCorp_3F_EventScript_00201DFC, 0, 0
-	bg_event 1, 7, 3, 0, RustboroCity_DevonCorp_3F_EventScript_00201DFC, 0, 0
+	bg_event 1, 5, 3, 0, RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay, 0, 0
+	bg_event 1, 7, 3, 0, RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay, 0, 0
 	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F
 gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F: @ 0x08508C50
 	map_events RUSTBORO_CITY_DEVON_CORP_3F_EventObjects, RUSTBORO_CITY_DEVON_CORP_3F_EventWarps, 0, RUSTBORO_CITY_DEVON_CORP_3F_EventBgEvents

@@ -220,7 +220,12 @@ class JapaneseScriptTextCodec:
             return '\\"'
         return char
 
-    def _decode_token(self, data: bytes, pos: int) -> tuple[str, int, bool]:
+    def _decode_token(
+        self,
+        data: bytes,
+        pos: int,
+        placeholder_names: dict[int, str] | None = None,
+    ) -> tuple[str, int, bool]:
         byte = data[pos]
         if byte == 0xFF:
             return "$", pos + 1, True
@@ -257,8 +262,18 @@ class JapaneseScriptTextCodec:
         if byte == 0xFD:
             if pos + 1 >= len(data):
                 raise TextDecodeError("truncated string-placeholder control (FD)")
+            placeholder_id = data[pos + 1]
+            if placeholder_names and placeholder_id in placeholder_names:
+                name = placeholder_names[placeholder_id]
+                expected = bytes((0xFD, placeholder_id))
+                if self.constants.get(name) != expected:
+                    raise TextDecodeError(
+                        f"placeholder {name} does not encode as {expected.hex().upper()}"
+                    )
+                return "{" + name + "}", pos + 2, False
             # Field and battle placeholder names share byte values.  Preserve
-            # the exact generic control rather than guessing a false meaning.
+            # the exact generic control unless the caller has supplied a
+            # source-verified field-text interpretation for this string.
             return self._format_control("STRING", data[pos + 1 : pos + 2]), pos + 2, False
         if byte == 0xFC:
             if pos + 1 >= len(data):
@@ -280,21 +295,25 @@ class JapaneseScriptTextCodec:
             raise TextDecodeError(f"unmapped text byte {byte:02X}")
         return self._escape_literal(literal), pos + 1, False
 
-    def decode(self, data: bytes) -> str:
+    def decode(
+        self, data: bytes, placeholder_names: dict[int, str] | None = None
+    ) -> str:
         """Decode all bytes, allowing multiple EOS characters in one span."""
         out: list[str] = []
         pos = 0
         while pos < len(data):
-            token, pos, _ = self._decode_token(data, pos)
+            token, pos, _ = self._decode_token(data, pos, placeholder_names)
             out.append(token)
         return "".join(out)
 
-    def decode_one(self, data: bytes) -> DecodedText:
+    def decode_one(
+        self, data: bytes, placeholder_names: dict[int, str] | None = None
+    ) -> DecodedText:
         """Decode exactly one EOS-terminated text object from the start."""
         out: list[str] = []
         pos = 0
         while pos < len(data):
-            token, pos, ended = self._decode_token(data, pos)
+            token, pos, ended = self._decode_token(data, pos, placeholder_names)
             out.append(token)
             if ended:
                 return DecodedText("".join(out), pos, True)
@@ -324,9 +343,11 @@ class JapaneseScriptTextCodec:
             )
         return _extract_preproc_bytes(result.stdout)
 
-    def verify(self, data: bytes) -> str:
+    def verify(
+        self, data: bytes, placeholder_names: dict[int, str] | None = None
+    ) -> str:
         """Decode then verify an exact re-encoding through preproc."""
-        source = self.decode(data)
+        source = self.decode(data, placeholder_names)
         encoded = self.preproc_bytes(source)
         if encoded != data:
             raise TextRoundTripError(
@@ -335,9 +356,11 @@ class JapaneseScriptTextCodec:
             )
         return source
 
-    def verify_one(self, data: bytes) -> DecodedText:
+    def verify_one(
+        self, data: bytes, placeholder_names: dict[int, str] | None = None
+    ) -> DecodedText:
         """Decode and verify one EOS-terminated object, leaving trailing bytes alone."""
-        decoded = self.decode_one(data)
+        decoded = self.decode_one(data, placeholder_names)
         encoded = self.preproc_bytes(decoded.source)
         expected = data[: decoded.consumed]
         if encoded != expected:
@@ -391,6 +414,16 @@ def _run_selftest(codec: JapaneseScriptTextCodec) -> None:
                 f"{name}: expected source {expected!r}, got {source!r}"
             )
         print(f"PASS {name}: {raw.hex().upper()} -> {source}")
+
+    named = codec.verify(
+        bytes.fromhex("FD 01 FD 05 FF"),
+        placeholder_names={0x01: "PLAYER", 0x05: "KUN"},
+    )
+    if named != "{PLAYER}{KUN}$":
+        raise TextRoundTripError(
+            f"field-placeholder-names: unexpected source {named!r}"
+        )
+    print("PASS field-placeholder-names: FD01FD05FF -> {PLAYER}{KUN}$")
 
 
 def main() -> None:
