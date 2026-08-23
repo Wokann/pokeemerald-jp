@@ -65,6 +65,28 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x081FD4FF: 'SlateportCity_OceanicMuseum_2F_Movement_SecondGruntApproach',
         0x081FD508: 'SlateportCity_OceanicMuseum_2F_Movement_GruntMoveForArchie',
     },
+    'GraniteCave_StevensRoom': {
+        0x082140F2: 'GraniteCave_StevensRoom_Movement_StevenExit',
+        0x082140F9: 'GraniteCave_StevensRoom_Movement_PlayerTurnTowardExit',
+        0x082140FE: 'GraniteCave_StevensRoom_Movement_StevenExitSouth',
+    },
+    'PetalburgWoods': {
+        0x08214453: 'PetalburgWoods_Movement_DevonResearcherLookAround',
+        0x08214464: 'PetalburgWoods_Movement_DevonResearcherExitLeft',
+        0x0821446D: 'PetalburgWoods_Movement_DevonResearcherApproachPlayerLeft',
+        0x08214472: 'PetalburgWoods_Movement_DevonResearcherApproachPlayerRight',
+        0x08214479: 'PetalburgWoods_Movement_DevonResearcherExitRight',
+        0x08214482: 'PetalburgWoods_Movement_WatchResearcherLeave',
+        0x08214486: 'PetalburgWoods_Movement_DevonResearcherFleeToPlayerLeft',
+        0x0821448C: 'PetalburgWoods_Movement_DevonResearcherFleeToPlayerRight',
+        0x08214490: 'PetalburgWoods_Movement_DevonResearcherStartExit',
+        0x08214498: 'PetalburgWoods_Movement_AquaApproachResearcherLeft',
+        0x0821449B: 'PetalburgWoods_Movement_AquaBackOff',
+        0x0821449F: 'PetalburgWoods_Movement_AquaRunAway',
+        0x082144A7: 'PetalburgWoods_Movement_AquaApproachResearcherRight',
+        0x082144AB: 'PetalburgWoods_Movement_AquaEntrance',
+        0x082144B0: 'PetalburgWoods_Movement_AquaApproachPlayer',
+    },
 }
 
 TEXT_POINTER_ARGUMENTS = {

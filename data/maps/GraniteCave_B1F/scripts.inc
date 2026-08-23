@@ -10,5 +10,3 @@ GraniteCave_B1F_EventScript_0021401B::
 	setstepcallback 0x7
 	setholewarp 0x1809, 0xFF, 0x0, 0x0
 	end
-
-	.incbin "baserom_jp.gba", 0x214026, 0xb6e
