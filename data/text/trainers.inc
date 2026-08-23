@@ -2531,4 +2531,121 @@ Route117_Text_AishaDefeat: @ 0x0825E2D9
 Route117_Text_AishaPostBattle: @ 0x0825E2FD
 	.string "まけるかな？と　しんぱい　すると\n"
 	.string "よけいに　まけちゃうと　おもうのよね$"
-	.incbin "baserom_jp.gba", 0x25e321, 0x4072
+Route118_Text_RoseIntro: @ 0x0825E321
+	.string "はなの　かおりは　ふしぎな　ちから\n"
+	.string "からだも　こころも　きれいに　なるわ$"
+
+Route118_Text_RoseDefeat: @ 0x0825E346
+	.string "あらら\n"
+	.string "まけちゃったわね$"
+
+Route118_Text_RosePostBattle: @ 0x0825E353
+	.string "はなも　ポケモンも\n"
+	.string "いい　かおりの　ものが　だいすき！\l"
+	.string "クサイにおいは⋯⋯　かんべんね$"
+
+Route118_Text_RoseRegister: @ 0x0825E37F
+	.string "あら　その　においは　ポケナビね\n"
+	.string "ぜひとも　とうろく　しあいましょう！$"
+
+Route118_Text_RoseRematchIntro: @ 0x0825E3A3
+	.string "いい　かおりに　さそわれて\n"
+	.string "いらしたのかしら？$"
+
+Route118_Text_RoseRematchDefeat: @ 0x0825E3BB
+	.string "においの　こうか⋯⋯\n"
+	.string "あんまり　きかなかったわね$"
+
+Route118_Text_RosePostRematch: @ 0x0825E3D4
+	.string "あまいかおりを　うまく　つかうと\n"
+	.string "ポケモンが　さそわれて　やってくるわね$"
+
+Route118_Text_PerryIntro: @ 0x0825E3F9
+	.string "かれいに　おおぞらを　まう\n"
+	.string "とりポケモンが　さいこう　だぜ！$"
+
+Route118_Text_PerryDefeat: @ 0x0825E418
+	.string "うう⋯⋯　まけた⋯⋯$"
+
+Route118_Text_PerryPostBattle: @ 0x0825E423
+	.string "きみも　いい　ポケモンを　もってるね！\n"
+	.string "ぼくも　まけずに　そだてよっと！$"
+
+Route118_Text_ChesterIntro: @ 0x0825E448
+	.string "はばたけ！\n"
+	.string "おいらの　とりポケモン！$"
+
+Route118_Text_ChesterDefeat: @ 0x0825E45B
+	.string "はばたいたけど⋯⋯$"
+
+Route118_Text_ChesterPostBattle: @ 0x0825E465
+	.string "もっと　つよくなると\n"
+	.string "じゆうに　とべるように　なるのにな！$"
+
+Route118_Text_BarnyIntro: @ 0x0825E483
+	.string "あたしゃ　つりびとだが　トレーナーでもある\n"
+	.string "つった　ポケモン　ちゃんと　そだててるよ！$"
+
+Route118_Text_BarnyDefeat: @ 0x0825E4AF
+	.string "そだてたはず　なんだが⋯⋯？$"
+
+Route118_Text_BarnyPostBattle: @ 0x0825E4BE
+	.string "つりを　しながら\n"
+	.string "ポケモン　そだてても　かてなかった⋯⋯\l"
+	.string "どっちも　はんぱ　だったのか！？$"
+
+Route118_Text_WadeIntro: @ 0x0825E4EC
+	.string "つりびとに　だいじ　なのは　どうぐ！\n"
+	.string "トレーナーに　だいじ　なのは\l"
+	.string "もちろん　ポケモンと　ハートだな！$"
+
+Route118_Text_WadeDefeat: @ 0x0825E520
+	.string "ハートの　しょうぶで　まけたのか？$"
+
+Route118_Text_WadePostBattle: @ 0x0825E532
+	.string "つり　というのも\n"
+	.string "ひとと　ポケモンとの\l"
+	.string "しんけん　しょうぶ　だな！$"
+
+Route118_Text_DaltonIntro: @ 0x0825E554
+	.string "ぼくの　メロディ\n"
+	.string "あなたの　こころに　とどけるよ$"
+
+Route118_Text_DaltonDefeat: @ 0x0825E56D
+	.string "ルー　ルルルー$"
+
+Route118_Text_DaltonPostBattle: @ 0x0825E575
+	.string "エレキギターって\n"
+	.string "ただ　うるさい　だけじゃ　ないんだ⋯⋯\p"
+	.string "こうして　こころに　しみる\n"
+	.string "メロディも　かなでられるのさ⋯⋯$"
+
+Route118_Text_DaltonRegister: @ 0x0825E5B1
+	.string "もっと　いい　メロディが　できたら\n"
+	.string "ききにおいでよ！$"
+
+Route118_Text_DaltonRematchIntro: @ 0x0825E5CC
+	.string "ぼくと　ポケモンの　メロディ\n"
+	.string "あなたの　こころに　とどけるよ$"
+
+Route118_Text_DaltonRematchDefeat: @ 0x0825E5EB
+	.string "ルー　ルルルー$"
+
+Route118_Text_DaltonPostRematch: @ 0x0825E5F3
+	.string "ひいてるときの　ぼくの　きもちが\n"
+	.string "エレキギターを　とおして\l"
+	.string "あなたに　とどく　はずなのさ⋯⋯$"
+
+Route118_Text_DeandreIntro: @ 0x0825E622
+	.string "いけいけー！\n"
+	.string "ボクの　ポケモン　1ごう　2ごう　3ごう！$"
+
+Route118_Text_DeandreDefeat: @ 0x0825E63F
+	.string "ああ　だいじょうぶか！？\n"
+	.string "ボクの　ポケモン　1ごう　2ごう　3ごう！$"
+
+Route118_Text_DeandrePostBattle: @ 0x0825E662
+	.string "ボクの　ポケモン　せんたい\n"
+	.string "カッコいい　だろー！\l"
+	.string "まね　しても　いーぜー！$"
+	.incbin "baserom_jp.gba", 0x25e688, 0x3d0b
