@@ -9905,7 +9905,7 @@ SECTIONS {
         src/slot_machine.o(.rodata.sPikachuAuraFlashDelays);
         src/slot_machine.o(.rodata.sInfoBoxTasks);
         src/slot_machine.o(.rodata.sDigitalDisplayTasks);
-        data/data_b2d_mid61.o(.rodata.8584598);
+        src/data/slot_machine.o(.rodata.8584598);
         src/data/slot_machine.o(.rodata.85845B2);
         src/data/text/region_texts62.o(.rodata);
         src/data/slot_machine.o(.rodata);

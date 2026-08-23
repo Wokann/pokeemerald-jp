@@ -66,6 +66,26 @@ const struct WindowTemplate sSlotMachineWindowTemplates[] SLOT_MACHINE_DATA(".ro
     DUMMY_WIN_TEMPLATE,
 };
 
+const u8 sReelTimeAuraColors[] SLOT_MACHINE_DATA(".rodata.8584598") =
+{
+    16, 0,
+};
+
+const u16 sReelTimeDuckOffsets[] SLOT_MACHINE_DATA(".rodata.8584598") =
+{
+    0, 0x40, 0x80, 0xC0,
+};
+
+const s16 sDigitalDisplaySmokeXOffsets[] SLOT_MACHINE_DATA(".rodata.8584598") =
+{
+    4, -4, 4, -4,
+};
+
+const s16 sDigitalDisplaySmokeYOffsets[] SLOT_MACHINE_DATA(".rodata.8584598") =
+{
+    4, 4, -4, -4,
+};
+
 const s16 sDigitalDisplayRegBonusXOffsets[] SLOT_MACHINE_DATA(".rodata.85845B2") =
 {
      0, -40, 0, 0, 48, 0, 24, 0,
