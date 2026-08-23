@@ -9513,6 +9513,9 @@ SECTIONS {
         src/event_object_movement.o(.rodata.object_event_graphics_player_data);
         gUnknown_8470C4C = gObjectEventPal_Brendan;
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_player_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_player_extended_data);
+        gUnknown_8471E6C = gObjectEventPal_RubySapphireBrendan;
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_player_extended_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_palettes);
@@ -9542,9 +9545,6 @@ SECTIONS {
         gObjectEventPal_Npc2Reflection = ABSOLUTE(0x08485DAC);
         gObjectEventPal_Npc3Reflection = ABSOLUTE(0x08485DCC);
         gObjectEventPal_Npc4Reflection = ABSOLUTE(0x08485DEC);
-        gObjectEventPal_BrendanReflection = ABSOLUTE(0x0847206C);
-        gObjectEventPal_BridgeReflection = ABSOLUTE(0x0847208C);
-        gObjectEventPal_PlayerUnderwater = ABSOLUTE(0x0847B4AC);
         gObjectEventPal_QuintyPlump = ABSOLUTE(0x084CEC6C);
         gObjectEventPal_QuintyPlumpReflection = ABSOLUTE(0x084CEC8C);
         gObjectEventPal_Truck = ABSOLUTE(0x084BE12C);
@@ -9566,7 +9566,6 @@ SECTIONS {
         gObjectEventPal_BirthIslandStone = ABSOLUTE(0x084D8B0C);
         gObjectEventPal_HoOh = ABSOLUTE(0x084DD86C);
         gObjectEventPal_Lugia = ABSOLUTE(0x084DD44C);
-        gObjectEventPal_RubySapphireBrendan = ABSOLUTE(0x08471E6C);
         gObjectEventPal_RubySapphireMay = ABSOLUTE(0x0847D90C);
         gObjectEventPic_BerryTreeDirtPile = ABSOLUTE(0x084C22EC);
         gObjectEventPic_BerryTreeSprout = ABSOLUTE(0x084C236C);

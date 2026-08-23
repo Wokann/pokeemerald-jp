@@ -809,7 +809,16 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/pics/people/brendan/walking.4bpp graphics/object_events/pics/people/brendan/running.4bpp \
 	graphics/object_events/palettes/brendan.gbapal \
 	graphics/object_events/pics/people/ruby_sapphire_brendan/walking.4bpp \
-	graphics/object_events/pics/people/ruby_sapphire_brendan/running.4bpp
+	graphics/object_events/pics/people/ruby_sapphire_brendan/running.4bpp \
+	graphics/object_events/palettes/ruby_sapphire_brendan.gbapal \
+	graphics/object_events/palettes/brendan_reflection.gbapal graphics/object_events/palettes/bridge_reflection.gbapal \
+	graphics/object_events/pics/people/brendan/field_move.4bpp graphics/object_events/pics/people/brendan/surfing.4bpp \
+	graphics/object_events/pics/people/brendan/mach_bike.4bpp graphics/object_events/pics/people/brendan/acro_bike.4bpp \
+	graphics/object_events/pics/people/brendan/fishing.4bpp graphics/object_events/pics/people/brendan/watering.4bpp \
+	graphics/object_events/pics/people/brendan/decorating.4bpp graphics/object_events/pics/people/may/decorating.4bpp \
+	graphics/object_events/pics/people/brendan/underwater.4bpp graphics/object_events/pics/people/may/underwater.4bpp \
+	graphics/object_events/palettes/player_underwater.gbapal \
+	graphics/object_events/pics/people/may/walking.4bpp graphics/object_events/pics/people/may/running.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -
