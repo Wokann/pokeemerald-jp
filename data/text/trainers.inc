@@ -2648,4 +2648,245 @@ Route118_Text_DeandrePostBattle: @ 0x0825E662
 	.string "ボクの　ポケモン　せんたい\n"
 	.string "カッコいい　だろー！\l"
 	.string "まね　しても　いーぜー！$"
-	.incbin "baserom_jp.gba", 0x25e688, 0x3d0b
+Route119_Text_BrentIntro: @ 0x0825E688
+	.string "ボクらは　モノマネサークル！\n"
+	.string "キミの　うごきを　マネするよ！$"
+
+Route119_Text_BrentDefeat: @ 0x0825E6A7
+	.string "うわあ　まけたーっ！$"
+
+Route119_Text_BrentPostBattle: @ 0x0825E6B2
+	.string "マネを　して　なにが　たのしいか⋯⋯\p"
+	.string "ふふふ⋯⋯\n"
+	.string "キミには　わからない　だろうよ$"
+
+Route119_Text_DonaldIntro: @ 0x0825E6DB
+	.string "ようやく　であえたね！\n"
+	.string "ぼくの　むしポケモンが　あいて　するよ！$"
+
+Route119_Text_DonaldDefeat: @ 0x0825E6FC
+	.string "であわなければ　よかった⋯⋯$"
+
+Route119_Text_DonaldPostBattle: @ 0x0825E70B
+	.string "もっと　キミの　マネを　したい！\n"
+	.string "ほら　はやく　うごいてよ！$"
+
+Route119_Text_TaylorIntro: @ 0x0825E72A
+	.string "きみが　まえに　すすんだら\n"
+	.string "ぼくらも　すすむ\p"
+	.string "きみが　みぎへ　まがれば\n"
+	.string "ぼくらも　まがる⋯⋯$"
+
+Route119_Text_TaylorDefeat: @ 0x0825E759
+	.string "キミが　かっても\n"
+	.string "ぼくは　まける⋯⋯$"
+
+Route119_Text_TaylorPostBattle: @ 0x0825E76C
+	.string "うーん　しょうぶの　しょうはい　だけは\n"
+	.string "マネ　できないよなあ⋯⋯\l"
+	.string "なんか　くやしい⋯⋯$"
+
+Route119_Text_DougIntro: @ 0x0825E798
+	.string "やっと　ボクを　つかまえられたね！\n"
+	.string "それとも　にげようと　していたのかな？$"
+
+Route119_Text_DougDefeat: @ 0x0825E7BE
+	.string "すばらしい　たたかい　だったな！$"
+
+Route119_Text_DougPostBattle: @ 0x0825E7CF
+	.string "ボクらは　モノマネサークル！\n"
+	.string "たのしんで　もらえたかな？$"
+
+Route119_Text_GregIntro: @ 0x0825E7EC
+	.string "ボクが　だれなのか　わからないだろう？\p"
+	.string "⋯⋯まあ　ボクも　キミのこと　しらないから\n"
+	.string "こうして　たたかうんだけどね！$"
+
+Route119_Text_GregDefeat: @ 0x0825E826
+	.string "けっこう　つよい　じゃんか！$"
+
+Route119_Text_GregPostBattle: @ 0x0825E835
+	.string "キミが　どこかに　いくまで\n"
+	.string "ボクらは　マネを　つづけるよ！$"
+
+Route119_Text_KentIntro: @ 0x0825E853
+	.string "モノマネ　だいすきな　ひとが\n"
+	.string "あつまって　つくった　モノマネサークル！\p"
+	.string "であった　そのとき\n"
+	.string "しょうぶが　はじまる！$"
+
+Route119_Text_KentDefeat: @ 0x0825E88D
+	.string "まいりましたーっ！$"
+
+Route119_Text_KentPostBattle: @ 0x0825E897
+	.string "キミも　モノマネサークルに　はいらない？$"
+
+Route119_Text_JacksonIntro: @ 0x0825E8AC
+	.string "サバイバルに　ひつような\n"
+	.string "ちしきと　ぎじゅつを　もつ　もの！\l"
+	.string "それが　ポケモンレンジャーさ！$"
+
+Route119_Text_JacksonDefeat: @ 0x0825E8DB
+	.string "ポケモンの　ちしきは　たらなかった⋯⋯$"
+
+Route119_Text_JacksonPostBattle: @ 0x0825E8EF
+	.string "ぶんめい　から　はなれて\n"
+	.string "にんげんの　やせいを　めざめさせる！\l"
+	.string "それが　オレたちの　テーマさ！$"
+
+Route119_Text_JacksonRegister: @ 0x0825E91F
+	.string "ちしきぶそくと　わらわずに\n"
+	.string "こんど　また　あいてを　してやってくれよな$"
+
+Route119_Text_JacksonRematchIntro: @ 0x0825E943
+	.string "ポケモンと　いることで\n"
+	.string "やせいを　とりもどすのさ！$"
+
+Route119_Text_JacksonRematchDefeat: @ 0x0825E95D
+	.string "あいかわらず　つよいな！$"
+
+Route119_Text_JacksonPostRematch: @ 0x0825E96A
+	.string "とにかく　ポケモンを　しんじろ！\n"
+	.string "じぶんを　しんじろ！\l"
+	.string "そうすれば　みちは　ひらける！$"
+
+Route119_Text_CatherineIntro: @ 0x0825E996
+	.string "あら　あなた⋯⋯\n"
+	.string "ぼうけんを　している　わりには\l"
+	.string "ずいぶん　みがるな　かっこうね！$"
+
+Route119_Text_CatherineDefeat: @ 0x0825E9C0
+	.string "じゅんび　ぶそくは　じこの　もと⋯⋯$"
+
+Route119_Text_CatherinePostBattle: @ 0x0825E9D3
+	.string "ずいぶん　みがるな　かっこう　だけど\n"
+	.string "ひつような　どうぐは　もってるし\l"
+	.string "きりょく　たいりょく　じゅうぶんね！$"
+
+Route119_Text_CatherineRegister: @ 0x0825EA0A
+	.string "トレーナーの　ひつじゅひん　ポケナビは\n"
+	.string "ちゃんと　もってる？\p"
+	.string "あっ　もってるわね！　とうろくしましょ$"
+
+Route119_Text_CatherineRematchIntro: @ 0x0825EA3D
+	.string "ポケモンと　いっしょの　ぼうけんは\n"
+	.string "うまく　いってるかしら？$"
+
+Route119_Text_CatherineRematchDefeat: @ 0x0825EA5C
+	.string "まだ　なにかが\n"
+	.string "たりなかったわね⋯⋯$"
+
+Route119_Text_CatherinePostRematch: @ 0x0825EA6F
+	.string "トレーナーの　あなたが\n"
+	.string "ポケモンを　たよって　いるように\l"
+	.string "ポケモンも　あなたを　たよっているのよ！$"
+
+Route119_Text_HughIntro: @ 0x0825EAA1
+	.string "おおぞらは　おとこの　ロマン！\p"
+	.string "じゆうに　そらを　とぶ　きもちよさは\n"
+	.string "なにごとにも　かえがたい！$"
+
+Route119_Text_HughDefeat: @ 0x0825EAD2
+	.string "まけたーっ！$"
+
+Route119_Text_HughPostBattle: @ 0x0825EAD9
+	.string "そらを　とびまわる　ユメは\n"
+	.string "とりポケモンの　おかげで　かなえられたよ！$"
+
+Route119_Text_PhilIntro: @ 0x0825EAFD
+	.string "ぼくの　とりポケモンの　じつりょくを\n"
+	.string "みせて　あげるよ！$"
+
+Route119_Text_PhilDefeat: @ 0x0825EB1A
+	.string "じつりょく　ぶそく　だった⋯⋯$"
+
+Route119_Text_PhilPostBattle: @ 0x0825EB2A
+	.string "ぼくは　ちいさい　ころから\n"
+	.string "とりポケモンに　あこがれて　いたんだ！$"
+
+Route119_Text_YasuIntro: @ 0x0825EB4C
+	.string "かげに　ひそみ　やみに　いきる\n"
+	.string "それが　オレの　さだめ⋯⋯！\l"
+	.string "いざ　ポケモンしょうぶ！$"
+
+Route119_Text_YasuDefeat: @ 0x0825EB78
+	.string "まいった⋯⋯！$"
+
+Route119_Text_YasuPostBattle: @ 0x0825EB80
+	.string "しょうぶに　やぶれた　ものは\n"
+	.string "いさぎよく　かげに　もどる⋯⋯\l"
+	.string "それも　さだめ⋯⋯$"
+
+Route119_Text_TakashiIntro: @ 0x0825EBA9
+	.string "ゆだん　してると\n"
+	.string "いたい　めに　あうぜ！$"
+
+Route119_Text_TakashiDefeat: @ 0x0825EBBE
+	.string "つよいな　きみーっ！$"
+
+Route119_Text_TakashiPostBattle: @ 0x0825EBC9
+	.string "きしゅう　さくせんは　シッパイだった⋯⋯$"
+
+Route119_Text_HideoIntro: @ 0x0825EBDE
+	.string "きを　かくすなら　もりのなか！$"
+
+Route119_Text_HideoDefeat: @ 0x0825EBEE
+	.string "つわもので　ござるな$"
+
+Route119_Text_HideoPostBattle: @ 0x0825EBF9
+	.string "きを　かくすなら　もりのなか！\n"
+	.string "ポケモンを　かくすなら　ポケモンのなか！\p"
+	.string "とくに　いみは　ないでござる$"
+
+Route119_Text_ChrisIntro: @ 0x0825EC2D
+	.string "わたしに　はなしかけた⋯⋯\n"
+	.string "つまり　しょうぶを　いどむ　つもりだな！\p"
+	.string "よーし！　なみのり　しながら\n"
+	.string "つりあげた　ポケモンで　たたかうぞ！$"
+
+Route119_Text_ChrisDefeat: @ 0x0825EC72
+	.string "かつための　ポイントが\n"
+	.string "ちっとも　わからん！$"
+
+Route119_Text_ChrisPostBattle: @ 0x0825EC89
+	.string "なみのりを　つかう！\p"
+	.string "ポケモンの　せなかに　のって\n"
+	.string "つりを　たのしむ！\p"
+	.string "なんて　ゆうがな　ひととき　だろう！$"
+
+Route119_Text_FabianIntro: @ 0x0825ECC0
+	.string "デケデケデケデケ\n"
+	.string "かつぜーヘ　おれたちーヒ　かつぜーヘ$"
+
+Route119_Text_FabianDefeat: @ 0x0825ECDC
+	.string "まけたぜーヘ　あっさりーヒ　まけたぜーヘ$"
+
+Route119_Text_FabianPostBattle: @ 0x0825ECF1
+	.string "デケデケデケデケ\n"
+	.string "にどとーホ　おれにーヒ　かまうなよーホ$"
+
+Route119_Text_DaytonIntro: @ 0x0825ED0E
+	.string "ホッホッホー！\n"
+	.string "こども　トレーナーは　だいすきだぞ！\l"
+	.string "おじちゃんと　たたかおうっ！$"
+
+Route119_Text_DaytonDefeat: @ 0x0825ED38
+	.string "やるなー　ホッホッホ！$"
+
+Route119_Text_DaytonPostBattle: @ 0x0825ED44
+	.string "ホッホッホー！\n"
+	.string "こども　トレーナーの　げんきを\l"
+	.string "みならって　おじちゃん　がんばるぞ！$"
+
+Route119_Text_RachelIntro: @ 0x0825ED6F
+	.string "いつでも　どこでも\n"
+	.string "パラソルを　てばなさないの！$"
+
+Route119_Text_RachelDefeat: @ 0x0825ED88
+	.string "いやん　そんなあ$"
+
+Route119_Text_RachelPostBattle: @ 0x0825ED91
+	.string "パラソルが　おもく　ないかって？\n"
+	.string "キミの　バッグの　ほうが\l"
+	.string "いっぱい　はいってるじゃない$"
+	.incbin "baserom_jp.gba", 0x25edbe, 0x35d5
