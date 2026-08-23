@@ -74,4 +74,178 @@ Route102_Text_TianaPostBattle: @ 0x0825972E
 	.string "もっと　たくさん　ポケモンを\l"
 	.string "つかまえないと　いけない　みたいね！$"
 
-	.incbin "baserom_jp.gba", 0x25975c, 0x8c37
+Route103_Text_DaisyIntro: @ 0x0825975C
+	.string "こころ　やすらぐ　かおりに\n"
+	.string "あなたも　さそわれたのですね⋯⋯$"
+
+Route103_Text_DaisyDefeated: @ 0x0825977B
+	.string "わたくしの　かおりに\n"
+	.string "まどわされませんでしたね⋯⋯$"
+
+Route103_Text_DaisyPostBattle: @ 0x08259795
+	.string "アロマとは　かおりのこと⋯⋯\n"
+	.string "かおりは　こころと　からだを　いやすのです$"
+
+Route103_Text_AmyIntro: @ 0x082597BA
+	.string "クミ“あたしは　クミ！\n"
+	.string "こっちは　いもうとの　ルミ！\l"
+	.string "ふたりで　いっしょに　たたかうのよ！$"
+
+Route103_Text_AmyDefeated: @ 0x082597E8
+	.string "クミ“まけっちゃったよぉ⋯⋯$"
+
+Route103_Text_AmyPostBattle: @ 0x082597F7
+	.string "クミ“ふたりを　あいてに　するのって\n"
+	.string "いろんな　ことを　かんがえるよね！$"
+
+Route103_Text_AmyNotEnoughPokemon: @ 0x0825981C
+	.string "クミ“あら？\n"
+	.string "ポケモン　1ひきしか　つれてないんだね！\l"
+	.string "それじゃあ　あたしたちと　たたかえないわ！$"
+
+Route103_Text_LivIntro: @ 0x0825984E
+	.string "ルミ“あたしたちは　ふたりで　ひとり\n"
+	.string "いっしょに　たたかうんだよ！$"
+
+Route103_Text_LivDefeated: @ 0x08259870
+	.string "ルミ“まけちゃったよぉ　おねえちゃぁん⋯⋯$"
+
+Route103_Text_LivPostBattle: @ 0x08259886
+	.string "ルミ“おねえちゃんと　あたしは\n"
+	.string "いきが　ぴったり　あってるのに⋯⋯\p"
+	.string "まけちゃったよぉ⋯⋯$"
+
+Route103_Text_AmyLivRegister: @ 0x082598B3
+	.string "ルミ“あたしたち　ほんとは\n"
+	.string "もっと　つよいんだもん⋯⋯\l"
+	.string "ほんとうだから！　こんど　みせるから！$"
+
+Route103_Text_LivNotEnoughPokemon: @ 0x082598E3
+	.string "ルミ“あたしたちと　たたかいたいなら\n"
+	.string "ポケモンを　2ひき　つれてないと　ダメよ！\l"
+	.string "じゃないと　しょうぶに　ならないんだから！$"
+
+Route103_Text_AmyRematchIntro: @ 0x08259922
+	.string "クミ“あたしは　クミ！\n"
+	.string "こっちは　いもうとの　ルミ！\l"
+	.string "ふたりで　いっしょに　たたかうのよ！$"
+
+Route103_Text_AmyRematchDefeated: @ 0x08259950
+	.string "クミ“くやしい⋯⋯\n"
+	.string "また　かてなかったよぉ⋯⋯$"
+
+Route103_Text_AmyRematchPostBattle: @ 0x08259968
+	.string "クミ“ふたりを　あいてに　するのって\n"
+	.string "いろんな　ことを　かんがえるよね！$"
+
+Route103_Text_AmyRematchNotEnoughPokemon: @ 0x0825998D
+	.string "クミ“あら？\n"
+	.string "ポケモン　1ひきしか　つれてないんだね！\l"
+	.string "それじゃあ　あたしたちと　たたかえないわ！$"
+
+Route103_Text_LivRematchIntro: @ 0x082599BF
+	.string "ルミ“あたしたちは　ふたりで　ひとり\n"
+	.string "いつも　いっしょに　たたかうんだよ！$"
+
+Route103_Text_LivRematchDefeated: @ 0x082599E5
+	.string "ルミ“また　まけちゃったよぉ\n"
+	.string "おねえちゃぁん⋯⋯$"
+
+Route103_Text_LivRematchPostBattle: @ 0x082599FE
+	.string "ルミ“おねえちゃんと　あたしは\n"
+	.string "いきが　ぴったり　あってるのに⋯⋯\p"
+	.string "どうして　また　まけちゃったの？$"
+
+Route103_Text_LivRematchNotEnoughPokemon: @ 0x08259A31
+	.string "ルミ“あたしたちと　たたかいたいなら\n"
+	.string "ポケモンを　2ひき　つれてないと　ダメよ！\l"
+	.string "じゃないと　しょうぶに　ならないんだから！$"
+
+Route103_Text_AndrewIntro: @ 0x08259A70
+	.string "つりいとが　からまって　イライラするーっ！\n"
+	.string "ええいっ　しょうぶだっ！$"
+
+Route103_Text_AndrewDefeated: @ 0x08259A93
+	.string "まけたっ！\n"
+	.string "よけいに　イライラするぞーっ！$"
+
+Route103_Text_AndrewPostBattle: @ 0x08259AA9
+	.string "ええい　はらだたしい⋯⋯！\n"
+	.string "イライライライラ⋯⋯$"
+
+Route103_Text_MiguelIntro: @ 0x08259AC2
+	.string "わたしの　ポケモンちゃん\n"
+	.string "すごく　かわいいから　みていきたまえ！$"
+
+Route103_Text_MiguelDefeated: @ 0x08259AE3
+	.string "あわわ⋯⋯\n"
+	.string "わたしの　ポケモンちゃん！$"
+
+Route103_Text_MiguelPostBattle: @ 0x08259AF7
+	.string "かわいい　ポケモンちゃんは\n"
+	.string "やられた　すがたも　かわいいな⋯⋯$"
+
+Route103_Text_MiguelRegister: @ 0x08259B17
+	.string "なんどでも　かわいい　ポケモンちゃんを\n"
+	.string "みにきて　もらうんだからね！$"
+
+Route103_Text_MiguelRematchIntro: @ 0x08259B3A
+	.string "きみ！　わたしの　ポケモンちゃん\n"
+	.string "さらに　かわいく　なったのだ！$"
+
+Route103_Text_MiguelRematchDefeated: @ 0x08259B5B
+	.string "ああ！\n"
+	.string "わたしの　ポケモンちゃん！$"
+
+Route103_Text_MiguelRematchPostBattle: @ 0x08259B6D
+	.string "いっしょに　いれば　いるほど\n"
+	.string "ポケモンが　かわいくなって　たまらん！$"
+
+Route103_Text_PeteIntro: @ 0x08259B90
+	.string "この　くらいの　きょり\n"
+	.string "およいで　わたれば　いーのにさ！$"
+
+Route103_Text_PeteDefeated: @ 0x08259BAD
+	.string "おお　やるじゃん$"
+
+Route103_Text_PetePostBattle: @ 0x08259BB6
+	.string "なーるほど\p"
+	.string "それ　ほど　たよれる　ポケモンなら\n"
+	.string "おもわず　なみのり　したくなる　ってもんだ$"
+
+Route103_Text_IsabelleIntro: @ 0x08259BE4
+	.string "きゃあ　ぶつかるわ！\n"
+	.string "あぶないっ！$"
+
+Route103_Text_IsabelleDefeated: @ 0x08259BF6
+	.string "んん⋯⋯$"
+
+Route103_Text_IsabellePostBattle: @ 0x08259BFB
+	.string "わたし　およぎが　へたで\n"
+	.string "れんしゅう　してたのよ⋯⋯\l"
+	.string "ぶつかりそうに　なって　ゴメンね$"
+
+Route103_Text_RhettIntro: @ 0x08259C27
+	.string "うぉっ！\n"
+	.string "なぜ　こんな　せまいところに！？$"
+
+Route103_Text_RhettDefeated: @ 0x08259C3D
+	.string "うぉっ　できる！$"
+
+Route103_Text_RhettPostBattle: @ 0x08259C46
+	.string "せまい　ところが\n"
+	.string "すき　なのかい　きみは？$"
+
+Route103_Text_MarcosIntro: @ 0x08259C5C
+	.string "おれっちの　ギターに　さそわれて\n"
+	.string "やって　きたのかーい？$"
+
+Route103_Text_MarcosDefeated: @ 0x08259C79
+	.string "おれっちの　ひとりショーが　だいなしだよ$"
+
+Route103_Text_MarcosPostBattle: @ 0x08259C8E
+	.string "ひとの　すくない　ところで\n"
+	.string "ギターを　ひいていたのに\l"
+	.string "こんなにも　あつまって　きたぜ！\p"
+	.string "ぷ　プロを　めざして　みるか！$"
+	.incbin "baserom_jp.gba", 0x259cca, 0x86c9

@@ -11,6 +11,8 @@
 	clearflag 0x4001
 	fadedefaultbgm
 	return
+
+ProfBirch_EventScript_UpdateLocation:: @ 0x08243139
 	compare_var_to_value 0x4085, 0x0
 	goto_if 0x1, 0x8244178
 	checkflag 0x864
@@ -92,4 +94,20 @@
 	applymovement 0x8004, 0x8243273
 	waitmovement 0x0
 	return
-	.incbin "baserom_jp.gba", 0x243273, 0x3DE
+	.incbin "baserom_jp.gba", 0x243273, 0x3A8
+
+Common_Movement_ExclamationMark: @ 0x0824361B
+	emote_exclamation_mark
+	step_end
+
+Common_Movement_Delay48: @ 0x0824361D
+	delay_16
+	delay_16
+	delay_16
+	step_end
+
+Common_Movement_FacePlayer: @ 0x08243621
+	face_player
+	step_end
+
+	.incbin "baserom_jp.gba", 0x243623, 0x2E

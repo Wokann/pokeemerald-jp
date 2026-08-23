@@ -136,6 +136,62 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
     },
 }
 
+# Shared text is stored separately from map script-data.  A block enters this
+# allowlist only after its raw owner, every EOS boundary, every caller, and
+# the matching US text order have been checked.  jp_text_blocks.py reads this
+# same mapping, so source labels and map references cannot drift apart.
+VERIFIED_SHARED_TEXT_BLOCKS = {
+    'Route103': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x0825975C,
+        'end': 0x08259CCA,
+        'labels': {
+            0x0825975C: 'Route103_Text_DaisyIntro',
+            0x0825977B: 'Route103_Text_DaisyDefeated',
+            0x08259795: 'Route103_Text_DaisyPostBattle',
+            0x082597BA: 'Route103_Text_AmyIntro',
+            0x082597E8: 'Route103_Text_AmyDefeated',
+            0x082597F7: 'Route103_Text_AmyPostBattle',
+            0x0825981C: 'Route103_Text_AmyNotEnoughPokemon',
+            0x0825984E: 'Route103_Text_LivIntro',
+            0x08259870: 'Route103_Text_LivDefeated',
+            0x08259886: 'Route103_Text_LivPostBattle',
+            0x082598B3: 'Route103_Text_AmyLivRegister',
+            0x082598E3: 'Route103_Text_LivNotEnoughPokemon',
+            0x08259922: 'Route103_Text_AmyRematchIntro',
+            0x08259950: 'Route103_Text_AmyRematchDefeated',
+            0x08259968: 'Route103_Text_AmyRematchPostBattle',
+            0x0825998D: 'Route103_Text_AmyRematchNotEnoughPokemon',
+            0x082599BF: 'Route103_Text_LivRematchIntro',
+            0x082599E5: 'Route103_Text_LivRematchDefeated',
+            0x082599FE: 'Route103_Text_LivRematchPostBattle',
+            0x08259A31: 'Route103_Text_LivRematchNotEnoughPokemon',
+            0x08259A70: 'Route103_Text_AndrewIntro',
+            0x08259A93: 'Route103_Text_AndrewDefeated',
+            0x08259AA9: 'Route103_Text_AndrewPostBattle',
+            0x08259AC2: 'Route103_Text_MiguelIntro',
+            0x08259AE3: 'Route103_Text_MiguelDefeated',
+            0x08259AF7: 'Route103_Text_MiguelPostBattle',
+            0x08259B17: 'Route103_Text_MiguelRegister',
+            0x08259B3A: 'Route103_Text_MiguelRematchIntro',
+            0x08259B5B: 'Route103_Text_MiguelRematchDefeated',
+            0x08259B6D: 'Route103_Text_MiguelRematchPostBattle',
+            0x08259B90: 'Route103_Text_PeteIntro',
+            0x08259BAD: 'Route103_Text_PeteDefeated',
+            0x08259BB6: 'Route103_Text_PetePostBattle',
+            0x08259BE4: 'Route103_Text_IsabelleIntro',
+            0x08259BF6: 'Route103_Text_IsabelleDefeated',
+            0x08259BFB: 'Route103_Text_IsabellePostBattle',
+            0x08259C27: 'Route103_Text_RhettIntro',
+            0x08259C3D: 'Route103_Text_RhettDefeated',
+            0x08259C46: 'Route103_Text_RhettPostBattle',
+            0x08259C5C: 'Route103_Text_MarcosIntro',
+            0x08259C79: 'Route103_Text_MarcosDefeated',
+            0x08259C8E: 'Route103_Text_MarcosPostBattle',
+        },
+    },
+}
+
 # Reviewed JP-to-US names for maps whose event positions, control-flow shape,
 # and text/movement ordering have all been checked against the US source.  This
 # is intentionally an allowlist: unreviewed addresses keep deterministic
@@ -621,6 +677,132 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
         },
     },
+    # Route103 was checked against the US map source from its MapScripts table
+    # through the rival scene, six local movements, eleven local texts, and
+    # the contiguous Route103 trainer-text family in data/text/trainers.inc.
+    'Route103': {
+        'scripts': {
+            0x081E6A64: 'Route103_OnTransition',
+            0x081E6A6F: 'Route103_OnLoad',
+            0x081E6A79: 'Route103_EventScript_OpenAlteringCave',
+            0x081E6A8C: 'Route103_EventScript_Rival',
+            0x081E6AA5: 'Route103_EventScript_RivalMay',
+            0x081E6AFF: 'Route103_EventScript_RivalBrendan',
+            0x081E6B59: 'Route103_EventScript_StartMayBattleTreecko',
+            0x081E6B69: 'Route103_EventScript_StartMayBattleTorchic',
+            0x081E6B79: 'Route103_EventScript_StartMayBattleMudkip',
+            0x081E6B89: 'Route103_EventScript_StartBrendanBattleTreecko',
+            0x081E6B99: 'Route103_EventScript_StartBrendanBattleTorchic',
+            0x081E6BA9: 'Route103_EventScript_StartBrendanBattleMudkip',
+            0x081E6BB9: 'Route103_EventScript_AfterMayBattle',
+            0x081E6BC7: 'Route103_EventScript_AfterBrendanBattle',
+            0x081E6BD5: 'Route103_EventScript_RivalExit',
+            0x081E6C08: 'Route103_EventScript_RivalExitFacingNorth',
+            0x081E6C2C: 'Route103_EventScript_RivalExitFacingEastOrWest',
+            0x081E6C50: 'Route103_EventScript_RivalExitFacingSouth',
+            0x081E6C6D: 'Route103_EventScript_RivalEnd',
+            0x081E6CA4: 'Route103_EventScript_Boy',
+            0x081E6CAD: 'Route103_EventScript_Man',
+            0x081E6CB6: 'Route103_EventScript_RouteSign',
+            0x081E6CBF: 'Route103_EventScript_Daisy',
+            0x081E6CD6: 'Route103_EventScript_Amy',
+            0x081E6D05: 'Route102_EventScript_AmyRegisterMatchCallAfterBattle',
+            0x081E6D1E: 'Route102_EventScript_AmyRematch',
+            0x081E6D39: 'Route103_EventScript_Liv',
+            0x081E6D68: 'Route102_EventScript_LivRegisterMatchCallAfterBattle',
+            0x081E6D81: 'Route102_EventScript_LivRematch',
+            0x081E6D9C: 'Route103_EventScript_Andrew',
+            0x081E6DB3: 'Route103_EventScript_Miguel',
+            0x081E6DDF: 'Route102_EventScript_MiguelRegisterMatchCallAfterBattle',
+            0x081E6DFE: 'Route103_EventScript_MiguelRematch',
+            0x081E6E15: 'Route103_EventScript_Marcos',
+            0x081E6E2C: 'Route103_EventScript_Rhett',
+            0x081E6E43: 'Route103_EventScript_Pete',
+            0x081E6E5A: 'Route103_EventScript_Isabelle',
+        },
+        'texts': {
+            0x081E6E71: 'Route103_Text_MayRoute103Pokemon',
+            0x081E6E97: 'Route103_Text_MayLetsBattle',
+            0x081E6F03: 'Route103_Text_MayDefeated',
+            0x081E6F20: 'Route103_Text_MayTimeToHeadBack',
+            0x081E6FA8: 'Route103_Text_BrendanRoute103Pokemon',
+            0x081E6FD0: 'Route103_Text_BrendanLetsBattle',
+            0x081E702A: 'Route103_Text_BrendanDefeated',
+            0x081E703A: 'Route103_Text_BrendanTimeToHeadBack',
+            0x081E70B5: 'Route103_Text_ShouldHaveBroughtPotion',
+            0x081E70DC: 'Route103_Text_ShortcutToOldale',
+            0x081E7115: 'Route103_Text_RouteSign',
+        },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route103']['labels'],
+        # These symbols are owned by existing common-script sources, not by
+        # Route103. Their JP entry addresses and movement bytes were matched
+        # one-for-one with the corresponding US common definitions.
+        'external_labels': {
+            0x08242F63: 'Common_EventScript_SetupRivalGfxId',
+            0x08243139: 'ProfBirch_EventScript_UpdateLocation',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+        },
+        # Each FD field control is mapped only where the corresponding US
+        # field message proves the same PLAYER/KUN placeholder semantics.
+        'field_placeholders': {
+            0x081E6E97: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081E6F03: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081E6FD0: {0x01: 'PLAYER'},
+            0x081E702A: {0x01: 'PLAYER'},
+            0x081E703A: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'flags': {
+                0x0082: 'FLAG_DEFEATED_RIVAL_ROUTE103',
+                0x0379: 'FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_RIVAL',
+                0x03D3: 'FLAG_HIDE_OLDALE_TOWN_RIVAL',
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+            },
+            'trainers': {
+                0x0024: 'TRAINER_DAISY',
+                0x0125: 'TRAINER_MIGUEL_1',
+                0x0150: 'TRAINER_ANDREW',
+                0x01E1: 'TRAINER_AMY_AND_LIV_1',
+                0x0208: 'TRAINER_BRENDAN_ROUTE_103_MUDKIP',
+                0x020B: 'TRAINER_BRENDAN_ROUTE_103_TREECKO',
+                0x020E: 'TRAINER_BRENDAN_ROUTE_103_TORCHIC',
+                0x0211: 'TRAINER_MAY_ROUTE_103_MUDKIP',
+                0x0214: 'TRAINER_MAY_ROUTE_103_TREECKO',
+                0x0217: 'TRAINER_MAY_ROUTE_103_TORCHIC',
+                # The JP trainer-data order differs for Pete, Isabelle,
+                # Rhett, and Marcos.  Their scripts/text are semantically
+                # proven, but the current US-derived constants encode other
+                # JP IDs, so retain these four numeric operands until the
+                # trainer constants themselves have an audited JP mapping.
+            },
+            'vars': {
+                0x4023: 'VAR_STARTER_MON',
+                0x4084: 'VAR_BIRCH_LAB_STATE',
+                0x40C7: 'VAR_OLDALE_RIVAL_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'songs': {
+                0x0000: 'MUS_DUMMY',
+                0x019F: 'MUS_ENCOUNTER_MAY',
+                0x01A5: 'MUS_ENCOUNTER_BRENDAN',
+            },
+            'sounds': {0x000A: 'SE_LEDGE'},
+            'metatiles': {
+                0x009F: 'METATILE_General_CaveEntrance_Top',
+                0x00A7: 'METATILE_General_CaveEntrance_Bottom',
+            },
+            'local_ids': {
+                0x02: 'LOCALID_ROUTE103_RIVAL',
+                0xFF: 'LOCALID_PLAYER',
+            },
+        },
+    },
     # These two routes are a compact, contiguous trainer-only tail.  The
     # event order and each trainer ID are identical to the US map sources;
     # their battle text remains in the existing shared text owner.
@@ -694,6 +876,16 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x081E881F: 'Route109_Movement_PlayerEnterBoatWest',
         0x081E8822: 'Route109_Movement_BrineyEnterBoat',
         0x081E8824: 'Route109_Movement_BrineyExitBoat',
+    },
+    # Route103's rival-exit movements occupy the otherwise raw 0x1E6C89
+    # region.  Each target and step_end boundary matches the US map source.
+    'Route103': {
+        0x081E6C89: 'Route103_Movement_RivalExitFacingNorth1',
+        0x081E6C8C: 'Route103_Movement_RivalExitFacingNorth2',
+        0x081E6C93: 'Route103_Movement_WatchRivalExitFacingNorth',
+        0x081E6C99: 'Route103_Movement_RivalExit1',
+        0x081E6C9B: 'Route103_Movement_RivalExit2',
+        0x081E6CA1: 'Route103_Movement_WatchRivalExitFacingEastOrWest',
     },
 })
 
@@ -811,16 +1003,24 @@ def collapse_trainerbattle_macros(lines):
             out.append((name, argstr))
             continue
         parts = [part.strip() for part in argstr.split(',')]
-        if len(parts) < 5 or parts[2] not in ('0', '0x0', 'LOCALID_NONE'):
+        if len(parts) < 4 or parts[2] not in ('0', '0x0', 'LOCALID_NONE'):
             out.append((name, argstr))
             continue
         battle_type, trainer = parts[0], parts[1]
-        if battle_type == 'TRAINER_BATTLE_SINGLE' and len(parts) == 5:
+        if battle_type == 'TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT' and len(parts) == 4:
+            out.append(('trainerbattle_no_intro', ', '.join((trainer, parts[3]))))
+        elif battle_type == 'TRAINER_BATTLE_SINGLE' and len(parts) == 5:
             out.append(('trainerbattle_single', ', '.join((trainer, parts[3], parts[4]))))
         elif battle_type == 'TRAINER_BATTLE_CONTINUE_SCRIPT' and len(parts) == 6:
             out.append(('trainerbattle_single', ', '.join((trainer, parts[3], parts[4], parts[5]))))
+        elif battle_type == 'TRAINER_BATTLE_DOUBLE' and len(parts) == 6:
+            out.append(('trainerbattle_double', ', '.join((trainer, parts[3], parts[4], parts[5]))))
+        elif battle_type == 'TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE' and len(parts) == 7:
+            out.append(('trainerbattle_double', ', '.join((trainer, parts[3], parts[4], parts[5], parts[6]))))
         elif battle_type == 'TRAINER_BATTLE_REMATCH' and len(parts) == 5:
             out.append(('trainerbattle_rematch', ', '.join((trainer, parts[3], parts[4]))))
+        elif battle_type == 'TRAINER_BATTLE_REMATCH_DOUBLE' and len(parts) == 6:
+            out.append(('trainerbattle_rematch_double', ', '.join((trainer, parts[3], parts[4], parts[5]))))
         else:
             out.append((name, argstr))
     return out
@@ -900,6 +1100,42 @@ def collapse_condition_macros(lines):
     return out
 
 
+def name_contextual_result_conditions(lines):
+    """Name result values only when their producing command proves the type.
+
+    ``VAR_RESULT`` carries many unrelated result families.  In particular,
+    checkplayergender returns MALE/FEMALE rather than FALSE/TRUE.  Preserve a
+    literal unless the immediately preceding command establishes one of these
+    two precise meanings.
+    """
+    out = list(lines)
+
+    def replace_condition(index, names):
+        if index >= len(out):
+            return
+        name, argstr = out[index]
+        parts = [part.strip() for part in argstr.split(',')]
+        if name not in ('goto_if_eq', 'goto_if_ne', 'call_if_eq', 'call_if_ne'):
+            return
+        if len(parts) != 3 or parts[0] != 'VAR_RESULT':
+            return
+        try:
+            value = int(parts[1], 0)
+        except ValueError:
+            return
+        replacement = names.get(value)
+        if replacement is not None:
+            out[index] = (name, ', '.join((parts[0], replacement, parts[2])))
+
+    for index, (name, argstr) in enumerate(out):
+        if name == 'checkplayergender':
+            replace_condition(index + 1, {0: 'MALE'})
+            replace_condition(index + 2, {1: 'FEMALE'})
+        elif name == 'specialvar' and argstr == 'VAR_RESULT, ShouldTryRematchBattle':
+            replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
+    return out
+
+
 VARIABLE_ARGUMENTS = {
     'compare_var_to_value': {0},
     'compare_var_to_var': {0, 1},
@@ -943,16 +1179,17 @@ def semantic_symbol_formatter(mname):
         if (name == 'setvar' and index == 1 and args
                 and args[0] == 0x8004):
             return symbols.get('trainers', {}).get(value)
-        if (name == 'compare_var_to_value' and index == 1 and args
-                and args[0] == 0x800D):
-            return symbols.get('booleans', {}).get(value)
         if name == 'setorcopyvar' and index == 1 and args and args[0] == 0x8000:
             return (symbols.get('items', {}).get(value)
                     or symbols.get('trainers', {}).get(value))
-        if name in ('playbgm', 'playfanfare') and index == 0:
+        if name in ('playbgm', 'playfanfare', 'savebgm', 'fadenewbgm') and index == 0:
             return symbols.get('songs', {}).get(value)
         if name == 'playse' and index == 0:
             return symbols.get('sounds', {}).get(value)
+        if name == 'setmetatile' and index == 2:
+            return symbols.get('metatiles', {}).get(value)
+        if name == 'setmetatile' and index == 3:
+            return symbols.get('booleans', {}).get(value)
         if name == 'playmoncry' and index == 0:
             return symbols.get('species', {}).get(value)
         if name == 'multichoicedefault' and index == 2:
@@ -1182,6 +1419,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     verified_table_labels = semantic.get('tables', {})
     verified_text_labels = semantic.get('texts', {})
     external_text_labels = semantic.get('external_texts', {})
+    external_labels = semantic.get('external_labels', {})
     field_placeholders = semantic.get('field_placeholders', {})
     special_aliases = semantic.get('specials', {})
     symbol_formatter = semantic_symbol_formatter(mname)
@@ -1292,6 +1530,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 ', '.join('0x%08X' % addr for addr in sorted(missing_placeholder_texts))))
     reference_text_label_map = dict(emitted_text_label_map)
     reference_text_label_map.update(external_text_labels)
+    reference_label_map = dict(label_map)
+    reference_label_map.update(external_labels)
     # build segments in address order
     segs = []
     segs.append((ms, 'map_table', 0))
@@ -1368,7 +1608,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 lines.append('%s:: @ 0x%08X' % (old, addr))
             lines.append('%s::' % label_map[addr])
             decoded_lines = sp.decode_script_lines(
-                scripts[addr], label_map, reference_text_label_map, symbol_formatter)
+                scripts[addr], reference_label_map, reference_text_label_map, symbol_formatter)
             decoded_lines = [
                 (name, special_aliases.get(argstr, argstr) if name == 'special' else argstr)
                 for name, argstr in decoded_lines
@@ -1376,7 +1616,9 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_msgbox_macros(decoded_lines)
             decoded_lines = collapse_trainerbattle_macros(decoded_lines)
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)
-            for name, argstr in collapse_condition_macros(decoded_lines):
+            decoded_lines = collapse_condition_macros(decoded_lines)
+            decoded_lines = name_contextual_result_conditions(decoded_lines)
+            for name, argstr in decoded_lines:
                 if argstr:
                     lines.append('\t%s %s' % (name, argstr))
                 else:
@@ -1452,7 +1694,7 @@ def event_script_labels():
     sources.extend(sorted((ROOT / 'data' / 'text').rglob('*.inc')))
     for source in sources:
         for line in source.read_text(encoding='utf-8').splitlines():
-            m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):\s*@\s*0x([0-9A-Fa-f]+)', line)
+            m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):{1,2}\s*@\s*0x([0-9A-Fa-f]+)', line)
             if m:
                 labels.setdefault(int(m.group(2), 16), m.group(1))
     return labels

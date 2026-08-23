@@ -13,6 +13,8 @@
 	dofieldeffect 0x9
 	releaseall 
 	end 
+
+Common_EventScript_SetupRivalGfxId:: @ 0x08242F63
 	checkplayergender 
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x8242F7B

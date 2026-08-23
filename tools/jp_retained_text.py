@@ -7,6 +7,7 @@ address, re-encode it with the fixed charmap, and add a gJPText_<addr>
 label so map scripts can reference shared text.
 """
 
+import argparse
 import re
 import sys
 from pathlib import Path
@@ -55,7 +56,7 @@ def split_strings(text):
     return out
 
 
-def process_block(path, block_addr, known_ptrs):
+def process_block(path, block_addr, known_ptrs, write=False):
     """Walk the block: re-encode garbled .string lines from ROM bytes,
     track each text's ROM address, and label texts in known_ptrs."""
     lines = path.read_text(encoding='utf-8').splitlines(keepends=True)
@@ -105,12 +106,20 @@ def process_block(path, block_addr, known_ptrs):
         if r is None:
             break
         pos += r[0]
-    if changed:
+    if changed and write:
         path.write_text(''.join(new_lines), encoding='utf-8')
     return changed
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        '--write',
+        action='store_true',
+        help='write verified replacements; default is a read-only audit',
+    )
+    options = parser.parse_args()
+
     entries = em.map_entries()
     map_starts = {e[0] for e in entries}
     blocks = []
@@ -143,11 +152,14 @@ def main():
             p = ROOT / 'data' / 'scripts' / ('gUnknown_%08X.inc' % b)
         if not p.exists():
             continue
-        n = process_block(p, b, known)
+        n = process_block(p, b, known, write=options.write)
         if n:
-            print('%s: %d text lines labeled' % (p.name, n))
+            action = 'updated' if options.write else 'would update'
+            print('%s: %d text lines %s' % (p.name, n, action))
             total += n
     print('total:', total)
+    if not options.write:
+        print('read-only audit; pass --write to modify files')
 
 
 if __name__ == '__main__':

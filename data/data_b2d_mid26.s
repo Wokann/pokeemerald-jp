@@ -1343,8 +1343,8 @@ gMapEvents_ROUTE102: @ 0x085007D4
 	map_events ROUTE102_EventObjects, 0, 0, ROUTE102_EventBgEvents
 	.globl ROUTE103_EventObjects
 ROUTE103_EventObjects: @ 0x085007E8
-	object_event 1, 33, 0, 49, 12, 3, 9, 0, 0, 0, 0, Route103_EventScript_001E6CAD, 0x0000
-	object_event 2, 240, 0, 10, 3, 3, 10, 0, 0, 0, 0, Route103_EventScript_001E6A8C, 0x02D3
+	object_event 1, 33, 0, 49, 12, 3, 9, 0, 0, 0, 0, Route103_EventScript_Man, 0x0000
+	object_event 2, 240, 0, 10, 3, 3, 10, 0, 0, 0, 0, Route103_EventScript_Rival, 0x02D3
 	object_event 3, 20, 0, 71, 11, 3, 18, 0, 0, 1, 3, 0x081E6CBF, 0x0000
 	object_event 4, 6, 0, 65, 12, 3, 8, 0, 0, 1, 1, 0x081E6D39, 0x0000
 	object_event 5, 6, 0, 64, 12, 3, 8, 0, 0, 1, 1, 0x081E6CD6, 0x0000
@@ -1352,7 +1352,7 @@ ROUTE103_EventObjects: @ 0x085007E8
 	object_event 7, 60, 0, 58, 5, 3, 12, 0, 0, 0, 5, 0x08244D23, 0x0000
 	object_event 8, 60, 0, 59, 5, 3, 12, 0, 0, 0, 6, 0x08244D23, 0x0000
 	object_event 9, 60, 0, 60, 5, 3, 12, 0, 0, 0, 7, 0x08244D23, 0x0000
-	object_event 10, 7, 0, 20, 10, 3, 2, 1, 2, 0, 0, Route103_EventScript_001E6CA4, 0x0000
+	object_event 10, 7, 0, 20, 10, 3, 2, 1, 2, 0, 0, Route103_EventScript_Boy, 0x0000
 	object_event 11, 64, 0, 7, 3, 3, 2, 1, 1, 0, 0, 0x082431CD, 0x0382
 	object_event 12, 25, 0, 56, 13, 3, 10, 0, 0, 1, 5, 0x081E6DB3, 0x0000
 	object_event 13, 59, 0, 50, 5, 3, 1, 1, 1, 0, 0, 0x08256A3C, 0x045A
@@ -1368,7 +1368,7 @@ ROUTE103_EventWarps: @ 0x085009C8
 	warp_def 45, 6, 0, 0, MAP_ALTERING_CAVE
 	.globl ROUTE103_EventBgEvents
 ROUTE103_EventBgEvents: @ 0x085009D0
-	bg_event 11, 9, 0, 0, Route103_EventScript_001E6CB6, 0, 0
+	bg_event 11, 9, 0, 0, Route103_EventScript_RouteSign, 0, 0
 	.globl gMapEvents_ROUTE103
 gMapEvents_ROUTE103: @ 0x085009DC
 	map_events ROUTE103_EventObjects, ROUTE103_EventWarps, 0, ROUTE103_EventBgEvents
