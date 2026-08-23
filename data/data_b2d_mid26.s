@@ -1628,23 +1628,23 @@ gMapEvents_ROUTE110: @ 0x085018E8
 	map_events ROUTE110_EventObjects, ROUTE110_EventWarps, ROUTE110_EventCoordEvents, ROUTE110_EventBgEvents
 	.globl ROUTE111_EventObjects
 ROUTE111_EventObjects: @ 0x085018FC
-	object_event 1, 19, 0, 13, 114, 3, 8, 0, 0, 0, 0, Route111_EventScript_001EA46B, 0x0300
+	object_event 1, 19, 0, 13, 114, 3, 8, 0, 0, 0, 0, Route111_EventScript_Victor, 0x0300
 	object_event 2, 18, 0, 13, 113, 0, 8, 0, 0, 0, 0, 0x00000000, 0x0301
 	object_event 3, 47, 0, 13, 113, 0, 8, 1, 0, 0, 0, 0x00000000, 0x0302
 	object_event 4, 22, 0, 13, 113, 0, 8, 0, 0, 0, 0, 0x00000000, 0x0303
-	object_event 5, 32, 0, 28, 51, 3, 17, 0, 0, 1, 3, 0x081EA6C1, 0x0000
+	object_event 5, 32, 0, 28, 51, 3, 17, 0, 0, 1, 3, Route111_EventScript_Heidi, 0x0000
 	object_event 6, 60, 0, 22, 5, 3, 12, 0, 0, 0, 19, 0x08244D23, 0x0000
 	object_event 7, 60, 0, 23, 5, 3, 12, 0, 0, 0, 20, 0x08244D23, 0x0000
-	object_event 8, 33, 0, 8, 91, 3, 2, 1, 1, 0, 0, Route111_EventScript_001EA62F, 0x0000
-	object_event 9, 31, 0, 29, 37, 3, 17, 0, 0, 1, 3, 0x081EA6AA, 0x0000
-	object_event 10, 55, 0, 27, 69, 3, 50, 2, 2, 1, 2, 0x081EA706, 0x0000
-	object_event 11, 31, 0, 21, 47, 3, 9, 0, 0, 1, 4, 0x081EA6D8, 0x0000
-	object_event 12, 32, 0, 32, 66, 3, 24, 0, 0, 1, 3, 0x081EA6EF, 0x0000
+	object_event 8, 33, 0, 8, 91, 3, 2, 1, 1, 0, 0, Route111_EventScript_Man1, 0x0000
+	object_event 9, 31, 0, 29, 37, 3, 17, 0, 0, 1, 3, Route111_EventScript_Drew, 0x0000
+	object_event 10, 55, 0, 27, 69, 3, 50, 2, 2, 1, 2, Route111_EventScript_Dusty, 0x0000
+	object_event 11, 31, 0, 21, 47, 3, 9, 0, 0, 1, 4, Route111_EventScript_Beau, 0x0000
+	object_event 12, 32, 0, 32, 66, 3, 24, 0, 0, 1, 3, Route111_EventScript_Becky, 0x0000
 	object_event 13, 110, 0, 14, 86, 3, 8, 0, 0, 0, 0, 0x0825420E, 0x031C
 	object_event 14, 68, 0, 13, 86, 3, 8, 0, 0, 0, 0, 0x082541EE, 0x031C
 	object_event 15, 86, 0, 18, 101, 3, 1, 0, 0, 0, 0, 0x0825667C, 0x0011
 	object_event 16, 86, 0, 19, 100, 3, 1, 0, 0, 0, 0, 0x0825667C, 0x0012
-	object_event 17, 8, 0, 23, 8, 3, 5, 1, 0, 0, 0, Route111_EventScript_001EA35F, 0x0000
+	object_event 17, 8, 0, 23, 8, 3, 5, 1, 0, 0, 0, Route111_EventScript_Girl, 0x0000
 	object_event 18, 59, 0, 33, 104, 3, 1, 0, 0, 0, 0, 0x08256AF2, 0x03F0
 	object_event 19, 60, 0, 18, 5, 3, 12, 0, 0, 0, 80, 0x08244D23, 0x0000
 	object_event 20, 60, 0, 19, 5, 3, 12, 0, 0, 0, 81, 0x08244D23, 0x0000
@@ -1655,25 +1655,25 @@ ROUTE111_EventObjects: @ 0x085018FC
 	object_event 25, 59, 0, 12, 54, 3, 1, 0, 0, 0, 0, 0x08256AFF, 0x03F1
 	object_event 26, 59, 0, 3, 114, 3, 1, 0, 0, 0, 0, 0x08256B0C, 0x03F2
 	object_event 27, 82, 0, 22, 21, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0013
-	object_event 28, 32, 0, 10, 82, 3, 14, 0, 0, 1, 2, 0x081EA77F, 0x0000
-	object_event 29, 31, 0, 11, 71, 3, 22, 0, 0, 1, 3, 0x081EA768, 0x0000
-	object_event 30, 44, 0, 32, 29, 3, 28, 1, 0, 1, 2, 0x081EA796, 0x0000
-	object_event 31, 34, 0, 11, 11, 3, 7, 4, 0, 1, 4, 0x081EA80F, 0x0000
-	object_event 32, 33, 0, 9, 27, 3, 17, 0, 0, 1, 3, 0x081EA7AD, 0x0000
+	object_event 28, 32, 0, 10, 82, 3, 14, 0, 0, 1, 2, Route111_EventScript_Irene, 0x0000
+	object_event 29, 31, 0, 11, 71, 3, 22, 0, 0, 1, 3, Route111_EventScript_Travis, 0x0000
+	object_event 30, 44, 0, 32, 29, 3, 28, 1, 0, 1, 2, Route111_EventScript_Daisuke, 0x0000
+	object_event 31, 34, 0, 11, 11, 3, 7, 4, 0, 1, 4, Route111_EventScript_Brooke, 0x0000
+	object_event 32, 33, 0, 9, 27, 3, 17, 0, 0, 1, 3, Route111_EventScript_Wilton, 0x0000
 	object_event 33, 7, 0, 13, 20, 3, 7, 1, 1, 0, 0, 0x08246512, 0x03C0
-	object_event 34, 65, 0, 20, 114, 3, 2, 1, 1, 0, 0, Route111_EventScript_001EA638, 0x0000
-	object_event 35, 31, 0, 26, 132, 3, 9, 1, 1, 1, 5, 0x081EA89F, 0x0000
-	object_event 36, 20, 0, 20, 132, 3, 10, 1, 1, 1, 5, 0x081EA8B6, 0x0000
-	object_event 37, 32, 0, 19, 121, 3, 7, 1, 1, 1, 2, 0x081EA888, 0x0000
-	object_event 38, 66, 0, 16, 119, 3, 10, 1, 1, 1, 3, 0x081EA871, 0x0000
-	object_event 39, 55, 0, 29, 77, 3, 14, 1, 1, 1, 7, 0x081EA8E4, 0x0000
-	object_event 40, 32, 0, 22, 77, 3, 10, 1, 1, 1, 6, 0x081EA8CD, 0x0000
-	object_event 41, 31, 0, 37, 77, 3, 9, 1, 1, 1, 7, 0x081EA8FB, 0x0000
+	object_event 34, 65, 0, 20, 114, 3, 2, 1, 1, 0, 0, Route111_EventScript_Man2, 0x0000
+	object_event 35, 31, 0, 26, 132, 3, 9, 1, 1, 1, 5, Route111_EventScript_Tyron, 0x0000
+	object_event 36, 20, 0, 20, 132, 3, 10, 1, 1, 1, 5, Route111_EventScript_Celina, 0x0000
+	object_event 37, 32, 0, 19, 121, 3, 7, 1, 1, 1, 2, Route111_EventScript_Bianca, 0x0000
+	object_event 38, 66, 0, 16, 119, 3, 10, 1, 1, 1, 3, Route111_EventScript_Hayden, 0x0000
+	object_event 39, 55, 0, 29, 77, 3, 14, 1, 1, 1, 7, Route111_EventScript_Bryan, 0x0000
+	object_event 40, 32, 0, 22, 77, 3, 10, 1, 1, 1, 6, Route111_EventScript_Celia, 0x0000
+	object_event 41, 31, 0, 37, 77, 3, 9, 1, 1, 1, 7, Route111_EventScript_Branden, 0x0000
 	object_event 42, 59, 0, 19, 118, 3, 1, 1, 1, 0, 0, 0x08256B19, 0x0476
-	object_event 43, 55, 0, 14, 56, 3, 16, 1, 1, 0, 0, Route111_EventScript_001EA641, 0x0000
+	object_event 43, 55, 0, 14, 56, 3, 16, 1, 1, 0, 0, Route111_EventScript_Hiker, 0x0000
 	object_event 44, 199, 0, 20, 53, 3, 8, 1, 1, 0, 0, 0x00000000, 0x036C
 	object_event 45, 240, 0, 19, 53, 3, 8, 1, 1, 0, 0, 0x00000000, 0x036B
-	object_event 46, 17, 0, 19, 101, 3, 7, 1, 1, 0, 0, Route111_EventScript_001EA68A, 0x034B
+	object_event 46, 17, 0, 19, 101, 3, 7, 1, 1, 0, 0, Route111_EventScript_RockSmashTipFatMan, 0x034B
 	.globl ROUTE111_EventWarps
 ROUTE111_EventWarps: @ 0x08501D4C
 	warp_def 13, 113, 0, 0, MAP_ROUTE111_WINSTRATE_FAMILYS_HOUSE
@@ -1683,60 +1683,60 @@ ROUTE111_EventWarps: @ 0x08501D4C
 	warp_def 31, 113, 0, 0, MAP_TRAINER_HILL_ENTRANCE
 	.globl ROUTE111_EventCoordEvents
 ROUTE111_EventCoordEvents: @ 0x08501D74
-	coord_event 12, 62, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 11, 61, 3, 16387, 0, Route111_EventScript_001EA3B0
-	coord_event 12, 61, 3, 16387, 0, Route111_EventScript_001EA3B0
-	coord_event 13, 61, 3, 16387, 0, Route111_EventScript_001EA3B0
-	coord_event 7, 63, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 12, 44, 3, 16387, 0, Route111_EventScript_001EA3BC
-	coord_event 13, 43, 3, 16387, 0, Route111_EventScript_001EA3BC
-	coord_event 14, 42, 3, 16387, 0, Route111_EventScript_001EA3BC
-	coord_event 16, 40, 3, 16387, 0, Route111_EventScript_001EA3BC
-	coord_event 14, 61, 3, 16387, 0, Route111_EventScript_001EA3B0
-	coord_event 18, 32, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 17, 31, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 9, 37, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 10, 36, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 17, 39, 3, 16387, 0, Route111_EventScript_001EA3BC
-	coord_event 18, 38, 3, 16387, 0, Route111_EventScript_001EA3BC
-	coord_event 8, 64, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 9, 65, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 10, 65, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 11, 66, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 12, 67, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 13, 68, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 14, 69, 3, 0, 0, Route111_EventScript_001EA456
-	coord_event 10, 61, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 11, 62, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 13, 62, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 14, 62, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 17, 38, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 16, 39, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 15, 40, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 14, 41, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 13, 42, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 12, 43, 3, 0, 0, Route111_EventScript_001EA463
-	coord_event 11, 44, 3, 0, 0, Route111_EventScript_001EA463
+	coord_event 12, 62, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 11, 61, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerDown
+	coord_event 12, 61, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerDown
+	coord_event 13, 61, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerDown
+	coord_event 7, 63, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 12, 44, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerLeft
+	coord_event 13, 43, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerLeft
+	coord_event 14, 42, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerLeft
+	coord_event 16, 40, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerLeft
+	coord_event 14, 61, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerDown
+	coord_event 18, 32, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 17, 31, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 9, 37, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 10, 36, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 17, 39, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerLeft
+	coord_event 18, 38, 3, 16387, 0, Route111_EventScript_ViciousSandstormTriggerLeft
+	coord_event 8, 64, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 9, 65, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 10, 65, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 11, 66, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 12, 67, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 13, 68, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 14, 69, 3, 0, 0, Route111_EventScript_SunTrigger
+	coord_event 10, 61, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 11, 62, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 13, 62, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 14, 62, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 17, 38, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 16, 39, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 15, 40, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 14, 41, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 13, 42, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 12, 43, 3, 0, 0, Route111_EventScript_SandstormTrigger
+	coord_event 11, 44, 3, 0, 0, Route111_EventScript_SandstormTrigger
 	.globl ROUTE111_EventBgEvents
 ROUTE111_EventBgEvents: @ 0x08501F94
-	bg_event 16, 114, 0, 0, Route111_EventScript_001EA602, 0, 0
-	bg_event 24, 126, 0, 0, Route111_EventScript_001EA5F9, 0, 0
-	bg_event 7, 66, 0, 0, Route111_EventScript_001EA60B, 0, 0
-	bg_event 13, 6, 0, 0, Route111_EventScript_001EA614, 0, 0
+	bg_event 16, 114, 0, 0, Route111_EventScript_WinstrateHouseSign, 0, 0
+	bg_event 24, 126, 0, 0, Route111_EventScript_RouteSignMauville, 0, 0
+	bg_event 7, 66, 0, 0, Route111_EventScript_RouteSign112, 0, 0
+	bg_event 13, 6, 0, 0, Route111_EventScript_RouteSign113, 0, 0
 	bg_event 24, 36, 0, 8, 0x0083, 0x00, 0x00
 	bg_event 34, 50, 0, 8, 0x008D, 0x00, 0x00
 	bg_event 33, 34, 0, 8, 0x0079, 0x00, 0x00
-	bg_event 25, 19, 0, 0, Route111_EventScript_001EA61D, 0, 0
+	bg_event 25, 19, 0, 0, Route111_EventScript_OldLadysRestStopSign, 0, 0
 	bg_event 35, 1, 0, 8, 0x000D, 0x00, 0x00
 	bg_event 35, 31, 0, 8, 0x0099, 0x00, 0x00
 	bg_event 26, 70, 0, 7, 0x006C, 0x02, 0x00
 	bg_event 27, 27, 3, 8, 0x0021, 0x00, 0x00
-	bg_event 7, 84, 3, 0, Route111_EventScript_001EA626, 0, 0
+	bg_event 7, 84, 3, 0, Route111_EventScript_TrainerTipsSpAtkSpDef, 0, 0
 	bg_event 14, 19, 0, 8, 0x00A4, 0x00, 0x00
 	bg_event 13, 19, 0, 8, 0x00A1, 0x00, 0x00
 	bg_event 19, 55, 0, 7, 0x0040, 0x38, 0x00
 	bg_event 35, 66, 0, 7, 0x0044, 0x39, 0x00
-	bg_event 24, 116, 0, 0, Route111_EventScript_001EA912, 0, 0
+	bg_event 24, 116, 0, 0, Route111_EventScript_TrainerHillSign, 0, 0
 	.globl gMapEvents_ROUTE111
 gMapEvents_ROUTE111: @ 0x0850206C
 	map_events ROUTE111_EventObjects, ROUTE111_EventWarps, ROUTE111_EventCoordEvents, ROUTE111_EventBgEvents
