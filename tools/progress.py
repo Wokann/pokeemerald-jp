@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Report decompilation progress for pokeemerald-jp.
+"""Report C-object ownership for pokeemerald-jp.
 
-Counts the number of functions already converted to C (function symbols
-defined in build/src/*.o, excluding compiler noise and naked-asm jump
-labels) against the total number of functions listed in funcmap_jp.txt
-(unique addresses).
+Counts function symbols defined in build/src/*.o against the unique function
+addresses in funcmap_jp.txt.  This is a source-ownership metric only: objects
+containing naked inline assembly are deliberately included.  It must not be
+used as the strict C-conversion rate.
 
 Usage: python3 tools/progress.py
 """
@@ -48,12 +48,12 @@ def count_total_functions():
 
 
 def main():
-    converted = count_c_functions()
+    owned = count_c_functions()
     total = count_total_functions()
-    pct = converted * 100.0 / total
-    print(f"converted: {converted}")
-    print(f"total:     {total}")
-    print(f"progress:  {converted}/{total} = {pct:.2f}%")
+    pct = owned * 100.0 / total
+    print(f"C-object ownership: {owned}")
+    print(f"total:              {total}")
+    print(f"ownership:          {owned}/{total} = {pct:.2f}%")
 
 
 if __name__ == "__main__":
