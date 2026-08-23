@@ -4,50 +4,47 @@ Route108_MapScripts::
 	.byte 0
 
 Route108_EventScript_Jerome::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_JEROME, 0x0, 0x0825AB71, 0x0825AB93
-	msgbox 0x0825ABAB, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_JEROME, Route108_Text_JeromeIntro, Route108_Text_JeromeDefeated
+	msgbox Route108_Text_JeromePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route108_EventScript_Matthew::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_MATTHEW, 0x0, 0x0825ABCF, 0x0825ABEB
-	msgbox 0x0825ABFF, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_MATTHEW, Route108_Text_MatthewIntro, Route108_Text_MatthewDefeated
+	msgbox Route108_Text_MatthewPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route108_EventScript_Tara::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_TARA, 0x0, 0x0825AC1E, 0x0825AC43
-	msgbox 0x0825AC4F, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_TARA, Route108_Text_TaraIntro, Route108_Text_TaraDefeated
+	msgbox Route108_Text_TaraPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route108_EventScript_Missy::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_MISSY, 0x0, 0x0825AC75, 0x0825AC96
-	msgbox 0x0825ACAE, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_MISSY, Route108_Text_MissyIntro, Route108_Text_MissyDefeated
+	msgbox Route108_Text_MissyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route108_EventScript_Carolina::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_CAROLINA, 0x0, 0x0825AD8F, 0x0825ADAB
-	msgbox 0x0825ADB8, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_CAROLINA, Route108_Text_CarolinaIntro, Route108_Text_CarolinaDefeated
+	msgbox Route108_Text_CarolinaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route108_EventScript_Cory::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_CORY_1, 0x0, 0x0825ACCB, 0x0825ACED, Route108_EventScript_CoryRegisterMatchCallAfterBattle
+	trainerbattle_single TRAINER_CORY_1, Route108_Text_CoryIntro, Route108_Text_CoryDefeated, Route108_EventScript_CoryRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, 0x1, Route108_EventScript_CoryRematch
-	msgbox 0x0825ACFC, MSGBOX_DEFAULT
+	goto_if_eq VAR_RESULT, TRUE, Route108_EventScript_CoryRematch
+	msgbox Route108_Text_CoryPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
 Route108_EventScript_CoryRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0x0
-	msgbox 0x0825AD14, MSGBOX_DEFAULT
-	setvar VAR_0x8004, 0x2E4
-	special SetMatchCallRegisteredFlag
-	setorcopyvar VAR_0x8000, 0x2E4
-	callstd 0x8
+	msgbox Route108_Text_CoryRegister, MSGBOX_DEFAULT
+	register_matchcall TRAINER_CORY_1
 	release
 	end
 
 Route108_EventScript_CoryRematch::
-	trainerbattle TRAINER_BATTLE_REMATCH, TRAINER_CORY_1, 0x0, 0x0825AD3A, 0x0825AD58
-	msgbox 0x0825AD6B, MSGBOX_AUTOCLOSE
+	trainerbattle_rematch TRAINER_CORY_1, Route108_Text_CoryRematchIntro, Route108_Text_CoryRematchDefeated
+	msgbox Route108_Text_CoryRematchPostBattle, MSGBOX_AUTOCLOSE
 	end

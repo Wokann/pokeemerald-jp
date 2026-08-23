@@ -704,4 +704,90 @@ Route107_Text_CamronPostBattle: @ 0x0825AB45
 	.string "こ　このあと　まだ\n"
 	.string "すいえい　ランニングが　のこっているぜ\l"
 	.string "だいじょうぶか　おれ⋯⋯？$"
-	.incbin "baserom_jp.gba", 0x25ab71, 0x7822
+Route108_Text_JeromeIntro: @ 0x0825AB71
+	.string "オレの　ユメは　せかいに　ある\n"
+	.string "7つのうみ　すべてで　およぐこと！$"
+
+Route108_Text_JeromeDefeated: @ 0x0825AB93
+	.string "これじゃ\n"
+	.string "7つのうみ　すべてで　およげない⋯⋯$"
+
+Route108_Text_JeromePostBattle: @ 0x0825ABAB
+	.string "うみの　ポケモンと　あそぶことも\n"
+	.string "およいでいる　ときの　たのしみだね！$"
+
+Route108_Text_MatthewIntro: @ 0x0825ABCF
+	.string "なあ　キミ！\n"
+	.string "キミも　すてられた　ふねに　いくのかい？$"
+
+Route108_Text_MatthewDefeated: @ 0x0825ABEB
+	.string "ああ　ぼくが　しずむ⋯⋯\n"
+	.string "ぶくぶく⋯⋯$"
+
+Route108_Text_MatthewPostBattle: @ 0x0825ABFF
+	.string "すてられぶねの　なかに\n"
+	.string "はいっていく　やつらが　いるんだよ！$"
+
+Route108_Text_TaraIntro: @ 0x0825AC1E
+	.string "ウソつきな　カレに　いわれたのよ\n"
+	.string "ビキニが　にあってて　カワイイって⋯⋯$"
+
+Route108_Text_TaraDefeated: @ 0x0825AC43
+	.string "いやん　まけたわーっ！$"
+
+Route108_Text_TaraPostBattle: @ 0x0825AC4F
+	.string "ウソでも　いいから　カワイイって　いわれたい\n"
+	.string "ふくざつな　おんなごころ⋯⋯$"
+
+Route108_Text_MissyIntro: @ 0x0825AC75
+	.string "うみって　だいすき！\n"
+	.string "およいでいれば　イヤなことも　わすれるわ！$"
+
+Route108_Text_MissyDefeated: @ 0x0825AC96
+	.string "しょうぶに　まけると\n"
+	.string "ストレスが　たまるーっ！$"
+
+Route108_Text_MissyPostBattle: @ 0x0825ACAE
+	.string "ストレスは　およいで　はっさん！\n"
+	.string "けんこうてき　よねー！$"
+
+Route108_Text_CoryIntro: @ 0x0825ACCB
+	.string "みずポケモンが　だいすきだー！\n"
+	.string "ほかの　ポケモンも　だいすきだー！$"
+
+Route108_Text_CoryDefeated: @ 0x0825ACED
+	.string "わー　まけたー！\n"
+	.string "わーわー！$"
+
+Route108_Text_CoryPostBattle: @ 0x0825ACFC
+	.string "おおごえで　さけべば\n"
+	.string "スッキリ　するなあーっ！$"
+
+Route108_Text_CoryRegister: @ 0x0825AD14
+	.string "つよい　トレーナーも　だいすきだー！\n"
+	.string "ポケナビの　とうろくを　してくれー！$"
+
+Route108_Text_CoryRematchIntro: @ 0x0825AD3A
+	.string "かっても　まけても\n"
+	.string "うみ　での　しょうぶが　だいすきだー！$"
+
+Route108_Text_CoryRematchDefeated: @ 0x0825AD58
+	.string "わーっ　また　まけた！\n"
+	.string "わー　わー！$"
+
+Route108_Text_CoryRematchPostBattle: @ 0x0825AD6B
+	.string "きみも　いきづまった　ときは\n"
+	.string "なにかを　うみに　むかって　さけべーっ！$"
+
+Route108_Text_CarolinaIntro: @ 0x0825AD8F
+	.string "じまんの　ポケモンたちで\n"
+	.string "スピーディに　たたかうわよ！$"
+
+Route108_Text_CarolinaDefeated: @ 0x0825ADAB
+	.string "あら　かわいくないわね！$"
+
+Route108_Text_CarolinaPostBattle: @ 0x0825ADB8
+	.string "せっかくの　うみ　だし\n"
+	.string "ピンクの　フリフリの　ビキニも\l"
+	.string "ちょっと　きてみたい⋯⋯$"
+	.incbin "baserom_jp.gba", 0x25ade1, 0x75b2

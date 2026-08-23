@@ -356,6 +356,37 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
             0x0825AB45: 'Route107_Text_CamronPostBattle',
         },
     },
+    # Route108 follows Route107 in the same trainer-text owner.  Its final
+    # Carolina message ends immediately before Route109 David at 0x0825ADE1.
+    'Route108': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x0825AB71,
+        'end': 0x0825ADE1,
+        'labels': {
+            0x0825AB71: 'Route108_Text_JeromeIntro',
+            0x0825AB93: 'Route108_Text_JeromeDefeated',
+            0x0825ABAB: 'Route108_Text_JeromePostBattle',
+            0x0825ABCF: 'Route108_Text_MatthewIntro',
+            0x0825ABEB: 'Route108_Text_MatthewDefeated',
+            0x0825ABFF: 'Route108_Text_MatthewPostBattle',
+            0x0825AC1E: 'Route108_Text_TaraIntro',
+            0x0825AC43: 'Route108_Text_TaraDefeated',
+            0x0825AC4F: 'Route108_Text_TaraPostBattle',
+            0x0825AC75: 'Route108_Text_MissyIntro',
+            0x0825AC96: 'Route108_Text_MissyDefeated',
+            0x0825ACAE: 'Route108_Text_MissyPostBattle',
+            0x0825ACCB: 'Route108_Text_CoryIntro',
+            0x0825ACED: 'Route108_Text_CoryDefeated',
+            0x0825ACFC: 'Route108_Text_CoryPostBattle',
+            0x0825AD14: 'Route108_Text_CoryRegister',
+            0x0825AD3A: 'Route108_Text_CoryRematchIntro',
+            0x0825AD58: 'Route108_Text_CoryRematchDefeated',
+            0x0825AD6B: 'Route108_Text_CoryRematchPostBattle',
+            0x0825AD8F: 'Route108_Text_CarolinaIntro',
+            0x0825ADAB: 'Route108_Text_CarolinaDefeated',
+            0x0825ADB8: 'Route108_Text_CarolinaPostBattle',
+        },
+    },
 }
 
 # Reviewed JP-to-US names for maps whose event positions, control-flow shape,
@@ -665,6 +696,7 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081E8640: 'Route108_EventScript_CoryRegisterMatchCallAfterBattle',
             0x081E865F: 'Route108_EventScript_CoryRematch',
         },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route108']['labels'],
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
         'symbols': {
             'trainers': {
