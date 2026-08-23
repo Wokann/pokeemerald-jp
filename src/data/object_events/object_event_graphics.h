@@ -253,6 +253,17 @@ OBJECT_EVENT_GRAPHICS_DOLLS_DATA const u32 gObjectEventPic_BigRegirockDoll[] = I
 OBJECT_EVENT_GRAPHICS_DOLLS_DATA const u32 gObjectEventPic_BigRegiceDoll[] = INCBIN_U32("graphics/object_events/pics/dolls/big_regice_doll.4bpp");
 OBJECT_EVENT_GRAPHICS_DOLLS_DATA const u32 gObjectEventPic_BigRegisteelDoll[] = INCBIN_U32("graphics/object_events/pics/dolls/big_registeel_doll.4bpp");
 
+// This JP-owned static misc-object graphics family follows the dolls and cushions.
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u32 gObjectEventPic_CuttableTree[] = INCBIN_U32("graphics/object_events/pics/misc/cuttable_tree.4bpp");
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u32 gObjectEventPic_BreakableRock[] = INCBIN_U32("graphics/object_events/pics/misc/breakable_rock.4bpp");
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u32 gObjectEventPic_PushableBoulder[] = INCBIN_U32("graphics/object_events/pics/misc/pushable_boulder.4bpp");
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u32 gObjectEventPic_MrBrineysBoat[] = INCBIN_U32("graphics/object_events/pics/misc/mr_brineys_boat.4bpp");
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u32 gObjectEventPic_Fossil[] = INCBIN_U32("graphics/object_events/pics/misc/fossil.4bpp");
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u32 gObjectEventPic_SubmarineShadow[] = INCBIN_U32("graphics/object_events/pics/misc/submarine_shadow.4bpp");
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u16 gObjectEventPal_SubmarineShadow[] = INCBIN_U16("graphics/object_events/palettes/submarine_shadow.gbapal");
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u32 gObjectEventPic_Truck[] = INCBIN_U32("graphics/object_events/pics/misc/truck.4bpp");
+OBJECT_EVENT_GRAPHICS_MISC_DATA const u16 gObjectEventPal_Truck[] = INCBIN_U16("graphics/object_events/palettes/truck.gbapal");
+
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u8 gFieldEffectPic_CutGrass[] = INCBIN_U8("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u32 gFieldEffectPic_CutGrass_Copy[] = INCBIN_U32("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u16 gFieldEffectPal_CutGrass[] = INCBIN_U16("graphics/field_effects/palettes/cut_grass.gbapal");

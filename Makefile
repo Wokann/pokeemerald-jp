@@ -911,7 +911,12 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/pics/dolls/big_lapras_doll.4bpp graphics/object_events/pics/dolls/big_venusaur_doll.4bpp \
 	graphics/object_events/pics/dolls/big_charizard_doll.4bpp graphics/object_events/pics/dolls/big_blastoise_doll.4bpp \
 	graphics/object_events/pics/dolls/big_wailmer_doll.4bpp graphics/object_events/pics/dolls/big_regirock_doll.4bpp \
-	graphics/object_events/pics/dolls/big_regice_doll.4bpp graphics/object_events/pics/dolls/big_registeel_doll.4bpp
+	graphics/object_events/pics/dolls/big_regice_doll.4bpp graphics/object_events/pics/dolls/big_registeel_doll.4bpp \
+	graphics/object_events/pics/misc/cuttable_tree.4bpp graphics/object_events/pics/misc/breakable_rock.4bpp \
+	graphics/object_events/pics/misc/pushable_boulder.4bpp graphics/object_events/pics/misc/mr_brineys_boat.4bpp \
+	graphics/object_events/pics/misc/fossil.4bpp graphics/object_events/pics/misc/submarine_shadow.4bpp \
+	graphics/object_events/palettes/submarine_shadow.gbapal graphics/object_events/pics/misc/truck.4bpp \
+	graphics/object_events/palettes/truck.gbapal
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -

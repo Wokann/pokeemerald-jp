@@ -10,7 +10,9 @@
 #define OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA __attribute__((section(".rodata.object_event_graphics_npc_people_extended_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA __attribute__((section(".rodata.object_event_graphics_special_object_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_DOLLS_DATA __attribute__((section(".rodata.object_event_graphics_dolls_data"), aligned(4)))
+#define OBJECT_EVENT_GRAPHICS_MISC_DATA __attribute__((section(".rodata.object_event_graphics_misc_data"), aligned(4)))
 #include "data/object_events/object_event_graphics.h"
+#undef OBJECT_EVENT_GRAPHICS_MISC_DATA
 #undef OBJECT_EVENT_GRAPHICS_DOLLS_DATA
 #undef OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA
 #undef OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA
