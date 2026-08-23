@@ -294,6 +294,32 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
             0x0825A5BC: 'Route105_Text_JosuePostBattle',
         },
     },
+    # Route106 starts immediately after Route105 in the same physical trainer
+    # text owner.  Its 16 EOS-terminated messages end immediately before the
+    # Route107 Darrin block at 0x0825A7CD.
+    'Route106': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x0825A5D9,
+        'end': 0x0825A7CD,
+        'labels': {
+            0x0825A5D9: 'Route106_Text_ElliotIntro',
+            0x0825A5F1: 'Route106_Text_ElliotDefeated',
+            0x0825A60D: 'Route106_Text_ElliotPostBattle',
+            0x0825A631: 'Route106_Text_ElliotRegister',
+            0x0825A657: 'Route106_Text_ElliotRematchIntro',
+            0x0825A679: 'Route106_Text_ElliotRematchDefeated',
+            0x0825A68A: 'Route106_Text_ElliotRematchPostBattle',
+            0x0825A6B0: 'Route106_Text_NedIntro',
+            0x0825A6F8: 'Route106_Text_NedDefeated',
+            0x0825A714: 'Route106_Text_NedPostBattle',
+            0x0825A72C: 'Route106_Text_DouglasIntro',
+            0x0825A754: 'Route106_Text_DouglasDefeated',
+            0x0825A75E: 'Route106_Text_DouglasPostBattle',
+            0x0825A775: 'Route106_Text_KylaIntro',
+            0x0825A797: 'Route106_Text_KylaDefeated',
+            0x0825A7AB: 'Route106_Text_KylaPostBattle',
+        },
+    },
 }
 
 # Reviewed JP-to-US names for maps whose event positions, control-flow shape,
@@ -546,6 +572,7 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081E8464: 'Route106_EventScript_Ned',
         },
         'texts': {0x081E847B: 'Route106_Text_TrainerTips'},
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route106']['labels'],
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
         'symbols': {
             'trainers': {

@@ -528,4 +528,67 @@ Route105_Text_JosueDefeated: @ 0x0825A5A9
 Route105_Text_JosuePostBattle: @ 0x0825A5BC
 	.string "やっぱりさ　おれには\n"
 	.string "うみより　そらが　にあってるんだよ$"
-	.incbin "baserom_jp.gba", 0x25a5d9, 0x7dba
+Route106_Text_ElliotIntro: @ 0x0825A5D9
+	.string "うみづりと　かわづり\n"
+	.string "キミは　どっちが　すき？$"
+
+Route106_Text_ElliotDefeated: @ 0x0825A5F1
+	.string "まるで　うみづりの　ように\n"
+	.string "ごうかいに　まけたぞーっ！$"
+
+Route106_Text_ElliotPostBattle: @ 0x0825A60D
+	.string "うみでも　かわでも　つりは　サイコーだ！\n"
+	.string "キミも　そう　おもうだろ！？$"
+
+Route106_Text_ElliotRegister: @ 0x0825A631
+	.string "つりも　いいけど　しょうぶも　いいな！\n"
+	.string "キミ　よかったら　また　たのむよ！$"
+
+Route106_Text_ElliotRematchIntro: @ 0x0825A657
+	.string "ポケモン　つりまくったからね\n"
+	.string "すごい　しょうぶを　してみせるぞー！$"
+
+Route106_Text_ElliotRematchDefeated: @ 0x0825A679
+	.string "また　ごうかいに　まけたぞーっ！$"
+
+Route106_Text_ElliotRematchPostBattle: @ 0x0825A68A
+	.string "かっても　まけても　ポケモンは　サイコーだ！\n"
+	.string "キミも　そう　おもうだろ！？$"
+
+Route106_Text_NedIntro: @ 0x0825A6B0
+	.string "トイレに　いきたくなったとき\n"
+	.string "みんなは　どうしてるんだろう⋯⋯？\p"
+	.string "トイレに　いっている　あいだに\n"
+	.string "もし　おおものが　かかったらと　おもうと⋯⋯$"
+
+Route106_Text_NedDefeated: @ 0x0825A6F8
+	.string "トイレを　がまん　してたから\n"
+	.string "まけたんだよ　きっと⋯⋯$"
+
+Route106_Text_NedPostBattle: @ 0x0825A714
+	.string "ああっ！\n"
+	.string "おおものが　つれそうな　よかん⋯⋯！$"
+
+Route106_Text_DouglasIntro: @ 0x0825A72C
+	.string "はっはっはっ！\n"
+	.string "りくでは　はやく　はしれないが\l"
+	.string "みずの　なかなら　まけないぞ！$"
+
+Route106_Text_DouglasDefeated: @ 0x0825A754
+	.string "まいりましたーっ！$"
+
+Route106_Text_DouglasPostBattle: @ 0x0825A75E
+	.string "すいえいの　きょうそうなら　まけないのに⋯⋯$"
+
+Route106_Text_KylaIntro: @ 0x0825A775
+	.string "うみは　わたしの　にわ\n"
+	.string "こども　だからって　てかげん　しないわよ！$"
+
+Route106_Text_KylaDefeated: @ 0x0825A797
+	.string "ひょっとして\n"
+	.string "てかげん　してないよね？$"
+
+Route106_Text_KylaPostBattle: @ 0x0825A7AB
+	.string "なみに　ゆられて　ただようのが　だいすき\n"
+	.string "あなたも　やってみない？$"
+	.incbin "baserom_jp.gba", 0x25a7cd, 0x7bc6

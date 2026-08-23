@@ -1458,10 +1458,10 @@ gMapEvents_ROUTE105: @ 0x08500EDC
 	map_events ROUTE105_EventObjects, ROUTE105_EventWarps, 0, ROUTE105_EventBgEvents
 	.globl ROUTE106_EventObjects
 ROUTE106_EventObjects: @ 0x08500EF0
-	object_event 1, 42, 0, 18, 5, 1, 27, 4, 0, 1, 3, 0x081E83D4, 0x0000
-	object_event 2, 43, 0, 29, 10, 1, 1, 0, 0, 1, 3, 0x081E83EB, 0x0000
-	object_event 3, 50, 0, 51, 14, 3, 10, 0, 0, 1, 4, 0x081E8402, 0x0000
-	object_event 4, 50, 0, 65, 14, 3, 1, 0, 0, 1, 3, 0x081E8464, 0x0000
+	object_event 1, 42, 0, 18, 5, 1, 27, 4, 0, 1, 3, Route106_EventScript_Douglas, 0x0000
+	object_event 2, 43, 0, 29, 10, 1, 1, 0, 0, 1, 3, Route106_EventScript_Kyla, 0x0000
+	object_event 3, 50, 0, 51, 14, 3, 10, 0, 0, 1, 4, Route106_EventScript_Elliot, 0x0000
+	object_event 4, 50, 0, 65, 14, 3, 1, 0, 0, 1, 3, Route106_EventScript_Ned, 0x0000
 	object_event 5, 59, 0, 29, 14, 3, 1, 0, 0, 0, 0, 0x08256A97, 0x03EC
 	.globl ROUTE106_EventWarps
 ROUTE106_EventWarps: @ 0x08500F68
@@ -1471,7 +1471,7 @@ ROUTE106_EventBgEvents: @ 0x08500F70
 	bg_event 41, 11, 3, 7, 0x0004, 0x3F, 0x00
 	bg_event 53, 12, 0, 7, 0x006C, 0x2E, 0x00
 	bg_event 68, 15, 3, 7, 0x006F, 0x2F, 0x00
-	bg_event 59, 13, 3, 0, 0x081E83CB, 0, 0
+	bg_event 59, 13, 3, 0, Route106_EventScript_TrainerTipsSign, 0, 0
 	.globl gMapEvents_ROUTE106
 gMapEvents_ROUTE106: @ 0x08500FA0
 	map_events ROUTE106_EventObjects, ROUTE106_EventWarps, 0, ROUTE106_EventBgEvents
