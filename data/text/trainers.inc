@@ -993,4 +993,232 @@ Route109_Text_ElijahPostBattle: @ 0x0825B356
 	.string "こうはの　おれさまには\n"
 	.string "みなとまちが　おにあいだぜ！\l"
 	.string "カイナシティに　いってくるか$"
-	.incbin "baserom_jp.gba", 0x25b380, 0x7013
+Route110_Text_JacobIntro: @ 0x0825B380
+	.string "おっと　あぶない！\n"
+	.string "バイク　レースに　なれてない　ようだな！$"
+
+Route110_Text_JacobDefeated: @ 0x0825B39F
+	.string "キキーッ！\n"
+	.string "ブレーキが　こしょうした！$"
+
+Route110_Text_JacobPostBattle: @ 0x0825B3B3
+	.string "タイヤの　パンクや\n"
+	.string "ブレーキの　こしょうは　ケガのもと\l"
+	.string "ちゃんと　てんけん　しないとな$"
+
+Route110_Text_AnthonyIntro: @ 0x0825B3DF
+	.string "ヘイ　ユー！\n"
+	.string "ワタシの　スピードに　ついてこれるかな！？$"
+
+Route110_Text_AnthonyDefeated: @ 0x0825B3FC
+	.string "オー　マイ　ガッ！$"
+
+Route110_Text_AnthonyPostBattle: @ 0x0825B406
+	.string "スピードだけじゃ　ポケモンしょうぶ\n"
+	.string "かてませーん！　ハンセイしまーす！$"
+
+Route110_Text_BenjaminIntro: @ 0x0825B42A
+	.string "じてんしゃの　スピード　でても\n"
+	.string "あせっちゃ　いけないよ！$"
+
+Route110_Text_BenjaminDefeated: @ 0x0825B447
+	.string "ポケモンしょうぶも\n"
+	.string "あせっちゃ　いけないな⋯⋯$"
+
+Route110_Text_BenjaminPostBattle: @ 0x0825B45F
+	.string "あせらず　のんびり　いこうよ\n"
+	.string "じかんは　たっぷり　あるからね！$"
+
+Route110_Text_BenjaminRegister: @ 0x0825B47F
+	.string "あせらずに　また　がんばるか！\n"
+	.string "よかったらさ　れんらく　くれよな$"
+
+Route110_Text_BenjaminRematchIntro: @ 0x0825B4A0
+	.string "おっ！　スピード　だしすぎ　じゃない？\n"
+	.string "ちょっと　のんびり　しょうぶ　しようよ！$"
+
+Route110_Text_BenjaminRematchDefeated: @ 0x0825B4C9
+	.string "べつに　あせってないけど\n"
+	.string "なぜだか　まけて　しまうな⋯⋯$"
+
+Route110_Text_BenjaminRematchPostBattle: @ 0x0825B4E6
+	.string "あせらず　のんびり　いこうよ\n"
+	.string "じかんは　たっぷり　あるからね！$"
+
+Route110_Text_AbigailIntro: @ 0x0825B506
+	.string "トライアスロンは　ハードな　スポーツ\n"
+	.string "すいえい　じてんしゃ　マラソンの\l"
+	.string "3しゅもくを　こなすのよ！$"
+
+Route110_Text_AbigailDefeated: @ 0x0825B538
+	.string "ポケモン　しょうぶも　ハードだわ！$"
+
+Route110_Text_AbigailPostBattle: @ 0x0825B54A
+	.string "つかれたから　ひとやすみ\n"
+	.string "きゅうけいは　たいせつ　なのよ$"
+
+Route110_Text_AbigailRegister: @ 0x0825B567
+	.string "あなた　きにいったわ！\n"
+	.string "また　サイクリングロードで　たたかいましょ$"
+
+Route110_Text_AbigailRematchIntro: @ 0x0825B589
+	.string "じてんしゃに　のりながら\n"
+	.string "ポケモンしょうぶ　ってのも　いいものよね！$"
+
+Route110_Text_AbigailRematchDefeated: @ 0x0825B5AC
+	.string "うわー\n"
+	.string "どうして　そんなに　つよいの？$"
+
+Route110_Text_AbigailRematchPostBattle: @ 0x0825B5C0
+	.string "ひょっとして　きろくに\n"
+	.string "ちょうせん　していたのかしら？\p"
+	.string "だったら　ジャマして　ゴメンねー$"
+
+Route110_Text_JasmineIntro: @ 0x0825B5ED
+	.string "じてんしゃを　こぎつづけて\n"
+	.string "ふとももが　パンパンに　なっちゃった$"
+
+Route110_Text_JasmineDefeated: @ 0x0825B60E
+	.string "きんにくつうが　しんぱいだわ⋯⋯$"
+
+Route110_Text_JasminePostBattle: @ 0x0825B61F
+	.string "ジムの　バッチを　もってるの？\n"
+	.string "どうりで　つよい　はずだわ！$"
+
+Route110_Text_EdwardIntro: @ 0x0825B63E
+	.string "おまえの　さくせんは　すべて　みえた！\n"
+	.string "わたしが　まけるはず　ない！$"
+
+Route110_Text_EdwardDefeated: @ 0x0825B661
+	.string "じぶんの　はいぼくは　みえなかった⋯⋯！$"
+
+Route110_Text_EdwardPostBattle: @ 0x0825B676
+	.string "おまえの　みらいが　みえる⋯⋯\p"
+	.string "ふうむ⋯⋯\n"
+	.string "あかるい　ひかりが　みえるぞ⋯⋯！$"
+
+Route110_Text_JaclynIntro: @ 0x0825B69E
+	.string "おほほほほっ！\n"
+	.string "わたくしの　ミラクルを　みせてあげるわ！$"
+
+Route110_Text_JaclynDefeated: @ 0x0825B6BB
+	.string "ミラクルに　まけたーっ！$"
+
+Route110_Text_JaclynPostBattle: @ 0x0825B6C8
+	.string "わたくしに　かったことが　ミラクル⋯⋯\n"
+	.string "そう　きせき　なのよ！\l"
+	.string "いつでも　かてるなんて　おもわないことね！$"
+
+Route110_Text_EdwinIntro: @ 0x0825B6FE
+	.string "キミの　ポケモン　みせてくれない？\n"
+	.string "ひとめで　いいから　おねがい！$"
+
+Route110_Text_EdwinDefeated: @ 0x0825B720
+	.string "コンプリート　したかった⋯⋯！$"
+
+Route110_Text_EdwinPostBattle: @ 0x0825B730
+	.string "みたことのない　ポケモンに　であうと\n"
+	.string "ボクの　コレクターだましいが　もえるなぁ！$"
+
+Route110_Text_EdwinRegister: @ 0x0825B759
+	.string "ぼく　エントリーコールも\n"
+	.string "たくさん　あつめたいんだよねぇ$"
+
+Route110_Text_EdwinRematchIntro: @ 0x0825B776
+	.string "ねえ　キミ\n"
+	.string "あたらしい　ポケモン　つかまえた？\p"
+	.string "よかったら　ポケモン　みせてくれない？\n"
+	.string "ひとめで　いいから　おねがい！$"
+
+Route110_Text_EdwinRematchDefeated: @ 0x0825B7B2
+	.string "キミの　ポケモン\n"
+	.string "うらやましいな⋯⋯$"
+
+Route110_Text_EdwinRematchPostBattle: @ 0x0825B7C5
+	.string "ああ！　とにかく　めずらしい　ポケモン\n"
+	.string "ぜんぶ　ボクの　ものに　したいよー！$"
+
+Route110_Text_DaleIntro: @ 0x0825B7EC
+	.string "ええーい！\n"
+	.string "うしろから　はなしかけるなー！$"
+
+Route110_Text_DaleDefeated: @ 0x0825B802
+	.string "まけたっ！\n"
+	.string "くやしいっ！！$"
+
+Route110_Text_DalePostBattle: @ 0x0825B810
+	.string "すいめんに　うかぶ　うきを　じっと　みる⋯⋯\n"
+	.string "しゅうちゅうりょくが　たいせつ　なんだ$"
+
+Route110_Text_IsabelIntro: @ 0x0825B83B
+	.string "おほほ！　だいじな　ポケモンを\n"
+	.string "じまん　するためなら　どこにでも　いきますわ$"
+
+Route110_Text_IsabelDefeated: @ 0x0825B862
+	.string "あら　まあ　イヤですわ$"
+
+Route110_Text_IsabelPostBattle: @ 0x0825B86E
+	.string "しょうぶ　させるよりも\n"
+	.string "だいすきクラブで　じまんして　こようかしら$"
+
+Route110_Text_IsabelRegister: @ 0x0825B890
+	.string "わたしの　じまんは　こんなんじゃ\n"
+	.string "おわりませんわ！\l"
+	.string "なんかいも　つきあって　もらいますわよ！$"
+
+Route110_Text_IsabelRematchIntro: @ 0x0825B8BF
+	.string "おほほ！　だいじな　ポケモンなら\n"
+	.string "なんどだって　じまん　しますわ！$"
+
+Route110_Text_IsabelRematchDefeated: @ 0x0825B8E1
+	.string "あら　まあ　イヤですわ$"
+
+Route110_Text_IsabelRematchPostBattle: @ 0x0825B8ED
+	.string "ポケモンじまんも　やめられないけど\n"
+	.string "しょうぶ　するのも　すきなのよ！$"
+
+Route110_Text_TimmyIntro: @ 0x0825B910
+	.string "この　あたりの　くさむらで\n"
+	.string "かっこいい　ポケモン　みつけたんだぜ！$"
+
+Route110_Text_TimmyDefeated: @ 0x0825B932
+	.string "かっこいい　だけじゃ　だめかぁ⋯⋯$"
+
+Route110_Text_TimmyPostBattle: @ 0x0825B944
+	.string "つかまえた　ばかりの　ポケモンじゃ\n"
+	.string "うまく　たたかえないや！$"
+
+Route110_Text_AlyssaIntro: @ 0x0825B963
+	.string "サイクリングロード　から　おちちゃった！\n"
+	.string "はずかしい⋯⋯　しょうぶで　まぎらわすわ！$"
+
+Route110_Text_AlyssaDefeated: @ 0x0825B98E
+	.string "ひぇ　まけて　しまったわ！$"
+
+Route110_Text_AlyssaPostBattle: @ 0x0825B99C
+	.string "おっこちるは　まけるはで\n"
+	.string "はずかし　すぎます！　わたし！$"
+
+Route110_Text_JosephIntro: @ 0x0825B9B9
+	.string "よぉぉし　とばして　いくぜえェ！\n"
+	.string "ノリの　わるいやつは　おいてくぜェ！$"
+
+Route110_Text_JosephDefeated: @ 0x0825B9DD
+	.string "ノリが　いいね　あんた⋯⋯$"
+
+Route110_Text_JosephPostBattle: @ 0x0825B9EB
+	.string "こんなこと　では　へこたれないぜェ！\n"
+	.string "おれは　まけて　またひとつ\l"
+	.string "いいオトコに　なったぜェ！$"
+
+Route110_Text_KalebIntro: @ 0x0825BA1A
+	.string "かわいい　ポケモンたちが\n"
+	.string "たすけあう　ところは　かわいいぞーーっ！$"
+
+Route110_Text_KalebDefeated: @ 0x0825BA3C
+	.string "きみは　ちも　なみだも　ないんだな$"
+
+Route110_Text_KalebPostBattle: @ 0x0825BA4E
+	.string "おう　よしよし\n"
+	.string "よくやったよ　かわいい　おまえたち$"
+	.incbin "baserom_jp.gba", 0x25ba68, 0x692b

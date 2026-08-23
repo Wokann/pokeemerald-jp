@@ -1556,14 +1556,14 @@ ROUTE110_EventObjects: @ 0x085013FC
 	object_event 5, 21, 0, 10, 11, 3, 2, 1, 1, 0, 0, Route110_EventScript_001E8EFD, 0x0000
 	object_event 6, 57, 0, 27, 24, 4, 2, 1, 3, 0, 0, Route110_EventScript_001E8EEB, 0x0000
 	object_event 7, 13, 0, 15, 7, 3, 2, 1, 1, 0, 0, Route110_EventScript_001E8EE2, 0x0000
-	object_event 8, 57, 0, 16, 73, 4, 49, 2, 14, 1, 3, 0x081E9109, 0x0000
-	object_event 9, 56, 0, 19, 31, 4, 51, 10, 1, 1, 3, 0x081E9090, 0x0000
-	object_event 10, 57, 0, 30, 31, 4, 9, 1, 1, 1, 4, 0x081E9120, 0x0000
-	object_event 11, 56, 0, 16, 55, 4, 45, 4, 4, 1, 3, 0x081E90A7, 0x0000
-	object_event 12, 37, 0, 3, 39, 3, 10, 0, 0, 1, 6, 0x081E8FD2, 0x0000
-	object_event 13, 47, 0, 33, 15, 3, 9, 0, 0, 1, 1, 0x081E8FE9, 0x0000
-	object_event 14, 39, 0, 34, 40, 3, 67, 0, 0, 1, 4, 0x081E9000, 0x0000
-	object_event 15, 50, 0, 10, 19, 3, 8, 0, 0, 1, 1, 0x081E9062, 0x0000
+	object_event 8, 57, 0, 16, 73, 4, 49, 2, 14, 1, 3, Route110_EventScript_Jasmine, 0x0000
+	object_event 9, 56, 0, 19, 31, 4, 51, 10, 1, 1, 3, Route110_EventScript_Anthony, 0x0000
+	object_event 10, 57, 0, 30, 31, 4, 9, 1, 1, 1, 4, Route110_EventScript_Abigail, 0x0000
+	object_event 11, 56, 0, 16, 55, 4, 45, 4, 4, 1, 3, Route110_EventScript_Benjamin, 0x0000
+	object_event 12, 37, 0, 3, 39, 3, 10, 0, 0, 1, 6, Route110_EventScript_Edward, 0x0000
+	object_event 13, 47, 0, 33, 15, 3, 9, 0, 0, 1, 1, Route110_EventScript_Jaclyn, 0x0000
+	object_event 14, 39, 0, 34, 40, 3, 67, 0, 0, 1, 4, Route110_EventScript_Edwin, 0x0000
+	object_event 15, 50, 0, 10, 19, 3, 8, 0, 0, 1, 1, Route110_EventScript_Dale, 0x0000
 	object_event 16, 60, 0, 5, 11, 3, 12, 0, 0, 0, 16, 0x08244D23, 0x0000
 	object_event 17, 60, 0, 6, 11, 3, 12, 0, 0, 0, 17, 0x08244D23, 0x0000
 	object_event 18, 60, 0, 7, 11, 3, 12, 0, 0, 0, 18, 0x08244D23, 0x0000
@@ -1575,14 +1575,14 @@ ROUTE110_EventObjects: @ 0x085013FC
 	object_event 24, 117, 0, 9, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_001E8EB6, 0x0384
 	object_event 25, 117, 0, 10, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_001E8ECC, 0x0384
 	object_event 26, 117, 0, 8, 82, 3, 8, 0, 0, 0, 0, 0x00000000, 0x0384
-	object_event 27, 56, 0, 21, 78, 4, 51, 7, 1, 1, 2, 0x081E9079, 0x0000
+	object_event 27, 56, 0, 21, 78, 4, 51, 7, 1, 1, 2, Route110_EventScript_Jacob, 0x0000
 	object_event 28, 240, 0, 34, 54, 3, 14, 0, 0, 0, 0, 0x00000000, 0x0397
 	object_event 29, 243, 0, 34, 54, 3, 8, 0, 0, 0, 0, 0x00000000, 0x039A
-	object_event 30, 35, 0, 33, 69, 3, 14, 0, 0, 1, 3, 0x081E91E4, 0x0000
-	object_event 31, 18, 0, 10, 76, 3, 9, 0, 0, 1, 2, 0x081E9182, 0x0000
-	object_event 32, 25, 0, 7, 76, 3, 10, 1, 1, 1, 2, 0x081E91FC, 0x0000
-	object_event 33, 57, 0, 10, 39, 3, 9, 1, 1, 1, 6, 0x081E922A, 0x0000
-	object_event 34, 66, 0, 36, 40, 3, 66, 1, 1, 1, 3, 0x081E9213, 0x0000
+	object_event 30, 35, 0, 33, 69, 3, 14, 0, 0, 1, 3, Route110_EventScript_Timmy, 0x0000
+	object_event 31, 18, 0, 10, 76, 3, 9, 0, 0, 1, 2, Route110_EventScript_Isabel, 0x0000
+	object_event 32, 25, 0, 7, 76, 3, 10, 1, 1, 1, 2, Route110_EventScript_Kaleb, 0x0000
+	object_event 33, 57, 0, 10, 39, 3, 9, 1, 1, 1, 6, Route110_EventScript_Alyssa, 0x0000
+	object_event 34, 66, 0, 36, 40, 3, 66, 1, 1, 1, 3, Route110_EventScript_Joseph, 0x0000
 	object_event 35, 59, 0, 6, 38, 3, 1, 1, 1, 0, 0, 0x08256AE5, 0x0475
 	object_event 36, 64, 0, 9, 79, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0345
 	.globl ROUTE110_EventWarps
