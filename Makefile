@@ -471,7 +471,7 @@ $(C_BUILDDIR)/mystery_event_msg.o: src/mystery_event_msg.c charmap.txt
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/mystery_event_msg.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/mystery_event_msg.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/mystery_event_msg.gen.s
-graphics/summary_screen/%.png.4bpp: graphics/summary_screen/%.png
+graphics/summary_screen/%.png.4bpp: graphics/summary_screen/%.png | tools
 	$(GFX) $< $@
 $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/summary_screen/a_button.png.4bpp graphics/summary_screen/b_button.png.4bpp
 	@mkdir -p $(dir $@)
