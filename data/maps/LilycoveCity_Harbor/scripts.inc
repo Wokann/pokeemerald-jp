@@ -526,4 +526,4 @@ LilycoveCity_Harbor_EventScript_00209B8E::
 	waitmovement 0x0
 	return
 
-	.incbin "baserom_jp.gba", 0x209ba7, 0x4be
+	.incbin "baserom_jp.gba", 0x209ba7, 0x1c9
