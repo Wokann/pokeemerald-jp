@@ -44,4 +44,8 @@ Route125_EventScript_ItemBigPearl:: @ 0x08256D6F
 	finditem ITEM_BIG_PEARL
 	end
 
-	.incbin "baserom_jp.gba", 0x256d7c, 0xd0d
+Route126_EventScript_ItemGreenShard:: @ 0x08256D7C
+	finditem ITEM_GREEN_SHARD
+	end
+
+	.incbin "baserom_jp.gba", 0x256d89, 0xd00

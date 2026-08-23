@@ -3840,4 +3840,113 @@ Route125_Text_AuronPostBattle: @ 0x08260B33
 	.string "さっき　この　あたりで\n"
 	.string "こきたない　ビンを　ひろったんじゃ！\l"
 	.string "うみに　ゴミを　すてるとは　なっとらん！$"
-	.incbin "baserom_jp.gba", 0x260b67, 0x182c
+Route126_Text_BarryIntro: @ 0x08260B67
+	.string "すいえいは　ぜんしん　うんどう！\n"
+	.string "たいりょくが　つくぞー！$"
+
+Route126_Text_BarryDefeat: @ 0x08260B85
+	.string "まけましたーっ！$"
+
+Route126_Text_BarryPostBattle: @ 0x08260B8E
+	.string "まいにち　およいでる　おかげで\n"
+	.string "みよ！　この　きんにくっ！！$"
+
+Route126_Text_DeanIntro: @ 0x08260BAD
+	.string "この　しろく　そびえる　いわやまが\n"
+	.string "ルネシティ　なんだぜー！$"
+
+Route126_Text_DeanDefeat: @ 0x08260BCC
+	.string "やられたか！？$"
+
+Route126_Text_DeanPostBattle: @ 0x08260BD4
+	.string "ルネシティの　いりぐちが　みつからん！\n"
+	.string "どこに　あるんだ？$"
+
+Route126_Text_NikkiIntro: @ 0x08260BF2
+	.string "おほほほっ\n"
+	.string "わたしは　にんぎょ！$"
+
+Route126_Text_NikkiDefeat: @ 0x08260C03
+	.string "アワと　なって　きえていく⋯⋯\n"
+	.string "ぶくぶくぶく⋯⋯$"
+
+Route126_Text_NikkiPostBattle: @ 0x08260C1C
+	.string "こっぴどく　やられちゃったわ⋯⋯\n"
+	.string "アワくって　にげだしたい　きぶん⋯⋯$"
+
+Route126_Text_BrendaIntro: @ 0x08260C40
+	.string "ねえ　ねえ\n"
+	.string "おねえさんと　しょうぶ　しない？$"
+
+Route126_Text_BrendaDefeat: @ 0x08260C57
+	.string "いやーんっ！$"
+
+Route126_Text_BrendaPostBattle: @ 0x08260C5E
+	.string "こうして　ポケモンと\n"
+	.string "うみで　あそぶのが　だいすきなの！$"
+
+Route126_Text_PabloIntro: @ 0x08260C7B
+	.string "からておう　より　たくましい\n"
+	.string "この　にくたいびを　みよ！$"
+
+Route126_Text_PabloDefeat: @ 0x08260C98
+	.string "おわっ　つよいな\n"
+	.string "いいね！　いいね！$"
+
+Route126_Text_PabloPostBattle: @ 0x08260CAB
+	.string "まけて　いい　しげきに　なったよ！\n"
+	.string "からだも　ポケモンも　もっと　きたえるぜ$"
+
+Route126_Text_PabloRegister: @ 0x08260CD2
+	.string "いやー　いいね！\n"
+	.string "ぜひとも　おちかづきに　なっておきたいね！$"
+
+Route126_Text_PabloRematchIntro: @ 0x08260CF1
+	.string "ビキニのおねえさん　より　うつくしい\n"
+	.string "この　にくたいびを　みよ！$"
+
+Route126_Text_PabloRematchDefeat: @ 0x08260D12
+	.string "おわっ　ほんと　つよいな\n"
+	.string "いいね！　いいね！$"
+
+Route126_Text_PabloPostRematch: @ 0x08260D29
+	.string "よし　もっともっと　きたえるぜ！\n"
+	.string "きみは　いい　しげきに　なるから\l"
+	.string "また　きてくれよ！$"
+
+Route126_Text_LeonardoIntro: @ 0x08260D55
+	.string "きょねん　まで　およげなかった　オレも\n"
+	.string "かいパンやろうに　なれたんだ\l"
+	.string "いまなら　なんでも　できる　きがする！$"
+
+Route126_Text_LeonardoDefeat: @ 0x08260D8C
+	.string "てへっ　よくばりすぎちゃ　ダメだよな$"
+
+Route126_Text_LeonardoPostBattle: @ 0x08260D9F
+	.string "なんでも　れんしゅう　すれば\n"
+	.string "うまく　なるんだ！\p"
+	.string "キミも　わかい　うちから\n"
+	.string "いろいろ　やっておけよ！$"
+
+Route126_Text_IsobelIntro: @ 0x08260DD2
+	.string "はなに　かいすいが　はいると\n"
+	.string "すっごく　つらいよね？$"
+
+Route126_Text_IsobelDefeat: @ 0x08260DED
+	.string "ああっ！\n"
+	.string "く　くやし⋯⋯ごほッ！$"
+
+Route126_Text_IsobelPostBattle: @ 0x08260DFE
+	.string "かいすいを　ちょっと　のんじゃった⋯⋯！\n"
+	.string "からいーッ　にがいーッ！$"
+
+Route126_Text_SiennaIntro: @ 0x08260E20
+	.string "わたしの　ハートを　ぶつけるわ！$"
+
+Route126_Text_SiennaDefeat: @ 0x08260E31
+	.string "ハートで　まけたわ！$"
+
+Route126_Text_SiennaPostBattle: @ 0x08260E3C
+	.string "あつく　なっちゃった\n"
+	.string "ちょっと　もぐって　こようかな$"
+	.incbin "baserom_jp.gba", 0x260e57, 0x153c
