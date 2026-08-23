@@ -32,6 +32,24 @@ LABEL_RE = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*):\s*@\s*0x([0-9A-Fa-f]+)\s*$")
 INCINBIN_RE = re.compile(
     r'^\s*\.incbin\s+"[^"]+",\s*0x([0-9A-Fa-f]+),\s*0x([0-9A-Fa-f]+)\s*$'
 )
+PREPROC_BYTE_LINE_RE = re.compile(r"^\s*\.byte\s+(.+?)\s*$")
+PREPROC_HEX_BYTE_RE = re.compile(r"0x([0-9A-Fa-f]{2})(?![0-9A-Fa-f])")
+
+
+def _extract_preproc_bytes(output):
+    """Read encoded bytes only from preproc's .byte directives."""
+    vals = []
+    for line in output.splitlines():
+        match = PREPROC_BYTE_LINE_RE.match(line)
+        if match is None:
+            continue
+        payload = match.group(1)
+        byte_matches = list(PREPROC_HEX_BYTE_RE.finditer(payload))
+        remainder = PREPROC_HEX_BYTE_RE.sub("", payload)
+        if not byte_matches or remainder.replace(",", "").strip():
+            raise ValueError(f"unexpected preproc .byte output: {line!r}")
+        vals.extend(int(byte_match.group(1), 16) for byte_match in byte_matches)
+    return bytes(vals)
 
 
 class Charmap:
@@ -184,10 +202,7 @@ class Charmap:
             return None
         finally:
             os.unlink(tmp.name)
-        vals = []
-        for line in result.stdout.splitlines():
-            vals.extend(int(m.group(1), 16) for m in re.finditer(r"0x([0-9A-Fa-f]{2})", line))
-        return bytes(vals)
+        return _extract_preproc_bytes(result.stdout)
 
 
 def parse_chunks():

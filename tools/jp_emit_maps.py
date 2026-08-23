@@ -30,6 +30,28 @@ MAP_SCRIPT_NAMES = {
     7: 'MAP_SCRIPT_ON_RETURN_TO_FIELD',
 }
 
+# Confirmed JP script entries which are owned by a map in the US source tree
+# but are invoked indirectly rather than through that map's event table.
+MAP_AUXILIARY_SCRIPT_ADDRESSES = {
+    'RustboroCity_Gym': (0x08202410,),  # EventScript_RegisterRoxanne
+}
+
+# Map-owned movement scripts confirmed by their JP addresses and the matching
+# US map source.  They are referenced by ``applymovement`` rather than being
+# event scripts, so the event-script parser deliberately does not follow them.
+MAP_MOVEMENT_SCRIPT_LABELS = {
+    'RustboroCity_PokemonSchool': {
+        0x08202D82: 'RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest',
+        0x08202D99: 'RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast',
+    },
+}
+
+TEXT_POINTER_ARGUMENTS = {
+    'loadword': (1,),
+    'message': (0,),
+    'pokenavcall': (0,),
+}
+
 
 def toi(x):
     return int(x, 16) if isinstance(x, str) else int(x)
@@ -47,6 +69,46 @@ def build_map_names():
 
 MAP_NAMES = build_map_names()
 TEXT_CODEC = JapaneseScriptTextCodec()
+
+
+def build_movement_action_names():
+    """Read the JP movement macro table as its authoritative byte mapping."""
+    names = {}
+    value = None
+    macro_file = ROOT / 'asm' / 'macros' / 'movement.inc'
+    for raw_line in macro_file.read_text(encoding='utf-8').splitlines():
+        line = raw_line.strip()
+        match = re.fullmatch(r'enum_start(?:\s+(0x[0-9A-Fa-f]+))?', line)
+        if match:
+            value = int(match.group(1), 0) if match.group(1) else 0
+            continue
+        match = re.fullmatch(
+            r'create_movement_action\s+([A-Za-z_][A-Za-z0-9_]*)', line)
+        if match and value is not None:
+            names[value] = match.group(1)
+            value += 1
+    return names
+
+
+MOVEMENT_ACTION_NAMES = build_movement_action_names()
+if MOVEMENT_ACTION_NAMES.get(0xFE) != 'step_end':
+    raise RuntimeError('movement macro table does not define step_end as 0xFE')
+
+
+def decode_movement_script(addr, region_end):
+    """Decode a proved one-byte movement sequence through its step_end byte."""
+    actions = []
+    pos = addr
+    while pos < region_end:
+        action = ROM[pos - 0x08000000]
+        name = MOVEMENT_ACTION_NAMES.get(action)
+        if name is None:
+            return None
+        actions.append(name)
+        pos += 1
+        if action == 0xFE:
+            return actions, pos
+    return None
 
 def decode_text(data):
     """Return safe source text, or None when a byte sequence is not proved."""
@@ -162,13 +224,14 @@ def collect_map_scripts(map_addr, map_name, extra_addrs=None, events_addr=None,
             continue
         scripts[addr] = script
         for off, name, args, refs in script:
-            if name in ('loadword', 'message') and args:
-                idx = 1 if name == 'loadword' else 0
-                if len(args) > idx and 0x08000000 <= args[idx] < 0x0A000000:
-                    text_ptrs.add(args[idx])
-            elif name == 'loadword' and len(args) == 2 and args[0] == 0:
-                if 0x08000000 <= args[1] < 0x0A000000:
-                    text_ptrs.add(args[1])
+            if name in TEXT_POINTER_ARGUMENTS:
+                for idx in TEXT_POINTER_ARGUMENTS[name]:
+                    if len(args) > idx and 0x08000000 <= args[idx] < 0x0A000000:
+                        text_ptrs.add(args[idx])
+            elif name == 'trainerbattle':
+                for idx in sp.trainerbattle_text_arg_indexes(args):
+                    if 0x08000000 <= args[idx] < 0x0A000000:
+                        text_ptrs.add(args[idx])
             for r in refs:
                 if r not in scripts and r not in queue and \
                         (region_end is None or map_addr <= r < region_end):
@@ -249,8 +312,25 @@ def text_range(tp, region_end):
 def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
              text_label_map, region_labels=None, std_addrs=None, events_addr=None):
     std_addrs = std_addrs or set()
-    extra = [a for a in std_addrs if ms <= a < region_end]
+    extra = [
+        a
+        for a in (*std_addrs, *MAP_AUXILIARY_SCRIPT_ADDRESSES.get(mname, ()))
+        if ms <= a < region_end
+    ]
     scripts, text_ptrs = collect_map_scripts(ms, mname, extra, events_addr, region_end)
+    movement_labels = {
+        addr: label
+        for addr, label in MAP_MOVEMENT_SCRIPT_LABELS.get(mname, {}).items()
+        if ms <= addr < region_end
+    }
+    movements = {}
+    for addr, label in movement_labels.items():
+        decoded = decode_movement_script(addr, region_end)
+        if decoded is None:
+            raise RuntimeError(
+                'cannot prove movement script %s at 0x%08X' % (label, addr))
+        actions, end = decoded
+        movements[addr] = (label, actions, end)
     region_labels = region_labels or {}
     label_map = {}
     for addr in sorted(scripts):
@@ -258,6 +338,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             label_map[addr] = region_labels.get(addr, 'gUnknown_%08X' % (addr & 0xFFFFFF))
         else:
             label_map[addr] = '%s_EventScript_%08X' % (mname, addr & 0xFFFFFF)
+    label_map.update(movement_labels)
     # byte coverage
     covered = collections.defaultdict(str)
     for a in range(ms, region_end):
@@ -272,6 +353,11 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             for b in range(pos, pos + size):
                 covered[b] = 'script'
             pos += size
+    for addr, (_label, _actions, end) in movements.items():
+        if any(covered[b] != 'raw' for b in range(addr, end)):
+            raise RuntimeError('movement script overlaps decoded data at 0x%08X' % addr)
+        for b in range(addr, end):
+            covered[b] = 'movement'
     table_addrs = {ms: 'map'}
     for tag, ptr in entries:
         t, p = toi(tag), toi(ptr)
@@ -317,6 +403,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             size += r[0]
             pos += r[0]
         segs.append((addr, 'script', addr))
+    for addr in movements:
+        segs.append((addr, 'movement', addr))
     for tp, end in text_ranges:
         segs.append((tp, 'text', tp))
     # raw gaps
@@ -375,6 +463,12 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 else:
                     lines.append('\t%s' % name)
             lines.append('')
+        elif kind == 'movement':
+            label, actions, _end = movements[payload]
+            lines.append('%s:' % label)
+            for action in actions:
+                lines.append('\t%s' % action)
+            lines.append('')
         elif kind == 'text':
             tp = payload
             end = text_ranges[[x[0] for x in text_ranges].index(tp)][1]
@@ -418,7 +512,12 @@ def collect_all_text_ptrs(entries):
     """Global set of text pointers reachable from map scripts."""
     all_ptrs = set()
     for ms, mname, gi, mi, ents, events_addr in entries:
-        _, tptrs = collect_map_scripts(ms, mname)
+        _, tptrs = collect_map_scripts(
+            ms,
+            mname,
+            MAP_AUXILIARY_SCRIPT_ADDRESSES.get(mname, ()),
+            events_addr,
+        )
         all_ptrs |= tptrs
     return all_ptrs
 
@@ -472,15 +571,15 @@ def main():
                                     region_labels, set(), events_addr)
         total_raw += nraw
         total_text += ntext
+        if do_write:
+            outdir = ROOT / 'data' / 'maps' / mname
+            outdir.mkdir(parents=True, exist_ok=True)
+            (outdir / 'scripts.inc').write_text(out, encoding='utf-8')
         if m:
             print('=== %s @ %08X region 0x%X texts=%d rawinc=%d ===' % (
                 mname, ms, region_end - ms, ntext, nraw))
             print(out[:2500])
             return
-        if do_write:
-            outdir = ROOT / 'data' / 'maps' / mname
-            outdir.mkdir(parents=True, exist_ok=True)
-            (outdir / 'scripts.inc').write_text(out, encoding='utf-8')
     print('total raw incbin lines:', total_raw, 'text ranges:', total_text)
 
 

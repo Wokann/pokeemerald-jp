@@ -28,6 +28,12 @@ CHARMAP_PATH = ROOT / "charmap.txt"
 PREPROC_PATH = ROOT / "tools" / "preproc" / "preproc"
 BASEROM_PATH = ROOT / "baserom_jp.gba"
 
+# preproc begins every assembly result with a line marker naming its input
+# file.  Temporary file names may themselves contain ``0xNN``; only actual
+# .byte directives carry encoded text bytes.
+PREPROC_BYTE_LINE_RE = re.compile(r"^\s*\.byte\s+(.+?)\s*$")
+PREPROC_HEX_BYTE_RE = re.compile(r"0x([0-9A-Fa-f]{2})(?![0-9A-Fa-f])")
+
 
 class TextDecodeError(ValueError):
     """The byte stream is not safe to render as a source string."""
@@ -35,6 +41,24 @@ class TextDecodeError(ValueError):
 
 class TextRoundTripError(ValueError):
     """The source representation did not reproduce the original bytes."""
+
+
+def _extract_preproc_bytes(output: str) -> bytes:
+    """Extract encoded bytes from preproc output, excluding line markers."""
+    encoded = bytearray()
+    for line in output.splitlines():
+        line_match = PREPROC_BYTE_LINE_RE.match(line)
+        if line_match is None:
+            continue
+        payload = line_match.group(1)
+        byte_matches = list(PREPROC_HEX_BYTE_RE.finditer(payload))
+        remainder = PREPROC_HEX_BYTE_RE.sub("", payload)
+        if not byte_matches or remainder.replace(",", "").strip():
+            raise TextRoundTripError(
+                f"unexpected preproc .byte output: {line!r}"
+            )
+        encoded.extend(int(match.group(1), 16) for match in byte_matches)
+    return bytes(encoded)
 
 
 # These lengths are taken from the Japanese text engine's RenderText switch in
@@ -298,10 +322,7 @@ class JapaneseScriptTextCodec:
             raise TextRoundTripError(
                 "preproc rejected decoded text: " + result.stderr.strip()
             )
-        return bytes(
-            int(match.group(1), 16)
-            for match in re.finditer(r"0x([0-9A-Fa-f]{2})", result.stdout)
-        )
+        return _extract_preproc_bytes(result.stdout)
 
     def verify(self, data: bytes) -> str:
         """Decode then verify an exact re-encoding through preproc."""
@@ -338,6 +359,15 @@ def _parse_hex_bytes(text: str) -> bytes:
 
 
 def _run_selftest(codec: JapaneseScriptTextCodec) -> None:
+    marker_bytes = _extract_preproc_bytes(
+        '# 1 "/tmp/preproc0x29.s"\n\t.byte 0x1E, 0x06\n'
+    )
+    if marker_bytes != bytes.fromhex("1E06"):
+        raise TextRoundTripError(
+            f"line-marker extraction failed: got {marker_bytes.hex().upper()}"
+        )
+    print("PASS preproc-line-marker: 1E06")
+
     cases = (
         ("kana", bytes.fromhex("58 77 9A FF"), "クラボ$"),
         ("dynamic", bytes.fromhex("F7 01 FF"), "{DYNAMIC 0x01}$"),

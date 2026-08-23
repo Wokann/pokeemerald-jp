@@ -43,18 +43,18 @@
 	create_movement_action walk_in_place_fast_up
 	create_movement_action walk_in_place_fast_left
 	create_movement_action walk_in_place_fast_right
-	create_movement_action walk_in_place_fastest_down
-	create_movement_action walk_in_place_fastest_up
-	create_movement_action walk_in_place_fastest_left
-	create_movement_action walk_in_place_fastest_right
+	create_movement_action walk_in_place_faster_down
+	create_movement_action walk_in_place_faster_up
+	create_movement_action walk_in_place_faster_left
+	create_movement_action walk_in_place_faster_right
 	create_movement_action ride_water_current_down
 	create_movement_action ride_water_current_up
 	create_movement_action ride_water_current_left
 	create_movement_action ride_water_current_right
-	create_movement_action walk_fastest_down
-	create_movement_action walk_fastest_up
-	create_movement_action walk_fastest_left
-	create_movement_action walk_fastest_right
+	create_movement_action walk_faster_down
+	create_movement_action walk_faster_up
+	create_movement_action walk_faster_left
+	create_movement_action walk_faster_right
 	create_movement_action slide_down
 	create_movement_action slide_up
 	create_movement_action slide_left
@@ -102,8 +102,8 @@
 	create_movement_action clear_fixed_priority
 	create_movement_action init_affine_anim
 	create_movement_action clear_affine_anim
-	create_movement_action unknown_movement_1
-	create_movement_action unknown_movement_2
+	create_movement_action hide_reflection
+	create_movement_action show_reflection
 	create_movement_action walk_down_start_affine
 	create_movement_action walk_down_affine
 
@@ -116,8 +116,8 @@
 	create_movement_action walk_slow_diag_northeast
 	create_movement_action walk_slow_diag_southwest
 	create_movement_action walk_slow_diag_southeast
-	create_movement_action store_lock_anim
-	create_movement_action free_unlock_anim
+	create_movement_action lock_anim
+	create_movement_action unlock_anim
 	create_movement_action walk_left_affine
 	create_movement_action walk_right_affine
 	create_movement_action levitate

@@ -13,7 +13,7 @@ TOOLDIRS := $(TOOL_NAMES:%=$(TOOLS_DIR)/%)
 tools: $(TOOLDIRS)
 
 $(TOOLDIRS):
-	@$(MAKE) -C $@
+	@$(MAKE) -C $@ CC=cc
 
 clean-tools:
 	@$(foreach tooldir,$(TOOLDIRS),$(MAKE) clean -C $(tooldir);)

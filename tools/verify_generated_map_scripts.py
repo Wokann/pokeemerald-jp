@@ -79,6 +79,15 @@ def _external_label_addresses() -> dict[str, int]:
     for index, (name, waitstate) in emitter.sp.SPECIALS.items():
         labels[f"SPECIAL_{name}"] = index
         labels[f"SPECIAL_WAITSTATE_{name}"] = waitstate
+    # trainerbattle's assembly macro selects a variable pointer layout using
+    # these C constants.  They are compile-time values rather than ROM
+    # symbols, so provide their numeric definitions to the temporary GAS
+    # wrapper used for byte verification.
+    battle_setup = ROOT / "include" / "constants" / "battle_setup.h"
+    for line in battle_setup.read_text(encoding="utf-8").splitlines():
+        match = re.match(r"\s*#define\s+(TRAINER_BATTLE_\w+)\s+(\d+)\s*$", line)
+        if match:
+            labels[match.group(1)] = int(match.group(2))
     return labels
 
 

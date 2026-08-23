@@ -224,10 +224,89 @@ TERMINATORS = {0x02, 0x03, 0x0C, 0x0D}
 # opcodes whose 4-byte arg is a script pointer (call/goto)
 PTR_OPS = {0x04, 0x05, 0x06, 0x07}  # call, goto, goto_if, call_if
 
+# trainerbattle has a fixed prefix and a type-dependent number of pointers.
+# The layout is shared by the JP and US event.inc macro definitions:
+#   opcode, type, trainer (u16), local id (u16), pointer1 ... pointer4
+# Only the continuation variants carry an event-script pointer; all other
+# trailing pointers are text addresses.
+TRAINERBATTLE_OPCODE = OPCODE_BY_NAME["SCR_OP_TRAINERBATTLE"]
+TRAINERBATTLE_POINTER_COUNTS = {
+    0: 2,   # TRAINER_BATTLE_SINGLE
+    1: 3,   # TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC
+    2: 3,   # TRAINER_BATTLE_CONTINUE_SCRIPT
+    3: 1,   # TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT
+    4: 3,   # TRAINER_BATTLE_DOUBLE
+    5: 2,   # TRAINER_BATTLE_REMATCH
+    6: 4,   # TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE
+    7: 3,   # TRAINER_BATTLE_REMATCH_DOUBLE
+    8: 4,   # TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC
+    9: 2,   # TRAINER_BATTLE_PYRAMID
+    10: 2,  # TRAINER_BATTLE_SET_TRAINER_A
+    11: 2,  # TRAINER_BATTLE_SET_TRAINER_B
+    12: 2,  # TRAINER_BATTLE_HILL
+}
+TRAINERBATTLE_TYPE_NAMES = {
+    0: 'TRAINER_BATTLE_SINGLE',
+    1: 'TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC',
+    2: 'TRAINER_BATTLE_CONTINUE_SCRIPT',
+    3: 'TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT',
+    4: 'TRAINER_BATTLE_DOUBLE',
+    5: 'TRAINER_BATTLE_REMATCH',
+    6: 'TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE',
+    7: 'TRAINER_BATTLE_REMATCH_DOUBLE',
+    8: 'TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC',
+    9: 'TRAINER_BATTLE_PYRAMID',
+    10: 'TRAINER_BATTLE_SET_TRAINER_A',
+    11: 'TRAINER_BATTLE_SET_TRAINER_B',
+    12: 'TRAINER_BATTLE_HILL',
+}
+TRAINERBATTLE_SCRIPT_ARG_INDEX = {
+    1: 5,
+    2: 5,
+    6: 6,
+    8: 6,
+}
+
+
+def trainerbattle_text_arg_indexes(args):
+    """Return argument indexes that carry text pointers in trainerbattle."""
+    if not args or not isinstance(args[0], int):
+        return ()
+    pointer_count = TRAINERBATTLE_POINTER_COUNTS.get(args[0])
+    if pointer_count is None:
+        return ()
+    script_index = TRAINERBATTLE_SCRIPT_ARG_INDEX.get(args[0])
+    return tuple(
+        index
+        for index in range(3, 3 + pointer_count)
+        if index != script_index
+    )
+
+
+def _decode_trainerbattle(addr):
+    """Decode one type-dependent trainerbattle instruction."""
+    battle_type = rd8(addr + 1)
+    pointer_count = TRAINERBATTLE_POINTER_COUNTS.get(battle_type)
+    if pointer_count is None:
+        return None
+    size = 6 + pointer_count * 4
+    if addr + size > REGION[1]:
+        return None
+
+    args = [battle_type, rd16(addr + 2), rd16(addr + 4)]
+    args.extend(rd32(addr + 6 + index * 4) for index in range(pointer_count))
+    refs = []
+    script_index = TRAINERBATTLE_SCRIPT_ARG_INDEX.get(battle_type)
+    if script_index is not None:
+        refs.append(args[script_index])
+    return (size, "trainerbattle", args, refs)
+
 
 def decode_instruction(addr):
     """Return (size, name, args, refs) or None if undecodable."""
     op = rd8(addr)
+    if op == TRAINERBATTLE_OPCODE:
+        return _decode_trainerbattle(addr)
     fmt = FORMATS.get(op)
     if fmt is None:
         return None
@@ -306,9 +385,22 @@ def decode_script_lines(script, label_map, text_label_map=None):
     out = []
     for off, name, args, refs in script:
         parts = []
+        trainer_text_args = (
+            trainerbattle_text_arg_indexes(args)
+            if name == "trainerbattle"
+            else ()
+        )
         for i, a in enumerate(args):
-            if name in ('loadword', 'message') and i == (1 if name == 'loadword' else 0) \
+            if name == 'trainerbattle' and i == 0 and isinstance(a, int):
+                # event.inc branches on this token with assembler conditionals.
+                # Keep the symbolic constant, as the US source does: a numeric
+                # literal would not select a branch when the constant is only
+                # known symbolically to GAS.
+                parts.append(TRAINERBATTLE_TYPE_NAMES.get(a, '0x%X' % a))
+            elif name in ('loadword', 'message') and i == (1 if name == 'loadword' else 0) \
                     and isinstance(a, int) and a in text_label_map:
+                parts.append(text_label_map[a])
+            elif i in trainer_text_args and isinstance(a, int) and a in text_label_map:
                 parts.append(text_label_map[a])
             elif isinstance(a, int) and a in label_map:
                 parts.append(label_map[a])
