@@ -17,9 +17,9 @@ SCRIPT_START = 0x081DABAC
 SCRIPT_END = 0x0828D2F8
 
 def main():
-    if not d.BIN.is_file():
-        sys.exit(f"missing {d.BIN}; run make first")
-    data = d.BIN.read_bytes()
+    if not d.BASEROM.is_file():
+        sys.exit(f"missing {d.BASEROM}; obtain the matching Japanese baserom first")
+    data = d.BASEROM.read_bytes()
     opcode_table = d.build_opcode_table()
     by_name = {const: op for const, op in opcode_table.items()}
     formats, formats_by_name = d.build_macro_formats(by_name)
@@ -42,7 +42,10 @@ def main():
             continue
         rel = int(m.group(1), 16)
         size = int(m.group(2), 16)
-        raw = data[rel - 0x1DABAC: rel - 0x1DABAC + size]
+        # .incbin offsets are offsets in baserom_jp.gba, not offsets relative
+        # to the event-script region.  The old subtraction silently examined
+        # unrelated bytes even when the expected build/data.bin was present.
+        raw = data[rel: rel + size]
         dec = d.decode_chunk(raw, formats, specials)
         lines = [l for l in dec.splitlines() if l.strip()]
         if not lines:

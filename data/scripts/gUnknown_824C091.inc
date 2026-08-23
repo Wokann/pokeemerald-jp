@@ -1,1 +1,1 @@
-	.string "かんきゃくは\n{B_COPY_VAR_3}を　みつづけている！{PAUSE}そ{PAUSE}そ{PAUSE}そ{PAUSE}そ$"
+	.string "かんきゃくは\n{B_COPY_VAR_3}を　みつづけている！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
