@@ -9531,6 +9531,9 @@ SECTIONS {
         src/event_object_movement.o(.rodata.object_event_graphics_special_object_data);
         gUnknown_84A408C = gObjectEventPic_ItemBall;
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_special_object_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_dolls_data);
+        gUnknown_84BA38C = gObjectEventPic_UnusedNatuDoll;
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_dolls_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_palettes);

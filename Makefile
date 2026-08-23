@@ -886,7 +886,32 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/pics/people/tuber_m_swimming.4bpp graphics/object_events/pics/pokemon/azurill.4bpp \
 	graphics/object_events/pics/people/mom.4bpp graphics/object_events/palettes/kyogre.gbapal \
 	graphics/object_events/palettes/kyogre_reflection.gbapal graphics/object_events/palettes/groudon.gbapal \
-	graphics/object_events/palettes/groudon_reflection.gbapal
+	graphics/object_events/palettes/groudon_reflection.gbapal graphics/object_events/pics/dolls/unused_natu_doll.4bpp \
+	graphics/object_events/pics/dolls/unused_magnemite_doll.4bpp graphics/object_events/pics/dolls/unused_squirtle_doll.4bpp \
+	graphics/object_events/pics/dolls/unused_wooper_doll.4bpp graphics/object_events/pics/dolls/unused_pikachu_doll.4bpp \
+	graphics/object_events/pics/dolls/unused_porygon2_doll.4bpp graphics/object_events/pics/dolls/pichu_doll.4bpp \
+	graphics/object_events/pics/dolls/pikachu_doll.4bpp graphics/object_events/pics/dolls/marill_doll.4bpp \
+	graphics/object_events/pics/dolls/togepi_doll.4bpp graphics/object_events/pics/dolls/cyndaquil_doll.4bpp \
+	graphics/object_events/pics/dolls/chikorita_doll.4bpp graphics/object_events/pics/dolls/totodile_doll.4bpp \
+	graphics/object_events/pics/dolls/jigglypuff_doll.4bpp graphics/object_events/pics/dolls/meowth_doll.4bpp \
+	graphics/object_events/pics/dolls/clefairy_doll.4bpp graphics/object_events/pics/dolls/ditto_doll.4bpp \
+	graphics/object_events/pics/dolls/smoochum_doll.4bpp graphics/object_events/pics/dolls/treecko_doll.4bpp \
+	graphics/object_events/pics/dolls/torchic_doll.4bpp graphics/object_events/pics/dolls/mudkip_doll.4bpp \
+	graphics/object_events/pics/dolls/duskull_doll.4bpp graphics/object_events/pics/dolls/wynaut_doll.4bpp \
+	graphics/object_events/pics/dolls/baltoy_doll.4bpp graphics/object_events/pics/dolls/kecleon_doll.4bpp \
+	graphics/object_events/pics/dolls/azurill_doll.4bpp graphics/object_events/pics/dolls/skitty_doll.4bpp \
+	graphics/object_events/pics/dolls/swablu_doll.4bpp graphics/object_events/pics/dolls/gulpin_doll.4bpp \
+	graphics/object_events/pics/dolls/lotad_doll.4bpp graphics/object_events/pics/dolls/seedot_doll.4bpp \
+	graphics/object_events/pics/cushions/pika_cushion.4bpp graphics/object_events/pics/cushions/round_cushion.4bpp \
+	graphics/object_events/pics/cushions/kiss_cushion.4bpp graphics/object_events/pics/cushions/zigzag_cushion.4bpp \
+	graphics/object_events/pics/cushions/spin_cushion.4bpp graphics/object_events/pics/cushions/diamond_cushion.4bpp \
+	graphics/object_events/pics/cushions/ball_cushion.4bpp graphics/object_events/pics/cushions/grass_cushion.4bpp \
+	graphics/object_events/pics/cushions/fire_cushion.4bpp graphics/object_events/pics/cushions/water_cushion.4bpp \
+	graphics/object_events/pics/dolls/big_snorlax_doll.4bpp graphics/object_events/pics/dolls/big_rhydon_doll.4bpp \
+	graphics/object_events/pics/dolls/big_lapras_doll.4bpp graphics/object_events/pics/dolls/big_venusaur_doll.4bpp \
+	graphics/object_events/pics/dolls/big_charizard_doll.4bpp graphics/object_events/pics/dolls/big_blastoise_doll.4bpp \
+	graphics/object_events/pics/dolls/big_wailmer_doll.4bpp graphics/object_events/pics/dolls/big_regirock_doll.4bpp \
+	graphics/object_events/pics/dolls/big_regice_doll.4bpp graphics/object_events/pics/dolls/big_registeel_doll.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -
