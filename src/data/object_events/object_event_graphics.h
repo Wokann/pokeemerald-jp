@@ -139,6 +139,67 @@ OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Man4[] 
 OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Man5[] = INCBIN_U32("graphics/object_events/pics/people/man_5.4bpp");
 OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Nurse[] = INCBIN_U32("graphics/object_events/pics/people/nurse.4bpp");
 
+// This JP-owned special object family follows the generic NPC people graphics.
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_ItemBall[] = INCBIN_U32("graphics/object_events/pics/misc/item_ball.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_ProfBirch[] = INCBIN_U32("graphics/object_events/pics/people/prof_birch.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_ReporterM[] = INCBIN_U32("graphics/object_events/pics/people/reporter_m.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_ReporterF[] = INCBIN_U32("graphics/object_events/pics/people/reporter_f.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_MauvilleOldMan1[] = INCBIN_U32("graphics/object_events/pics/people/mauville_old_man_1.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_MauvilleOldMan2[] = INCBIN_U32("graphics/object_events/pics/people/mauville_old_man_2.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_MartEmployee[] = INCBIN_U32("graphics/object_events/pics/people/mart_employee.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_RooftopSaleWoman[] = INCBIN_U32("graphics/object_events/pics/people/rooftop_sale_woman.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Teala[] = INCBIN_U32("graphics/object_events/pics/people/teala.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Artist[] = INCBIN_U32("graphics/object_events/pics/people/artist.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Cameraman[] = INCBIN_U32("graphics/object_events/pics/people/cameraman.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Scientist2[] = INCBIN_U32("graphics/object_events/pics/people/scientist_2.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_DevonEmployee[] = INCBIN_U32("graphics/object_events/pics/people/devon_employee.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_AquaMemberM[] = INCBIN_U32("graphics/object_events/pics/people/team_aqua/aqua_member_m.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_AquaMemberF[] = INCBIN_U32("graphics/object_events/pics/people/team_aqua/aqua_member_f.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_MagmaMemberM[] = INCBIN_U32("graphics/object_events/pics/people/team_magma/magma_member_m.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_MagmaMemberF[] = INCBIN_U32("graphics/object_events/pics/people/team_magma/magma_member_f.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Sidney[] = INCBIN_U32("graphics/object_events/pics/people/elite_four/sidney.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Phoebe[] = INCBIN_U32("graphics/object_events/pics/people/elite_four/phoebe.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Glacia[] = INCBIN_U32("graphics/object_events/pics/people/elite_four/glacia.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Drake[] = INCBIN_U32("graphics/object_events/pics/people/elite_four/drake.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Roxanne[] = INCBIN_U32("graphics/object_events/pics/people/gym_leaders/roxanne.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Brawly[] = INCBIN_U32("graphics/object_events/pics/people/gym_leaders/brawly.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Wattson[] = INCBIN_U32("graphics/object_events/pics/people/gym_leaders/wattson.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Flannery[] = INCBIN_U32("graphics/object_events/pics/people/gym_leaders/flannery.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Norman[] = INCBIN_U32("graphics/object_events/pics/people/gym_leaders/norman.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Winona[] = INCBIN_U32("graphics/object_events/pics/people/gym_leaders/winona.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Liza[] = INCBIN_U32("graphics/object_events/pics/people/gym_leaders/liza.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Tate[] = INCBIN_U32("graphics/object_events/pics/people/gym_leaders/tate.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Wallace[] = INCBIN_U32("graphics/object_events/pics/people/wallace.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Steven[] = INCBIN_U32("graphics/object_events/pics/people/steven.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Wally[] = INCBIN_U32("graphics/object_events/pics/people/wally.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_RubySapphireLittleBoy[] = INCBIN_U32("graphics/object_events/pics/people/rs_little_boy.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_HotSpringsOldWoman[] = INCBIN_U32("graphics/object_events/pics/people/hot_springs_old_woman.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_LatiasLatios[] = INCBIN_U32("graphics/object_events/pics/pokemon/latias_latios.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_GameboyKid[] = INCBIN_U32("graphics/object_events/pics/people/gameboy_kid.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_ContestJudge[] = INCBIN_U32("graphics/object_events/pics/people/contest_judge.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Archie[] = INCBIN_U32("graphics/object_events/pics/people/team_aqua/archie.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Maxie[] = INCBIN_U32("graphics/object_events/pics/people/team_magma/maxie.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Kyogre[] = INCBIN_U32("graphics/object_events/pics/pokemon/kyogre.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Groudon[] = INCBIN_U32("graphics/object_events/pics/pokemon/groudon.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Regi[] = INCBIN_U32("graphics/object_events/pics/pokemon/regi.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Skitty[] = INCBIN_U32("graphics/object_events/pics/pokemon/skitty.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Kecleon[] = INCBIN_U32("graphics/object_events/pics/pokemon/kecleon.4bpp");
+// This symbol is also consumed by the pre-existing Rayquaza spotlight field effect.
+// Keep its historical byte-pointer type so that consumer's declaration remains valid.
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u8 gObjectEventPic_Rayquaza[] = INCBIN_U8("graphics/object_events/pics/pokemon/rayquaza.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_RayquazaStill[] = INCBIN_U32("graphics/object_events/pics/pokemon/rayquaza_still.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Zigzagoon[] = INCBIN_U32("graphics/object_events/pics/pokemon/zigzagoon.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Pikachu[] = INCBIN_U32("graphics/object_events/pics/pokemon/pikachu.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Azumarill[] = INCBIN_U32("graphics/object_events/pics/pokemon/azumarill.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Wingull[] = INCBIN_U32("graphics/object_events/pics/pokemon/wingull.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_TuberMSwimming[] = INCBIN_U32("graphics/object_events/pics/people/tuber_m_swimming.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Azurill[] = INCBIN_U32("graphics/object_events/pics/pokemon/azurill.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u32 gObjectEventPic_Mom[] = INCBIN_U32("graphics/object_events/pics/people/mom.4bpp");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u16 gObjectEventPal_Kyogre[] = INCBIN_U16("graphics/object_events/palettes/kyogre.gbapal");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u16 gObjectEventPal_KyogreReflection[] = INCBIN_U16("graphics/object_events/palettes/kyogre_reflection.gbapal");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u16 gObjectEventPal_Groudon[] = INCBIN_U16("graphics/object_events/palettes/groudon.gbapal");
+OBJECT_EVENT_GRAPHICS_SPECIAL_OBJECT_DATA const u16 gObjectEventPal_GroudonReflection[] = INCBIN_U16("graphics/object_events/palettes/groudon_reflection.gbapal");
+
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u8 gFieldEffectPic_CutGrass[] = INCBIN_U8("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u32 gFieldEffectPic_CutGrass_Copy[] = INCBIN_U32("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u16 gFieldEffectPal_CutGrass[] = INCBIN_U16("graphics/field_effects/palettes/cut_grass.gbapal");

@@ -857,7 +857,36 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/pics/people/tuber_f.4bpp graphics/object_events/pics/people/tuber_m.4bpp \
 	graphics/object_events/pics/people/hiker.4bpp graphics/object_events/pics/people/cycling_triathlete_m.4bpp \
 	graphics/object_events/pics/people/cycling_triathlete_f.4bpp graphics/object_events/pics/people/man_4.4bpp \
-	graphics/object_events/pics/people/man_5.4bpp graphics/object_events/pics/people/nurse.4bpp
+	graphics/object_events/pics/people/man_5.4bpp graphics/object_events/pics/people/nurse.4bpp \
+	graphics/object_events/pics/misc/item_ball.4bpp graphics/object_events/pics/people/prof_birch.4bpp \
+	graphics/object_events/pics/people/reporter_m.4bpp graphics/object_events/pics/people/reporter_f.4bpp \
+	graphics/object_events/pics/people/mauville_old_man_1.4bpp graphics/object_events/pics/people/mauville_old_man_2.4bpp \
+	graphics/object_events/pics/people/mart_employee.4bpp graphics/object_events/pics/people/rooftop_sale_woman.4bpp \
+	graphics/object_events/pics/people/teala.4bpp graphics/object_events/pics/people/artist.4bpp \
+	graphics/object_events/pics/people/cameraman.4bpp graphics/object_events/pics/people/scientist_2.4bpp \
+	graphics/object_events/pics/people/devon_employee.4bpp graphics/object_events/pics/people/team_aqua/aqua_member_m.4bpp \
+	graphics/object_events/pics/people/team_aqua/aqua_member_f.4bpp graphics/object_events/pics/people/team_magma/magma_member_m.4bpp \
+	graphics/object_events/pics/people/team_magma/magma_member_f.4bpp graphics/object_events/pics/people/elite_four/sidney.4bpp \
+	graphics/object_events/pics/people/elite_four/phoebe.4bpp graphics/object_events/pics/people/elite_four/glacia.4bpp \
+	graphics/object_events/pics/people/elite_four/drake.4bpp graphics/object_events/pics/people/gym_leaders/roxanne.4bpp \
+	graphics/object_events/pics/people/gym_leaders/brawly.4bpp graphics/object_events/pics/people/gym_leaders/wattson.4bpp \
+	graphics/object_events/pics/people/gym_leaders/flannery.4bpp graphics/object_events/pics/people/gym_leaders/norman.4bpp \
+	graphics/object_events/pics/people/gym_leaders/winona.4bpp graphics/object_events/pics/people/gym_leaders/liza.4bpp \
+	graphics/object_events/pics/people/gym_leaders/tate.4bpp graphics/object_events/pics/people/wallace.4bpp \
+	graphics/object_events/pics/people/steven.4bpp graphics/object_events/pics/people/wally.4bpp \
+	graphics/object_events/pics/people/rs_little_boy.4bpp graphics/object_events/pics/people/hot_springs_old_woman.4bpp \
+	graphics/object_events/pics/pokemon/latias_latios.4bpp graphics/object_events/pics/people/gameboy_kid.4bpp \
+	graphics/object_events/pics/people/contest_judge.4bpp graphics/object_events/pics/people/team_aqua/archie.4bpp \
+	graphics/object_events/pics/people/team_magma/maxie.4bpp graphics/object_events/pics/pokemon/kyogre.4bpp \
+	graphics/object_events/pics/pokemon/groudon.4bpp graphics/object_events/pics/pokemon/regi.4bpp \
+	graphics/object_events/pics/pokemon/skitty.4bpp graphics/object_events/pics/pokemon/kecleon.4bpp \
+	graphics/object_events/pics/pokemon/rayquaza.4bpp graphics/object_events/pics/pokemon/rayquaza_still.4bpp \
+	graphics/object_events/pics/pokemon/zigzagoon.4bpp graphics/object_events/pics/pokemon/pikachu.4bpp \
+	graphics/object_events/pics/pokemon/azumarill.4bpp graphics/object_events/pics/pokemon/wingull.4bpp \
+	graphics/object_events/pics/people/tuber_m_swimming.4bpp graphics/object_events/pics/pokemon/azurill.4bpp \
+	graphics/object_events/pics/people/mom.4bpp graphics/object_events/palettes/kyogre.gbapal \
+	graphics/object_events/palettes/kyogre_reflection.gbapal graphics/object_events/palettes/groudon.gbapal \
+	graphics/object_events/palettes/groudon_reflection.gbapal
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -

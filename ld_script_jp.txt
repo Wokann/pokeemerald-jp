@@ -9528,6 +9528,9 @@ SECTIONS {
         src/event_object_movement.o(.rodata.object_event_graphics_npc_people_extended_data);
         gUnknown_849888C = gObjectEventPic_UnusedWoman;
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_npc_people_extended_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_special_object_data);
+        gUnknown_84A408C = gObjectEventPic_ItemBall;
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_special_object_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_palettes);
@@ -9557,10 +9560,6 @@ SECTIONS {
         gObjectEventPal_MovingBox = ABSOLUTE(0x084D6CCC);
         gObjectEventPal_CableCar = ABSOLUTE(0x084C182C);
         gObjectEventPal_SSTidal = ABSOLUTE(0x084C1FCC);
-        gObjectEventPal_Kyogre = ABSOLUTE(0x084BA30C);
-        gObjectEventPal_KyogreReflection = ABSOLUTE(0x084BA32C);
-        gObjectEventPal_Groudon = ABSOLUTE(0x084BA34C);
-        gObjectEventPal_GroudonReflection = ABSOLUTE(0x084BA36C);
         gObjectEventPal_SubmarineShadow = ABSOLUTE(0x084BDC8C);
         gObjectEventPal_Poochyena = ABSOLUTE(0x084C100C);
         gObjectEventPal_RedLeaf = ABSOLUTE(0x084D78EC);
@@ -9644,7 +9643,6 @@ SECTIONS {
         gObjectEventBaseOam_64x32 = ABSOLUTE(0x084E1960);
         gObjectEventBaseOam_16x32 = ABSOLUTE(0x084E1968);
         gObjectEventBaseOam_32x32 = ABSOLUTE(0x084E1970);
-        gObjectEventPic_Rayquaza = ABSOLUTE(0x084B5C8C);
         gUnknown_84E5B30 = .;
         src/event_object_movement.o(.rodata.event_object_movement_function_tables);
         gUnknown_84E5B40 = gUnknown_84E5B30 + 0x10;
