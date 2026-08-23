@@ -882,4 +882,4 @@ gJPText_001F2402: @ 0x081F2402
 	.string "3ひきの　なかから\n"
 	.string "すきなものを　1ひきだけ　あげよう！$"
 
-	.incbin "baserom_jp.gba", 0x1f24f0, 0x4b2
+	.incbin "baserom_jp.gba", 0x1f24f0, 0x3e3
