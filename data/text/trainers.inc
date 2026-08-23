@@ -1751,4 +1751,208 @@ Route113_Text_WyattPostBattle: @ 0x0825CAB6
 	.string "はいしゃに　こえを　かけて　くれるって\n"
 	.string "いうんですか！\l"
 	.string "か　カッコいい　ですね！　ふん！$"
-	.incbin "baserom_jp.gba", 0x25cae3, 0x58b0
+Route114_Text_LennyIntro: @ 0x0825CAE3
+	.string "やっほーっ！\p"
+	.string "⋯⋯\p"
+	.string "こだまの　かわりに\n"
+	.string "やっほー！　って　いってくれよ！$"
+
+Route114_Text_LennyDefeat: @ 0x0825CB08
+	.string "やっほーっ！$"
+
+Route114_Text_LennyPostBattle: @ 0x0825CB0F
+	.string "こどものころ　こだま　って\n"
+	.string "むこうの　やまにいる　モノマネさんが\l"
+	.string "やっほー！　って　いってると　おもってた$"
+
+Route114_Text_LucasIntro: @ 0x0825CB45
+	.string "じゅんびを　おこたる　もの\n"
+	.string "やまに　のぼるべからず！$"
+
+Route114_Text_LucasDefeat: @ 0x0825CB60
+	.string "やまは　こわい　ところだ⋯⋯$"
+
+Route114_Text_LucasPostBattle: @ 0x0825CB6F
+	.string "ふゆの　やまは　なだれや　ふぶきで\n"
+	.string "そうなんする　きけんが　おおいぞ！$"
+
+Route114_Text_ShaneIntro: @ 0x0825CB93
+	.string "キャンプの　たのしみと　いえば\n"
+	.string "つりに　はなびに　きもだめし！\p"
+	.string "だけど　いちばんは\n"
+	.string "ポケモンしょうぶ　だね！$"
+
+Route114_Text_ShaneDefeat: @ 0x0825CBCA
+	.string "つよすぎるーっ！$"
+
+Route114_Text_ShanePostBattle: @ 0x0825CBD3
+	.string "ぼくね　ポケモンと　いっしょに\n"
+	.string "キャンプ　できるだけで　しあわせ　だよ$"
+
+Route114_Text_NancyIntro: @ 0x0825CBF7
+	.string "しょくごの　うんどう！\n"
+	.string "わたしと　しょうぶ　しましょうよ！$"
+
+Route114_Text_NancyDefeat: @ 0x0825CC15
+	.string "まけちゃったー！$"
+
+Route114_Text_NancyPostBattle: @ 0x0825CC1E
+	.string "おいしい　ごはんも　たべたし\n"
+	.string "なんだか　ねむくなって　きたわ⋯⋯$"
+
+Route114_Text_SteveIntro: @ 0x0825CC3F
+	.string "うふふふふふ⋯⋯\n"
+	.string "ボクの　ポケモンと　しょうぶしない？$"
+
+Route114_Text_SteveDefeat: @ 0x0825CC5B
+	.string "ボ　ボクの　ポケモン⋯⋯$"
+
+Route114_Text_StevePostBattle: @ 0x0825CC68
+	.string "からだが　おおきくて　ゴツゴツ　かたくて\n"
+	.string "おおきな　ツノと　するどい　キバ⋯⋯\l"
+	.string "うふふふふ⋯⋯\l"
+	.string "そんな　ポケモンが　ほしいなぁ⋯⋯$"
+
+Route114_Text_SteveRegister: @ 0x0825CCAA
+	.string "お　おぼえてろっ！　⋯⋯いや\n"
+	.string "わすれられない　ように　こうしてやる！$"
+
+Route114_Text_SteveRematchIntro: @ 0x0825CCCD
+	.string "うふふふふふ⋯⋯\n"
+	.string "ボクの　ポケモンと　しょうぶ　しようよ$"
+
+Route114_Text_SteveRematchDefeat: @ 0x0825CCEA
+	.string "ああ　ポケモン　みることが　できて\n"
+	.string "しあわせ　だ⋯⋯$"
+
+Route114_Text_StevePostRematch: @ 0x0825CD05
+	.string "うふふふふふ⋯⋯\p"
+	.string "ポケモンの　たたかっている　すがたに\n"
+	.string "ぞくぞく　するんだ　ボク$"
+
+Route114_Text_BernieIntro: @ 0x0825CD2E
+	.string "キャンプファイヤー　するとき\n"
+	.string "はなびを　するとき\l"
+	.string "みずを　ようい　しておけよ！$"
+
+Route114_Text_BernieDefeat: @ 0x0825CD56
+	.string "しょうか　かつどう\n"
+	.string "ありがとう！　ってか$"
+
+Route114_Text_BerniePostBattle: @ 0x0825CD6B
+	.string "ほんと　ひのようじん　だけは　おこたるな！\n"
+	.string "ひを　あまく　みるんじゃないぜ！$"
+
+Route114_Text_BernieRegister: @ 0x0825CD92
+	.string "もえあがった　きもちの　まま\n"
+	.string "ポケナビに　とうろく　しあおう！$"
+
+Route114_Text_BernieRematchIntro: @ 0x0825CDB2
+	.string "キャンプファイヤー　するとき\n"
+	.string "はなびを　するとき\l"
+	.string "みずを　ようい　するように　なったか！？$"
+
+Route114_Text_BernieRematchDefeat: @ 0x0825CDE0
+	.string "もえあがる　まえに\n"
+	.string "けされた！　ってか$"
+
+Route114_Text_BerniePostRematch: @ 0x0825CDF4
+	.string "ほんと　ひのようじん　だけは　おこたるな！\n"
+	.string "ひを　あまく　みるんじゃないぜ！$"
+
+Route114_Text_ClaudeIntro: @ 0x0825CE1B
+	.string "つりで　しょうぶ　すると\n"
+	.string "きみには　かちめが　ないだろう\l"
+	.string "ポケモンで　かかってきなさい！$"
+
+Route114_Text_ClaudeDefeat: @ 0x0825CE48
+	.string "つりの　しょうぶなら　かってた⋯⋯$"
+
+Route114_Text_ClaudePostBattle: @ 0x0825CE5A
+	.string "りゅうせいのたきで\n"
+	.string "おおものでも　つると　しようかな\l"
+	.string "あそこの　たきには　なにか　いそうだからね$"
+
+Route114_Text_NolanIntro: @ 0x0825CE8B
+	.string "つりも　すき　だが\n"
+	.string "しょうぶも　すき！\p"
+	.string "しょうぶを　いどまれたら\n"
+	.string "つりの　さいちゅうでも　ことわらないよ！$"
+
+Route114_Text_NolanDefeat: @ 0x0825CEC1
+	.string "しょうぶは　すき　だが\n"
+	.string "つよい　わけじゃ　ないんだ⋯⋯$"
+
+Route114_Text_NolanPostBattle: @ 0x0825CEDD
+	.string "こんどこそ！\p"
+	.string "と　おもっちゃうから\n"
+	.string "つりも　しょうぶも　やめられない$"
+
+Route114_Text_TyraIntro: @ 0x0825CF00
+	.string "カヨ“そうね\n"
+	.string "なんとなく　そんな　きぶん　だから\l"
+	.string "あなたにも　ポケモン　おしえたげよっか$"
+
+Route114_Text_TyraDefeat: @ 0x0825CF2D
+	.string "カヨ“すごい　たたかいかた！$"
+
+Route114_Text_TyraPostBattle: @ 0x0825CF3C
+	.string "カヨ“コウハイの　イヨに　あたしが\n"
+	.string "ポケモンを　おしえて　あげたの！$"
+
+Route114_Text_TyraNotEnoughMons: @ 0x0825CF5F
+	.string "カヨ“うふふ！\n"
+	.string "あたしたちと　しょうぶ　するなら\l"
+	.string "ポケモン　いっぴきじゃ　ダメなのよ！$"
+
+Route114_Text_IvyIntro: @ 0x0825CF8B
+	.string "イヨ“あなた\n"
+	.string "だれに　ポケモン　おそわったの？$"
+
+Route114_Text_IvyDefeat: @ 0x0825CFA3
+	.string "イヨ“すごい　たたかいかた！$"
+
+Route114_Text_IvyPostBattle: @ 0x0825CFB2
+	.string "イヨ“あたしが\n"
+	.string "ポケモン　はじめた　きっかけは\l"
+	.string "センパイが　おしえてくれた　からなの！$"
+
+Route114_Text_IvyNotEnoughMons: @ 0x0825CFDE
+	.string "イヨ“ポケモン　いっぴき　だけなの？\n"
+	.string "なんだか　さみしい　かんじ　しちゃうね$"
+
+Route114_Text_KaiIntro: @ 0x0825D005
+	.string "でっかいの　つれたっ　でっかいの！$"
+
+Route114_Text_KaiDefeat: @ 0x0825D017
+	.string "あれー\n"
+	.string "おおきさで　まけたんかな$"
+
+Route114_Text_KaiPostBattle: @ 0x0825D028
+	.string "よっしゃー！\n"
+	.string "もっと　おおきいの　つるもんね！$"
+
+Route114_Text_CharlotteIntro: @ 0x0825D040
+	.string "あたし！\n"
+	.string "かわいい　だけじゃ　ないんだから！$"
+
+Route114_Text_CharlotteDefeat: @ 0x0825D057
+	.string "かわいく　なーいっ！$"
+
+Route114_Text_CharlottePostBattle: @ 0x0825D062
+	.string "かわいい　だけの　ポケモンなんて　いや！\n"
+	.string "かわいくて　ひとクセ　あるコが　すき！$"
+
+Route114_Text_AngelinaIntro: @ 0x0825D08B
+	.string "あなたの　ポケモンって\n"
+	.string "どの　くらい　しんか　させてる？$"
+
+Route114_Text_AngelinaDefeat: @ 0x0825D0A8
+	.string "ふーん\n"
+	.string "なるほどね$"
+
+Route114_Text_AngelinaPostBattle: @ 0x0825D0B2
+	.string "しんか　させると\n"
+	.string "みためが　ものすごく　かわって\l"
+	.string "ビックリする　ポケモンが　いるよね！$"
+	.incbin "baserom_jp.gba", 0x25d0de, 0x52b5

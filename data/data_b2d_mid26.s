@@ -1833,31 +1833,31 @@ gMapEvents_ROUTE113: @ 0x08502560
 ROUTE114_EventObjects: @ 0x08502574
 	object_event 1, 60, 0, 31, 43, 3, 12, 0, 0, 0, 77, 0x08244D23, 0x0000
 	object_event 2, 60, 0, 31, 44, 3, 12, 0, 0, 0, 78, 0x08244D23, 0x0000
-	object_event 3, 55, 0, 15, 65, 7, 10, 0, 0, 1, 6, 0x081EB585, 0x0000
-	object_event 4, 55, 0, 30, 72, 5, 9, 0, 0, 1, 4, 0x081EB59C, 0x0000
-	object_event 5, 31, 0, 22, 50, 3, 10, 0, 0, 1, 3, 0x081EB5B3, 0x0000
-	object_event 6, 32, 0, 19, 35, 3, 1, 0, 0, 1, 3, 0x081EB5CA, 0x0000
-	object_event 7, 39, 0, 20, 56, 3, 7, 0, 0, 1, 3, 0x081EB5E1, 0x0000
+	object_event 3, 55, 0, 15, 65, 7, 10, 0, 0, 1, 6, Route114_EventScript_Lenny, 0x0000
+	object_event 4, 55, 0, 30, 72, 5, 9, 0, 0, 1, 4, Route114_EventScript_Lucas, 0x0000
+	object_event 5, 31, 0, 22, 50, 3, 10, 0, 0, 1, 3, Route114_EventScript_Shane, 0x0000
+	object_event 6, 32, 0, 19, 35, 3, 1, 0, 0, 1, 3, Route114_EventScript_Nancy, 0x0000
+	object_event 7, 39, 0, 20, 56, 3, 7, 0, 0, 1, 3, Route114_EventScript_Steve, 0x0000
 	object_event 8, 60, 0, 31, 45, 3, 12, 0, 0, 0, 68, 0x08244D23, 0x0000
 	object_event 9, 59, 0, 7, 6, 3, 1, 0, 0, 0, 0, 0x08256B5A, 0x03F6
 	object_event 10, 59, 0, 11, 37, 4, 1, 0, 0, 0, 0, 0x08256B67, 0x03F7
 	object_event 11, 86, 0, 12, 43, 4, 1, 0, 0, 0, 0, 0x0825667C, 0x0011
-	object_event 12, 48, 0, 19, 11, 3, 10, 0, 0, 0, 0, Route114_EventScript_001EB516, 0x0000
-	object_event 13, 220, 0, 19, 12, 3, 10, 0, 0, 0, 0, Route114_EventScript_001EB557, 0x0000
-	object_event 14, 65, 0, 27, 42, 3, 3, 0, 1, 0, 0, Route114_EventScript_001EB4C7, 0x0000
-	object_event 15, 50, 0, 25, 6, 3, 8, 0, 0, 1, 0, 0x081EB6BC, 0x0000
-	object_event 16, 50, 0, 19, 26, 3, 9, 0, 0, 1, 0, 0x081EB6A5, 0x0000
-	object_event 17, 66, 0, 30, 58, 5, 23, 0, 0, 1, 3, 0x081EB643, 0x0000
+	object_event 12, 48, 0, 19, 11, 3, 10, 0, 0, 0, 0, Route114_EventScript_RoarGentleman, 0x0000
+	object_event 13, 220, 0, 19, 12, 3, 10, 0, 0, 0, 0, Route114_EventScript_Poochyena, 0x0000
+	object_event 14, 65, 0, 27, 42, 3, 3, 0, 1, 0, 0, Route114_EventScript_Man, 0x0000
+	object_event 15, 50, 0, 25, 6, 3, 8, 0, 0, 1, 0, Route114_EventScript_Nolan, 0x0000
+	object_event 16, 50, 0, 19, 26, 3, 9, 0, 0, 1, 0, Route114_EventScript_Claude, 0x0000
+	object_event 17, 66, 0, 30, 58, 5, 23, 0, 0, 1, 3, Route114_EventScript_Bernie, 0x0000
 	object_event 18, 86, 0, 29, 53, 5, 1, 1, 1, 0, 0, 0x0825667C, 0x0012
 	object_event 19, 86, 0, 30, 54, 5, 1, 1, 1, 0, 0, 0x0825667C, 0x0013
 	object_event 20, 86, 0, 22, 69, 7, 1, 1, 1, 0, 0, 0x0825667C, 0x0014
 	object_event 21, 86, 0, 11, 64, 5, 1, 1, 1, 0, 0, 0x0825667C, 0x0015
-	object_event 22, 47, 0, 24, 44, 3, 8, 1, 1, 1, 1, 0x081EB6EE, 0x0000
-	object_event 23, 47, 0, 23, 44, 3, 8, 1, 1, 1, 1, 0x081EB6D3, 0x0000
-	object_event 24, 32, 0, 28, 20, 3, 7, 1, 1, 1, 3, 0x081EB720, 0x0000
-	object_event 25, 32, 0, 26, 72, 5, 18, 1, 1, 1, 4, 0x081EB709, 0x0000
+	object_event 22, 47, 0, 24, 44, 3, 8, 1, 1, 1, 1, Route114_EventScript_Ivy, 0x0000
+	object_event 23, 47, 0, 23, 44, 3, 8, 1, 1, 1, 1, Route114_EventScript_Tyra, 0x0000
+	object_event 24, 32, 0, 28, 20, 3, 7, 1, 1, 1, 3, Route114_EventScript_Charlotte, 0x0000
+	object_event 25, 32, 0, 26, 72, 5, 18, 1, 1, 1, 4, Route114_EventScript_Angelina, 0x0000
 	object_event 26, 59, 0, 31, 19, 3, 1, 1, 1, 0, 0, 0x08256B74, 0x0488
-	object_event 27, 50, 0, 28, 16, 3, 17, 1, 1, 1, 3, 0x081EB737, 0x0000
+	object_event 27, 50, 0, 28, 16, 3, 17, 1, 1, 1, 3, Route114_EventScript_Kai, 0x0000
 	.globl ROUTE114_EventWarps
 ROUTE114_EventWarps: @ 0x085027FC
 	warp_def 8, 63, 0, 0, MAP_METEOR_FALLS_1F_1R
@@ -1867,15 +1867,15 @@ ROUTE114_EventWarps: @ 0x085027FC
 	warp_def 7, 4, 0, 0, MAP_TERRA_CAVE_ENTRANCE
 	.globl ROUTE114_EventBgEvents
 ROUTE114_EventBgEvents: @ 0x08502824
-	bg_event 7, 64, 0, 0, Route114_EventScript_001EB56A, 0, 0
-	bg_event 31, 7, 0, 0, Route114_EventScript_001EB573, 0, 0
+	bg_event 7, 64, 0, 0, Route114_EventScript_MeteorFallsSign, 0, 0
+	bg_event 31, 7, 0, 0, Route114_EventScript_FossilManiacsHouseSign, 0, 0
 	bg_event 9, 47, 0, 8, 0x0029, 0x00, 0x00
 	bg_event 30, 51, 0, 8, 0x0033, 0x00, 0x00
 	bg_event 11, 62, 0, 8, 0x003D, 0x00, 0x00
 	bg_event 19, 70, 0, 8, 0x0047, 0x00, 0x00
 	bg_event 11, 27, 0, 8, 0x00B6, 0x00, 0x00
 	bg_event 12, 27, 0, 8, 0x00C0, 0x00, 0x00
-	bg_event 25, 38, 3, 0, Route114_EventScript_001EB57C, 0, 0
+	bg_event 25, 38, 3, 0, Route114_EventScript_LanettesHouseSign, 0, 0
 	bg_event 20, 57, 3, 7, 0x0042, 0x04, 0x00
 	bg_event 32, 57, 0, 8, 0x0049, 0x00, 0x00
 	bg_event 7, 30, 3, 7, 0x0018, 0x2A, 0x00
