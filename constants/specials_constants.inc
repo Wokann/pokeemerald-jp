@@ -1030,8 +1030,8 @@
 .equ SPECIAL_WAITSTATE_sub_080F9424, 0
 .equ SPECIAL_ShowTrainerHillRecords, 515
 .equ SPECIAL_WAITSTATE_ShowTrainerHillRecords, 1
-.equ SPECIAL_sub_080B3F60, 516
-.equ SPECIAL_WAITSTATE_sub_080B3F60, 0
+.equ SPECIAL_PlayerFaceTrainerAfterBattle, 516
+.equ SPECIAL_WAITSTATE_PlayerFaceTrainerAfterBattle, 0
 .equ SPECIAL_sub_0813B9D8, 517
 .equ SPECIAL_WAITSTATE_sub_0813B9D8, 0
 .equ SPECIAL_IsLastMonThatKnowsSurf, 518

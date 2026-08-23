@@ -38,5 +38,3 @@ Route105_MapScriptTable_001E8203::
 gJPText_001E83B3: @ 0x081E83B3
 	.string "パパ　センリを\n"
 	.string "ポケナビに　とうろく　した！$"
-
-	.incbin "baserom_jp.gba", 0x1e83ca, 0xa7f

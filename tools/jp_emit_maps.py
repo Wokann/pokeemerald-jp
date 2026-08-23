@@ -371,6 +371,187 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             },
         },
     },
+    # Route106-109 are one contiguous JP raw owner.  Their event entry order,
+    # trainer IDs, and locally-owned text/movement data have been checked
+    # one-for-one against the corresponding US map sources.  One additional
+    # JP-only arrival text at 0x081E8B34 intentionally stays address-named.
+    'Route106': {
+        'scripts': {
+            0x081E83CB: 'Route106_EventScript_TrainerTipsSign',
+            0x081E83D4: 'Route106_EventScript_Douglas',
+            0x081E83EB: 'Route106_EventScript_Kyla',
+            0x081E8402: 'Route106_EventScript_Elliot',
+            0x081E842E: 'Route106_EventScript_ElliotRegisterMatchCallAfterBattle',
+            0x081E844D: 'Route106_EventScript_ElliotRematch',
+            0x081E8464: 'Route106_EventScript_Ned',
+        },
+        'texts': {0x081E847B: 'Route106_Text_TrainerTips'},
+        'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
+        'symbols': {
+            'trainers': {
+                0x0099: 'TRAINER_DOUGLAS',
+                0x01BB: 'TRAINER_KYLA',
+                0x0153: 'TRAINER_ELLIOT_1',
+                0x0154: 'TRAINER_NED',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+        },
+    },
+    'Route107': {
+        'scripts': {
+            0x081E84AC: 'Route107_EventScript_Darrin',
+            0x081E84C3: 'Route107_EventScript_Tony',
+            0x081E84EF: 'Route107_EventScript_TonyRegisterMatchCallAfterBattle',
+            0x081E850E: 'Route107_EventScript_TonyRematch',
+            0x081E8525: 'Route107_EventScript_Denise',
+            0x081E853C: 'Route107_EventScript_Beth',
+            0x081E8553: 'Route107_EventScript_Lisa',
+            0x081E856E: 'Route107_EventScript_Ray',
+            0x081E8589: 'Route107_EventScript_Camron',
+        },
+        'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
+        'symbols': {
+            'trainers': {
+                0x009A: 'TRAINER_DARRIN',
+                0x009B: 'TRAINER_TONY_1',
+                0x01BC: 'TRAINER_DENISE',
+                0x01BD: 'TRAINER_BETH',
+                0x02B4: 'TRAINER_LISA_AND_RAY',
+                0x02E3: 'TRAINER_CAMRON',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+        },
+    },
+    'Route108': {
+        'scripts': {
+            0x081E85A1: 'Route108_EventScript_Jerome',
+            0x081E85B8: 'Route108_EventScript_Matthew',
+            0x081E85CF: 'Route108_EventScript_Tara',
+            0x081E85E6: 'Route108_EventScript_Missy',
+            0x081E85FD: 'Route108_EventScript_Carolina',
+            0x081E8614: 'Route108_EventScript_Cory',
+            0x081E8640: 'Route108_EventScript_CoryRegisterMatchCallAfterBattle',
+            0x081E865F: 'Route108_EventScript_CoryRematch',
+        },
+        'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
+        'symbols': {
+            'trainers': {
+                0x009C: 'TRAINER_JEROME',
+                0x009D: 'TRAINER_MATTHEW',
+                0x01BE: 'TRAINER_TARA',
+                0x01BF: 'TRAINER_MISSY',
+                0x02E5: 'TRAINER_CAROLINA',
+                0x02E4: 'TRAINER_CORY_1',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+        },
+    },
+    'Route109': {
+        'scripts': {
+            0x081E8677: 'Route109_EventScript_StartDepartForDewford',
+            0x081E86BC: 'Route109_EventScript_EnterBoatSouth',
+            0x081E86CC: 'Route109_EventScript_EnterBoatEast',
+            0x081E86DC: 'Route109_EventScript_EnterBoatWest',
+            0x081E86EC: 'Route109_EventScript_DoSailToDewford',
+            0x081E8827: 'Route109_EventScript_MrBriney',
+            0x081E8838: 'Route109_EventScript_HaveNotDeliveredDevonGood',
+            0x081E8856: 'Route109_EventScript_DeliveredDevonGoods',
+            0x081E8889: 'Route109_EventScript_SailToDewford',
+            0x081E8898: 'Route109_EventScript_StayHere',
+            0x081E88A2: 'Route109_EventScript_ChoseNotToSail',
+            0x081E88AC: 'Route109_EventScript_SeashoreHouseGirl',
+            0x081E88B5: 'Route109_EventScript_SandCastleBoy',
+            0x081E88CC: 'Route109_EventScript_SoftSandGirl',
+            0x081E8909: 'Route109_EventScript_AlreadyReceivedSoftSand',
+            0x081E891D: 'Route109_EventScript_Woman',
+            0x081E8926: 'Route109_EventScript_OldMan',
+            0x081E892F: 'Route109_EventScript_Zigzagoon',
+            0x081E8942: 'Route109_EventScript_SeashoreHouseSign',
+            0x081E894B: 'Route109_EventScript_TrainerTipsSign',
+            0x081E8954: 'Route109_EventScript_David',
+            0x081E896B: 'Route109_EventScript_Alice',
+            0x081E8982: 'Route109_EventScript_Huey',
+            0x081E8999: 'Route109_EventScript_Edmond',
+            0x081E89B0: 'Route109_EventScript_Ricky',
+            0x081E89DC: 'Route109_EventScript_RickyRegisterMatchCallAfterBattle',
+            0x081E89FB: 'Route109_EventScript_RickyRematch',
+            0x081E8A12: 'Route109_EventScript_Lola',
+            0x081E8A3E: 'Route109_EventScript_LolaRegisterMatchCallAfterBattle',
+            0x081E8A5D: 'Route109_EventScript_LolaRematch',
+            0x081E8A74: 'Route109_EventScript_Austina',
+            0x081E8A8B: 'Route109_EventScript_Gwen',
+            0x081E8AA2: 'Route109_EventScript_Carter',
+            0x081E8AB9: 'Route109_EventScript_Paul',
+            0x081E8AD4: 'Route109_EventScript_Mel',
+            0x081E8AEF: 'Route109_EventScript_Chandler',
+            0x081E8B06: 'Route109_EventScript_Hailey',
+            0x081E8B1D: 'Route109_EventScript_Elijah',
+        },
+        'texts': {
+            0x081E8B67: 'Route109_Text_BrineySailToDewfordQuestion',
+            0x081E8B8A: 'Route109_Text_BrineyDewfordItIs',
+            0x081E8BA7: 'Route109_Text_BrineyDeliverDevonGoods',
+            0x081E8BC7: 'DewfordTown_Text_BrineyLandedInSlateport',
+            0x081E8BFA: 'Route109_Text_BrineyWhereAreWeBound',
+            0x081E8C2A: 'Route109_Text_BrineyTellMeWhenYouNeedToSail',
+            0x081E8C50: 'Route109_Text_ChillAtMyPapasSpot',
+            0x081E8C80: 'Route109_Text_LittleKidsDartAround',
+            0x081E8CC7: 'Route109_Text_SandCastleTakingLongTime',
+            0x081E8CDA: 'Route109_Text_YouCanHaveThis',
+            0x081E8CE5: 'Route109_Text_WereGoingToMakeBigCastle',
+            0x081E8D34: 'Route109_Text_ZigzagoonPicksUpLitter',
+            0x081E8DB1: 'Route109_Text_ZigzagoonCry',
+            0x081E8DBB: 'Route109_Text_SeashoreHouseSign',
+            0x081E8DEB: 'Route109_Text_TrainerTipsSign',
+        },
+        'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
+        'symbols': {
+            'flags': {
+                0x0095: 'FLAG_DELIVERED_DEVON_GOODS',
+                0x0118: 'FLAG_RECEIVED_SOFT_SAND',
+                0x02E4: 'FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN',
+                0x02E7: 'FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN',
+                0x02E8: 'FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT',
+            },
+            'trainers': {
+                0x009E: 'TRAINER_DAVID',
+                0x01C0: 'TRAINER_ALICE',
+                0x01EA: 'TRAINER_HUEY',
+                0x01EB: 'TRAINER_EDMOND',
+                0x0040: 'TRAINER_RICKY_1',
+                0x0039: 'TRAINER_LOLA_1',
+                0x003A: 'TRAINER_AUSTINA',
+                0x003B: 'TRAINER_GWEN',
+                0x0159: 'TRAINER_CARTER',
+                0x02A8: 'TRAINER_MEL_AND_PAUL',
+                0x02BA: 'TRAINER_CHANDLER',
+                0x02B9: 'TRAINER_HAILEY',
+                0x02E6: 'TRAINER_ELIJAH',
+            },
+            'vars': {
+                0x4096: 'VAR_BRINEY_LOCATION',
+                0x8000: 'VAR_0x8000',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'items': {0x00CB: 'ITEM_SOFT_SAND'},
+            'species': {0x0120: 'SPECIES_ZIGZAGOON'},
+            'multichoices': {0x000E: 'MULTI_BRINEY_OFF_DEWFORD'},
+        },
+    },
 }
 
 MAP_MOVEMENT_SCRIPT_LABELS.update({
@@ -386,6 +567,15 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x08218C89: 'SeafloorCavern_Room9_Movement_MaxieExit',
         0x08218C8C: 'SeafloorCavern_Room9_Movement_MagmaGruntArrive',
         0x08218C91: 'SeafloorCavern_Room9_Movement_Delay32',
+    },
+    'Route109': {
+        0x081E8766: 'Route109_Movement_SailToDewford',
+        0x081E8814: 'Route109_Movement_PlayerEnterBoatSouth',
+        0x081E8817: 'Route109_Movement_PlayerExitBoat',
+        0x081E881C: 'Route109_Movement_PlayerEnterBoatEast',
+        0x081E881F: 'Route109_Movement_PlayerEnterBoatWest',
+        0x081E8822: 'Route109_Movement_BrineyEnterBoat',
+        0x081E8824: 'Route109_Movement_BrineyExitBoat',
     },
 })
 
@@ -541,13 +731,20 @@ def collapse_condition_macros(lines):
 VARIABLE_ARGUMENTS = {
     'compare_var_to_value': {0},
     'compare_var_to_var': {0, 1},
+    'goto_if_eq': {0},
+    'goto_if_ne': {0},
+    'goto_if_lt': {0},
+    'goto_if_gt': {0},
     'setvar': {0},
     'addvar': {0},
     'subvar': {0},
     'copyvar': {0, 1},
     'setorcopyvar': {0},
+    'specialvar': {0},
 }
-FLAG_ARGUMENTS = {'setflag', 'clearflag', 'checkflag'}
+FLAG_ARGUMENTS = {
+    'setflag', 'clearflag', 'checkflag', 'goto_if_set', 'goto_if_unset',
+}
 LOCAL_ID_ARGUMENTS = {
     'applymovement': {0},
     'addobject': {0},
@@ -577,6 +774,10 @@ def semantic_symbol_formatter(mname):
             return symbols.get('songs', {}).get(value)
         if name == 'playse' and index == 0:
             return symbols.get('sounds', {}).get(value)
+        if name == 'playmoncry' and index == 0:
+            return symbols.get('species', {}).get(value)
+        if name == 'multichoicedefault' and index == 2:
+            return symbols.get('multichoices', {}).get(value)
         if name == 'setweather' and index == 0:
             return symbols.get('weather', {}).get(value)
         if name in ('dofieldeffect', 'waitfieldeffect') and index == 0:

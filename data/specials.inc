@@ -533,7 +533,7 @@ gSpecials:
 	def_special sub_0813B9A0
 	def_special sub_080F9424
 	def_special ShowTrainerHillRecords, waitstate=1
-	def_special sub_080B3F60
+	def_special PlayerFaceTrainerAfterBattle
 	def_special sub_0813B9D8
 	def_special IsLastMonThatKnowsSurf
 	def_special sub_08071CF0

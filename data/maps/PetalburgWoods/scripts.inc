@@ -321,7 +321,7 @@ PetalburgWoods_EventScript_00214526::
 	end
 
 PetalburgWoods_EventScript_00214567::
-	special sub_080B3F60
+	special PlayerFaceTrainerAfterBattle
 	waitmovement 0x0
 	checkflag 0x12F
 	goto_if 0x1, PetalburgWoods_EventScript_00214578

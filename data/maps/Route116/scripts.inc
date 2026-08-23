@@ -304,7 +304,7 @@ Route116_EventScript_001EBDA1::
 	end
 
 Route116_EventScript_001EBDAC::
-	special sub_080B3F60
+	special PlayerFaceTrainerAfterBattle
 	waitmovement 0x0
 	loadword 0x0, 0x0825D80A
 	callstd 0x4
@@ -372,7 +372,7 @@ Route116_EventScript_001EBE7D::
 	end
 
 Route116_EventScript_001EBE88::
-	special sub_080B3F60
+	special PlayerFaceTrainerAfterBattle
 	waitmovement 0x0
 	loadword 0x0, 0x0825D941
 	callstd 0x4
