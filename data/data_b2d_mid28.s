@@ -15,9 +15,8 @@ gUnknown_846FA13: @ 0x846FA13
 
 	.section .rodata.data_b2d_mid28_after_reflection_data
 
-	.globl gUnknown_846FA40
-gUnknown_846FA40: @ 0x846FA40
-	.incbin "baserom_jp.gba", 0x46fa40, 0x120c
+	.section .rodata.data_b2d_mid28_after_camera_function_data
+	.incbin "baserom_jp.gba", 0x46fa4c, 0x1200
 
 	.globl gUnknown_8470C4C
 gUnknown_8470C4C: @ 0x8470C4C

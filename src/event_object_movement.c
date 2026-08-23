@@ -19,6 +19,9 @@
 
 extern void MovementType_Hidden(struct Sprite *sprite);
 void ObjectCB_CameraObject(struct Sprite *sprite);
+void CameraObject_0(struct Sprite *sprite);
+void CameraObject_1(struct Sprite *sprite);
+void CameraObject_2(struct Sprite *sprite);
 
 #define EVENT_OBJECT_MOVEMENT_REFLECTION_PALETTE_DATA __attribute__((section(".rodata.event_object_movement_reflection_palette_data"), aligned(1)))
 #define EVENT_OBJECT_MOVEMENT_CAMERA_DATA __attribute__((section(".rodata.event_object_movement_camera_data"), aligned(4)))
@@ -697,8 +700,6 @@ extern u8 gUnknown_2037254; // sCurrentReflectionType
 extern u16 gUnknown_2037256; // sCurrentSpecialObjectPaletteTag
 static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
 extern u32 state_to_direction(u8, u8, u8);
-extern void (*const gUnknown_846FA40[])(struct Sprite *);
-
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
 extern const s8 sFigure8YOffsets[];
@@ -742,6 +743,17 @@ enum {
     CAMERA_STATE_MOVE,
     CAMERA_STATE_FROZEN,
 };
+
+#define EVENT_OBJECT_MOVEMENT_CAMERA_FUNCTION_DATA __attribute__((section(".rodata.event_object_movement_camera_function_data"), aligned(4)))
+
+EVENT_OBJECT_MOVEMENT_CAMERA_FUNCTION_DATA static void (*const sCameraObjectFuncs[])(struct Sprite *) =
+{
+    [CAMERA_STATE_INIT] = CameraObject_0,
+    [CAMERA_STATE_MOVE] = CameraObject_1,
+    [CAMERA_STATE_FROZEN] = CameraObject_2,
+};
+
+#undef EVENT_OBJECT_MOVEMENT_CAMERA_FUNCTION_DATA
 
 enum {
     BERRYTREEFUNC_NORMAL,
@@ -3510,7 +3522,7 @@ void ObjectCB_CameraObject(struct Sprite *sprite)
 {
     void (*callbacks[3])(struct Sprite *);
 
-    memcpy(callbacks, gUnknown_846FA40, sizeof callbacks);
+    memcpy(callbacks, sCameraObjectFuncs, sizeof callbacks);
     callbacks[sprite->sCamera_State](sprite);
 }
 
