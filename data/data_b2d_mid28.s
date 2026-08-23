@@ -21,9 +21,7 @@ gUnknown_846FA13: @ 0x846FA13
 
 	.section .rodata.data_b2d_mid28_after_player_extended_graphics
 
-	.globl gUnknown_847C6CC
-gUnknown_847C6CC: @ 0x847C6CC
-	.incbin "baserom_jp.gba", 0x47c6cc, 0x1240
+	.section .rodata.data_b2d_mid28_after_may_base_graphics
 
 	.globl gUnknown_847D90C
 gUnknown_847D90C: @ 0x847D90C

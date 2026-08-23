@@ -9516,6 +9516,9 @@ SECTIONS {
         src/event_object_movement.o(.rodata.object_event_graphics_player_extended_data);
         gUnknown_8471E6C = gObjectEventPal_RubySapphireBrendan;
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_player_extended_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_may_base_data);
+        gUnknown_847C6CC = gObjectEventPal_May;
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_may_base_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_palettes);
@@ -9550,8 +9553,6 @@ SECTIONS {
         gObjectEventPal_Truck = ABSOLUTE(0x084BE12C);
         gObjectEventPal_Vigoroth = ABSOLUTE(0x084BEB4C);
         gObjectEventPal_EnemyZigzagoon = ABSOLUTE(0x084BFDEC);
-        gObjectEventPal_May = ABSOLUTE(0x0847C6CC);
-        gObjectEventPal_MayReflection = ABSOLUTE(0x0847C6EC);
         gObjectEventPal_MovingBox = ABSOLUTE(0x084D6CCC);
         gObjectEventPal_CableCar = ABSOLUTE(0x084C182C);
         gObjectEventPal_SSTidal = ABSOLUTE(0x084C1FCC);

@@ -818,7 +818,10 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/pics/people/brendan/decorating.4bpp graphics/object_events/pics/people/may/decorating.4bpp \
 	graphics/object_events/pics/people/brendan/underwater.4bpp graphics/object_events/pics/people/may/underwater.4bpp \
 	graphics/object_events/palettes/player_underwater.gbapal \
-	graphics/object_events/pics/people/may/walking.4bpp graphics/object_events/pics/people/may/running.4bpp
+	graphics/object_events/pics/people/may/walking.4bpp graphics/object_events/pics/people/may/running.4bpp \
+	graphics/object_events/palettes/may.gbapal graphics/object_events/palettes/may_reflection.gbapal \
+	graphics/object_events/pics/people/ruby_sapphire_may/walking.4bpp \
+	graphics/object_events/pics/people/ruby_sapphire_may/running.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -

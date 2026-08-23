@@ -41,6 +41,12 @@ OBJECT_EVENT_GRAPHICS_PLAYER_EXTENDED_DATA const u16 gObjectEventPal_PlayerUnder
 OBJECT_EVENT_GRAPHICS_PLAYER_EXTENDED_DATA const u32 gObjectEventPic_MayNormal[] = INCBIN_U32("graphics/object_events/pics/people/may/walking.4bpp");
 OBJECT_EVENT_GRAPHICS_PLAYER_EXTENDED_DATA const u32 gObjectEventPic_MayRunning[] = INCBIN_U32("graphics/object_events/pics/people/may/running.4bpp");
 
+// This JP-owned May base graphics family follows the extended player graphics.
+OBJECT_EVENT_GRAPHICS_MAY_BASE_DATA const u16 gObjectEventPal_May[] = INCBIN_U16("graphics/object_events/palettes/may.gbapal");
+OBJECT_EVENT_GRAPHICS_MAY_BASE_DATA const u16 gObjectEventPal_MayReflection[] = INCBIN_U16("graphics/object_events/palettes/may_reflection.gbapal");
+OBJECT_EVENT_GRAPHICS_MAY_BASE_DATA const u32 gObjectEventPic_RubySapphireMayNormal[] = INCBIN_U32("graphics/object_events/pics/people/ruby_sapphire_may/walking.4bpp");
+OBJECT_EVENT_GRAPHICS_MAY_BASE_DATA const u32 gObjectEventPic_RubySapphireMayRunning[] = INCBIN_U32("graphics/object_events/pics/people/ruby_sapphire_may/running.4bpp");
+
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u8 gFieldEffectPic_CutGrass[] = INCBIN_U8("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u32 gFieldEffectPic_CutGrass_Copy[] = INCBIN_U32("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u16 gFieldEffectPal_CutGrass[] = INCBIN_U16("graphics/field_effects/palettes/cut_grass.gbapal");
