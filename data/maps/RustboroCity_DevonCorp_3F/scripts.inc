@@ -33,24 +33,24 @@ RustboroCity_DevonCorp_3F_EventScript_00201C6A::
 	loadword 0x0, gJPText_0020213E
 	callstd 0x4
 	closemessage
-	applymovement 0x2, 0x08201D42
+	applymovement 0x2, RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen
 	waitmovement 0x0
 	delay 0x50
-	applymovement 0x2, 0x08201D4B
+	applymovement 0x2, RustboroCity_DevonCorp_3F_Movement_EmployeeReturnToPlayer
 	waitmovement 0x0
 	loadword 0x0, gJPText_00202212
 	callstd 0x4
 	closemessage
 	playbgm 0x1A4, 0x0
-	applymovement 0x2, 0x08201D30
-	applymovement 0xFF, 0x08201D54
+	applymovement 0x2, RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident
+	applymovement 0xFF, RustboroCity_DevonCorp_3F_Movement_PlayerFollowToPresident
 	waitmovement 0x0
 	loadword 0x0, gJPText_00202239
 	callstd 0x4
 	closemessage
 	fadedefaultbgm
-	applymovement 0x2, 0x08201D3F
-	applymovement 0xFF, 0x08201D62
+	applymovement 0x2, RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk
+	applymovement 0xFF, RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk
 	waitmovement 0x0
 	loadword 0x0, gJPText_00201E05
 	callstd 0x4
@@ -83,7 +83,81 @@ RustboroCity_DevonCorp_3F_EventScript_00201C6A::
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x201d2b, 0x3d
+RustboroCity_DevonCorp_3F_Movement_Unused:
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_left
+	step_end
+
+RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident:
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_in_place_faster_left
+	step_end
+
+RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk:
+	delay_16
+	walk_in_place_faster_down
+	step_end
+
+RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen:
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+RustboroCity_DevonCorp_3F_Movement_EmployeeReturnToPlayer:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+RustboroCity_DevonCorp_3F_Movement_PlayerFollowToPresident:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk:
+	delay_16
+	delay_16
+	walk_down
+	walk_down
+	walk_in_place_faster_right
+	step_end
+
 RustboroCity_DevonCorp_3F_EventScript_00201D68::
 	lock
 	faceplayer
@@ -91,7 +165,7 @@ RustboroCity_DevonCorp_3F_EventScript_00201D68::
 	goto_if 0x1, RustboroCity_DevonCorp_3F_EventScript_00201DC8
 	checkflag 0xBD
 	goto_if 0x1, RustboroCity_DevonCorp_3F_EventScript_00201D91
-	loadword 0x0, 0x08202037
+	loadword 0x0, gJPText_00202037
 	callstd 0x4
 	closemessage
 	applymovement 0x800F, 0x08243625
@@ -100,7 +174,7 @@ RustboroCity_DevonCorp_3F_EventScript_00201D68::
 	end
 
 RustboroCity_DevonCorp_3F_EventScript_00201D91::
-	loadword 0x0, 0x08202047
+	loadword 0x0, gJPText_00202047
 	callstd 0x4
 	setorcopyvar 0x8000, 0xB6
 	setorcopyvar 0x8001, 0x1
@@ -108,7 +182,7 @@ RustboroCity_DevonCorp_3F_EventScript_00201D91::
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x082430E0
 	setflag 0x110
-	loadword 0x0, 0x0820208A
+	loadword 0x0, gJPText_0020208A
 	callstd 0x4
 	closemessage
 	applymovement 0x800F, 0x08243625
@@ -117,7 +191,7 @@ RustboroCity_DevonCorp_3F_EventScript_00201D91::
 	end
 
 RustboroCity_DevonCorp_3F_EventScript_00201DC8::
-	loadword 0x0, 0x082020E6
+	loadword 0x0, gJPText_002020E6
 	callstd 0x4
 	closemessage
 	applymovement 0x800F, 0x08243625
@@ -130,19 +204,19 @@ RustboroCity_DevonCorp_3F_EventScript_00201DDD::
 	faceplayer
 	checkflag 0x100
 	goto_if 0x1, RustboroCity_DevonCorp_3F_EventScript_00201DF2
-	loadword 0x0, 0x08202241
+	loadword 0x0, gJPText_00202241
 	callstd 0x4
 	release
 	end
 
 RustboroCity_DevonCorp_3F_EventScript_00201DF2::
-	loadword 0x0, 0x08202277
+	loadword 0x0, gJPText_00202277
 	callstd 0x4
 	release
 	end
 
 RustboroCity_DevonCorp_3F_EventScript_00201DFC::
-	loadword 0x0, 0x082022A7
+	loadword 0x0, gJPText_002022A7
 	callstd 0x3
 	end
 
@@ -173,7 +247,7 @@ gJPText_00201EE9: @ 0x08201EE9
 
 	.globl gJPText_00201F3E
 gJPText_00201F3E: @ 0x08201F3E
-	.string "{MUS_RG_VS_TRAINER}は\n"
+	.string "{STRING 0x01}は\n"
 	.string "ポケナビを　てにいれた！$"
 
 	.globl gJPText_00201F4F
@@ -193,10 +267,36 @@ gJPText_00201F4F: @ 0x08201F4F
 
 	.globl gJPText_00202015
 gJPText_00202015: @ 0x08202015
-	.string "ツワブキ“それでは　{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}\n"
+	.string "ツワブキ“それでは　{STRING 0x01}{STRING 0x05}\n"
 	.string "じゅうぶん　きをつけて　いくのだよ！$"
 
-	.incbin "baserom_jp.gba", 0x202037, 0x107
+	.globl gJPText_00202037
+gJPText_00202037: @ 0x08202037
+	.string "ツワブキ“よろしく　たのむよ！$"
+
+	.globl gJPText_00202047
+gJPText_00202047: @ 0x08202047
+	.string "ツワブキ“てがみを　とどけて　くれたんだね\n"
+	.string "いやいや　ありがとう！\p"
+	.string "こいつは　おれい　だよ\n"
+	.string "トレーナーの　きみに　やくだつ　はずだ！$"
+
+	.globl gJPText_0020208A
+gJPText_0020208A: @ 0x0820208A
+	.string "ツワブキ“がくしゅうそうちを　もたせた\n"
+	.string "ポケモンは　しょうぶを　しなくても\l"
+	.string "けいけんちを　わけて　もらえる！\p"
+	.string "よわい　ポケモンを　そだてるのに\n"
+	.string "なかなか　べんりな　どうぐ　なのだよ！$"
+
+	.globl gJPText_002020E6
+gJPText_002020E6: @ 0x082020E6
+	.string "ツワブキ“わたしは　わかいころ　から\n"
+	.string "しごと　ばかり　だったから\l"
+	.string "いまいち　わからんのだが⋯⋯\p"
+	.string "わかものは　やはり　トレーナーとして\n"
+	.string "ポケモンリーグを　めざす　もの　なのかね$"
+
 	.globl gJPText_0020213E
 gJPText_0020213E: @ 0x0820213E
 	.string "ここが　デボン　コーポレーション　3かい\n"
@@ -224,4 +324,19 @@ gJPText_00202212: @ 0x08202212
 gJPText_00202239: @ 0x08202239
 	.string "ささ　どうぞ！$"
 
-	.incbin "baserom_jp.gba", 0x202241, 0x84
+	.globl gJPText_00202241
+gJPText_00202241: @ 0x08202241
+	.string "カイナの　ぞうせんじょ　には\n"
+	.string "クスノキさん　という　ひとが　いるから\l"
+	.string "かれを　たずねていくと　いいですよ！$"
+
+	.globl gJPText_00202277
+gJPText_00202277: @ 0x08202277
+	.string "デボンの　しんせいひん\n"
+	.string "リピートボールと　タイマーボール\l"
+	.string "トレーナーに　だいにんき　なのよね！$"
+
+	.globl gJPText_002022A7
+gJPText_002022A7: @ 0x082022A7
+	.string "しゃちょうの　あつめた\n"
+	.string "めずらしい　いしが　かざってある！$"

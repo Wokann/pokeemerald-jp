@@ -36,6 +36,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
     'RustboroCity_Gym': (0x08202410,),  # EventScript_RegisterRoxanne
 }
 
+# Verified map-local text that has no JP script pointer (for example an
+# intentionally unused US-source string) and therefore is not discovered by
+# the script graph.
+MAP_AUXILIARY_TEXT_ADDRESSES = {
+    'RustboroCity_DevonCorp_2F': (0x08201B83,),
+}
+
 # Map-owned movement scripts confirmed by their JP addresses and the matching
 # US map source.  They are referenced by ``applymovement`` rather than being
 # event scripts, so the event-script parser deliberately does not follow them.
@@ -70,6 +77,15 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x08213968: 'RusturfTunnel_Movement_PlayerWatchBrineyExit',
         0x0821396D: 'RusturfTunnel_Movement_BrineyApproachPeeko2',
         0x08213970: 'RusturfTunnel_Movement_PeekoExit',
+    },
+    'RustboroCity_DevonCorp_3F': {
+        0x08201D2B: 'RustboroCity_DevonCorp_3F_Movement_Unused',
+        0x08201D30: 'RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident',
+        0x08201D3F: 'RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk',
+        0x08201D42: 'RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen',
+        0x08201D4B: 'RustboroCity_DevonCorp_3F_Movement_EmployeeReturnToPlayer',
+        0x08201D54: 'RustboroCity_DevonCorp_3F_Movement_PlayerFollowToPresident',
+        0x08201D62: 'RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk',
     },
     'RustboroCity_PokemonSchool': {
         0x08202D82: 'RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest',
@@ -392,6 +408,9 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         if ms <= a < region_end
     ]
     scripts, text_ptrs = collect_map_scripts(ms, mname, extra, events_addr, region_end)
+    text_ptrs.update(
+        addr for addr in MAP_AUXILIARY_TEXT_ADDRESSES.get(mname, ())
+        if ms <= addr < region_end)
     movement_labels = {
         addr: label
         for addr, label in MAP_MOVEMENT_SCRIPT_LABELS.get(mname, {}).items()
