@@ -1935,32 +1935,32 @@ gMapEvents_ROUTE115: @ 0x08502BB0
 ROUTE116_EventObjects: @ 0x08502BC4
 	object_event 1, 60, 0, 18, 2, 3, 12, 0, 0, 0, 25, 0x08244D23, 0x0000
 	object_event 2, 60, 0, 19, 2, 3, 12, 0, 0, 0, 26, 0x08244D23, 0x0000
-	object_event 3, 35, 0, 12, 7, 3, 16, 0, 0, 1, 3, 0x081EBD32, 0x0000
+	object_event 3, 35, 0, 12, 7, 3, 16, 0, 0, 1, 3, Route116_EventScript_Joey, 0x0000
 	object_event 4, 82, 0, 21, 6, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0011
 	object_event 5, 82, 0, 32, 10, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0012
-	object_event 6, 36, 0, 13, 17, 3, 24, 0, 0, 1, 2, 0x081EBD49, 0x0000
+	object_event 6, 36, 0, 13, 17, 3, 24, 0, 0, 1, 2, Route116_EventScript_Jose, 0x0000
 	object_event 7, 59, 0, 19, 6, 3, 1, 0, 0, 0, 0, 0x08256BDC, 0x03FB
 	object_event 8, 59, 0, 10, 17, 3, 1, 0, 0, 0, 0, 0x08256BE9, 0x03FC
 	object_event 9, 60, 0, 20, 2, 3, 12, 0, 0, 0, 66, 0x08244D23, 0x0000
 	object_event 10, 60, 0, 21, 2, 3, 12, 0, 0, 0, 67, 0x08244D23, 0x0000
-	object_event 11, 21, 0, 46, 9, 3, 1, 0, 0, 0, 0, Route116_EventScript_001EBC2D, 0x037B
+	object_event 11, 21, 0, 46, 9, 3, 1, 0, 0, 0, 0, Route116_EventScript_Briney, 0x037B
 	object_event 12, 82, 0, 28, 11, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0013
-	object_event 13, 55, 0, 36, 17, 3, 15, 0, 0, 1, 3, 0x081EBE0E, 0x0000
+	object_event 13, 55, 0, 36, 17, 3, 15, 0, 0, 1, 3, Route116_EventScript_Clark, 0x0000
 	object_event 14, 82, 0, 24, 9, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0014
 	object_event 15, 59, 0, 80, 8, 3, 1, 0, 0, 0, 0, 0x08256BF6, 0x03FD
-	object_event 16, 47, 0, 26, 6, 3, 10, 0, 0, 1, 2, 0x081EBE25, 0x0000
-	object_event 17, 14, 0, 22, 16, 3, 13, 0, 0, 1, 3, 0x081EBE3C, 0x0000
-	object_event 18, 38, 0, 28, 8, 3, 7, 0, 0, 1, 4, 0x081EBD60, 0x0000
-	object_event 19, 23, 0, 46, 11, 3, 1, 1, 1, 0, 0, Route116_EventScript_001EBB4B, 0x03B3
+	object_event 16, 47, 0, 26, 6, 3, 10, 0, 0, 1, 2, Route116_EventScript_Janice, 0x0000
+	object_event 17, 14, 0, 22, 16, 3, 13, 0, 0, 1, 3, Route116_EventScript_Karen, 0x0000
+	object_event 18, 38, 0, 28, 8, 3, 7, 0, 0, 1, 4, Route116_EventScript_Jerry, 0x0000
+	object_event 19, 23, 0, 46, 11, 3, 1, 1, 1, 0, 0, Route116_EventScript_DevonEmployee, 0x03B3
 	object_event 20, 59, 0, 55, 12, 4, 1, 1, 1, 0, 0, 0x08256BCF, 0x03E9
-	object_event 21, 44, 0, 38, 9, 3, 10, 1, 1, 0, 0, Route116_EventScript_001EBB19, 0x037E
-	object_event 22, 39, 0, 74, 13, 3, 1, 1, 1, 0, 0, Route116_EventScript_001EBC5F, 0x032D
-	object_event 23, 20, 0, 33, 8, 3, 7, 0, 0, 1, 1, 0x081EBEEA, 0x0000
-	object_event 24, 9, 0, 33, 5, 3, 8, 0, 0, 1, 2, 0x081EBF01, 0x0000
+	object_event 21, 44, 0, 38, 9, 3, 10, 1, 1, 0, 0, Route116_EventScript_WandasBoyfriend, 0x037E
+	object_event 22, 39, 0, 74, 13, 3, 1, 1, 1, 0, 0, Route116_EventScript_GlassesMan, 0x032D
+	object_event 23, 20, 0, 33, 8, 3, 7, 0, 0, 1, 1, Route116_EventScript_Sarah, 0x0000
+	object_event 24, 9, 0, 33, 5, 3, 8, 0, 0, 1, 2, Route116_EventScript_Dawson, 0x0000
 	object_event 25, 59, 0, 34, 7, 0, 1, 1, 1, 0, 0, 0x08256C03, 0x047A
 	object_event 26, 82, 0, 30, 5, 3, 1, 1, 1, 0, 0, 0x082565C8, 0x0015
-	object_event 27, 35, 0, 36, 13, 3, 18, 1, 1, 1, 5, 0x081EBF2F, 0x0000
-	object_event 28, 55, 0, 42, 13, 3, 9, 1, 1, 1, 5, 0x081EBF18, 0x0000
+	object_event 27, 35, 0, 36, 13, 3, 18, 1, 1, 1, 5, Route116_EventScript_Johnson, 0x0000
+	object_event 28, 55, 0, 42, 13, 3, 9, 1, 1, 1, 5, Route116_EventScript_Devan, 0x0000
 	.globl ROUTE116_EventWarps
 ROUTE116_EventWarps: @ 0x08502E64
 	warp_def 47, 8, 0, 0, MAP_RUSTURF_TUNNEL
@@ -1970,16 +1970,16 @@ ROUTE116_EventWarps: @ 0x08502E64
 	warp_def 79, 6, 0, 0, MAP_TERRA_CAVE_ENTRANCE
 	.globl ROUTE116_EventCoordEvents
 ROUTE116_EventCoordEvents: @ 0x08502E8C
-	coord_event 47, 9, 3, 16495, 1, Route116_EventScript_001EBC3E
+	coord_event 47, 9, 3, 16495, 1, Route116_EventScript_BrineyTrigger
 	.globl ROUTE116_EventBgEvents
 ROUTE116_EventBgEvents: @ 0x08502E9C
-	bg_event 5, 10, 0, 0, Route116_EventScript_001EBC00, 0, 0
-	bg_event 48, 9, 0, 0, Route116_EventScript_001EBC09, 0, 0
-	bg_event 40, 9, 0, 0, Route116_EventScript_001EBC12, 0, 0
+	bg_event 5, 10, 0, 0, Route116_EventScript_RouteSignRustboro, 0, 0
+	bg_event 48, 9, 0, 0, Route116_EventScript_RusturfTunnelSign, 0, 0
+	bg_event 40, 9, 0, 0, Route116_EventScript_TunnelersRestHouseSign, 0, 0
 	bg_event 71, 4, 0, 8, 0x0051, 0x00, 0x00
 	bg_event 79, 11, 0, 8, 0x005B, 0x00, 0x00
-	bg_event 16, 12, 0, 0, Route116_EventScript_001EBC1B, 0, 0
-	bg_event 29, 10, 0, 0, Route116_EventScript_001EBC24, 0, 0
+	bg_event 16, 12, 0, 0, Route116_EventScript_TrainerTipsBToStopEvolution, 0, 0
+	bg_event 29, 10, 0, 0, Route116_EventScript_TrainerTipsBagHasPockets, 0, 0
 	bg_event 56, 6, 0, 8, 0x0066, 0x00, 0x00
 	bg_event 55, 15, 0, 8, 0x0070, 0x00, 0x00
 	bg_event 22, 9, 3, 7, 0x0016, 0x2D, 0x00

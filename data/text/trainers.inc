@@ -2127,4 +2127,172 @@ Route115_Text_MarlenePostBattle: @ 0x0825D5B8
 	.string "ここで　ポケモンたちと\n"
 	.string "めいそうを　していたの！\l"
 	.string "でも　あまり　おちつかない　ところね$"
-	.incbin "baserom_jp.gba", 0x25d5e4, 0x4daf
+Route116_Text_ClarkIntro: @ 0x0825D5E4
+	.string "トンネルが　つうじて　いないなら\n"
+	.string "やまを　こえて　いけば　いいのだ！$"
+
+Route116_Text_ClarkDefeat: @ 0x0825D607
+	.string "ぜえ⋯⋯　ぜえ⋯⋯\n"
+	.string "まけて　つかれて　しまった$"
+
+Route116_Text_ClarkPostBattle: @ 0x0825D61F
+	.string "トンネルなど　なくても　かまわん\n"
+	.string "やまおとこは　やまが　みち　なのだ！$"
+
+Route116_Text_JoeyIntro: @ 0x0825D643
+	.string "おれの　ポケモン　つえーぞ！\n"
+	.string "ちょっと　みてみろよ！$"
+
+Route116_Text_JoeyDefeat: @ 0x0825D65E
+	.string "あいたたたたっ！　キズが　できた！\n"
+	.string "バンソーコー　はらなきゃ！$"
+
+Route116_Text_JoeyPostBattle: @ 0x0825D67E
+	.string "バンソーコーは　おとこの　くんしょう！\n"
+	.string "また　ひとつ　ふえたぜ！$"
+
+Route116_Text_JoseIntro: @ 0x0825D69F
+	.string "ぼくの　むしポケモンは　つよいよ！\n"
+	.string "しょうぶ　しようよ！$"
+
+Route116_Text_JoseDefeat: @ 0x0825D6BC
+	.string "まけた⋯⋯！\n"
+	.string "かてると　おもったのに⋯⋯！$"
+
+Route116_Text_JosePostBattle: @ 0x0825D6D2
+	.string "むしポケモンは　しんかが　はやいから\n"
+	.string "つよく　なるのも　はやい！$"
+
+Route116_Text_JaniceIntro: @ 0x0825D6F3
+	.string "わたしの　かわいい　ポケモンの　つよさ\n"
+	.string "じっくりと　おしえて　あげるわ！$"
+
+Route116_Text_JaniceDefeat: @ 0x0825D718
+	.string "キミの　ほうが　いちまい　うわてね⋯⋯$"
+
+Route116_Text_JanicePostBattle: @ 0x0825D72C
+	.string "かわいさと　つよさを　かねそなえた　ポケモン\n"
+	.string "それが　わたしの　りそうなの！$"
+
+Route116_Text_JerryIntro: @ 0x0825D753
+	.string "トレーナーズ　スクールで\n"
+	.string "いろいろ　べんきょう　したからね\l"
+	.string "じっせんで　たしかめるよ！$"
+
+Route116_Text_JerryDefeat: @ 0x0825D77F
+	.string "べんきょう　さぼってたから\n"
+	.string "まけちゃったよ$"
+
+Route116_Text_JerryPostBattle: @ 0x0825D795
+	.string "トレーナーズ　スクールで\n"
+	.string "もういちど　べんきょう　しなおさなきゃ\l"
+	.string "ツツジさんに　おこられちゃうよ$"
+
+Route116_Text_JerryRegister1: @ 0x0825D7C6
+	.string "ポケナビには　トレーナーが\n"
+	.string "とうろく　できるん　だって\l"
+	.string "トレーナーズ　スクールで　ならったんだ！\p"
+	.string "よく　わからないから　やってみてよ！$"
+
+Route116_Text_JerryRegister2: @ 0x0825D80A
+	.string "ポケナビには　トレーナーが\n"
+	.string "とうろく　できるん　だって\l"
+	.string "トレーナーズ　スクールで　ならったんだ！\p"
+	.string "よく　わからないから　やってみてよ！$"
+
+Route116_Text_JerryRematchIntro: @ 0x0825D84E
+	.string "あれから　トレーナーズ　スクールで\n"
+	.string "まじめに　べんきょう　したからね\l"
+	.string "このまえ　みたいに　まけたりしないよ！$"
+
+Route116_Text_JerryRematchDefeat: @ 0x0825D885
+	.string "あれー？\n"
+	.string "きちんと　べんきょう　したのに$"
+
+Route116_Text_JerryPostRematch: @ 0x0825D89A
+	.string "トレーナーズ　スクールで\n"
+	.string "もういちど　べんきょう　しなおさなきゃ\l"
+	.string "ツツジさんに　おこられちゃうよ$"
+
+Route116_Text_KarenIntro: @ 0x0825D8CB
+	.string "スクールでも　べんきょう\n"
+	.string "かえりみち　でも　べんきょうよ！$"
+
+Route116_Text_KarenDefeat: @ 0x0825D8E9
+	.string "ショック\n"
+	.string "まけちゃったよ$"
+
+Route116_Text_KarenPostBattle: @ 0x0825D8F6
+	.string "ああん！　これじゃ　ツツジさまのように\n"
+	.string "エレガントな　トレーナーに　なれないわ！$"
+
+Route116_Text_KarenRegister1: @ 0x0825D91F
+	.string "あーっ　それ　ポケナビね！\n"
+	.string "あたしも　もってるから　とうろくして！$"
+
+Route116_Text_KarenRegister2: @ 0x0825D941
+	.string "あーっ　それ　ポケナビね！\n"
+	.string "あたしも　もってるから　とうろくして！$"
+
+Route116_Text_KarenRematchIntro: @ 0x0825D963
+	.string "あれから　ものすっごく　べんきょう　したの！\n"
+	.string "その　せいか　みてもらうからね！$"
+
+Route116_Text_KarenRematchDefeat: @ 0x0825D98B
+	.string "ショック\n"
+	.string "また　まけちゃったよ$"
+
+Route116_Text_KarenPostRematch: @ 0x0825D99B
+	.string "ツツジさまに　かったことが　あるの？\n"
+	.string "それじゃ　いまの　あたしには　かてないわ$"
+
+Route116_Text_SarahIntro: @ 0x0825D9C3
+	.string "わたくし　いままで\n"
+	.string "ひとに　なにかで　まけた　ことって\l"
+	.string "ありませんの！$"
+
+Route116_Text_SarahDefeat: @ 0x0825D9E7
+	.string "まあ\n"
+	.string "こんなの　はじめてですわ！$"
+
+Route116_Text_SarahPostBattle: @ 0x0825D9F8
+	.string "なにふじゆう　ない　くらし　ですけど\n"
+	.string "ポケモンの　ことだけは\l"
+	.string "おもいどおりに　なりません　のね$"
+
+Route116_Text_DawsonIntro: @ 0x0825DA28
+	.string "ぼくの　ポケモンの\n"
+	.string "うつくしい　けなみに　みとれて\l"
+	.string "キミは　なにも　できない！$"
+
+Route116_Text_DawsonDefeat: @ 0x0825DA50
+	.string "そりゃないぜ　ベイビー$"
+
+Route116_Text_DawsonPostBattle: @ 0x0825DA5C
+	.string "ああっ\n"
+	.string "ポケモンの　けなみと\l"
+	.string "ぼくの　ヘアーが　みだれた！\l"
+	.string "びよういん　よやく　しなきゃ$"
+
+Route116_Text_DevanIntro: @ 0x0825DA89
+	.string "ガツンと　いってみようかあ！$"
+
+Route116_Text_DevanDefeat: @ 0x0825DA98
+	.string "あああ\n"
+	.string "しょうぶに　ならんな　こりゃ$"
+
+Route116_Text_DevanPostBattle: @ 0x0825DAAB
+	.string "たまには　ほかの　タイプの\n"
+	.string "ポケモンも　つかって　みるかなあ？$"
+
+Route116_Text_JohnsonIntro: @ 0x0825DACB
+	.string "この　さきって　いきどまりなんだ\n"
+	.string "つまんない　から　しょうぶ　してね$"
+
+Route116_Text_JohnsonDefeat: @ 0x0825DAEE
+	.string "まけた　けど　おもしろかったよ！$"
+
+Route116_Text_JohnsonPostBattle: @ 0x0825DAFF
+	.string "まけちゃった　から\n"
+	.string "ぼくの　たんパン　かしてあげても　いーよ！$"
+	.incbin "baserom_jp.gba", 0x25db1f, 0x4874
