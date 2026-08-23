@@ -320,6 +320,42 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
             0x0825A7AB: 'Route106_Text_KylaPostBattle',
         },
     },
+    # Route107 follows Route106 in the same trainer-text owner.  The next
+    # EOS object is Route108 Jerome at 0x0825AB71, so this block is closed.
+    'Route107': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x0825A7CD,
+        'end': 0x0825AB71,
+        'labels': {
+            0x0825A7CD: 'Route107_Text_DarrinIntro',
+            0x0825A7F7: 'Route107_Text_DarrinDefeated',
+            0x0825A80B: 'Route107_Text_DarrinPostBattle',
+            0x0825A835: 'Route107_Text_TonyIntro',
+            0x0825A854: 'Route107_Text_TonyDefeated',
+            0x0825A86A: 'Route107_Text_TonyPostBattle',
+            0x0825A89D: 'Route107_Text_TonyRegister',
+            0x0825A8BB: 'Route107_Text_TonyRematchIntro',
+            0x0825A8E1: 'Route107_Text_TonyRematchDefeated',
+            0x0825A909: 'Route107_Text_TonyRematchPostBattle',
+            0x0825A945: 'Route107_Text_DeniseIntro',
+            0x0825A95F: 'Route107_Text_DeniseDefeated',
+            0x0825A967: 'Route107_Text_DenisePostBattle',
+            0x0825A98C: 'Route107_Text_BethIntro',
+            0x0825A9B0: 'Route107_Text_BethDefeated',
+            0x0825A9C4: 'Route107_Text_BethPostBattle',
+            0x0825A9E5: 'Route107_Text_LisaIntro',
+            0x0825AA08: 'Route107_Text_LisaDefeated',
+            0x0825AA20: 'Route107_Text_LisaPostBattle',
+            0x0825AA4B: 'Route107_Text_LisaNotEnoughPokemon',
+            0x0825AA6E: 'Route107_Text_RayIntro',
+            0x0825AAAE: 'Route107_Text_RayDefeated',
+            0x0825AAC7: 'Route107_Text_RayPostBattle',
+            0x0825AAF5: 'Route107_Text_RayNotEnoughPokemon',
+            0x0825AB15: 'Route107_Text_CamronIntro',
+            0x0825AB36: 'Route107_Text_CamronDefeated',
+            0x0825AB45: 'Route107_Text_CamronPostBattle',
+        },
+    },
 }
 
 # Reviewed JP-to-US names for maps whose event positions, control-flow shape,
@@ -600,6 +636,7 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081E856E: 'Route107_EventScript_Ray',
             0x081E8589: 'Route107_EventScript_Camron',
         },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route107']['labels'],
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
         'symbols': {
             'trainers': {

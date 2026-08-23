@@ -591,4 +591,117 @@ Route106_Text_KylaDefeated: @ 0x0825A797
 Route106_Text_KylaPostBattle: @ 0x0825A7AB
 	.string "なみに　ゆられて　ただようのが　だいすき\n"
 	.string "あなたも　やってみない？$"
-	.incbin "baserom_jp.gba", 0x25a7cd, 0x7bc6
+Route107_Text_DarrinIntro: @ 0x0825A7CD
+	.string "むにゃむにゃ⋯⋯\p"
+	.string "なみに　ゆられてたら　きもちよくなって\n"
+	.string "うっかり　ねてしまった！$"
+
+Route107_Text_DarrinDefeated: @ 0x0825A7F7
+	.string "あはは　まけた⋯⋯\n"
+	.string "また　ねますか⋯⋯$"
+
+Route107_Text_DarrinPostBattle: @ 0x0825A80B
+	.string "うみに　うかんで　なみに　ゆられてると\n"
+	.string "ふかふかの　ベッドで　ねてる　みたいだよ！$"
+
+Route107_Text_TonyIntro: @ 0x0825A835
+	.string "うみは　オレの　にわ　みたいな　もの！\n"
+	.string "しょうぶ　しようぜ！$"
+
+Route107_Text_TonyDefeated: @ 0x0825A854
+	.string "ホームグラウンドで　まけた⋯⋯\n"
+	.string "ショック！$"
+
+Route107_Text_TonyPostBattle: @ 0x0825A86A
+	.string "おおきな　ユメを　いっぱい　つめてー\n"
+	.string "でっかい　うみを　ひとおよぎー\p"
+	.string "さぁて　まだまだ　およぐぞー！$"
+
+Route107_Text_TonyRegister: @ 0x0825A89D
+	.string "ショックを　うけたオレを\n"
+	.string "きみが　わすれない　ために⋯⋯！$"
+
+Route107_Text_TonyRematchIntro: @ 0x0825A8BB
+	.string "でっかい　うみを　およいでいたら\n"
+	.string "ポケモンが　すっごく　つよくなったぞー！$"
+
+Route107_Text_TonyRematchDefeated: @ 0x0825A8E1
+	.string "ショック！！\p"
+	.string "ポケモンは　つよくなったが\n"
+	.string "トレーナーの　おれが　よわいまま！？$"
+
+Route107_Text_TonyRematchPostBattle: @ 0x0825A909
+	.string "たたかいの　なかで　おぼえたことが\n"
+	.string "トレーナーとしての　つよさに　つながる！\l"
+	.string "でっかい　うみが　そう　いっていたぞー！$"
+
+Route107_Text_DeniseIntro: @ 0x0825A945
+	.string "ムロタウン　っていう\n"
+	.string "ちいさな　まちを　しってる？$"
+
+Route107_Text_DeniseDefeated: @ 0x0825A95F
+	.string "ヤダ　もーっ！$"
+
+Route107_Text_DenisePostBattle: @ 0x0825A967
+	.string "ムロタウンの　しゅうかいじょで\n"
+	.string "ふしぎな　ことばが　はやって　いるのよ！$"
+
+Route107_Text_BethIntro: @ 0x0825A98C
+	.string "わたしと　しょうぶが　したいの？\n"
+	.string "いいわ！　あいてに　なって　あげる！$"
+
+Route107_Text_BethDefeated: @ 0x0825A9B0
+	.string "わたしじゃ　あいてに　ならなかったわ！$"
+
+Route107_Text_BethPostBattle: @ 0x0825A9C4
+	.string "あなた　まだまだ　つよく　なりそうね\n"
+	.string "わたしも　がんばろうっと！$"
+
+Route107_Text_LisaIntro: @ 0x0825A9E5
+	.string "ユミ“あたしたち　きょうだい　ふたりで\n"
+	.string "しょうぶを　させてもらうわ！$"
+
+Route107_Text_LisaDefeated: @ 0x0825AA08
+	.string "ユミ“すごいわ\n"
+	.string "つよさの　レベルが　ちがうのね$"
+
+Route107_Text_LisaPostBattle: @ 0x0825AA20
+	.string "ユミ“あなたは　いっしょに\n"
+	.string "うみに　あそびに　いくような\l"
+	.string "おともだち　いるのかしら？$"
+
+Route107_Text_LisaNotEnoughPokemon: @ 0x0825AA4B
+	.string "ユミ“アタシたちと　たたかうなら\n"
+	.string "ポケモン　もっと　つれてきなさいな$"
+
+Route107_Text_RayIntro: @ 0x0825AA6E
+	.string "シン“いつも　きょうだいで\n"
+	.string "ポケモンしょうぶ　してるんだ！\p"
+	.string "⋯⋯いっつも　おれが　まけるけど\n"
+	.string "2たい2なら　きみに　かてるよ！$"
+
+Route107_Text_RayDefeated: @ 0x0825AAAE
+	.string "シン“ひゃー\n"
+	.string "つよさの　レベルが　ちがいすぎるや$"
+
+Route107_Text_RayPostBattle: @ 0x0825AAC7
+	.string "シン“おれの　ポケモン\n"
+	.string "ねえちゃんから　もらって　そだてた\l"
+	.string "だいじな　あいぼう　なんだぜ！$"
+
+Route107_Text_RayNotEnoughPokemon: @ 0x0825AAF5
+	.string "シン“オレらと　たたかうなら\n"
+	.string "もっと　ポケモン　つれてきてよ！$"
+
+Route107_Text_CamronIntro: @ 0x0825AB15
+	.string "トライアスロンの　とちゅう　だが\n"
+	.string "ぜんぜん　つかれて　いないぜ！$"
+
+Route107_Text_CamronDefeated: @ 0x0825AB36
+	.string "いまので　つかれて　しまった$"
+
+Route107_Text_CamronPostBattle: @ 0x0825AB45
+	.string "こ　このあと　まだ\n"
+	.string "すいえい　ランニングが　のこっているぜ\l"
+	.string "だいじょうぶか　おれ⋯⋯？$"
+	.incbin "baserom_jp.gba", 0x25ab71, 0x7822

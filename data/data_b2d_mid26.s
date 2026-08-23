@@ -1477,13 +1477,13 @@ gMapEvents_ROUTE106: @ 0x08500FA0
 	map_events ROUTE106_EventObjects, ROUTE106_EventWarps, 0, ROUTE106_EventBgEvents
 	.globl ROUTE107_EventObjects
 ROUTE107_EventObjects: @ 0x08500FB4
-	object_event 1, 42, 0, 41, 10, 1, 24, 1, 1, 1, 3, 0x081E84AC, 0x0000
-	object_event 2, 42, 0, 23, 11, 1, 52, 6, 2, 1, 2, 0x081E84C3, 0x0000
-	object_event 3, 43, 0, 16, 7, 1, 13, 0, 0, 1, 5, 0x081E8525, 0x0000
-	object_event 4, 43, 0, 50, 11, 1, 65, 1, 1, 1, 5, 0x081E853C, 0x0000
-	object_event 5, 43, 0, 33, 4, 1, 8, 1, 1, 1, 1, 0x081E8553, 0x0000
-	object_event 6, 213, 0, 32, 4, 1, 8, 1, 1, 1, 1, 0x081E856E, 0x0000
-	object_event 7, 42, 0, 50, 5, 1, 64, 1, 1, 1, 5, 0x081E8589, 0x0000
+	object_event 1, 42, 0, 41, 10, 1, 24, 1, 1, 1, 3, Route107_EventScript_Darrin, 0x0000
+	object_event 2, 42, 0, 23, 11, 1, 52, 6, 2, 1, 2, Route107_EventScript_Tony, 0x0000
+	object_event 3, 43, 0, 16, 7, 1, 13, 0, 0, 1, 5, Route107_EventScript_Denise, 0x0000
+	object_event 4, 43, 0, 50, 11, 1, 65, 1, 1, 1, 5, Route107_EventScript_Beth, 0x0000
+	object_event 5, 43, 0, 33, 4, 1, 8, 1, 1, 1, 1, Route107_EventScript_Lisa, 0x0000
+	object_event 6, 213, 0, 32, 4, 1, 8, 1, 1, 1, 1, Route107_EventScript_Ray, 0x0000
+	object_event 7, 42, 0, 50, 5, 1, 64, 1, 1, 1, 5, Route107_EventScript_Camron, 0x0000
 	.globl gMapEvents_ROUTE107
 gMapEvents_ROUTE107: @ 0x0850105C
 	map_events ROUTE107_EventObjects, 0, 0, 0
