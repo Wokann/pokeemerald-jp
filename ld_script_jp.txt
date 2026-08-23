@@ -9771,6 +9771,8 @@ SECTIONS {
         src/field_tasks.o(.rodata.field_tasks_data.sSootopolisGymIceRowVars);
         src/field_tasks.o(.rodata.field_tasks_data.sMuddySlopeMetatiles);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_field_tasks_static_data);
+        src/data/reset_rtc_screen.o(.rodata.reset_rtc_screen_templates);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_reset_rtc_templates);
         src/data/text/region_texts25.o(.rodata);
         src/data/reset_rtc_screen.o(.rodata.reset_rtc_screen_data);
         src/data/text/region_texts31.o(.rodata);

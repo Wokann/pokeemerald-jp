@@ -83,16 +83,4 @@ gTextWindowFrame1_Pal: @ 0x84E8360
 
 	.section .rodata.data_b2d_mid28_after_field_tasks_static_data
 
-	.globl gResetRtcBgTemplates
-gResetRtcBgTemplates: @ 0x84E8A48
-	.byte 0xF0, 0x01, 0x00, 0x00
-
-	.globl gResetRtcWindowTemplates
-gResetRtcWindowTemplates: @ 0x84E8A4C
-	.byte 0x00, 0x01, 0x01, 0x13, 0x09, 0x0F, 0x55, 0x01
-	.byte 0x00, 0x04, 0x0F, 0x16, 0x04, 0x0F, 0xFD, 0x00
-	.byte 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-
-	.globl gResetRtcInputTimeWindow
-gResetRtcInputTimeWindow: @ 0x84E8A64
-	.incbin "graphics/misc/gResetRtcInputTimeWindow.bin"
+	.section .rodata.data_b2d_mid28_after_reset_rtc_templates
