@@ -552,6 +552,55 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             'multichoices': {0x000E: 'MULTI_BRINEY_OFF_DEWFORD'},
         },
     },
+    # These two routes are a compact, contiguous trainer-only tail.  The
+    # event order and each trainer ID are identical to the US map sources;
+    # their battle text remains in the existing shared text owner.
+    'Route132': {
+        'scripts': {
+            0x081EF51A: 'Route132_EventScript_Gilbert',
+            0x081EF531: 'Route132_EventScript_Dana',
+            0x081EF548: 'Route132_EventScript_Ronald',
+            0x081EF55F: 'Route132_EventScript_Kiyo',
+            0x081EF576: 'Route132_EventScript_Paxton',
+            0x081EF58D: 'Route132_EventScript_Darcy',
+            0x081EF5A4: 'Route132_EventScript_Jonathan',
+            0x081EF5BB: 'Route132_EventScript_Makayla',
+        },
+        'symbols': {
+            'trainers': {
+                0x00A9: 'TRAINER_GILBERT',
+                0x01CA: 'TRAINER_DANA',
+                0x015E: 'TRAINER_RONALD',
+                0x00B5: 'TRAINER_KIYO',
+                0x0252: 'TRAINER_PAXTON',
+                0x02DD: 'TRAINER_DARCY',
+                0x0256: 'TRAINER_JONATHAN',
+                0x02F6: 'TRAINER_MAKAYLA',
+            },
+        },
+    },
+    'Route133': {
+        'scripts': {
+            0x081EF5D3: 'Route133_EventScript_Franklin',
+            0x081EF5EA: 'Route133_EventScript_Debra',
+            0x081EF601: 'Route133_EventScript_Linda',
+            0x081EF618: 'Route133_EventScript_Warren',
+            0x081EF62F: 'Route133_EventScript_Beck',
+            0x081EF646: 'Route133_EventScript_Mollie',
+            0x081EF65D: 'Route133_EventScript_Conor',
+        },
+        'symbols': {
+            'trainers': {
+                0x00AA: 'TRAINER_FRANKLIN',
+                0x01CC: 'TRAINER_DEBRA',
+                0x01CD: 'TRAINER_LINDA',
+                0x0058: 'TRAINER_WARREN',
+                0x019E: 'TRAINER_BECK',
+                0x0089: 'TRAINER_MOLLIE',
+                0x01FF: 'TRAINER_CONOR',
+            },
+        },
+    },
 }
 
 MAP_MOVEMENT_SCRIPT_LABELS.update({

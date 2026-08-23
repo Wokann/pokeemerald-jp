@@ -19,4 +19,4 @@ Route131_EventScript_001EF44F::
 	call_if 0x1, 0x08243106
 	return
 
-	.incbin "baserom_jp.gba", 0x1ef459, 0x21b
+	.incbin "baserom_jp.gba", 0x1ef459, 0xc0

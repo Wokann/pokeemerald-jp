@@ -147,6 +147,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/Route129/scripts.inc"
 	.include "data/maps/Route130/scripts.inc"
 	.include "data/maps/Route131/scripts.inc"
+	.include "data/maps/Route132/scripts.inc"
+	.include "data/maps/Route133/scripts.inc"
 	.include "data/maps/Route134/scripts.inc"
 	.include "data/maps/Underwater_Route124/scripts.inc"
 	.include "data/maps/Underwater_Route126/scripts.inc"
