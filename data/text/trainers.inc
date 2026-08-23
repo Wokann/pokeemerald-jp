@@ -3516,4 +3516,191 @@ Route123_Text_KayleyDefeat: @ 0x082600B1
 
 Route123_Text_KayleyPostBattle: @ 0x082600C4
 	.string "こもの　づかいも　おしゃれの　ひけつよ！$"
-	.incbin "baserom_jp.gba", 0x2600d9, 0x22ba
+Route124_Text_SpencerIntro: @ 0x082600D9
+	.string "おっと　みちに　まよったのか？\p"
+	.string "わたしの　ポケモンに　かてたら\n"
+	.string "みずさき　あんないにんに　なってあげようか？$"
+
+Route124_Text_SpencerDefeat: @ 0x08260110
+	.string "たたかいかたを　まよってしまった⋯⋯$"
+
+Route124_Text_SpencerPostBattle: @ 0x08260123
+	.string "うみで　まよってしまう　ひとは　おおい！\p"
+	.string "そんな　ひとは　ポケナビで\n"
+	.string "マップを　たしかめながら　すすむと　いい！$"
+
+Route124_Text_RolandIntro: @ 0x0826015C
+	.string "むっ！　じぶんで　およがずに\n"
+	.string "ポケモンに　のっている⋯⋯\p"
+	.string "なんて　うらやましいんだ！$"
+
+Route124_Text_RolandDefeat: @ 0x08260187
+	.string "ああ！\n"
+	.string "ダメだ⋯⋯！$"
+
+Route124_Text_RolandPostBattle: @ 0x08260192
+	.string "からだが　ひえてきた⋯⋯\n"
+	.string "ながいこと　みずの　なかに　いるからだ\p"
+	.string "きみのように　ポケモンに　のりたいよ$"
+
+Route124_Text_JennyIntro: @ 0x082601C6
+	.string "こうして　うみに　うかんでいると\n"
+	.string "ポケモンたちが　あそびに　くるのよ！$"
+
+Route124_Text_JennyDefeat: @ 0x082601EA
+	.string "あーあ\n"
+	.string "まけちゃった⋯⋯$"
+
+Route124_Text_JennyPostBattle: @ 0x082601F7
+	.string "うみを　およいでいると\n"
+	.string "おそってくる　ポケモンと\l"
+	.string "ただ　みているだけの　ポケモンが　いるの\p"
+	.string "ポケモンにも　こせいが　あるのね！$"
+
+Route124_Text_JennyRegister: @ 0x08260237
+	.string "なんとなく　だけど\n"
+	.string "ポケナビ　とうろく　してもらおうかな⋯⋯$"
+
+Route124_Text_JennyRematchIntro: @ 0x08260256
+	.string "こうして　うみに　うかんでいると\n"
+	.string "トレーナーが　いどんで　くるのよね！$"
+
+Route124_Text_JennyRematchDefeat: @ 0x0826027A
+	.string "おかしいなあ\n"
+	.string "また　まけちゃった⋯⋯$"
+
+Route124_Text_JennyPostRematch: @ 0x0826028D
+	.string "なんとなく　だけど\n"
+	.string "カラクリやしきに　いってみようかな⋯⋯$"
+
+Route124_Text_GraceIntro: @ 0x082602AB
+	.string "およぐのにも　あきた　ところだし⋯⋯\n"
+	.string "わたしと　しょうぶ　しようよ！$"
+
+Route124_Text_GraceDefeat: @ 0x082602CE
+	.string "こんなに　つよいなんて\n"
+	.string "おもいも　しなかったわ！$"
+
+Route124_Text_GracePostBattle: @ 0x082602E7
+	.string "ずっと　がんばって　きたことが\n"
+	.string "あなたの　つよさなのね⋯⋯！$"
+
+Route124_Text_ChadIntro: @ 0x08260306
+	.string "うふふふふ\n"
+	.string "オレは　モグリの　スイマー\l"
+	.string "もぐりは　とくいちゅうの　とくいだぜ！$"
+
+Route124_Text_ChadDefeat: @ 0x0826032E
+	.string "ゴボゴボゴボ⋯⋯\n"
+	.string "しずんでいく⋯⋯$"
+
+Route124_Text_ChadPostBattle: @ 0x08260340
+	.string "うみの　そこに　もぐれる　ポイントが\n"
+	.string "この　あたりには　あるらしいぜ！\l"
+	.string "モグリの　ちが　さわぐなあ⋯⋯$"
+
+Route124_Text_LilaIntro: @ 0x08260374
+	.string "カコ“はーあ\p"
+	.string "せっかくの　うみ　なのに\n"
+	.string "いっしょに　いるのが　おとうと　なんて⋯⋯\p"
+	.string "あなた　きばらしに　ポケモン　しようか！？$"
+
+Route124_Text_LilaDefeat: @ 0x082603B4
+	.string "カコ“コウの　せいで　まけたのよ！\n"
+	.string "あとで　おしおき　だかんね！！$"
+
+Route124_Text_LilaPostBattle: @ 0x082603D6
+	.string "カコ“はーあ\p"
+	.string "となりに　いるのが　おとうと　じゃなくて\n"
+	.string "すてきな　かれし　だったら　いいのに⋯⋯$"
+
+Route124_Text_LilaNotEnoughMons: @ 0x08260407
+	.string "カコ“あたしたちと　たたかう　つもり？\n"
+	.string "ポケモン　2ひき　いないと　ダメよ$"
+
+Route124_Text_RoyIntro: @ 0x0826042D
+	.string "コウ“オレの　ねえちゃん\n"
+	.string "ポケモン　つよいぞ！\l"
+	.string "まけて　ないたり　するなよ！$"
+
+Route124_Text_RoyDefeat: @ 0x08260454
+	.string "コウ“うわぁ⋯⋯\n"
+	.string "あとで　ねえちゃんに　おこられる⋯⋯$"
+
+Route124_Text_RoyPostBattle: @ 0x08260470
+	.string "コウ“オレの　ねえちゃん\n"
+	.string "おこると　むちゃくちゃ　こわいんだ⋯⋯\p"
+	.string "だから　こいびと　いないんだぜ⋯⋯$"
+
+Route124_Text_LilaRoyRegister: @ 0x082604A3
+	.string "コウ“また　こんど　しょうぶしてよ\n"
+	.string "⋯⋯そのときは　てかげんして　くれよ！$"
+
+Route124_Text_RoyNotEnoughMons: @ 0x082604C9
+	.string "コウ“オレらと　たたかう　つもり？\n"
+	.string "ポケモン　2ひき　つれてきなよ！$"
+
+Route124_Text_LilaRematchIntro: @ 0x082604EC
+	.string "カコ“はーあ\p"
+	.string "せっかくの　うみ　なのに\n"
+	.string "いっしょに　いるのが　おとうと　なんて⋯⋯\p"
+	.string "あら　あなた　ひさしぶりね\n"
+	.string "きばらしに　ポケモン　しようか！？$"
+
+Route124_Text_LilaRematchDefeat: @ 0x08260536
+	.string "カコ“コウったら！\n"
+	.string "あんたの　せいで　また　まけたでしょ！\l"
+	.string "あとで　とっくん　だかんね！！$"
+
+Route124_Text_LilaPostRematch: @ 0x08260564
+	.string "カコ“はーあ\p"
+	.string "あたしに　すてきな　かれしが　いたらなぁ\n"
+	.string "すてきな　コンビネーションで\l"
+	.string "どんな　あいてにでも　かっちゃうのに$"
+
+Route124_Text_LilaRematchNotEnoughMons: @ 0x082605A2
+	.string "カコ“あたしたちと　たたかう　つもり？\n"
+	.string "ポケモン　2ひき　いないと　ダメよ$"
+
+Route124_Text_RoyRematchIntro: @ 0x082605C8
+	.string "コウ“まけたら　オレが　おこられるから\n"
+	.string "むちゃくちゃ　ほんきで　がんばるぞ！$"
+
+Route124_Text_RoyRematchDefeat: @ 0x082605EF
+	.string "コウ“うわぁ⋯⋯\n"
+	.string "また　ねえちゃんに　おこられる⋯⋯$"
+
+Route124_Text_RoyPostRematch: @ 0x0826060A
+	.string "コウ“オレの　ねえちゃん\n"
+	.string "おこると　むちゃくちゃ　こわいんだ⋯⋯\p"
+	.string "あとで　オレと　ポケモン\n"
+	.string "もうとっくん　だよ⋯⋯$"
+
+Route124_Text_RoyRematchNotEnoughMons: @ 0x08260644
+	.string "コウ“オレらと　たたかう　つもり？\n"
+	.string "ポケモン　2ひき　つれてきなよ！$"
+
+Route124_Text_DeclanIntro: @ 0x08260667
+	.string "こんな　きれいな　うみで\n"
+	.string "ひとりで　およいでいる　オレ！\l"
+	.string "はっきりいって　かなしすぎます！$"
+
+Route124_Text_DeclanDefeat: @ 0x08260695
+	.string "かなしい\n"
+	.string "そらの　あおさが　かなしい$"
+
+Route124_Text_DeclanPostBattle: @ 0x082606A8
+	.string "ビキニのおねえさんを　さそって\n"
+	.string "えんえいと　しゃれこんで　みようかな？$"
+
+Route124_Text_IsabellaIntro: @ 0x082606CC
+	.string "なみのりトレーナー　なんかに　まけないわ！$"
+
+Route124_Text_IsabellaDefeat: @ 0x082606E2
+	.string "ううっ　ポタポタ\n"
+	.string "こ　これは　すいてきよ！　ないてないわよ！$"
+
+Route124_Text_IsabellaPostBattle: @ 0x08260701
+	.string "きれいな　いろの　カケラが\n"
+	.string "この　あたりで　みつかることが　あるわよ$"
+	.incbin "baserom_jp.gba", 0x260724, 0x1c6f

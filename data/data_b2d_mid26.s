@@ -1,3 +1,16 @@
+#include "constants/global.h"
+#include "constants/event_bg.h"
+#include "constants/event_object_movement.h"
+#include "constants/event_objects.h"
+#include "constants/flags.h"
+#include "constants/items.h"
+#include "constants/secret_bases.h"
+#include "constants/trainer_types.h"
+#include "constants/berry.h"
+#include "constants/weather.h"
+
+#define NULL 0
+
 .include "sound/MPlayDef.s"
 	.section .rodata
 	.include "asm/macros.inc"
@@ -2325,117 +2338,15 @@ ROUTE122_EventWarps: @ 0x085044CC
 	.globl gMapEvents_ROUTE122
 gMapEvents_ROUTE122: @ 0x085044D4
 	map_events 0, ROUTE122_EventWarps, 0, 0
-	.globl ROUTE123_EventObjects
-ROUTE123_EventObjects: @ 0x085044E8
-	object_event 1, 60, 0, 11, 3, 3, 12, 0, 0, 0, 58, 0x08244D23, 0x0000
-	object_event 2, 60, 0, 12, 3, 3, 12, 0, 0, 0, 59, 0x08244D23, 0x0000
-	object_event 3, 60, 0, 14, 3, 3, 12, 0, 0, 0, 60, 0x08244D23, 0x0000
-	object_event 4, 60, 0, 15, 3, 3, 12, 0, 0, 0, 61, 0x08244D23, 0x0000
-	object_event 5, 60, 0, 81, 1, 3, 12, 0, 0, 0, 62, 0x08244D23, 0x0000
-	object_event 6, 60, 0, 82, 1, 3, 12, 0, 0, 0, 63, 0x08244D23, 0x0000
-	object_event 7, 60, 0, 83, 1, 3, 12, 0, 0, 0, 64, 0x08244D23, 0x0000
-	object_event 8, 34, 0, 70, 12, 3, 24, 0, 0, 1, 1, Route123_EventScript_Wendy, 0x0000
-	object_event 9, 33, 0, 58, 7, 3, 17, 0, 0, 1, 2, Route123_EventScript_Braxton, 0x0000
-	object_event 10, 60, 0, 14, 5, 3, 12, 0, 0, 0, 65, 0x08244D23, 0x0000
-	object_event 11, 60, 0, 15, 5, 3, 12, 0, 0, 0, 72, 0x08244D23, 0x0000
-	object_event 12, 60, 0, 17, 5, 3, 12, 0, 0, 0, 73, 0x08244D23, 0x0000
-	object_event 13, 60, 0, 18, 5, 3, 12, 0, 0, 0, 74, 0x08244D23, 0x0000
-	object_event 14, 60, 0, 17, 3, 3, 12, 0, 0, 0, 79, 0x08244D23, 0x0000
-	object_event 15, 60, 0, 18, 3, 3, 12, 0, 0, 0, 14, 0x08244D23, 0x0000
-	object_event 16, 60, 0, 11, 5, 3, 12, 0, 0, 0, 15, 0x08244D23, 0x0000
-	object_event 17, 60, 0, 12, 5, 3, 12, 0, 0, 0, 30, 0x08244D23, 0x0000
-	object_event 18, 82, 0, 101, 13, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0011
-	object_event 19, 82, 0, 129, 14, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0012
-	object_event 20, 82, 0, 92, 9, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0013
-	object_event 21, 59, 0, 31, 8, 3, 1, 0, 0, 0, 0, 0x08256D07, 0x0408
-	object_event 22, 14, 0, 108, 13, 3, 15, 0, 0, 0, 0, Route123_EventScript_GigaDrainGirl, 0x0000
-	object_event 23, 60, 0, 109, 13, 3, 12, 0, 0, 0, 87, 0x08244D23, 0x0000
-	object_event 24, 60, 0, 110, 13, 3, 12, 0, 0, 0, 88, 0x08244D23, 0x0000
-	object_event 25, 60, 0, 111, 13, 3, 12, 0, 0, 0, 89, 0x08244D23, 0x0000
-	object_event 26, 20, 0, 18, 9, 3, 23, 0, 0, 1, 2, Route123_EventScript_Violet, 0x0000
-	object_event 27, 6, 0, 38, 13, 3, 8, 0, 0, 1, 1, Route123_EventScript_Yuki, 0x0000
-	object_event 28, 6, 0, 37, 13, 3, 8, 0, 0, 1, 1, Route123_EventScript_Miu, 0x0000
-	object_event 29, 37, 0, 138, 12, 3, 9, 0, 0, 1, 7, Route123_EventScript_Cameron, 0x0000
-	object_event 30, 47, 0, 49, 16, 3, 8, 0, 0, 1, 1, Route123_EventScript_Jacki, 0x0000
-	object_event 31, 40, 0, 87, 12, 3, 8, 0, 0, 1, 4, Route123_EventScript_Kindra, 0x0000
-	object_event 32, 59, 0, 27, 18, 3, 1, 1, 1, 0, 0, 0x08256D14, 0x0450
-	object_event 33, 59, 0, 75, 9, 3, 1, 1, 1, 0, 0, 0x08256D21, 0x0455
-	object_event 34, 5, 0, 138, 14, 3, 57, 1, 1, 1, 1, Route123_EventScript_Jonas, 0x0000
-	object_event 35, 20, 0, 138, 16, 3, 7, 1, 1, 1, 1, Route123_EventScript_Kayley, 0x0000
-	object_event 36, 39, 0, 87, 17, 3, 7, 1, 1, 1, 4, Route123_EventScript_Ed, 0x0000
-	object_event 37, 66, 0, 66, 16, 3, 8, 1, 1, 1, 2, Route123_EventScript_Fernando, 0x0000
-	object_event 38, 66, 0, 66, 19, 3, 7, 1, 1, 1, 2, Route123_EventScript_Alberto, 0x0000
-	object_event 39, 21, 0, 49, 19, 3, 7, 1, 1, 1, 2, Route123_EventScript_Frederick, 0x0000
-	object_event 40, 59, 0, 43, 15, 3, 1, 1, 1, 0, 0, 0x08256D2E, 0x0480
-	object_event 41, 34, 0, 14, 16, 3, 7, 1, 1, 1, 3, Route123_EventScript_Jazmyn, 0x0000
-	object_event 42, 35, 0, 14, 12, 3, 26, 1, 3, 1, 3, Route123_EventScript_Davis, 0x0000
-	object_event 43, 59, 0, 57, 16, 3, 1, 1, 1, 0, 0, 0x08256D3B, 0x0481
-	.globl ROUTE123_EventWarps
-ROUTE123_EventWarps: @ 0x085048F0
-	warp_def 22, 6, 0, 0, MAP_ROUTE123_BERRY_MASTERS_HOUSE
-	.globl ROUTE123_EventCoordEvents
-ROUTE123_EventCoordEvents: @ 0x085048F8
-	coord_event 90, 16, 3, 21, 0, 0x00000000
-	coord_event 92, 9, 3, 21, 0, 0x00000000
-	coord_event 93, 12, 3, 21, 0, 0x00000000
-	coord_event 92, 13, 3, 21, 0, 0x00000000
-	coord_event 91, 14, 3, 21, 0, 0x00000000
-	coord_event 19, 13, 3, 21, 0, 0x00000000
-	coord_event 19, 12, 3, 21, 0, 0x00000000
-	coord_event 34, 13, 3, 21, 0, 0x00000000
-	coord_event 19, 14, 3, 21, 0, 0x00000000
-	coord_event 19, 15, 3, 21, 0, 0x00000000
-	coord_event 19, 16, 3, 21, 0, 0x00000000
-	coord_event 108, 14, 3, 2, 0, 0x00000000
-	coord_event 109, 15, 3, 2, 0, 0x00000000
-	coord_event 110, 16, 3, 2, 0, 0x00000000
-	coord_event 111, 17, 3, 2, 0, 0x00000000
-	coord_event 112, 18, 3, 2, 0, 0x00000000
-	coord_event 9, 12, 3, 2, 0, 0x00000000
-	coord_event 9, 13, 3, 2, 0, 0x00000000
-	coord_event 9, 14, 3, 2, 0, 0x00000000
-	coord_event 9, 15, 3, 2, 0, 0x00000000
-	coord_event 9, 16, 3, 2, 0, 0x00000000
-	coord_event 94, 10, 3, 21, 0, 0x00000000
-	.globl ROUTE123_EventBgEvents
-ROUTE123_EventBgEvents: @ 0x08504A58
-	bg_event 117, 10, 0, 0, Route123_EventScript_RouteSignMtPyre, 0, 0
-	bg_event 47, 3, 0, 8, 0x0052, 0x00, 0x00
-	bg_event 49, 3, 0, 8, 0x005C, 0x00, 0x00
-	bg_event 10, 12, 3, 0, Route123_EventScript_RouteSign, 0, 0
-	bg_event 75, 1, 3, 7, 0x0053, 0x07, 0x00
-	bg_event 20, 7, 3, 0, Route123_EventScript_BerryMastersHouseSign, 0, 0
-	bg_event 57, 5, 0, 8, 0x0053, 0x00, 0x00
-	bg_event 12, 1, 3, 7, 0x0018, 0x29, 0x00
-	bg_event 91, 15, 3, 7, 0x0015, 0x4A, 0x00
-	bg_event 139, 15, 3, 7, 0x0045, 0x63, 0x00
-	bg_event 138, 18, 3, 7, 0x0044, 0x6E, 0x00
+	.include "data/maps/Route123/events.inc"
+	.globl EventScript_CutTree
+	.set EventScript_CutTree, 0x082565C8
 	.globl gMapEvents_ROUTE123
-gMapEvents_ROUTE123: @ 0x08504ADC
-	map_events ROUTE123_EventObjects, ROUTE123_EventWarps, ROUTE123_EventCoordEvents, ROUTE123_EventBgEvents
-	.globl ROUTE124_EventObjects
-ROUTE124_EventObjects: @ 0x08504AF0
-	object_event 1, 42, 0, 34, 25, 1, 1, 5, 0, 1, 3, 0x081EE7B8, 0x0000
-	object_event 2, 42, 0, 61, 74, 1, 67, 5, 3, 1, 7, 0x081EE7CF, 0x0000
-	object_event 3, 43, 0, 49, 45, 1, 24, 0, 0, 1, 3, 0x081EE7E6, 0x0000
-	object_event 4, 43, 0, 7, 23, 1, 18, 6, 8, 1, 5, 0x081EE848, 0x0000
-	object_event 5, 42, 0, 58, 58, 1, 28, 7, 0, 1, 2, 0x081EE85F, 0x0000
-	object_event 6, 59, 0, 28, 12, 3, 1, 1, 1, 0, 0, 0x08256D48, 0x0444
-	object_event 7, 59, 0, 31, 53, 3, 1, 1, 1, 0, 0, 0x08256D55, 0x0445
-	object_event 8, 59, 0, 58, 11, 3, 1, 1, 1, 0, 0, 0x08256D62, 0x042A
-	object_event 9, 43, 0, 18, 44, 1, 8, 1, 1, 1, 1, 0x081EE876, 0x0000
-	object_event 10, 213, 0, 17, 44, 1, 8, 1, 1, 1, 1, 0x081EE8DA, 0x0000
-	object_event 11, 42, 0, 7, 29, 1, 7, 1, 1, 1, 5, 0x081EE93E, 0x0000
-	object_event 12, 43, 0, 69, 74, 1, 66, 1, 1, 1, 7, 0x081EE955, 0x0000
-	.globl ROUTE124_EventWarps
-ROUTE124_EventWarps: @ 0x08504C10
-	warp_def 70, 48, 3, 0, MAP_ROUTE124_DIVING_TREASURE_HUNTERS_HOUSE
-	.globl ROUTE124_EventBgEvents
-ROUTE124_EventBgEvents: @ 0x08504C18
-	bg_event 73, 48, 3, 0, Route124_EventScript_001EE7AF, 0, 0
+	.set gMapEvents_ROUTE123, Route123_MapEvents
+
+	.include "data/maps/Route124/events.inc"
 	.globl gMapEvents_ROUTE124
-gMapEvents_ROUTE124: @ 0x08504C24
-	map_events ROUTE124_EventObjects, ROUTE124_EventWarps, 0, ROUTE124_EventBgEvents
+	.set gMapEvents_ROUTE124, Route124_MapEvents
 	.globl ROUTE125_EventObjects
 ROUTE125_EventObjects: @ 0x08504C38
 	object_event 1, 42, 0, 7, 31, 1, 28, 0, 0, 1, 2, 0x081EE9D8, 0x0000

@@ -14,7 +14,19 @@
 	.4byte \address
 	.endm
 
-	.macro object_event index:req, gfx:req, replacement:req, x:req, y:req, elevation:req, movement_type:req, x_radius:req, y_radius:req, trainer_type:req, sight_radius_tree_etc:req, script:req, event_flag:req
+	.macro object_event index:req, gfx:req, replacement:req, x:req, y:req, elevation:req, movement_type:req, x_radius:req, y_radius:req, trainer_type:req, sight_radius_tree_etc:req, script:req, event_flag
+	.ifb \event_flag
+	@ US/mapjson form omits the obsolete JP replacement byte.  Re-map the
+	@ shifted arguments while retaining the legacy form for unmigrated maps.
+	.byte \index, \gfx, 0, 0
+	.2byte \replacement
+	.2byte \x
+	.byte \y, \elevation, ((\x_radius << 4) | \movement_type), 0
+	.2byte \y_radius, \trainer_type
+	.4byte \sight_radius_tree_etc
+	.2byte \script
+	.2byte 0
+	.else
 	.byte \index, \gfx, \replacement, 0
 	.2byte \x
 	.2byte \y
@@ -23,6 +35,7 @@
 	.4byte \script
 	.2byte \event_flag
 	.2byte 0
+	.endif
 	inc _num_npcs
 	.endm
 
@@ -62,6 +75,10 @@
 	.byte \arg7, \arg8
 	.endif
 	inc _num_signs
+	.endm
+
+	.macro bg_sign_event x:req, y:req, elevation:req, facing_dir:req, script:req
+	bg_event \x, \y, \elevation, \facing_dir, \script, 0, 0
 	.endm
 
 	.macro bg_hidden_item_event x, y, height, item, flag

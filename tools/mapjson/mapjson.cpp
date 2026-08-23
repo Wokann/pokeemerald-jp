@@ -391,6 +391,25 @@ void process_map(string map_filepath, string layouts_filepath, string output_dir
     write_text_file(out_dir + "connections.inc", connections_text);
 }
 
+// JP is migrating map events before its complete layout table is available.
+// Keep the canonical map.json schema and generator, but allow the event-only
+// output to be rebuilt without an unrelated layouts.json dependency.
+void process_map_events(string map_filepath, string output_dir) {
+    string mapdata_err;
+    Json map_data = Json::parse(read_text_file(map_filepath), mapdata_err);
+    if (map_data == Json())
+        FATAL_ERROR("%s\n", mapdata_err.c_str());
+
+    string events_text = generate_map_events_text(map_data);
+    while (events_text.size() >= 2
+           && events_text[events_text.size() - 1] == '\n'
+           && events_text[events_text.size() - 2] == '\n')
+        events_text.pop_back();
+
+    string out_dir = strip_trailing_separator(output_dir).append(sep);
+    write_text_file(out_dir + "events.inc", events_text);
+}
+
 void process_event_constants(const vector<string> &map_filepaths, string output_ids_file) {
     string warning = get_generated_warning("data/maps/*/map.json", false);
 
@@ -698,6 +717,13 @@ int main(int argc, char *argv[]) {
 
         process_map(filepath, layouts_filepath, output_dir);
     }
+    else if (mode == "events") {
+        if (argc != 5)
+            FATAL_ERROR("USAGE: mapjson events <game-version> <map_file> <output_dir>\n");
+
+        infer_separator(argv[3]);
+        process_map_events(argv[3], argv[4]);
+    }
     else if (mode == "groups") {
         if (argc != 6)
             FATAL_ERROR("USAGE: mapjson groups <game-version> <groups_file> <output_asm_dir> <output_c_dir>\n");
@@ -737,7 +763,7 @@ int main(int argc, char *argv[]) {
         process_event_constants(filepaths, output_ids_file);
     }
     else {
-        FATAL_ERROR("ERROR: <mode> must be 'layouts', 'map', 'event_constants', or 'groups'.\n");
+        FATAL_ERROR("ERROR: <mode> must be 'layouts', 'map', 'events', 'event_constants', or 'groups'.\n");
     }
 
     return 0;

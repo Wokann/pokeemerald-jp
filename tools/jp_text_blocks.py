@@ -4,8 +4,9 @@
 Map script data and shared text do not always live in the same ROM region.
 This tool handles the latter without optimistic decoding: each configured
 block has an exact raw owner, a closed ROM range, and a proof-gated label for
-every EOS-terminated object.  ``emit`` and ``patch`` are read-only; a patch is
-printed for review and must be applied separately.
+every EOS-terminated object.  ``emit`` and ``patch`` are read-only.  ``write``
+performs the same byte-exact verification before replacing the unique raw
+owner in place.
 """
 
 from __future__ import annotations
@@ -175,6 +176,22 @@ def patch_block(block: TextBlock) -> str:
     return "\n".join(patch) + "\n"
 
 
+def write_block(block: TextBlock) -> None:
+    """Verify and replace the unique raw owner with one decoded block."""
+    fragment = verify_block(block)
+    line_index, owner_start, owner_end, _ = raw_owner(block)
+    source_lines = block.source.read_text(encoding="utf-8").splitlines()
+    replacement = []
+    if owner_start < block.start:
+        replacement.append(incbin_line(owner_start, block.start))
+    replacement.extend(fragment.rstrip("\n").splitlines())
+    if block.end < owner_end:
+        replacement.append(incbin_line(block.end, owner_end))
+    source_lines[line_index : line_index + 1] = replacement
+    block.source.write_text("\n".join(source_lines) + "\n", encoding="utf-8")
+    print(f"wrote {block.source}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -182,6 +199,7 @@ def main() -> None:
         ("emit", "print one losslessly decoded text block"),
         ("verify", "assemble and exact-compare one text block"),
         ("patch", "print a verified apply_patch payload for one text block"),
+        ("write", "verify and replace the unique raw owner in place"),
     ):
         subparser = commands.add_parser(command, help=help_text)
         subparser.add_argument("block_name")
@@ -191,8 +209,10 @@ def main() -> None:
         print(emit_block(block), end="")
     elif args.command == "verify":
         verify_block(block)
-    else:
+    elif args.command == "patch":
         print(patch_block(block), end="")
+    else:
+        write_block(block)
 
 
 if __name__ == "__main__":

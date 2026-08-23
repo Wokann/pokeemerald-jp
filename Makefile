@@ -66,6 +66,15 @@ C_OBJECTS += $(C_BUILDDIR)/libisagbprn_a.o $(C_BUILDDIR)/libisagbprn_putc.o $(C_
 C_OBJECTS += $(C_BUILDDIR)/field_player_avatar_tail.o
 C_OBJECTS += $(C_BUILDDIR)/pokenav_conditions_gfx_tail.o
 
+# Maps already migrated to the canonical map.json event-data structure.
+# The event-only mode keeps this first slice reproducible while the complete
+# JP layouts.json and map header/connection tables are migrated separately.
+JP_STRUCTURED_MAPS := Route123 Route124
+JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
+
+$(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
+	$(MAPJSON) events emerald $< $(@D)
+
 # Match the official flash library builds: agb_flash uses -O (not -O2).
 $(C_BUILDDIR)/agb_flash.o: CFLAGS := -O -mthumb-interwork -fhex-asm
 $(C_BUILDDIR)/agb_flash_1m.o: CFLAGS := -O -mthumb-interwork -fhex-asm
@@ -1378,9 +1387,9 @@ $(OBJ_DIR)/data/data_b2d_mid15.o: data/data_b2d_mid15.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-$(OBJ_DIR)/data/data_b2d_mid26.o: data/data_b2d_mid26.s baserom_jp.gba
+$(OBJ_DIR)/data/data_b2d_mid26.o: data/data_b2d_mid26.s baserom_jp.gba $(JP_STRUCTURED_MAP_EVENTS)
 	@mkdir -p $(dir $@)
-	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(CPP) -I include - | $(PREPROC) -ie $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/data_b2d_mid28.o: data/data_b2d_mid28.s baserom_jp.gba
 	@mkdir -p $(dir $@)

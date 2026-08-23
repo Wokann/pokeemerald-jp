@@ -144,6 +144,8 @@ Common_EventScript_ShowBagIsFull:: @ 0x082430E0
 	loadword 0x0, 0x82439A8
 	callstd 0x4
 	return 
+
+Common_EventScript_SetAbnormalWeather:: @ 0x08243106
 	setweather 0xF
 	return 
 	playfanfare 0x171
