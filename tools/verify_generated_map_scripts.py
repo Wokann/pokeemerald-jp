@@ -111,7 +111,10 @@ def _undefined_symbols(object_path: Path) -> set[str]:
 
 
 def _external_label_addresses() -> dict[str, int]:
-    labels = {name: address for address, name in emitter.event_script_labels().items()}
+    # One ROM address may deliberately retain both a legacy gJPText alias and
+    # a reviewed semantic label.  The temporary verifier must know every
+    # alias, not merely the primary display name used by map emission.
+    labels = emitter.event_script_symbol_addresses()
     # These names are macro-only string-buffer selectors. They do not survive
     # as ROM symbols, but GAS must know their identities while expanding
     # stringvar inside generated map scripts.

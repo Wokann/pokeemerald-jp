@@ -259,6 +259,41 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
             0x0825A29B: 'Route104_Text_DarianPostBattle',
         },
     },
+    # Route105's trainer text immediately follows the Route104 block in the
+    # same physical owner.  Every EOS boundary and trainerbattle pointer was
+    # checked against the JP ROM and the US Route105 source.
+    'Route105': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x0825A2BA,
+        'end': 0x0825A5D9,
+        'labels': {
+            0x0825A2BA: 'Route105_Text_FosterIntro',
+            0x0825A2DD: 'Route105_Text_FosterDefeated',
+            0x0825A2FF: 'Route105_Text_FosterPostBattle',
+            0x0825A320: 'Route105_Text_LuisIntro',
+            0x0825A355: 'Route105_Text_LuisDefeated',
+            0x0825A35C: 'Route105_Text_LuisPostBattle',
+            0x0825A380: 'Route105_Text_DominikIntro',
+            0x0825A39E: 'Route105_Text_DominikDefeated',
+            0x0825A3AF: 'Route105_Text_DominikPostBattle',
+            0x0825A3DF: 'Route105_Text_BeverlyIntro',
+            0x0825A407: 'Route105_Text_BeverlyDefeated',
+            0x0825A40E: 'Route105_Text_PostBattle',
+            0x0825A454: 'Route105_Text_ImaniIntro',
+            0x0825A470: 'Route105_Text_ImaniDefeated',
+            0x0825A486: 'Route105_Text_ImaniPostBattle',
+            0x0825A4A3: 'Route105_Text_AndresIntro',
+            0x0825A4BD: 'Route105_Text_AndresDefeated',
+            0x0825A4D2: 'Route105_Text_AndresPostBattle',
+            0x0825A4FD: 'Route105_Text_AndresRegister',
+            0x0825A520: 'Route105_Text_AndresRematchIntro',
+            0x0825A543: 'Route105_Text_AndresRematchDefeated',
+            0x0825A553: 'Route105_Text_AndresRematchPostBattle',
+            0x0825A585: 'Route105_Text_JosueIntro',
+            0x0825A5A9: 'Route105_Text_JosueDefeated',
+            0x0825A5BC: 'Route105_Text_JosuePostBattle',
+        },
+    },
 }
 
 # Reviewed JP-to-US names for maps whose event positions, control-flow shape,
@@ -1086,6 +1121,72 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             },
         },
     },
+    # Route105 is a closed trainer-map range.  The map-events count, script
+    # entry order, all trainerbattle operands and the contiguous trainer-text
+    # family match the US Route105 sources one-for-one.
+    'Route105': {
+        'scripts': {
+            0x081E81AE: 'Route105_OnLoad',
+            0x081E81CE: 'Route105_CloseRegiEntrance',
+            0x081E81E1: 'Route105_OnTransition',
+            0x081E820D: 'Route105_EventScript_Foster',
+            0x081E8224: 'Route105_EventScript_Luis',
+            0x081E823B: 'Route105_EventScript_Dominik',
+            0x081E8252: 'Route105_EventScript_Beverly',
+            0x081E8269: 'Route105_EventScript_Imani',
+            0x081E8280: 'Route105_EventScript_Josue',
+            0x081E8297: 'Route105_EventScript_Andres',
+            0x081E82C3: 'Route105_EventScript_AndresRegisterMatchCallAfterBattle',
+            0x081E82E2: 'Route105_EventScript_AndresRematch',
+        },
+        'tables': {0x081E8203: 'Route105_OnFrame'},
+        # These two messages are physically owned by Route105's ROM region,
+        # but their callers and US names belong to Route104.
+        'texts': {
+            0x081E82F9: 'Route104_Text_DadPokenavCall',
+            0x081E83B3: 'Route104_Text_RegisteredDadInPokenav',
+        },
+        'text_aliases': {0x081E83B3: ('gJPText_001E83B3',)},
+        'field_placeholders': {0x081E82F9: {0x01: 'PLAYER'}},
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route105']['labels'],
+        'external_labels': {
+            0x082443D5: 'AbnormalWeather_EventScript_PlaceTilesRoute105North',
+            0x08244442: 'AbnormalWeather_EventScript_PlaceTilesRoute105South',
+            0x0824473D: 'AbnormalWeather_EventScript_HideMapNamePopup',
+            0x08244741: 'AbnormalWeather_StartKyogreWeather',
+            0x08244749: 'AbnormalWeather_EventScript_EndEventAndCleanup_1',
+        },
+        'symbols': {
+            'flags': {0x00E4: 'FLAG_REGI_DOORS_OPENED'},
+            'trainers': {
+                0x002E: 'TRAINER_FOSTER',
+                0x0097: 'TRAINER_LUIS',
+                0x0098: 'TRAINER_DOMINIK',
+                0x01B9: 'TRAINER_BEVERLY',
+                0x01BA: 'TRAINER_IMANI',
+                0x02E1: 'TRAINER_ANDRES_1',
+                0x02E2: 'TRAINER_JOSUE',
+            },
+            'vars': {
+                0x4037: 'VAR_ABNORMAL_WEATHER_LOCATION',
+                0x4039: 'VAR_SHOULD_END_ABNORMAL_WEATHER',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x4037: {
+                    0x09: 'ABNORMAL_WEATHER_ROUTE_105_NORTH',
+                    0x0A: 'ABNORMAL_WEATHER_ROUTE_105_SOUTH',
+                },
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'metatiles': {
+                0x007C: 'METATILE_General_RockWall_RockBase',
+                0x0091: 'METATILE_General_RockWall_SandBase',
+            },
+        },
+    },
     # These two routes are a compact, contiguous trainer-only tail.  The
     # event order and each trainer ID are identical to the US map sources;
     # their battle text remains in the existing shared text owner.
@@ -1478,6 +1579,11 @@ def semantic_symbol_formatter(mname):
             return symbols.get('trainers', {}).get(value)
         if index in VARIABLE_ARGUMENTS.get(name, ()):
             return symbols.get('vars', {}).get(value)
+        # The meaning of a comparison value is defined by the variable it is
+        # compared against.  Keep this strictly map-local and allowlisted so
+        # an unrelated numeric result is never assigned a plausible name.
+        if name == 'compare_var_to_value' and index == 1 and args:
+            return symbols.get('var_values', {}).get(args[0], {}).get(value)
         if (name == 'setvar' and index == 1 and args
                 and args[0] == 0x8004):
             return symbols.get('trainers', {}).get(value)
@@ -1901,9 +2007,10 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             lines.append('%s::' % table_label)
             for var, cmp, sptr in parse_frame_table(start):
                 rendered_var = semantic_map_variable(mname, var) or '0x%X' % var
-                if sptr in label_map:
+                script_label = label_map.get(sptr) or external_labels.get(sptr)
+                if script_label is not None:
                     lines.append('\tmap_script_2 %s, 0x%X, %s' % (
-                        rendered_var, cmp, label_map[sptr]))
+                        rendered_var, cmp, script_label))
                 else:
                     lines.append('\tmap_script_2 %s, 0x%X, 0x%08X' % (
                         rendered_var, cmp, sptr))
@@ -1952,10 +2059,15 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             if label.startswith('gJPText_'):
                 lines.append('\t.globl %s' % label)
             lines.append('%s: @ 0x%08X' % (label, tp))
+            aliases = []
             old = region_labels.get(tp)
             if old and old != label:
-                lines.append('\t.globl %s' % old)
-                lines.append('%s:' % old)
+                aliases.append(old)
+            aliases.extend(semantic.get('text_aliases', {}).get(tp, ()))
+            for alias in dict.fromkeys(aliases):
+                if alias != label:
+                    lines.append('\t.globl %s' % alias)
+                    lines.append('%s:' % alias)
             parts = [p for p in re.split(r'(?<=\\l|\\p|\\n)', dec) if p]
             for k, part in enumerate(parts):
                 if k == len(parts) - 1 and dec.endswith('$'):
@@ -1992,11 +2104,11 @@ def collect_all_text_ptrs(entries):
     return all_ptrs
 
 
-def event_script_labels():
-    """Return ROM-address labels available to script-source verification."""
+def event_script_symbol_addresses():
+    """Return every source label that has a known JP ROM address."""
     labels = {}
     for p in (ROOT / 'data' / 'scripts').glob('gUnknown_*.inc'):
-        labels[int(p.stem[len('gUnknown_'):], 16)] = p.stem
+        labels[p.stem] = int(p.stem[len('gUnknown_'):], 16)
     sources = [ROOT / 'data' / 'event_scripts.s']
     sources.extend(sorted((ROOT / 'data' / 'scripts').rglob('*.inc')))
     sources.extend(sorted((ROOT / 'data' / 'text').rglob('*.inc')))
@@ -2007,7 +2119,15 @@ def event_script_labels():
         for line in source.read_text(encoding='utf-8').splitlines():
             m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):{1,2}\s*@\s*0x([0-9A-Fa-f]+)', line)
             if m:
-                labels.setdefault(int(m.group(2), 16), m.group(1))
+                labels.setdefault(m.group(1), int(m.group(2), 16))
+    return labels
+
+
+def event_script_labels():
+    """Return one stable primary label for each known JP ROM address."""
+    labels = {}
+    for name, address in event_script_symbol_addresses().items():
+        labels.setdefault(address, name)
     return labels
 
 

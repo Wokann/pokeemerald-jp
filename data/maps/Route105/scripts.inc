@@ -1,41 +1,84 @@
 @ Route105 scripts (JP map g0 m20 @ 0x081E819E)
 
 Route105_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, Route105_EventScript_001E81AE
-	map_script MAP_SCRIPT_ON_TRANSITION, Route105_EventScript_001E81E1
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route105_MapScriptTable_001E8203
+	map_script MAP_SCRIPT_ON_LOAD, Route105_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, Route105_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route105_OnFrame
 	.byte 0
 
-Route105_EventScript_001E81AE::
-	checkflag 0xE4
-	call_if 0x0, Route105_EventScript_001E81CE
-	compare_var_to_value 0x4037, 0x9
-	call_if 0x1, 0x082443D5
-	compare_var_to_value 0x4037, 0xA
-	call_if 0x1, 0x08244442
+Route105_OnLoad::
+	call_if_unset FLAG_REGI_DOORS_OPENED, Route105_CloseRegiEntrance
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_NORTH, AbnormalWeather_EventScript_PlaceTilesRoute105North
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_SOUTH, AbnormalWeather_EventScript_PlaceTilesRoute105South
 	end
 
-Route105_EventScript_001E81CE::
-	setmetatile 0x9, 0x13, 0x7C, 0x1
-	setmetatile 0x9, 0x14, 0x91, 0x1
+Route105_CloseRegiEntrance::
+	setmetatile 0x9, 0x13, METATILE_General_RockWall_RockBase, TRUE
+	setmetatile 0x9, 0x14, METATILE_General_RockWall_SandBase, TRUE
 	return
 
-Route105_EventScript_001E81E1::
-	compare_var_to_value 0x4039, 0x1
-	call_if 0x1, 0x0824473D
-	compare_var_to_value 0x4037, 0x9
-	call_if 0x1, 0x08244741
-	compare_var_to_value 0x4037, 0xA
-	call_if 0x1, 0x08244741
+Route105_OnTransition::
+	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_HideMapNamePopup
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_NORTH, AbnormalWeather_StartKyogreWeather
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_SOUTH, AbnormalWeather_StartKyogreWeather
 	end
 
-Route105_MapScriptTable_001E8203::
-	map_script_2 0x4039, 0x1, 0x08244749
+Route105_OnFrame::
+	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
-	.incbin "baserom_jp.gba", 0x1e820d, 0xec
+Route105_EventScript_Foster::
+	trainerbattle_single TRAINER_FOSTER, Route105_Text_FosterIntro, Route105_Text_FosterDefeated
+	msgbox Route105_Text_FosterPostBattle, MSGBOX_AUTOCLOSE
+	end
 
-Route104_Text_DadPokenavCall:: @ 0x081E82F9
+Route105_EventScript_Luis::
+	trainerbattle_single TRAINER_LUIS, Route105_Text_LuisIntro, Route105_Text_LuisDefeated
+	msgbox Route105_Text_LuisPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route105_EventScript_Dominik::
+	trainerbattle_single TRAINER_DOMINIK, Route105_Text_DominikIntro, Route105_Text_DominikDefeated
+	msgbox Route105_Text_DominikPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route105_EventScript_Beverly::
+	trainerbattle_single TRAINER_BEVERLY, Route105_Text_BeverlyIntro, Route105_Text_BeverlyDefeated
+	msgbox Route105_Text_PostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route105_EventScript_Imani::
+	trainerbattle_single TRAINER_IMANI, Route105_Text_ImaniIntro, Route105_Text_ImaniDefeated
+	msgbox Route105_Text_ImaniPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route105_EventScript_Josue::
+	trainerbattle_single TRAINER_JOSUE, Route105_Text_JosueIntro, Route105_Text_JosueDefeated
+	msgbox Route105_Text_JosuePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route105_EventScript_Andres::
+	trainerbattle_single TRAINER_ANDRES_1, Route105_Text_AndresIntro, Route105_Text_AndresDefeated, Route105_EventScript_AndresRegisterMatchCallAfterBattle
+	specialvar VAR_RESULT, ShouldTryRematchBattle
+	goto_if_eq VAR_RESULT, TRUE, Route105_EventScript_AndresRematch
+	msgbox Route105_Text_AndresPostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+Route105_EventScript_AndresRegisterMatchCallAfterBattle::
+	special PlayerFaceTrainerAfterBattle
+	waitmovement 0x0
+	msgbox Route105_Text_AndresRegister, MSGBOX_DEFAULT
+	register_matchcall TRAINER_ANDRES_1
+	release
+	end
+
+Route105_EventScript_AndresRematch::
+	trainerbattle_rematch TRAINER_ANDRES_1, Route105_Text_AndresRematchIntro, Route105_Text_AndresRematchDefeated
+	msgbox Route105_Text_AndresRematchPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route104_Text_DadPokenavCall: @ 0x081E82F9
 	.string "⋯⋯　⋯⋯　⋯⋯\n"
 	.string "⋯⋯　⋯⋯　⋯⋯　ピッ！\p"
 	.string "パパ“おお　{PLAYER}か！\p"
@@ -50,7 +93,7 @@ Route104_Text_DadPokenavCall:: @ 0x081E82F9
 	.string "⋯⋯　⋯⋯　⋯⋯\n"
 	.string "⋯⋯　⋯⋯　⋯⋯　ツー$"
 
-Route104_Text_RegisteredDadInPokenav:: @ 0x081E83B3
+Route104_Text_RegisteredDadInPokenav: @ 0x081E83B3
 	.globl gJPText_001E83B3
 gJPText_001E83B3:
 	.string "パパ　センリを\n"

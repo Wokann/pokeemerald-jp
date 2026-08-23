@@ -1438,14 +1438,14 @@ gMapEvents_ROUTE104: @ 0x08500DE8
 	map_events ROUTE104_EventObjects, ROUTE104_EventWarps, ROUTE104_EventCoordEvents, ROUTE104_EventBgEvents
 	.globl ROUTE105_EventObjects
 ROUTE105_EventObjects: @ 0x08500DFC
-	object_event 1, 42, 0, 19, 60, 1, 10, 0, 0, 1, 6, 0x081E8224, 0x0000
-	object_event 2, 42, 0, 27, 36, 1, 27, 7, 0, 1, 3, 0x081E823B, 0x0000
-	object_event 3, 43, 0, 8, 45, 1, 25, 0, 7, 1, 3, 0x081E8252, 0x0000
-	object_event 4, 43, 0, 19, 9, 1, 24, 0, 5, 1, 3, 0x081E8269, 0x0000
+	object_event 1, 42, 0, 19, 60, 1, 10, 0, 0, 1, 6, Route105_EventScript_Luis, 0x0000
+	object_event 2, 42, 0, 27, 36, 1, 27, 7, 0, 1, 3, Route105_EventScript_Dominik, 0x0000
+	object_event 3, 43, 0, 8, 45, 1, 25, 0, 7, 1, 3, Route105_EventScript_Beverly, 0x0000
+	object_event 4, 43, 0, 19, 9, 1, 24, 0, 5, 1, 3, Route105_EventScript_Imani, 0x0000
 	object_event 5, 59, 0, 8, 73, 3, 1, 0, 0, 0, 0, 0x08256A8A, 0x03EB
-	object_event 6, 55, 0, 17, 48, 3, 26, 0, 7, 1, 3, 0x081E820D, 0x0000
-	object_event 7, 66, 0, 4, 54, 3, 8, 0, 2, 1, 2, 0x081E8280, 0x0000
-	object_event 8, 55, 0, 4, 58, 3, 7, 0, 2, 1, 4, 0x081E8297, 0x0000
+	object_event 6, 55, 0, 17, 48, 3, 26, 0, 7, 1, 3, Route105_EventScript_Foster, 0x0000
+	object_event 7, 66, 0, 4, 54, 3, 8, 0, 2, 1, 2, Route105_EventScript_Josue, 0x0000
+	object_event 8, 55, 0, 4, 58, 3, 7, 0, 2, 1, 4, Route105_EventScript_Andres, 0x0000
 	.globl ROUTE105_EventWarps
 ROUTE105_EventWarps: @ 0x08500EBC
 	warp_def 9, 20, 0, 0, MAP_ISLAND_CAVE

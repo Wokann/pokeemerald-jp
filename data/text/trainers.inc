@@ -425,4 +425,107 @@ Route104_Text_DarianDefeat: @ 0x0825A296
 Route104_Text_DarianPostBattle: @ 0x0825A29B
 	.string "おい　なまえ　まけ　してるじゃないか\n"
 	.string "おれの　コイキングよ！$"
-	.incbin "baserom_jp.gba", 0x25a2ba, 0x80d9
+Route105_Text_FosterIntro: @ 0x0825A2BA
+	.string "この　あたりに\n"
+	.string "ふしぎな　いわが　あるらしいが\l"
+	.string "きみ　しらないかい？$"
+
+Route105_Text_FosterDefeated: @ 0x0825A2DD
+	.string "いわのこと　ばかり　かんがえて\n"
+	.string "ポケモン　よわいまま　だったか⋯⋯$"
+
+Route105_Text_FosterPostBattle: @ 0x0825A2FF
+	.string "すてきな　いわ　だったら\n"
+	.string "なんじかん　みていても　あきないよ⋯⋯$"
+
+Route105_Text_LuisIntro: @ 0x0825A320
+	.string "よかった！　こどもが\n"
+	.string "おぼれているのかと　しんぱい　したよ！\p"
+	.string "だいじょうぶ　そうだから　しょうぶ　だな！$"
+
+Route105_Text_LuisDefeated: @ 0x0825A355
+	.string "ゴボゴボ⋯⋯$"
+
+Route105_Text_LuisPostBattle: @ 0x0825A35C
+	.string "すなはまに　むかって　かたてを　ふるのが\n"
+	.string "おぼれたときの　サインだぜ！$"
+
+Route105_Text_DominikIntro: @ 0x0825A380
+	.string "あおい　うみで　およいでいると\n"
+	.string "さいこうの　きぶん　だな！$"
+
+Route105_Text_DominikDefeated: @ 0x0825A39E
+	.string "まけた⋯⋯\n"
+	.string "ブルーな　きぶん⋯⋯$"
+
+Route105_Text_DominikPostBattle: @ 0x0825A3AF
+	.string "うみが　あおい　りゆう！？\p"
+	.string "カイナの　はくぶつかんで　きいたけど\n"
+	.string "そんなの　わすれちまったよ！$"
+
+Route105_Text_BeverlyIntro: @ 0x0825A3DF
+	.string "みずに　はいると　からだが　かるくなるわね\n"
+	.string "なんだか　スリムに　なったみたい！$"
+
+Route105_Text_BeverlyDefeated: @ 0x0825A407
+	.string "ぷかぷか⋯⋯$"
+
+Route105_Text_PostBattle: @ 0x0825A40E
+	.string "みずの　なかでは　たいじゅうが\n"
+	.string "10ぶんの1　くらいに　なるのよ\p"
+	.string "と　すると　いま　わたしは⋯⋯\n"
+	.string "いけない！　たいじゅうが　バレちゃうわ！$"
+
+Route105_Text_ImaniIntro: @ 0x0825A454
+	.string "あおい　そら⋯⋯\n"
+	.string "ひろい　うみ⋯⋯\l"
+	.string "のどか　よねー⋯⋯$"
+
+Route105_Text_ImaniDefeated: @ 0x0825A470
+	.string "なごんでいる　うちに\n"
+	.string "まけちゃったわーっ！$"
+
+Route105_Text_ImaniPostBattle: @ 0x0825A486
+	.string "あたしと　いると　なごむって　いわれたいの\n"
+	.string "うふふふふ！$"
+
+Route105_Text_AndresIntro: @ 0x0825A4A3
+	.string "うみに　こそ　なにかが　あると\n"
+	.string "かくしんが　ある！$"
+
+Route105_Text_AndresDefeated: @ 0x0825A4BD
+	.string "うん⋯⋯　わし\n"
+	.string "しょうぶは　よわいんだよ$"
+
+Route105_Text_AndresPostBattle: @ 0x0825A4D2
+	.string "せかいじゅうの　うみには\n"
+	.string "まだまだ　ひみつが　あるはずだ！\l"
+	.string "ぜんぶ　さがしまくるぞ！$"
+
+Route105_Text_AndresRegister: @ 0x0825A4FD
+	.string "ん？　こんな　よわい　わしでも\n"
+	.string "ポケナビ　とうろくして　くれるのか？$"
+
+Route105_Text_AndresRematchIntro: @ 0x0825A520
+	.string "しょうぶは　よわいと　いっているのに⋯⋯\n"
+	.string "わし　なんかで　いいのか？$"
+
+Route105_Text_AndresRematchDefeated: @ 0x0825A543
+	.string "うん⋯⋯　やっぱり　かてないな$"
+
+Route105_Text_AndresRematchPostBattle: @ 0x0825A553
+	.string "しょうぶは　よわいが\n"
+	.string "たんきゅうしんは　きみにも　まけん！\l"
+	.string "せかいじゅうの　うみを　たび　するぞ！$"
+
+Route105_Text_JosueIntro: @ 0x0825A585
+	.string "なれない　およぎで　つかれたー\n"
+	.string "きばらしに　ポケモンしょうぶ　じゃい！$"
+
+Route105_Text_JosueDefeated: @ 0x0825A5A9
+	.string "うみで　たたかった　から　まけたんだ$"
+
+Route105_Text_JosuePostBattle: @ 0x0825A5BC
+	.string "やっぱりさ　おれには\n"
+	.string "うみより　そらが　にあってるんだよ$"
+	.incbin "baserom_jp.gba", 0x25a5d9, 0x7dba
