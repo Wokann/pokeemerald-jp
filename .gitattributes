@@ -1,0 +1,3 @@
+# Byte-exact raw GBA assets must not be interpreted as text by Git.
+*.4bpp binary
+*.gbapal binary

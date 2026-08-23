@@ -9519,6 +9519,9 @@ SECTIONS {
         src/event_object_movement.o(.rodata.object_event_graphics_may_base_data);
         gUnknown_847C6CC = gObjectEventPal_May;
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_may_base_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_may_action_data);
+        gUnknown_847D90C = gObjectEventPal_RubySapphireMay;
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_may_action_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_palettes);
@@ -9567,7 +9570,6 @@ SECTIONS {
         gObjectEventPal_BirthIslandStone = ABSOLUTE(0x084D8B0C);
         gObjectEventPal_HoOh = ABSOLUTE(0x084DD86C);
         gObjectEventPal_Lugia = ABSOLUTE(0x084DD44C);
-        gObjectEventPal_RubySapphireMay = ABSOLUTE(0x0847D90C);
         gObjectEventPic_BerryTreeDirtPile = ABSOLUTE(0x084C22EC);
         gObjectEventPic_BerryTreeSprout = ABSOLUTE(0x084C236C);
         gObjectEventPic_PechaBerryTree = ABSOLUTE(0x084C246C);
