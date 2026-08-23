@@ -60,4 +60,4 @@ ShoalCave_LowTideLowerRoom_EventScript_0021A2AC::
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x21a2b6, 0x70
+	.incbin "baserom_jp.gba", 0x21a2b6, 0x6e

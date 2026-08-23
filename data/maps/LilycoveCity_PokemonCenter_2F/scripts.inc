@@ -7,4 +7,4 @@ LilycoveCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, 0x082467CD
 	.byte 0
 
-	.incbin "baserom_jp.gba", 0x20838b, 0x13
+	.incbin "baserom_jp.gba", 0x20838b, 0x12

@@ -7,5 +7,3 @@ ArtisanCave_B1F_MapScripts::
 ArtisanCave_B1F_EventScript_0021CFD8::
 	setflag 0x8DF
 	end
-
-	.incbin "baserom_jp.gba", 0x21cfdc, 0x1

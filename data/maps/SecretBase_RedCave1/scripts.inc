@@ -30,5 +30,3 @@ SecretBase_EventScript_PC:: @ 0x0821D3AA
 	.globl gJPText_0021D613
 gJPText_0021D613: @ 0x0821D613
 	.string "ここに　ひみつきちを　つくりますか？$"
-
-	.incbin "baserom_jp.gba", 0x21d626, 0x4

@@ -119,4 +119,4 @@ MeteorFalls_1F_1R_EventScript_00212D67::
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x212d71, 0x87f
+	.incbin "baserom_jp.gba", 0x212d71, 0x87d

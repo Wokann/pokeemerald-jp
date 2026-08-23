@@ -8,4 +8,4 @@ Route134_EventScript_001EF67A::
 	setdivewarp 0x1845, 0xFF, 0x8, 0x6
 	end
 
-	.incbin "baserom_jp.gba", 0x1ef683, 0xd1
+	.incbin "baserom_jp.gba", 0x1ef683, 0xcf

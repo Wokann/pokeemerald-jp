@@ -7,5 +7,3 @@ ScorchedSlab_MapScripts::
 ScorchedSlab_EventScript_0021BBDC::
 	setflag 0x8B8
 	end
-
-	.incbin "baserom_jp.gba", 0x21bbe0, 0x3

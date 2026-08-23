@@ -8,4 +8,4 @@ NavelRock_Exterior_EventScript_0023C0C7::
 	setflag 0x8E1
 	end
 
-	.incbin "baserom_jp.gba", 0x23c0cb, 0x57
+	.incbin "baserom_jp.gba", 0x23c0cb, 0x50

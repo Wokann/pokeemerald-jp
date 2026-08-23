@@ -92,4 +92,4 @@ NavelRock_Top_EventScript_0023C234::
 	goto 0x082441A0
 	end
 
-	.incbin "baserom_jp.gba", 0x23c23f, 0x25
+	.incbin "baserom_jp.gba", 0x23c23f, 0x1a

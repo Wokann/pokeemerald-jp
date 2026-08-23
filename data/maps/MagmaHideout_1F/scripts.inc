@@ -8,4 +8,4 @@ MagmaHideout_1F_EventScript_0021C0F9::
 	setvar 0x40BD, 0x0
 	end
 
-	.incbin "baserom_jp.gba", 0x21c0ff, 0xcc7
+	.incbin "baserom_jp.gba", 0x21c0ff, 0xcc5

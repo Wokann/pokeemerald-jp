@@ -20,5 +20,3 @@ SkyPillar_4F_EventScript_0021BF06::
 	setstepcallback 0x7
 	setholewarp 0x1851, 0xFF, 0x0, 0x0
 	end
-
-	.incbin "baserom_jp.gba", 0x21bf11, 0x1
