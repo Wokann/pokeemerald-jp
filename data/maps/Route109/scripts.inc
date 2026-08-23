@@ -376,111 +376,105 @@ Route109_EventScript_TrainerTipsSign::
 	end
 
 Route109_EventScript_David::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_DAVID, 0x0, 0x0825ADE1, 0x0825ADFF
-	msgbox 0x0825AE0F, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_DAVID, Route109_Text_DavidIntro, Route109_Text_DavidDefeated
+	msgbox Route109_Text_DavidPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Alice::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_ALICE, 0x0, 0x0825AE36, 0x0825AE49
-	msgbox 0x0825AE51, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_ALICE, Route109_Text_AliceIntro, Route109_Text_AliceDefeated
+	msgbox Route109_Text_AlicePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Huey::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_HUEY, 0x0, 0x0825AE72, 0x0825AE9B
-	msgbox 0x0825AEA9, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_HUEY, Route109_Text_HueyIntro, Route109_Text_HueyDefeated
+	msgbox Route109_Text_HueyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Edmond::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_EDMOND, 0x0, 0x0825AECA, 0x0825AEDF
-	msgbox 0x0825AEE6, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_EDMOND, Route109_Text_EdmondIntro, Route109_Text_EdmondDefeated
+	msgbox Route109_Text_EdmondPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Ricky::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_RICKY_1, 0x0, 0x0825AF16, 0x0825AF38, Route109_EventScript_RickyRegisterMatchCallAfterBattle
+	trainerbattle_single TRAINER_RICKY_1, Route109_Text_RickyIntro, Route109_Text_RickyDefeated, Route109_EventScript_RickyRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, 0x1, Route109_EventScript_RickyRematch
-	msgbox 0x0825AF3E, MSGBOX_DEFAULT
+	goto_if_eq VAR_RESULT, TRUE, Route109_EventScript_RickyRematch
+	msgbox Route109_Text_RickyPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
 Route109_EventScript_RickyRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0x0
-	msgbox 0x0825AF61, MSGBOX_DEFAULT
-	setvar 0x8004, 0x40
-	special SetMatchCallRegisteredFlag
-	setorcopyvar VAR_0x8000, 0x40
-	callstd 0x8
+	msgbox Route109_Text_RickyRegister, MSGBOX_DEFAULT
+	register_matchcall TRAINER_RICKY_1
 	release
 	end
 
 Route109_EventScript_RickyRematch::
-	trainerbattle TRAINER_BATTLE_REMATCH, TRAINER_RICKY_1, 0x0, 0x0825AF87, 0x0825AFA4
-	msgbox 0x0825AFB7, MSGBOX_AUTOCLOSE
+	trainerbattle_rematch TRAINER_RICKY_1, Route109_Text_RickyRematchIntro, Route109_Text_RickyRematchDefeated
+	msgbox Route109_Text_RickyRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Lola::
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, TRAINER_LOLA_1, 0x0, 0x0825AFD3, 0x0825AFEE, Route109_EventScript_LolaRegisterMatchCallAfterBattle
+	trainerbattle_single TRAINER_LOLA_1, Route109_Text_LolaIntro, Route109_Text_LolaDefeated, Route109_EventScript_LolaRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, 0x1, Route109_EventScript_LolaRematch
-	msgbox 0x0825AFF4, MSGBOX_DEFAULT
+	goto_if_eq VAR_RESULT, TRUE, Route109_EventScript_LolaRematch
+	msgbox Route109_Text_LolaPostBattle, MSGBOX_DEFAULT
 	release
 	end
 
 Route109_EventScript_LolaRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
 	waitmovement 0x0
-	msgbox 0x0825B01B, MSGBOX_DEFAULT
-	setvar 0x8004, 0x39
-	special SetMatchCallRegisteredFlag
-	setorcopyvar VAR_0x8000, 0x39
-	callstd 0x8
+	msgbox Route109_Text_LolaRegister, MSGBOX_DEFAULT
+	register_matchcall TRAINER_LOLA_1
 	release
 	end
 
 Route109_EventScript_LolaRematch::
-	trainerbattle TRAINER_BATTLE_REMATCH, TRAINER_LOLA_1, 0x0, 0x0825B034, 0x0825B057
-	msgbox 0x0825B05D, MSGBOX_AUTOCLOSE
+	trainerbattle_rematch TRAINER_LOLA_1, Route109_Text_LolaRematchIntro, Route109_Text_LolaRematchDefeated
+	msgbox Route109_Text_LolaRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Austina::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_AUSTINA, 0x0, 0x0825B086, 0x0825B0AA
-	msgbox 0x0825B0BF, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_AUSTINA, Route109_Text_AustinaIntro, Route109_Text_AustinaDefeated
+	msgbox Route109_Text_AustinaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Gwen::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_GWEN, 0x0, 0x0825B0D8, 0x0825B0F3
-	msgbox 0x0825B0FD, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_GWEN, Route109_Text_GwenIntro, Route109_Text_GwenDefeated
+	msgbox Route109_Text_GwenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Carter::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_CARTER, 0x0, 0x0825B117, 0x0825B12E
-	msgbox 0x0825B13D, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_CARTER, Route109_Text_CarterIntro, Route109_Text_CarterDefeated
+	msgbox Route109_Text_CarterPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Paul::
-	trainerbattle TRAINER_BATTLE_DOUBLE, TRAINER_MEL_AND_PAUL, 0x0, 0x0825B161, 0x0825B189, 0x0825B1D0
-	msgbox 0x0825B197, MSGBOX_AUTOCLOSE
+	trainerbattle_double TRAINER_MEL_AND_PAUL, Route109_Text_PaulIntro, Route109_Text_PaulDefeated, Route109_Text_PaulNotEnoughPokemon
+	msgbox Route109_Text_PaulPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Mel::
-	trainerbattle TRAINER_BATTLE_DOUBLE, TRAINER_MEL_AND_PAUL, 0x0, 0x0825B202, 0x0825B223, 0x0825B26E
-	msgbox 0x0825B24C, MSGBOX_AUTOCLOSE
+	trainerbattle_double TRAINER_MEL_AND_PAUL, Route109_Text_MelIntro, Route109_Text_MelDefeated, Route109_Text_MelNotEnoughPokemon
+	msgbox Route109_Text_MelPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Chandler::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_CHANDLER, 0x0, 0x0825B2A2, 0x0825B2BA
-	msgbox 0x0825B2C4, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_CHANDLER, Route109_Text_ChandlerIntro, Route109_Text_ChandlerDefeated
+	msgbox Route109_Text_ChandlerPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Hailey::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_HAILEY, 0x0, 0x0825B2DD, 0x0825B2F4
-	msgbox 0x0825B309, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_HAILEY, Route109_Text_HaileyIntro, Route109_Text_HaileyDefeated
+	msgbox Route109_Text_HaileyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route109_EventScript_Elijah::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_ELIJAH, 0x0, 0x0825B329, 0x0825B347
-	msgbox 0x0825B356, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_ELIJAH, Route109_Text_ElijahIntro, Route109_Text_ElijahDefeated
+	msgbox Route109_Text_ElijahPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 	.globl gJPText_001E8B34

@@ -790,4 +790,207 @@ Route108_Text_CarolinaPostBattle: @ 0x0825ADB8
 	.string "せっかくの　うみ　だし\n"
 	.string "ピンクの　フリフリの　ビキニも\l"
 	.string "ちょっと　きてみたい⋯⋯$"
-	.incbin "baserom_jp.gba", 0x25ade1, 0x75b2
+Route109_Text_DavidIntro: @ 0x0825ADE1
+	.string "うりゃーっ！！\n"
+	.string "みごとに　われた　ふっきんを　みろーっ！！$"
+
+Route109_Text_DavidDefeated: @ 0x0825ADFF
+	.string "うりゃーっ！！\n"
+	.string "まけたーっ！！$"
+
+Route109_Text_DavidPostBattle: @ 0x0825AE0F
+	.string "うりゃーっ！！\p"
+	.string "ふっきんと　ポケモンの　しょうぶは\n"
+	.string "かんけい　ないぞーっ！！$"
+
+Route109_Text_AliceIntro: @ 0x0825AE36
+	.string "ひやけ　たいさく\n"
+	.string "あなたは　してる？$"
+
+Route109_Text_AliceDefeated: @ 0x0825AE49
+	.string "あちちちちっ！$"
+
+Route109_Text_AlicePostBattle: @ 0x0825AE51
+	.string "ほっぺの　あたりが　いちばん\n"
+	.string "ひやけ　しやすい　ばしょ　なのよ！$"
+
+Route109_Text_HueyIntro: @ 0x0825AE72
+	.string "せかいじゅうの　みなとを　おとずれたが\n"
+	.string "カイナは　さいこーの　みなとまち　だぜ！$"
+
+Route109_Text_HueyDefeated: @ 0x0825AE9B
+	.string "あんた　さいこー　だぜ⋯⋯$"
+
+Route109_Text_HueyPostBattle: @ 0x0825AEA9
+	.string "さいこーの　みなとまちには\n"
+	.string "さいこーの　トレーナーが　いたぜ⋯⋯$"
+
+Route109_Text_EdmondIntro: @ 0x0825AECA
+	.string "ううう⋯⋯\n"
+	.string "しょうぶ　するの？　オレと？$"
+
+Route109_Text_EdmondDefeated: @ 0x0825AEDF
+	.string "げろげろ⋯⋯$"
+
+Route109_Text_EdmondPostBattle: @ 0x0825AEE6
+	.string "いつもは　もっと　つよいんだぞ！\n"
+	.string "ふなよいで　ちょうしが　わるいだけだ！\p"
+	.string "ふなのり　だけど⋯⋯$"
+
+Route109_Text_RickyIntro: @ 0x0825AF16
+	.string "のどが　かわいたよ⋯⋯\n"
+	.string "うみのいえで　サイコソーダ　のみたいな⋯⋯$"
+
+Route109_Text_RickyDefeated: @ 0x0825AF38
+	.string "うーん⋯⋯$"
+
+Route109_Text_RickyPostBattle: @ 0x0825AF3E
+	.string "おなかも　へってきた⋯⋯\n"
+	.string "うきわが　おっきな　ドーナッツに　みえるよ$"
+
+Route109_Text_RickyRegister: @ 0x0825AF61
+	.string "こんど　のどが　かわいて　ないときに\n"
+	.string "もういっかい　しょうぶ　してくれる？$"
+
+Route109_Text_RickyRematchIntro: @ 0x0825AF87
+	.string "おなか　へってるけど\n"
+	.string "しょうぶ　するなら　げんき　だよ！$"
+
+Route109_Text_RickyRematchDefeated: @ 0x0825AFA4
+	.string "まけた⋯⋯\n"
+	.string "おなかが　へってるからだ$"
+
+Route109_Text_RickyRematchPostBattle: @ 0x0825AFB7
+	.string "すなはまで　たべると\n"
+	.string "なんでも　おいしく　おもえるよね$"
+
+Route109_Text_LolaIntro: @ 0x0825AFD3
+	.string "ビーチパラソルって\n"
+	.string "おおきな　おはな　みたいよねー！$"
+
+Route109_Text_LolaDefeated: @ 0x0825AFEE
+	.string "ママーっ！$"
+
+Route109_Text_LolaPostBattle: @ 0x0825AFF4
+	.string "おそらの　うえから　すなはまを　みたら\n"
+	.string "おはなばたけ　みたいに　みえるのよ！$"
+
+Route109_Text_LolaRegister: @ 0x0825B01B
+	.string "わたし　だったら\n"
+	.string "まいにち　ここに　きているよ！$"
+
+Route109_Text_LolaRematchIntro: @ 0x0825B034
+	.string "もう　あなたには　まけません！\n"
+	.string "そのために　うきわ　してるんだから！$"
+
+Route109_Text_LolaRematchDefeated: @ 0x0825B057
+	.string "ママーっ！$"
+
+Route109_Text_LolaRematchPostBattle: @ 0x0825B05D
+	.string "うきわ　もってると　あたしと　ポケモンの\n"
+	.string "かわいさが　ぐぐーんと　アップするの！$"
+
+Route109_Text_AustinaIntro: @ 0x0825B086
+	.string "うきわが　ないと　およげないけど\n"
+	.string "ポケモンなら　だれにも　まけないよ！$"
+
+Route109_Text_AustinaDefeated: @ 0x0825B0AA
+	.string "うきわが　あるから　まけちゃったのかな？$"
+
+Route109_Text_AustinaPostBattle: @ 0x0825B0BF
+	.string "あたしの　うきわ\n"
+	.string "オシャレだから　てばなせないの$"
+
+Route109_Text_GwenIntro: @ 0x0825B0D8
+	.string "そこの　トレーナーさん\n"
+	.string "あたしと　たたかう　でちゅ！$"
+
+Route109_Text_GwenDefeated: @ 0x0825B0F3
+	.string "つよいでちゅね⋯⋯$"
+
+Route109_Text_GwenPostBattle: @ 0x0825B0FD
+	.string "どうしたら　そんなに\n"
+	.string "つよくなれる　でちゅか⋯⋯？$"
+
+Route109_Text_CarterIntro: @ 0x0825B117
+	.string "わはは！\n"
+	.string "おじさん　おおもの　つっちゃうぞ！$"
+
+Route109_Text_CarterDefeated: @ 0x0825B12E
+	.string "おじさん　まけちゃったな⋯⋯$"
+
+Route109_Text_CarterPostBattle: @ 0x0825B13D
+	.string "たしかに　きみは　おおもの　だな！\n"
+	.string "いや　きっと　おおものに　なるぞ！$"
+
+Route109_Text_PaulIntro: @ 0x0825B161
+	.string "リキ“やあ　こまったなあ\p"
+	.string "ふたりっきりの　じかん\n"
+	.string "じゃま　して　ほしくないなあ$"
+
+Route109_Text_PaulDefeated: @ 0x0825B189
+	.string "リキ“やあ　まいったな⋯⋯$"
+
+Route109_Text_PaulPostBattle: @ 0x0825B197
+	.string "リキ“やあ　ぼくたちが　ここに　いること\n"
+	.string "だれにも　いわないで　くれよ！\l"
+	.string "ふたりっきりの　せかい　なんだからさ！$"
+
+Route109_Text_PaulNotEnoughPokemon: @ 0x0825B1D0
+	.string "リキ“ぼくたち　ラブラブ　だからね\n"
+	.string "ぼくたちの　ポケモンも\l"
+	.string "2ひき　いっしょに　たたかわせるんだ！$"
+
+Route109_Text_MelIntro: @ 0x0825B202
+	.string "シキ“あたしたちが　ラブラブだから\n"
+	.string "ホウエンは　あっついのよお！$"
+
+Route109_Text_MelDefeated: @ 0x0825B223
+	.string "シキ“あたしの　せいで　まけたんだわ⋯⋯\n"
+	.string "こんなんじゃ　リキに　きらわれちゃう！$"
+
+Route109_Text_MelPostBattle: @ 0x0825B24C
+	.string "シキ“ねえ　リキ\n"
+	.string "あたしのこと　おこってない？\l"
+	.string "おこっちゃ　いやよ$"
+
+Route109_Text_MelNotEnoughPokemon: @ 0x0825B26E
+	.string "シキ“あたしたち　ラブラブ　だからね\n"
+	.string "あたしたちの　ポケモンも\l"
+	.string "2ひき　いっしょに　たたかわせるんだ！$"
+
+Route109_Text_ChandlerIntro: @ 0x0825B2A2
+	.string "じゃーん！\n"
+	.string "ボクの　うきわ　まるいでしょーっ！$"
+
+Route109_Text_ChandlerDefeated: @ 0x0825B2BA
+	.string "あーあ！　ざんねん$"
+
+Route109_Text_ChandlerPostBattle: @ 0x0825B2C4
+	.string "せっかく　まるい　うきわを\n"
+	.string "みせて　あげたのにさ$"
+
+Route109_Text_HaileyIntro: @ 0x0825B2DD
+	.string "およげない　から\n"
+	.string "およぐ　ふりを　してるの！$"
+
+Route109_Text_HaileyDefeated: @ 0x0825B2F4
+	.string "やっぱね！\n"
+	.string "かてないって　おもってたんだ$"
+
+Route109_Text_HaileyPostBattle: @ 0x0825B309
+	.string "およげるように　なったら\n"
+	.string "ポケモンも　つよく　なると　おもう！$"
+
+Route109_Text_ElijahIntro: @ 0x0825B329
+	.string "こうはの　おれさまには\n"
+	.string "こんな　ポケモンが　おにあいだぜ！$"
+
+Route109_Text_ElijahDefeated: @ 0x0825B347
+	.string "まけても　カッコ　いいだろ？$"
+
+Route109_Text_ElijahPostBattle: @ 0x0825B356
+	.string "こうはの　おれさまには\n"
+	.string "みなとまちが　おにあいだぜ！\l"
+	.string "カイナシティに　いってくるか$"
+	.incbin "baserom_jp.gba", 0x25b380, 0x7013

@@ -1508,36 +1508,36 @@ gMapEvents_ROUTE108: @ 0x0850112C
 	.globl ROUTE109_EventObjects
 ROUTE109_EventObjects: @ 0x08501140
 	object_event 1, 88, 0, 21, 26, 1, 7, 0, 0, 0, 0, 0x00000000, 0x02E8
-	object_event 2, 21, 0, 21, 24, 3, 7, 0, 0, 0, 0, 0x081E8827, 0x02E5
-	object_event 3, 42, 0, 12, 36, 3, 10, 0, 0, 1, 5, 0x081E8954, 0x0000
-	object_event 4, 43, 0, 25, 39, 1, 15, 0, 0, 1, 5, 0x081E896B, 0x0000
-	object_event 5, 49, 0, 15, 17, 4, 8, 0, 0, 1, 1, 0x081E8982, 0x0000
-	object_event 6, 49, 0, 24, 13, 3, 9, 0, 0, 1, 6, 0x081E8999, 0x0000
-	object_event 7, 54, 0, 19, 10, 3, 8, 0, 0, 1, 3, 0x081E89B0, 0x0000
-	object_event 8, 53, 0, 22, 7, 3, 80, 0, 0, 1, 4, 0x081E8A12, 0x0000
-	object_event 9, 12, 0, 11, 6, 3, 8, 0, 0, 0, 0, 0x081E88AC, 0x0000
+	object_event 2, 21, 0, 21, 24, 3, 7, 0, 0, 0, 0, Route109_EventScript_MrBriney, 0x02E5
+	object_event 3, 42, 0, 12, 36, 3, 10, 0, 0, 1, 5, Route109_EventScript_David, 0x0000
+	object_event 4, 43, 0, 25, 39, 1, 15, 0, 0, 1, 5, Route109_EventScript_Alice, 0x0000
+	object_event 5, 49, 0, 15, 17, 4, 8, 0, 0, 1, 1, Route109_EventScript_Huey, 0x0000
+	object_event 6, 49, 0, 24, 13, 3, 9, 0, 0, 1, 6, Route109_EventScript_Edmond, 0x0000
+	object_event 7, 54, 0, 19, 10, 3, 8, 0, 0, 1, 3, Route109_EventScript_Ricky, 0x0000
+	object_event 8, 53, 0, 22, 7, 3, 80, 0, 0, 1, 4, Route109_EventScript_Lola, 0x0000
+	object_event 9, 12, 0, 11, 6, 3, 8, 0, 0, 0, 0, Route109_EventScript_SeashoreHouseGirl, 0x0000
 	object_event 10, 59, 0, 27, 46, 3, 1, 0, 0, 0, 0, 0x08256AB1, 0x03ED
-	object_event 11, 53, 0, 29, 32, 3, 13, 0, 0, 1, 3, 0x081E8A8B, 0x0000
-	object_event 12, 53, 0, 28, 31, 3, 17, 0, 0, 1, 3, 0x081E8A74, 0x0000
-	object_event 13, 50, 0, 21, 56, 0, 9, 0, 0, 1, 3, 0x081E8AA2, 0x0000
-	object_event 14, 54, 0, 24, 18, 3, 10, 1, 1, 0, 0, 0x081E88B5, 0x0000
-	object_event 15, 53, 0, 25, 18, 3, 9, 1, 1, 0, 0, 0x081E88CC, 0x0000
-	object_event 16, 18, 0, 30, 32, 3, 8, 1, 1, 0, 0, 0x081E891D, 0x0000
-	object_event 17, 26, 0, 8, 41, 3, 8, 1, 1, 1, 1, 0x081E8AD4, 0x0000
-	object_event 18, 65, 0, 9, 41, 3, 8, 1, 1, 1, 1, 0x081E8AB9, 0x0000
-	object_event 19, 29, 0, 33, 6, 3, 1, 1, 1, 0, 0, 0x081E8926, 0x0000
-	object_event 20, 208, 0, 32, 6, 3, 1, 1, 1, 0, 0, 0x081E892F, 0x0000
-	object_event 21, 53, 0, 17, 13, 3, 80, 1, 1, 1, 6, 0x081E8B06, 0x0000
-	object_event 22, 54, 0, 27, 7, 3, 79, 1, 1, 1, 4, 0x081E8AEF, 0x0000
+	object_event 11, 53, 0, 29, 32, 3, 13, 0, 0, 1, 3, Route109_EventScript_Gwen, 0x0000
+	object_event 12, 53, 0, 28, 31, 3, 17, 0, 0, 1, 3, Route109_EventScript_Austina, 0x0000
+	object_event 13, 50, 0, 21, 56, 0, 9, 0, 0, 1, 3, Route109_EventScript_Carter, 0x0000
+	object_event 14, 54, 0, 24, 18, 3, 10, 1, 1, 0, 0, Route109_EventScript_SandCastleBoy, 0x0000
+	object_event 15, 53, 0, 25, 18, 3, 9, 1, 1, 0, 0, Route109_EventScript_SoftSandGirl, 0x0000
+	object_event 16, 18, 0, 30, 32, 3, 8, 1, 1, 0, 0, Route109_EventScript_Woman, 0x0000
+	object_event 17, 26, 0, 8, 41, 3, 8, 1, 1, 1, 1, Route109_EventScript_Mel, 0x0000
+	object_event 18, 65, 0, 9, 41, 3, 8, 1, 1, 1, 1, Route109_EventScript_Paul, 0x0000
+	object_event 19, 29, 0, 33, 6, 3, 1, 1, 1, 0, 0, Route109_EventScript_OldMan, 0x0000
+	object_event 20, 208, 0, 32, 6, 3, 1, 1, 1, 0, 0, Route109_EventScript_Zigzagoon, 0x0000
+	object_event 21, 53, 0, 17, 13, 3, 80, 1, 1, 1, 6, Route109_EventScript_Hailey, 0x0000
+	object_event 22, 54, 0, 27, 7, 3, 79, 1, 1, 1, 4, Route109_EventScript_Chandler, 0x0000
 	object_event 23, 59, 0, 25, 6, 3, 1, 1, 1, 0, 0, 0x08256ABE, 0x0474
-	object_event 24, 66, 0, 17, 56, 3, 80, 1, 1, 1, 3, 0x081E8B1D, 0x0000
+	object_event 24, 66, 0, 17, 56, 3, 80, 1, 1, 1, 3, Route109_EventScript_Elijah, 0x0000
 	.globl ROUTE109_EventWarps
 ROUTE109_EventWarps: @ 0x08501380
 	warp_def 12, 5, 0, 0, MAP_ROUTE109_SEASHORE_HOUSE
 	.globl ROUTE109_EventBgEvents
 ROUTE109_EventBgEvents: @ 0x08501388
-	bg_event 15, 5, 0, 0, 0x081E8942, 0, 0
-	bg_event 29, 10, 3, 0, 0x081E894B, 0, 0
+	bg_event 15, 5, 0, 0, Route109_EventScript_SeashoreHouseSign, 0, 0
+	bg_event 29, 10, 3, 0, Route109_EventScript_TrainerTipsSign, 0, 0
 	bg_event 16, 23, 3, 7, 0x0018, 0x32, 0x00
 	bg_event 33, 5, 3, 7, 0x006F, 0x34, 0x00
 	bg_event 9, 10, 3, 7, 0x0003, 0x33, 0x00
