@@ -128,6 +128,8 @@ Common_EventScript_SetupRivalGfxId:: @ 0x08242F63
 	settrainerflag 0x1F6
 	settrainerflag 0x73
 	return 
+
+Common_EventScript_ShowBagIsFull:: @ 0x082430E0
 	loadword 0x0, 0x8243977
 	callstd 0x4
 	release 

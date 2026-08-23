@@ -33,8 +33,25 @@ Route105_MapScriptTable_001E8203::
 	map_script_2 0x4039, 0x1, 0x08244749
 	.2byte 0
 
-	.incbin "baserom_jp.gba", 0x1e820d, 0x1a6
+	.incbin "baserom_jp.gba", 0x1e820d, 0xec
+
+Route104_Text_DadPokenavCall:: @ 0x081E82F9
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯　ピッ！\p"
+	.string "パパ“おお　{PLAYER}か！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "おまえは　いま　どこに　いるんだ？\n"
+	.string "ずいぶん　かぜの　おとが　つよいな\p"
+	.string "⋯⋯そうそう　デボンの　ツワブキさんから\n"
+	.string "ポケナビの　ことを　きいたもんでな\l"
+	.string "ちょっと　よびだして　みたんだ！\p"
+	.string "げんきで　やってるなら　それでよし！\n"
+	.string "じゃあ　きをつけてな！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯　ツー$"
+
+Route104_Text_RegisteredDadInPokenav:: @ 0x081E83B3
 	.globl gJPText_001E83B3
-gJPText_001E83B3: @ 0x081E83B3
+gJPText_001E83B3:
 	.string "パパ　センリを\n"
 	.string "ポケナビに　とうろく　した！$"

@@ -26,6 +26,15 @@ ROM = (ROOT / 'baserom_jp.gba').read_bytes()
 REGION = (0x081DABAC, 0x0828F000)
 GDATA_START = 0x08290000
 
+# Pointer-bearing script operands whose targets are text rather than event
+# scripts.  Keep this beside decode_script_lines so every emitter uses the
+# same classification for graph collection and source rendering.
+TEXT_POINTER_ARGUMENTS = {
+    'loadword': (1,),
+    'message': (0,),
+    'pokenavcall': (0,),
+}
+
 
 def build_opcode_table():
     entries = []
@@ -399,7 +408,7 @@ def decode_script_lines(script, label_map, text_label_map=None, symbol_formatter
                 # literal would not select a branch when the constant is only
                 # known symbolically to GAS.
                 parts.append(TRAINERBATTLE_TYPE_NAMES.get(a, '0x%X' % a))
-            elif name in ('loadword', 'message') and i == (1 if name == 'loadword' else 0) \
+            elif name in TEXT_POINTER_ARGUMENTS and i in TEXT_POINTER_ARGUMENTS[name] \
                     and isinstance(a, int) and a in text_label_map:
                 parts.append(text_label_map[a])
             elif i in trainer_text_args and isinstance(a, int) and a in text_label_map:

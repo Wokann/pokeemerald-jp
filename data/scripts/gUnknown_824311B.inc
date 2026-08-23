@@ -5,9 +5,13 @@
 	special FieldShowRegionMap
 	releaseall
 	end
+
+Common_EventScript_PlayBrineysBoatMusic:: @ 0x0824312C
 	setflag 0x4001
 	playbgm 0x1AF, 0x0
 	return
+
+Common_EventScript_StopBrineysBoatMusic:: @ 0x08243134
 	clearflag 0x4001
 	fadedefaultbgm
 	return
@@ -110,4 +114,10 @@ Common_Movement_FacePlayer: @ 0x08243621
 	face_player
 	step_end
 
-	.incbin "baserom_jp.gba", 0x243623, 0x2E
+	.incbin "baserom_jp.gba", 0x243623, 0x6
+
+Common_Movement_WalkInPlaceFasterUp: @ 0x08243629
+	walk_in_place_faster_up
+	step_end
+
+	.incbin "baserom_jp.gba", 0x24362b, 0x26

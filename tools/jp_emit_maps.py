@@ -33,6 +33,9 @@ MAP_SCRIPT_NAMES = {
 # Confirmed JP script entries which are owned by a map in the US source tree
 # but are invoked indirectly rather than through that map's event table.
 MAP_AUXILIARY_SCRIPT_ADDRESSES = {
+    # The Route104 music selector is intentionally unused by its local
+    # control flow, but remains map-owned in the matching US source.
+    'Route104': (0x081E720D,),
     'RustboroCity_Gym': (0x08202410,),  # EventScript_RegisterRoxanne
 }
 
@@ -47,6 +50,21 @@ MAP_AUXILIARY_TEXT_ADDRESSES = {
 # US map source.  They are referenced by ``applymovement`` rather than being
 # event scripts, so the event-script parser deliberately does not follow them.
 MAP_MOVEMENT_SCRIPT_LABELS = {
+    'Route104': {
+        0x081E72C4: 'Route104_Movement_RivalWalkSlowLeft',
+        0x081E72C6: 'Route104_Movement_RivalApproachPlayer',
+        0x081E72C9: 'Route104_Movement_PlayerFaceRival',
+        0x081E7482: 'Route104_Movement_PlayerBackUp',
+        0x081E7486: 'Route104_Movement_RivalExitBrineysCottage',
+        0x081E76C4: 'Route104_Movement_SailToDewfordBeforeDadCalls',
+        0x081E7726: 'Route104_Movement_SailToDewfordAfterDadCalls',
+        0x081E7788: 'Route104_Movement_SailToDewford',
+        0x081E784B: 'Route104_Movement_PlayerBoardBoat',
+        0x081E784F: 'Route104_Movement_PlayerExitBoat',
+        0x081E7851: 'Route104_Movement_PlayerMoveForBriney',
+        0x081E7855: 'Route104_Movement_BrineyBoardBoat',
+        0x081E7858: 'Route104_Movement_BrineyExitBoat',
+    },
     'Route116': {
         0x081EBBEC: 'Route116_Movement_DevonEmployeeExit',
         0x081EBBF5: 'Route116_Movement_DevonEmployeeExitEast',
@@ -188,6 +206,57 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
             0x08259C5C: 'Route103_Text_MarcosIntro',
             0x08259C79: 'Route103_Text_MarcosDefeated',
             0x08259C8E: 'Route103_Text_MarcosPostBattle',
+        },
+    },
+    # Route104's trainer text is physically contiguous with the remaining
+    # retained trainer-text owner.  Its start/end, every EOS boundary, and
+    # caller order were checked against the Route104/Route105 US sources.
+    'Route104': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x08259CCA,
+        'end': 0x0825A2BA,
+        'labels': {
+            0x08259CCA: 'Route104_Text_GinaIntro',
+            0x08259CE7: 'Route104_Text_GinaDefeat',
+            0x08259CF9: 'Route104_Text_GinaPostBattle',
+            0x08259D1F: 'Route104_Text_GinaNotEnoughMons',
+            0x08259D74: 'Route104_Text_MiaIntro',
+            0x08259D9B: 'Route104_Text_MiaDefeat',
+            0x08259DB8: 'Route104_Text_MiaPostBattle',
+            0x08259DDB: 'Route104_Text_MiaNotEnoughMons',
+            0x08259E1B: 'Route104_Text_IvanIntro',
+            0x08259E48: 'Route104_Text_IvanDefeat',
+            0x08259E6D: 'Route104_Text_IvanPostBattle',
+            0x08259E91: 'Route104_Text_BillyIntro',
+            0x08259EAC: 'Route104_Text_BillyDefeat',
+            0x08259EC9: 'Route104_Text_BillyPostBattle',
+            0x08259EF6: 'Route104_Text_HaleyIntro',
+            0x08259F1B: 'Route104_Text_HaleyDefeat',
+            0x08259F2D: 'Route104_Text_HaleyPostBattle',
+            0x08259F6A: 'Route104_Text_HaleyRegister1',
+            0x08259FA0: 'Route104_Text_HaleyRegister2',
+            0x08259FD6: 'Route104_Text_HaleyRematchIntro',
+            0x08259FE9: 'Route104_Text_HaleyRematchDefeat',
+            0x08259FFC: 'Route104_Text_HaleyPostRematch',
+            0x0825A031: 'Route104_Text_WinstonIntro',
+            0x0825A04F: 'Route104_Text_WinstonDefeat',
+            0x0825A05F: 'Route104_Text_WinstonPostBattle',
+            0x0825A082: 'Route104_Text_WinstonRegister1',
+            0x0825A0B5: 'Route104_Text_WinstonRegister2',
+            0x0825A0E8: 'Route104_Text_WinstonRematchIntro',
+            0x0825A10B: 'Route104_Text_WinstonRematchDefeat',
+            0x0825A124: 'Route104_Text_WinstonPostRematch',
+            0x0825A15D: 'Route104_Text_CindyIntro',
+            0x0825A185: 'Route104_Text_CindyDefeat',
+            0x0825A189: 'Route104_Text_CindyPostBattle',
+            0x0825A1AB: 'Route104_Text_CindyRegister1',
+            0x0825A1E5: 'Route104_Text_CindyRegister2',
+            0x0825A208: 'Route104_Text_CindyRematchIntro',
+            0x0825A228: 'Route104_Text_CindyRematchDefeat',
+            0x0825A242: 'Route104_Text_CindyPostRematch',
+            0x0825A264: 'Route104_Text_DarianIntro',
+            0x0825A296: 'Route104_Text_DarianDefeat',
+            0x0825A29B: 'Route104_Text_DarianPostBattle',
         },
     },
 }
@@ -771,11 +840,10 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
                 0x0211: 'TRAINER_MAY_ROUTE_103_MUDKIP',
                 0x0214: 'TRAINER_MAY_ROUTE_103_TREECKO',
                 0x0217: 'TRAINER_MAY_ROUTE_103_TORCHIC',
-                # The JP trainer-data order differs for Pete, Isabelle,
-                # Rhett, and Marcos.  Their scripts/text are semantically
-                # proven, but the current US-derived constants encode other
-                # JP IDs, so retain these four numeric operands until the
-                # trainer constants themselves have an audited JP mapping.
+                0x02BE: 'TRAINER_MARCOS',
+                0x02BF: 'TRAINER_RHETT',
+                0x02DF: 'TRAINER_PETE',
+                0x02E0: 'TRAINER_ISABELLE',
             },
             'vars': {
                 0x4023: 'VAR_STARTER_MON',
@@ -799,6 +867,221 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             },
             'local_ids': {
                 0x02: 'LOCALID_ROUTE103_RIVAL',
+                0xFF: 'LOCALID_PLAYER',
+            },
+        },
+    },
+    # Route104 has matching map-event counts and a one-for-one US script,
+    # movement, text, and trainer-text control-flow audit.  Its four text
+    # objects in adjacent physical map ranges remain explicit external
+    # owners; the labels still follow the US Route104/Dewford names.
+    'Route104': {
+        'scripts': {
+            0x081E7143: 'Route104_EventScript_StartSailToDewford',
+            0x081E714A: 'Route104_OnTransition',
+            0x081E715A: 'Route104_EventScript_ShowOrHideWhiteHerbFlorist',
+            0x081E7170: 'Route104_EventScript_HideWhiteHerbFlorist',
+            0x081E7174: 'Route104_EventScript_TrySetRivalPos',
+            0x081E7199: 'Route104_EventScript_DontSetRivalPos',
+            0x081E719A: 'Route104_EventScript_Rival',
+            0x081E71AF: 'Route104_EventScript_RivalTrigger',
+            0x081E720D: 'Route104_EventScript_PlayRivalMusic',
+            0x081E7225: 'Route104_EventScript_PlayMayMusic',
+            0x081E722A: 'Route104_EventScript_PlayBrendanMusic',
+            0x081E722F: 'Route104_EventScript_RivalEncounter',
+            0x081E7247: 'Route104_EventScript_MayEncounter',
+            0x081E72CC: 'Route104_EventScript_MayAskToBattle',
+            0x081E72E9: 'Route104_EventScript_BattleMay',
+            0x081E7318: 'Route104_EventScript_MayDefeated',
+            0x081E732D: 'Route104_EventScript_RestoreMusic',
+            0x081E7332: 'Route104_EventScript_BattleMayTreecko',
+            0x081E7345: 'Route104_EventScript_BattleMayTorchic',
+            0x081E7358: 'Route104_EventScript_BattleMayMudkip',
+            0x081E736B: 'Route104_EventScript_BrendanEncounter',
+            0x081E73E8: 'Route104_EventScript_BrendanAskToBattle',
+            0x081E7405: 'Route104_EventScript_BattleBrendan',
+            0x081E7434: 'Route104_EventScript_BrendanDefeated',
+            0x081E7449: 'Route104_EventScript_BattleBrendanTreecko',
+            0x081E745C: 'Route104_EventScript_BattleBrendanTorchic',
+            0x081E746F: 'Route104_EventScript_BattleBrendanMudkip',
+            0x081E7488: 'Route104_EventScript_ExpertF',
+            0x081E74BF: 'Route104_EventScript_ReceivedBerry',
+            0x081E74C9: 'Route104_EventScript_WhiteHerbFlorist',
+            0x081E74F8: 'Route104_EventScript_ReceivedWhiteHerb',
+            0x081E7502: 'Route104_EventScript_Girl1',
+            0x081E750B: 'Route104_EventScript_BugCatcher',
+            0x081E7514: 'Route104_EventScript_BrineysCottageSign',
+            0x081E751D: 'Route104_EventScript_RouteSignPetalburg',
+            0x081E7526: 'Route104_EventScript_RouteSignRustboro',
+            0x081E752F: 'Route104_EventScript_FlowerShopSign',
+            0x081E7538: 'Route104_EventScript_TrainerTipsDoubleBattles',
+            0x081E7541: 'Route104_EventScript_Boy1',
+            0x081E754A: 'Route104_EventScript_Woman',
+            0x081E7553: 'Route104_EventScript_Boy2',
+            0x081E7582: 'Route104_EventScript_ReceivedBulletSeed',
+            0x081E758C: 'Route104_EventScript_Girl2',
+            0x081E7595: 'Route104_EventScript_SailToDewford',
+            0x081E75D5: 'Route104_EventScript_SailToDewfordNoCall',
+            0x081E75EB: 'Route104_EventScript_SailToDewfordDadCalls',
+            0x081E7635: 'Route104_EventScript_ArriveInDewford',
+            0x081E76B0: 'Route104_EventScript_DeliverLetterReminder',
+            0x081E76BA: 'Route104_EventScript_LandedInDewford',
+            0x081E785B: 'Route104_EventScript_Ivan',
+            0x081E7872: 'Route104_EventScript_Billy',
+            0x081E7889: 'Route104_EventScript_Haley',
+            0x081E78CA: 'Route104_EventScript_TryRegisterHaleyAfterBattle',
+            0x081E78DB: 'Route104_EventScript_RegisterHaleyAfterBattle',
+            0x081E78F4: 'Route104_EventScript_TryRegisterHaley',
+            0x081E7907: 'Route104_EventScript_RegisterHaley',
+            0x081E7920: 'Route104_EventScript_RematchHaley',
+            0x081E7937: 'Route104_EventScript_Winston',
+            0x081E7978: 'Route104_EventScript_TryRegisterWinstonAfterBattle',
+            0x081E7989: 'Route104_EventScript_RegisterWinstonAfterBattle',
+            0x081E79A2: 'Route104_EventScript_TryRegisterWinston',
+            0x081E79B5: 'Route104_EventScript_RegisterWinston',
+            0x081E79CE: 'Route104_EventScript_RematchWinston',
+            0x081E79E5: 'Route104_EventScript_Cindy',
+            0x081E7A26: 'Route104_EventScript_TryRegisterCindyAfterBattle',
+            0x081E7A37: 'Route104_EventScript_RegisterCindyAfterBattle',
+            0x081E7A50: 'Route104_EventScript_TryRegisterCindy',
+            0x081E7A63: 'Route104_EventScript_RegisterCindy',
+            0x081E7A7C: 'Route104_EventScript_RematchCindy',
+            0x081E7A93: 'Route104_EventScript_Gina',
+            0x081E7AB2: 'Route104_EventScript_Mia',
+            0x081E7AD1: 'Route104_EventScript_Darian',
+        },
+        'tables': {0x081E7139: 'Route104_OnFrame'},
+        'texts': {
+            0x081E7AE8: 'Route104_Text_BrineyLivesInSeasideCottage',
+            0x081E7B35: 'Route104_Text_WhatsItLikeAtBottomOfSea',
+            0x081E7B5C: 'Route104_Text_ThrowBallAtWeakenedPokemon',
+            0x081E7B96: 'Route104_Text_OnlyThrowBallAtWildPokemon',
+            0x081E7BCB: 'Route104_Text_ImNotATrainer',
+            0x081E7C2A: 'Route104_Text_LikeFillingMouthWithSeedsTakeThis',
+            0x081E7C88: 'Route104_Text_TMsAreOneTimeUse',
+            0x081E7CC1: 'Route104_Text_DontNeedThisTakeIt',
+            0x081E7D17: 'Route104_Text_FlowerShopSellingSaplings',
+            0x081E7D58: 'Route104_Text_MrBrineysCottage',
+            0x081E7D65: 'Route104_Text_RouteSignPetalburg',
+            0x081E7D7E: 'Route104_Text_RouteSignRustboro',
+            0x081E7D98: 'Route104_Text_PrettyPetalFlowShop',
+            0x081E7DAA: 'Route104_Text_TrainerTipsDoubleBattles',
+            0x081E7E3B: 'Route104_Text_MayWeShouldRegister',
+            0x081E7E9E: 'Route104_Text_RegisteredMay',
+            0x081E7EB6: 'Route104_Text_MayHowsYourPokedex',
+            0x081E7ED8: 'Route104_Text_MayMinesDecentLetsBattle',
+            0x081E7EFD: 'Route104_Text_MayHaventRaisedPokemon',
+            0x081E7F41: 'Route104_Text_MayLetsBattle',
+            0x081E7F62: 'Route104_Text_MayIntro',
+            0x081E7F84: 'Route104_Text_MayDefeat',
+            0x081E7F9B: 'Route104_Text_MayPostBattle',
+            0x081E8001: 'Route104_Text_BrendanWeShouldRegister',
+            0x081E805F: 'Route104_Text_RegisteredBrendan',
+            0x081E8077: 'Route104_Text_BrendanHowsYourPokedex',
+            0x081E80A2: 'Route104_Text_BrendanDoingGreatLetsBattle',
+            0x081E80CD: 'Route104_Text_BrendanNoConfidence',
+            0x081E80EC: 'Route104_Text_BrendanLetsBattle',
+            0x081E8109: 'Route104_Text_BrendanIntro',
+            0x081E812B: 'Route104_Text_BrendanDefeat',
+            0x081E813D: 'Route104_Text_BrendanPostBattle',
+        },
+        'external_texts': {
+            **VERIFIED_SHARED_TEXT_BLOCKS['Route104']['labels'],
+            0x081E5191: 'Route104_Text_LandedInDewfordDeliverLetter',
+            0x081E522C: 'DewfordTown_Text_BrineyLandedInDewford',
+            0x081E82F9: 'Route104_Text_DadPokenavCall',
+            0x081E83B3: 'Route104_Text_RegisteredDadInPokenav',
+        },
+        'external_labels': {
+            0x081DEE0A: 'RustboroCity_EventScript_PlayRivalMusic',
+            0x08242F63: 'Common_EventScript_SetupRivalGfxId',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x0824312C: 'Common_EventScript_PlayBrineysBoatMusic',
+            0x08243134: 'Common_EventScript_StopBrineysBoatMusic',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+        },
+        'field_placeholders': {
+            0x081E7E3B: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081E7E9E: {0x01: 'PLAYER'},
+            0x081E7EB6: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081E7F62: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081E8001: {0x01: 'PLAYER'},
+            0x081E805F: {0x01: 'PLAYER'},
+            0x081E8077: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'flags': {
+                0x007C: 'FLAG_REGISTER_RIVAL_POKENAV',
+                0x007D: 'FLAG_DEFEATED_RIVAL_ROUTE_104',
+                0x007F: 'FLAG_MET_PRETTY_PETAL_SHOP_OWNER',
+                0x00BD: 'FLAG_DELIVERED_STEVEN_LETTER',
+                0x00F6: 'FLAG_RECEIVED_CHESTO_BERRY_ROUTE_104',
+                0x00FD: 'FLAG_ENABLE_RIVAL_MATCH_CALL',
+                0x0106: 'FLAG_RECEIVED_TM_BULLET_SEED',
+                0x0117: 'FLAG_RECEIVED_WHITE_HERB',
+                0x0120: 'FLAG_MET_RIVAL_RUSTBORO',
+                0x0132: 'FLAG_ENABLE_NORMAN_MATCH_CALL',
+                0x02CF: 'FLAG_HIDE_ROUTE_104_RIVAL',
+                0x02E4: 'FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN',
+                0x02E6: 'FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT',
+                0x02E7: 'FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN',
+                0x032E: 'FLAG_HIDE_RUSTBORO_CITY_RIVAL',
+                0x038A: 'FLAG_HIDE_ROUTE_104_WHITE_HERB_FLORIST',
+                0x0869: 'FLAG_BADGE03_GET',
+            },
+            'trainers': {
+                0x0072: 'TRAINER_CINDY_1',
+                0x0088: 'TRAINER_WINSTON_1',
+                0x013F: 'TRAINER_BILLY',
+                0x0151: 'TRAINER_IVAN',
+                0x01E3: 'TRAINER_GINA_AND_MIA_1',
+                0x0250: 'TRAINER_BRENDAN_RUSTBORO_TREECKO',
+                0x0251: 'TRAINER_BRENDAN_RUSTBORO_MUDKIP',
+                0x0257: 'TRAINER_BRENDAN_RUSTBORO_TORCHIC',
+                0x0258: 'TRAINER_MAY_RUSTBORO_MUDKIP',
+                0x025C: 'TRAINER_HALEY_1',
+                0x02B8: 'TRAINER_DARIAN',
+                0x0300: 'TRAINER_MAY_RUSTBORO_TREECKO',
+                0x0301: 'TRAINER_MAY_RUSTBORO_TORCHIC',
+            },
+            'items': {
+                0x0086: 'ITEM_CHESTO_BERRY',
+                0x00B4: 'ITEM_WHITE_HERB',
+                0x0129: 'ITEM_TM09',
+            },
+            'vars': {
+                0x4023: 'VAR_STARTER_MON',
+                0x405A: 'VAR_RUSTBORO_CITY_STATE',
+                0x4063: 'VAR_ROUTE104_STATE',
+                0x408E: 'VAR_BOARD_BRINEY_BOAT_STATE',
+                0x4096: 'VAR_BRINEY_LOCATION',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'songs': {
+                0x0000: 'MUS_DUMMY',
+                0x019F: 'MUS_ENCOUNTER_MAY',
+                0x01A5: 'MUS_ENCOUNTER_BRENDAN',
+                0x01CC: 'MUS_REGISTER_MATCH_CALL',
+            },
+            'sounds': {0x0015: 'SE_PIN'},
+            'maps': {
+                0x000B: 'MAP_DEWFORD_TOWN',
+                0x0013: 'MAP_ROUTE104',
+            },
+            'local_ids': {
+                0x02: 'LOCALID_DEWFORD_BRINEY',
+                0x04: 'LOCALID_DEWFORD_BOAT',
+                0x07: 'LOCALID_ROUTE104_BOAT',
+                0x08: 'LOCALID_ROUTE104_BRINEY',
+                0x22: 'LOCALID_ROUTE104_RIVAL',
                 0xFF: 'LOCALID_PLAYER',
             },
         },
@@ -899,11 +1182,7 @@ MSGBOX_TYPES = {
     10: 'MSGBOX_POKENAV',
 }
 
-TEXT_POINTER_ARGUMENTS = {
-    'loadword': (1,),
-    'message': (0,),
-    'pokenavcall': (0,),
-}
+TEXT_POINTER_ARGUMENTS = sp.TEXT_POINTER_ARGUMENTS
 
 
 def toi(x):
@@ -1155,11 +1434,34 @@ FLAG_ARGUMENTS = {
 }
 LOCAL_ID_ARGUMENTS = {
     'applymovement': {0},
+    'applymovement_at': {0},
     'addobject': {0},
+    'addobject_at': {0},
+    'copyobjectxytoperm': {0},
+    'hideobject_at': {0},
+    'moveobjectoffscreen': {0},
     'removeobject': {0},
+    'removeobject_at': {0},
+    'resetobjectsubpriority': {0},
     'setobjectxyperm': {0},
     'setobjectmovementtype': {0},
+    'setobjectsubpriority': {0},
+    'showobject_at': {0},
     'turnobject': {0},
+    'waitmovement_at': {0},
+}
+MAP_ARGUMENTS = {
+    'addobject_at': {1},
+    'applymovement_at': {2},
+    'hideobject_at': {1},
+    'removeobject_at': {1},
+    'resetobjectsubpriority': {1},
+    'setobjectsubpriority': {1},
+    'showobject_at': {1},
+    'waitmovement_at': {1},
+}
+ITEM_ARGUMENTS = {
+    'giveitem': {0},
 }
 
 
@@ -1182,8 +1484,12 @@ def semantic_symbol_formatter(mname):
         if name == 'setorcopyvar' and index == 1 and args and args[0] == 0x8000:
             return (symbols.get('items', {}).get(value)
                     or symbols.get('trainers', {}).get(value))
+        if index in ITEM_ARGUMENTS.get(name, ()):
+            return symbols.get('items', {}).get(value)
         if name in ('playbgm', 'playfanfare', 'savebgm', 'fadenewbgm') and index == 0:
             return symbols.get('songs', {}).get(value)
+        if name == 'playbgm' and index == 1:
+            return symbols.get('booleans', {}).get(value)
         if name == 'playse' and index == 0:
             return symbols.get('sounds', {}).get(value)
         if name == 'setmetatile' and index == 2:
@@ -1199,6 +1505,8 @@ def semantic_symbol_formatter(mname):
         if name in ('dofieldeffect', 'waitfieldeffect') and index == 0:
             return symbols.get('field_effects', {}).get(value)
         if name == 'warp' and index == 0:
+            return symbols.get('maps', {}).get(value)
+        if index in MAP_ARGUMENTS.get(name, ()):
             return symbols.get('maps', {}).get(value)
         if index in LOCAL_ID_ARGUMENTS.get(name, ()):
             local = symbols.get('local_ids', {}).get(value)
@@ -1692,6 +2000,9 @@ def event_script_labels():
     sources = [ROOT / 'data' / 'event_scripts.s']
     sources.extend(sorted((ROOT / 'data' / 'scripts').rglob('*.inc')))
     sources.extend(sorted((ROOT / 'data' / 'text').rglob('*.inc')))
+    # Map-local labels can be valid external references when the original JP
+    # ROM packs one map's text into the next map's physical interval.
+    sources.extend(sorted((ROOT / 'data' / 'maps').rglob('scripts.inc')))
     for source in sources:
         for line in source.read_text(encoding='utf-8').splitlines():
             m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):{1,2}\s*@\s*0x([0-9A-Fa-f]+)', line)

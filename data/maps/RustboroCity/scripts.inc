@@ -558,6 +558,7 @@ RustboroCity_EventScript_001DEDF1::
 	waitmovement 0x0
 	goto RustboroCity_EventScript_001DF02C
 
+RustboroCity_EventScript_PlayRivalMusic:: @ 0x081DEE0A
 RustboroCity_EventScript_001DEE0A::
 	checkplayergender
 	compare_var_to_value 0x800D, 0x0

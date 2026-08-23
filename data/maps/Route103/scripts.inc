@@ -29,7 +29,7 @@ Route103_EventScript_Rival::
 Route103_EventScript_RivalMay::
 	msgbox Route103_Text_MayRoute103Pokemon, MSGBOX_DEFAULT
 	closemessage
-	playbgm MUS_ENCOUNTER_MAY, 0x1
+	playbgm MUS_ENCOUNTER_MAY, TRUE
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_FacePlayer
 	waitmovement 0x0
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_ExclamationMark
@@ -46,7 +46,7 @@ Route103_EventScript_RivalMay::
 Route103_EventScript_RivalBrendan::
 	msgbox Route103_Text_BrendanRoute103Pokemon, MSGBOX_DEFAULT
 	closemessage
-	playbgm MUS_ENCOUNTER_BRENDAN, 0x1
+	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_FacePlayer
 	waitmovement 0x0
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_ExclamationMark
@@ -269,22 +269,22 @@ Route103_EventScript_MiguelRematch::
 	end
 
 Route103_EventScript_Marcos::
-	trainerbattle_single 0x2BE, Route103_Text_MarcosIntro, Route103_Text_MarcosDefeated
+	trainerbattle_single TRAINER_MARCOS, Route103_Text_MarcosIntro, Route103_Text_MarcosDefeated
 	msgbox Route103_Text_MarcosPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route103_EventScript_Rhett::
-	trainerbattle_single 0x2BF, Route103_Text_RhettIntro, Route103_Text_RhettDefeated
+	trainerbattle_single TRAINER_RHETT, Route103_Text_RhettIntro, Route103_Text_RhettDefeated
 	msgbox Route103_Text_RhettPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route103_EventScript_Pete::
-	trainerbattle_single 0x2DF, Route103_Text_PeteIntro, Route103_Text_PeteDefeated
+	trainerbattle_single TRAINER_PETE, Route103_Text_PeteIntro, Route103_Text_PeteDefeated
 	msgbox Route103_Text_PetePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route103_EventScript_Isabelle::
-	trainerbattle_single 0x2E0, Route103_Text_IsabelleIntro, Route103_Text_IsabelleDefeated
+	trainerbattle_single TRAINER_ISABELLE, Route103_Text_IsabelleIntro, Route103_Text_IsabelleDefeated
 	msgbox Route103_Text_IsabellePostBattle, MSGBOX_AUTOCLOSE
 	end
 

@@ -191,6 +191,10 @@ def repack(jobs: int) -> None:
     environment.pop("OS", None)
     commands = (
         ["make", "-s", "clean"],
+        # A clean removes the host executables too.  Build them serially before
+        # the parallel ROM build so scaninc/gbagfx/rsfont cannot race the first
+        # object that invokes them.
+        ["make", "-s", "tools"],
         ["make", "-s", f"-j{jobs}"],
         ["make", "-s", "compare"],
     )

@@ -248,4 +248,181 @@ Route103_Text_MarcosPostBattle: @ 0x08259C8E
 	.string "ギターを　ひいていたのに\l"
 	.string "こんなにも　あつまって　きたぜ！\p"
 	.string "ぷ　プロを　めざして　みるか！$"
-	.incbin "baserom_jp.gba", 0x259cca, 0x86c9
+Route104_Text_GinaIntro: @ 0x08259CCA
+	.string "ナオ“よーし！\n"
+	.string "あたしたちの　ポケモンと　たたかうです！$"
+
+Route104_Text_GinaDefeat: @ 0x08259CE7
+	.string "ナオ“まけて　すごく　くやしいです$"
+
+Route104_Text_GinaPostBattle: @ 0x08259CF9
+	.string "ナオ“うわー　{STRING 0x02}　つよいです！\n"
+	.string "あたしたち　もっと　しゅぎょう　するです$"
+
+Route104_Text_GinaNotEnoughMons: @ 0x08259D1F
+	.string "ナオ“あら？　ポケモン　1ひき　だけですか！\n"
+	.string "じゃあ　あたしたち　たたかわない　です！\p"
+	.string "だって　ポケモン　1ひき　だけだと\n"
+	.string "ポケモンが　さびしそうで　かわいそう　です！$"
+
+Route104_Text_MiaIntro: @ 0x08259D74
+	.string "ミオ“あたしたち　ふたご　だから\n"
+	.string "ポケモンしょうぶも　いっしょに　するです！$"
+
+Route104_Text_MiaDefeat: @ 0x08259D9B
+	.string "ミオ“ふたりで　しょうぶ　したのに\n"
+	.string "まけちゃったです⋯⋯$"
+
+Route104_Text_MiaPostBattle: @ 0x08259DB8
+	.string "ミオ“もっと　ポケモン　そだてて\n"
+	.string "{STRING 0x02}　みたいに　つよく　なるです！$"
+
+Route104_Text_MiaNotEnoughMons: @ 0x08259DDB
+	.string "ミオ“あたしたちと　たたかうですか？\p"
+	.string "じゃあ　ポケモンを\n"
+	.string "2ひき　つれてないと　ダメですよ！\l"
+	.string "だって　あたしたち　つよいもん！$"
+
+Route104_Text_IvanIntro: @ 0x08259E1B
+	.string "みずポケモンの　エキスパートとは\n"
+	.string "なにを　かくそう　オレのこと！\p"
+	.string "⋯⋯え？\n"
+	.string "しらないの？$"
+
+Route104_Text_IvanDefeat: @ 0x08259E48
+	.string "けっこう　つよいと　おもってたんだけどな\n"
+	.string "じぶんのこと⋯⋯　がっかり⋯⋯$"
+
+Route104_Text_IvanPostBattle: @ 0x08259E6D
+	.string "つりに　むちゅうに　なってて\n"
+	.string "ポケモン　そだてるのを　わすれてたよ⋯⋯$"
+
+Route104_Text_BillyIntro: @ 0x08259E91
+	.string "すなはまに　あしあと　つけるのって\n"
+	.string "たのしーよねー！$"
+
+Route104_Text_BillyDefeat: @ 0x08259EAC
+	.string "うへーっ！\n"
+	.string "クツに　すなが　はいって　ジャリジャリする！$"
+
+Route104_Text_BillyPostBattle: @ 0x08259EC9
+	.string "すなはまを　ボクの　あしあとで\n"
+	.string "いっぱいに　したいんだけど\l"
+	.string "すぐに　きえちゃうんだよなぁ$"
+
+Route104_Text_HaleyIntro: @ 0x08259EF6
+	.string "しょうぶ　しようかな⋯⋯\n"
+	.string "やめとこうかな⋯⋯\p"
+	.string "えーい！　たたかっちゃえ！$"
+
+Route104_Text_HaleyDefeat: @ 0x08259F1B
+	.string "たたかわなければ　よかったかな⋯⋯$"
+
+Route104_Text_HaleyPostBattle: @ 0x08259F2D
+	.string "どっちに　しようか　まよってる　とき\n"
+	.string "じぶんで　きめないで　たにんに　まかせると\l"
+	.string "どっちに　なっても　こうかいするね⋯⋯$"
+
+Route104_Text_HaleyRegister1: @ 0x08259F6A
+	.string "あなた　つよいけど\n"
+	.string "ポケナビに　とうろく　しようかな⋯⋯\l"
+	.string "やめとこうかな⋯⋯\p"
+	.string "えーい！　とうろくしちゃえ！$"
+
+Route104_Text_HaleyRegister2: @ 0x08259FA0
+	.string "あなた　つよいけど\n"
+	.string "ポケナビに　とうろく　しようかな⋯⋯\l"
+	.string "やめとこうかな⋯⋯\p"
+	.string "えーい！　とうろくしちゃえ！$"
+
+Route104_Text_HaleyRematchIntro: @ 0x08259FD6
+	.string "あたしと　しょうぶ　してもらうわよ！$"
+
+Route104_Text_HaleyRematchDefeat: @ 0x08259FE9
+	.string "うーん⋯⋯\n"
+	.string "かてると　おもったのにな$"
+
+Route104_Text_HaleyPostRematch: @ 0x08259FFC
+	.string "たたかうって　じぶんで　きめたから\n"
+	.string "まけても　すっきり　してるわ！\p"
+	.string "⋯⋯もちろん　まけて　くやしいけどね$"
+
+Route104_Text_WinstonIntro: @ 0x0825A031
+	.string "ボクが　あいてして　あげるよ\n"
+	.string "この　おかねもちの　ボクがね$"
+
+Route104_Text_WinstonDefeat: @ 0x0825A04F
+	.string "どうして　かてないんだ⋯⋯！？$"
+
+Route104_Text_WinstonPostBattle: @ 0x0825A05F
+	.string "おかねじゃ　かてない　ものが　ある⋯⋯\n"
+	.string "それが　ポケモンなんだね⋯⋯$"
+
+Route104_Text_WinstonRegister1: @ 0x0825A082
+	.string "ん？　きみ　ポケナビを　てにいれたね！\p"
+	.string "ボクが　とうろくして　あげよう\n"
+	.string "この　おかねもちの　ボクがね$"
+
+Route104_Text_WinstonRegister2: @ 0x0825A0B5
+	.string "ん？　きみ　ポケナビを　てにいれたね！\p"
+	.string "ボクが　とうろくして　あげよう\n"
+	.string "この　おかねもちの　ボクがね$"
+
+Route104_Text_WinstonRematchIntro: @ 0x0825A0E8
+	.string "きみに　まけてから　いろいろ\n"
+	.string "ポケモンのこと　べんきょう　したんだ！$"
+
+Route104_Text_WinstonRematchDefeat: @ 0x0825A10B
+	.string "また　まけた⋯⋯\n"
+	.string "どうして　かてないんだ⋯⋯！？$"
+
+Route104_Text_WinstonPostRematch: @ 0x0825A124
+	.string "おかねもちの　ボク　なのに\n"
+	.string "なかなか　ポケモンに　かてない⋯⋯\p"
+	.string "なんて　おくが　ふかいんだろう\n"
+	.string "ポケモンって⋯⋯$"
+
+Route104_Text_CindyIntro: @ 0x0825A15D
+	.string "あなたと　であったのも　なにかの　ごえん\n"
+	.string "おてあわせを　おねがい　できるかしら$"
+
+Route104_Text_CindyDefeat: @ 0x0825A185
+	.string "まあ！$"
+
+Route104_Text_CindyPostBattle: @ 0x0825A189
+	.string "であいは　わかれの　はじまり⋯⋯\n"
+	.string "また　どこかで　おあいしましょう$"
+
+Route104_Text_CindyRegister1: @ 0x0825A1AB
+	.string "あら⋯⋯　また　おあい　しましたわね\p"
+	.string "こんなに　ごえんが　あるんですもの\n"
+	.string "ポケナビに　とうろく　して　くださいませ$"
+
+Route104_Text_CindyRegister2: @ 0x0825A1E5
+	.string "この　ごえんを　きねんして\n"
+	.string "ポケナビに　とうろく　して　くださいませ$"
+
+Route104_Text_CindyRematchIntro: @ 0x0825A208
+	.string "また　おあい　しましたわね\n"
+	.string "おてあわせ　おねがい　できるかしら$"
+
+Route104_Text_CindyRematchDefeat: @ 0x0825A228
+	.string "あら⋯⋯\n"
+	.string "わたくし　ベストを　つくしましたのに⋯⋯$"
+
+Route104_Text_CindyPostRematch: @ 0x0825A242
+	.string "であいは　わかれの　はじまり⋯⋯\n"
+	.string "また　どこかで　おあいしましょう$"
+
+Route104_Text_DarianIntro: @ 0x0825A264
+	.string "つよそうな　ポケモンが　つれたっ！\n"
+	.string "さかなの　おうさま　って　かんじだ！\l"
+	.string "これは　つよそうだぞっ！$"
+
+Route104_Text_DarianDefeat: @ 0x0825A296
+	.string "なっにい$"
+
+Route104_Text_DarianPostBattle: @ 0x0825A29B
+	.string "おい　なまえ　まけ　してるじゃないか\n"
+	.string "おれの　コイキングよ！$"
+	.incbin "baserom_jp.gba", 0x25a2ba, 0x80d9

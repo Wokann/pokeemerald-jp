@@ -274,15 +274,17 @@ DewfordTown_EventScript_001E50EE::
 	end
 
 	.incbin "baserom_jp.gba", 0x1e50f8, 0x99
+Route104_Text_LandedInDewfordDeliverLetter:: @ 0x081E5191
 	.globl gJPText_001E5191
-gJPText_001E5191: @ 0x081E5191
+gJPText_001E5191:
 	.string "ハギ“ほい！　ムロに　とうちゃく！\p"
 	.string "たしか　ダイゴとやらに\n"
 	.string "てがみを　とどけるんだったな！$"
 
 	.incbin "baserom_jp.gba", 0x1e51bf, 0x6d
+DewfordTown_Text_BrineyLandedInDewford:: @ 0x081E522C
 	.globl gJPText_001E522C
-gJPText_001E522C: @ 0x081E522C
+gJPText_001E522C:
 	.string "ハギ“ほい！　ムロタウンに　とうちゃく！\p"
 	.string "ふねに　のりたくなったら\n"
 	.string "また　わしに　こえを　かけておくれ！$"
