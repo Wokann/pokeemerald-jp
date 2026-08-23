@@ -6,7 +6,9 @@
 #define OBJECT_EVENT_GRAPHICS_PLAYER_EXTENDED_DATA __attribute__((section(".rodata.object_event_graphics_player_extended_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_MAY_BASE_DATA __attribute__((section(".rodata.object_event_graphics_may_base_data"), aligned(4)))
 #define OBJECT_EVENT_GRAPHICS_MAY_ACTION_DATA __attribute__((section(".rodata.object_event_graphics_may_action_data"), aligned(4)))
+#define OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_DATA __attribute__((section(".rodata.object_event_graphics_npc_people_data"), aligned(4)))
 #include "data/object_events/object_event_graphics.h"
+#undef OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_DATA
 #undef OBJECT_EVENT_GRAPHICS_MAY_ACTION_DATA
 #undef OBJECT_EVENT_GRAPHICS_MAY_BASE_DATA
 #undef OBJECT_EVENT_GRAPHICS_PLAYER_EXTENDED_DATA

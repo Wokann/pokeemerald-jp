@@ -825,7 +825,29 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/palettes/ruby_sapphire_may.gbapal graphics/object_events/palettes/unused_palette.gbapal \
 	graphics/object_events/pics/people/may/mach_bike.4bpp graphics/object_events/pics/people/may/acro_bike.4bpp \
 	graphics/object_events/pics/people/may/surfing.4bpp graphics/object_events/pics/people/may/field_move.4bpp \
-	graphics/object_events/pics/people/may/fishing.4bpp graphics/object_events/pics/people/may/watering.4bpp
+	graphics/object_events/pics/people/may/fishing.4bpp graphics/object_events/pics/people/may/watering.4bpp \
+	graphics/object_events/palettes/npc_1.gbapal graphics/object_events/palettes/npc_2.gbapal \
+	graphics/object_events/palettes/npc_3.gbapal graphics/object_events/palettes/npc_4.gbapal \
+	graphics/object_events/palettes/npc_1_reflection.gbapal graphics/object_events/palettes/npc_2_reflection.gbapal \
+	graphics/object_events/palettes/npc_3_reflection.gbapal graphics/object_events/palettes/npc_4_reflection.gbapal \
+	graphics/object_events/pics/people/ninja_boy.4bpp graphics/object_events/pics/people/twin.4bpp \
+	graphics/object_events/pics/people/boy_1.4bpp graphics/object_events/pics/people/girl_1.4bpp \
+	graphics/object_events/pics/people/boy_2.4bpp graphics/object_events/pics/people/girl_2.4bpp \
+	graphics/object_events/pics/people/little_boy.4bpp graphics/object_events/pics/people/little_girl.4bpp \
+	graphics/object_events/pics/people/boy_3.4bpp graphics/object_events/pics/people/girl_3.4bpp \
+	graphics/object_events/pics/people/rich_boy.4bpp graphics/object_events/pics/people/woman_1.4bpp \
+	graphics/object_events/pics/people/fat_man.4bpp graphics/object_events/pics/people/pokefan_f.4bpp \
+	graphics/object_events/pics/people/man_1.4bpp graphics/object_events/pics/people/woman_2.4bpp \
+	graphics/object_events/pics/people/expert_m.4bpp graphics/object_events/pics/people/expert_f.4bpp \
+	graphics/object_events/pics/people/man_2.4bpp graphics/object_events/pics/people/woman_3.4bpp \
+	graphics/object_events/pics/people/pokefan_m.4bpp graphics/object_events/pics/people/woman_4.4bpp \
+	graphics/object_events/pics/people/cook.4bpp graphics/object_events/pics/people/link_receptionist.4bpp \
+	graphics/object_events/pics/people/old_man.4bpp graphics/object_events/pics/people/old_woman.4bpp \
+	graphics/object_events/pics/people/camper.4bpp graphics/object_events/pics/people/picnicker.4bpp \
+	graphics/object_events/pics/people/man_3.4bpp graphics/object_events/pics/people/woman_5.4bpp \
+	graphics/object_events/pics/people/youngster.4bpp graphics/object_events/pics/people/bug_catcher.4bpp \
+	graphics/object_events/pics/people/psychic_m.4bpp graphics/object_events/pics/people/school_kid_m.4bpp \
+	graphics/object_events/pics/people/maniac.4bpp graphics/object_events/pics/people/hex_maniac.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -
