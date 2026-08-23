@@ -9754,6 +9754,11 @@ SECTIONS {
         gUnknown_84E6CB8 = .;
         src/event_object_movement.o(.rodata.event_object_movement_action_function_tables_tail);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_event_object_movement_action_function_tables_tail);
+        src/graphics.o(.rodata.message_box_gfx);
+        src/graphics.o(.rodata.text_window_palettes);
+        src/graphics.o(.rodata.message_box_pal);
+        src/graphics.o(.rodata.text_window_frame_table);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_text_window_resources);
         src/coord_event_weather.o(.rodata.coord_event_weather_data.sCoordEventWeatherFuncs);
         src/field_tasks.o(.rodata.field_tasks_data.sPerStepCallbacks);
         src/field_tasks.o(.rodata.field_tasks_data.sHalfSubmergedBridgeMetatileOffsets);
@@ -10331,7 +10336,6 @@ SECTIONS {
         *(*);
     }
 }
-gMessageBox_Pal = gUnknown_84E8840;
 gUnknown_82FCDBC = gStatusSummaryTextData;
 gUnknown_82FCDDA = gStatusSummaryTextData + 0x1E;
 gUnknown_82FCDEE = gStatusSummaryTextData + 0x32;

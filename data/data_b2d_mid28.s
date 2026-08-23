@@ -77,21 +77,7 @@ gTextWindowFrame1_Gfx: @ 0x84E6CE0
 gTextWindowFrame1_Pal: @ 0x84E8360
 	.incbin "graphics/text_window/gTextWindowFrame1_Pal.bin"
 
-	.globl gMessageBox_Gfx
-gMessageBox_Gfx: @ 0x84E85E0
-	.incbin "graphics/text_window/message_box_jp.4bpp"
-
-	.globl sTextWindowPalettes
-sTextWindowPalettes: @ 0x84E87A0
-	.incbin "graphics/text_window/sTextWindowPalettes.bin"
-
-	.globl gUnknown_84E8840
-gUnknown_84E8840: @ 0x84E8840
-	.incbin "baserom_jp.gba", 0x4e8840, 0x20
-
-	.globl sWindowFrames
-sWindowFrames: @ 0x84E8860
-	.incbin "graphics/text_window/sWindowFrames.bin"
+	.section .rodata.data_b2d_mid28_after_text_window_resources
 
 	.globl gNullScriptPtr
 gNullScriptPtr: @ 0x84E8900

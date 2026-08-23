@@ -478,7 +478,8 @@ $(C_BUILDDIR)/pokemon_summary_screen.o: src/pokemon_summary_screen.c graphics/su
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/pokemon_summary_screen.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/pokemon_summary_screen.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/pokemon_summary_screen.gen.s
-$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/graphics/pokeballs.h \
+$(C_BUILDDIR)/graphics.o: src/graphics.c src/data/graphics/berries.h src/data/graphics/pokeballs.h src/data/text_window.h \
+	graphics/text_window/message_box_jp.4bpp \
 	graphics/balls/poke.4bpp.lz graphics/balls/poke.gbapal.lz \
 	graphics/balls/great.4bpp.lz graphics/balls/great.gbapal.lz \
 	graphics/balls/safari.4bpp.lz graphics/balls/safari.gbapal.lz \

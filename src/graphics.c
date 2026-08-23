@@ -1,4 +1,5 @@
 #include "global.h"
+#include "text_window.h"
 
 #define POKEBALL_GRAPHICS __attribute__((section(".rodata.pokeball_graphics"), aligned(1)))
 #define POKEBALL_OPEN_GRAPHICS __attribute__((section(".rodata.pokeball_open_graphics"), aligned(1)))
@@ -1141,3 +1142,28 @@ NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenKeyboardLower_Tilemap[] = INCB
 NAMING_SCREEN_JP_RESOURCES const u32 gNamingScreenKeyboardSymbols_Tilemap[] = INCBIN_U32("graphics/naming_screen/keyboard_symbols.bin.lz");
 
 #undef NAMING_SCREEN_JP_RESOURCES
+
+// These resources are logically owned by text_window.c. They are emitted
+// here only because adding data definitions to that matched code unit changes
+// agbcc output; dedicated linker sections preserve their original JP order.
+#define MESSAGE_BOX_GFX __attribute__((section(".rodata.message_box_gfx"), aligned(1)))
+
+MESSAGE_BOX_GFX const u8 gMessageBox_Gfx[] = INCBIN_U8("graphics/text_window/message_box_jp.4bpp");
+
+#undef MESSAGE_BOX_GFX
+
+#define TEXT_WINDOW_PALETTES __attribute__((section(".rodata.text_window_palettes"), aligned(1)))
+#define TEXT_WINDOW_FRAME_TABLE __attribute__((section(".rodata.text_window_frame_table"), aligned(1)))
+#include "data/text_window.h"
+#undef TEXT_WINDOW_FRAME_TABLE
+#undef TEXT_WINDOW_PALETTES
+
+#define MESSAGE_BOX_PAL __attribute__((section(".rodata.message_box_pal"), aligned(1)))
+
+MESSAGE_BOX_PAL const u16 gMessageBox_Pal[] =
+{
+    0x532E, 0x7FFF, 0x318C, 0x675A, 0x043C, 0x3AFF, 0x0664, 0x4BD2,
+    0x6546, 0x7B14, 0x7FFF, 0x73BC, 0x7FFF, 0x4FE0, 0x5F20, 0x51C9,
+};
+
+#undef MESSAGE_BOX_PAL
