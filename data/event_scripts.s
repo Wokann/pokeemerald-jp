@@ -118,6 +118,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/VerdanturfTown/scripts.inc"
 	.include "data/maps/PacifidlogTown/scripts.inc"
 	.include "data/maps/Route101/scripts.inc"
+	.include "data/maps/Route102/scripts.inc"
 	.include "data/maps/Route103/scripts.inc"
 	.include "data/maps/Route104/scripts.inc"
 	.include "data/maps/Route105/scripts.inc"
@@ -1135,7 +1136,7 @@ gUnknown_825941C: @ 0x825941C
 
 	.globl gUnknown_825941F
 gUnknown_825941F: @ 0x825941F
-	.include "data/scripts/gUnknown_825941F.inc"
+	.include "data/text/trainers.inc"
 
 	.globl EventScript_RepelWoreOff
 EventScript_RepelWoreOff: @ 0x8262393

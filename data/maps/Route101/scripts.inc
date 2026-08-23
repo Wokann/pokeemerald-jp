@@ -131,24 +131,4 @@ Route101_EventScript_001E6685::
 	setflag 0x2F8
 	return
 
-	.incbin "baserom_jp.gba", 0x1e6689, 0x2b3
-	.globl gJPText_001E693C
-gJPText_001E693C: @ 0x081E693C
-	.string "ミツル“{MUS_RG_VS_TRAINER}さん⋯⋯\n"
-	.string "ポケモンって　こういう　くさむらに\l"
-	.string "いたり　するんでしょ⋯⋯？\p"
-	.string "ぼくが　じょうずに　つかまえられるか\n"
-	.string "そこで　みてて　くださいね⋯⋯\p"
-	.string "⋯⋯うわっ！！$"
-
-	.globl gJPText_001E6992
-gJPText_001E6992: @ 0x081E6992
-	.string "ミツル“やった⋯⋯　ぼくの⋯⋯\n"
-	.string "ぼくの　ポケモンだ⋯⋯！！$"
-
-	.globl gJPText_001E69B0
-gJPText_001E69B0: @ 0x081E69B0
-	.string "{MUS_RG_VS_TRAINER}さん　ありがとう！\n"
-	.string "ジムに　もどろうよ！$"
-
-	.incbin "baserom_jp.gba", 0x1e69c7, 0x92
+	.incbin "baserom_jp.gba", 0x1e6689, 0x19b

@@ -511,7 +511,7 @@ gSpecials:
 	def_special sub_080A0194
 	def_special Unused_SetWeatherSunny
 	def_special SetUnlockedPokedexFlags
-	def_special sub_0813B518
+	def_special IsTrainerRegistered
 	def_special ShouldDoBrailleRegicePuzzle
 	def_special EnableNationalPokedex
 	def_special display_text_and_get_width_internal

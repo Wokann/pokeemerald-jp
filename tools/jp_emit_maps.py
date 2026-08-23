@@ -552,6 +552,75 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             'multichoices': {0x000E: 'MULTI_BRINEY_OFF_DEWFORD'},
         },
     },
+    # Route102 is the Wally/tutorial and early-trainer map.  Its JP scripts,
+    # object-event order, local text, and the first trainer-text block were
+    # checked one-for-one against the US Route102 sources.
+    'Route102': {
+        'scripts': {
+            0x081E6825: 'Route102_EventScript_LittleBoy',
+            0x081E682E: 'Route102_EventScript_RouteSignOldale',
+            0x081E6837: 'Route102_EventScript_RouteSignPetalburg',
+            0x081E6840: 'Route102_EventScript_Boy',
+            0x081E6849: 'Route102_EventScript_Calvin',
+            0x081E688A: 'Route102_EventScript_CalvinRegisterMatchCallAfterBattle',
+            0x081E689B: 'Route102_EventScript_CalvinRegisterMatchCall',
+            0x081E68B4: 'Route102_EventScript_CalvinTryRegister',
+            0x081E68C7: 'Route102_EventScript_CalvinRegister',
+            0x081E68E0: 'Route102_EventScript_CalvinRematch',
+            0x081E68F7: 'Route102_EventScript_Rick',
+            0x081E690E: 'Route102_EventScript_Tiana',
+            0x081E6925: 'Route102_EventScript_Allen',
+        },
+        'texts': {
+            0x081E693C: 'Route102_Text_WatchMeCatchPokemon',
+            0x081E6992: 'Route102_Text_WallyIDidIt',
+            0x081E69B0: 'Route102_Text_LetsGoBack',
+            0x081E69C7: 'Route102_Text_ImNotVeryTall',
+            0x081E6A13: 'Route102_Text_CatchWholeBunchOfPokemon',
+            0x081E6A27: 'Route102_Text_RouteSignOldale',
+            0x081E6A40: 'Route102_Text_RouteSignPetalburg',
+        },
+        'external_texts': {
+            0x08259517: 'Route102_Text_CalvinIntro',
+            0x08259548: 'Route102_Text_CalvinDefeated',
+            0x08259563: 'Route102_Text_CalvinPostBattle',
+            0x08259583: 'Route102_Text_CalvinRegister',
+            0x082595B1: 'Route102_Text_CalvinRegisterShort',
+            0x082595D1: 'Route102_Text_CalvinRematchIntro',
+            0x08259603: 'Route102_Text_CalvinRematchDefeated',
+            0x08259619: 'Route102_Text_CalvinRematchPostBattle',
+            0x0825963A: 'Route102_Text_AllenIntro',
+            0x0825965C: 'Route102_Text_AllenDefeated',
+            0x08259673: 'Route102_Text_AllenPostBattle',
+            0x08259690: 'Route102_Text_RickIntro',
+            0x082596B0: 'Route102_Text_RickDefeated',
+            0x082596B9: 'Route102_Text_RickPostBattle',
+            0x082596DA: 'Route102_Text_TianaIntro',
+            0x08259710: 'Route102_Text_TianaDefeated',
+            0x0825972E: 'Route102_Text_TianaPostBattle',
+        },
+        # FD 01 is context-sensitive.  These two field messages match the
+        # US {PLAYER} fields exactly, so retain the proven semantic token.
+        'field_placeholders': {
+            0x081E693C: {0x01: 'PLAYER'},
+            0x081E69B0: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'flags': {0x012F: 'FLAG_HAS_MATCH_CALL'},
+            'trainers': {
+                0x013E: 'TRAINER_CALVIN_1',
+                0x0267: 'TRAINER_RICK',
+                0x025B: 'TRAINER_TIANA',
+                0x014D: 'TRAINER_ALLEN',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
     # These two routes are a compact, contiguous trainer-only tail.  The
     # event order and each trainer ID are identical to the US map sources;
     # their battle text remains in the existing shared text owner.
@@ -734,6 +803,60 @@ def collapse_msgbox_macros(lines):
     return out
 
 
+def collapse_trainerbattle_macros(lines):
+    """Restore the standard trainer-battle wrappers when their bytes prove them."""
+    out = []
+    for name, argstr in lines:
+        if name != 'trainerbattle':
+            out.append((name, argstr))
+            continue
+        parts = [part.strip() for part in argstr.split(',')]
+        if len(parts) < 5 or parts[2] not in ('0', '0x0', 'LOCALID_NONE'):
+            out.append((name, argstr))
+            continue
+        battle_type, trainer = parts[0], parts[1]
+        if battle_type == 'TRAINER_BATTLE_SINGLE' and len(parts) == 5:
+            out.append(('trainerbattle_single', ', '.join((trainer, parts[3], parts[4]))))
+        elif battle_type == 'TRAINER_BATTLE_CONTINUE_SCRIPT' and len(parts) == 6:
+            out.append(('trainerbattle_single', ', '.join((trainer, parts[3], parts[4], parts[5]))))
+        elif battle_type == 'TRAINER_BATTLE_REMATCH' and len(parts) == 5:
+            out.append(('trainerbattle_rematch', ', '.join((trainer, parts[3], parts[4]))))
+        else:
+            out.append((name, argstr))
+    return out
+
+
+def collapse_register_matchcall_macros(lines):
+    """Restore ``register_matchcall`` only for its exact four-op expansion."""
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 3 < len(lines):
+            first, second, third, fourth = lines[index:index + 4]
+            if (
+                first[0] == 'setvar'
+                and second == ('special', 'SetMatchCallRegisteredFlag')
+                and third[0] == 'setorcopyvar'
+                and fourth[0] == 'callstd'
+            ):
+                first_args = [part.strip() for part in first[1].split(',')]
+                third_args = [part.strip() for part in third[1].split(',')]
+                if (
+                    len(first_args) == 2
+                    and len(third_args) == 2
+                    and first_args[0] == 'VAR_0x8004'
+                    and third_args[0] == 'VAR_0x8000'
+                    and first_args[1] == third_args[1]
+                    and fourth[1] in ('8', '0x8', 'STD_REGISTER_MATCH_CALL')
+                ):
+                    out.append(('register_matchcall', first_args[1]))
+                    index += 4
+                    continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
 def collapse_condition_macros(lines):
     """Restore exact two-instruction comparison and flag-test macros."""
     out = []
@@ -817,8 +940,15 @@ def semantic_symbol_formatter(mname):
             return symbols.get('trainers', {}).get(value)
         if index in VARIABLE_ARGUMENTS.get(name, ()):
             return symbols.get('vars', {}).get(value)
+        if (name == 'setvar' and index == 1 and args
+                and args[0] == 0x8004):
+            return symbols.get('trainers', {}).get(value)
+        if (name == 'compare_var_to_value' and index == 1 and args
+                and args[0] == 0x800D):
+            return symbols.get('booleans', {}).get(value)
         if name == 'setorcopyvar' and index == 1 and args and args[0] == 0x8000:
-            return symbols.get('items', {}).get(value)
+            return (symbols.get('items', {}).get(value)
+                    or symbols.get('trainers', {}).get(value))
         if name in ('playbgm', 'playfanfare') and index == 0:
             return symbols.get('songs', {}).get(value)
         if name == 'playse' and index == 0:
@@ -1051,6 +1181,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     verified_script_labels = semantic.get('scripts', {})
     verified_table_labels = semantic.get('tables', {})
     verified_text_labels = semantic.get('texts', {})
+    external_text_labels = semantic.get('external_texts', {})
     field_placeholders = semantic.get('field_placeholders', {})
     special_aliases = semantic.get('specials', {})
     symbol_formatter = semantic_symbol_formatter(mname)
@@ -1159,6 +1290,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             'field placeholder metadata has no emitted text for %s: %s' % (
                 mname,
                 ', '.join('0x%08X' % addr for addr in sorted(missing_placeholder_texts))))
+    reference_text_label_map = dict(emitted_text_label_map)
+    reference_text_label_map.update(external_text_labels)
     # build segments in address order
     segs = []
     segs.append((ms, 'map_table', 0))
@@ -1235,12 +1368,14 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 lines.append('%s:: @ 0x%08X' % (old, addr))
             lines.append('%s::' % label_map[addr])
             decoded_lines = sp.decode_script_lines(
-                scripts[addr], label_map, emitted_text_label_map, symbol_formatter)
+                scripts[addr], label_map, reference_text_label_map, symbol_formatter)
             decoded_lines = [
                 (name, special_aliases.get(argstr, argstr) if name == 'special' else argstr)
                 for name, argstr in decoded_lines
             ]
             decoded_lines = collapse_msgbox_macros(decoded_lines)
+            decoded_lines = collapse_trainerbattle_macros(decoded_lines)
+            decoded_lines = collapse_register_matchcall_macros(decoded_lines)
             for name, argstr in collapse_condition_macros(decoded_lines):
                 if argstr:
                     lines.append('\t%s %s' % (name, argstr))
@@ -1308,15 +1443,18 @@ def collect_all_text_ptrs(entries):
 
 
 def event_script_labels():
-    """addr -> label name from data/scripts/*.inc file names + event_scripts.s."""
+    """Return ROM-address labels available to script-source verification."""
     labels = {}
     for p in (ROOT / 'data' / 'scripts').glob('gUnknown_*.inc'):
         labels[int(p.stem[len('gUnknown_'):], 16)] = p.stem
-    for line in (ROOT / 'data' / 'event_scripts.s').read_text(
-            encoding='utf-8').splitlines():
-        m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):\s*@\s*0x([0-9A-Fa-f]+)', line)
-        if m:
-            labels.setdefault(int(m.group(2), 16), m.group(1))
+    sources = [ROOT / 'data' / 'event_scripts.s']
+    sources.extend(sorted((ROOT / 'data' / 'scripts').rglob('*.inc')))
+    sources.extend(sorted((ROOT / 'data' / 'text').rglob('*.inc')))
+    for source in sources:
+        for line in source.read_text(encoding='utf-8').splitlines():
+            m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):\s*@\s*0x([0-9A-Fa-f]+)', line)
+            if m:
+                labels.setdefault(int(m.group(2), 16), m.group(1))
     return labels
 
 

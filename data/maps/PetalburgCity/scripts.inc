@@ -43,14 +43,14 @@ PetalburgCity_EventScript_001DB84A::
 	applymovement 0x2, 0x081DB96D
 	applymovement 0xFF, 0x081DB94C
 	waitmovement 0x0
-	loadword 0x0, gJPText_001E693C
+	loadword 0x0, Route102_Text_WatchMeCatchPokemon
 	callstd 0x4
 	special StartWallyTutorialBattle
-	loadword 0x0, gJPText_001E6992
+	loadword 0x0, Route102_Text_WallyIDidIt
 	callstd 0x4
 	applymovement_at 0x2, 0x08243627, 0x0
 	waitmovement_at 0x2, 0x0
-	loadword 0x0, gJPText_001E69B0
+	loadword 0x0, Route102_Text_LetsGoBack
 	callstd 0x4
 	closemessage
 	clearflag 0x4000

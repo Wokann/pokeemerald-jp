@@ -6761,7 +6761,7 @@ __attribute__((naked)) void sub_0813B4C8(void)
     );
 }
 
-__attribute__((naked)) void sub_0813B518(void)
+__attribute__((naked)) bool32 IsTrainerRegistered(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
