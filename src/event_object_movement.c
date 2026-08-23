@@ -2,7 +2,9 @@
 
 #define OBJECT_EVENT_GRAPHICS_CUT_GRASS __attribute__((section(".rodata.object_event_graphics_cut_grass"), aligned(1)))
 #define OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES __attribute__((section(".rodata.object_event_graphics_field_effect_palettes")))
+#define OBJECT_EVENT_GRAPHICS_PLAYER_DATA __attribute__((section(".rodata.object_event_graphics_player_data"), aligned(4)))
 #include "data/object_events/object_event_graphics.h"
+#undef OBJECT_EVENT_GRAPHICS_PLAYER_DATA
 #undef OBJECT_EVENT_GRAPHICS_CUT_GRASS
 #undef OBJECT_EVENT_GRAPHICS_FIELD_EFFECT_PALETTES
 #include "event_object_movement.h"

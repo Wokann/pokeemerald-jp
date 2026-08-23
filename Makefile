@@ -805,7 +805,11 @@ $(C_BUILDDIR)/diploma.o: src/diploma.c charmap.txt \
 	@rm -f $(C_BUILDDIR)/diploma.gen.s
 
 $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/object_events/object_event_graphics.h charmap.txt \
-	graphics/field_effects/pics/cut_grass.4bpp graphics/field_effects/palettes/cut_grass.gbapal
+	graphics/field_effects/pics/cut_grass.4bpp graphics/field_effects/palettes/cut_grass.gbapal \
+	graphics/object_events/pics/people/brendan/walking.4bpp graphics/object_events/pics/people/brendan/running.4bpp \
+	graphics/object_events/palettes/brendan.gbapal \
+	graphics/object_events/pics/people/ruby_sapphire_brendan/walking.4bpp \
+	graphics/object_events/pics/people/ruby_sapphire_brendan/running.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -
