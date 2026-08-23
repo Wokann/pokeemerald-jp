@@ -1581,4 +1581,174 @@ Route112_Text_ShaylaPostBattle: @ 0x0825C58A
 	.string "えっと　もし　よかったら\l"
 	.string "さっそく　2かいせん　と　おもって⋯⋯\l"
 	.string "ん？　いそがしいなら　いいわ$"
-	.incbin "baserom_jp.gba", 0x25c5c8, 0x5dcb
+Route113_Text_JaylenIntro: @ 0x0825C5C8
+	.string "この　あたりが　わりと　すずしいの\n"
+	.string "なんでか　しってるかい？$"
+
+Route113_Text_JaylenDefeat: @ 0x0825C5E7
+	.string "ぴゅーっ！\n"
+	.string "まけたーっ！$"
+
+Route113_Text_JaylenPostBattle: @ 0x0825C5F4
+	.string "かざんばいが　たいようの　ひかりを\n"
+	.string "さえぎってるから　ひえるんだね！\l"
+	.string "あつがりの　オレには　たすかるよ！$"
+
+Route113_Text_DillonIntro: @ 0x0825C629
+	.string "やまの　ふんかは\n"
+	.string "ちきゅうが　いきている　しょうこ！$"
+
+Route113_Text_DillonDefeat: @ 0x0825C644
+	.string "つよいな　おまえーっ！$"
+
+Route113_Text_DillonPostBattle: @ 0x0825C650
+	.string "ごほ　がへっ！\n"
+	.string "はいが　はいに　はいった⋯⋯\p"
+	.string "うけなかった⋯⋯\n"
+	.string "さむい⋯⋯　ブルブル⋯⋯$"
+
+Route113_Text_MadelineIntro: @ 0x0825C67D
+	.string "あたしの　ドンメルちゃんに\n"
+	.string "かざんばいが　かからないように\l"
+	.string "パラソルを　さしているの$"
+
+Route113_Text_MadelineDefeat: @ 0x0825C6A8
+	.string "はあ　はあ⋯⋯\n"
+	.string "つかれましたわ⋯⋯$"
+
+Route113_Text_MadelinePostBattle: @ 0x0825C6BA
+	.string "とても　おつよいのね\n"
+	.string "おねえさん　かんしん　しちゃったわ$"
+
+Route113_Text_MadelineRegister: @ 0x0825C6D7
+	.string "ね　ちょっと　パラソルに　はいって\n"
+	.string "ポケナビを　とうろく　していって！$"
+
+Route113_Text_MadelineRematchIntro: @ 0x0825C6FB
+	.string "おひさしぶりね\n"
+	.string "よろしかったら　しょうぶ　しません？$"
+
+Route113_Text_MadelineRematchDefeat: @ 0x0825C716
+	.string "おみごと　ですわ$"
+
+Route113_Text_MadelinePostRematch: @ 0x0825C71F
+	.string "あいかわらず　おつよいのね\n"
+	.string "おねえさん　かんしん　しちゃったわ$"
+
+Route113_Text_LaoIntro: @ 0x0825C73F
+	.string "はいの　なかから　ドロロンッ！！\n"
+	.string "しょうぶで　ござる！$"
+
+Route113_Text_LaoDefeat: @ 0x0825C75B
+	.string "まいったで　ござる$"
+
+Route113_Text_LaoPostBattle: @ 0x0825C765
+	.string "もっと　かくれかたを　けんきゅう　しよう\n"
+	.string "それでは　しつれいするで　ござる$"
+
+Route113_Text_LaoRegister: @ 0x0825C78B
+	.string "やあ！　にんぽう\n"
+	.string "ポケナビ　とうろくのじゅつで　ござる！$"
+
+Route113_Text_LaoRematchIntro: @ 0x0825C7A8
+	.string "はいの　なかから　ドロロロンッ！！\n"
+	.string "しょうぶで　ござる！$"
+
+Route113_Text_LaoRematchDefeat: @ 0x0825C7C5
+	.string "まいったで　ござる$"
+
+Route113_Text_LaoPostRematch: @ 0x0825C7CF
+	.string "かくれかたは　よかったが\n"
+	.string "しょうぶが　いまいち　だった⋯⋯\p"
+	.string "それでは　しつれいするで　ござる$"
+
+Route113_Text_LungIntro: @ 0x0825C7FE
+	.string "みつけてくれて　ありがとう！\n"
+	.string "でも　しょうぶは　べつだよ！$"
+
+Route113_Text_LungDefeat: @ 0x0825C81C
+	.string "にんぽう　かざんばい　がくれ！\p"
+	.string "⋯⋯　って　もう　おわり？$"
+
+Route113_Text_LungPostBattle: @ 0x0825C83A
+	.string "かくれていて　なにが　しんぱいって\n"
+	.string "だれも　とおらないと　さびしいんだよね$"
+
+Route113_Text_ToriIntro: @ 0x0825C860
+	.string "ナナ“ふたりで　かざんばい　あつめてるよ\n"
+	.string "でも　ポケモンしょうぶも　するんだよ！$"
+
+Route113_Text_ToriDefeat: @ 0x0825C889
+	.string "ナナ“まけちゃった\n"
+	.string "つまんないから　かざんばい　あつめよ！$"
+
+Route113_Text_ToriPostBattle: @ 0x0825C8A7
+	.string "ナナ“かざんばい　どれくらい　たまったかな？\n"
+	.string "しろいビードロ　つくれると　いいのにね！$"
+
+Route113_Text_ToriNotEnoughMons: @ 0x0825C8D3
+	.string "ナナ“あたしたち　2たい2で　たたかいたいの\n"
+	.string "そうしないと　まけちゃうもん！$"
+
+Route113_Text_TiaIntro: @ 0x0825C8FA
+	.string "ネネ“ふたりで　かざんばい　あつめてるよ\n"
+	.string "でも　ポケモンしょうぶも　するんだよ！$"
+
+Route113_Text_TiaDefeat: @ 0x0825C923
+	.string "ネネ“かてなかった\n"
+	.string "つまんないから　かざんばい　あつめよ！$"
+
+Route113_Text_TiaPostBattle: @ 0x0825C941
+	.string "ネネ“かざんばい　けっこう　たまったよ！\n"
+	.string "もう　しろいビードロ　つくれるよ　きっと！$"
+
+Route113_Text_TiaNotEnoughMons: @ 0x0825C96C
+	.string "ネネ“あたしたち　2たい2で　たたかいたいの\n"
+	.string "そうしないと　かてないもん！$"
+
+Route113_Text_CobyIntro: @ 0x0825C992
+	.string "おまえ　なんか　この　つばさで\n"
+	.string "ふきとばして　やるぜっ！$"
+
+Route113_Text_CobyDefeat: @ 0x0825C9AF
+	.string "え　あれ？$"
+
+Route113_Text_CobyPostBattle: @ 0x0825C9B5
+	.string "そんなに　あっさり　かたれると\n"
+	.string "なにを　いって　いいか　わからない⋯⋯$"
+
+Route113_Text_SophieIntro: @ 0x0825C9D9
+	.string "あったかくて　ねむく　なっちゃう\n"
+	.string "ねむけ　ざましに　あいてを　してよ！$"
+
+Route113_Text_SophieDefeat: @ 0x0825C9FD
+	.string "きっと　これは　ユメなのよ⋯⋯$"
+
+Route113_Text_SophiePostBattle: @ 0x0825CA0D
+	.string "まけて　くやしい　から\n"
+	.string "もう　ここで　フテね　しちゃうわ！\l"
+	.string "ぐーぐー$"
+
+Route113_Text_LawrenceIntro: @ 0x0825CA30
+	.string "もしかして　かざんばい　あつめの\n"
+	.string "とちゅう　だった？$"
+
+Route113_Text_LawrenceDefeat: @ 0x0825CA4B
+	.string "えへへ　まけちゃったね$"
+
+Route113_Text_LawrencePostBattle: @ 0x0825CA57
+	.string "ぼくも　はいに　もぐっちゃおう　かしら$"
+
+Route113_Text_WyattIntro: @ 0x0825CA6B
+	.string "ぼ　ボクと　たたかうって　いうんですか！\n"
+	.string "まだ　つかまえた　ばかりなのに！$"
+
+Route113_Text_WyattDefeat: @ 0x0825CA91
+	.string "か　かって　うれしい　ですか！\n"
+	.string "こんな　ボクに　かって　うれしいですか！$"
+
+Route113_Text_WyattPostBattle: @ 0x0825CAB6
+	.string "はいしゃに　こえを　かけて　くれるって\n"
+	.string "いうんですか！\l"
+	.string "か　カッコいい　ですね！　ふん！$"
+	.incbin "baserom_jp.gba", 0x25cae3, 0x58b0
