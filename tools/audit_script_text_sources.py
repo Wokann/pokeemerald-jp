@@ -100,6 +100,15 @@ def implicit_control_arguments(strings: list[StringLine]) -> list[tuple[int, str
     return findings
 
 
+def inline_line_controls(strings: list[StringLine]) -> list[tuple[int, str]]:
+    """Find line/page controls followed by more source in one .string line."""
+    findings: list[tuple[int, str]] = []
+    for entry in strings:
+        for match in re.finditer(r"\\[nlp](?=.)", entry.source):
+            findings.append((entry.line_number, match.group(0)))
+    return findings
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--verbose", action="store_true", help="show every eligible include")
@@ -107,6 +116,11 @@ def main() -> None:
         "--strict-control-syntax",
         action="store_true",
         help="return non-zero if a required control argument is outside braces",
+    )
+    parser.add_argument(
+        "--strict-layout",
+        action="store_true",
+        help="return non-zero if text follows \\n, \\p, or \\l in one .string directive",
     )
     args = parser.parse_args()
 
@@ -121,6 +135,7 @@ def main() -> None:
     byte_mismatches: list[tuple[IncludeRecord, bytes, bytes]] = []
     codec_errors: list[tuple[IncludeRecord, str]] = []
     implicit: list[tuple[IncludeRecord, int, str]] = []
+    inline_controls: list[tuple[IncludeRecord, int, str]] = []
 
     for record in records:
         strings, reason = pure_string_lines(record.path)
@@ -147,6 +162,8 @@ def main() -> None:
             byte_mismatches.append((record, expected, encoded))
         for line_number, control in implicit_control_arguments(strings):
             implicit.append((record, line_number, control))
+        for line_number, control in inline_line_controls(strings):
+            inline_controls.append((record, line_number, control))
         if args.verbose:
             status = "OK" if expected == encoded else "MISMATCH"
             print(
@@ -160,6 +177,7 @@ def main() -> None:
     print(f"codec/preproc errors:               {len(codec_errors)}")
     print(f"skipped mixed/non-string includes:  {len(skipped)}")
     print(f"implicit control arguments:         {len(implicit)}")
+    print(f"inline line/page controls:          {len(inline_controls)}")
 
     for record, expected, actual in byte_mismatches[:20]:
         print(
@@ -176,7 +194,20 @@ def main() -> None:
     if len(implicit) > 40:
         print(f"... {len(implicit) - 40} more implicit-control findings")
 
-    if byte_mismatches or codec_errors or (args.strict_control_syntax and implicit):
+    for record, line_number, control in inline_controls[:40]:
+        print(
+            f"INLINE CONTROL {record.path.relative_to(ROOT)}:{line_number}: "
+            f"split after {control} into the next .string directive"
+        )
+    if len(inline_controls) > 40:
+        print(f"... {len(inline_controls) - 40} more inline-control findings")
+
+    if (
+        byte_mismatches
+        or codec_errors
+        or (args.strict_control_syntax and implicit)
+        or (args.strict_layout and inline_controls)
+    ):
         raise SystemExit(1)
 
 
