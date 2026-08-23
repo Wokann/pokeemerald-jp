@@ -40,6 +40,31 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
 # US map source.  They are referenced by ``applymovement`` rather than being
 # event scripts, so the event-script parser deliberately does not follow them.
 MAP_MOVEMENT_SCRIPT_LABELS = {
+    'RusturfTunnel': {
+        0x082137E0: 'RusturfTunnel_Movement_WandaExit1',
+        0x082137EC: 'RusturfTunnel_Movement_WandaExit',
+        0x082137F8: 'RusturfTunnel_Movement_PlayerWatchWandaExit',
+        0x082137FE: 'RusturfTunnel_Movement_Unused1',
+        0x08213801: 'RusturfTunnel_Movement_Unused2',
+        0x08213806: 'RusturfTunnel_Movement_Unused3',
+        0x0821380B: 'RusturfTunnel_Movement_PlayerWatchBoyfriend1',
+        0x0821380E: 'RusturfTunnel_Movement_PlayerWatchBoyfriend',
+        0x08213811: 'RusturfTunnel_Movement_BoyfriendFaceRight',
+        0x08213814: 'RusturfTunnel_Movement_WandasBoyfriendExit1',
+        0x08213821: 'RusturfTunnel_Movement_WandasBoyfriendExit',
+        0x0821382E: 'RusturfTunnel_Movement_WandasBoyfriendApproachPlayer',
+        0x08213830: 'RusturfTunnel_Movement_BoyfriendApproachWanda1',
+        0x08213835: 'RusturfTunnel_Movement_BoyfriendApproachWanda',
+        0x08213874: 'RusturfTunnel_Movement_GruntAndPeekoBackUp',
+        0x08213941: 'RusturfTunnel_Movement_PushPlayerAsideForGrunt',
+        0x08213947: 'RusturfTunnel_Movement_PlayerMoveAsideForBriney',
+        0x0821394A: 'RusturfTunnel_Movement_GruntEscape',
+        0x08213954: 'RusturfTunnel_Movement_BrineyApproachPeeko1',
+        0x0821395C: 'RusturfTunnel_Movement_BrineyExit',
+        0x08213968: 'RusturfTunnel_Movement_PlayerWatchBrineyExit',
+        0x0821396D: 'RusturfTunnel_Movement_BrineyApproachPeeko2',
+        0x08213970: 'RusturfTunnel_Movement_PeekoExit',
+    },
     'RustboroCity_PokemonSchool': {
         0x08202D82: 'RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest',
         0x08202D99: 'RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast',
