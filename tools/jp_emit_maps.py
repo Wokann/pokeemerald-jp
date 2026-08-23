@@ -286,7 +286,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 for b in frame_table_bytes(ta):
                     covered[b] = 'table'
     text_ranges = []
-    for tp in sorted(global_text_ptrs):
+    for tp in sorted(global_text_ptrs | text_ptrs):
         if not (ms <= tp < region_end):
             continue
         result = text_range(tp, region_end)
@@ -298,6 +298,9 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         text_ranges.append((a, b))
         for x in range(a, b):
             covered[x] = 'text'
+    emitted_text_label_map = dict(text_label_map)
+    for tp, _ in text_ranges:
+        emitted_text_label_map[tp] = 'gJPText_%08X' % (tp & 0xFFFFFF)
     # build segments in address order
     segs = []
     segs.append((ms, 'map_table', 0))
@@ -365,7 +368,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             if old:
                 lines.append('%s:: @ 0x%08X' % (old, addr))
             lines.append('%s::' % label_map[addr])
-            for name, argstr in sp.decode_script_lines(scripts[addr], label_map, text_label_map):
+            for name, argstr in sp.decode_script_lines(
+                    scripts[addr], label_map, emitted_text_label_map):
                 if argstr:
                     lines.append('\t%s %s' % (name, argstr))
                 else:
@@ -433,11 +437,12 @@ def event_script_labels():
 
 
 def main():
-    entries = map_entries()
-    print('maps:', len(entries))
     do_write = '--write' in sys.argv
-    args = [a for a in sys.argv[1:] if a != '--write']
+    include_empty = '--include-empty' in sys.argv
+    args = [a for a in sys.argv[1:] if a not in ('--write', '--include-empty')]
     m = args[0] if args else None
+    entries = map_entries(include_empty=include_empty or m is not None)
+    print('maps:', len(entries))
     global_text_ptrs = collect_all_text_ptrs(entries)
     print('global text ptrs:', len(global_text_ptrs))
     text_label_map = {p: 'gJPText_%08X' % (p & 0xFFFFFF) for p in global_text_ptrs}

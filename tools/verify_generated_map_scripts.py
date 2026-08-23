@@ -71,7 +71,15 @@ def _undefined_symbols(object_path: Path) -> set[str]:
 
 
 def _external_label_addresses() -> dict[str, int]:
-    return {name: address for address, name in emitter.event_script_labels().items()}
+    labels = {name: address for address, name in emitter.event_script_labels().items()}
+    # These names are macro-only string-buffer selectors. They do not survive
+    # as ROM symbols, but GAS must know their identities while expanding
+    # stringvar inside generated map scripts.
+    labels.update({"STR_VAR_1": 0, "STR_VAR_2": 1, "STR_VAR_3": 2})
+    for index, (name, waitstate) in emitter.sp.SPECIALS.items():
+        labels[f"SPECIAL_{name}"] = index
+        labels[f"SPECIAL_WAITSTATE_{name}"] = waitstate
+    return labels
 
 
 def _resolve_address(symbol: str, known: dict[str, int]) -> int | None:
