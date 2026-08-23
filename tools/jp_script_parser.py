@@ -15,6 +15,8 @@ import re
 import sys
 from pathlib import Path
 
+from jp_map_script_metadata import build_metadata
+
 ROOT = Path(__file__).resolve().parents[1]
 CMD_TABLE = ROOT / 'data' / 'script_cmd_table.inc'
 EVENT_INC = ROOT / 'asm' / 'macros' / 'event.inc'
@@ -339,14 +341,16 @@ def std_entries():
     return out
 
 
-def build_graph():
-    """Discover scripts reachable from map tables + std table."""
+def build_graph(map_tables=None):
+    """Discover scripts reachable from ROM-derived map tables + std table."""
     scripts = {}       # addr -> list of instr
     entry_sources = {}  # addr -> source description
     queue = []
     seen = set()
 
-    for tb, entries in parse_map_tables('/tmp/map_script_tables.json'):
+    if map_tables is None:
+        _, map_tables = build_metadata()
+    for tb, entries in map_tables.items():
         for tag, ptr in entries:
             if in_region(ptr) and ptr not in seen:
                 seen.add(ptr)
@@ -398,11 +402,14 @@ def main():
         print('text pointers:', len(tptrs))
         if tptrs:
             print('range:', hex(min(tptrs)), hex(max(tptrs)))
-        import json
-        json.dump({hex(a): [[o, n, a2] for o, n, a2, _ in s]
-                   for a, s in scripts.items()},
-                  open('/tmp/jp_script_graph.json', 'w'))
-        print('saved /tmp/jp_script_graph.json')
+        output = ROOT / 'build' / 'jp_map_script_metadata' / 'jp_script_graph.json'
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(
+            json.dumps({hex(a): [[o, n, a2] for o, n, a2, _ in s]
+                        for a, s in scripts.items()}, indent=2) + '\n',
+            encoding='utf-8',
+        )
+        print('saved', output)
     elif cmd == 'dump':
         addr = int(sys.argv[2], 16)
         script = parse_script(addr)

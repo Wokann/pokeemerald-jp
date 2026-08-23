@@ -11,10 +11,13 @@ import collections
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 import jp_script_parser as sp
+import jp_map_script_metadata as map_metadata
+from jp_script_text import JapaneseScriptTextCodec, TextDecodeError, TextRoundTripError
 
 ROM = sp.ROM
-MAP_HEADERS = json.loads(Path('/tmp/jp_map_headers.json').read_text())
-MAP_TABLES = json.loads(Path('/tmp/map_script_tables.json').read_text())
+_MAP_HEADERS, _MAP_TABLES = map_metadata.build_metadata()
+MAP_HEADERS = map_metadata.legacy_map_headers(_MAP_HEADERS)
+MAP_TABLES = map_metadata.legacy_map_tables(_MAP_TABLES)
 US_JSON = Path('/home/kenny/pokeemerald/data/maps/map_groups.json')
 
 MAP_SCRIPT_NAMES = {
@@ -43,125 +46,23 @@ def build_map_names():
 
 
 MAP_NAMES = build_map_names()
-
-# text decoding support (single-byte kana priority + control codes)
-CHARMAP = ROOT / 'charmap.txt'
-
-
-def build_text_maps():
-    single = {}
-    multi = {}
-    for line in CHARMAP.read_text(encoding='utf-8').splitlines():
-        line = line.strip()
-        if not line or line.startswith('@'):
-            continue
-        m = re.match(r"'((?:[^'\\]|\\.)*)'\s*=\s*([0-9A-Fa-f ]+)", line)
-        if m:
-            key = m.group(1).replace("\\'", "'")
-            vals = [int(x, 16) for x in m.group(2).split()]
-            if len(vals) == 1:
-                single[vals[0]] = key
-            continue
-        m = re.match(r'([A-Za-z_][A-Za-z0-9_]*)\s*=\s*([0-9A-Fa-f ]+)', line)
-        if m:
-            vals = [int(x, 16) for x in m.group(2).split()]
-            if len(vals) > 1 and vals[0] != 0xFC:
-                multi[bytes(vals)] = m.group(1)
-    return single, multi
-
-
-def ctrl_render(code, args):
-    """EXT_CTRL_CODE -> preproc-compatible {NAME arg} text."""
-    if code in (0x01, 0x02, 0x03):
-        return '{%s %d}' % (djt.CTRL_NAMES[code], args[0]) if args else '{%s}' % djt.CTRL_NAMES[code]
-    if code == 0x04:
-        return '{COLOR_HIGHLIGHT_SHADOW %d %d %d}' % tuple(args)
-    if code == 0x05:
-        return '{PALETTE %d}' % args[0]
-    if code == 0x06:
-        return '{FONT %d}' % args[0]
-    if code == 0x08:
-        return '{PAUSE %d}' % args[0]
-    if code in (0x0B, 0x10):
-        sid = args[0] | (args[1] << 8)
-        name = djt.build_sound_map().get(sid)
-        return '{%s %s}' % (djt.CTRL_NAMES[code], name) if name else '{%s 0x%04X}' % (djt.CTRL_NAMES[code], sid)
-    if code == 0x0C:
-        return '{ESCAPE 0x%02X}' % args[0]
-    if code in (0x0D, 0x0E):
-        return '{%s %d}' % (djt.CTRL_NAMES[code], args[0])
-    if code == 0x13:
-        return '{CLEAR_TO %d}' % args[0]
-    if code == 0x14:
-        return '{MIN_LETTER_SPACING %d}' % args[0]
-    name = djt.CTRL_NAMES.get(code)
-    return '{%s}' % name if name else '{CTRL_%02X}' % code
-
-
-import decode_jp_text as djt
-
-
-SINGLE, MULTI = build_text_maps()
-SAFE_MULTI = {seq: n for seq, n in MULTI.items() if seq[0] in (0xFD, 0xF9, 0xF8, 0xF7)}
-
+TEXT_CODEC = JapaneseScriptTextCodec()
 
 def decode_text(data):
-    out = []
-    i = 0
-    n = len(data)
-    while i < n:
-        b = data[i]
-        if b == 0xFC:
-            if i + 1 < n:
-                code = data[i + 1]
-                nargs = djt.CTRL_ARGS.get(code, 0)
-                args = data[i + 2:i + 2 + nargs]
-                if len(args) == nargs:
-                    out.append(ctrl_render(code, args))
-                else:
-                    out.append('[FC]')
-                i += 2 + nargs
-            else:
-                out.append('[FC]')
-                i += 1
-            continue
-        if b == 0xFF:
-            out.append('$')
-            i += 1
-            continue
-        if b == 0xFE:
-            out.append('\\n')
-            i += 1
-            continue
-        if b == 0xFA:
-            out.append('\\l')
-            i += 1
-            continue
-        if b == 0xFB:
-            out.append('\\p')
-            i += 1
-            continue
-        matched = False
-        for ln in (3, 2):
-            seq = bytes(data[i:i + ln])
-            if len(seq) == ln and seq in SAFE_MULTI:
-                out.append('{%s}' % SAFE_MULTI[seq])
-                i += ln
-                matched = True
-                break
-        if matched:
-            continue
-        if b in SINGLE:
-            out.append(SINGLE[b])
-            i += 1
-            continue
-        out.append('[%02X]' % b)
-        i += 1
-    return ''.join(out)
+    """Return safe source text, or None when a byte sequence is not proved."""
+    try:
+        return TEXT_CODEC.verify(data)
+    except (TextDecodeError, TextRoundTripError):
+        return None
 
 
-def map_entries():
-    """Return sorted [(table_addr, map_name, gi, mi, entries, events)]. """
+def map_entries(include_empty=False):
+    """Return sorted [(table_addr, map_name, gi, mi, entries, events)].
+
+    ``include_empty`` retains maps whose table is a single zero terminator.
+    Those tables are the missing structural owners behind many US
+    ``data/maps/<Map>/scripts.inc`` paths.
+    """
     out = []
     for entry in MAP_HEADERS:
         gi, mi, h, layout, events, ms, wild, name_hex = entry
@@ -171,8 +72,12 @@ def map_entries():
         ms = toi(ms)
         if ms == 0:
             continue
-        tables = MAP_TABLES.get(hex(ms)) or MAP_TABLES.get('%x' % ms)
-        if not tables:
+        tables = MAP_TABLES.get(hex(ms))
+        if tables is None:
+            tables = MAP_TABLES.get('%x' % ms)
+        if tables is None:
+            continue
+        if not tables and not include_empty:
             continue
         entries = [(toi(t), toi(p)) for t, p in tables]
         out.append((ms, mname, gi, mi, entries, toi(events)))
@@ -225,7 +130,11 @@ def collect_map_scripts(map_addr, map_name, extra_addrs=None, events_addr=None,
                         region_end=None):
     """Parse all scripts reachable from the map-script table."""
     extra_addrs = extra_addrs or []
-    tables = MAP_TABLES.get(hex(map_addr)) or MAP_TABLES.get('%x' % map_addr)
+    tables = MAP_TABLES.get(hex(map_addr))
+    if tables is None:
+        tables = MAP_TABLES.get('%x' % map_addr)
+    if tables is None:
+        return {}, set()
     scripts = {}   # addr -> script instr list
     text_ptrs = set()
     queue = []
@@ -328,12 +237,13 @@ def frame_table_bytes(addr):
 
 
 def text_range(tp, region_end):
-    end = tp
-    while end < region_end and ROM[end - 0x08000000] != 0xFF:
-        end += 1
-    if end < region_end:
-        end += 1
-    return tp, end
+    """Return one verified EOS-terminated text span, or None if uncertain."""
+    raw = ROM[tp - 0x08000000:region_end - 0x08000000]
+    try:
+        decoded = TEXT_CODEC.verify_one(raw)
+    except (TextDecodeError, TextRoundTripError):
+        return None
+    return tp, tp + decoded.consumed
 
 
 def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
@@ -379,7 +289,12 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     for tp in sorted(global_text_ptrs):
         if not (ms <= tp < region_end):
             continue
-        a, b = text_range(tp, region_end)
+        result = text_range(tp, region_end)
+        if result is None:
+            # It remains in the surrounding raw segment.  Do not emit source
+            # text unless its terminator and every control byte are proved.
+            continue
+        a, b = result
         text_ranges.append((a, b))
         for x in range(a, b):
             covered[x] = 'text'
@@ -461,7 +376,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             end = text_ranges[[x[0] for x in text_ranges].index(tp)][1]
             raw = ROM[tp - 0x08000000:end - 0x08000000]
             dec = decode_text(raw)
-            if '[' in dec:
+            if dec is None:
                 lines.append('\t.incbin "baserom_jp.gba", 0x%x, 0x%x' % (
                     tp - 0x08000000, end - tp))
                 nraw += 1

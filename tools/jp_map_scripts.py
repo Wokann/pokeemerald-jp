@@ -1,54 +1,26 @@
 #!/usr/bin/env python3
-"""Group JP scripts by map using the map-script tables and US map names."""
+"""Group JP scripts by map from reproducible ROM-derived metadata."""
 
 import json
-import re
 from pathlib import Path
 
+from jp_map_script_metadata import build_metadata
+from jp_script_parser import build_graph
+
 ROOT = Path(__file__).resolve().parents[1]
-US_JSON = Path('/home/kenny/pokeemerald/data/maps/map_groups.json')
-MAP_HEADERS = json.loads(Path('/tmp/jp_map_headers.json').read_text())
-MAP_TABLES = json.loads(Path('/tmp/map_script_tables.json').read_text())
-GRAPH = json.loads(Path('/tmp/jp_script_graph.json').read_text())
-
-
-def toi(x):
-    return int(x, 16) if isinstance(x, str) else int(x)
-
-
-def build_map_names():
-    """Return {(group, map): name} for the first 34 groups."""
-    us = json.loads(US_JSON.read_text())
-    order = us['group_order']
-    names = {}
-    for gi, gkey in enumerate(order[:34]):
-        for mi, name in enumerate(us[gkey]):
-            names[(gi, mi)] = name
-    return names
-
-
-MAP_NAMES = build_map_names()
+MAP_HEADERS, MAP_TABLES = build_metadata()
 
 
 def group_scripts():
     """Map name -> list of (tag, script_addr) from its mapScripts table."""
     per_map = {}
-    for entry in MAP_HEADERS:
-        gi, mi, h, layout, events, ms, wild, name_hex = entry
-        key = (gi, mi)
-        mname = MAP_NAMES.get(key)
-        if mname is None:
+    for header in MAP_HEADERS:
+        if header.map_scripts == 0:
             continue
-        ms = toi(ms)
-        if ms == 0:
+        entries = MAP_TABLES.get(header.map_scripts)
+        if not entries:
             continue
-        tables = MAP_TABLES.get(hex(ms)) or MAP_TABLES.get('%x' % ms)
-        if not tables:
-            continue
-        entries = []
-        for t, p in tables:
-            entries.append((toi(t), toi(p)))
-        per_map.setdefault(mname, []).extend(entries)
+        per_map.setdefault(header.name, []).extend(entries)
     return per_map
 
 
@@ -63,7 +35,8 @@ def main():
     total_entries = sum(len(v) for v in per_map.values())
     print('total map script entries:', total_entries)
     # check coverage against graph
-    graph_addrs = {int(a, 16) for a in GRAPH}
+    graph, _ = build_graph(MAP_TABLES)
+    graph_addrs = set(graph)
     covered = set()
     for mname, entries in per_map.items():
         for t, p in entries:
@@ -73,9 +46,10 @@ def main():
     print('in graph:', len(in_graph))
     # save grouped map
     out = {k: [[t, hex(p)] for t, p in v] for k, v in sorted(per_map.items())}
-    Path('/tmp/jp_scripts_by_map.json').write_text(
-        json.dumps(out, indent=0, ensure_ascii=False))
-    print('saved /tmp/jp_scripts_by_map.json')
+    output = ROOT / 'build' / 'jp_map_script_metadata' / 'jp_scripts_by_map.json'
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(out, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    print('saved', output)
 
 
 if __name__ == '__main__':

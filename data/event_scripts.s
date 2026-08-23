@@ -73,6 +73,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/Route118/scripts.inc"
 	.include "data/maps/Route119/scripts.inc"
 	.include "data/maps/Route120/scripts.inc"
+	.include "data/maps/Route121/scripts.inc"
+	.include "data/maps/Route122/scripts.inc"
 	.include "data/maps/Route123/scripts.inc"
 	.include "data/maps/Route124/scripts.inc"
 	.include "data/maps/Route125/scripts.inc"

@@ -317,4 +317,4 @@ Route120_EventScript_001EDC46::
 	callstd 0x3
 	end
 
-	.incbin "baserom_jp.gba", 0x1edc4f, 0x787
+	.incbin "baserom_jp.gba", 0x1edc4f, 0x48a
