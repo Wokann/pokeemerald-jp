@@ -2889,4 +2889,201 @@ Route119_Text_RachelPostBattle: @ 0x0825ED91
 	.string "パラソルが　おもく　ないかって？\n"
 	.string "キミの　バッグの　ほうが\l"
 	.string "いっぱい　はいってるじゃない$"
-	.incbin "baserom_jp.gba", 0x25edbe, 0x35d5
+Route120_Text_ColinIntro: @ 0x0825EDBE
+	.string "そらを　とんでいる　ポケモンに\n"
+	.string "ダメージを　あたえる　ワザを　もってる？$"
+
+Route120_Text_ColinDefeat: @ 0x0825EDE3
+	.string "キミの　ほうが\n"
+	.string "いちまい　うわて　だった！$"
+
+Route120_Text_ColinPostBattle: @ 0x0825EDF9
+	.string "そらをとぶ　って　ワザは　べんりだな！\p"
+	.string "そらを　とんでいる　あいだは\n"
+	.string "ほとんどの　ワザが　あたらないだろ？$"
+
+Route120_Text_RobertIntro: @ 0x0825EE2F
+	.string "ボクの　ポケモンは　つよいぜ！\n"
+	.string "キミの　ポケモンは　どうかな？$"
+
+Route120_Text_RobertDefeat: @ 0x0825EE4F
+	.string "キミの　ポケモンの　ほうが\n"
+	.string "つよかった⋯⋯！$"
+
+Route120_Text_RobertPostBattle: @ 0x0825EE66
+	.string "どんどん　つよくなる　ポケモンは\n"
+	.string "ほんと　たよりに　なるよなー！$"
+
+Route120_Text_RobertRegister: @ 0x0825EE87
+	.string "キミって　きたい　できそうだなー！\n"
+	.string "ポケナビに　とうろく　しておきたい！$"
+
+Route120_Text_RobertRematchIntro: @ 0x0825EEAC
+	.string "どんどん　つよくなる　ポケモンは\n"
+	.string "ほんと　たよりに　なるよなー！$"
+
+Route120_Text_RobertRematchDefeat: @ 0x0825EECD
+	.string "キミの　ポケモン\n"
+	.string "ほんとうに　つよいんだな⋯⋯$"
+
+Route120_Text_RobertPostRematch: @ 0x0825EEE5
+	.string "ポケモンが　つよくなるのと　いっしょに\n"
+	.string "おれも　つよくならないとなー！$"
+
+Route120_Text_LorenzoIntro: @ 0x0825EF09
+	.string "きみの　ポケモン\n"
+	.string "そうなん　しないか　みてあげよう！$"
+
+Route120_Text_LorenzoDefeat: @ 0x0825EF24
+	.string "そんなに　つよい　ポケモンと　いっしょなら\n"
+	.string "そうなんの　おそれは　ないな！$"
+
+Route120_Text_LorenzoPostBattle: @ 0x0825EF4A
+	.string "ポケモンと　いっしょに　どこまでもいく\n"
+	.string "トレーナーの　よろこびと　いえるだろう！$"
+
+Route120_Text_JennaIntro: @ 0x0825EF73
+	.string "あなたの　たいりょく　どう？\n"
+	.string "たいりょく　ぶそくだと\l"
+	.string "いざと　いうとき　こまるわよ！$"
+
+Route120_Text_JennaDefeat: @ 0x0825EF9E
+	.string "たいりょく　だけは　あったのに⋯⋯$"
+
+Route120_Text_JennaPostBattle: @ 0x0825EFB0
+	.string "たいりょく　づくりが　わたしの　にっか\n"
+	.string "まいにち　ポケモンと　ランニングよ！$"
+
+Route120_Text_JeffreyIntro: @ 0x0825EFD7
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯\l"
+	.string "しょうぶ　する⋯⋯？$"
+
+Route120_Text_JeffreyDefeat: @ 0x0825EFF4
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "まけた⋯⋯$"
+
+Route120_Text_JeffreyPostBattle: @ 0x0825F003
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯\l"
+	.string "がんばろう⋯⋯$"
+
+Route120_Text_JeffreyRegister: @ 0x0825F01D
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯\l"
+	.string "ポケナビ　もってる⋯⋯？$"
+
+Route120_Text_JeffreyRematchIntro: @ 0x0825F03C
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯\l"
+	.string "また　しょうぶ　する⋯⋯？$"
+
+Route120_Text_JeffreyRematchDefeat: @ 0x0825F05C
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "また　まけた⋯⋯$"
+
+Route120_Text_JeffreyPostRematch: @ 0x0825F06E
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯\l"
+	.string "また　がんばろう⋯⋯\l"
+	.string "だいじな　むしポケモンの　ために⋯⋯$"
+
+Route120_Text_JenniferIntro: @ 0x0825F09E
+	.string "ポケモンには　いろんな　とくせいが　ある\n"
+	.string "それを　かんがえてこそ\l"
+	.string "いちりゅうの　トレーナーに　なれるのよ！$"
+
+Route120_Text_JenniferDefeat: @ 0x0825F0D4
+	.string "なかなか　かんがえてるのね$"
+
+Route120_Text_JenniferPostBattle: @ 0x0825F0E2
+	.string "そう　ポケモンの　とくせいに　よって\n"
+	.string "たたかいかたも　いろいろ　かわってくるわ！$"
+
+Route120_Text_ChipIntro: @ 0x0825F10B
+	.string "なんだね　きみは？\p"
+	.string "もしかして　ひょっとすると\n"
+	.string "あるかもしれない　といわれる\l"
+	.string "こだいの　いせきを　さがしに　きたのかね！？$"
+
+Route120_Text_ChipDefeat: @ 0x0825F149
+	.string "まいったね　こりゃ$"
+
+Route120_Text_ChipPostBattle: @ 0x0825F153
+	.string "あの　おおきな　いわ\n"
+	.string "わたしは　いせき　だと　おもいたいが\l"
+	.string "それにしては　いりぐちが　ないね⋯⋯$"
+
+Route120_Text_ClarissaIntro: @ 0x0825F184
+	.string "あたしが　パラソルを　もってる　りゆう？\p"
+	.string "うふふ　あたしに　かてたら\n"
+	.string "おしえて　あげても　いいかな？$"
+
+Route120_Text_ClarissaDefeat: @ 0x0825F1B7
+	.string "パラソルで　ポケモンの　こうげきは\n"
+	.string "しのげないのね⋯⋯$"
+
+Route120_Text_ClarissaPostBattle: @ 0x0825F1D3
+	.string "あたしの　ポケモンたちも\n"
+	.string "あつい　ひざしは　にがてだと　おもうの\l"
+	.string "だから　こうして　パラソルを　もってるのよ$"
+
+Route120_Text_AngelicaIntro: @ 0x0825F20A
+	.string "あたしと　ポケモンと　パラソル\n"
+	.string "どれか　ひとつ　かけていても\l"
+	.string "うつくしさが　そこなわれるんだわ$"
+
+Route120_Text_AngelicaDefeat: @ 0x0825F23A
+	.string "うつくしさが\n"
+	.string "だいなしに　なっちゃったわ$"
+
+Route120_Text_AngelicaPostBattle: @ 0x0825F24F
+	.string "あなたに　パラソルは　にあわないわ！\p"
+	.string "だって　こんなの　もっていたら\n"
+	.string "すっごく　ジャマに　なりそう　なんだもの$"
+
+Route120_Text_KeigoIntro: @ 0x0825F287
+	.string "ポケモンの　うごきを　とりいれて\n"
+	.string "あたらしい　にんぽうを　あみだすんだ！$"
+
+Route120_Text_KeigoDefeat: @ 0x0825F2AC
+	.string "あたらしい　にんぽう\n"
+	.string "かんせいまで　まだまだ　かかりそうだ$"
+
+Route120_Text_KeigoPostBattle: @ 0x0825F2CA
+	.string "ニンジャの　せんせいを　さがして\n"
+	.string "でしいり　しようかな？$"
+
+Route120_Text_RileyIntro: @ 0x0825F2E7
+	.string "ぼくたち　ニンジャごっこの　かくれぬの！\n"
+	.string "どこに　いるのか　わからなかっただろ！$"
+
+Route120_Text_RileyDefeat: @ 0x0825F310
+	.string "まけた！\n"
+	.string "かくれぬので　かくれるか？$"
+
+Route120_Text_RileyPostBattle: @ 0x0825F323
+	.string "ぼくたち　ニンジャごっこの　かくれぬの！\n"
+	.string "これって　てづくり　なんだぜ！$"
+
+Route120_Text_CallieIntro: @ 0x0825F348
+	.string "よそみ　してると　ケガするよ！$"
+
+Route120_Text_CallieDefeat: @ 0x0825F358
+	.string "いたいめに　あったのは　あたしのほうか$"
+
+Route120_Text_CalliePostBattle: @ 0x0825F36C
+	.string "やっぱり　しんか　させようかな？\n"
+	.string "このままでも　かわいい　けど$"
+
+Route120_Text_LeonelIntro: @ 0x0825F38C
+	.string "きみの　てもち　ポケモン\n"
+	.string "いろんな　タイプが　そろって　いるか？$"
+
+Route120_Text_LeonelDefeat: @ 0x0825F3AD
+	.string "きみの　こだわり　みせてもらったよ！$"
+
+Route120_Text_LeonelPostBattle: @ 0x0825F3C0
+	.string "すきな　ポケモン　だけで\n"
+	.string "つよいって　いうのが　さいこうだね$"
+	.incbin "baserom_jp.gba", 0x25f3df, 0x2fb4

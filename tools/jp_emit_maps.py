@@ -168,6 +168,60 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
 # the matching US text order have been checked.  jp_text_blocks.py reads this
 # same mapping, so source labels and map references cannot drift apart.
 VERIFIED_SHARED_TEXT_BLOCKS = {
+    'Route120': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x0825EDBE,
+        'end': 0x0825F3DF,
+        'labels': {
+            0x0825EDBE: 'Route120_Text_ColinIntro',
+            0x0825EDE3: 'Route120_Text_ColinDefeat',
+            0x0825EDF9: 'Route120_Text_ColinPostBattle',
+            0x0825EE2F: 'Route120_Text_RobertIntro',
+            0x0825EE4F: 'Route120_Text_RobertDefeat',
+            0x0825EE66: 'Route120_Text_RobertPostBattle',
+            0x0825EE87: 'Route120_Text_RobertRegister',
+            0x0825EEAC: 'Route120_Text_RobertRematchIntro',
+            0x0825EECD: 'Route120_Text_RobertRematchDefeat',
+            0x0825EEE5: 'Route120_Text_RobertPostRematch',
+            0x0825EF09: 'Route120_Text_LorenzoIntro',
+            0x0825EF24: 'Route120_Text_LorenzoDefeat',
+            0x0825EF4A: 'Route120_Text_LorenzoPostBattle',
+            0x0825EF73: 'Route120_Text_JennaIntro',
+            0x0825EF9E: 'Route120_Text_JennaDefeat',
+            0x0825EFB0: 'Route120_Text_JennaPostBattle',
+            0x0825EFD7: 'Route120_Text_JeffreyIntro',
+            0x0825EFF4: 'Route120_Text_JeffreyDefeat',
+            0x0825F003: 'Route120_Text_JeffreyPostBattle',
+            0x0825F01D: 'Route120_Text_JeffreyRegister',
+            0x0825F03C: 'Route120_Text_JeffreyRematchIntro',
+            0x0825F05C: 'Route120_Text_JeffreyRematchDefeat',
+            0x0825F06E: 'Route120_Text_JeffreyPostRematch',
+            0x0825F09E: 'Route120_Text_JenniferIntro',
+            0x0825F0D4: 'Route120_Text_JenniferDefeat',
+            0x0825F0E2: 'Route120_Text_JenniferPostBattle',
+            0x0825F10B: 'Route120_Text_ChipIntro',
+            0x0825F149: 'Route120_Text_ChipDefeat',
+            0x0825F153: 'Route120_Text_ChipPostBattle',
+            0x0825F184: 'Route120_Text_ClarissaIntro',
+            0x0825F1B7: 'Route120_Text_ClarissaDefeat',
+            0x0825F1D3: 'Route120_Text_ClarissaPostBattle',
+            0x0825F20A: 'Route120_Text_AngelicaIntro',
+            0x0825F23A: 'Route120_Text_AngelicaDefeat',
+            0x0825F24F: 'Route120_Text_AngelicaPostBattle',
+            0x0825F287: 'Route120_Text_KeigoIntro',
+            0x0825F2AC: 'Route120_Text_KeigoDefeat',
+            0x0825F2CA: 'Route120_Text_KeigoPostBattle',
+            0x0825F2E7: 'Route120_Text_RileyIntro',
+            0x0825F310: 'Route120_Text_RileyDefeat',
+            0x0825F323: 'Route120_Text_RileyPostBattle',
+            0x0825F348: 'Route120_Text_CallieIntro',
+            0x0825F358: 'Route120_Text_CallieDefeat',
+            0x0825F36C: 'Route120_Text_CalliePostBattle',
+            0x0825F38C: 'Route120_Text_LeonelIntro',
+            0x0825F3AD: 'Route120_Text_LeonelDefeat',
+            0x0825F3C0: 'Route120_Text_LeonelPostBattle',
+        },
+    },
     'Route119': {
         'source': 'data/text/trainers.inc',
         'start': 0x0825E688,
@@ -2444,6 +2498,158 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
         },
     },
+    'Route120': {
+        'scripts': {
+            0x081ED874: 'Route120_OnResume',
+            0x081ED87E: 'Route120_EventScript_RemoveKecleonObject',
+            0x081ED8C1: 'Route120_EventScript_RemoveBridgeKecleon',
+            0x081ED8D8: 'Route120_EventScript_RemoveKecleon',
+            0x081ED8EC: 'Route120_OnLoad',
+            0x081ED908: 'Route120_EventScript_CloseAncientTomb',
+            0x081ED91B: 'Route120_EventScript_SetBridgeClearMetatiles',
+            0x081ED940: 'Route120_EventScript_SetBridgeKecleonMovement',
+            0x081ED945: 'Route120_OnTransition',
+            0x081ED950: 'Route120_EventScript_SetWeather',
+            0x081ED977: 'Route120_EventScript_SetCloudyWeather',
+            0x081ED97B: 'Route120_EventScript_SetSunnyWeather',
+            0x081ED97F: 'Route120_EventScript_TrySetRainyWeather',
+            0x081ED99B: 'Route120_EventScript_SetRainyWeather',
+            0x081ED99F: 'Route120_EventScript_BerryBeauty',
+            0x081EDA42: 'Route120_EventScript_GiveFigyBerry',
+            0x081EDA4D: 'Route120_EventScript_GiveWikiBerry',
+            0x081EDA58: 'Route120_EventScript_GiveMagoBerry',
+            0x081EDA63: 'Route120_EventScript_GiveAguavBerry',
+            0x081EDA6E: 'Route120_EventScript_GiveIapapaBerry',
+            0x081EDA79: 'Route120_EventScript_GiveBerry',
+            0x081EDA9D: 'Route120_EventScript_ReceivedBerry',
+            0x081EDAA7: 'Route120_EventScript_BerryLove',
+            0x081EDAB0: 'Route120_EventScript_BerryNotLove',
+            0x081EDAB9: 'Route120_EventScript_Steven',
+            0x081EDADD: 'Route120_EventScript_StevenNotReady',
+            0x081EDAEA: 'Route120_EventScript_StevenAskReadyForBattle',
+            0x081EDB03: 'Route120_EventScript_StevenBattleKecleon',
+            0x081EDB94: 'Route120_EventScript_RemoveBridgeKecleonPostBattle',
+            0x081EDBA4: 'Route120_EventScript_StevenGiveDeconScope',
+            0x081EDC1B: 'Route120_EventScript_PlayerApproachKecleonNorth',
+            0x081EDC26: 'Route120_EventScript_PlayerApproachKecleonWest',
+            0x081EDC34: 'Route120_EventScript_BridgeKecleon',
+            0x081EDC3D: 'Route120_EventScript_RouteSignFortree',
+            0x081EDC46: 'Route120_EventScript_RouteSign121',
+            0x081EDC4F: 'Route120_EventScript_Colin',
+            0x081EDC66: 'Route120_EventScript_Robert',
+            0x081EDC92: 'Route120_EventScript_RegisterRobert',
+            0x081EDCB1: 'Route120_EventScript_RematchRobert',
+            0x081EDCC8: 'Route120_EventScript_Lorenzo',
+            0x081EDCDF: 'Route120_EventScript_Jenna',
+            0x081EDCF6: 'Route120_EventScript_Jeffrey',
+            0x081EDD22: 'Route120_EventScript_RegisterJeffrey',
+            0x081EDD41: 'Route120_EventScript_RematchJeffrey',
+            0x081EDD58: 'Route120_EventScript_Jennifer',
+            0x081EDD6F: 'Route120_EventScript_Chip',
+            0x081EDD86: 'Route120_EventScript_Clarissa',
+            0x081EDD9D: 'Route120_EventScript_Angelica',
+            0x081EDDB4: 'Route120_EventScript_Keigo',
+            0x081EDDCB: 'Route120_EventScript_Riley',
+            0x081EDDE2: 'Route120_EventScript_Leonel',
+            0x081EDDF9: 'Route120_EventScript_Callie',
+        },
+        'texts': {
+            0x081EDE10: 'Route120_Text_StevenGreeting',
+            0x081EDEA6: 'Route120_Text_StevenIllWaitHere',
+            0x081EDECC: 'Route120_Text_StevenReadyForBattle',
+            0x081EDEF4: 'Route120_Text_StevenShowMeYourPower',
+            0x081EDF1B: 'Route120_Text_StevenUsedDevonScope',
+            0x081EDF65: 'Route120_Text_StevenGiveDevonScope',
+            0x081EDFE1: 'Route120_Text_StevenGoodbye',
+            0x081EE029: 'Kecleon_Text_SomethingUnseeable',
+            0x081EE039: 'Kecleon_Text_WantToUseDevonScope',
+            0x081EE05A: 'Kecleon_Text_UseDevonScopeMonAttacked',
+            0x081EE0A3: 'Route120_Text_RouteSignFortree',
+            0x081EE0BD: 'Route120_Text_RouteSign121',
+        },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route120']['labels'],
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
+        'symbols': {
+            'flags': {
+                0x00E4: 'FLAG_REGI_DOORS_OPENED',
+                0x011D: 'FLAG_RECEIVED_DEVON_SCOPE',
+                0x0122: 'FLAG_NOT_READY_FOR_BATTLE_ROUTE_120',
+                0x08C1: 'FLAG_SYS_CTRL_OBJ_DELETE',
+                0x092E: 'FLAG_DAILY_ROUTE_120_RECEIVED_BERRY',
+            },
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x4001: 'VAR_TEMP_1',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x8009: 'VAR_0x8009',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'var_values': {
+                0x8004: {
+                    0x008F: 'ITEM_FIGY_BERRY',
+                    0x0090: 'ITEM_WIKI_BERRY',
+                    0x0091: 'ITEM_MAGO_BERRY',
+                    0x0092: 'ITEM_AGUAV_BERRY',
+                    0x0093: 'ITEM_IAPAPA_BERRY',
+                },
+                0x800C: {
+                    0x2: 'DIR_NORTH',
+                    0x3: 'DIR_WEST',
+                },
+                0x800D: {
+                    0x4: 'B_OUTCOME_RAN',
+                    0x5: 'B_OUTCOME_PLAYER_TELEPORTED',
+                    0x7: 'B_OUTCOME_CAUGHT',
+                },
+            },
+            'local_ids': {
+                0x1E: 'LOCALID_BRIDGE_KECLEON',
+                0x1F: 'LOCALID_ROUTE120_STEVEN',
+                0x24: 'LOCALID_BRIDGE_KECLEON_SHADOW',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'items': {0x0120: 'ITEM_DEVON_SCOPE'},
+            'weather': {
+                0x1: 'WEATHER_SUNNY_CLOUDS',
+                0x2: 'WEATHER_SUNNY',
+                0x3: 'WEATHER_RAIN',
+            },
+            'metatiles': {
+                0x007C: 'METATILE_General_RockWall_RockBase',
+                0x0091: 'METATILE_General_RockWall_SandBase',
+                0x00A1: 'METATILE_General_ReflectiveWater',
+                0x0297: 'METATILE_Fortree_WoodBridge1_Top',
+                0x029F: 'METATILE_Fortree_WoodBridge1_Bottom',
+            },
+            'movement_types': {0x0A: 'MOVEMENT_TYPE_FACE_RIGHT'},
+            'field_effects': {0x1E: 'FLDEFF_NPCFLY_OUT'},
+            'species': {0x013D: 'SPECIES_KECLEON'},
+            'cry_modes': {0x2: 'CRY_MODE_ENCOUNTER'},
+            'trainers': {
+                0x002D: 'TRAINER_CHIP',
+                0x005F: 'TRAINER_JENNIFER',
+                0x00E2: 'TRAINER_JEFFREY_1',
+                0x0195: 'TRAINER_COLIN',
+                0x0196: 'TRAINER_ROBERT_1',
+                0x01B3: 'TRAINER_CLARISSA',
+                0x01B4: 'TRAINER_ANGELICA',
+                0x0229: 'TRAINER_LORENZO',
+                0x0230: 'TRAINER_JENNA',
+                0x028C: 'TRAINER_KEIGO',
+                0x028D: 'TRAINER_RILEY',
+                0x02FA: 'TRAINER_LEONEL',
+                0x02FB: 'TRAINER_CALLIE',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
     # Route102 is the Wally/tutorial and early-trainer map.  Its JP scripts,
     # object-event order, local text, and the first trainer-text block were
     # checked one-for-one against the US Route102 sources.
@@ -3043,6 +3249,9 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x081ED01B: 'Route119_Movement_ScottExit1',
         0x081ED024: 'Route119_Movement_ScottExit2',
     },
+    'Route120': {
+        0x081EDC31: 'Route120_Movement_ApproachKecleonWest',
+    },
     # Route103's rival-exit movements occupy the otherwise raw 0x1E6C89
     # region.  Each target and step_end boundary matches the US map source.
     'Route103': {
@@ -3124,6 +3333,24 @@ def decode_movement_script(addr, region_end):
         if action == 0xFE:
             return actions, pos
     return None
+
+
+def referenced_movement_addresses(scripts, region_start, region_end):
+    """Return in-owner movement streams named by decoded script operands.
+
+    These are not heuristic pointers: both movement opcodes define argument 1
+    as a movement-script address.  Restricting targets to the current owner
+    prevents this map from taking ownership of shared movement data.
+    """
+    addresses = set()
+    for script in scripts.values():
+        for _off, name, args, _refs in script:
+            if name not in ('applymovement', 'applymovement_at') or len(args) < 2:
+                continue
+            target = args[1]
+            if region_start <= target < region_end:
+                addresses.add(target)
+    return addresses
 
 def decode_text(data, placeholder_names=None):
     """Return safe source text, or None when a byte sequence is not proved."""
@@ -3366,6 +3593,10 @@ def semantic_symbol_formatter(mname):
         # an unrelated numeric result is never assigned a plausible name.
         if name == 'compare_var_to_value' and index == 1 and args:
             return symbols.get('var_values', {}).get(args[0], {}).get(value)
+        if name == 'setvar' and index == 1 and args:
+            reviewed = symbols.get('var_values', {}).get(args[0], {}).get(value)
+            if reviewed is not None:
+                return reviewed
         if (name == 'setvar' and index == 1 and args
                 and args[0] == 0x8004):
             return symbols.get('trainers', {}).get(value)
@@ -3384,7 +3615,12 @@ def semantic_symbol_formatter(mname):
             return symbols.get('metatiles', {}).get(value)
         if name == 'setmetatile' and index == 3:
             return symbols.get('booleans', {}).get(value)
-        if name == 'playmoncry' and index == 0:
+        if name == 'playmoncry':
+            if index == 0:
+                return symbols.get('species', {}).get(value)
+            if index == 1:
+                return symbols.get('cry_modes', {}).get(value)
+        if name == 'setwildbattle' and index == 0:
             return symbols.get('species', {}).get(value)
         if name == 'multichoicedefault' and index == 2:
             return symbols.get('multichoices', {}).get(value)
@@ -3635,10 +3871,40 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     text_ptrs.update(
         addr for addr in MAP_AUXILIARY_TEXT_ADDRESSES.get(mname, ())
         if ms <= addr < region_end)
-    movement_labels = {
+    reviewed_movement_labels = {
         addr: label
         for addr, label in MAP_MOVEMENT_SCRIPT_LABELS.get(mname, {}).items()
         if ms <= addr < region_end
+    }
+    auto_movement_targets = (
+        referenced_movement_addresses(scripts, ms, region_end)
+        - set(reviewed_movement_labels)
+    )
+    # Some maps intentionally point at suffixes inside another movement
+    # stream.  Emitting both as independent objects would duplicate bytes;
+    # leave every overlapping auto candidate raw until the source emitter can
+    # represent an interior label.  Reviewed entries retain the existing
+    # strict overlap check below.
+    auto_ranges = {}
+    for addr in auto_movement_targets:
+        decoded = decode_movement_script(addr, region_end)
+        if decoded is not None:
+            auto_ranges[addr] = (addr, decoded[1])
+    overlapping_auto_targets = set()
+    for left_addr, left_range in auto_ranges.items():
+        for right_addr, right_range in auto_ranges.items():
+            if left_addr >= right_addr:
+                continue
+            if max(left_range[0], right_range[0]) < min(left_range[1], right_range[1]):
+                overlapping_auto_targets.update((left_addr, right_addr))
+    auto_movement_targets = set(auto_ranges) - overlapping_auto_targets
+    movement_labels = {
+        addr: reviewed_movement_labels.get(
+            addr, '%s_Movement_%08X' % (mname, addr & 0xFFFFFF))
+        for addr in (
+            set(reviewed_movement_labels)
+            | auto_movement_targets
+        )
     }
     movements = {}
     for addr, label in movement_labels.items():

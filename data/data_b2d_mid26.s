@@ -2184,11 +2184,11 @@ ROUTE120_EventObjects: @ 0x08503B24
 	object_event 8, 60, 0, 9, 92, 5, 12, 0, 0, 0, 40, 0x08244D23, 0x0000
 	object_event 9, 60, 0, 10, 92, 5, 12, 0, 0, 0, 41, 0x08244D23, 0x0000
 	object_event 10, 60, 0, 11, 92, 5, 12, 0, 0, 0, 42, 0x08244D23, 0x0000
-	object_event 11, 66, 0, 5, 22, 3, 14, 0, 0, 1, 3, 0x081EDC4F, 0x0000
-	object_event 12, 66, 0, 32, 14, 3, 10, 0, 0, 1, 3, 0x081EDC66, 0x0000
-	object_event 13, 31, 0, 27, 51, 3, 9, 0, 0, 1, 7, 0x081EDCC8, 0x0000
-	object_event 14, 32, 0, 36, 45, 3, 9, 0, 0, 1, 2, 0x081EDCDF, 0x0000
-	object_event 15, 39, 0, 19, 80, 5, 15, 0, 0, 1, 3, 0x081EDCF6, 0x0000
+	object_event 11, 66, 0, 5, 22, 3, 14, 0, 0, 1, 3, Route120_EventScript_Colin, 0x0000
+	object_event 12, 66, 0, 32, 14, 3, 10, 0, 0, 1, 3, Route120_EventScript_Robert, 0x0000
+	object_event 13, 31, 0, 27, 51, 3, 9, 0, 0, 1, 7, Route120_EventScript_Lorenzo, 0x0000
+	object_event 14, 32, 0, 36, 45, 3, 9, 0, 0, 1, 2, Route120_EventScript_Jenna, 0x0000
+	object_event 15, 39, 0, 19, 80, 5, 15, 0, 0, 1, 3, Route120_EventScript_Jeffrey, 0x0000
 	object_event 16, 59, 0, 20, 55, 3, 1, 0, 0, 0, 0, 0x08256C9F, 0x0406
 	object_event 17, 110, 0, 37, 5, 3, 8, 0, 0, 0, 0, 0x0825428E, 0x031E
 	object_event 18, 68, 0, 36, 5, 3, 8, 0, 0, 0, 0, 0x0825426E, 0x031E
@@ -2196,27 +2196,27 @@ ROUTE120_EventObjects: @ 0x08503B24
 	object_event 20, 110, 0, 37, 5, 3, 8, 0, 0, 0, 0, 0x0825434E, 0x0386
 	object_event 21, 82, 0, 35, 32, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0011
 	object_event 22, 59, 0, 7, 89, 3, 1, 0, 0, 0, 0, 0x08256CAC, 0x0407
-	object_event 23, 45, 0, 14, 92, 5, 5, 1, 0, 0, 0, Route120_EventScript_001ED99F, 0x0000
-	object_event 24, 34, 0, 31, 37, 3, 15, 0, 0, 1, 4, 0x081EDD58, 0x0000
-	object_event 25, 55, 0, 9, 60, 3, 21, 0, 0, 1, 4, 0x081EDD6F, 0x0000
-	object_event 26, 34, 0, 16, 6, 3, 23, 0, 0, 1, 4, 0x081EDD86, 0x0000
-	object_event 27, 34, 0, 18, 34, 3, 9, 0, 0, 1, 3, 0x081EDD9D, 0x0000
+	object_event 23, 45, 0, 14, 92, 5, 5, 1, 0, 0, 0, Route120_EventScript_BerryBeauty, 0x0000
+	object_event 24, 34, 0, 31, 37, 3, 15, 0, 0, 1, 4, Route120_EventScript_Jennifer, 0x0000
+	object_event 25, 55, 0, 9, 60, 3, 21, 0, 0, 1, 4, Route120_EventScript_Chip, 0x0000
+	object_event 26, 34, 0, 16, 6, 3, 23, 0, 0, 1, 4, Route120_EventScript_Clarissa, 0x0000
+	object_event 27, 34, 0, 18, 34, 3, 9, 0, 0, 1, 3, Route120_EventScript_Angelica, 0x0000
 	object_event 28, 59, 0, 22, 13, 3, 1, 1, 1, 0, 0, 0x08256CC6, 0x0454
 	object_event 29, 59, 0, 23, 82, 5, 1, 1, 1, 0, 0, 0x08256CB9, 0x0453
-	object_event 30, 204, 0, 12, 16, 4, 76, 1, 1, 0, 0, Route120_EventScript_001EDC34, 0x03CA
-	object_event 31, 134, 0, 13, 15, 4, 8, 1, 1, 0, 0, Route120_EventScript_001EDAB9, 0x03CC
+	object_event 30, 204, 0, 12, 16, 4, 76, 1, 1, 0, 0, Route120_EventScript_BridgeKecleon, 0x03CA
+	object_event 31, 134, 0, 13, 15, 4, 8, 1, 1, 0, 0, Route120_EventScript_Steven, 0x03CC
 	object_event 32, 82, 0, 20, 1, 3, 1, 1, 1, 0, 0, 0x082565C8, 0x0014
 	object_event 33, 82, 0, 15, 1, 3, 1, 1, 1, 0, 0, 0x082565C8, 0x0012
-	object_event 34, 5, 0, 10, 72, 3, 58, 1, 1, 1, 3, 0x081EDDB4, 0x0000
-	object_event 35, 5, 0, 19, 28, 3, 57, 1, 1, 1, 3, 0x081EDDCB, 0x0000
+	object_event 34, 5, 0, 10, 72, 3, 58, 1, 1, 1, 3, Route120_EventScript_Keigo, 0x0000
+	object_event 35, 5, 0, 19, 28, 3, 57, 1, 1, 1, 3, Route120_EventScript_Riley, 0x0000
 	object_event 36, 212, 0, 12, 16, 3, 8, 1, 1, 0, 0, 0x00000000, 0x03D5
 	object_event 37, 204, 0, 20, 11, 3, 76, 1, 1, 0, 0, 0x0824335E, 0x03D6
 	object_event 38, 204, 0, 27, 2, 3, 76, 1, 1, 0, 0, 0x0824336B, 0x03D9
 	object_event 39, 204, 0, 4, 77, 3, 76, 1, 1, 0, 0, 0x08243378, 0x03DA
 	object_event 40, 204, 0, 7, 51, 3, 76, 1, 1, 0, 0, 0x08243392, 0x03DC
 	object_event 41, 204, 0, 19, 48, 3, 76, 1, 1, 0, 0, 0x08243385, 0x03DB
-	object_event 42, 14, 0, 19, 32, 3, 7, 1, 1, 1, 3, 0x081EDDF9, 0x0000
-	object_event 43, 33, 0, 14, 34, 3, 10, 1, 1, 1, 3, 0x081EDDE2, 0x0000
+	object_event 42, 14, 0, 19, 32, 3, 7, 1, 1, 1, 3, Route120_EventScript_Callie, 0x0000
+	object_event 43, 33, 0, 14, 34, 3, 10, 1, 1, 1, 3, Route120_EventScript_Leonel, 0x0000
 	object_event 44, 59, 0, 24, 33, 3, 1, 1, 1, 0, 0, 0x08256CD3, 0x047C
 	.globl ROUTE120_EventWarps
 ROUTE120_EventWarps: @ 0x08503F44
@@ -2245,8 +2245,8 @@ ROUTE120_EventCoordEvents: @ 0x08503F54
 	coord_event 13, 75, 3, 1, 0, 0x00000000
 	.globl ROUTE120_EventBgEvents
 ROUTE120_EventBgEvents: @ 0x08504084
-	bg_event 27, 3, 3, 0, Route120_EventScript_001EDC3D, 0, 0
-	bg_event 38, 88, 3, 0, Route120_EventScript_001EDC46, 0, 0
+	bg_event 27, 3, 3, 0, Route120_EventScript_RouteSignFortree, 0, 0
+	bg_event 38, 88, 3, 0, Route120_EventScript_RouteSign121, 0, 0
 	bg_event 28, 62, 0, 8, 0x0065, 0x00, 0x00
 	bg_event 30, 62, 0, 8, 0x006F, 0x00, 0x00
 	bg_event 26, 10, 0, 8, 0x00DE, 0x00, 0x00
