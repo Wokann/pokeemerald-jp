@@ -616,8 +616,8 @@
 .equ SPECIAL_WAITSTATE_IsPokerusInParty, 0
 .equ SPECIAL_SetSootopolisGymCrackedIceMetatiles, 308
 .equ SPECIAL_WAITSTATE_SetSootopolisGymCrackedIceMetatiles, 0
-.equ SPECIAL_sub_081395D0, 309
-.equ SPECIAL_WAITSTATE_sub_081395D0, 0
+.equ SPECIAL_ShakeCamera, 309
+.equ SPECIAL_WAITSTATE_ShakeCamera, 0
 .equ SPECIAL_StartGroudonKyogreBattle, 310
 .equ SPECIAL_WAITSTATE_StartGroudonKyogreBattle, 0
 .equ SPECIAL_BattleSetup_StartLegendaryBattle, 311

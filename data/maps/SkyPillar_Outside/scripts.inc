@@ -50,7 +50,7 @@ SkyPillar_Outside_EventScript_0021BC49::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x3
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	delay 0x28
 	loadword 0x0, gJPText_0021BDB5
@@ -63,7 +63,7 @@ SkyPillar_Outside_EventScript_0021BC49::
 	setvar 0x8005, 0x3
 	setvar 0x8006, 0x14
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	delay 0x14
 	applymovement 0x1, 0x08243627
@@ -134,4 +134,3 @@ gJPText_0021BDF8: @ 0x0821BDF8
 	.string "さきに　ルネまで　もどっていよう！\p"
 	.string "ここは　きみに　まかせるから\n"
 	.string "しっかり　たのんだよ！$"
-

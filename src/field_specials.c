@@ -2660,7 +2660,7 @@ bool8 IsPokerusInParty(void)
     return TRUE;
 }
 
-__attribute__((naked)) void sub_081395D0(void)
+__attribute__((naked)) void ShakeCamera(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

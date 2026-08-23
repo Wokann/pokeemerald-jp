@@ -20,10 +20,20 @@ LABEL_RE = re.compile(r'^([A-Za-z_][A-Za-z0-9_]*):\s*@\s*0x([0-9A-Fa-f]+)')
 
 
 def main():
-    entries = em.map_entries()
+    # Empty MapScripts tables can still own a full map-local script/text
+    # interval.  Keep every table whose US-style source file exists, rather
+    # than silently dropping those migrated empty-table maps on a later
+    # reorganization pass.
+    all_entries = em.map_entries(include_empty=True)
+    entries = [
+        entry for entry in all_entries
+        if (ROOT / 'data' / 'maps' / entry[1] / 'scripts.inc').is_file()
+    ]
+    if not entries:
+        raise RuntimeError('no map script sources found')
     first_map = entries[0][0]
     all_labels = em.event_script_labels()
-    map_starts = {e[0] for e in entries}
+    map_starts = {e[0] for e in all_entries}
     nonmap = sorted(a for a in all_labels if a not in map_starts)
     last_map_end = next((a for a in nonmap if a > entries[-1][0]), 0x0828F000)
     print('first map @ %08X, last map end @ %08X' % (first_map, last_map_end))

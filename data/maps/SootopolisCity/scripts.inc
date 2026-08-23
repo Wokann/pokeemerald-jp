@@ -238,7 +238,7 @@ SootopolisCity_EventScript_001E1FE0::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	applymovement 0xA, 0x081E2269
 	applymovement 0x9, 0x081E228A
@@ -252,7 +252,7 @@ SootopolisCity_EventScript_001E1FE0::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	applymovement 0xA, 0x081E2269
 	applymovement 0x9, 0x081E228A
@@ -266,7 +266,7 @@ SootopolisCity_EventScript_001E1FE0::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	applymovement 0xA, 0x081E2269
 	applymovement 0x9, 0x081E228A
@@ -309,7 +309,7 @@ SootopolisCity_EventScript_001E211C::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	applymovement 0xA, 0x081E2269
 	applymovement 0x9, 0x081E228A
@@ -323,7 +323,7 @@ SootopolisCity_EventScript_001E211C::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	applymovement 0xA, 0x081E2269
 	applymovement 0x9, 0x081E228A
@@ -337,7 +337,7 @@ SootopolisCity_EventScript_001E211C::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	applymovement 0xA, 0x081E2269
 	applymovement 0x9, 0x081E228A

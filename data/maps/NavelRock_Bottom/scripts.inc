@@ -44,14 +44,14 @@ NavelRock_Bottom_EventScript_0023C2B1::
 	setvar 0x8005, 0x3
 	setvar 0x8006, 0x4
 	setvar 0x8007, 0x2
-	special sub_081395D0
+	special ShakeCamera
 	delay 0x1E
 	playse 0x52
 	setvar 0x8004, 0x0
 	setvar 0x8005, 0x3
 	setvar 0x8006, 0x4
 	setvar 0x8007, 0x2
-	special sub_081395D0
+	special ShakeCamera
 	delay 0x1E
 	delay 0x32
 	waitse
@@ -86,4 +86,3 @@ NavelRock_Bottom_EventScript_0023C353::
 	setvar 0x8004, 0xF9
 	goto 0x082441A0
 	end
-

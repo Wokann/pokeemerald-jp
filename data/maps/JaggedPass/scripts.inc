@@ -48,7 +48,7 @@ JaggedPass_EventScript_00215B57::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	loadword 0x0, 0x08216039
 	callstd 0x4
@@ -57,7 +57,7 @@ JaggedPass_EventScript_00215B57::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x10
 	setvar 0x8007, 0x3
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	playse 0xD
 	setmetatile 0x10, 0x11, 0x256, 0x1

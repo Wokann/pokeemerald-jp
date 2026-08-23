@@ -112,7 +112,7 @@ SkyPillar_Top_EventScript_0021C00A::
 	setvar 0x8005, 0x1
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x3
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	waitse
 	playmoncry 0x196, 0x2
@@ -120,7 +120,7 @@ SkyPillar_Top_EventScript_0021C00A::
 	setvar 0x8005, 0x2
 	setvar 0x8006, 0x8
 	setvar 0x8007, 0x5
-	special sub_081395D0
+	special ShakeCamera
 	waitstate
 	waitdooranim
 	applymovement 0x1, 0x0821C0BB

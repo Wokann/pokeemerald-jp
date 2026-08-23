@@ -223,7 +223,171 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             'movement_types': {0x09: 'MOVEMENT_TYPE_FACE_LEFT'},
         },
     },
+    # Seafloor Cavern Room1-4 and Room9 are a contiguous, fully reviewed
+    # script region.  The JP instruction, text, and movement ordering is
+    # checked one-for-one against the corresponding US map sources.  Keep
+    # this an explicit allowlist: other maps continue to use address labels
+    # until their semantic ownership is independently established.
+    'SeafloorCavern_Room1': {
+        'scripts': {
+            0x0821865F: 'SeafloorCavern_Room1_EventScript_Grunt1',
+            0x08218676: 'SeafloorCavern_Room1_EventScript_Grunt2',
+        },
+        'texts': {
+            0x0821868D: 'SeafloorCavern_Room1_Text_Grunt1Intro',
+            0x082186A9: 'SeafloorCavern_Room1_Text_Grunt1Defeat',
+            0x082186B6: 'SeafloorCavern_Room1_Text_Grunt1PostBattle',
+            0x082186D5: 'SeafloorCavern_Room1_Text_Grunt2Intro',
+            0x082186FC: 'SeafloorCavern_Room1_Text_Grunt2Defeat',
+            0x0821870C: 'SeafloorCavern_Room1_Text_Grunt2PostBattle',
+        },
+        'symbols': {
+            'trainers': {
+                0x0006: 'TRAINER_GRUNT_SEAFLOOR_CAVERN_1',
+                0x0007: 'TRAINER_GRUNT_SEAFLOOR_CAVERN_2',
+            },
+        },
+    },
+    'SeafloorCavern_Room3': {
+        'scripts': {
+            0x0821873F: 'SeafloorCavern_Room3_EventScript_Shelly',
+            0x08218756: 'SeafloorCavern_Room3_EventScript_Grunt5',
+        },
+        'texts': {
+            0x0821876D: 'SeafloorCavern_Room3_Text_ShellyIntro',
+            0x082187F9: 'SeafloorCavern_Room3_Text_ShellyDefeat',
+            0x08218808: 'SeafloorCavern_Room3_Text_ShellyPostBattle',
+            0x0821886E: 'SeafloorCavern_Room3_Text_Grunt5Intro',
+            0x082188D1: 'SeafloorCavern_Room3_Text_Grunt5Defeat',
+            0x082188D6: 'SeafloorCavern_Room3_Text_Grunt5PostBattle',
+        },
+        'symbols': {
+            'trainers': {
+                0x0021: 'TRAINER_SHELLY_SEAFLOOR_CAVERN',
+                0x0237: 'TRAINER_GRUNT_SEAFLOOR_CAVERN_5',
+            },
+        },
+    },
+    'SeafloorCavern_Room4': {
+        'scripts': {
+            0x0821892F: 'SeafloorCavern_Room4_EventScript_Grunt3',
+            0x08218946: 'SeafloorCavern_Room4_EventScript_Grunt4',
+        },
+        'texts': {
+            0x0821895D: 'SeafloorCavern_Room4_Text_Grunt3Intro',
+            0x08218973: 'SeafloorCavern_Room4_Text_Grunt3Defeat',
+            0x0821897A: 'SeafloorCavern_Room4_Text_Grunt3PostBattle',
+            0x082189A4: 'SeafloorCavern_Room4_Text_Grunt4Intro',
+            0x082189BA: 'SeafloorCavern_Room4_Text_Grunt4Defeat',
+            0x082189C4: 'SeafloorCavern_Room4_Text_Grunt4PostBattle',
+        },
+        'symbols': {
+            'trainers': {
+                0x0008: 'TRAINER_GRUNT_SEAFLOOR_CAVERN_3',
+                0x000E: 'TRAINER_GRUNT_SEAFLOOR_CAVERN_4',
+            },
+        },
+    },
+    'SeafloorCavern_Room9': {
+        'scripts': {
+            0x082189FE: 'SeafloorCavern_Room9_EventScript_ArchieAwakenKyogre',
+        },
+        'texts': {
+            0x08218C94: 'SeafloorCavern_Room9_Text_ArchieHoldItRightThere',
+            0x08218CA1: 'SeafloorCavern_Room9_Text_ArchieSoItWasYou',
+            0x08218CB9: 'SeafloorCavern_Room9_Text_ArchieBeholdKyogre',
+            0x08218D0F: 'SeafloorCavern_Room9_Text_ArchieYouMustDisappear',
+            0x08218D63: 'SeafloorCavern_Room9_Text_ArchieDefeat',
+            0x08218D79: 'SeafloorCavern_Room9_Text_ArchieWithThisRedOrb',
+            0x08218DD1: 'SeafloorCavern_Room9_Text_RedOrbShinesByItself',
+            0x08218DEF: 'SeafloorCavern_Room9_Text_ArchieWhereDidKyogreGo',
+            0x08218E28: 'SeafloorCavern_Room9_Text_ArchieAMessageFromOutside',
+            0x08218E43: 'SeafloorCavern_Room9_Text_ArchieWhatRainingTooHard',
+            0x08218EEB: 'SeafloorCavern_Room9_Text_ArchieWhyDidKyogreDisappear',
+            0x08218F44: 'SeafloorCavern_Room9_Text_MaxieWhatHaveYouWrought',
+            0x08218FB7: 'SeafloorCavern_Room9_Text_ArchieDontGetAllHighAndMighty',
+            0x08219035: 'SeafloorCavern_Room9_Text_MaxieWeDontHaveTimeToArgue',
+            0x08219092: 'SeafloorCavern_Room9_Text_MaxieComeOnPlayer',
+        },
+        'field_placeholders': {
+            0x08219092: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'vars': {
+                0x405E: 'VAR_SOOTOPOLIS_CITY_STATE',
+                0x407B: 'VAR_ROUTE128_STATE',
+                0x40A2: 'VAR_SEAFLOOR_CAVERN_STATE',
+                0x40C6: 'VAR_STEVENS_HOUSE_STATE',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x8007: 'VAR_0x8007',
+                0x800D: 'VAR_RESULT',
+            },
+            'flags': {
+                0x0053: 'FLAG_LEGENDARIES_IN_SOOTOPOLIS',
+                0x0081: 'FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN',
+                0x0347: 'FLAG_HIDE_SOOTOPOLIS_CITY_MAN_1',
+                0x033A: 'FLAG_HIDE_SOOTOPOLIS_CITY_ARCHIE',
+                0x033B: 'FLAG_HIDE_SOOTOPOLIS_CITY_MAXIE',
+                0x033C: 'FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_ARCHIE',
+                0x033D: 'FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_MAXIE',
+                0x033F: 'FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_MAGMA_GRUNTS',
+                0x0356: 'FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS',
+                0x035B: 'FLAG_HIDE_SEAFLOOR_CAVERN_ROOM_9_KYOGRE',
+                0x03B0: 'FLAG_HIDE_ROUTE_128_ARCHIE',
+                0x03B1: 'FLAG_HIDE_ROUTE_128_MAXIE',
+                0x03B2: 'FLAG_HIDE_SEAFLOOR_CAVERN_AQUA_GRUNTS',
+                0x03C7: 'FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN',
+                0x03CD: 'FLAG_HIDE_SOOTOPOLIS_CITY_STEVEN',
+                0x03E5: 'FLAG_HIDE_SOOTOPOLIS_CITY_KYOGRE',
+                0x03E6: 'FLAG_HIDE_SOOTOPOLIS_CITY_GROUDON',
+                0x088A: 'FLAG_SYS_WEATHER_CTRL',
+                0x4000: 'FLAG_HIDE_MAP_NAME_POPUP',
+            },
+            'trainers': {0x0022: 'TRAINER_ARCHIE'},
+            'songs': {
+                0x0184: 'MUS_AWAKEN_LEGEND',
+                0x01A3: 'MUS_ENCOUNTER_AQUA',
+            },
+            'sounds': {
+                0x0002: 'SE_PC_LOGIN',
+                0x0003: 'SE_PC_OFF',
+                0x0015: 'SE_PIN',
+                0x006B: 'SE_ORB',
+                0x00D1: 'SE_M_DETECT',
+            },
+            'weather': {0x0000: 'WEATHER_NONE'},
+            'field_effects': {0x0036: 'FLDEFF_SPARKLE'},
+            'maps': {0x002B: 'MAP_ROUTE128'},
+            'local_ids': {
+                0x0001: 'LOCALID_SEAFLOOR_CAVERN_KYOGRE',
+                0x0002: 'LOCALID_SEAFLOOR_CAVERN_ARCHIE',
+                0x0003: 'LOCALID_SEAFLOOR_CAVERN_MAXIE',
+                0x0004: 'LOCALID_SEAFLOOR_CAVERN_GRUNT_1',
+                0x0005: 'LOCALID_SEAFLOOR_CAVERN_GRUNT_2',
+                0x0007: 'LOCALID_SEAFLOOR_CAVERN_KYOGRE_SLEEPING',
+                0x00FF: 'LOCALID_PLAYER',
+            },
+        },
+    },
 }
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'SeafloorCavern_Room9': {
+        0x08218C5F: 'SeafloorCavern_Room9_Movement_ArchieApproachPlayer',
+        0x08218C67: 'SeafloorCavern_Room9_Movement_Unused1',
+        0x08218C6A: 'SeafloorCavern_Room9_Movement_ArchieListenMessage',
+        0x08218C6D: 'SeafloorCavern_Room9_Movement_Unused2',
+        0x08218C6F: 'SeafloorCavern_Room9_Movement_ArchieExit',
+        0x08218C75: 'SeafloorCavern_Room9_Movement_KyogreApproach',
+        0x08218C80: 'SeafloorCavern_Room9_Movement_KyogreExit',
+        0x08218C83: 'SeafloorCavern_Room9_Movement_MaxieArrive',
+        0x08218C89: 'SeafloorCavern_Room9_Movement_MaxieExit',
+        0x08218C8C: 'SeafloorCavern_Room9_Movement_MagmaGruntArrive',
+        0x08218C91: 'SeafloorCavern_Room9_Movement_Delay32',
+    },
+})
 
 MSGBOX_TYPES = {
     2: 'MSGBOX_NPC',
@@ -386,6 +550,8 @@ VARIABLE_ARGUMENTS = {
 FLAG_ARGUMENTS = {'setflag', 'clearflag', 'checkflag'}
 LOCAL_ID_ARGUMENTS = {
     'applymovement': {0},
+    'addobject': {0},
+    'removeobject': {0},
     'setobjectxyperm': {0},
     'setobjectmovementtype': {0},
     'turnobject': {0},
@@ -401,12 +567,22 @@ def semantic_symbol_formatter(mname):
     def format_symbol(name, index, value, args):
         if name in FLAG_ARGUMENTS and index == 0:
             return symbols.get('flags', {}).get(value)
+        if name == 'trainerbattle' and index == 1:
+            return symbols.get('trainers', {}).get(value)
         if index in VARIABLE_ARGUMENTS.get(name, ()):
             return symbols.get('vars', {}).get(value)
         if name == 'setorcopyvar' and index == 1 and args and args[0] == 0x8000:
             return symbols.get('items', {}).get(value)
         if name in ('playbgm', 'playfanfare') and index == 0:
             return symbols.get('songs', {}).get(value)
+        if name == 'playse' and index == 0:
+            return symbols.get('sounds', {}).get(value)
+        if name == 'setweather' and index == 0:
+            return symbols.get('weather', {}).get(value)
+        if name in ('dofieldeffect', 'waitfieldeffect') and index == 0:
+            return symbols.get('field_effects', {}).get(value)
+        if name == 'warp' and index == 0:
+            return symbols.get('maps', {}).get(value)
         if index in LOCAL_ID_ARGUMENTS.get(name, ()):
             local = symbols.get('local_ids', {}).get(value)
             if local is not None:
@@ -626,6 +802,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     verified_table_labels = semantic.get('tables', {})
     verified_text_labels = semantic.get('texts', {})
     field_placeholders = semantic.get('field_placeholders', {})
+    special_aliases = semantic.get('specials', {})
     symbol_formatter = semantic_symbol_formatter(mname)
     extra = [
         a
@@ -809,6 +986,10 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             lines.append('%s::' % label_map[addr])
             decoded_lines = sp.decode_script_lines(
                 scripts[addr], label_map, emitted_text_label_map, symbol_formatter)
+            decoded_lines = [
+                (name, special_aliases.get(argstr, argstr) if name == 'special' else argstr)
+                for name, argstr in decoded_lines
+            ]
             decoded_lines = collapse_msgbox_macros(decoded_lines)
             for name, argstr in collapse_condition_macros(decoded_lines):
                 if argstr:
