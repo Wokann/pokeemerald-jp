@@ -1884,15 +1884,15 @@ gMapEvents_ROUTE114: @ 0x085028B4
 	map_events ROUTE114_EventObjects, ROUTE114_EventWarps, 0, ROUTE114_EventBgEvents
 	.globl ROUTE115_EventObjects
 ROUTE115_EventObjects: @ 0x085028C8
-	object_event 1, 20, 0, 18, 68, 3, 2, 1, 1, 0, 0, Route115_EventScript_001EB857, 0x0000
-	object_event 2, 21, 0, 5, 15, 3, 10, 0, 0, 1, 6, 0x081EB872, 0x0000
-	object_event 3, 44, 0, 27, 53, 3, 15, 1, 1, 1, 4, 0x081EB8EB, 0x0000
+	object_event 1, 20, 0, 18, 68, 3, 2, 1, 1, 0, 0, Route115_EventScript_Woman, 0x0000
+	object_event 2, 21, 0, 5, 15, 3, 10, 0, 0, 1, 6, Route115_EventScript_Timothy, 0x0000
+	object_event 3, 44, 0, 27, 53, 3, 15, 1, 1, 1, 4, Route115_EventScript_Nob, 0x0000
 	object_event 4, 60, 0, 12, 5, 3, 12, 0, 0, 0, 69, 0x08244D23, 0x0000
 	object_event 5, 60, 0, 13, 5, 3, 12, 0, 0, 0, 70, 0x08244D23, 0x0000
 	object_event 6, 60, 0, 14, 5, 3, 12, 0, 0, 0, 71, 0x08244D23, 0x0000
-	object_event 7, 14, 0, 15, 50, 3, 64, 0, 0, 1, 3, 0x081EB94D, 0x0000
-	object_event 8, 44, 0, 19, 15, 3, 27, 5, 0, 1, 2, 0x081EB8D4, 0x0000
-	object_event 9, 39, 0, 24, 62, 3, 18, 0, 0, 1, 4, 0x081EB9AF, 0x0000
+	object_event 7, 14, 0, 15, 50, 3, 64, 0, 0, 1, 3, Route115_EventScript_Cyndy, 0x0000
+	object_event 8, 44, 0, 19, 15, 3, 27, 5, 0, 1, 2, Route115_EventScript_Koichi, 0x0000
+	object_event 9, 39, 0, 24, 62, 3, 18, 0, 0, 1, 4, Route115_EventScript_Hector, 0x0000
 	object_event 10, 59, 0, 20, 60, 3, 1, 0, 0, 0, 0, 0x08256B81, 0x03F8
 	object_event 11, 59, 0, 18, 7, 3, 1, 0, 0, 0, 0, 0x08256B8E, 0x03F9
 	object_event 12, 59, 0, 23, 29, 3, 1, 0, 0, 0, 0, 0x08256B9B, 0x03FA
@@ -1900,11 +1900,11 @@ ROUTE115_EventObjects: @ 0x085028C8
 	object_event 14, 60, 0, 31, 65, 3, 12, 0, 0, 0, 56, 0x08244D23, 0x0000
 	object_event 15, 86, 0, 29, 50, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0011
 	object_event 16, 59, 0, 31, 56, 3, 1, 1, 1, 0, 0, 0x08256BA8, 0x045E
-	object_event 17, 52, 0, 10, 15, 3, 46, 3, 3, 1, 2, 0x081EB9C6, 0x0000
-	object_event 18, 5, 0, 11, 12, 3, 57, 1, 1, 1, 3, 0x081EB9DD, 0x0000
-	object_event 19, 14, 0, 15, 7, 3, 9, 1, 1, 1, 4, 0x081EBA0B, 0x0000
-	object_event 20, 47, 0, 10, 7, 3, 10, 1, 1, 1, 4, 0x081EB9F4, 0x0000
-	object_event 21, 47, 0, 28, 62, 3, 9, 1, 1, 1, 4, 0x081EBA22, 0x0000
+	object_event 17, 52, 0, 10, 15, 3, 46, 3, 3, 1, 2, Route115_EventScript_Kyra, 0x0000
+	object_event 18, 5, 0, 11, 12, 3, 57, 1, 1, 1, 3, Route115_EventScript_Jaiden, 0x0000
+	object_event 19, 14, 0, 15, 7, 3, 9, 1, 1, 1, 4, Route115_EventScript_Helene, 0x0000
+	object_event 20, 47, 0, 10, 7, 3, 10, 1, 1, 1, 4, Route115_EventScript_Alix, 0x0000
+	object_event 21, 47, 0, 28, 62, 3, 9, 1, 1, 1, 4, Route115_EventScript_Marlene, 0x0000
 	object_event 22, 59, 0, 26, 67, 3, 1, 1, 1, 0, 0, 0x08256BC2, 0x0489
 	object_event 23, 59, 0, 12, 14, 3, 1, 1, 1, 0, 0, 0x08256BB5, 0x0478
 	.globl ROUTE115_EventWarps
@@ -1916,8 +1916,8 @@ ROUTE115_EventWarps: @ 0x08502AF0
 ROUTE115_EventBgEvents: @ 0x08502B08
 	bg_event 32, 6, 0, 8, 0x0048, 0x00, 0x00
 	bg_event 21, 18, 0, 8, 0x003E, 0x00, 0x00
-	bg_event 16, 64, 0, 0, Route115_EventScript_001EB860, 0, 0
-	bg_event 25, 38, 3, 0, Route115_EventScript_001EB869, 0, 0
+	bg_event 16, 64, 0, 0, Route115_EventScript_RouteSignRustboro, 0, 0
+	bg_event 25, 38, 3, 0, Route115_EventScript_MeteorFallsSign, 0, 0
 	bg_event 8, 30, 0, 8, 0x0085, 0x00, 0x00
 	bg_event 32, 39, 0, 8, 0x002A, 0x00, 0x00
 	bg_event 26, 15, 0, 8, 0x0034, 0x00, 0x00

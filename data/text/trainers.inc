@@ -1955,4 +1955,176 @@ Route114_Text_AngelinaPostBattle: @ 0x0825D0B2
 	.string "しんか　させると\n"
 	.string "みためが　ものすごく　かわって\l"
 	.string "ビックリする　ポケモンが　いるよね！$"
-	.incbin "baserom_jp.gba", 0x25d0de, 0x52b5
+Route115_Text_TimothyIntro: @ 0x0825D0DE
+	.string "ふむ⋯⋯\n"
+	.string "なかなか　できそうだな⋯⋯\l"
+	.string "わたしが　あいてを　してあげよう！$"
+
+Route115_Text_TimothyDefeat: @ 0x0825D103
+	.string "そうぞう　いじょうの　つよさだ⋯⋯！$"
+
+Route115_Text_TimothyPostBattle: @ 0x0825D116
+	.string "てんさい　など　いない\n"
+	.string "すべては　どりょく！\l"
+	.string "わたしは　そう　しんじている⋯⋯$"
+
+Route115_Text_TimothyRegister: @ 0x0825D13E
+	.string "ふむ⋯⋯\n"
+	.string "こんな　まけかたも　ひさかたぶりだ\l"
+	.string "できれば　また　あいてを　してほしい$"
+
+Route115_Text_TimothyRematchIntro: @ 0x0825D168
+	.string "ふむ⋯⋯\n"
+	.string "あいかわらずの　みのこなし\l"
+	.string "わたしの　あいてを　してもらおう！$"
+
+Route115_Text_TimothyRematchDefeat: @ 0x0825D18D
+	.string "あいかわらずの　つよさだ⋯⋯！$"
+
+Route115_Text_TimothyPostRematch: @ 0x0825D19D
+	.string "どりょく　あるのみ！\p"
+	.string "まけたのは　まだまだ\n"
+	.string "どりょくが　たりないからだ！$"
+
+Route115_Text_KoichiIntro: @ 0x0825D1C2
+	.string "おれのッ！\p"
+	.string "ワンリキーがッ！\p"
+	.string "たたかいを　のぞんでいるッ！$"
+
+Route115_Text_KoichiDefeat: @ 0x0825D1E0
+	.string "いててててっ！$"
+
+Route115_Text_KoichiPostBattle: @ 0x0825D1E8
+	.string "おれの　ワンリキー　たちがッ！\p"
+	.string "つよさを　のぞむかぎり\p"
+	.string "おれたちは　どこまでも　つよくなるぜッ！$"
+
+Route115_Text_NobIntro: @ 0x0825D219
+	.string "オレの　とくいわざは\n"
+	.string "ずつきで　レンガを　くだく　ことだ！$"
+
+Route115_Text_NobDefeat: @ 0x0825D237
+	.string "うがーっ！\n"
+	.string "あたまが　くだけたーっ！$"
+
+Route115_Text_NobPostBattle: @ 0x0825D24A
+	.string "ポケモンに　カラテを　おしえてるんだが\n"
+	.string "オレより　つよく　なりそうで\l"
+	.string "ちょっと　たのしみ　なんだ！$"
+
+Route115_Text_NobRegister: @ 0x0825D27C
+	.string "きみは　すげえな！\n"
+	.string "きたえなおして　もういちど　しょうぶだ！$"
+
+Route115_Text_NobRematchIntro: @ 0x0825D29B
+	.string "きみに　まけてから　がんばって\n"
+	.string "ポケモンと　おのれを　きたえなおしたぞ！\l"
+	.string "さあ　もういちど　しょうぶ！$"
+
+Route115_Text_NobRematchDefeat: @ 0x0825D2CF
+	.string "うがーっ！\n"
+	.string "また　まけたーっ！$"
+
+Route115_Text_NobPostRematch: @ 0x0825D2DF
+	.string "おれの　ポケモンは　まだまだ　つよくなる！\n"
+	.string "がんばって　きたえるぞ！$"
+
+Route115_Text_CyndyIntro: @ 0x0825D302
+	.string "この　すなはまは　わたしの\n"
+	.string "ヒミツの　しゅぎょう　ばしょ！\l"
+	.string "かってに　はいって　こないでよ！$"
+
+Route115_Text_CyndyDefeat: @ 0x0825D331
+	.string "しゅぎょうが　たりないわ⋯⋯！$"
+
+Route115_Text_CyndyPostBattle: @ 0x0825D341
+	.string "すなが　クッションに　なるから\n"
+	.string "からだを　いためないの\l"
+	.string "さいこうの　しゅぎょう　ばしょね！$"
+
+Route115_Text_CyndyRegister: @ 0x0825D36F
+	.string "いいわ　あなたが　ここに　はいるの\n"
+	.string "みとめてあげる！\l"
+	.string "そのかわり　また　あいてを　たのむわよ！$"
+
+Route115_Text_CyndyRematchIntro: @ 0x0825D39F
+	.string "さあ　ポケモンしょうぶ　いくわよ！$"
+
+Route115_Text_CyndyRematchDefeat: @ 0x0825D3B1
+	.string "わたしは　たたかえるけど\n"
+	.string "ポケモンが⋯⋯$"
+
+Route115_Text_CyndyPostRematch: @ 0x0825D3C6
+	.string "まけても　ちょっと　たのしいのは\n"
+	.string "ほんとうに　ポケモンが　すき　だからかな？$"
+
+Route115_Text_HectorIntro: @ 0x0825D3ED
+	.string "ぼく　めずらしい　ポケモン　もってるんだ！\n"
+	.string "よかったら　みせて　あげようか$"
+
+Route115_Text_HectorDefeat: @ 0x0825D413
+	.string "きみ⋯⋯\n"
+	.string "ぼくの　ポケモン　ほしいでしょ？$"
+
+Route115_Text_HectorPostBattle: @ 0x0825D429
+	.string "こんなに　めずらしい　ポケモン　もってるんだ\n"
+	.string "それだけで　ぼくは　まんぞく　なのさ！$"
+
+Route115_Text_KyraIntro: @ 0x0825D454
+	.string "はしりながら　しょうぶを　するわよッ！\n"
+	.string "あなたも　ついて　きなさーい！$"
+
+Route115_Text_KyraDefeat: @ 0x0825D478
+	.string "はぁ　はぁ⋯⋯$"
+
+Route115_Text_KyraPostBattle: @ 0x0825D480
+	.string "はしりながら　たたかおうと　したのが\n"
+	.string "まちがい　だったわよ！\l"
+	.string "ひとっぱしり　して　アタマ　ひやすかな$"
+
+Route115_Text_JaidenIntro: @ 0x0825D4B3
+	.string "くらえーっ\n"
+	.string "にんぽう　すごポケモンの　じゅつ！$"
+
+Route115_Text_JaidenDefeat: @ 0x0825D4CB
+	.string "わーん　しっぱいだ！$"
+
+Route115_Text_JaidenPostBattle: @ 0x0825D4D6
+	.string "でも　ぼくの　ポケモン\n"
+	.string "すごポケモン　だった　でしょ？$"
+
+Route115_Text_HeleneIntro: @ 0x0825D4F2
+	.string "ふふっ　あたしの　ポケモンたちは\n"
+	.string "くろおび　クラスの　つよさよ！$"
+
+Route115_Text_HeleneDefeat: @ 0x0825D513
+	.string "くやしすぎるわ！$"
+
+Route115_Text_HelenePostBattle: @ 0x0825D51C
+	.string "あたしより　つよい　ひとなんて\n"
+	.string "めったに　あわないのに⋯⋯\p"
+	.string "わかった！\n"
+	.string "あなた　ジムリーダー　でしょ！$"
+
+Route115_Text_AlixIntro: @ 0x0825D550
+	.string "めが　あったからには　にがさないわよ！$"
+
+Route115_Text_AlixDefeat: @ 0x0825D564
+	.string "くっ⋯⋯　なかなか！$"
+
+Route115_Text_AlixPostBattle: @ 0x0825D56F
+	.string "あーあ！\n"
+	.string "テレポートで　おうちに　かえろうかしら$"
+
+Route115_Text_MarleneIntro: @ 0x0825D588
+	.string "めいそうの　じゃまを　したわね⋯⋯\n"
+	.string "おしおき　させて　もらうわ！$"
+
+Route115_Text_MarleneDefeat: @ 0x0825D5A9
+	.string "こころが　みだれて　しまう！$"
+
+Route115_Text_MarlenePostBattle: @ 0x0825D5B8
+	.string "ここで　ポケモンたちと\n"
+	.string "めいそうを　していたの！\l"
+	.string "でも　あまり　おちつかない　ところね$"
+	.incbin "baserom_jp.gba", 0x25d5e4, 0x4daf
