@@ -9525,6 +9525,9 @@ SECTIONS {
         src/event_object_movement.o(.rodata.object_event_graphics_npc_people_data);
         gUnknown_8485D0C = gObjectEventPal_Npc1;
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_npc_people_graphics);
+        src/event_object_movement.o(.rodata.object_event_graphics_npc_people_extended_data);
+        gUnknown_849888C = gObjectEventPic_UnusedWoman;
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_npc_people_extended_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_palettes);

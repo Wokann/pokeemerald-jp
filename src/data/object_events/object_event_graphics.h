@@ -117,6 +117,28 @@ OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_DATA const u32 gObjectEventPic_SchoolKidM[] = I
 OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_DATA const u32 gObjectEventPic_Maniac[] = INCBIN_U32("graphics/object_events/pics/people/maniac.4bpp");
 OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_DATA const u32 gObjectEventPic_HexManiac[] = INCBIN_U32("graphics/object_events/pics/people/hex_maniac.4bpp");
 
+// This JP-owned continuation keeps the remaining generic people graphics in ROM order.
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_UnusedWoman[] = INCBIN_U32("graphics/object_events/pics/people/unused_woman.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_SwimmerM[] = INCBIN_U32("graphics/object_events/pics/people/swimmer_m.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_SwimmerF[] = INCBIN_U32("graphics/object_events/pics/people/swimmer_f.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_BlackBelt[] = INCBIN_U32("graphics/object_events/pics/people/black_belt.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Beauty[] = INCBIN_U32("graphics/object_events/pics/people/beauty.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Scientist1[] = INCBIN_U32("graphics/object_events/pics/people/scientist_1.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Lass[] = INCBIN_U32("graphics/object_events/pics/people/lass.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Gentleman[] = INCBIN_U32("graphics/object_events/pics/people/gentleman.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Sailor[] = INCBIN_U32("graphics/object_events/pics/people/sailor.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Fisherman[] = INCBIN_U32("graphics/object_events/pics/people/fisherman.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_RunningTriathleteM[] = INCBIN_U32("graphics/object_events/pics/people/running_triathlete_m.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_RunningTriathleteF[] = INCBIN_U32("graphics/object_events/pics/people/running_triathlete_f.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_TuberF[] = INCBIN_U32("graphics/object_events/pics/people/tuber_f.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_TuberM[] = INCBIN_U32("graphics/object_events/pics/people/tuber_m.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Hiker[] = INCBIN_U32("graphics/object_events/pics/people/hiker.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_CyclingTriathleteM[] = INCBIN_U32("graphics/object_events/pics/people/cycling_triathlete_m.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_CyclingTriathleteF[] = INCBIN_U32("graphics/object_events/pics/people/cycling_triathlete_f.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Man4[] = INCBIN_U32("graphics/object_events/pics/people/man_4.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Man5[] = INCBIN_U32("graphics/object_events/pics/people/man_5.4bpp");
+OBJECT_EVENT_GRAPHICS_NPC_PEOPLE_EXTENDED_DATA const u32 gObjectEventPic_Nurse[] = INCBIN_U32("graphics/object_events/pics/people/nurse.4bpp");
+
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u8 gFieldEffectPic_CutGrass[] = INCBIN_U8("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u32 gFieldEffectPic_CutGrass_Copy[] = INCBIN_U32("graphics/field_effects/pics/cut_grass.4bpp");
 OBJECT_EVENT_GRAPHICS_CUT_GRASS const u16 gFieldEffectPal_CutGrass[] = INCBIN_U16("graphics/field_effects/palettes/cut_grass.gbapal");

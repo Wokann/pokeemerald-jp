@@ -27,9 +27,11 @@ gUnknown_846FA13: @ 0x846FA13
 
 	.section .rodata.data_b2d_mid28_after_npc_people_graphics
 
-	.globl gUnknown_849888C
-gUnknown_849888C: @ 0x849888C
-	.incbin "baserom_jp.gba", 0x49888c, 0x36a20
+	.section .rodata.data_b2d_mid28_after_npc_people_extended_graphics
+
+	.globl gUnknown_84A408C
+gUnknown_84A408C: @ 0x84A408C
+	.incbin "baserom_jp.gba", 0x4a408c, 0x2b220
 
 	.section .rodata.data_b2d_mid28_after_cut_grass_graphics
 

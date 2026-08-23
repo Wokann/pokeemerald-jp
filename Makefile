@@ -847,7 +847,17 @@ $(C_BUILDDIR)/event_object_movement.o: src/event_object_movement.c src/data/obje
 	graphics/object_events/pics/people/man_3.4bpp graphics/object_events/pics/people/woman_5.4bpp \
 	graphics/object_events/pics/people/youngster.4bpp graphics/object_events/pics/people/bug_catcher.4bpp \
 	graphics/object_events/pics/people/psychic_m.4bpp graphics/object_events/pics/people/school_kid_m.4bpp \
-	graphics/object_events/pics/people/maniac.4bpp graphics/object_events/pics/people/hex_maniac.4bpp
+	graphics/object_events/pics/people/maniac.4bpp graphics/object_events/pics/people/hex_maniac.4bpp \
+	graphics/object_events/pics/people/unused_woman.4bpp graphics/object_events/pics/people/swimmer_m.4bpp \
+	graphics/object_events/pics/people/swimmer_f.4bpp graphics/object_events/pics/people/black_belt.4bpp \
+	graphics/object_events/pics/people/beauty.4bpp graphics/object_events/pics/people/scientist_1.4bpp \
+	graphics/object_events/pics/people/lass.4bpp graphics/object_events/pics/people/gentleman.4bpp \
+	graphics/object_events/pics/people/sailor.4bpp graphics/object_events/pics/people/fisherman.4bpp \
+	graphics/object_events/pics/people/running_triathlete_m.4bpp graphics/object_events/pics/people/running_triathlete_f.4bpp \
+	graphics/object_events/pics/people/tuber_f.4bpp graphics/object_events/pics/people/tuber_m.4bpp \
+	graphics/object_events/pics/people/hiker.4bpp graphics/object_events/pics/people/cycling_triathlete_m.4bpp \
+	graphics/object_events/pics/people/cycling_triathlete_f.4bpp graphics/object_events/pics/people/man_4.4bpp \
+	graphics/object_events/pics/people/man_5.4bpp graphics/object_events/pics/people/nurse.4bpp
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(or $(CC1),$(CC)) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/event_object_movement.gen.s
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/event_object_movement.gen.s | $(AS) $(ASFLAGS) -o $@ -
