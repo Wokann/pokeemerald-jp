@@ -2334,8 +2334,8 @@ ROUTE123_EventObjects: @ 0x085044E8
 	object_event 5, 60, 0, 81, 1, 3, 12, 0, 0, 0, 62, 0x08244D23, 0x0000
 	object_event 6, 60, 0, 82, 1, 3, 12, 0, 0, 0, 63, 0x08244D23, 0x0000
 	object_event 7, 60, 0, 83, 1, 3, 12, 0, 0, 0, 64, 0x08244D23, 0x0000
-	object_event 8, 34, 0, 70, 12, 3, 24, 0, 0, 1, 1, 0x081EE454, 0x0000
-	object_event 9, 33, 0, 58, 7, 3, 17, 0, 0, 1, 2, 0x081EE46B, 0x0000
+	object_event 8, 34, 0, 70, 12, 3, 24, 0, 0, 1, 1, Route123_EventScript_Wendy, 0x0000
+	object_event 9, 33, 0, 58, 7, 3, 17, 0, 0, 1, 2, Route123_EventScript_Braxton, 0x0000
 	object_event 10, 60, 0, 14, 5, 3, 12, 0, 0, 0, 65, 0x08244D23, 0x0000
 	object_event 11, 60, 0, 15, 5, 3, 12, 0, 0, 0, 72, 0x08244D23, 0x0000
 	object_event 12, 60, 0, 17, 5, 3, 12, 0, 0, 0, 73, 0x08244D23, 0x0000
@@ -2348,27 +2348,27 @@ ROUTE123_EventObjects: @ 0x085044E8
 	object_event 19, 82, 0, 129, 14, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0012
 	object_event 20, 82, 0, 92, 9, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0013
 	object_event 21, 59, 0, 31, 8, 3, 1, 0, 0, 0, 0, 0x08256D07, 0x0408
-	object_event 22, 14, 0, 108, 13, 3, 15, 0, 0, 0, 0, Route123_EventScript_001EE3E0, 0x0000
+	object_event 22, 14, 0, 108, 13, 3, 15, 0, 0, 0, 0, Route123_EventScript_GigaDrainGirl, 0x0000
 	object_event 23, 60, 0, 109, 13, 3, 12, 0, 0, 0, 87, 0x08244D23, 0x0000
 	object_event 24, 60, 0, 110, 13, 3, 12, 0, 0, 0, 88, 0x08244D23, 0x0000
 	object_event 25, 60, 0, 111, 13, 3, 12, 0, 0, 0, 89, 0x08244D23, 0x0000
-	object_event 26, 20, 0, 18, 9, 3, 23, 0, 0, 1, 2, 0x081EE482, 0x0000
-	object_event 27, 6, 0, 38, 13, 3, 8, 0, 0, 1, 1, 0x081EE578, 0x0000
-	object_event 28, 6, 0, 37, 13, 3, 8, 0, 0, 1, 1, 0x081EE55D, 0x0000
-	object_event 29, 37, 0, 138, 12, 3, 9, 0, 0, 1, 7, 0x081EE499, 0x0000
-	object_event 30, 47, 0, 49, 16, 3, 8, 0, 0, 1, 1, 0x081EE4FB, 0x0000
-	object_event 31, 40, 0, 87, 12, 3, 8, 0, 0, 1, 4, 0x081EE593, 0x0000
+	object_event 26, 20, 0, 18, 9, 3, 23, 0, 0, 1, 2, Route123_EventScript_Violet, 0x0000
+	object_event 27, 6, 0, 38, 13, 3, 8, 0, 0, 1, 1, Route123_EventScript_Yuki, 0x0000
+	object_event 28, 6, 0, 37, 13, 3, 8, 0, 0, 1, 1, Route123_EventScript_Miu, 0x0000
+	object_event 29, 37, 0, 138, 12, 3, 9, 0, 0, 1, 7, Route123_EventScript_Cameron, 0x0000
+	object_event 30, 47, 0, 49, 16, 3, 8, 0, 0, 1, 1, Route123_EventScript_Jacki, 0x0000
+	object_event 31, 40, 0, 87, 12, 3, 8, 0, 0, 1, 4, Route123_EventScript_Kindra, 0x0000
 	object_event 32, 59, 0, 27, 18, 3, 1, 1, 1, 0, 0, 0x08256D14, 0x0450
 	object_event 33, 59, 0, 75, 9, 3, 1, 1, 1, 0, 0, 0x08256D21, 0x0455
-	object_event 34, 5, 0, 138, 14, 3, 57, 1, 1, 1, 1, 0x081EE606, 0x0000
-	object_event 35, 20, 0, 138, 16, 3, 7, 1, 1, 1, 1, 0x081EE5EF, 0x0000
-	object_event 36, 39, 0, 87, 17, 3, 7, 1, 1, 1, 4, 0x081EE5D8, 0x0000
-	object_event 37, 66, 0, 66, 16, 3, 8, 1, 1, 1, 2, 0x081EE64B, 0x0000
-	object_event 38, 66, 0, 66, 19, 3, 7, 1, 1, 1, 2, 0x081EE5C1, 0x0000
-	object_event 39, 21, 0, 49, 19, 3, 7, 1, 1, 1, 2, 0x081EE5AA, 0x0000
+	object_event 34, 5, 0, 138, 14, 3, 57, 1, 1, 1, 1, Route123_EventScript_Jonas, 0x0000
+	object_event 35, 20, 0, 138, 16, 3, 7, 1, 1, 1, 1, Route123_EventScript_Kayley, 0x0000
+	object_event 36, 39, 0, 87, 17, 3, 7, 1, 1, 1, 4, Route123_EventScript_Ed, 0x0000
+	object_event 37, 66, 0, 66, 16, 3, 8, 1, 1, 1, 2, Route123_EventScript_Fernando, 0x0000
+	object_event 38, 66, 0, 66, 19, 3, 7, 1, 1, 1, 2, Route123_EventScript_Alberto, 0x0000
+	object_event 39, 21, 0, 49, 19, 3, 7, 1, 1, 1, 2, Route123_EventScript_Frederick, 0x0000
 	object_event 40, 59, 0, 43, 15, 3, 1, 1, 1, 0, 0, 0x08256D2E, 0x0480
-	object_event 41, 34, 0, 14, 16, 3, 7, 1, 1, 1, 3, 0x081EE61D, 0x0000
-	object_event 42, 35, 0, 14, 12, 3, 26, 1, 3, 1, 3, 0x081EE634, 0x0000
+	object_event 41, 34, 0, 14, 16, 3, 7, 1, 1, 1, 3, Route123_EventScript_Jazmyn, 0x0000
+	object_event 42, 35, 0, 14, 12, 3, 26, 1, 3, 1, 3, Route123_EventScript_Davis, 0x0000
 	object_event 43, 59, 0, 57, 16, 3, 1, 1, 1, 0, 0, 0x08256D3B, 0x0481
 	.globl ROUTE123_EventWarps
 ROUTE123_EventWarps: @ 0x085048F0
@@ -2399,12 +2399,12 @@ ROUTE123_EventCoordEvents: @ 0x085048F8
 	coord_event 94, 10, 3, 21, 0, 0x00000000
 	.globl ROUTE123_EventBgEvents
 ROUTE123_EventBgEvents: @ 0x08504A58
-	bg_event 117, 10, 0, 0, Route123_EventScript_001EE442, 0, 0
+	bg_event 117, 10, 0, 0, Route123_EventScript_RouteSignMtPyre, 0, 0
 	bg_event 47, 3, 0, 8, 0x0052, 0x00, 0x00
 	bg_event 49, 3, 0, 8, 0x005C, 0x00, 0x00
-	bg_event 10, 12, 3, 0, Route123_EventScript_001EE439, 0, 0
+	bg_event 10, 12, 3, 0, Route123_EventScript_RouteSign, 0, 0
 	bg_event 75, 1, 3, 7, 0x0053, 0x07, 0x00
-	bg_event 20, 7, 3, 0, Route123_EventScript_001EE44B, 0, 0
+	bg_event 20, 7, 3, 0, Route123_EventScript_BerryMastersHouseSign, 0, 0
 	bg_event 57, 5, 0, 8, 0x0053, 0x00, 0x00
 	bg_event 12, 1, 3, 7, 0x0018, 0x29, 0x00
 	bg_event 91, 15, 3, 7, 0x0015, 0x4A, 0x00
