@@ -1989,38 +1989,38 @@ gMapEvents_ROUTE116: @ 0x08502F20
 	map_events ROUTE116_EventObjects, ROUTE116_EventWarps, ROUTE116_EventCoordEvents, ROUTE116_EventBgEvents
 	.globl ROUTE117_EventObjects
 ROUTE117_EventObjects: @ 0x08502F34
-	object_event 1, 16, 0, 13, 13, 3, 8, 0, 0, 0, 0, Route117_EventScript_001EC440, 0x0000
-	object_event 2, 11, 0, 25, 5, 3, 40, 2, 2, 0, 0, Route117_EventScript_001EC449, 0x0000
+	object_event 1, 16, 0, 13, 13, 3, 8, 0, 0, 0, 0, Route117_EventScript_Woman, 0x0000
+	object_event 2, 11, 0, 25, 5, 3, 40, 2, 2, 0, 0, Route117_EventScript_LittleBoy, 0x0000
 	object_event 3, 29, 0, 47, 4, 3, 8, 0, 0, 0, 0, 0x082576E1, 0x0000
 	object_event 4, 208, 0, 33, 3, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
 	object_event 5, 204, 0, 39, 4, 3, 1, 0, 0, 0, 0, 0x00000000, 0x0000
 	object_event 6, 210, 0, 42, 2, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
 	object_event 7, 209, 0, 49, 2, 3, 1, 0, 0, 0, 0, 0x00000000, 0x0000
-	object_event 8, 51, 0, 38, 16, 3, 28, 8, 0, 1, 4, 0x081EC53A, 0x0000
-	object_event 9, 20, 0, 8, 10, 3, 23, 0, 0, 1, 3, 0x081EC4D8, 0x0000
-	object_event 10, 65, 0, 33, 11, 3, 16, 0, 0, 1, 4, 0x081EC476, 0x0000
+	object_event 8, 51, 0, 38, 16, 3, 28, 8, 0, 1, 4, Route117_EventScript_Dylan, 0x0000
+	object_event 9, 20, 0, 8, 10, 3, 23, 0, 0, 1, 3, Route117_EventScript_Lydia, 0x0000
+	object_event 10, 65, 0, 33, 11, 3, 16, 0, 0, 1, 4, Route117_EventScript_Isaac, 0x0000
 	object_event 11, 60, 0, 41, 13, 3, 12, 0, 0, 0, 29, 0x08244D23, 0x0000
 	object_event 12, 60, 0, 42, 13, 3, 12, 0, 0, 0, 28, 0x08244D23, 0x0000
 	object_event 13, 60, 0, 43, 13, 3, 12, 0, 0, 0, 27, 0x08244D23, 0x0000
 	object_event 14, 59, 0, 16, 18, 3, 1, 0, 0, 0, 0, 0x08256C10, 0x03FE
 	object_event 15, 82, 0, 15, 2, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0011
 	object_event 16, 59, 0, 9, 1, 3, 1, 0, 0, 0, 0, 0x08256C1D, 0x03FF
-	object_event 17, 52, 0, 26, 13, 3, 33, 2, 2, 1, 5, 0x081EC59C, 0x0000
-	object_event 18, 39, 0, 17, 12, 3, 7, 1, 1, 1, 4, 0x081EC5FE, 0x0000
-	object_event 19, 47, 0, 43, 6, 3, 8, 0, 0, 1, 1, 0x081EC679, 0x0000
-	object_event 20, 47, 0, 42, 6, 3, 8, 0, 0, 1, 1, 0x081EC615, 0x0000
-	object_event 21, 10, 0, 48, 10, 3, 2, 1, 1, 0, 0, Route117_EventScript_001EC452, 0x0000
-	object_event 22, 47, 0, 15, 4, 3, 10, 1, 1, 1, 4, 0x081EC6F4, 0x0000
-	object_event 23, 14, 0, 21, 4, 3, 9, 1, 1, 1, 4, 0x081EC70B, 0x0000
-	object_event 24, 52, 0, 16, 4, 3, 28, 4, 1, 1, 4, 0x081EC6DD, 0x0000
+	object_event 17, 52, 0, 26, 13, 3, 33, 2, 2, 1, 5, Route117_EventScript_Maria, 0x0000
+	object_event 18, 39, 0, 17, 12, 3, 7, 1, 1, 1, 4, Route117_EventScript_Derek, 0x0000
+	object_event 19, 47, 0, 43, 6, 3, 8, 0, 0, 1, 1, Route117_EventScript_Meg, 0x0000
+	object_event 20, 47, 0, 42, 6, 3, 8, 0, 0, 1, 1, Route117_EventScript_Anna, 0x0000
+	object_event 21, 10, 0, 48, 10, 3, 2, 1, 1, 0, 0, Route117_EventScript_Girl, 0x0000
+	object_event 22, 47, 0, 15, 4, 3, 10, 1, 1, 1, 4, Route117_EventScript_Brandi, 0x0000
+	object_event 23, 14, 0, 21, 4, 3, 9, 1, 1, 1, 4, Route117_EventScript_Aisha, 0x0000
+	object_event 24, 52, 0, 16, 4, 3, 28, 4, 1, 1, 4, Route117_EventScript_Melina, 0x0000
 	.globl ROUTE117_EventWarps
 ROUTE117_EventWarps: @ 0x08503174
 	warp_def 51, 5, 0, 0, MAP_ROUTE117_POKEMON_DAY_CARE
 	.globl ROUTE117_EventBgEvents
 ROUTE117_EventBgEvents: @ 0x0850317C
-	bg_event 16, 6, 0, 0, Route117_EventScript_001EC45B, 0, 0
-	bg_event 49, 12, 0, 0, Route117_EventScript_001EC464, 0, 0
-	bg_event 49, 5, 0, 0, Route117_EventScript_001EC46D, 0, 0
+	bg_event 16, 6, 0, 0, Route117_EventScript_RouteSignVerdanturf, 0, 0
+	bg_event 49, 12, 0, 0, Route117_EventScript_RouteSignMauville, 0, 0
+	bg_event 49, 5, 0, 0, Route117_EventScript_DayCareSign, 0, 0
 	bg_event 3, 18, 3, 7, 0x0056, 0x48, 0x00
 	.globl gMapEvents_ROUTE117
 gMapEvents_ROUTE117: @ 0x085031AC

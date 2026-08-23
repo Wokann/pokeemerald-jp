@@ -2295,4 +2295,240 @@ Route116_Text_JohnsonDefeat: @ 0x0825DAEE
 Route116_Text_JohnsonPostBattle: @ 0x0825DAFF
 	.string "まけちゃった　から\n"
 	.string "ぼくの　たんパン　かしてあげても　いーよ！$"
-	.incbin "baserom_jp.gba", 0x25db1f, 0x4874
+Route117_Text_IsaacIntro: @ 0x0825DB1F
+	.string "オレが　そだてている　ポケモンと\n"
+	.string "しょうぶ　してくれないか？$"
+
+Route117_Text_IsaacDefeat: @ 0x0825DB3E
+	.string "みごとに　そだててるね⋯⋯$"
+
+Route117_Text_IsaacPostBattle: @ 0x0825DB4C
+	.string "つよさ　だけが　ポケモンじゃないよ！\n"
+	.string "ポケモンの　こせいを　みがきあげるのも\l"
+	.string "たのしみかたの　ひとつ　だね！$"
+
+Route117_Text_IsaacRegister: @ 0x0825DB83
+	.string "よーし　ますます　がんばって　そだてるぞ！\n"
+	.string "きみ　そしたら　みにきて　くれるだろ？$"
+
+Route117_Text_IsaacRematchIntro: @ 0x0825DBAD
+	.string "オレが　そだてている　ポケモン\n"
+	.string "あいかわらず　いい　かんじ　だよ！$"
+
+Route117_Text_IsaacRematchDefeat: @ 0x0825DBCF
+	.string "いい　そだてかた　してるね⋯⋯\n"
+	.string "きみには　そだてやの　さいのう　あるかも$"
+
+Route117_Text_IsaacPostRematch: @ 0x0825DBF4
+	.string "いい　ぐあいに　そだってるね！\n"
+	.string "ミナモシティの　ポケモンコンテストに\l"
+	.string "でることを　おすすめ　するよ！$"
+
+Route117_Text_LydiaIntro: @ 0x0825DC27
+	.string "ポケモンを　ちゃんと　そだててるか\n"
+	.string "わたしが　たしかめて　あげますね$"
+
+Route117_Text_LydiaDefeat: @ 0x0825DC4A
+	.string "ちゃんと　そだってますね$"
+
+Route117_Text_LydiaPostBattle: @ 0x0825DC57
+	.string "ポケモンの　こせいにも　きをくばって\n"
+	.string "そだてて　みて　くださいね$"
+
+Route117_Text_LydiaRegister: @ 0x0825DC78
+	.string "よい　トレーナーさんに　あえて　よかった！\n"
+	.string "これからも　よろしく　おねがいしますね$"
+
+Route117_Text_LydiaRematchIntro: @ 0x0825DCA2
+	.string "ポケモンを　ちゃんと　そだててるか\n"
+	.string "また　わたしが　たしかめて　あげますね$"
+
+Route117_Text_LydiaRematchDefeat: @ 0x0825DCC8
+	.string "みごとに　そだってますね$"
+
+Route117_Text_LydiaPostRematch: @ 0x0825DCD5
+	.string "ポケモンの　せいかくに　よって\n"
+	.string "すきな　ポロックが　あるみたいなの$"
+
+Route117_Text_DylanIntro: @ 0x0825DCF7
+	.string "トライアスロンの　まっさいちゅう　だけど\n"
+	.string "さくっと　しょうぶ　しようじゃ　ないか！$"
+
+Route117_Text_DylanDefeat: @ 0x0825DD21
+	.string "たいりょく　なくなった！$"
+
+Route117_Text_DylanPostBattle: @ 0x0825DD2E
+	.string "まいったな⋯⋯\p"
+	.string "いまの　しょうぶの　あいだに\n"
+	.string "ビリに　なっちゃったかも⋯⋯？$"
+
+Route117_Text_DylanRegister: @ 0x0825DD55
+	.string "ポケモンも　つよく　なくちゃ　ダメか？\n"
+	.string "きみさ　たまに　ぼくを　きたえてよ！$"
+
+Route117_Text_DylanRematchIntro: @ 0x0825DD7C
+	.string "トライアスロンの　まっさいちゅう　だけど\n"
+	.string "ぼくには　よゆうが　あるからね\l"
+	.string "さくっと　しょうぶ　しようじゃ　ないか！$"
+
+Route117_Text_DylanRematchDefeat: @ 0x0825DDB6
+	.string "また　たいりょく　なくなった！$"
+
+Route117_Text_DylanPostRematch: @ 0x0825DDC6
+	.string "およぎと　じてんしゃでは　トップだったけど\n"
+	.string "ポケモンは　いまいち　じしんが　ないよ$"
+
+Route117_Text_MariaIntro: @ 0x0825DDF0
+	.string "トライアスロンの　れんしゅう\n"
+	.string "ポケモンと　いっしょに　してるからさ\l"
+	.string "スピードに　じしん　あるよ！$"
+
+Route117_Text_MariaDefeat: @ 0x0825DE21
+	.string "れんしゅうが　たりなかったかな？$"
+
+Route117_Text_MariaPostBattle: @ 0x0825DE32
+	.string "れんしゅうは　つづけてこそ\n"
+	.string "いみが　あるのよね\p"
+	.string "よーし！　また　れんしゅうよ\n"
+	.string "あしたから！$"
+
+Route117_Text_MariaRegister: @ 0x0825DE60
+	.string "あなたは　れんしゅう　してる？\n"
+	.string "よかったら　わたしが　あいてになるわ！$"
+
+Route117_Text_MariaRematchIntro: @ 0x0825DE84
+	.string "どう　れんしゅう　つづけてる？\n"
+	.string "あたしは　もちろん　つづけてるわ\l"
+	.string "その　しょうこ　みせちゃうから！$"
+
+Route117_Text_MariaRematchDefeat: @ 0x0825DEB6
+	.string "れんしゅうが　たりなかったかな？$"
+
+Route117_Text_MariaPostRematch: @ 0x0825DEC7
+	.string "あしたから　また　れんしゅう　するから\n"
+	.string "よかったら　また　しょうぶ　してね！$"
+
+Route117_Text_DerekIntro: @ 0x0825DEEE
+	.string "むかしは　むしとりしょうねん！\n"
+	.string "いまは　こんちゅうマニア！\p"
+	.string "でも　ポケモンを　あいする　きもちは\n"
+	.string "ずっと　かわらないぜ！$"
+
+Route117_Text_DerekDefeat: @ 0x0825DF2B
+	.string "ポケモンの　よわさも　かわらない⋯⋯$"
+
+Route117_Text_DerekPostBattle: @ 0x0825DF3E
+	.string "すきな　ことばかり　していたら\n"
+	.string "いつのまにか　マニアって　よばれてるよ！\p"
+	.string "まあ　むしポケモンに　くわしいからね\n"
+	.string "マニアと　よばれて　とうぜん　なのさっ！$"
+
+Route117_Text_AnnaIntro: @ 0x0825DF8B
+	.string "ミホ“かわいい　コウハイの　まえ　だもん\n"
+	.string "いいところ　みせちゃうんだから！$"
+
+Route117_Text_AnnaDefeat: @ 0x0825DFB1
+	.string "ミホ“もう！\n"
+	.string "コウハイの　まえ　だから　かたせてよ！$"
+
+Route117_Text_AnnaPostBattle: @ 0x0825DFCC
+	.string "ミホ“あなたの　ポケモン\n"
+	.string "なかなかの　コンビネーション　してる！\p"
+	.string "そうね　あたしたちの\n"
+	.string "つぎ　ぐらいに　すごいんじゃない？$"
+
+Route117_Text_AnnaAndMegRegister: @ 0x0825E00A
+	.string "ミホ“まけっぱなしでは\n"
+	.string "ひきさがれない　わたしたち！\l"
+	.string "また　きて　くれるわよね？$"
+
+Route117_Text_AnnaNotEnoughMons: @ 0x0825E033
+	.string "ミホ“あたしたちと　しょうぶ　したいなら\n"
+	.string "ポケモンを　2ひきは　もってきてね！$"
+
+Route117_Text_MegIntro: @ 0x0825E05B
+	.string "リコ“すてきな　センパイとの　タッグで\n"
+	.string "あなたを　まかしちゃうから！$"
+
+Route117_Text_MegDefeat: @ 0x0825E07E
+	.string "リコ“やーん\n"
+	.string "センパイ　ごめんなさい！$"
+
+Route117_Text_MegPostBattle: @ 0x0825E092
+	.string "リコ“あたしが　センパイの\n"
+	.string "あしを　ひっぱっちゃったの⋯⋯\p"
+	.string "そうでなきゃ　あんた　かってないわよ！$"
+
+Route117_Text_MegNotEnoughMons: @ 0x0825E0C4
+	.string "リコ“ポケモン　1ぴき　しか　いないの？\n"
+	.string "じゃあ　しょうぶは　できないわね\p"
+	.string "あたしたち　2たい2の\n"
+	.string "しょうぶを　たのしみたいの！$"
+
+Route117_Text_AnnaRematchIntro: @ 0x0825E105
+	.string "ミホ“コウハイの　まえで\n"
+	.string "なんども　まけてられないのよね$"
+
+Route117_Text_AnnaRematchDefeat: @ 0x0825E122
+	.string "ミホ“ちょうしが　でなかったのよ$"
+
+Route117_Text_AnnaPostRematch: @ 0x0825E133
+	.string "ミホ“あなたの　ポケモン\n"
+	.string "なかなかの　コンビネーションしてる！\p"
+	.string "そうね　あたしたちの\n"
+	.string "つぎ　ぐらいに　すごいんじゃない？$"
+
+Route117_Text_AnnaRematchNotEnoughMons: @ 0x0825E170
+	.string "ミホ“あたしたちと　しょうぶ　したいなら\n"
+	.string "ポケモンを　2ひきは　もってきてね！$"
+
+Route117_Text_MegRematchIntro: @ 0x0825E198
+	.string "リコ“センパイとの　タッグで\n"
+	.string "こんどこそ　あなたを　まかしちゃうから！$"
+
+Route117_Text_MegRematchDefeat: @ 0x0825E1BC
+	.string "リコ“つよすぎるわ$"
+
+Route117_Text_MegPostRematch: @ 0x0825E1C6
+	.string "リコ“センパイと　いっしょに　たたかったのに\n"
+	.string "まけるだなんて⋯⋯　おちこんじゃう！$"
+
+Route117_Text_MegRematchNotEnoughMons: @ 0x0825E1F0
+	.string "リコ“ポケモン　1ぴき　しか　いないの？\n"
+	.string "じゃあ　しょうぶは　できないわね\p"
+	.string "あたしたち　2たい2の\n"
+	.string "しょうぶを　たのしみたいの！$"
+
+Route117_Text_MelinaIntro: @ 0x0825E231
+	.string "すてきな　おはなを　みながら\n"
+	.string "しょうぶする　なんて　すてきよね！$"
+
+Route117_Text_MelinaDefeat: @ 0x0825E252
+	.string "へーえ　いいカンジね　あんた！$"
+
+Route117_Text_MelinaPostBattle: @ 0x0825E262
+	.string "おはなを　みながら　はしると\n"
+	.string "きもちいいわよ！$"
+
+Route117_Text_BrandiIntro: @ 0x0825E27A
+	.string "エスパーポケモンに\n"
+	.string "ひめられた　ちからを　おみせするわ！$"
+
+Route117_Text_BrandiDefeat: @ 0x0825E297
+	.string "おどろいたわ$"
+
+Route117_Text_BrandiPostBattle: @ 0x0825E29E
+	.string "エスパーポケモンは　おくが　ふかいの\n"
+	.string "あなたも　つかまえて　ごらんなさい$"
+
+Route117_Text_AishaIntro: @ 0x0825E2C3
+	.string "かつこと　だけを　かんがえて　たたかうわ！$"
+
+Route117_Text_AishaDefeat: @ 0x0825E2D9
+	.string "まけても　くやしがったり　しない！\n"
+	.string "そんなひまが　あったら　とっくんよ$"
+
+Route117_Text_AishaPostBattle: @ 0x0825E2FD
+	.string "まけるかな？と　しんぱい　すると\n"
+	.string "よけいに　まけちゃうと　おもうのよね$"
+	.incbin "baserom_jp.gba", 0x25e321, 0x4072
