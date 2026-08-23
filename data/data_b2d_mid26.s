@@ -1549,13 +1549,13 @@ gMapEvents_ROUTE109: @ 0x085013E8
 	map_events ROUTE109_EventObjects, ROUTE109_EventWarps, 0, ROUTE109_EventBgEvents
 	.globl ROUTE110_EventObjects
 ROUTE110_EventObjects: @ 0x085013FC
-	object_event 1, 31, 0, 17, 90, 3, 8, 0, 0, 0, 0, Route110_EventScript_001E8F18, 0x0000
-	object_event 2, 56, 0, 29, 79, 4, 8, 0, 0, 0, 0, Route110_EventScript_001E8F0F, 0x0000
-	object_event 3, 22, 0, 14, 69, 3, 3, 0, 1, 0, 0, Route110_EventScript_001E8F06, 0x0000
-	object_event 4, 56, 0, 9, 57, 4, 2, 1, 1, 0, 0, Route110_EventScript_001E8EF4, 0x0000
-	object_event 5, 21, 0, 10, 11, 3, 2, 1, 1, 0, 0, Route110_EventScript_001E8EFD, 0x0000
-	object_event 6, 57, 0, 27, 24, 4, 2, 1, 3, 0, 0, Route110_EventScript_001E8EEB, 0x0000
-	object_event 7, 13, 0, 15, 7, 3, 2, 1, 1, 0, 0, Route110_EventScript_001E8EE2, 0x0000
+	object_event 1, 31, 0, 17, 90, 3, 8, 0, 0, 0, 0, Route110_EventScript_Boy2, 0x0000
+	object_event 2, 56, 0, 29, 79, 4, 8, 0, 0, 0, 0, Route110_EventScript_CyclingGuy2, 0x0000
+	object_event 3, 22, 0, 14, 69, 3, 3, 0, 1, 0, 0, Route110_EventScript_OldWoman, 0x0000
+	object_event 4, 56, 0, 9, 57, 4, 2, 1, 1, 0, 0, Route110_EventScript_CyclingGuy1, 0x0000
+	object_event 5, 21, 0, 10, 11, 3, 2, 1, 1, 0, 0, Route110_EventScript_OldMan, 0x0000
+	object_event 6, 57, 0, 27, 24, 4, 2, 1, 3, 0, 0, Route110_EventScript_CyclingGirl1, 0x0000
+	object_event 7, 13, 0, 15, 7, 3, 2, 1, 1, 0, 0, Route110_EventScript_Boy1, 0x0000
 	object_event 8, 57, 0, 16, 73, 4, 49, 2, 14, 1, 3, Route110_EventScript_Jasmine, 0x0000
 	object_event 9, 56, 0, 19, 31, 4, 51, 10, 1, 1, 3, Route110_EventScript_Anthony, 0x0000
 	object_event 10, 57, 0, 30, 31, 4, 9, 1, 1, 1, 4, Route110_EventScript_Abigail, 0x0000
@@ -1569,11 +1569,11 @@ ROUTE110_EventObjects: @ 0x085013FC
 	object_event 18, 60, 0, 7, 11, 3, 12, 0, 0, 0, 18, 0x08244D23, 0x0000
 	object_event 19, 59, 0, 30, 69, 3, 1, 0, 0, 0, 0, 0x08256AD8, 0x03EF
 	object_event 20, 59, 0, 26, 47, 3, 1, 0, 0, 0, 0, 0x08256ACB, 0x03EE
-	object_event 21, 56, 0, 27, 92, 3, 8, 0, 0, 0, 0, Route110_EventScript_001E8F97, 0x0000
-	object_event 22, 117, 0, 7, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_001E8E8A, 0x0384
-	object_event 23, 117, 0, 8, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_001E8EA0, 0x0384
-	object_event 24, 117, 0, 9, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_001E8EB6, 0x0384
-	object_event 25, 117, 0, 10, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_001E8ECC, 0x0384
+	object_event 21, 56, 0, 27, 92, 3, 8, 0, 0, 0, 0, Route110_EventScript_ChallengeGuy, 0x0000
+	object_event 22, 117, 0, 7, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_AquaGrunt1, 0x0384
+	object_event 23, 117, 0, 8, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_AquaGrunt2, 0x0384
+	object_event 24, 117, 0, 9, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_AquaGrunt3, 0x0384
+	object_event 25, 117, 0, 10, 83, 3, 7, 0, 0, 0, 0, Route110_EventScript_AquaGrunt4, 0x0384
 	object_event 26, 117, 0, 8, 82, 3, 8, 0, 0, 0, 0, 0x00000000, 0x0384
 	object_event 27, 56, 0, 21, 78, 4, 51, 7, 1, 1, 2, Route110_EventScript_Jacob, 0x0000
 	object_event 28, 240, 0, 34, 54, 3, 14, 0, 0, 0, 0, 0x00000000, 0x0397
@@ -1595,34 +1595,34 @@ ROUTE110_EventWarps: @ 0x0850175C
 	warp_def 19, 88, 0, 2, MAP_ROUTE110_SEASIDE_CYCLING_ROAD_SOUTH_ENTRANCE
 	.globl ROUTE110_EventCoordEvents
 ROUTE110_EventCoordEvents: @ 0x0850178C
-	coord_event 28, 92, 3, 16553, 2, Route110_EventScript_001E9241
-	coord_event 29, 92, 3, 16553, 2, Route110_EventScript_001E9241
-	coord_event 33, 56, 3, 16489, 0, Route110_EventScript_001E932D
-	coord_event 34, 56, 3, 16489, 0, Route110_EventScript_001E9338
-	coord_event 35, 56, 3, 16489, 0, Route110_EventScript_001E9343
-	coord_event 7, 85, 3, 16602, 1, Route110_EventScript_001E95AB
-	coord_event 8, 85, 3, 16602, 1, Route110_EventScript_001E95B6
-	coord_event 9, 85, 3, 16602, 1, Route110_EventScript_001E95C1
-	coord_event 10, 85, 3, 16602, 1, Route110_EventScript_001E95CC
+	coord_event 28, 92, 3, 16553, 2, Route110_EventScript_CyclingChallengeEnd
+	coord_event 29, 92, 3, 16553, 2, Route110_EventScript_CyclingChallengeEnd
+	coord_event 33, 56, 3, 16489, 0, Route110_EventScript_RivalTrigger1
+	coord_event 34, 56, 3, 16489, 0, Route110_EventScript_RivalTrigger2
+	coord_event 35, 56, 3, 16489, 0, Route110_EventScript_RivalTrigger3
+	coord_event 7, 85, 3, 16602, 1, Route110_EventScript_BirchScene1
+	coord_event 8, 85, 3, 16602, 1, Route110_EventScript_BirchScene2
+	coord_event 9, 85, 3, 16602, 1, Route110_EventScript_BirchScene3
+	coord_event 10, 85, 3, 16602, 1, Route110_EventScript_BirchScene4
 	.globl ROUTE110_EventBgEvents
 ROUTE110_EventBgEvents: @ 0x0850181C
-	bg_event 15, 25, 0, 0, Route110_EventScript_001E8F33, 0, 0
-	bg_event 9, 51, 0, 0, Route110_EventScript_001E8F45, 0, 0
-	bg_event 14, 88, 0, 0, Route110_EventScript_001E8F2A, 0, 0
-	bg_event 20, 94, 0, 0, Route110_EventScript_001E8F21, 0, 0
-	bg_event 7, 79, 0, 0, Route110_EventScript_001E8F3C, 0, 0
-	bg_event 3, 17, 0, 0, Route110_EventScript_001E8F4E, 0, 0
+	bg_event 15, 25, 0, 0, Route110_EventScript_VandalizedSign, 0, 0
+	bg_event 9, 51, 0, 0, Route110_EventScript_SeasideParkingSign, 0, 0
+	bg_event 14, 88, 0, 0, Route110_EventScript_CyclingRoadSign, 0, 0
+	bg_event 20, 94, 0, 0, Route110_EventScript_SlateportCitySign, 0, 0
+	bg_event 7, 79, 0, 0, Route110_EventScript_Route103Sign, 0, 0
+	bg_event 3, 17, 0, 0, Route110_EventScript_MauvilleCitySign, 0, 0
 	bg_event 16, 25, 0, 8, 0x00B5, 0x00, 0x00
 	bg_event 17, 25, 0, 8, 0x00BF, 0x00, 0x00
-	bg_event 33, 39, 3, 0, Route110_EventScript_001E8F57, 0, 0
-	bg_event 37, 70, 3, 0, Route110_EventScript_001E8F60, 0, 0
-	bg_event 8, 67, 0, 0, Route110_EventScript_001E8F69, 0, 0
-	bg_event 32, 93, 0, 0, Route110_EventScript_001E8F72, 0, 0
+	bg_event 33, 39, 3, 0, Route110_EventScript_TrainerTipsPrlzSleep, 0, 0
+	bg_event 37, 70, 3, 0, Route110_EventScript_TrainerTipsRegisterItems, 0, 0
+	bg_event 8, 67, 0, 0, Route110_EventScript_TrickHouseSign, 0, 0
+	bg_event 32, 93, 0, 0, Route110_EventScript_CyclingRoadResultsSign, 0, 0
 	bg_event 35, 39, 3, 7, 0x0018, 0x36, 0x00
 	bg_event 33, 45, 3, 7, 0x0003, 0x35, 0x00
 	bg_event 4, 35, 3, 7, 0x0004, 0x41, 0x00
 	bg_event 37, 67, 3, 7, 0x0017, 0x37, 0x00
-	bg_event 13, 16, 0, 0, Route110_EventScript_001E8F2A, 0, 0
+	bg_event 13, 16, 0, 0, Route110_EventScript_CyclingRoadSign, 0, 0
 	.globl gMapEvents_ROUTE110
 gMapEvents_ROUTE110: @ 0x085018E8
 	map_events ROUTE110_EventObjects, ROUTE110_EventWarps, ROUTE110_EventCoordEvents, ROUTE110_EventBgEvents
