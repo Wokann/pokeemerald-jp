@@ -1485,4 +1485,100 @@ Route111_Text_BiancaDefeat: @ 0x0825C2A9
 Route111_Text_BiancaPostBattle: @ 0x0825C2B4
 	.string "この　さきの　みちのりは\n"
 	.string "けっこう　ながいわよ！$"
-	.incbin "baserom_jp.gba", 0x25c2cd, 0x60c6
+Route112_Text_BriceIntro: @ 0x0825C2CD
+	.string "わっはっはっ！\n"
+	.string "どうだ？\l"
+	.string "オレと　しょうぶ　しないか？\l"
+	.string "わっはっはっ！$"
+
+Route112_Text_BriceDefeat: @ 0x0825C2F1
+	.string "まけた⋯⋯\n"
+	.string "わっはっはっ！$"
+
+Route112_Text_BricePostBattle: @ 0x0825C2FF
+	.string "いろあざやかな　キノコを　たべたら⋯⋯\n"
+	.string "わ　わらいが　とまらない！\l"
+	.string "わっはっはっ！$"
+
+Route112_Text_TrentIntro: @ 0x0825C329
+	.string "やまのぼりで　きたえた　オレの　あしこし\n"
+	.string "ちょっとや　そっとじゃ　くじけないぜ！$"
+
+Route112_Text_TrentDefeat: @ 0x0825C352
+	.string "あ⋯⋯\n"
+	.string "あしが　つった⋯⋯$"
+
+Route112_Text_TrentPostBattle: @ 0x0825C360
+	.string "なんじゅっキロも　ある　にもつを　せおって\n"
+	.string "やまみちを　あるき　つづけるんだ\l"
+	.string "からだが　じょうぶに　なるぞ！$"
+
+Route112_Text_TrentRegister: @ 0x0825C397
+	.string "つった　あしが　いたい⋯⋯\n"
+	.string "ちょっと　オレの　リュックから\l"
+	.string "ほうたいを　だしてくれ\p"
+	.string "って　ちがうよ　それは　ポケナビだろ！\n"
+	.string "もういいよ　とうろく　するから$"
+
+Route112_Text_TrentRematchIntro: @ 0x0825C3E5
+	.string "やまのぼりで　きたえてるからな\n"
+	.string "かなり　パワフルだぞ！$"
+
+Route112_Text_TrentRematchDefeat: @ 0x0825C401
+	.string "パワーで　まけたか？$"
+
+Route112_Text_TrentRematchPostBattle: @ 0x0825C40C
+	.string "えんとつやまの　うえには\n"
+	.string "すごい　トレーナーが　いるらしいぞ！\l"
+	.string "こんど　しょうぶに　いくつもりだ！$"
+
+Route112_Text_LarryIntro: @ 0x0825C43E
+	.string "ぼくは　つよいんだ⋯⋯\n"
+	.string "まけても　ないたり　しないぞ⋯⋯！$"
+
+Route112_Text_LarryDefeat: @ 0x0825C45C
+	.string "うわーーーん！$"
+
+Route112_Text_LarryPostBattle: @ 0x0825C464
+	.string "おかあさんに　あえなくて\n"
+	.string "さみしいから　ないてるんじゃ　ないよ！\l"
+	.string "ぐすん⋯⋯$"
+
+Route112_Text_CarolIntro: @ 0x0825C48B
+	.string "ピクニックと　いえば　うた！\n"
+	.string "さあ　いっしょに　うたいましょ！$"
+
+Route112_Text_CarolDefeat: @ 0x0825C4AB
+	.string "こんなに　つよいなんて⋯⋯！$"
+
+Route112_Text_CarolPostBattle: @ 0x0825C4BA
+	.string "うたも　ポケモンしょうぶも\n"
+	.string "うまい　へた　なんて　かんけい　ないよ！\l"
+	.string "たのしんだ　ほうが　かち　なのよ！$"
+
+Route112_Text_BryantIntro: @ 0x0825C4EF
+	.string "ほのおの　ぬけみちで　つかまえた\n"
+	.string "ホカホカの　ポケモン　みせてやろー！$"
+
+Route112_Text_BryantDefeat: @ 0x0825C513
+	.string "おお　ボコボコだ$"
+
+Route112_Text_BryantPostBattle: @ 0x0825C51C
+	.string "ナカナカ　すてきな\n"
+	.string "たたかいかたじゃ　ないか　きみぃ！$"
+
+Route112_Text_ShaylaIntro: @ 0x0825C538
+	.string "アラ！　すてきな　トレーナーさん\n"
+	.string "ロマンチックな　しょうぶを　おねがいね！\l"
+	.string "マアマア　つよいわよ　わたし！$"
+
+Route112_Text_ShaylaDefeat: @ 0x0825C56E
+	.string "なんて　つよいのかしら\n"
+	.string "おねえさん　おどろいちゃった！$"
+
+Route112_Text_ShaylaPostBattle: @ 0x0825C58A
+	.string "ねえ　いま　いそがしいの？\n"
+	.string "えっと　もし　よかったら\l"
+	.string "さっそく　2かいせん　と　おもって⋯⋯\l"
+	.string "ん？　いそがしいなら　いいわ$"
+	.incbin "baserom_jp.gba", 0x25c5c8, 0x5dcb
