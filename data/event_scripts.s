@@ -134,6 +134,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/SlateportCity_BattleTentLobby/scripts.inc"
 	.include "data/maps/SlateportCity_BattleTentCorridor/scripts.inc"
 	.include "data/maps/SlateportCity_BattleTentBattleRoom/scripts.inc"
+	.include "data/maps/SlateportCity_OceanicMuseum_1F/scripts.inc"
+	.include "data/maps/SlateportCity_OceanicMuseum_2F/scripts.inc"
 	.include "data/maps/SlateportCity_Harbor/scripts.inc"
 	.include "data/maps/SlateportCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/SlateportCity_PokemonCenter_2F/scripts.inc"

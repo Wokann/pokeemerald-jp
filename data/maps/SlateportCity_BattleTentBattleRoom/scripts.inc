@@ -40,4 +40,4 @@ SlateportCity_BattleTentBattleRoom_MapScriptTable_001FBCAD::
 	map_script_2 0x4000, 0x0, 0x081FBCB7
 	.2byte 0
 
-	.incbin "baserom_jp.gba", 0x1fbcb7, 0x1fb7
+	.incbin "baserom_jp.gba", 0x1fbcb7, 0xd87

@@ -44,6 +44,27 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x08202D82: 'RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest',
         0x08202D99: 'RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast',
     },
+    'SlateportCity_OceanicMuseum_1F': {
+        0x081FCAF4: 'SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter',
+        0x081FCC68: 'SlateportCity_OceanicMuseum_1F_Movement_PlayerWatchGruntExitNorth',
+        0x081FCC6D: 'SlateportCity_OceanicMuseum_1F_Movement_PlayerWatchGruntExitWestEast',
+        0x081FCC70: 'SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit',
+        0x081FCC77: 'SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExitNorth',
+    },
+    'SlateportCity_OceanicMuseum_2F': {
+        0x081FD4C8: 'SlateportCity_OceanicMuseum_2F_Movement_PlayerApproachGruntSouth',
+        0x081FD4CC: 'SlateportCity_OceanicMuseum_2F_Movement_PlayerApproachGruntWest',
+        0x081FD4D2: 'SlateportCity_OceanicMuseum_2F_Movement_Unused',
+        0x081FD4E0: 'SlateportCity_OceanicMuseum_2F_Movement_ArchieApproachPlayer',
+        0x081FD4E2: 'SlateportCity_OceanicMuseum_2F_Movement_ArchieEnter',
+        0x081FD4EC: 'SlateportCity_OceanicMuseum_2F_Movement_GruntApproachToBattle',
+        0x081FD4EE: 'SlateportCity_OceanicMuseum_2F_Movement_FirstGruntEnter',
+        0x081FD4F2: 'SlateportCity_OceanicMuseum_2F_Movement_FirstGruntApproach',
+        0x081FD4F9: 'SlateportCity_OceanicMuseum_2F_Movement_GruntDefeated',
+        0x081FD4FD: 'SlateportCity_OceanicMuseum_2F_Movement_SecondGruntEnter',
+        0x081FD4FF: 'SlateportCity_OceanicMuseum_2F_Movement_SecondGruntApproach',
+        0x081FD508: 'SlateportCity_OceanicMuseum_2F_Movement_GruntMoveForArchie',
+    },
 }
 
 TEXT_POINTER_ARGUMENTS = {
