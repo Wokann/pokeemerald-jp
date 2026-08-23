@@ -1,6 +1,9 @@
 #ifndef GUARD_DATA_SLOT_MACHINE_H
 #define GUARD_DATA_SLOT_MACHINE_H
 
+#include "bg.h"
+#include "window.h"
+
 // JP Slot Machine data retained in its original per-section ROM order.
 // Structured pointer tables remain raw while their referenced C functions and
 // assets are still being independently decompiled.
@@ -8,6 +11,70 @@
 #define SLOT_MACHINE_DATA(sectionName) __attribute__((section(sectionName), aligned(1)))
 #define SLOT_MACHINE_RESOURCE(symbol, size, sectionName, path) \
     const u8 symbol[size] SLOT_MACHINE_DATA(sectionName) = INCBIN_U8(path)
+
+const struct BgTemplate sSlotMachineBgTemplates[4] SLOT_MACHINE_DATA(".rodata.85843A8") =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0,
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 28,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+    {
+        .bg = 2,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 29,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0,
+    },
+    {
+        .bg = 3,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 1,
+        .baseTile = 0,
+    },
+};
+
+const struct WindowTemplate sSlotMachineWindowTemplates[] SLOT_MACHINE_DATA(".rodata.85843A8") =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x1A8,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+const s16 sDigitalDisplayRegBonusXOffsets[] SLOT_MACHINE_DATA(".rodata.85845B2") =
+{
+     0, -40, 0, 0, 48, 0, 24, 0,
+};
+
+const s16 sDigitalDisplayRegBonusYOffsets[] SLOT_MACHINE_DATA(".rodata.85845B2") =
+{
+    -32, 0, -32, -48, 0, -48, 0, -48,
+};
 
 SLOT_MACHINE_RESOURCE(sDigitalDisplayRegBonusDelays, 0x10, ".rodata", "data/slot_machine/jp/digital_display_reg_bonus_delays.bin");
 SLOT_MACHINE_RESOURCE(sDigitalDisplayBigBonusOffsets, 0x10, ".rodata", "data/slot_machine/jp/digital_display_big_bonus_offsets.bin");

@@ -498,14 +498,6 @@ gUnknown_85822E8: @ 0x85822E8
 gUnknown_8582300: @ 0x8582300
 	.incbin "baserom_jp.gba", 0x582300, 0x20a8
 
-	.globl sSlotMachineBgTemplates
-sSlotMachineBgTemplates: @ 0x85843A8
-	.incbin "baserom_jp.gba", 0x5843a8, 0x10
-
-	.globl sSlotMachineWindowTemplates
-sSlotMachineWindowTemplates: @ 0x85843B8
-	.incbin "baserom_jp.gba", 0x5843b8, 0x10
-
 	.section .rodata.8584598
 	.globl sReelTimeAuraColors
 sReelTimeAuraColors: @ 0x8584598
@@ -522,11 +514,3 @@ sDigitalDisplaySmokeXOffsets: @ 0x85845A2
 	.globl sDigitalDisplaySmokeYOffsets
 sDigitalDisplaySmokeYOffsets: @ 0x85845AA
 	.incbin "baserom_jp.gba", 0x5845aa, 0x8
-
-	.globl sDigitalDisplayRegBonusXOffsets
-sDigitalDisplayRegBonusXOffsets: @ 0x85845B2
-	.incbin "baserom_jp.gba", 0x5845b2, 0x10
-
-	.globl sDigitalDisplayRegBonusYOffsets
-sDigitalDisplayRegBonusYOffsets: @ 0x85845C2
-	.incbin "baserom_jp.gba", 0x5845c2, 0x10
