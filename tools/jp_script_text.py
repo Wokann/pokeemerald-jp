@@ -288,6 +288,19 @@ class JapaneseScriptTextCodec:
                 raise TextDecodeError(
                     f"truncated {name} control: expected {arg_count} argument byte(s)"
                 )
+            if control == 0x0C and data[pos + 2] < 4:
+                arrow_name = (
+                    "UP_ARROW",
+                    "DOWN_ARROW",
+                    "LEFT_ARROW",
+                    "RIGHT_ARROW",
+                )[data[pos + 2]]
+                expected = data[pos:end]
+                if self.constants.get(arrow_name) != expected:
+                    raise TextDecodeError(
+                        f"{arrow_name} does not encode as {expected.hex().upper()}"
+                    )
+                return "{" + arrow_name + "}", end, False
             return self._format_control(name, data[pos + 2 : end]), end, False
 
         literal = self.literals.get(byte)

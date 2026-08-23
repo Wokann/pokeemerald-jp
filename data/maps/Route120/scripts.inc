@@ -432,8 +432,8 @@ Kecleon_Text_UseDevonScopeMonAttacked: @ 0x081EE05A
 
 Route120_Text_RouteSignFortree: @ 0x081EE0A3
 	.string "ここは　120ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　ヒワマキシティ$"
+	.string "{LEFT_ARROW}　ヒワマキシティ$"
 
 Route120_Text_RouteSign121: @ 0x081EE0BD
-	.string "{ESCAPE 0x03}　121ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　120ばん　どうろ$"
+	.string "{RIGHT_ARROW}　121ばん　どうろ\n"
+	.string "{LEFT_ARROW}　120ばん　どうろ$"

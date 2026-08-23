@@ -131,7 +131,7 @@ Route112_Text_NotEasyToGetBackToLavaridge: @ 0x081EB0B0
 
 Route112_Text_MtChimneyCableCarSign: @ 0x081EB0EC
 	.string "‘えんとつやま　ロープウェイ　のりば’\n"
-	.string "{ESCAPE 0x00}　このさき　すぐ！$"
+	.string "{UP_ARROW}　このさき　すぐ！$"
 
 Route112_Text_MtChimneySign: @ 0x081EB10D
 	.string "‘えんとつやま’\p"
@@ -140,4 +140,4 @@ Route112_Text_MtChimneySign: @ 0x081EB10D
 
 Route112_Text_RouteSignLavaridge: @ 0x081EB13A
 	.string "ここは　112ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　フエンタウン$"
+	.string "{LEFT_ARROW}　フエンタウン$"

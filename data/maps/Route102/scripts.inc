@@ -103,8 +103,8 @@ Route102_Text_CatchWholeBunchOfPokemon: @ 0x081E6A13
 
 Route102_Text_RouteSignOldale: @ 0x081E6A27
 	.string "ここは　102ばん　どうろ\n"
-	.string "{ESCAPE 0x03}　コトキタウン$"
+	.string "{RIGHT_ARROW}　コトキタウン$"
 
 Route102_Text_RouteSignPetalburg: @ 0x081E6A40
 	.string "ここは　102ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　トウカシティ$"
+	.string "{LEFT_ARROW}　トウカシティ$"

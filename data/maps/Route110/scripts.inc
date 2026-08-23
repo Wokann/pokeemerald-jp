@@ -912,7 +912,7 @@ Route110_Text_AcroBikesDoNotQualify: @ 0x081E9DD5
 
 Route110_Text_SlateportCitySign: @ 0x081E9E44
 	.string "ここは　110ばん　どうろ\n"
-	.string "{ESCAPE 0x01}　カイナシティ$"
+	.string "{DOWN_ARROW}　カイナシティ$"
 
 Route110_Text_CyclingRoadSign: @ 0x081E9E5D
 	.string "‘シーサイド　サイクリング　ロード’$"
@@ -926,14 +926,14 @@ Route110_Text_AquaWasHere: @ 0x081E9E70
 
 Route110_Text_Route103Sign: @ 0x081E9EC1
 	.string "ここは　110ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　103ばん　どうろ$"
+	.string "{LEFT_ARROW}　103ばん　どうろ$"
 
 Route110_Text_SeasideParkingSign: @ 0x081E9EDD
 	.string "‘シーサイド　パーキング’$"
 
 Route110_Text_MauvilleCitySign: @ 0x081E9EEB
 	.string "ここは　110ばん　どうろ\n"
-	.string "{ESCAPE 0x00}　キンセツシティ$"
+	.string "{UP_ARROW}　キンセツシティ$"
 
 Route110_Text_TrainerTipsPrlzSleep: @ 0x081E9F05
 	.string "おとくな　けいじばん！！\p"
@@ -949,7 +949,7 @@ Route110_Text_TrainerTipsRegisterItems: @ 0x081E9F56
 	.string "いれかえる　ことが　できます！$"
 
 Route110_Text_TrickHouseSign: @ 0x081E9F95
-	.string "ここより　{ESCAPE 0x03}へ3ぽ　{ESCAPE 0x00}へ2ほ　ゆけば\n"
+	.string "ここより　{RIGHT_ARROW}へ3ぽ　{UP_ARROW}へ2ほ　ゆけば\n"
 	.string "そこは　すてきな　‘カラクリやしき’！$"
 
 Route110_Text_BestRecord: @ 0x081E9FC0

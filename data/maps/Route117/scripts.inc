@@ -197,11 +197,11 @@ Route117_Text_AirIsTastyHere: @ 0x081EC78F
 
 Route117_Text_RouteSignVerdanturf: @ 0x081EC79A
 	.string "ここは　117ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　シダケタウン$"
+	.string "{LEFT_ARROW}　シダケタウン$"
 
 Route117_Text_RouteSignMauville: @ 0x081EC7B3
 	.string "ここは　117ばん　どうろ\n"
-	.string "{ESCAPE 0x03}　キンセツシティ$"
+	.string "{RIGHT_ARROW}　キンセツシティ$"
 
 Route117_Text_DayCareSign: @ 0x081EC7CD
 	.string "‘ポケモン　そだてや’\n"

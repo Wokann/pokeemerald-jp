@@ -648,7 +648,7 @@ Route111_Text_WinstrateFamilyDestroyedMe: @ 0x081EAB71
 
 Route111_Text_RouteSignMauville: @ 0x081EABA8
 	.string "ここは　111ばん　どうろ\n"
-	.string "{ESCAPE 0x01}　キンセツシティ$"
+	.string "{DOWN_ARROW}　キンセツシティ$"
 
 Route111_Text_WinstrateHouseSign: @ 0x081EABC2
 	.string "われら　かぞくの　こころは　ひとつ\n"
@@ -656,11 +656,11 @@ Route111_Text_WinstrateHouseSign: @ 0x081EABC2
 
 Route111_Text_RouteSign112: @ 0x081EABE5
 	.string "ここは　111ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　112ばん　どうろ$"
+	.string "{LEFT_ARROW}　112ばん　どうろ$"
 
 Route111_Text_RouteSign113: @ 0x081EAC01
 	.string "ここは　111ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　113ばん　どうろ$"
+	.string "{LEFT_ARROW}　113ばん　どうろ$"
 
 Route111_Text_OldLadysRestStopSign: @ 0x081EAC1D
 	.string "‘ケンコーばあさんの　いえ’\n"
@@ -720,5 +720,5 @@ Route111_Text_MauvilleUncleToldMeToTakeRockSmash: @ 0x081EAE0C
 	.string "むかいがわの　いえに　すんでるよ$"
 
 Route111_Text_TrainerHillSign: @ 0x081EAE67
-	.string "{ESCAPE 0x03}　トレーナーヒル　いりぐち\n"
+	.string "{RIGHT_ARROW}　トレーナーヒル　いりぐち\n"
 	.string "かけあがれ！　あつき　トレーナーたち！$"

@@ -139,7 +139,7 @@ Route115_Text_NeverKnowWhenCavePokemonWillAppear: @ 0x081EBA39
 
 Route115_Text_RouteSignRustboro: @ 0x081EBA7E
 	.string "ここは　115ばん　どうろ\n"
-	.string "{ESCAPE 0x01}　カナズミシティ$"
+	.string "{DOWN_ARROW}　カナズミシティ$"
 
 Route115_Text_MeteorFallsSign: @ 0x081EBA98
 	.string "ここは　りゅうせいのたき\n"

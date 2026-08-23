@@ -193,11 +193,11 @@ Route123_Text_CheckTreesWithMyGrassMon: @ 0x081EE722
 	.string "いってみれば　きの　おいしゃさんね$"
 
 Route123_Text_RouteSign: @ 0x081EE753
-	.string "{ESCAPE 0x03}　123ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　118ばん　どうろ$"
+	.string "{RIGHT_ARROW}　123ばん　どうろ\n"
+	.string "{LEFT_ARROW}　118ばん　どうろ$"
 
 Route123_Text_RouteSignMtPyre: @ 0x081EE76F
-	.string "{ESCAPE 0x00}⋯⋯　おくりびやま\n"
+	.string "{UP_ARROW}⋯⋯　おくりびやま\n"
 	.string "こころ　よわきもの　ちかよる　べからず$"
 
 Route123_Text_BerryMastersHouse: @ 0x081EE790

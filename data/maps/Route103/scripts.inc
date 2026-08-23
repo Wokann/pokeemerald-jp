@@ -355,4 +355,4 @@ Route103_Text_ShortcutToOldale: @ 0x081E70DC
 
 Route103_Text_RouteSign: @ 0x081E7115
 	.string "ここは　103ばん　どうろ\n"
-	.string "{ESCAPE 0x01}　コトキタウン$"
+	.string "{DOWN_ARROW}　コトキタウン$"

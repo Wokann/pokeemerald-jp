@@ -1061,11 +1061,11 @@ Route104_Text_MrBrineysCottage: @ 0x081E7D58
 
 Route104_Text_RouteSignPetalburg: @ 0x081E7D65
 	.string "ここは　104ばん　どうろ\n"
-	.string "{ESCAPE 0x03}　トウカシティ$"
+	.string "{RIGHT_ARROW}　トウカシティ$"
 
 Route104_Text_RouteSignRustboro: @ 0x081E7D7E
 	.string "ここは　104ばん　どうろ\n"
-	.string "{ESCAPE 0x00}　カナズミシティ$"
+	.string "{UP_ARROW}　カナズミシティ$"
 
 Route104_Text_PrettyPetalFlowShop: @ 0x081E7D98
 	.string "‘フラワーショップ　サン·トウカ’$"

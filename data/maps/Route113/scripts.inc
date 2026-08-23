@@ -148,11 +148,11 @@ Route113_Text_FunWalkingThroughAsh: @ 0x081EB397
 
 Route113_Text_RouteSign111: @ 0x081EB3CC
 	.string "ここは　113ばん　どうろ\n"
-	.string "{ESCAPE 0x03}　111ばん　どうろ$"
+	.string "{RIGHT_ARROW}　111ばん　どうろ$"
 
 Route113_Text_RouteSignFallarbor: @ 0x081EB3E8
 	.string "ここは　113ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　ハジツゲタウン$"
+	.string "{LEFT_ARROW}　ハジツゲタウン$"
 
 Route113_Text_TrainerTipsRegisterKeyItems: @ 0x081EB402
 	.string "おとくな　けいじばん！！\p"

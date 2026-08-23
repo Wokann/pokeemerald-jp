@@ -188,6 +188,12 @@ def decode(data, single, multi, sounds):
                         out.append("{PAUSE}%s" % single[data[i + 2]])
                         i += 3
                         continue
+                if code == 0x0C and i + 2 < len(data) and data[i + 2] < 4:
+                    out.append("{%s}" % (
+                        ("UP_ARROW", "DOWN_ARROW", "LEFT_ARROW", "RIGHT_ARROW")[data[i + 2]]
+                    ))
+                    i += 3
+                    continue
                 name = CTRL_NAMES.get(code, "CTRL_%02X" % code)
                 nargs = CTRL_ARGS.get(code, 0)
                 args = data[i + 2 : i + 2 + nargs]

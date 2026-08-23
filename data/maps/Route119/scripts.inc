@@ -600,7 +600,7 @@ Route119_Text_CanYourMonMakeSecretBase: @ 0x081ED7B3
 
 Route119_Text_RouteSignFortree: @ 0x081ED7E7
 	.string "ここは　119ばん　どうろ\n"
-	.string "{ESCAPE 0x03}　ヒワマキシティ$"
+	.string "{RIGHT_ARROW}　ヒワマキシティ$"
 
 Route119_Text_WeatherInstitute: @ 0x081ED801
 	.string "‘てんき　けんきゅうじょ’$"

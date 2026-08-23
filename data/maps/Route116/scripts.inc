@@ -446,7 +446,7 @@ Route116_Text_NotWhatImLookingFor: @ 0x081EC2E9
 
 Route116_Text_RouteSignRustboro: @ 0x081EC312
 	.string "ここは　116ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　カナズミシティ$"
+	.string "{LEFT_ARROW}　カナズミシティ$"
 
 Route116_Text_RusturfTunnelSign: @ 0x081EC32C
 	.string "カナズミと　シダケを　むすぶ\n"

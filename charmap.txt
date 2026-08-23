@@ -4,10 +4,12 @@
 @PKMN        = 53 54
 @POKEBLOCK   = 55 56 57 58 59
 @UNK_SPACER  = 77
-@UP_ARROW    = 79
-@DOWN_ARROW  = 7A
-@LEFT_ARROW  = 7B
-@RIGHT_ARROW = 7C
+@ Japanese uses EXT_CTRL_CODE_ESCAPE to select the four directional glyphs.
+@ Keep the US semantic names while preserving the JP byte sequences.
+UP_ARROW    = FC 0C 00
+DOWN_ARROW  = FC 0C 01
+LEFT_ARROW  = FC 0C 02
+RIGHT_ARROW = FC 0C 03
 @SUPER_E     = 84
 @SUPER_RE    = A0
 '0'         = A1

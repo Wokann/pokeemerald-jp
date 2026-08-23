@@ -294,8 +294,8 @@ Route118_Text_CanCrossRiversWithSurf: @ 0x081ECC68
 
 Route118_Text_RouteSignMauville: @ 0x081ECCAF
 	.string "ここは　118ばん　どうろ\n"
-	.string "{ESCAPE 0x02}　キンセツシティ$"
+	.string "{LEFT_ARROW}　キンセツシティ$"
 
 Route118_Text_RouteSign119: @ 0x081ECCC9
 	.string "ここは　118ばん　どうろ\n"
-	.string "{ESCAPE 0x00}　119ばん　どうろ$"
+	.string "{UP_ARROW}　119ばん　どうろ$"
