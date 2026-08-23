@@ -9503,6 +9503,10 @@ SECTIONS {
         data/data_b2d.o(.rodata.mid27);
         src/data/text/region_texts18.o(.rodata);
         data/data_b2d_mid28.o(.rodata);
+        src/event_object_movement.o(.rodata.event_object_movement_reflection_palette_data);
+        gUnknown_846FA28 = .;
+        src/event_object_movement.o(.rodata.event_object_movement_camera_data);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_reflection_data);
         src/event_object_movement.o(.rodata.object_event_graphics_cut_grass);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_cut_grass_graphics);
         src/event_object_movement.o(.rodata.object_event_graphics_field_effect_palettes);

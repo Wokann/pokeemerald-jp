@@ -13,13 +13,7 @@
 gUnknown_846FA13: @ 0x846FA13
 	.incbin "baserom_jp.gba", 0x46fa13, 0x5
 
-	.globl gReflectionEffectPaletteMap
-gReflectionEffectPaletteMap: @ 0x846FA18
-	.incbin "graphics/field_effects/gReflectionEffectPaletteMap.bin"
-
-	.globl gUnknown_846FA28
-gUnknown_846FA28: @ 0x846FA28
-	.incbin "baserom_jp.gba", 0x46fa28, 0x18
+	.section .rodata.data_b2d_mid28_after_reflection_data
 
 	.globl gUnknown_846FA40
 gUnknown_846FA40: @ 0x846FA40

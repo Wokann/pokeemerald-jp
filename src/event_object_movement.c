@@ -18,6 +18,40 @@
 #include "constants/items.h"
 
 extern void MovementType_Hidden(struct Sprite *sprite);
+void ObjectCB_CameraObject(struct Sprite *sprite);
+
+#define EVENT_OBJECT_MOVEMENT_REFLECTION_PALETTE_DATA __attribute__((section(".rodata.event_object_movement_reflection_palette_data"), aligned(1)))
+#define EVENT_OBJECT_MOVEMENT_CAMERA_DATA __attribute__((section(".rodata.event_object_movement_camera_data"), aligned(4)))
+
+EVENT_OBJECT_MOVEMENT_REFLECTION_PALETTE_DATA const u8 gReflectionEffectPaletteMap[16] =
+{
+    [PALSLOT_PLAYER]                 = PALSLOT_PLAYER_REFLECTION,
+    [PALSLOT_PLAYER_REFLECTION]      = PALSLOT_PLAYER_REFLECTION,
+    [PALSLOT_NPC_1]                  = PALSLOT_NPC_1_REFLECTION,
+    [PALSLOT_NPC_2]                  = PALSLOT_NPC_2_REFLECTION,
+    [PALSLOT_NPC_3]                  = PALSLOT_NPC_3_REFLECTION,
+    [PALSLOT_NPC_4]                  = PALSLOT_NPC_4_REFLECTION,
+    [PALSLOT_NPC_1_REFLECTION]       = PALSLOT_NPC_1_REFLECTION,
+    [PALSLOT_NPC_2_REFLECTION]       = PALSLOT_NPC_2_REFLECTION,
+    [PALSLOT_NPC_3_REFLECTION]       = PALSLOT_NPC_3_REFLECTION,
+    [PALSLOT_NPC_4_REFLECTION]       = PALSLOT_NPC_4_REFLECTION,
+    [PALSLOT_NPC_SPECIAL]            = PALSLOT_NPC_SPECIAL_REFLECTION,
+    [PALSLOT_NPC_SPECIAL_REFLECTION] = PALSLOT_NPC_SPECIAL_REFLECTION,
+};
+
+EVENT_OBJECT_MOVEMENT_CAMERA_DATA static const struct SpriteTemplate sCameraSpriteTemplate =
+{
+    .tileTag = 0,
+    .paletteTag = TAG_NONE,
+    .oam = &gDummyOamData,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = ObjectCB_CameraObject,
+};
+
+#undef EVENT_OBJECT_MOVEMENT_CAMERA_DATA
+#undef EVENT_OBJECT_MOVEMENT_REFLECTION_PALETTE_DATA
 
 extern const u8 gFieldEffectObjectPic_Arrow[];
 extern const u8 gFieldEffectObjectPic_Ash[];
@@ -663,7 +697,6 @@ extern u8 gUnknown_2037254; // sCurrentReflectionType
 extern u16 gUnknown_2037256; // sCurrentSpecialObjectPaletteTag
 static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
 extern u32 state_to_direction(u8, u8, u8);
-extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
@@ -3467,7 +3500,7 @@ u8 AddCameraObject(u8 followSpriteId)
 {
     u8 spriteId;
 
-    spriteId = CreateSprite(&gUnknown_846FA28, 0, 0, 4);
+    spriteId = CreateSprite(&sCameraSpriteTemplate, 0, 0, 4);
     gSprites[spriteId].invisible = TRUE;
     gSprites[spriteId].sCamera_FollowSpriteId = followSpriteId;
     return spriteId;
