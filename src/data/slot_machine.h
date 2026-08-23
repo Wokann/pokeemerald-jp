@@ -96,21 +96,98 @@ const s16 sDigitalDisplayRegBonusYOffsets[] SLOT_MACHINE_DATA(".rodata.85845B2")
     -32, 0, -32, -48, 0, -48, 0, -48,
 };
 
-SLOT_MACHINE_RESOURCE(sDigitalDisplayRegBonusDelays, 0x10, ".rodata", "data/slot_machine/jp/digital_display_reg_bonus_delays.bin");
-SLOT_MACHINE_RESOURCE(sDigitalDisplayBigBonusOffsets, 0x10, ".rodata", "data/slot_machine/jp/digital_display_big_bonus_offsets.bin");
+const s16 sDigitalDisplayRegBonusDelays[] SLOT_MACHINE_DATA(".rodata") =
+{
+    16, 12, 16, 0, 0, 4, 8, 8,
+};
 
-SLOT_MACHINE_RESOURCE(sInitialReelPositions, 0xC, ".rodata.8584638", "data/slot_machine/jp/initial_reel_positions.bin");
-SLOT_MACHINE_RESOURCE(sSpecialDrawOdds, 0x12, ".rodata.8584638", "data/slot_machine/jp/special_draw_odds.bin");
-SLOT_MACHINE_RESOURCE(sBiasProbabilities_Special, 0x12, ".rodata.8584638", "data/slot_machine/jp/bias_probabilities_special.bin");
-SLOT_MACHINE_RESOURCE(sBiasProbabilities_Regular, 0x1E, ".rodata.8584638", "data/slot_machine/jp/bias_probabilities_regular.bin");
-SLOT_MACHINE_RESOURCE(sReelTimeProbabilities_NormalGame, 0x66, ".rodata.8584638", "data/slot_machine/jp/reel_time_probabilities_normal_game.bin");
-SLOT_MACHINE_RESOURCE(sReelTimeProbabilities_LuckyGame, 0x66, ".rodata.8584638", "data/slot_machine/jp/reel_time_probabilities_lucky_game.bin");
+const s16 sDigitalDisplayBigBonusOffsets[] SLOT_MACHINE_DATA(".rodata") =
+{
+    160, 192, 224, 104, 80, 64, 48, 24,
+};
 
-SLOT_MACHINE_RESOURCE(sReelTimeSpeed_Probabilities, 0x14, ".rodata.858475C", "data/slot_machine/jp/reel_time_speed_probabilities.bin");
-SLOT_MACHINE_RESOURCE(sQuarterSpeed_ProbabilityBoost, 0xA, ".rodata.858475C", "data/slot_machine/jp/quarter_speed_probability_boost.bin");
+const s16 sInitialReelPositions[][2] SLOT_MACHINE_DATA(".rodata.8584638") =
+{
+    {0, 6},
+    {0, 10},
+    {0, 2},
+};
 
-SLOT_MACHINE_RESOURCE(sBiasesSpecial, 0x6, ".rodata.8584782", "data/slot_machine/jp/biases_special.bin");
-SLOT_MACHINE_RESOURCE(sBiasesRegular, 0xA, ".rodata.8584782", "data/slot_machine/jp/biases_regular.bin");
+const u8 sSpecialDrawOdds[][3] SLOT_MACHINE_DATA(".rodata.8584638") =
+{
+    {1, 1, 12},
+    {1, 1, 14},
+    {2, 2, 14},
+    {2, 2, 14},
+    {2, 3, 16},
+    {3, 3, 16},
+};
+
+const u8 sBiasProbabilities_Special[][6] SLOT_MACHINE_DATA(".rodata.8584638") =
+{
+    {25, 25, 30, 40, 40, 50},
+    {25, 25, 30, 30, 35, 35},
+    {25, 25, 30, 25, 25, 30},
+};
+
+const u8 sBiasProbabilities_Regular[][6] SLOT_MACHINE_DATA(".rodata.8584638") =
+{
+    {20, 25, 25, 20, 25, 25},
+    {12, 15, 15, 18, 19, 22},
+    {25, 25, 25, 30, 30, 40},
+    {25, 25, 20, 20, 15, 15},
+    {40, 40, 35, 35, 40, 40},
+};
+
+const u8 sReelTimeProbabilities_NormalGame[][17] SLOT_MACHINE_DATA(".rodata.8584638") =
+{
+    {243, 243, 243, 80, 80, 80, 80, 40, 40, 40, 40, 40, 40, 5, 5, 5, 5},
+    {5, 5, 5, 150, 150, 150, 150, 130, 130, 130, 130, 130, 130, 100, 100, 100, 5},
+    {4, 4, 4, 20, 20, 20, 20, 80, 80, 80, 80, 80, 80, 100, 100, 100, 40},
+    {2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 45, 45, 45, 100},
+    {1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 100},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6},
+};
+
+const u8 sReelTimeProbabilities_LuckyGame[][17] SLOT_MACHINE_DATA(".rodata.8584638") =
+{
+    {243, 243, 243, 200, 200, 200, 200, 160, 160, 160, 160, 160, 160, 70, 70, 70, 5},
+    {5, 5, 5, 25, 25, 25, 25, 5, 5, 5, 5, 5, 5, 2, 2, 2, 6},
+    {4, 4, 4, 25, 25, 25, 25, 30, 30, 30, 30, 30, 30, 40, 40, 40, 35},
+    {2, 2, 2, 3, 3, 3, 3, 30, 30, 30, 30, 30, 30, 100, 100, 100, 50},
+    {1, 1, 1, 2, 2, 2, 2, 30, 30, 30, 30, 30, 30, 40, 40, 40, 100},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 4, 60},
+};
+
+const u16 sReelTimeSpeed_Probabilities[][2] SLOT_MACHINE_DATA(".rodata.858475C") =
+{
+    {10, 5},
+    {10, 10},
+    {10, 15},
+    {10, 25},
+    {10, 35},
+};
+
+const u16 sQuarterSpeed_ProbabilityBoost[] SLOT_MACHINE_DATA(".rodata.858475C") =
+{
+    0, 5, 10, 15, 20,
+};
+
+const u16 sBiasesSpecial[] SLOT_MACHINE_DATA(".rodata.8584782") =
+{
+    0x80, // BIAS_STRAIGHT_7
+    0x20, // BIAS_REELTIME
+    0x40, // BIAS_MIXED_7
+};
+
+const u16 sBiasesRegular[] SLOT_MACHINE_DATA(".rodata.8584782") =
+{
+    0x10, // BIAS_POWER
+    0x08, // BIAS_AZURILL
+    0x04, // BIAS_LOTAD
+    0x02, // BIAS_CHERRY
+    0x01, // BIAS_REPLAY
+};
 
 SLOT_MACHINE_RESOURCE(sDigitalDisplay_SpriteCoords, 0x8E, ".rodata.85847BE", "data/slot_machine/jp/digital_display_sprite_coords.bin");
 SLOT_MACHINE_RESOURCE(sDigitalDisplay_SpriteCallbacks, 0x8C, ".rodata.85847BE", "data/slot_machine/jp/digital_display_sprite_callbacks.bin");
