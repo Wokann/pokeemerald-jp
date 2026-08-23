@@ -2347,30 +2347,9 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/Route124/events.inc"
 	.globl gMapEvents_ROUTE124
 	.set gMapEvents_ROUTE124, Route124_MapEvents
-	.globl ROUTE125_EventObjects
-ROUTE125_EventObjects: @ 0x08504C38
-	object_event 1, 42, 0, 7, 31, 1, 28, 0, 0, 1, 2, 0x081EE9D8, 0x0000
-	object_event 2, 42, 0, 45, 9, 1, 10, 2, 5, 1, 2, 0x081EE9EF, 0x0000
-	object_event 3, 43, 0, 38, 24, 1, 28, 6, 0, 1, 3, 0x081EEA06, 0x0000
-	object_event 4, 43, 0, 30, 28, 1, 52, 9, 9, 1, 3, 0x081EEA1D, 0x0000
-	object_event 5, 49, 0, 21, 30, 3, 13, 0, 0, 1, 2, 0x081EEA34, 0x0000
-	object_event 6, 47, 0, 17, 19, 3, 8, 1, 1, 1, 1, 0x081EEA96, 0x0000
-	object_event 7, 47, 0, 18, 19, 3, 8, 1, 1, 1, 1, 0x081EEAB1, 0x0000
-	object_event 8, 66, 0, 43, 19, 3, 28, 2, 1, 1, 3, 0x081EEACC, 0x0000
-	object_event 9, 21, 0, 48, 19, 3, 27, 2, 1, 1, 3, 0x081EEAE3, 0x0000
-	object_event 10, 59, 0, 46, 17, 3, 1, 1, 1, 0, 0, 0x08256D6F, 0x0482
-	.globl ROUTE125_EventWarps
-ROUTE125_EventWarps: @ 0x08504D28
-	warp_def 22, 19, 0, 0, MAP_SHOAL_CAVE_LOW_TIDE_ENTRANCE_ROOM
-	.globl ROUTE125_EventBgEvents
-ROUTE125_EventBgEvents: @ 0x08504D30
-	bg_event 53, 10, 0, 8, 0x0002, 0x00, 0x00
-	bg_event 55, 11, 0, 8, 0x0020, 0x00, 0x00
-	bg_event 7, 25, 0, 8, 0x0084, 0x00, 0x00
-	bg_event 24, 32, 0, 8, 0x0098, 0x00, 0x00
+	.include "data/maps/Route125/events.inc"
 	.globl gMapEvents_ROUTE125
-gMapEvents_ROUTE125: @ 0x08504D60
-	map_events ROUTE125_EventObjects, ROUTE125_EventWarps, 0, ROUTE125_EventBgEvents
+	.set gMapEvents_ROUTE125, Route125_MapEvents
 	.globl ROUTE126_EventObjects
 ROUTE126_EventObjects: @ 0x08504D74
 	object_event 1, 42, 0, 51, 65, 1, 51, 10, 3, 1, 3, 0x081EEB0A, 0x0000

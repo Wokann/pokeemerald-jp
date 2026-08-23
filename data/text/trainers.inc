@@ -3703,4 +3703,141 @@ Route124_Text_IsabellaDefeat: @ 0x082606E2
 Route124_Text_IsabellaPostBattle: @ 0x08260701
 	.string "きれいな　いろの　カケラが\n"
 	.string "この　あたりで　みつかることが　あるわよ$"
-	.incbin "baserom_jp.gba", 0x260724, 0x1c6f
+Route125_Text_NolenIntro: @ 0x08260724
+	.string "キミが　やってくる　おとが\n"
+	.string "きこえて　いたから　まってたよ！$"
+
+Route125_Text_NolenDefeat: @ 0x08260743
+	.string "まいりました⋯⋯！$"
+
+Route125_Text_NolenPostBattle: @ 0x0826074D
+	.string "くうきちゅう　よりも\n"
+	.string "すいちゅうの　ほうが　おとの　つたわる\l"
+	.string "スピードが　はやいんだよ！$"
+
+Route125_Text_StanIntro: @ 0x0826077A
+	.string "おらーっ！！\n"
+	.string "おれの　かわいい　ポケモンだー！！$"
+
+Route125_Text_StanDefeat: @ 0x08260793
+	.string "まいったぜ⋯⋯！$"
+
+Route125_Text_StanPostBattle: @ 0x0826079C
+	.string "タッツーの　みりょくに　まいって\n"
+	.string "おれも　およぐように　なったんだー！$"
+
+Route125_Text_TanyaIntro: @ 0x082607C0
+	.string "およぎ　つかれちゃった！\n"
+	.string "わたしと　ひとしょうぶ　どう？$"
+
+Route125_Text_TanyaDefeat: @ 0x082607DD
+	.string "あんた　つよすぎ！$"
+
+Route125_Text_TanyaPostBattle: @ 0x082607E7
+	.string "ふう　ふう⋯⋯\n"
+	.string "トクサネシティは　どっち　だったっけ？$"
+
+Route125_Text_SharonIntro: @ 0x08260803
+	.string "わたしの　そだてた　みずポケモンと\n"
+	.string "たたかって　みない？$"
+
+Route125_Text_SharonDefeat: @ 0x08260820
+	.string "まけた⋯⋯$"
+
+Route125_Text_SharonPostBattle: @ 0x08260826
+	.string "あなたの　つよさは　ホンモノね！\n"
+	.string "おどろいたわ！$"
+
+Route125_Text_ErnestIntro: @ 0x0826083F
+	.string "オレさまは　たくましい　ふなのり！\n"
+	.string "せかいの　うみを　わたりあるく　おとこ！$"
+
+Route125_Text_ErnestDefeat: @ 0x08260866
+	.string "ぐおおおーっ！\n"
+	.string "かてねえ⋯⋯！$"
+
+Route125_Text_ErnestPostBattle: @ 0x08260876
+	.string "あさせのほらあな　は　じかんによって\n"
+	.string "しおが　みちたり　ひいたり　するんだ！\p"
+	.string "ちなみに　みちしお　から　ひきしお　まで\n"
+	.string "およそ　6じかんだぞ！　しっていたか？$"
+
+Route125_Text_ErnestRegister: @ 0x082608C6
+	.string "ポケナビ　とうろく　して　くれたら\n"
+	.string "いいことを　おしえて　やるよ！$"
+
+Route125_Text_ErnestRematchIntro: @ 0x082608E8
+	.string "おっと　ここで　あったが　100ねんめ！\n"
+	.string "とにかく　ポケモンしょうぶ　だっ！$"
+
+Route125_Text_ErnestRematchDefeat: @ 0x0826090F
+	.string "かてねえ\n"
+	.string "ちっとも　かてねえよ！$"
+
+Route125_Text_ErnestRematchPostBattle: @ 0x08260920
+	.string "あさせのほらあな⋯⋯\p"
+	.string "しおの　みちひきに　よって\n"
+	.string "いけたり　いけなかったり　する\l"
+	.string "ばしょが　あるんだよな\p"
+	.string "ちなみに　みちしお　から　ひきしお　まで\n"
+	.string "およそ　6じかんだぞ！　おぼえておけよ！$"
+
+Route125_Text_KimIntro: @ 0x0826097F
+	.string "マホ“あさせのほらあなに\n"
+	.string "へんな　じいさんが　いるんだって！\l"
+	.string "あなたも　あいにいく　とちゅう？$"
+
+Route125_Text_KimDefeat: @ 0x082609AF
+	.string "マホ“かてると　おもったのに$"
+
+Route125_Text_KimPostBattle: @ 0x082609BE
+	.string "マホ“あさせのほらあなに\n"
+	.string "へんな　じいさんが　いるんでしょ？\p"
+	.string "さっ　ナホちゃん　あいに　いくよ！$"
+
+Route125_Text_KimNotEnoughMons: @ 0x082609EF
+	.string "マホ“ダメだって！\n"
+	.string "ポケモン　2ひき　いないと　ダメだって！$"
+
+Route125_Text_IrisIntro: @ 0x08260A0E
+	.string "ナホ“センパイ\n"
+	.string "こんな　ところに　なにが　あるんですかぁ？$"
+
+Route125_Text_IrisDefeat: @ 0x08260A2C
+	.string "ナホ“とちゅう　おしいところ　あったのに$"
+
+Route125_Text_IrisPostBattle: @ 0x08260A41
+	.string "ナホ“センパイ⋯⋯　ほんとに\n"
+	.string "あさせのほらあなに　はいりますぅ？\l"
+	.string "ぬれちゃいますよぉ？$"
+
+Route125_Text_IrisNotEnoughMons: @ 0x08260A6D
+	.string "ナホ“2たい1で　しょうぶ　なんて\n"
+	.string "そんな　まね　あたしたちに　できないわ$"
+
+Route125_Text_PresleyIntro: @ 0x08260A93
+	.string "とりつかいの　ボクが\n"
+	.string "なぜ　うみにまで　きているかと　いうと⋯⋯$"
+
+Route125_Text_PresleyDefeat: @ 0x08260AB4
+	.string "わかった\n"
+	.string "なんで　ここに　いるか　おしえてやるよ$"
+
+Route125_Text_PresleyPostBattle: @ 0x08260ACD
+	.string "あきビンに　メールを　いれて\n"
+	.string "さっき　うみに　ながしたんだ！\p"
+	.string "きっと　かわいい　ビキニの　おんなのコが\n"
+	.string "ひろって　くれるぜ！$"
+
+Route125_Text_AuronIntro: @ 0x08260B0C
+	.string "こらーッ！　おぬしかッ\n"
+	.string "うみに　ゴミを　すてたのは！$"
+
+Route125_Text_AuronDefeat: @ 0x08260B27
+	.string "おぬしでは　なかったか$"
+
+Route125_Text_AuronPostBattle: @ 0x08260B33
+	.string "さっき　この　あたりで\n"
+	.string "こきたない　ビンを　ひろったんじゃ！\l"
+	.string "うみに　ゴミを　すてるとは　なっとらん！$"
+	.incbin "baserom_jp.gba", 0x260b67, 0x182c
