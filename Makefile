@@ -362,16 +362,16 @@ $(OBJFILE) $(ELF) $(ROM): | tools
 
 # Match pokeemerald's generic LZ77 asset rule.  Individual C targets declare
 # their generated .lz prerequisites so a clean checkout rebuilds them safely.
-%.lz: %
+%.lz: % | tools
 	$(GFX) $< $@
 
-%.4bpp: %.png
+%.4bpp: %.png | tools
 	$(GFX) $< $@
 
-%.gbapal: %.pal
+%.gbapal: %.pal | tools
 	$(GFX) $< $@
 
-%.gbapal: %.png
+%.gbapal: %.png | tools
 	$(GFX) $< $@
 
 $(ROM): $(ELF)
