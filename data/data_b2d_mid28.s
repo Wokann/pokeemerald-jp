@@ -79,18 +79,7 @@ gTextWindowFrame1_Pal: @ 0x84E8360
 
 	.section .rodata.data_b2d_mid28_after_text_window_resources
 
-	.globl gNullScriptPtr
-gNullScriptPtr: @ 0x84E8900
-	.4byte 0
-
-	.globl sScriptConditionTable
-sScriptConditionTable: @ 0x84E8904
-	.byte 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x01, 0x01, 0x00
-	.byte 0x00, 0x01, 0x01, 0x01, 0x00, 0x01, 0x00, 0x00
-
-	.globl sScriptStringVars
-sScriptStringVars: @ 0x84E8918
-	.4byte 0x02021C40, 0x02021C54, 0x02021C68
+	.section .rodata.data_b2d_mid28_after_script_command_static_data
 
 	.section .rodata.data_b2d_mid28_after_field_tasks_static_data
 

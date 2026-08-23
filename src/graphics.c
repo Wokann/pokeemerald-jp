@@ -1,5 +1,7 @@
 #include "global.h"
 #include "text_window.h"
+#include "string_util.h"
+#include "constants/comparison_operators.h"
 
 #define POKEBALL_GRAPHICS __attribute__((section(".rodata.pokeball_graphics"), aligned(1)))
 #define POKEBALL_OPEN_GRAPHICS __attribute__((section(".rodata.pokeball_open_graphics"), aligned(1)))
@@ -1167,3 +1169,13 @@ MESSAGE_BOX_PAL const u16 gMessageBox_Pal[] =
 };
 
 #undef MESSAGE_BOX_PAL
+
+// These script-command tables remain externally referenced by matched code in
+// scrcmd.c/script.c. Emit their typed data here to keep that codegen stable.
+#define SCRIPT_COMMAND_NULL_PTR __attribute__((section(".rodata.script_command_null_ptr"), aligned(4)))
+#define SCRIPT_COMMAND_CONDITION_TABLE __attribute__((section(".rodata.script_command_condition_table"), aligned(1)))
+#define SCRIPT_COMMAND_STRING_VARS __attribute__((section(".rodata.script_command_string_vars"), aligned(4)))
+#include "data/scrcmd_data.h"
+#undef SCRIPT_COMMAND_STRING_VARS
+#undef SCRIPT_COMMAND_CONDITION_TABLE
+#undef SCRIPT_COMMAND_NULL_PTR

@@ -9759,6 +9759,10 @@ SECTIONS {
         src/graphics.o(.rodata.message_box_pal);
         src/graphics.o(.rodata.text_window_frame_table);
         data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_text_window_resources);
+        src/graphics.o(.rodata.script_command_null_ptr);
+        src/graphics.o(.rodata.script_command_condition_table);
+        src/graphics.o(.rodata.script_command_string_vars);
+        data/data_b2d_mid28.o(.rodata.data_b2d_mid28_after_script_command_static_data);
         src/coord_event_weather.o(.rodata.coord_event_weather_data.sCoordEventWeatherFuncs);
         src/field_tasks.o(.rodata.field_tasks_data.sPerStepCallbacks);
         src/field_tasks.o(.rodata.field_tasks_data.sHalfSubmergedBridgeMetatileOffsets);
