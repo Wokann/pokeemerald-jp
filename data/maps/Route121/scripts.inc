@@ -3,57 +3,187 @@
 Route121_MapScripts::
 	.byte 0
 
-Route121_EventScript_001EE0DA::
-	loadword 0x0, Route121_Text_AheadLoomsMtPyre
-	callstd 0x2
+Route121_EventScript_Woman::
+	msgbox Route121_Text_AheadLoomsMtPyre, MSGBOX_NPC
 	end
 
-Route121_EventScript_001EE0E3::
-	loadword 0x0, Route121_Text_MtPyrePierSign
-	callstd 0x3
+Route121_EventScript_MtPyrePierSign::
+	msgbox Route121_Text_MtPyrePierSign, MSGBOX_SIGN
 	end
 
-Route121_EventScript_001EE0EC::
-	loadword 0x0, Route121_Text_SafariZoneSign
-	callstd 0x3
+Route121_EventScript_SafariZoneSign::
+	msgbox Route121_Text_SafariZoneSign, MSGBOX_SIGN
 	end
 
-Route121_EventScript_001EE0F5::
+Route121_EventScript_AquaGruntsMoveOut::
 	lockall
-	playbgm 0x1A3, 0x0
-	applymovement 0xD, 0x0824363B
+	playbgm MUS_ENCOUNTER_AQUA, FALSE
+	applymovement LOCALID_ROUTE121_GRUNT_2, 0x0824363B
 	waitmovement 0x0
-	loadword 0x0, Route121_Text_OkayMoveOutToMtPyre
-	callstd 0x4
+	msgbox Route121_Text_OkayMoveOutToMtPyre, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xC, 0x081EE136
-	applymovement 0xD, 0x081EE13F
-	applymovement 0xE, 0x081EE148
+	applymovement LOCALID_ROUTE121_GRUNT_1, Route121_Movement_Grunt1Exit
+	applymovement LOCALID_ROUTE121_GRUNT_2, Route121_Movement_Grunt2Exit
+	applymovement LOCALID_ROUTE121_GRUNT_3, Route121_Movement_Grunt3Exit
 	waitmovement 0x0
 	fadedefaultbgm
-	removeobject 0xC
-	removeobject 0xD
-	removeobject 0xE
-	setvar 0x4074, 0x1
+	removeobject LOCALID_ROUTE121_GRUNT_1
+	removeobject LOCALID_ROUTE121_GRUNT_2
+	removeobject LOCALID_ROUTE121_GRUNT_3
+	setvar VAR_ROUTE121_STATE, 0x1
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1ee136, 0x201
+Route121_Movement_Grunt1Exit:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
 
-Route121_Text_OkayMoveOutToMtPyre::
+Route121_Movement_Grunt2Exit:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+Route121_Movement_Grunt3Exit:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+Route121_EventScript_Vanessa::
+	trainerbattle_single TRAINER_VANESSA, Route121_Text_VanessaIntro, Route121_Text_VanessaDefeat
+	msgbox Route121_Text_VanessaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Walter::
+	trainerbattle_single TRAINER_WALTER_1, Route121_Text_WalterIntro, Route121_Text_WalterDefeat, Route121_EventScript_RegisterWalter
+	specialvar VAR_RESULT, ShouldTryRematchBattle
+	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchWalter
+	msgbox Route121_Text_WalterPostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+Route121_EventScript_RegisterWalter::
+	special PlayerFaceTrainerAfterBattle
+	waitmovement 0x0
+	msgbox Route121_Text_WalterRegister, MSGBOX_DEFAULT
+	register_matchcall TRAINER_WALTER_1
+	release
+	end
+
+Route121_EventScript_RematchWalter::
+	trainerbattle_rematch TRAINER_WALTER_1, Route121_Text_WalterRematchIntro, Route121_Text_WalterRematchDefeat
+	msgbox Route121_Text_WalterPostRematch, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Tammy::
+	trainerbattle_single TRAINER_TAMMY, Route121_Text_TammyIntro, Route121_Text_TammyDefeat
+	msgbox Route121_Text_TammyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Kate::
+	trainerbattle_double TRAINER_KATE_AND_JOY, Route121_Text_KateIntro, Route121_Text_KateDefeat, Route121_Text_KateNotEnoughMons
+	msgbox Route121_Text_KatePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Joy::
+	trainerbattle_double TRAINER_KATE_AND_JOY, Route121_Text_JoyIntro, Route121_Text_JoyDefeat, Route121_Text_JoyNotEnoughMons
+	msgbox Route121_Text_JoyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Jessica::
+	trainerbattle_single TRAINER_JESSICA_1, Route121_Text_JessicaIntro, Route121_Text_JessicaDefeat, Route121_EventScript_RegisterJessica
+	specialvar VAR_RESULT, ShouldTryRematchBattle
+	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchJessica
+	msgbox Route121_Text_JessicaPostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+Route121_EventScript_RegisterJessica::
+	special PlayerFaceTrainerAfterBattle
+	waitmovement 0x0
+	msgbox Route121_Text_JessicaRegister, MSGBOX_DEFAULT
+	register_matchcall TRAINER_JESSICA_1
+	release
+	end
+
+Route121_EventScript_RematchJessica::
+	trainerbattle_rematch TRAINER_JESSICA_1, Route121_Text_JessicaRematchIntro, Route121_Text_JessicaRematchDefeat
+	msgbox Route121_Text_JessicaPostRematch, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Cale::
+	trainerbattle_single TRAINER_CALE, Route121_Text_CaleIntro, Route121_Text_CaleDefeat
+	msgbox Route121_Text_CalePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Myles::
+	trainerbattle_single TRAINER_MYLES, Route121_Text_MylesIntro, Route121_Text_MylesDefeat
+	msgbox Route121_Text_MylesPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Pat::
+	trainerbattle_single TRAINER_PAT, Route121_Text_PatIntro, Route121_Text_PatDefeat
+	msgbox Route121_Text_PatPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Marcel::
+	trainerbattle_single TRAINER_MARCEL, Route121_Text_MarcelIntro, Route121_Text_MarcelDefeat
+	msgbox Route121_Text_MarcelPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route121_EventScript_Cristin::
+	trainerbattle_single TRAINER_CRISTIN_1, Route121_Text_CristinIntro, Route121_Text_CristinDefeat, Route121_EventScript_RegisterCristin
+	specialvar VAR_RESULT, ShouldTryRematchBattle
+	goto_if_eq VAR_RESULT, TRUE, Route121_EventScript_RematchCristin
+	msgbox Route121_Text_CristinPostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+Route121_EventScript_RegisterCristin::
+	special PlayerFaceTrainerAfterBattle
+	waitmovement 0x0
+	msgbox Route121_Text_CristinRegister, MSGBOX_DEFAULT
+	register_matchcall TRAINER_CRISTIN_1
+	release
+	end
+
+Route121_EventScript_RematchCristin::
+	trainerbattle_rematch TRAINER_CRISTIN_1, Route121_Text_CristinRematchIntro, Route121_Text_CristinRematchDefeat
+	msgbox Route121_Text_CristinPostRematch, MSGBOX_AUTOCLOSE
+	end
+
+Route121_Text_OkayMoveOutToMtPyre: @ 0x081EE337
 	.string "よし！\n"
 	.string "おれたちも　おくりびやまに　むかうぞ！$"
 
-Route121_Text_AheadLoomsMtPyre::
+Route121_Text_AheadLoomsMtPyre: @ 0x081EE34F
 	.string "このさきに　あるのは　おくりびやま⋯⋯\p"
 	.string "じゅみょうを　おえた　ポケモンたちの\n"
 	.string "たましいが　まつられる　ところ⋯⋯$"
 
-Route121_Text_MtPyrePierSign::
+Route121_Text_MtPyrePierSign: @ 0x081EE388
 	.string "おくりびやま　さんばし\p"
 	.string "⋯⋯ながい　あいだ　つかわれて　いないのか\n"
 	.string "もじが　きえそうに　なっている$"
 
-Route121_Text_SafariZoneSign::
+Route121_Text_SafariZoneSign: @ 0x081EE3BA
 	.string "めずらしい　ポケモン　たくさん！\n"
 	.string "‘サファリゾーン’$"

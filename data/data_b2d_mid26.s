@@ -2264,7 +2264,7 @@ gMapEvents_ROUTE120: @ 0x0850412C
 	map_events ROUTE120_EventObjects, ROUTE120_EventWarps, ROUTE120_EventCoordEvents, ROUTE120_EventBgEvents
 	.globl ROUTE121_EventObjects
 ROUTE121_EventObjects: @ 0x08504140
-	object_event 1, 24, 0, 29, 14, 3, 10, 1, 1, 0, 0, 0x081EE0DA, 0x0000
+	object_event 1, 24, 0, 29, 14, 3, 10, 1, 1, 0, 0, Route121_EventScript_Woman, 0x0000
 	object_event 2, 60, 0, 14, 2, 3, 12, 0, 0, 0, 47, 0x08244D23, 0x0000
 	object_event 3, 60, 0, 15, 2, 3, 12, 0, 0, 0, 48, 0x08244D23, 0x0000
 	object_event 4, 60, 0, 16, 2, 3, 12, 0, 0, 0, 49, 0x08244D23, 0x0000
@@ -2273,24 +2273,24 @@ ROUTE121_EventObjects: @ 0x08504140
 	object_event 7, 60, 0, 65, 14, 3, 12, 0, 0, 0, 52, 0x08244D23, 0x0000
 	object_event 8, 60, 0, 66, 14, 3, 12, 0, 0, 0, 53, 0x08244D23, 0x0000
 	object_event 9, 60, 0, 67, 14, 3, 12, 0, 0, 0, 54, 0x08244D23, 0x0000
-	object_event 10, 47, 0, 39, 9, 3, 8, 0, 0, 1, 1, 0x081EE1E1, 0x0000
-	object_event 11, 47, 0, 40, 9, 3, 8, 0, 0, 1, 1, 0x081EE1FC, 0x0000
+	object_event 10, 47, 0, 39, 9, 3, 8, 0, 0, 1, 1, Route121_EventScript_Kate, 0x0000
+	object_event 11, 47, 0, 40, 9, 3, 8, 0, 0, 1, 1, Route121_EventScript_Joy, 0x0000
 	object_event 12, 117, 0, 30, 8, 3, 7, 0, 0, 0, 0, 0x00000000, 0x0392
 	object_event 13, 117, 0, 30, 7, 3, 10, 0, 0, 0, 0, 0x00000000, 0x0392
 	object_event 14, 117, 0, 31, 7, 3, 9, 0, 0, 0, 0, 0x00000000, 0x0392
 	object_event 15, 82, 0, 32, 5, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0011
 	object_event 16, 82, 0, 65, 4, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0012
-	object_event 17, 18, 0, 63, 5, 3, 9, 0, 0, 1, 4, 0x081EE151, 0x0000
-	object_event 18, 48, 0, 55, 8, 3, 9, 0, 0, 1, 3, 0x081EE168, 0x0000
-	object_event 19, 40, 0, 11, 11, 3, 7, 0, 0, 1, 4, 0x081EE1CA, 0x0000
-	object_event 20, 45, 0, 22, 5, 3, 17, 0, 0, 1, 4, 0x081EE217, 0x0000
+	object_event 17, 18, 0, 63, 5, 3, 9, 0, 0, 1, 4, Route121_EventScript_Vanessa, 0x0000
+	object_event 18, 48, 0, 55, 8, 3, 9, 0, 0, 1, 3, Route121_EventScript_Walter, 0x0000
+	object_event 19, 40, 0, 11, 11, 3, 7, 0, 0, 1, 4, Route121_EventScript_Tammy, 0x0000
+	object_event 20, 45, 0, 22, 5, 3, 17, 0, 0, 1, 4, Route121_EventScript_Jessica, 0x0000
 	object_event 21, 59, 0, 55, 10, 3, 1, 1, 1, 0, 0, 0x08256CE0, 0x044F
 	object_event 22, 82, 0, 26, 12, 3, 1, 1, 1, 0, 0, 0x082565C8, 0x0013
-	object_event 23, 39, 0, 11, 6, 3, 26, 1, 4, 1, 3, 0x081EE279, 0x0000
-	object_event 24, 65, 0, 59, 8, 3, 8, 1, 1, 1, 4, 0x081EE290, 0x0000
-	object_event 25, 20, 0, 59, 13, 3, 7, 1, 1, 1, 4, 0x081EE2A7, 0x0000
-	object_event 26, 33, 0, 65, 9, 3, 18, 1, 1, 1, 6, 0x081EE2BE, 0x0000
-	object_event 27, 34, 0, 72, 9, 3, 17, 1, 1, 1, 6, 0x081EE2D5, 0x0000
+	object_event 23, 39, 0, 11, 6, 3, 26, 1, 4, 1, 3, Route121_EventScript_Cale, 0x0000
+	object_event 24, 65, 0, 59, 8, 3, 8, 1, 1, 1, 4, Route121_EventScript_Myles, 0x0000
+	object_event 25, 20, 0, 59, 13, 3, 7, 1, 1, 1, 4, Route121_EventScript_Pat, 0x0000
+	object_event 26, 33, 0, 65, 9, 3, 18, 1, 1, 1, 6, Route121_EventScript_Marcel, 0x0000
+	object_event 27, 34, 0, 72, 9, 3, 17, 1, 1, 1, 6, Route121_EventScript_Cristin, 0x0000
 	object_event 28, 59, 0, 60, 10, 3, 1, 1, 1, 0, 0, 0x08256CED, 0x047D
 	object_event 29, 59, 0, 38, 13, 3, 1, 1, 1, 0, 0, 0x08256CFA, 0x047E
 	.globl ROUTE121_EventWarps
@@ -2298,18 +2298,18 @@ ROUTE121_EventWarps: @ 0x085043F8
 	warp_def 37, 5, 0, 2, MAP_ROUTE121_SAFARI_ZONE_ENTRANCE
 	.globl ROUTE121_EventCoordEvents
 ROUTE121_EventCoordEvents: @ 0x08504400
-	coord_event 25, 5, 3, 16500, 0, 0x081EE0F5
-	coord_event 25, 6, 3, 16500, 0, 0x081EE0F5
-	coord_event 25, 7, 3, 16500, 0, 0x081EE0F5
-	coord_event 25, 8, 3, 16500, 0, 0x081EE0F5
+	coord_event 25, 5, 3, 16500, 0, Route121_EventScript_AquaGruntsMoveOut
+	coord_event 25, 6, 3, 16500, 0, Route121_EventScript_AquaGruntsMoveOut
+	coord_event 25, 7, 3, 16500, 0, Route121_EventScript_AquaGruntsMoveOut
+	coord_event 25, 8, 3, 16500, 0, Route121_EventScript_AquaGruntsMoveOut
 	.globl ROUTE121_EventBgEvents
 ROUTE121_EventBgEvents: @ 0x08504440
-	bg_event 32, 14, 0, 0, 0x081EE0E3, 0, 0
+	bg_event 32, 14, 0, 0, Route121_EventScript_MtPyrePierSign, 0, 0
 	bg_event 40, 11, 0, 8, 0x000C, 0x00, 0x00
 	bg_event 18, 13, 0, 8, 0x0016, 0x00, 0x00
 	bg_event 43, 7, 0, 8, 0x00A2, 0x00, 0x00
 	bg_event 42, 7, 0, 8, 0x00AC, 0x00, 0x00
-	bg_event 39, 6, 0, 0, 0x081EE0EC, 0, 0
+	bg_event 39, 6, 0, 0, Route121_EventScript_SafariZoneSign, 0, 0
 	bg_event 23, 10, 3, 7, 0x003F, 0x27, 0x00
 	bg_event 58, 3, 3, 7, 0x006E, 0x28, 0x00
 	bg_event 72, 5, 3, 7, 0x0017, 0x49, 0x00
