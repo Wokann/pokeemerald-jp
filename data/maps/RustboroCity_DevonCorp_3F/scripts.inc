@@ -224,4 +224,4 @@ gJPText_00202212: @ 0x08202212
 gJPText_00202239: @ 0x08202239
 	.string "ささ　どうぞ！$"
 
-	.incbin "baserom_jp.gba", 0x202241, 0x1272
+	.incbin "baserom_jp.gba", 0x202241, 0x84

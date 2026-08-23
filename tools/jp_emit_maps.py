@@ -505,7 +505,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             lines.append('\t.incbin "baserom_jp.gba", 0x%x, 0x%x' % (
                 a - 0x08000000, b - a))
             nraw += 1
-    return '\n'.join(lines) + '\n', len(text_ranges), nraw
+    return '\n'.join(lines).rstrip() + '\n', len(text_ranges), nraw
 
 
 def collect_all_text_ptrs(entries):
