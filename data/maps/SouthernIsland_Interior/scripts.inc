@@ -133,4 +133,4 @@ SouthernIsland_Interior_EventScript_00222954::
 	special CreateObedientEnemyMon
 	return
 
-	.incbin "baserom_jp.gba", 0x222967, 0x38
+	.incbin "baserom_jp.gba", 0x222967, 0x1c

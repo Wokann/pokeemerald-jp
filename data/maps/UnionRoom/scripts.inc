@@ -100,4 +100,4 @@ UnionRoom_EventScript_0021E9F6::
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x21ea00, 0x39
+	.incbin "baserom_jp.gba", 0x21ea00, 0x9
