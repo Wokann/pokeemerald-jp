@@ -37,9 +37,9 @@ Route104_MrBrineysHouse_EventScript_00211629::
 
 Route104_MrBrineysHouse_EventScript_0021164C::
 	setflag 0x93
-	loadword 0x0, 0x08211732
+	loadword 0x0, gJPText_00211732
 	callstd 0x4
-	loadword 0x0, 0x08211749
+	loadword 0x0, gJPText_00211749
 	callstd 0x5
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, Route104_MrBrineysHouse_EventScript_002116D5
@@ -47,7 +47,7 @@ Route104_MrBrineysHouse_EventScript_0021164C::
 	end
 
 Route104_MrBrineysHouse_EventScript_00211670::
-	message 0x0821192C
+	message gJPText_0021192C
 	waitmessage
 	multichoicedefault 0x14, 0x8, 0xE, 0x1, 0x0
 	copyvar 0x8000, 0x800D
@@ -60,7 +60,7 @@ Route104_MrBrineysHouse_EventScript_00211670::
 	end
 
 Route104_MrBrineysHouse_EventScript_002116A3::
-	loadword 0x0, 0x0821185C
+	loadword 0x0, gJPText_0021185C
 	callstd 0x5
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, Route104_MrBrineysHouse_EventScript_002116D5
@@ -68,7 +68,7 @@ Route104_MrBrineysHouse_EventScript_002116A3::
 	end
 
 Route104_MrBrineysHouse_EventScript_002116BC::
-	loadword 0x0, 0x082118C7
+	loadword 0x0, gJPText_002118C7
 	callstd 0x5
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, Route104_MrBrineysHouse_EventScript_002116D5
@@ -76,19 +76,19 @@ Route104_MrBrineysHouse_EventScript_002116BC::
 	end
 
 Route104_MrBrineysHouse_EventScript_002116D5::
-	loadword 0x0, 0x0821181B
+	loadword 0x0, gJPText_0021181B
 	callstd 0x4
 	release
 	end
 
 Route104_MrBrineysHouse_EventScript_002116DF::
-	loadword 0x0, 0x0821195C
+	loadword 0x0, gJPText_0021195C
 	callstd 0x4
 	release
 	end
 
 Route104_MrBrineysHouse_EventScript_002116E9::
-	loadword 0x0, 0x082117FE
+	loadword 0x0, gJPText_002117FE
 	callstd 0x4
 	call 0x08242F21
 	setvar 0x408E, 0x1
@@ -109,10 +109,74 @@ Route104_MrBrineysHouse_EventScript_0021171F::
 	faceplayer
 	waitse
 	playmoncry 0x135, 0x0
-	loadword 0x0, 0x082119A3
+	loadword 0x0, gJPText_002119A3
 	callstd 0x4
 	waitdooranim
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x211732, 0x282
+	.globl gJPText_00211732
+gJPText_00211732: @ 0x08211732
+	.string "ハギ“こらこら！\n"
+	.string "まて　まて　ピーコちゃん！$"
+
+	.globl gJPText_00211749
+gJPText_00211749: @ 0x08211749
+	.string "おや？　きみは　たしか　ピーコちゃんを\n"
+	.string "たすけて　くれた　{STRING 0x01}{STRING 0x05}！\l"
+	.string "そのせつは　せわに　なったのう！\p"
+	.string "⋯⋯なぬ？　ふねに　のりたい　とな？\p"
+	.string "ふむふむ？\n"
+	.string "ムロに　てがみを　とどけて\l"
+	.string "カイナへ　にもつを　とどける⋯⋯\l"
+	.string "なんだか　いそがしいのう　きみは\p"
+	.string "じゃが　それくらい　おやすい　ごようだ！\n"
+	.string "わしに　まかせて　おきなさい！\l"
+	.string "では　まず　ムロに　むかうとするか！$"
+
+	.globl gJPText_002117FE
+gJPText_002117FE: @ 0x082117FE
+	.string "ハギ“ムロタウン　か\p"
+	.string "よっしゃ！　いくぞ　ピーコちゃん！$"
+
+	.globl gJPText_0021181B
+gJPText_0021181B: @ 0x0821181B
+	.string "ハギ“そうかね\n"
+	.string "たのまれごとは　いいのかね？\p"
+	.string "まあ　ふねに　のる　ひつようが　あるときは\n"
+	.string "いつでも　えんりょなく　いっておくれ！$"
+
+	.globl gJPText_0021185C
+gJPText_0021185C: @ 0x0821185C
+	.string "ハギ“きみの　いいたいことは　わかっとる！\p"
+	.string "ムロに　てがみを　とどけて\n"
+	.string "カイナへ　にもつを　とどけるんだろう\p"
+	.string "それくらい　おやすい　ごようだ！\n"
+	.string "わしに　まかせて　おきなさい！\l"
+	.string "では　まず　ムロに　むかうとするか！$"
+
+	.globl gJPText_002118C7
+gJPText_002118C7: @ 0x082118C7
+	.string "ハギ“きみの　いいたいことは　わかっとる！\p"
+	.string "カイナの　クスノキさんに\n"
+	.string "にもつを　とどけるんだろう\p"
+	.string "それくらい　おやすい　ごようだ！\n"
+	.string "わしに　まかせて　おきなさい！\l"
+	.string "では　まず　ムロに　むかうとするか！$"
+
+	.globl gJPText_0021192C
+gJPText_0021192C: @ 0x0821192C
+	.string "ハギ“やあ！　きみのため　なら\n"
+	.string "いつでも　ふねを　だそう！\p"
+	.string "きみが　いきたいのは　どこ　かな？$"
+
+	.globl gJPText_0021195C
+gJPText_0021195C: @ 0x0821195C
+	.string "ハギ“そうか⋯⋯　きみは\n"
+	.string "ピーコちゃんの　いのちの　おんじんだ\p"
+	.string "ふねに　のる　ひつようが　あるときは\n"
+	.string "いつでも　えんりょなく　いっておくれ！$"
+
+	.globl gJPText_002119A3
+gJPText_002119A3: @ 0x082119A3
+	.string "ピーコちゃん“ピー　ピひょろー！$"
