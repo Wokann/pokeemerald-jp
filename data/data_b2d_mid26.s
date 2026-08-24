@@ -2665,32 +2665,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_Mart/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_MART
 	.set gMapEvents_SLATEPORT_CITY_MART, SlateportCity_Mart_MapEvents
-	.globl MAUVILLE_CITY_GYM_EventObjects
-MAUVILLE_CITY_GYM_EventObjects: @ 0x08508488
-	object_event 1, 127, 0, 5, 2, 0, 8, 0, 0, 0, 0, 0x081FEB31, 0x0391
-	object_event 2, 66, 0, 7, 8, 3, 8, 0, 0, 1, 1, 0x081FED16, 0x0000
-	object_event 3, 14, 0, 1, 16, 0, 7, 0, 0, 1, 2, 0x081FED44, 0x0000
-	object_event 4, 35, 0, 5, 10, 0, 9, 0, 0, 1, 2, 0x081FED2D, 0x0000
-	object_event 5, 66, 0, 1, 13, 0, 8, 0, 0, 1, 2, 0x081FECFF, 0x0000
-	object_event 6, 23, 0, 7, 20, 0, 9, 0, 0, 0, 0, MauvilleCity_Gym_EventScript_001FED72, 0x0000
-	object_event 7, 39, 0, 7, 10, 3, 7, 1, 1, 1, 1, 0x081FED5B, 0x0000
-	.globl MAUVILLE_CITY_GYM_EventWarps
-MAUVILLE_CITY_GYM_EventWarps: @ 0x08508530
-	warp_def 4, 20, 0, 0, MAP_MAUVILLE_CITY
-	warp_def 5, 20, 0, 0, MAP_MAUVILLE_CITY
-	.globl MAUVILLE_CITY_GYM_EventCoordEvents
-MAUVILLE_CITY_GYM_EventCoordEvents: @ 0x08508540
-	coord_event 4, 12, 3, 16384, 0, MauvilleCity_Gym_EventScript_001FEC64
-	coord_event 3, 9, 3, 16384, 0, MauvilleCity_Gym_EventScript_001FEC89
-	coord_event 0, 15, 3, 16384, 0, MauvilleCity_Gym_EventScript_001FEC3F
-	coord_event 8, 9, 3, 16384, 0, MauvilleCity_Gym_EventScript_001FECAE
-	.globl MAUVILLE_CITY_GYM_EventBgEvents
-MAUVILLE_CITY_GYM_EventBgEvents: @ 0x08508580
-	bg_event 3, 18, 0, 1, MauvilleCity_Gym_EventScript_001FED91, 0, 0
-	bg_event 6, 18, 0, 1, MauvilleCity_Gym_EventScript_001FEDA1, 0, 0
+	.include "data/maps/MauvilleCity_Gym/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_GYM
-gMapEvents_MAUVILLE_CITY_GYM: @ 0x08508598
-	map_events MAUVILLE_CITY_GYM_EventObjects, MAUVILLE_CITY_GYM_EventWarps, MAUVILLE_CITY_GYM_EventCoordEvents, MAUVILLE_CITY_GYM_EventBgEvents
+	.set gMapEvents_MAUVILLE_CITY_GYM, MauvilleCity_Gym_MapEvents
 	.globl MAUVILLE_CITY_BIKE_SHOP_EventObjects
 MAUVILLE_CITY_BIKE_SHOP_EventObjects: @ 0x085085AC
 	object_event 1, 23, 0, 2, 5, 3, 9, 0, 0, 0, 0, 0x081FF3EC, 0x0000

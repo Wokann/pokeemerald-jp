@@ -1,199 +1,422 @@
-@ MauvilleCity_Gym scripts (JP map g10 m0 @ 0x081FE9B4)
-
 MauvilleCity_Gym_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, MauvilleCity_Gym_EventScript_001FE9BA
-	.byte 0
+    map_script MAP_SCRIPT_ON_LOAD, MauvilleCity_Gym_OnLoad
+    .byte 0
 
-MauvilleCity_Gym_EventScript_001FE9BA::
-	checkflag 0x4F2
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEB2D
-	copyvar 0x8000, 0x4093
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEA00
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEAF5
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEB03
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEB11
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEB1F
-	end
+MauvilleCity_Gym_OnLoad:
+    goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_DeactivatePuzzle
+    switch VAR_MAUVILLE_GYM_STATE
+    case 0, MauvilleCity_Gym_EventScript_UpdateBarriers
+    case 1, MauvilleCity_Gym_EventScript_Switch1Pressed
+    case 2, MauvilleCity_Gym_EventScript_Switch2Pressed
+    case 3, MauvilleCity_Gym_EventScript_Switch3Pressed
+    case 4, MauvilleCity_Gym_EventScript_Switch4Pressed
+    end
 
-MauvilleCity_Gym_EventScript_001FEA00::
-	checkflag 0x63
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEA0A
-	end
+MauvilleCity_Gym_EventScript_UpdateBarriers:
+    goto_if_set FLAG_MAUVILLE_GYM_BARRIERS_STATE, MauvilleCity_Gym_EventScript_SetAltBarriers
+    end
 
-MauvilleCity_Gym_EventScript_001FEA0A::
-	setmetatile 0x3, 0xB, 0x241, 0x1
-	setmetatile 0x3, 0xC, 0x249, 0x1
-	setmetatile 0x3, 0xD, 0x250, 0x1
-	setmetatile 0x4, 0xA, 0x222, 0x0
-	setmetatile 0x5, 0xA, 0x223, 0x0
-	setmetatile 0x4, 0xB, 0x22A, 0x1
-	setmetatile 0x5, 0xB, 0x22B, 0x1
-	setmetatile 0x7, 0xA, 0x222, 0x0
-	setmetatile 0x8, 0xA, 0x223, 0x0
-	setmetatile 0x7, 0xB, 0x22A, 0x1
-	setmetatile 0x8, 0xB, 0x22B, 0x1
-	setmetatile 0x4, 0xD, 0x230, 0x0
-	setmetatile 0x5, 0xD, 0x231, 0x0
-	setmetatile 0x4, 0xE, 0x238, 0x0
-	setmetatile 0x5, 0xE, 0x239, 0x0
-	setmetatile 0x1, 0xA, 0x230, 0x0
-	setmetatile 0x2, 0xA, 0x231, 0x0
-	setmetatile 0x1, 0xB, 0x238, 0x0
-	setmetatile 0x2, 0xB, 0x239, 0x0
-	setmetatile 0x6, 0x8, 0x242, 0x1
-	setmetatile 0x6, 0x9, 0x21A, 0x0
-	setmetatile 0x6, 0xA, 0x251, 0x0
-	setmetatile 0x4, 0x6, 0x230, 0x0
-	setmetatile 0x5, 0x6, 0x231, 0x0
-	setmetatile 0x4, 0x7, 0x238, 0x0
-	setmetatile 0x5, 0x7, 0x239, 0x0
-	end
+MauvilleCity_Gym_EventScript_SetAltBarriers:
+    setmetatile 3, 11, METATILE_MauvilleGym_RedBeamV1_On, TRUE
+    setmetatile 3, 12, METATILE_MauvilleGym_RedBeamV2_On, TRUE
+    setmetatile 3, 13, METATILE_MauvilleGym_PoleTop_On, TRUE
+    setmetatile 4, 10, METATILE_MauvilleGym_RedBeamH1_On, FALSE
+    setmetatile 5, 10, METATILE_MauvilleGym_RedBeamH2_On, FALSE
+    setmetatile 4, 11, METATILE_MauvilleGym_RedBeamH3_On, TRUE
+    setmetatile 5, 11, METATILE_MauvilleGym_RedBeamH4_On, TRUE
+    setmetatile 7, 10, METATILE_MauvilleGym_RedBeamH1_On, FALSE
+    setmetatile 8, 10, METATILE_MauvilleGym_RedBeamH2_On, FALSE
+    setmetatile 7, 11, METATILE_MauvilleGym_RedBeamH3_On, TRUE
+    setmetatile 8, 11, METATILE_MauvilleGym_RedBeamH4_On, TRUE
+    setmetatile 4, 13, METATILE_MauvilleGym_GreenBeamH1_Off, FALSE
+    setmetatile 5, 13, METATILE_MauvilleGym_GreenBeamH2_Off, FALSE
+    setmetatile 4, 14, METATILE_MauvilleGym_GreenBeamH3_Off, FALSE
+    setmetatile 5, 14, METATILE_MauvilleGym_GreenBeamH4_Off, FALSE
+    setmetatile 1, 10, METATILE_MauvilleGym_GreenBeamH1_Off, FALSE
+    setmetatile 2, 10, METATILE_MauvilleGym_GreenBeamH2_Off, FALSE
+    setmetatile 1, 11, METATILE_MauvilleGym_GreenBeamH3_Off, FALSE
+    setmetatile 2, 11, METATILE_MauvilleGym_GreenBeamH4_Off, FALSE
+    setmetatile 6, 8, METATILE_MauvilleGym_PoleBottom_On, TRUE
+    setmetatile 6, 9, METATILE_MauvilleGym_FloorTile, FALSE
+    setmetatile 6, 10, METATILE_MauvilleGym_PoleTop_Off, FALSE
+    setmetatile 4, 6, METATILE_MauvilleGym_GreenBeamH1_Off, FALSE
+    setmetatile 5, 6, METATILE_MauvilleGym_GreenBeamH2_Off, FALSE
+    setmetatile 4, 7, METATILE_MauvilleGym_GreenBeamH3_Off, FALSE
+    setmetatile 5, 7, METATILE_MauvilleGym_GreenBeamH4_Off, FALSE
+    end
 
-MauvilleCity_Gym_EventScript_001FEAF5::
-	setvar 0x8004, 0x0
-	special MauvilleGymSpecial1
-	goto MauvilleCity_Gym_EventScript_001FEA00
-	end
+MauvilleCity_Gym_EventScript_Switch1Pressed:
+    setvar VAR_0x8004, 0
+    special MauvilleGymPressSwitch
+    goto MauvilleCity_Gym_EventScript_UpdateBarriers
+    end
 
-MauvilleCity_Gym_EventScript_001FEB03::
-	setvar 0x8004, 0x1
-	special MauvilleGymSpecial1
-	goto MauvilleCity_Gym_EventScript_001FEA00
-	end
+MauvilleCity_Gym_EventScript_Switch2Pressed:
+    setvar VAR_0x8004, 1
+    special MauvilleGymPressSwitch
+    goto MauvilleCity_Gym_EventScript_UpdateBarriers
+    end
 
-MauvilleCity_Gym_EventScript_001FEB11::
-	setvar 0x8004, 0x2
-	special MauvilleGymSpecial1
-	goto MauvilleCity_Gym_EventScript_001FEA00
-	end
+MauvilleCity_Gym_EventScript_Switch3Pressed:
+    setvar VAR_0x8004, 2
+    special MauvilleGymPressSwitch
+    goto MauvilleCity_Gym_EventScript_UpdateBarriers
+    end
 
-MauvilleCity_Gym_EventScript_001FEB1F::
-	setvar 0x8004, 0x3
-	special MauvilleGymSpecial1
-	goto MauvilleCity_Gym_EventScript_001FEA00
-	end
+MauvilleCity_Gym_EventScript_Switch4Pressed:
+    setvar VAR_0x8004, 3
+    special MauvilleGymPressSwitch
+    goto MauvilleCity_Gym_EventScript_UpdateBarriers
+    end
 
-MauvilleCity_Gym_EventScript_001FEB2D::
-	special MauvilleGymSpecial3
-	end
+MauvilleCity_Gym_EventScript_DeactivatePuzzle:
+    special MauvilleGymDeactivatePuzzle
+    end
 
-	.incbin "baserom_jp.gba", 0x1feb31, 0x10e
-MauvilleCity_Gym_EventScript_001FEC3F::
-	lockall
-	checkflag 0x4F2
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECF3
-	compare_var_to_value 0x4093, 0x1
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECF3
-	setvar 0x4093, 0x1
-	setvar 0x8004, 0x0
-	goto MauvilleCity_Gym_EventScript_001FECD3
-	end
+MauvilleCity_Gym_EventScript_Wattson::
+    trainerbattle_single TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonIntro, MauvilleCity_Gym_Text_WattsonDefeat, MauvilleCity_Gym_EventScript_WattsonDefeated, NO_MUSIC
+    specialvar VAR_RESULT, ShouldTryRematchBattle
+    goto_if_eq VAR_RESULT, TRUE, MauvilleCity_Gym_EventScript_WattsonRematch
+    goto_if_unset FLAG_RECEIVED_TM_SHOCK_WAVE, MauvilleCity_Gym_EventScript_GiveShockWave2
+    goto_if_eq VAR_NEW_MAUVILLE_STATE, 2, MauvilleCity_Gym_EventScript_CompletedNewMauville
+    msgbox MauvilleCity_Gym_Text_WattsonPostBattle, MSGBOX_DEFAULT
+    release
+    end
 
-MauvilleCity_Gym_EventScript_001FEC64::
-	lockall
-	checkflag 0x4F2
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECF3
-	compare_var_to_value 0x4093, 0x2
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECF3
-	setvar 0x4093, 0x2
-	setvar 0x8004, 0x1
-	goto MauvilleCity_Gym_EventScript_001FECD3
-	end
+MauvilleCity_Gym_EventScript_WattsonDefeated:
+    message MauvilleCity_Gym_Text_ReceivedDynamoBadge
+    waitmessage
+    call Common_EventScript_PlayGymBadgeFanfare
+    msgbox MauvilleCity_Gym_Text_ExplainDynamoBadgeTakeThis, MSGBOX_DEFAULT
+    setvar VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE, 3
+    clearflag FLAG_HIDE_VERDANTURF_TOWN_SCOTT
+    setflag FLAG_DEFEATED_MAUVILLE_GYM
+    setflag FLAG_BADGE03_GET
+    addvar VAR_PETALBURG_GYM_STATE, 1
+    call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
+    setvar VAR_0x8008, 3
+    call Common_EventScript_SetGymTrainers
+    special MauvilleGymDeactivatePuzzle
+    special DrawWholeMapView
+    playse SE_UNLOCK
+    call MauvilleCity_Gym_EventScript_GiveShockWave
+    closemessage
+    delay 30
+    playfanfare MUS_REGISTER_MATCH_CALL
+    msgbox MauvilleCity_Gym_Text_RegisteredWattson, MSGBOX_DEFAULT
+    waitfanfare
+    closemessage
+    delay 30
+    setflag FLAG_ENABLE_WATTSON_MATCH_CALL
+    release
+    end
 
-MauvilleCity_Gym_EventScript_001FEC89::
-	lockall
-	checkflag 0x4F2
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECF3
-	compare_var_to_value 0x4093, 0x3
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECF3
-	setvar 0x4093, 0x3
-	setvar 0x8004, 0x2
-	goto MauvilleCity_Gym_EventScript_001FECD3
-	end
+MauvilleCity_Gym_EventScript_GiveShockWave2:
+    giveitem ITEM_TM_SHOCK_WAVE
+    goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+    msgbox MauvilleCity_Gym_Text_ExplainShockWave, MSGBOX_DEFAULT
+    setflag FLAG_RECEIVED_TM_SHOCK_WAVE
+    release
+    end
 
-MauvilleCity_Gym_EventScript_001FECAE::
-	lockall
-	checkflag 0x4F2
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECF3
-	compare_var_to_value 0x4093, 0x4
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECF3
-	setvar 0x4093, 0x4
-	setvar 0x8004, 0x3
-	goto MauvilleCity_Gym_EventScript_001FECD3
-	end
+MauvilleCity_Gym_EventScript_GiveShockWave:
+    giveitem ITEM_TM_SHOCK_WAVE
+    goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
+    msgbox MauvilleCity_Gym_Text_ExplainShockWave, MSGBOX_DEFAULT
+    setflag FLAG_RECEIVED_TM_SHOCK_WAVE
+    return
 
-MauvilleCity_Gym_EventScript_001FECD3::
-	special MauvilleGymSpecial2
-	special MauvilleGymSpecial1
-	special DrawWholeMapView
-	playse 0x2C
-	checkflag 0x63
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FECFA
-	checkflag 0x63
-	goto_if 0x0, MauvilleCity_Gym_EventScript_001FECF5
-	releaseall
-	end
+MauvilleCity_Gym_EventScript_CompletedNewMauville:
+    msgbox MauvilleCity_Gym_Text_WattsonGoForthAndEndeavor, MSGBOX_DEFAULT
+    release
+    end
 
-MauvilleCity_Gym_EventScript_001FECF3::
-	releaseall
-	end
+MauvilleCity_Gym_EventScript_WattsonRematch:
+    trainerbattle_rematch_double TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonPreRematch, MauvilleCity_Gym_Text_WattsonRematchDefeat, MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons
+    msgbox MauvilleCity_Gym_Text_WattsonPostRematch, MSGBOX_AUTOCLOSE
+    end
 
-MauvilleCity_Gym_EventScript_001FECF5::
-	setflag 0x63
-	releaseall
-	end
+MauvilleCity_Gym_EventScript_Switch1::
+    lockall
+    goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_SwitchDoNothing
+    goto_if_eq VAR_MAUVILLE_GYM_STATE, 1, MauvilleCity_Gym_EventScript_SwitchDoNothing
+    setvar VAR_MAUVILLE_GYM_STATE, 1
+    setvar VAR_0x8004, 0
+    goto MauvilleCity_Gym_EventScript_PressFloorSwitch
+    end
 
-MauvilleCity_Gym_EventScript_001FECFA::
-	clearflag 0x63
-	releaseall
-	end
+MauvilleCity_Gym_EventScript_Switch2::
+    lockall
+    goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_SwitchDoNothing
+    goto_if_eq VAR_MAUVILLE_GYM_STATE, 2, MauvilleCity_Gym_EventScript_SwitchDoNothing
+    setvar VAR_MAUVILLE_GYM_STATE, 2
+    setvar VAR_0x8004, 1
+    goto MauvilleCity_Gym_EventScript_PressFloorSwitch
+    end
 
-	.incbin "baserom_jp.gba", 0x1fecff, 0x73
-MauvilleCity_Gym_EventScript_001FED72::
-	lock
-	faceplayer
-	checkflag 0x4F2
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FED87
-	loadword 0x0, 0x081FEDC5
-	callstd 0x4
-	release
-	end
+MauvilleCity_Gym_EventScript_Switch3::
+    lockall
+    goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_SwitchDoNothing
+    goto_if_eq VAR_MAUVILLE_GYM_STATE, 3, MauvilleCity_Gym_EventScript_SwitchDoNothing
+    setvar VAR_MAUVILLE_GYM_STATE, 3
+    setvar VAR_0x8004, 2
+    goto MauvilleCity_Gym_EventScript_PressFloorSwitch
+    end
 
-MauvilleCity_Gym_EventScript_001FED87::
-	loadword 0x0, 0x081FEE65
-	callstd 0x4
-	release
-	end
+MauvilleCity_Gym_EventScript_Switch4::
+    lockall
+    goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_SwitchDoNothing
+    goto_if_eq VAR_MAUVILLE_GYM_STATE, 4, MauvilleCity_Gym_EventScript_SwitchDoNothing
+    setvar VAR_MAUVILLE_GYM_STATE, 4
+    setvar VAR_0x8004, 3
+    goto MauvilleCity_Gym_EventScript_PressFloorSwitch
+    end
 
-MauvilleCity_Gym_EventScript_001FED91::
-	lockall
-	checkflag 0x869
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEDB1
-	goto MauvilleCity_Gym_EventScript_001FEDBB
-	end
+MauvilleCity_Gym_EventScript_PressFloorSwitch:
+    special MauvilleGymSetDefaultBarriers
+    special MauvilleGymPressSwitch
+    special DrawWholeMapView
+    playse SE_UNLOCK
+    goto_if_set FLAG_MAUVILLE_GYM_BARRIERS_STATE, MauvilleCity_Gym_EventScript_ClearBarriersAltState
+    goto_if_unset FLAG_MAUVILLE_GYM_BARRIERS_STATE, MauvilleCity_Gym_EventScript_SetBarriersAltState
+    releaseall
+    end
 
-MauvilleCity_Gym_EventScript_001FEDA1::
-	lockall
-	checkflag 0x869
-	goto_if 0x1, MauvilleCity_Gym_EventScript_001FEDB1
-	goto MauvilleCity_Gym_EventScript_001FEDBB
-	end
+MauvilleCity_Gym_EventScript_SwitchDoNothing:
+    releaseall
+    end
 
-MauvilleCity_Gym_EventScript_001FEDB1::
-	loadword 0x0, 0x081FF292
-	callstd 0x4
-	releaseall
-	end
+MauvilleCity_Gym_EventScript_SetBarriersAltState:
+    setflag FLAG_MAUVILLE_GYM_BARRIERS_STATE
+    releaseall
+    end
 
-MauvilleCity_Gym_EventScript_001FEDBB::
-	loadword 0x0, 0x081FF283
-	callstd 0x4
-	releaseall
-	end
+MauvilleCity_Gym_EventScript_ClearBarriersAltState:
+    clearflag FLAG_MAUVILLE_GYM_BARRIERS_STATE
+    releaseall
+    end
 
-	.incbin "baserom_jp.gba", 0x1fedc5, 0x200f
+MauvilleCity_Gym_EventScript_Kirk::
+    trainerbattle_single TRAINER_KIRK, MauvilleCity_Gym_Text_KirkIntro, MauvilleCity_Gym_Text_KirkDefeat
+    msgbox MauvilleCity_Gym_Text_KirkPostBattle, MSGBOX_AUTOCLOSE
+    end
+
+MauvilleCity_Gym_EventScript_Shawn::
+    trainerbattle_single TRAINER_SHAWN, MauvilleCity_Gym_Text_ShawnIntro, MauvilleCity_Gym_Text_ShawnDefeat
+    msgbox MauvilleCity_Gym_Text_ShawnPostBattle, MSGBOX_AUTOCLOSE
+    end
+
+MauvilleCity_Gym_EventScript_Ben::
+    trainerbattle_single TRAINER_BEN, MauvilleCity_Gym_Text_BenIntro, MauvilleCity_Gym_Text_BenDefeat
+    msgbox MauvilleCity_Gym_Text_BenPostBattle, MSGBOX_AUTOCLOSE
+    end
+
+MauvilleCity_Gym_EventScript_Vivian::
+    trainerbattle_single TRAINER_VIVIAN, MauvilleCity_Gym_Text_VivianIntro, MauvilleCity_Gym_Text_VivianDefeat
+    msgbox MauvilleCity_Gym_Text_VivianPostBattle, MSGBOX_AUTOCLOSE
+    end
+
+MauvilleCity_Gym_EventScript_Angelo::
+    trainerbattle_single TRAINER_ANGELO, MauvilleCity_Gym_Text_AngeloIntro, MauvilleCity_Gym_Text_AngeloDefeat
+    msgbox MauvilleCity_Gym_Text_AngeloPostBattle, MSGBOX_AUTOCLOSE
+    end
+
+MauvilleCity_Gym_EventScript_GymGuide::
+    lock
+    faceplayer
+    goto_if_set FLAG_DEFEATED_MAUVILLE_GYM, MauvilleCity_Gym_EventScript_GymGuidePostVictory
+    msgbox MauvilleCity_Gym_Text_GymGuideAdvice, MSGBOX_DEFAULT
+    release
+    end
+
+MauvilleCity_Gym_EventScript_GymGuidePostVictory:
+    msgbox MauvilleCity_Gym_Text_GymGuidePostVictory, MSGBOX_DEFAULT
+    release
+    end
+
+MauvilleCity_Gym_EventScript_LeftGymStatue::
+    lockall
+    goto_if_set FLAG_BADGE03_GET, MauvilleCity_Gym_EventScript_GymStatueCertified
+    goto MauvilleCity_Gym_EventScript_GymStatue
+    end
+
+MauvilleCity_Gym_EventScript_RightGymStatue::
+    lockall
+    goto_if_set FLAG_BADGE03_GET, MauvilleCity_Gym_EventScript_GymStatueCertified
+    goto MauvilleCity_Gym_EventScript_GymStatue
+    end
+
+MauvilleCity_Gym_EventScript_GymStatueCertified:
+    msgbox MauvilleCity_Gym_Text_GymStatueCertified, MSGBOX_DEFAULT
+    releaseall
+    end
+
+MauvilleCity_Gym_EventScript_GymStatue:
+    msgbox MauvilleCity_Gym_Text_GymStatue, MSGBOX_DEFAULT
+    releaseall
+    end
+
+MauvilleCity_Gym_Text_GymGuideAdvice:
+    .string "げんき　しとぉや！！\n"
+    .string "チャンピオンを　めざす　{PLAYER}！！\p"
+    .string "キンセツシティの　ジムリーダー　テッセンは\n"
+    .string "でんきタイプ　ポケモンの　つかいてだ！\p"
+    .string "みずタイプの　ポケモンで　むかうと\n"
+    .string "ビリビリ　しびれさせられるぞ！\p"
+    .string "しかも　スイッチで　あけたり　する\n"
+    .string "けったいな　とびらを\l"
+    .string "ジムに　つくって　しまったんだ！\p"
+    .string "きばってこー　な！$"
+
+MauvilleCity_Gym_Text_GymGuidePostVictory:
+    .string "こりゃ　びっくり　たまげたッ！\n"
+    .string "きみの　おかげで　とびらは　ひらかれた！$"
+
+MauvilleCity_Gym_Text_KirkIntro:
+    .string "しびれる　オレの　ハートが\n"
+    .string "きみの　やぼうを　ふんさい　するっ！$"
+
+MauvilleCity_Gym_Text_KirkDefeat:
+    .string "しびれる　たたかい　だったぜ⋯⋯$"
+
+MauvilleCity_Gym_Text_KirkPostBattle:
+    .string "ポケモンも　ロックも　ハートが　すべて\n"
+    .string "いぇーい！$"
+
+MauvilleCity_Gym_Text_ShawnIntro:
+    .string "テッセンさんに　きたえられた　この　オレが\n"
+    .string "そう　かんたんに　まける　はずがねえ！$"
+
+MauvilleCity_Gym_Text_ShawnDefeat:
+    .string "キュ　キュイィィィン⋯⋯$"
+
+MauvilleCity_Gym_Text_ShawnPostBattle:
+    .string "このジムの　リーダー　テッセンさんは\n"
+    .string "きみの　おやじが　うまれる　まえから\l"
+    .string "ポケモンと　たたかってきた　つわものさ！$"
+
+MauvilleCity_Gym_Text_BenIntro:
+    .string "この　ポケモンジムは\n"
+    .string "しかけが　あって　たのしいな！$"
+
+MauvilleCity_Gym_Text_BenDefeat:
+    .string "まけると　たのしくないよ$"
+
+MauvilleCity_Gym_Text_BenPostBattle:
+    .string "テッセンさんは　スイッチを　つかった\n"
+    .string "しかけを　つくるのが　しゅみ　なんだって！$"
+
+MauvilleCity_Gym_Text_VivianIntro:
+    .string "あたしの　みりょくと\n"
+    .string "ポケモンの　わざで　しびれさせちゃう！$"
+
+MauvilleCity_Gym_Text_VivianDefeat:
+    .string "あなたの　つよさに　しびれたわ！$"
+
+MauvilleCity_Gym_Text_VivianPostBattle:
+    .string "この　キンセツシティは\n"
+    .string "テッセンさんが　つくったって　はなし\p"
+    .string "あなたや　わたしが\n"
+    .string "うまれる　まえからの　トレーナーだもの\l"
+    .string "きっと　いろんな　ことを　しってるわ$"
+
+MauvilleCity_Gym_Text_AngeloIntro:
+    .string "ぼく　ひかるもの　だーいすき　なんだ！$"
+
+MauvilleCity_Gym_Text_AngeloDefeat:
+    .string "ああ⋯\n"
+    .string "めのまえが　チカ　チカ$"
+
+MauvilleCity_Gym_Text_AngeloPostBattle:
+    .string "キンセツジムも　テッセンさんの　おデコも\n"
+    .string "ピカピカ　ひかってて　うれしいな！$"
+
+MauvilleCity_Gym_Text_WattsonIntro:
+    .string "まちを　かいぞうする　けいかくは\n"
+    .string "あきらめた　わし　じゃが\p"
+    .string "いまは　このジムの　とびらの　しかけを\n"
+    .string "つくることに　うちこんで　おるのじゃ！\p"
+    .string "⋯⋯あれ？　おまえさん\n"
+    .string "なんで　わしの　まえに　いるんじゃ？\p"
+    .string "なにー！　とびらの　しかけを\n"
+    .string "くぐりぬけて　きたと　いうのかっ！\p"
+    .string "わっはははは！　こりゃ　おもしろい！\p"
+    .string "ならば　この　キンセツ　ポケモン　ジムの\n"
+    .string "リーダー　テッセンが\l"
+    .string "ポケモンで　しびれさせて　やるぞい！$"
+
+MauvilleCity_Gym_Text_WattsonDefeat:
+    .string "わっはははは！　わしの　まけじゃ！\n"
+    .string "おまえさんには　しびれた　わい\l"
+    .string "この　バッジ　もっていくが　いいぞ！$"
+
+MauvilleCity_Gym_Text_ReceivedDynamoBadge:
+    .string "{PLAYER}は　テッセンから\n"
+    .string "ダイナモバッジを　もらった！$"
+
+MauvilleCity_Gym_Text_ExplainDynamoBadgeTakeThis:
+    .string "ダイナモバッジを　もっておると\n"
+    .string "ひでんの　いわくだきが\l"
+    .string "つかえるように　なるんじゃ！\p"
+    .string "それに　おまえさんの　ポケモン\n"
+    .string "いっそう　すばやく　なるぞい！\p"
+    .string "うむ⋯⋯\n"
+    .string "これも　もっていくが　いいぞ！$"
+
+MauvilleCity_Gym_Text_ExplainShockWave:
+    .string "その　わざマシン34　には\n"
+    .string "でんげきは　が　はいっておる！\p"
+    .string "かならず　めいちゅう　する\n"
+    .string "たのもしい　わざ　なんじゃよ！\p"
+    .string "⋯⋯　⋯⋯　⋯⋯$"
+
+MauvilleCity_Gym_Text_RegisteredWattson:
+    .string "ジムリーダー　テッセンを\n"
+    .string "ポケナビに　とうろく　した！$"
+
+MauvilleCity_Gym_Text_WattsonPostBattle:
+    .string "みどころの　ある　わかものの　しゅつげん\n"
+    .string "じつに　たのもしい　ことじゃ！$"
+
+MauvilleCity_Gym_Text_WattsonGoForthAndEndeavor:
+    .string "わっはははは！\n"
+    .string "わかものよ　もっともっと　がんばるんじゃ！$"
+
+MauvilleCity_Gym_Text_GymStatue:
+    .string "キンセツシティ　ポケモンジム$"
+
+MauvilleCity_Gym_Text_GymStatueCertified:
+    .string "キンセツシティ　ポケモンジム\p"
+    .string "テッセン　にんてい　トレーナー！\n"
+    .string "{PLAYER}$"
+
+MauvilleCity_Gym_Text_WattsonPreRematch:
+    .string "テッセン“おーっと　あらわれたな！\n"
+    .string "わかっとる！　わしと　ポケモンの\l"
+    .string "しょうぶを　したいんじゃろう！？\p"
+    .string "わっはははは！\p"
+    .string "ひばな　バチバチ　いわせて　やるから\n"
+    .string "かくご　するんじゃぞ！$"
+
+MauvilleCity_Gym_Text_WattsonRematchDefeat:
+    .string "ふぅ　バッテリーぎれ　じゃ⋯⋯$"
+
+MauvilleCity_Gym_Text_WattsonPostRematch:
+    .string "テッセン“わしゃ　じゅうでんの　しなおしだ\p"
+    .string "たいせいを　たてなおしたら\n"
+    .string "また　きみの　ちょうせんを　うけるから\l"
+    .string "しばらく　してから　きておくれ⋯⋯$"
+
+MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons:
+    .string "テッセン“おーっと　あらわれたな！\n"
+    .string "わかっとる！　わしと　ポケモンの\l"
+    .string "しょうぶを　したいんじゃろう！？\p"
+    .string "わっはははは！\p"
+    .string "⋯⋯ありゃ？　たたかえる　ポケモンを\n"
+    .string "1ひきしか　もっておらん　ようだな\p"
+    .string "すまんが　2ひき　いじょうの\n"
+    .string "ポケモンを　もって　きておくれ！$"
+
+@ Temporary successor ownership: the next unstructured map-script block starts
+@ at 0x081FF3EB and remains byte-exact until its own map migration.
+    .incbin "baserom_jp.gba", 0x1ff3eb, 0x19e9

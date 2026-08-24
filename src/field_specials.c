@@ -1025,7 +1025,7 @@ __attribute__((naked)) void LoadLinkPartnerEventObjectSpritePalette(void)
     );
 }
 
-__attribute__((naked)) void MauvilleGymSpecial1(void)
+__attribute__((naked)) void MauvilleGymPressSwitch(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1070,7 +1070,7 @@ __attribute__((naked)) void MauvilleGymSpecial1(void)
     );
 }
 
-__attribute__((naked)) void MauvilleGymSpecial2(void)
+__attribute__((naked)) void MauvilleGymSetDefaultBarriers(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1310,7 +1310,7 @@ __attribute__((naked)) void MauvilleGymSpecial2(void)
     );
 }
 
-__attribute__((naked)) void MauvilleGymSpecial3(void)
+__attribute__((naked)) void MauvilleGymDeactivatePuzzle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
