@@ -1,913 +1,1751 @@
 @ SootopolisCity scripts (JP map g0 m7 @ 0x081E1CF6)
 
 SootopolisCity_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, SootopolisCity_EventScript_001E1D10
-	map_script MAP_SCRIPT_ON_TRANSITION, SootopolisCity_EventScript_001E1D89
-	map_script MAP_SCRIPT_ON_RESUME, SootopolisCity_EventScript_001E1FA5
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, SootopolisCity_MapScriptTable_001E1FAE
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, SootopolisCity_MapScriptTable_001E1F75
+	map_script MAP_SCRIPT_ON_LOAD, SootopolisCity_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, SootopolisCity_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, SootopolisCity_OnResume
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, SootopolisCity_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, SootopolisCity_OnWarp
 	.byte 0
 
-SootopolisCity_EventScript_001E1D10::
-	checkflag 0x9E
-	call_if 0x0, SootopolisCity_EventScript_001E1D7F
-	checkflag 0x81
-	goto_if 0x0, SootopolisCity_EventScript_001E1D2C
-	checkflag 0x9E
-	call_if 0x0, SootopolisCity_EventScript_001E1D2D
+@ These JP strings still reside in the shared event-text range. Keep the
+@ map-local US names while that earlier range is converted separately.
+.set SootopolisCity_Text_NameIsKiriHaveOneOfThese, 0x08263F33
+.set SootopolisCity_Text_GiveYouThisBerryToo, 0x08263FB4
+.set SootopolisCity_Text_WhatKindOfWishInYourName, 0x08263FD5
+.set SootopolisCity_Text_LikeSeasonBornIn, 0x08263FF1
+.set SootopolisCity_Text_ThenILoveAutumn, 0x08264025
+.set SootopolisCity_Text_OhDoesntMatter, 0x0826404E
+
+SootopolisCity_OnLoad::
+	call_if_unset FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_LockGymDoor
+	goto_if_unset FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN, SootopolisCity_EventScript_LegendariesNotArrived
+	call_if_unset FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_LockHouseDoors
 	end
 
-SootopolisCity_EventScript_001E1D2C::
+SootopolisCity_EventScript_LegendariesNotArrived::
 	end
 
-SootopolisCity_EventScript_001E1D2D::
-	setmetatile 0x9, 0x6, 0x248, 0x1
-	setmetatile 0x9, 0x11, 0x248, 0x1
-	setmetatile 0x9, 0x1A, 0x248, 0x1
-	setmetatile 0x2C, 0x11, 0x248, 0x1
-	setmetatile 0x8, 0x23, 0x248, 0x1
-	setmetatile 0x35, 0x1C, 0x248, 0x1
-	setmetatile 0x2D, 0x6, 0x248, 0x1
-	setmetatile 0x30, 0x19, 0x248, 0x1
-	setmetatile 0x33, 0x24, 0x248, 0x1
+SootopolisCity_EventScript_LockHouseDoors::
+	setmetatile 9, 6, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 9, 17, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 9, 26, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 44, 17, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 8, 35, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 53, 28, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 45, 6, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 48, 25, METATILE_Sootopolis_Door_Closed, TRUE
+	setmetatile 51, 36, METATILE_Sootopolis_Door_Closed, TRUE
 	return
 
-SootopolisCity_EventScript_001E1D7F::
-	setmetatile 0x1F, 0x20, 0x250, 0x1
+SootopolisCity_EventScript_LockGymDoor::
+	setmetatile 31, 32, METATILE_Sootopolis_GymDoor_Closed, TRUE
 	return
 
-SootopolisCity_EventScript_001E1D89::
-	setflag 0x87D
-	compare_var_to_value 0x405E, 0x1
-	call_if 0x1, SootopolisCity_EventScript_001E1E1B
-	compare_var_to_value 0x40CA, 0x1
-	call_if 0x1, SootopolisCity_EventScript_001E1E1B
-	call SootopolisCity_EventScript_001E1E9F
-	call SootopolisCity_EventScript_001E1E4C
-	compare_var_to_value 0x405E, 0x1
-	call_if 0x1, SootopolisCity_EventScript_001E1E1F
-	compare_var_to_value 0x405E, 0x2
-	call_if 0x1, SootopolisCity_EventScript_001E1E1F
-	compare_var_to_value 0x405E, 0x3
-	call_if 0x1, SootopolisCity_EventScript_001E1E1F
-	compare_var_to_value 0x405E, 0x4
-	call_if 0x1, SootopolisCity_EventScript_001E1E1F
-	compare_var_to_value 0x405E, 0x5
-	call_if 0x1, SootopolisCity_EventScript_001E1E1F
-	compare_var_to_value 0x405E, 0x2
-	call_if 0x1, SootopolisCity_EventScript_001E1EDC
-	compare_var_to_value 0x405E, 0x3
-	call_if 0x1, SootopolisCity_EventScript_001E1EDC
-	compare_var_to_value 0x405E, 0x4
-	call_if 0x1, SootopolisCity_EventScript_001E1EF5
-	compare_var_to_value 0x405E, 0x5
-	call_if 0x1, SootopolisCity_EventScript_001E1F0B
-	compare_var_to_value 0x405E, 0x6
-	call_if 0x1, SootopolisCity_EventScript_001E1F6D
+SootopolisCity_OnTransition::
+	setflag FLAG_VISITED_SOOTOPOLIS_CITY
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x1, SootopolisCity_EventScript_HideMapNamePopup
+	call_if_eq VAR_SKY_PILLAR_STATE, 0x1, SootopolisCity_EventScript_HideMapNamePopup
+	call SootopolisCity_EventScript_SetWeather
+	call SootopolisCity_EventScript_SetLayout
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x1, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x2, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x3, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x4, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_SetBattleSpectators
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x2, SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x3, SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x4, SootopolisCity_EventScript_SetExitCaveOfOriginObjPos
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_SetOutsideGymObjPos
+	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_SetExpertBlockCaveEntrance
 	end
 
-SootopolisCity_EventScript_001E1E1B::
-	setflag 0x4000
+SootopolisCity_EventScript_HideMapNamePopup::
+	setflag FLAG_HIDE_MAP_NAME_POPUP
 	return
 
-SootopolisCity_EventScript_001E1E1F::
-	setobjectxyperm 0x3, 0xD, 0x30
-	setobjectxyperm 0x5, 0x2E, 0x20
-	setobjectxyperm 0x4, 0x30, 0x29
-	setobjectxyperm 0x8, 0x2D, 0x2B
-	setobjectmovementtype 0x3, 0x7
-	setobjectmovementtype 0x5, 0x9
-	setobjectmovementtype 0x4, 0x9
-	setobjectmovementtype 0x8, 0x9
+SootopolisCity_EventScript_SetBattleSpectators::
+	setobjectxyperm LOCALID_KIRI, 13, 48
+	setobjectxyperm LOCALID_SOOTOPOLIS_BOY_1, 46, 32
+	setobjectxyperm LOCALID_SOOTOPOLIS_NINJA_BOY, 48, 41
+	setobjectxyperm LOCALID_SOOTOPOLIS_WOMAN_1, 45, 43
+	setobjectmovementtype LOCALID_KIRI, MOVEMENT_TYPE_FACE_UP
+	setobjectmovementtype LOCALID_SOOTOPOLIS_BOY_1, MOVEMENT_TYPE_FACE_LEFT
+	setobjectmovementtype LOCALID_SOOTOPOLIS_NINJA_BOY, MOVEMENT_TYPE_FACE_LEFT
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WOMAN_1, MOVEMENT_TYPE_FACE_LEFT
 	return
 
-SootopolisCity_EventScript_001E1E4C::
-	compare_var_to_value 0x405E, 0x0
-	goto_if 0x1, SootopolisCity_EventScript_001E1E9A
-	compare_var_to_value 0x405E, 0x6
-	goto_if 0x4, SootopolisCity_EventScript_001E1E9A
-	compare_var_to_value 0x405E, 0x1
-	goto_if 0x1, SootopolisCity_EventScript_001E1E9B
-	compare_var_to_value 0x405E, 0x2
-	goto_if 0x1, SootopolisCity_EventScript_001E1E9B
-	compare_var_to_value 0x405E, 0x3
-	goto_if 0x1, SootopolisCity_EventScript_001E1E9B
-	compare_var_to_value 0x405E, 0x4
-	goto_if 0x1, SootopolisCity_EventScript_001E1E9B
-	compare_var_to_value 0x40CA, 0x1
-	goto_if 0x3, SootopolisCity_EventScript_001E1E9B
+SootopolisCity_EventScript_SetLayout::
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x0, SootopolisCity_EventScript_SetNormalLayout
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_SetNormalLayout
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x1, SootopolisCity_EventScript_SetLegendariesLayout
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x2, SootopolisCity_EventScript_SetLegendariesLayout
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x3, SootopolisCity_EventScript_SetLegendariesLayout
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x4, SootopolisCity_EventScript_SetLegendariesLayout
+	goto_if_le VAR_SKY_PILLAR_STATE, 0x1, SootopolisCity_EventScript_SetLegendariesLayout
 	return
 
-SootopolisCity_EventScript_001E1E9A::
+SootopolisCity_EventScript_SetNormalLayout::
 	return
 
-SootopolisCity_EventScript_001E1E9B::
-	setmaplayoutindex 0x165
+SootopolisCity_EventScript_SetLegendariesLayout::
+	setmaplayoutindex LAYOUT_SOOTOPOLIS_CITY_LEGENDS_BATTLE
 	return
 
-SootopolisCity_EventScript_001E1E9F::
-	compare_var_to_value 0x405E, 0x0
-	goto_if 0x1, SootopolisCity_EventScript_001E1ED7
-	compare_var_to_value 0x405E, 0x6
-	goto_if 0x4, SootopolisCity_EventScript_001E1ED7
-	compare_var_to_value 0x405E, 0x1
-	goto_if 0x1, SootopolisCity_EventScript_001E1ED8
-	compare_var_to_value 0x40CA, 0x1
-	goto_if 0x1, SootopolisCity_EventScript_001E1ED8
-	compare_var_to_value 0x40CA, 0x1
-	goto_if 0x3, 0x08243106
+SootopolisCity_EventScript_SetWeather::
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x0, SootopolisCity_EventScript_SetNormalWeather
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_SetNormalWeather
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x1, SootopolisCity_EventScript_SetDownpour
+	goto_if_eq VAR_SKY_PILLAR_STATE, 0x1, SootopolisCity_EventScript_SetDownpour
+	goto_if_le VAR_SKY_PILLAR_STATE, 0x1, Common_EventScript_SetAbnormalWeather
 	return
 
-SootopolisCity_EventScript_001E1ED7::
+SootopolisCity_EventScript_SetNormalWeather::
 	return
 
-SootopolisCity_EventScript_001E1ED8::
-	setweather 0xD
+SootopolisCity_EventScript_SetDownpour::
+	setweather WEATHER_DOWNPOUR
 	return
 
-SootopolisCity_EventScript_001E1EDC::
-	checkflag 0x133
-	goto_if 0x1, SootopolisCity_EventScript_001E1EE6
+SootopolisCity_EventScript_CheckSetEnterCaveOfOriginObjPos::
+	goto_if_set FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN, SootopolisCity_EventScript_SetEnterCaveOfOriginObjPos
 	return
 
-SootopolisCity_EventScript_001E1EE6::
-	setobjectxyperm 0x1, 0x1E, 0x12
-	setobjectxyperm 0x7, 0x20, 0x12
+SootopolisCity_EventScript_SetEnterCaveOfOriginObjPos::
+	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 30, 18
+	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 32, 18
 	return
 
-SootopolisCity_EventScript_001E1EF5::
-	setobjectxyperm 0x1, 0x1E, 0x12
-	setobjectxyperm 0x12, 0x1F, 0x12
-	setobjectxyperm 0x7, 0x20, 0x12
+SootopolisCity_EventScript_SetExitCaveOfOriginObjPos::
+	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 30, 18
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 31, 18
+	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 32, 18
 	end
 
-SootopolisCity_EventScript_001E1F0B::
-	setobjectxyperm 0x1, 0x1F, 0x12
-	setobjectxyperm 0x7, 0x1D, 0x21
-	setobjectxyperm 0x10, 0x21, 0x23
-	setobjectxyperm 0x11, 0x22, 0x23
-	compare_var_to_value 0x40D8, 0x0
-	call_if 0x1, SootopolisCity_EventScript_001E1F49
-	compare_var_to_value 0x40D8, 0x1
-	call_if 0x1, SootopolisCity_EventScript_001E1F55
-	compare_var_to_value 0x40D8, 0x2
-	call_if 0x1, SootopolisCity_EventScript_001E1F61
+SootopolisCity_EventScript_SetOutsideGymObjPos::
+	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 31, 18
+	setobjectxyperm LOCALID_SOOTOPOLIS_STEVEN, 29, 33
+	setobjectxyperm LOCALID_SOOTOPOLIS_MAXIE, 33, 35
+	setobjectxyperm LOCALID_SOOTOPOLIS_ARCHIE, 34, 35
+	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 0x0, SootopolisCity_EventScript_SetWallaceMiddle
+	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 0x1, SootopolisCity_EventScript_SetWallaceRight
+	call_if_eq VAR_SOOTOPOLIS_WALLACE_STATE, 0x2, SootopolisCity_EventScript_SetWallaceLeft
 	return
 
-SootopolisCity_EventScript_001E1F49::
-	setobjectxyperm 0x12, 0x1F, 0x21
-	setobjectmovementtype 0x12, 0x8
+SootopolisCity_EventScript_SetWallaceMiddle::
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 31, 33
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
 	return
 
-SootopolisCity_EventScript_001E1F55::
-	setobjectxyperm 0x12, 0x20, 0x21
-	setobjectmovementtype 0x12, 0x8
+SootopolisCity_EventScript_SetWallaceRight::
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 32, 33
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
 	return
 
-SootopolisCity_EventScript_001E1F61::
-	setobjectxyperm 0x12, 0x1E, 0x21
-	setobjectmovementtype 0x12, 0x8
+SootopolisCity_EventScript_SetWallaceLeft::
+	setobjectxyperm LOCALID_SOOTOPOLIS_WALLACE, 30, 33
+	setobjectmovementtype LOCALID_SOOTOPOLIS_WALLACE, MOVEMENT_TYPE_FACE_DOWN
 	return
 
-SootopolisCity_EventScript_001E1F6D::
-	setobjectxyperm 0x1, 0x1F, 0x12
+SootopolisCity_EventScript_SetExpertBlockCaveEntrance::
+	setobjectxyperm LOCALID_SOOTOPOLIS_EXPERT, 31, 18
 	return
 
-SootopolisCity_MapScriptTable_001E1F75::
-	map_script_2 0x405E, 0x5, SootopolisCity_EventScript_001E1F7F
+SootopolisCity_OnWarp::
+	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_PlayerFaceLegendaries
 	.2byte 0
 
-SootopolisCity_EventScript_001E1F7F::
-	compare_var_to_value 0x40CA, 0x1
-	call_if 0x1, SootopolisCity_EventScript_001E1F96
-	compare_var_to_value 0x40CA, 0x2
-	call_if 0x1, SootopolisCity_EventScript_001E1F9B
+SootopolisCity_EventScript_PlayerFaceLegendaries::
+	call_if_eq VAR_SKY_PILLAR_STATE, 0x1, SootopolisCity_EventScript_PlayerFaceLegendaries1
+	call_if_eq VAR_SKY_PILLAR_STATE, 0x2, SootopolisCity_EventScript_PlayerFaceLegendaries2
 	end
 
-SootopolisCity_EventScript_001E1F96::
-	turnobject 0xFF, 0x2
+SootopolisCity_EventScript_PlayerFaceLegendaries1::
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	return
 
-SootopolisCity_EventScript_001E1F9B::
-	turnobject 0xFF, 0x2
-	setvar 0x40CA, 0x3
+SootopolisCity_EventScript_PlayerFaceLegendaries2::
+	turnobject LOCALID_PLAYER, DIR_NORTH
+	setvar VAR_SKY_PILLAR_STATE, 0x3
 	return
 
-SootopolisCity_EventScript_001E1FA5::
-	setdivewarp 0x1805, 0xFF, 0x9, 0x6
+SootopolisCity_OnResume::
+	setdivewarp MAP_UNDERWATER_SOOTOPOLIS_CITY, 9, 6
 	end
 
-SootopolisCity_MapScriptTable_001E1FAE::
-	map_script_2 0x405E, 0x1, SootopolisCity_EventScript_001E1FC0
-	map_script_2 0x40CA, 0x1, SootopolisCity_EventScript_001E2298
+SootopolisCity_OnFrame::
+	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 0x1, SootopolisCity_EventScript_StartLegendariesScene
+	map_script_2 VAR_SKY_PILLAR_STATE, 0x1, SootopolisCity_EventScript_StartRayquazaScene
 	.2byte 0
 
-SootopolisCity_EventScript_001E1FC0::
+SootopolisCity_EventScript_StartLegendariesScene::
 	lockall
 	special StorePlayerCoordsInVars
-	compare_var_to_value 0x8004, 0x2B
-	goto_if 0x5, SootopolisCity_EventScript_001E211C
-	compare_var_to_value 0x8005, 0x20
-	goto_if 0x5, SootopolisCity_EventScript_001E211C
-	goto SootopolisCity_EventScript_001E1FE0
+	goto_if_ne VAR_0x8004, 0x2B, SootopolisCity_EventScript_LegendariesSceneFromDive
+	goto_if_ne VAR_0x8005, 0x20, SootopolisCity_EventScript_LegendariesSceneFromDive
+	goto SootopolisCity_EventScript_LegendariesSceneFromPokeCenter
 	end
 
-SootopolisCity_EventScript_001E1FE0::
-	delay 0x3C
+SootopolisCity_EventScript_LegendariesSceneFromPokeCenter::
+	delay 60
 	special SpawnCameraObject
-	applymovement 0x7F, 0x081E2102
-	waitmovement 0x0
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromPokeCenter
+	waitmovement 0
 	special RemoveCameraObject
-	delay 0x3C
-	fadescreenspeed 0x1, 0x8
-	setweather 0xF
+	delay 60
+	fadescreenspeed FADE_TO_BLACK, 8
+	setweather WEATHER_ABNORMAL
 	resetweather
-	setvar 0x8004, 0x0
-	special sub_0813B810
-	waitstate
-	applymovement 0xA, 0x08243627
-	applymovement 0x9, 0x0824362B
-	waitmovement 0x0
-	delay 0x3C
+	setvar VAR_0x8004, FALSE
+	special Script_DoRayquazaScene
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	delay 60
 	waitse
-	playmoncry 0x194, 0x2
-	applymovement 0xA, 0x081E2252
-	applymovement 0x9, 0x081E227F
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x8
-	setvar 0x8007, 0x5
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
+	waitmovement 0
+	setvar VAR_0x8004, 0x1
+	setvar VAR_0x8005, 0x1
+	setvar VAR_0x8006, 0x8
+	setvar VAR_0x8007, 0x5
 	special ShakeCamera
 	waitstate
-	applymovement 0xA, 0x081E2269
-	applymovement 0x9, 0x081E228A
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+	waitmovement 0
 	waitse
-	playmoncry 0x195, 0x2
-	applymovement 0xA, 0x081E225C
-	applymovement 0x9, 0x081E2277
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x8
-	setvar 0x8007, 0x5
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreDefend
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonAttack
+	waitmovement 0
+	setvar VAR_0x8004, 0x1
+	setvar VAR_0x8005, 0x1
+	setvar VAR_0x8006, 0x8
+	setvar VAR_0x8007, 0x5
 	special ShakeCamera
 	waitstate
-	applymovement 0xA, 0x081E2269
-	applymovement 0x9, 0x081E228A
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+	waitmovement 0
 	waitse
-	playmoncry 0x194, 0x2
-	applymovement 0xA, 0x081E2252
-	applymovement 0x9, 0x081E227F
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x8
-	setvar 0x8007, 0x5
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
+	waitmovement 0
+	setvar VAR_0x8004, 0x1
+	setvar VAR_0x8005, 0x1
+	setvar VAR_0x8006, 0x8
+	setvar VAR_0x8007, 0x5
 	special ShakeCamera
 	waitstate
-	applymovement 0xA, 0x081E2269
-	applymovement 0x9, 0x081E228A
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+	waitmovement 0
 	special SpawnCameraObject
-	applymovement 0xA, 0x081E2270
-	applymovement 0x9, 0x081E2291
-	applymovement 0x7F, 0x081E210F
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreIdle
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonIdle
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanBackToPokeCenter
+	waitmovement 0
 	special RemoveCameraObject
-	setvar 0x405E, 0x2
-	clearflag 0x4000
+	setvar VAR_SOOTOPOLIS_CITY_STATE, 0x2
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1e2102, 0x1a
-SootopolisCity_EventScript_001E211C::
-	delay 0x3C
+SootopolisCity_Movement_PanToActionFromPokeCenter:
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	step_end
+
+SootopolisCity_Movement_PanBackToPokeCenter:
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	step_end
+
+SootopolisCity_EventScript_LegendariesSceneFromDive::
+	delay 60
 	special SpawnCameraObject
-	applymovement 0x7F, 0x081E223E
-	waitmovement 0x0
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromDive
+	waitmovement 0
 	special RemoveCameraObject
-	delay 0x3C
-	fadescreenspeed 0x1, 0x8
-	setweather 0xF
+	delay 60
+	fadescreenspeed FADE_TO_BLACK, 8
+	setweather WEATHER_ABNORMAL
 	resetweather
-	setvar 0x8004, 0x0
-	special sub_0813B810
-	waitstate
-	applymovement 0xA, 0x08243627
-	applymovement 0x9, 0x0824362B
-	waitmovement 0x0
-	delay 0x3C
+	setvar VAR_0x8004, FALSE
+	special Script_DoRayquazaScene
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	delay 60
 	waitse
-	playmoncry 0x194, 0x2
-	applymovement 0xA, 0x081E2252
-	applymovement 0x9, 0x081E227F
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x8
-	setvar 0x8007, 0x5
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
+	waitmovement 0
+	setvar VAR_0x8004, 0x1
+	setvar VAR_0x8005, 0x1
+	setvar VAR_0x8006, 0x8
+	setvar VAR_0x8007, 0x5
 	special ShakeCamera
 	waitstate
-	applymovement 0xA, 0x081E2269
-	applymovement 0x9, 0x081E228A
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+	waitmovement 0
 	waitse
-	playmoncry 0x195, 0x2
-	applymovement 0xA, 0x081E225C
-	applymovement 0x9, 0x081E2277
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x8
-	setvar 0x8007, 0x5
+	playmoncry SPECIES_GROUDON, CRY_MODE_ENCOUNTER
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreDefend
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonAttack
+	waitmovement 0
+	setvar VAR_0x8004, 0x1
+	setvar VAR_0x8005, 0x1
+	setvar VAR_0x8006, 0x8
+	setvar VAR_0x8007, 0x5
 	special ShakeCamera
 	waitstate
-	applymovement 0xA, 0x081E2269
-	applymovement 0x9, 0x081E228A
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+	waitmovement 0
 	waitse
-	playmoncry 0x194, 0x2
-	applymovement 0xA, 0x081E2252
-	applymovement 0x9, 0x081E227F
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x8
-	setvar 0x8007, 0x5
+	playmoncry SPECIES_KYOGRE, CRY_MODE_ENCOUNTER
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreAttack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonDefend
+	waitmovement 0
+	setvar VAR_0x8004, 0x1
+	setvar VAR_0x8005, 0x1
+	setvar VAR_0x8006, 0x8
+	setvar VAR_0x8007, 0x5
 	special ShakeCamera
 	waitstate
-	applymovement 0xA, 0x081E2269
-	applymovement 0x9, 0x081E228A
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreMoveBack
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonMoveBack
+	waitmovement 0
 	special SpawnCameraObject
-	applymovement 0xA, 0x081E2270
-	applymovement 0x9, 0x081E2291
-	applymovement 0x7F, 0x081E2248
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_KYOGRE, SootopolisCity_Movement_KyogreIdle
+	applymovement LOCALID_SOOTOPOLIS_GROUDON, SootopolisCity_Movement_GroudonIdle
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanBackToDive
+	waitmovement 0
 	special RemoveCameraObject
-	setvar 0x405E, 0x2
-	clearflag 0x4000
+	setvar VAR_SOOTOPOLIS_CITY_STATE, 0x2
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1e223e, 0x5a
-SootopolisCity_EventScript_001E2298::
+SootopolisCity_Movement_PanToActionFromDive:
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+SootopolisCity_Movement_PanBackToDive:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	step_end
+
+SootopolisCity_Movement_KyogreAttack:
+	walk_in_place_slow_left
+	walk_in_place_slow_left
+	walk_in_place_slow_left
+	delay_16
+	delay_16
+	delay_16
+	init_affine_anim
+	walk_left_affine
+	clear_affine_anim
+	step_end
+
+SootopolisCity_Movement_KyogreDefend:
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	init_affine_anim
+	walk_left_affine
+	clear_affine_anim
+	step_end
+
+SootopolisCity_Movement_KyogreMoveBack:
+	lock_facing_direction
+	walk_right
+	delay_16
+	delay_16
+	delay_16
+	unlock_facing_direction
+	step_end
+
+SootopolisCity_Movement_KyogreIdle:
+	walk_in_place_slow_left
+	walk_in_place_slow_left
+	walk_in_place_slow_left
+	walk_in_place_slow_left
+	walk_in_place_slow_left
+	walk_in_place_slow_left
+	step_end
+
+SootopolisCity_Movement_GroudonAttack:
+	walk_in_place_slow_right
+	walk_in_place_slow_right
+	walk_in_place_slow_right
+	delay_16
+	delay_16
+	delay_16
+	walk_fast_right
+	step_end
+
+SootopolisCity_Movement_GroudonDefend:
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	walk_fast_right
+	step_end
+
+SootopolisCity_Movement_GroudonMoveBack:
+	lock_facing_direction
+	walk_left
+	delay_16
+	delay_16
+	delay_16
+	unlock_facing_direction
+	step_end
+
+SootopolisCity_Movement_GroudonIdle:
+	walk_in_place_slow_right
+	walk_in_place_slow_right
+	walk_in_place_slow_right
+	walk_in_place_slow_right
+	walk_in_place_slow_right
+	walk_in_place_slow_right
+	step_end
+
+SootopolisCity_EventScript_StartRayquazaScene::
 	lockall
 	special StorePlayerCoordsInVars
-	compare_var_to_value 0x8004, 0x2B
-	goto_if 0x5, 0x081E2368
-	compare_var_to_value 0x8005, 0x20
-	goto_if 0x5, 0x081E2368
-	goto 0x081E22B8
+	goto_if_ne VAR_0x8004, 43, SootopolisCity_EventScript_RayquazaSceneFromDive
+	goto_if_ne VAR_0x8005, 32, SootopolisCity_EventScript_RayquazaSceneFromDive
+	goto SootopolisCity_EventScript_RayquazaSceneFromPokeCenter
 	end
 
-	.incbin "baserom_jp.gba", 0x1e22b8, 0x26f
-SootopolisCity_EventScript_001E2527::
+SootopolisCity_EventScript_RayquazaSceneFromPokeCenter::
+	delay 60
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromPokeCenter
+	waitmovement 0
+	special RemoveCameraObject
+	delay 60
+	fadescreenspeed FADE_TO_BLACK, 8
+	call SootopolisCity_EventScript_SetRoughWater
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
+	setvar VAR_0x8004, TRUE
+	special Script_DoRayquazaScene
+	playse SE_THUNDER
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
+	waitmovement 0
+	waitse
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 1
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 3
+	special ShakeCamera
+	waitstate
+	waitse
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 5
+	special ShakeCamera
+	waitstate
+	@ JP opcode 0xC5 is a verified Pokemon-cry wait at this site.
+	waitmoncry_jp
+	setweather WEATHER_NONE
+	resetweather
+	applymovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff
+	waitmovement 0
+	removeobject LOCALID_SOOTOPOLIS_RAYQUAZA
+	special WaitWeather
+	clearflag FLAG_SYS_WEATHER_CTRL
+	setvar VAR_SKY_PILLAR_STATE, 3
+	clearflag FLAG_LEGENDARIES_IN_SOOTOPOLIS
+	fadenewbgm MUS_SOOTOPOLIS
+	delay 120
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
+	warpwhitefade MAP_SOOTOPOLIS_CITY, 43, 32
+	waitstate
+	end
+
+SootopolisCity_EventScript_RayquazaSceneFromDive::
+	delay 60
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanToActionFromDive
+	waitmovement 0
+	special RemoveCameraObject
+	delay 60
+	fadescreenspeed FADE_TO_BLACK, 8
+	call SootopolisCity_EventScript_SetRoughWater
+	removeobject LOCALID_SOOTOPOLIS_GROUDON
+	removeobject LOCALID_SOOTOPOLIS_KYOGRE
+	addobject LOCALID_SOOTOPOLIS_RAYQUAZA
+	setvar VAR_0x8004, TRUE
+	special Script_DoRayquazaScene
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, SootopolisCity_Movement_PanUp
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerApproachLegendaries
+	waitmovement 0
+	waitse
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 1
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 3
+	special ShakeCamera
+	waitstate
+	waitse
+	playmoncry SPECIES_RAYQUAZA, CRY_MODE_ENCOUNTER
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, 2
+	setvar VAR_0x8006, 8
+	setvar VAR_0x8007, 5
+	special ShakeCamera
+	waitstate
+	@ JP opcode 0xC5 is a verified Pokemon-cry wait at this site.
+	waitmoncry_jp
+	setweather WEATHER_NONE
+	resetweather
+	applymovement LOCALID_SOOTOPOLIS_RAYQUAZA, SootopolisCity_Movement_RayquazaFlyOff
+	waitmovement 0
+	removeobject LOCALID_SOOTOPOLIS_RAYQUAZA
+	special WaitWeather
+	clearflag FLAG_SYS_WEATHER_CTRL
+	setvar VAR_SKY_PILLAR_STATE, 2
+	clearflag FLAG_LEGENDARIES_IN_SOOTOPOLIS
+	fadenewbgm MUS_SURF
+	delay 120
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
+	warpwhitefade MAP_SOOTOPOLIS_CITY, 29, 53
+	waitstate
+	end
+
+SootopolisCity_EventScript_SetRoughWater::
+	setmetatile 27, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 28, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 29, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 30, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 27, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 28, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 29, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 30, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 27, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 28, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 29, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 30, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 32, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 33, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 34, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 35, 43, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 32, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 33, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 34, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 35, 44, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 32, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 33, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 34, 45, METATILE_Sootopolis_RoughWater, FALSE
+	setmetatile 35, 45, METATILE_Sootopolis_RoughWater, FALSE
+	return
+
+SootopolisCity_Movement_RayquazaFlyOff: @ 0x081E24F5
+	walk_fast_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	step_end
+
+SootopolisCity_Movement_PanUp: @ 0x081E24FD
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+SootopolisCity_Movement_PlayerApproachLegendaries: @ 0x081E2502
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+@ Unused
+SootopolisCity_Movement_PlayerApproachLegendariesDown: @ 0x081E2507
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+@ Unused
+SootopolisCity_Movement_UnusedPanUp: @ 0x081E250C
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_slow_diag_northeast
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+@ Unused
+SootopolisCity_Movement_UnusedPanBack: @ 0x081E2519
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_slow_diag_southwest
+	walk_slow_diag_southwest
+	step_end
+SootopolisCity_EventScript_CaveOfOriginExpert::
 	lock
 	faceplayer
-	compare_var_to_value 0x405E, 0x6
-	goto_if 0x4, SootopolisCity_EventScript_001E255E
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E2568
-	compare_var_to_value 0x405E, 0x2
-	goto_if 0x4, SootopolisCity_EventScript_001E2554
-	loadword 0x0, 0x081E305D
-	callstd 0x4
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_ExpertPostLegendaries
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_ExpertLegendaries
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x2, SootopolisCity_EventScript_ExpertLeadToCave
+	msgbox SootopolisCity_Text_CaveOfOriginPleaseLeave, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2554::
-	loadword 0x0, 0x081E30B4
-	callstd 0x4
+SootopolisCity_EventScript_ExpertLeadToCave::
+	msgbox SootopolisCity_Text_LeadSuperiorTrainerToCave, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E255E::
-	loadword 0x0, 0x081E3148
-	callstd 0x4
+SootopolisCity_EventScript_ExpertPostLegendaries::
+	msgbox SootopolisCity_Text_CaveOfOriginSleepsToo, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2568::
-	loadword 0x0, 0x081E311F
-	callstd 0x4
+SootopolisCity_EventScript_ExpertLegendaries::
+	msgbox SootopolisCity_Text_AwakenedPokemonClash, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2572::
+SootopolisCity_EventScript_Kiri::
 	lock
 	faceplayer
-	compare_var_to_value 0x405E, 0x1
-	goto_if 0x3, SootopolisCity_EventScript_001E25B5
-	compare_var_to_value 0x405E, 0x6
-	goto_if 0x4, SootopolisCity_EventScript_001E25B5
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E25AA
-	loadword 0x0, 0x081E2F96
-	callstd 0x4
+	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 0x1, SootopolisCity_EventScript_KiriGiveBerry
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_KiriGiveBerry
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_KiriRayquaza
+	msgbox SootopolisCity_Text_BigPokemonFighting, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x3, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_KIRI, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-SootopolisCity_EventScript_001E25AA::
-	loadword 0x0, 0x081E2FBE
-	callstd 0x4
+SootopolisCity_EventScript_KiriRayquaza::
+	msgbox SootopolisCity_Text_PrettyMonCameFromSky, MSGBOX_DEFAULT
 	closemessage
 	release
 	end
 
-SootopolisCity_EventScript_001E25B5::
+SootopolisCity_EventScript_KiriGiveBerry::
 	dotimebasedevents
 	special GetPlayerBigGuyGirlString
-	checkflag 0x932
-	goto_if 0x1, SootopolisCity_EventScript_001E2655
-	loadword 0x0, 0x08263F33
-	callstd 0x4
-	random 0xA
-	addvar 0x800D, 0x14
-	addvar 0x800D, 0x85
-	setorcopyvar 0x8000, 0x800D
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0x932
-	loadword 0x0, 0x08263FB4
-	callstd 0x4
-	random 0x2
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, SootopolisCity_EventScript_001E2613
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, SootopolisCity_EventScript_001E2634
+	goto_if_set FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY, SootopolisCity_EventScript_KiriReceivedBerry
+	msgbox SootopolisCity_Text_NameIsKiriHaveOneOfThese, MSGBOX_DEFAULT
+	random NUM_KIRI_BERRIES
+	addvar VAR_RESULT, NUM_KIRI_BERRIES_SKIPPED
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_DAILY_SOOTOPOLIS_RECEIVED_BERRY
+	msgbox SootopolisCity_Text_GiveYouThisBerryToo, MSGBOX_DEFAULT
+	random 2
+	goto_if_eq VAR_RESULT, FALSE, SootopolisCity_EventScript_GiveFigyBerry
+	goto_if_eq VAR_RESULT, TRUE, SootopolisCity_EventScript_GiveIapapaBerry
 	end
 
-SootopolisCity_EventScript_001E2613::
-	setorcopyvar 0x8000, 0x8F
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	loadword 0x0, 0x08263FD5
-	callstd 0x4
+SootopolisCity_EventScript_GiveFigyBerry::
+	giveitem ITEM_FIGY_BERRY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2634::
-	setorcopyvar 0x8000, 0x93
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	loadword 0x0, 0x08263FD5
-	callstd 0x4
+SootopolisCity_EventScript_GiveIapapaBerry::
+	giveitem ITEM_IAPAPA_BERRY
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	msgbox SootopolisCity_Text_WhatKindOfWishInYourName, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2655::
-	loadword 0x0, 0x08263FF1
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, SootopolisCity_EventScript_001E2672
-	loadword 0x0, 0x0826404E
-	callstd 0x4
+SootopolisCity_EventScript_KiriReceivedBerry::
+	msgbox SootopolisCity_Text_LikeSeasonBornIn, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, SootopolisCity_EventScript_KiriLikeSeasonBornIn
+	msgbox SootopolisCity_Text_OhDoesntMatter, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2672::
-	loadword 0x0, 0x08264025
-	callstd 0x4
+SootopolisCity_EventScript_KiriLikeSeasonBornIn::
+	msgbox SootopolisCity_Text_ThenILoveAutumn, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E267C::
+SootopolisCity_EventScript_Woman2::
 	lockall
-	applymovement 0x2, 0x08243621
-	waitmovement 0x0
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E26A7
-	loadword 0x0, 0x081E32A3
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_WOMAN_2, Common_Movement_FacePlayer
+	waitmovement 0
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_Woman2Rayquaza
+	msgbox SootopolisCity_Text_WeatherWentWild, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x2, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_WOMAN_2, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E26A7::
-	loadword 0x0, 0x081E3326
-	callstd 0x4
+SootopolisCity_EventScript_Woman2Rayquaza::
+	msgbox SootopolisCity_Text_YouBroughtFlyingMon, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E26B1::
+SootopolisCity_EventScript_Man::
 	lock
 	faceplayer
-	compare_var_to_value 0x405E, 0x6
-	goto_if 0x4, SootopolisCity_EventScript_001E26C8
-	loadword 0x0, 0x081E2FFF
-	callstd 0x4
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_ManPostLegendaries
+	msgbox SootopolisCity_Text_NoOrdinaryTourist, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E26C8::
-	loadword 0x0, 0x081E304B
-	callstd 0x4
+SootopolisCity_EventScript_ManPostLegendaries::
+	msgbox SootopolisCity_Text_CityRegainedCalm, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E26D2::
+SootopolisCity_EventScript_Woman1::
 	lock
 	faceplayer
-	compare_var_to_value 0x405E, 0x6
-	goto_if 0x4, SootopolisCity_EventScript_001E2714
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E271E
-	compare_var_to_value 0x405E, 0x2
-	goto_if 0x4, SootopolisCity_EventScript_001E26FF
-	loadword 0x0, 0x081E317C
-	callstd 0x4
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_Woman1PostLegendaries
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_Woman1Rayquaza
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x2, SootopolisCity_EventScript_Woman1Legendaries
+	msgbox SootopolisCity_Text_SootopolisSkyBeautiful, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E26FF::
-	loadword 0x0, 0x081E31E2
-	callstd 0x4
+SootopolisCity_EventScript_Woman1Legendaries::
+	msgbox SootopolisCity_Text_GiganticPokemonFight, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x8, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_WOMAN_1, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-SootopolisCity_EventScript_001E2714::
-	loadword 0x0, 0x081E324C
-	callstd 0x4
+SootopolisCity_EventScript_Woman1PostLegendaries::
+	msgbox SootopolisCity_Text_NightSkyFavoriteScenery, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E271E::
-	loadword 0x0, 0x081E3217
-	callstd 0x4
+SootopolisCity_EventScript_Woman1Rayquaza::
+	msgbox SootopolisCity_Text_FearedWorstWhenPokemonFlewDown, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2728::
+SootopolisCity_EventScript_NinjaBoy::
 	lockall
-	applymovement 0x4, 0x08243621
-	waitmovement 0x0
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E2773
-	compare_var_to_value 0x405E, 0x6
-	goto_if 0x4, SootopolisCity_EventScript_001E2769
-	compare_var_to_value 0x405E, 0x1
-	goto_if 0x3, SootopolisCity_EventScript_001E2769
-	loadword 0x0, 0x081E2E17
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_NINJA_BOY, Common_Movement_FacePlayer
+	waitmovement 0
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_NinjaBoyRayquaza
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_NinjaBoyNormal
+	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 0x1, SootopolisCity_EventScript_NinjaBoyNormal
+	msgbox SootopolisCity_Text_ThisIsWicked, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x4, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_NINJA_BOY, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-SootopolisCity_EventScript_001E2769::
-	loadword 0x0, 0x081E2DD3
-	callstd 0x4
+SootopolisCity_EventScript_NinjaBoyNormal::
+	msgbox SootopolisCity_Text_WonderWhatWorldIsLike, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2773::
-	loadword 0x0, 0x081E2E24
-	callstd 0x4
+SootopolisCity_EventScript_NinjaBoyRayquaza::
+	msgbox SootopolisCity_Text_ThatWasWicked, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E277D::
+SootopolisCity_EventScript_Boy1::
 	lockall
-	applymovement 0x5, 0x08243621
-	waitmovement 0x0
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E27C7
-	checkflag 0x864
-	goto_if 0x1, SootopolisCity_EventScript_001E27D1
-	compare_var_to_value 0x405E, 0x6
-	goto_if 0x4, SootopolisCity_EventScript_001E27DB
-	compare_var_to_value 0x405E, 0x1
-	goto_if 0x3, SootopolisCity_EventScript_001E27DB
-	loadword 0x0, 0x081E2C9A
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_BOY_1, Common_Movement_FacePlayer
+	waitmovement 0
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_Boy1Rayquaza
+	goto_if_set FLAG_SYS_GAME_CLEAR, SootopolisCity_EventScript_Boy1GameClear
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x6, SootopolisCity_EventScript_Boy1Normal
+	goto_if_le VAR_SOOTOPOLIS_CITY_STATE, 0x1, SootopolisCity_EventScript_Boy1Normal
+	msgbox SootopolisCity_Text_GiantPokemonSuddenlyAppeared, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x5, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_BOY_1, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-SootopolisCity_EventScript_001E27C7::
-	loadword 0x0, 0x081E2D00
-	callstd 0x4
+SootopolisCity_EventScript_Boy1Rayquaza::
+	msgbox SootopolisCity_Text_WhatIsThatGreenPokemon, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E27D1::
-	loadword 0x0, 0x081E2D1F
-	callstd 0x4
+SootopolisCity_EventScript_Boy1GameClear::
+	msgbox SootopolisCity_Text_WhereDidLegendariesGo, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E27DB::
-	loadword 0x0, 0x081E2C5C
-	callstd 0x4
+SootopolisCity_EventScript_Boy1Normal::
+	msgbox SootopolisCity_Text_PhysicallyFitLivingHere, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E27E5::
-	loadword 0x0, 0x081E2C09
-	callstd 0x3
+SootopolisCity_EventScript_GymSign::
+	msgbox SootopolisCity_Text_GymSign, MSGBOX_SIGN
 	end
 
-SootopolisCity_EventScript_001E27EE::
-	loadword 0x0, 0x081E2C31
-	callstd 0x3
+SootopolisCity_EventScript_CitySign::
+	msgbox SootopolisCity_Text_CitySign, MSGBOX_SIGN
 	end
 
 EventScript_ClosedSootopolisDoor:: @ 0x081E27F7
-	.incbin "baserom_jp.gba", 0x1e27f7, 0x9
-SootopolisCity_EventScript_001E2800::
+	msgbox SootopolisCity_Text_DoorIsClosed, MSGBOX_SIGN
+	end
+SootopolisCity_EventScript_Steven::
 	lockall
-	applymovement 0x7, 0x08243621
-	waitmovement 0x0
-	checkflag 0x133
-	call_if 0x0, SootopolisCity_EventScript_001E2866
-	compare_var_to_value 0x405E, 0x2
-	goto_if 0x1, SootopolisCity_EventScript_001E2848
-	compare_var_to_value 0x405E, 0x3
-	goto_if 0x1, SootopolisCity_EventScript_001E285C
-	compare_var_to_value 0x405E, 0x4
-	goto_if 0x1, SootopolisCity_EventScript_001E285C
-	checkflag 0x9E
-	goto_if 0x1, SootopolisCity_EventScript_001E2852
-	loadword 0x0, 0x081E36F0
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, Common_Movement_FacePlayer
+	waitmovement 0
+	call_if_unset FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN, SootopolisCity_EventScript_StevenLeadPlayerCaveOfOrigin
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x2, SootopolisCity_EventScript_StevenHelpWallace
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x3, SootopolisCity_EventScript_StevenHelpedWallace
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x4, SootopolisCity_EventScript_StevenHelpedWallace
+	goto_if_set FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_StevenMaxieArchieLeft
+	msgbox SootopolisCity_Text_SoThatsRayquaza, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2848::
-	loadword 0x0, 0x081E369B
-	callstd 0x4
+SootopolisCity_EventScript_StevenHelpWallace::
+	msgbox SootopolisCity_Text_KnowWhatsNeededToHelpHim, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2852::
-	loadword 0x0, 0x081E3726
-	callstd 0x4
+SootopolisCity_EventScript_StevenMaxieArchieLeft::
+	msgbox SootopolisCity_Text_MaxieArchieLeft, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E285C::
-	loadword 0x0, 0x081E36BF
-	callstd 0x4
+SootopolisCity_EventScript_StevenHelpedWallace::
+	msgbox SootopolisCity_Text_NeverBeenToSkyPillar, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2866::
-	loadword 0x0, 0x081E350F
-	callstd 0x4
+SootopolisCity_EventScript_StevenLeadPlayerCaveOfOrigin::
+	msgbox SootopolisCity_Text_InvolvedWithCrisisComeWithMe, MSGBOX_DEFAULT
 	closemessage
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, SootopolisCity_EventScript_001E28DD
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, SootopolisCity_EventScript_001E28EF
-	loadword 0x0, 0x081E35DC
-	callstd 0x4
+	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_StartWalkToCaveOfOriginWest
+	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_StartWalkToCaveOfOriginNorth
+	msgbox SootopolisCity_Text_DoesThisMakeYourFearPokemon, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x7, 0x081E296E
-	applymovement 0xFF, 0x081E29A8
-	waitmovement 0x0
-	delay 0x78
-	applymovement 0x1, 0x081E29DB
-	waitmovement 0x0
-	applymovement 0x7, 0x081E29DE
-	applymovement 0xFF, 0x081E29E9
-	waitmovement 0x0
-	loadword 0x0, 0x081E3656
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenWalkToCaveOfOrigin
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerWalkToCaveOfOrigin
+	waitmovement 0
+	delay 120
+	applymovement LOCALID_SOOTOPOLIS_EXPERT, SootopolisCity_Movement_ExpertMoveAside
+	waitmovement 0
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenArriveCaveEntrance
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerArriveCaveEntrance
+	waitmovement 0
+	msgbox SootopolisCity_Text_HereWereAreHelpWallace, MSGBOX_DEFAULT
 	closemessage
-	setflag 0x133
-	applymovement 0xFF, 0x081E29F4
-	waitmovement 0x0
-	warp 0x1825, 0xFF, 0x9, 0x14
+	setflag FLAG_STEVEN_GUIDES_TO_CAVE_OF_ORIGIN
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerEnterCaveOfOrigin
+	waitmovement 0
+	warp MAP_CAVE_OF_ORIGIN_ENTRANCE, 9, 20
 	waitstate
 	end
 
-SootopolisCity_EventScript_001E28DD::
-	applymovement 0x7, 0x081E2901
-	applymovement 0xFF, 0x081E2926
-	waitmovement 0x0
+SootopolisCity_EventScript_StartWalkToCaveOfOriginWest::
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest
+	waitmovement 0
 	return
 
-SootopolisCity_EventScript_001E28EF::
-	applymovement 0x7, 0x081E2901
-	applymovement 0xFF, 0x081E294A
-	waitmovement 0x0
+SootopolisCity_EventScript_StartWalkToCaveOfOriginNorth::
+	applymovement LOCALID_SOOTOPOLIS_STEVEN, SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin
+	applymovement LOCALID_PLAYER, SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth
+	waitmovement 0
 	return
 
-	.incbin "baserom_jp.gba", 0x1e2901, 0xf6
-SootopolisCity_EventScript_001E29F7::
+SootopolisCity_Movement_StevenStartWalkToCaveOfOrigin:
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginWest:
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+SootopolisCity_Movement_PlayerStartWalkToCaveOfOriginNorth:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+SootopolisCity_Movement_StevenWalkToCaveOfOrigin:
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	delay_4
+	walk_in_place_faster_left
+	delay_16
+	delay_16
+	walk_right
+	walk_up
+	walk_up
+	step_end
+
+SootopolisCity_Movement_PlayerWalkToCaveOfOrigin:
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+SootopolisCity_Movement_ExpertMoveAside:
+	walk_slow_left
+	walk_in_place_faster_right
+	step_end
+
+SootopolisCity_Movement_StevenArriveCaveEntrance:
+	walk_down
+	walk_down
+	walk_left
+	delay_8
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_right
+	walk_in_place_faster_left
+	step_end
+
+SootopolisCity_Movement_PlayerArriveCaveEntrance:
+	delay_16
+	delay_16
+	delay_16
+	delay_8
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_right
+	step_end
+
+SootopolisCity_Movement_PlayerEnterCaveOfOrigin:
+	walk_up
+	walk_up
+	step_end
+
+SootopolisCity_EventScript_Boy2::
 	lockall
-	applymovement 0xF, 0x08243621
-	waitmovement 0x0
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E2A22
-	loadword 0x0, 0x081E2D60
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FacePlayer
+	waitmovement 0
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_Boy2Rayquaza
+	msgbox SootopolisCity_Text_TwoPokemonArentAngry, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xF, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_BOY_2, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2A22::
-	loadword 0x0, 0x081E2DAA
-	callstd 0x4
+SootopolisCity_EventScript_Boy2Rayquaza::
+	msgbox SootopolisCity_Text_FlyingMonStoppedRampage, MSGBOX_DEFAULT
 	closemessage
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2A2D::
+SootopolisCity_EventScript_BlackBelt::
 	lockall
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E2A61
-	loadword 0x0, 0x081E2E35
-	callstd 0x4
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_BlackBeltRayquaza
+	msgbox SootopolisCity_Text_GoRedAndBlueMon, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xE, 0x08243621
-	waitmovement 0x0
-	loadword 0x0, 0x081E2E55
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox SootopolisCity_Text_DoYouKnowMonNames, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xE, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2A61::
-	applymovement 0xE, 0x08243621
-	waitmovement 0x0
-	loadword 0x0, 0x081E2E7F
-	callstd 0x4
+SootopolisCity_EventScript_BlackBeltRayquaza::
+	applymovement LOCALID_SOOTOPOLIS_BLACK_BELT, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox SootopolisCity_Text_GreenOneSettlesThings, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2A75::
+SootopolisCity_EventScript_Girl::
 	lockall
-	applymovement 0xD, 0x08243621
-	waitmovement 0x0
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E2AA0
-	loadword 0x0, 0x081E2FD7
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_GIRL, Common_Movement_FacePlayer
+	waitmovement 0
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_GirlRayquaza
+	msgbox SootopolisCity_Text_SootopolisWillBeWrecked, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xD, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_GIRL, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2AA0::
-	loadword 0x0, 0x081E2FEB
-	callstd 0x4
+SootopolisCity_EventScript_GirlRayquaza::
+	msgbox SootopolisCity_Text_SootopolisDidntGetWrecked, MSGBOX_DEFAULT
 	closemessage
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2AAB::
+SootopolisCity_EventScript_Maniac::
 	lockall
-	applymovement 0xC, 0x08243621
-	waitmovement 0x0
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E2AD6
-	loadword 0x0, 0x081E2EC0
-	callstd 0x4
+	applymovement LOCALID_SOOTOPOLIS_MANIAC, Common_Movement_FacePlayer
+	waitmovement 0
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_ManiacRayquaza
+	msgbox SootopolisCity_Text_SeeingLegendWithOwnEyes, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xC, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_SOOTOPOLIS_MANIAC, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2AD6::
-	loadword 0x0, 0x081E2F2C
-	callstd 0x4
+SootopolisCity_EventScript_ManiacRayquaza::
+	msgbox SootopolisCity_Text_SawLegendWithOwnEyes, MSGBOX_DEFAULT
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2AE0::
+SootopolisCity_EventScript_Wallace::
 	lock
 	faceplayer
-	compare_var_to_value 0x405E, 0x4
-	goto_if 0x1, SootopolisCity_EventScript_001E2B72
-	checkflag 0x138
-	goto_if 0x1, SootopolisCity_EventScript_001E2B7C
-	checkflag 0x9E
-	goto_if 0x1, SootopolisCity_EventScript_001E2B09
-	loadword 0x0, 0x081E37B8
-	callstd 0x4
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x4, SootopolisCity_EventScript_GoToSkyPillar
+	goto_if_set FLAG_RECEIVED_HM_WATERFALL, SootopolisCity_EventScript_GoToGym
+	goto_if_set FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_GiveWaterfall
+	msgbox SootopolisCity_Text_AquaMagmaDidntMeanHarm, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2B09::
-	loadword 0x0, 0x081E380B
-	callstd 0x4
-	setorcopyvar 0x8000, 0x159
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	setflag 0x138
-	loadword 0x0, 0x081E38A0
-	callstd 0x4
+SootopolisCity_EventScript_GiveWaterfall::
+	msgbox SootopolisCity_Text_ThankYouForHelpAcceptThis, MSGBOX_DEFAULT
+	giveitem ITEM_HM_WATERFALL
+	setflag FLAG_RECEIVED_HM_WATERFALL
+	msgbox SootopolisCity_Text_ExplainWaterfallGoToGym, MSGBOX_DEFAULT
 	closemessage
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, SootopolisCity_EventScript_001E2B4C
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, SootopolisCity_EventScript_001E2B4C
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, SootopolisCity_EventScript_001E2B5F
+	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_WallaceMoveFromGym
+	call_if_eq VAR_FACING, DIR_EAST, SootopolisCity_EventScript_WallaceMoveFromGym
+	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_WallaceMoveFromGymWest
 	release
 	end
 
-SootopolisCity_EventScript_001E2B4C::
-	applymovement 0x12, 0x081E2B86
-	waitmovement 0x0
-	moveobjectoffscreen 0x12
-	setvar 0x40D8, 0x1
+SootopolisCity_EventScript_WallaceMoveFromGym::
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGym
+	waitmovement 0
+	moveobjectoffscreen LOCALID_SOOTOPOLIS_WALLACE
+	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 0x1
 	return
 
-SootopolisCity_EventScript_001E2B5F::
-	applymovement 0x12, 0x081E2B89
-	waitmovement 0x0
-	moveobjectoffscreen 0x12
-	setvar 0x40D8, 0x2
+SootopolisCity_EventScript_WallaceMoveFromGymWest::
+	applymovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGymWest
+	waitmovement 0
+	moveobjectoffscreen LOCALID_SOOTOPOLIS_WALLACE
+	setvar VAR_SOOTOPOLIS_WALLACE_STATE, 0x2
 	return
 
-SootopolisCity_EventScript_001E2B72::
-	loadword 0x0, 0x081E376F
-	callstd 0x4
+SootopolisCity_EventScript_GoToSkyPillar::
+	msgbox SootopolisCity_Text_HaventYouScaledSkyPillar, MSGBOX_DEFAULT
 	release
 	end
 
-SootopolisCity_EventScript_001E2B7C::
-	loadword 0x0, 0x081E3943
-	callstd 0x4
+SootopolisCity_EventScript_GoToGym::
+	msgbox SootopolisCity_Text_DazzledByMentor, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x1e2b86, 0x6
-SootopolisCity_EventScript_001E2B8C::
+SootopolisCity_Movement_WallaceMoveFromGym:
+	walk_right
+	walk_in_place_faster_down
+	step_end
+
+SootopolisCity_Movement_WallaceMoveFromGymWest:
+	walk_left
+	walk_in_place_faster_down
+	step_end
+
+SootopolisCity_EventScript_Maxie::
 	lockall
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E2BA3
-	loadword 0x0, 0x081E335D
-	callstd 0x4
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_MaxieRayquaza
+	msgbox SootopolisCity_Text_GroudonPleaseStop, MSGBOX_DEFAULT
 	closemessage
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2BA3::
-	loadword 0x0, 0x081E33BA
-	callstd 0x4
-	setflag 0x135
-	checkflag 0x134
-	goto_if 0x1, SootopolisCity_EventScript_001E2BE6
+SootopolisCity_EventScript_MaxieRayquaza::
+	msgbox SootopolisCity_Text_AfterAllOurScheming, MSGBOX_DEFAULT
+	setflag FLAG_MET_MAXIE_SOOTOPOLIS
+	goto_if_set FLAG_MET_ARCHIE_SOOTOPOLIS, SootopolisCity_EventScript_MaxieArchieLeave
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2BB9::
+SootopolisCity_EventScript_Archie::
 	lockall
-	compare_var_to_value 0x405E, 0x5
-	goto_if 0x1, SootopolisCity_EventScript_001E2BD0
-	loadword 0x0, 0x081E343A
-	callstd 0x4
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x5, SootopolisCity_EventScript_ArchieRayquaza
+	msgbox SootopolisCity_Text_KyogreCalmDown, MSGBOX_DEFAULT
 	closemessage
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2BD0::
-	loadword 0x0, 0x081E3495
-	callstd 0x4
-	setflag 0x134
-	checkflag 0x135
-	goto_if 0x1, SootopolisCity_EventScript_001E2BE6
+SootopolisCity_EventScript_ArchieRayquaza::
+	msgbox SootopolisCity_Text_TryingMeaninglessToPokemon, MSGBOX_DEFAULT
+	setflag FLAG_MET_ARCHIE_SOOTOPOLIS
+	goto_if_set FLAG_MET_MAXIE_SOOTOPOLIS, SootopolisCity_EventScript_MaxieArchieLeave
 	releaseall
 	end
 
-SootopolisCity_EventScript_001E2BE6::
-	setflag 0x33B
-	setflag 0x33A
-	setflag 0x9E
-	clearflag 0x358
-	clearflag 0x394
-	setvar 0x40B9, 0x2
-	warpsilent 0x7, 0xFF, 0x1F, 0x22
+SootopolisCity_EventScript_MaxieArchieLeave::
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_MAXIE
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_ARCHIE
+	setflag FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE
+	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_MAXIE
+	clearflag FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE
+	setvar VAR_MT_PYRE_STATE, 0x2
+	warpsilent MAP_SOOTOPOLIS_CITY, 31, 34
 	waitstate
 	releaseall
 	end
+
+@ Unused
+SootopolisCity_Movement_Levitate: @ 0x081E2C05
+	levitate
+	step_end
+
+@ Unused
+SootopolisCity_Movement_DestroyTask: @ 0x081E2C07
+	destroy_extra_task
+	step_end
+
+	.globl SootopolisCity_Text_GymSign
+SootopolisCity_Text_GymSign: @ 0x081E2C09
+	.string "ルネ　シティ　ポケモンジム\n"
+	.string "リーダー　アダン\l"
+	.string "みずも　したたる　ジムリーダー！$"
+
+	.globl SootopolisCity_Text_CitySign
+SootopolisCity_Text_CitySign: @ 0x081E2C31
+	.string "ここは　ルネ　シティ\n"
+	.string "れきしが　ねむる　しんぴの　まち$"
+
+SootopolisCity_Text_DoorIsClosed: @ 0x081E2C4D
+	.string "とびらは　とざされて　いる！$"
+	.globl SootopolisCity_Text_PhysicallyFitLivingHere
+SootopolisCity_Text_PhysicallyFitLivingHere: @ 0x081E2C5C
+	.string "うみに　もぐったり\n"
+	.string "かいだんを　のぼったり　おりたり⋯⋯\p"
+	.string "このまちで　くらして　いると\n"
+	.string "けっこう　たくましく　なるんだよね$"
+
+	.globl SootopolisCity_Text_GiantPokemonSuddenlyAppeared
+SootopolisCity_Text_GiantPokemonSuddenlyAppeared: @ 0x081E2C9A
+	.string "おっきな　ポケモンが　とつぜん\n"
+	.string "まちの　まんなかに　あらわれたんだ！\l"
+	.string "しかも　みたことない　やつが　2ひきも！\p"
+	.string "あの　2ひき⋯⋯\n"
+	.string "どうして　ぶつかり　あってるの？\l"
+	.string "ポケモンどうし　なかよく　できないの？$"
+
+	.globl SootopolisCity_Text_WhatIsThatGreenPokemon
+SootopolisCity_Text_WhatIsThatGreenPokemon: @ 0x081E2D00
+	.string "なに？　なに？　なに？\n"
+	.string "あの　みどりの　ポケモン　なにー！？$"
+
+	.globl SootopolisCity_Text_WhereDidLegendariesGo
+SootopolisCity_Text_WhereDidLegendariesGo: @ 0x081E2D1F
+	.string "グラードンと　カイオーガ\n"
+	.string "どこ　いっちゃったんだろう⋯⋯\p"
+	.string "また　どこかで　ひでりに　したり\n"
+	.string "おおあめ　ふらせたり　してるのかな？$"
+
+	.globl SootopolisCity_Text_TwoPokemonArentAngry
+SootopolisCity_Text_TwoPokemonArentAngry: @ 0x081E2D60
+	.string "なんとなく　かんじるよ⋯⋯　あの2ひき\n"
+	.string "おこってる　わけじゃ　ないみたい\p"
+	.string "たぶん⋯⋯　じぶんの　ちからを\n"
+	.string "コントロール　できなく　なってるんだ⋯⋯$"
+
+	.globl SootopolisCity_Text_FlyingMonStoppedRampage
+SootopolisCity_Text_FlyingMonStoppedRampage: @ 0x081E2DAA
+	.string "そらから　きた　ポケモンが\n"
+	.string "あばれていた　2ひきを\l"
+	.string "おとなしく　させちゃった⋯⋯$"
+
+	.globl SootopolisCity_Text_WonderWhatWorldIsLike
+SootopolisCity_Text_WonderWhatWorldIsLike: @ 0x081E2DD3
+	.string "ぼく⋯⋯　まだ　いちども　このまちから\n"
+	.string "そとに　でたこと　ないんだ\p"
+	.string "あの　まあるい　そらの　むこうには\n"
+	.string "どんな　せかいが　あるのかな？$"
+
+	.globl SootopolisCity_Text_ThisIsWicked
+SootopolisCity_Text_ThisIsWicked: @ 0x081E2E17
+	.string "すげー　だいはくりょく！$"
+
+	.globl SootopolisCity_Text_ThatWasWicked
+SootopolisCity_Text_ThatWasWicked: @ 0x081E2E24
+	.string "すげー　だいはくりょく　だった！$"
+
+	.globl SootopolisCity_Text_GoRedAndBlueMon
+SootopolisCity_Text_GoRedAndBlueMon: @ 0x081E2E35
+	.string "それいけ！　あかい　ポケモン！\n"
+	.string "まけるな！　あおい　ポケモン！$"
+
+	.globl SootopolisCity_Text_DoYouKnowMonNames
+SootopolisCity_Text_DoYouKnowMonNames: @ 0x081E2E55
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "きみ　あそこで　たたかってる\n"
+	.string "ポケモンたちの　なまえ　しってる？$"
+
+	.globl SootopolisCity_Text_GreenOneSettlesThings
+SootopolisCity_Text_GreenOneSettlesThings: @ 0x081E2E7F
+	.string "あかい　ポケモンと　あおい　ポケモン\n"
+	.string "どっちが　かつのかと　おもったら\l"
+	.string "みどりの　ポケモンかよ！\p"
+	.string "こりゃ　だいドンデンがえしだ！$"
+
+	.globl SootopolisCity_Text_SeeingLegendWithOwnEyes
+SootopolisCity_Text_SeeingLegendWithOwnEyes: @ 0x081E2EC0
+	.string "ポケモンの　たたかいに　よって\n"
+	.string "りくちと　うみが　つくられた　という\l"
+	.string "おおむかし　からの　いいつたえが\p"
+	.string "いま　めのまえで　さいげん　されている！\p"
+	.string "うぉぉー！　こんな　すごいものを\n"
+	.string "この　めで　みられる　なんてー！！$"
+
+	.globl SootopolisCity_Text_SawLegendWithOwnEyes
+SootopolisCity_Text_SawLegendWithOwnEyes: @ 0x081E2F2C
+	.string "ポケモンの　たたかいに　よって\n"
+	.string "りくちと　うみが　つくられた　という\l"
+	.string "おおむかし　からの　いいつたえが\p"
+	.string "いま　このまちで　さいげん　された！\p"
+	.string "うぉぉー！　こんな　すごいものを\n"
+	.string "この　めで　みられた　なんてー！！$"
+
+	.globl SootopolisCity_Text_BigPokemonFighting
+SootopolisCity_Text_BigPokemonFighting: @ 0x081E2F96
+	.string "おっきな　ポケモンと　ポケモンが\n"
+	.string "けんか　してるよ！\p"
+	.string "だれか　とめて　あげて！$"
+
+	.globl SootopolisCity_Text_PrettyMonCameFromSky
+SootopolisCity_Text_PrettyMonCameFromSky: @ 0x081E2FBE
+	.string "きれいな　ポケモン\n"
+	.string "おそらから　おりて　きた⋯⋯$"
+
+	.globl SootopolisCity_Text_SootopolisWillBeWrecked
+SootopolisCity_Text_SootopolisWillBeWrecked: @ 0x081E2FD7
+	.string "ひー　ルネシティが　こわれちゃうよー！$"
+
+	.globl SootopolisCity_Text_SootopolisDidntGetWrecked
+SootopolisCity_Text_SootopolisDidntGetWrecked: @ 0x081E2FEB
+	.string "ルネシティ　こわれないで　すんだよー！$"
+
+	.globl SootopolisCity_Text_NoOrdinaryTourist
+SootopolisCity_Text_NoOrdinaryTourist: @ 0x081E2FFF
+	.string "ほう！\n"
+	.string "わざわざ　ルネに　やってくるとは\l"
+	.string "ただの　かんこうきゃく　じゃ　ないな！\p"
+	.string "だからといって　おかねを　はらった\n"
+	.string "かんこうきゃく　でも　ないな⋯⋯$"
+
+	.globl SootopolisCity_Text_CityRegainedCalm
+SootopolisCity_Text_CityRegainedCalm: @ 0x081E304B
+	.string "まちが　また　しずかに　なった⋯⋯$"
+
+	.globl SootopolisCity_Text_CaveOfOriginPleaseLeave
+SootopolisCity_Text_CaveOfOriginPleaseLeave: @ 0x081E305D
+	.string "あなたは　なんですかな？\p"
+	.string "ここは　めざめのほこら⋯⋯\p"
+	.string "おくりびやまで　しずめられた\n"
+	.string "ポケモンの　たましいが\l"
+	.string "よみがえると　いわれる　ばしょ⋯⋯\p"
+	.string "どうか　おひきとり　ください$"
+
+	.globl SootopolisCity_Text_LeadSuperiorTrainerToCave
+SootopolisCity_Text_LeadSuperiorTrainerToCave: @ 0x081E30B4
+	.string "つよい　いしと　すぐれた　さいのう\p"
+	.string "そして　たくさんの　ポケモンを　みてきた\n"
+	.string "ちしきと　けいけん⋯⋯\p"
+	.string "そんな　じんぶつが　やってきたら\n"
+	.string "この　ほこらへ　あんない　するよう\l"
+	.string "ミクリから　もうしつけられて　いたのです$"
+
+	.globl SootopolisCity_Text_AwakenedPokemonClash
+SootopolisCity_Text_AwakenedPokemonClash: @ 0x081E311F
+	.string "おお⋯⋯\p"
+	.string "めざめた　2ひきの　あらそいを\n"
+	.string "もう　1ひきの　めざめが　しずめた⋯⋯$"
+
+	.globl SootopolisCity_Text_CaveOfOriginSleepsToo
+SootopolisCity_Text_CaveOfOriginSleepsToo: @ 0x081E3148
+	.string "ここは　めざめのほこら⋯⋯\p"
+	.string "けれど　わざわいが　きえさった　いま\n"
+	.string "ほこらも　しずかに　ねむるのです⋯⋯$"
+
+	.globl SootopolisCity_Text_SootopolisSkyBeautiful
+SootopolisCity_Text_SootopolisSkyBeautiful: @ 0x081E317C
+	.string "ルネは　かざんの\n"
+	.string "かこうの　なかに　できた　まち\p"
+	.string "うえを　みあげると\n"
+	.string "かこうも　いっしょに　みえてしまって\l"
+	.string "そらの　すべては　みえない\p"
+	.string "でも　だからこそ\n"
+	.string "ルネから　みえる　そらが\l"
+	.string "いちばん　うつくしいの$"
+
+	.globl SootopolisCity_Text_GiganticPokemonFight
+SootopolisCity_Text_GiganticPokemonFight: @ 0x081E31E2
+	.string "あんなに　おおきな　ポケモンが\n"
+	.string "2ひきも　あばれている　なんて\l"
+	.string "とても　わたしたちの　てに　おえないわ！$"
+
+	.globl SootopolisCity_Text_FearedWorstWhenPokemonFlewDown
+SootopolisCity_Text_FearedWorstWhenPokemonFlewDown: @ 0x081E3217
+	.string "3ひきめの　おおきな　ポケモンが\n"
+	.string "そらから　おりてきた　ときには\l"
+	.string "もう　どうなることかと　おもったわ⋯⋯$"
+
+	.globl SootopolisCity_Text_NightSkyFavoriteScenery
+SootopolisCity_Text_NightSkyFavoriteScenery: @ 0x081E324C
+	.string "かざんの　かこう　という\n"
+	.string "わっかに　かこまれた　まるい　よぞら\p"
+	.string "その　なかでは　たくさんの　ほしが\n"
+	.string "いきている　みたいに　またたくの⋯⋯\l"
+	.string "わたしが　いちばん　すきな　けしき$"
+
+	.globl SootopolisCity_Text_WeatherWentWild
+SootopolisCity_Text_WeatherWentWild: @ 0x081E32A3
+	.string "きょうの　あさは　いいてんき　だったのよ\n"
+	.string "それが⋯⋯\p"
+	.string "とつぜん　くもり　はじめたと　おもったら\n"
+	.string "つよい　あめが　ふりだして\l"
+	.string "かみなりも　ゴロゴロ　なりだして\l"
+	.string "てんきが　メチャメチャに　なっちゃったの\p"
+	.string "それも　これも　ぜんぶ\n"
+	.string "あの　ポケモンの　せい　かしら⋯⋯？$"
+
+	.globl SootopolisCity_Text_YouBroughtFlyingMon
+SootopolisCity_Text_YouBroughtFlyingMon: @ 0x081E3326
+	.string "えっ！\p"
+	.string "あの　そらから　おりてきた　ポケモンを\n"
+	.string "つれてきたの　って　あなたなの！？\p"
+	.string "⋯⋯へえ　やるじゃない！$"
+
+	.globl SootopolisCity_Text_GroudonPleaseStop
+SootopolisCity_Text_GroudonPleaseStop: @ 0x081E335D
+	.string "マツブサ“グ⋯　グラードン⋯⋯\n"
+	.string "たのむから　もう　やめてくれ！\p"
+	.string "おまえの　ちからは　もう　わかった！\p"
+	.string "このままでは　ルネ　だけじゃない\n"
+	.string "ホウエンじゅうが\l"
+	.string "めちゃめちゃに　なってしまう！$"
+
+	.globl SootopolisCity_Text_AfterAllOurScheming
+SootopolisCity_Text_AfterAllOurScheming: @ 0x081E33BA
+	.string "マツブサ“ちょうこだい　ポケモンは\n"
+	.string "グラードンと　カイオーガ　だけじゃ\l"
+	.string "なかったと　いうのか⋯⋯\p"
+	.string "われわれは　ひっしに　なって\n"
+	.string "あれこれ　うごきまわって　きたが\l"
+	.string "あの　ポケモンの　ひとはたらきで\l"
+	.string "ぜんぶ　もとどおり　というわけか⋯⋯\p"
+	.string "ふ⋯⋯　ふははは⋯⋯$"
+
+	.globl SootopolisCity_Text_KyogreCalmDown
+SootopolisCity_Text_KyogreCalmDown: @ 0x081E343A
+	.string "アオギリ“カイオーガ！　どうした！？\n"
+	.string "これを　みろ！　べにいろのたま　だぞ！\l"
+	.string "おとなしくなるんだ！　カイオーガ！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "だめだ！　ぜんぜん　きかない！$"
+
+	.globl SootopolisCity_Text_TryingMeaninglessToPokemon
+SootopolisCity_Text_TryingMeaninglessToPokemon: @ 0x081E3495
+	.string "アオギリ“カイオーガと　グラードンは\n"
+	.string "どこかへ　とびさって　しまった\p"
+	.string "そして　ホウエンの　てんきも\n"
+	.string "また　もとどおりに　なった⋯⋯\p"
+	.string "はは　ははは⋯⋯\p"
+	.string "おれたちの　やろうと　したことは\n"
+	.string "ポケモンから　みれば\l"
+	.string "ちっぽけなこと　だったの　かもな⋯⋯$"
+
+	.globl SootopolisCity_Text_InvolvedWithCrisisComeWithMe
+SootopolisCity_Text_InvolvedWithCrisisComeWithMe: @ 0x081E350F
+	.string "ダイゴ“あそこで　たたかって　いるのは\n"
+	.string "グラードン⋯⋯\l"
+	.string "そして　カイオーガ⋯⋯\p"
+	.string "ながい　ねむりから　めざめた\n"
+	.string "2ひきの　ちょうこだい　ポケモンは\p"
+	.string "やりばのない　エネルギーを\n"
+	.string "おたがいに　ぶつけあっている⋯⋯\p"
+	.string "⋯⋯{PLAYER}{KUN}\p"
+	.string "ここまで　きた　ということは\n"
+	.string "きみは　このじけんに　かかわる\l"
+	.string "かくごが　できている　ということだね\p"
+	.string "よし！　それなら\n"
+	.string "きみに　あわせたい　ひとが　いるんだ\p"
+	.string "ちょっと　ボクに　ついておいで$"
+
+	.globl SootopolisCity_Text_DoesThisMakeYourFearPokemon
+SootopolisCity_Text_DoesThisMakeYourFearPokemon: @ 0x081E35DC
+	.string "ダイゴ“ねえ　{PLAYER}{KUN}\n"
+	.string "グラードンと　カイオーガを　みて\l"
+	.string "ポケモンは　こわいものだと　おもったかい？\p"
+	.string "でも　そんなことは　ないんだよ\n"
+	.string "ポケモンって　ほんとうは　もっと⋯⋯\p"
+	.string "⋯⋯いや　きみなら　そんなことは\n"
+	.string "もう　とっくに　きがついて　いるよね$"
+
+	.globl SootopolisCity_Text_HereWereAreHelpWallace
+SootopolisCity_Text_HereWereAreHelpWallace: @ 0x081E3656
+	.string "ダイゴ“さあ　ついた！\p"
+	.string "このおくに　ミクリさん　という\n"
+	.string "ひとが　いるんだ\p"
+	.string "きみなら　かれの　ちからに\n"
+	.string "なって　あげられると　おもうよ⋯⋯$"
+
+	.globl SootopolisCity_Text_KnowWhatsNeededToHelpHim
+SootopolisCity_Text_KnowWhatsNeededToHelpHim: @ 0x081E369B
+	.string "ダイゴ“きみなら　かれの　ちからに\n"
+	.string "なって　あげられると　おもうよ⋯⋯$"
+
+	.globl SootopolisCity_Text_NeverBeenToSkyPillar
+SootopolisCity_Text_NeverBeenToSkyPillar: @ 0x081E36BF
+	.string "ダイゴ“そらのはしら⋯⋯\n"
+	.string "ボクも　まだ　いったことが　ないけど\l"
+	.string "いったい　どこに　あるんだろうね$"
+
+	.globl SootopolisCity_Text_SoThatsRayquaza
+SootopolisCity_Text_SoThatsRayquaza: @ 0x081E36F0
+	.string "ダイゴ“あれが　レックウザか⋯⋯\p"
+	.string "あばれていた　2ひきが　おそれをなして\n"
+	.string "さっていく　なんて　すごいや⋯⋯$"
+
+	.globl SootopolisCity_Text_MaxieArchieLeft
+SootopolisCity_Text_MaxieArchieLeft: @ 0x081E3726
+	.string "ダイゴ“マツブサと　アオギリの　ふたりは\n"
+	.string "どこかへ　いって　しまった　ようだね\p"
+	.string "もしかすると　おくりびやまに\n"
+	.string "たまを　かえしに　いったのかも⋯⋯$"
+
+	.globl SootopolisCity_Text_HaventYouScaledSkyPillar
+SootopolisCity_Text_HaventYouScaledSkyPillar: @ 0x081E376F
+	.string "ミクリ“おや？　{PLAYER}{KUN}\p"
+	.string "あれから　そらのはしらを　のぼって\n"
+	.string "いかなかったのかい？\p"
+	.string "きみなら　きっと　いけるさ\n"
+	.string "そらのはしらの　おくじょうへ⋯⋯$"
+
+	.globl SootopolisCity_Text_AquaMagmaDidntMeanHarm
+SootopolisCity_Text_AquaMagmaDidntMeanHarm: @ 0x081E37B8
+	.string "ミクリ“{PLAYER}{KUN}⋯⋯\p"
+	.string "マグマだんと　アクアだんの　ふたりも\n"
+	.string "きっと　わるぎは　なかったの　だろうね\p"
+	.string "ちょっと　かれらの　はなしを\n"
+	.string "きいてやって　みては　どうかな⋯⋯$"
+
+	.globl SootopolisCity_Text_ThankYouForHelpAcceptThis
+SootopolisCity_Text_ThankYouForHelpAcceptThis: @ 0x081E380B
+	.string "ミクリ“{PLAYER}{KUN}⋯⋯\n"
+	.string "やはり　わたしの　めは　ただしかった\p"
+	.string "きみが　ちからを　かしてくれた　おかげで\n"
+	.string "ルネシティは⋯⋯\l"
+	.string "いや　ホウエンは　すくわれたんだよ\p"
+	.string "まちの　みんなを　だいひょうして\n"
+	.string "おれいを　いわせて　もらうよ\l"
+	.string "⋯⋯ありがとう\p"
+	.string "これは　わたしからの　プレゼントだ\n"
+	.string "うけとって　くれたまえ！$"
+
+	.globl SootopolisCity_Text_ExplainWaterfallGoToGym
+SootopolisCity_Text_ExplainWaterfallGoToGym: @ 0x081E38A0
+	.string "その　ひでんマシンは　たきのぼり！\p"
+	.string "レインバッジを　もっていれば\n"
+	.string "そのわざを　おぼえさせた　ポケモンが\l"
+	.string "たきを　のぼれるように　なるのさ！\p"
+	.string "そして⋯⋯　レインバッジは\n"
+	.string "どこで　もらえるのか　というと⋯⋯\p"
+	.string "もう　おわかりだね\n"
+	.string "そう！　ルネの　ジムリーダーに　かつこと\p"
+	.string "さあ　じゅんびが　できたら\n"
+	.string "なかに　はいって　くれたまえ！$"
+
+	.globl SootopolisCity_Text_DazzledByMentor
+SootopolisCity_Text_DazzledByMentor: @ 0x081E3943
+	.string "ミクリ“わたしの　ししょうの\n"
+	.string "かれい　かつ　ゆうがな　たたかいぶりに\l"
+	.string "きっと　きみは　おどろく　だろうよ！$"

@@ -74,6 +74,10 @@
 	@ with pokeemerald without changing the special-table entry.
 	.set SPECIAL_SetMauvilleOldManObjEventGfx, 104
 	.set SPECIAL_WAITSTATE_SetMauvilleOldManObjEventGfx, 0
+	@ The JP special table retains the address-style C name. Its verified
+	@ index and implicit waitstate match pokeemerald's Rayquaza scene entry.
+	.set SPECIAL_Script_DoRayquazaScene, 505
+	.set SPECIAL_WAITSTATE_Script_DoRayquazaScene, 1
 	@ These JP command-table entries retain older names but use the same opcodes
 	@ as the US semantic spellings used by Dewford Gym.
 	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG
@@ -84,6 +88,8 @@
 	@ Coin commands use the retained JP 0xB4/0xB5 opcode tokens.
 	.set SCR_OP_ADDCOINS, SCR_OP_B4
 	.set SCR_OP_REMOVECOINS, SCR_OP_B5
+	@ Sootopolis uses JP command-table opcode 0xE0 for the US white-fade warp.
+	.set SCR_OP_WARPWHITEFADE, SCR_OP_E0
 
 	@ Reviewed semantic names for shared event/text entries that still live
 	@ inside retained JP blocks.  Keeping these aliases in the owning event
@@ -387,7 +393,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity/scripts.inc"
 	.include "data/maps/MossdeepCity/scripts.inc"
 	.include "data/maps/SootopolisCity/scripts.inc"
-	.incbin "baserom_jp.gba", 0x1e2c05, 0xd74
 	.include "data/maps/EverGrandeCity/scripts.inc"
 	.incbin "baserom_jp.gba", 0x1e39ad, 0x48
 	.include "data/maps/LittlerootTown/scripts.inc"

@@ -1040,24 +1040,24 @@ gMapEvents_MOSSDEEP_CITY: @ 0x084FFA0C
 	map_events MOSSDEEP_CITY_EventObjects, MOSSDEEP_CITY_EventWarps, MOSSDEEP_CITY_EventCoordEvents, MOSSDEEP_CITY_EventBgEvents
 	.globl SOOTOPOLIS_CITY_EventObjects
 SOOTOPOLIS_CITY_EventObjects: @ 0x084FFA20
-	object_event 1, 21, 0, 31, 18, 3, 8, 0, 0, 0, 0, SootopolisCity_EventScript_001E2527, 0x0000
-	object_event 2, 26, 0, 47, 33, 0, 9, 0, 0, 0, 0, SootopolisCity_EventScript_001E267C, 0x0356
-	object_event 3, 10, 0, 9, 43, 3, 5, 1, 0, 0, 0, SootopolisCity_EventScript_001E2572, 0x0000
-	object_event 4, 5, 0, 51, 14, 3, 8, 0, 0, 0, 0, SootopolisCity_EventScript_001E2728, 0x0000
-	object_event 5, 7, 0, 43, 26, 3, 1, 0, 0, 0, 0, SootopolisCity_EventScript_001E277D, 0x0000
-	object_event 6, 19, 0, 26, 4, 3, 5, 1, 0, 0, 0, SootopolisCity_EventScript_001E26B1, 0x0347
-	object_event 7, 134, 0, 20, 36, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_001E2800, 0x03CD
-	object_event 8, 34, 0, 49, 34, 3, 3, 1, 1, 0, 0, SootopolisCity_EventScript_001E26D2, 0x0000
+	object_event 1, 21, 0, 31, 18, 3, 8, 0, 0, 0, 0, SootopolisCity_EventScript_CaveOfOriginExpert, 0x0000
+	object_event 2, 26, 0, 47, 33, 0, 9, 0, 0, 0, 0, SootopolisCity_EventScript_Woman2, 0x0356
+	object_event 3, 10, 0, 9, 43, 3, 5, 1, 0, 0, 0, SootopolisCity_EventScript_Kiri, 0x0000
+	object_event 4, 5, 0, 51, 14, 3, 8, 0, 0, 0, 0, SootopolisCity_EventScript_NinjaBoy, 0x0000
+	object_event 5, 7, 0, 43, 26, 3, 1, 0, 0, 0, 0, SootopolisCity_EventScript_Boy1, 0x0000
+	object_event 6, 19, 0, 26, 4, 3, 5, 1, 0, 0, 0, SootopolisCity_EventScript_Man, 0x0347
+	object_event 7, 134, 0, 20, 36, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_Steven, 0x03CD
+	object_event 8, 34, 0, 49, 34, 3, 3, 1, 1, 0, 0, SootopolisCity_EventScript_Woman1, 0x0000
 	object_event 9, 222, 0, 28, 44, 0, 80, 1, 1, 0, 0, 0x00000000, 0x03E6
 	object_event 10, 221, 0, 34, 44, 1, 79, 1, 1, 0, 0, 0x00000000, 0x03E5
 	object_event 11, 207, 0, 31, 41, 1, 10, 1, 1, 0, 0, 0x00000000, 0x03E4
-	object_event 12, 39, 0, 17, 44, 3, 10, 1, 1, 0, 0, SootopolisCity_EventScript_001E2AAB, 0x0356
-	object_event 13, 14, 0, 14, 42, 3, 10, 1, 1, 0, 0, SootopolisCity_EventScript_001E2A75, 0x0356
-	object_event 14, 44, 0, 17, 40, 3, 10, 1, 1, 0, 0, SootopolisCity_EventScript_001E2A2D, 0x0356
-	object_event 15, 9, 0, 19, 37, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_001E29F7, 0x0356
-	object_event 16, 196, 0, 29, 33, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_001E2B8C, 0x033B
-	object_event 17, 195, 0, 31, 33, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_001E2BB9, 0x033A
-	object_event 18, 133, 0, 31, 18, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_001E2AE0, 0x0330
+	object_event 12, 39, 0, 17, 44, 3, 10, 1, 1, 0, 0, SootopolisCity_EventScript_Maniac, 0x0356
+	object_event 13, 14, 0, 14, 42, 3, 10, 1, 1, 0, 0, SootopolisCity_EventScript_Girl, 0x0356
+	object_event 14, 44, 0, 17, 40, 3, 10, 1, 1, 0, 0, SootopolisCity_EventScript_BlackBelt, 0x0356
+	object_event 15, 9, 0, 19, 37, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_Boy2, 0x0356
+	object_event 16, 196, 0, 29, 33, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_Maxie, 0x033B
+	object_event 17, 195, 0, 31, 33, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_Archie, 0x033A
+	object_event 18, 133, 0, 31, 18, 3, 8, 1, 1, 0, 0, SootopolisCity_EventScript_Wallace, 0x0330
 	.globl SOOTOPOLIS_CITY_EventWarps
 SOOTOPOLIS_CITY_EventWarps: @ 0x084FFBD0
 	warp_def 43, 31, 0, 0, MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_1F
@@ -1075,12 +1075,12 @@ SOOTOPOLIS_CITY_EventWarps: @ 0x084FFBD0
 	warp_def 51, 36, 0, 0, MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F
 	.globl SOOTOPOLIS_CITY_EventBgEvents
 SOOTOPOLIS_CITY_EventBgEvents: @ 0x084FFC38
-	bg_event 33, 34, 3, 0, SootopolisCity_EventScript_001E27E5, 0, 0
-	bg_event 19, 29, 0, 1, 0x08242EF6, 0, 0
-	bg_event 44, 31, 0, 1, 0x08242EFF, 0, 0
-	bg_event 45, 31, 0, 1, 0x08242EFF, 0, 0
-	bg_event 18, 29, 0, 1, 0x08242EF6, 0, 0
-	bg_event 41, 37, 0, 0, SootopolisCity_EventScript_001E27EE, 0, 0
+	bg_event 33, 34, 3, 0, SootopolisCity_EventScript_GymSign, 0, 0
+	bg_event 19, 29, 0, 1, Common_EventScript_ShowPokemartSign, 0, 0
+	bg_event 44, 31, 0, 1, Common_EventScript_ShowPokemonCenterSign, 0, 0
+	bg_event 45, 31, 0, 1, Common_EventScript_ShowPokemonCenterSign, 0, 0
+	bg_event 18, 29, 0, 1, Common_EventScript_ShowPokemartSign, 0, 0
+	bg_event 41, 37, 0, 0, SootopolisCity_EventScript_CitySign, 0, 0
 	.globl gMapEvents_SOOTOPOLIS_CITY
 gMapEvents_SOOTOPOLIS_CITY: @ 0x084FFC80
 	map_events SOOTOPOLIS_CITY_EventObjects, SOOTOPOLIS_CITY_EventWarps, 0, SOOTOPOLIS_CITY_EventBgEvents
