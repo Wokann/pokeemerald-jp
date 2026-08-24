@@ -2457,20 +2457,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/FallarborTown_BattleTentBattleRoom/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
 	.set gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM, FallarborTown_BattleTentBattleRoom_MapEvents
-	.globl FALLARBOR_TOWN_POKEMON_CENTER_1F_EventObjects
-FALLARBOR_TOWN_POKEMON_CENTER_1F_EventObjects: @ 0x08506BCC
-	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, FallarborTown_PokemonCenter_1F_EventScript_001F5C62, 0x0000
-	object_event 2, 14, 0, 10, 6, 3, 10, 0, 0, 0, 0, FallarborTown_PokemonCenter_1F_EventScript_001F5C70, 0x0000
-	object_event 3, 21, 0, 2, 3, 3, 8, 0, 0, 0, 0, FallarborTown_PokemonCenter_1F_EventScript_001F5C79, 0x0000
-	object_event 4, 20, 0, 10, 2, 3, 7, 0, 0, 0, 0, FallarborTown_PokemonCenter_1F_EventScript_001F5C82, 0x0367
-	.globl FALLARBOR_TOWN_POKEMON_CENTER_1F_EventWarps
-FALLARBOR_TOWN_POKEMON_CENTER_1F_EventWarps: @ 0x08506C2C
-	warp_def 7, 8, 3, 2, MAP_FALLARBOR_TOWN
-	warp_def 6, 8, 3, 2, MAP_FALLARBOR_TOWN
-	warp_def 1, 6, 4, 0, MAP_FALLARBOR_TOWN_POKEMON_CENTER_2F
+	.include "data/maps/FallarborTown_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_1F
-gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_1F: @ 0x08506C44
-	map_events FALLARBOR_TOWN_POKEMON_CENTER_1F_EventObjects, FALLARBOR_TOWN_POKEMON_CENTER_1F_EventWarps, 0, 0
+	.set gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_1F, FallarborTown_PokemonCenter_1F_MapEvents
 	.globl FALLARBOR_TOWN_POKEMON_CENTER_2F_EventObjects
 FALLARBOR_TOWN_POKEMON_CENTER_2F_EventObjects: @ 0x08506C58
 	object_event 1, 85, 0, 6, 2, 0, 8, 1, 1, 0, 0, 0x08244185, 0x0000
