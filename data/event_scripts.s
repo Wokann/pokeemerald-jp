@@ -143,6 +143,8 @@
 	@ These Fan Club object scripts remain in their existing shared JP owners.
 	.globl SlateportCity_PokemonFanClub_EventScript_Reporter
 	.set SlateportCity_PokemonFanClub_EventScript_Reporter, 0x08253D5B
+	.globl SlateportCity_OceanicMuseum_1F_EventScript_Reporter
+	.set SlateportCity_OceanicMuseum_1F_EventScript_Reporter, 0x08253C9B
 	.globl SlateportCity_PokemonFanClub_EventScript_SwaggerTutor
 	.set SlateportCity_PokemonFanClub_EventScript_SwaggerTutor, 0x08276832
 	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize

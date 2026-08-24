@@ -161,7 +161,7 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_CONTESTLINKTRANSFER ScrCmd_contestlinktransfer @ 0x8E
 	script_cmd_table_entry SCR_OP_RANDOM ScrCmd_random @ 0x8F
 	script_cmd_table_entry SCR_OP_90 ScrCmd_givemoney @ 0x90
-	script_cmd_table_entry SCR_OP_91 ScrCmd_takemoney @ 0x91
+	script_cmd_table_entry SCR_OP_REMOVEMONEY ScrCmd_takemoney @ 0x91
 	script_cmd_table_entry SCR_OP_CHECKMONEY ScrCmd_checkmoney @ 0x92
 	script_cmd_table_entry SCR_OP_SHOWMONEYBOX ScrCmd_showmoneybox @ 0x93
 	script_cmd_table_entry SCR_OP_HIDEMONEYBOX ScrCmd_hidemoneybox @ 0x94

@@ -1,70 +1,60 @@
-@ SlateportCity_OceanicMuseum_1F scripts (JP map g9 m7 @ 0x081FCA3E)
-
 SlateportCity_OceanicMuseum_1F_MapScripts::
 	.byte 0
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCA3F::
-	loadword 0x0, gJPText_001FCCC1
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_EntranceAttendant::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_PleaseEnjoyYourself, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCA48::
+SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFeeLeft::
 	lockall
-	applymovement 0xFF, 0x08243627
-	waitmovement 0x0
-	goto SlateportCity_OceanicMuseum_1F_EventScript_001FCA6A
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	goto SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCA59::
+SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFeeRight::
 	lockall
-	applymovement 0xFF, 0x0824362B
-	waitmovement 0x0
-	goto SlateportCity_OceanicMuseum_1F_EventScript_001FCA6A
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	goto SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCA6A::
-	showmoneybox 0x0, 0x0, 0x0
-	loadword 0x0, gJPText_001FCC7E
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, SlateportCity_OceanicMuseum_1F_EventScript_001FCA91
+SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee::
+	showmoneybox 0, 0
+	msgbox SlateportCity_OceanicMuseum_1F_Text_WouldYouLikeToEnter, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee
 	closemessage
 	hidemoneybox
-	applymovement 0xFF, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
+	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCA91::
-	checkmoney 0x32, 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, SlateportCity_OceanicMuseum_1F_EventScript_001FCAC1
-	playse 0x5F
-	takemoney 0x32, 0x0
-	updatemoneybox 0x0
-	loadword 0x0, gJPText_001FCCC1
-	callstd 0x4
-	setvar 0x40AA, 0x1
+SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee::
+	checkmoney 50
+	goto_if_eq VAR_RESULT, FALSE, SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney
+	playse SE_SHOP
+	removemoney 50
+	updatemoneybox
+	msgbox SlateportCity_OceanicMuseum_1F_Text_PleaseEnjoyYourself, MSGBOX_DEFAULT
+	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 1
 	hidemoneybox
 	releaseall
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCAC1::
-	checkflag 0x95
-	goto_if 0x0, SlateportCity_OceanicMuseum_1F_EventScript_001FCAE2
-	loadword 0x0, gJPText_001FCCCC
-	callstd 0x4
+SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney::
+	goto_if_unset FLAG_DELIVERED_DEVON_GOODS, SlateportCity_OceanicMuseum_1F_EventScript_AllowEntranceAnyway
+	msgbox SlateportCity_OceanicMuseum_1F_Text_NotEnoughMoney, MSGBOX_DEFAULT
 	closemessage
 	hidemoneybox
-	applymovement 0xFF, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter
+	waitmovement 0
 	releaseall
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCAE2::
-	loadword 0x0, gJPText_001FCCDD
-	callstd 0x4
-	setvar 0x40AA, 0x1
+SlateportCity_OceanicMuseum_1F_EventScript_AllowEntranceAnyway::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_CatchUpWithYourGroup, MSGBOX_DEFAULT
+	setvar VAR_SLATEPORT_MUSEUM_1F_STATE, 1
 	hidemoneybox
 	releaseall
 	end
@@ -73,161 +63,132 @@ SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter:
 	walk_down
 	step_end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCAF6::
-	loadword 0x0, gJPText_001FCD12
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt1::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_AquaExistForGoodOfAll, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCAFF::
-	loadword 0x0, gJPText_001FCD2D
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt2::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_OurBossIsntHere, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB08::
-	loadword 0x0, gJPText_001FCD60
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt3::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_WouldStuffHereMakeMeRich, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB11::
-	loadword 0x0, gJPText_001FCD7C
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt4::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_CanLearnForNefariousDeeds, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB1A::
-	loadword 0x0, gJPText_001FCD97
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt5::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_RustboroBungled, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB23::
-	loadword 0x0, gJPText_001FCDBB
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt6::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_DidntHaveMoney, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB2C::
-	loadword 0x0, gJPText_001FCF51
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_WhirlpoolExperiment::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_WhirlpoolExperiment, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB35::
-	loadword 0x0, gJPText_001FCF9B
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_WaterfallExperiment::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_WaterfallExperiment, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB3E::
-	loadword 0x0, gJPText_001FCFEB
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_OceanSoilDisplay::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_OceanSoilDisplay, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB47::
-	loadword 0x0, gJPText_001FD062
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_BeachSandDisplay::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_BeachSandDisplay, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB50::
-	loadword 0x0, gJPText_001FD0D7
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_OceanicMinifact1::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact1, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB59::
-	loadword 0x0, gJPText_001FD16B
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_OceanicMinifact2::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact2, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB62::
-	loadword 0x0, gJPText_001FD1EA
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_OceanicMinifact3::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact3, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB6B::
-	loadword 0x0, gJPText_001FD258
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_FossilDisplay::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_FossilDisplay, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB74::
-	loadword 0x0, gJPText_001FD2CF
-	callstd 0x3
+SlateportCity_OceanicMuseum_1F_EventScript_DepthMeasuringMachine::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_DepthMeasuringMachine, MSGBOX_SIGN
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB7D::
-	loadword 0x0, gJPText_001FCDDF
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron1::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_LearnAboutSeaForBattling, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB86::
-	loadword 0x0, gJPText_001FCE00
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron2::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_SternIsRoleModel, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB8F::
-	loadword 0x0, gJPText_001FCE4A
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron3::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_MustBePokemonWeDontKnow, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCB98::
-	loadword 0x0, gJPText_001FCE86
-	callstd 0x2
+SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron4::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_WantSeaPokemon, MSGBOX_NPC
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCBA1::
+SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt::
 	lock
 	faceplayer
-	delay 0x8
-	playse 0x15
-	applymovement 0xD, 0x0824361B
-	waitmovement 0x0
-	applymovement 0xD, 0x0824361D
-	waitmovement 0x0
-	loadword 0x0, gJPText_001FCEBA
-	callstd 0x4
-	setorcopyvar 0x8000, 0x14E
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, SlateportCity_OceanicMuseum_1F_EventScript_001FCC5E
-	setflag 0x10D
-	loadword 0x0, gJPText_001FCF12
-	callstd 0x4
+	delay 8
+	playse SE_PIN
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, Common_Movement_Delay48
+	waitmovement 0
+	msgbox SlateportCity_OceanicMuseum_1F_Text_RememberMeTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_TM46
+	goto_if_eq VAR_RESULT, 0, SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief
+	setflag FLAG_RECEIVED_TM_THIEF
+	msgbox SlateportCity_OceanicMuseum_1F_Text_HopeINeverSeeYouAgain, MSGBOX_DEFAULT
 	closemessage
-	compare_var_to_value 0x800C, 0x2
-	goto_if 0x1, SlateportCity_OceanicMuseum_1F_EventScript_001FCC15
-	compare_var_to_value 0x800C, 0x1
-	goto_if 0x1, SlateportCity_OceanicMuseum_1F_EventScript_001FCC2C
-	compare_var_to_value 0x800C, 0x3
-	goto_if 0x1, SlateportCity_OceanicMuseum_1F_EventScript_001FCC3C
-	compare_var_to_value 0x800C, 0x4
-	goto_if 0x1, SlateportCity_OceanicMuseum_1F_EventScript_001FCC3C
+	goto_if_eq VAR_FACING, DIR_NORTH, SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitNorth
+	goto_if_eq VAR_FACING, DIR_SOUTH, SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitSouth
+	goto_if_eq VAR_FACING, DIR_WEST, SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitWestEast
+	goto_if_eq VAR_FACING, DIR_EAST, SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitWestEast
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCC15::
-	applymovement 0xFF, SlateportCity_OceanicMuseum_1F_Movement_PlayerWatchGruntExitNorth
-	applymovement 0xD, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExitNorth
-	waitmovement 0x0
-	goto SlateportCity_OceanicMuseum_1F_EventScript_001FCC53
+SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitNorth::
+	applymovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PlayerWatchGruntExitNorth
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExitNorth
+	waitmovement 0
+	goto SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExited
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCC2C::
-	applymovement 0xD, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit
-	waitmovement 0x0
-	goto SlateportCity_OceanicMuseum_1F_EventScript_001FCC53
+SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitSouth::
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit
+	waitmovement 0
+	goto SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExited
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCC3C::
-	applymovement 0xFF, SlateportCity_OceanicMuseum_1F_Movement_PlayerWatchGruntExitWestEast
-	applymovement 0xD, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit
-	waitmovement 0x0
-	goto SlateportCity_OceanicMuseum_1F_EventScript_001FCC53
+SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitWestEast::
+	applymovement LOCALID_PLAYER, SlateportCity_OceanicMuseum_1F_Movement_PlayerWatchGruntExitWestEast
+	applymovement LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT, SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit
+	waitmovement 0
+	goto SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExited
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCC53::
-	setflag 0x3C5
-	playse 0x9
-	removeobject 0xD
+SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExited::
+	setflag FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_FAMILIAR_AQUA_GRUNT
+	playse SE_EXIT
+	removeobject LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT
 	release
 	end
 
-SlateportCity_OceanicMuseum_1F_EventScript_001FCC5E::
-	loadword 0x0, gJPText_001FCF3A
-	callstd 0x4
+SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief::
+	msgbox SlateportCity_OceanicMuseum_1F_Text_YouHaveToTakeThis, MSGBOX_DEFAULT
 	release
 	end
 
@@ -261,86 +222,71 @@ SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExitNorth:
 	delay_8
 	step_end
 
-	.globl gJPText_001FCC7E
-gJPText_001FCC7E: @ 0x081FCC7E
+SlateportCity_OceanicMuseum_1F_Text_WouldYouLikeToEnter:
 	.string "うみの　かがく　はくぶつかんへ\n"
 	.string "ようこそ　いらっしゃいませ！\p"
 	.string "にゅうじょうりょう　50えんに　なります\n"
 	.string "けんがく　して　いきますか？$"
 
-	.globl gJPText_001FCCC1
-gJPText_001FCCC1: @ 0x081FCCC1
+SlateportCity_OceanicMuseum_1F_Text_PleaseEnjoyYourself:
 	.string "ごゆっくり　どうぞ！$"
 
-	.globl gJPText_001FCCCC
-gJPText_001FCCCC: @ 0x081FCCCC
+SlateportCity_OceanicMuseum_1F_Text_NotEnoughMoney:
 	.string "⋯⋯あら　おかねが　たりませんわ$"
 
-	.globl gJPText_001FCCDD
-gJPText_001FCCDD: @ 0x081FCCDD
+SlateportCity_OceanicMuseum_1F_Text_CatchUpWithYourGroup:
 	.string "⋯⋯あら　さっきの　だんたいさん？\n"
 	.string "あなただけ　おくれちゃって　しかたないわね\l"
 	.string "はやく　とおっちゃって！$"
 
-	.globl gJPText_001FCD12
-gJPText_001FCD12: @ 0x081FCD12
+SlateportCity_OceanicMuseum_1F_Text_AquaExistForGoodOfAll:
 	.string "みんなの　ために\n"
 	.string "われわれ　アクアだんは　いるのよ！$"
 
-	.globl gJPText_001FCD2D
-gJPText_001FCD2D: @ 0x081FCD2D
+SlateportCity_OceanicMuseum_1F_Text_OurBossIsntHere:
 	.string "げんちしゅうごう　で\n"
 	.string "ここに　あつまったのは　いいけど⋯⋯\p"
 	.string "かんじんの　リーダーが　まだ　こないんだ$"
 
-	.globl gJPText_001FCD60
-gJPText_001FCD60: @ 0x081FCD60
+SlateportCity_OceanicMuseum_1F_Text_WouldStuffHereMakeMeRich:
 	.string "ここに　おいてある　もの\n"
 	.string "かっぱらうと　もうかるかな？$"
 
-	.globl gJPText_001FCD7C
-gJPText_001FCD7C: @ 0x081FCD7C
+SlateportCity_OceanicMuseum_1F_Text_CanLearnForNefariousDeeds:
 	.string "この　ちしきを　いかして\n"
 	.string "わるいこと　してやるか⋯⋯$"
 
-	.globl gJPText_001FCD97
-gJPText_001FCD97: @ 0x081FCD97
+SlateportCity_OceanicMuseum_1F_Text_RustboroBungled:
 	.string "なかまが　カナズミで　ドジらなければ\n"
 	.string "ここに　こなくて　すんだのによ！$"
 
-	.globl gJPText_001FCDBB
-gJPText_001FCDBB: @ 0x081FCDBB
+SlateportCity_OceanicMuseum_1F_Text_DidntHaveMoney:
 	.string "さっき　50えんが　なくて\n"
 	.string "うけつけで　すごい　じかん　かかったよ⋯⋯$"
 
-	.globl gJPText_001FCDDF
-gJPText_001FCDDF: @ 0x081FCDDF
+SlateportCity_OceanicMuseum_1F_Text_LearnAboutSeaForBattling:
 	.string "うみのこと　べんきょう　して\n"
 	.string "ポケモンしょうぶに　やくだてたいの$"
 
-	.globl gJPText_001FCE00
-gJPText_001FCE00: @ 0x081FCE00
+SlateportCity_OceanicMuseum_1F_Text_SternIsRoleModel:
 	.string "わたくしッ\n"
 	.string "うみを　みると　こうふん　するのですッ！\p"
 	.string "そんな　わたくしに　とって\n"
 	.string "クスノキかんちょうは\l"
 	.string "あこがれの　ひと　ナンバー1　なのですッ！$"
 
-	.globl gJPText_001FCE4A
-gJPText_001FCE4A: @ 0x081FCE4A
+SlateportCity_OceanicMuseum_1F_Text_MustBePokemonWeDontKnow:
 	.string "うみは　はてしなく　ひろく\n"
 	.string "どこまでも　ふかい⋯⋯\p"
 	.string "きっと　われわれが　しらない　ポケモンも\n"
 	.string "いっぱい　いるのだろうね$"
 
-	.globl gJPText_001FCE86
-gJPText_001FCE86: @ 0x081FCE86
+SlateportCity_OceanicMuseum_1F_Text_WantSeaPokemon:
 	.string "あたし　うみの　ポケモンが　ほしいの\p"
 	.string "だって　ひんやりと　してて\n"
 	.string "だきしめたら　きもちよさそう　だもの$"
 
-	.globl gJPText_001FCEBA
-gJPText_001FCEBA: @ 0x081FCEBA
+SlateportCity_OceanicMuseum_1F_Text_RememberMeTakeThis:
 	.string "ひえー！！\n"
 	.string "なんで　おまえ　ここに　いるんだよ！？\p"
 	.string "おれ？　おれは　カナシダ　トンネルで\n"
@@ -348,33 +294,28 @@ gJPText_001FCEBA: @ 0x081FCEBA
 	.string "アクアだん　だよ\p"
 	.string "これを　やるから　ゆるしてくれよ！$"
 
-	.globl gJPText_001FCF12
-gJPText_001FCF12: @ 0x081FCF12
+SlateportCity_OceanicMuseum_1F_Text_HopeINeverSeeYouAgain:
 	.string "その　わざマシン\n"
 	.string "おれより　おまえのほうが　にあうぜ！\p"
 	.string "じゃあな　わはははー！$"
 
-	.globl gJPText_001FCF3A
-gJPText_001FCF3A: @ 0x081FCF3A
+SlateportCity_OceanicMuseum_1F_Text_YouHaveToTakeThis:
 	.string "たのむから\n"
 	.string "なんとかして　うけとってくれよ！$"
 
-	.globl gJPText_001FCF51
-gJPText_001FCF51: @ 0x081FCF51
+SlateportCity_OceanicMuseum_1F_Text_WhirlpoolExperiment:
 	.string "ガラスの　なかで　あおい　みずが\n"
 	.string "くるくると　まわって　いる！\p"
 	.string "‘これは　かぜの　ちからで　じんこうてきに\n"
 	.string "　うずしおを　おこす　じっけん　です’$"
 
-	.globl gJPText_001FCF9B
-gJPText_001FCF9B: @ 0x081FCF9B
+SlateportCity_OceanicMuseum_1F_Text_WaterfallExperiment:
 	.string "ガラスの　なかで　あかい　ボールが\n"
 	.string "うかんだり　しずんだり　している！\p"
 	.string "‘これは　ボールの　ふりょくを　りようした\n"
 	.string "　たきのぼりの　げんりの　じっけん　です’$"
 
-	.globl gJPText_001FCFEB
-gJPText_001FCFEB: @ 0x081FCFEB
+SlateportCity_OceanicMuseum_1F_Text_OceanSoilDisplay:
 	.string "うみの　そこの　つちの　みほんだ！\p"
 	.string "‘かいていには　ながい　ねんげつを　かけて\n"
 	.string "　せいぶつの　しがいが　ふりつもり\l"
@@ -382,8 +323,7 @@ gJPText_001FCFEB: @ 0x081FCFEB
 	.string "‘これらを　ぶんせき　することで\n"
 	.string "　とおい　むかしの　ことが　わかるのです’$"
 
-	.globl gJPText_001FD062
-gJPText_001FD062: @ 0x081FD062
+SlateportCity_OceanicMuseum_1F_Text_BeachSandDisplay:
 	.string "うみべの　すなの　みほんだ！\p"
 	.string "‘やまから　かわを　つたって　きた　いしは\n"
 	.string "　みずの　なかで　ころがる　うちに\l"
@@ -391,8 +331,7 @@ gJPText_001FD062: @ 0x081FD062
 	.string "‘それらが　ちいさな　つぶに　なって\n"
 	.string "　うみべの　すなが　できて　いくのです’$"
 
-	.globl gJPText_001FD0D7
-gJPText_001FD0D7: @ 0x081FD0D7
+SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact1:
 	.string "‘うみの　まめちしき　その1\n"
 	.string "　なぜ　うみの　みずは　あおいの？’\p"
 	.string "‘ひかりには　いくつもの　いろが　あって\n"
@@ -402,8 +341,7 @@ gJPText_001FD0D7: @ 0x081FD0D7
 	.string "　そのままの　いろで　のこる　ため\l"
 	.string "　うみは　あおく　みえるのです’$"
 
-	.globl gJPText_001FD16B
-gJPText_001FD16B: @ 0x081FD16B
+SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact2:
 	.string "‘うみの　まめちしき　その2\n"
 	.string "　なぜ　うみの　みずは　しょっぱいの？’\p"
 	.string "‘かいすい　には　いわから　にじみでた\p"
@@ -412,8 +350,7 @@ gJPText_001FD16B: @ 0x081FD16B
 	.string "　という　ぶっしつが　おおく　ふくまれ\l"
 	.string "　だから　なめると　しょっぱいのです’$"
 
-	.globl gJPText_001FD1EA
-gJPText_001FD1EA: @ 0x081FD1EA
+SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact3:
 	.string "‘うみの　まめちしき　その3\n"
 	.string "　うみと　りくは　どちらが　ひろいの？’\p"
 	.string "‘だいたい　うみが　70パーセントで\n"
@@ -421,8 +358,7 @@ gJPText_001FD1EA: @ 0x081FD1EA
 	.string "　りくちに　くらべて　うみは\n"
 	.string "　その　2ばい　いじょうも　あるのです’$"
 
-	.globl gJPText_001FD258
-gJPText_001FD258: @ 0x081FD258
+SlateportCity_OceanicMuseum_1F_Text_FossilDisplay:
 	.string "デコボコに　なみうった　かせきが　ある！\p"
 	.string "‘うみの　そこに　たまった　つちには\n"
 	.string "　かいすいが　ながれる　えいきょうで\l"
@@ -430,8 +366,7 @@ gJPText_001FD258: @ 0x081FD258
 	.string "‘それが　そのまま　かせきに　なったものを\n"
 	.string "　リップルマークと　よんでいます’$"
 
-	.globl gJPText_001FD2CF
-gJPText_001FD2CF: @ 0x081FD2CF
+SlateportCity_OceanicMuseum_1F_Text_DepthMeasuringMachine:
 	.string "まるい　ドームの　なかで　なんだか\n"
 	.string "よく　わからない　きかいが　まわってる！\p"
 	.string "なにかの　ふかさを　しらべるのかな？$"

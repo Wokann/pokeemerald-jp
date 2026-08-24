@@ -2104,7 +2104,7 @@
 	.endm
 
 	.macro takemoney amount:req, silent=0
-	.byte SCR_OP_91
+	.byte SCR_OP_REMOVEMONEY
 	.4byte \amount
 	.byte \silent
 	.endm
