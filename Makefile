@@ -145,7 +145,8 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	RustboroCity_PokemonCenter_2F \
 	RustboroCity_Mart \
 	RustboroCity_Flat1_1F \
-	RustboroCity_House1
+	RustboroCity_House1 \
+	RustboroCity_CuttersHouse
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools

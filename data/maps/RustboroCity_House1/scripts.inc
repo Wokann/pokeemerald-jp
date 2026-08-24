@@ -82,6 +82,3 @@ RustboroCity_House1_Text_AllSortsOfPlaces: @ 0x08203D38
 	.string "いろんな　ひとも　いる\p"
 	.string "それが　たのしみで　わしも\n"
 	.string "いろんな　ところに　でかけるのさ！$"
-
-	@ Rustboro City Cutters House and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x203d7c, 0x622
