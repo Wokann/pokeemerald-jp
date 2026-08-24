@@ -1,295 +1,670 @@
 @ MauvilleCity scripts (JP map g0 m2 @ 0x081DD9BE)
 
 MauvilleCity_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, MauvilleCity_EventScript_001DD9C4
+	map_script MAP_SCRIPT_ON_TRANSITION, MauvilleCity_OnTransition
 	.byte 0
 
-MauvilleCity_EventScript_001DD9C4::
-	setflag 0x878
-	clearflag 0x9D
-	clearflag 0x3C1
-	setflag 0x892
-	clearflag 0x63
-	setvar 0x4093, 0x0
-	checkflag 0xD1
-	call_if 0x1, MauvilleCity_EventScript_001DD9E2
+MauvilleCity_OnTransition:
+	setflag FLAG_VISITED_MAUVILLE_CITY
+	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
+	clearflag FLAG_HIDE_SLATEPORT_MUSEUM_POPULATION
+	setflag FLAG_SYS_TV_START
+	clearflag FLAG_MAUVILLE_GYM_BARRIERS_STATE
+	setvar VAR_MAUVILLE_GYM_STATE, 0
+	call_if_set FLAG_GOT_TM_THUNDERBOLT_FROM_WATTSON, MauvilleCity_EventScript_MoveWattsonBackToGym
 	end
 
-MauvilleCity_EventScript_001DD9E2::
-	clearflag 0x391
-	setflag 0x390
-	setflag 0x5B
+MauvilleCity_EventScript_MoveWattsonBackToGym::
+	clearflag FLAG_HIDE_MAUVILLE_GYM_WATTSON
+	setflag FLAG_HIDE_MAUVILLE_CITY_WATTSON
+	setflag FLAG_WATTSON_REMATCH_AVAILABLE
 	return
 
-MauvilleCity_EventScript_001DD9EC::
-	loadword 0x0, 0x081DE4C1
-	callstd 0x2
+MauvilleCity_EventScript_Boy::
+	msgbox MauvilleCity_Text_NurseHurtMonBackToHealth, MSGBOX_NPC
 	end
 
-MauvilleCity_EventScript_001DD9F5::
-	loadword 0x0, 0x081DE509
-	callstd 0x2
+MauvilleCity_EventScript_Maniac::
+	msgbox MauvilleCity_Text_AllSortsOfPeopleComeThrough, MSGBOX_NPC
 	end
 
-MauvilleCity_EventScript_001DD9FE::
-	loadword 0x0, 0x081DE53B
-	callstd 0x2
+MauvilleCity_EventScript_Woman::
+	msgbox MauvilleCity_Text_RydelVeryGenerous, MSGBOX_NPC
 	end
 
-MauvilleCity_EventScript_001DDA07::
-	loadword 0x0, 0x081DE578
-	callstd 0x2
+MauvilleCity_EventScript_RichBoy::
+	msgbox MauvilleCity_Text_PokemonCanJumpYouOnBike, MSGBOX_NPC
 	end
 
-MauvilleCity_EventScript_001DDA10::
-	loadword 0x0, 0x081DE59B
-	callstd 0x3
+MauvilleCity_EventScript_CitySign::
+	msgbox MauvilleCity_Text_CitySign, MSGBOX_SIGN
 	end
 
-MauvilleCity_EventScript_001DDA19::
-	loadword 0x0, 0x081DE5BA
-	callstd 0x3
+MauvilleCity_EventScript_GymSign::
+	msgbox MauvilleCity_Text_GymSign, MSGBOX_SIGN
 	end
 
-MauvilleCity_EventScript_001DDA22::
-	loadword 0x0, 0x081DE5E4
-	callstd 0x3
+MauvilleCity_EventScript_BikeShopSign::
+	msgbox MauvilleCity_Text_BikeShopSign, MSGBOX_SIGN
 	end
 
-MauvilleCity_EventScript_001DDA2B::
-	loadword 0x0, 0x081DE608
-	callstd 0x3
+MauvilleCity_EventScript_GameCornerSign::
+	msgbox MauvilleCity_Text_GameCornerSign, MSGBOX_SIGN
 	end
 
-MauvilleCity_EventScript_001DDA34::
+MauvilleCity_EventScript_SchoolKidM::
 	lock
 	faceplayer
-	checkflag 0x62
-	goto_if 0x1, MauvilleCity_EventScript_001DDA4C
-	loadword 0x0, 0x081DE62C
-	callstd 0x4
-	setflag 0x62
+	goto_if_set FLAG_TV_EXPLAINED, MauvilleCity_EventScript_TVExplained
+	msgbox MauvilleCity_Text_ExplainTV, MSGBOX_DEFAULT
+	setflag FLAG_TV_EXPLAINED
 	release
 	end
 
-MauvilleCity_EventScript_001DDA4C::
-	loadword 0x0, 0x081DE6DE
-	callstd 0x4
+MauvilleCity_EventScript_TVExplained::
+	msgbox MauvilleCity_Text_BeenCheckingOutTV, MSGBOX_DEFAULT
 	release
 	end
 
-MauvilleCity_EventScript_001DDA56::
+MauvilleCity_EventScript_WallysUncle::
 	lock
 	faceplayer
-	checkflag 0x11C
-	goto_if 0x1, MauvilleCity_EventScript_001DDA76
-	loadword 0x0, 0x081DDE15
-	callstd 0x4
+	goto_if_set FLAG_DECLINED_WALLY_BATTLE_MAUVILLE, MauvilleCity_EventScript_UncleAskPlayerToBattleWally
+	msgbox MauvilleCity_Text_UncleHesTooPeppy, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x7, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-MauvilleCity_EventScript_001DDA76::
-	loadword 0x0, 0x081DDFD3
-	callstd 0x4
+MauvilleCity_EventScript_UncleAskPlayerToBattleWally::
+	msgbox MauvilleCity_Text_UncleCanYouBattleWally, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x7, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-MauvilleCity_EventScript_001DDA8B::
+MauvilleCity_EventScript_Wally::
 	lockall
-	checkflag 0x11C
-	goto_if 0x1, MauvilleCity_EventScript_001DDCC9
-	applymovement 0x6, 0x0824362B
-	waitmovement 0x0
-	loadword 0x0, 0x081DDE51
-	callstd 0x4
-	loadword 0x0, 0x081DDE96
-	callstd 0x4
-	loadword 0x0, 0x081DDF00
-	callstd 0x4
-	applymovement 0x6, 0x08243621
-	waitmovement 0x0
-	playse 0x15
-	applymovement 0x6, 0x0824361B
-	waitmovement 0x0
-	applymovement 0x6, 0x0824361D
-	waitmovement 0x0
-	loadword 0x0, 0x081DDF37
-	callstd 0x5
-	goto MauvilleCity_EventScript_001DDAE6
+	goto_if_set FLAG_DECLINED_WALLY_BATTLE_MAUVILLE, MauvilleCity_EventScript_WallyRequestBattleAgain
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox MauvilleCity_Text_WallyWantToChallengeGym, MSGBOX_DEFAULT
+	msgbox MauvilleCity_Text_UncleYourePushingIt, MSGBOX_DEFAULT
+	msgbox MauvilleCity_Text_WallyWeCanBeatAnyone, MSGBOX_DEFAULT
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_FacePlayer
+	waitmovement 0
+	playse SE_PIN
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_Delay48
+	waitmovement 0
+	msgbox MauvilleCity_Text_WallyWillYouBattleMe, MSGBOX_YESNO
+	goto MauvilleCity_EventScript_BattleWallyPrompt
 	end
 
-MauvilleCity_EventScript_001DDAE6::
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, 0x081DDC73
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, MauvilleCity_EventScript_001DDCBC
+MauvilleCity_EventScript_BattleWallyPrompt::
+	call_if_eq VAR_RESULT, YES, MauvilleCity_EventScript_BattleWally
+	goto_if_eq VAR_RESULT, NO, MauvilleCity_EventScript_DeclineWallyBattle
 	closemessage
-	copyvar 0x8000, 0x800C
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, MauvilleCity_EventScript_001DDB19
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, MauvilleCity_EventScript_001DDB76
+	switch VAR_FACING
+	case DIR_NORTH, MauvilleCity_EventScript_WallyAndUncleExitNorth
+	case DIR_EAST, MauvilleCity_EventScript_WallyAndUncleExitEast
 	end
 
-MauvilleCity_EventScript_001DDB19::
-	applymovement 0xFF, 0x081DDD18
-	applymovement 0x6, 0x081DDCE1
-	applymovement 0x7, 0x081DDD1B
-	waitmovement 0x0
-	applymovement 0x6, 0x0824362B
-	waitmovement 0x0
-	delay 0x1E
-	applymovement 0xFF, 0x081DDD27
-	applymovement 0x7, 0x081DDD2C
-	waitmovement 0x0
-	loadword 0x0, 0x081DE142
-	callstd 0x4
+MauvilleCity_EventScript_WallyAndUncleExitNorth::
+	applymovement LOCALID_PLAYER, MauvilleCity_Movement_PlayerWatchWallyExitNorth1
+	applymovement LOCALID_MAUVILLE_WALLY, MauvilleCity_Movement_WallyExitNorth1
+	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitNorth1
+	waitmovement 0
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	delay 30
+	applymovement LOCALID_PLAYER, MauvilleCity_Movement_PlayerFaceUncleNorth
+	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleApproachPlayerNorth
+	waitmovement 0
+	msgbox MauvilleCity_Text_UncleVisitUsSometime, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081DDD05
-	applymovement 0x7, 0x081DDD33
-	applymovement 0x6, 0x081DDCED
-	waitmovement 0x0
-	goto MauvilleCity_EventScript_001DDBCC
+	applymovement LOCALID_PLAYER, MauvilleCity_Movement_PlayerWatchWallyExitNorth2
+	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitNorth2
+	applymovement LOCALID_MAUVILLE_WALLY, MauvilleCity_Movement_WallyExitNorth2
+	waitmovement 0
+	goto MauvilleCity_EventScript_DefeatedWally
 	end
 
-MauvilleCity_EventScript_001DDB76::
-	applymovement 0xFF, 0x081DDD15
-	applymovement 0x6, 0x081DDCE7
-	applymovement 0x7, 0x081DDD21
-	waitmovement 0x0
-	applymovement 0x6, 0x0824362B
-	waitmovement 0x0
-	delay 0x1E
-	applymovement 0x7, 0x081DDD30
-	waitmovement 0x0
-	loadword 0x0, 0x081DE142
-	callstd 0x4
+MauvilleCity_EventScript_WallyAndUncleExitEast::
+	applymovement LOCALID_PLAYER, MauvilleCity_Movement_PlayerWatchWallyExitEast1
+	applymovement LOCALID_MAUVILLE_WALLY, MauvilleCity_Movement_WallyExitEast1
+	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitEast1
+	waitmovement 0
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	delay 30
+	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleApproachPlayerEast
+	waitmovement 0
+	msgbox MauvilleCity_Text_UncleVisitUsSometime, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081DDD09
-	applymovement 0x7, 0x081DDD3C
-	applymovement 0x6, 0x081DDCF9
-	waitmovement 0x0
-	goto MauvilleCity_EventScript_001DDBCC
+	applymovement LOCALID_PLAYER, MauvilleCity_Movement_PlayerWatchWallyExitEast2
+	applymovement LOCALID_MAUVILLE_WALLYS_UNCLE, MauvilleCity_Movement_WallysUncleExitEast2
+	applymovement LOCALID_MAUVILLE_WALLY, MauvilleCity_Movement_WallyExitEast2
+	waitmovement 0
+	goto MauvilleCity_EventScript_DefeatedWally
 	end
 
-MauvilleCity_EventScript_001DDBCC::
-	removeobject 0x6
-	removeobject 0x7
-	clearflag 0x326
-	clearflag 0x329
-	setflag 0xBE
-	setvar 0x40F2, 0x0
-	setflag 0x88
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, MauvilleCity_EventScript_001DDC2C
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, MauvilleCity_EventScript_001DDC3A
-	applymovement 0xFF, 0x0824362D
-	waitmovement 0x0
-	loadword 0x0, 0x081DE235
-	callstd 0x4
+MauvilleCity_EventScript_DefeatedWally::
+	removeobject LOCALID_MAUVILLE_WALLY
+	removeobject LOCALID_MAUVILLE_WALLYS_UNCLE
+	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY
+	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLYS_UNCLE
+	setflag FLAG_DEFEATED_WALLY_MAUVILLE
+	setvar VAR_WALLY_CALL_STEP_COUNTER, 0
+	setflag FLAG_ENABLE_FIRST_WALLY_POKENAV_CALL
+	call_if_eq VAR_FACING, DIR_NORTH, MauvilleCity_EventScript_ScottApproachPlayerNorth
+	call_if_eq VAR_FACING, DIR_EAST, MauvilleCity_EventScript_ScottApproachPlayerEast
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox MauvilleCity_Text_ScottYouDidntHoldBack, MSGBOX_DEFAULT
 	closemessage
-	addvar 0x40D1, 0x1
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, MauvilleCity_EventScript_001DDC4F
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, MauvilleCity_EventScript_001DDC61
-	removeobject 0xB
+	addvar VAR_SCOTT_STATE, 1
+	call_if_eq VAR_FACING, DIR_NORTH, MauvilleCity_EventScript_ScottExitNorth
+	call_if_eq VAR_FACING, DIR_EAST, MauvilleCity_EventScript_ScottExitEast
+	removeobject LOCALID_MAUVILLE_SCOTT
 	releaseall
 	end
 
-MauvilleCity_EventScript_001DDC2C::
-	addobject 0xB
-	applymovement 0xB, 0x081DDD46
-	waitmovement 0x0
+MauvilleCity_EventScript_ScottApproachPlayerNorth::
+	addobject LOCALID_MAUVILLE_SCOTT
+	applymovement LOCALID_MAUVILLE_SCOTT, MauvilleCity_Movement_ScottApproachPlayerNorth
+	waitmovement 0
 	return
 
-MauvilleCity_EventScript_001DDC3A::
-	setobjectxyperm 0xB, 0xC, 0xD
-	addobject 0xB
-	applymovement 0xB, 0x081DDD52
-	waitmovement 0x0
+MauvilleCity_EventScript_ScottApproachPlayerEast::
+	setobjectxyperm LOCALID_MAUVILLE_SCOTT, 12, 13
+	addobject LOCALID_MAUVILLE_SCOTT
+	applymovement LOCALID_MAUVILLE_SCOTT, MauvilleCity_Movement_ScottApproachPlayerEast
+	waitmovement 0
 	return
 
-MauvilleCity_EventScript_001DDC4F::
-	applymovement 0xFF, 0x081DDD0E
-	applymovement 0xB, 0x081DDD5E
-	waitmovement 0x0
+MauvilleCity_EventScript_ScottExitNorth::
+	applymovement LOCALID_PLAYER, MauvilleCity_Movement_PlayerWatchScottExitNorth
+	applymovement LOCALID_MAUVILLE_SCOTT, MauvilleCity_Movement_ScottExitNorth
+	waitmovement 0
 	return
 
-MauvilleCity_EventScript_001DDC61::
-	applymovement 0xFF, 0x081DDD11
-	applymovement 0xB, 0x081DDD68
-	waitmovement 0x0
+MauvilleCity_EventScript_ScottExitEast::
+	applymovement LOCALID_PLAYER, MauvilleCity_Movement_PlayerWatchScottExitEast
+	applymovement LOCALID_MAUVILLE_SCOTT, MauvilleCity_Movement_ScottExitEast
+	waitmovement 0
 	return
 
-	.incbin "baserom_jp.gba", 0x1ddc73, 0x49
-MauvilleCity_EventScript_001DDCBC::
-	setflag 0x11C
-	loadword 0x0, 0x081DDF95
-	callstd 0x4
+MauvilleCity_EventScript_BattleWally::
+	msgbox MauvilleCity_Text_WallyHereICome, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_WALLY_MAUVILLE, MauvilleCity_Text_WallyDefeat
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox MauvilleCity_Text_WallyIllGoBackToVerdanturf, MSGBOX_DEFAULT
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox MauvilleCity_Text_ThankYouNotEnoughToBattle, MSGBOX_DEFAULT
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	msgbox MauvilleCity_Text_UncleNoNeedToBeDown, MSGBOX_DEFAULT
+	return
+
+MauvilleCity_EventScript_DeclineWallyBattle::
+	setflag FLAG_DECLINED_WALLY_BATTLE_MAUVILLE
+	msgbox MauvilleCity_Text_WallyMyUncleWontKnowImStrong, MSGBOX_DEFAULT
 	release
 	end
 
-MauvilleCity_EventScript_001DDCC9::
-	applymovement 0x6, 0x08243621
-	waitmovement 0x0
-	loadword 0x0, 0x081DE01F
-	callstd 0x5
-	goto MauvilleCity_EventScript_001DDAE6
+MauvilleCity_EventScript_WallyRequestBattleAgain::
+	applymovement LOCALID_MAUVILLE_WALLY, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox MauvilleCity_Text_WallyPleaseBattleMe, MSGBOX_YESNO
+	goto MauvilleCity_EventScript_BattleWallyPrompt
 	end
 
-	.incbin "baserom_jp.gba", 0x1ddce1, 0x92
-MauvilleCity_EventScript_001DDD73::
+MauvilleCity_Movement_WallyExitNorth1:
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_left
+	step_end
+
+MauvilleCity_Movement_WallyExitEast1:
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+MauvilleCity_Movement_WallyExitNorth2:
+	delay_16
+	delay_16
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	delay_8
+	step_end
+
+MauvilleCity_Movement_WallyExitEast2:
+	delay_16
+	delay_16
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	delay_8
+	step_end
+
+MauvilleCity_Movement_PlayerWatchWallyExitNorth2:
+	delay_16
+	delay_8
+	walk_in_place_faster_left
+	step_end
+
+MauvilleCity_Movement_PlayerWatchWallyExitEast2:
+	delay_16
+	delay_16
+	delay_16
+	walk_in_place_faster_left
+	step_end
+
+MauvilleCity_Movement_PlayerWatchScottExitNorth:
+	delay_16
+	walk_in_place_faster_left
+	step_end
+
+MauvilleCity_Movement_PlayerWatchScottExitEast:
+	delay_16
+	delay_16
+	walk_in_place_faster_left
+	step_end
+
+MauvilleCity_Movement_PlayerWatchWallyExitEast1:
+	delay_16
+	walk_in_place_faster_down
+	step_end
+
+MauvilleCity_Movement_PlayerWatchWallyExitNorth1:
+	delay_16
+	walk_in_place_faster_left
+	step_end
+
+MauvilleCity_Movement_WallysUncleExitNorth1:
+	walk_left
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	step_end
+
+MauvilleCity_Movement_WallysUncleExitEast1:
+	walk_left
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	step_end
+
+MauvilleCity_Movement_PlayerFaceUncleNorth:
+	delay_16
+	delay_8
+	delay_4
+	walk_in_place_faster_down
+	step_end
+
+MauvilleCity_Movement_WallysUncleApproachPlayerNorth:
+	walk_right
+	walk_right
+	walk_in_place_faster_up
+	step_end
+
+MauvilleCity_Movement_WallysUncleApproachPlayerEast:
+	walk_right
+	walk_up
+	step_end
+
+MauvilleCity_Movement_WallysUncleExitNorth2:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+MauvilleCity_Movement_WallysUncleExitEast2:
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+MauvilleCity_Movement_ScottApproachPlayerNorth:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_in_place_faster_up
+	step_end
+
+MauvilleCity_Movement_ScottApproachPlayerEast:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	step_end
+
+MauvilleCity_Movement_ScottExitNorth:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+MauvilleCity_Movement_ScottExitEast:
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+MauvilleCity_EventScript_Wattson::
 	lock
 	faceplayer
-	checkflag 0xD1
-	goto_if 0x1, MauvilleCity_EventScript_001DDDE9
-	compare_var_to_value 0x40BA, 0x2
-	goto_if 0x1, MauvilleCity_EventScript_001DDDBD
-	checkflag 0xD0
-	goto_if 0x1, MauvilleCity_EventScript_001DDDB3
-	loadword 0x0, 0x081DE2EE
-	callstd 0x4
-	setorcopyvar 0x8000, 0x10F
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	setflag 0xD0
-	loadword 0x0, 0x081DE3C9
-	callstd 0x4
+	goto_if_set FLAG_GOT_TM_THUNDERBOLT_FROM_WATTSON, MauvilleCity_EventScript_ReceivedThunderbolt
+	goto_if_eq VAR_NEW_MAUVILLE_STATE, 2, MauvilleCity_EventScript_CompletedNewMauville
+	goto_if_set FLAG_GOT_BASEMENT_KEY_FROM_WATTSON, MauvilleCity_EventScript_BegunNewMauville
+	msgbox MauvilleCity_Text_WattsonNeedFavorTakeKey, MSGBOX_DEFAULT
+	giveitem ITEM_BASEMENT_KEY
+	setflag FLAG_GOT_BASEMENT_KEY_FROM_WATTSON
+	msgbox MauvilleCity_Text_WattsonWontBeChallenge, MSGBOX_DEFAULT
 	release
 	end
 
-MauvilleCity_EventScript_001DDDB3::
-	loadword 0x0, 0x081DE3C9
-	callstd 0x4
+MauvilleCity_EventScript_BegunNewMauville::
+	msgbox MauvilleCity_Text_WattsonWontBeChallenge, MSGBOX_DEFAULT
 	release
 	end
 
-MauvilleCity_EventScript_001DDDBD::
-	loadword 0x0, 0x081DE432
-	callstd 0x4
-	setorcopyvar 0x8000, 0x138
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0xD1
-	loadword 0x0, 0x081DE48F
-	callstd 0x4
+MauvilleCity_EventScript_CompletedNewMauville::
+	msgbox MauvilleCity_Text_WattsonThanksTakeTM, MSGBOX_DEFAULT
+	giveitem ITEM_TM_THUNDERBOLT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_GOT_TM_THUNDERBOLT_FROM_WATTSON
+	msgbox MauvilleCity_Text_WattsonYoungTakeCharge, MSGBOX_DEFAULT
 	release
 	end
 
-MauvilleCity_EventScript_001DDDE9::
-	loadword 0x0, 0x081DE48F
-	callstd 0x4
+MauvilleCity_EventScript_ReceivedThunderbolt::
+	msgbox MauvilleCity_Text_WattsonYoungTakeCharge, MSGBOX_DEFAULT
 	release
 	end
 
 MauvilleCity_EventScript_RegisterWallyCall:: @ 0x081DDDF3
+	lockall
+	pokenavcall MauvilleCity_Text_WallyPokenavCall
+	waitmessage
+	delay 30
+	playfanfare MUS_REGISTER_MATCH_CALL
+	msgbox MauvilleCity_Text_RegisteredWally, MSGBOX_DEFAULT
+	waitfanfare
+	closemessage
+	delay 30
+	setflag FLAG_ENABLE_WALLY_MATCH_CALL
+	clearflag FLAG_ENABLE_FIRST_WALLY_POKENAV_CALL
+	releaseall
+	end
+MauvilleCity_Text_UncleHesTooPeppy: @ 0x081DDE15
+	.string "おじさん“このこは　ポケモンの　おかげで\n"
+	.string "げんきに　なれたような　もんだけど\l"
+	.string "ちょっと　げんきに　なりすぎ　なんだ⋯⋯$"
+
+MauvilleCity_Text_WallyWantToChallengeGym: @ 0x081DDE51
+	.string "ミツル“おじさん　おねがい　だから！\p"
+	.string "じぶんが　どれくらい　つよくなったか\n"
+	.string "このジムで　ためして　みたいんだ！\p"
+	.string "ね　ね　いいでしょう！？$"
+
+MauvilleCity_Text_UncleYourePushingIt: @ 0x081DDE96
+	.string "おじさん“まあまあ　ミツルくん！\p"
+	.string "たしかに　ポケモンと　いっしょに\n"
+	.string "くらすように　なってから\l"
+	.string "きみは　ずいぶん　げんきに　なった！\p"
+	.string "だからって　いきなり　ポケモンジムに\n"
+	.string "ちょうせん　なんて　むり　してないかい？$"
+
+MauvilleCity_Text_WallyWeCanBeatAnyone: @ 0x081DDF00
+	.string "ミツル“むり　なんか　してません\p"
+	.string "ぼくと　ラルトスが　ちからを　あわせれば\n"
+	.string "だれにだって　かてる　はずです！$"
+
+MauvilleCity_Text_WallyWillYouBattleMe: @ 0x081DDF37
+	.string "ミツル“あっ！　{PLAYER}さん！\p"
+	.string "ぼく　あれから　つよくなったんだ！\p"
+	.string "それを　{PLAYER}さんにも\n"
+	.string "おじさんにも　わかって　もらいたいんです！\p"
+	.string "{PLAYER}さん　おねがいです！\n"
+	.string "ぼくと　しょうぶ　してください$"
+
+MauvilleCity_Text_WallyMyUncleWontKnowImStrong: @ 0x081DDF95
+	.string "ミツル“{PLAYER}さんが\n"
+	.string "ぼくと　しょうぶ　してくれないと⋯⋯\p"
+	.string "おじさんに　ぼくが　つよくなったこと\n"
+	.string "わかって　もらえないよ⋯⋯$"
+
+MauvilleCity_Text_UncleCanYouBattleWally: @ 0x081DDFD3
+	.string "おじさん“{PLAYER}{KUN}とやら\n"
+	.string "わるいけど　ミツルくんと\l"
+	.string "しょうぶ　してあげて　くれないかな？\p"
+	.string "このままだと　なにを　いっても\n"
+	.string "きいて　もらえそうに　ないよ$"
+
+MauvilleCity_Text_WallyPleaseBattleMe: @ 0x081DE01F
+	.string "ミツル“{PLAYER}さん　おねがいです！\n"
+	.string "ぼくと　しょうぶ　してください$"
+
+MauvilleCity_Text_WallyHereICome: @ 0x081DE040
+	.string "ミツル“ありがとう　{PLAYER}さん\p"
+	.string "それでは⋯⋯　いきますね！$"
+
+MauvilleCity_Text_WallyDefeat: @ 0x081DE05D
+	.string "ミツル“⋯⋯　⋯⋯　⋯⋯　⋯⋯\p"
+	.string "⋯⋯　⋯⋯　⋯⋯　⋯⋯\p"
+	.string "ぼくの　まけ　です⋯⋯$"
+
+MauvilleCity_Text_WallyIllGoBackToVerdanturf: @ 0x081DE085
+	.string "ミツル“おじさん⋯⋯\n"
+	.string "ぼく　シダケに　もどります$"
+
+MauvilleCity_Text_ThankYouNotEnoughToBattle: @ 0x081DE09E
+	.string "{PLAYER}さん　ありがとう\n"
+	.string "やっぱり　トレーナーって　すごいんですね\p"
+	.string "ただ　ポケモンを　もっていて\n"
+	.string "たたかわせる　だけじゃ　ほんとうの　いみで\l"
+	.string "トレーナーには　なれないんだ⋯⋯$"
+
+MauvilleCity_Text_UncleNoNeedToBeDown: @ 0x081DE0F4
+	.string "おじさん“ミツルくん\n"
+	.string "そんなに　しょげることは　ないよ\p"
+	.string "これから　もっともっと\n"
+	.string "つよくなれば　いいじゃないか！\p"
+	.string "さあ　うちに　かえろう\n"
+	.string "みんな　まってるよ$"
+
+MauvilleCity_Text_UncleVisitUsSometime: @ 0x081DE142
+	.string "おじさん“なるほど　ミツルくんが\n"
+	.string "ポケモンを　つかまえるのを\l"
+	.string "みまもって　くれたのは　{PLAYER}{KUN}！\l"
+	.string "きみ　だったんだね\p"
+	.string "よかったら　シダケにも\n"
+	.string "あそびに　きてくれないか？\l"
+	.string "ミツルくん　きっと　よろこぶから$"
+
+MauvilleCity_Text_WallyPokenavCall:
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯　ピッ！\p"
+	.string "ミツル“あっ　{PLAYER}さん！\n"
+	.string "あのね　おじさんが　ぼくのために\l"
+	.string "ポケナビを　てにいれて　くれたんです！\p"
+	.string "これで　いつでも　{PLAYER}さんと\n"
+	.string "れんらくが　とれますね！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯　ツー$"
+
+MauvilleCity_Text_RegisteredWally:
+	.string "ミツルを\n"
+	.string "ポケナビに　とうろく　した！$"
+
+MauvilleCity_Text_ScottYouDidntHoldBack: @ 0x081DE235
+	.string "エニシダ“へへ⋯⋯\n"
+	.string "いまの　しょうぶ　みていたよ！\p"
+	.string "きみは　あの　ミツルくん　とかいう\n"
+	.string "しょうねんと　ともだち　なんだろう？\p"
+	.string "それなのに　てかげん　せずに　たたかい\n"
+	.string "みごとに　うちまかした⋯⋯\p"
+	.string "うん！　それでこそ　ほんとうの\n"
+	.string "ポケモン　しょうぶ　と　いうものだ！\p"
+	.string "わたしは　そういう　トレーナーが\n"
+	.string "だいすきだなー！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "これからも　おうえん　しているよ！$"
+
+MauvilleCity_Text_WattsonNeedFavorTakeKey: @ 0x081DE2EE
+	.string "テッセン“おお　{PLAYER}{KUN}\n"
+	.string "げんきそうに　しておるのう\l"
+	.string "わっはははは！　いいこと　じゃよ！\p"
+	.string "よしっ！　きめた！\n"
+	.string "{PLAYER}{KUN}に　おねがいを　するぞい！\p"
+	.string "じつは　この　キンセツには\n"
+	.string "ニューキンセツ　という　ちかとしが　ある\p"
+	.string "で　{PLAYER}{KUN}　には\n"
+	.string "そこの　はつでんそうちの　スイッチを\l"
+	.string "きってきて　ほしいんじゃよ！\p"
+	.string "さいきん　はつでんそうちが\n"
+	.string "ぼうそうぎみで　なにかと　あぶないからのう\p"
+	.string "ほら　これが　ニューキンセツの\n"
+	.string "とびらを　あける　カギじゃ！$"
+
+MauvilleCity_Text_WattsonWontBeChallenge: @ 0x081DE3C9
+	.string "テッセン“なーに\n"
+	.string "おまえさんなら　だいじょうぶ　じゃ\p"
+	.string "ちなみに　ニューキンセツの　いりぐちは\n"
+	.string "110ばんどうろで　なみのりを　して\l"
+	.string "すぐの　ところに　あるからのう\p"
+	.string "では　よろしく　たのんだぞ！\n"
+	.string "わっはははは！$"
+
+MauvilleCity_Text_WattsonThanksTakeTM: @ 0x081DE432
+	.string "テッセン“わっはははは！\p"
+	.string "さすがは　{PLAYER}{KUN}！　おまえさんに\n"
+	.string "たのんで　せいかい　じゃったよ！\p"
+	.string "これは　おれいじゃ\n"
+	.string "10まんボルトの　わざマシン\l"
+	.string "えんりょせずに　もっていくが　いいぞ！$"
+
+MauvilleCity_Text_WattsonYoungTakeCharge: @ 0x081DE48F
+	.string "テッセン“わっはははは！\p"
+	.string "わかものの　たのもしい　すがたを　みるのは\n"
+	.string "よろこばしい　こと　じゃな！$"
+
+MauvilleCity_Text_NurseHurtMonBackToHealth: @ 0x081DE4C1
+	.string "ポケモンしょうぶを　するのも　いいけど\p"
+	.string "もしも　じぶんの　ポケモンが\n"
+	.string "たたかいで　きずついたり　したなら\l"
+	.string "やさしく　いたわって　あげなきゃね！$"
+
+MauvilleCity_Text_AllSortsOfPeopleComeThrough: @ 0x081DE509
+	.string "この　まちは　とうざい　なんぼく　に\n"
+	.string "みちが　つうじて　いるから\l"
+	.string "いろんな　ひとが　やってきます！$"
+
+MauvilleCity_Text_RydelVeryGenerous: @ 0x081DE53B
+	.string "あなた　サイクルショップ　には\n"
+	.string "もう　いってみた？\p"
+	.string "あそこの　ごしゅじんの　カゼノさんは\n"
+	.string "すごく　きまえが　いいのよね！$"
+
+MauvilleCity_Text_PokemonCanJumpYouOnBike: @ 0x081DE578
+	.string "じてんしゃに　のっていても\n"
+	.string "やせいの　ポケモンは　とびだしてくるよ！$"
+
+MauvilleCity_Text_CitySign: @ 0x081DE59B
+	.string "ここは　キンセツ　シティ\n"
+	.string "あかるく　かがやく　たのしい　まち$"
+
+MauvilleCity_Text_GymSign: @ 0x081DE5BA
+	.string "キンセツ　シティ　ポケモンジム\n"
+	.string "リーダー　テッセン\l"
+	.string "あっかるい　でんげき　オヤジ！$"
+
+MauvilleCity_Text_BikeShopSign: @ 0x081DE5E4
+	.string "じゃりみち　はしれば　こころも　はずむ！\n"
+	.string "‘サイクルショップ　カゼノ’$"
+
+MauvilleCity_Text_GameCornerSign: @ 0x081DE608
+	.string "だれもが　あそべる　すてきな　スポット！\n"
+	.string "‘キンセツ　ゲームコーナー’$"
+
+MauvilleCity_Text_ExplainTV: @ 0x081DE62C
+	.string "ねえ　きみ\n"
+	.string "テレビって　チェック　してるかい？\p"
+	.string "さいきんに　なって　おもしろい\n"
+	.string "ばんぐみが　きゅうに　ふえたんだぜ！\p"
+	.string "いいよね　テレビって\n"
+	.string "いきなり　ともだちの　ことが\l"
+	.string "しょうかい　されたり\p"
+	.string "しらない　うちに　じぶんが\n"
+	.string "テレビに　でていたり　するんだよ\p"
+	.string "こんど　ぼくも　テレビに\n"
+	.string "うつんない　かなー\p"
+	.string "きみも　こんどから\n"
+	.string "ちゃんと　チェックを　してみなよ！$"
+
+MauvilleCity_Text_BeenCheckingOutTV: @ 0x081DE6DE
+	.string "やあ！\n"
+	.string "テレビは　ちゃんと　チェック　してる？$"
