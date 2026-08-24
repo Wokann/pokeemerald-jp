@@ -2882,35 +2882,12 @@ gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F: @ 0x085095C4
 	.include "data/maps/FortreeCity_DecorationShop/events.inc"
 	.globl gMapEvents_FORTREE_CITY_DECORATION_SHOP
 	.set gMapEvents_FORTREE_CITY_DECORATION_SHOP, FortreeCity_DecorationShop_MapEvents
-	.globl LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventObjects
-LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventObjects: @ 0x08509860
-	object_event 1, 19, 0, 10, 3, 3, 7, 0, 0, 0, 0, 0x082054FD, 0x0000
-	.globl LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventWarps
-LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventWarps: @ 0x08509878
-	warp_def 5, 8, 0, 1, MAP_LILYCOVE_CITY
-	warp_def 6, 8, 0, 1, MAP_LILYCOVE_CITY
-	warp_def 2, 1, 0, 0, MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_2F
-	.globl LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventCoordEvents
-LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventCoordEvents: @ 0x08509890
-	coord_event 10, 2, 3, 16385, 0, 0x08205585
+	.include "data/maps/LilycoveCity_CoveLilyMotel_1F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_1F
-gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_1F: @ 0x085098A0
-	map_events LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventObjects, LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventWarps, LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventCoordEvents, 0
-	.globl LILYCOVE_CITY_COVE_LILY_MOTEL_2F_EventObjects
-LILYCOVE_CITY_COVE_LILY_MOTEL_2F_EventObjects: @ 0x085098B4
-	object_event 1, 33, 0, 4, 6, 3, 9, 0, 0, 0, 0, 0x08205888, 0x039D
-	object_event 2, 46, 0, 1, 4, 3, 10, 0, 0, 0, 0, 0x082058DE, 0x039D
-	object_event 3, 17, 0, 7, 7, 3, 10, 0, 0, 0, 0, 0x082058E7, 0x039D
-	object_event 4, 65, 0, 10, 3, 3, 9, 0, 0, 0, 0, 0x082058D5, 0x039D
-	object_event 5, 189, 0, 7, 3, 3, 8, 1, 1, 0, 0, 0x082058F9, 0x039D
-	object_event 6, 20, 0, 4, 4, 3, 9, 1, 1, 0, 0, 0x082058F0, 0x039D
-	object_event 7, 219, 0, 1, 7, 3, 10, 0, 0, 0, 0, 0x08205902, 0x0313
-	.globl LILYCOVE_CITY_COVE_LILY_MOTEL_2F_EventWarps
-LILYCOVE_CITY_COVE_LILY_MOTEL_2F_EventWarps: @ 0x0850995C
-	warp_def 2, 1, 0, 2, MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_1F
+	.set gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_1F, LilycoveCity_CoveLilyMotel_1F_MapEvents
+	.include "data/maps/LilycoveCity_CoveLilyMotel_2F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F
-gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F: @ 0x08509964
-	map_events LILYCOVE_CITY_COVE_LILY_MOTEL_2F_EventObjects, LILYCOVE_CITY_COVE_LILY_MOTEL_2F_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F, LilycoveCity_CoveLilyMotel_2F_MapEvents
 	.globl LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventObjects
 LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventObjects: @ 0x08509978
 	object_event 1, 45, 0, 5, 12, 3, 10, 0, 0, 0, 0, 0x08205BE3, 0x0000

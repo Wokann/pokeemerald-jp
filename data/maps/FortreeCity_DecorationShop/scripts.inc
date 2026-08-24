@@ -67,5 +67,3 @@ FortreeCity_DecorationShop_Text_BuyingDeskForDolls: @ 0x0820549C
 	.string "そうしないと　ひみつきちに　おくとき\n"
 	.string "つちで　よごれたり　トゲが　ささって\l"
 	.string "ぬいぐるみが　かわいそう　だもん！$"
-
-	.incbin "baserom_jp.gba", 0x2054fc, 0xcea
