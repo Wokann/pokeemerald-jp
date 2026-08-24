@@ -7,4 +7,18 @@ RustboroCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-	.incbin "baserom_jp.gba", 0x2035ce, 0xdd0
+@ The below 3 are unused and leftover from RS.
+RustboroCity_PokemonCenter_2F_EventScript_Colosseum::
+	call CableClub_EventScript_Colosseum
+	end
+
+RustboroCity_PokemonCenter_2F_EventScript_TradeCenter::
+	call CableClub_EventScript_TradeCenter
+	end
+
+RustboroCity_PokemonCenter_2F_EventScript_RecordCorner::
+	call CableClub_EventScript_RecordCorner
+	end
+
+	@ Rustboro City Mart and later unstructured script owners begin here.
+	.incbin "baserom_jp.gba", 0x2035e0, 0xdbe
