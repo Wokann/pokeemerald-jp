@@ -182,6 +182,68 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
 # the matching US text order have been checked.  jp_text_blocks.py reads this
 # same mapping, so source labels and map references cannot drift apart.
 VERIFIED_SHARED_TEXT_BLOCKS = {
+    'Route134': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x08262069,
+        'end': 0x08262393,
+        'labels': {
+            0x08262069: 'Route134_Text_JackIntro',
+            0x0826208B: 'Route134_Text_JackDefeat',
+            0x08262091: 'Route134_Text_JackPostBattle',
+            0x082620AF: 'Route134_Text_LaurelIntro',
+            0x082620CE: 'Route134_Text_LaurelDefeat',
+            0x082620D7: 'Route134_Text_LaurelPostBattle',
+            0x082620F6: 'Route134_Text_AlexIntro',
+            0x08262116: 'Route134_Text_AlexDefeat',
+            0x0826211F: 'Route134_Text_AlexPostBattle',
+            0x08262143: 'Route134_Text_HitoshiIntro',
+            0x0826215E: 'Route134_Text_HitoshiDefeat',
+            0x08262170: 'Route134_Text_HitoshiPostBattle',
+            0x08262196: 'Route134_Text_AaronIntro',
+            0x082621C0: 'Route134_Text_AaronDefeat',
+            0x082621CF: 'Route134_Text_AaronPostBattle',
+            0x0826220B: 'Route134_Text_KelvinIntro',
+            0x0826221F: 'Route134_Text_KelvinDefeat',
+            0x08262237: 'Route134_Text_KelvinPostBattle',
+            0x08262281: 'Route134_Text_MarleyIntro',
+            0x08262295: 'Route134_Text_MarleyDefeat',
+            0x082622AE: 'Route134_Text_MarleyPostBattle',
+            0x082622D3: 'Route134_Text_ReynaIntro',
+            0x082622F2: 'Route134_Text_ReynaDefeat',
+            0x08262306: 'Route134_Text_ReynaPostBattle',
+            0x0826233C: 'Route134_Text_HudsonIntro',
+            0x08262358: 'Route134_Text_HudsonDefeat',
+            0x08262360: 'Route134_Text_HudsonPostBattle',
+        },
+    },
+    'Route133': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x08261E19,
+        'end': 0x08262069,
+        'labels': {
+            0x08261E19: 'Route133_Text_FranklinIntro',
+            0x08261E45: 'Route133_Text_FranklinDefeat',
+            0x08261E51: 'Route133_Text_FranklinPostBattle',
+            0x08261E80: 'Route133_Text_DebraIntro',
+            0x08261EA4: 'Route133_Text_DebraDefeat',
+            0x08261EAB: 'Route133_Text_DebraPostBattle',
+            0x08261EC8: 'Route133_Text_LindaIntro',
+            0x08261EDD: 'Route133_Text_LindaDefeat',
+            0x08261EE3: 'Route133_Text_LindaPostBattle',
+            0x08261F06: 'Route133_Text_WarrenIntro',
+            0x08261F26: 'Route133_Text_WarrenDefeat',
+            0x08261F3F: 'Route133_Text_WarrenPostBattle',
+            0x08261F6E: 'Route133_Text_BeckIntro',
+            0x08261F8B: 'Route133_Text_BeckDefeat',
+            0x08261F9D: 'Route133_Text_BeckPostBattle',
+            0x08261FC7: 'Route133_Text_MollieIntro',
+            0x08261FE5: 'Route133_Text_MollieDefeat',
+            0x08262001: 'Route133_Text_MolliePostBattle',
+            0x08262022: 'Route133_Text_ConorIntro',
+            0x0826203E: 'Route133_Text_ConorDefeat',
+            0x0826204B: 'Route133_Text_ConorPostBattle',
+        },
+    },
     'Route132': {
         'source': 'data/text/trainers.inc',
         'start': 0x08261B3C,
@@ -4130,6 +4192,12 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081EF646: 'Route133_EventScript_Mollie',
             0x081EF65D: 'Route133_EventScript_Conor',
         },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route133']['labels'],
+        'external_labels': {
+            0x08256DCA: 'Route133_EventScript_ItemBigPearl',
+            0x08256DD7: 'Route133_EventScript_ItemStarPiece',
+            0x08256DE4: 'Route133_EventScript_ItemMaxRevive',
+        },
         'symbols': {
             'trainers': {
                 0x00AA: 'TRAINER_FRANKLIN',
@@ -4140,6 +4208,41 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
                 0x0089: 'TRAINER_MOLLIE',
                 0x01FF: 'TRAINER_CONOR',
             },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+    'Route134': {
+        'scripts': {
+            0x081EF67A: 'Route134_OnResume',
+            0x081EF683: 'Route134_EventScript_Jack',
+            0x081EF69A: 'Route134_EventScript_Laurel',
+            0x081EF6B1: 'Route134_EventScript_Alex',
+            0x081EF6C8: 'Route134_EventScript_Aaron',
+            0x081EF6DF: 'Route134_EventScript_Hitoshi',
+            0x081EF6F6: 'Route134_EventScript_Hudson',
+            0x081EF70D: 'Route134_EventScript_Reyna',
+            0x081EF724: 'Route134_EventScript_Marley',
+            0x081EF73B: 'Route134_EventScript_Kelvin',
+        },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route134']['labels'],
+        'external_labels': {
+            0x08256DF1: 'Route134_EventScript_ItemCarbos',
+            0x08256DFE: 'Route134_EventScript_ItemStarPiece',
+        },
+        'symbols': {
+            'trainers': {
+                0x00AC: 'TRAINER_JACK',
+                0x01CF: 'TRAINER_LAUREL',
+                0x019D: 'TRAINER_ALEX',
+                0x018D: 'TRAINER_AARON',
+                0x00B4: 'TRAINER_HITOSHI',
+                0x01FE: 'TRAINER_HUDSON',
+                0x01FD: 'TRAINER_REYNA',
+                0x01FC: 'TRAINER_MARLEY',
+                0x01FB: 'TRAINER_KELVIN',
+            },
+            'maps': {0x1845: 'MAP_UNDERWATER_ROUTE134'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
         },
     },
 }
@@ -4534,6 +4637,7 @@ LOCAL_ID_ARGUMENTS = {
     'waitmovement_at': {0},
 }
 MAP_ARGUMENTS = {
+    'setdivewarp': {0},
     'addobject_at': {1},
     'applymovement_at': {2},
     'hideobject_at': {1},
@@ -4543,6 +4647,18 @@ MAP_ARGUMENTS = {
     'showobject_at': {1},
     'waitmovement_at': {1},
 }
+
+
+def collapse_coordinate_warp_macros(lines):
+    """Use the canonical three-argument form for coordinate-only warps."""
+    out = []
+    for name, argstr in lines:
+        if name == 'setdivewarp':
+            args = [arg.strip() for arg in argstr.split(',')]
+            if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
+                argstr = ', '.join((args[0], args[2], args[3]))
+        out.append((name, argstr))
+    return out
 ITEM_ARGUMENTS = {
     'giveitem': {0},
 }
@@ -5057,6 +5173,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_trainerbattle_macros(decoded_lines)
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)
             decoded_lines = collapse_condition_macros(decoded_lines)
+            decoded_lines = collapse_coordinate_warp_macros(decoded_lines)
             decoded_lines = name_contextual_result_conditions(decoded_lines)
             for name, argstr in decoded_lines:
                 if argstr:

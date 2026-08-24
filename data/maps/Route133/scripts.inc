@@ -4,36 +4,36 @@ Route133_MapScripts::
 	.byte 0
 
 Route133_EventScript_Franklin::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_FRANKLIN, 0x0, 0x08261E19, 0x08261E45
-	msgbox 0x08261E51, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_FRANKLIN, Route133_Text_FranklinIntro, Route133_Text_FranklinDefeat
+	msgbox Route133_Text_FranklinPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route133_EventScript_Debra::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_DEBRA, 0x0, 0x08261E80, 0x08261EA4
-	msgbox 0x08261EAB, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_DEBRA, Route133_Text_DebraIntro, Route133_Text_DebraDefeat
+	msgbox Route133_Text_DebraPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route133_EventScript_Linda::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_LINDA, 0x0, 0x08261EC8, 0x08261EDD
-	msgbox 0x08261EE3, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_LINDA, Route133_Text_LindaIntro, Route133_Text_LindaDefeat
+	msgbox Route133_Text_LindaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route133_EventScript_Warren::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_WARREN, 0x0, 0x08261F06, 0x08261F26
-	msgbox 0x08261F3F, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_WARREN, Route133_Text_WarrenIntro, Route133_Text_WarrenDefeat
+	msgbox Route133_Text_WarrenPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route133_EventScript_Beck::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_BECK, 0x0, 0x08261F6E, 0x08261F8B
-	msgbox 0x08261F9D, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_BECK, Route133_Text_BeckIntro, Route133_Text_BeckDefeat
+	msgbox Route133_Text_BeckPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route133_EventScript_Mollie::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_MOLLIE, 0x0, 0x08261FC7, 0x08261FE5
-	msgbox 0x08262001, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_MOLLIE, Route133_Text_MollieIntro, Route133_Text_MollieDefeat
+	msgbox Route133_Text_MolliePostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route133_EventScript_Conor::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_CONOR, 0x0, 0x08262022, 0x0826203E
-	msgbox 0x0826204B, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_CONOR, Route133_Text_ConorIntro, Route133_Text_ConorDefeat
+	msgbox Route133_Text_ConorPostBattle, MSGBOX_AUTOCLOSE
 	end

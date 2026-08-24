@@ -68,4 +68,24 @@ Route132_EventScript_ItemProtein:: @ 0x08256DBD
 	finditem ITEM_PROTEIN
 	end
 
-	.incbin "baserom_jp.gba", 0x256dca, 0xcbf
+Route133_EventScript_ItemBigPearl:: @ 0x08256DCA
+	finditem ITEM_BIG_PEARL
+	end
+
+Route133_EventScript_ItemStarPiece:: @ 0x08256DD7
+	finditem ITEM_STAR_PIECE
+	end
+
+Route133_EventScript_ItemMaxRevive:: @ 0x08256DE4
+	finditem ITEM_MAX_REVIVE
+	end
+
+Route134_EventScript_ItemCarbos:: @ 0x08256DF1
+	finditem ITEM_CARBOS
+	end
+
+Route134_EventScript_ItemStarPiece:: @ 0x08256DFE
+	finditem ITEM_STAR_PIECE
+	end
+
+	.incbin "baserom_jp.gba", 0x256e0b, 0xc7e

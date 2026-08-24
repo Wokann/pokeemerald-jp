@@ -2371,37 +2371,12 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/Route132/events.inc"
 	.globl gMapEvents_ROUTE132
 	.set gMapEvents_ROUTE132, Route132_MapEvents
-	.globl ROUTE133_EventObjects
-ROUTE133_EventObjects: @ 0x085053C0
-	object_event 1, 42, 0, 68, 27, 1, 25, 0, 2, 1, 3, 0x081EF5D3, 0x0000
-	object_event 2, 43, 0, 13, 3, 1, 8, 0, 0, 1, 3, 0x081EF601, 0x0000
-	object_event 3, 43, 0, 68, 28, 1, 26, 0, 2, 1, 3, 0x081EF5EA, 0x0000
-	object_event 4, 59, 0, 53, 12, 3, 1, 0, 0, 0, 0, 0x08256DCA, 0x040D
-	object_event 5, 59, 0, 8, 10, 3, 1, 0, 0, 0, 0, 0x08256DD7, 0x040E
-	object_event 6, 66, 0, 7, 14, 3, 18, 1, 1, 1, 2, 0x081EF62F, 0x0000
-	object_event 7, 33, 0, 37, 15, 3, 18, 0, 0, 1, 4, 0x081EF618, 0x0000
-	object_event 8, 22, 0, 56, 11, 3, 8, 1, 1, 1, 3, 0x081EF646, 0x0000
-	object_event 9, 21, 0, 56, 15, 3, 16, 1, 1, 1, 3, 0x081EF65D, 0x0000
-	object_event 10, 59, 0, 48, 28, 3, 1, 1, 1, 0, 0, 0x08256DE4, 0x0485
+	.include "data/maps/Route133/events.inc"
 	.globl gMapEvents_ROUTE133
-gMapEvents_ROUTE133: @ 0x085054B0
-	map_events ROUTE133_EventObjects, 0, 0, 0
-	.globl ROUTE134_EventObjects
-ROUTE134_EventObjects: @ 0x085054C4
-	object_event 1, 42, 0, 49, 9, 1, 49, 3, 5, 1, 2, 0x081EF683, 0x0000
-	object_event 2, 43, 0, 58, 7, 1, 1, 0, 0, 1, 3, 0x081EF69A, 0x0000
-	object_event 3, 33, 0, 41, 23, 3, 10, 0, 0, 1, 2, 0x081EF6C8, 0x0000
-	object_event 4, 66, 0, 24, 23, 3, 26, 0, 3, 1, 6, 0x081EF6B1, 0x0000
-	object_event 5, 44, 0, 49, 16, 3, 27, 6, 0, 1, 5, 0x081EF6DF, 0x0000
-	object_event 6, 34, 0, 43, 23, 1, 9, 1, 1, 1, 2, 0x081EF724, 0x0000
-	object_event 7, 49, 0, 24, 30, 3, 25, 0, 3, 1, 6, 0x081EF73B, 0x0000
-	object_event 8, 14, 0, 50, 16, 3, 28, 6, 0, 1, 5, 0x081EF70D, 0x0000
-	object_event 9, 49, 0, 63, 14, 3, 18, 1, 1, 1, 3, 0x081EF6F6, 0x0000
-	object_event 10, 59, 0, 50, 17, 3, 1, 1, 1, 0, 0, 0x08256DF1, 0x0486
-	object_event 11, 59, 0, 22, 27, 3, 1, 1, 1, 0, 0, 0x08256DFE, 0x0487
+	.set gMapEvents_ROUTE133, Route133_MapEvents
+	.include "data/maps/Route134/events.inc"
 	.globl gMapEvents_ROUTE134
-gMapEvents_ROUTE134: @ 0x085055CC
-	map_events ROUTE134_EventObjects, 0, 0, 0
+	.set gMapEvents_ROUTE134, Route134_MapEvents
 	.globl UNDERWATER_ROUTE124_EventObjects
 UNDERWATER_ROUTE124_EventObjects: @ 0x00000000
 	.globl UNDERWATER_ROUTE124_EventBgEvents

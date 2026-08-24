@@ -4480,4 +4480,193 @@ Route132_Text_DarcyDefeat: @ 0x08261DD6
 Route132_Text_DarcyPostBattle: @ 0x08261DEE
 	.string "とりあえず　そこの　おじいさんと　くんで\n"
 	.string "むこうの　チームに　いどんで　みようかな？$"
-	.incbin "baserom_jp.gba", 0x261e19, 0x57a
+Route133_Text_FranklinIntro: @ 0x08261E19
+	.string "キミも　しおに　ながされて　きたの？\n"
+	.string "これも　なにかの　えんだね\l"
+	.string "しょうぶ　しようよ！$"
+
+Route133_Text_FranklinDefeat: @ 0x08261E45
+	.string "つよい！\n"
+	.string "つよすぎっ！$"
+
+Route133_Text_FranklinPostBattle: @ 0x08261E51
+	.string "キミみたいな　つよい　トレーナーが\n"
+	.string "ながされて　くるなんて⋯⋯\l"
+	.string "オレも　ツキが　ないなぁ⋯⋯$"
+
+Route133_Text_DebraIntro: @ 0x08261E80
+	.string "わたしは　かなしい　おんな⋯⋯\n"
+	.string "ながれ　ながれて　ここまで　きたの⋯⋯$"
+
+Route133_Text_DebraDefeat: @ 0x08261EA4
+	.string "まけたぁ⋯⋯$"
+
+Route133_Text_DebraPostBattle: @ 0x08261EAB
+	.string "ながされる　だけの　じんせい　なんて⋯⋯\n"
+	.string "もう　イヤっ！$"
+
+Route133_Text_LindaIntro: @ 0x08261EC8
+	.string "いらっしゃーい！\n"
+	.string "おまち　してましたわ！$"
+
+Route133_Text_LindaDefeat: @ 0x08261EDD
+	.string "いやーん！$"
+
+Route133_Text_LindaPostBattle: @ 0x08261EE3
+	.string "つよい　こどもの　トレーナーなんて⋯⋯\n"
+	.string "おねえさん　こまっちゃうぅ！$"
+
+Route133_Text_WarrenIntro: @ 0x08261F06
+	.string "かちたいから　って\n"
+	.string "ひとと　おなじように　そだては　しないぜ！$"
+
+Route133_Text_WarrenDefeat: @ 0x08261F26
+	.string "くそー！\n"
+	.string "おれの　やりかたは　まだまだ　あまい！$"
+
+Route133_Text_WarrenPostBattle: @ 0x08261F3F
+	.string "ひとと　おなじこと　するより\n"
+	.string "じぶんの　したいこと　したほうが\l"
+	.string "たのしいに　きまってるだろ！$"
+
+Route133_Text_BeckIntro: @ 0x08261F6E
+	.string "とりポケモンと　いっしょに\n"
+	.string "こんな　ところまで　きました$"
+
+Route133_Text_BeckDefeat: @ 0x08261F8B
+	.string "きみ⋯⋯\n"
+	.string "なんて　かっこいいんだ！$"
+
+Route133_Text_BeckPostBattle: @ 0x08261F9D
+	.string "そろそろ　ヒワマキに　かえりたいけど\n"
+	.string "なんとなく　ここ　すきに　なっちゃったぞ！？$"
+
+Route133_Text_MollieIntro: @ 0x08261FC7
+	.string "いままでに　なんぜんかい\n"
+	.string "ポケモン　しょうぶを　したかねえ$"
+
+Route133_Text_MollieDefeat: @ 0x08261FE5
+	.string "なんぜんかい　まけても\n"
+	.string "くやしい　もんは　くやしいでね$"
+
+Route133_Text_MolliePostBattle: @ 0x08262001
+	.string "わたいや　じいさんのような\n"
+	.string "たつじんを　めざして　がんばんなせえ$"
+
+Route133_Text_ConorIntro: @ 0x08262022
+	.string "わかい　やつらは\n"
+	.string "ながされて　ばっかりで　なさけねぇ！$"
+
+Route133_Text_ConorDefeat: @ 0x0826203E
+	.string "きみは　しっかりしとるな$"
+
+Route133_Text_ConorPostBattle: @ 0x0826204B
+	.string "まわりに　ながされず\n"
+	.string "しっかりした　おとなに　なんなさい！$"
+Route134_Text_JackIntro: @ 0x08262069
+	.string "およぎの　とくいな　ポケモンだって\n"
+	.string "ながされる　しおの　ながれだ！$"
+
+Route134_Text_JackDefeat: @ 0x0826208B
+	.string "ひえーっ！$"
+
+Route134_Text_JackPostBattle: @ 0x08262091
+	.string "ポケモンたちは　この　ながれを\n"
+	.string "たのしんでる　みたいだよ！$"
+
+Route134_Text_LaurelIntro: @ 0x082620AF
+	.string "わたしの　ラブカスたちと\n"
+	.string "たのしく　しょうぶ　しましょうよ！$"
+
+Route134_Text_LaurelDefeat: @ 0x082620CE
+	.string "あらららららっ！$"
+
+Route134_Text_LaurelPostBattle: @ 0x082620D7
+	.string "どこかの　マニアが\n"
+	.string "ラブカスの　ウロコを　あつめてるのよねー$"
+
+Route134_Text_AlexIntro: @ 0x082620F6
+	.string "よーしっ！　きゅうけい　おわり！\n"
+	.string "ポケモンしょうぶ　しようぜ！$"
+
+Route134_Text_AlexDefeat: @ 0x08262116
+	.string "また　バテた⋯⋯$"
+
+Route134_Text_AlexPostBattle: @ 0x0826211F
+	.string "オレの　とりポケモンたち⋯⋯\n"
+	.string "ながいあいだ　とぶと　すぐに　バテるんだ$"
+
+Route134_Text_HitoshiIntro: @ 0x08262143
+	.string "ポケモントレーナーなら\n"
+	.string "だまって　ポケモンしょうぶ！$"
+
+Route134_Text_HitoshiDefeat: @ 0x0826215E
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯$"
+
+Route134_Text_HitoshiPostBattle: @ 0x08262170
+	.string "じぶんから　しょうぶを　いどんでおいて\n"
+	.string "まけるとは⋯⋯　はずかしすぎる⋯⋯$"
+
+Route134_Text_AaronIntro: @ 0x08262196
+	.string "このあたりの　はげしい　しおの　ながれ！\n"
+	.string "それもまた　おれたちを　きたえてくれる！$"
+
+Route134_Text_AaronDefeat: @ 0x082621C0
+	.string "すなおに　まけを　みとめよう$"
+
+Route134_Text_AaronPostBattle: @ 0x082621CF
+	.string "りゅうせいのたきで\n"
+	.string "しゅぎょう　しなおすと　しよう！\p"
+	.string "よければ　きみも　いってみたまえ\n"
+	.string "きっと　いまより　つよくなる！$"
+
+Route134_Text_KelvinIntro: @ 0x0826220B
+	.string "ふ　ふねが\n"
+	.string "ながされて　しまったんです$"
+
+Route134_Text_KelvinDefeat: @ 0x0826221F
+	.string "あわわわわ\n"
+	.string "やめてください　やめてくださいよ！$"
+
+Route134_Text_KelvinPostBattle: @ 0x08262237
+	.string "このうえ　なみのり　まで　できなかったら\n"
+	.string "かえれないじゃ　ないですか！\p"
+	.string "⋯⋯まあ　ひんしでも　なみのり　できますけど\n"
+	.string "きぶんてきに　よろしくなくて$"
+
+Route134_Text_MarleyIntro: @ 0x08262281
+	.string "すばやい　こうげきを　かわせますこと？$"
+
+Route134_Text_MarleyDefeat: @ 0x08262295
+	.string "そんな　てが　あるなんて⋯⋯！\n"
+	.string "かんぱい　ですわ$"
+
+Route134_Text_MarleyPostBattle: @ 0x082622AE
+	.string "すばやさへの　こだわりは　すてきれないの\n"
+	.string "もっと　がんばって　みますわ！$"
+
+Route134_Text_ReynaIntro: @ 0x082622D3
+	.string "あたいの　ポケモンは\n"
+	.string "ちょっとや　そっとじゃ　たおせないよ！$"
+
+Route134_Text_ReynaDefeat: @ 0x082622F2
+	.string "うっそだろ！\n"
+	.string "あたいが　まけるなんて！$"
+
+Route134_Text_ReynaPostBattle: @ 0x08262306
+	.string "ははっ　あんたにゃ　まけたよ！\p"
+	.string "そこらへんの　トレーナーでも　たおして\n"
+	.string "いちから　しゅぎょう　しなおすよ！$"
+
+Route134_Text_HudsonIntro: @ 0x0826233C
+	.string "なあ　このへんで\n"
+	.string "もうひとり　ふなのりを　みなかった？$"
+
+Route134_Text_HudsonDefeat: @ 0x08262358
+	.string "おー　すごいな$"
+
+Route134_Text_HudsonPostBattle: @ 0x08262360
+	.string "おれたちの　ふねが　ながされちゃってさ！\p"
+	.string "あいぼうが　きの　よわい　やつだから\n"
+	.string "しんぱい　してるんだ$"
