@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_anim.h"
 #include "cable_club.h"
 #include "trade.h"
 #include "evolution_scene.h"
@@ -23,11 +24,14 @@
 #include "link_rfu.h"
 #include "malloc.h"
 #include "menu.h"
+#include "overworld.h"
 #include "palette.h"
 #include "pokedex.h"
+#include "pokeball.h"
 #include "pokemon_icon.h"
 #include "pokemon_summary_screen.h"
 #include "sprite.h"
+#include "sound.h"
 #include "text.h"
 #include "text_window.h"
 #include "union_room.h"
@@ -189,6 +193,9 @@ enum {
 static u32 GetNumQueuedActions(void);
 extern void CB2_ReturnToFieldFromMultiplayer(void);
 void sub_080790C8(u8 side);
+static u8 GetMonNicknameWidth(u8 *str, u8 whichParty, u8 partyIdx);
+static void BufferMovesString(u8 *str, u8 whichParty, u8 partyIdx);
+static void PrintLevelAndGender(u8 whichParty, u8 monIdx, u8 x, u8 y, u8 width, u8 height);
 static void PrintPartyLevelsAndGenders(u8 whichParty);
 static void DoQueuedActions(void);
 static void PrintPartyNicknames(u8 whichParty);
@@ -274,27 +281,31 @@ struct TradeAnim
     u16 linkTimeoutTimer;  // 0x8A
     u16 neverRead_8C;      // 0x8C
     u8 monSpriteIds[2];    // 0x8E
-    u8 filler_90[3];       // 0x90
+    u8 connectionSpriteId1; // 0x90
+    u8 connectionSpriteId2; // 0x91
+    u8 cableEndSpriteId;    // 0x92
     u8 scheduleLinkTransfer; // 0x93
     u16 state;             // 0x94
-    u8 filler_96[0x3E];    // 0x96
+    u8 filler_96[0x3C];    // 0x96
+    u8 releasePokeballSpriteId; // 0xD2
+    u8 bouncingPokeballSpriteId; // 0xD3
     u16 texX;       // 0xD4
     u16 texY;       // 0xD6
     u16 neverRead_D8;   // 0xD8
     u16 neverRead_DA;   // 0xDA
-    s16 scrX;               // 0xDC
-    s16 scrY;               // 0xDE
-    u16 bg1vofs;            // 0xE0
-    u16 bg1hofs;            // 0xE2
-    u16 bg2vofs;            // 0xE4
-    u16 bg2hofs;            // 0xE6
-    s16 sXY;                // 0xE8
+    u16 scrX;               // 0xDC
+    u16 scrY;               // 0xDE
+    s16 bg1vofs;            // 0xE0
+    s16 bg1hofs;            // 0xE2
+    s16 bg2vofs;            // 0xE4
+    s16 bg2hofs;            // 0xE6
+    u16 sXY;                // 0xE8
     u16 gbaScale;           // 0xEA
     u16 alpha;              // 0xEC
     u8 isLinkTrade;         // 0xEE
     u8 filler_EF[1];
     u16 monSpecies[2];  // 0xF0
-    u8 filler_F4[2];        // 0xF4
+    u16 cachedMapMusic;     // 0xF4
     u8 textColors[3];       // 0xF6
     u8 filler_F9[1];        // 0xF9
     u8 isCableTrade;        // 0xFA
@@ -336,9 +347,15 @@ static void CB2_WaitTradeComplete(void);
 static void CB2_TryLinkTradeEvolution(void);
 static void CB2_SaveAndEndTrade(void);
 static void CB2_SaveAndEndWirelessTrade(void);
+static bool8 DoTradeAnim_Cable(void);
+static bool8 DoTradeAnim_Wireless(void);
 static void SpriteCB_BouncingPokeballDepart(struct Sprite *sprite);
 static void SpriteCB_BouncingPokeballDepartEnd(struct Sprite *sprite);
 static void SpriteCB_BouncingPokeballArrive(struct Sprite *sprite);
+static void Task_AnimateWirelessSignal(u8 taskId);
+static void Task_OpenCenterWhiteColumn(u8 taskId);
+static void Task_CloseCenterWhiteColumn(u8 taskId);
+static void CheckPartnersMonForRibbons(void);
 static void BufferInGameTradeMonName(void);
 static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTrade);
 static void GetInGameTradeMail(struct Mail *mail, const struct InGameTrade *trade);
@@ -375,9 +392,22 @@ extern const u8 gUnknown_8300AA2[];
 extern const u8 gUnknown_8300AA5[];
 extern const u8 gUnknown_8300AB1[];
 extern const u8 gUnknown_8300C00[];
+extern const u8 gUnknown_8300A9B[];
 extern const u8 gUnknown_8300A36[][2];
 extern const u8 gUnknown_8300A4E[][2];
 extern const u8 gUnknown_8300A1C[][2];
+extern const u8 gUnknown_8300D40[][2];
+extern const struct SpriteTemplate gUnknown_830CF6C;
+extern const struct SpriteTemplate gUnknown_830CFCC;
+extern const struct SpriteTemplate gUnknown_830D00C;
+extern const struct SpriteTemplate gUnknown_830D040;
+extern const struct SpriteTemplate gUnknown_830D0B8;
+extern const struct SpriteTemplate gUnknown_830D0D0;
+extern const union AffineAnimCmd *const gUnknown_830D110[];
+extern const u8 gUnknown_830D240[];
+extern const u8 gUnknown_830D24F[];
+extern const u8 gUnknown_830D258[];
+extern const u8 gUnknown_830D26A[];
 extern const struct MenuAction sSelectTradeMonActions[];
 extern const struct WindowTemplate sTradeYesNoWindowTemplate;
 static void LoadTradeBgGfx(u8 state);
@@ -1925,6 +1955,7 @@ static void SetSelectedMon(u8 cursorPosition)
     }
 }
 
+// Byte-exact exception: agbcc cannot reproduce this JP routine's cross-case r8/r9/sl lifetimes.
 __attribute__((naked)) void sub_080790C8(u8 side)
 {
     __asm__(".syntax unified\n\t"
@@ -2381,8 +2412,7 @@ __attribute__((naked)) void sub_080790C8(u8 side)
         ".syntax divided\n\t"
     );
 }
-
-u8 GetMonNicknameWidth(u8 *str, u8 whichParty, u8 partyIdx)
+static u8 GetMonNicknameWidth(u8 *str, u8 whichParty, u8 partyIdx)
 {
     u8 nickname[POKEMON_NAME_STORAGE_LENGTH + 1];
     register u32 monAddr asm("r4");
@@ -3759,4396 +3789,1048 @@ static bool8 DoTradeAnim(void)
         return DoTradeAnim_Wireless();
 }
 
-__attribute__((naked)) void DoTradeAnim_Cable(void)
+// Below are the states for the main switch in DoTradeAnim_Cable and DoTradeAnim_Wireless
+// When DoTradeAnim_Wireless has a unique version of a state used by DoTradeAnim_Cable, it adds the below modifier
+#define STATE_WIRELESS 100
+
+enum {
+    ANIM_LINKMON_NORMAL,
+    ANIM_LINKMON_SMALL,
+};
+enum {
+    STATE_START,
+    STATE_MON_SLIDE_IN,
+    // 2-9 unused
+    STATE_SEND_MSG = 10,
+    STATE_BYE_BYE,
+    STATE_POKEBALL_DEPART,
+    STATE_POKEBALL_DEPART_WAIT,
+    STATE_FADE_OUT_TO_GBA_SEND,
+    // 15-19 unused
+    STATE_WAIT_FADE_OUT_TO_GBA_SEND = 20,
+    STATE_FADE_IN_TO_GBA_SEND,
+    STATE_WAIT_FADE_IN_TO_GBA_SEND,
+    STATE_GBA_ZOOM_OUT,
+    STATE_GBA_FLASH_SEND,
+    STATE_GBA_STOP_FLASH_SEND,
+    STATE_PAN_AWAY_GBA,
+    STATE_CREATE_LINK_MON_LEAVING,
+    STATE_LINK_MON_TRAVEL_OUT,
+    STATE_FADE_OUT_TO_CROSSING,
+    STATE_WAIT_FADE_OUT_TO_CROSSING,
+    STATE_FADE_IN_TO_CROSSING,
+    STATE_WAIT_FADE_IN_TO_CROSSING,
+    STATE_CROSSING_LINK_MONS_ENTER,
+    STATE_CROSSING_BLEND_WHITE_1,
+    STATE_CROSSING_BLEND_WHITE_2,
+    STATE_CROSSING_BLEND_WHITE_3,
+    STATE_CROSSING_CREATE_MON_PICS,
+    STATE_CROSSING_MON_PICS_MOVE,
+    STATE_CROSSING_LINK_MONS_EXIT,
+    STATE_CREATE_LINK_MON_ARRIVING,
+    STATE_FADE_OUT_TO_GBA_RECV,
+    STATE_WAIT_FADE_OUT_TO_GBA_RECV,
+    STATE_LINK_MON_TRAVEL_IN,
+    STATE_PAN_TO_GBA,
+    STATE_DESTROY_LINK_MON,
+    STATE_LINK_MON_ARRIVED_DELAY,
+    STATE_MOVE_GBA_TO_CENTER,
+    STATE_GBA_FLASH_RECV,
+    STATE_UNUSED,
+    STATE_GBA_STOP_FLASH_RECV,
+    STATE_GBA_ZOOM_IN,
+    STATE_FADE_OUT_TO_NEW_MON,
+    // 53-59 unused
+    STATE_WAIT_FADE_OUT_TO_NEW_MON = 60,
+    STATE_FADE_IN_TO_NEW_MON,
+    STATE_WAIT_FADE_IN_TO_NEW_MON,
+    STATE_POKEBALL_ARRIVE,
+    STATE_FADE_POKEBALL_TO_NORMAL,
+    STATE_POKEBALL_ARRIVE_WAIT,
+    STATE_SHOW_NEW_MON,
+    STATE_NEW_MON_MSG,
+    STATE_TAKE_CARE_OF_MON,
+    STATE_AFTER_NEW_MON_DELAY,
+    STATE_CHECK_RIBBONS,
+    STATE_END_LINK_TRADE,
+    STATE_TRY_EVOLUTION,
+    STATE_FADE_OUT_END,
+    STATE_WAIT_FADE_OUT_END,
+    // Special states
+    STATE_GBA_FLASH_SEND_WIRELESS = STATE_GBA_FLASH_SEND + STATE_WIRELESS,
+    STATE_GBA_STOP_FLASH_SEND_WIRELESS,
+    STATE_WAIT_WIRELESS_SIGNAL_SEND,
+    STATE_PAN_TO_GBA_WIRELESS = STATE_PAN_TO_GBA + STATE_WIRELESS,
+    STATE_DESTROY_LINK_MON_WIRELESS,
+    STATE_WAIT_WIRELESS_SIGNAL_RECV,
+    STATE_DELAY_FOR_MON_ANIM = 167,
+    STATE_LINK_MON_TRAVEL_OFFSCREEN = 200,
+    STATE_WAIT_FOR_MON_CRY = 267,
+};
+
+static bool8 DoTradeAnim_Cable(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	ldr r0, _0807B648\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r5, [r1]\n\t"
-        "	ldr r1, _0807B64C\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	cmp r5, r1\n\t"
-        "	bls _0807B63C\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807B63C:\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	ldr r1, _0807B650\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807B648: .4byte gUnknown_2031F40\n\t"
-        "_0807B64C: .4byte SPECIAL_CheckLeadMonCute\n\t"
-        "_0807B650: .4byte 0x0807B654\n\t"
-        "_0807B654: @ jump table\n\t"
-        "	.4byte _0807BA84 @ case 0\n\t"
-        "	.4byte _0807BAFC @ case 1\n\t"
-        "	.4byte _0807C9EC @ case 2\n\t"
-        "	.4byte _0807C9EC @ case 3\n\t"
-        "	.4byte _0807C9EC @ case 4\n\t"
-        "	.4byte _0807C9EC @ case 5\n\t"
-        "	.4byte _0807C9EC @ case 6\n\t"
-        "	.4byte _0807C9EC @ case 7\n\t"
-        "	.4byte _0807C9EC @ case 8\n\t"
-        "	.4byte _0807C9EC @ case 9\n\t"
-        "	.4byte _0807BB58 @ case 10\n\t"
-        "	.4byte _0807BBA0 @ case 11\n\t"
-        "	.4byte _0807BC14 @ case 12\n\t"
-        "	.4byte _0807C9EC @ case 13\n\t"
-        "	.4byte _0807BC80 @ case 14\n\t"
-        "	.4byte _0807C9EC @ case 15\n\t"
-        "	.4byte _0807C9EC @ case 16\n\t"
-        "	.4byte _0807C9EC @ case 17\n\t"
-        "	.4byte _0807C9EC @ case 18\n\t"
-        "	.4byte _0807C9EC @ case 19\n\t"
-        "	.4byte _0807BCA4 @ case 20\n\t"
-        "	.4byte _0807BCD4 @ case 21\n\t"
-        "	.4byte _0807BCE6 @ case 22\n\t"
-        "	.4byte _0807BD08 @ case 23\n\t"
-        "	.4byte _0807BD50 @ case 24\n\t"
-        "	.4byte _0807BD80 @ case 25\n\t"
-        "	.4byte _0807BDC8 @ case 26\n\t"
-        "	.4byte _0807BE18 @ case 27\n\t"
-        "	.4byte _0807BE6C @ case 28\n\t"
-        "	.4byte _0807BEF0 @ case 29\n\t"
-        "	.4byte _0807BF14 @ case 30\n\t"
-        "	.4byte _0807BF60 @ case 31\n\t"
-        "	.4byte _0807BFAC @ case 32\n\t"
-        "	.4byte _0807C008 @ case 33\n\t"
-        "	.4byte _0807C068 @ case 34\n\t"
-        "	.4byte _0807C07C @ case 35\n\t"
-        "	.4byte _0807C090 @ case 36\n\t"
-        "	.4byte _0807C0A4 @ case 37\n\t"
-        "	.4byte _0807C1CC @ case 38\n\t"
-        "	.4byte _0807C29C @ case 39\n\t"
-        "	.4byte _0807C324 @ case 40\n\t"
-        "	.4byte _0807C39C @ case 41\n\t"
-        "	.4byte _0807C3AC @ case 42\n\t"
-        "	.4byte _0807C3CC @ case 43\n\t"
-        "	.4byte _0807C41C @ case 44\n\t"
-        "	.4byte _0807C43A @ case 45\n\t"
-        "	.4byte _0807C478 @ case 46\n\t"
-        "	.4byte _0807C488 @ case 47\n\t"
-        "	.4byte _0807C500 @ case 48\n\t"
-        "	.4byte _0807C9EC @ case 49\n\t"
-        "	.4byte _0807C528 @ case 50\n\t"
-        "	.4byte _0807C568 @ case 51\n\t"
-        "	.4byte _0807C5A8 @ case 52\n\t"
-        "	.4byte _0807C9EC @ case 53\n\t"
-        "	.4byte _0807C9EC @ case 54\n\t"
-        "	.4byte _0807C9EC @ case 55\n\t"
-        "	.4byte _0807C9EC @ case 56\n\t"
-        "	.4byte _0807C9EC @ case 57\n\t"
-        "	.4byte _0807C9EC @ case 58\n\t"
-        "	.4byte _0807C9EC @ case 59\n\t"
-        "	.4byte _0807C5C8 @ case 60\n\t"
-        "	.4byte _0807C5F0 @ case 61\n\t"
-        "	.4byte _0807C60C @ case 62\n\t"
-        "	.4byte _0807C62C @ case 63\n\t"
-        "	.4byte _0807C6D4 @ case 64\n\t"
-        "	.4byte _0807C708 @ case 65\n\t"
-        "	.4byte _0807C754 @ case 66\n\t"
-        "	.4byte _0807C814 @ case 67\n\t"
-        "	.4byte _0807C88C @ case 68\n\t"
-        "	.4byte _0807C8D8 @ case 69\n\t"
-        "	.4byte _0807C8E8 @ case 70\n\t"
-        "	.4byte _0807C8EE @ case 71\n\t"
-        "	.4byte _0807C914 @ case 72\n\t"
-        "	.4byte _0807C970 @ case 73\n\t"
-        "	.4byte _0807C994 @ case 74\n\t"
-        "	.4byte _0807C9EC @ case 75\n\t"
-        "	.4byte _0807C9EC @ case 76\n\t"
-        "	.4byte _0807C9EC @ case 77\n\t"
-        "	.4byte _0807C9EC @ case 78\n\t"
-        "	.4byte _0807C9EC @ case 79\n\t"
-        "	.4byte _0807C9EC @ case 80\n\t"
-        "	.4byte _0807C9EC @ case 81\n\t"
-        "	.4byte _0807C9EC @ case 82\n\t"
-        "	.4byte _0807C9EC @ case 83\n\t"
-        "	.4byte _0807C9EC @ case 84\n\t"
-        "	.4byte _0807C9EC @ case 85\n\t"
-        "	.4byte _0807C9EC @ case 86\n\t"
-        "	.4byte _0807C9EC @ case 87\n\t"
-        "	.4byte _0807C9EC @ case 88\n\t"
-        "	.4byte _0807C9EC @ case 89\n\t"
-        "	.4byte _0807C9EC @ case 90\n\t"
-        "	.4byte _0807C9EC @ case 91\n\t"
-        "	.4byte _0807C9EC @ case 92\n\t"
-        "	.4byte _0807C9EC @ case 93\n\t"
-        "	.4byte _0807C9EC @ case 94\n\t"
-        "	.4byte _0807C9EC @ case 95\n\t"
-        "	.4byte _0807C9EC @ case 96\n\t"
-        "	.4byte _0807C9EC @ case 97\n\t"
-        "	.4byte _0807C9EC @ case 98\n\t"
-        "	.4byte _0807C9EC @ case 99\n\t"
-        "	.4byte _0807C9EC @ case 100\n\t"
-        "	.4byte _0807C9EC @ case 101\n\t"
-        "	.4byte _0807C9EC @ case 102\n\t"
-        "	.4byte _0807C9EC @ case 103\n\t"
-        "	.4byte _0807C9EC @ case 104\n\t"
-        "	.4byte _0807C9EC @ case 105\n\t"
-        "	.4byte _0807C9EC @ case 106\n\t"
-        "	.4byte _0807C9EC @ case 107\n\t"
-        "	.4byte _0807C9EC @ case 108\n\t"
-        "	.4byte _0807C9EC @ case 109\n\t"
-        "	.4byte _0807C9EC @ case 110\n\t"
-        "	.4byte _0807C9EC @ case 111\n\t"
-        "	.4byte _0807C9EC @ case 112\n\t"
-        "	.4byte _0807C9EC @ case 113\n\t"
-        "	.4byte _0807C9EC @ case 114\n\t"
-        "	.4byte _0807C9EC @ case 115\n\t"
-        "	.4byte _0807C9EC @ case 116\n\t"
-        "	.4byte _0807C9EC @ case 117\n\t"
-        "	.4byte _0807C9EC @ case 118\n\t"
-        "	.4byte _0807C9EC @ case 119\n\t"
-        "	.4byte _0807C9EC @ case 120\n\t"
-        "	.4byte _0807C9EC @ case 121\n\t"
-        "	.4byte _0807C9EC @ case 122\n\t"
-        "	.4byte _0807C9EC @ case 123\n\t"
-        "	.4byte _0807C9EC @ case 124\n\t"
-        "	.4byte _0807C9EC @ case 125\n\t"
-        "	.4byte _0807C9EC @ case 126\n\t"
-        "	.4byte _0807C9EC @ case 127\n\t"
-        "	.4byte _0807C9EC @ case 128\n\t"
-        "	.4byte _0807C9EC @ case 129\n\t"
-        "	.4byte _0807C9EC @ case 130\n\t"
-        "	.4byte _0807C9EC @ case 131\n\t"
-        "	.4byte _0807C9EC @ case 132\n\t"
-        "	.4byte _0807C9EC @ case 133\n\t"
-        "	.4byte _0807C9EC @ case 134\n\t"
-        "	.4byte _0807C9EC @ case 135\n\t"
-        "	.4byte _0807C9EC @ case 136\n\t"
-        "	.4byte _0807C9EC @ case 137\n\t"
-        "	.4byte _0807C9EC @ case 138\n\t"
-        "	.4byte _0807C9EC @ case 139\n\t"
-        "	.4byte _0807C9EC @ case 140\n\t"
-        "	.4byte _0807C9EC @ case 141\n\t"
-        "	.4byte _0807C9EC @ case 142\n\t"
-        "	.4byte _0807C9EC @ case 143\n\t"
-        "	.4byte _0807C9EC @ case 144\n\t"
-        "	.4byte _0807C9EC @ case 145\n\t"
-        "	.4byte _0807C9EC @ case 146\n\t"
-        "	.4byte _0807C9EC @ case 147\n\t"
-        "	.4byte _0807C9EC @ case 148\n\t"
-        "	.4byte _0807C9EC @ case 149\n\t"
-        "	.4byte _0807C9EC @ case 150\n\t"
-        "	.4byte _0807C9EC @ case 151\n\t"
-        "	.4byte _0807C9EC @ case 152\n\t"
-        "	.4byte _0807C9EC @ case 153\n\t"
-        "	.4byte _0807C9EC @ case 154\n\t"
-        "	.4byte _0807C9EC @ case 155\n\t"
-        "	.4byte _0807C9EC @ case 156\n\t"
-        "	.4byte _0807C9EC @ case 157\n\t"
-        "	.4byte _0807C9EC @ case 158\n\t"
-        "	.4byte _0807C9EC @ case 159\n\t"
-        "	.4byte _0807C9EC @ case 160\n\t"
-        "	.4byte _0807C9EC @ case 161\n\t"
-        "	.4byte _0807C9EC @ case 162\n\t"
-        "	.4byte _0807C9EC @ case 163\n\t"
-        "	.4byte _0807C9EC @ case 164\n\t"
-        "	.4byte _0807C9EC @ case 165\n\t"
-        "	.4byte _0807C9EC @ case 166\n\t"
-        "	.4byte _0807C850 @ case 167\n\t"
-        "	.4byte _0807C9EC @ case 168\n\t"
-        "	.4byte _0807C9EC @ case 169\n\t"
-        "	.4byte _0807C9EC @ case 170\n\t"
-        "	.4byte _0807C9EC @ case 171\n\t"
-        "	.4byte _0807C9EC @ case 172\n\t"
-        "	.4byte _0807C9EC @ case 173\n\t"
-        "	.4byte _0807C9EC @ case 174\n\t"
-        "	.4byte _0807C9EC @ case 175\n\t"
-        "	.4byte _0807C9EC @ case 176\n\t"
-        "	.4byte _0807C9EC @ case 177\n\t"
-        "	.4byte _0807C9EC @ case 178\n\t"
-        "	.4byte _0807C9EC @ case 179\n\t"
-        "	.4byte _0807C9EC @ case 180\n\t"
-        "	.4byte _0807C9EC @ case 181\n\t"
-        "	.4byte _0807C9EC @ case 182\n\t"
-        "	.4byte _0807C9EC @ case 183\n\t"
-        "	.4byte _0807C9EC @ case 184\n\t"
-        "	.4byte _0807C9EC @ case 185\n\t"
-        "	.4byte _0807C9EC @ case 186\n\t"
-        "	.4byte _0807C9EC @ case 187\n\t"
-        "	.4byte _0807C9EC @ case 188\n\t"
-        "	.4byte _0807C9EC @ case 189\n\t"
-        "	.4byte _0807C9EC @ case 190\n\t"
-        "	.4byte _0807C9EC @ case 191\n\t"
-        "	.4byte _0807C9EC @ case 192\n\t"
-        "	.4byte _0807C9EC @ case 193\n\t"
-        "	.4byte _0807C9EC @ case 194\n\t"
-        "	.4byte _0807C9EC @ case 195\n\t"
-        "	.4byte _0807C9EC @ case 196\n\t"
-        "	.4byte _0807C9EC @ case 197\n\t"
-        "	.4byte _0807C9EC @ case 198\n\t"
-        "	.4byte _0807C9EC @ case 199\n\t"
-        "	.4byte _0807BE98 @ case 200\n\t"
-        "	.4byte _0807C9EC @ case 201\n\t"
-        "	.4byte _0807C9EC @ case 202\n\t"
-        "	.4byte _0807C9EC @ case 203\n\t"
-        "	.4byte _0807C9EC @ case 204\n\t"
-        "	.4byte _0807C9EC @ case 205\n\t"
-        "	.4byte _0807C9EC @ case 206\n\t"
-        "	.4byte _0807C9EC @ case 207\n\t"
-        "	.4byte _0807C9EC @ case 208\n\t"
-        "	.4byte _0807C9EC @ case 209\n\t"
-        "	.4byte _0807C9EC @ case 210\n\t"
-        "	.4byte _0807C9EC @ case 211\n\t"
-        "	.4byte _0807C9EC @ case 212\n\t"
-        "	.4byte _0807C9EC @ case 213\n\t"
-        "	.4byte _0807C9EC @ case 214\n\t"
-        "	.4byte _0807C9EC @ case 215\n\t"
-        "	.4byte _0807C9EC @ case 216\n\t"
-        "	.4byte _0807C9EC @ case 217\n\t"
-        "	.4byte _0807C9EC @ case 218\n\t"
-        "	.4byte _0807C9EC @ case 219\n\t"
-        "	.4byte _0807C9EC @ case 220\n\t"
-        "	.4byte _0807C9EC @ case 221\n\t"
-        "	.4byte _0807C9EC @ case 222\n\t"
-        "	.4byte _0807C9EC @ case 223\n\t"
-        "	.4byte _0807C9EC @ case 224\n\t"
-        "	.4byte _0807C9EC @ case 225\n\t"
-        "	.4byte _0807C9EC @ case 226\n\t"
-        "	.4byte _0807C9EC @ case 227\n\t"
-        "	.4byte _0807C9EC @ case 228\n\t"
-        "	.4byte _0807C9EC @ case 229\n\t"
-        "	.4byte _0807C9EC @ case 230\n\t"
-        "	.4byte _0807C9EC @ case 231\n\t"
-        "	.4byte _0807C9EC @ case 232\n\t"
-        "	.4byte _0807C9EC @ case 233\n\t"
-        "	.4byte _0807C9EC @ case 234\n\t"
-        "	.4byte _0807C9EC @ case 235\n\t"
-        "	.4byte _0807C9EC @ case 236\n\t"
-        "	.4byte _0807C9EC @ case 237\n\t"
-        "	.4byte _0807C9EC @ case 238\n\t"
-        "	.4byte _0807C9EC @ case 239\n\t"
-        "	.4byte _0807C9EC @ case 240\n\t"
-        "	.4byte _0807C9EC @ case 241\n\t"
-        "	.4byte _0807C9EC @ case 242\n\t"
-        "	.4byte _0807C9EC @ case 243\n\t"
-        "	.4byte _0807C9EC @ case 244\n\t"
-        "	.4byte _0807C9EC @ case 245\n\t"
-        "	.4byte _0807C9EC @ case 246\n\t"
-        "	.4byte _0807C9EC @ case 247\n\t"
-        "	.4byte _0807C9EC @ case 248\n\t"
-        "	.4byte _0807C9EC @ case 249\n\t"
-        "	.4byte _0807C9EC @ case 250\n\t"
-        "	.4byte _0807C9EC @ case 251\n\t"
-        "	.4byte _0807C9EC @ case 252\n\t"
-        "	.4byte _0807C9EC @ case 253\n\t"
-        "	.4byte _0807C9EC @ case 254\n\t"
-        "	.4byte _0807C9EC @ case 255\n\t"
-        "	.4byte _0807C9EC @ case 256\n\t"
-        "	.4byte _0807C9EC @ case 257\n\t"
-        "	.4byte _0807C9EC @ case 258\n\t"
-        "	.4byte _0807C9EC @ case 259\n\t"
-        "	.4byte _0807C9EC @ case 260\n\t"
-        "	.4byte _0807C9EC @ case 261\n\t"
-        "	.4byte _0807C9EC @ case 262\n\t"
-        "	.4byte _0807C9EC @ case 263\n\t"
-        "	.4byte _0807C9EC @ case 264\n\t"
-        "	.4byte _0807C9EC @ case 265\n\t"
-        "	.4byte _0807C9EC @ case 266\n\t"
-        "	.4byte _0807C870 @ case 267\n\t"
-        "_0807BA84:\n\t"
-        "	ldr r3, _0807BAEC\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x8e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, _0807BAF0\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r2, _0807BAF4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0xf0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl GetCurrentMapMusic\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0xf4\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0807BAF8\n\t"
-        "	bl PlayNewMapMusic\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BAEC: .4byte gSprites\n\t"
-        "_0807BAF0: .4byte 0x0000FF4C\n\t"
-        "_0807BAF4: .4byte gMonFrontPicCoords\n\t"
-        "_0807BAF8: .4byte SPECIAL_sub_0811B0A8\n\t"
-        "_0807BAFC:\n\t"
-        "	ldr r5, [r7]\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	adds r6, #0xe6\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _0807BB30\n\t"
-        "	ldr r2, _0807BB2C\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x24]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	subs r0, #3\n\t"
-        "	strh r0, [r6]\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BB2C: .4byte gSprites\n\t"
-        "_0807BB30:\n\t"
-        "	ldr r2, _0807BB54\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	strh r1, [r6]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BB54: .4byte gSprites\n\t"
-        "_0807BB58:\n\t"
-        "	ldr r4, _0807BB94\n\t"
-        "	ldr r1, _0807BB98\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawTextOnTradeWindow\n\t"
-        "	ldr r4, _0807BB9C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0xf0\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807BB86\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl PlayCry1\n\t"
-        "_0807BB86:\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0xb\n\t"
-        "	bl _0807C83E\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BB94: .4byte gStringVar4\n\t"
-        "_0807BB98: .4byte gUnknown_830D240\n\t"
-        "_0807BB9C: .4byte gUnknown_2031F40\n\t"
-        "_0807BBA0:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x50\n\t"
-        "	beq _0807BBB0\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BBB0:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r2, _0807BC04\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r2, #2\n\t"
-        "	str r2, [sp]\n\t"
-        "	movs r2, #1\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	movs r2, #0x14\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldr r2, _0807BC08\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	movs r2, #0x78\n\t"
-        "	movs r3, #0x20\n\t"
-        "	bl sub_08076124\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0xd2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r4, _0807BC0C\n\t"
-        "	ldr r1, _0807BC10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawTextOnTradeWindow\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BC04: .4byte gSprites\n\t"
-        "_0807BC08: .4byte 0x000FFFFF\n\t"
-        "_0807BC0C: .4byte gStringVar4\n\t"
-        "_0807BC10: .4byte gUnknown_830D24F\n\t"
-        "_0807BC14:\n\t"
-        "	ldr r5, _0807BC70\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xd2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0807BC74\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807BC34\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BC34:\n\t"
-        "	ldr r0, _0807BC78\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x20\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0xd3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, _0807BC7C\n\t"
-        "	str r1, [r0]\n\t"
-        "	adds r2, #0xd2\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BC70: .4byte gSprites\n\t"
-        "_0807BC74: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0807BC78: .4byte gUnknown_830CF6C\n\t"
-        "_0807BC7C: .4byte SpriteCB_BouncingPokeballDepart + 1\n\t"
-        "_0807BC80:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0807BCA0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x14\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BCA0: .4byte gUnknown_2031F40\n\t"
-        "_0807BCA4:\n\t"
-        "	ldr r0, _0807BCD0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807BCB4\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BCB4:\n\t"
-        "	movs r0, #4\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	bl _0807C980\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BCD0: .4byte gPaletteFade\n\t"
-        "_0807BCD4:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl _0807C97C\n\t"
-        "_0807BCE6:\n\t"
-        "	ldr r0, _0807BD04\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807BCF6\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BCF6:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x17\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BD04: .4byte gPaletteFade\n\t"
-        "_0807BD08:\n\t"
-        "	ldr r4, _0807BD24\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0xea\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bls _0807BD28\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	subs r0, #0x34\n\t"
-        "	strh r0, [r2]\n\t"
-        "	b _0807BD44\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BD24: .4byte gUnknown_2031F40\n\t"
-        "_0807BD28:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0xea\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strh r0, [r1]\n\t"
-        "	subs r1, #0x56\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	str r2, [r3, #0x64]\n\t"
-        "_0807BD44:\n\t"
-        "	ldr r0, _0807BD4C\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	bl _0807C594\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BD4C: .4byte gUnknown_2031F40\n\t"
-        "_0807BD50:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	bhi _0807BD60\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BD60:\n\t"
-        "	bl SetTradeBGAffine\n\t"
-        "	ldr r0, _0807BD7C\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BD7C: .4byte gUnknown_830D0B8\n\t"
-        "_0807BD80:\n\t"
-        "	ldr r2, _0807BDC0\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0807BDA0\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BDA0:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r1, #0xc8\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _0807BDC4\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BDC0: .4byte gSprites\n\t"
-        "_0807BDC4: .4byte 0x0000040C\n\t"
-        "_0807BDC8:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xe0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	subs r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	movs r0, #0x9e\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0807BDE8\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807BDE8:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xe0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0xa4\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807BDFC\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BDFC:\n\t"
-        "	ldr r0, _0807BE14\n\t"
-        "	movs r1, #0x80\n\t"
-        "	movs r2, #0x41\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x92\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BE14: .4byte gUnknown_830D040\n\t"
-        "_0807BE18:\n\t"
-        "	ldr r0, _0807BE5C\n\t"
-        "	movs r1, #0x80\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #3\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r4, _0807BE60\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x90\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _0807BE64\n\t"
-        "	movs r1, #0x80\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807BE68\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	bl _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BE5C: .4byte gUnknown_830CFCC\n\t"
-        "_0807BE60: .4byte gUnknown_2031F40\n\t"
-        "_0807BE64: .4byte gUnknown_830D00C\n\t"
-        "_0807BE68: .4byte gSprites\n\t"
-        "_0807BE6C:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0xe0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xa6\n\t"
-        "	bne _0807BE86\n\t"
-        "	subs r1, #0x4c\n\t"
-        "	movs r0, #0xc8\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807BE86:\n\t"
-        "	ldr r1, _0807BE94\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BE94: .4byte 0x00001241\n\t"
-        "_0807BE98:\n\t"
-        "	ldr r2, _0807BEEC\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x90\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x22]\n\t"
-        "	subs r1, #2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x22]\n\t"
-        "	subs r1, #2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r3, #0x22\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0807BEDE\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BEDE:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r0, #0x1d\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BEEC: .4byte gSprites\n\t"
-        "_0807BEF0:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0807BF10\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BF10: .4byte gUnknown_2031F40\n\t"
-        "_0807BF14:\n\t"
-        "	ldr r0, _0807BF58\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807BF24\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807BF24:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _0807BF5C\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BF58: .4byte gPaletteFade\n\t"
-        "_0807BF5C: .4byte gSprites\n\t"
-        "_0807BF60:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r5, _0807BFA4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x6f\n\t"
-        "	movs r2, #0xaa\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r4, _0807BFA8\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x90\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x81\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	bl _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BFA4: .4byte gUnknown_830D00C\n\t"
-        "_0807BFA8: .4byte gUnknown_2031F40\n\t"
-        "_0807BFAC:\n\t"
-        "	ldr r0, _0807BFFC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807BFCA\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _0807C000\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807BFCA:\n\t"
-        "	ldr r3, _0807C004\n\t"
-        "	ldr r0, _0807C000\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	subs r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r2, #0x91\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	bl _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807BFFC: .4byte gPaletteFade\n\t"
-        "_0807C000: .4byte gUnknown_2031F40\n\t"
-        "_0807C004: .4byte gSprites\n\t"
-        "_0807C008:\n\t"
-        "	ldr r5, _0807C064\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x90\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	subs r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r6, #0x91\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r3, r0, r5\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	movs r0, #0x5a\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0807C04E\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807C04E:\n\t"
-        "	movs r2, #1\n\t"
-        "	strh r2, [r3, #0x30]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r2, [r0, #0x30]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C064: .4byte gSprites\n\t"
-        "_0807C068:\n\t"
-        "	ldr r2, _0807C078\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalettes\n\t"
-        "	bl _0807C980\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C078: .4byte 0x0000FFFF\n\t"
-        "_0807C07C:\n\t"
-        "	ldr r2, _0807C08C\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	bl _0807C980\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C08C: .4byte 0x0000FFFF\n\t"
-        "_0807C090:\n\t"
-        "	ldr r2, _0807C0A0\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalettes\n\t"
-        "	bl _0807C980\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C0A0: .4byte 0x0000FFFF\n\t"
-        "_0807C0A4:\n\t"
-        "	ldr r5, _0807C110\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xf0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl IsMonSpriteNotFlipped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807C11C\n\t"
-        "	ldr r4, _0807C114\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r2, #0x8e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807C118\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #3\n\t"
-        "	bl CalcCenterToCornerVec\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	b _0807C132\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C110: .4byte gUnknown_2031F40\n\t"
-        "_0807C114: .4byte gSprites\n\t"
-        "_0807C118: .4byte gUnknown_830D110\n\t"
-        "_0807C11C:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807C1C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_0807C132:\n\t"
-        "	ldr r5, _0807C1C4\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _0807C1C0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x8e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	adds r2, #0x8f\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xb4\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, _0807C1C8\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	movs r2, #5\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ands r2, r1\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	bl _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C1C0: .4byte gSprites\n\t"
-        "_0807C1C4: .4byte gUnknown_2031F40\n\t"
-        "_0807C1C8: .4byte 0x0000FFE0\n\t"
-        "_0807C1CC:\n\t"
-        "	ldr r4, _0807C294\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x8e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	subs r1, #3\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r2, #0x8f\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0, #0x26]\n\t"
-        "	adds r0, #0xa3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	bhi _0807C214\n\t"
-        "	movs r0, #0x2d\n\t"
-        "	bl PlaySE\n\t"
-        "_0807C214:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x8e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r6, #0x26\n\t"
-        "	ldrsh r1, [r0, r6]\n\t"
-        "	movs r0, #0xde\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0807C234\n\t"
-        "	bl _0807C9EC\n\t"
-        "_0807C234:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0, #0x30]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0, #0x30]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r2, _0807C298\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C294: .4byte gSprites\n\t"
-        "_0807C298: .4byte 0x0000FFFF\n\t"
-        "_0807C29C:\n\t"
-        "	ldr r4, _0807C320\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x90\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	subs r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r2, #0x91\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0xde\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0807C2DE\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C2DE:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x94\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, #0x90\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C320: .4byte gSprites\n\t"
-        "_0807C324:\n\t"
-        "	ldr r0, _0807C38C\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807C332\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C332:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xe0\n\t"
-        "	movs r1, #0xa6\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0807C390\n\t"
-        "	movs r4, #0x14\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	movs r1, #0x80\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #3\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x90\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _0807C394\n\t"
-        "	movs r1, #0x80\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807C398\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C38C: .4byte gPaletteFade\n\t"
-        "_0807C390: .4byte gUnknown_830CFCC\n\t"
-        "_0807C394: .4byte gUnknown_830D00C\n\t"
-        "_0807C398: .4byte gSprites\n\t"
-        "_0807C39C:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	b _0807C97C\n\t"
-        "_0807C3AC:\n\t"
-        "	movs r1, #0x92\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807C3C8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807C3C4\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C3C4:\n\t"
-        "	b _0807C980\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C3C8: .4byte gPaletteFade\n\t"
-        "_0807C3CC:\n\t"
-        "	ldr r2, _0807C418\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x90\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	movs r6, #0x22\n\t"
-        "	ldrsh r0, [r0, r6]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	cmp r1, #0x40\n\t"
-        "	beq _0807C412\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C412:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	b _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C418: .4byte gSprites\n\t"
-        "_0807C41C:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r5, #0xe0\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r5]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r6, #0x9e\n\t"
-        "	lsls r6, r6, #1\n\t"
-        "	cmp r0, r6\n\t"
-        "	bgt _0807C436\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C436:\n\t"
-        "	strh r6, [r5]\n\t"
-        "	b _0807C984\n\t"
-        "_0807C43A:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _0807C474\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x94\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	str r1, [r3, #0x64]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C474: .4byte gSprites\n\t"
-        "_0807C478:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	beq _0807C486\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C486:\n\t"
-        "	b _0807C984\n\t"
-        "_0807C488:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0xe0\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r3, #0xae\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	cmp r0, r3\n\t"
-        "	ble _0807C4AA\n\t"
-        "	strh r3, [r2]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807C4AA:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xe0\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	movs r0, #0xa4\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807C4BE\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C4BE:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xfa\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807C4CA\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C4CA:\n\t"
-        "	ldr r0, _0807C4F4\n\t"
-        "	movs r1, #0x80\n\t"
-        "	movs r2, #0x41\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x92\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, _0807C4F8\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x92\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, _0807C4FC\n\t"
-        "	str r1, [r0]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C4F4: .4byte gUnknown_830D040\n\t"
-        "_0807C4F8: .4byte gSprites\n\t"
-        "_0807C4FC: .4byte SpriteCB_CableEndReceiving + 1\n\t"
-        "_0807C500:\n\t"
-        "	ldr r0, _0807C520\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r2, _0807C524\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x32\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C520: .4byte gUnknown_830D0B8\n\t"
-        "_0807C524: .4byte gUnknown_2031F40\n\t"
-        "_0807C528:\n\t"
-        "	ldr r2, _0807C564\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0807C546\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C546:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #6\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0x9f\n\t"
-        "	bl PlaySE\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C564: .4byte gSprites\n\t"
-        "_0807C568:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0xea\n\t"
-        "	ldrh r3, [r2]\n\t"
-        "	ldr r0, _0807C580\n\t"
-        "	cmp r3, r0\n\t"
-        "	bhi _0807C584\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x34\n\t"
-        "	strh r0, [r2]\n\t"
-        "	b _0807C592\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C580: .4byte 0x000003FF\n\t"
-        "_0807C584:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807C592:\n\t"
-        "	ldr r4, [r7]\n\t"
-        "_0807C594:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0xea\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, #0xe8\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C5A8:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0807C5C4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C5C4: .4byte gUnknown_2031F40\n\t"
-        "_0807C5C8:\n\t"
-        "	ldr r4, _0807C5EC\n\t"
-        "	ldrb r1, [r4, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807C5D6\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C5D6:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	movs r0, #7\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldrb r0, [r4, #8]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #8]\n\t"
-        "	b _0807C980\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C5EC: .4byte gPaletteFade\n\t"
-        "_0807C5F0:\n\t"
-        "	ldr r2, _0807C608\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	b _0807C97C\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C608: .4byte gPaletteFade\n\t"
-        "_0807C60C:\n\t"
-        "	movs r1, #0xa2\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807C628\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807C624\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C624:\n\t"
-        "	b _0807C980\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C628: .4byte gPaletteFade\n\t"
-        "_0807C62C:\n\t"
-        "	ldr r0, _0807C6C0\n\t"
-        "	movs r2, #8\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r5, _0807C6C4\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, #0xd3\n\t"
-        "	movs r6, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _0807C6C8\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r2, #0xd3\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x4a\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807C6CC\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	lsls r0, r1\n\t"
-        "	ldr r2, _0807C6D0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalettes\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	str r6, [r2, #0x64]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C6C0: .4byte gUnknown_830CF6C\n\t"
-        "_0807C6C4: .4byte gUnknown_2031F40\n\t"
-        "_0807C6C8: .4byte gSprites\n\t"
-        "_0807C6CC: .4byte SpriteCB_BouncingPokeballArrive + 1\n\t"
-        "_0807C6D0: .4byte 0x0000FFFF\n\t"
-        "_0807C6D4:\n\t"
-        "	ldr r2, _0807C700\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	lsls r0, r1\n\t"
-        "	ldr r1, _0807C704\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	b _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C700: .4byte gSprites\n\t"
-        "_0807C704: .4byte 0x0000FFFF\n\t"
-        "_0807C708:\n\t"
-        "	ldr r2, _0807C744\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0807C748\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807C726\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C726:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xf2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	ldr r1, _0807C74C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807C750\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r1, [r1, #0x10]\n\t"
-        "	ldr r3, [r3, #0x6c]\n\t"
-        "	bl HandleLoadSpecialPokePic_2\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	b _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C744: .4byte gSprites\n\t"
-        "_0807C748: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0807C74C: .4byte gMonFrontPicTable\n\t"
-        "_0807C750: .4byte gMonSpritesGfxPtr\n\t"
-        "_0807C754:\n\t"
-        "	ldr r4, _0807C808\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	adds r6, #0x8f\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r1, #0x78\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r3, _0807C80C\n\t"
-        "	adds r2, #0xf2\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	adds r0, #0x3c\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0, #0x24]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0, #0x26]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r2, #2\n\t"
-        "	str r2, [sp]\n\t"
-        "	movs r2, #1\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	movs r2, #0x14\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldr r2, _0807C810\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	adds r3, #0xf2\n\t"
-        "	ldrh r2, [r3]\n\t"
-        "	str r2, [sp, #0x10]\n\t"
-        "	movs r2, #0x78\n\t"
-        "	movs r3, #0x54\n\t"
-        "	bl CreatePokeballSpriteToReleaseMon\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	b _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C808: .4byte gSprites\n\t"
-        "_0807C80C: .4byte gMonFrontPicCoords\n\t"
-        "_0807C810: .4byte 0x000FFFFF\n\t"
-        "_0807C814:\n\t"
-        "	movs r1, #0xaa\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r4, _0807C844\n\t"
-        "	ldr r1, _0807C848\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawTextOnTradeWindow\n\t"
-        "	ldr r0, _0807C84C\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0xa7\n\t"
-        "_0807C83E:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	str r2, [r3, #0x64]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C844: .4byte gStringVar4\n\t"
-        "_0807C848: .4byte gUnknown_830D258\n\t"
-        "_0807C84C: .4byte gUnknown_2031F40\n\t"
-        "_0807C850:\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	ldr r0, [r3, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r3, #0x64]\n\t"
-        "	cmp r0, #0x3c\n\t"
-        "	bhi _0807C85E\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C85E:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _0807C86C\n\t"
-        "	strh r1, [r0]\n\t"
-        "	str r2, [r3, #0x64]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C86C: .4byte SPECIAL_CheckLeadMonCute\n\t"
-        "_0807C870:\n\t"
-        "	bl IsCryFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807C87C\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C87C:\n\t"
-        "	ldr r0, _0807C888\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x44\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C888: .4byte gUnknown_2031F40\n\t"
-        "_0807C88C:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _0807C89E\n\t"
-        "	ldr r0, _0807C8CC\n\t"
-        "	bl PlayFanfare\n\t"
-        "_0807C89E:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0xfa\n\t"
-        "	beq _0807C8A8\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C8A8:\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r4, _0807C8D0\n\t"
-        "	ldr r1, _0807C8D4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawTextOnTradeWindow\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	str r5, [r0, #0x64]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C8CC: .4byte SPECIAL_sub_0818DB68\n\t"
-        "_0807C8D0: .4byte gStringVar4\n\t"
-        "_0807C8D4: .4byte gUnknown_830D26A\n\t"
-        "_0807C8D8:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x3c\n\t"
-        "	beq _0807C8E6\n\t"
-        "	b _0807C9EC\n\t"
-        "_0807C8E6:\n\t"
-        "	b _0807C984\n\t"
-        "_0807C8E8:\n\t"
-        "	bl CheckPartnersMonForRibbons\n\t"
-        "	b _0807C980\n\t"
-        "_0807C8EE:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xee\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807C8FE\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0807C9EE\n\t"
-        "_0807C8FE:\n\t"
-        "	ldr r0, _0807C910\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807C9EC\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	b _0807C984\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C910: .4byte gMain\n\t"
-        "_0807C914:\n\t"
-        "	ldr r0, _0807C958\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl TradeMons\n\t"
-        "	ldr r1, _0807C95C\n\t"
-        "	ldr r0, _0807C960\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r7, _0807C964\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _0807C968\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetEvolutionTargetSpecies\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _0807C980\n\t"
-        "	ldrb r3, [r7]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _0807C96C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x8f\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl TradeEvolutionScene\n\t"
-        "	b _0807C980\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C958: .4byte gSpecialVar_0x8005\n\t"
-        "_0807C95C: .4byte gCB2_AfterEvolution\n\t"
-        "_0807C960: .4byte CB2_InGameTradeAnim + 1\n\t"
-        "_0807C964: .4byte gSelectedTradeMonPositions\n\t"
-        "_0807C968: .4byte gPlayerParty\n\t"
-        "_0807C96C: .4byte gUnknown_2031F40\n\t"
-        "_0807C970:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "_0807C97C:\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_0807C980:\n\t"
-        "	ldr r0, _0807C990\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_0807C984:\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _0807C9EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C990: .4byte gUnknown_2031F40\n\t"
-        "_0807C994:\n\t"
-        "	ldr r0, _0807C9F8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0807C9EC\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xf4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl PlayNewMapMusic\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807C9E2\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	bl FreeMonSpritesGfx\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	bl Free\n\t"
-        "	str r4, [r7]\n\t"
-        "_0807C9E2:\n\t"
-        "	ldr r0, _0807C9FC\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	bl BufferInGameTradeMonName\n\t"
-        "_0807C9EC:\n\t"
-        "	movs r0, #0\n\t"
-        "_0807C9EE:\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0807C9F8: .4byte gPaletteFade\n\t"
-        "_0807C9FC: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 evoTarget;
+
+    switch (gUnknown_2031F40->state)
+    {
+    case STATE_START:
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].invisible = FALSE;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].x2 = -180;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 = gMonFrontPicCoords[gUnknown_2031F40->monSpecies[TRADE_PLAYER]].y_offset;
+        gUnknown_2031F40->state++;
+        gUnknown_2031F40->cachedMapMusic = GetCurrentMapMusic();
+        PlayNewMapMusic(MUS_EVOLUTION);
+        break;
+    case STATE_MON_SLIDE_IN:
+        if (gUnknown_2031F40->bg2hofs > 0)
+        {
+            // Sliding
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].x2 += 3;
+            gUnknown_2031F40->bg2hofs -= 3;
+        }
+        else
+        {
+            // Pokémon has arrived onscreen
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].x2 = 0;
+            gUnknown_2031F40->bg2hofs = 0;
+            gUnknown_2031F40->state = STATE_SEND_MSG;
+        }
+        break;
+    case STATE_SEND_MSG:
+        StringExpandPlaceholders(gStringVar4, gUnknown_830D240);
+        DrawTextOnTradeWindow(0, gStringVar4, 0);
+
+        if (gUnknown_2031F40->monSpecies[TRADE_PLAYER] != SPECIES_EGG)
+            PlayCry_Normal(gUnknown_2031F40->monSpecies[TRADE_PLAYER], 0);
+
+        gUnknown_2031F40->state = STATE_BYE_BYE;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case STATE_BYE_BYE:
+        if (++gUnknown_2031F40->timer == 80)
+        {
+            gUnknown_2031F40->releasePokeballSpriteId = CreateTradePokeballSprite(gUnknown_2031F40->monSpriteIds[TRADE_PLAYER], gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].oam.paletteNum, 120, 32, 2, 1, 0x14, 0xfffff);
+            gUnknown_2031F40->state++;
+            StringExpandPlaceholders(gStringVar4, gUnknown_830D24F);
+            DrawTextOnTradeWindow(0, gStringVar4, 0);
+        }
+        break;
+    case STATE_POKEBALL_DEPART:
+        if (gSprites[gUnknown_2031F40->releasePokeballSpriteId].callback == SpriteCallbackDummy)
+        {
+            gUnknown_2031F40->bouncingPokeballSpriteId = CreateSprite(&gUnknown_830CF6C, 120, 32, 0);
+            gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].callback = SpriteCB_BouncingPokeballDepart;
+            DestroySprite(&gSprites[gUnknown_2031F40->releasePokeballSpriteId]);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_POKEBALL_DEPART_WAIT:
+        // The game waits here for the sprite to finish its animation sequence.
+        break;
+    case STATE_FADE_OUT_TO_GBA_SEND:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gUnknown_2031F40->state = STATE_WAIT_FADE_OUT_TO_GBA_SEND;
+        break;
+    case STATE_WAIT_FADE_OUT_TO_GBA_SEND:
+        if (!gPaletteFade.active)
+        {
+            SetTradeSequenceBgGpuRegs(4);
+            FillWindowPixelBuffer(0, PIXEL_FILL(15));
+            CopyWindowToVram(0, COPYWIN_FULL);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_FADE_IN_TO_GBA_SEND:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_IN_TO_GBA_SEND:
+        if (!gPaletteFade.active)
+            gUnknown_2031F40->state = STATE_GBA_ZOOM_OUT;
+        break;
+    case STATE_GBA_ZOOM_OUT:
+        if (gUnknown_2031F40->gbaScale > 0x100)
+        {
+            gUnknown_2031F40->gbaScale -= 0x34;
+        }
+        else
+        {
+            SetTradeSequenceBgGpuRegs(1);
+            gUnknown_2031F40->gbaScale = 0x80;
+            gUnknown_2031F40->state++;
+            gUnknown_2031F40->timer = 0;
+        }
+        gUnknown_2031F40->sXY = 0x8000 / gUnknown_2031F40->gbaScale;
+        break;
+    case STATE_GBA_FLASH_SEND:
+        if (++gUnknown_2031F40->timer > 20)
+        {
+            SetTradeBGAffine();
+            gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D0B8, 120, 80, 0);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_GBA_STOP_FLASH_SEND:
+        if (gSprites[gUnknown_2031F40->connectionSpriteId2].animEnded)
+        {
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND |
+                                         BLDCNT_TGT2_BG1 |
+                                         BLDCNT_TGT2_BG2);
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(12, 4));
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_PAN_AWAY_GBA:
+        if (--gUnknown_2031F40->bg1vofs == 316)
+            gUnknown_2031F40->state++;
+
+        if (gUnknown_2031F40->bg1vofs == 328)
+            gUnknown_2031F40->cableEndSpriteId = CreateSprite(&gUnknown_830D040, 128, 65, 0);
+        break;
+    case STATE_CREATE_LINK_MON_LEAVING:
+        gUnknown_2031F40->connectionSpriteId1 = CreateSprite(&gUnknown_830CFCC, 128, 80, 3);
+        gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D00C, 128, 80, 0);
+        StartSpriteAnim(&gSprites[gUnknown_2031F40->connectionSpriteId2], ANIM_LINKMON_SMALL);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_LINK_MON_TRAVEL_OUT:
+        if ((gUnknown_2031F40->bg1vofs -= 2) == 166)
+            gUnknown_2031F40->state = STATE_LINK_MON_TRAVEL_OFFSCREEN;
+
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG1_ON |
+                                      DISPCNT_OBJ_ON);
+        break;
+    case STATE_LINK_MON_TRAVEL_OFFSCREEN:
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y -= 2;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y -= 2;
+        if (gSprites[gUnknown_2031F40->connectionSpriteId1].y < -8)
+            gUnknown_2031F40->state = STATE_FADE_OUT_TO_CROSSING;
+        break;
+    case STATE_FADE_OUT_TO_CROSSING:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_BLACK);
+        gUnknown_2031F40->state = STATE_WAIT_FADE_OUT_TO_CROSSING;
+        break;
+    case STATE_WAIT_FADE_OUT_TO_CROSSING:
+        if (!gPaletteFade.active)
+        {
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId1]);
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+            SetTradeSequenceBgGpuRegs(2);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_FADE_IN_TO_CROSSING:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
+        gUnknown_2031F40->connectionSpriteId1 = CreateSprite(&gUnknown_830D00C, 111, 170, 0);
+        gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D00C, 129, -10, 0);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_IN_TO_CROSSING:
+        if (!gPaletteFade.active)
+        {
+            PlaySE(SE_WARP_OUT);
+            gUnknown_2031F40->state++;
+        }
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y2 -= 3;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y2 += 3;
+        break;
+    case STATE_CROSSING_LINK_MONS_ENTER:
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y2 -= 3;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y2 += 3;
+        if (gSprites[gUnknown_2031F40->connectionSpriteId1].y2 <= -90)
+        {
+            gSprites[gUnknown_2031F40->connectionSpriteId1].data[1] = 1;
+            gSprites[gUnknown_2031F40->connectionSpriteId2].data[1] = 1;
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_CROSSING_BLEND_WHITE_1:
+        BlendPalettes(0x1, 16, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_CROSSING_BLEND_WHITE_2:
+        BlendPalettes(0x1, 0, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_CROSSING_BLEND_WHITE_3:
+        BlendPalettes(0x1, 16, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_CROSSING_CREATE_MON_PICS:
+        if (!IsMonSpriteNotFlipped(gUnknown_2031F40->monSpecies[TRADE_PLAYER]))
+        {
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].affineAnims = gUnknown_830D110;
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+            CalcCenterToCornerVec(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]], SPRITE_SHAPE(64x64), SPRITE_SIZE(64x64), ST_OAM_AFFINE_DOUBLE);
+            StartSpriteAffineAnim(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]], 0);
+        }
+        else
+        {
+            StartSpriteAffineAnim(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]], 0);
+        }
+        StartSpriteAffineAnim(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]], 0);
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].x = 60;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].x = 180;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y = 192;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].y = -32;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].invisible = FALSE;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].invisible = FALSE;
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_CROSSING_MON_PICS_MOVE:
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 -= 3;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].y2 += 3;
+        if (gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 < -DISPLAY_HEIGHT
+         && gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 >= -DISPLAY_HEIGHT - 3)
+        {
+            PlaySE(SE_WARP_IN);
+        }
+        if (gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 < -222)
+        {
+            gSprites[gUnknown_2031F40->connectionSpriteId1].data[1] = 0;
+            gSprites[gUnknown_2031F40->connectionSpriteId2].data[1] = 0;
+            gUnknown_2031F40->state++;
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].invisible = TRUE;
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].invisible = TRUE;
+            BlendPalettes(0x1, 0, RGB_WHITEALPHA);
+        }
+        break;
+    case STATE_CROSSING_LINK_MONS_EXIT:
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y2 -= 3;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y2 += 3;
+        if (gSprites[gUnknown_2031F40->connectionSpriteId1].y2 <= -222)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_BLACK);
+            gUnknown_2031F40->state++;
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId1]);
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+        }
+        break;
+    case STATE_CREATE_LINK_MON_ARRIVING:
+        if (!gPaletteFade.active)
+        {
+            gUnknown_2031F40->state++;
+            SetTradeSequenceBgGpuRegs(1);
+            gUnknown_2031F40->bg1vofs = 166;
+            gUnknown_2031F40->connectionSpriteId1 = CreateSprite(&gUnknown_830CFCC, 128, -20, 3);
+            gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D00C, 128, -20, 0);
+            StartSpriteAnim(&gSprites[gUnknown_2031F40->connectionSpriteId2], ANIM_LINKMON_SMALL);
+        }
+        break;
+    case STATE_FADE_OUT_TO_GBA_RECV:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_OUT_TO_GBA_RECV:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG1_ON |
+                                      DISPCNT_OBJ_ON);
+        if (!gPaletteFade.active)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_LINK_MON_TRAVEL_IN:
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y2 += 3;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y2 += 3;
+        if (gSprites[gUnknown_2031F40->connectionSpriteId1].y2 + gSprites[gUnknown_2031F40->connectionSpriteId1].y == 64)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_PAN_TO_GBA:
+        if ((gUnknown_2031F40->bg1vofs += 2) > 316)
+        {
+            gUnknown_2031F40->bg1vofs = 316;
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_DESTROY_LINK_MON:
+        DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId1]);
+        DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+        gUnknown_2031F40->state++;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case STATE_LINK_MON_ARRIVED_DELAY:
+        if (++gUnknown_2031F40->timer == 10)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_MOVE_GBA_TO_CENTER:
+        if (++gUnknown_2031F40->bg1vofs > 348)
+        {
+            gUnknown_2031F40->bg1vofs = 348;
+            gUnknown_2031F40->state++;
+        }
+        if (gUnknown_2031F40->bg1vofs == 328 && gUnknown_2031F40->isCableTrade)
+        {
+            gUnknown_2031F40->cableEndSpriteId = CreateSprite(&gUnknown_830D040, 128, 65, 0);
+            gSprites[gUnknown_2031F40->cableEndSpriteId].callback = SpriteCB_CableEndReceiving;
+        }
+        break;
+    case STATE_GBA_FLASH_RECV:
+        gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D0B8, 120, 80, 0);
+        gUnknown_2031F40->state = STATE_GBA_STOP_FLASH_RECV;
+        break;
+    case STATE_GBA_STOP_FLASH_RECV:
+        if (gSprites[gUnknown_2031F40->connectionSpriteId2].animEnded)
+        {
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+            SetTradeSequenceBgGpuRegs(6);
+            gUnknown_2031F40->state++;
+            PlaySE(SE_M_SAND_ATTACK);
+        }
+        break;
+    case STATE_GBA_ZOOM_IN:
+        if (gUnknown_2031F40->gbaScale < 0x400)
+        {
+            gUnknown_2031F40->gbaScale += 0x34;
+        }
+        else
+        {
+            gUnknown_2031F40->gbaScale = 0x400;
+            gUnknown_2031F40->state++;
+        }
+        gUnknown_2031F40->sXY = 0x8000 / gUnknown_2031F40->gbaScale;
+        break;
+    case STATE_FADE_OUT_TO_NEW_MON:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gUnknown_2031F40->state = STATE_WAIT_FADE_OUT_TO_NEW_MON;
+        break;
+
+    case STATE_WAIT_FADE_OUT_TO_NEW_MON:
+        if (!gPaletteFade.active)
+        {
+            SetTradeSequenceBgGpuRegs(5);
+            SetTradeSequenceBgGpuRegs(7);
+            gPaletteFade.bufferTransferDisabled = TRUE;
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_FADE_IN_TO_NEW_MON:
+        gPaletteFade.bufferTransferDisabled = FALSE;
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_IN_TO_NEW_MON:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG2_ON |
+                                      DISPCNT_OBJ_ON);
+        if (!gPaletteFade.active)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_POKEBALL_ARRIVE:
+        gUnknown_2031F40->bouncingPokeballSpriteId = CreateSprite(&gUnknown_830CF6C, 120, -8, 0);
+        gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].data[3] = 74;
+        gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].callback = SpriteCB_BouncingPokeballArrive;
+        StartSpriteAnim(&gSprites[gUnknown_2031F40->bouncingPokeballSpriteId], 1);
+        StartSpriteAffineAnim(&gSprites[gUnknown_2031F40->bouncingPokeballSpriteId], 2);
+        BlendPalettes(1 << (16 + gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].oam.paletteNum), 16, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case STATE_FADE_POKEBALL_TO_NORMAL:
+        BeginNormalPaletteFade(1 << (16 + gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].oam.paletteNum), 1, 16, 0, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_POKEBALL_ARRIVE_WAIT:
+        if (gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].callback == SpriteCallbackDummy)
+        {
+            HandleLoadSpecialPokePic_2(&gMonFrontPicTable[gUnknown_2031F40->monSpecies[TRADE_PARTNER]],
+                                        gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_RIGHT],
+                                        gUnknown_2031F40->monSpecies[TRADE_PARTNER],
+                                        gUnknown_2031F40->monPersonalities[TRADE_PARTNER]);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_SHOW_NEW_MON:
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].x = 120;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].y = gMonFrontPicCoords[gUnknown_2031F40->monSpecies[TRADE_PARTNER]].y_offset + 60;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].x2 = 0;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].y2 = 0;
+        StartSpriteAnim(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]], 0);
+        CreatePokeballSpriteToReleaseMon(gUnknown_2031F40->monSpriteIds[TRADE_PARTNER], gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].oam.paletteNum, 120, 84, 2, 1, 20, PALETTES_BG | (0xF << 16), gUnknown_2031F40->monSpecies[TRADE_PARTNER]);
+        FreeSpriteOamMatrix(&gSprites[gUnknown_2031F40->bouncingPokeballSpriteId]);
+        DestroySprite(&gSprites[gUnknown_2031F40->bouncingPokeballSpriteId]);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_NEW_MON_MSG:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG0_ON |
+                                      DISPCNT_BG2_ON |
+                                      DISPCNT_OBJ_ON);
+        StringExpandPlaceholders(gStringVar4, gUnknown_830D258);
+        DrawTextOnTradeWindow(0, gStringVar4, 0);
+        gUnknown_2031F40->state = STATE_DELAY_FOR_MON_ANIM;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case STATE_DELAY_FOR_MON_ANIM:
+        if (++gUnknown_2031F40->timer > 60)
+        {
+            gUnknown_2031F40->state = STATE_WAIT_FOR_MON_CRY;
+            gUnknown_2031F40->timer = 0;
+        }
+        break;
+    case STATE_WAIT_FOR_MON_CRY:
+        if (IsCryFinished())
+            gUnknown_2031F40->state = STATE_TAKE_CARE_OF_MON;
+        break;
+    case STATE_TAKE_CARE_OF_MON:
+        if (++gUnknown_2031F40->timer == 10)
+            PlayFanfare(MUS_EVOLVED);
+
+        if (gUnknown_2031F40->timer == 250)
+        {
+            gUnknown_2031F40->state++;
+            StringExpandPlaceholders(gStringVar4, gUnknown_830D26A);
+            DrawTextOnTradeWindow(0, gStringVar4, 0);
+            gUnknown_2031F40->timer = 0;
+        }
+        break;
+    case STATE_AFTER_NEW_MON_DELAY:
+        if (++gUnknown_2031F40->timer == 60)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_CHECK_RIBBONS:
+        CheckPartnersMonForRibbons();
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_END_LINK_TRADE:
+        if (gUnknown_2031F40->isLinkTrade)
+            return TRUE;
+        else if (JOY_NEW(A_BUTTON))
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_TRY_EVOLUTION: // Only if in-game trade, link trades use CB2_TryLinkTradeEvolution
+        TradeMons(gSpecialVar_0x8005, 0);
+        gCB2_AfterEvolution = CB2_InGameTradeAnim;
+        evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[TRADE_PLAYER]], EVO_MODE_TRADE, ITEM_NONE);
+        if (evoTarget != SPECIES_NONE)
+            TradeEvolutionScene(&gPlayerParty[gSelectedTradeMonPositions[TRADE_PLAYER]], evoTarget, gUnknown_2031F40->monSpriteIds[TRADE_PARTNER], gSelectedTradeMonPositions[TRADE_PLAYER]);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_FADE_OUT_END:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_OUT_END:
+        if (!gPaletteFade.active)
+        {
+            PlayNewMapMusic(gUnknown_2031F40->cachedMapMusic);
+            if (gUnknown_2031F40)
+            {
+                FreeAllWindowBuffers();
+                Free(GetBgTilemapBuffer(3));
+                Free(GetBgTilemapBuffer(1));
+                Free(GetBgTilemapBuffer(0));
+                FreeMonSpritesGfx();
+                FREE_AND_SET_NULL(gUnknown_2031F40);
+            }
+            SetMainCallback2(CB2_ReturnToField);
+            BufferInGameTradeMonName();
+        }
+        break;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void DoTradeAnim_Wireless(void)
+// Task data for Task_AnimateWirelessSignal
+#define tIdx               data[0]
+#define tCounter           data[1]
+#define tSignalComingBack  data[2]
+
+static bool8 DoTradeAnim_Wireless(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	ldr r0, _0807CA24\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r5, [r1]\n\t"
-        "	ldr r1, _0807CA28\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	cmp r5, r1\n\t"
-        "	bls _0807CA18\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807CA18:\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	ldr r1, _0807CA2C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807CA24: .4byte gUnknown_2031F40\n\t"
-        "_0807CA28: .4byte SPECIAL_CheckLeadMonCute\n\t"
-        "_0807CA2C: .4byte 0x0807CA30\n\t"
-        "_0807CA30: @ jump table\n\t"
-        "	.4byte _0807CE60 @ case 0\n\t"
-        "	.4byte _0807CED8 @ case 1\n\t"
-        "	.4byte _0807DE38 @ case 2\n\t"
-        "	.4byte _0807DE38 @ case 3\n\t"
-        "	.4byte _0807DE38 @ case 4\n\t"
-        "	.4byte _0807DE38 @ case 5\n\t"
-        "	.4byte _0807DE38 @ case 6\n\t"
-        "	.4byte _0807DE38 @ case 7\n\t"
-        "	.4byte _0807DE38 @ case 8\n\t"
-        "	.4byte _0807DE38 @ case 9\n\t"
-        "	.4byte _0807CF34 @ case 10\n\t"
-        "	.4byte _0807CF7C @ case 11\n\t"
-        "	.4byte _0807CFF0 @ case 12\n\t"
-        "	.4byte _0807DE38 @ case 13\n\t"
-        "	.4byte _0807D05C @ case 14\n\t"
-        "	.4byte _0807DE38 @ case 15\n\t"
-        "	.4byte _0807DE38 @ case 16\n\t"
-        "	.4byte _0807DE38 @ case 17\n\t"
-        "	.4byte _0807DE38 @ case 18\n\t"
-        "	.4byte _0807DE38 @ case 19\n\t"
-        "	.4byte _0807D080 @ case 20\n\t"
-        "	.4byte _0807D0B0 @ case 21\n\t"
-        "	.4byte _0807D0C2 @ case 22\n\t"
-        "	.4byte _0807D0E4 @ case 23\n\t"
-        "	.4byte _0807DE38 @ case 24\n\t"
-        "	.4byte _0807DE38 @ case 25\n\t"
-        "	.4byte _0807D1DC @ case 26\n\t"
-        "	.4byte _0807D1FC @ case 27\n\t"
-        "	.4byte _0807D268 @ case 28\n\t"
-        "	.4byte _0807D2EC @ case 29\n\t"
-        "	.4byte _0807D310 @ case 30\n\t"
-        "	.4byte _0807D35C @ case 31\n\t"
-        "	.4byte _0807D3A8 @ case 32\n\t"
-        "	.4byte _0807D404 @ case 33\n\t"
-        "	.4byte _0807D470 @ case 34\n\t"
-        "	.4byte _0807D484 @ case 35\n\t"
-        "	.4byte _0807D498 @ case 36\n\t"
-        "	.4byte _0807D4AC @ case 37\n\t"
-        "	.4byte _0807D5D4 @ case 38\n\t"
-        "	.4byte _0807D6A4 @ case 39\n\t"
-        "	.4byte _0807D72C @ case 40\n\t"
-        "	.4byte _0807D7CC @ case 41\n\t"
-        "	.4byte _0807D7DC @ case 42\n\t"
-        "	.4byte _0807D7FC @ case 43\n\t"
-        "	.4byte _0807DE38 @ case 44\n\t"
-        "	.4byte _0807DE38 @ case 45\n\t"
-        "	.4byte _0807D920 @ case 46\n\t"
-        "	.4byte _0807D930 @ case 47\n\t"
-        "	.4byte _0807D94E @ case 48\n\t"
-        "	.4byte _0807DE38 @ case 49\n\t"
-        "	.4byte _0807D974 @ case 50\n\t"
-        "	.4byte _0807D9B4 @ case 51\n\t"
-        "	.4byte _0807D9F4 @ case 52\n\t"
-        "	.4byte _0807DE38 @ case 53\n\t"
-        "	.4byte _0807DE38 @ case 54\n\t"
-        "	.4byte _0807DE38 @ case 55\n\t"
-        "	.4byte _0807DE38 @ case 56\n\t"
-        "	.4byte _0807DE38 @ case 57\n\t"
-        "	.4byte _0807DE38 @ case 58\n\t"
-        "	.4byte _0807DE38 @ case 59\n\t"
-        "	.4byte _0807DA14 @ case 60\n\t"
-        "	.4byte _0807DA3C @ case 61\n\t"
-        "	.4byte _0807DA58 @ case 62\n\t"
-        "	.4byte _0807DA78 @ case 63\n\t"
-        "	.4byte _0807DB20 @ case 64\n\t"
-        "	.4byte _0807DB54 @ case 65\n\t"
-        "	.4byte _0807DBA0 @ case 66\n\t"
-        "	.4byte _0807DC60 @ case 67\n\t"
-        "	.4byte _0807DCD8 @ case 68\n\t"
-        "	.4byte _0807DD24 @ case 69\n\t"
-        "	.4byte _0807DD34 @ case 70\n\t"
-        "	.4byte _0807DD3A @ case 71\n\t"
-        "	.4byte _0807DD60 @ case 72\n\t"
-        "	.4byte _0807DDBC @ case 73\n\t"
-        "	.4byte _0807DDE0 @ case 74\n\t"
-        "	.4byte _0807DE38 @ case 75\n\t"
-        "	.4byte _0807DE38 @ case 76\n\t"
-        "	.4byte _0807DE38 @ case 77\n\t"
-        "	.4byte _0807DE38 @ case 78\n\t"
-        "	.4byte _0807DE38 @ case 79\n\t"
-        "	.4byte _0807DE38 @ case 80\n\t"
-        "	.4byte _0807DE38 @ case 81\n\t"
-        "	.4byte _0807DE38 @ case 82\n\t"
-        "	.4byte _0807DE38 @ case 83\n\t"
-        "	.4byte _0807DE38 @ case 84\n\t"
-        "	.4byte _0807DE38 @ case 85\n\t"
-        "	.4byte _0807DE38 @ case 86\n\t"
-        "	.4byte _0807DE38 @ case 87\n\t"
-        "	.4byte _0807DE38 @ case 88\n\t"
-        "	.4byte _0807DE38 @ case 89\n\t"
-        "	.4byte _0807DE38 @ case 90\n\t"
-        "	.4byte _0807DE38 @ case 91\n\t"
-        "	.4byte _0807DE38 @ case 92\n\t"
-        "	.4byte _0807DE38 @ case 93\n\t"
-        "	.4byte _0807DE38 @ case 94\n\t"
-        "	.4byte _0807DE38 @ case 95\n\t"
-        "	.4byte _0807DE38 @ case 96\n\t"
-        "	.4byte _0807DE38 @ case 97\n\t"
-        "	.4byte _0807DE38 @ case 98\n\t"
-        "	.4byte _0807DE38 @ case 99\n\t"
-        "	.4byte _0807DE38 @ case 100\n\t"
-        "	.4byte _0807DE38 @ case 101\n\t"
-        "	.4byte _0807DE38 @ case 102\n\t"
-        "	.4byte _0807DE38 @ case 103\n\t"
-        "	.4byte _0807DE38 @ case 104\n\t"
-        "	.4byte _0807DE38 @ case 105\n\t"
-        "	.4byte _0807DE38 @ case 106\n\t"
-        "	.4byte _0807DE38 @ case 107\n\t"
-        "	.4byte _0807DE38 @ case 108\n\t"
-        "	.4byte _0807DE38 @ case 109\n\t"
-        "	.4byte _0807DE38 @ case 110\n\t"
-        "	.4byte _0807DE38 @ case 111\n\t"
-        "	.4byte _0807DE38 @ case 112\n\t"
-        "	.4byte _0807DE38 @ case 113\n\t"
-        "	.4byte _0807DE38 @ case 114\n\t"
-        "	.4byte _0807DE38 @ case 115\n\t"
-        "	.4byte _0807DE38 @ case 116\n\t"
-        "	.4byte _0807DE38 @ case 117\n\t"
-        "	.4byte _0807DE38 @ case 118\n\t"
-        "	.4byte _0807DE38 @ case 119\n\t"
-        "	.4byte _0807DE38 @ case 120\n\t"
-        "	.4byte _0807DE38 @ case 121\n\t"
-        "	.4byte _0807DE38 @ case 122\n\t"
-        "	.4byte _0807DE38 @ case 123\n\t"
-        "	.4byte _0807D12C @ case 124\n\t"
-        "	.4byte _0807D160 @ case 125\n\t"
-        "	.4byte _0807D1B4 @ case 126\n\t"
-        "	.4byte _0807DE38 @ case 127\n\t"
-        "	.4byte _0807DE38 @ case 128\n\t"
-        "	.4byte _0807DE38 @ case 129\n\t"
-        "	.4byte _0807DE38 @ case 130\n\t"
-        "	.4byte _0807DE38 @ case 131\n\t"
-        "	.4byte _0807DE38 @ case 132\n\t"
-        "	.4byte _0807DE38 @ case 133\n\t"
-        "	.4byte _0807DE38 @ case 134\n\t"
-        "	.4byte _0807DE38 @ case 135\n\t"
-        "	.4byte _0807DE38 @ case 136\n\t"
-        "	.4byte _0807DE38 @ case 137\n\t"
-        "	.4byte _0807DE38 @ case 138\n\t"
-        "	.4byte _0807DE38 @ case 139\n\t"
-        "	.4byte _0807DE38 @ case 140\n\t"
-        "	.4byte _0807DE38 @ case 141\n\t"
-        "	.4byte _0807DE38 @ case 142\n\t"
-        "	.4byte _0807DE38 @ case 143\n\t"
-        "	.4byte _0807D854 @ case 144\n\t"
-        "	.4byte _0807D8BC @ case 145\n\t"
-        "	.4byte _0807D8F8 @ case 146\n\t"
-        "	.4byte _0807DE38 @ case 147\n\t"
-        "	.4byte _0807DE38 @ case 148\n\t"
-        "	.4byte _0807DE38 @ case 149\n\t"
-        "	.4byte _0807DE38 @ case 150\n\t"
-        "	.4byte _0807DE38 @ case 151\n\t"
-        "	.4byte _0807DE38 @ case 152\n\t"
-        "	.4byte _0807DE38 @ case 153\n\t"
-        "	.4byte _0807DE38 @ case 154\n\t"
-        "	.4byte _0807DE38 @ case 155\n\t"
-        "	.4byte _0807DE38 @ case 156\n\t"
-        "	.4byte _0807DE38 @ case 157\n\t"
-        "	.4byte _0807DE38 @ case 158\n\t"
-        "	.4byte _0807DE38 @ case 159\n\t"
-        "	.4byte _0807DE38 @ case 160\n\t"
-        "	.4byte _0807DE38 @ case 161\n\t"
-        "	.4byte _0807DE38 @ case 162\n\t"
-        "	.4byte _0807DE38 @ case 163\n\t"
-        "	.4byte _0807DE38 @ case 164\n\t"
-        "	.4byte _0807DE38 @ case 165\n\t"
-        "	.4byte _0807DE38 @ case 166\n\t"
-        "	.4byte _0807DC9C @ case 167\n\t"
-        "	.4byte _0807DE38 @ case 168\n\t"
-        "	.4byte _0807DE38 @ case 169\n\t"
-        "	.4byte _0807DE38 @ case 170\n\t"
-        "	.4byte _0807DE38 @ case 171\n\t"
-        "	.4byte _0807DE38 @ case 172\n\t"
-        "	.4byte _0807DE38 @ case 173\n\t"
-        "	.4byte _0807DE38 @ case 174\n\t"
-        "	.4byte _0807DE38 @ case 175\n\t"
-        "	.4byte _0807DE38 @ case 176\n\t"
-        "	.4byte _0807DE38 @ case 177\n\t"
-        "	.4byte _0807DE38 @ case 178\n\t"
-        "	.4byte _0807DE38 @ case 179\n\t"
-        "	.4byte _0807DE38 @ case 180\n\t"
-        "	.4byte _0807DE38 @ case 181\n\t"
-        "	.4byte _0807DE38 @ case 182\n\t"
-        "	.4byte _0807DE38 @ case 183\n\t"
-        "	.4byte _0807DE38 @ case 184\n\t"
-        "	.4byte _0807DE38 @ case 185\n\t"
-        "	.4byte _0807DE38 @ case 186\n\t"
-        "	.4byte _0807DE38 @ case 187\n\t"
-        "	.4byte _0807DE38 @ case 188\n\t"
-        "	.4byte _0807DE38 @ case 189\n\t"
-        "	.4byte _0807DE38 @ case 190\n\t"
-        "	.4byte _0807DE38 @ case 191\n\t"
-        "	.4byte _0807DE38 @ case 192\n\t"
-        "	.4byte _0807DE38 @ case 193\n\t"
-        "	.4byte _0807DE38 @ case 194\n\t"
-        "	.4byte _0807DE38 @ case 195\n\t"
-        "	.4byte _0807DE38 @ case 196\n\t"
-        "	.4byte _0807DE38 @ case 197\n\t"
-        "	.4byte _0807DE38 @ case 198\n\t"
-        "	.4byte _0807DE38 @ case 199\n\t"
-        "	.4byte _0807D294 @ case 200\n\t"
-        "	.4byte _0807DE38 @ case 201\n\t"
-        "	.4byte _0807DE38 @ case 202\n\t"
-        "	.4byte _0807DE38 @ case 203\n\t"
-        "	.4byte _0807DE38 @ case 204\n\t"
-        "	.4byte _0807DE38 @ case 205\n\t"
-        "	.4byte _0807DE38 @ case 206\n\t"
-        "	.4byte _0807DE38 @ case 207\n\t"
-        "	.4byte _0807DE38 @ case 208\n\t"
-        "	.4byte _0807DE38 @ case 209\n\t"
-        "	.4byte _0807DE38 @ case 210\n\t"
-        "	.4byte _0807DE38 @ case 211\n\t"
-        "	.4byte _0807DE38 @ case 212\n\t"
-        "	.4byte _0807DE38 @ case 213\n\t"
-        "	.4byte _0807DE38 @ case 214\n\t"
-        "	.4byte _0807DE38 @ case 215\n\t"
-        "	.4byte _0807DE38 @ case 216\n\t"
-        "	.4byte _0807DE38 @ case 217\n\t"
-        "	.4byte _0807DE38 @ case 218\n\t"
-        "	.4byte _0807DE38 @ case 219\n\t"
-        "	.4byte _0807DE38 @ case 220\n\t"
-        "	.4byte _0807DE38 @ case 221\n\t"
-        "	.4byte _0807DE38 @ case 222\n\t"
-        "	.4byte _0807DE38 @ case 223\n\t"
-        "	.4byte _0807DE38 @ case 224\n\t"
-        "	.4byte _0807DE38 @ case 225\n\t"
-        "	.4byte _0807DE38 @ case 226\n\t"
-        "	.4byte _0807DE38 @ case 227\n\t"
-        "	.4byte _0807DE38 @ case 228\n\t"
-        "	.4byte _0807DE38 @ case 229\n\t"
-        "	.4byte _0807DE38 @ case 230\n\t"
-        "	.4byte _0807DE38 @ case 231\n\t"
-        "	.4byte _0807DE38 @ case 232\n\t"
-        "	.4byte _0807DE38 @ case 233\n\t"
-        "	.4byte _0807DE38 @ case 234\n\t"
-        "	.4byte _0807DE38 @ case 235\n\t"
-        "	.4byte _0807DE38 @ case 236\n\t"
-        "	.4byte _0807DE38 @ case 237\n\t"
-        "	.4byte _0807DE38 @ case 238\n\t"
-        "	.4byte _0807DE38 @ case 239\n\t"
-        "	.4byte _0807DE38 @ case 240\n\t"
-        "	.4byte _0807DE38 @ case 241\n\t"
-        "	.4byte _0807DE38 @ case 242\n\t"
-        "	.4byte _0807DE38 @ case 243\n\t"
-        "	.4byte _0807DE38 @ case 244\n\t"
-        "	.4byte _0807DE38 @ case 245\n\t"
-        "	.4byte _0807DE38 @ case 246\n\t"
-        "	.4byte _0807DE38 @ case 247\n\t"
-        "	.4byte _0807DE38 @ case 248\n\t"
-        "	.4byte _0807DE38 @ case 249\n\t"
-        "	.4byte _0807DE38 @ case 250\n\t"
-        "	.4byte _0807DE38 @ case 251\n\t"
-        "	.4byte _0807DE38 @ case 252\n\t"
-        "	.4byte _0807DE38 @ case 253\n\t"
-        "	.4byte _0807DE38 @ case 254\n\t"
-        "	.4byte _0807DE38 @ case 255\n\t"
-        "	.4byte _0807DE38 @ case 256\n\t"
-        "	.4byte _0807DE38 @ case 257\n\t"
-        "	.4byte _0807DE38 @ case 258\n\t"
-        "	.4byte _0807DE38 @ case 259\n\t"
-        "	.4byte _0807DE38 @ case 260\n\t"
-        "	.4byte _0807DE38 @ case 261\n\t"
-        "	.4byte _0807DE38 @ case 262\n\t"
-        "	.4byte _0807DE38 @ case 263\n\t"
-        "	.4byte _0807DE38 @ case 264\n\t"
-        "	.4byte _0807DE38 @ case 265\n\t"
-        "	.4byte _0807DE38 @ case 266\n\t"
-        "	.4byte _0807DCBC @ case 267\n\t"
-        "_0807CE60:\n\t"
-        "	ldr r3, _0807CEC8\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x8e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, _0807CECC\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r2, _0807CED0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0xf0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl GetCurrentMapMusic\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0xf4\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0807CED4\n\t"
-        "	bl PlayNewMapMusic\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807CEC8: .4byte gSprites\n\t"
-        "_0807CECC: .4byte 0x0000FF4C\n\t"
-        "_0807CED0: .4byte gMonFrontPicCoords\n\t"
-        "_0807CED4: .4byte SPECIAL_sub_0811B0A8\n\t"
-        "_0807CED8:\n\t"
-        "	ldr r5, [r7]\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	adds r6, #0xe6\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _0807CF0C\n\t"
-        "	ldr r2, _0807CF08\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x24]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	subs r0, #3\n\t"
-        "	strh r0, [r6]\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807CF08: .4byte gSprites\n\t"
-        "_0807CF0C:\n\t"
-        "	ldr r2, _0807CF30\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0, #0x24]\n\t"
-        "	strh r1, [r6]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807CF30: .4byte gSprites\n\t"
-        "_0807CF34:\n\t"
-        "	ldr r4, _0807CF70\n\t"
-        "	ldr r1, _0807CF74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawTextOnTradeWindow\n\t"
-        "	ldr r4, _0807CF78\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0xf0\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807CF62\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl PlayCry1\n\t"
-        "_0807CF62:\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0xb\n\t"
-        "	bl _0807DC8A\n\t"
-        "	.align 2, 0\n\t"
-        "_0807CF70: .4byte gStringVar4\n\t"
-        "_0807CF74: .4byte gUnknown_830D240\n\t"
-        "_0807CF78: .4byte gUnknown_2031F40\n\t"
-        "_0807CF7C:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x50\n\t"
-        "	beq _0807CF8C\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807CF8C:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r2, _0807CFE0\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r2, #2\n\t"
-        "	str r2, [sp]\n\t"
-        "	movs r2, #1\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	movs r2, #0x14\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldr r2, _0807CFE4\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	movs r2, #0x78\n\t"
-        "	movs r3, #0x20\n\t"
-        "	bl sub_08076124\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0xd2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r4, _0807CFE8\n\t"
-        "	ldr r1, _0807CFEC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawTextOnTradeWindow\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807CFE0: .4byte gSprites\n\t"
-        "_0807CFE4: .4byte 0x000FFFFF\n\t"
-        "_0807CFE8: .4byte gStringVar4\n\t"
-        "_0807CFEC: .4byte gUnknown_830D24F\n\t"
-        "_0807CFF0:\n\t"
-        "	ldr r5, _0807D04C\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xd2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	adds r4, #0x1c\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0807D050\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807D010\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D010:\n\t"
-        "	ldr r0, _0807D054\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x20\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0xd3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, _0807D058\n\t"
-        "	str r1, [r0]\n\t"
-        "	adds r2, #0xd2\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D04C: .4byte gSprites\n\t"
-        "_0807D050: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0807D054: .4byte gUnknown_830CF6C\n\t"
-        "_0807D058: .4byte SpriteCB_BouncingPokeballDepart + 1\n\t"
-        "_0807D05C:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0807D07C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x14\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D07C: .4byte gUnknown_2031F40\n\t"
-        "_0807D080:\n\t"
-        "	ldr r0, _0807D0AC\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807D090\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D090:\n\t"
-        "	movs r0, #4\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xff\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	bl _0807DDCC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D0AC: .4byte gPaletteFade\n\t"
-        "_0807D0B0:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl _0807DDC8\n\t"
-        "_0807D0C2:\n\t"
-        "	ldr r0, _0807D0E0\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807D0D2\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D0D2:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x17\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D0E0: .4byte gPaletteFade\n\t"
-        "_0807D0E4:\n\t"
-        "	ldr r4, _0807D100\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0xea\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bls _0807D104\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	subs r0, #0x34\n\t"
-        "	strh r0, [r2]\n\t"
-        "	b _0807D11E\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D100: .4byte gUnknown_2031F40\n\t"
-        "_0807D104:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0xea\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strh r0, [r1]\n\t"
-        "	subs r1, #0x56\n\t"
-        "	movs r0, #0x7c\n\t"
-        "	strh r0, [r1]\n\t"
-        "	str r2, [r3, #0x64]\n\t"
-        "_0807D11E:\n\t"
-        "	ldr r0, _0807D128\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	bl _0807D9E0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D128: .4byte gUnknown_2031F40\n\t"
-        "_0807D12C:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	bhi _0807D13C\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D13C:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r0, _0807D15C\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D15C: .4byte gUnknown_830D0D0\n\t"
-        "_0807D160:\n\t"
-        "	ldr r2, _0807D1A8\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0807D180\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D180:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r1, _0807D1AC\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0x82\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807D1B0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D1A8: .4byte gSprites\n\t"
-        "_0807D1AC: .4byte 0x00000452\n\t"
-        "_0807D1B0: .4byte Task_AnimateWirelessSignal + 1\n\t"
-        "_0807D1B4:\n\t"
-        "	ldr r0, _0807D1D4\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807D1C4\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D1C4:\n\t"
-        "	ldr r0, _0807D1D8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x1a\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D1D4: .4byte Task_AnimateWirelessSignal + 1\n\t"
-        "_0807D1D8: .4byte gUnknown_2031F40\n\t"
-        "_0807D1DC:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xe0\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	subs r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	movs r0, #0x9e\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807D1F6\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D1F6:\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl _0807DDD0\n\t"
-        "_0807D1FC:\n\t"
-        "	ldr r0, _0807D254\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #3\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r4, _0807D258\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x90\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r5, _0807D25C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807D260\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _0807D264\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	bl _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D254: .4byte gUnknown_830CFCC\n\t"
-        "_0807D258: .4byte gUnknown_2031F40\n\t"
-        "_0807D25C: .4byte gSprites\n\t"
-        "_0807D260: .4byte SpriteCB_LinkMonGlowWireless + 1\n\t"
-        "_0807D264: .4byte gUnknown_830D00C\n\t"
-        "_0807D268:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0xe0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xa6\n\t"
-        "	bne _0807D282\n\t"
-        "	subs r1, #0x4c\n\t"
-        "	movs r0, #0xc8\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807D282:\n\t"
-        "	ldr r1, _0807D290\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D290: .4byte 0x00001241\n\t"
-        "_0807D294:\n\t"
-        "	ldr r2, _0807D2E8\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x90\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x22]\n\t"
-        "	subs r1, #2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x22]\n\t"
-        "	subs r1, #2\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0807D2DA\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D2DA:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r0, #0x1d\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D2E8: .4byte gSprites\n\t"
-        "_0807D2EC:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0807D30C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D30C: .4byte gUnknown_2031F40\n\t"
-        "_0807D310:\n\t"
-        "	ldr r0, _0807D354\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807D320\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D320:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _0807D358\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	bl _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D354: .4byte gPaletteFade\n\t"
-        "_0807D358: .4byte gSprites\n\t"
-        "_0807D35C:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r5, _0807D3A0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x6f\n\t"
-        "	movs r2, #0xaa\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r4, _0807D3A4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x90\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x81\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	bl _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D3A0: .4byte gUnknown_830D00C\n\t"
-        "_0807D3A4: .4byte gUnknown_2031F40\n\t"
-        "_0807D3A8:\n\t"
-        "	ldr r0, _0807D3F8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807D3C6\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _0807D3FC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807D3C6:\n\t"
-        "	ldr r3, _0807D400\n\t"
-        "	ldr r0, _0807D3FC\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	subs r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r2, #0x91\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	bl _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D3F8: .4byte gPaletteFade\n\t"
-        "_0807D3FC: .4byte gUnknown_2031F40\n\t"
-        "_0807D400: .4byte gSprites\n\t"
-        "_0807D404:\n\t"
-        "	ldr r5, _0807D468\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x90\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	subs r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r6, #0x91\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r3, r0, r5\n\t"
-        "	movs r0, #0x26\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	movs r0, #0x5a\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0807D44A\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D44A:\n\t"
-        "	movs r2, #1\n\t"
-        "	strh r2, [r3, #0x30]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r2, [r0, #0x30]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _0807D46C\n\t"
-        "	b _0807D692\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D468: .4byte gSprites\n\t"
-        "_0807D46C: .4byte Task_OpenCenterWhiteColumn + 1\n\t"
-        "_0807D470:\n\t"
-        "	ldr r2, _0807D480\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalettes\n\t"
-        "	bl _0807DDCC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D480: .4byte 0x0000FFFF\n\t"
-        "_0807D484:\n\t"
-        "	ldr r2, _0807D494\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalettes\n\t"
-        "	bl _0807DDCC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D494: .4byte 0x0000FFFF\n\t"
-        "_0807D498:\n\t"
-        "	ldr r2, _0807D4A8\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalettes\n\t"
-        "	bl _0807DDCC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D4A8: .4byte 0x0000FFFF\n\t"
-        "_0807D4AC:\n\t"
-        "	ldr r5, _0807D518\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xf0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl IsMonSpriteNotFlipped\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807D524\n\t"
-        "	ldr r4, _0807D51C\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r2, #0x8e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807D520\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #3\n\t"
-        "	bl CalcCenterToCornerVec\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	b _0807D53A\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D518: .4byte gUnknown_2031F40\n\t"
-        "_0807D51C: .4byte gSprites\n\t"
-        "_0807D520: .4byte gUnknown_830D110\n\t"
-        "_0807D524:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0807D5C8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_0807D53A:\n\t"
-        "	ldr r5, _0807D5CC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _0807D5C8\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x8e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x28\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	adds r2, #0x8f\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xc8\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, _0807D5D0\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	movs r2, #5\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ands r2, r1\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	bl _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D5C8: .4byte gSprites\n\t"
-        "_0807D5CC: .4byte gUnknown_2031F40\n\t"
-        "_0807D5D0: .4byte 0x0000FFE0\n\t"
-        "_0807D5D4:\n\t"
-        "	ldr r4, _0807D69C\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x8e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	subs r1, #3\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r2, #0x8f\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0, #0x26]\n\t"
-        "	adds r0, #0xa3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	bhi _0807D61C\n\t"
-        "	movs r0, #0x2d\n\t"
-        "	bl PlaySE\n\t"
-        "_0807D61C:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x8e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r6, #0x26\n\t"
-        "	ldrsh r1, [r0, r6]\n\t"
-        "	movs r0, #0xde\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _0807D63C\n\t"
-        "	bl _0807DE38\n\t"
-        "_0807D63C:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0, #0x30]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0, #0x30]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _0807D6A0\n\t"
-        "_0807D692:\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D69C: .4byte gSprites\n\t"
-        "_0807D6A0: .4byte Task_CloseCenterWhiteColumn + 1\n\t"
-        "_0807D6A4:\n\t"
-        "	ldr r4, _0807D728\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x90\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	subs r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r2, #0x91\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #3\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0xde\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0807D6E6\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D6E6:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0x94\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, #0x90\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D728: .4byte gSprites\n\t"
-        "_0807D72C:\n\t"
-        "	ldr r0, _0807D7B8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807D73A\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D73A:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xe0\n\t"
-        "	movs r1, #0xa6\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xe4\n\t"
-        "	movs r1, #0xce\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _0807D7BC\n\t"
-        "	movs r4, #0x14\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	movs r1, #0x78\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #3\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x90\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r5, _0807D7C0\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807D7C4\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _0807D7C8\n\t"
-        "	movs r1, #0x78\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D7B8: .4byte gPaletteFade\n\t"
-        "_0807D7BC: .4byte gUnknown_830CFCC\n\t"
-        "_0807D7C0: .4byte gSprites\n\t"
-        "_0807D7C4: .4byte SpriteCB_LinkMonGlowWireless + 1\n\t"
-        "_0807D7C8: .4byte gUnknown_830D00C\n\t"
-        "_0807D7CC:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	b _0807DDC8\n\t"
-        "_0807D7DC:\n\t"
-        "	movs r1, #0x92\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807D7F8\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807D7F4\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D7F4:\n\t"
-        "	b _0807DDCC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D7F8: .4byte gPaletteFade\n\t"
-        "_0807D7FC:\n\t"
-        "	ldr r2, _0807D850\n\t"
-        "	ldr r4, [r7]\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	adds r3, #0x90\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #4\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #0x26]\n\t"
-        "	adds r1, #4\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r6, #0x26\n\t"
-        "	ldrsh r1, [r0, r6]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	cmp r1, #0x40\n\t"
-        "	beq _0807D842\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D842:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x90\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r4, #0x64]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D850: .4byte gSprites\n\t"
-        "_0807D854:\n\t"
-        "	movs r1, #0xb2\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r4, _0807D8B0\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0xe0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, [r2, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r2, #0x64]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _0807D898\n\t"
-        "	ldr r0, _0807D8B4\n\t"
-        "	movs r1, #5\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0807D8B8\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "_0807D898:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0xe0\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrsh r0, [r3, r6]\n\t"
-        "	movs r2, #0x9e\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	cmp r0, r2\n\t"
-        "	bgt _0807D8AC\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D8AC:\n\t"
-        "	strh r2, [r3]\n\t"
-        "	b _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D8B0: .4byte gUnknown_2031F40\n\t"
-        "_0807D8B4: .4byte Task_AnimateWirelessSignal + 1\n\t"
-        "_0807D8B8: .4byte gTasks\n\t"
-        "_0807D8BC:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x90\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r4, _0807D8F4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x94\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	str r1, [r3, #0x64]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D8F4: .4byte gSprites\n\t"
-        "_0807D8F8:\n\t"
-        "	ldr r0, _0807D918\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _0807D908\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D908:\n\t"
-        "	ldr r0, _0807D91C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	strh r0, [r1]\n\t"
-        "	str r3, [r2, #0x64]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D918: .4byte Task_AnimateWirelessSignal + 1\n\t"
-        "_0807D91C: .4byte gUnknown_2031F40\n\t"
-        "_0807D920:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	beq _0807D92E\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D92E:\n\t"
-        "	b _0807DDD0\n\t"
-        "_0807D930:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r5, #0xe0\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r6, #0xae\n\t"
-        "	lsls r6, r6, #1\n\t"
-        "	cmp r0, r6\n\t"
-        "	bgt _0807D94A\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D94A:\n\t"
-        "	strh r6, [r5]\n\t"
-        "	b _0807DDD0\n\t"
-        "_0807D94E:\n\t"
-        "	ldr r0, _0807D96C\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r2, #0x50\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r2, _0807D970\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, #0x91\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x32\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D96C: .4byte gUnknown_830D0B8\n\t"
-        "_0807D970: .4byte gUnknown_2031F40\n\t"
-        "_0807D974:\n\t"
-        "	ldr r2, _0807D9B0\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0x91\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0807D992\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D992:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #6\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0x9f\n\t"
-        "	bl PlaySE\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D9B0: .4byte gSprites\n\t"
-        "_0807D9B4:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	adds r2, #0xea\n\t"
-        "	ldrh r3, [r2]\n\t"
-        "	ldr r0, _0807D9CC\n\t"
-        "	cmp r3, r0\n\t"
-        "	bhi _0807D9D0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x34\n\t"
-        "	strh r0, [r2]\n\t"
-        "	b _0807D9DE\n\t"
-        "	.align 2, 0\n\t"
-        "_0807D9CC: .4byte 0x000003FF\n\t"
-        "_0807D9D0:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r2]\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_0807D9DE:\n\t"
-        "	ldr r4, [r7]\n\t"
-        "_0807D9E0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0xea\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, #0xe8\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _0807DE38\n\t"
-        "_0807D9F4:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r0, _0807DA10\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DA10: .4byte gUnknown_2031F40\n\t"
-        "_0807DA14:\n\t"
-        "	ldr r4, _0807DA38\n\t"
-        "	ldrb r1, [r4, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DA22\n\t"
-        "	b _0807DE38\n\t"
-        "_0807DA22:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	movs r0, #7\n\t"
-        "	bl SetTradeSequenceBgGpuRegs\n\t"
-        "	ldrb r0, [r4, #8]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #8]\n\t"
-        "	b _0807DDCC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DA38: .4byte gPaletteFade\n\t"
-        "_0807DA3C:\n\t"
-        "	ldr r2, _0807DA54\n\t"
-        "	ldrb r1, [r2, #8]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	b _0807DDC8\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DA54: .4byte gPaletteFade\n\t"
-        "_0807DA58:\n\t"
-        "	movs r1, #0xa2\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r0, _0807DA74\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DA70\n\t"
-        "	b _0807DE38\n\t"
-        "_0807DA70:\n\t"
-        "	b _0807DDCC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DA74: .4byte gPaletteFade\n\t"
-        "_0807DA78:\n\t"
-        "	ldr r0, _0807DB0C\n\t"
-        "	movs r2, #8\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r1, #0x78\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	ldr r5, _0807DB10\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, #0xd3\n\t"
-        "	movs r6, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _0807DB14\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r2, #0xd3\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x4a\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x1c\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807DB18\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	lsls r0, r1\n\t"
-        "	ldr r2, _0807DB1C\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalettes\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	str r6, [r2, #0x64]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DB0C: .4byte gUnknown_830CF6C\n\t"
-        "_0807DB10: .4byte gUnknown_2031F40\n\t"
-        "_0807DB14: .4byte gSprites\n\t"
-        "_0807DB18: .4byte SpriteCB_BouncingPokeballArrive + 1\n\t"
-        "_0807DB1C: .4byte 0x0000FFFF\n\t"
-        "_0807DB20:\n\t"
-        "	ldr r2, _0807DB4C\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	lsls r0, r1\n\t"
-        "	ldr r1, _0807DB50\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	b _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DB4C: .4byte gSprites\n\t"
-        "_0807DB50: .4byte 0x0000FFFF\n\t"
-        "_0807DB54:\n\t"
-        "	ldr r2, _0807DB90\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, #0x1c\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _0807DB94\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0807DB72\n\t"
-        "	b _0807DE38\n\t"
-        "_0807DB72:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xf2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	ldr r1, _0807DB98\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _0807DB9C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r1, [r1, #0x10]\n\t"
-        "	ldr r3, [r3, #0x6c]\n\t"
-        "	bl HandleLoadSpecialPokePic_2\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	b _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DB90: .4byte gSprites\n\t"
-        "_0807DB94: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0807DB98: .4byte gMonFrontPicTable\n\t"
-        "_0807DB9C: .4byte gMonSpritesGfxPtr\n\t"
-        "_0807DBA0:\n\t"
-        "	ldr r4, _0807DC54\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	adds r6, #0x8f\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r1, #0x78\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r3, _0807DC58\n\t"
-        "	adds r2, #0xf2\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	adds r0, #0x3c\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0, #0x24]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r5, [r0, #0x26]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x8f\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r2, #2\n\t"
-        "	str r2, [sp]\n\t"
-        "	movs r2, #1\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	movs r2, #0x14\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	ldr r2, _0807DC5C\n\t"
-        "	str r2, [sp, #0xc]\n\t"
-        "	adds r3, #0xf2\n\t"
-        "	ldrh r2, [r3]\n\t"
-        "	str r2, [sp, #0x10]\n\t"
-        "	movs r2, #0x78\n\t"
-        "	movs r3, #0x54\n\t"
-        "	bl CreatePokeballSpriteToReleaseMon\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl FreeSpriteOamMatrix\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xd3\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	b _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DC54: .4byte gSprites\n\t"
-        "_0807DC58: .4byte gMonFrontPicCoords\n\t"
-        "_0807DC5C: .4byte 0x000FFFFF\n\t"
-        "_0807DC60:\n\t"
-        "	movs r1, #0xaa\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r4, _0807DC90\n\t"
-        "	ldr r1, _0807DC94\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawTextOnTradeWindow\n\t"
-        "	ldr r0, _0807DC98\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x94\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r0, #0xa7\n\t"
-        "_0807DC8A:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	str r2, [r3, #0x64]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DC90: .4byte gStringVar4\n\t"
-        "_0807DC94: .4byte gUnknown_830D258\n\t"
-        "_0807DC98: .4byte gUnknown_2031F40\n\t"
-        "_0807DC9C:\n\t"
-        "	ldr r3, [r7]\n\t"
-        "	ldr r0, [r3, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r3, #0x64]\n\t"
-        "	cmp r0, #0x3c\n\t"
-        "	bhi _0807DCAA\n\t"
-        "	b _0807DE38\n\t"
-        "_0807DCAA:\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _0807DCB8\n\t"
-        "	strh r1, [r0]\n\t"
-        "	str r2, [r3, #0x64]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DCB8: .4byte SPECIAL_CheckLeadMonCute\n\t"
-        "_0807DCBC:\n\t"
-        "	bl IsCryFinished\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0807DCC8\n\t"
-        "	b _0807DE38\n\t"
-        "_0807DCC8:\n\t"
-        "	ldr r0, _0807DCD4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x94\n\t"
-        "	movs r1, #0x44\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DCD4: .4byte gUnknown_2031F40\n\t"
-        "_0807DCD8:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bne _0807DCEA\n\t"
-        "	ldr r0, _0807DD18\n\t"
-        "	bl PlayFanfare\n\t"
-        "_0807DCEA:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0xfa\n\t"
-        "	beq _0807DCF4\n\t"
-        "	b _0807DE38\n\t"
-        "_0807DCF4:\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r4, _0807DD1C\n\t"
-        "	ldr r1, _0807DD20\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl DrawTextOnTradeWindow\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	str r5, [r0, #0x64]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DD18: .4byte SPECIAL_sub_0818DB68\n\t"
-        "_0807DD1C: .4byte gStringVar4\n\t"
-        "_0807DD20: .4byte gUnknown_830D26A\n\t"
-        "_0807DD24:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, [r1, #0x64]\n\t"
-        "	adds r0, #1\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	cmp r0, #0x3c\n\t"
-        "	beq _0807DD32\n\t"
-        "	b _0807DE38\n\t"
-        "_0807DD32:\n\t"
-        "	b _0807DDD0\n\t"
-        "_0807DD34:\n\t"
-        "	bl CheckPartnersMonForRibbons\n\t"
-        "	b _0807DDCC\n\t"
-        "_0807DD3A:\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xee\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DD4A\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0807DE3A\n\t"
-        "_0807DD4A:\n\t"
-        "	ldr r0, _0807DD5C\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DE38\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	b _0807DDD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DD5C: .4byte gMain\n\t"
-        "_0807DD60:\n\t"
-        "	ldr r0, _0807DDA4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl TradeMons\n\t"
-        "	ldr r1, _0807DDA8\n\t"
-        "	ldr r0, _0807DDAC\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r7, _0807DDB0\n\t"
-        "	ldrb r0, [r7]\n\t"
-        "	movs r6, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r5, _0807DDB4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetEvolutionTargetSpecies\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _0807DDCC\n\t"
-        "	ldrb r3, [r7]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _0807DDB8\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x8f\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl TradeEvolutionScene\n\t"
-        "	b _0807DDCC\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DDA4: .4byte gSpecialVar_0x8005\n\t"
-        "_0807DDA8: .4byte gCB2_AfterEvolution\n\t"
-        "_0807DDAC: .4byte CB2_InGameTradeAnim + 1\n\t"
-        "_0807DDB0: .4byte gSelectedTradeMonPositions\n\t"
-        "_0807DDB4: .4byte gPlayerParty\n\t"
-        "_0807DDB8: .4byte gUnknown_2031F40\n\t"
-        "_0807DDBC:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "_0807DDC8:\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "_0807DDCC:\n\t"
-        "	ldr r0, _0807DDDC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_0807DDD0:\n\t"
-        "	adds r1, #0x94\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _0807DE38\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DDDC: .4byte gUnknown_2031F40\n\t"
-        "_0807DDE0:\n\t"
-        "	ldr r0, _0807DE44\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0807DE38\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, #0xf4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl PlayNewMapMusic\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0807DE2E\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetBgTilemapBuffer\n\t"
-        "	bl Free\n\t"
-        "	bl FreeMonSpritesGfx\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	bl Free\n\t"
-        "	str r4, [r7]\n\t"
-        "_0807DE2E:\n\t"
-        "	ldr r0, _0807DE48\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	bl BufferInGameTradeMonName\n\t"
-        "_0807DE38:\n\t"
-        "	movs r0, #0\n\t"
-        "_0807DE3A:\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0807DE44: .4byte gPaletteFade\n\t"
-        "_0807DE48: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 evoTarget;
+
+    switch (gUnknown_2031F40->state)
+    {
+    case STATE_START:
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].invisible = FALSE;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].x2 = -180;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 = gMonFrontPicCoords[gUnknown_2031F40->monSpecies[TRADE_PLAYER]].y_offset;
+        gUnknown_2031F40->state++;
+        gUnknown_2031F40->cachedMapMusic = GetCurrentMapMusic();
+        PlayNewMapMusic(MUS_EVOLUTION);
+        break;
+    case STATE_MON_SLIDE_IN:
+        if (gUnknown_2031F40->bg2hofs > 0)
+        {
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].x2 += 3;
+            gUnknown_2031F40->bg2hofs -= 3;
+        }
+        else
+        {
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].x2 = 0;
+            gUnknown_2031F40->bg2hofs = 0;
+            gUnknown_2031F40->state = STATE_SEND_MSG;
+        }
+        break;
+    case STATE_SEND_MSG:
+        StringExpandPlaceholders(gStringVar4, gUnknown_830D240);
+        DrawTextOnTradeWindow(0, gStringVar4, 0);
+
+        if (gUnknown_2031F40->monSpecies[TRADE_PLAYER] != SPECIES_EGG)
+            PlayCry_Normal(gUnknown_2031F40->monSpecies[TRADE_PLAYER], 0);
+
+        gUnknown_2031F40->state = STATE_BYE_BYE;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case STATE_BYE_BYE:
+        if (++gUnknown_2031F40->timer == 80)
+        {
+            gUnknown_2031F40->releasePokeballSpriteId = CreateTradePokeballSprite(gUnknown_2031F40->monSpriteIds[TRADE_PLAYER], gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].oam.paletteNum, 120, 32, 2, 1, 0x14, 0xfffff);
+            gUnknown_2031F40->state++;
+            StringExpandPlaceholders(gStringVar4, gUnknown_830D24F);
+            DrawTextOnTradeWindow(0, gStringVar4, 0);
+        }
+        break;
+    case STATE_POKEBALL_DEPART:
+        if (gSprites[gUnknown_2031F40->releasePokeballSpriteId].callback == SpriteCallbackDummy)
+        {
+            gUnknown_2031F40->bouncingPokeballSpriteId = CreateSprite(&gUnknown_830CF6C, 120, 32, 0);
+            gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].callback = SpriteCB_BouncingPokeballDepart;
+            DestroySprite(&gSprites[gUnknown_2031F40->releasePokeballSpriteId]);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_POKEBALL_DEPART_WAIT:
+        // The game waits here for the sprite to finish its animation sequence.
+        break;
+    case STATE_FADE_OUT_TO_GBA_SEND:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gUnknown_2031F40->state = STATE_WAIT_FADE_OUT_TO_GBA_SEND;
+        break;
+    case STATE_WAIT_FADE_OUT_TO_GBA_SEND:
+        if (!gPaletteFade.active)
+        {
+            SetTradeSequenceBgGpuRegs(4);
+            FillWindowPixelBuffer(0, PIXEL_FILL(15));
+            CopyWindowToVram(0, COPYWIN_FULL);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_FADE_IN_TO_GBA_SEND:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_IN_TO_GBA_SEND:
+        if (!gPaletteFade.active)
+            gUnknown_2031F40->state = STATE_GBA_ZOOM_OUT;
+        break;
+    case STATE_GBA_ZOOM_OUT:
+        if (gUnknown_2031F40->gbaScale > 0x100)
+        {
+            gUnknown_2031F40->gbaScale -= 0x34;
+        }
+        else
+        {
+            SetTradeSequenceBgGpuRegs(1);
+            gUnknown_2031F40->gbaScale = 0x80;
+            gUnknown_2031F40->state = STATE_GBA_FLASH_SEND_WIRELESS;
+            gUnknown_2031F40->timer = 0;
+        }
+        gUnknown_2031F40->sXY = 0x8000 / gUnknown_2031F40->gbaScale;
+        break;
+    case STATE_GBA_FLASH_SEND_WIRELESS:
+        if (++gUnknown_2031F40->timer > 20)
+        {
+            SetTradeSequenceBgGpuRegs(3);
+            gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D0D0, 120, 80, 0);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_GBA_STOP_FLASH_SEND_WIRELESS:
+        if (gSprites[gUnknown_2031F40->connectionSpriteId2].animEnded)
+        {
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 |
+                                         BLDCNT_TGT1_OBJ |
+                                         BLDCNT_EFFECT_BLEND |
+                                         BLDCNT_TGT2_BG2);
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 4));
+
+            // Start wireless signal effect
+            CreateTask(Task_AnimateWirelessSignal, 5);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_WAIT_WIRELESS_SIGNAL_SEND:
+        if (!FuncIsActiveTask(Task_AnimateWirelessSignal))
+            gUnknown_2031F40->state = STATE_PAN_AWAY_GBA;
+        break;
+    case STATE_PAN_AWAY_GBA:
+        if (--gUnknown_2031F40->bg1vofs == 316)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_CREATE_LINK_MON_LEAVING:
+        gUnknown_2031F40->connectionSpriteId1 = CreateSprite(&gUnknown_830CFCC, 120, 80, 3);
+        gSprites[gUnknown_2031F40->connectionSpriteId1].callback = SpriteCB_LinkMonGlowWireless;
+        gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D00C, 120, 80, 0);
+        StartSpriteAnim(&gSprites[gUnknown_2031F40->connectionSpriteId2], ANIM_LINKMON_SMALL);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_LINK_MON_TRAVEL_OUT:
+        if ((gUnknown_2031F40->bg1vofs -= 3) == 166)
+            gUnknown_2031F40->state = STATE_LINK_MON_TRAVEL_OFFSCREEN;
+
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG1_ON |
+                                      DISPCNT_OBJ_ON);
+        break;
+    case STATE_LINK_MON_TRAVEL_OFFSCREEN:
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y -= 2;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y -= 2;
+        if (gSprites[gUnknown_2031F40->connectionSpriteId1].y < -8)
+            gUnknown_2031F40->state = STATE_FADE_OUT_TO_CROSSING;
+        break;
+    case STATE_FADE_OUT_TO_CROSSING:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_BLACK);
+        gUnknown_2031F40->state = STATE_WAIT_FADE_OUT_TO_CROSSING;
+        break;
+    case STATE_WAIT_FADE_OUT_TO_CROSSING:
+        if (!gPaletteFade.active)
+        {
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId1]);
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+            SetTradeSequenceBgGpuRegs(2);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_FADE_IN_TO_CROSSING:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
+        gUnknown_2031F40->connectionSpriteId1 = CreateSprite(&gUnknown_830D00C, 111, 170, 0);
+        gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D00C, 129, -10, 0);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_IN_TO_CROSSING:
+        if (!gPaletteFade.active)
+        {
+            PlaySE(SE_WARP_OUT);
+            gUnknown_2031F40->state++;
+        }
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y2 -= 3;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y2 += 3;
+        break;
+    case STATE_CROSSING_LINK_MONS_ENTER:
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y2 -= 3;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y2 += 3;
+        if (gSprites[gUnknown_2031F40->connectionSpriteId1].y2 <= -90)
+        {
+            gSprites[gUnknown_2031F40->connectionSpriteId1].data[1] = 1;
+            gSprites[gUnknown_2031F40->connectionSpriteId2].data[1] = 1;
+            gUnknown_2031F40->state++;
+            CreateTask(Task_OpenCenterWhiteColumn, 5);
+        }
+        break;
+    case STATE_CROSSING_BLEND_WHITE_1:
+        BlendPalettes(0x8, 16, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_CROSSING_BLEND_WHITE_2:
+        BlendPalettes(0x8, 16, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_CROSSING_BLEND_WHITE_3:
+        BlendPalettes(0x8, 16, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_CROSSING_CREATE_MON_PICS:
+        if (!IsMonSpriteNotFlipped(gUnknown_2031F40->monSpecies[TRADE_PLAYER]))
+        {
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].affineAnims = gUnknown_830D110;
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+            CalcCenterToCornerVec(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]], SPRITE_SHAPE(64x64), SPRITE_SIZE(64x64), ST_OAM_AFFINE_DOUBLE);
+            StartSpriteAffineAnim(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]], 0);
+        }
+        else
+        {
+            StartSpriteAffineAnim(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]], 0);
+        }
+        StartSpriteAffineAnim(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]], 0);
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].x = 40;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].x = 200;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y = 192;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].y = -32;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].invisible = FALSE;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].invisible = FALSE;
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_CROSSING_MON_PICS_MOVE:
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 -= 3;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].y2 += 3;
+        if (gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 < -DISPLAY_HEIGHT
+         && gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 >= -DISPLAY_HEIGHT - 3)
+        {
+            PlaySE(SE_WARP_IN);
+        }
+        if (gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].y2 < -222)
+        {
+            gSprites[gUnknown_2031F40->connectionSpriteId1].data[1] = 0;
+            gSprites[gUnknown_2031F40->connectionSpriteId2].data[1] = 0;
+            gUnknown_2031F40->state++;
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PLAYER]].invisible = TRUE;
+            gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].invisible = TRUE;
+            CreateTask(Task_CloseCenterWhiteColumn, 5);
+        }
+        break;
+    case STATE_CROSSING_LINK_MONS_EXIT:
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y2 -= 3;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y2 += 3;
+        if (gSprites[gUnknown_2031F40->connectionSpriteId1].y2 <= -222)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_BLACK);
+            gUnknown_2031F40->state++;
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId1]);
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+        }
+        break;
+    case STATE_CREATE_LINK_MON_ARRIVING:
+        if (!gPaletteFade.active)
+        {
+            gUnknown_2031F40->state++;
+            SetTradeSequenceBgGpuRegs(1);
+            gUnknown_2031F40->bg1vofs = 166;
+            SetTradeSequenceBgGpuRegs(3);
+            gUnknown_2031F40->bg2vofs = 412;
+            gUnknown_2031F40->connectionSpriteId1 = CreateSprite(&gUnknown_830CFCC, 120, -20, 3);
+            gSprites[gUnknown_2031F40->connectionSpriteId1].callback = SpriteCB_LinkMonGlowWireless;
+            gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D00C, 120, -20, 0);
+            StartSpriteAnim(&gSprites[gUnknown_2031F40->connectionSpriteId2], ANIM_LINKMON_SMALL);
+        }
+        break;
+    case STATE_FADE_OUT_TO_GBA_RECV:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_OUT_TO_GBA_RECV:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG1_ON |
+                                      DISPCNT_OBJ_ON);
+        if (!gPaletteFade.active)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_LINK_MON_TRAVEL_IN:
+        gSprites[gUnknown_2031F40->connectionSpriteId1].y2 += 4;
+        gSprites[gUnknown_2031F40->connectionSpriteId2].y2 += 4;
+        if (gSprites[gUnknown_2031F40->connectionSpriteId1].y2 + gSprites[gUnknown_2031F40->connectionSpriteId1].y == 64)
+        {
+            gUnknown_2031F40->state = STATE_PAN_TO_GBA_WIRELESS;
+            gUnknown_2031F40->timer = 0;
+        }
+        break;
+    case STATE_PAN_TO_GBA_WIRELESS:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG1_ON |
+                                      DISPCNT_BG2_ON |
+                                      DISPCNT_OBJ_ON);
+        gUnknown_2031F40->bg1vofs += 3;
+        gUnknown_2031F40->bg2vofs += 3;
+        if (++gUnknown_2031F40->timer == 10)
+        {
+            u8 taskId = CreateTask(Task_AnimateWirelessSignal, 5);
+            gTasks[taskId].tSignalComingBack = TRUE;
+        }
+        if (gUnknown_2031F40->bg1vofs > 316)
+        {
+            gUnknown_2031F40->bg1vofs = 316;
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_DESTROY_LINK_MON_WIRELESS:
+        DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId1]);
+        DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+        gUnknown_2031F40->state++;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case STATE_WAIT_WIRELESS_SIGNAL_RECV:
+        if (!FuncIsActiveTask(Task_AnimateWirelessSignal))
+        {
+            gUnknown_2031F40->state = STATE_LINK_MON_ARRIVED_DELAY;
+            gUnknown_2031F40->timer = 0;
+        }
+        break;
+    case STATE_LINK_MON_ARRIVED_DELAY:
+        if (++gUnknown_2031F40->timer == 10)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_MOVE_GBA_TO_CENTER:
+        if (++gUnknown_2031F40->bg1vofs > 348)
+        {
+            gUnknown_2031F40->bg1vofs = 348;
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_GBA_FLASH_RECV:
+        gUnknown_2031F40->connectionSpriteId2 = CreateSprite(&gUnknown_830D0B8, 120, 80, 0);
+        gUnknown_2031F40->state = STATE_GBA_STOP_FLASH_RECV;
+        break;
+    case STATE_GBA_STOP_FLASH_RECV:
+        if (gSprites[gUnknown_2031F40->connectionSpriteId2].animEnded)
+        {
+            DestroySprite(&gSprites[gUnknown_2031F40->connectionSpriteId2]);
+            SetTradeSequenceBgGpuRegs(6);
+            gUnknown_2031F40->state++;
+            PlaySE(SE_M_SAND_ATTACK);
+        }
+        break;
+    case STATE_GBA_ZOOM_IN:
+        if (gUnknown_2031F40->gbaScale < 0x400)
+        {
+            gUnknown_2031F40->gbaScale += 0x34;
+        }
+        else
+        {
+            gUnknown_2031F40->gbaScale = 0x400;
+            gUnknown_2031F40->state++;
+        }
+        gUnknown_2031F40->sXY = 0x8000 / gUnknown_2031F40->gbaScale;
+        break;
+    case STATE_FADE_OUT_TO_NEW_MON:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gUnknown_2031F40->state = STATE_WAIT_FADE_OUT_TO_NEW_MON;
+        break;
+    case STATE_WAIT_FADE_OUT_TO_NEW_MON:
+        if (!gPaletteFade.active)
+        {
+            SetTradeSequenceBgGpuRegs(5);
+            SetTradeSequenceBgGpuRegs(7);
+            gPaletteFade.bufferTransferDisabled = TRUE;
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_FADE_IN_TO_NEW_MON:
+        gPaletteFade.bufferTransferDisabled = FALSE;
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_IN_TO_NEW_MON:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG2_ON |
+                                      DISPCNT_OBJ_ON);
+        if (!gPaletteFade.active)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_POKEBALL_ARRIVE:
+        gUnknown_2031F40->bouncingPokeballSpriteId = CreateSprite(&gUnknown_830CF6C, 120, -8, 0);
+        gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].data[3] = 74;
+        gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].callback = SpriteCB_BouncingPokeballArrive;
+        StartSpriteAnim(&gSprites[gUnknown_2031F40->bouncingPokeballSpriteId], 1);
+        StartSpriteAffineAnim(&gSprites[gUnknown_2031F40->bouncingPokeballSpriteId], 2);
+        BlendPalettes(1 << (16 + gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].oam.paletteNum), 16, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case STATE_FADE_POKEBALL_TO_NORMAL:
+        BeginNormalPaletteFade(1 << (16 + gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].oam.paletteNum), 1, 16, 0, RGB_WHITEALPHA);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_POKEBALL_ARRIVE_WAIT:
+        if (gSprites[gUnknown_2031F40->bouncingPokeballSpriteId].callback == SpriteCallbackDummy)
+        {
+            HandleLoadSpecialPokePic_2(&gMonFrontPicTable[gUnknown_2031F40->monSpecies[TRADE_PARTNER]],
+                                        gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_RIGHT],
+                                        gUnknown_2031F40->monSpecies[TRADE_PARTNER],
+                                        gUnknown_2031F40->monPersonalities[TRADE_PARTNER]);
+            gUnknown_2031F40->state++;
+        }
+        break;
+    case STATE_SHOW_NEW_MON:
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].x = 120;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].y = gMonFrontPicCoords[gUnknown_2031F40->monSpecies[TRADE_PARTNER]].y_offset + 60;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].x2 = 0;
+        gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].y2 = 0;
+        StartSpriteAnim(&gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]], 0);
+        CreatePokeballSpriteToReleaseMon(gUnknown_2031F40->monSpriteIds[TRADE_PARTNER], gSprites[gUnknown_2031F40->monSpriteIds[TRADE_PARTNER]].oam.paletteNum, 120, 84, 2, 1, 20, PALETTES_BG | (0xF << 16), gUnknown_2031F40->monSpecies[TRADE_PARTNER]);
+        FreeSpriteOamMatrix(&gSprites[gUnknown_2031F40->bouncingPokeballSpriteId]);
+        DestroySprite(&gSprites[gUnknown_2031F40->bouncingPokeballSpriteId]);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_NEW_MON_MSG:
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 |
+                                      DISPCNT_OBJ_1D_MAP |
+                                      DISPCNT_BG0_ON |
+                                      DISPCNT_BG2_ON |
+                                      DISPCNT_OBJ_ON);
+        StringExpandPlaceholders(gStringVar4, gUnknown_830D258);
+        DrawTextOnTradeWindow(0, gStringVar4, 0);
+        gUnknown_2031F40->state = STATE_DELAY_FOR_MON_ANIM;
+        gUnknown_2031F40->timer = 0;
+        break;
+    case STATE_DELAY_FOR_MON_ANIM:
+        if (++gUnknown_2031F40->timer > 60)
+        {
+            gUnknown_2031F40->state = STATE_WAIT_FOR_MON_CRY;
+            gUnknown_2031F40->timer = 0;
+        }
+        break;
+    case STATE_WAIT_FOR_MON_CRY:
+        if (IsCryFinished())
+            gUnknown_2031F40->state = STATE_TAKE_CARE_OF_MON;
+        break;
+    case STATE_TAKE_CARE_OF_MON:
+        if (++gUnknown_2031F40->timer == 10)
+            PlayFanfare(MUS_EVOLVED);
+
+        if (gUnknown_2031F40->timer == 250)
+        {
+            gUnknown_2031F40->state++;
+            StringExpandPlaceholders(gStringVar4, gUnknown_830D26A);
+            DrawTextOnTradeWindow(0, gStringVar4, 0);
+            gUnknown_2031F40->timer = 0;
+        }
+        break;
+    case STATE_AFTER_NEW_MON_DELAY:
+        if (++gUnknown_2031F40->timer == 60)
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_CHECK_RIBBONS:
+        CheckPartnersMonForRibbons();
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_END_LINK_TRADE:
+        if (gUnknown_2031F40->isLinkTrade)
+            return TRUE;
+        else if (JOY_NEW(A_BUTTON))
+            gUnknown_2031F40->state++;
+        break;
+    case STATE_TRY_EVOLUTION: // Only if in-game trade, link trades use CB2_TryLinkTradeEvolution
+        TradeMons(gSpecialVar_0x8005, 0);
+        gCB2_AfterEvolution = CB2_InGameTradeAnim;
+        evoTarget = GetEvolutionTargetSpecies(&gPlayerParty[gSelectedTradeMonPositions[TRADE_PLAYER]], EVO_MODE_TRADE, ITEM_NONE);
+        if (evoTarget != SPECIES_NONE)
+            TradeEvolutionScene(&gPlayerParty[gSelectedTradeMonPositions[TRADE_PLAYER]], evoTarget, gUnknown_2031F40->monSpriteIds[TRADE_PARTNER], gSelectedTradeMonPositions[TRADE_PLAYER]);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_FADE_OUT_END:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gUnknown_2031F40->state++;
+        break;
+    case STATE_WAIT_FADE_OUT_END:
+        if (!gPaletteFade.active)
+        {
+            PlayNewMapMusic(gUnknown_2031F40->cachedMapMusic);
+            if (gUnknown_2031F40)
+            {
+                FreeAllWindowBuffers();
+                Free(GetBgTilemapBuffer(3));
+                Free(GetBgTilemapBuffer(1));
+                Free(GetBgTilemapBuffer(0));
+                FreeMonSpritesGfx();
+                FREE_AND_SET_NULL(gUnknown_2031F40);
+            }
+            SetMainCallback2(CB2_ReturnToField);
+            BufferInGameTradeMonName();
+        }
+        break;
+    }
+    return FALSE;
 }
 
 static void CB2_TryLinkTradeEvolution(void)
