@@ -326,7 +326,3 @@ MauvilleCity_BikeShop_Text_Jumps:
     .string "うしろへ　おせば　ジャンプしながら\n"
     .string "ほうこうを　かえることが　できます！\p"
     .string "⋯⋯べつの　ページを　よみますか？$"
-
-@ Temporary successor ownership: the next unstructured map-script block starts
-@ at 0x081FFD77 and remains byte-exact until its own map migration.
-    .incbin "baserom_jp.gba", 0x1ffd77, 0x105d
