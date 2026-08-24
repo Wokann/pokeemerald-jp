@@ -628,6 +628,9 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_PlayGymBadgeFanfare, 0x0824310A
 	.globl EventScript_GotoTrainerScript
 	.set EventScript_GotoTrainerScript, 0x08244D20
+	@ The Lavaridge House event table references the shared Mimic tutor script.
+	.globl LavaridgeTown_House_EventScript_MimicTutor
+	.set LavaridgeTown_House_EventScript_MimicTutor, 0x0827696A
 
 	.globl EventScript_UseSurf
 EventScript_UseSurf: @ 0x8242F2C

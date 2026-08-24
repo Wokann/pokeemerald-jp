@@ -2419,18 +2419,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/LavaridgeTown_Gym_B1F/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_GYM_B1F
 	.set gMapEvents_LAVARIDGE_TOWN_GYM_B1F, LavaridgeTown_Gym_B1F_MapEvents
-	.globl LAVARIDGE_TOWN_HOUSE_EventObjects
-LAVARIDGE_TOWN_HOUSE_EventObjects: @ 0x08506808
-	object_event 1, 29, 0, 2, 3, 3, 1, 1, 1, 0, 0, 0x081F4E4E, 0x0000
-	object_event 2, 208, 0, 6, 6, 3, 1, 1, 1, 0, 0, 0x081F4E57, 0x0000
-	object_event 3, 5, 0, 8, 4, 3, 2, 1, 1, 0, 0, 0x0827696A, 0x0000
-	.globl LAVARIDGE_TOWN_HOUSE_EventWarps
-LAVARIDGE_TOWN_HOUSE_EventWarps: @ 0x08506850
-	warp_def 3, 7, 0, 4, MAP_LAVARIDGE_TOWN
-	warp_def 4, 7, 0, 4, MAP_LAVARIDGE_TOWN
+	.include "data/maps/LavaridgeTown_House/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_HOUSE
-gMapEvents_LAVARIDGE_TOWN_HOUSE: @ 0x08506860
-	map_events LAVARIDGE_TOWN_HOUSE_EventObjects, LAVARIDGE_TOWN_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_LAVARIDGE_TOWN_HOUSE, LavaridgeTown_House_MapEvents
 	.globl LAVARIDGE_TOWN_MART_EventObjects
 LAVARIDGE_TOWN_MART_EventObjects: @ 0x08506874
 	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x081F4ECD, 0x0000
