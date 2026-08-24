@@ -1,36 +1,52 @@
 @ Route129 scripts (JP map g0 m44 @ 0x081EF2B4)
 
 Route129_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, Route129_EventScript_001EF2DB
-	map_script MAP_SCRIPT_ON_LOAD, Route129_EventScript_001EF2C4
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route129_MapScriptTable_001EF312
+	map_script MAP_SCRIPT_ON_TRANSITION, Route129_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, Route129_OnLoad
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route129_OnFrame
 	.byte 0
 
-Route129_EventScript_001EF2C4::
-	compare_var_to_value 0x4037, 0xF
-	call_if 0x1, 0x08244663
-	compare_var_to_value 0x4037, 0x10
-	call_if 0x1, 0x082446D0
+Route129_OnLoad::
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_129_WEST, AbnormalWeather_EventScript_PlaceTilesRoute129West
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_129_EAST, AbnormalWeather_EventScript_PlaceTilesRoute129East
 	end
 
-Route129_EventScript_001EF2DB::
-	compare_var_to_value 0x4039, 0x1
-	call_if 0x1, 0x0824473D
-	compare_var_to_value 0x405E, 0x4
-	call_if 0x4, Route129_EventScript_001EF308
-	compare_var_to_value 0x4037, 0xF
-	call_if 0x1, 0x08244741
-	compare_var_to_value 0x4037, 0x10
-	call_if 0x1, 0x08244741
+Route129_OnTransition::
+	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_HideMapNamePopup
+	call_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x4, Route129_EventScript_CheckSetAbnormalWeather
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_129_WEST, AbnormalWeather_StartKyogreWeather
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_129_EAST, AbnormalWeather_StartKyogreWeather
 	end
 
-Route129_EventScript_001EF308::
-	checkflag 0x88A
-	call_if 0x1, 0x08243106
+Route129_EventScript_CheckSetAbnormalWeather::
+	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	return
 
-Route129_MapScriptTable_001EF312::
-	map_script_2 0x4039, 0x1, 0x08244749
+Route129_OnFrame::
+	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
-	.incbin "baserom_jp.gba", 0x1ef31c, 0x73
+Route129_EventScript_Chase::
+	trainerbattle_single TRAINER_CHASE, Route129_Text_ChaseIntro, Route129_Text_ChaseDefeat
+	msgbox Route129_Text_ChasePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route129_EventScript_Allison::
+	trainerbattle_single TRAINER_ALLISON, Route129_Text_AllisonIntro, Route129_Text_AllisonDefeat
+	msgbox Route129_Text_AllisonPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route129_EventScript_Reed::
+	trainerbattle_single TRAINER_REED, Route129_Text_ReedIntro, Route129_Text_ReedDefeat
+	msgbox Route129_Text_ReedPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route129_EventScript_Tisha::
+	trainerbattle_single TRAINER_TISHA, Route129_Text_TishaIntro, Route129_Text_TishaDefeat
+	msgbox Route129_Text_TishaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route129_EventScript_Clarence::
+	trainerbattle_single TRAINER_CLARENCE, Route129_Text_ClarenceIntro, Route129_Text_ClarenceDefeat
+	msgbox Route129_Text_ClarencePostBattle, MSGBOX_AUTOCLOSE
+	end

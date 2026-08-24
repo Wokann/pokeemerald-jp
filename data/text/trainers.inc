@@ -4177,4 +4177,60 @@ Route128_Text_CarleeDefeat: @ 0x082614EC
 Route128_Text_CarleePostBattle: @ 0x082614FE
 	.string "そろそろ　もどって\n"
 	.string "ひやけどめ　ぬりなおさなきゃ$"
-	.incbin "baserom_jp.gba", 0x261517, 0xe7c
+Route129_Text_ChaseIntro: @ 0x08261517
+	.string "オレは　しょしんしゃ　トライアスリート\n"
+	.string "はじめての　レースで　きんちょう！$"
+
+Route129_Text_ChaseDefeat: @ 0x0826153D
+	.string "うおー！\n"
+	.string "まけてしまったーっ！$"
+
+Route129_Text_ChasePostBattle: @ 0x0826154D
+	.string "きんちょう　していたら\n"
+	.string "じつりょくが　だせないよな！$"
+
+Route129_Text_AllisonIntro: @ 0x08261568
+	.string "トライアスロンの　とちゅう　だけど⋯⋯\n"
+	.string "ポケモンしょうぶを　しようよ！$"
+
+Route129_Text_AllisonDefeat: @ 0x0826158C
+	.string "かてると　おもったのにーっ！$"
+
+Route129_Text_AllisonPostBattle: @ 0x0826159B
+	.string "だいしぜんを　あいてに\n"
+	.string "じぶんの　ちからを　ためす　ことも\l"
+	.string "トライアスロンの　だいごみ！$"
+
+Route129_Text_ReedIntro: @ 0x082615C8
+	.string "ホラホラ！\n"
+	.string "とっとと　しょうぶ　しようぜ！$"
+
+Route129_Text_ReedDefeat: @ 0x082615DE
+	.string "まけた　まけたよ\n"
+	.string "とっとと　おわろうぜ！$"
+
+Route129_Text_ReedPostBattle: @ 0x082615F3
+	.string "まけたら　なにも　ないさ\n"
+	.string "とっとと　かえると　するか！$"
+
+Route129_Text_TishaIntro: @ 0x0826160F
+	.string "のーんびり　のーんびり　やりましょうか？$"
+
+Route129_Text_TishaDefeat: @ 0x08261624
+	.string "あらら\n"
+	.string "もっと　のんびり　したかったなあ$"
+
+Route129_Text_TishaPostBattle: @ 0x08261639
+	.string "あせって　ミスを　するのって　イヤでしょ？\n"
+	.string "のんびり　やることに　してるのよ$"
+
+Route129_Text_ClarenceIntro: @ 0x08261660
+	.string "なみのりも　けっこう　たいへんだろ？$"
+
+Route129_Text_ClarenceDefeat: @ 0x08261673
+	.string "かつのって　むずかしいなあ$"
+
+Route129_Text_ClarencePostBattle: @ 0x08261681
+	.string "ポケモンリーグを　めざしてるのか？\n"
+	.string "がんばれ　がんばれよ！$"
+	.incbin "baserom_jp.gba", 0x26169f, 0xcf4

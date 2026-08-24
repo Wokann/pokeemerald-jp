@@ -182,6 +182,28 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
 # the matching US text order have been checked.  jp_text_blocks.py reads this
 # same mapping, so source labels and map references cannot drift apart.
 VERIFIED_SHARED_TEXT_BLOCKS = {
+    'Route129': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x08261517,
+        'end': 0x0826169F,
+        'labels': {
+            0x08261517: 'Route129_Text_ChaseIntro',
+            0x0826153D: 'Route129_Text_ChaseDefeat',
+            0x0826154D: 'Route129_Text_ChasePostBattle',
+            0x08261568: 'Route129_Text_AllisonIntro',
+            0x0826158C: 'Route129_Text_AllisonDefeat',
+            0x0826159B: 'Route129_Text_AllisonPostBattle',
+            0x082615C8: 'Route129_Text_ReedIntro',
+            0x082615DE: 'Route129_Text_ReedDefeat',
+            0x082615F3: 'Route129_Text_ReedPostBattle',
+            0x0826160F: 'Route129_Text_TishaIntro',
+            0x08261624: 'Route129_Text_TishaDefeat',
+            0x08261639: 'Route129_Text_TishaPostBattle',
+            0x08261660: 'Route129_Text_ClarenceIntro',
+            0x08261673: 'Route129_Text_ClarenceDefeat',
+            0x08261681: 'Route129_Text_ClarencePostBattle',
+        },
+    },
     'Route128': {
         'source': 'data/text/trainers.inc',
         'start': 0x08261197,
@@ -3379,6 +3401,50 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
                 0x02A1: 'TRAINER_WAYNE',
                 0x0242: 'TRAINER_HARRISON',
                 0x01D0: 'TRAINER_CARLEE',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+    'Route129': {
+        'scripts': {
+            0x081EF2C4: 'Route129_OnLoad',
+            0x081EF2DB: 'Route129_OnTransition',
+            0x081EF308: 'Route129_EventScript_CheckSetAbnormalWeather',
+            0x081EF31C: 'Route129_EventScript_Chase',
+            0x081EF333: 'Route129_EventScript_Allison',
+            0x081EF34A: 'Route129_EventScript_Reed',
+            0x081EF361: 'Route129_EventScript_Tisha',
+            0x081EF378: 'Route129_EventScript_Clarence',
+        },
+        'tables': {0x081EF312: 'Route129_OnFrame'},
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route129']['labels'],
+        'external_labels': {
+            0x08243106: 'Common_EventScript_SetAbnormalWeather',
+            0x08244663: 'AbnormalWeather_EventScript_PlaceTilesRoute129West',
+            0x082446D0: 'AbnormalWeather_EventScript_PlaceTilesRoute129East',
+            0x0824473D: 'AbnormalWeather_EventScript_HideMapNamePopup',
+            0x08244741: 'AbnormalWeather_StartKyogreWeather',
+            0x08244749: 'AbnormalWeather_EventScript_EndEventAndCleanup_1',
+        },
+        'symbols': {
+            'flags': {0x088A: 'FLAG_SYS_WEATHER_CTRL'},
+            'vars': {
+                0x4037: 'VAR_ABNORMAL_WEATHER_LOCATION',
+                0x4039: 'VAR_SHOULD_END_ABNORMAL_WEATHER',
+                0x405E: 'VAR_SOOTOPOLIS_CITY_STATE',
+            },
+            'var_values': {
+                0x4037: {
+                    0xF: 'ABNORMAL_WEATHER_ROUTE_129_WEST',
+                    0x10: 'ABNORMAL_WEATHER_ROUTE_129_EAST',
+                },
+            },
+            'trainers': {
+                0x017A: 'TRAINER_CHASE',
+                0x0183: 'TRAINER_ALLISON',
+                0x02A3: 'TRAINER_REED',
+                0x02A4: 'TRAINER_TISHA',
+                0x0244: 'TRAINER_CLARENCE',
             },
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
         },
