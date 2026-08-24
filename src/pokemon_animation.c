@@ -8488,186 +8488,67 @@ void Anim_VerticalShakeHorizontalSlide_Slow(struct Sprite *sprite)
     TryFlipX(sprite);
 }
 
-__attribute__((naked)) void VerticalStretchBothEnds(struct Sprite *sprite)
+void VerticalStretchBothEnds(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r6, r2]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081831C6\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r6, #0x26]\n\t"
-        "	strh r0, [r6, #0x38]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldrh r1, [r6, #0x36]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081831BC\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081831B8\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _08183288\n\t"
-        "	.align 2, 0\n\t"
-        "_081831B8: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081831BC:\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r6, #0x36]\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r6, #0x3c]\n\t"
-        "	b _08183288\n\t"
-        "_081831C6:\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r5, [r6, r1]\n\t"
-        "	lsls r0, r5, #7\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r4, [r6, r2]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _081831E0\n\t"
-        "	adds r4, #3\n\t"
-        "_081831E0:\n\t"
-        "	asrs r1, r4, #2\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r5, r1\n\t"
-        "	blt _08183204\n\t"
-        "	cmp r5, r0\n\t"
-        "	bge _08183204\n\t"
-        "	ldrh r0, [r6, #0x3c]\n\t"
-        "	adds r0, #0x33\n\t"
-        "	strh r0, [r6, #0x3c]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	mov r8, r1\n\t"
-        "	ands r1, r0\n\t"
-        "	mov r8, r1\n\t"
-        "_08183204:\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08183228\n\t"
-        "	lsls r4, r2, #0x10\n\t"
-        "	asrs r0, r4, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	ldr r2, _08183224\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov sb, r1\n\t"
-        "	b _0818323E\n\t"
-        "	.align 2, 0\n\t"
-        "_08183224: .4byte 0xFFFFFF00\n\t"
-        "_08183228:\n\t"
-        "	lsls r4, r2, #0x10\n\t"
-        "	asrs r0, r4, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "_0818323E:\n\t"
-        "	adds r7, r4, #0\n\t"
-        "	ldrh r4, [r6, #0x34]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	mov r5, r8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Sin\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	asrs r0, r7, #0x10\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	subs r2, r2, r5\n\t"
-        "	subs r2, r2, r0\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetAffineData\n\t"
-        "	ldrh r0, [r6, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x38]\n\t"
-        "_08183288:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 index1 = 0, index2 = 0;
+
+    if (sprite->data[5] > sprite->data[6])
+    {
+        sprite->y2 = 0;
+        sprite->data[5] = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        if (sprite->data[4] <= 1)
+        {
+            ResetSpriteAfterAnim(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        }
+        else
+        {
+            sprite->data[4]--;
+            sprite->data[7] = 0;
+        }
+    }
+    else
+    {
+        u8 amplitude, cmpVal1, cmpVal2;
+        s16 xScale, yScale;
+
+        index2 = (sprite->data[5] * 128) / sprite->data[6];
+        cmpVal1 = sprite->data[6] / 4;
+        cmpVal2 = cmpVal1 * 3;
+        if (sprite->data[5] >= cmpVal1 && sprite->data[5] < cmpVal2)
+        {
+            sprite->data[7] += 51;
+            index1 = sprite->data[7] & 0xFF;
+        }
+
+        if (sprite->data[1] == 0)
+            xScale = -256 - Sin(index2, 16);
+        else
+            xScale = 256 + Sin(index2, 16);
+
+        amplitude = sprite->data[3];
+        yScale = 256 - Sin(index2, amplitude) - Sin(index1, amplitude / 5);
+        SetAffineData(sprite, xScale, yScale, 0);
+        sprite->data[5]++;
+    }
 }
 
 
-__attribute__((naked)) void Anim_VerticalStretchBothEnds_Slow(struct Sprite *sprite)
+void Anim_VerticalStretchBothEnds_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r6, [r5, r0]\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _081832B6\n\t"
-        "	movs r4, #1\n\t"
-        "	strh r4, [r5, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r4, [r5, #0x36]\n\t"
-        "	movs r0, #0x28\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "	strh r6, [r5, #0x38]\n\t"
-        "	strh r6, [r5, #0x3c]\n\t"
-        "_081832B6:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_08183174\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        HandleStartAffineAnim(sprite);
+        sprite->data[4] = 1;
+        sprite->data[6] = 40;
+        sprite->data[3] = 40;
+        sprite->data[5] = 0;
+        sprite->data[7] = 0;
+    }
+
+    VerticalStretchBothEnds(sprite);
 }
 
 __attribute__((naked)) void HorizontalStretchFar(struct Sprite *sprite)
