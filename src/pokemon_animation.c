@@ -8453,144 +8453,39 @@ void Anim_VerticalShakeBack_Slow(struct Sprite *sprite)
     sprite->callback = VerticalShakeBack;
 }
 
-__attribute__((naked)) void Anim_VerticalShakeHorizontalSlide_Slow(struct Sprite *sprite)
+void Anim_VerticalShakeHorizontalSlide_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081830A4\n\t"
-        "	ldr r0, _081830A0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _08183168\n\t"
-        "	.align 2, 0\n\t"
-        "_081830A0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081830A4:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _081830B2\n\t"
-        "	ldr r1, _081830D8\n\t"
-        "	adds r0, r2, r1\n\t"
-        "_081830B2:\n\t"
-        "	asrs r3, r0, #9\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _081830BE\n\t"
-        "	adds r0, r1, #3\n\t"
-        "_081830BE:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08183114\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081830DC\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081830E6\n\t"
-        "	b _08183144\n\t"
-        "	.align 2, 0\n\t"
-        "_081830D8: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_081830DC:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081830F8\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08183130\n\t"
-        "	b _08183144\n\t"
-        "_081830E6:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081830F4\n\t"
-        "	adds r0, #0x1f\n\t"
-        "_081830F4:\n\t"
-        "	asrs r0, r0, #5\n\t"
-        "	b _08183142\n\t"
-        "_081830F8:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0818310A\n\t"
-        "	ldr r1, _08183110\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_0818310A:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	b _08183142\n\t"
-        "	.align 2, 0\n\t"
-        "_08183110: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08183114:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08183126\n\t"
-        "	ldr r1, _0818312C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_08183126:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	adds r0, #0x10\n\t"
-        "	b _08183142\n\t"
-        "	.align 2, 0\n\t"
-        "_0818312C: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08183130:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0818313E\n\t"
-        "	adds r0, #0x1f\n\t"
-        "_0818313E:\n\t"
-        "	asrs r0, r0, #5\n\t"
-        "	subs r0, #0x10\n\t"
-        "_08183142:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_08183144:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08183150\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08183150:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0x18\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08183168:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    TryFlipX(sprite);
+    if (sprite->data[2] > 2048)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->data[6] = 0;
+    }
+    else
+    {
+        s16 divCase = (sprite->data[2] / 512) % 4;
+
+        switch (divCase)
+        {
+        case 0:
+            sprite->x2 = (sprite->data[2] % 512) / 32;
+            break;
+        case 2:
+            sprite->x2 = -(sprite->data[2] % 512 * 16) / 512;
+            break;
+        case 1:
+            sprite->x2 = -(sprite->data[2] % 512 * 16) / 512 + 16;
+            break;
+        case 3:
+            sprite->x2 = (sprite->data[2] % 512) / 32 - 16;
+            break;
+        }
+
+        sprite->y2 = Sin(sprite->data[2] % 128, 4);
+        sprite->data[2] += 24;
+    }
+
+    TryFlipX(sprite);
 }
 
 __attribute__((naked)) void VerticalStretchBothEnds(struct Sprite *sprite)
