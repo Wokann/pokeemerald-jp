@@ -8348,105 +8348,35 @@ void Anim_DeepVerticalSquishBounce_Twice(struct Sprite *sprite)
     sprite->callback = DeepVerticalSquishBounce;
 }
 
-__attribute__((naked)) void Anim_HorizontalJumpsVerticalStretch_Twice(struct Sprite *sprite)
+void Anim_HorizontalJumpsVerticalStretch_Twice(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182EA0\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r5, [r4, #0x34]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181968\n\t"
-        "	ldr r0, _08182EA4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182EA0: .4byte gUnknown_3001240\n\t"
-        "_08182EA4: .4byte HorizontalJumpsVerticalStretch_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].data = 1;
+    gUnknown_3001240[id].runs = 2;
+    HandleStartAffineAnim(sprite);
+    sprite->data[3] = 0;
+    HorizontalJumpsVerticalStretch_0(sprite);
+    sprite->callback = HorizontalJumpsVerticalStretch_0;
 }
 
-__attribute__((naked)) void Anim_RotateToSides(struct Sprite *sprite)
+void Anim_RotateToSides(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182ED4\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181B94\n\t"
-        "	ldr r0, _08182ED8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182ED4: .4byte gUnknown_3001240\n\t"
-        "_08182ED8: .4byte RotateToSides + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 2;
+    RotateToSides(sprite);
+    sprite->callback = RotateToSides;
 }
 
-__attribute__((naked)) void Anim_RotateToSides_Twice(struct Sprite *sprite)
+void Anim_RotateToSides_Twice(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182F0C\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181B94\n\t"
-        "	ldr r0, _08182F10\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182F0C: .4byte gUnknown_3001240\n\t"
-        "_08182F10: .4byte RotateToSides + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 4;
+    gUnknown_3001240[id].runs = 2;
+    RotateToSides(sprite);
+    sprite->callback = RotateToSides;
 }
 
 __attribute__((naked)) void Anim_SwingConcave(struct Sprite *sprite)
