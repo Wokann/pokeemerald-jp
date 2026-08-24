@@ -2477,16 +2477,9 @@ gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_2F: @ 0x08506CD0
 	.include "data/maps/FallarborTown_CozmosHouse/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_COZMOS_HOUSE
 	.set gMapEvents_FALLARBOR_TOWN_COZMOS_HOUSE, FallarborTown_CozmosHouse_MapEvents
-	.globl FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE_EventObjects
-FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE_EventObjects: @ 0x08506D38
-	object_event 1, 17, 0, 4, 4, 3, 8, 0, 0, 0, 0, 0x081F6156, 0x0000
-	.globl FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE_EventWarps
-FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE_EventWarps: @ 0x08506D50
-	warp_def 3, 7, 0, 4, MAP_FALLARBOR_TOWN
-	warp_def 4, 7, 0, 4, MAP_FALLARBOR_TOWN
+	.include "data/maps/FallarborTown_MoveRelearnersHouse/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE
-gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE: @ 0x08506D60
-	map_events FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE_EventObjects, FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE, FallarborTown_MoveRelearnersHouse_MapEvents
 	.globl VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventObjects
 VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventObjects: @ 0x08506D74
 	object_event 1, 21, 0, 6, 5, 3, 8, 1, 1, 0, 0, VerdanturfTown_BattleTentLobby_EventScript_001F6508, 0x0000

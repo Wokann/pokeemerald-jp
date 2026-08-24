@@ -3,77 +3,62 @@
 FallarborTown_MoveRelearnersHouse_MapScripts::
 	.byte 0
 
-FallarborTown_MoveRelearnersHouse_EventScript_001F6156::
+FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner::
 	lockall
-	applymovement 0x1, 0x08243621
-	waitmovement 0x0
-	checkflag 0x1
-	goto_if 0x1, FallarborTown_MoveRelearnersHouse_EventScript_001F617B
-	loadword 0x0, gJPText_001F622F
-	callstd 0x4
-	setflag 0x1
-	goto FallarborTown_MoveRelearnersHouse_EventScript_001F617B
+	applymovement LOCALID_MOVE_RELEARNER, Common_Movement_FacePlayer
+	waitmovement 0
+	goto_if_set FLAG_TEMP_1, FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove
+	msgbox FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor, MSGBOX_DEFAULT
+	setflag FLAG_TEMP_1
+	goto FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_001F617B::
-	checkitem 0x6F, 0x1
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, FallarborTown_MoveRelearnersHouse_EventScript_001F6225
-	loadword 0x0, gJPText_001F62A4
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, FallarborTown_MoveRelearnersHouse_EventScript_001F6225
-	goto FallarborTown_MoveRelearnersHouse_EventScript_001F61A9
+FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove::
+	checkitem ITEM_HEART_SCALE
+	goto_if_eq VAR_RESULT, FALSE, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
+	msgbox FallarborTown_MoveRelearnersHouse_Text_ThatsAHeartScaleWantMeToTeachMove, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
+	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_001F61A9::
-	loadword 0x0, gJPText_001F62CB
-	callstd 0x4
+FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon::
+	msgbox FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon, MSGBOX_DEFAULT
 	special ChooseMonForMoveRelearner
+	@ JP's picker waits asynchronously here; the corresponding US special owns this wait internally.
 	waitstate
-	compare_var_to_value 0x8004, 0xFF
-	goto_if 0x1, FallarborTown_MoveRelearnersHouse_EventScript_001F6225
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	special IsSelectedMonEgg
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, FallarborTown_MoveRelearnersHouse_EventScript_001F6217
-	compare_var_to_value 0x8005, 0x0
-	goto_if 0x1, FallarborTown_MoveRelearnersHouse_EventScript_001F6209
-	goto FallarborTown_MoveRelearnersHouse_EventScript_001F61DF
+	goto_if_eq VAR_RESULT, TRUE, FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg
+	goto_if_eq VAR_0x8005, 0, FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon
+	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_001F61DF::
-	loadword 0x0, gJPText_001F62DB
-	callstd 0x4
+FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove::
+	msgbox FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove, MSGBOX_DEFAULT
 	special TeachMoveRelearnerMove
-	compare_var_to_value 0x8004, 0x0
-	goto_if 0x1, FallarborTown_MoveRelearnersHouse_EventScript_001F61A9
-	loadword 0x0, gJPText_001F6310
-	callstd 0x4
-	removeitem 0x6F, 0x1
-	goto FallarborTown_MoveRelearnersHouse_EventScript_001F6225
+	goto_if_eq VAR_0x8004, 0, FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
+	msgbox FallarborTown_MoveRelearnersHouse_Text_HandedOverHeartScale, MSGBOX_DEFAULT
+	removeitem ITEM_HEART_SCALE
+	goto FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_001F6209::
-	loadword 0x0, gJPText_001F62E9
-	callstd 0x4
-	goto FallarborTown_MoveRelearnersHouse_EventScript_001F61A9
+FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon::
+	msgbox FallarborTown_MoveRelearnersHouse_Text_DontHaveMoveToTeachPokemon, MSGBOX_DEFAULT
+	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_001F6217::
-	loadword 0x0, gJPText_001F634D
-	callstd 0x4
-	goto FallarborTown_MoveRelearnersHouse_EventScript_001F61A9
+FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg::
+	msgbox FallarborTown_MoveRelearnersHouse_Text_CantTeachEgg, MSGBOX_DEFAULT
+	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_001F6225::
-	loadword 0x0, gJPText_001F632B
-	callstd 0x4
+FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale::
+	msgbox FallarborTown_MoveRelearnersHouse_Text_ComeBackWithHeartScale, MSGBOX_DEFAULT
 	releaseall
 	end
 
-	.globl gJPText_001F622F
-gJPText_001F622F: @ 0x081F622F
+FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor:
 	.string "ぼく　ポケモン　わざマニア\p"
 	.string "ポケモンが　せいちょうして　おぼえていく\n"
 	.string "わざを　すべて　しっていて\l"
@@ -82,37 +67,30 @@ gJPText_001F622F: @ 0x081F622F
 	.string "ハートのウロコを　くれたら\l"
 	.string "しってる　わざを　おしえてあげるよ！$"
 
-	.globl gJPText_001F62A4
-gJPText_001F62A4: @ 0x081F62A4
+FallarborTown_MoveRelearnersHouse_Text_ThatsAHeartScaleWantMeToTeachMove:
 	.string "おおっ！\n"
 	.string "それは　まさしく　ハートのウロコ！\p"
 	.string "わざを　おぼえさせたいんだね？$"
 
-	.globl gJPText_001F62CB
-gJPText_001F62CB: @ 0x081F62CB
+FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon:
 	.string "どの　ポケモンに　するんだい？$"
 
-	.globl gJPText_001F62DB
-gJPText_001F62DB: @ 0x081F62DB
+FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove:
 	.string "どの　わざに　するんだい？$"
 
-	.globl gJPText_001F62E9
-gJPText_001F62E9: @ 0x081F62E9
+FallarborTown_MoveRelearnersHouse_Text_DontHaveMoveToTeachPokemon:
 	.string "ごめんね⋯⋯\p"
 	.string "ぼくが　その　ポケモンに\n"
 	.string "おしえられる　わざは　ないみたいだよ$"
 
-	.globl gJPText_001F6310
-gJPText_001F6310: @ 0x081F6310
-	.string "{STRING 0x01}は　おれいに\n"
+FallarborTown_MoveRelearnersHouse_Text_HandedOverHeartScale:
+	.string "{PLAYER}は　おれいに\n"
 	.string "ハートのウロコを　1まい　あげた！$"
 
-	.globl gJPText_001F632B
-gJPText_001F632B: @ 0x081F632B
+FallarborTown_MoveRelearnersHouse_Text_ComeBackWithHeartScale:
 	.string "おぼえさせたい　わざが　あったら\n"
 	.string "ハートのウロコを　もってきてね！$"
 
-	.globl gJPText_001F634D
-gJPText_001F634D: @ 0x081F634D
+FallarborTown_MoveRelearnersHouse_Text_CantTeachEgg:
 	.string "えっ？\n"
 	.string "タマゴに　おしえられる　わざは　ないよ$"
