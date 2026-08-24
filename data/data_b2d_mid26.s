@@ -2472,12 +2472,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/VerdanturfTown_BattleTentLobby/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_LOBBY
 	.set gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_LOBBY, VerdanturfTown_BattleTentLobby_MapEvents
-	.globl VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR_EventObjects
-VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR_EventObjects: @ 0x08506E34
-	object_event 1, 21, 0, 2, 6, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0000
+	.include "data/maps/VerdanturfTown_BattleTentCorridor/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR
-gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR: @ 0x08506E4C
-	map_events VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR_EventObjects, 0, 0, 0
+	.set gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR, VerdanturfTown_BattleTentCorridor_MapEvents
 	.globl VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_EventObjects
 VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_EventObjects: @ 0x08506E60
 	object_event 1, 241, 0, 2, 8, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0000
