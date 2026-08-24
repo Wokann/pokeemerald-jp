@@ -2481,20 +2481,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/VerdanturfTown_Mart/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_MART
 	.set gMapEvents_VERDANTURF_TOWN_MART, VerdanturfTown_Mart_MapEvents
-	.globl VERDANTURF_TOWN_POKEMON_CENTER_1F_EventObjects
-VERDANTURF_TOWN_POKEMON_CENTER_1F_EventObjects: @ 0x08506F40
-	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, VerdanturfTown_PokemonCenter_1F_EventScript_001F7035, 0x0000
-	object_event 2, 48, 0, 4, 5, 3, 5, 1, 0, 0, 0, VerdanturfTown_PokemonCenter_1F_EventScript_001F7043, 0x0000
-	object_event 3, 21, 0, 12, 2, 3, 7, 0, 0, 0, 0, VerdanturfTown_PokemonCenter_1F_EventScript_001F704C, 0x0000
-	object_event 4, 11, 0, 10, 6, 3, 9, 1, 0, 0, 0, 0x08276902, 0x0000
-	.globl VERDANTURF_TOWN_POKEMON_CENTER_1F_EventWarps
-VERDANTURF_TOWN_POKEMON_CENTER_1F_EventWarps: @ 0x08506FA0
-	warp_def 7, 8, 3, 2, MAP_VERDANTURF_TOWN
-	warp_def 6, 8, 3, 2, MAP_VERDANTURF_TOWN
-	warp_def 1, 6, 4, 0, MAP_VERDANTURF_TOWN_POKEMON_CENTER_2F
+	.include "data/maps/VerdanturfTown_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_1F
-gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_1F: @ 0x08506FB8
-	map_events VERDANTURF_TOWN_POKEMON_CENTER_1F_EventObjects, VERDANTURF_TOWN_POKEMON_CENTER_1F_EventWarps, 0, 0
+	.set gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_1F, VerdanturfTown_PokemonCenter_1F_MapEvents
 	.globl VERDANTURF_TOWN_POKEMON_CENTER_2F_EventObjects
 VERDANTURF_TOWN_POKEMON_CENTER_2F_EventObjects: @ 0x08506FCC
 	object_event 1, 85, 0, 6, 2, 0, 8, 1, 1, 0, 0, 0x08244185, 0x0000

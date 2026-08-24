@@ -1,31 +1,40 @@
 @ VerdanturfTown_PokemonCenter_1F scripts (JP map g6 m4 @ 0x081F7021)
 
 VerdanturfTown_PokemonCenter_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, VerdanturfTown_PokemonCenter_1F_EventScript_001F702C
-	map_script MAP_SCRIPT_ON_RESUME, 0x0824790F
+	map_script MAP_SCRIPT_ON_TRANSITION, VerdanturfTown_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-VerdanturfTown_PokemonCenter_1F_EventScript_001F702C::
-	setrespawn 0x12
-	call 0x08242978
+VerdanturfTown_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_VERDANTURF_TOWN
+	call Common_EventScript_UpdateBrineyLocation
 	end
 
-VerdanturfTown_PokemonCenter_1F_EventScript_001F7035::
-	setvar 0x800B, 0x1
-	call 0x082429B8
+VerdanturfTown_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_VERDANTURF_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-VerdanturfTown_PokemonCenter_1F_EventScript_001F7043::
-	loadword 0x0, 0x081F7055
-	callstd 0x2
+VerdanturfTown_PokemonCenter_1F_EventScript_Gentleman::
+	msgbox VerdanturfTown_PokemonCenter_1F_Text_FaithInYourPokemon, MSGBOX_NPC
 	end
 
-VerdanturfTown_PokemonCenter_1F_EventScript_001F704C::
-	loadword 0x0, 0x081F70A5
-	callstd 0x2
+VerdanturfTown_PokemonCenter_1F_EventScript_ExpertM::
+	msgbox VerdanturfTown_PokemonCenter_1F_Text_VisitForBattleTent, MSGBOX_NPC
 	end
 
-	.incbin "baserom_jp.gba", 0x1f7055, 0x89
+VerdanturfTown_PokemonCenter_1F_Text_FaithInYourPokemon:
+	.string "ポケモンを　しんじられない　ようでは\n"
+	.string "いちにんまえ　とは　いえないね\p"
+	.string "たたかう　ポケモンたちを\n"
+	.string "さいごまで　しんじる　ものだけが\l"
+	.string "かちぬく　ことが　できるんだ$"
+
+VerdanturfTown_PokemonCenter_1F_Text_VisitForBattleTent:
+	.string "シダケにくる　りゆうと　いえば\n"
+	.string "ずばり　バトルテントじゃろ？\p"
+	.string "それとも　だれか　あいたい　ひとでも\n"
+	.string "いるのかね？$"

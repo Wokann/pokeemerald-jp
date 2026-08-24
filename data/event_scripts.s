@@ -158,6 +158,9 @@
 	.set BattleFrontier_BattlePalaceBattleRoom_Text_WishToQuitChallenge, 0x0822B91F
 	.globl BattleFrontier_BattlePalaceBattleRoom_Text_SavingData
 	.set BattleFrontier_BattlePalaceBattleRoom_Text_SavingData, 0x0822B931
+	@ The Verdanturf Pokémon Center references the retained Fury Cutter tutor.
+	.globl VerdanturfTown_PokemonCenter_1F_EventScript_FuryCutterTutor
+	.set VerdanturfTown_PokemonCenter_1F_EventScript_FuryCutterTutor, 0x08276902
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
 	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
 	.globl Common_EventScript_NameReceivedPartyMon
