@@ -2662,18 +2662,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_2F, SlateportCity_PokemonCenter_2F_MapEvents
-	.globl SLATEPORT_CITY_MART_EventObjects
-SLATEPORT_CITY_MART_EventObjects: @ 0x0850841C
-	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x081FE8FA, 0x0000
-	object_event 2, 44, 0, 4, 2, 3, 7, 0, 0, 0, 0, 0x081FE92A, 0x0000
-	object_event 3, 33, 0, 5, 5, 3, 1, 0, 0, 0, 0, 0x081FE933, 0x0000
-	.globl SLATEPORT_CITY_MART_EventWarps
-SLATEPORT_CITY_MART_EventWarps: @ 0x08508464
-	warp_def 3, 7, 0, 1, MAP_SLATEPORT_CITY
-	warp_def 4, 7, 0, 1, MAP_SLATEPORT_CITY
+	.include "data/maps/SlateportCity_Mart/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_MART
-gMapEvents_SLATEPORT_CITY_MART: @ 0x08508474
-	map_events SLATEPORT_CITY_MART_EventObjects, SLATEPORT_CITY_MART_EventWarps, 0, 0
+	.set gMapEvents_SLATEPORT_CITY_MART, SlateportCity_Mart_MapEvents
 	.globl MAUVILLE_CITY_GYM_EventObjects
 MAUVILLE_CITY_GYM_EventObjects: @ 0x08508488
 	object_event 1, 127, 0, 5, 2, 0, 8, 0, 0, 0, 0, 0x081FEB31, 0x0391

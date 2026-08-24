@@ -4891,7 +4891,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_SLATEPORT_CITY_MART (g9 m13)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
 	.4byte gMapEvents_SLATEPORT_CITY_MART  @ events
-	.4byte 0x081FE8F9  @ mapScripts
+	.4byte SlateportCity_Mart_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
 	.2byte 0x003F  @ mapLayoutId

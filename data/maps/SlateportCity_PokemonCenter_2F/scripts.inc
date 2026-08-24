@@ -17,8 +17,3 @@ SlateportCity_PokemonCenter_2F_EventScript_TradeCenter::
 SlateportCity_PokemonCenter_2F_EventScript_RecordCorner::
 	call CableClub_EventScript_RecordCorner
 	end
-
-@ The immediately following SlateportCity_Mart script block has not yet been
-@ structurally migrated. Keep its pre-existing successor ownership here until
-@ that map can be converted as its own cohesive change.
-	.incbin "baserom_jp.gba", 0x1fe8f9, 0xbb
