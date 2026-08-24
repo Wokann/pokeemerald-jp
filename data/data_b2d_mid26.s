@@ -2641,24 +2641,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_NameRatersHouse/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE
 	.set gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE, SlateportCity_NameRatersHouse_MapEvents
-	.globl SLATEPORT_CITY_POKEMON_FAN_CLUB_EventObjects
-SLATEPORT_CITY_POKEMON_FAN_CLUB_EventObjects: @ 0x08507CA0
-	object_event 1, 19, 0, 11, 4, 0, 8, 0, 0, 0, 0, 0x081FC37A, 0x0000
-	object_event 2, 6, 0, 1, 5, 0, 3, 0, 1, 0, 0, 0x081FC383, 0x0000
-	object_event 3, 68, 0, 11, 5, 0, 7, 0, 0, 0, 0, 0x08253D5B, 0x0000
-	object_event 4, 26, 0, 6, 2, 3, 1, 0, 0, 0, 0, 0x081FC310, 0x0000
-	object_event 5, 48, 0, 6, 5, 4, 8, 0, 0, 0, 0, 0x081FC028, 0x0000
-	object_event 6, 208, 0, 3, 9, 3, 1, 1, 1, 0, 0, 0x081FC39F, 0x0000
-	object_event 7, 203, 0, 8, 3, 3, 1, 1, 1, 0, 0, 0x081FC38C, 0x0000
-	object_event 8, 210, 0, 10, 8, 3, 1, 1, 1, 0, 0, 0x081FC3B2, 0x0000
-	object_event 9, 65, 0, 11, 8, 0, 9, 0, 1, 0, 0, 0x08276832, 0x0000
-	.globl SLATEPORT_CITY_POKEMON_FAN_CLUB_EventWarps
-SLATEPORT_CITY_POKEMON_FAN_CLUB_EventWarps: @ 0x08507D78
-	warp_def 6, 10, 0, 4, MAP_SLATEPORT_CITY
-	warp_def 7, 10, 0, 4, MAP_SLATEPORT_CITY
+	.include "data/maps/SlateportCity_PokemonFanClub/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_POKEMON_FAN_CLUB
-gMapEvents_SLATEPORT_CITY_POKEMON_FAN_CLUB: @ 0x08507D88
-	map_events SLATEPORT_CITY_POKEMON_FAN_CLUB_EventObjects, SLATEPORT_CITY_POKEMON_FAN_CLUB_EventWarps, 0, 0
+	.set gMapEvents_SLATEPORT_CITY_POKEMON_FAN_CLUB, SlateportCity_PokemonFanClub_MapEvents
 	.globl SLATEPORT_CITY_OCEANIC_MUSEUM_1F_EventObjects
 SLATEPORT_CITY_OCEANIC_MUSEUM_1F_EventObjects: @ 0x08507D9C
 	object_event 1, 45, 0, 7, 7, 3, 10, 0, 0, 0, 0, 0x081FCA3F, 0x0000

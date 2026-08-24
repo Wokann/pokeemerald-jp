@@ -140,6 +140,11 @@
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_RightThisWay, 0x0823287D
 	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait, 0x0823288B
+	@ These Fan Club object scripts remain in their existing shared JP owners.
+	.globl SlateportCity_PokemonFanClub_EventScript_Reporter
+	.set SlateportCity_PokemonFanClub_EventScript_Reporter, 0x08253D5B
+	.globl SlateportCity_PokemonFanClub_EventScript_SwaggerTutor
+	.set SlateportCity_PokemonFanClub_EventScript_SwaggerTutor, 0x08276832
 	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleTowerLobby_Text_ReceivedPrize, 0x0822064B
 	.globl BattleFrontier_BattleFactoryLobby_Text_RulesAreListed
