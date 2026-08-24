@@ -2487,20 +2487,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/VerdanturfTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_2F, VerdanturfTown_PokemonCenter_2F_MapEvents
-	.globl VERDANTURF_TOWN_WANDAS_HOUSE_EventObjects
-VERDANTURF_TOWN_WANDAS_HOUSE_EventObjects: @ 0x08507058
-	object_event 1, 135, 0, 14, 5, 3, 2, 1, 1, 0, 0, 0x081F7106, 0x0326
-	object_event 2, 44, 0, 5, 4, 3, 8, 0, 0, 0, 0, 0x081F715A, 0x0328
-	object_event 3, 25, 0, 7, 2, 3, 8, 0, 0, 0, 0, 0x081F7128, 0x0329
-	object_event 4, 18, 0, 2, 4, 3, 10, 0, 0, 0, 0, 0x081F7195, 0x0000
-	object_event 5, 20, 0, 5, 5, 3, 9, 0, 0, 0, 0, 0x081F7163, 0x03D8
-	.globl VERDANTURF_TOWN_WANDAS_HOUSE_EventWarps
-VERDANTURF_TOWN_WANDAS_HOUSE_EventWarps: @ 0x085070D0
-	warp_def 7, 7, 0, 3, MAP_VERDANTURF_TOWN
-	warp_def 8, 7, 0, 3, MAP_VERDANTURF_TOWN
+	.include "data/maps/VerdanturfTown_WandasHouse/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_WANDAS_HOUSE
-gMapEvents_VERDANTURF_TOWN_WANDAS_HOUSE: @ 0x085070E0
-	map_events VERDANTURF_TOWN_WANDAS_HOUSE_EventObjects, VERDANTURF_TOWN_WANDAS_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_VERDANTURF_TOWN_WANDAS_HOUSE, VerdanturfTown_WandasHouse_MapEvents
 	.globl VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE_EventObjects
 VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE_EventObjects: @ 0x085070F4
 	object_event 1, 20, 0, 3, 4, 3, 8, 0, 0, 0, 0, 0x081F7557, 0x0000

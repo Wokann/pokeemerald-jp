@@ -19,6 +19,3 @@ VerdanturfTown_PokemonCenter_2F_EventScript_TradeCenter::
 VerdanturfTown_PokemonCenter_2F_EventScript_RecordCorner::
 	call CableClub_EventScript_RecordCorner
 	end
-
-@ The next unstructured Verdanturf map starts at 0x081F7105.
-	.incbin "baserom_jp.gba", 0x1f7105, 0x725
