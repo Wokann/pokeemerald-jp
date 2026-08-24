@@ -90,9 +90,9 @@ PetalburgCity_Gym_MapScriptTable_001F8631::
 
 PetalburgCity_Gym_EventScript_001F863B::
 	lockall
-	loadword 0x0, gJPText_001F965A
+	loadword 0x0, PetalburgCity_Gym_Text_DadSoDidItWorkOut
 	callstd 0x4
-	loadword 0x0, gJPText_001F9668
+	loadword 0x0, PetalburgCity_Gym_Text_WallyThankYouBye
 	callstd 0x4
 	closemessage
 	applymovement 0xFF, 0x0824362D
@@ -104,7 +104,7 @@ PetalburgCity_Gym_EventScript_001F863B::
 	delay 0x1E
 	applymovement 0xFF, 0x08243629
 	waitmovement 0x0
-	loadword 0x0, gJPText_001F9705
+	loadword 0x0, PetalburgCity_Gym_Text_DadGoCollectBadges
 	callstd 0x4
 	setvar 0x4085, 0x2
 	releaseall
@@ -129,7 +129,7 @@ PetalburgCity_Gym_EventScript_001F8688::
 	goto_if 0x1, PetalburgCity_Gym_EventScript_001F8A17
 	compare_var_to_value 0x8000, 0x8
 	goto_if 0x1, 0x081F8A4A
-	loadword 0x0, 0x081F9439
+	loadword 0x0, PetalburgCity_Gym_Text_DadYoureHereWithYourPokemon
 	callstd 0x4
 	closemessage
 	copyvar 0x8000, 0x800C
@@ -174,13 +174,13 @@ PetalburgCity_Gym_EventScript_001F8743::
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F88F6
 	compare_var_to_value 0x8008, 0x3
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F88F6
-	loadword 0x0, 0x081F94BD
+	loadword 0x0, PetalburgCity_Gym_Text_WallyIdLikeAPokemon
 	callstd 0x4
-	loadword 0x0, 0x081F94D9
+	loadword 0x0, PetalburgCity_Gym_Text_DadOhYoureWallyRight
 	callstd 0x4
-	loadword 0x0, 0x081F94F6
+	loadword 0x0, PetalburgCity_Gym_Text_WallyIveNeverCaughtAPokemon
 	callstd 0x4
-	loadword 0x0, 0x081F9572
+	loadword 0x0, PetalburgCity_Gym_Text_DadHmISee
 	callstd 0x4
 	compare_var_to_value 0x8008, 0x0
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F895E
@@ -190,7 +190,7 @@ PetalburgCity_Gym_EventScript_001F8743::
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F897B
 	compare_var_to_value 0x8008, 0x3
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F898D
-	loadword 0x0, 0x081F957F
+	loadword 0x0, PetalburgCity_Gym_Text_DadPlayerGoWithWally
 	callstd 0x4
 	compare_var_to_value 0x8008, 0x0
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F899F
@@ -200,11 +200,11 @@ PetalburgCity_Gym_EventScript_001F8743::
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F89B5
 	compare_var_to_value 0x8008, 0x3
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F89C0
-	loadword 0x0, 0x081F95B6
+	loadword 0x0, PetalburgCity_Gym_Text_IllLoanYouMyZigzagoon
 	callstd 0x4
-	loadword 0x0, 0x081F95E4
+	loadword 0x0, PetalburgCity_Gym_Text_WallyThankYouAndDadGivesPokeBall
 	callstd 0x4
-	loadword 0x0, 0x081F9630
+	loadword 0x0, PetalburgCity_Gym_Text_WallyOhWowThankYou
 	callstd 0x4
 	compare_var_to_value 0x8008, 0x0
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F8A09
@@ -222,7 +222,7 @@ PetalburgCity_Gym_EventScript_001F8743::
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F89CB
 	compare_var_to_value 0x8008, 0x3
 	call_if 0x1, PetalburgCity_Gym_EventScript_001F89CB
-	loadword 0x0, 0x081F9640
+	loadword 0x0, PetalburgCity_Gym_Text_WouldYouReallyComeWithMe
 	callstd 0x4
 	closemessage
 	setflag 0x4001
@@ -812,28 +812,85 @@ PetalburgCity_Gym_EventScript_001F942F::
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1f9439, 0x221
-	.globl gJPText_001F965A
-gJPText_001F965A: @ 0x081F965A
+PetalburgCity_Gym_Text_DadYoureHereWithYourPokemon:
+	.string "パパ“ん？\p"
+	.string "{PLAYER}じゃ　ないか！\n"
+	.string "そうか　ひっこしが　おわったんだね\p"
+	.string "それにしても\n"
+	.string "よく　ここまで　ひとりで　これたな\p"
+	.string "なるほど⋯⋯\n"
+	.string "ポケモンと　いっしょ　なのか\p"
+	.string "ふむ⋯⋯　じゃあ　{PLAYER}も\n"
+	.string "わたしの　ように\l"
+	.string "ポケモントレーナーに　なるのか\p"
+	.string "それは　たのしみ　だな！$"
+
+PetalburgCity_Gym_Text_WallyIdLikeAPokemon:
+	.string "あの⋯⋯　ぼく⋯⋯\n"
+	.string "ポケモンが　ほしいん　ですけど⋯⋯$"
+
+PetalburgCity_Gym_Text_DadOhYoureWallyRight:
+	.string "パパ“ん？　きみは⋯⋯　たしか\n"
+	.string "ミツルくんと　いったよね$"
+
+PetalburgCity_Gym_Text_WallyIveNeverCaughtAPokemon:
+	.string "ミツル“ぼく　きょうから　シダケタウンの\n"
+	.string "しんせきの　うちに　いくんですけど\p"
+	.string "ひとりじゃ　さみしいから　ポケモンを\n"
+	.string "つれて　いこうかと　おもって⋯⋯\p"
+	.string "でも　いままで　じぶんで　ポケモンを\n"
+	.string "つかまえた　ことが　ないから\l"
+	.string "どう　やったら　いいのか⋯⋯$"
+
+PetalburgCity_Gym_Text_DadHmISee:
+	.string "パパ“⋯⋯ふむ　なるほど$"
+
+PetalburgCity_Gym_Text_DadPlayerGoWithWally:
+	.string "パパ“{PLAYER}！　はなしは　きいたね\p"
+	.string "ミツルくんが　ぶじに\n"
+	.string "ポケモンを　つかまえられるか\l"
+	.string "みまもって　あげるんだ$"
+
+PetalburgCity_Gym_Text_IllLoanYouMyZigzagoon:
+	.string "ミツルくん\n"
+	.string "わたしの　ポケモンを　かして　あげよう！\p"
+	.string "ミツルは\n"
+	.string "ジグザグマを　あずかった！$"
+
+PetalburgCity_Gym_Text_WallyThankYouAndDadGivesPokeBall:
+	.string "ミツル“わあ⋯⋯\n"
+	.string "ポケモンだぁ⋯⋯！\p"
+	.string "パパ“うむ⋯⋯\n"
+	.string "モンスターボールは　あげるから\l"
+	.string "がんばって　みなさい！\p"
+	.string "ミツルは\n"
+	.string "モンスターボールを　もらった！$"
+
+PetalburgCity_Gym_Text_WallyOhWowThankYou:
+	.string "ミツル“おじさん　ありがとう！$"
+
+PetalburgCity_Gym_Text_WouldYouReallyComeWithMe:
+	.string "{PLAYER}さん⋯⋯\n"
+	.string "ぼくと　いっしょに　きてくれますよね$"
+
+PetalburgCity_Gym_Text_DadSoDidItWorkOut:
 	.string "パパ“うまく　いったかい？$"
 
-	.globl gJPText_001F9668
-gJPText_001F9668: @ 0x081F9668
+PetalburgCity_Gym_Text_WallyThankYouBye:
 	.string "ミツル“おじさん\n"
 	.string "おかりした　ポケモン　おかえし　します\p"
-	.string "{MUS_RG_VS_TRAINER}さん　いっしょに　きてくれて\n"
+	.string "{PLAYER}さん　いっしょに　きてくれて\n"
 	.string "どうも　ありがとう⋯⋯\p"
 	.string "ポケモンを　つかまえることが　できたのは\n"
 	.string "ふたりの　おかげです！\l"
 	.string "つかまえた　ポケモン　たいせつに　しますね\p"
 	.string "⋯⋯あ！　おかあさんが　まってるから\n"
 	.string "ぼくは　もう　いかなきゃ！\p"
-	.string "じゃあね　{MUS_RG_VS_TRAINER}さん！$"
+	.string "じゃあね　{PLAYER}さん！$"
 
-	.globl gJPText_001F9705
-gJPText_001F9705: @ 0x081F9705
+PetalburgCity_Gym_Text_DadGoCollectBadges:
 	.string "パパ“さて⋯⋯\p"
-	.string "{MUS_RG_VS_TRAINER}！　ポケモントレーナー　として\n"
+	.string "{PLAYER}！　ポケモントレーナー　として\n"
 	.string "つよく　なりたいのなら\l"
 	.string "わたしの　アドバイスを　ききなさい\p"
 	.string "まずは　この　さきにある\n"
@@ -844,8 +901,8 @@ gJPText_001F9705: @ 0x081F9705
 	.string "ジムリーダーを　たおして\l"
 	.string "ジムバッジを　あつめて　いくんだ\p"
 	.string "もちろん　わたしも　ジムリーダーだ\n"
-	.string "いずれ　{MUS_RG_VS_TRAINER}と　しょうぶ　するだろう\p"
-	.string "だが　それは　{MUS_RG_VS_TRAINER}が\n"
+	.string "いずれ　{PLAYER}と　しょうぶ　するだろう\p"
+	.string "だが　それは　{PLAYER}が\n"
 	.string "つよくなってからの　はなし　だよ$"
 
 	.incbin "baserom_jp.gba", 0x1f97e8, 0xfe5
