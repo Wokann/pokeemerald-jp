@@ -36,6 +36,3 @@ RustboroCity_Flat2_2F_Text_GoingToWorkAtDevonToo: @ 0x08204087
 	.string "おとうさんは　かいしゃで　おしごと！\p"
 	.string "ぼくも　おおきく　なったら\n"
 	.string "デボンで　はたらくんだ！$"
-
-	@ Rustboro City Flat2 3F and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x2040b5, 0x2e9
