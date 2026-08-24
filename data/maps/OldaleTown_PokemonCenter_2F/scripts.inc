@@ -19,5 +19,3 @@ OldaleTown_PokemonCenter_2F_EventScript_TradeCenter::
 OldaleTown_PokemonCenter_2F_EventScript_RecordCorner::
 	call CableClub_EventScript_RecordCorner
 	end
-
-	.incbin "baserom_jp.gba", 0x1f2b0b, 0x1c4

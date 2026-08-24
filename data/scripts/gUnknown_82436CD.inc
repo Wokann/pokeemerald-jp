@@ -9,7 +9,18 @@
 	gettime
 	nop
 	returnram
-	.incbin "baserom_jp.gba", 0x2436E5, 0x292
+	.incbin "baserom_jp.gba", 0x2436E5, 0x22A
+
+	.globl gText_HowMayIServeYou
+gText_HowMayIServeYou: @ 0x0824390F
+	.string "ようこそ！\p"
+	.string "おかいもの　ですね！$"
+
+	.globl gText_PleaseComeAgain
+gText_PleaseComeAgain: @ 0x08243920
+	.string "またどうぞ！$"
+
+	.incbin "baserom_jp.gba", 0x243927, 0x50
 	.globl gJPText_00243977
 gJPText_00243977: @ 0x08243977
 	.string "ざんねん！\n"
@@ -52,4 +63,3 @@ gJPText_002440BC: @ 0x082440BC
 	.globl gJPText_002440CD
 gJPText_002440CD: @ 0x082440CD
 	.string "ひでりは　おさまったようだ⋯⋯$"
-
