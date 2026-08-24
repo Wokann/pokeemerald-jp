@@ -95,6 +95,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	FallarborTown_BattleTentCorridor \
 	FallarborTown_BattleTentBattleRoom \
 	FallarborTown_PokemonCenter_1F \
+	FallarborTown_PokemonCenter_2F \
 	FallarborTown_CozmosHouse \
 	FallarborTown_MoveRelearnersHouse
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
