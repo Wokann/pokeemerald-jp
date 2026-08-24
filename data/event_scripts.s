@@ -66,6 +66,10 @@
 	.include "asm/macros/event.inc"
 	.include "constants/gba_constants.inc"
 	.include "constants/global.inc"
+	@ The underlying JP special is still named sub_08139938 in C.  Expose the
+	@ matching pokeemerald script name without changing its table index.
+	.set SPECIAL_BufferTMHMMoveName, 411
+	.set SPECIAL_WAITSTATE_BufferTMHMMoveName, 0
 	@ These JP command-table entries retain older names but use the same opcodes
 	@ as the US semantic spellings used by Dewford Gym.
 	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG
@@ -73,6 +77,9 @@
 	@ Object visibility commands use the retained JP 0x58/0x59 opcode tokens.
 	.set SCR_OP_SHOWOBJECTAT, SCR_OP_58
 	.set SCR_OP_HIDEOBJECTAT, SCR_OP_59
+	@ Coin commands use the retained JP 0xB4/0xB5 opcode tokens.
+	.set SCR_OP_ADDCOINS, SCR_OP_B4
+	.set SCR_OP_REMOVECOINS, SCR_OP_B5
 
 	@ Reviewed semantic names for shared event/text entries that still live
 	@ inside retained JP blocks.  Keeping these aliases in the owning event
@@ -493,6 +500,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MauvilleCity_Gym/scripts.inc"
 	.include "data/maps/MauvilleCity_BikeShop/scripts.inc"
 	.include "data/maps/MauvilleCity_House1/scripts.inc"
+	.include "data/maps/MauvilleCity_GameCorner/scripts.inc"
 	.include "data/maps/MauvilleCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/MauvilleCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/RustboroCity_DevonCorp_1F/scripts.inc"
@@ -812,6 +820,12 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_NopReturn, 0x08244178
 	.globl Common_EventScript_BagIsFull
 	.set Common_EventScript_BagIsFull, 0x082430EA
+	.globl Common_EventScript_NoRoomForDecor
+	.set Common_EventScript_NoRoomForDecor, 0x082430FD
+	.globl Roulette_EventScript_Table1
+	.set Roulette_EventScript_Table1, 0x08262C92
+	.globl Roulette_EventScript_Table2
+	.set Roulette_EventScript_Table2, 0x08262CC0
 	.globl Common_EventScript_PlayerHandedOverTheItem
 	.set Common_EventScript_PlayerHandedOverTheItem, 0x08243467
 	.globl Common_EventScript_FerryDepart

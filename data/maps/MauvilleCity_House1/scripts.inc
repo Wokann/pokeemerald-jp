@@ -47,7 +47,3 @@ MauvilleCity_House1_Text_MonCanFlyOutOfSmashedRock:
     .string "いわを　くだくと　かくれていた\l"
     .string "ポケモンが　とびでることも　あるからね！\p"
     .string "ほっほう！$"
-
-@ Temporary successor ownership: the next unstructured map-script block starts
-@ at 0x081FFEE7 and remains byte-exact until its own map migration.
-    .incbin "baserom_jp.gba", 0x1ffee7, 0xeed

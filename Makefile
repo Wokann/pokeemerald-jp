@@ -134,7 +134,8 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	SlateportCity_Mart \
 	MauvilleCity_Gym \
 	MauvilleCity_BikeShop \
-	MauvilleCity_House1
+	MauvilleCity_House1 \
+	MauvilleCity_GameCorner
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools

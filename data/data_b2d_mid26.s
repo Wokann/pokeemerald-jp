@@ -2674,53 +2674,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/MauvilleCity_House1/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_HOUSE1
 	.set gMapEvents_MAUVILLE_CITY_HOUSE1, MauvilleCity_House1_MapEvents
-	.globl MAUVILLE_CITY_GAME_CORNER_EventObjects
-MAUVILLE_CITY_GAME_CORNER_EventObjects: @ 0x08508654
-	object_event 1, 20, 0, 12, 7, 3, 8, 0, 0, 0, 0, 0x08200454, 0x0000
-	object_event 2, 48, 0, 16, 5, 3, 8, 0, 0, 0, 0, 0x0820045D, 0x0000
-	object_event 3, 45, 0, 11, 2, 3, 8, 0, 0, 0, 0, 0x081FFEE8, 0x0000
-	object_event 4, 45, 0, 14, 2, 3, 8, 0, 0, 0, 0, 0x08200020, 0x0000
-	object_event 5, 10, 0, 7, 3, 3, 8, 0, 0, 0, 0, 0x08200466, 0x0000
-	object_event 6, 25, 0, 19, 4, 3, 8, 0, 0, 0, 0, 0x0820054C, 0x0000
-	object_event 7, 29, 0, 20, 8, 3, 9, 0, 0, 0, 0, 0x082005A8, 0x0000
-	object_event 8, 27, 0, 6, 8, 3, 10, 0, 0, 0, 0, 0x082005B8, 0x0000
-	object_event 9, 45, 0, 13, 2, 3, 8, 1, 1, 0, 0, 0x082001CE, 0x0000
-	object_event 10, 33, 0, 1, 7, 3, 10, 1, 1, 0, 0, 0x082005C8, 0x0000
-	object_event 11, 39, 0, 9, 8, 3, 9, 1, 1, 0, 0, 0x082005E5, 0x0000
-	object_event 12, 34, 0, 4, 6, 3, 9, 1, 1, 0, 0, 0x082005F5, 0x0000
-	.globl MAUVILLE_CITY_GAME_CORNER_EventWarps
-MAUVILLE_CITY_GAME_CORNER_EventWarps: @ 0x08508774
-	warp_def 11, 10, 3, 5, MAP_MAUVILLE_CITY
-	warp_def 12, 10, 3, 5, MAP_MAUVILLE_CITY
-	.globl MAUVILLE_CITY_GAME_CORNER_EventBgEvents
-MAUVILLE_CITY_GAME_CORNER_EventBgEvents: @ 0x08508784
-	bg_event 2, 6, 0, 3, 0x08200605, 0, 0
-	bg_event 2, 8, 0, 3, 0x08200625, 0, 0
-	bg_event 2, 9, 0, 3, 0x08200645, 0, 0
-	bg_event 3, 7, 0, 4, 0x08200665, 0, 0
-	bg_event 3, 8, 0, 4, 0x08200685, 0, 0
-	bg_event 3, 9, 0, 4, 0x082006A5, 0, 0
-	bg_event 7, 6, 0, 3, 0x082006C5, 0, 0
-	bg_event 7, 7, 0, 3, 0x082006E5, 0, 0
-	bg_event 7, 9, 0, 3, 0x08200705, 0, 0
-	bg_event 8, 6, 0, 4, 0x08200725, 0, 0
-	bg_event 8, 7, 0, 4, 0x08200745, 0, 0
-	bg_event 8, 9, 0, 4, 0x08200765, 0, 0
-	bg_event 14, 6, 0, 0, 0x08262C92, 0, 0
-	bg_event 15, 6, 0, 0, 0x08262C92, 0, 0
-	bg_event 14, 7, 0, 0, 0x08262C92, 0, 0
-	bg_event 15, 7, 0, 0, 0x08262C92, 0, 0
-	bg_event 14, 8, 0, 0, 0x08262C92, 0, 0
-	bg_event 15, 8, 0, 0, 0x08262C92, 0, 0
-	bg_event 18, 6, 0, 0, 0x08262CC0, 0, 0
-	bg_event 19, 6, 0, 0, 0x08262CC0, 0, 0
-	bg_event 18, 7, 0, 0, 0x08262CC0, 0, 0
-	bg_event 19, 7, 0, 0, 0x08262CC0, 0, 0
-	bg_event 18, 8, 0, 0, 0x08262CC0, 0, 0
-	bg_event 19, 8, 0, 0, 0x08262CC0, 0, 0
+	.include "data/maps/MauvilleCity_GameCorner/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_GAME_CORNER
-gMapEvents_MAUVILLE_CITY_GAME_CORNER: @ 0x085088A4
-	map_events MAUVILLE_CITY_GAME_CORNER_EventObjects, MAUVILLE_CITY_GAME_CORNER_EventWarps, 0, MAUVILLE_CITY_GAME_CORNER_EventBgEvents
+	.set gMapEvents_MAUVILLE_CITY_GAME_CORNER, MauvilleCity_GameCorner_MapEvents
 	.globl MAUVILLE_CITY_HOUSE2_EventObjects
 MAUVILLE_CITY_HOUSE2_EventObjects: @ 0x085088B8
 	object_event 1, 24, 0, 4, 5, 3, 9, 0, 0, 0, 0, 0x08200C5B, 0x0000

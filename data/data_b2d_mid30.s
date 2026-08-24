@@ -4923,7 +4923,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_MAUVILLE_CITY_GAME_CORNER (g10 m3)
 	.4byte gMapLayout_MAUVILLE_CITY_GAME_CORNER  @ mapLayout
 	.4byte gMapEvents_MAUVILLE_CITY_GAME_CORNER  @ events
-	.4byte 0x081FFEE7  @ mapScripts
+	.4byte MauvilleCity_GameCorner_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AA  @ music
 	.2byte 0x005B  @ mapLayoutId
