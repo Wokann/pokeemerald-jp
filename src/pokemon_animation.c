@@ -2,7 +2,11 @@
 
 extern bool32 sIsSummaryAnim;
 extern void (*const sMonAnimFunctions[])(struct Sprite *sprite);
+extern const u8 gUnknown_85D3328[];
 extern const u8 gUnknown_85D34E0[][2];
+extern const union AffineAnimCmd *const gUnknown_85D37C8[];
+extern const s8 gUnknown_85D37D0[][3];
+extern const s8 gUnknown_85D381E[][3];
 #include "pokemon_animation.h"
 #include "sprite.h"
 #include "task.h"
@@ -19,8218 +23,2882 @@ struct PokemonAnimData
 };
 
 extern struct PokemonAnimData gUnknown_3001240[];
+extern u8 gUnknown_3001270;
 void SpriteCB_SetDummyOnAnimEnd(struct Sprite *sprite);
+extern void SpriteCB_SetDummyOnAnimEnd_Thumb(struct Sprite *sprite) __asm__("SpriteCB_SetDummyOnAnimEnd + 1");
+extern void CircleCounterclockwise_Thumb(struct Sprite *sprite) __asm__("CircleCounterclockwise + 1");
+void BackAndLunge_0(struct Sprite *sprite);
+void BackAndLunge_1(struct Sprite *sprite);
+void BackAndLunge_2(struct Sprite *sprite);
+void BackAndLunge_3(struct Sprite *sprite);
+void BackAndLunge_4(struct Sprite *sprite);
+void BackFlip_0(struct Sprite *sprite);
+void BackFlip_1(struct Sprite *sprite);
+void BackFlip_2(struct Sprite *sprite);
+void BackFlipBig_0(struct Sprite *sprite);
+void BackFlipBig_1(struct Sprite *sprite);
+void BackFlipBig_2(struct Sprite *sprite);
+void FrontFlip_0(struct Sprite *sprite);
+void FrontFlip_1(struct Sprite *sprite);
+void FrontFlip_2(struct Sprite *sprite);
+void TumblingFrontFlip(struct Sprite *sprite);
+void Figure8(struct Sprite *sprite);
+void RotateUpSlamDown_0(struct Sprite *sprite);
+void RotateUpSlamDown_1(struct Sprite *sprite);
+void RotateUpSlamDown_2(struct Sprite *sprite);
+void HorizontalJumpsVerticalStretch_0(struct Sprite *sprite);
+void HorizontalJumpsVerticalStretch_2(struct Sprite *sprite);
+void TipHopForward_0(struct Sprite *sprite);
+void TipHopForward_1(struct Sprite *sprite);
+void TipHopForward_2(struct Sprite *sprite);
+void TipAndShake_0(struct Sprite *sprite);
+void TipAndShake_1(struct Sprite *sprite);
+void TipAndShake_2(struct Sprite *sprite);
+void TipAndShake_3(struct Sprite *sprite);
+void SpringRising_0(struct Sprite *sprite);
+void SpringRising_1(struct Sprite *sprite);
 
 void MonAnimDummySpriteCallback(struct Sprite *sprite) {}
-__attribute__((naked)) void SetPosForRotation(struct Sprite *sprite, u16 index, s16 amplitudeX, s16 amplitudeY)
+void SetPosForRotation(struct Sprite *sprite, u16 index, s16 amplitudeX, s16 amplitudeY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov sb, r0\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl Cos\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	subs r6, r6, r0\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl Cos\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	str r2, [sp]\n\t"
-        "	bl Sin\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	asrs r6, r6, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	adds r6, r6, r5\n\t"
-        "	mov r0, sb\n\t"
-        "	strh r6, [r0, #0x24]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	strh r2, [r0, #0x26]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern s16 Cos(s16 index, s16 amplitude);
+    s16 xAdder;
+    s16 yAdder;
+
+    amplitudeX *= -1;
+    amplitudeY *= -1;
+
+    xAdder = Cos(index, amplitudeX) - Sin(index, amplitudeY);
+    yAdder = Cos(index, amplitudeY) + Sin(index, amplitudeX);
+
+    amplitudeX *= -1;
+    amplitudeY *= -1;
+
+    sprite->x2 = xAdder + amplitudeX;
+    sprite->y2 = yAdder + amplitudeY;
+}
+u8 GetSpeciesBackAnimSet(u16 species)
+{
+    if (gUnknown_85D3328[species] != 0)
+        return gUnknown_85D3328[species] - 1;
+    else
+        return 0;
 }
 
-__attribute__((naked)) u8 GetSpeciesBackAnimSet(u16 species)
+void Task_HandleMonAnimation(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r1, _0817F334\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817F338\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817F33E\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F334: .4byte gUnknown_85D3328\n\t"
-        "_0817F338:\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "_0817F33E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 i;
+    struct Sprite *sprite = (struct Sprite *)((gTasks[taskId].data[1] << 16) | gTasks[taskId].data[2]);
+
+    if (gTasks[taskId].data[0] == 0)
+    {
+        gTasks[taskId].data[4] = sprite->data[0];
+        gTasks[taskId].data[5] = sprite->data[2];
+        sprite->data[1] = 1;
+        sprite->data[0] = 0;
+
+        for (i = 2; i < 8; i++)
+            sprite->data[i] = 0;
+
+        sprite->callback = sMonAnimFunctions[gTasks[taskId].data[3]];
+        sIsSummaryAnim = FALSE;
+        gTasks[taskId].data[0]++;
+    }
+
+    if (sprite->callback == SpriteCallbackDummy)
+    {
+        sprite->data[0] = gTasks[taskId].data[4];
+        sprite->data[2] = gTasks[taskId].data[5];
+        sprite->data[1] = 0;
+        DestroyTask(taskId);
+    }
 }
 
-__attribute__((naked)) void Task_HandleMonAnimation(u8 taskId)
+void LaunchAnimationTaskForFrontSprite(struct Sprite *sprite, u8 frontAnimId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r1, _0817F3E0\n\t"
-        "	lsls r6, r5, #2\n\t"
-        "	adds r0, r6, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	lsls r3, r0, #0x10\n\t"
-        "	movs r4, #0xc\n\t"
-        "	ldrsh r0, [r2, r4]\n\t"
-        "	orrs r3, r0\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r4, [r2, r0]\n\t"
-        "	mov r8, r1\n\t"
-        "	ldr r0, _0817F3E4\n\t"
-        "	mov ip, r0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _0817F3B4\n\t"
-        "	ldrh r0, [r3, #0x2e]\n\t"
-        "	strh r0, [r2, #0x10]\n\t"
-        "	ldrh r0, [r3, #0x32]\n\t"
-        "	strh r0, [r2, #0x12]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r3, #0x30]\n\t"
-        "	strh r4, [r3, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	ldr r6, _0817F3E8\n\t"
-        "	ldr r7, _0817F3EC\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x32\n\t"
-        "_0817F38E:\n\t"
-        "	strh r4, [r2]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r0, #1\n\t"
-        "	cmp r0, #7\n\t"
-        "	bls _0817F38E\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	add r1, r8\n\t"
-        "	movs r2, #0xe\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r7]\n\t"
-        "	ldrh r0, [r1, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "_0817F3B4:\n\t"
-        "	ldr r0, [r3, #0x1c]\n\t"
-        "	cmp r0, ip\n\t"
-        "	bne _0817F3D4\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	add r0, r8\n\t"
-        "	ldrh r1, [r0, #0x10]\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r1, [r3, #0x2e]\n\t"
-        "	ldrh r0, [r0, #0x12]\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	strh r2, [r3, #0x30]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_0817F3D4:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F3E0: .4byte gTasks\n\t"
-        "_0817F3E4: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0817F3E8: .4byte sMonAnimFunctions\n\t"
-        "_0817F3EC: .4byte gUnknown_3001274\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    extern void Task_HandleMonAnimation_Thumb(u8 taskId) __asm__("Task_HandleMonAnimation + 1");
+    u8 taskId = CreateTask(Task_HandleMonAnimation_Thumb, 128);
 
-__attribute__((naked)) void LaunchAnimationTaskForFrontSprite(struct Sprite *sprite, u8 frontAnimId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r4, r1, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _0817F41C\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0817F420\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsrs r0, r5, #0x10\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	strh r5, [r1, #0xc]\n\t"
-        "	strh r4, [r1, #0xe]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F41C: .4byte Task_HandleMonAnimation + 1\n\t"
-        "_0817F420: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].data[1] = (u32)sprite >> 16;
+    gTasks[taskId].data[2] = (u32)sprite;
+    gTasks[taskId].data[3] = frontAnimId;
 }
-
 void StartMonSummaryAnimation(struct Sprite *sprite, u8 frontAnimId)
 {
     sIsSummaryAnim = TRUE;
     sprite->callback = sMonAnimFunctions[frontAnimId];
 }
 
-__attribute__((naked)) void LaunchAnimationTaskForBackSprite(struct Sprite *sprite, u8 backAnimSet)
+void LaunchAnimationTaskForBackSprite(struct Sprite *sprite, u8 backAnimSet)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r6, r1, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldr r0, _0817F4A0\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _0817F4A4\n\t"
-        "	lsls r4, r0, #2\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	lsrs r0, r5, #0x10\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	strh r5, [r4, #0xc]\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _0817F4A8\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _0817F4AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl GetNature\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	ldr r2, _0817F4B0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r0, _0817F4B4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	strh r0, [r4, #0xe]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F4A0: .4byte Task_HandleMonAnimation + 1\n\t"
-        "_0817F4A4: .4byte gTasks\n\t"
-        "_0817F4A8: .4byte gBattlerPartyIndexes\n\t"
-        "_0817F4AC: .4byte gPlayerParty\n\t"
-        "_0817F4B0: .4byte gUnknown_85D378F\n\t"
-        "_0817F4B4: .4byte gUnknown_85D3744\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    extern void Task_HandleMonAnimation_Thumb(u8 taskId) __asm__("Task_HandleMonAnimation + 1");
+    extern u16 gBattlerPartyIndexes[];
+    extern const u8 gUnknown_85D378F[];
+    extern const u8 gUnknown_85D3744[];
+    u8 nature;
+    u8 taskId;
+    u8 animId;
+    u8 battler;
 
+    taskId = CreateTask(Task_HandleMonAnimation_Thumb, 128);
+    gTasks[taskId].data[1] = (u32)sprite >> 16;
+    gTasks[taskId].data[2] = (u32)sprite;
+    battler = sprite->data[0];
+    nature = GetNature(&gPlayerParty[gBattlerPartyIndexes[battler]]);
+    animId = 3 * backAnimSet + gUnknown_85D378F[nature];
+    gTasks[taskId].data[3] = gUnknown_85D3744[animId];
+}
 void SetSpriteCB_MonAnimDummy(struct Sprite *sprite)
 {
     sprite->callback = MonAnimDummySpriteCallback;
 }
 
-__attribute__((naked)) void SetAffineData(struct Sprite *sprite, s16 xScale, s16 yScale, u16 rotation)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	ldr r4, _0817F514\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	orrs r1, r2\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldr r1, [sp, #4]\n\t"
-        "	ands r1, r4\n\t"
-        "	orrs r1, r3\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldrb r4, [r0, #3]\n\t"
-        "	lsls r4, r4, #0x1a\n\t"
-        "	lsrs r4, r4, #0x1b\n\t"
-        "	add r5, sp, #8\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ObjAffineSet\n\t"
-        "	ldr r0, _0817F518\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	strh r0, [r4]\n\t"
-        "	ldrh r0, [r5, #2]\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "	ldrh r0, [r5, #4]\n\t"
-        "	strh r0, [r4, #4]\n\t"
-        "	ldrh r0, [r5, #6]\n\t"
-        "	strh r0, [r4, #6]\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F514: .4byte 0xFFFF0000\n\t"
-        "_0817F518: .4byte gOamMatrices\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HandleStartAffineAnim(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldr r0, _0817F54C\n\t"
-        "	str r0, [r4, #0x10]\n\t"
-        "	ldr r0, _0817F550\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0817F53A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "_0817F53A:\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817F554\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "	b _0817F55C\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F54C: .4byte gUnknown_85D37C8\n\t"
-        "_0817F550: .4byte gUnknown_3001274\n\t"
-        "_0817F554:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_0817F55C:\n\t"
-        "	ldrb r3, [r4, #1]\n\t"
-        "	lsrs r1, r3, #6\n\t"
-        "	ldrb r2, [r4, #3]\n\t"
-        "	lsrs r2, r2, #6\n\t"
-        "	lsls r3, r3, #0x1e\n\t"
-        "	lsrs r3, r3, #0x1e\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CalcCenterToCornerVec\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HandleSetAffineData(struct Sprite *sprite, s16 xScale, s16 yScale, u16 rotation)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r5, #0x30\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817F5A4\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	rsbs r0, r3, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "_0817F5A4:\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetAffineData\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TryFlipX(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817F5CC\n\t"
-        "	movs r2, #0x24\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r1, #0x24]\n\t"
-        "_0817F5CC:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_0817F5D0(u8 a0)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #3\n\t"
-        "	bhi _0817F5FC\n\t"
-        "	ldr r1, _0817F5F8\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r0, #6]\n\t"
-        "	strh r2, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r0, #4]\n\t"
-        "	strh r2, [r0, #2]\n\t"
-        "	strh r2, [r0, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0817F5FE\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F5F8: .4byte gUnknown_3001240\n\t"
-        "_0817F5FC:\n\t"
-        "	movs r0, #0\n\t"
-        "_0817F5FE:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 AddNewAnim(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0817F624\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r2, r1, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	bl sub_0817F5D0\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F624: .4byte gUnknown_3001270\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ResetSpriteAfterAnim(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r3, #4\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	ands r3, r0\n\t"
-        "	movs r5, #1\n\t"
-        "	orrs r3, r5\n\t"
-        "	strb r3, [r4, #1]\n\t"
-        "	lsrs r1, r3, #6\n\t"
-        "	ldrb r2, [r4, #3]\n\t"
-        "	lsrs r2, r2, #6\n\t"
-        "	lsls r3, r3, #0x1e\n\t"
-        "	lsrs r3, r3, #0x1e\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CalcCenterToCornerVec\n\t"
-        "	ldr r0, _0817F668\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0817F6AC\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817F66C\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x3f\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	orrs r0, r5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	b _0817F67C\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F668: .4byte gUnknown_3001274\n\t"
-        "_0817F66C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r5, r0, #0\n\t"
-        "_0817F67C:\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	ldrb r2, [r4, #3]\n\t"
-        "	lsls r1, r2, #0x1a\n\t"
-        "	lsrs r1, r1, #0x1b\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	lsls r0, r0, #0x1f\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #3]\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "_0817F6AC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_CircularStretchTwice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817F6C6\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_0817F6C6:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _0817F6EC\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _0817F6E8\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _0817F738\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F6E8: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817F6EC:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817F700\n\t"
-        "	adds r4, #0xff\n\t"
-        "_0817F700:\n\t"
-        "	asrs r4, r4, #8\n\t"
-        "	lsls r4, r4, #8\n\t"
-        "	subs r4, r0, r4\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x36]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Cos\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x38]\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r2, [r6, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0817F738:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalVibrate(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _0817F760\n\t"
-        "	ldr r0, _0817F75C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817F79A\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F75C: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817F760:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r5, #0xff\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817F76C\n\t"
-        "	movs r5, #1\n\t"
-        "_0817F76C:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817F780\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0817F780:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #6\n\t"
-        "	bl Sin\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "_0817F79A:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HorizontalSlide(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817F7C8\n\t"
-        "	ldr r0, _0817F7C4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817F7F2\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F7C4: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817F7C8:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817F7E2\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0817F7E2:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #6\n\t"
-        "	bl Sin\n\t"
-        "_0817F7F2:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalSlide(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x28\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F7A8\n\t"
-        "	ldr r0, _0817F820\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F820: .4byte HorizontalSlide + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void VerticalSlide(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817F844\n\t"
-        "	ldr r0, _0817F840\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817F870\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F840: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817F844:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817F85E\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0817F85E:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #6\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_0817F870:\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void Anim_VerticalSlide(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x28\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F824\n\t"
-        "	ldr r0, _0817F89C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F89C: .4byte VerticalSlide + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void VerticalJumps(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817F8C0\n\t"
-        "	ldr r0, _0817F8BC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	b _0817F90A\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F8BC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817F8C0:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817F8C8\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817F8C8:\n\t"
-        "	asrs r2, r0, #7\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _0817F90C\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _0817F8F4\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _0817F90C\n\t"
-        "	ldr r2, _0817F8F0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	b _0817F902\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F8F0: .4byte 0xFFFFFF00\n\t"
-        "_0817F8F4:\n\t"
-        "	lsls r0, r2, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "_0817F902:\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_0817F90A:\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0817F90C:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalJumps_Big(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F8A0\n\t"
-        "	ldr r0, _0817F930\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F930: .4byte VerticalJumps + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalJumpsHorizontalJumps(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r2, r0\n\t"
-        "	ble _0817F954\n\t"
-        "	ldr r0, _0817F950\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	b _0817FA02\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F950: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817F954:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _0817F95C\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817F95C:\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _0817F9E8\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0817F970\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F970: .4byte 0x0817F974\n\t"
-        "_0817F974: @ jump table\n\t"
-        "	.4byte _0817F98C @ case 0\n\t"
-        "	.4byte _0817F98C @ case 1\n\t"
-        "	.4byte _0817F990 @ case 2\n\t"
-        "	.4byte _0817F994 @ case 3\n\t"
-        "	.4byte _0817F9B0 @ case 4\n\t"
-        "	.4byte _0817F9CA @ case 5\n\t"
-        "_0817F98C:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817F9E6\n\t"
-        "_0817F990:\n\t"
-        "	movs r2, #0\n\t"
-        "	b _0817F9E8\n\t"
-        "_0817F994:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _0817F99C\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817F99C:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817F9AC\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817F9AC:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	b _0817F9E6\n\t"
-        "_0817F9B0:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _0817F9B8\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817F9B8:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817F9C4\n\t"
-        "	adds r0, #7\n\t"
-        "_0817F9C4:\n\t"
-        "	asrs r0, r0, #3\n\t"
-        "	subs r0, #8\n\t"
-        "	b _0817F9E6\n\t"
-        "_0817F9CA:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _0817F9D2\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817F9D2:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817F9E2\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817F9E2:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	adds r0, #8\n\t"
-        "_0817F9E6:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_0817F9E8:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _0817F9F0\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0817F9F0:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_0817FA02:\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GrowVibrate(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FA22\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_0817FA22:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _0817FA48\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _0817FA44\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _0817FABE\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FA44: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FA48:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817FA5C\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0817FA5C:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FA8C\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x36]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	b _0817FAA6\n\t"
-        "_0817FA8C:\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x36]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "_0817FAA6:\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x38]\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r2, [r6, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0817FABE:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Zigzag(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FADE\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_0817FADE:\n\t"
-        "	ldr r2, _0817FB04\n\t"
-        "	movs r5, #0x34\n\t"
-        "	ldrsh r1, [r4, r5]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r2, #2\n\t"
-        "	adds r3, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r3, r1]\n\t"
-        "	movs r5, #0x32\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _0817FB16\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FB0C\n\t"
-        "	ldr r0, _0817FB08\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0817FB16\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FB04: .4byte gUnknown_85D37D0\n\t"
-        "_0817FB08: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FB0C:\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r1, [r4, #0x32]\n\t"
-        "_0817FB16:\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	adds r0, r2, #2\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FB38\n\t"
-        "	ldr r0, _0817FB34\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0817FB6A\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FB34: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FB38:\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r5, #0x34\n\t"
-        "	ldrsh r1, [r4, r5]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r2, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "_0817FB6A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ZigzagFast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817FACC\n\t"
-        "	ldr r0, _0817FB84\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FB84: .4byte Zigzag + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HorizontalShake(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x90\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817FBA4\n\t"
-        "	ldr r0, _0817FBA0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817FBBE\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FBA0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FBA4:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817FBAC\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0817FBAC:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "_0817FBBE:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalShake(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FB88\n\t"
-        "	ldr r0, _0817FBEC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FBEC: .4byte HorizontalShake + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void VerticalShake(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x90\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817FC0C\n\t"
-        "	ldr r0, _0817FC08\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0817FC24\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FC08: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FC0C:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817FC14\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0817FC14:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #3\n\t"
-        "	bl Sin\n\t"
-        "_0817FC24:\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalShake(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FBF0\n\t"
-        "	ldr r0, _0817FC4C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FC4C: .4byte VerticalShake + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_CircularVibrate(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	ldrh r2, [r7, #0x32]\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r7, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817FC74\n\t"
-        "	ldr r0, _0817FC70\n\t"
-        "	str r0, [r7, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r7, #0x24]\n\t"
-        "	strh r0, [r7, #0x26]\n\t"
-        "	b _0817FCD0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FC70: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FC74:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r5, #0xff\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FC80\n\t"
-        "	movs r5, #1\n\t"
-        "_0817FC80:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817FC8A\n\t"
-        "	adds r0, #3\n\t"
-        "_0817FC8A:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r6, r0, #0x10\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r7, r0]\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817FCA2\n\t"
-        "	adds r4, #0xff\n\t"
-        "_0817FCA2:\n\t"
-        "	asrs r4, r4, #8\n\t"
-        "	lsls r4, r4, #8\n\t"
-        "	subs r4, r1, r4\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl Sin\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	asrs r5, r5, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	muls r1, r5, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	strh r0, [r7, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl Cos\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	muls r1, r5, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	strh r0, [r7, #0x24]\n\t"
-        "_0817FCD0:\n\t"
-        "	ldrh r0, [r7, #0x32]\n\t"
-        "	adds r0, #9\n\t"
-        "	strh r0, [r7, #0x32]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Twist(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r2, _0817FCFC\n\t"
-        "	ldrh r6, [r4, #0x2e]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r5, r0, r2\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817FD00\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r5]\n\t"
-        "	b _0817FDA4\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FCFC: .4byte gUnknown_3001240\n\t"
-        "_0817FD00:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FD1C\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FD1C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "_0817FD1C:\n\t"
-        "	ldr r2, _0817FD5C\n\t"
-        "	lsls r1, r6, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r5, r0, r2\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #6\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817FD70\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldrh r1, [r5, #4]\n\t"
-        "	movs r2, #4\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _0817FD60\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r5, #4]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r5]\n\t"
-        "	strh r1, [r4, #0x32]\n\t"
-        "	b _0817FD9E\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FD5C: .4byte gUnknown_3001240\n\t"
-        "_0817FD60:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _0817FD6C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0817FD9E\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FD6C: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FD70:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0817FD7C\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0817FD7C:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3a]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0817FD9E:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0x10\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_0817FDA4:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_Twist(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _0817FDE0\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	strh r3, [r1]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FCDC\n\t"
-        "	ldr r0, _0817FDE4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FDE0: .4byte gUnknown_3001240\n\t"
-        "_0817FDE4: .4byte Twist + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Spin(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FE00\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_0817FE00:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r6, [r4, r2]\n\t"
-        "	ldr r1, _0817FE30\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	cmp r6, r1\n\t"
-        "	ble _0817FE38\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _0817FE34\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0817FE56\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FE30: .4byte gUnknown_3001240\n\t"
-        "_0817FE34: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FE38:\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #9\n\t"
-        "	bl __divsi3\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3a]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0817FE56:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_Spin_Long(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _0817FE94\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FDE8\n\t"
-        "	ldr r0, _0817FE98\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FE94: .4byte gUnknown_3001240\n\t"
-        "_0817FE98: .4byte Spin + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void CircleCounterclockwise(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrh r0, [r5, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldr r1, _0817FED0\n\t"
-        "	lsls r0, r7, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	movs r2, #6\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0817FED8\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldr r0, _0817FED4\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	b _0817FF16\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FED0: .4byte gUnknown_3001240\n\t"
-        "_0817FED4: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FED8:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xc0\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0817FEEA\n\t"
-        "	ldr r2, _0817FF34\n\t"
-        "	adds r4, r1, r2\n\t"
-        "_0817FEEA:\n\t"
-        "	asrs r4, r4, #8\n\t"
-        "	lsls r4, r4, #8\n\t"
-        "	subs r4, r0, r4\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	movs r0, #8\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	movs r2, #8\n\t"
-        "	ldrsh r1, [r6, r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	ldrh r1, [r6, #8]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "_0817FF16:\n\t"
-        "	ldr r0, _0817FF38\n\t"
-        "	lsls r1, r7, #1\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1, #2]\n\t"
-        "	ldrh r1, [r5, #0x32]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FF34: .4byte SPECIAL_sub_081C472C\n\t"
-        "_0817FF38: .4byte gUnknown_3001240\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_CircleCounterclockwise(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _0817FF74\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FE9C\n\t"
-        "	ldr r0, _0817FF78\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FF74: .4byte gUnknown_3001240\n\t"
-        "_0817FF78: .4byte CircleCounterclockwise + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GlowBlack(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FF98\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_0817FF98:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	ble _0817FFB8\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, _0817FFB4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0817FFD4\n\t"
-        "	.align 2, 0\n\t"
-        "_0817FFB4: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0817FFB8:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r2, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "_0817FFD4:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalStretch(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817FFF4\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_0817FFF4:\n\t"
-        "	ldrh r5, [r6, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _0818001C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180018\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _081800B0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180018: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818001C:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	subs r0, #0xa\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x13\n\t"
-        "	bhi _08180042\n\t"
-        "	ldrh r0, [r6, #0x3c]\n\t"
-        "	adds r0, #0x33\n\t"
-        "	strh r0, [r6, #0x3c]\n\t"
-        "	movs r7, #0xff\n\t"
-        "	ands r7, r0\n\t"
-        "_08180042:\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180070\n\t"
-        "	lsls r5, r4, #0x10\n\t"
-        "	asrs r0, r5, #0x10\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl Sin\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	ldr r1, _0818006C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	strh r4, [r6, #0x36]\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	b _08180090\n\t"
-        "	.align 2, 0\n\t"
-        "_0818006C: .4byte 0xFFFFFF00\n\t"
-        "_08180070:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r0, r4, #0x10\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	subs r1, r1, r5\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r6, #0x36]\n\t"
-        "_08180090:\n\t"
-        "	asrs r0, r4, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r6, #0x38]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r6, r2]\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r2, [r6, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetAffineData\n\t"
-        "_081800B0:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void Anim_VerticalStretch(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081800D8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_081800D8:\n\t"
-        "	ldrh r6, [r5, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _08180104\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180100\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	mov r0, r8\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	b _081801B6\n\t"
-        "	.align 2, 0\n\t"
-        "_08180100: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08180104:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	subs r0, #0xa\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x13\n\t"
-        "	bhi _0818012A\n\t"
-        "	ldrh r0, [r5, #0x3c]\n\t"
-        "	adds r0, #0x33\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "	movs r7, #0xff\n\t"
-        "	ands r7, r0\n\t"
-        "_0818012A:\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0818014C\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r0, r4, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	ldr r2, _08180148\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r5, #0x36]\n\t"
-        "	b _0818015E\n\t"
-        "	.align 2, 0\n\t"
-        "_08180148: .4byte 0xFFFFFF00\n\t"
-        "_0818014C:\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r0, r4, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "_0818015E:\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	asrs r0, r6, #0x10\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	subs r4, r1, r4\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	strh r4, [r5, #0x38]\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r4, r1\n\t"
-        "	beq _0818019C\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08180196\n\t"
-        "	adds r0, #7\n\t"
-        "_08180196:\n\t"
-        "	lsls r0, r0, #0xd\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "_0818019C:\n\t"
-        "	mov r1, r8\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r2, [r5, r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetAffineData\n\t"
-        "_081801B6:\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void VerticalShakeTwice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r2, _08180214\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r5, [r1]\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	cmp r5, #0xfe\n\t"
-        "	beq _08180204\n\t"
-        "	subs r0, r6, r7\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "_08180204:\n\t"
-        "	cmp r5, #0xff\n\t"
-        "	bne _0818021C\n\t"
-        "	ldr r0, _08180218\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _08180240\n\t"
-        "	.align 2, 0\n\t"
-        "_08180214: .4byte gUnknown_85D34E0\n\t"
-        "_08180218: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818021C:\n\t"
-        "	mov r0, r8\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	cmp r7, r6\n\t"
-        "	bne _08180232\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0818023E\n\t"
-        "_08180232:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #1\n\t"
-        "_0818023E:\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "_08180240:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalShakeTwice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x30\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081801C8\n\t"
-        "	ldr r0, _08180264\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180264: .4byte VerticalShakeTwice + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_TipMoveForward(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	lsls r7, r0, #0x18\n\t"
-        "	lsrs r5, r7, #0x18\n\t"
-        "	mov r8, r5\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180286\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_08180286:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x23\n\t"
-        "	ble _081802B0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081802AC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	b _0818030A\n\t"
-        "	.align 2, 0\n\t"
-        "_081802AC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081802B0:\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	subs r6, #0xa\n\t"
-        "	lsls r0, r6, #7\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	cmp r5, #9\n\t"
-        "	bhi _081802D6\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	lsrs r3, r7, #0x19\n\t"
-        "	lsls r3, r3, #9\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	b _0818030A\n\t"
-        "_081802D6:\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x13\n\t"
-        "	bhi _081802EE\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #5\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	b _0818030A\n\t"
-        "_081802EE:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r3, #0x23\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r3, r3, r0\n\t"
-        "	lsrs r0, r3, #0x1f\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	asrs r3, r3, #1\n\t"
-        "	lsls r3, r3, #0x1a\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0818030A:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalPivot(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180332\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_08180332:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0x64\n\t"
-        "	ble _0818035C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r6, #0x26]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180358\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _08180394\n\t"
-        "	.align 2, 0\n\t"
-        "_08180358: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818035C:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r6, #0x26]\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	ldr r1, _081803A0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_08180394:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081803A0: .4byte 0x00000CCC\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void VerticalSlideWobble(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081803B8\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_081803B8:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0x64\n\t"
-        "	ble _081803E0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	strh r5, [r6, #0x26]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081803DC\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _0818042E\n\t"
-        "	.align 2, 0\n\t"
-        "_081803DC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081803E0:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r6, r0]\n\t"
-        "	lsls r0, r5, #8\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #9\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0xff\n\t"
-        "	ands r5, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r6, #0x26]\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ldr r1, _0818043C\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0818042E:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818043C: .4byte 0x00000CCC\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalSlideWobble(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081803A4\n\t"
-        "	ldr r0, _08180458\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180458: .4byte VerticalSlideWobble + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void RisingWobble(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180470\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_08180470:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r0, #0x64\n\t"
-        "	ble _08180498\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	strh r5, [r6, #0x26]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180494\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _081804F0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180494: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08180498:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r6, r0]\n\t"
-        "	lsls r0, r5, #8\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #9\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0xff\n\t"
-        "	ands r5, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r0, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x1f\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r1, [r6, r2]\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r6, #0x26]\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ldr r1, _081804FC\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_081804F0:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081804FC: .4byte 0x00000CCC\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_RisingWobble(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0818045C\n\t"
-        "	ldr r0, _08180518\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180518: .4byte RisingWobble + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalSlideWobble(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180534\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_08180534:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0x64\n\t"
-        "	ble _0818055C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	strh r5, [r6, #0x24]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180558\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _081805A8\n\t"
-        "	.align 2, 0\n\t"
-        "_08180558: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818055C:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r6, r0]\n\t"
-        "	lsls r0, r5, #8\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #9\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0xff\n\t"
-        "	ands r5, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r6, #0x24]\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ldr r1, _081805BC\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_081805A8:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081805BC: .4byte 0x00000CCC\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void VerticalSquishBounce(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081805D6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r6, [r4, #0x34]\n\t"
-        "_081805D6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	cmp r2, r0\n\t"
-        "	ble _0818060C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	strh r6, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180608\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081806AA\n\t"
-        "	.align 2, 0\n\t"
-        "_08180608: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818060C:\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08180642\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _08180642\n\t"
-        "	movs r0, #0x80\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x34]\n\t"
-        "_08180642:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	cmp r1, r2\n\t"
-        "	ble _0818065C\n\t"
-        "	subs r0, r2, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08180658\n\t"
-        "	adds r0, #7\n\t"
-        "_08180658:\n\t"
-        "	lsls r0, r0, #0xd\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "_0818065C:\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r1, r6, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	asrs r2, r5, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	bl __divsi3\n\t"
-        "	ldrh r1, [r4, #0x36]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	strh r1, [r4, #0x36]\n\t"
-        "_081806AA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalSquishBounce(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081805C0\n\t"
-        "	ldr r0, _081806D0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081806D0: .4byte VerticalSquishBounce + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ShrinkGrow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r4, [r5, r0]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	bl __divsi3\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	cmp r4, r0\n\t"
-        "	ble _08180714\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	strh r6, [r5, #0x26]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180710\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	b _0818077C\n\t"
-        "	.align 2, 0\n\t"
-        "_08180710: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08180714:\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r0, r1\n\t"
-        "	ble _08180740\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0818073C\n\t"
-        "	adds r0, #7\n\t"
-        "_0818073C:\n\t"
-        "	lsls r0, r0, #0xd\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "_08180740:\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0x30\n\t"
-        "	bl Sin\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r4, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	ldrh r0, [r5, #0x3a]\n\t"
-        "	ldrh r1, [r5, #0x36]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "_0818077C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShrinkGrow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0818079E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "_0818079E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081806D4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BounceRotateToSides(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r2, _08180850\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0, #6]\n\t"
-        "	str r1, [sp]\n\t"
-        "	ldr r5, _08180854\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r2, [r0, r3]\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r6, r0, #3\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	adds r2, r1, r5\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	mov sb, r2\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	ldrh r7, [r4, #0x34]\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180818\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08180818:\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	adds r5, #2\n\t"
-        "	mov r8, r5\n\t"
-        "	adds r1, r0, r5\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsb r5, [r1, r5]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0818085C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	strh r5, [r4, #0x24]\n\t"
-        "	strh r5, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180858\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081808E6\n\t"
-        "	.align 2, 0\n\t"
-        "_08180850: .4byte gUnknown_3001240\n\t"
-        "_08180854: .4byte gUnknown_85D37EE\n\t"
-        "_08180858: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818085C:\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r5, r0, #0x10\n\t"
-        "	lsls r0, r5, #7\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	mov r3, sl\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	add r1, r8\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	bl __divsi3\n\t"
-        "	add r0, sb\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r3, #0x24\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081808B0\n\t"
-        "	adds r0, #7\n\t"
-        "_081808B0:\n\t"
-        "	lsls r3, r0, #0xd\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r5, r0\n\t"
-        "	bne _081808E0\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081808E4\n\t"
-        "_081808E0:\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "_081808E4:\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_081808E6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_BounceRotateToSides(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08180930\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081807AC\n\t"
-        "	ldr r0, _08180934\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180930: .4byte gUnknown_3001240\n\t"
-        "_08180934: .4byte BounceRotateToSides + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GlowOrange(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180954\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08180954:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	ble _08180978\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldr r3, _08180970\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, _08180974\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08180994\n\t"
-        "	.align 2, 0\n\t"
-        "_08180970: .4byte 0x000002DF\n\t"
-        "_08180974: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08180978:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r2, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r3, _081809A0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "_08180994:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081809A0: .4byte 0x000002DF\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GlowRed(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081809C0\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_081809C0:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	ble _081809E0\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x1f\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, _081809DC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081809FC\n\t"
-        "	.align 2, 0\n\t"
-        "_081809DC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081809E0:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r2, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r3, #0x1f\n\t"
-        "	bl BlendPalette\n\t"
-        "_081809FC:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GlowBlue(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180A24\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08180A24:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	ble _08180A44\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	movs r3, #0xf8\n\t"
-        "	lsls r3, r3, #7\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, _08180A40\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08180A62\n\t"
-        "	.align 2, 0\n\t"
-        "_08180A40: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08180A44:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r2, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r3, #0xf8\n\t"
-        "	lsls r3, r3, #7\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "_08180A62:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GlowYellow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180A8C\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08180A8C:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	ble _08180AB0\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldr r3, _08180AA8\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, _08180AAC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08180ACC\n\t"
-        "	.align 2, 0\n\t"
-        "_08180AA8: .4byte 0x000003FF\n\t"
-        "_08180AAC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08180AB0:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r2, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r3, _08180AD8\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "_08180ACC:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180AD8: .4byte 0x000003FF\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void Anim_GlowPurple(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180AF8\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08180AF8:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	ble _08180B1C\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldr r3, _08180B14\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, _08180B18\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08180B38\n\t"
-        "	.align 2, 0\n\t"
-        "_08180B14: .4byte 0x00006018\n\t"
-        "_08180B18: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08180B1C:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r2, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r3, _08180B44\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "_08180B38:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180B44: .4byte 0x00006018\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_BackAndLunge(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldr r0, _08180B5C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180B5C: .4byte BackAndLunge_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackAndLunge_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #7\n\t"
-        "	ble _08180B82\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldr r0, _08180B90\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180B82:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180B90: .4byte BackAndLunge_1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackAndLunge_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	adds r0, #1\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _08180BDE\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	ldr r5, _08180BEC\n\t"
-        "	movs r3, #8\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "_08180BC0:\n\t"
-        "	subs r0, r1, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r4, #0x3a]\n\t"
-        "	adds r1, r2, #1\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r2, r1, #0x18\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r3\n\t"
-        "	bgt _08180BC0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	str r5, [r4, #0x1c]\n\t"
-        "_08180BDE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180BEC: .4byte BackAndLunge_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackAndLunge_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldrh r2, [r4, #0x3a]\n\t"
-        "	movs r3, #0x3a\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	cmp r0, r1\n\t"
-        "	ble _08180C30\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "_08180C30:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	lsls r3, r5, #8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r1, #0x24\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _08180C5A\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r5, [r4, #0x32]\n\t"
-        "	ldr r0, _08180C68\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180C5A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180C68: .4byte BackAndLunge_3 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackAndLunge_3(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	ble _08180CB4\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	subs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08180C8E\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08180C8E:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x32]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180CC8\n\t"
-        "	ldr r0, _08180CB0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08180CC8\n\t"
-        "	.align 2, 0\n\t"
-        "_08180CB0: .4byte BackAndLunge_4 + 1\n\t"
-        "_08180CB4:\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	ldrh r2, [r4, #0x24]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_08180CC8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackAndLunge_4(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _08180CF6\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180D04\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180CF6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180D04: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_BackFlip(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	ldr r0, _08180D20\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180D20: .4byte BackFlip_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackFlip_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180D4E\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _08180D4E\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_08180D4E:\n\t"
-        "	movs r1, #0x24\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #7\n\t"
-        "	ble _08180D66\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldr r0, _08180D74\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	strh r1, [r4, #0x36]\n\t"
-        "	ldr r0, _08180D78\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180D66:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180D74: .4byte 0x0000FFF8\n\t"
-        "_08180D78: .4byte BackFlip_1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackFlip_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Cos\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	ble _08180DB4\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	ldr r0, _08180DD4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180DB4:\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	ble _08180DC6\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_08180DC6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180DD4: .4byte BackFlip_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackFlip_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x34]\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _08180DF0\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	b _08180E42\n\t"
-        "_08180DF0:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #5\n\t"
-        "	bl Cos\n\t"
-        "	subs r0, #4\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #5\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	subs r0, #4\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	subs r3, #0x20\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	lsls r3, r3, #0x19\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	bgt _08180E42\n\t"
-        "	strh r5, [r4, #0x24]\n\t"
-        "	strh r5, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180E50\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180E42:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180E50: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_Flicker(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrh r1, [r3, #0x34]\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r3, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _08180E66\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	b _08180EAA\n\t"
-        "_08180E66:\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08180E72\n\t"
-        "	movs r2, #1\n\t"
-        "_08180E72:\n\t"
-        "	strh r2, [r3, #0x36]\n\t"
-        "	movs r0, #0x3e\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	mov ip, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r4, #5\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r2\n\t"
-        "	mov r1, ip\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrh r0, [r3, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x13\n\t"
-        "	ble _08180EA8\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	mov r2, ip\n\t"
-        "	strb r1, [r2]\n\t"
-        "	ldr r0, _08180EB4\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "_08180EA8:\n\t"
-        "	movs r0, #2\n\t"
-        "_08180EAA:\n\t"
-        "	strh r0, [r3, #0x34]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180EB4: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_BackFlipBig(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldr r0, _08180ECC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180ECC: .4byte BackFlipBig_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackFlipBig_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bgt _08180F00\n\t"
-        "	ldr r0, _08180F0C\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldr r0, _08180F10\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08180F00:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180F0C: .4byte 0x0000FFF0\n\t"
-        "_08180F10: .4byte BackFlipBig_1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackFlipBig_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	subs r0, #4\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x16\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x16\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	subs r3, #0x20\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	lsls r3, r3, #0x19\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	bgt _08180F5E\n\t"
-        "	ldr r0, _08180F6C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180F5E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180F6C: .4byte BackFlipBig_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BackFlipBig_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	subs r1, #1\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _08180F94\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08180FA0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180F94:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180FA0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_FrontFlip(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldr r0, _08180FB8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180FB8: .4byte FrontFlip_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FrontFlip_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0xf\n\t"
-        "	ble _08180FE0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldr r0, _08180FEC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08180FE0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08180FEC: .4byte FrontFlip_1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FrontFlip_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0x10\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrh r2, [r4, #0x24]\n\t"
-        "	movs r0, #0x24\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _08181028\n\t"
-        "	ldr r0, _08181020\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldr r0, _08181024\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08181032\n\t"
-        "	.align 2, 0\n\t"
-        "_08181020: .4byte 0x0000FFF0\n\t"
-        "_08181024: .4byte FrontFlip_2 + 1\n\t"
-        "_08181028:\n\t"
-        "	subs r0, r2, #2\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_08181032:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x32]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void FrontFlip_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	adds r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	blt _0818107A\n\t"
-        "	strh r2, [r4, #0x24]\n\t"
-        "	strh r2, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08181088\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_0818107A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181088: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void Anim_TumblingFrontFlip(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _081810B8\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081810C0\n\t"
-        "	ldr r0, _081810BC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081810B8: .4byte gUnknown_3001240\n\t"
-        "_081810BC: .4byte TumblingFrontFlip + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TumblingFrontFlip(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r6, _081810E0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081810E4\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _081811F6\n\t"
-        "	.align 2, 0\n\t"
-        "_081810E0: .4byte gUnknown_3001240\n\t"
-        "_081810E4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r5, [r4, r1]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0818111C\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrh r0, [r0, #2]\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldr r0, _08181160\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "	strh r5, [r4, #0x3a]\n\t"
-        "_0818111C:\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r6, #0x34\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	ldrh r2, [r4, #0x3c]\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	muls r3, r2, r3\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ldrh r6, [r4, #0x26]\n\t"
-        "	adds r2, r0, r6\n\t"
-        "	strh r2, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	adds r1, #0xf\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	cmp r1, #0x1e\n\t"
-        "	bls _08181164\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	b _08181180\n\t"
-        "	.align 2, 0\n\t"
-        "_08181160: .4byte 0x0000FFFF\n\t"
-        "_08181164:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0xf\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	bls _08181186\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r6, #0x36\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_08181180:\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_08181186:\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _081811DE\n\t"
-        "	movs r2, #0x24\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _081811DE\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r3, [r4, #0x24]\n\t"
-        "	strh r3, [r4, #0x26]\n\t"
-        "	ldr r5, _081811D0\n\t"
-        "	movs r6, #0x2e\n\t"
-        "	ldrsh r0, [r4, r6]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrh r2, [r1, #4]\n\t"
-        "	movs r6, #4\n\t"
-        "	ldrsh r0, [r1, r6]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _081811D4\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	strh r3, [r4, #0x38]\n\t"
-        "	strh r3, [r4, #0x3a]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0xa\n\t"
-        "	strh r1, [r0]\n\t"
-        "	b _081811DE\n\t"
-        "	.align 2, 0\n\t"
-        "_081811D0: .4byte gUnknown_3001240\n\t"
-        "_081811D4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081811FC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081811DE:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3a]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "_081811F6:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081811FC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_Figure8(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldr r0, _08181218\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181218: .4byte Figure8 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Figure8(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xc0\n\t"
-        "	ble _08181266\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08181266\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	b _0818127E\n\t"
-        "_08181266:\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	ble _0818128A\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0818128A\n\t"
-        "	ldr r1, _081812BC\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "_0818127E:\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_0818128A:\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	ble _081812B0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081812C0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081812B0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081812BC: .4byte 0xFFFFFF00\n\t"
-        "_081812C0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_FlashYellow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081812EE\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	strh r2, [r4, #0x3a]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	strh r2, [r4, #0x36]\n\t"
-        "_081812EE:\n\t"
-        "	ldr r1, _08181308\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r2, r0, #1\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _08181310\n\t"
-        "	ldr r0, _0818130C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0818137A\n\t"
-        "	.align 2, 0\n\t"
-        "_08181308: .4byte gUnknown_85D34C4\n\t"
-        "_0818130C: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08181310:\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08181346\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08181334\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldr r3, _08181330\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "	b _08181340\n\t"
-        "	.align 2, 0\n\t"
-        "_08181330: .4byte 0x000003FF\n\t"
-        "_08181334:\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldr r3, _0818136C\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "_08181340:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldr r1, _08181370\n\t"
-        "_08181346:\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r3, #0x38\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08181374\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _0818137A\n\t"
-        "	.align 2, 0\n\t"
-        "_0818136C: .4byte 0x000003FF\n\t"
-        "_08181370: .4byte gUnknown_85D34C4\n\t"
-        "_08181374:\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_0818137A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SwingConcave(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08181392\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_08181392:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldr r4, _081813E4\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r6, r3]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r0, r4\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081813F8\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r3, [r6, #0x24]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	ldrh r2, [r1, #4]\n\t"
-        "	movs r4, #4\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _081813E8\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	strh r3, [r6, #0x32]\n\t"
-        "	b _08181434\n\t"
-        "	.align 2, 0\n\t"
-        "_081813E4: .4byte gUnknown_3001240\n\t"
-        "_081813E8:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081813F4\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _08181434\n\t"
-        "	.align 2, 0\n\t"
-        "_081813F4: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081813F8:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r6, #0x24]\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	ldr r1, _08181448\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_08181434:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181448: .4byte 0x00000CCC\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_SwingConcave_FastShort(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08181478\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x32\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181380\n\t"
-        "	ldr r0, _0818147C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181478: .4byte gUnknown_3001240\n\t"
-        "_0818147C: .4byte SwingConcave + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SwingConvex(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08181492\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "_08181492:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldr r4, _081814E4\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r6, r3]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r0, r4\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081814F8\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r3, [r6, #0x24]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	ldrh r2, [r1, #4]\n\t"
-        "	movs r4, #4\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _081814E8\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	strh r3, [r6, #0x32]\n\t"
-        "	b _08181536\n\t"
-        "	.align 2, 0\n\t"
-        "_081814E4: .4byte gUnknown_3001240\n\t"
-        "_081814E8:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081814F4\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _08181536\n\t"
-        "	.align 2, 0\n\t"
-        "_081814F4: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081814F8:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r6, #0x24]\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	ldr r1, _08181548\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_08181536:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181548: .4byte 0x00000CCC\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_SwingConvex_FastShort(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08181578\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x32\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181480\n\t"
-        "	ldr r0, _0818157C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181578: .4byte gUnknown_3001240\n\t"
-        "_0818157C: .4byte SwingConvex + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_RotateUpSlamDown(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r0, #0x28\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl __divsi3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldr r0, _081815B0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081815B0: .4byte RotateUpSlamDown_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void RotateUpSlamDown_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3c]\n\t"
-        "	subs r3, #0x80\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x78\n\t"
-        "	bgt _0818160C\n\t"
-        "	movs r0, #0x78\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	ldr r0, _08181618\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_0818160C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181618: .4byte RotateUpSlamDown_1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void RotateUpSlamDown_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	bne _08181630\n\t"
-        "	ldr r0, _0818163C\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "_08181630:\n\t"
-        "	ldrh r0, [r1, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818163C: .4byte RotateUpSlamDown_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void RotateUpSlamDown_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #2\n\t"
-        "	movs r6, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Cos\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	ldrh r3, [r4, #0x3c]\n\t"
-        "	subs r3, #0x80\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	ble _081816AC\n\t"
-        "	strh r6, [r4, #0x24]\n\t"
-        "	strh r6, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	strh r6, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081816B8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081816AC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081816B8: .4byte Anim_VerticalShake + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void DeepVerticalSquishBounce(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r4, _081816DC\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _081816E0\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _081817FC\n\t"
-        "	.align 2, 0\n\t"
-        "_081816DC: .4byte gUnknown_3001240\n\t"
-        "_081816E0:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081816F6\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r6, [r5, #0x36]\n\t"
-        "	strh r6, [r5, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "_081816F6:\n\t"
-        "	movs r3, #0x38\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0818174E\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r1, [r5, #0x3a]\n\t"
-        "	subs r1, r4, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r2, [r5, #0x3c]\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	bne _081817E6\n\t"
-        "	strh r6, [r5, #0x36]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x38]\n\t"
-        "	b _081817E6\n\t"
-        "_0818174E:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081817E6\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl Sin\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	strh r1, [r5, #0x3a]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r0, [r5, #0x3c]\n\t"
-        "	subs r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r1, #0x36\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	bne _081817E6\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r2, [r1, #4]\n\t"
-        "	movs r3, #4\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _081817CE\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0xa\n\t"
-        "	strh r1, [r0]\n\t"
-        "	strh r6, [r5, #0x36]\n\t"
-        "	strh r6, [r5, #0x38]\n\t"
-        "	b _081817E6\n\t"
-        "_081817CE:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08181804\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "_081817E6:\n\t"
-        "	ldr r2, _08181808\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r5, r3]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0, #6]\n\t"
-        "	ldrh r1, [r5, #0x36]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "_081817FC:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181804: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08181808: .4byte gUnknown_3001240\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_DeepVerticalSquishBounce(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08181838\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081816BC\n\t"
-        "	ldr r0, _0818183C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181838: .4byte gUnknown_3001240\n\t"
-        "_0818183C: .4byte DeepVerticalSquishBounce + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalJumps(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r4, [r5, r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r4, r0\n\t"
-        "	ble _08181864\n\t"
-        "	ldr r0, _08181860\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	b _0818190E\n\t"
-        "	.align 2, 0\n\t"
-        "_08181860: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08181864:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0818186E\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_0818186E:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081818A4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _0818187E\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08181888\n\t"
-        "	b _081818F4\n\t"
-        "_0818187E:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _081818BE\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _081818D6\n\t"
-        "	b _081818F4\n\t"
-        "_08181888:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _08181890\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08181890:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r4, r0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081818A0\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081818A0:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	b _081818F2\n\t"
-        "_081818A4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _081818AC\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081818AC:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r4, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081818B8\n\t"
-        "	adds r0, #0xf\n\t"
-        "_081818B8:\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	subs r0, #8\n\t"
-        "	b _081818F2\n\t"
-        "_081818BE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _081818C6\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081818C6:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r4, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081818D2\n\t"
-        "	adds r0, #0xf\n\t"
-        "_081818D2:\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	b _081818F2\n\t"
-        "_081818D6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _081818DE\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081818DE:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r4, r0\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081818EE\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081818EE:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	adds r0, #8\n\t"
-        "_081818F2:\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "_081818F4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _081818FC\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081818FC:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r4, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_0818190E:\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	ldrh r0, [r5, #0x32]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalJumpsVerticalStretch(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _0818195C\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r0, _08181960\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r5, [r4, #0x34]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181968\n\t"
-        "	ldr r0, _08181964\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818195C: .4byte gUnknown_3001240\n\t"
-        "_08181960: .4byte 0x0000FFFF\n\t"
-        "_08181964: .4byte HorizontalJumpsVerticalStretch_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HorizontalJumpsVerticalStretch_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r6, _08181988\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _0818198C\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _081819F0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181988: .4byte gUnknown_3001240\n\t"
-        "_0818198C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r0, #0x80\n\t"
-        "	ble _081819A8\n\t"
-        "	strh r5, [r4, #0x32]\n\t"
-        "	ldr r0, _081819A4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081819EA\n\t"
-        "	.align 2, 0\n\t"
-        "_081819A4: .4byte HorizontalJumpsVerticalStretch_1 + 1\n\t"
-        "_081819A8:\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r3, #8\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	lsls r3, r0, #3\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _081819C2\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081819C2:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r1, r2, r0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081819D2\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081819D2:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_081819EA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "_081819F0:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HorizontalJumpsVerticalStretch_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x30\n\t"
-        "	ble _08181A28\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldr r0, _08181A24\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08181AC6\n\t"
-        "	.align 2, 0\n\t"
-        "_08181A24: .4byte HorizontalJumpsVerticalStretch_2 + 1\n\t"
-        "_08181A28:\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	subs r0, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	bhi _08181A66\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	ldr r2, _08181AD4\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	ldrh r0, [r0, #8]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "_08181A66:\n\t"
-        "	movs r5, #0\n\t"
-        "	lsls r1, r3, #0x10\n\t"
-        "	asrs r2, r1, #0x10\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	cmp r2, r0\n\t"
-        "	ble _08181A82\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08181A7E\n\t"
-        "	adds r0, #7\n\t"
-        "_08181A7E:\n\t"
-        "	lsls r0, r0, #0xd\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "_08181A82:\n\t"
-        "	movs r1, #0x34\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r1, r5, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	asrs r2, r6, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	adds r0, #8\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r0, r1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_08181AC6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181AD4: .4byte gUnknown_3001240\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HorizontalJumpsVerticalStretch_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r3, [r4, r0]\n\t"
-        "	cmp r3, #0x80\n\t"
-        "	ble _08181B3C\n\t"
-        "	ldr r3, _08181B20\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r2, [r1, #4]\n\t"
-        "	movs r5, #4\n\t"
-        "	ldrsh r0, [r1, r5]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _08181B28\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0xa\n\t"
-        "	strh r1, [r0]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	strh r2, [r4, #0x32]\n\t"
-        "	strh r2, [r4, #0x36]\n\t"
-        "	ldr r0, _08181B24\n\t"
-        "	b _08181B30\n\t"
-        "	.align 2, 0\n\t"
-        "_08181B20: .4byte gUnknown_3001240\n\t"
-        "_08181B24: .4byte HorizontalJumpsVerticalStretch_0 + 1\n\t"
-        "_08181B28:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08181B38\n\t"
-        "_08181B30:\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	b _08181B7C\n\t"
-        "	.align 2, 0\n\t"
-        "_08181B38: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08181B3C:\n\t"
-        "	ldr r2, _08181B90\n\t"
-        "	movs r5, #0x2e\n\t"
-        "	ldrsh r1, [r4, r5]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r5, [r0, r1]\n\t"
-        "	lsls r1, r5, #3\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	cmp r3, #0\n\t"
-        "	bge _08181B58\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08181B58:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r2, r3, r0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08181B68\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08181B68:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r1, r5, #3\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_08181B7C:\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181B90: .4byte gUnknown_3001240\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void RotateToSides(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08181BAC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08181BAC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #0xfe\n\t"
-        "	ble _08181C0C\n\t"
-        "	movs r5, #0\n\t"
-        "	strh r5, [r4, #0x24]\n\t"
-        "	strh r5, [r4, #0x26]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldr r2, _08181BF0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r2, [r1, #4]\n\t"
-        "	movs r3, #4\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _08181BF4\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	strh r5, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	b _08181BFE\n\t"
-        "	.align 2, 0\n\t"
-        "_08181BF0: .4byte gUnknown_3001240\n\t"
-        "_08181BF4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08181C08\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08181BFE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	b _08181C52\n\t"
-        "	.align 2, 0\n\t"
-        "_08181C08: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08181C0C:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldr r2, _08181C58\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0, #6]\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "_08181C52:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181C58: .4byte gUnknown_3001240\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_RotateToSides_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08181C88\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181B94\n\t"
-        "	ldr r0, _08181C8C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181C88: .4byte gUnknown_3001240\n\t"
-        "_08181C8C: .4byte RotateToSides + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_RotateUpToSides(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08181CA8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08181CA8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xfe\n\t"
-        "	ble _08181CE0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08181CDC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	b _08181D36\n\t"
-        "	.align 2, 0\n\t"
-        "_08181CDC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08181CE0:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08181CFA\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08181CFA:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "_08181D36:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_FlickerIncreasing(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08181D4A\n\t"
-        "	strh r0, [r3, #0x3c]\n\t"
-        "_08181D4A:\n\t"
-        "	ldrh r4, [r3, #0x32]\n\t"
-        "	movs r5, #0x32\n\t"
-        "	ldrsh r1, [r3, r5]\n\t"
-        "	ldrh r2, [r3, #0x3c]\n\t"
-        "	movs r5, #0x3c\n\t"
-        "	ldrsh r0, [r3, r5]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _08181D74\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r3, #0x3c]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	b _08181D84\n\t"
-        "_08181D74:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r3, #0x3c]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_08181D84:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	ble _08181D9A\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r2]\n\t"
-        "	ldr r0, _08181DA0\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "_08181D9A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181DA0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_TipHopForward(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldr r0, _08181DBC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181DBC: .4byte TipHopForward_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TipHopForward_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	ble _08181DE0\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldr r0, _08181DDC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08181DE4\n\t"
-        "	.align 2, 0\n\t"
-        "_08181DDC: .4byte TipHopForward_1 + 1\n\t"
-        "_08181DE0:\n\t"
-        "	adds r0, r1, #4\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08181DE4:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3c]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TipHopForward_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08181E20\n\t"
-        "	ldr r0, _08181E1C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _08181E5A\n\t"
-        "	.align 2, 0\n\t"
-        "_08181E1C: .4byte TipHopForward_2 + 1\n\t"
-        "_08181E20:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08181E30\n\t"
-        "	ldr r1, _08181E68\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_08181E30:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08181E40\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08181E40:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0xc\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08181E5A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181E68: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TipHopForward_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	subs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08181E98\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08181E94\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08181EAA\n\t"
-        "	.align 2, 0\n\t"
-        "_08181E94: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08181E98:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_08181EAA:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3c]\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_PivotShake(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08181EE2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_08181EE2:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	ble _08181F0C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08181F08\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08181F52\n\t"
-        "	.align 2, 0\n\t"
-        "_08181F08: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08181F0C:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x10\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08181F1E\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08181F1E:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08181F3E\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08181F3E:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_08181F52:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08181F5E\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08181F5E:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_TipAndShake(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldr r0, _08181FA4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08181FA4: .4byte TipAndShake_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TipAndShake_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x18\n\t"
-        "	ble _08181FD8\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _08181FF6\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	ldr r0, _08181FD4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08181FF6\n\t"
-        "	.align 2, 0\n\t"
-        "_08181FD4: .4byte TipAndShake_1 + 1\n\t"
-        "_08181FD8:\n\t"
-        "	adds r0, r1, #2\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_08181FF6:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3c]\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TipAndShake_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x20\n\t"
-        "	ble _08182038\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	ldr r0, _08182034\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08182056\n\t"
-        "	.align 2, 0\n\t"
-        "_08182034: .4byte TipAndShake_2 + 1\n\t"
-        "_08182038:\n\t"
-        "	adds r0, r1, #2\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_08182056:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3c]\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TipAndShake_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #9\n\t"
-        "	ble _0818209C\n\t"
-        "	movs r0, #0x20\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldr r0, _081820F0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_0818209C:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	subs r0, #0x1d\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #6\n\t"
-        "	bls _081820D0\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_081820D0:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3c]\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081820F0: .4byte TipAndShake_3 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TipAndShake_3(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _0818211C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08182118\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0818213A\n\t"
-        "	.align 2, 0\n\t"
-        "_08182118: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818211C:\n\t"
-        "	subs r0, r1, #2\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_0818213A:\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3c]\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VibrateToCorners(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _0818217C\n\t"
-        "	ldr r0, _08182178\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	b _08182208\n\t"
-        "	.align 2, 0\n\t"
-        "_08182178: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818217C:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r5, #0xff\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08182188\n\t"
-        "	movs r5, #1\n\t"
-        "_08182188:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _08182194\n\t"
-        "	adds r0, r2, #3\n\t"
-        "_08182194:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	asrs r1, r1, #1\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081821D8\n\t"
-        "	lsls r0, r2, #7\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _081821B8\n\t"
-        "	adds r0, #0xff\n\t"
-        "_081821B8:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	b _08182206\n\t"
-        "_081821D8:\n\t"
-        "	lsls r0, r2, #7\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _081821E8\n\t"
-        "	adds r0, #0xff\n\t"
-        "_081821E8:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_08182206:\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_08182208:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GrowInStages(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0818223E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "	strh r5, [r4, #0x3a]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_0818223E:\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _08182290\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08182340\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	movs r1, #0x14\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	b _08182340\n\t"
-        "_08182290:\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _081822D0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	ble _081822BC\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081822CC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081822BC:\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl Cos\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	b _08182320\n\t"
-        "	.align 2, 0\n\t"
-        "_081822CC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081822D0:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl Sin\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	ble _081822F4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	strh r1, [r4, #0x3a]\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	b _08182320\n\t"
-        "_081822F4:\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x30\n\t"
-        "	ble _08182308\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08182308\n\t"
-        "	movs r0, #2\n\t"
-        "	b _0818231A\n\t"
-        "_08182308:\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	ble _08182320\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08182320\n\t"
-        "	movs r0, #1\n\t"
-        "_0818231A:\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "_08182320:\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r2, r2, r0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_08182340:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalSpring(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08182366\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_08182366:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08182394\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08182390\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081823EC\n\t"
-        "	.align 2, 0\n\t"
-        "_08182390: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08182394:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _081823A0\n\t"
-        "	adds r0, #0xff\n\t"
-        "_081823A0:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _081823C4\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081823C4:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x60\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_081823EC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalRepeatedSpring(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0818240E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_0818240E:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	cmp r0, r5\n\t"
-        "	ble _0818243C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08182438\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08182480\n\t"
-        "	.align 2, 0\n\t"
-        "_08182438: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818243C:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0818245A\n\t"
-        "	adds r0, #0x3f\n\t"
-        "_0818245A:\n\t"
-        "	asrs r0, r0, #6\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_08182480:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_SpringRising(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldr r0, _081824A0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081824A0: .4byte SpringRising_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SpringRising_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #8\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	ble _081824C8\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	strh r1, [r4, #0x3a]\n\t"
-        "	ldr r0, _081824C4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	b _081824CC\n\t"
-        "	.align 2, 0\n\t"
-        "_081824C4: .4byte SpringRising_1 + 1\n\t"
-        "_081824C8:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "_081824CC:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl Sin\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	lsls r2, r0, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void SpringRising_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #4\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x5f\n\t"
-        "	ble _0818251E\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl Cos\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _08182574\n\t"
-        "_0818251E:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x26]\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	ble _08182550\n\t"
-        "	ldr r5, _0818254C\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	subs r0, #0x40\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	b _08182554\n\t"
-        "	.align 2, 0\n\t"
-        "_0818254C: .4byte 0x0000FFFF\n\t"
-        "_08182550:\n\t"
-        "	movs r5, #1\n\t"
-        "	movs r0, #0\n\t"
-        "_08182554:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xf\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl Cos\n\t"
-        "	lsls r1, r5, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	muls r2, r0, r2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "_08182574:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _0818259A\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldr r0, _081825A0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_0818259A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081825A0: .4byte SpringRising_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SpringRising_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl Cos\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	ble _081825EE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _0818260C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_081825EE:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	lsls r2, r5, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818260C: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HorizontalSpring(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08182644\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08182640\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	b _081826A0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182640: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08182644:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08182650\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08182650:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08182678\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08182678:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x60\n\t"
-        "	bl Sin\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_081826A0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalSpring(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _081826CE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	movs r1, #8\n\t"
-        "	strh r1, [r4, #0x3a]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	strh r1, [r4, #0x36]\n\t"
-        "_081826CE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08182610\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void HorizontalRepeatedSpring(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08182710\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _0818270C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	b _0818276C\n\t"
-        "	.align 2, 0\n\t"
-        "_0818270C: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08182710:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0818271C\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0818271C:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08182744\n\t"
-        "	adds r0, #0x3f\n\t"
-        "_08182744:\n\t"
-        "	asrs r0, r0, #6\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl Sin\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0818276C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalRepeatedSpring_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0818279A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #0xfc\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_0818279A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081826DC\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalSlideShrink(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _081827C6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_081827C6:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081827F4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldr r0, _081827F0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0818284A\n\t"
-        "	.align 2, 0\n\t"
-        "_081827F0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081827F4:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08182800\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08182800:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08182824\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08182824:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x60\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0818284A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_LungeGrow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08182876\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_08182876:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081828A4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldr r0, _081828A0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0818290A\n\t"
-        "	.align 2, 0\n\t"
-        "_081828A0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081828A4:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081828B0\n\t"
-        "	adds r1, #0xff\n\t"
-        "_081828B0:\n\t"
-        "	asrs r1, r1, #8\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	subs r1, r0, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r0, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081828DC\n\t"
-        "	adds r1, #0xff\n\t"
-        "_081828DC:\n\t"
-        "	asrs r1, r1, #8\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	subs r1, r0, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r0, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_0818290A:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_CircleIntoBackground(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08182936\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_08182936:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08182964\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldr r0, _08182960\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081829C2\n\t"
-        "	.align 2, 0\n\t"
-        "_08182960: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08182964:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08182970\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08182970:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08182996\n\t"
-        "	adds r1, #0xff\n\t"
-        "_08182996:\n\t"
-        "	asrs r1, r1, #8\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	subs r1, r0, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r0, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	movs r1, #0x60\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_081829C2:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_RapidHorizontalHops(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081829F4\n\t"
-        "	ldr r0, _081829F0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _08182AB4\n\t"
-        "	.align 2, 0\n\t"
-        "_081829F0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081829F4:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _08182A02\n\t"
-        "	ldr r1, _08182A28\n\t"
-        "	adds r0, r2, r1\n\t"
-        "_08182A02:\n\t"
-        "	asrs r3, r0, #9\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08182A0E\n\t"
-        "	adds r0, r1, #3\n\t"
-        "_08182A0E:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _08182A50\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08182A2C\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08182A36\n\t"
-        "	b _08182A8E\n\t"
-        "	.align 2, 0\n\t"
-        "_08182A28: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08182A2C:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08182A64\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _08182A76\n\t"
-        "	b _08182A8E\n\t"
-        "_08182A36:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08182A48\n\t"
-        "	ldr r1, _08182A4C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_08182A48:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	b _08182A8C\n\t"
-        "	.align 2, 0\n\t"
-        "_08182A4C: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08182A50:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08182A5E\n\t"
-        "	adds r0, #0x1f\n\t"
-        "_08182A5E:\n\t"
-        "	asrs r0, r0, #5\n\t"
-        "	subs r0, #0x10\n\t"
-        "	b _08182A8C\n\t"
-        "_08182A64:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08182A72\n\t"
-        "	adds r0, #0x1f\n\t"
-        "_08182A72:\n\t"
-        "	asrs r0, r0, #5\n\t"
-        "	b _08182A8C\n\t"
-        "_08182A76:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08182A88\n\t"
-        "	ldr r1, _08182AC0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_08182A88:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	adds r0, #0x10\n\t"
-        "_08182A8C:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_08182A8E:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08182A9A\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_08182A9A:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0x18\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08182AB4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182AC0: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_FourPetal(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08182AE0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08182AE0:\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #8\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	ldrh r2, [r4, #0x3a]\n\t"
-        "	movs r5, #0x3a\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _08182AFE\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	ble _08182B0C\n\t"
-        "	b _08182B06\n\t"
-        "_08182AFE:\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	ble _08182B0C\n\t"
-        "_08182B06:\n\t"
-        "	strh r3, [r4, #0x3c]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "_08182B0C:\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _08182BB4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08182B20\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182B20: .4byte 0x08182B24\n\t"
-        "_08182B24: @ jump table\n\t"
-        "	.4byte _08182B98 @ case 0\n\t"
-        "	.4byte _08182B38 @ case 1\n\t"
-        "	.4byte _08182B56 @ case 2\n\t"
-        "	.4byte _08182B78 @ case 3\n\t"
-        "	.4byte _08182B98 @ case 4\n\t"
-        "_08182B38:\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r5, #0x3c\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _08182BBE\n\t"
-        "_08182B56:\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #0x80\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Cos\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _08182BBE\n\t"
-        "_08182B78:\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	adds r0, #0x80\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _08182BBE\n\t"
-        "_08182B98:\n\t"
-        "	movs r5, #0x3c\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Cos\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _08182BBE\n\t"
-        "_08182BB4:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldr r0, _08182BCC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08182BBE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182BCC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalSquishBounce_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x20\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081805C0\n\t"
-        "	ldr r0, _08182BE8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182BE8: .4byte VerticalSquishBounce + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalSlide_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F7A8\n\t"
-        "	ldr r0, _08182C04\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182C04: .4byte HorizontalSlide + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalSlide_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F824\n\t"
-        "	ldr r0, _08182C20\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182C20: .4byte VerticalSlide + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_BounceRotateToSides_Small(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182C58\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081807AC\n\t"
-        "	ldr r0, _08182C5C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182C58: .4byte gUnknown_3001240\n\t"
-        "_08182C5C: .4byte BounceRotateToSides + 1\n\t"
-        ".syntax divided\n\t"
-    );
+void SetAffineData(struct Sprite *sprite, s16 xScale, s16 yScale, u16 rotation)
+{
+    u8 matrixNum;
+    struct ObjAffineSrcData affineSrcData;
+    struct OamMatrix dest;
+
+    affineSrcData.xScale = xScale;
+    affineSrcData.yScale = yScale;
+    affineSrcData.rotation = rotation;
+    matrixNum = sprite->oam.matrixNum;
+
+    ObjAffineSet(&affineSrcData, &dest, 1, 2);
+    gOamMatrices[matrixNum].a = dest.a;
+    gOamMatrices[matrixNum].b = dest.b;
+    gOamMatrices[matrixNum].c = dest.c;
+    gOamMatrices[matrixNum].d = dest.d;
+}
+
+void HandleStartAffineAnim(struct Sprite *sprite)
+{
+    sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+    sprite->affineAnims = gUnknown_85D37C8;
+
+    if (sIsSummaryAnim == TRUE)
+        InitSpriteAffineAnim(sprite);
+
+    if (sprite->data[1] == 0)
+        StartSpriteAffineAnim(sprite, 1);
+    else
+        StartSpriteAffineAnim(sprite, 0);
+
+    CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
+    sprite->affineAnimPaused = TRUE;
+}
+
+void HandleSetAffineData(struct Sprite *sprite, s16 xScale, s16 yScale, u16 rotation)
+{
+    if (sprite->data[1] == 0)
+    {
+        xScale = -xScale;
+        rotation = -rotation;
+    }
+
+    SetAffineData(sprite, xScale, yScale, rotation);
+}
+
+void TryFlipX(struct Sprite *sprite)
+{
+    if (sprite->data[1] == 0)
+    {
+        s16 xOffset = sprite->x2;
+
+        sprite->x2 = -xOffset;
+    }
+}
+
+bool32 sub_0817F5D0(u8 id)
+{
+    if (id >= 4)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gUnknown_3001240[id].rotation = 0;
+        gUnknown_3001240[id].delay = 0;
+        gUnknown_3001240[id].runs = 1;
+        gUnknown_3001240[id].speed = 0;
+        gUnknown_3001240[id].data = 0;
+        return TRUE;
+    }
+}
+
+u8 AddNewAnim(void)
+{
+    gUnknown_3001270 = (gUnknown_3001270 + 1) % 4;
+    sub_0817F5D0(gUnknown_3001270);
+    return gUnknown_3001270;
+}
+
+void ResetSpriteAfterAnim(struct Sprite *sprite)
+{
+    sprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
+
+    if (sIsSummaryAnim == TRUE)
+    {
+        if (sprite->data[1] == 0)
+            sprite->hFlip = TRUE;
+        else
+            sprite->hFlip = FALSE;
+
+        FreeOamMatrix(sprite->oam.matrixNum);
+        sprite->oam.matrixNum |= (sprite->hFlip << 3);
+        sprite->oam.affineMode = ST_OAM_AFFINE_OFF;
+    }
+}
+
+void Anim_CircularStretchTwice(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 40)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 var = (sprite->data[2] * 512 / 40) % 256;
+
+        sprite->data[4] = Sin(var, 32) + 256;
+        sprite->data[5] = Cos(var, 32) + 256;
+        HandleSetAffineData(sprite, sprite->data[4], sprite->data[5], 0);
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_HorizontalVibrate(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    if (sprite->data[2] > 40)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        sprite->x2 = 0;
+    }
+    else
+    {
+        s8 sign;
+
+        if (!(sprite->data[2] & 1))
+            sign = 1;
+        else
+            sign = -1;
+
+        sprite->x2 = Sin((sprite->data[2] * 128 / 40) % 256, 6) * sign;
+    }
+
+    sprite->data[2]++;
+}
+
+void HorizontalSlide(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+
+    if (sprite->data[2] > sprite->data[0])
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->x2 = 0;
+    }
+    else
+    {
+        sprite->x2 = Sin((s16)((sprite->data[2] * 384 / sprite->data[0]) % 256), 6);
+    }
+
+    sprite->data[2]++;
+    TryFlipX(sprite);
+}
+
+void Anim_HorizontalSlide(struct Sprite *sprite)
+{
+    sprite->data[0] = 40;
+    HorizontalSlide(sprite);
+    sprite->callback = HorizontalSlide;
+}
+
+void VerticalSlide(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+
+    if (sprite->data[2] > sprite->data[0])
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        sprite->y2 = -(Sin((s16)((sprite->data[2] * 384 / sprite->data[0]) % 256), 6));
+    }
+
+    sprite->data[2]++;
+    TryFlipX(sprite);
+}
+
+
+void Anim_VerticalSlide(struct Sprite *sprite)
+{
+    sprite->data[0] = 40;
+    VerticalSlide(sprite);
+    sprite->callback = VerticalSlide;
+}
+
+void VerticalJumps(struct Sprite *sprite)
+{
+    s32 counter = sprite->data[2];
+
+    if (counter > 384)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        s16 divCounter = counter / 128;
+
+        switch (divCounter)
+        {
+        case 0:
+        case 1:
+            sprite->y2 = -(Sin((s16)(counter % 128), (s16)(sprite->data[0] * 2)));
+            break;
+        case 2:
+        case 3:
+            counter -= 256;
+            sprite->y2 = -(Sin((s16)counter, (s16)(sprite->data[0] * 3)));
+            break;
+        }
+    }
+
+    sprite->data[2] += 12;
+}
+
+void Anim_VerticalJumps_Big(struct Sprite *sprite)
+{
+    sprite->data[0] = 4;
+    VerticalJumps(sprite);
+    sprite->callback = VerticalJumps;
+}
+
+void Anim_VerticalJumpsHorizontalJumps(struct Sprite *sprite)
+{
+    s32 counter = sprite->data[2];
+
+    if (counter > 768)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        s16 divCounter = counter / 128;
+
+        switch (divCounter)
+        {
+        case 0:
+        case 1:
+            sprite->x2 = 0;
+            break;
+        case 2:
+            counter = 0;
+            break;
+        case 3:
+            sprite->x2 = -(counter % 128 * 8) / 128;
+            break;
+        case 4:
+            sprite->x2 = counter % 128 / 8 - 8;
+            break;
+        case 5:
+            sprite->x2 = -(counter % 128 * 8) / 128 + 8;
+            break;
+        }
+
+        sprite->y2 = -(Sin((s16)(counter % 128), 8));
+    }
+
+    sprite->data[2] += 12;
+}
+
+void Anim_GrowVibrate(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 40)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 index = (sprite->data[2] * 256 / 40) % 256;
+
+        if (sprite->data[2] % 2 == 0)
+        {
+            sprite->data[4] = Sin(index, 32) + 256;
+            sprite->data[5] = Sin(index, 32) + 256;
+        }
+        else
+        {
+            sprite->data[4] = Sin(index, 8) + 256;
+            sprite->data[5] = Sin(index, 8) + 256;
+        }
+
+        HandleSetAffineData(sprite, sprite->data[4], sprite->data[5], 0);
+    }
+
+    sprite->data[2]++;
+}
+
+void Zigzag(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+
+    if (sprite->data[2] == 0)
+        sprite->data[3] = 0;
+
+    if (gUnknown_85D37D0[sprite->data[3]][2] == sprite->data[2])
+    {
+        if (gUnknown_85D37D0[sprite->data[3]][2] == 0)
+        {
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        }
+        else
+        {
+            sprite->data[3]++;
+            sprite->data[2] = 0;
+        }
+    }
+
+    if (gUnknown_85D37D0[sprite->data[3]][2] == 0)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->x2 += gUnknown_85D37D0[sprite->data[3]][0];
+        sprite->y2 += gUnknown_85D37D0[sprite->data[3]][1];
+        sprite->data[2]++;
+        TryFlipX(sprite);
+    }
+}
+
+void Anim_ZigzagFast(struct Sprite *sprite)
+{
+    Zigzag(sprite);
+    sprite->callback = Zigzag;
+}
+
+void HorizontalShake(struct Sprite *sprite)
+{
+    s32 counter = sprite->data[2];
+
+    if (counter > 2304)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->x2 = 0;
+    }
+    else
+    {
+        sprite->x2 = Sin((s16)(counter % 256), sprite->data[7]);
+    }
+
+    sprite->data[2] += sprite->data[0];
+}
+
+void Anim_HorizontalShake(struct Sprite *sprite)
+{
+    sprite->data[0] = 60;
+    sprite->data[7] = 3;
+    HorizontalShake(sprite);
+    sprite->callback = HorizontalShake;
+}
+
+void VerticalShake(struct Sprite *sprite)
+{
+    s32 counter = sprite->data[2];
+
+    if (counter > 2304)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        sprite->y2 = Sin((s16)(counter % 256), 3);
+    }
+
+    sprite->data[2] += sprite->data[0];
+}
+
+void Anim_VerticalShake(struct Sprite *sprite)
+{
+    sprite->data[0] = 60;
+    VerticalShake(sprite);
+    sprite->callback = VerticalShake;
+}
+
+void Anim_CircularVibrate(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern s16 Cos(s16 index, s16 amplitude);
+    s8 sign;
+    s32 index;
+    s32 amplitude;
+
+    if (sprite->data[2] > 512)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        if (!(sprite->data[2] & 1))
+            sign = 1;
+        else
+            sign = -1;
+
+        amplitude = Sin(sprite->data[2] / 4, 8);
+        index = sprite->data[2] % 256;
+
+        sprite->y2 = Sin(index, amplitude) * sign;
+        sprite->x2 = Cos(index, amplitude) * sign;
+    }
+
+    sprite->data[2] += 9;
+}
+void Twist(struct Sprite *sprite)
+{
+    s16 id = sprite->data[0];
+
+    if (gUnknown_3001240[id].delay != 0)
+    {
+        gUnknown_3001240[id].delay--;
+    }
+    else
+    {
+        if (sprite->data[2] == 0 && gUnknown_3001240[id].data == 0)
+        {
+            HandleStartAffineAnim(sprite);
+            gUnknown_3001240[id].data++;
+        }
+
+        if (sprite->data[2] > gUnknown_3001240[id].rotation)
+        {
+            HandleSetAffineData(sprite, 256, 256, 0);
+            if (gUnknown_3001240[id].runs > 1)
+            {
+                gUnknown_3001240[id].runs--;
+                gUnknown_3001240[id].delay = 10;
+                sprite->data[2] = 0;
+            }
+            else
+            {
+                ResetSpriteAfterAnim(sprite);
+                sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+            }
+        }
+        else
+        {
+            sprite->data[6] = Sin((s16)(sprite->data[2] % 256), 4096);
+            HandleSetAffineData(sprite, 256, 256, sprite->data[6]);
+        }
+
+        sprite->data[2] += 16;
+    }
+}
+
+void Anim_Twist(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 512;
+    gUnknown_3001240[id].delay = 0;
+    Twist(sprite);
+    sprite->callback = Twist;
+}
+
+void Spin(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0];
+
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > gUnknown_3001240[id].delay)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[6] = (65536 / gUnknown_3001240[id].data) * sprite->data[2];
+        HandleSetAffineData(sprite, 256, 256, sprite->data[6]);
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_Spin_Long(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].delay = 60;
+    gUnknown_3001240[id].data = 20;
+    Spin(sprite);
+    sprite->callback = Spin;
+}
+
+void CircleCounterclockwise(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern s16 Cos(s16 index, s16 amplitude);
+    u8 id = sprite->data[0];
+
+    TryFlipX(sprite);
+
+    if (sprite->data[2] > gUnknown_3001240[id].rotation)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+    }
+    else
+    {
+        s16 index = (sprite->data[2] + 192) % 256;
+
+        sprite->x2 = -(Cos(index, gUnknown_3001240[id].data * 2));
+        sprite->y2 = Sin(index, gUnknown_3001240[id].data) + gUnknown_3001240[id].data;
+    }
+
+    sprite->data[2] += gUnknown_3001240[id].speed;
+    TryFlipX(sprite);
+}
+void Anim_CircleCounterclockwise(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 512;
+    gUnknown_3001240[id].data = 6;
+    gUnknown_3001240[id].speed = 24;
+    CircleCounterclockwise(sprite);
+    sprite->callback = CircleCounterclockwise_Thumb;
+}
+void Anim_GlowBlack(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+
+    if (sprite->data[2] > 128)
+    {
+        BlendPalette((u16)sprite->data[7], 16, 0, 0);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[6] = Sin(sprite->data[2], 16);
+        BlendPalette((u16)sprite->data[7], 16, (u8)sprite->data[6], 0);
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_HorizontalStretch(struct Sprite *sprite)
+{
+    s16 index1 = 0, index2 = 0;
+
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 40)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        index2 = (sprite->data[2] * 128) / 40;
+        if (sprite->data[2] >= 10 && sprite->data[2] <= 29)
+        {
+            sprite->data[7] += 51;
+            index1 = 0xFF & sprite->data[7];
+        }
+
+        if (!sprite->data[1])
+            sprite->data[4] = (Sin(index2, 40) - 256) + Sin(index1, 16);
+        else
+            sprite->data[4] = (256 - Sin(index2, 40)) - Sin(index1, 16);
+
+        sprite->data[5] = Sin(index2, 16) + 256;
+        SetAffineData(sprite, sprite->data[4], sprite->data[5], 0);
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_VerticalStretch(struct Sprite *sprite)
+{
+    s16 posY = 0, index1 = 0, index2 = 0;
+
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 40)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->y2 = posY;
+    }
+    else
+    {
+        index2 = (sprite->data[2] * 128) / 40;
+        if (sprite->data[2] >= 10 && sprite->data[2] <= 29)
+        {
+            sprite->data[7] += 51;
+            index1 = 0xFF & sprite->data[7];
+        }
+
+        if (!sprite->data[1])
+            sprite->data[4] = -(Sin(index2, 16)) - 256;
+        else
+            sprite->data[4] = Sin(index2, 16) + 256;
+
+        sprite->data[5] = (256 - Sin(index2, 40)) - Sin(index1, 8);
+
+        if (sprite->data[5] != 256)
+            posY = (256 - sprite->data[5]) / 8;
+        sprite->y2 = -(posY);
+        SetAffineData(sprite, sprite->data[4], sprite->data[5], 0);
+    }
+
+    sprite->data[2]++;
+}
+
+void VerticalShakeTwice(struct Sprite *sprite)
+{
+    u8 index = sprite->data[2];
+    u8 var7 = sprite->data[6];
+    u8 var5 = gUnknown_85D34E0[sprite->data[5]][0];
+    u8 var6 = gUnknown_85D34E0[sprite->data[5]][1];
+    u8 amplitude = 0;
+
+    if (var5 != (u8)-2)
+        amplitude = (var6 - var7) * var5 / var6;
+    else
+        amplitude = 0;
+
+    if (var5 == (u8)-1)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        sprite->y2 = Sin(index, amplitude);
+
+        if (var7 == var6)
+        {
+            sprite->data[5]++;
+            sprite->data[6] = 0;
+        }
+        else
+        {
+            sprite->data[2] += sprite->data[0];
+            sprite->data[6]++;
+        }
+    }
+}
+
+void Anim_VerticalShakeTwice(struct Sprite *sprite)
+{
+    sprite->data[0] = 48;
+    VerticalShakeTwice(sprite);
+    sprite->callback = VerticalShakeTwice;
+}
+
+void Anim_TipMoveForward(struct Sprite *sprite)
+{
+    u8 counter = 0;
+
+    TryFlipX(sprite);
+    counter = sprite->data[2];
+
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 35)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->x2 = 0;
+    }
+    else
+    {
+        s16 index = ((counter - 10) * 128) / 20;
+
+        if (counter < 10)
+            HandleSetAffineData(sprite, 256, 256, counter / 2 * 512);
+        else if (counter >= 10 && counter <= 29)
+            sprite->x2 = -(Sin(index, 5));
+        else
+            HandleSetAffineData(sprite, 256, 256, (35 - counter) / 2 * 1024);
+    }
+
+    sprite->data[2]++;
+    TryFlipX(sprite);
+}
+
+void Anim_HorizontalPivot(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 100)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->y2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 index = (sprite->data[2] * 256) / 100;
+
+        sprite->y2 = Sin(index, 10);
+        HandleSetAffineData(sprite, 256, 256, Sin(index, 3276));
+    }
+
+    sprite->data[2]++;
+}
+
+void VerticalSlideWobble(struct Sprite *sprite)
+{
+    s32 var = 0;
+    s16 index = 0;
+
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 100)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->y2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        index = (sprite->data[2] * 256) / 100;
+        var = (sprite->data[2] * 512) / 100;
+        var &= 0xFF;
+        sprite->y2 = Sin(index, sprite->data[0]);
+        HandleSetAffineData(sprite, 256, 256, Sin((s16)var, 3276));
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_VerticalSlideWobble(struct Sprite *sprite)
+{
+    sprite->data[0] = 10;
+    VerticalSlideWobble(sprite);
+    sprite->callback = VerticalSlideWobble;
+}
+
+void RisingWobble(struct Sprite *sprite)
+{
+    s32 var = 0;
+    s16 index = 0;
+
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 100)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->y2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        index = (sprite->data[2] * 256) / 100;
+        var = (sprite->data[2] * 512) / 100;
+        var &= 0xFF;
+        sprite->y2 = -(Sin(index / 2, (s16)(sprite->data[0] * 2)));
+        HandleSetAffineData(sprite, 256, 256, Sin((s16)var, 3276));
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_RisingWobble(struct Sprite *sprite)
+{
+    sprite->data[0] = 5;
+    RisingWobble(sprite);
+    sprite->callback = RisingWobble;
+}
+
+void Anim_HorizontalSlideWobble(struct Sprite *sprite)
+{
+    s32 var;
+    s16 index = 0;
+
+    TryFlipX(sprite);
+    var = 0;
+
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    if (sprite->data[2] > 100)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->x2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        index = (sprite->data[2] * 256) / 100;
+        var = (sprite->data[2] * 512) / 100;
+        var &= 0xFF;
+        sprite->x2 = Sin(index, 8);
+        HandleSetAffineData(sprite, 256, 256, Sin((s16)var, 3276));
+    }
+
+    sprite->data[2]++;
+    TryFlipX(sprite);
+}
+
+void VerticalSquishBounce(struct Sprite *sprite)
+{
+    s16 posY = 0;
+
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[3] = 0;
+    }
+
+    TryFlipX(sprite);
+
+    if (sprite->data[2] > sprite->data[0] * 3)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->y2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 yScale = Sin(sprite->data[4], 32) + 256;
+
+        if (sprite->data[2] > sprite->data[0] && sprite->data[2] < sprite->data[0] * 2)
+            sprite->data[3] += 128 / sprite->data[0];
+
+        if (yScale > 256)
+            posY = (256 - yScale) / 8;
+
+        sprite->y2 = -(Sin(sprite->data[3], 10)) - posY;
+        HandleSetAffineData(sprite, 256 - Sin(sprite->data[4], 32), yScale, 0);
+        sprite->data[2]++;
+        sprite->data[4] = (sprite->data[4] + 128 / sprite->data[0]) & 0xFF;
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_VerticalSquishBounce(struct Sprite *sprite)
+{
+    sprite->data[0] = 16;
+    VerticalSquishBounce(sprite);
+    sprite->callback = VerticalSquishBounce;
+}
+
+void ShrinkGrow(struct Sprite *sprite)
+{
+    s16 posY = 0;
+
+    if (sprite->data[2] > (128 / sprite->data[6]) * sprite->data[7])
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->y2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 yScale = Sin(sprite->data[4], 32) + 256;
+
+        if (yScale > 256)
+            posY = (256 - yScale) / 8;
+
+        sprite->y2 = -posY;
+        HandleSetAffineData(sprite, Sin(sprite->data[4], 48) + 256, yScale, 0);
+        sprite->data[2]++;
+        sprite->data[4] = (sprite->data[4] + sprite->data[6]) & 0xFF;
+    }
+}
+
+void Anim_ShrinkGrow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[7] = 3;
+        sprite->data[6] = 8;
+    }
+
+    ShrinkGrow(sprite);
+}
+
+void BounceRotateToSides(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern const s8 gUnknown_85D37EE[][8][3];
+    s16 var;
+    u8 structId;
+    s8 r9;
+    s16 r10;
+    s16 r7;
+    u32 arrId;
+
+    TryFlipX(sprite);
+    structId = sprite->data[0];
+    var = gUnknown_3001240[structId].rotation;
+    r9 = gUnknown_85D37EE[gUnknown_3001240[structId].data][sprite->data[4]][0];
+    r10 = gUnknown_85D37EE[gUnknown_3001240[structId].data][sprite->data[4]][1] - r9;
+    arrId = gUnknown_3001240[structId].data;
+    r7 = sprite->data[3];
+
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+    }
+
+    if (gUnknown_85D37EE[arrId][sprite->data[4]][2] == 0)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+    }
+    else
+    {
+        u16 rotation;
+
+        sprite->y2 = -(Sin(r7 * 128 / gUnknown_85D37EE[arrId][sprite->data[4]][2], 10));
+        sprite->x2 = (r10 * r7 / gUnknown_85D37EE[arrId][sprite->data[4]][2]) + r9;
+        rotation = -(var * sprite->x2) / 8;
+        HandleSetAffineData(sprite, 256, 256, rotation);
+
+        if (r7 == gUnknown_85D37EE[arrId][sprite->data[4]][2])
+        {
+            sprite->data[4]++;
+            sprite->data[3] = 0;
+        }
+        else
+        {
+            sprite->data[3]++;
+        }
+    }
+
+    TryFlipX(sprite);
+}
+void Anim_BounceRotateToSides(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 4096;
+    gUnknown_3001240[id].data = sprite->data[6];
+    BounceRotateToSides(sprite);
+    sprite->callback = BounceRotateToSides;
+}
+
+void Anim_GlowOrange(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+
+    if (sprite->data[2] > 128)
+    {
+        BlendPalette((u16)sprite->data[7], 16, 0, 0x2DF);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[6] = Sin(sprite->data[2], 12);
+        BlendPalette((u16)sprite->data[7], 16, (u8)sprite->data[6], 0x2DF);
+    }
+
+    sprite->data[2] += 2;
+}
+
+void Anim_GlowRed(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+
+    if (sprite->data[2] > 128)
+    {
+        BlendPalette((u16)sprite->data[7], 16, 0, 0x1F);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[6] = Sin(sprite->data[2], 12);
+        BlendPalette((u16)sprite->data[7], 16, (u8)sprite->data[6], 0x1F);
+    }
+
+    sprite->data[2] += 2;
+}
+
+void Anim_GlowBlue(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+
+    if (sprite->data[2] > 128)
+    {
+        BlendPalette((u16)sprite->data[7], 16, 0, 0x7C00);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[6] = Sin(sprite->data[2], 12);
+        BlendPalette((u16)sprite->data[7], 16, (u8)sprite->data[6], 0x7C00);
+    }
+
+    sprite->data[2] += 2;
+}
+
+void Anim_GlowYellow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+
+    if (sprite->data[2] > 128)
+    {
+        BlendPalette((u16)sprite->data[7], 16, 0, 0x3FF);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[6] = Sin(sprite->data[2], 12);
+        BlendPalette((u16)sprite->data[7], 16, (u8)sprite->data[6], 0x3FF);
+    }
+
+    sprite->data[2] += 2;
+}
+
+void Anim_GlowPurple(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+
+    if (sprite->data[2] > 128)
+    {
+        BlendPalette((u16)sprite->data[7], 16, 0, 0x6018);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[6] = Sin(sprite->data[2], 12);
+        BlendPalette((u16)sprite->data[7], 16, (u8)sprite->data[6], 0x6018);
+    }
+
+    sprite->data[2] += 2;
+}
+void Anim_BackAndLunge(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->callback = BackAndLunge_0;
+}
+
+void BackAndLunge_0(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+
+    if (++sprite->x2 > 7)
+    {
+        sprite->x2 = 8;
+        sprite->data[7] = 2;
+        sprite->callback = BackAndLunge_1;
+    }
+
+    TryFlipX(sprite);
+}
+
+void BackAndLunge_1(struct Sprite *sprite)
+{
+    s16 subResult;
+    u8 var;
+
+    TryFlipX(sprite);
+    sprite->x2 -= sprite->data[7];
+    sprite->data[7]++;
+
+    if (sprite->x2 <= 0)
+    {
+        var = sprite->data[7];
+        sprite->data[6] = 0;
+        subResult = sprite->x2;
+
+        do
+        {
+            subResult -= var;
+            sprite->data[6]++;
+            var++;
+        } while (subResult > -8);
+
+        sprite->data[5] = 1;
+        sprite->callback = BackAndLunge_2;
+    }
+
+    TryFlipX(sprite);
+}
+
+void BackAndLunge_2(struct Sprite *sprite)
+{
+    u8 rotation;
+
+    TryFlipX(sprite);
+    sprite->x2 -= sprite->data[7];
+    sprite->data[7]++;
+    rotation = (sprite->data[5] * 6) / sprite->data[6];
+
+    if (++sprite->data[5] > sprite->data[6])
+        sprite->data[5] = sprite->data[6];
+
+    HandleSetAffineData(sprite, 256, 256, rotation * 256);
+
+    if (sprite->x2 < -8)
+    {
+        sprite->x2 = -8;
+        sprite->data[4] = 2;
+        sprite->data[3] = 0;
+        sprite->data[2] = rotation;
+        sprite->callback = BackAndLunge_3;
+    }
+
+    TryFlipX(sprite);
+}
+
+void BackAndLunge_3(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+
+    if (sprite->data[3] > 11)
+    {
+        sprite->data[2] -= 2;
+
+        if (sprite->data[2] < 0)
+            sprite->data[2] = 0;
+
+        HandleSetAffineData(sprite, 256, 256, sprite->data[2] << 8);
+
+        if (sprite->data[2] == 0)
+            sprite->callback = BackAndLunge_4;
+    }
+    else
+    {
+        sprite->x2 += sprite->data[4];
+        sprite->data[4] *= -1;
+        sprite->data[3]++;
+    }
+
+    TryFlipX(sprite);
+}
+
+void BackAndLunge_4(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2 += 2;
+
+    if (sprite->x2 > 0)
+    {
+        sprite->x2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_BackFlip(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->data[3] = 0;
+    sprite->callback = BackFlip_0;
+}
+
+void BackFlip_0(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2++;
+    sprite->y2--;
+
+    if (sprite->x2 % 2 == 0 && sprite->data[3] <= 0)
+        sprite->data[3] = 10;
+
+    if (sprite->x2 > 7)
+    {
+        sprite->x2 = 8;
+        sprite->y2 = -8;
+        sprite->data[4] = 0;
+        sprite->callback = BackFlip_1;
+    }
+
+    TryFlipX(sprite);
+}
+
+void BackFlip_1(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2 = Cos(sprite->data[4], 16) - 8;
+    sprite->y2 = Sin(sprite->data[4], 16) - 8;
+
+    if (sprite->data[4] > 63)
+    {
+        sprite->data[2] = 160;
+        sprite->data[3] = 10;
+        sprite->callback = BackFlip_2;
+    }
+
+    sprite->data[4] += 8;
+
+    if (sprite->data[4] > 64)
+        sprite->data[4] = 64;
+
+    TryFlipX(sprite);
+}
+
+void BackFlip_2(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+
+    if (sprite->data[3] > 0)
+    {
+        sprite->data[3]--;
+    }
+    else
+    {
+        u32 rotation;
+
+        sprite->x2 = Cos(sprite->data[2], 5) - 4;
+        sprite->y2 = -(Sin(sprite->data[2], 5)) + 4;
+        sprite->data[2] -= 4;
+        rotation = sprite->data[2] - 32;
+        HandleSetAffineData(sprite, 256, 256, rotation * 512);
+
+        if (sprite->data[2] <= 32)
+        {
+            sprite->x2 = 0;
+            sprite->y2 = 0;
+            ResetSpriteAfterAnim(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        }
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_Flicker(struct Sprite *sprite)
+{
+    if (sprite->data[3] > 0)
+    {
+        sprite->data[3]--;
+    }
+    else
+    {
+        sprite->data[4] = (sprite->data[4] == 0) ? TRUE : FALSE;
+        sprite->invisible = sprite->data[4];
+
+        if (++sprite->data[2] > 19)
+        {
+            sprite->invisible = FALSE;
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        }
+
+        sprite->data[3] = 2;
+    }
+}
+
+void Anim_BackFlipBig(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->callback = BackFlipBig_0;
+}
+
+void BackFlipBig_0(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2--;
+    sprite->y2++;
+
+    if (sprite->x2 <= -16)
+    {
+        sprite->x2 = -16;
+        sprite->y2 = 16;
+        sprite->callback = BackFlipBig_1;
+        sprite->data[2] = 160;
+    }
+
+    TryFlipX(sprite);
+}
+
+void BackFlipBig_1(struct Sprite *sprite)
+{
+    u32 rotation;
+
+    TryFlipX(sprite);
+    sprite->data[2] -= 4;
+    sprite->x2 = Cos(sprite->data[2], 22);
+    sprite->y2 = -(Sin(sprite->data[2], 22));
+    rotation = sprite->data[2] - 32;
+    HandleSetAffineData(sprite, 256, 256, rotation * 512);
+
+    if (sprite->data[2] <= 32)
+        sprite->callback = BackFlipBig_2;
+
+    TryFlipX(sprite);
+}
+
+void BackFlipBig_2(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2--;
+    sprite->y2++;
+
+    if (sprite->x2 <= 0)
+    {
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_FrontFlip(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->callback = FrontFlip_0;
+}
+
+void FrontFlip_0(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2++;
+    sprite->y2--;
+
+    if (sprite->x2 > 15)
+    {
+        sprite->data[2] = 0;
+        sprite->callback = FrontFlip_1;
+    }
+
+    TryFlipX(sprite);
+}
+
+void FrontFlip_1(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->data[2] += 16;
+
+    if (sprite->x2 <= -16)
+    {
+        sprite->x2 = -16;
+        sprite->y2 = 16;
+        sprite->data[2] = 0;
+        sprite->callback = FrontFlip_2;
+    }
+    else
+    {
+        sprite->x2 -= 2;
+        sprite->y2 += 2;
+    }
+
+    HandleSetAffineData(sprite, 256, 256, sprite->data[2] << 8);
+    TryFlipX(sprite);
+}
+
+void FrontFlip_2(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2++;
+    sprite->y2--;
+
+    if (sprite->x2 >= 0)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+
+    TryFlipX(sprite);
+}
+
+
+void Anim_TumblingFrontFlip(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].speed = 2;
+    TumblingFrontFlip(sprite);
+    sprite->callback = TumblingFrontFlip;
+}
+
+void TumblingFrontFlip(struct Sprite *sprite)
+{
+    if (gUnknown_3001240[sprite->data[0]].delay != 0)
+    {
+        gUnknown_3001240[sprite->data[0]].delay--;
+    }
+    else
+    {
+        TryFlipX(sprite);
+        if (sprite->data[2] == 0)
+        {
+            sprite->data[2]++;
+            HandleStartAffineAnim(sprite);
+            sprite->data[7] = gUnknown_3001240[sprite->data[0]].speed;
+            sprite->data[3] = -1;
+            sprite->data[4] = -1;
+            sprite->data[5] = 0;
+            sprite->data[6] = 0;
+        }
+
+        sprite->x2 += (sprite->data[7] * 2 * sprite->data[3]);
+        sprite->y2 += (sprite->data[7] * sprite->data[4]);
+        sprite->data[6] += 8;
+        if (sprite->x2 <= -16 || sprite->x2 >= 16)
+        {
+            sprite->x2 = sprite->data[3] * 16;
+            sprite->data[3] *= -1;
+            sprite->data[5]++;
+        }
+        else if (sprite->y2 <= -16 || sprite->y2 >= 16)
+        {
+            sprite->y2 = sprite->data[4] * 16;
+            sprite->data[4] *= -1;
+            sprite->data[5]++;
+        }
+
+        if (sprite->data[5] > 5 && sprite->x2 <= 0)
+        {
+            sprite->x2 = 0;
+            sprite->y2 = 0;
+            if (gUnknown_3001240[sprite->data[0]].runs > 1)
+            {
+                gUnknown_3001240[sprite->data[0]].runs--;
+                sprite->data[5] = 0;
+                sprite->data[6] = 0;
+                gUnknown_3001240[sprite->data[0]].delay = 10;
+            }
+            else
+            {
+                ResetSpriteAfterAnim(sprite);
+                sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+            }
+        }
+
+        HandleSetAffineData(sprite, 256, 256, sprite->data[6] << 8);
+        TryFlipX(sprite);
+    }
+}
+
+void Anim_Figure8(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->data[6] = 0;
+    sprite->data[7] = 0;
+    sprite->callback = Figure8;
+}
+
+void Figure8(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->data[6] += 4;
+    sprite->x2 = -(Sin(sprite->data[6], 16));
+    sprite->y2 = -(Sin((sprite->data[6] * 2) & 0xFF, 8));
+
+    if (sprite->data[6] > 192 && sprite->data[7] == 1)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->data[7]++;
+    }
+    else if (sprite->data[6] > 64 && sprite->data[7] == 0)
+    {
+        HandleSetAffineData(sprite, -256, 256, 0);
+        sprite->data[7]++;
+    }
+
+    if (sprite->data[6] > 255)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_FlashYellow(struct Sprite *sprite)
+{
+    extern const u8 gUnknown_85D34C4[][2];
+
+    if (++sprite->data[2] == 1)
+    {
+        sprite->data[7] = (sprite->oam.paletteNum << 4) + 256;
+        sprite->data[6] = 0;
+        sprite->data[5] = 0;
+        sprite->data[4] = 0;
+    }
+
+    if (gUnknown_85D34C4[sprite->data[6]][1] == (u8)-1)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+    }
+    else
+    {
+        if (sprite->data[4] == 1)
+        {
+            if (gUnknown_85D34C4[sprite->data[6]][0])
+                BlendPalette((u16)sprite->data[7], 16, 16, 0x3FF);
+            else
+                BlendPalette((u16)sprite->data[7], 16, 0, 0x3FF);
+
+            sprite->data[4] = 0;
+        }
+
+        if (gUnknown_85D34C4[sprite->data[6]][1] == sprite->data[5])
+        {
+            sprite->data[4] = 1;
+            sprite->data[5] = 0;
+            sprite->data[6]++;
+        }
+        else
+        {
+            sprite->data[5]++;
+        }
+    }
+}
+
+void SwingConcave(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    TryFlipX(sprite);
+    if (sprite->data[2] > gUnknown_3001240[sprite->data[0]].data)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->x2 = 0;
+        if (gUnknown_3001240[sprite->data[0]].runs > 1)
+        {
+            gUnknown_3001240[sprite->data[0]].runs--;
+            sprite->data[2] = 0;
+        }
+        else
+        {
+            ResetSpriteAfterAnim(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        }
+    }
+    else
+    {
+        s16 index = (sprite->data[2] * 256) / gUnknown_3001240[sprite->data[0]].data;
+
+        sprite->x2 = -(Sin(index, 10));
+        HandleSetAffineData(sprite, 256, 256, Sin(index, 3276));
+    }
+
+    sprite->data[2]++;
+    TryFlipX(sprite);
+}
+
+void Anim_SwingConcave_FastShort(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].data = 50;
+    SwingConcave(sprite);
+    sprite->callback = SwingConcave;
+}
+
+void SwingConvex(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        HandleStartAffineAnim(sprite);
+
+    TryFlipX(sprite);
+    if (sprite->data[2] > gUnknown_3001240[sprite->data[0]].data)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->x2 = 0;
+        if (gUnknown_3001240[sprite->data[0]].runs > 1)
+        {
+            gUnknown_3001240[sprite->data[0]].runs--;
+            sprite->data[2] = 0;
+        }
+        else
+        {
+            ResetSpriteAfterAnim(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        }
+    }
+    else
+    {
+        s16 index = (sprite->data[2] * 256) / gUnknown_3001240[sprite->data[0]].data;
+
+        sprite->x2 = -(Sin(index, 10));
+        HandleSetAffineData(sprite, 256, 256, -(Sin(index, 3276)));
+    }
+
+    sprite->data[2]++;
+    TryFlipX(sprite);
+}
+
+void Anim_SwingConvex_FastShort(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].data = 50;
+    SwingConvex(sprite);
+    sprite->callback = SwingConvex;
+}
+
+void Anim_RotateUpSlamDown(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->data[6] = -(14 * sprite->centerToCornerVecX / 10);
+    sprite->data[7] = 128;
+    sprite->callback = RotateUpSlamDown_0;
+}
+
+void RotateUpSlamDown_0(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern s16 Cos(s16 index, s16 amplitude);
+    extern void RotateUpSlamDown_1_Thumb(struct Sprite *sprite) __asm__("RotateUpSlamDown_1 + 1");
+
+    TryFlipX(sprite);
+    sprite->data[7]--;
+    sprite->x2 = sprite->data[6] + Cos(sprite->data[7], sprite->data[6]);
+    sprite->y2 = -(Sin(sprite->data[7], sprite->data[6]));
+    HandleSetAffineData(sprite, 256, 256, (sprite->data[7] - 128) << 8);
+
+    if (sprite->data[7] <= 120)
+    {
+        sprite->data[7] = 120;
+        sprite->data[3] = 0;
+        sprite->callback = RotateUpSlamDown_1_Thumb;
+    }
+
+    TryFlipX(sprite);
+}
+void RotateUpSlamDown_1(struct Sprite *sprite)
+{
+    if (sprite->data[3] == 20)
+    {
+        sprite->callback = RotateUpSlamDown_2;
+        sprite->data[3] = 0;
+    }
+
+    sprite->data[3]++;
+}
+
+void RotateUpSlamDown_2(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern s16 Cos(s16 index, s16 amplitude);
+    extern void Anim_VerticalShake_Thumb(struct Sprite *sprite) __asm__("Anim_VerticalShake + 1");
+
+    TryFlipX(sprite);
+    sprite->data[7] += 2;
+    sprite->x2 = sprite->data[6] + Cos(sprite->data[7], sprite->data[6]);
+    sprite->y2 = -(Sin(sprite->data[7], sprite->data[6]));
+    HandleSetAffineData(sprite, 256, 256, (sprite->data[7] - 128) << 8);
+
+    if (sprite->data[7] >= 128)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->data[2] = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = Anim_VerticalShake_Thumb;
+    }
+
+    TryFlipX(sprite);
+}
+void DeepVerticalSquishBounce(struct Sprite *sprite)
+{
+    if (gUnknown_3001240[sprite->data[0]].delay != 0)
+    {
+        gUnknown_3001240[sprite->data[0]].delay--;
+    }
+    else
+    {
+        if (sprite->data[2] == 0)
+        {
+            HandleStartAffineAnim(sprite);
+            sprite->data[4] = 0;
+            sprite->data[5] = 0;
+            sprite->data[2] = 1;
+        }
+
+        if (sprite->data[5] == 0)
+        {
+            sprite->data[7] = Sin(sprite->data[4], 256);
+            sprite->y2 = Sin(sprite->data[4], 16);
+            sprite->data[6] = Sin(sprite->data[4], 32);
+            HandleSetAffineData(sprite, 256 - sprite->data[6], 256 + sprite->data[7], 0);
+
+            if (sprite->data[4] == 128)
+            {
+                sprite->data[4] = 0;
+                sprite->data[5] = 1;
+            }
+        }
+        else if (sprite->data[5] == 1)
+        {
+            sprite->data[7] = Sin(sprite->data[4], 32);
+            sprite->y2 = -Sin(sprite->data[4], 8);
+            sprite->data[6] = Sin(sprite->data[4], 128);
+            HandleSetAffineData(sprite, 256 + sprite->data[6], 256 - sprite->data[7], 0);
+
+            if (sprite->data[4] == 128)
+            {
+                if (gUnknown_3001240[sprite->data[0]].runs > 1)
+                {
+                    gUnknown_3001240[sprite->data[0]].runs--;
+                    gUnknown_3001240[sprite->data[0]].delay = 10;
+                    sprite->data[4] = 0;
+                    sprite->data[5] = 0;
+                }
+                else
+                {
+                    HandleSetAffineData(sprite, 256, 256, 0);
+                    ResetSpriteAfterAnim(sprite);
+                    sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+                }
+            }
+        }
+
+        sprite->data[4] += gUnknown_3001240[sprite->data[0]].rotation;
+    }
+}
+
+void Anim_DeepVerticalSquishBounce(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 4;
+    DeepVerticalSquishBounce(sprite);
+    sprite->callback = DeepVerticalSquishBounce;
+}
+
+void Anim_HorizontalJumps(struct Sprite *sprite)
+{
+    s32 counter = sprite->data[2];
+
+    TryFlipX(sprite);
+    if (counter > 512)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        switch (sprite->data[2] / 128)
+        {
+        case 0:
+            sprite->x2 = -(counter % 128 * 8) / 128;
+            break;
+        case 1:
+            sprite->x2 = (counter % 128 / 16) - 8;
+            break;
+        case 2:
+            sprite->x2 = counter % 128 / 16;
+            break;
+        case 3:
+            sprite->x2 = -(counter % 128 * 8) / 128 + 8;
+            break;
+        }
+        sprite->y2 = -(Sin((s16)(counter % 128), 8));
+    }
+
+    sprite->data[2] += 12;
+    TryFlipX(sprite);
+}
+
+void Anim_HorizontalJumpsVerticalStretch(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].data = -1;
+    HandleStartAffineAnim(sprite);
+    sprite->data[3] = 0;
+    HorizontalJumpsVerticalStretch_0(sprite);
+    sprite->callback = HorizontalJumpsVerticalStretch_0;
+}
+
+void HorizontalJumpsVerticalStretch_0(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern void HorizontalJumpsVerticalStretch_1_Thumb(struct Sprite *sprite) __asm__("HorizontalJumpsVerticalStretch_1 + 1");
+
+    if (gUnknown_3001240[sprite->data[0]].delay != 0)
+    {
+        gUnknown_3001240[sprite->data[0]].delay--;
+    }
+    else
+    {
+        s32 counter;
+
+        TryFlipX(sprite);
+        counter = sprite->data[2];
+        if (sprite->data[2] > 128)
+        {
+            sprite->data[2] = 0;
+            sprite->callback = HorizontalJumpsVerticalStretch_1_Thumb;
+        }
+        else
+        {
+            s32 var = 8 * gUnknown_3001240[sprite->data[0]].data;
+
+            sprite->x2 = var * (counter % 128) / 128;
+            sprite->y2 = -(Sin(counter % 128, 8));
+            sprite->data[2] += 12;
+        }
+
+        TryFlipX(sprite);
+    }
+}
+void HorizontalJumpsVerticalStretch_1(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[2] > 48)
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->y2 = 0;
+        sprite->data[2] = 0;
+        sprite->callback = HorizontalJumpsVerticalStretch_2;
+    }
+    else
+    {
+        s16 yDelta;
+        s16 yScale = Sin(sprite->data[4], 64) + 256;
+
+        if (sprite->data[2] >= 16 && sprite->data[2] <= 31)
+        {
+            sprite->data[3] += 8;
+            sprite->x2 -= gUnknown_3001240[sprite->data[0]].data;
+        }
+
+        yDelta = 0;
+        if (yScale > 256)
+            yDelta = (256 - yScale) / 8;
+
+        sprite->y2 = -(Sin(sprite->data[3], 20)) - yDelta;
+        HandleSetAffineData(sprite, 256 - Sin(sprite->data[4], 32), yScale, 0);
+        sprite->data[2]++;
+        sprite->data[4] += 8;
+        sprite->data[4] &= 0xFF;
+    }
+
+    TryFlipX(sprite);
+}
+
+void HorizontalJumpsVerticalStretch_2(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern void HorizontalJumpsVerticalStretch_0_Thumb(struct Sprite *sprite) __asm__("HorizontalJumpsVerticalStretch_0 + 1");
+
+    s32 counter;
+
+    TryFlipX(sprite);
+    counter = sprite->data[2];
+    if (counter > 128)
+    {
+        if (gUnknown_3001240[sprite->data[0]].runs > 1)
+        {
+            gUnknown_3001240[sprite->data[0]].runs--;
+            gUnknown_3001240[sprite->data[0]].delay = 10;
+            sprite->data[3] = 0;
+            sprite->data[2] = 0;
+            sprite->data[4] = 0;
+            sprite->callback = HorizontalJumpsVerticalStretch_0_Thumb;
+        }
+        else
+        {
+            ResetSpriteAfterAnim(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        }
+
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        s32 var = gUnknown_3001240[sprite->data[0]].data;
+
+        sprite->x2 = var * ((counter % 128) * 8) / 128 + 8 * -var;
+        sprite->y2 = -(Sin(counter % 128, 8));
+    }
+
+    sprite->data[2] += 12;
+    TryFlipX(sprite);
+}
+
+void RotateToSides(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+    }
+
+    TryFlipX(sprite);
+    if (sprite->data[7] > 254)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        if (gUnknown_3001240[sprite->data[0]].runs > 1)
+        {
+            gUnknown_3001240[sprite->data[0]].runs--;
+            sprite->data[2] = 0;
+            sprite->data[7] = 0;
+        }
+        else
+        {
+            ResetSpriteAfterAnim(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        }
+
+        TryFlipX(sprite);
+    }
+    else
+    {
+        u16 rotation;
+
+        sprite->x2 = -(Sin(sprite->data[7], 16));
+        rotation = Sin(sprite->data[7], 32);
+        HandleSetAffineData(sprite, 256, 256, rotation << 8);
+        sprite->data[7] += gUnknown_3001240[sprite->data[0]].rotation;
+        TryFlipX(sprite);
+    }
+}
+
+void Anim_RotateToSides_Fast(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 4;
+    RotateToSides(sprite);
+    sprite->callback = RotateToSides;
+}
+
+void Anim_RotateUpToSides(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+    }
+
+    TryFlipX(sprite);
+    if (sprite->data[7] > 254)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        TryFlipX(sprite);
+    }
+    else
+    {
+        u16 rotation;
+
+        sprite->x2 = -(Sin(sprite->data[7], 16));
+        sprite->y2 = -(Sin((s16)(sprite->data[7] % 128), 16));
+        rotation = Sin(sprite->data[7], 32);
+        HandleSetAffineData(sprite, 256, 256, rotation << 8);
+        sprite->data[7] += 8;
+        TryFlipX(sprite);
+    }
+}
+
+void Anim_FlickerIncreasing(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+        sprite->data[7] = 0;
+
+    if (sprite->data[2] == sprite->data[7])
+    {
+        sprite->data[7] = 0;
+        sprite->data[2]++;
+        sprite->invisible = FALSE;
+    }
+    else
+    {
+        sprite->data[7]++;
+        sprite->invisible = TRUE;
+    }
+
+    if (sprite->data[2] > 10)
+    {
+        sprite->invisible = FALSE;
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+}
+
+void Anim_TipHopForward(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->data[7] = 0;
+    sprite->callback = TipHopForward_0;
+}
+
+void TipHopForward_0(struct Sprite *sprite)
+{
+    if (sprite->data[7] > 31)
+    {
+        sprite->data[7] = 32;
+        sprite->data[2] = 0;
+        sprite->callback = TipHopForward_1;
+    }
+    else
+    {
+        sprite->data[7] += 4;
+    }
+
+    HandleSetAffineData(sprite, 256, 256, sprite->data[7] << 8);
+}
+
+void TipHopForward_1(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[2] > 512)
+    {
+        sprite->callback = TipHopForward_2;
+        sprite->data[6] = 0;
+    }
+    else
+    {
+        sprite->x2 = -(sprite->data[2] * 16) / 512;
+        sprite->y2 = -(Sin(sprite->data[2] % 128, 4));
+        sprite->data[2] += 12;
+    }
+
+    TryFlipX(sprite);
+}
+
+void TipHopForward_2(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    TryFlipX(sprite);
+    sprite->data[7] -= 2;
+    if (sprite->data[7] < 0)
+    {
+        sprite->data[7] = 0;
+        sprite->x2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+    }
+    else
+    {
+        sprite->x2 = -(Sin(sprite->data[7] * 2, 16));
+    }
+
+    HandleSetAffineData(sprite, 256, 256, sprite->data[7] << 8);
+    TryFlipX(sprite);
+}
+void Anim_PivotShake(struct Sprite *sprite)
+{
+    u16 rotation;
+
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+    }
+
+    TryFlipX(sprite);
+    if (sprite->data[7] > 255)
+    {
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[7] = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[7] += 16;
+        sprite->x2 = -(Sin(sprite->data[7] % 128, 8));
+        sprite->y2 = -(Sin(sprite->data[7] % 128, 8));
+    }
+
+    rotation = Sin(sprite->data[7] % 128, 16);
+    HandleSetAffineData(sprite, 256, 256, rotation << 8);
+    TryFlipX(sprite);
+}
+
+void Anim_TipAndShake(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->data[7] = 0;
+    sprite->data[4] = 0;
+    sprite->callback = TipAndShake_0;
+}
+
+void TipAndShake_0(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[7] > 24)
+    {
+        if (++sprite->data[4] > 4)
+        {
+            sprite->data[4] = 0;
+            sprite->callback = TipAndShake_1;
+        }
+    }
+    else
+    {
+        sprite->data[7] += 2;
+        sprite->x2 = Sin(sprite->data[7], 8);
+        sprite->y2 = -(Sin(sprite->data[7], 8));
+    }
+
+    HandleSetAffineData(sprite, 256, 256, -(sprite->data[7]) << 8);
+    TryFlipX(sprite);
+}
+
+void TipAndShake_1(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[7] > 32)
+    {
+        sprite->data[6] = 1;
+        sprite->callback = TipAndShake_2;
+    }
+    else
+    {
+        sprite->data[7] += 2;
+        sprite->x2 = Sin(sprite->data[7], 8);
+        sprite->y2 = -(Sin(sprite->data[7], 8));
+    }
+
+    HandleSetAffineData(sprite, 256, 256, -(sprite->data[7]) << 8);
+    TryFlipX(sprite);
+}
+
+void TipAndShake_2(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->data[7] += (sprite->data[6] * 4);
+    if (sprite->data[5] > 9)
+    {
+        sprite->data[7] = 32;
+        sprite->callback = TipAndShake_3;
+    }
+
+    sprite->x2 = Sin(sprite->data[7], 8);
+    sprite->y2 = -(Sin(sprite->data[7], 8));
+    if (sprite->data[7] <= 28 || sprite->data[7] >= 36)
+    {
+        sprite->data[6] *= -1;
+        sprite->data[5]++;
+    }
+
+    HandleSetAffineData(sprite, 256, 256, -(sprite->data[7]) << 8);
+    TryFlipX(sprite);
+}
+
+void TipAndShake_3(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[7] <= 0)
+    {
+        sprite->data[7] = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        sprite->data[7] -= 2;
+        sprite->x2 = Sin(sprite->data[7], 8);
+        sprite->y2 = -(Sin(sprite->data[7], 8));
+    }
+
+    HandleSetAffineData(sprite, 256, 256, -(sprite->data[7]) << 8);
+    TryFlipX(sprite);
+}
+
+void Anim_VibrateToCorners(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    s8 sign;
+
+    TryFlipX(sprite);
+    if (sprite->data[2] > 40)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        sprite->x2 = 0;
+    }
+    else
+    {
+        if (!(sprite->data[2] & 1))
+            sign = 1;
+        else
+            sign = -1;
+
+        if ((sprite->data[2] % 4) / 2 == 0)
+        {
+            sprite->x2 = Sin((sprite->data[2] * 128 / 40) % 256, 16) * sign;
+            sprite->y2 = -(sprite->x2);
+        }
+        else
+        {
+            sprite->x2 = -(Sin((sprite->data[2] * 128 / 40) % 256, 16)) * sign;
+            sprite->y2 = sprite->x2;
+        }
+    }
+
+    sprite->data[2]++;
+    TryFlipX(sprite);
+}
+void Anim_GrowInStages(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern s16 Cos(s16 index, s16 amplitude);
+
+    TryFlipX(sprite);
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[5] = 0;
+        sprite->data[6] = 0;
+        sprite->data[7] = 0;
+        sprite->data[2]++;
+    }
+
+    if (sprite->data[6] > 0)
+    {
+        sprite->data[6]--;
+        if (sprite->data[5] != 3)
+        {
+            s16 scale = (8 * sprite->data[6]) / 20;
+
+            scale = Sin(sprite->data[7] - scale, 64);
+            HandleSetAffineData(sprite, 256 - scale, 256 - scale, 0);
+        }
+    }
+    else
+    {
+        s16 var;
+
+        if (sprite->data[5] == 3)
+        {
+            if (sprite->data[7] > 63)
+            {
+                sprite->data[7] = 64;
+                HandleSetAffineData(sprite, 256, 256, 0);
+                ResetSpriteAfterAnim(sprite);
+                sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+            }
+
+            var = Cos(sprite->data[7], 64);
+        }
+        else
+        {
+            var = Sin(sprite->data[7], 64);
+            if (sprite->data[7] > 63)
+            {
+                sprite->data[5] = 3;
+                sprite->data[6] = 10;
+                sprite->data[7] = 0;
+            }
+            else
+            {
+                if (var > 48 && sprite->data[5] == 1)
+                {
+                    sprite->data[5] = 2;
+                    sprite->data[6] = 20;
+                }
+                else if (var > 16 && sprite->data[5] == 0)
+                {
+                    sprite->data[5] = 1;
+                    sprite->data[6] = 20;
+                }
+            }
+        }
+
+        sprite->data[7] += 2;
+        HandleSetAffineData(sprite, 256 - var, 256 - var, 0);
+    }
+
+    TryFlipX(sprite);
+}
+void Anim_VerticalSpring(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+    }
+
+    if (sprite->data[7] > 512)
+    {
+        sprite->y2 = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 yScale;
+
+        sprite->y2 = Sin(sprite->data[7] % 256, 8);
+        sprite->data[7] += 8;
+        yScale = Sin(sprite->data[7] % 128, 96);
+        HandleSetAffineData(sprite, 256, yScale + 256, 0);
+    }
+}
+
+void Anim_VerticalRepeatedSpring(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+    }
+
+    if (sprite->data[7] > 256)
+    {
+        sprite->y2 = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+    }
+    else
+    {
+        s16 yScale;
+
+        sprite->y2 = Sin(sprite->data[7], 16);
+        sprite->data[7] += 4;
+        yScale = Sin((sprite->data[7] % 64) * 2, 128);
+        HandleSetAffineData(sprite, 256, yScale + 256, 0);
+    }
+}
+
+void Anim_SpringRising(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->callback = SpringRising_0;
+    sprite->data[7] = 0;
+}
+
+void SpringRising_0(struct Sprite *sprite)
+{
+    s16 yScale;
+
+    sprite->data[7] += 8;
+    if (sprite->data[7] > 63)
+    {
+        sprite->data[7] = 0;
+        sprite->data[6] = 0;
+        sprite->callback = SpringRising_1;
+        yScale = Sin(64, 128);
+    }
+    else
+    {
+        yScale = Sin(sprite->data[7], 128);
+    }
+
+    HandleSetAffineData(sprite, 256, 256 + yScale, 0);
+}
+
+
+void SpringRising_1(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern s16 Cos(s16 index, s16 amplitude);
+    extern void SpringRising_2_Thumb(struct Sprite *sprite) __asm__("SpringRising_2 + 1");
+    s16 yScale;
+
+    sprite->data[7] += 4;
+    if (sprite->data[7] > 95)
+    {
+        yScale = Cos(0, 128);
+        sprite->data[7] = 0;
+        sprite->data[6]++;
+    }
+    else
+    {
+        s16 sign;
+        s16 index;
+
+        sprite->y2 = -(sprite->data[6] * 4) - Sin(sprite->data[7], 8);
+        if (sprite->data[7] > 63)
+        {
+            sign = -1;
+            index = sprite->data[7] - 64;
+        }
+        else
+        {
+            sign = 1;
+            index = 0;
+        }
+
+        yScale = Cos((index * 2) + sprite->data[7], 128) * sign;
+    }
+
+    HandleSetAffineData(sprite, 256, 256 + yScale, 0);
+    if (sprite->data[6] == 3)
+    {
+        sprite->data[7] = 0;
+        sprite->callback = SpringRising_2_Thumb;
+    }
+}
+
+void SpringRising_2(struct Sprite *sprite)
+{
+    s16 yScale;
+
+    sprite->data[7] += 8;
+    yScale = Cos(sprite->data[7], 128);
+    sprite->y2 = -(Cos(sprite->data[7], 12));
+    if (sprite->data[7] > 63)
+    {
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->y2 = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+    }
+
+    HandleSetAffineData(sprite, 256, 256 + yScale, 0);
+}
+
+void HorizontalSpring(struct Sprite *sprite)
+{
+    if (sprite->data[7] > sprite->data[5])
+    {
+        sprite->x2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        HandleSetAffineData(sprite, 256, 256, 0);
+    }
+    else
+    {
+        s16 xScale;
+
+        sprite->x2 = Sin(sprite->data[7] % 256, sprite->data[4]);
+        sprite->data[7] += sprite->data[6];
+        xScale = Sin(sprite->data[7] % 128, 96);
+        HandleSetAffineData(sprite, 256 + xScale, 256, 0);
+    }
+}
+
+void Anim_HorizontalSpring(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+        sprite->data[6] = 8;
+        sprite->data[5] = 512;
+        sprite->data[4] = 8;
+    }
+
+    HorizontalSpring(sprite);
+}
+
+void HorizontalRepeatedSpring(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern void SpriteCB_SetDummyOnAnimEnd_Thumb(struct Sprite *sprite)
+        __asm__("SpriteCB_SetDummyOnAnimEnd + 1");
+
+    if (sprite->data[7] > sprite->data[5])
+    {
+        sprite->x2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        HandleSetAffineData(sprite, 256, 256, 0);
+    }
+    else
+    {
+        s16 xScale;
+
+        sprite->x2 = Sin(sprite->data[7] % 256, sprite->data[4]);
+        sprite->data[7] += sprite->data[6];
+        xScale = Sin((sprite->data[7] % 64) * 2, 128);
+        HandleSetAffineData(sprite, 256 + xScale, 256, 0);
+    }
+}
+
+void Anim_HorizontalRepeatedSpring_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+        sprite->data[6] = 4;
+        sprite->data[5] = 256;
+        sprite->data[4] = 16;
+    }
+
+    HorizontalRepeatedSpring(sprite);
+}
+
+void Anim_HorizontalSlideShrink(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+    }
+
+    if (sprite->data[7] > 512)
+    {
+        sprite->x2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 scale;
+
+        sprite->x2 = Sin(sprite->data[7] % 256, 8);
+        sprite->data[7] += 8;
+        scale = Sin(sprite->data[7] % 128, 96);
+        HandleSetAffineData(sprite, 256 + scale, 256 + scale, 0);
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_LungeGrow(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+    }
+
+    if (sprite->data[7] > 512)
+    {
+        sprite->x2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 scale;
+
+        sprite->x2 = -(Sin((sprite->data[7] % 256) / 2, 16));
+        sprite->data[7] += 8;
+        scale = -(Sin((sprite->data[7] % 256) / 2, 64));
+        HandleSetAffineData(sprite, 256 + scale, 256 + scale, 0);
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_CircleIntoBackground(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+    }
+
+    if (sprite->data[7] > 512)
+    {
+        sprite->x2 = 0;
+        ResetSpriteAfterAnim(sprite);
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s16 scale;
+
+        sprite->x2 = -(Sin(sprite->data[7] % 256, 8));
+        sprite->data[7] += 8;
+        scale = Sin((sprite->data[7] % 256) / 2, 96);
+        HandleSetAffineData(sprite, 256 + scale, 256 + scale, 0);
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_RapidHorizontalHops(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[2] > 2048)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->data[6] = 0;
+    }
+    else
+    {
+        s16 caseVar = (sprite->data[2] / 512) % 4;
+
+        switch (caseVar)
+        {
+        case 0:
+            sprite->x2 = -(sprite->data[2] % 512 * 16) / 512;
+            break;
+        case 1:
+            sprite->x2 = (sprite->data[2] % 512 / 32) - 16;
+            break;
+        case 2:
+            sprite->x2 = (sprite->data[2] % 512) / 32;
+            break;
+        case 3:
+            sprite->x2 = -(sprite->data[2] % 512 * 16) / 512 + 16;
+            break;
+        }
+
+        sprite->y2 = -(Sin(sprite->data[2] % 128, 4));
+        sprite->data[2] += 24;
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_FourPetal(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern s16 Cos(s16 index, s16 amplitude);
+
+    TryFlipX(sprite);
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[6] = 0;
+        sprite->data[7] = 64;
+        sprite->data[2]++;
+    }
+
+    sprite->data[7] += 8;
+    if (sprite->data[6] == 4)
+    {
+        if (sprite->data[7] > 63)
+        {
+            sprite->data[7] = 0;
+            sprite->data[6]++;
+        }
+    }
+    else
+    {
+        if (sprite->data[7] > 127)
+        {
+            sprite->data[7] = 0;
+            sprite->data[6]++;
+        }
+    }
+
+    switch (sprite->data[6])
+    {
+    case 1:
+        sprite->x2 = -(Cos(sprite->data[7], 8));
+        sprite->y2 = Sin(sprite->data[7], 8) - 8;
+        break;
+    case 2:
+        sprite->x2 = Sin(sprite->data[7] + 128, 8) + 8;
+        sprite->y2 = -(Cos(sprite->data[7], 8));
+        break;
+    case 3:
+        sprite->x2 = Cos(sprite->data[7], 8);
+        sprite->y2 = Sin(sprite->data[7] + 128, 8) + 8;
+        break;
+    case 0:
+    case 4:
+        sprite->x2 = Sin(sprite->data[7], 8) - 8;
+        sprite->y2 = Cos(sprite->data[7], 8);
+        break;
+    default:
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        break;
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_VerticalSquishBounce_Slow(struct Sprite *sprite)
+{
+    sprite->data[0] = 32;
+    VerticalSquishBounce(sprite);
+    sprite->callback = VerticalSquishBounce;
+}
+
+void Anim_HorizontalSlide_Slow(struct Sprite *sprite)
+{
+    sprite->data[0] = 80;
+    HorizontalSlide(sprite);
+    sprite->callback = HorizontalSlide;
+}
+
+void Anim_VerticalSlide_Slow(struct Sprite *sprite)
+{
+    sprite->data[0] = 80;
+    VerticalSlide(sprite);
+    sprite->callback = VerticalSlide;
+}
+
+void Anim_BounceRotateToSides_Small(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 2048;
+    gUnknown_3001240[id].data = sprite->data[6];
+    BounceRotateToSides(sprite);
+    sprite->callback = BounceRotateToSides;
 }
 
 void Anim_BounceRotateToSides_Slow(struct Sprite *sprite)
@@ -8658,189 +3326,75 @@ void Anim_VerticalShakeLowTwice(struct Sprite *sprite)
     sprite->callback = VerticalShakeLowTwice;
 }
 
-__attribute__((naked)) void Anim_HorizontalShake_Fast(struct Sprite *sprite)
+void Anim_HorizontalShake_Fast(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x46\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FB88\n\t"
-        "	ldr r0, _08183500\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183500: .4byte HorizontalShake + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 70;
+    sprite->data[7] = 6;
+    HorizontalShake(sprite);
+    sprite->callback = HorizontalShake;
 }
 
-__attribute__((naked)) void Anim_HorizontalSlide_Fast(struct Sprite *sprite)
+void Anim_HorizontalSlide_Fast(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F7A8\n\t"
-        "	ldr r0, _0818351C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818351C: .4byte HorizontalSlide + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 20;
+    HorizontalSlide(sprite);
+    sprite->callback = HorizontalSlide;
 }
 
-__attribute__((naked)) void Anim_HorizontalVibrate_Fast(struct Sprite *sprite)
+void Anim_HorizontalVibrate_Fast(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _0818353C\n\t"
-        "	ldr r0, _08183538\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08183576\n\t"
-        "	.align 2, 0\n\t"
-        "_08183538: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818353C:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r5, #0xff\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08183548\n\t"
-        "	movs r5, #1\n\t"
-        "_08183548:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0818355C\n\t"
-        "	adds r0, #0xff\n\t"
-        "_0818355C:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #9\n\t"
-        "	bl Sin\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "_08183576:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    if (sprite->data[2] > 40)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        sprite->x2 = 0;
+    }
+    else
+    {
+        s8 sign;
+
+        if (!(sprite->data[2] & 1))
+            sign = 1;
+        else
+            sign = -1;
+
+        sprite->x2 = Sin((sprite->data[2] * 128 / 40) % 256, 9) * sign;
+    }
+
+    sprite->data[2]++;
 }
 
-__attribute__((naked)) void Anim_HorizontalVibrate_Fastest(struct Sprite *sprite)
+void Anim_HorizontalVibrate_Fastest(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	ble _081835A0\n\t"
-        "	ldr r0, _0818359C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081835DA\n\t"
-        "	.align 2, 0\n\t"
-        "_0818359C: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081835A0:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r5, #0xff\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081835AC\n\t"
-        "	movs r5, #1\n\t"
-        "_081835AC:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r1, #0x28\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _081835C0\n\t"
-        "	adds r0, #0xff\n\t"
-        "_081835C0:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl Sin\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "_081835DA:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    if (sprite->data[2] > 40)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        sprite->x2 = 0;
+    }
+    else
+    {
+        s8 sign;
+
+        if (!(sprite->data[2] & 1))
+            sign = 1;
+        else
+            sign = -1;
+
+        sprite->x2 = Sin((sprite->data[2] * 128 / 40) % 256, 12) * sign;
+    }
+
+    sprite->data[2]++;
 }
 
-__attribute__((naked)) void Anim_VerticalShakeBack_Fast(struct Sprite *sprite)
+void Anim_VerticalShakeBack_Fast(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x46\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08182FEC\n\t"
-        "	ldr r0, _08183604\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183604: .4byte VerticalShakeBack + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 70;
+    sprite->data[7] = 6;
+    VerticalShakeBack(sprite);
+    sprite->callback = VerticalShakeBack;
 }
 
 void Anim_VerticalShakeLowTwice_Slow(struct Sprite *sprite)
@@ -8859,3343 +3413,1296 @@ void Anim_VerticalShakeLowTwice_Fast(struct Sprite *sprite)
     sprite->callback = VerticalShakeLowTwice;
 }
 
-__attribute__((naked)) void Anim_CircleCounterclockwise_Long(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08183680\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FE9C\n\t"
-        "	ldr r0, _08183684\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183680: .4byte gUnknown_3001240\n\t"
-        "_08183684: .4byte CircleCounterclockwise + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void GrowStutter(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r1, [r7, r0]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r7, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081836D8\n\t"
-        "	strh r5, [r7, #0x26]\n\t"
-        "	strh r5, [r7, #0x38]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	ldrh r1, [r7, #0x36]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r7, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _081836D0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081836CC\n\t"
-        "	str r0, [r7, #0x1c]\n\t"
-        "	b _081837D8\n\t"
-        "	.align 2, 0\n\t"
-        "_081836CC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081836D0:\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r7, #0x36]\n\t"
-        "	strh r5, [r7, #0x3c]\n\t"
-        "	b _081837D8\n\t"
-        "_081836D8:\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r6, [r7, r0]\n\t"
-        "	lsls r0, r6, #7\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r4, [r7, r1]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _081836F2\n\t"
-        "	adds r4, #3\n\t"
-        "_081836F2:\n\t"
-        "	asrs r1, r4, #2\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r6, r1\n\t"
-        "	blt _08183712\n\t"
-        "	cmp r6, r0\n\t"
-        "	bge _08183712\n\t"
-        "	ldrh r0, [r7, #0x3c]\n\t"
-        "	adds r0, #0x33\n\t"
-        "	strh r0, [r7, #0x3c]\n\t"
-        "	movs r5, #0xff\n\t"
-        "	ands r5, r0\n\t"
-        "_08183712:\n\t"
-        "	ldrh r0, [r7, #0x34]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r7, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0818375C\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	mov r8, r2\n\t"
-        "	asrs r0, r2, #0x10\n\t"
-        "	mov r1, sb\n\t"
-        "	bl Sin\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r6, r5, #0x10\n\t"
-        "	asrs r5, r6, #0x10\n\t"
-        "	mov r0, sb\n\t"
-        "	movs r1, #5\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x17\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl Sin\n\t"
-        "	ldr r2, _08183758\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	b _08183796\n\t"
-        "	.align 2, 0\n\t"
-        "_08183758: .4byte 0xFFFFFF00\n\t"
-        "_0818375C:\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	mov r8, r2\n\t"
-        "	asrs r0, r2, #0x10\n\t"
-        "	mov r1, sb\n\t"
-        "	bl Sin\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r4, r5, #0x10\n\t"
-        "	mov r0, sb\n\t"
-        "	movs r1, #5\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x17\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	subs r1, r1, r6\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov sl, r1\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r6, r5, #0\n\t"
-        "_08183796:\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	mov r1, sb\n\t"
-        "	bl Sin\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	asrs r4, r6, #0x10\n\t"
-        "	mov r0, sb\n\t"
-        "	movs r1, #5\n\t"
-        "	bl __udivsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	subs r2, r2, r5\n\t"
-        "	subs r2, r2, r0\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl SetAffineData\n\t"
-        "	ldrh r0, [r7, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r7, #0x38]\n\t"
-        "_081837D8:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GrowStutter_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r6, [r5, r0]\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0818380A\n\t"
-        "	movs r4, #1\n\t"
-        "	strh r4, [r5, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r4, [r5, #0x36]\n\t"
-        "	movs r0, #0x28\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "	strh r6, [r5, #0x38]\n\t"
-        "	strh r6, [r5, #0x3c]\n\t"
-        "_0818380A:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_08183688\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalShakeHorizontalSlide(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0818383C\n\t"
-        "	ldr r0, _08183838\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _08183900\n\t"
-        "	.align 2, 0\n\t"
-        "_08183838: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818383C:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _0818384A\n\t"
-        "	ldr r1, _08183870\n\t"
-        "	adds r0, r2, r1\n\t"
-        "_0818384A:\n\t"
-        "	asrs r3, r0, #9\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08183856\n\t"
-        "	adds r0, r1, #3\n\t"
-        "_08183856:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081838AC\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08183874\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0818387E\n\t"
-        "	b _081838DC\n\t"
-        "	.align 2, 0\n\t"
-        "_08183870: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08183874:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08183890\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _081838C8\n\t"
-        "	b _081838DC\n\t"
-        "_0818387E:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0818388C\n\t"
-        "	adds r0, #0x1f\n\t"
-        "_0818388C:\n\t"
-        "	asrs r0, r0, #5\n\t"
-        "	b _081838DA\n\t"
-        "_08183890:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081838A2\n\t"
-        "	ldr r1, _081838A8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_081838A2:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	b _081838DA\n\t"
-        "	.align 2, 0\n\t"
-        "_081838A8: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_081838AC:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081838BE\n\t"
-        "	ldr r1, _081838C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_081838BE:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	adds r0, #0x10\n\t"
-        "	b _081838DA\n\t"
-        "	.align 2, 0\n\t"
-        "_081838C4: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_081838C8:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081838D6\n\t"
-        "	adds r0, #0x1f\n\t"
-        "_081838D6:\n\t"
-        "	asrs r0, r0, #5\n\t"
-        "	subs r0, #0x10\n\t"
-        "_081838DA:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_081838DC:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _081838E8\n\t"
-        "	adds r0, #0x7f\n\t"
-        "_081838E8:\n\t"
-        "	asrs r0, r0, #7\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0x30\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08183900:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalShakeHorizontalSlide_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08183930\n\t"
-        "	ldr r0, _0818392C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _081839EC\n\t"
-        "	.align 2, 0\n\t"
-        "_0818392C: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08183930:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r2, [r4, r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _0818393E\n\t"
-        "	ldr r1, _08183964\n\t"
-        "	adds r0, r2, r1\n\t"
-        "_0818393E:\n\t"
-        "	asrs r3, r0, #9\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _0818394A\n\t"
-        "	adds r0, r1, #3\n\t"
-        "_0818394A:\n\t"
-        "	asrs r0, r0, #2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _081839A0\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08183968\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08183972\n\t"
-        "	b _081839D0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183964: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08183968:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08183984\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _081839BC\n\t"
-        "	b _081839D0\n\t"
-        "_08183972:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08183980\n\t"
-        "	adds r0, #0x1f\n\t"
-        "_08183980:\n\t"
-        "	asrs r0, r0, #5\n\t"
-        "	b _081839CE\n\t"
-        "_08183984:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08183996\n\t"
-        "	ldr r1, _0818399C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_08183996:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	b _081839CE\n\t"
-        "	.align 2, 0\n\t"
-        "_0818399C: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_081839A0:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0xc\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081839B2\n\t"
-        "	ldr r1, _081839B8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_081839B2:\n\t"
-        "	asrs r0, r0, #9\n\t"
-        "	adds r0, #0x10\n\t"
-        "	b _081839CE\n\t"
-        "	.align 2, 0\n\t"
-        "_081839B8: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_081839BC:\n\t"
-        "	lsls r0, r3, #9\n\t"
-        "	subs r0, r2, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081839CA\n\t"
-        "	adds r0, #0x1f\n\t"
-        "_081839CA:\n\t"
-        "	asrs r0, r0, #5\n\t"
-        "	subs r0, #0x10\n\t"
-        "_081839CE:\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_081839D0:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r1, #0x60\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #0x40\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_081839EC:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void TriangleDown(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08183A0A\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_08183A0A:\n\t"
-        "	ldr r7, _08183A6C\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r5, r7, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl __divsi3\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _08183A38\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r1, [r4, #0x32]\n\t"
-        "_08183A38:\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	adds r0, r6, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r5, [r4, r1]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08183A78\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08183A74\n\t"
-        "	ldr r0, _08183A70\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08183AB2\n\t"
-        "	.align 2, 0\n\t"
-        "_08183A6C: .4byte gUnknown_85D381E\n\t"
-        "_08183A70: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08183A74:\n\t"
-        "	strh r1, [r4, #0x32]\n\t"
-        "	b _08183AB2\n\t"
-        "_08183A78:\n\t"
-        "	adds r0, r6, r7\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	ldrh r2, [r4, #0x24]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r7, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "_08183AB2:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_TriangleDown_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081839F8\n\t"
-        "	ldr r0, _08183AD4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183AD4: .4byte TriangleDown + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_TriangleDown(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081839F8\n\t"
-        "	ldr r0, _08183AF4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183AF4: .4byte TriangleDown + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void Anim_TriangleDown_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081839F8\n\t"
-        "	ldr r0, _08183B14\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183B14: .4byte TriangleDown + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Grow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	ble _08183B5A\n\t"
-        "	ldrh r1, [r4, #0x38]\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08183B50\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08183B4C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	b _08183B94\n\t"
-        "	.align 2, 0\n\t"
-        "_08183B4C: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08183B50:\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	b _08183B94\n\t"
-        "_08183B5A:\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	cmp r0, r5\n\t"
-        "	ble _08183B6E\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_08183B6E:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	movs r1, #0x40\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	subs r2, r5, r2\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_08183B94:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_Grow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183BC2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_08183BC2:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08183B18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_Grow_Twice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183BFA\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_08183BFA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08183B18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalSpring_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183C34\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_08183C34:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08182610\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalSpring_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183C66\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #0xfc\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_08183C66:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08182610\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalRepeatedSpring_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183C9C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_08183C9C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081826DC\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalRepeatedSpring(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183CCE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "	movs r1, #8\n\t"
-        "	strh r1, [r4, #0x3a]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	strh r1, [r4, #0x36]\n\t"
-        "_08183CCE:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081826DC\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShrinkGrow_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08183CF6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "_08183CF6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081806D4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShrinkGrow_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08183D1E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "_08183D1E:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081806D4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalStretchBothEnds(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r6, [r5, r0]\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _08183D4E\n\t"
-        "	movs r4, #1\n\t"
-        "	strh r4, [r5, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r4, [r5, #0x36]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "	strh r6, [r5, #0x3c]\n\t"
-        "_08183D4E:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_08183174\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_VerticalStretchBothEnds_Twice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183D80\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x46\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_08183D80:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08183174\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalStretchFar_Twice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183DB2\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x46\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_08183DB2:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081832C4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalStretchFar(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r6, [r5, r0]\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _08183DE4\n\t"
-        "	movs r4, #1\n\t"
-        "	strh r4, [r5, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r4, [r5, #0x36]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "	strh r6, [r5, #0x38]\n\t"
-        "	strh r6, [r5, #0x3c]\n\t"
-        "_08183DE4:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_081832C4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GrowStutter_Twice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08183E16\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x46\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r5, [r4, #0x38]\n\t"
-        "	strh r5, [r4, #0x3c]\n\t"
-        "_08183E16:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08183688\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_GrowStutter(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r6, [r5, r0]\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _08183E48\n\t"
-        "	movs r4, #1\n\t"
-        "	strh r4, [r5, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	strh r4, [r5, #0x36]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r5, #0x34]\n\t"
-        "	strh r6, [r5, #0x38]\n\t"
-        "	strh r6, [r5, #0x3c]\n\t"
-        "_08183E48:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_08183688\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ConcaveArc(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	ble _08183E96\n\t"
-        "	ldrh r2, [r4, #0x3a]\n\t"
-        "	movs r3, #0x3a\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _08183E7C\n\t"
-        "	ldr r0, _08183E78\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _08183EEA\n\t"
-        "	.align 2, 0\n\t"
-        "_08183E78: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08183E7C:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08183E88\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08183E88:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _08183EEA\n\t"
-        "_08183E96:\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r2, [r4, r3]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0xc0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08183EB8\n\t"
-        "	ldr r3, _08183EF0\n\t"
-        "	adds r0, r2, r3\n\t"
-        "_08183EB8:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	ble _08183EDA\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "_08183EDA:\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	ldrh r1, [r4, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	ldrh r2, [r4, #0x3c]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08183EEA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183EF0: .4byte SPECIAL_sub_081C472C\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConcaveArcLarge_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08183F12\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	strh r0, [r1, #0x3a]\n\t"
-        "	strh r2, [r1, #0x3c]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strh r0, [r1, #0x38]\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "_08183F12:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl sub_08183E54\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConcaveArcLarge(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08183F3A\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	strh r0, [r1, #0x3a]\n\t"
-        "	strh r2, [r1, #0x3c]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strh r0, [r1, #0x38]\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "_08183F3A:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl sub_08183E54\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConcaveArcLarge_Twice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08183F64\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #0x3a]\n\t"
-        "	strh r2, [r1, #0x3c]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strh r0, [r1, #0x38]\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "_08183F64:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl sub_08183E54\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void ConvexDoubleArc(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	cmp r0, r1\n\t"
-        "	ble _08183FA8\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	ldrh r2, [r5, #0x36]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _08183F98\n\t"
-        "	ldr r0, _08183F94\n\t"
-        "	str r0, [r5, #0x1c]\n\t"
-        "	b _08183FA0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183F94: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08183F98:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r5, #0x36]\n\t"
-        "	strh r1, [r5, #0x3c]\n\t"
-        "_08183FA0:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "	b _08184034\n\t"
-        "_08183FA8:\n\t"
-        "	cmp r0, #0x9f\n\t"
-        "	ble _08183FD2\n\t"
-        "	cmp r0, r1\n\t"
-        "	ble _08183FB2\n\t"
-        "	strh r1, [r5, #0x3c]\n\t"
-        "_08183FB2:\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	ldrsh r1, [r5, r0]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08183FBE\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08183FBE:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	b _08184000\n\t"
-        "_08183FD2:\n\t"
-        "	cmp r0, #0x5f\n\t"
-        "	ble _08183FF6\n\t"
-        "	movs r0, #0x60\n\t"
-        "	movs r1, #6\n\t"
-        "	bl Sin\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	subs r0, #0x60\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #4\n\t"
-        "	bl Sin\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	strh r4, [r5, #0x26]\n\t"
-        "	b _08184002\n\t"
-        "_08183FF6:\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl Sin\n\t"
-        "_08184000:\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "_08184002:\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	bl Sin\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldrh r0, [r5, #0x36]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0818402A\n\t"
-        "	lsls r0, r2, #0x10\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "_0818402A:\n\t"
-        "	strh r2, [r5, #0x24]\n\t"
-        "	ldrh r0, [r5, #0x34]\n\t"
-        "	ldrh r3, [r5, #0x3c]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "_08184034:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConvexDoubleArc_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r3, [r2, r0]\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _0818405C\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r2, #0x32]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r2, #0x3a]\n\t"
-        "	strh r3, [r2, #0x3c]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	strh r1, [r2, #0x36]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r2, #0x34]\n\t"
-        "_0818405C:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_08183F70\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConvexDoubleArc(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r3, [r2, r0]\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _08184088\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r2, #0x32]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r2, #0x3a]\n\t"
-        "	strh r3, [r2, #0x3c]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	strh r1, [r2, #0x36]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r2, #0x34]\n\t"
-        "_08184088:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_08183F70\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConvexDoubleArc_Twice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r3, [r2, r0]\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _081840B4\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r2, #0x32]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r2, #0x3a]\n\t"
-        "	strh r3, [r2, #0x3c]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	strh r1, [r2, #0x36]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r2, #0x34]\n\t"
-        "_081840B4:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_08183F70\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConcaveArcSmall_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _081840DE\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	strh r0, [r2, #0x3a]\n\t"
-        "	strh r1, [r2, #0x3c]\n\t"
-        "	movs r1, #4\n\t"
-        "	strh r1, [r2, #0x38]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r2, #0x36]\n\t"
-        "	strh r1, [r2, #0x34]\n\t"
-        "_081840DE:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_08183E54\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConcaveArcSmall(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08184106\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	strh r0, [r1, #0x3a]\n\t"
-        "	strh r2, [r1, #0x3c]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1, #0x38]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "_08184106:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl sub_08183E54\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ConcaveArcSmall_Twice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08184132\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #0x3a]\n\t"
-        "	strh r2, [r1, #0x3c]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1, #0x38]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "_08184132:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	bl sub_08183E54\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SetHorizontalDip(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r0, r1, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_0817F29C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	ldrh r3, [r4, #0x3a]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalDip(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _081841AC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldr r0, _081841EC\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r5, [r4, #0x2e]\n\t"
-        "_081841AC:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _081841F8\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r4, #0x24]\n\t"
-        "	strh r2, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r3, #0x34\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _081841F4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081841F0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08184204\n\t"
-        "	.align 2, 0\n\t"
-        "_081841EC: .4byte 0x0000FFE0\n\t"
-        "_081841F0: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081841F4:\n\t"
-        "	strh r2, [r4, #0x32]\n\t"
-        "	b _081841FE\n\t"
-        "_081841F8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0818413C\n\t"
-        "_081841FE:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08184204:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalDip_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _08184230\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #0x5a\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldr r0, _08184270\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r5, [r4, #0x2e]\n\t"
-        "_08184230:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0818427C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r4, #0x24]\n\t"
-        "	strh r2, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r3, #0x34\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _08184278\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08184274\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08184288\n\t"
-        "	.align 2, 0\n\t"
-        "_08184270: .4byte 0x0000FFE0\n\t"
-        "_08184274: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08184278:\n\t"
-        "	strh r2, [r4, #0x32]\n\t"
-        "	b _08184282\n\t"
-        "_0818427C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0818413C\n\t"
-        "_08184282:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08184288:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_HorizontalDip_Twice(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r5, [r4, r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _081842B4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	ldr r0, _081842F4\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	strh r5, [r4, #0x2e]\n\t"
-        "_081842B4:\n\t"
-        "	movs r2, #0x32\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r3, #0x3c\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08184300\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r4, #0x24]\n\t"
-        "	strh r2, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r3, #0x34\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _081842FC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _081842F8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _0818430C\n\t"
-        "	.align 2, 0\n\t"
-        "_081842F4: .4byte 0x0000FFE0\n\t"
-        "_081842F8: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081842FC:\n\t"
-        "	strh r2, [r4, #0x32]\n\t"
-        "	b _08184306\n\t"
-        "_08184300:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0818413C\n\t"
-        "_08184306:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_0818430C:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ShrinkGrowVibrate(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r6, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08184348\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r6, #0x26]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08184344\n\t"
-        "	str r0, [r6, #0x1c]\n\t"
-        "	b _081843F0\n\t"
-        "	.align 2, 0\n\t"
-        "_08184344: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08184348:\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r4, [r6, r2]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08184368\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08184368:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081843A4\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x36]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x38]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	b _081843CA\n\t"
-        "_081843A4:\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x36]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strh r0, [r6, #0x38]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #8\n\t"
-        "_081843CA:\n\t"
-        "	bl Sin\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _081843DC\n\t"
-        "	adds r0, #7\n\t"
-        "_081843DC:\n\t"
-        "	lsrs r0, r0, #3\n\t"
-        "	strh r0, [r6, #0x26]\n\t"
-        "	movs r0, #0x36\n\t"
-        "	ldrsh r1, [r6, r0]\n\t"
-        "	movs r0, #0x38\n\t"
-        "	ldrsh r2, [r6, r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl HandleSetAffineData\n\t"
-        "_081843F0:\n\t"
-        "	ldrh r0, [r6, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShrinkGrowVibrate_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0818441C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r0, #0x28\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_0818441C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08184314\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShrinkGrowVibrate(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08184446\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r0, #0x28\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08184446:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08184314\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShrinkGrowVibrate_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08184472\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	ldrh r0, [r4, #0x26]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_08184472:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08184314\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void JoltRight(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #0x24\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmn r1, r0\n\t"
-        "	bgt _081844AA\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	ldr r0, _081844B8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081844AA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081844B8: .4byte JoltRight_0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void JoltRight_0(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldrh r2, [r4, #0x24]\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	cmp r1, #0\n\t"
-        "	blt _081844DA\n\t"
-        "	ldr r0, _081844E8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_081844DA:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081844E8: .4byte JoltRight_1 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void JoltRight_1(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldrh r2, [r4, #0x24]\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	strh r1, [r4, #0x24]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldrh r2, [r4, #0x3a]\n\t"
-        "	movs r3, #0x3a\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _08184514\n\t"
-        "	strh r2, [r4, #0x24]\n\t"
-        "	ldr r0, _08184520\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08184514:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08184520: .4byte JoltRight_2 + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void JoltRight_2(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r2, [r4, #0x34]\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r3, #0x38\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	cmp r1, r0\n\t"
-        "	blt _08184544\n\t"
-        "	ldr r0, _08184540\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _08184558\n\t"
-        "	.align 2, 0\n\t"
-        "_08184540: .4byte JoltRight_3 + 1\n\t"
-        "_08184544:\n\t"
-        "	ldrh r0, [r4, #0x36]\n\t"
-        "	ldrh r1, [r4, #0x24]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "_08184558:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void JoltRight_3(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	ldrh r0, [r4, #0x24]\n\t"
-        "	subs r0, #2\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _08184586\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F628\n\t"
-        "	ldr r0, _08184594\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_08184586:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08184594: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-__attribute__((naked)) void Anim_JoltRight_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	strh r1, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldr r0, _081845C0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081845C0: .4byte JoltRight + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_JoltRight(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	strh r1, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldr r0, _081845EC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081845EC: .4byte JoltRight + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_JoltRight_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl HandleStartAffineAnim\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r1, [r4, #0x34]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldr r0, _08184618\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08184618: .4byte JoltRight + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_0818461C(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	strh r0, [r1, #0x24]\n\t"
-        "	ldrh r2, [r1, #0x2e]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _0818463A\n\t"
-        "	movs r2, #0x30\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0818463C\n\t"
-        "_0818463A:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "_0818463C:\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ShakeFlashYellow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r1, _08184674\n\t"
-        "	movs r2, #0x34\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r5, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0818461C\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r0, r5\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _0818467C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldr r0, _08184678\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081846DA\n\t"
-        "	.align 2, 0\n\t"
-        "_08184674: .4byte gUnknown_85D38DC\n\t"
-        "_08184678: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_0818467C:\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _081846AC\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0818469C\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldr r3, _08184698\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "	b _081846A8\n\t"
-        "	.align 2, 0\n\t"
-        "_08184698: .4byte 0x000003FF\n\t"
-        "_0818469C:\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	ldr r3, _081846D0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalette\n\t"
-        "_081846A8:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "_081846AC:\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _081846D4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "	b _081846DA\n\t"
-        "	.align 2, 0\n\t"
-        "_081846D0: .4byte 0x000003FF\n\t"
-        "_081846D4:\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_081846DA:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeFlashYellow_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0818470C\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "	strh r3, [r2, #0x3a]\n\t"
-        "	strh r3, [r2, #0x38]\n\t"
-        "	strh r3, [r2, #0x36]\n\t"
-        "	strh r3, [r2, #0x34]\n\t"
-        "_0818470C:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl BackAnimBlendYellow\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeFlashYellow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _08184744\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "	strh r3, [r2, #0x3a]\n\t"
-        "	strh r3, [r2, #0x38]\n\t"
-        "	strh r3, [r2, #0x36]\n\t"
-        "	strh r4, [r2, #0x34]\n\t"
-        "_08184744:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl BackAnimBlendYellow\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeFlashYellow_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0818477E\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "	strh r3, [r2, #0x3a]\n\t"
-        "	strh r3, [r2, #0x38]\n\t"
-        "	strh r3, [r2, #0x36]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r2, #0x34]\n\t"
-        "_0818477E:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl BackAnimBlendYellow\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ShakeGlow_Blend(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x7f\n\t"
-        "	ble _081847B0\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x1f\n\t"
-        "	bl BlendPalette\n\t"
-        "	ldr r0, _081847AC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	b _081847D6\n\t"
-        "	.align 2, 0\n\t"
-        "_081847AC: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_081847B0:\n\t"
-        "	movs r5, #0x32\n\t"
-        "	ldrsh r0, [r4, r5]\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl Sin\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strh r2, [r4, #0x3a]\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r3, _081847DC\n\t"
-        "	movs r5, #0x30\n\t"
-        "	ldrsh r1, [r4, r5]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	bl BlendPalette\n\t"
-        "_081847D6:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081847DC: .4byte gUnknown_85D38E8\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ShakeGlow_Move(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	movs r2, #0x36\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bge _08184878\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "	movs r3, #0x38\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0818481C\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _08184818\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "_08184818:\n\t"
-        "	strh r2, [r4, #0x24]\n\t"
-        "	b _08184872\n\t"
-        "_0818481C:\n\t"
-        "	movs r0, #0x34\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsrs r0, r1, #0x1f\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0xf\n\t"
-        "	movs r0, #1\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #7\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	bl __divsi3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08184850\n\t"
-        "	adds r0, #0xff\n\t"
-        "_08184850:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #6\n\t"
-        "	bl Sin\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	muls r2, r0, r2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "_08184872:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F5B8\n\t"
-        "_08184878:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowRed_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _081848AA\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	strh r2, [r4, #0x30]\n\t"
-        "_081848AA:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081848BA\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_081848BA:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _081848DC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_081848DC:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowRed(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08184912\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	strh r2, [r4, #0x30]\n\t"
-        "_08184912:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08184922\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_08184922:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _08184944\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_08184944:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowRed_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _0818497A\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	strh r2, [r4, #0x30]\n\t"
-        "_0818497A:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0818498A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_0818498A:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _081849AC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_081849AC:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowGreen_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _081849E4\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_081849E4:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081849F4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_081849F4:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _08184A16\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_08184A16:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowGreen(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08184A4E\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_08184A4E:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08184A5E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_08184A5E:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _08184A80\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_08184A80:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowGreen_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08184AB6\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_08184AB6:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08184AC6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_08184AC6:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _08184AE8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_08184AE8:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowBlue_Fast(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08184B1E\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_08184B1E:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08184B2E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_08184B2E:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _08184B50\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_08184B50:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowBlue(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08184B88\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_08184B88:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08184B98\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_08184B98:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _08184BBA\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_08184BBA:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void Anim_ShakeGlowBlue_Slow(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _08184BF4\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	lsrs r0, r0, #4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	movs r0, #0x50\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	strh r2, [r4, #0x38]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r2, [r4, #0x34]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "_08184BF4:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08184C04\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl BackAnimBlend\n\t"
-        "_08184C04:\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r3, #0x2e\n\t"
-        "	ldrsh r1, [r4, r3]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r4, r3]\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	movs r0, #0x80\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsrs r1, r0, #0x1f\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	asrs r0, r0, #1\n\t"
-        "	cmp r2, r0\n\t"
-        "	blt _08184C26\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081847E0\n\t"
-        "_08184C26:\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SpriteCB_SetDummyOnAnimEnd(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08184C48\n\t"
-        "	ldr r0, _08184C4C\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "_08184C48:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08184C4C: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+void Anim_CircleCounterclockwise_Long(struct Sprite *sprite)
+{
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 1024;
+    gUnknown_3001240[id].data = 6;
+    gUnknown_3001240[id].speed = 24;
+    CircleCounterclockwise(sprite);
+    sprite->callback = CircleCounterclockwise;
+}
+
+void GrowStutter(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    s16 index1 = 0;
+    s16 index2 = 0;
+
+    if (sprite->data[5] > sprite->data[6])
+    {
+        sprite->y2 = 0;
+        sprite->data[5] = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        if (sprite->data[4] <= 1)
+        {
+            ResetSpriteAfterAnim(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        }
+        else
+        {
+            sprite->data[4]--;
+            sprite->data[7] = 0;
+        }
+    }
+    else
+    {
+        u8 amplitude;
+        u8 cmpVal1;
+        u8 cmpVal2;
+        s16 xScale;
+        s16 yScale;
+
+        index2 = (sprite->data[5] * 128) / sprite->data[6];
+        cmpVal1 = sprite->data[6] / 4;
+        cmpVal2 = cmpVal1 * 3;
+        if (sprite->data[5] >= cmpVal1 && sprite->data[5] < cmpVal2)
+        {
+            sprite->data[7] += 51;
+            index1 = sprite->data[7] & 0xFF;
+        }
+
+        amplitude = sprite->data[3];
+        if (sprite->data[1] == 0)
+            xScale = Sin(index2, amplitude) + (Sin(index1, amplitude / 5 * 2) - 256);
+        else
+            xScale = 256 - Sin(index1, amplitude / 5 * 2) - Sin(index2, amplitude);
+
+        yScale = 256 - Sin(index1, amplitude / 5) - Sin(index2, amplitude);
+        SetAffineData(sprite, xScale, yScale, 0);
+        sprite->data[5]++;
+    }
+}
+
+void Anim_GrowStutter_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        HandleStartAffineAnim(sprite);
+        sprite->data[4] = 1;
+        sprite->data[6] = 40;
+        sprite->data[3] = 40;
+        sprite->data[5] = 0;
+        sprite->data[7] = 0;
+    }
+
+    GrowStutter(sprite);
+}
+
+void Anim_VerticalShakeHorizontalSlide(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    TryFlipX(sprite);
+    if (sprite->data[2] > 2048)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        sprite->data[6] = 0;
+    }
+    else
+    {
+        s16 divCase = (sprite->data[2] / 512) % 4;
+
+        switch (divCase)
+        {
+        case 0:
+            sprite->x2 = (sprite->data[2] % 512) / 32;
+            break;
+        case 2:
+            sprite->x2 = -(sprite->data[2] % 512 * 16) / 512;
+            break;
+        case 1:
+            sprite->x2 = -(sprite->data[2] % 512 * 16) / 512 + 16;
+            break;
+        case 3:
+            sprite->x2 = (sprite->data[2] % 512) / 32 - 16;
+            break;
+        }
+
+        sprite->y2 = Sin(sprite->data[2] % 128, 4);
+        sprite->data[2] += 48;
+    }
+
+    TryFlipX(sprite);
+}
+void Anim_VerticalShakeHorizontalSlide_Fast(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    TryFlipX(sprite);
+    if (sprite->data[2] > 2048)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        sprite->data[6] = 0;
+    }
+    else
+    {
+        s16 divCase = (sprite->data[2] / 512) % 4;
+
+        switch (divCase)
+        {
+        case 0:
+            sprite->x2 = (sprite->data[2] % 512) / 32;
+            break;
+        case 2:
+            sprite->x2 = -(sprite->data[2] % 512 * 16) / 512;
+            break;
+        case 1:
+            sprite->x2 = -(sprite->data[2] % 512 * 16) / 512 + 16;
+            break;
+        case 3:
+            sprite->x2 = (sprite->data[2] % 512) / 32 - 16;
+            break;
+        }
+
+        sprite->y2 = Sin(sprite->data[2] % 96, 4);
+        sprite->data[2] += 64;
+    }
+
+    TryFlipX(sprite);
+}
+
+void TriangleDown(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+
+    if (sprite->data[2] == 0)
+        sprite->data[3] = 0;
+
+    if (gUnknown_85D381E[sprite->data[3]][2] / sprite->data[5] == sprite->data[2])
+    {
+        sprite->data[3]++;
+        sprite->data[2] = 0;
+    }
+
+    if (gUnknown_85D381E[sprite->data[3]][2] / sprite->data[5] == 0)
+    {
+        if (--sprite->data[6] == 0)
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        else
+            sprite->data[2] = 0;
+    }
+    else
+    {
+        s32 amplitude = sprite->data[5];
+
+        sprite->x2 += gUnknown_85D381E[sprite->data[3]][0] * amplitude;
+        sprite->y2 += gUnknown_85D381E[sprite->data[3]][1] * sprite->data[5];
+        sprite->data[2]++;
+        TryFlipX(sprite);
+    }
+}
+
+void Anim_TriangleDown_Slow(struct Sprite *sprite)
+{
+    sprite->data[5] = 1;
+    sprite->data[6] = 1;
+    TriangleDown(sprite);
+    sprite->callback = TriangleDown;
+}
+
+void Anim_TriangleDown(struct Sprite *sprite)
+{
+    sprite->data[5] = 2;
+    sprite->data[6] = 1;
+    TriangleDown(sprite);
+    sprite->callback = TriangleDown;
+}
+
+void Anim_TriangleDown_Fast(struct Sprite *sprite)
+{
+    sprite->data[5] = 2;
+    sprite->data[6] = 2;
+    TriangleDown(sprite);
+    sprite->callback = TriangleDown;
+}
+
+void Grow(struct Sprite *sprite)
+{
+    if (sprite->data[7] > 255)
+    {
+        if (sprite->data[5] <= 1)
+        {
+            ResetSpriteAfterAnim(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+            HandleSetAffineData(sprite, 256, 256, 0);
+        }
+        else
+        {
+            sprite->data[5]--;
+            sprite->data[7] = 0;
+        }
+    }
+    else
+    {
+        s16 scale;
+
+        sprite->data[7] += sprite->data[6];
+        if (sprite->data[7] > 256)
+            sprite->data[7] = 256;
+
+        scale = Sin(sprite->data[7] / 2, 64);
+        HandleSetAffineData(sprite, 256 - scale, 256 - scale, 0);
+    }
+}
+
+void Anim_Grow(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+        sprite->data[6] = 4;
+        sprite->data[5] = 1;
+    }
+
+    Grow(sprite);
+    TryFlipX(sprite);
+}
+
+void Anim_Grow_Twice(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+        sprite->data[6] = 8;
+        sprite->data[5] = 2;
+    }
+
+    Grow(sprite);
+    TryFlipX(sprite);
+}
+
+void Anim_HorizontalSpring_Fast(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+        sprite->data[6] = 8;
+        sprite->data[5] = 512;
+        sprite->data[4] = 16;
+    }
+
+    HorizontalSpring(sprite);
+}
+
+void Anim_HorizontalSpring_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+        sprite->data[6] = 4;
+        sprite->data[5] = 256;
+        sprite->data[4] = 16;
+    }
+
+    HorizontalSpring(sprite);
+}
+
+void Anim_HorizontalRepeatedSpring_Fast(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+        sprite->data[6] = 8;
+        sprite->data[5] = 512;
+        sprite->data[4] = 16;
+    }
+
+    HorizontalRepeatedSpring(sprite);
+}
+
+void Anim_HorizontalRepeatedSpring(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[2]++;
+        sprite->data[7] = 0;
+        sprite->data[6] = 8;
+        sprite->data[5] = 512;
+        sprite->data[4] = 8;
+    }
+
+    HorizontalRepeatedSpring(sprite);
+}
+
+void Anim_ShrinkGrow_Fast(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[7] = 5;
+        sprite->data[6] = 8;
+    }
+
+    ShrinkGrow(sprite);
+}
+
+void Anim_ShrinkGrow_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[7] = 3;
+        sprite->data[6] = 4;
+    }
+
+    ShrinkGrow(sprite);
+}
+void Anim_VerticalStretchBothEnds(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        HandleStartAffineAnim(sprite);
+        sprite->data[4] = 1;
+        sprite->data[6] = 30;
+        sprite->data[3] = 60;
+        sprite->data[7] = 0;
+    }
+
+    VerticalStretchBothEnds(sprite);
+}
+
+void Anim_VerticalStretchBothEnds_Twice(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        HandleStartAffineAnim(sprite);
+        sprite->data[4] = 2;
+        sprite->data[6] = 20;
+        sprite->data[3] = 70;
+        sprite->data[7] = 0;
+    }
+
+    VerticalStretchBothEnds(sprite);
+}
+void Anim_HorizontalStretchFar_Twice(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        HandleStartAffineAnim(sprite);
+        sprite->data[4] = 2;
+        sprite->data[6] = 20;
+        sprite->data[3] = 70;
+        sprite->data[5] = 0;
+        sprite->data[7] = 0;
+    }
+
+    HorizontalStretchFar(sprite);
+}
+
+void Anim_HorizontalStretchFar(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        HandleStartAffineAnim(sprite);
+        sprite->data[4] = 1;
+        sprite->data[6] = 30;
+        sprite->data[3] = 60;
+        sprite->data[5] = 0;
+        sprite->data[7] = 0;
+    }
+
+    HorizontalStretchFar(sprite);
+}
+void Anim_GrowStutter_Twice(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        HandleStartAffineAnim(sprite);
+        sprite->data[4] = 2;
+        sprite->data[6] = 20;
+        sprite->data[3] = 70;
+        sprite->data[5] = 0;
+        sprite->data[7] = 0;
+    }
+
+    GrowStutter(sprite);
+}
+
+void Anim_GrowStutter(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        HandleStartAffineAnim(sprite);
+        sprite->data[4] = 1;
+        sprite->data[6] = 30;
+        sprite->data[3] = 60;
+        sprite->data[5] = 0;
+        sprite->data[7] = 0;
+    }
+
+    GrowStutter(sprite);
+}
+void ConcaveArc(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    if (sprite->data[7] > 255)
+    {
+        if (sprite->data[6] <= 1)
+        {
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+            sprite->x2 = 0;
+            sprite->y2 = 0;
+        }
+        else
+        {
+            sprite->data[7] %= 256;
+            sprite->data[6]--;
+        }
+    }
+    else
+    {
+        sprite->x2 = -(Sin(sprite->data[7], sprite->data[5]));
+        sprite->y2 = Sin((sprite->data[7] + 192) % 256, sprite->data[4]);
+        if (sprite->y2 > 0)
+            sprite->y2 *= -1;
+
+        sprite->y2 += sprite->data[4];
+        sprite->data[7] += sprite->data[3];
+    }
+}
+
+void Anim_ConcaveArcLarge_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 1;
+        sprite->data[7] = 0;
+        sprite->data[5] = 12;
+        sprite->data[4] = 12;
+        sprite->data[3] = 4;
+    }
+
+    ConcaveArc(sprite);
+}
+
+void Anim_ConcaveArcLarge(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 1;
+        sprite->data[7] = 0;
+        sprite->data[5] = 12;
+        sprite->data[4] = 12;
+        sprite->data[3] = 6;
+    }
+
+    ConcaveArc(sprite);
+}
+
+void Anim_ConcaveArcLarge_Twice(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 2;
+        sprite->data[7] = 0;
+        sprite->data[5] = 12;
+        sprite->data[4] = 12;
+        sprite->data[3] = 8;
+    }
+
+    ConcaveArc(sprite);
+}
+void ConvexDoubleArc(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    if (sprite->data[7] > 256)
+    {
+        if (sprite->data[6] <= sprite->data[4])
+        {
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+        }
+        else
+        {
+            sprite->data[4]++;
+            sprite->data[7] = 0;
+        }
+
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        s16 posX;
+
+        if (sprite->data[7] > 159)
+        {
+            if (sprite->data[7] > 256)
+                sprite->data[7] = 256;
+
+            sprite->y2 = -(Sin(sprite->data[7] % 256, 8));
+        }
+        else if (sprite->data[7] > 95)
+        {
+            sprite->y2 = Sin(96, 6) - Sin((sprite->data[7] - 96) * 2, 4);
+        }
+        else
+        {
+            sprite->y2 = Sin(sprite->data[7], 6);
+        }
+
+        posX = -(Sin(sprite->data[7] / 2, sprite->data[5]));
+        if (sprite->data[4] % 2 == 0)
+            posX *= -1;
+
+        sprite->x2 = posX;
+        sprite->data[7] += sprite->data[3];
+    }
+}
+
+void Anim_ConvexDoubleArc_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 2;
+        sprite->data[7] = 0;
+        sprite->data[5] = 16;
+        sprite->data[4] = 1;
+        sprite->data[3] = 4;
+    }
+
+    ConvexDoubleArc(sprite);
+}
+
+void Anim_ConvexDoubleArc(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 2;
+        sprite->data[7] = 0;
+        sprite->data[5] = 16;
+        sprite->data[4] = 1;
+        sprite->data[3] = 6;
+    }
+
+    ConvexDoubleArc(sprite);
+}
+
+void Anim_ConvexDoubleArc_Twice(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 3;
+        sprite->data[7] = 0;
+        sprite->data[5] = 16;
+        sprite->data[4] = 1;
+        sprite->data[3] = 8;
+    }
+
+    ConvexDoubleArc(sprite);
+}
+void Anim_ConcaveArcSmall_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 1;
+        sprite->data[7] = 0;
+        sprite->data[5] = 4;
+        sprite->data[4] = 6;
+        sprite->data[3] = 4;
+    }
+
+    ConcaveArc(sprite);
+}
+
+void Anim_ConcaveArcSmall(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 1;
+        sprite->data[7] = 0;
+        sprite->data[5] = 4;
+        sprite->data[4] = 6;
+        sprite->data[3] = 6;
+    }
+
+    ConcaveArc(sprite);
+}
+
+void Anim_ConcaveArcSmall_Twice(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[2] = 1;
+        sprite->data[6] = 2;
+        sprite->data[7] = 0;
+        sprite->data[5] = 4;
+        sprite->data[4] = 6;
+        sprite->data[3] = 8;
+    }
+
+    ConcaveArc(sprite);
+}
+void SetHorizontalDip(struct Sprite *sprite)
+{
+    u16 index = Sin((s16)((sprite->data[2] * 128) / sprite->data[7]), sprite->data[5]);
+
+    sprite->data[6] = -(index << 8);
+    sub_0817F29C(sprite, index, sprite->data[4], 0);
+    HandleSetAffineData(sprite, 256, 256, sprite->data[6]);
+}
+
+void Anim_HorizontalDip(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[7] = 60;
+        sprite->data[5] = 8;
+        sprite->data[4] = -32;
+        sprite->data[3] = 1;
+        sprite->data[0] = 0;
+    }
+
+    if (sprite->data[2] > sprite->data[7])
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0]++;
+        if (sprite->data[3] <= sprite->data[0])
+        {
+            sub_0817F628(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+            return;
+        }
+        else
+        {
+            sprite->data[2] = 0;
+        }
+    }
+    else
+    {
+        SetHorizontalDip(sprite);
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_HorizontalDip_Fast(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[7] = 90;
+        sprite->data[5] = 8;
+        sprite->data[4] = -32;
+        sprite->data[3] = 1;
+        sprite->data[0] = 0;
+    }
+
+    if (sprite->data[2] > sprite->data[7])
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0]++;
+        if (sprite->data[3] <= sprite->data[0])
+        {
+            sub_0817F628(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+            return;
+        }
+        else
+        {
+            sprite->data[2] = 0;
+        }
+    }
+    else
+    {
+        SetHorizontalDip(sprite);
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_HorizontalDip_Twice(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->data[7] = 30;
+        sprite->data[5] = 8;
+        sprite->data[4] = -32;
+        sprite->data[3] = 2;
+        sprite->data[0] = 0;
+    }
+
+    if (sprite->data[2] > sprite->data[7])
+    {
+        HandleSetAffineData(sprite, 256, 256, 0);
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0]++;
+        if (sprite->data[3] <= sprite->data[0])
+        {
+            sub_0817F628(sprite);
+            sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+            return;
+        }
+        else
+        {
+            sprite->data[2] = 0;
+        }
+    }
+    else
+    {
+        SetHorizontalDip(sprite);
+    }
+
+    sprite->data[2]++;
+}
+
+void ShrinkGrowVibrate(struct Sprite *sprite)
+{
+    if (sprite->data[2] > sprite->data[7])
+    {
+        sprite->y2 = 0;
+        HandleSetAffineData(sprite, 256, 256, 0);
+        ResetSpriteAfterAnim(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+    else
+    {
+        s8 sinY;
+        u16 y;
+        s16 index = ((u16)(sprite->data[2] % sprite->data[6] * 256) / sprite->data[6]) % 256;
+
+        if (sprite->data[2] % 2 == 0)
+        {
+            sprite->data[4] = Sin(index, 32) + 256;
+            sprite->data[5] = Sin(index, 32) + 256;
+            sinY = Sin(index, 32);
+        }
+        else
+        {
+            sprite->data[4] = Sin(index, 8) + 256;
+            sprite->data[5] = Sin(index, 8) + 256;
+            sinY = Sin(index, 8);
+        }
+
+        y = sinY / 8;
+        sprite->y2 = y;
+        HandleSetAffineData(sprite, sprite->data[4], sprite->data[5], 0);
+    }
+
+    sprite->data[2]++;
+}
+
+void Anim_ShrinkGrowVibrate_Fast(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->y2 += 2;
+        sprite->data[6] = 40;
+        sprite->data[7] = 80;
+    }
+
+    ShrinkGrowVibrate(sprite);
+}
+
+void Anim_ShrinkGrowVibrate(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->y2 += 2;
+        sprite->data[6] = 40;
+        sprite->data[7] = 40;
+    }
+
+    ShrinkGrowVibrate(sprite);
+}
+
+void Anim_ShrinkGrowVibrate_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        HandleStartAffineAnim(sprite);
+        sprite->y2 += 2;
+        sprite->data[6] = 80;
+        sprite->data[7] = 80;
+    }
+
+    ShrinkGrowVibrate(sprite);
+}
+
+void JoltRight_0(struct Sprite *sprite);
+void JoltRight_1(struct Sprite *sprite);
+void JoltRight_2(struct Sprite *sprite);
+void JoltRight_3(struct Sprite *sprite);
+
+void JoltRight(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2 -= sprite->data[2];
+    if (sprite->x2 <= -sprite->data[6])
+    {
+        sprite->x2 = -sprite->data[6];
+        sprite->data[7] = 2;
+        sprite->callback = JoltRight_0;
+    }
+
+    TryFlipX(sprite);
+}
+
+void JoltRight_0(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2 += sprite->data[7];
+    sprite->data[7]++;
+    if (sprite->x2 >= 0)
+        sprite->callback = JoltRight_1;
+
+    TryFlipX(sprite);
+}
+
+void JoltRight_1(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2 += sprite->data[7];
+    sprite->data[7]++;
+    if (sprite->x2 > sprite->data[6])
+    {
+        sprite->x2 = sprite->data[6];
+        sprite->callback = JoltRight_2;
+    }
+
+    TryFlipX(sprite);
+}
+
+void JoltRight_2(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    if (sprite->data[3] >= sprite->data[5])
+    {
+        sprite->callback = JoltRight_3;
+    }
+    else
+    {
+        sprite->x2 += sprite->data[4];
+        sprite->data[4] *= -1;
+        sprite->data[3]++;
+    }
+
+    TryFlipX(sprite);
+}
+
+void JoltRight_3(struct Sprite *sprite)
+{
+    TryFlipX(sprite);
+    sprite->x2 -= 2;
+    if (sprite->x2 <= 0)
+    {
+        sprite->x2 = 0;
+        sub_0817F628(sprite);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+    }
+
+    TryFlipX(sprite);
+}
+
+void Anim_JoltRight_Fast(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->data[7] = 4;
+    sprite->data[6] = 12;
+    sprite->data[5] = 16;
+    sprite->data[4] = 4;
+    sprite->data[3] = 0;
+    sprite->data[2] = 2;
+    sprite->callback = JoltRight;
+}
+
+void Anim_JoltRight(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->data[7] = 2;
+    sprite->data[6] = 8;
+    sprite->data[5] = 12;
+    sprite->data[4] = 2;
+    sprite->data[3] = 0;
+    sprite->data[2] = 1;
+    sprite->callback = JoltRight;
+}
+
+void Anim_JoltRight_Slow(struct Sprite *sprite)
+{
+    HandleStartAffineAnim(sprite);
+    sprite->data[7] = 0;
+    sprite->data[6] = 6;
+    sprite->data[5] = 6;
+    sprite->data[4] = 2;
+    sprite->data[3] = 0;
+    sprite->data[2] = 1;
+    sprite->callback = JoltRight;
+}
+
+void sub_0818461C(struct Sprite *sprite)
+{
+    sprite->x2 = sprite->data[1];
+
+    if (sprite->data[0] > 1)
+    {
+        s16 velocity = sprite->data[1];
+
+        sprite->data[1] = -velocity;
+        sprite->data[0] = 0;
+    }
+    else
+    {
+        sprite->data[0]++;
+    }
+}
+
+void ShakeFlashYellow(struct Sprite *sprite)
+{
+    extern const u8 *const gUnknown_85D38DC[];
+    const u8 *array = gUnknown_85D38DC[sprite->data[3]];
+
+    sub_0818461C(sprite);
+    if (array[sprite->data[6] * 4 + 1] == (u8)-1)
+    {
+        sprite->x2 = 0;
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+    }
+    else
+    {
+        if (sprite->data[4] == 1)
+        {
+            if (array[sprite->data[6] * 4])
+                BlendPalette((u16)sprite->data[7], 16, 16, 0x3FF);
+            else
+                BlendPalette((u16)sprite->data[7], 16, 0, 0x3FF);
+
+            sprite->data[4] = 0;
+        }
+
+        if (array[sprite->data[6] * 4 + 1] == sprite->data[5])
+        {
+            sprite->data[4] = 1;
+            sprite->data[5] = 0;
+            sprite->data[6]++;
+        }
+        else
+        {
+            sprite->data[5]++;
+        }
+    }
+}
+
+extern void BackAnimBlendYellow(struct Sprite *sprite);
+
+void Anim_ShakeFlashYellow_Fast(struct Sprite *sprite)
+{
+    if (++sprite->data[2] == 1)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[6] = 0;
+        sprite->data[5] = 0;
+        sprite->data[4] = 0;
+        sprite->data[3] = 0;
+    }
+
+    BackAnimBlendYellow(sprite);
+}
+
+void Anim_ShakeFlashYellow(struct Sprite *sprite)
+{
+    if (++sprite->data[2] == 1)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[6] = 0;
+        sprite->data[5] = 0;
+        sprite->data[4] = 0;
+        sprite->data[3] = 1;
+    }
+
+    BackAnimBlendYellow(sprite);
+}
+
+void Anim_ShakeFlashYellow_Slow(struct Sprite *sprite)
+{
+    if (++sprite->data[2] == 1)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[6] = 0;
+        sprite->data[5] = 0;
+        sprite->data[4] = 0;
+        sprite->data[3] = 2;
+    }
+
+    BackAnimBlendYellow(sprite);
+}
+
+void ShakeGlow_Blend(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+    extern const u16 gUnknown_85D38E8[];
+
+    if (sprite->data[2] > 127)
+    {
+        BlendPalette((u16)sprite->data[7], 16, 0, 0x1F);
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd_Thumb;
+    }
+    else
+    {
+        sprite->data[6] = Sin(sprite->data[2], 12);
+        BlendPalette((u16)sprite->data[7], 16, (u8)sprite->data[6], gUnknown_85D38E8[sprite->data[1]]);
+    }
+}
+void ShakeGlow_Move(struct Sprite *sprite)
+{
+    extern s16 Sin(s16 index, s16 amplitude);
+
+    if (sprite->data[3] < sprite->data[4])
+    {
+        TryFlipX(sprite);
+        if (sprite->data[5] > sprite->data[0])
+        {
+            if (++sprite->data[3] < sprite->data[4])
+                sprite->data[5] = 0;
+
+            sprite->x2 = 0;
+        }
+        else
+        {
+            s8 sign = 1 - (sprite->data[3] % 2 * 2);
+
+            sprite->x2 = sign * Sin((sprite->data[5] * 384 / sprite->data[0]) % 256, 6);
+            sprite->data[5]++;
+        }
+
+        TryFlipX(sprite);
+    }
+}
+
+extern void BackAnimBlend(struct Sprite *sprite);
+extern void sub_081847E0(struct Sprite *sprite);
+
+void Anim_ShakeGlowRed_Fast(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 10;
+        sprite->data[5] = 0;
+        sprite->data[4] = 2;
+        sprite->data[3] = 0;
+        sprite->data[1] = 0;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void Anim_ShakeGlowRed(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 20;
+        sprite->data[5] = 0;
+        sprite->data[4] = 1;
+        sprite->data[3] = 0;
+        sprite->data[1] = 0;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void Anim_ShakeGlowRed_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 80;
+        sprite->data[5] = 0;
+        sprite->data[4] = 1;
+        sprite->data[3] = 0;
+        sprite->data[1] = 0;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void Anim_ShakeGlowGreen_Fast(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 10;
+        sprite->data[5] = 0;
+        sprite->data[4] = 2;
+        sprite->data[3] = 0;
+        sprite->data[1] = 1;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void Anim_ShakeGlowGreen(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 20;
+        sprite->data[5] = 0;
+        sprite->data[4] = 1;
+        sprite->data[3] = 0;
+        sprite->data[1] = 1;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void Anim_ShakeGlowGreen_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 80;
+        sprite->data[5] = 0;
+        sprite->data[4] = 1;
+        sprite->data[3] = 0;
+        sprite->data[1] = 1;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void Anim_ShakeGlowBlue_Fast(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 10;
+        sprite->data[5] = 0;
+        sprite->data[4] = 2;
+        sprite->data[3] = 0;
+        sprite->data[1] = 2;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void Anim_ShakeGlowBlue(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 20;
+        sprite->data[5] = 0;
+        sprite->data[4] = 1;
+        sprite->data[3] = 0;
+        sprite->data[1] = 2;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void Anim_ShakeGlowBlue_Slow(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->data[7] = 256 + (sprite->oam.paletteNum << 4);
+        sprite->data[0] = 80;
+        sprite->data[5] = 0;
+        sprite->data[4] = 1;
+        sprite->data[3] = 0;
+        sprite->data[1] = 2;
+    }
+
+    if (sprite->data[2] % 2 == 0)
+        BackAnimBlend(sprite);
+
+    if (sprite->data[2] >= (128 - sprite->data[0] * sprite->data[4]) / 2)
+        sub_081847E0(sprite);
+
+    sprite->data[2]++;
+}
+
+void SpriteCB_SetDummyOnAnimEnd(struct Sprite *sprite)
+{
+    if (sprite->animEnded)
+        sprite->callback = SpriteCallbackDummy;
 }
