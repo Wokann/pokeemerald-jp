@@ -1,5 +1,3 @@
-@ SlateportCity_PokemonCenter_2F scripts (JP map g9 m12 @ 0x081FE8D2)
-
 SlateportCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, CableClub_OnFrame
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, CableClub_OnWarp
@@ -7,4 +5,20 @@ SlateportCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-	.incbin "baserom_jp.gba", 0x1fe8e7, 0xcd
+@ The below 3 are unused and leftover from RS.
+SlateportCity_PokemonCenter_2F_EventScript_Colosseum::
+	call CableClub_EventScript_Colosseum
+	end
+
+SlateportCity_PokemonCenter_2F_EventScript_TradeCenter::
+	call CableClub_EventScript_TradeCenter
+	end
+
+SlateportCity_PokemonCenter_2F_EventScript_RecordCorner::
+	call CableClub_EventScript_RecordCorner
+	end
+
+@ The immediately following SlateportCity_Mart script block has not yet been
+@ structurally migrated. Keep its pre-existing successor ownership here until
+@ that map can be converted as its own cohesive change.
+	.incbin "baserom_jp.gba", 0x1fe8f9, 0xbb
