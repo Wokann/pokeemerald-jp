@@ -72,6 +72,7 @@
 	.set ITEM_TM_OVERHEAT, ITEM_TM50
 	@ TM27 is Return in the JP item table; keep this alias event-script-only.
 	.set ITEM_TM_RETURN, ITEM_TM27
+	.set ITEM_TM_FRUSTRATION, ITEM_TM21
 	@ TM45 is Attract in the JP item table; keep this alias event-script-only.
 	.set ITEM_TM_ATTRACT, ITEM_TM45
 	@ These JP command-table entries retain older names but use the same opcodes
@@ -734,6 +735,8 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_SetGymTrainers, 0x08242FCF
 	.globl Common_EventScript_ShowBagIsFull
 	.set Common_EventScript_ShowBagIsFull, 0x082430E0
+	.globl Common_EventScript_NopReturn
+	.set Common_EventScript_NopReturn, 0x08244178
 	.globl Common_EventScript_BagIsFull
 	.set Common_EventScript_BagIsFull, 0x082430EA
 	.globl Common_EventScript_PlayerHandedOverTheItem

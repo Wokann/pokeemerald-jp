@@ -3,123 +3,98 @@
 PacifidlogTown_House2_MapScripts::
 	.byte 0
 
-PacifidlogTown_House2_EventScript_001F7A00::
+PacifidlogTown_House2_EventScript_FanClubYoungerBrother::
 	lock
 	faceplayer
 	dotimebasedevents
-	call PacifidlogTown_House2_EventScript_001F7A4C
-	checkflag 0x12B
-	goto_if 0x1, PacifidlogTown_House2_EventScript_001F7AEC
-	checkflag 0x12C
-	call_if 0x1, PacifidlogTown_House2_EventScript_001F7A66
-	checkflag 0x12C
-	call_if 0x0, PacifidlogTown_House2_EventScript_001F7A6F
-	setflag 0x12C
-	specialvar 0x800D, GetLeadMonFriendshipScore
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x4, PacifidlogTown_House2_EventScript_001F7A84
-	specialvar 0x800D, GetLeadMonFriendshipScore
-	compare_var_to_value 0x800D, 0x2
-	goto_if 0x4, PacifidlogTown_House2_EventScript_001F7AB3
-	goto PacifidlogTown_House2_EventScript_001F7ABD
+	call PacifidlogTown_House2_EventScript_UpdateFanClubTMFlag
+	goto_if_set FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK, PacifidlogTown_House2_EventScript_ComeBackInXDays
+	call_if_set FLAG_MET_FANCLUB_YOUNGER_BROTHER, PacifidlogTown_House2_EventScript_MonAssessment
+	call_if_unset FLAG_MET_FANCLUB_YOUNGER_BROTHER, PacifidlogTown_House2_EventScript_FirstMonAssessment
+	setflag FLAG_MET_FANCLUB_YOUNGER_BROTHER
+	specialvar VAR_RESULT, GetLeadMonFriendshipScore
+	goto_if_ge VAR_RESULT, FRIENDSHIP_150_TO_199, PacifidlogTown_House2_EventScript_GiveReturn
+	specialvar VAR_RESULT, GetLeadMonFriendshipScore
+	goto_if_ge VAR_RESULT, FRIENDSHIP_50_TO_99, PacifidlogTown_House2_EventScript_PutInEffort
+	goto PacifidlogTown_House2_EventScript_GiveFrustration
 	end
 
-PacifidlogTown_House2_EventScript_001F7A4C::
-	checkflag 0x12B
-	goto_if 0x0, 0x08244178
-	specialvar 0x800D, GetDaysUntilPacifidlogTMAvailable
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, PacifidlogTown_House2_EventScript_001F7A80
+PacifidlogTown_House2_EventScript_UpdateFanClubTMFlag::
+	goto_if_unset FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK, Common_EventScript_NopReturn
+	specialvar VAR_RESULT, GetDaysUntilPacifidlogTMAvailable
+	call_if_eq VAR_RESULT, 0, PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM
 	return
 
-PacifidlogTown_House2_EventScript_001F7A66::
-	loadword 0x0, gJPText_001F7B93
-	callstd 0x4
+PacifidlogTown_House2_EventScript_MonAssessment::
+	msgbox PacifidlogTown_House2_Text_AhYourPokemon, MSGBOX_DEFAULT
 	return
 
-PacifidlogTown_House2_EventScript_001F7A6F::
-	loadword 0x0, gJPText_001F7B35
-	callstd 0x4
-	loadword 0x0, gJPText_001F7B93
-	callstd 0x4
+PacifidlogTown_House2_EventScript_FirstMonAssessment::
+	msgbox PacifidlogTown_House2_Text_ChairmansYoungerBrotherOnVacation, MSGBOX_DEFAULT
+	msgbox PacifidlogTown_House2_Text_AhYourPokemon, MSGBOX_DEFAULT
 	return
 
-PacifidlogTown_House2_EventScript_001F7A80::
-	clearflag 0x12B
+PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM::
+	clearflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
 	return
 
-PacifidlogTown_House2_EventScript_001F7A84::
-	loadword 0x0, gJPText_001F7BA2
-	callstd 0x4
-	setorcopyvar 0x8000, 0x13B
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0x12B
+PacifidlogTown_House2_EventScript_GiveReturn::
+	msgbox PacifidlogTown_House2_Text_AdoringPokemonTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_TM_RETURN
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
 	special SetPacifidlogTMReceivedDay
-	loadword 0x0, gJPText_001F7C43
-	callstd 0x4
+	msgbox PacifidlogTown_House2_Text_ExplainReturnFrustration, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House2_EventScript_001F7AB3::
-	loadword 0x0, gJPText_001F7BD5
-	callstd 0x4
+PacifidlogTown_House2_EventScript_PutInEffort::
+	msgbox PacifidlogTown_House2_Text_PutInSomeMoreEffort, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House2_EventScript_001F7ABD::
-	loadword 0x0, gJPText_001F7C0F
-	callstd 0x4
-	setorcopyvar 0x8000, 0x135
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0x12B
+PacifidlogTown_House2_EventScript_GiveFrustration::
+	msgbox PacifidlogTown_House2_Text_ViciousPokemonTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_TM_FRUSTRATION
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
 	special SetPacifidlogTMReceivedDay
-	loadword 0x0, gJPText_001F7C43
-	callstd 0x4
+	msgbox PacifidlogTown_House2_Text_ExplainReturnFrustration, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House2_EventScript_001F7AEC::
-	specialvar 0x800D, GetDaysUntilPacifidlogTMAvailable
-	buffernumberstring 0x0, 0x800D
-	loadword 0x0, gJPText_001F7C8C
-	callstd 0x4
+PacifidlogTown_House2_EventScript_ComeBackInXDays::
+	specialvar VAR_RESULT, GetDaysUntilPacifidlogTMAvailable
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	msgbox PacifidlogTown_House2_Text_GetGoodTMInXDays, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House2_EventScript_001F7AFF::
+PacifidlogTown_House2_EventScript_HappyAzurill::
 	lock
 	faceplayer
 	waitse
-	playmoncry 0x15E, 0x0
-	loadword 0x0, gJPText_001F7CE4
-	callstd 0x4
+	playmoncry SPECIES_AZURILL, CRY_MODE_NORMAL
+	msgbox PacifidlogTown_House2_Text_Rurii, MSGBOX_DEFAULT
+	@ JP opcode 0xC5 is waitdooranim; US uses waitmoncry at this point.
 	waitdooranim
-	loadword 0x0, gJPText_001F7CEC
-	callstd 0x4
+	msgbox PacifidlogTown_House2_Text_VeryFriendlyWithTrainer, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House2_EventScript_001F7B1A::
+PacifidlogTown_House2_EventScript_UnhappyAzurill::
 	lock
 	faceplayer
 	waitse
-	playmoncry 0x15E, 0x2
-	loadword 0x0, gJPText_001F7CFC
-	callstd 0x4
+	playmoncry SPECIES_AZURILL, CRY_MODE_ENCOUNTER
+	msgbox PacifidlogTown_House2_Text_Rururi, MSGBOX_DEFAULT
+	@ JP opcode 0xC5 is waitdooranim; US uses waitmoncry at this point.
 	waitdooranim
-	loadword 0x0, gJPText_001F7D07
-	callstd 0x4
+	msgbox PacifidlogTown_House2_Text_DoesntLikeTrainerVeryMuch, MSGBOX_DEFAULT
 	release
 	end
 
-	.globl gJPText_001F7B35
-gJPText_001F7B35: @ 0x081F7B35
+PacifidlogTown_House2_Text_ChairmansYoungerBrotherOnVacation:
 	.string "ウォッホン！！\p"
 	.string "わしが　ポケモン　だいすきクラブで\n"
 	.string "いちばーん　えらい　かいちょうの⋯⋯\p"
@@ -127,57 +102,47 @@ gJPText_001F7B35: @ 0x081F7B35
 	.string "まあ　ここで　ポケモンと　いっしょに\n"
 	.string "バカンスを　たのしんで　おるのですな！$"
 
-	.globl gJPText_001F7B93
-gJPText_001F7B93: @ 0x081F7B93
+PacifidlogTown_House2_Text_AhYourPokemon:
 	.string "ほう！\n"
 	.string "きみの　ポケモン⋯⋯$"
 
-	.globl gJPText_001F7BA2
-gJPText_001F7BA2: @ 0x081F7BA2
+PacifidlogTown_House2_Text_AdoringPokemonTakeThis:
 	.string "とっても　なついて　いますなあ\p"
 	.string "そんな　かわいらしい　ポケモンには\n"
 	.string "この　わざマシン　どうですかな？$"
 
-	.globl gJPText_001F7BD5
-gJPText_001F7BD5: @ 0x081F7BD5
+PacifidlogTown_House2_Text_PutInSomeMoreEffort:
 	.string "ふむう⋯⋯\n"
 	.string "わるくは　ないんだが　よくもない⋯⋯\p"
 	.string "おやの　トレーナーである　きみの\n"
 	.string "どりょくが　ひつよう　ですな！$"
 
-	.globl gJPText_001F7C0F
-gJPText_001F7C0F: @ 0x081F7C0F
+PacifidlogTown_House2_Text_ViciousPokemonTakeThis:
 	.string "なんだか　めつきが　わるいですのう\p"
 	.string "そんな　こわそうな　ポケモンには\n"
 	.string "この　わざマシン　どうですかな？$"
 
-	.globl gJPText_001F7C43
-gJPText_001F7C43: @ 0x081F7C43
+PacifidlogTown_House2_Text_ExplainReturnFrustration:
 	.string "ポケモンの　なつきぐあいが　たかいと\n"
 	.string "おんがえしの　いりょくも　たかくなる\p"
 	.string "なつきぐあいが　ひくいと\n"
 	.string "やつあたりの　いりょくが　つよまるんだよ！$"
 
-	.globl gJPText_001F7C8C
-gJPText_001F7C8C: @ 0x081F7C8C
-	.string "そうそう　あと{STRING 0x02}にち　たてば\n"
+PacifidlogTown_House2_Text_GetGoodTMInXDays:
+	.string "そうそう　あと{STR_VAR_1}にち　たてば\n"
 	.string "いい　わざマシンが　てに　はいるんだよ！\p"
 	.string "そのとき　また　あそびに　きたまえ！\n"
 	.string "きみの　ポケモンに　あった\l"
 	.string "すてきな　わざマシンを　あげるから$"
 
-	.globl gJPText_001F7CE4
-gJPText_001F7CE4: @ 0x081F7CE4
+PacifidlogTown_House2_Text_Rurii:
 	.string "ルリリ“るりー$"
 
-	.globl gJPText_001F7CEC
-gJPText_001F7CEC: @ 0x081F7CEC
+PacifidlogTown_House2_Text_VeryFriendlyWithTrainer:
 	.string "とっても　なついて　いるようだ$"
 
-	.globl gJPText_001F7CFC
-gJPText_001F7CFC: @ 0x081F7CFC
+PacifidlogTown_House2_Text_Rururi:
 	.string "ルリリ“ルルリッ！！$"
 
-	.globl gJPText_001F7D07
-gJPText_001F7D07: @ 0x081F7D07
+PacifidlogTown_House2_Text_DoesntLikeTrainerVeryMuch:
 	.string "あんまり　なついて　いないようだ⋯⋯$"
