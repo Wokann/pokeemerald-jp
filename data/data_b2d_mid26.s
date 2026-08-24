@@ -2686,18 +2686,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/MauvilleCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F, MauvilleCity_PokemonCenter_2F_MapEvents
-	.globl MAUVILLE_CITY_MART_EventObjects
-MAUVILLE_CITY_MART_EventObjects: @ 0x08508A3C
-	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x08200F50, 0x0000
-	object_event 2, 21, 0, 5, 4, 3, 10, 0, 0, 0, 0, 0x08200F84, 0x0000
-	object_event 3, 33, 0, 5, 5, 3, 10, 0, 0, 0, 0, 0x08200F8D, 0x0000
-	.globl MAUVILLE_CITY_MART_EventWarps
-MAUVILLE_CITY_MART_EventWarps: @ 0x08508A84
-	warp_def 3, 7, 0, 3, MAP_MAUVILLE_CITY
-	warp_def 4, 7, 0, 3, MAP_MAUVILLE_CITY
+	.include "data/maps/MauvilleCity_Mart/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_MART
-gMapEvents_MAUVILLE_CITY_MART: @ 0x08508A94
-	map_events MAUVILLE_CITY_MART_EventObjects, MAUVILLE_CITY_MART_EventWarps, 0, 0
+	.set gMapEvents_MAUVILLE_CITY_MART, MauvilleCity_Mart_MapEvents
 	.globl RUSTBORO_CITY_DEVON_CORP_1F_EventObjects
 RUSTBORO_CITY_DEVON_CORP_1F_EventObjects: @ 0x08508AA8
 	object_event 1, 116, 0, 2, 6, 3, 2, 1, 1, 0, 0, RustboroCity_DevonCorp_1F_EventScript_0020104C, 0x0000

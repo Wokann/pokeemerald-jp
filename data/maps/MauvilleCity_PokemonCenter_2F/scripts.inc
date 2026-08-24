@@ -30,6 +30,3 @@ MauvilleCity_PokemonCenter_2F_Text_Youngster: @ 0x08200EFF
 	.string "じぶんの　せいせき　って\n"
 	.string "かべを　みると　わかるから\l"
 	.string "まけてばかりだと　はずかしくなっちゃう⋯⋯$"
-
-	@ Mauville City Mart and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x200f4f, 0xe1
