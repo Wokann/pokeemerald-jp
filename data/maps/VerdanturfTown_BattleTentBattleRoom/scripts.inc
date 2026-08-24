@@ -173,7 +173,3 @@ VerdanturfTown_BattleTentBattleRoom_Movement_OpponentExit:
 	walk_up
 	walk_up
 	step_end
-
-@ The next unstructured Verdanturf map begins at 0x081F6F27.
-@ Keep its untouched bytes outside this Battle Room's audited map boundary.
-	.incbin "baserom_jp.gba", 0x1f6f27, 0xfa

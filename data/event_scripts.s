@@ -387,6 +387,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/VerdanturfTown_BattleTentLobby/scripts.inc"
 	.include "data/maps/VerdanturfTown_BattleTentCorridor/scripts.inc"
 	.include "data/maps/VerdanturfTown_BattleTentBattleRoom/scripts.inc"
+	.include "data/maps/VerdanturfTown_Mart/scripts.inc"
 	.include "data/maps/VerdanturfTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/VerdanturfTown_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/PacifidlogTown_PokemonCenter_1F/scripts.inc"

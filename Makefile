@@ -100,7 +100,8 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	FallarborTown_MoveRelearnersHouse \
 	VerdanturfTown_BattleTentLobby \
 	VerdanturfTown_BattleTentCorridor \
-	VerdanturfTown_BattleTentBattleRoom
+	VerdanturfTown_BattleTentBattleRoom \
+	VerdanturfTown_Mart
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
