@@ -2647,45 +2647,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_OceanicMuseum_1F/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_1F
 	.set gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_1F, SlateportCity_OceanicMuseum_1F_MapEvents
-	.globl SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventObjects
-SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventObjects: @ 0x08507FD4
-	object_event 1, 46, 0, 13, 6, 3, 8, 0, 0, 0, 0, 0x081FD30A, 0x0377
-	object_event 2, 195, 0, 6, 1, 3, 8, 0, 0, 0, 0, 0x00000000, 0x0376
-	object_event 3, 117, 0, 6, 1, 3, 8, 0, 0, 0, 0, 0x00000000, 0x0374
-	object_event 4, 117, 0, 6, 1, 3, 8, 0, 0, 0, 0, 0x00000000, 0x0375
-	object_event 5, 29, 0, 12, 7, 3, 10, 1, 1, 0, 0, 0x081FD56E, 0x03C1
-	object_event 6, 18, 0, 9, 6, 3, 1, 1, 1, 0, 0, 0x081FD577, 0x03C1
-	object_event 7, 5, 0, 1, 3, 3, 10, 1, 1, 0, 0, 0x081FD580, 0x03C1
-	.globl SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventWarps
-SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventWarps: @ 0x0850807C
-	warp_def 6, 1, 0, 2, MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_1F
-	.globl SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventBgEvents
-SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventBgEvents: @ 0x08508084
-	bg_event 18, 4, 0, 0, 0x081FD514, 0, 0
-	bg_event 18, 7, 0, 0, 0x081FD51D, 0, 0
-	bg_event 4, 3, 0, 0, 0x081FD55C, 0, 0
-	bg_event 4, 4, 0, 0, 0x081FD55C, 0, 0
-	bg_event 3, 3, 0, 0, 0x081FD553, 0, 0
-	bg_event 2, 3, 0, 0, 0x081FD553, 0, 0
-	bg_event 3, 4, 0, 0, 0x081FD553, 0, 0
-	bg_event 3, 6, 0, 0, 0x081FD54A, 0, 0
-	bg_event 4, 6, 0, 0, 0x081FD54A, 0, 0
-	bg_event 13, 7, 0, 0, 0x081FD565, 0, 0
-	bg_event 14, 7, 3, 0, 0x081FD565, 0, 0
-	bg_event 18, 1, 0, 0, 0x081FD541, 0, 0
-	bg_event 19, 1, 0, 0, 0x081FD541, 0, 0
-	bg_event 15, 1, 0, 0, 0x081FD538, 0, 0
-	bg_event 16, 1, 0, 0, 0x081FD538, 0, 0
-	bg_event 8, 1, 0, 0, 0x081FD52F, 0, 0
-	bg_event 9, 1, 0, 0, 0x081FD52F, 0, 0
-	bg_event 12, 1, 0, 0, 0x081FD526, 0, 0
-	bg_event 13, 1, 0, 0, 0x081FD526, 0, 0
-	bg_event 3, 7, 0, 0, 0x081FD54A, 0, 0
-	bg_event 4, 7, 0, 0, 0x081FD54A, 0, 0
+	.include "data/maps/SlateportCity_OceanicMuseum_2F/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F
-gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F: @ 0x08508180
-	map_events SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventObjects, SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventWarps, 0, SLATEPORT_CITY_OCEANIC_MUSEUM_2F_EventBgEvents
-	.globl SLATEPORT_CITY_HARBOR_EventObjects
+	.set gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F, SlateportCity_OceanicMuseum_2F_MapEvents
 SLATEPORT_CITY_HARBOR_EventObjects: @ 0x08508194
 	object_event 1, 45, 0, 8, 10, 3, 8, 0, 0, 0, 0, SlateportCity_Harbor_EventScript_001FDDE2, 0x0389
 	object_event 2, 49, 0, 4, 12, 3, 9, 0, 0, 0, 0, SlateportCity_Harbor_EventScript_001FDF43, 0x0389
