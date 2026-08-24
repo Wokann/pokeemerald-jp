@@ -20,5 +20,5 @@ RustboroCity_Flat1_1F_Text_PokemonStrange: @ 0x08203755
 	.string "ほんとうに　ポケモンって\n"
 	.string "ふしぎな　いきもの　なのね$"
 
-	@ Rustboro City Flat1 2F and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x203770, 0xc2e
+	@ Rustboro City Flat1 2F and later unstructured script owners precede House1.
+	.incbin "baserom_jp.gba", 0x203770, 0x458
