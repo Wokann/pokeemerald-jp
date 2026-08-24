@@ -46,6 +46,14 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
     # logic, not from a Route119 map event, but remains in the Route119 owner.
     'Route119': (0x081ED2AD,),
     'RustboroCity_Gym': (0x08202410,),  # EventScript_RegisterRoxanne
+    # The two player-PC shutdown handlers are exported entry points in the US
+    # map sources, but no local event pointer calls them directly.
+    'LittlerootTown_BrendansHouse_2F': (0x081F01EE,),
+    'LittlerootTown_MaysHouse_2F': (0x081F0DDB,),
+    # Scott's postgame Pokenav call is dispatched by global progression logic
+    # rather than a local map event, but is owned by Birch's lab in the US
+    # source and sits inside the lab's exact JP script range.
+    'LittlerootTown_ProfessorBirchsLab': (0x081F1A71,),
 }
 
 # Verified map-local text that has no JP script pointer (for example an
@@ -53,12 +61,91 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
 # the script graph.
 MAP_AUXILIARY_TEXT_ADDRESSES = {
     'RustboroCity_DevonCorp_2F': (0x08201B83,),
+    # The movie and Running Shoes manual strings are map-owned but reached
+    # through shared/global handlers rather than the local script graph.
+    'LittlerootTown_BrendansHouse_1F': (
+        0x081EFD18,
+        0x081EFD5A,
+    ),
+    # The region-map description is shared and has no pointer in this map's
+    # directly reachable script graph.
+    'LittlerootTown_BrendansHouse_2F': (0x081F0308,),
+    # These three lab strings are intentionally unused in the US source, so
+    # no live JP script pointer discovers them during graph traversal.
+    'LittlerootTown_ProfessorBirchsLab': (
+        0x081F2609,
+        0x081F263D,
+        0x081F26DC,
+    ),
 }
 
 # Map-owned movement scripts confirmed by their JP addresses and the matching
 # US map source.  They are referenced by ``applymovement`` rather than being
 # event scripts, so the event-script parser deliberately does not follow them.
 MAP_MOVEMENT_SCRIPT_LABELS = {
+    'LittlerootTown_BrendansHouse_1F': {
+        0x081EF86A: 'LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs',
+        0x081EF8CC: 'LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach',
+        0x081EF9DD: 'LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer0',
+        0x081EF9E5: 'LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer1',
+        0x081EF9E9: 'LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer2',
+        0x081EFA27: 'LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit0',
+        0x081EFA2B: 'LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit1',
+        0x081EFA32: 'LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit2',
+        0x081EFA36: 'LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs0',
+        0x081EFA3C: 'LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs1',
+        0x081EFA46: 'LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs2',
+    },
+    'LittlerootTown_BrendansHouse_2F': {
+        0x081F016B: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanEnters',
+        0x081F016F: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanApproachPlayerNorth',
+        0x081F0175: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCNorth',
+        0x081F017E: 'LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanNorth',
+        0x081F0186: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanApproachPlayerSouth',
+        0x081F018A: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCSouth',
+        0x081F0191: 'LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanSouth',
+        0x081F0197: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanApproachPlayerWest',
+        0x081F019C: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCWest',
+        0x081F01A5: 'LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanWest',
+        0x081F01AC: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanApproachPlayerEast',
+        0x081F01B3: 'LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCEast',
+        0x081F01B8: 'LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanEast',
+    },
+    'LittlerootTown_MaysHouse_1F': {
+        0x081F043D: 'LittlerootTown_MaysHouse_1F_Movement_PushTowardStairs',
+        0x081F049F: 'LittlerootTown_MaysHouse_1F_Movement_RivalMomApproach',
+        0x081F0609: 'LittlerootTown_MaysHouse_1F_Movement_MayApproachPlayer0',
+        0x081F0611: 'LittlerootTown_MaysHouse_1F_Movement_MayApproachPlayer1',
+        0x081F0615: 'LittlerootTown_MaysHouse_1F_Movement_MayApproachPlayer2',
+        0x081F0653: 'LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit0',
+        0x081F0657: 'LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit1',
+        0x081F065E: 'LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit2',
+        0x081F0662: 'LittlerootTown_MaysHouse_1F_Movement_MayGoUpstairs0',
+        0x081F0668: 'LittlerootTown_MaysHouse_1F_Movement_MayGoUpstairs1',
+        0x081F0672: 'LittlerootTown_MaysHouse_1F_Movement_MayGoUpstairs2',
+    },
+    'LittlerootTown_MaysHouse_2F': {
+        0x081F0CBB: 'LittlerootTown_MaysHouse_2F_Movement_MayEnters',
+        0x081F0CBF: 'LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerNorth',
+        0x081F0CC5: 'LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCNorth',
+        0x081F0CCF: 'LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayNorth',
+        0x081F0CD7: 'LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerSouth',
+        0x081F0CDB: 'LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCSouth',
+        0x081F0CE3: 'LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMaySouth',
+        0x081F0CE9: 'LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerWest',
+        0x081F0CF0: 'LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCWest',
+        0x081F0CF5: 'LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayWest',
+        0x081F0CF9: 'LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerEast',
+        0x081F0CFE: 'LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCEast',
+        0x081F0D07: 'LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayEast',
+    },
+    'LittlerootTown_ProfessorBirchsLab': {
+        0x081F1413: 'LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForPokedex',
+        0x081F14E1: 'LittlerootTown_ProfessorBirchsLab_Movement_BirchRetrievePokedexes',
+        0x081F14F3: 'LittlerootTown_ProfessorBirchsLab_Movement_BirchReturnPokedex',
+        0x081F1517: 'LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForJohtoStarter',
+        0x081F197B: 'LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer',
+    },
     'Route128': {
         0x081EEEAA: 'Route128_Movement_Unused1',
         0x081EEEAC: 'Route128_Movement_Unused2',
@@ -1550,6 +1637,730 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
 # is intentionally an allowlist: unreviewed addresses keep deterministic
 # address labels instead of receiving a plausible-but-unproven semantic name.
 MAP_VERIFIED_SEMANTIC_LABELS = {
+    # The two mirrored houses share PlayersHouse/RivalsHouse handlers, but
+    # their rival roles are gender-dependent.  These names follow the actual
+    # JP control flow and the corresponding US map sources, not address order.
+    'LittlerootTown_BrendansHouse_1F': {
+        'scripts': {
+            0x081EF795: 'LittlerootTown_BrendansHouse_1F_OnLoad',
+            0x081EF7AA: 'LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes',
+            0x081EF7BD: 'LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual',
+            0x081EF7CA: 'LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual',
+            0x081EF7D4: 'LittlerootTown_BrendansHouse_1F_OnTransition',
+            0x081EF7F6: 'LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs',
+            0x081EF802: 'LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV',
+            0x081EF80E: 'LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor',
+            0x081EF844: 'LittlerootTown_BrendansHouse_1F_EventScript_GoUpstairsToSetClock',
+            0x081EF86C: 'LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn',
+            0x081EF87D: 'LittlerootTown_BrendansHouse_1F_EventScript_PetalburgGymReport',
+            0x081EF88E: 'LittlerootTown_BrendansHouse_1F_EventScript_YoureNewNeighbor',
+            0x081EF8D3: 'LittlerootTown_BrendansHouse_1F_EventScript_GoSeeRoom',
+            0x081EF8EE: 'LittlerootTown_BrendansHouse_1F_EventScript_MeetRival0',
+            0x081EF8FA: 'LittlerootTown_BrendansHouse_1F_EventScript_MeetRival1',
+            0x081EF906: 'LittlerootTown_BrendansHouse_1F_EventScript_MeetRival2',
+            0x081EF912: 'LittlerootTown_BrendansHouse_1F_EventScript_MeetRival',
+            0x081EF9B1: 'LittlerootTown_BrendansHouse_1F_EventScript_PlayerFaceBrendan',
+            0x081EF9BC: 'LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer0',
+            0x081EF9C7: 'LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer1',
+            0x081EF9D2: 'LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer2',
+            0x081EF9F1: 'LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs0',
+            0x081EFA03: 'LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs1',
+            0x081EFA15: 'LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs2',
+        },
+        'tables': {
+            0x081EF81A: 'LittlerootTown_BrendansHouse_1F_OnFrame',
+        },
+        'texts': {
+            0x081EFA4C: 'PlayersHouse_1F_Text_IsntItNiceInHere',
+            0x081EFA68: 'PlayersHouse_1F_Text_MoversPokemonGoSetClock',
+            0x081EFAE5: 'PlayersHouse_1F_Text_ArentYouInterestedInRoom',
+            0x081EFAFC: 'PlayersHouse_1F_Text_GoSetTheClock',
+            0x081EFB12: 'PlayersHouse_1F_Text_OhComeQuickly',
+            0x081EFB33: 'PlayersHouse_1F_Text_MaybeDadWillBeOn',
+            0x081EFB52: 'PlayersHouse_1F_Text_ItsOverWeMissedHim',
+            0x081EFB7A: 'PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor',
+            0x081EFBCF: 'PlayersHouse_1F_Text_SeeYouHoney',
+            0x081EFBDC: 'PlayersHouse_1F_Text_DidYouMeetProfBirch',
+            0x081EFBF0: 'PlayersHouse_1F_Text_YouShouldRestABit',
+            0x081EFC1E: 'PlayersHouse_1F_Text_TakeCareHoney',
+            0x081EFC2D: 'PlayersHouse_1F_Text_GotDadsBadgeHeresSomethingFromMom',
+            0x081EFC59: 'PlayersHouse_1F_Text_DontPushYourselfTooHard',
+            0x081EFC89: 'PlayersHouse_1F_Text_IsThatAPokenav',
+            0x081EFCD3: 'PlayersHouse_1F_Text_RegisteredMom',
+            0x081EFCE6: 'PlayersHouse_1F_Text_Vigoroth1',
+            0x081EFCEB: 'PlayersHouse_1F_Text_Vigoroth2',
+            0x081EFCF7: 'PlayersHouse_1F_Text_ReportFromPetalburgGym',
+            0x081EFD18: 'PlayersHouse_1F_Text_TheresAMovieOnTV',
+            0x081EFD5A: 'PlayersHouse_1F_Text_RunningShoesManual',
+            0x081EFDC8: 'PlayersHouse_1F_Text_TicketFromBrineyCameForYou',
+            0x081EFE2F: 'PlayersHouse_1F_Text_PortsInSlateportLilycove',
+            0x081EFE5D: 'PlayersHouse_1F_Text_BetterGetBackToGym',
+            0x081EFE82: 'PlayersHouse_1F_Text_DadShouldStayLonger',
+            0x081EFEC0: 'PlayersHouse_1F_Text_IsThatABreakingStory',
+            0x081EFED2: 'PlayersHouse_1F_Text_LatiEmergencyNewsFlash',
+            0x081EFF49: 'PlayersHouse_1F_Text_WhatColorDidTheySay',
+            0x081EFF72: 'PlayersHouse_1F_Text_StillUnknownPokemon',
+        },
+        'external_texts': {
+            0x081F0678: 'RivalsHouse_1F_Text_OhYoureTheNewNeighbor',
+            0x081F0994: 'RivalsHouse_1F_Text_BrendanWhoAreYou',
+        },
+        'field_placeholders': {
+            0x081EFA4C: {0x01: 'PLAYER'},
+            0x081EFA68: {0x01: 'PLAYER'},
+            0x081EFAE5: {0x01: 'PLAYER'},
+            0x081EFAFC: {0x01: 'PLAYER'},
+            0x081EFB12: {0x01: 'PLAYER'},
+            0x081EFBF0: {0x01: 'PLAYER'},
+            0x081EFDC8: {0x01: 'PLAYER'},
+            0x081EFF49: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x08257EEE: 'PlayersHouse_1F_EventScript_EnterHouseMovingIn',
+            0x08257F4F: 'PlayersHouse_1F_EventScript_MomGoSeeRoom',
+            0x08258057: 'PlayersHouse_1F_EventScript_PetalburgGymReportMale',
+            0x082582DC: 'PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x082581AF: 'PlayersHouse_1F_EventScript_Mom',
+            0x082582A4: 'PlayersHouse_1F_EventScript_Vigoroth1',
+            0x082582B7: 'PlayersHouse_1F_EventScript_Vigoroth2',
+            0x081F04A6: 'RivalsHouse_1F_EventScript_RivalMom',
+            0x081F04F0: 'RivalsHouse_1F_EventScript_RivalSibling',
+        },
+        'symbols': {
+            'vars': {
+                0x4050: 'VAR_LITTLEROOT_TOWN_STATE',
+                0x4082: 'VAR_LITTLEROOT_HOUSES_STATE_MAY',
+                0x408D: 'VAR_LITTLEROOT_RIVAL_STATE',
+                0x4092: 'VAR_LITTLEROOT_INTRO_STATE',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {0x800D: {0: 'MALE', 1: 'FEMALE'}},
+            'script_var_values': {
+                0x081EF86C: {
+                    0x8004: {0x01: 'LOCALID_PLAYERS_HOUSE_1F_MOM'},
+                    0x8005: {0x00: 'MALE'},
+                },
+                0x081EF87D: {
+                    0x8004: {0x00: 'MALE'},
+                    0x8005: {0x01: 'LOCALID_PLAYERS_HOUSE_1F_MOM'},
+                },
+                0x081EF8D3: {
+                    0x8004: {0x01: 'LOCALID_PLAYERS_HOUSE_1F_MOM'},
+                    0x8005: {0x00: 'MALE'},
+                },
+            },
+            'flags': {
+                0x0057: 'FLAG_MET_RIVAL_MOM',
+                0x0112: 'FLAG_RECEIVED_RUNNING_SHOES',
+                0x02E9: 'FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_BRENDAN',
+                0x02F8: 'FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM',
+                0x0331: 'FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL',
+            },
+            'songs': {0x0000: 'MUS_DUMMY', 0x01A5: 'MUS_ENCOUNTER_BRENDAN'},
+            'sounds': {0x0009: 'SE_EXIT', 0x0015: 'SE_PIN'},
+            'maps': {0x0101: 'MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F'},
+            'local_ids': {
+                0x01: 'LOCALID_PLAYERS_HOUSE_1F_MOM',
+                0x04: 'LOCALID_RIVALS_HOUSE_1F_MOM',
+                0x07: 'LOCALID_RIVALS_HOUSE_1F_RIVAL',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {0x07: 'MOVEMENT_TYPE_FACE_UP'},
+            'metatiles': {
+                0x0268: 'METATILE_BrendansMaysHouse_MovingBox_Closed',
+                0x0270: 'METATILE_BrendansMaysHouse_MovingBox_Open',
+                0x0293: 'METATILE_BrendansMaysHouse_BookOnTable',
+            },
+            'booleans': {0x01: 'TRUE'},
+        },
+    },
+    'LittlerootTown_MaysHouse_1F': {
+        'scripts': {
+            0x081F0368: 'LittlerootTown_MaysHouse_1F_OnLoad',
+            0x081F037D: 'LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes',
+            0x081F0390: 'LittlerootTown_MaysHouse_1F_EventScript_CheckShowShoesManual',
+            0x081F039D: 'LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual',
+            0x081F03A7: 'LittlerootTown_MaysHouse_1F_OnTransition',
+            0x081F03C9: 'LittlerootTown_MaysHouse_1F_EventScript_MoveMomToStairs',
+            0x081F03D5: 'LittlerootTown_MaysHouse_1F_EventScript_MoveMomToTV',
+            0x081F03E1: 'LittlerootTown_MaysHouse_1F_EventScript_MoveMomToDoor',
+            0x081F0417: 'LittlerootTown_MaysHouse_1F_EventScript_GoUpstairsToSetClock',
+            0x081F043F: 'LittlerootTown_MaysHouse_1F_EventScript_EnterHouseMovingIn',
+            0x081F0450: 'LittlerootTown_MaysHouse_1F_EventScript_PetalburgGymReport',
+            0x081F0461: 'LittlerootTown_MaysHouse_1F_EventScript_YoureNewNeighbor',
+            0x081F04A6: 'RivalsHouse_1F_EventScript_RivalMom',
+            0x081F04D2: 'RivalsHouse_1F_EventScript_RivalTooBusy',
+            0x081F04DC: 'RivalsHouse_1F_EventScript_RivalIsOnRoute103',
+            0x081F04E6: 'RivalsHouse_1F_EventScript_GoHomeEverySoOften',
+            0x081F04F0: 'RivalsHouse_1F_EventScript_RivalSibling',
+            0x081F04FF: 'LittlerootTown_MaysHouse_1F_EventScript_GoSeeRoom',
+            0x081F051A: 'LittlerootTown_MaysHouse_1F_EventScript_MeetRival0',
+            0x081F0526: 'LittlerootTown_MaysHouse_1F_EventScript_MeetRival1',
+            0x081F0532: 'LittlerootTown_MaysHouse_1F_EventScript_MeetRival2',
+            0x081F053E: 'LittlerootTown_MaysHouse_1F_EventScript_MeetRival',
+            0x081F05DD: 'LittlerootTown_MaysHouse_1F_EventScript_PlayerFaceMay',
+            0x081F05E8: 'LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer0',
+            0x081F05F3: 'LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer1',
+            0x081F05FE: 'LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer2',
+            0x081F061D: 'LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs0',
+            0x081F062F: 'LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs1',
+            0x081F0641: 'LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs2',
+        },
+        'tables': {0x081F03ED: 'LittlerootTown_MaysHouse_1F_OnFrame'},
+        'texts': {
+            0x081F0678: 'RivalsHouse_1F_Text_OhYoureTheNewNeighbor',
+            0x081F0701: 'RivalsHouse_1F_Text_LikeChildLikeFather',
+            0x081F0755: 'RivalsHouse_1F_Text_TooBusyToNoticeVisit',
+            0x081F078A: 'RivalsHouse_1F_Text_WentOutToRoute103',
+            0x081F07D8: 'RivalsHouse_1F_Text_ShouldGoHomeEverySoOften',
+            0x081F0843: 'RivalsHouse_1F_Text_MayWhoAreYou',
+            0x081F0994: 'RivalsHouse_1F_Text_BrendanWhoAreYou',
+            0x081F0ABD: 'RivalsHouse_1F_Text_DoYouHavePokemon',
+        },
+        'external_texts': {
+            0x081EFAFC: 'PlayersHouse_1F_Text_GoSetTheClock',
+        },
+        'field_placeholders': {
+            0x081F0678: {0x01: 'PLAYER', 0x02: 'STR_VAR_1', 0x05: 'KUN'},
+            0x081F0755: {0x01: 'PLAYER', 0x05: 'KUN', 0x06: 'RIVAL'},
+            0x081F078A: {0x06: 'RIVAL'},
+            0x081F07D8: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F0843: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F0994: {0x01: 'PLAYER'},
+            0x081F0ABD: {0x02: 'STR_VAR_1'},
+        },
+        'external_labels': {
+            0x08257EEE: 'PlayersHouse_1F_EventScript_EnterHouseMovingIn',
+            0x08257F4F: 'PlayersHouse_1F_EventScript_MomGoSeeRoom',
+            0x082580C6: 'PlayersHouse_1F_EventScript_PetalburgGymReportFemale',
+            0x082582DC: 'PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x082581AF: 'PlayersHouse_1F_EventScript_Mom',
+            0x082582A4: 'PlayersHouse_1F_EventScript_Vigoroth1',
+            0x082582B7: 'PlayersHouse_1F_EventScript_Vigoroth2',
+        },
+        'symbols': {
+            'vars': {
+                0x4050: 'VAR_LITTLEROOT_TOWN_STATE',
+                0x4082: 'VAR_LITTLEROOT_HOUSES_STATE_MAY',
+                0x408C: 'VAR_LITTLEROOT_HOUSES_STATE_BRENDAN',
+                0x408D: 'VAR_LITTLEROOT_RIVAL_STATE',
+                0x4092: 'VAR_LITTLEROOT_INTRO_STATE',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {0x800D: {0: 'MALE', 1: 'FEMALE'}},
+            'script_var_values': {
+                0x081F043F: {
+                    0x8004: {0x01: 'LOCALID_PLAYERS_HOUSE_1F_MOM'},
+                    0x8005: {0x01: 'FEMALE'},
+                },
+                0x081F0450: {
+                    0x8004: {0x01: 'FEMALE'},
+                    0x8005: {0x01: 'LOCALID_PLAYERS_HOUSE_1F_MOM'},
+                },
+                0x081F04FF: {
+                    0x8004: {0x01: 'LOCALID_PLAYERS_HOUSE_1F_MOM'},
+                    0x8005: {0x01: 'FEMALE'},
+                },
+            },
+            'flags': {
+                0x0057: 'FLAG_MET_RIVAL_MOM',
+                0x0082: 'FLAG_DEFEATED_RIVAL_ROUTE103',
+                0x0112: 'FLAG_RECEIVED_RUNNING_SHOES',
+                0x02D2: 'FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM',
+                0x02EA: 'FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MAY',
+                0x0332: 'FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL',
+                0x0860: 'FLAG_SYS_POKEMON_GET',
+            },
+            'songs': {0x0000: 'MUS_DUMMY', 0x019F: 'MUS_ENCOUNTER_MAY'},
+            'sounds': {0x0009: 'SE_EXIT', 0x0015: 'SE_PIN'},
+            'maps': {0x0103: 'MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F'},
+            'local_ids': {
+                0x01: 'LOCALID_PLAYERS_HOUSE_1F_MOM',
+                0x04: 'LOCALID_RIVALS_HOUSE_1F_MOM',
+                0x07: 'LOCALID_RIVALS_HOUSE_1F_RIVAL',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {0x07: 'MOVEMENT_TYPE_FACE_UP'},
+            'metatiles': {
+                0x0268: 'METATILE_BrendansMaysHouse_MovingBox_Closed',
+                0x0270: 'METATILE_BrendansMaysHouse_MovingBox_Open',
+                0x0293: 'METATILE_BrendansMaysHouse_BookOnTable',
+            },
+            'booleans': {0x01: 'TRUE'},
+        },
+    },
+    'LittlerootTown_BrendansHouse_2F': {
+        'scripts': {
+            0x081EFF9D: 'LittlerootTown_BrendansHouse_2F_OnTransition',
+            0x081EFFC9: 'LittlerootTown_BrendansHouse_2F_EventScript_CheckShouldUpdateBrendanPos',
+            0x081EFFE2: 'LittlerootTown_BrendansHouse_2F_EventScript_TryUpdateBrendanPos',
+            0x081F0005: 'LittlerootTown_BrendansHouse_2F_EventScript_Ret',
+            0x081F0006: 'LittlerootTown_BrendansHouse_2F_EventScript_CheckSetReadyToMeetBrendan',
+            0x081F0013: 'LittlerootTown_BrendansHouse_2F_EventScript_SetReadyToMeetBrendan',
+            0x081F0023: 'LittlerootTown_BrendansHouse_2F_EventScript_CheckInitDecor',
+            0x081F0030: 'LittlerootTown_BrendansHouse_2F_EventScript_RivalsPokeBall',
+            0x081F0046: 'LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendan',
+            0x081F00B6: 'LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanNorth',
+            0x081F00E5: 'LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanSouth',
+            0x081F0114: 'LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanWest',
+            0x081F0143: 'LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanEast',
+            0x081F01BC: 'LittlerootTown_BrendansHouse_2F_EventScript_PC',
+            0x081F01D5: 'LittlerootTown_BrendansHouse_2F_EventScript_CheckPlayersPC',
+            0x081F01EE: 'LittlerootTown_BrendansHouse_2F_EventScript_TurnOffPlayerPC',
+            0x081F01FB: 'LittlerootTown_BrendansHouse_2F_EventScript_CheckRivalsPC',
+            0x081F0205: 'PlayersHouse_2F_EventScript_Notebook',
+            0x081F020E: 'PlayersHouse_2F_EventScript_GameCube',
+        },
+        'tables': {
+            0x081F0019: 'LittlerootTown_BrendansHouse_2F_OnWarp',
+        },
+        'texts': {
+            0x081F0217: 'PlayersHouse_2F_Text_ClockIsStopped',
+            0x081F023B: 'PlayersHouse_2F_Text_HowDoYouLikeYourRoom',
+            0x081F02A6: 'PlayersHouse_2F_Text_Notebook',
+            0x081F0308: 'Common_Text_LookCloserAtMap',
+            0x081F0328: 'PlayersHouse_2F_Text_ItsAGameCube',
+        },
+        'external_texts': {
+            0x081F0F62: 'RivalsHouse_2F_Text_BrendanWhoAreYou',
+            0x081F10B0: 'RivalsHouse_2F_Text_ItsRivalsPokeBall',
+            0x08243AA2: 'gText_PokemonTrainerSchoolEmail',
+            0x08243B10: 'gText_PlayerHouseBootPC',
+        },
+        'field_placeholders': {
+            0x081F023B: {0x01: 'PLAYER'},
+            0x081F02A6: {0x01: 'PLAYER'},
+            0x081F0308: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            # The cross-house Ret target is also present in the US source.
+            0x081F0B55: 'LittlerootTown_MaysHouse_2F_EventScript_Ret',
+            0x081F0D0D: 'RivalsHouse_2F_EventScript_Rival',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x08245D90: 'SecretBase_EventScript_SetDecorationFlags',
+            0x08245DBB: 'SecretBase_EventScript_InitDecorations',
+            0x08257EE8: 'PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet',
+            0x08257F6B: 'LittlerootTown_BrendansHouse_2F_EventScript_WallClock',
+        },
+        'symbols': {
+            'vars': {
+                0x4050: 'VAR_LITTLEROOT_TOWN_STATE',
+                0x4084: 'VAR_BIRCH_LAB_STATE',
+                0x4089: 'VAR_SECRET_BASE_INITIALIZED',
+                0x408D: 'VAR_LITTLEROOT_RIVAL_STATE',
+                0x4092: 'VAR_LITTLEROOT_INTRO_STATE',
+                0x40D3: 'VAR_DEX_UPGRADE_JOHTO_STARTER_STATE',
+                0x8004: 'VAR_0x8004',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x8004: {1: 'PC_LOCATION_BRENDANS_HOUSE'},
+                0x800C: {
+                    1: 'DIR_SOUTH',
+                    2: 'DIR_NORTH',
+                    3: 'DIR_WEST',
+                    4: 'DIR_EAST',
+                },
+                0x800D: {0: 'MALE', 1: 'FEMALE'},
+            },
+            'flags': {
+                0x0124: 'FLAG_MET_RIVAL_LILYCOVE',
+                0x02F8: 'FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM',
+                0x0331: 'FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL',
+            },
+            'songs': {0x0000: 'MUS_DUMMY', 0x01A5: 'MUS_ENCOUNTER_BRENDAN'},
+            'sounds': {
+                0x0003: 'SE_PC_OFF',
+                0x0004: 'SE_PC_ON',
+                0x0015: 'SE_PIN',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_RIVALS_HOUSE_2F_RIVAL',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {0x07: 'MOVEMENT_TYPE_FACE_UP'},
+            'booleans': {0x01: 'TRUE'},
+        },
+    },
+    'LittlerootTown_MaysHouse_2F': {
+        'scripts': {
+            0x081F0AED: 'LittlerootTown_MaysHouse_2F_OnTransition',
+            0x081F0B19: 'LittlerootTown_MaysHouse_2F_EventScript_CheckShouldUpdateMayPos',
+            0x081F0B32: 'LittlerootTown_MaysHouse_2F_EventScript_TryUpdateMayPos',
+            0x081F0B55: 'LittlerootTown_MaysHouse_2F_EventScript_Ret',
+            0x081F0B56: 'LittlerootTown_MaysHouse_2F_EventScript_CheckSetReadyToMeetMay',
+            0x081F0B63: 'LittlerootTown_MaysHouse_2F_EventScript_SetReadyToMeetMay',
+            0x081F0B73: 'LittlerootTown_MaysHouse_2F_EventScript_CheckInitDecor',
+            0x081F0B80: 'LittlerootTown_MaysHouse_2F_EventScript_RivalsPokeBall',
+            0x081F0B96: 'LittlerootTown_MaysHouse_2F_EventScript_MeetMay',
+            0x081F0C06: 'LittlerootTown_MaysHouse_2F_EventScript_MeetMayNorth',
+            0x081F0C35: 'LittlerootTown_MaysHouse_2F_EventScript_MeetMaySouth',
+            0x081F0C64: 'LittlerootTown_MaysHouse_2F_EventScript_MeetMayWest',
+            0x081F0C8C: 'LittlerootTown_MaysHouse_2F_EventScript_MeetMayEast',
+            0x081F0D0D: 'RivalsHouse_2F_EventScript_Rival',
+            0x081F0D2F: 'RivalsHouse_2F_EventScript_May',
+            0x081F0D39: 'RivalsHouse_2F_EventScript_Brendan',
+            0x081F0D43: 'RivalsHouse_2F_EventScript_RivalPostLilycove',
+            0x081F0D69: 'RivalsHouse_2F_EventScript_MayPostLilycove',
+            0x081F0D7B: 'RivalsHouse_2F_EventScript_BrendanPostLilycove',
+            0x081F0D8D: 'RivalsHouse_2F_EventScript_MayWhereShouldIGoNext',
+            0x081F0D96: 'RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext',
+            0x081F0D9F: 'LittlerootTown_MaysHouse_2F_EventScript_PC',
+            0x081F0DB8: 'LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC',
+            0x081F0DC2: 'LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC',
+            0x081F0DDB: 'LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC',
+        },
+        'tables': {
+            0x081F0B69: 'LittlerootTown_MaysHouse_2F_OnWarp',
+        },
+        'texts': {
+            0x081F0DE8: 'RivalsHouse_2F_Text_MayWhoAreYou',
+            0x081F0F40: 'RivalsHouse_2F_Text_MayGettingReady',
+            0x081F0F62: 'RivalsHouse_2F_Text_BrendanWhoAreYou',
+            0x081F108B: 'RivalsHouse_2F_Text_BrendanGettingReady',
+            0x081F10B0: 'RivalsHouse_2F_Text_ItsRivalsPokeBall',
+            0x081F10CD: 'RivalsHouse_2F_Text_MayJustCheckingMyPokedex',
+            0x081F1142: 'RivalsHouse_2F_Text_MayWhereShouldIGoNext',
+            0x081F117C: 'RivalsHouse_2F_Text_BrendanJustCheckingMyPokedex',
+            0x081F11E3: 'RivalsHouse_2F_Text_BrendanWhereShouldIGoNext',
+        },
+        'external_texts': {
+            0x08243AA2: 'gText_PokemonTrainerSchoolEmail',
+            0x08243B10: 'gText_PlayerHouseBootPC',
+        },
+        'field_placeholders': {
+            0x081F0DE8: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F0F62: {0x01: 'PLAYER'},
+            0x081F10B0: {0x06: 'RIVAL'},
+            0x081F10CD: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F1142: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F117C: {0x01: 'PLAYER'},
+            0x081F11E3: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x081F0205: 'PlayersHouse_2F_EventScript_Notebook',
+            0x081F020E: 'PlayersHouse_2F_EventScript_GameCube',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x08245D90: 'SecretBase_EventScript_SetDecorationFlags',
+            0x08245DBB: 'SecretBase_EventScript_InitDecorations',
+            0x08257EE8: 'PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet',
+            0x08257F77: 'LittlerootTown_MaysHouse_2F_EventScript_WallClock',
+        },
+        'symbols': {
+            'vars': {
+                0x4050: 'VAR_LITTLEROOT_TOWN_STATE',
+                0x4084: 'VAR_BIRCH_LAB_STATE',
+                0x4089: 'VAR_SECRET_BASE_INITIALIZED',
+                0x408D: 'VAR_LITTLEROOT_RIVAL_STATE',
+                0x4092: 'VAR_LITTLEROOT_INTRO_STATE',
+                0x40D3: 'VAR_DEX_UPGRADE_JOHTO_STARTER_STATE',
+                0x8004: 'VAR_0x8004',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'var_values': {
+                0x8004: {2: 'PC_LOCATION_MAYS_HOUSE'},
+                0x800C: {
+                    1: 'DIR_SOUTH',
+                    2: 'DIR_NORTH',
+                    3: 'DIR_WEST',
+                    4: 'DIR_EAST',
+                },
+                0x800D: {0: 'MALE', 1: 'FEMALE'},
+            },
+            'flags': {
+                0x0124: 'FLAG_MET_RIVAL_LILYCOVE',
+                0x0125: 'FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE',
+                0x02D2: 'FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM',
+                0x0332: 'FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL',
+            },
+            'songs': {0x0000: 'MUS_DUMMY', 0x019F: 'MUS_ENCOUNTER_MAY'},
+            'sounds': {
+                0x0003: 'SE_PC_OFF',
+                0x0004: 'SE_PC_ON',
+                0x0015: 'SE_PIN',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_RIVALS_HOUSE_2F_RIVAL',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {0x07: 'MOVEMENT_TYPE_FACE_UP'},
+            'booleans': {0x01: 'TRUE'},
+        },
+    },
+    'LittlerootTown_ProfessorBirchsLab': {
+        'scripts': {
+            0x081F123C: 'LittlerootTown_ProfessorBirchsLab_OnTransition',
+            0x081F1268: 'LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter',
+            0x081F1284: 'LittlerootTown_ProfessorBirchsLab_EventScript_SetReadyForJohtoStarter',
+            0x081F128E: 'LittlerootTown_ProfessorBirchsLab_EventScript_SetJohtoStarterLayout',
+            0x081F1292: 'LittlerootTown_ProfessorBirchsLab_EventScript_SetAfterJohtoStarterLayout',
+            0x081F12DB: 'LittlerootTown_ProfessorBirchsLab_EventScript_SetPlayerPosForReceiveStarter',
+            0x081F12E0: 'LittlerootTown_ProfessorBirchsLab_EventScript_SetObjectPosForDexUpgrade',
+            0x081F130C: 'LittlerootTown_ProfessorBirchsLab_EventScript_AddRivalObject',
+            0x081F1310: 'LittlerootTown_ProfessorBirchsLab_EventScript_SetObjectPosForJohtoStarters',
+            0x081F1376: 'LittlerootTown_ProfessorBirchsLab_EventScript_GiveStarterEvent',
+            0x081F13A2: 'LittlerootTown_ProfessorBirchsLab_EventScript_NicknameStarter',
+            0x081F13B2: 'LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival',
+            0x081F13D1: 'LittlerootTown_ProfessorBirchsLab_EventScript_AgreeToSeeRival',
+            0x081F13E3: 'LittlerootTown_ProfessorBirchsLab_EventScript_DeclineSeeingRival',
+            0x081F1402: 'LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedexEvent',
+            0x081F141B: 'LittlerootTown_ProfessorBirchsLab_EventScript_UpgradeToNationalDex',
+            0x081F14CD: 'LittlerootTown_ProfessorBirchsLab_EventScript_MayUpgradeComment',
+            0x081F14D7: 'LittlerootTown_ProfessorBirchsLab_EventScript_BrendanUpgradeComment',
+            0x081F14FD: 'LittlerootTown_ProfessorBirchsLab_EventScript_ChooseJohtoStarter',
+            0x081F151F: 'LittlerootTown_ProfessorBirchsLab_EventScript_Aide',
+            0x081F1542: 'LittlerootTown_ProfessorBirchsLab_EventScript_AideAlreadyMet',
+            0x081F154C: 'LittlerootTown_ProfessorBirchsLab_EventScript_AideReceivedStarter',
+            0x081F1556: 'LittlerootTown_ProfessorBirchsLab_EventScript_Cyndaquil',
+            0x081F158A: 'LittlerootTown_ProfessorBirchsLab_EventScript_Totodile',
+            0x081F15BE: 'LittlerootTown_ProfessorBirchsLab_EventScript_Chikorita',
+            0x081F15F2: 'LittlerootTown_ProfessorBirchsLab_EventScript_AlreadyChoseJohtoStarter',
+            0x081F15FC: 'LittlerootTown_ProfessorBirchsLab_EventScript_TakeYourTime',
+            0x081F1607: 'LittlerootTown_ProfessorBirchsLab_EventScript_GiveCyndaquil',
+            0x081F163C: 'LittlerootTown_ProfessorBirchsLab_EventScript_SendCyndaquilToParty',
+            0x081F1667: 'LittlerootTown_ProfessorBirchsLab_EventScript_SendCyndaquilToPC',
+            0x081F168D: 'LittlerootTown_ProfessorBirchsLab_EventScript_CyndaquilTransferredToPC',
+            0x081F1698: 'LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedCyndaquil',
+            0x081F16A8: 'LittlerootTown_ProfessorBirchsLab_EventScript_GiveTotodile',
+            0x081F16DD: 'LittlerootTown_ProfessorBirchsLab_EventScript_SendTotodileToParty',
+            0x081F1708: 'LittlerootTown_ProfessorBirchsLab_EventScript_SendTotodileToPC',
+            0x081F172E: 'LittlerootTown_ProfessorBirchsLab_EventScript_TotodileTransferredToPC',
+            0x081F1739: 'LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedTotodile',
+            0x081F1749: 'LittlerootTown_ProfessorBirchsLab_EventScript_GiveChikorita',
+            0x081F177E: 'LittlerootTown_ProfessorBirchsLab_EventScript_SendChikoritaToParty',
+            0x081F17A9: 'LittlerootTown_ProfessorBirchsLab_EventScript_SendChikoritaToPC',
+            0x081F17CF: 'LittlerootTown_ProfessorBirchsLab_EventScript_ChikoritaTransferredToPC',
+            0x081F17DA: 'LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedChikorita',
+            0x081F17EA: 'LittlerootTown_ProfessorBirchsLab_EventScript_ReceivedJohtoStarter',
+            0x081F17F5: 'LittlerootTown_ProfessorBirchsLab_EventScript_Birch',
+            0x081F1825: 'LittlerootTown_ProfessorBirchsLab_EventScript_CanHaveAnyOneOfRarePokemon',
+            0x081F182F: 'LittlerootTown_ProfessorBirchsLab_EventScript_GrassyPatchWaiting',
+            0x081F1839: 'LittlerootTown_ProfessorBirchsLab_EventScript_TryRatePokedexOrRegister',
+            0x081F186D: 'EventScript_RegisterProfBirch',
+            0x081F1893: 'LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedex',
+            0x081F18ED: 'LittlerootTown_ProfessorBirchsLab_EventScript_MayGivePokeBalls',
+            0x081F191A: 'LittlerootTown_ProfessorBirchsLab_EventScript_BrendanGivePokeBalls',
+            0x081F1947: 'LittlerootTown_ProfessorBirchsLab_EventScript_ReceivePokedex',
+            0x081F195F: 'LittlerootTown_ProfessorBirchsLab_EventScript_PokemonAwait',
+            0x081F1969: 'LittlerootTown_ProfessorBirchsLab_EventScript_MayNoRoomForPokeBalls',
+            0x081F1972: 'LittlerootTown_ProfessorBirchsLab_EventScript_BrendanNoRoomForPokeBalls',
+            0x081F197E: 'LittlerootTown_ProfessorBirchsLab_EventScript_Machine',
+            0x081F1987: 'LittlerootTown_ProfessorBirchsLab_EventScript_Rival',
+            0x081F19C3: 'LittlerootTown_ProfessorBirchsLab_EventScript_MayWhereShouldIGoNext',
+            0x081F19CC: 'LittlerootTown_ProfessorBirchsLab_EventScript_BrendanWhereShouldIGoNext',
+            0x081F19D5: 'LittlerootTown_ProfessorBirchsLab_EventScript_RivalFuturePlans',
+            0x081F19EE: 'LittlerootTown_ProfessorBirchsLab_EventScript_MayWhatNextImStayingHere',
+            0x081F19F7: 'LittlerootTown_ProfessorBirchsLab_EventScript_BrendanPreferCollectingSlowly',
+            0x081F1A00: 'LittlerootTown_ProfessorBirchsLab_EventScript_RivalHaveYouGoneToBattleFrontier',
+            0x081F1A19: 'LittlerootTown_ProfessorBirchsLab_EventScript_MayHaveYouGoneToBattleFrontier',
+            0x081F1A22: 'LittlerootTown_ProfessorBirchsLab_EventScript_BrendanHaveYouGoneToBattleFrontier',
+            0x081F1A2B: 'LittlerootTown_ProfessorBirchsLab_EventScript_RivalTakeBreakFromFieldwork',
+            0x081F1A44: 'LittlerootTown_ProfessorBirchsLab_EventScript_MayTakeBreakFromFieldwork',
+            0x081F1A4D: 'LittlerootTown_ProfessorBirchsLab_EventScript_BrendanTakeBreakFromFieldwork',
+            0x081F1A56: 'LittlerootTown_ProfessorBirchsLab_EventScript_PC',
+            0x081F1A5F: 'LittlerootTown_ProfessorBirchsLab_EventScript_Bookshelf',
+            0x081F1A68: 'LittlerootTown_ProfessorBirchsLab_EventScript_Book',
+            0x081F1A71: 'LittlerootTown_ProfessorBirchsLab_EventScript_ScottAboardSSTidalCall',
+        },
+        'tables': {
+            0x081F12A1: 'LittlerootTown_ProfessorBirchsLab_OnWarp',
+            0x081F1354: 'LittlerootTown_ProfessorBirchsLab_OnFrame',
+        },
+        'texts': {
+            0x081F1A7D: 'LittlerootTown_ProfessorBirchsLab_Text_BirchAwayOnFieldwork',
+            0x081F1B1D: 'LittlerootTown_ProfessorBirchsLab_Text_BirchIsntOneForDeskWork',
+            0x081F1B5B: 'LittlerootTown_ProfessorBirchsLab_Text_BirchEnjoysRivalsHelpToo',
+            0x081F1BAD: 'LittlerootTown_ProfessorBirchsLab_Text_LikeYouToHavePokemon',
+            0x081F1C81: 'LittlerootTown_ProfessorBirchsLab_Text_WhyNotGiveNicknameToMon',
+            0x081F1CA8: 'LittlerootTown_ProfessorBirchsLab_Text_MightBeGoodIdeaToGoSeeRival',
+            0x081F1D1C: 'LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou',
+            0x081F1D52: 'LittlerootTown_ProfessorBirchsLab_Text_DontBeThatWay',
+            0x081F1D72: 'LittlerootTown_ProfessorBirchsLab_Text_BirchRivalGoneHome',
+            0x081F1DDC: 'LittlerootTown_ProfessorBirchsLab_Text_HeardYouBeatRivalTakePokedex',
+            0x081F1E6C: 'LittlerootTown_ProfessorBirchsLab_Text_ReceivedPokedex',
+            0x081F1E7F: 'LittlerootTown_ProfessorBirchsLab_Text_ExplainPokedex',
+            0x081F1F31: 'LittlerootTown_ProfessorBirchsLab_Text_CountlessPokemonAwait',
+            0x081F1F72: 'LittlerootTown_ProfessorBirchsLab_Text_MayGotPokedexTooTakeThese',
+            0x081F1FB3: 'LittlerootTown_ProfessorBirchsLab_Text_CatchCutePokemonWithPokeBalls',
+            0x081F2019: 'LittlerootTown_ProfessorBirchsLab_Text_OhYourBagsFull',
+            0x081F2028: 'LittlerootTown_ProfessorBirchsLab_Text_MayWhereShouldIGoNext',
+            0x081F2048: 'LittlerootTown_ProfessorBirchsLab_Text_BrendanGotPokedexTooTakeThese',
+            0x081F2072: 'LittlerootTown_ProfessorBirchsLab_Text_CatchCoolPokemonWithPokeBalls',
+            0x081F20D5: 'LittlerootTown_ProfessorBirchsLab_Text_HeyYourBagsFull',
+            0x081F20E4: 'LittlerootTown_ProfessorBirchsLab_Text_BrendanWhereShouldIGoNext',
+            0x081F2103: 'LittlerootTown_ProfessorBirchsLab_Text_SeriousLookingMachine',
+            0x081F2127: 'LittlerootTown_ProfessorBirchsLab_Text_PCUsedForResearch',
+            0x081F214D: 'LittlerootTown_ProfessorBirchsLab_Text_CrammedWithBooksOnPokemon',
+            0x081F2169: 'LittlerootTown_ProfessorBirchsLab_Text_BookTooHardToRead',
+            0x081F217C: 'LittlerootTown_ProfessorBirchsLab_Text_OtherRegionsUpgradeToNational',
+            0x081F226E: 'LittlerootTown_ProfessorBirchsLab_Text_MayUpgradeSoCool',
+            0x081F22B6: 'LittlerootTown_ProfessorBirchsLab_Text_BrendanYouCanThankMe',
+            0x081F22FE: 'LittlerootTown_ProfessorBirchsLab_Text_OkayAllDone',
+            0x081F230C: 'LittlerootTown_ProfessorBirchsLab_Text_PokedexUpgradedToNational',
+            0x081F232E: 'LittlerootTown_ProfessorBirchsLab_Text_GrassyPatchWaiting2',
+            0x081F2388: 'LittlerootTown_ProfessorBirchsLab_Text_MayTakeBreakFromFieldwork',
+            0x081F23C6: 'LittlerootTown_ProfessorBirchsLab_Text_BrendanTakeBreakFromFieldwork',
+            0x081F2402: 'LittlerootTown_ProfessorBirchsLab_Text_CompletedDexChoosePokemon',
+            0x081F24F0: 'LittlerootTown_ProfessorBirchsLab_Text_CanHaveAnyOneOfRarePokemon',
+            0x081F2532: 'LittlerootTown_ProfessorBirchsLab_Text_YoullTakeCyndaquil',
+            0x081F256E: 'LittlerootTown_ProfessorBirchsLab_Text_YoullTakeTotodile',
+            0x081F25A6: 'LittlerootTown_ProfessorBirchsLab_Text_YoullTakeChikorita',
+            0x081F25DC: 'LittlerootTown_ProfessorBirchsLab_Text_TakeYourTimeAllInvaluable',
+            0x081F2609: 'LittlerootTown_ProfessorBirchsLab_Text_PickedFinePokemon',
+            0x081F2624: 'LittlerootTown_ProfessorBirchsLab_Text_ReceivedJohtoStarter',
+            0x081F263D: 'LittlerootTown_ProfessorBirchsLab_Text_NicknameJohtoStarter',
+            0x081F2655: 'LittlerootTown_ProfessorBirchsLab_Text_GrassyPatchWaiting',
+            0x081F26B5: 'LittlerootTown_ProfessorBirchsLab_Text_BetterLeaveOthersAlone',
+            0x081F26DC: 'LittlerootTown_ProfessorBirchsLab_Text_DontHaveAnyRoomForPokemon',
+            0x081F26F8: 'LittlerootTown_ProfessorBirchsLab_Text_MayWhatNextImStayingHere',
+            0x081F275E: 'LittlerootTown_ProfessorBirchsLab_Text_BrendanPreferCollectingSlowly',
+            0x081F2796: 'LittlerootTown_ProfessorBirchsLab_Text_MayHaveYouGoneToBattleFrontier',
+            0x081F27C2: 'LittlerootTown_ProfessorBirchsLab_Text_BrendanHaveYouGoneToBattleFrontier',
+            0x081F27EC: 'LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall',
+        },
+        'field_placeholders': {
+            0x081F1B5B: {0x06: 'RIVAL'},
+            0x081F1BAD: {0x01: 'PLAYER', 0x02: 'STR_VAR_1', 0x05: 'KUN'},
+            0x081F1C81: {0x02: 'STR_VAR_1'},
+            0x081F1CA8: {0x01: 'PLAYER', 0x05: 'KUN', 0x06: 'RIVAL'},
+            0x081F1D1C: {0x06: 'RIVAL'},
+            0x081F1D72: {0x06: 'RIVAL'},
+            0x081F1DDC: {0x01: 'PLAYER', 0x05: 'KUN', 0x06: 'RIVAL'},
+            0x081F1E6C: {0x01: 'PLAYER'},
+            0x081F1E7F: {0x06: 'RIVAL'},
+            0x081F1F72: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F2048: {0x01: 'PLAYER'},
+            0x081F217C: {0x01: 'PLAYER', 0x05: 'KUN', 0x06: 'RIVAL'},
+            0x081F226E: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F22B6: {0x01: 'PLAYER'},
+            0x081F230C: {0x01: 'PLAYER'},
+            0x081F2402: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F2624: {0x01: 'PLAYER', 0x02: 'STR_VAR_1'},
+            0x081F263D: {0x02: 'STR_VAR_1'},
+            0x081F2655: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F26F8: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F2796: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F27C2: {0x01: 'PLAYER'},
+            0x081F27EC: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'external_labels': {
+            0x08242F63: 'Common_EventScript_SetupRivalGfxId',
+            0x08243139: 'ProfBirch_EventScript_UpdateLocation',
+            0x082431CD: 'ProfBirch_EventScript_RatePokedexOrRegister',
+            0x08243460: 'Common_EventScript_NameReceivedPartyMon',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x082441B5: 'Common_EventScript_GetGiftMonPartySlot',
+            0x082441C1: 'Common_EventScript_NameReceivedBoxMon',
+            0x082441CA: 'Common_EventScript_TransferredToPC',
+            0x0824423B: 'Common_EventScript_NoMoreRoomForPokemon',
+        },
+        'external_texts': {
+            0x08243EDB: 'gText_NicknameThisPokemon',
+            0x0826C1AF: 'MatchCall_Text_BirchRegisterCall',
+            0x0826C23E: 'MatchCall_Text_RegisteredBirch',
+        },
+        'symbols': {
+            'vars': {
+                0x4001: 'VAR_TEMP_TRANSFERRED_SPECIES',
+                0x4050: 'VAR_LITTLEROOT_TOWN_STATE',
+                0x4051: 'VAR_OLDALE_TOWN_STATE',
+                0x4084: 'VAR_BIRCH_LAB_STATE',
+                0x408D: 'VAR_LITTLEROOT_RIVAL_STATE',
+                0x40CD: 'VAR_CABLE_CLUB_TUTORIAL_STATE',
+                0x40D3: 'VAR_DEX_UPGRADE_JOHTO_STARTER_STATE',
+                0x40DA: 'VAR_REGISTER_BIRCH_STATE',
+                0x40F5: 'VAR_SCOTT_BF_CALL_STEP_COUNTER',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x4001: {
+                    0x0098: 'SPECIES_CHIKORITA',
+                    0x009B: 'SPECIES_CYNDAQUIL',
+                    0x009E: 'SPECIES_TOTODILE',
+                },
+            },
+            'script_var_values': {
+                0x081F1268: {0x800D: {0x01: 'TRUE'}},
+            },
+            'flags': {
+                0x0058: 'FLAG_BIRCH_AIDE_MET',
+                0x0072: 'FLAG_SCOTT_CALL_BATTLE_FRONTIER',
+                0x0074: 'FLAG_ADVENTURE_STARTED',
+                0x0119: 'FLAG_ENABLE_PROF_BIRCH_MATCH_CALL',
+                0x012F: 'FLAG_HAS_MATCH_CALL',
+                0x031A: 'FLAG_HIDE_LITTLEROOT_TOWN_RIVAL',
+                0x031B: 'FLAG_HIDE_LITTLEROOT_TOWN_BIRCH',
+                0x0380: 'FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_UNKNOWN_0x380',
+                0x03DF: 'FLAG_HIDE_ROUTE_101_BOY',
+                0x0861: 'FLAG_SYS_POKEDEX_GET',
+                0x0896: 'FLAG_SYS_NATIONAL_DEX',
+                0x08E4: 'FLAG_RECEIVED_POKEDEX_FROM_BIRCH',
+            },
+            'items': {0x0004: 'ITEM_POKE_BALL'},
+            'songs': {
+                0x0172: 'MUS_OBTAIN_ITEM',
+                0x01CC: 'MUS_REGISTER_MATCH_CALL',
+            },
+            'sounds': {
+                0x0004: 'SE_PC_ON',
+                0x0024: 'SE_CLICK',
+            },
+            'species': {
+                0x0098: 'SPECIES_CHIKORITA',
+                0x009B: 'SPECIES_CYNDAQUIL',
+                0x009E: 'SPECIES_TOTODILE',
+            },
+            'layouts': {
+                0x01B0: 'LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_WITH_TABLE',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_BIRCHS_LAB_AIDE',
+                0x02: 'LOCALID_BIRCHS_LAB_BIRCH',
+                0x03: 'LOCALID_BIRCHS_LAB_RIVAL',
+                0x04: 'LOCALID_BIRCHS_LAB_CYNDAQUIL_BALL',
+                0x05: 'LOCALID_BIRCHS_LAB_TOTODILE_BALL',
+                0x06: 'LOCALID_BIRCHS_LAB_CHIKORITA_BALL',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {
+                0x01: 'DIR_SOUTH',
+                0x02: 'DIR_NORTH',
+                0x04: 'DIR_EAST',
+            },
+            'movement_types': {
+                0x03: 'MOVEMENT_TYPE_WANDER_UP_AND_DOWN',
+            },
+        },
+    },
     'Underwater_Route105': {
         'scripts': {
             0x081EF773: 'Underwater_Route105_OnResume',
@@ -4641,6 +5452,20 @@ def name_contextual_result_conditions(lines):
             replace_condition(index + 2, {1: 'FEMALE'})
         elif name == 'specialvar' and argstr == 'VAR_RESULT, ShouldTryRematchBattle':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
+        elif name == 'msgbox' and argstr.endswith(', MSGBOX_YESNO'):
+            replace_condition(index + 1, {0: 'NO', 1: 'YES'})
+            replace_condition(index + 2, {0: 'NO', 1: 'YES'})
+        elif name == 'givemon':
+            result_names = {
+                0: 'MON_GIVEN_TO_PARTY',
+                1: 'MON_GIVEN_TO_PC',
+                2: 'MON_CANT_GIVE',
+            }
+            replace_condition(index + 1, result_names)
+            replace_condition(index + 2, result_names)
+            replace_condition(index + 3, result_names)
+        elif name == 'giveitem':
+            replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
     return out
 
 
@@ -4673,6 +5498,7 @@ LOCAL_ID_ARGUMENTS = {
     'removeobject_at': {0},
     'resetobjectsubpriority': {0},
     'setobjectxyperm': {0},
+    'setobjectxy': {0},
     'setobjectmovementtype': {0},
     'setobjectsubpriority': {0},
     'showobject_at': {0},
@@ -4696,18 +5522,61 @@ def collapse_coordinate_warp_macros(lines):
     """Use the canonical three-argument form for coordinate-only warps."""
     out = []
     for name, argstr in lines:
-        if name == 'setdivewarp':
+        if name in ('setdivewarp', 'warp'):
             args = [arg.strip() for arg in argstr.split(',')]
             if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
                 argstr = ', '.join((args[0], args[2], args[3]))
         out.append((name, argstr))
     return out
+
+
+def collapse_giveitem_macros(lines):
+    """Restore the canonical US-style giveitem wrapper when byte-exact.
+
+    The macro expands to these same three JP commands, so this is a source
+    presentation change only; the candidate assembler remains the byte gate.
+    """
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 2 < len(lines):
+            first_name, first_args = lines[index]
+            second_name, second_args = lines[index + 1]
+            third_name, third_args = lines[index + 2]
+            first = [part.strip() for part in first_args.split(',', 1)]
+            second = [part.strip() for part in second_args.split(',', 1)]
+            if (first_name == 'setorcopyvar'
+                    and second_name == 'setorcopyvar'
+                    and third_name == 'callstd'
+                    and first[:1] == ['VAR_0x8000']
+                    and second[:1] == ['VAR_0x8001']
+                    and len(first) == 2 and len(second) == 2
+                    and third_args in ('0x0', 'STD_OBTAIN_ITEM')):
+                out.append(('giveitem', '%s, %s' % (first[1], second[1])))
+                index += 3
+                continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
+def omit_default_macro_arguments(lines):
+    """Drop explicit defaults only where the canonical macro proves them."""
+    out = []
+    for name, argstr in lines:
+        args = [part.strip() for part in argstr.split(',')]
+        if name == 'givemon' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
+            argstr = ', '.join(args[:2])
+        out.append((name, argstr))
+    return out
+
+
 ITEM_ARGUMENTS = {
     'giveitem': {0},
 }
 
 
-def semantic_symbol_formatter(mname):
+def semantic_symbol_formatter(mname, script_addr=None):
     """Return a conservative formatter for reviewed map-script constants."""
     symbols = MAP_VERIFIED_SEMANTIC_LABELS.get(mname, {}).get('symbols', {})
     if not symbols:
@@ -4724,9 +5593,16 @@ def semantic_symbol_formatter(mname):
         # compared against.  Keep this strictly map-local and allowlisted so
         # an unrelated numeric result is never assigned a plausible name.
         if name == 'compare_var_to_value' and index == 1 and args:
+            reviewed = (symbols.get('script_var_values', {})
+                        .get(script_addr, {}).get(args[0], {}).get(value))
+            if reviewed is not None:
+                return reviewed
             return symbols.get('var_values', {}).get(args[0], {}).get(value)
         if name == 'setvar' and index == 1 and args:
-            reviewed = symbols.get('var_values', {}).get(args[0], {}).get(value)
+            reviewed = (symbols.get('script_var_values', {})
+                        .get(script_addr, {}).get(args[0], {}).get(value))
+            if reviewed is None:
+                reviewed = symbols.get('var_values', {}).get(args[0], {}).get(value)
             if reviewed is not None:
                 return reviewed
         if (name == 'setvar' and index == 1 and args
@@ -4737,6 +5613,8 @@ def semantic_symbol_formatter(mname):
                     or symbols.get('trainers', {}).get(value))
         if index in ITEM_ARGUMENTS.get(name, ()):
             return symbols.get('items', {}).get(value)
+        if name.startswith('buffer') and index == 0:
+            return {0: 'STR_VAR_1', 1: 'STR_VAR_2', 2: 'STR_VAR_3'}.get(value)
         if name in ('playbgm', 'playfanfare', 'savebgm', 'fadenewbgm') and index == 0:
             return symbols.get('songs', {}).get(value)
         if name == 'playbgm' and index == 1:
@@ -4747,12 +5625,12 @@ def semantic_symbol_formatter(mname):
             return symbols.get('metatiles', {}).get(value)
         if name == 'setmetatile' and index == 3:
             return symbols.get('booleans', {}).get(value)
-        if name == 'playmoncry':
+        if name in ('playmoncry', 'showmonpic', 'setwildbattle'):
             if index == 0:
                 return symbols.get('species', {}).get(value)
-            if index == 1:
+            if name == 'playmoncry' and index == 1:
                 return symbols.get('cry_modes', {}).get(value)
-        if name == 'setwildbattle' and index == 0:
+        if name in ('bufferspeciesname', 'givemon') and index in ({1} if name == 'bufferspeciesname' else {0}):
             return symbols.get('species', {}).get(value)
         if name == 'multichoicedefault' and index == 2:
             return symbols.get('multichoices', {}).get(value)
@@ -4990,7 +5868,6 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     external_labels = semantic.get('external_labels', {})
     field_placeholders = semantic.get('field_placeholders', {})
     special_aliases = semantic.get('specials', {})
-    symbol_formatter = semantic_symbol_formatter(mname)
     extra = [
         a
         for a in (*std_addrs, *MAP_AUXILIARY_SCRIPT_ADDRESSES.get(mname, ()))
@@ -5203,9 +6080,10 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         elif kind == 'script':
             addr = payload
             old = region_labels.get(addr) if addr not in std_addrs else None
-            if old:
+            if old and old != label_map[addr]:
                 lines.append('%s:: @ 0x%08X' % (old, addr))
             lines.append('%s::' % label_map[addr])
+            symbol_formatter = semantic_symbol_formatter(mname, addr)
             decoded_lines = sp.decode_script_lines(
                 scripts[addr], reference_label_map, reference_text_label_map, symbol_formatter)
             decoded_lines = [
@@ -5217,6 +6095,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)
             decoded_lines = collapse_condition_macros(decoded_lines)
             decoded_lines = collapse_coordinate_warp_macros(decoded_lines)
+            decoded_lines = collapse_giveitem_macros(decoded_lines)
+            decoded_lines = omit_default_macro_arguments(decoded_lines)
             decoded_lines = name_contextual_result_conditions(decoded_lines)
             for name, argstr in decoded_lines:
                 if argstr:
@@ -5292,8 +6172,33 @@ def collect_all_text_ptrs(entries):
 def event_script_symbol_addresses():
     """Return every source label that has a known JP ROM address."""
     labels = {}
+
+    def add_reviewed(name, address):
+        previous = labels.get(name)
+        if previous is not None and previous != address:
+            raise RuntimeError(
+                'reviewed event symbol %s has conflicting addresses '
+                '0x%08X and 0x%08X' % (name, previous, address))
+        labels[name] = address
+
+    # A newly structured group can contain circular cross-map references.
+    # Make every reviewed semantic name available to the temporary assembler
+    # before any one member has been written to disk; this keeps verification
+    # independent of migration order without accepting guessed addresses.
+    for semantic in MAP_VERIFIED_SEMANTIC_LABELS.values():
+        for category in ('scripts', 'tables', 'texts',
+                         'external_labels', 'external_texts'):
+            for address, name in semantic.get(category, {}).items():
+                add_reviewed(name, address)
+        for address, aliases in semantic.get('text_aliases', {}).items():
+            for name in aliases:
+                add_reviewed(name, address)
+    for movements in MAP_MOVEMENT_SCRIPT_LABELS.values():
+        for address, name in movements.items():
+            add_reviewed(name, address)
+
     for p in (ROOT / 'data' / 'scripts').glob('gUnknown_*.inc'):
-        labels[p.stem] = int(p.stem[len('gUnknown_'):], 16)
+        add_reviewed(p.stem, int(p.stem[len('gUnknown_'):], 16))
     sources = [ROOT / 'data' / 'event_scripts.s']
     sources.extend(sorted((ROOT / 'data' / 'scripts').rglob('*.inc')))
     sources.extend(sorted((ROOT / 'data' / 'text').rglob('*.inc')))
