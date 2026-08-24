@@ -1,30 +1,37 @@
 @ EverGrandeCity scripts (JP map g0 m8 @ 0x081E3979)
 
 EverGrandeCity_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, EverGrandeCity_EventScript_001E397F
+	map_script MAP_SCRIPT_ON_TRANSITION, EverGrandeCity_OnTransition
 	.byte 0
 
-EverGrandeCity_EventScript_001E397F::
-	checkflag 0x88A
-	call_if 0x1, 0x08243106
+EverGrandeCity_OnTransition::
+	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	end
 
-EverGrandeCity_EventScript_001E3989::
-	loadword 0x0, 0x081E39AD
-	callstd 0x3
+EverGrandeCity_EventScript_VictoryRoadSign::
+	msgbox EverGrandeCity_Text_EnteringVictoryRoad, MSGBOX_SIGN
 	end
 
-EverGrandeCity_EventScript_001E3992::
-	loadword 0x0, 0x081E39D5
-	callstd 0x3
+EverGrandeCity_EventScript_CitySign::
+	msgbox EverGrandeCity_Text_CitySign, MSGBOX_SIGN
 	end
 
-EverGrandeCity_EventScript_001E399B::
-	loadword 0x0, 0x081E39BD
-	callstd 0x3
+EverGrandeCity_EventScript_PokemonLeagueSign::
+	msgbox EverGrandeCity_Text_EnteringPokemonLeague, MSGBOX_SIGN
 	end
 
-EverGrandeCity_EventScript_001E39A4::
-	setflag 0x87E
-	setvar 0x4001, 0x1
+EverGrandeCity_EventScript_SetVisitedEverGrande::
+	setflag FLAG_VISITED_EVER_GRANDE_CITY
+	setvar VAR_TEMP_1, 1
 	end
+
+EverGrandeCity_Text_EnteringVictoryRoad:
+	.string "これより　チャンピオン　ロード$"
+
+EverGrandeCity_Text_EnteringPokemonLeague:
+	.string "これより　ポケモン　リーグ\n"
+	.string "しょうめん　ゲート$"
+
+EverGrandeCity_Text_CitySign:
+	.string "ここは　サイユウ　シティ\n"
+	.string "はなと　うみと　ポケモンの　らくえん$"

@@ -1094,23 +1094,23 @@ EVER_GRANDE_CITY_EventWarps: @ 0x084FFC94
 	warp_def 18, 27, 0, 1, MAP_VICTORY_ROAD_1F
 	.globl EVER_GRANDE_CITY_EventCoordEvents
 EVER_GRANDE_CITY_EventCoordEvents: @ 0x084FFCB4
-	coord_event 17, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 16, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 18, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 19, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 20, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 21, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 22, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 23, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 24, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 25, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
-	coord_event 26, 58, 1, 16385, 0, EverGrandeCity_EventScript_001E39A4
+	coord_event 17, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 16, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 18, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 19, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 20, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 21, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 22, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 23, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 24, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 25, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
+	coord_event 26, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
 	.globl EVER_GRANDE_CITY_EventBgEvents
 EVER_GRANDE_CITY_EventBgEvents: @ 0x084FFD64
-	bg_event 19, 43, 5, 0, EverGrandeCity_EventScript_001E3989, 0, 0
+	bg_event 19, 43, 5, 0, EverGrandeCity_EventScript_VictoryRoadSign, 0, 0
 	bg_event 29, 48, 0, 1, 0x08242EFF, 0, 0
-	bg_event 18, 52, 5, 0, EverGrandeCity_EventScript_001E3992, 0, 0
-	bg_event 23, 15, 0, 0, EverGrandeCity_EventScript_001E399B, 0, 0
+	bg_event 18, 52, 5, 0, EverGrandeCity_EventScript_CitySign, 0, 0
+	bg_event 23, 15, 0, 0, EverGrandeCity_EventScript_PokemonLeagueSign, 0, 0
 	bg_event 28, 48, 0, 1, 0x08242EFF, 0, 0
 	.globl gMapEvents_EVER_GRANDE_CITY
 gMapEvents_EVER_GRANDE_CITY: @ 0x084FFDA0
