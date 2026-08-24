@@ -25,14 +25,20 @@ Common_EventScript_SetupRivalGfxId:: @ 0x08242F63
 	return 
 	setvar 0x4010, 0x64
 	return 
+
+Common_EventScript_SetupRivalOnBikeGfxId:: @ 0x08242F87
 	checkplayergender 
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x8242F9F
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x8242FA5
 	end 
+
+EventScript_SetupRivalOnBikeGfxIdFemale:: @ 0x08242F9F
 	setvar 0x4013, 0x6A
 	return 
+
+EventScript_SetupRivalOnBikeGfxIdMale:: @ 0x08242FA5
 	setvar 0x4013, 0x65
 	return 
 	checkplayergender 

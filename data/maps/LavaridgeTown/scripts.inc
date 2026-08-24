@@ -1,275 +1,280 @@
-@ LavaridgeTown scripts (JP map g0 m12 @ 0x081E5662)
-
 LavaridgeTown_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_EventScript_001E566D
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, LavaridgeTown_MapScriptTable_001E56D6
+	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, LavaridgeTown_OnFrame
 	.byte 0
 
-LavaridgeTown_EventScript_001E566D::
-	setflag 0x872
-	checkflag 0x6C
-	call_if 0x1, LavaridgeTown_EventScript_001E56A3
-	checkflag 0x8B
-	call_if 0x1, LavaridgeTown_EventScript_001E56CE
-	call 0x08242F63
-	call 0x08242F87
-	compare_var_to_value 0x4053, 0x1
-	call_if 0x1, LavaridgeTown_EventScript_001E56A7
-	compare_var_to_value 0x4053, 0x1
-	call_if 0x1, LavaridgeTown_EventScript_001E56D2
+LavaridgeTown_OnTransition:
+	setflag FLAG_VISITED_LAVARIDGE_TOWN
+	call_if_set FLAG_WHITEOUT_TO_LAVARIDGE, LavaridgeTown_EventScript_ClearLavaridgeWhiteOut
+	call_if_set FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY, LavaridgeTown_EventScript_ShowMtChimneyTrainers
+	call Common_EventScript_SetupRivalGfxId
+	call Common_EventScript_SetupRivalOnBikeGfxId
+	call_if_eq VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_CheckSetRivalPos
+	call_if_eq VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_HideMapNamePopup
 	end
 
-LavaridgeTown_EventScript_001E56A3::
-	clearflag 0x6C
+LavaridgeTown_EventScript_ClearLavaridgeWhiteOut::
+	clearflag FLAG_WHITEOUT_TO_LAVARIDGE
 	return
 
-LavaridgeTown_EventScript_001E56A7::
-	getplayerxy 0x8004, 0x8005
-	compare_var_to_value 0x8004, 0x9
-	goto_if 0x1, LavaridgeTown_EventScript_001E56B8
+LavaridgeTown_EventScript_CheckSetRivalPos::
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_eq VAR_0x8004, 9, LavaridgeTown_EventScript_SetRivalPos
 	return
 
-LavaridgeTown_EventScript_001E56B8::
-	setobjectxyperm 0x8, 0xB, 0x9
-	setobjectxyperm 0x7, 0x9, 0x8
-	setobjectmovementtype 0x7, 0x7
-	clearflag 0x3A1
+LavaridgeTown_EventScript_SetRivalPos::
+	setobjectxyperm LOCALID_LAVARIDGE_RIVAL, 11, 9
+	setobjectxyperm LOCALID_LAVARIDGE_RIVAL_ON_BIKE, 9, 8
+	setobjectmovementtype LOCALID_LAVARIDGE_RIVAL_ON_BIKE, MOVEMENT_TYPE_FACE_UP
+	clearflag FLAG_HIDE_LAVARIDGE_TOWN_RIVAL
 	return
 
-LavaridgeTown_EventScript_001E56CE::
-	clearflag 0x36D
+LavaridgeTown_EventScript_ShowMtChimneyTrainers::
+	clearflag FLAG_HIDE_MT_CHIMNEY_TRAINERS
 	return
 
-LavaridgeTown_EventScript_001E56D2::
-	setflag 0x4000
+LavaridgeTown_EventScript_HideMapNamePopup::
+	setflag FLAG_HIDE_MAP_NAME_POPUP
 	return
 
-LavaridgeTown_MapScriptTable_001E56D6::
-	map_script_2 0x4053, 0x1, LavaridgeTown_EventScript_001E56E0
+LavaridgeTown_OnFrame:
+	map_script_2 VAR_LAVARIDGE_TOWN_STATE, 1, LavaridgeTown_EventScript_RivalGiveGoGoggles
 	.2byte 0
 
-LavaridgeTown_EventScript_001E56E0::
+LavaridgeTown_EventScript_RivalGiveGoGoggles::
 	lockall
-	getplayerxy 0x8008, 0x8009
-	compare_var_to_value 0x8008, 0x9
-	call_if 0x1, LavaridgeTown_EventScript_001E57C9
-	compare_var_to_value 0x8008, 0x9
-	call_if 0x5, LavaridgeTown_EventScript_001E57EB
-	delay 0x14
+	getplayerxy VAR_0x8008, VAR_0x8009
+	call_if_eq VAR_0x8008, 9, LavaridgeTown_EventScript_RivalNoticePlayer
+	call_if_ne VAR_0x8008, 9, LavaridgeTown_EventScript_RivalExitHerbShop
+	delay 20
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, LavaridgeTown_EventScript_001E57BF
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, LavaridgeTown_EventScript_001E57C4
-	compare_var_to_value 0x8008, 0x9
-	call_if 0x1, LavaridgeTown_EventScript_001E5830
-	compare_var_to_value 0x8008, 0x9
-	call_if 0x5, LavaridgeTown_EventScript_001E583B
+	call_if_eq VAR_RESULT, MALE, LavaridgeTown_EventScript_PlayMayMusic
+	call_if_eq VAR_RESULT, FEMALE, LavaridgeTown_EventScript_PlayBrendanMusic
+	call_if_eq VAR_0x8008, 9, LavaridgeTown_EventScript_RivalApproachPlayer1
+	call_if_ne VAR_0x8008, 9, LavaridgeTown_EventScript_RivalApproachPlayer2
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LavaridgeTown_EventScript_001E5744
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LavaridgeTown_EventScript_001E5769
+	goto_if_eq VAR_RESULT, MALE, LavaridgeTown_EventScript_MayGiveGoGoggles
+	goto_if_eq VAR_RESULT, FEMALE, LavaridgeTown_EventScript_BrendanGiveGoGoggles
 	end
 
-LavaridgeTown_EventScript_001E5744::
-	loadword 0x0, gJPText_001E594F
-	callstd 0x4
-	setorcopyvar 0x8000, 0x117
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	setflag 0xDD
-	loadword 0x0, gJPText_001E59CC
-	callstd 0x4
-	goto LavaridgeTown_EventScript_001E578E
+LavaridgeTown_EventScript_MayGiveGoGoggles::
+	msgbox LavaridgeTown_Text_MayNiceBadgesTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_GO_GOGGLES
+	setflag FLAG_RECEIVED_GO_GOGGLES
+	msgbox LavaridgeTown_Text_MayExplainGoGogglesChallengeDad, MSGBOX_DEFAULT
+	goto LavaridgeTown_EventScript_RivalExit
 	end
 
-LavaridgeTown_EventScript_001E5769::
-	loadword 0x0, gJPText_001E5A74
-	callstd 0x4
-	setorcopyvar 0x8000, 0x117
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	setflag 0xDD
-	loadword 0x0, gJPText_001E5AB6
-	callstd 0x4
-	goto LavaridgeTown_EventScript_001E578E
+LavaridgeTown_EventScript_BrendanGiveGoGoggles::
+	msgbox LavaridgeTown_Text_BrendanNiceBadgesTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_GO_GOGGLES
+	setflag FLAG_RECEIVED_GO_GOGGLES
+	msgbox LavaridgeTown_Text_BrendanExplainGoGogglesChallengeDad, MSGBOX_DEFAULT
+	goto LavaridgeTown_EventScript_RivalExit
 	end
 
-LavaridgeTown_EventScript_001E578E::
+LavaridgeTown_EventScript_RivalExit::
 	closemessage
-	removeobject 0x8
-	addobject 0x7
-	delay 0x1E
-	compare_var_to_value 0x8008, 0x9
-	call_if 0x1, LavaridgeTown_EventScript_001E5846
-	compare_var_to_value 0x8008, 0x9
-	call_if 0x5, LavaridgeTown_EventScript_001E5858
-	removeobject 0x7
-	setvar 0x4053, 0x2
-	clearflag 0x4000
-	savebgm 0x0
+	removeobject LOCALID_LAVARIDGE_RIVAL
+	addobject LOCALID_LAVARIDGE_RIVAL_ON_BIKE
+	delay 30
+	call_if_eq VAR_0x8008, 9, LavaridgeTown_EventScript_RivalExit1
+	call_if_ne VAR_0x8008, 9, LavaridgeTown_EventScript_RivalExit2
+	removeobject LOCALID_LAVARIDGE_RIVAL_ON_BIKE
+	setvar VAR_LAVARIDGE_TOWN_STATE, 2
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
+	savebgm MUS_DUMMY
 	fadedefaultbgm
 	releaseall
 	end
 
-LavaridgeTown_EventScript_001E57BF::
-	playbgm 0x19F, 0x1
+LavaridgeTown_EventScript_PlayMayMusic::
+	playbgm MUS_ENCOUNTER_MAY, TRUE
 	return
 
-LavaridgeTown_EventScript_001E57C4::
-	playbgm 0x1A5, 0x1
+LavaridgeTown_EventScript_PlayBrendanMusic::
+	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
 	return
 
-LavaridgeTown_EventScript_001E57C9::
-	applymovement 0x8, 0x08243629
-	waitmovement 0x0
-	playse 0x15
-	applymovement 0x8, 0x0824361B
-	waitmovement 0x0
-	applymovement 0x8, 0x0824361D
-	waitmovement 0x0
+LavaridgeTown_EventScript_RivalNoticePlayer::
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	playse SE_PIN
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_Delay48
+	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_001E57EB::
-	opendoor 0xC, 0xF
+LavaridgeTown_EventScript_RivalExitHerbShop::
+	opendoor 12, 15
 	waitmoncry
-	addobject 0x8
-	applymovement 0x8, 0x081E5887
-	waitmovement 0x0
-	closedoor 0xC, 0xF
+	addobject LOCALID_LAVARIDGE_RIVAL
+	applymovement LOCALID_LAVARIDGE_RIVAL, LavaridgeTown_Movement_RivalExitHerbShop
+	waitmovement 0
+	closedoor 12, 15
 	waitmoncry
-	applymovement 0x8, 0x08243627
-	waitmovement 0x0
-	playse 0x15
-	applymovement 0x8, 0x0824361B
-	waitmovement 0x0
-	applymovement 0x8, 0x0824361D
-	waitmovement 0x0
-	applymovement 0xFF, 0x0824362B
-	waitmovement 0x0
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	playse SE_PIN
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_LAVARIDGE_RIVAL, Common_Movement_Delay48
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_001E5830::
-	applymovement 0x8, 0x081E5883
-	waitmovement 0x0
+LavaridgeTown_EventScript_RivalApproachPlayer1::
+	applymovement LOCALID_LAVARIDGE_RIVAL, LavaridgeTown_Movement_RivalApproachPlayer1
+	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_001E583B::
-	applymovement 0x8, 0x081E587C
-	waitmovement 0x0
+LavaridgeTown_EventScript_RivalApproachPlayer2::
+	applymovement LOCALID_LAVARIDGE_RIVAL, LavaridgeTown_Movement_RivalApproachPlayer2
+	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_001E5846::
-	applymovement 0xFF, 0x081E586E
-	applymovement 0x7, 0x081E5872
-	waitmovement 0x0
+LavaridgeTown_EventScript_RivalExit1::
+	applymovement LOCALID_PLAYER, LavaridgeTown_Movement_PlayerWatchRivalExit
+	applymovement LOCALID_LAVARIDGE_RIVAL_ON_BIKE, LavaridgeTown_Movement_RivalExit1
+	waitmovement 0
 	return
 
-LavaridgeTown_EventScript_001E5858::
-	applymovement 0x7, 0x081E5863
-	waitmovement 0x0
+LavaridgeTown_EventScript_RivalExit2::
+	applymovement LOCALID_LAVARIDGE_RIVAL_ON_BIKE, LavaridgeTown_Movement_RivalExit2
+	waitmovement 0
 	return
 
-	.incbin "baserom_jp.gba", 0x1e5863, 0x26
-LavaridgeTown_EventScript_001E5889::
-	specialvar 0x800D, GetPlayerFacingDirection
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LavaridgeTown_EventScript_001E589A
+LavaridgeTown_Movement_RivalExit2:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
+
+LavaridgeTown_Movement_PlayerWatchRivalExit:
+	delay_16
+	delay_8
+	walk_in_place_faster_right
+	step_end
+
+LavaridgeTown_Movement_RivalExit1:
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	step_end
+
+LavaridgeTown_Movement_RivalApproachPlayer2:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	step_end
+
+LavaridgeTown_Movement_RivalApproachPlayer1:
+	walk_left
+	walk_left
+	walk_up
+	step_end
+
+LavaridgeTown_Movement_RivalExitHerbShop:
+	walk_down
+	step_end
+
+LavaridgeTown_EventScript_HotSpringsTrigger::
+	specialvar VAR_RESULT, GetPlayerFacingDirection
+	goto_if_eq VAR_RESULT, DIR_SOUTH, LavaridgeTown_EventScript_EnteredHotSprings
 	end
 
-LavaridgeTown_EventScript_001E589A::
-	incrementgamestat 0x31
+LavaridgeTown_EventScript_EnteredHotSprings::
+	incrementgamestat GAME_STAT_ENTERED_HOT_SPRINGS
 	end
 
-LavaridgeTown_EventScript_001E589D::
-	loadword 0x0, 0x081E5C87
-	callstd 0x2
+LavaridgeTown_EventScript_ExpertM::
+	msgbox LavaridgeTown_Text_HotSpringsNeverRunDry, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_001E58A6::
-	loadword 0x0, 0x081E5CE8
-	callstd 0x3
+LavaridgeTown_EventScript_OldMan::
+	msgbox LavaridgeTown_Text_PokemonNippedBackside, MSGBOX_SIGN
 	end
 
-LavaridgeTown_EventScript_001E58AF::
-	loadword 0x0, 0x081E5D53
-	callstd 0x2
+LavaridgeTown_EventScript_Twin::
+	msgbox LavaridgeTown_Text_BatheInHotSpringsEveryDay, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_001E58B8::
-	loadword 0x0, 0x081E5D8B
-	callstd 0x2
+LavaridgeTown_EventScript_HotSpringsOldWoman1::
+	msgbox LavaridgeTown_Text_IfPokemonInHotSprings, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_001E58C1::
-	loadword 0x0, 0x081E5DBF
-	callstd 0x2
+LavaridgeTown_EventScript_HotSpringsOldWoman2::
+	msgbox LavaridgeTown_Text_HotSpringsClaims, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_001E58CA::
-	loadword 0x0, 0x081E5D2A
-	callstd 0x2
+LavaridgeTown_EventScript_ExpertF::
+	msgbox LavaridgeTown_Text_OhYouLikeHotSprings, MSGBOX_NPC
 	end
 
-LavaridgeTown_EventScript_001E58D3::
+LavaridgeTown_EventScript_EggWoman::
 	lock
 	faceplayer
-	checkflag 0x10A
-	goto_if 0x1, LavaridgeTown_EventScript_001E5916
-	loadword 0x0, 0x081E5B4B
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LavaridgeTown_EventScript_001E592A
+	goto_if_set FLAG_RECEIVED_LAVARIDGE_EGG, LavaridgeTown_EventScript_ReceivedEgg
+	msgbox LavaridgeTown_Text_HaveEggWillYouTakeIt, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LavaridgeTown_EventScript_DeclineEgg
 	getpartysize
-	compare_var_to_value 0x800D, 0x6
-	goto_if 0x1, LavaridgeTown_EventScript_001E5920
-	loadword 0x0, 0x081E5BE6
-	callstd 0x4
-	setflag 0x10A
-	playfanfare 0x172
-	message 0x081E5C01
+	goto_if_eq VAR_RESULT, PARTY_SIZE, LavaridgeTown_EventScript_NoRoomForEgg
+	msgbox LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_LAVARIDGE_EGG
+	playfanfare MUS_OBTAIN_ITEM
+	message LavaridgeTown_Text_ReceivedTheEgg
 	waitfanfare
-	giveegg 0x168
+	giveegg SPECIES_WYNAUT
 	release
 	end
 
-LavaridgeTown_EventScript_001E5916::
-	loadword 0x0, 0x081E5C5A
-	callstd 0x4
+LavaridgeTown_EventScript_ReceivedEgg::
+	msgbox LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare, MSGBOX_DEFAULT
 	release
 	end
 
-LavaridgeTown_EventScript_001E5920::
-	loadword 0x0, 0x081E5C10
-	callstd 0x4
+LavaridgeTown_EventScript_NoRoomForEgg::
+	msgbox LavaridgeTown_Text_NoRoomForThisEgg, MSGBOX_DEFAULT
 	release
 	end
 
-LavaridgeTown_EventScript_001E592A::
-	loadword 0x0, 0x081E5C31
-	callstd 0x4
+LavaridgeTown_EventScript_DeclineEgg::
+	msgbox LavaridgeTown_Text_AsYouWishThen, MSGBOX_DEFAULT
 	release
 	end
 
-LavaridgeTown_EventScript_001E5934::
-	loadword 0x0, 0x081E5DFF
-	callstd 0x3
+LavaridgeTown_EventScript_TownSign::
+	msgbox LavaridgeTown_Text_TownSign, MSGBOX_SIGN
 	end
 
-LavaridgeTown_EventScript_001E593D::
-	loadword 0x0, 0x081E5E1B
-	callstd 0x3
+LavaridgeTown_EventScript_GymSign::
+	msgbox LavaridgeTown_Text_GymSign, MSGBOX_SIGN
 	end
 
-LavaridgeTown_EventScript_001E5946::
-	loadword 0x0, 0x081E5E46
-	callstd 0x3
+LavaridgeTown_EventScript_HerbShopSign::
+	msgbox LavaridgeTown_Text_HerbShopSign, MSGBOX_SIGN
 	end
 
-	.globl gJPText_001E594F
-gJPText_001E594F: @ 0x081E594F
-	.string "ハルカ“{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}！　ひさしぶり！\p"
+LavaridgeTown_Text_MayNiceBadgesTakeThis: @ 0x081E594F
+	.string "ハルカ“{PLAYER}{KUN}！　ひさしぶり！\p"
 	.string "あら？　あたしが　おんせんに\n"
 	.string "はいったり　してる　あいだに\l"
 	.string "フエンの　ジムバッジ　てに　いれたんだ！\p"
@@ -278,30 +283,27 @@ gJPText_001E594F: @ 0x081E594F
 	.string "じゃあ　これを　あげても\n"
 	.string "だいじょうぶ　だよね$"
 
-	.globl gJPText_001E59CC
-gJPText_001E59CC: @ 0x081E59CC
+LavaridgeTown_Text_MayExplainGoGogglesChallengeDad: @ 0x081E59CC
 	.string "ハルカ“その　ゴーゴーゴーグルが　あると\n"
 	.string "111ばん　どうろの　さばくにも\l"
 	.string "はいれるように　なるんだよ！\p"
-	.string "それにしても　{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}\n"
+	.string "それにしても　{PLAYER}{KUN}\n"
 	.string "ポケモンジムに　ちょうせん　だなんて⋯⋯\p"
 	.string "あたしに　まけたくない　からって\n"
 	.string "がんばって　いるのね！\p"
-	.string "じゃあ　あたし　トウカで　{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}の\n"
+	.string "じゃあ　あたし　トウカで　{PLAYER}{KUN}の\n"
 	.string "おとうさんに　ちょうせん　しようかな？\p"
-	.string "{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}　じゃあ　またね！$"
+	.string "{PLAYER}{KUN}　じゃあ　またね！$"
 
-	.globl gJPText_001E5A74
-gJPText_001E5A74: @ 0x081E5A74
-	.string "ユウキ“{MUS_RG_VS_TRAINER}　ひさしぶり　だな\n"
+LavaridgeTown_Text_BrendanNiceBadgesTakeThis: @ 0x081E5A74
+	.string "ユウキ“{PLAYER}　ひさしぶり　だな\n"
 	.string "ちょうしは　どう？\p"
 	.string "ふうん⋯⋯\n"
 	.string "バッジは　けっこう　あつめてるんだな\p"
 	.string "じゃ\n"
 	.string "こいつを　やろうかな？$"
 
-	.globl gJPText_001E5AB6
-gJPText_001E5AB6: @ 0x081E5AB6
+LavaridgeTown_Text_BrendanExplainGoGogglesChallengeDad: @ 0x081E5AB6
 	.string "ユウキ“それを　もっていれば\n"
 	.string "111ばん　どうろの　さばくに　はいれるよ\p"
 	.string "さばくにしか　いない\n"
@@ -310,6 +312,88 @@ gJPText_001E5AB6: @ 0x081E5AB6
 	.string "オレは⋯⋯\n"
 	.string "トウカの　ジムリーダー　センリさんに\l"
 	.string "ちょうせん　してみようかな⋯⋯\p"
-	.string "{MUS_RG_VS_TRAINER}の　とうさん\n"
-	.string "{MUS_RG_VS_TRAINER}と　ちがって　つよそうだからな\p"
+	.string "{PLAYER}の　とうさん\n"
+	.string "{PLAYER}と　ちがって　つよそうだからな\p"
 	.string "じゃな！$"
+
+LavaridgeTown_Text_HaveEggWillYouTakeIt: @ 0x081E5B4B
+	.string "タマゴを　かえそうと　おもって\n"
+	.string "すなぶろに　いれて　あたためていたが\l"
+	.string "それだけ　じゃあ　だめらしいの⋯⋯\p"
+	.string "なんでも　げんきな　ポケモンと　いっしょに\n"
+	.string "つれてあるいた　ほうが　いいそうな⋯⋯\p"
+	.string "おまえさん　トレーナー　じゃろ？\n"
+	.string "しかも　げんきな　ポケモンを　つれておる\p"
+	.string "どうかね？\n"
+	.string "タマゴを　かえして　みるかね？$"
+
+LavaridgeTown_Text_HopeYoullWalkPlentyWithEgg: @ 0x081E5BE6
+	.string "タマゴと　いっしょに\n"
+	.string "たーっぷり　あるいて　おくれ！$"
+
+LavaridgeTown_Text_ReceivedTheEgg: @ 0x081E5C01
+	.string "{PLAYER}は\n"
+	.string "タマゴを　もらった！$"
+
+LavaridgeTown_Text_NoRoomForThisEgg: @ 0x081E5C10
+	.string "あれ？　ポケモン　いっぱいで\n"
+	.string "タマゴを　つれて　あるけないよ⋯⋯$"
+
+LavaridgeTown_Text_AsYouWishThen: @ 0x081E5C31
+	.string "そうかね⋯⋯\p"
+	.string "まあ　タマゴを　かえしたく　なったら\n"
+	.string "また　はなしかけて　おくれよ$"
+
+LavaridgeTown_Text_EverySoOftenEggFoundAtDayCare: @ 0x081E5C5A
+	.string "ポケモンの　タマゴは\n"
+	.string "ときどき　そだてやさんで　みつかる⋯⋯\p"
+	.string "そんな　うわさを　きいたよ$"
+
+LavaridgeTown_Text_HotSpringsNeverRunDry: @ 0x081E5C87
+	.string "くめども　くめども　おゆが　でる\n"
+	.string "ポットでも　ないのに　おゆが　でる\p"
+	.string "⋯⋯ふしぎ　じゃろ？\p"
+	.string "かざんが　ちかくに　あるところ　では\n"
+	.string "ちかすいが　ようがんの　ねつで\l"
+	.string "あたためられて　いるのじゃよ！$"
+
+LavaridgeTown_Text_PokemonNippedBackside: @ 0x081E5CE8
+	.string "こうして　すなに　うまっていると\n"
+	.string "はあぁ⋯⋯\p"
+	.string "あたたかくって　イイキモチ⋯⋯\p"
+	.string "⋯⋯ん？　イテテッ！\p"
+	.string "しりを　ポケモンに　かまれた！$"
+
+LavaridgeTown_Text_OhYouLikeHotSprings: @ 0x081E5D2A
+	.string "おや　あんた\n"
+	.string "おんせんが　すき　なのかい？\p"
+	.string "まだ　わかいのに　めずらしいねえ⋯⋯$"
+
+LavaridgeTown_Text_BatheInHotSpringsEveryDay: @ 0x081E5D53
+	.string "あたし　アスナさん　みたいに\n"
+	.string "すてきで　つよい　ジムリーダーに　なるため\l"
+	.string "まいにち　おんせんに　はいってるの！$"
+
+LavaridgeTown_Text_IfPokemonInHotSprings: @ 0x081E5D8B
+	.string "おんせんに　ポケモン　いれると\n"
+	.string "でんきぶろや　あわぶろ　はたまた\l"
+	.string "ようがんぶろに　なって　すごそうだわ$"
+
+LavaridgeTown_Text_HotSpringsClaims: @ 0x081E5DBF
+	.string "この　おんせんは⋯⋯\p"
+	.string "しんけいつう　きんにくつう　それから\n"
+	.string "れんあいのなやみ　おかねもうけ　などに\l"
+	.string "こうかてき　なんだとさ⋯⋯$"
+
+LavaridgeTown_Text_TownSign: @ 0x081E5DFF
+	.string "ここは　フエン　タウン\n"
+	.string "ポケセン　おんせん　よいところ$"
+
+LavaridgeTown_Text_GymSign: @ 0x081E5E1B
+	.string "フエン　タウン　ポケモンジム\n"
+	.string "リーダー　アスナ\l"
+	.string "やけど　しそうな　じょうねつの　ひと$"
+
+LavaridgeTown_Text_HerbShopSign: @ 0x081E5E46
+	.string "‘ポケモン　かんぽうやく’\n"
+	.string "りょうやく　くちに　にがし！$"
