@@ -2650,30 +2650,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_OceanicMuseum_2F/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F
 	.set gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F, SlateportCity_OceanicMuseum_2F_MapEvents
-SLATEPORT_CITY_HARBOR_EventObjects: @ 0x08508194
-	object_event 1, 45, 0, 8, 10, 3, 8, 0, 0, 0, 0, SlateportCity_Harbor_EventScript_001FDDE2, 0x0389
-	object_event 2, 49, 0, 4, 12, 3, 9, 0, 0, 0, 0, SlateportCity_Harbor_EventScript_001FDF43, 0x0389
-	object_event 3, 17, 0, 1, 12, 3, 10, 0, 0, 0, 0, SlateportCity_Harbor_EventScript_001FDF8A, 0x0389
-	object_event 4, 46, 0, 6, 13, 3, 1, 0, 0, 0, 0, SlateportCity_Harbor_EventScript_001FDF93, 0x0349
-	object_event 5, 140, 0, 8, 9, 1, 10, 0, 0, 0, 0, 0x00000000, 0x035C
-	object_event 6, 117, 0, 7, 10, 3, 10, 0, 0, 0, 0, 0x00000000, 0x034D
-	object_event 7, 195, 0, 8, 10, 3, 9, 0, 0, 0, 0, 0x00000000, 0x034E
-	object_event 8, 141, 0, 7, 9, 1, 10, 0, 0, 0, 0, 0x00000000, 0x0350
-	.globl SLATEPORT_CITY_HARBOR_EventWarps
-SLATEPORT_CITY_HARBOR_EventWarps: @ 0x08508254
-	warp_def 11, 14, 0, 8, MAP_SLATEPORT_CITY
-	warp_def 12, 14, 0, 8, MAP_SLATEPORT_CITY
-	warp_def 19, 15, 0, 9, MAP_SLATEPORT_CITY
-	warp_def 20, 15, 0, 9, MAP_SLATEPORT_CITY
-	.globl SLATEPORT_CITY_HARBOR_EventCoordEvents
-SLATEPORT_CITY_HARBOR_EventCoordEvents: @ 0x08508274
-	coord_event 8, 11, 3, 16544, 1, SlateportCity_Harbor_EventScript_001FDCAC
-	coord_event 8, 12, 3, 16544, 1, SlateportCity_Harbor_EventScript_001FDCB8
-	coord_event 8, 13, 3, 16544, 1, SlateportCity_Harbor_EventScript_001FDCC4
-	coord_event 8, 14, 3, 16544, 1, SlateportCity_Harbor_EventScript_001FDCD0
+	.include "data/maps/SlateportCity_Harbor/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_HARBOR
-gMapEvents_SLATEPORT_CITY_HARBOR: @ 0x085082B4
-	map_events SLATEPORT_CITY_HARBOR_EventObjects, SLATEPORT_CITY_HARBOR_EventWarps, SLATEPORT_CITY_HARBOR_EventCoordEvents, 0
+	.set gMapEvents_SLATEPORT_CITY_HARBOR, SlateportCity_Harbor_MapEvents
 	.globl SLATEPORT_CITY_HOUSE_EventObjects
 SLATEPORT_CITY_HOUSE_EventObjects: @ 0x085082C8
 	object_event 1, 25, 0, 4, 4, 3, 10, 0, 0, 0, 0, 0x081FE773, 0x0000

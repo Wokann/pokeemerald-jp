@@ -810,6 +810,8 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_BagIsFull, 0x082430EA
 	.globl Common_EventScript_PlayerHandedOverTheItem
 	.set Common_EventScript_PlayerHandedOverTheItem, 0x08243467
+	.globl Common_EventScript_FerryDepart
+	.set Common_EventScript_FerryDepart, 0x08243265
 	.globl Common_EventScript_PlayGymBadgeFanfare
 	.set Common_EventScript_PlayGymBadgeFanfare, 0x0824310A
 	.globl EventScript_GotoTrainerScript
