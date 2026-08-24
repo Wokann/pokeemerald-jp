@@ -2411,38 +2411,9 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/LittlerootTown_MaysHouse_2F/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_2F
 	.set gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_2F, LittlerootTown_MaysHouse_2F_MapEvents
-	.globl LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventObjects
-LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventObjects: @ 0x08505D78
-	object_event 1, 46, 0, 9, 8, 3, 2, 1, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F151F, 0x0000
-	object_event 2, 64, 0, 6, 4, 3, 8, 0, 0, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F17F5, 0x02D1
-	object_event 3, 240, 0, 7, 4, 3, 8, 1, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1987, 0x0379
-	object_event 4, 59, 0, 6, 8, 3, 8, 1, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1556, 0x032B
-	object_event 5, 59, 0, 6, 8, 3, 8, 1, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F158A, 0x032C
-	object_event 6, 59, 0, 6, 8, 3, 8, 1, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F15BE, 0x0346
-	.globl LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventWarps
-LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventWarps: @ 0x08505E08
-	warp_def 6, 12, 0, 2, MAP_LITTLEROOT_TOWN
-	warp_def 7, 12, 0, 2, MAP_LITTLEROOT_TOWN
-	.globl LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventBgEvents
-LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventBgEvents: @ 0x08505E18
-	bg_event 10, 7, 0, 1, LittlerootTown_ProfessorBirchsLab_EventScript_001F197E, 0, 0
-	bg_event 11, 7, 0, 1, LittlerootTown_ProfessorBirchsLab_EventScript_001F197E, 0, 0
-	bg_event 7, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A68, 0, 0
-	bg_event 8, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A68, 0, 0
-	bg_event 1, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A5F, 0, 0
-	bg_event 0, 7, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A5F, 0, 0
-	bg_event 1, 7, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A5F, 0, 0
-	bg_event 2, 7, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A5F, 0, 0
-	bg_event 3, 7, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A5F, 0, 0
-	bg_event 4, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A56, 0, 0
-	bg_event 3, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A56, 0, 0
-	bg_event 1, 10, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A56, 0, 0
-	bg_event 1, 9, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A56, 0, 0
-	bg_event 11, 10, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A56, 0, 0
-	bg_event 11, 9, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F1A56, 0, 0
+	.include "data/maps/LittlerootTown_ProfessorBirchsLab/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB
-gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB: @ 0x08505ECC
-	map_events LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventObjects, LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventWarps, 0, LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventBgEvents
+	.set gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, LittlerootTown_ProfessorBirchsLab_MapEvents
 	.globl OLDALE_TOWN_HOUSE1_EventObjects
 OLDALE_TOWN_HOUSE1_EventObjects: @ 0x08505EE0
 	object_event 1, 20, 0, 6, 4, 3, 2, 1, 1, 0, 0, 0x081F28D4, 0x0000
