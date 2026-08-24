@@ -2511,18 +2511,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/PacifidlogTown_House3/events.inc"
 	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE3
 	.set gMapEvents_PACIFIDLOG_TOWN_HOUSE3, PacifidlogTown_House3_MapEvents
-	.globl PACIFIDLOG_TOWN_HOUSE4_EventObjects
-PACIFIDLOG_TOWN_HOUSE4_EventObjects: @ 0x085073E0
-	object_event 1, 20, 0, 3, 4, 3, 8, 0, 0, 0, 0, 0x081F7F47, 0x0000
-	object_event 2, 12, 0, 7, 5, 3, 2, 1, 1, 0, 0, 0x081F7F3E, 0x0000
-	object_event 3, 7, 0, 7, 4, 3, 2, 1, 1, 0, 0, 0x081F7F50, 0x0000
-	.globl PACIFIDLOG_TOWN_HOUSE4_EventWarps
-PACIFIDLOG_TOWN_HOUSE4_EventWarps: @ 0x08507428
-	warp_def 4, 8, 0, 4, MAP_PACIFIDLOG_TOWN
-	warp_def 5, 8, 0, 4, MAP_PACIFIDLOG_TOWN
+	.include "data/maps/PacifidlogTown_House4/events.inc"
 	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE4
-gMapEvents_PACIFIDLOG_TOWN_HOUSE4: @ 0x08507438
-	map_events PACIFIDLOG_TOWN_HOUSE4_EventObjects, PACIFIDLOG_TOWN_HOUSE4_EventWarps, 0, 0
+	.set gMapEvents_PACIFIDLOG_TOWN_HOUSE4, PacifidlogTown_House4_MapEvents
 	.globl PACIFIDLOG_TOWN_HOUSE5_EventObjects
 PACIFIDLOG_TOWN_HOUSE5_EventObjects: @ 0x0850744C
 	object_event 1, 21, 0, 9, 4, 3, 10, 0, 0, 0, 0, 0x081F8056, 0x0000
