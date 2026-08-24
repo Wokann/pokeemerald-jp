@@ -18,6 +18,7 @@ struct PokemonAnimData
 };
 
 extern struct PokemonAnimData gUnknown_3001240[];
+void SpriteCB_SetDummyOnAnimEnd(struct Sprite *sprite);
 
 void MonAnimDummySpriteCallback(struct Sprite *sprite) {}
 __attribute__((naked)) void SetPosForRotation(struct Sprite *sprite, u16 index, s16 amplitudeX, s16 amplitudeY)
@@ -8417,102 +8418,39 @@ void Anim_SwingConvex_Fast(struct Sprite *sprite)
     sprite->callback = SwingConvex;
 }
 
-__attribute__((naked)) void VerticalShakeBack(struct Sprite *sprite)
+void VerticalShakeBack(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x32\n\t"
-        "	ldrsh r2, [r4, r0]\n\t"
-        "	movs r0, #0x90\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	cmp r2, r0\n\t"
-        "	ble _08183008\n\t"
-        "	ldr r0, _08183004\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0818302C\n\t"
-        "	.align 2, 0\n\t"
-        "_08183004: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08183008:\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0xc0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08183016\n\t"
-        "	ldr r3, _0818303C\n\t"
-        "	adds r0, r2, r3\n\t"
-        "_08183016:\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	bl Sin\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_0818302C:\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	ldrh r3, [r4, #0x32]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818303C: .4byte SPECIAL_sub_081C472C\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 counter = sprite->data[2];
+    s32 yOffset;
+
+    if (counter > 2304)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        yOffset = 0;
+    }
+    else
+    {
+        yOffset = Sin((s16)((counter + 192) % 256), sprite->data[7]) + (u16)sprite->data[7];
+    }
+
+    sprite->y2 = yOffset;
+    sprite->data[2] += sprite->data[0];
 }
 
-__attribute__((naked)) void Anim_VerticalShakeBack(struct Sprite *sprite)
+void Anim_VerticalShakeBack(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08182FEC\n\t"
-        "	ldr r0, _0818305C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818305C: .4byte VerticalShakeBack + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 60;
+    sprite->data[7] = 3;
+    VerticalShakeBack(sprite);
+    sprite->callback = VerticalShakeBack;
 }
 
-__attribute__((naked)) void Anim_VerticalShakeBack_Slow(struct Sprite *sprite)
+void Anim_VerticalShakeBack_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08182FEC\n\t"
-        "	ldr r0, _0818307C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0818307C: .4byte VerticalShakeBack + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 30;
+    sprite->data[7] = 3;
+    VerticalShakeBack(sprite);
+    sprite->callback = VerticalShakeBack;
 }
 
 __attribute__((naked)) void Anim_VerticalShakeHorizontalSlide_Slow(struct Sprite *sprite)
