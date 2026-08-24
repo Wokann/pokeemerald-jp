@@ -48,4 +48,16 @@ Route126_EventScript_ItemGreenShard:: @ 0x08256D7C
 	finditem ITEM_GREEN_SHARD
 	end
 
-	.incbin "baserom_jp.gba", 0x256d89, 0xd00
+Route127_EventScript_ItemZinc:: @ 0x08256D89
+	finditem ITEM_ZINC
+	end
+
+Route127_EventScript_ItemCarbos:: @ 0x08256D96
+	finditem ITEM_CARBOS
+	end
+
+Route127_EventScript_ItemRareCandy:: @ 0x08256DA3
+	finditem ITEM_RARE_CANDY
+	end
+
+	.incbin "baserom_jp.gba", 0x256db0, 0xcd9

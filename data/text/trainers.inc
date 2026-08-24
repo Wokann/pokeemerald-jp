@@ -3949,4 +3949,115 @@ Route126_Text_SiennaDefeat: @ 0x08260E31
 Route126_Text_SiennaPostBattle: @ 0x08260E3C
 	.string "あつく　なっちゃった\n"
 	.string "ちょっと　もぐって　こようかな$"
-	.incbin "baserom_jp.gba", 0x260e57, 0x153c
+Route127_Text_CamdenIntro: @ 0x08260E57
+	.string "オレと　しょうぶ　したいって\n"
+	.string "かおに　かいてあるぜ！$"
+
+Route127_Text_CamdenDefeat: @ 0x08260E72
+	.string "あわわわわ⋯⋯$"
+
+Route127_Text_CamdenPostBattle: @ 0x08260E7A
+	.string "いい　しょうぶを　した　あとは\n"
+	.string "すがすがしい　きもちに　なるなー$"
+
+Route127_Text_DonnyIntro: @ 0x08260E9B
+	.string "あいつには　まけたくない　って\n"
+	.string "ライバル　きみには　いるの？$"
+
+Route127_Text_DonnyDefeat: @ 0x08260EBA
+	.string "あぁ　すっごく　くやしい！$"
+
+Route127_Text_DonnyPostBattle: @ 0x08260EC8
+	.string "ライバルが　いると\n"
+	.string "つよくなりたい　って　きもちが\l"
+	.string "どんどん　あふれて　くるよね$"
+
+Route127_Text_JonahIntro: @ 0x08260EF1
+	.string "つりを　することで　てにいれた\n"
+	.string "おだやかな　こころ⋯⋯\l"
+	.string "それを　みせて　あげましょう⋯⋯$"
+
+Route127_Text_JonahDefeat: @ 0x08260F1E
+	.string "⋯⋯　まけても\n"
+	.string "こころは　おだやかです$"
+
+Route127_Text_JonahPostBattle: @ 0x08260F32
+	.string "つれなくても　かまいません\n"
+	.string "ずっと　いとを　たらしているのです⋯⋯$"
+
+Route127_Text_HenryIntro: @ 0x08260F54
+	.string "おっと！？　なみのり　している\n"
+	.string "ポケモンを　つりあげて　しまったか？$"
+
+Route127_Text_HenryDefeat: @ 0x08260F77
+	.string "かなわん！$"
+
+Route127_Text_HenryPostBattle: @ 0x08260F7D
+	.string "きみの　ポケモン　つよそうだから\n"
+	.string "つりあげたら　かなりの　てごたえ　だろうな！$"
+
+Route127_Text_RogerIntro: @ 0x08260FA5
+	.string "よーし！\n"
+	.string "ポケモンずきと　つりずきの　たいけつだ！$"
+
+Route127_Text_RogerDefeat: @ 0x08260FBF
+	.string "わあ！　いとが　からまった！\n"
+	.string "まさに　あとの　まつり$"
+
+Route127_Text_RogerPostBattle: @ 0x08260FDA
+	.string "つりでは　いとが　からまることを\n"
+	.string "マツリ　と　いうんだよ$"
+
+Route127_Text_AidanIntro: @ 0x08260FF7
+	.string "とりポケモンは　すごく　めが　いい！\n"
+	.string "おおぞら　たかくから　えものを　みつけるぜ！$"
+
+Route127_Text_AidanDefeat: @ 0x08261021
+	.string "ふぅ⋯⋯　まいったぜ$"
+
+Route127_Text_AidanPostBattle: @ 0x0826102C
+	.string "この　ちかくには　いっぱい\n"
+	.string "もぐれそうな　ところが　あるな！\p"
+	.string "そらから　みてると\n"
+	.string "うみの　いろが　ちがうから　よくわかる！$"
+
+Route127_Text_KojiIntro: @ 0x0826106A
+	.string "はだしで　かけまわると\n"
+	.string "あしの　うらが　きたえられるぞ！$"
+
+Route127_Text_KojiDefeat: @ 0x08261087
+	.string "いってェ！\n"
+	.string "ツメの　あいだに　こいしが⋯⋯$"
+
+Route127_Text_KojiPostBattle: @ 0x0826109D
+	.string "はだし　さいこう！\n"
+	.string "だが　おまえの　その　ズックも　いいな！$"
+
+Route127_Text_KojiRegister: @ 0x082610BC
+	.string "おれに　かったり　するやつは　こうだーっ！\n"
+	.string "また　よろしくおねがいします！$"
+
+Route127_Text_KojiRematchIntro: @ 0x082610E2
+	.string "きょうも　はだしで　かけまわって\n"
+	.string "あしの　うらを　きたえまくりだ！$"
+
+Route127_Text_KojiRematchDefeat: @ 0x08261104
+	.string "いってェ！\n"
+	.string "つちふまずに　ジャリが⋯⋯$"
+
+Route127_Text_KojiPostRematch: @ 0x08261118
+	.string "しばらく　おまえの　ズックと\n"
+	.string "おれの　はだし　こうかん　してみないか？$"
+
+Route127_Text_AthenaIntro: @ 0x0826113C
+	.string "じっくり　ゆっくり　しょうぶしましょう\n"
+	.string "よろしくね！$"
+
+Route127_Text_AthenaDefeat: @ 0x08261157
+	.string "せんりゃくを　ねる　ひまも　なかったわ$"
+
+Route127_Text_AthenaPostBattle: @ 0x0826116B
+	.string "あおい　いろに　かこまれていると\n"
+	.string "じかんが　すぎるのが\l"
+	.string "ゆっくりに　かんじられる　のよ$"
+	.incbin "baserom_jp.gba", 0x261197, 0x11fc
