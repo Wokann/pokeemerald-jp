@@ -81,6 +81,3 @@ RustboroCity_Mart_Text_GettingEscapeRopeJustInCase: @ 0x082036D4
 	.string "あなぬけのヒモを　かっておこう　っと！\p"
 	.string "つかうと　いっしゅんで\n"
 	.string "いりぐちに　もどれるもんね！$"
-
-	@ Rustboro City flats and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x203714, 0xc8a
