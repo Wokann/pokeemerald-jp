@@ -7,10 +7,29 @@ MauvilleCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-	.incbin "baserom_jp.gba", 0x200ee4, 0x12
-MauvilleCity_PokemonCenter_2F_EventScript_00200EF6::
-	loadword 0x0, 0x08200EFF
-	callstd 0x2
+@ The below 3 are unused and leftover from RS.
+MauvilleCity_PokemonCenter_2F_EventScript_Colosseum::
+	call CableClub_EventScript_Colosseum
 	end
 
-	.incbin "baserom_jp.gba", 0x200eff, 0x131
+MauvilleCity_PokemonCenter_2F_EventScript_TradeCenter::
+	call CableClub_EventScript_TradeCenter
+	end
+
+MauvilleCity_PokemonCenter_2F_EventScript_RecordCorner::
+	call CableClub_EventScript_RecordCorner
+	end
+
+MauvilleCity_PokemonCenter_2F_EventScript_Youngster::
+	msgbox MauvilleCity_PokemonCenter_2F_Text_Youngster, MSGBOX_NPC
+	end
+
+MauvilleCity_PokemonCenter_2F_Text_Youngster: @ 0x08200EFF
+	.string "ここの　コロシアムで\n"
+	.string "つうしんたいせん　できるの　しってる？\p"
+	.string "じぶんの　せいせき　って\n"
+	.string "かべを　みると　わかるから\l"
+	.string "まけてばかりだと　はずかしくなっちゃう⋯⋯$"
+
+	@ Mauville City Mart and later unstructured script owners begin here.
+	.incbin "baserom_jp.gba", 0x200f4f, 0xe1

@@ -2683,21 +2683,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/MauvilleCity_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_1F
 	.set gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_1F, MauvilleCity_PokemonCenter_1F_MapEvents
-	.globl MAUVILLE_CITY_POKEMON_CENTER_2F_EventObjects
-MAUVILLE_CITY_POKEMON_CENTER_2F_EventObjects: @ 0x08508998
-	object_event 1, 85, 0, 6, 2, 0, 8, 1, 1, 0, 0, 0x08244185, 0x0000
-	object_event 2, 85, 0, 2, 2, 3, 8, 1, 1, 0, 0, 0x0824418B, 0x0000
-	object_event 3, 85, 0, 10, 2, 0, 8, 1, 1, 0, 0, 0x08244191, 0x0000
-	object_event 4, 223, 0, 1, 2, 0, 8, 1, 1, 0, 0, 0x08246801, 0x02BE
-	object_event 5, 35, 0, 8, 8, 3, 7, 1, 1, 0, 0, MauvilleCity_PokemonCenter_2F_EventScript_00200EF6, 0x0000
-	.globl MAUVILLE_CITY_POKEMON_CENTER_2F_EventWarps
-MAUVILLE_CITY_POKEMON_CENTER_2F_EventWarps: @ 0x08508A10
-	warp_def 1, 6, 4, 2, MAP_MAUVILLE_CITY_POKEMON_CENTER_1F
-	warp_def 5, 1, 3, 0, MAP_UNION_ROOM
-	warp_def 9, 1, 3, 0, MAP_TRADE_CENTER
+	.include "data/maps/MauvilleCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F
-gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F: @ 0x08508A28
-	map_events MAUVILLE_CITY_POKEMON_CENTER_2F_EventObjects, MAUVILLE_CITY_POKEMON_CENTER_2F_EventWarps, 0, 0
+	.set gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F, MauvilleCity_PokemonCenter_2F_MapEvents
 	.globl MAUVILLE_CITY_MART_EventObjects
 MAUVILLE_CITY_MART_EventObjects: @ 0x08508A3C
 	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x08200F50, 0x0000
