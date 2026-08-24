@@ -2632,12 +2632,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_BattleTentLobby/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY
 	.set gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY, SlateportCity_BattleTentLobby_MapEvents
-	.globl SLATEPORT_CITY_BATTLE_TENT_CORRIDOR_EventObjects
-SLATEPORT_CITY_BATTLE_TENT_CORRIDOR_EventObjects: @ 0x08507BDC
-	object_event 1, 46, 0, 2, 6, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0000
+	.include "data/maps/SlateportCity_BattleTentCorridor/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR
-gMapEvents_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR: @ 0x08507BF4
-	map_events SLATEPORT_CITY_BATTLE_TENT_CORRIDOR_EventObjects, 0, 0, 0
+	.set gMapEvents_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR, SlateportCity_BattleTentCorridor_MapEvents
 	.globl SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM_EventObjects
 SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM_EventObjects: @ 0x08507C08
 	object_event 1, 46, 0, 1, 4, 0, 10, 1, 1, 0, 0, 0x00000000, 0x0000
