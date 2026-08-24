@@ -4907,7 +4907,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_MAUVILLE_CITY_BIKE_SHOP (g10 m1)
 	.4byte gMapLayout_MAUVILLE_CITY_BIKE_SHOP  @ mapLayout
 	.4byte gMapEvents_MAUVILLE_CITY_BIKE_SHOP  @ events
-	.4byte 0x081FF3EB  @ mapScripts
+	.4byte MauvilleCity_BikeShop_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
 	.2byte 0x005A  @ mapLayoutId

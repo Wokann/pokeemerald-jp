@@ -2668,21 +2668,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/MauvilleCity_Gym/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_GYM
 	.set gMapEvents_MAUVILLE_CITY_GYM, MauvilleCity_Gym_MapEvents
-	.globl MAUVILLE_CITY_BIKE_SHOP_EventObjects
-MAUVILLE_CITY_BIKE_SHOP_EventObjects: @ 0x085085AC
-	object_event 1, 23, 0, 2, 5, 3, 9, 0, 0, 0, 0, 0x081FF3EC, 0x0000
-	object_event 2, 66, 0, 7, 6, 3, 2, 1, 1, 0, 0, 0x081FF561, 0x0000
-	.globl MAUVILLE_CITY_BIKE_SHOP_EventWarps
-MAUVILLE_CITY_BIKE_SHOP_EventWarps: @ 0x085085DC
-	warp_def 3, 8, 0, 2, MAP_MAUVILLE_CITY
-	warp_def 4, 8, 0, 2, MAP_MAUVILLE_CITY
-	.globl MAUVILLE_CITY_BIKE_SHOP_EventBgEvents
-MAUVILLE_CITY_BIKE_SHOP_EventBgEvents: @ 0x085085EC
-	bg_event 8, 1, 0, 0, 0x081FF56A, 0, 0
-	bg_event 11, 1, 0, 0, 0x081FF5DE, 0, 0
+	.include "data/maps/MauvilleCity_BikeShop/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_BIKE_SHOP
-gMapEvents_MAUVILLE_CITY_BIKE_SHOP: @ 0x08508604
-	map_events MAUVILLE_CITY_BIKE_SHOP_EventObjects, MAUVILLE_CITY_BIKE_SHOP_EventWarps, 0, MAUVILLE_CITY_BIKE_SHOP_EventBgEvents
+	.set gMapEvents_MAUVILLE_CITY_BIKE_SHOP, MauvilleCity_BikeShop_MapEvents
 	.globl MAUVILLE_CITY_HOUSE1_EventObjects
 MAUVILLE_CITY_HOUSE1_EventObjects: @ 0x08508618
 	object_event 1, 46, 0, 4, 4, 3, 10, 0, 0, 0, 0, 0x081FFD78, 0x0000

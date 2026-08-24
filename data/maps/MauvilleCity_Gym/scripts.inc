@@ -416,7 +416,3 @@ MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons:
     .string "1ひきしか　もっておらん　ようだな\p"
     .string "すまんが　2ひき　いじょうの\n"
     .string "ポケモンを　もって　きておくれ！$"
-
-@ Temporary successor ownership: the next unstructured map-script block starts
-@ at 0x081FF3EB and remains byte-exact until its own map migration.
-    .incbin "baserom_jp.gba", 0x1ff3eb, 0x19e9
