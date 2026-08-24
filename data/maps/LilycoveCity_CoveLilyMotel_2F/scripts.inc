@@ -131,5 +131,3 @@ LilycoveCity_CoveLilyMotel_2F_Text_ContestsDoTakeStrategy: @ 0x08205BA3
 	.string "せんりゃくを　ねるのも\l"
 	.string "つよい　トレーナーに　なるための\l"
 	.string "ほうほうの　ひとつでは　あるね$"
-
-	.incbin "baserom_jp.gba", 0x205be2, 0x604

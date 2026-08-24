@@ -2888,44 +2888,9 @@ gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F: @ 0x085095C4
 	.include "data/maps/LilycoveCity_CoveLilyMotel_2F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F
 	.set gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F, LilycoveCity_CoveLilyMotel_2F_MapEvents
-	.globl LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventObjects
-LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventObjects: @ 0x08509978
-	object_event 1, 45, 0, 5, 12, 3, 10, 0, 0, 0, 0, 0x08205BE3, 0x0000
-	object_event 2, 48, 0, 16, 2, 3, 8, 0, 0, 0, 0, 0x08205BEC, 0x0307
-	object_event 3, 38, 0, 13, 7, 3, 10, 0, 0, 0, 0, 0x08205D1F, 0x0000
-	object_event 4, 99, 0, 13, 10, 3, 5, 2, 0, 0, 0, 0x08205D28, 0x0000
-	object_event 5, 5, 0, 2, 8, 3, 7, 0, 0, 0, 0, 0x08205D31, 0x0000
-	object_event 6, 26, 0, 3, 8, 3, 7, 0, 0, 0, 0, 0x08205D3A, 0x0000
-	object_event 7, 20, 0, 11, 3, 3, 2, 1, 1, 0, 0, 0x08205D43, 0x0308
-	object_event 8, 99, 0, 19, 3, 3, 7, 0, 0, 0, 0, 0x08205D55, 0x030B
-	object_event 9, 17, 0, 2, 2, 3, 2, 2, 2, 0, 0, 0x08205D6C, 0x030C
-	object_event 10, 37, 0, 6, 2, 3, 2, 1, 1, 0, 0, 0x08205D4C, 0x030A
-	.globl LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventWarps
-LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventWarps: @ 0x08509A68
-	warp_def 9, 13, 0, 3, MAP_LILYCOVE_CITY
-	warp_def 10, 13, 0, 13, MAP_LILYCOVE_CITY
-	warp_def 16, 1, 0, 0, MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F
-	.globl LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventBgEvents
-LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventBgEvents: @ 0x08509A80
-	bg_event 1, 1, 0, 0, 0x08205CD7, 0, 0
-	bg_event 2, 1, 0, 0, 0x08205CD7, 0, 0
-	bg_event 5, 1, 0, 0, 0x08205CFB, 0, 0
-	bg_event 6, 1, 0, 0, 0x08205CFB, 0, 0
-	bg_event 9, 1, 0, 0, 0x08205CCE, 0, 0
-	bg_event 3, 6, 0, 0, 0x08205CE0, 0, 0
-	bg_event 2, 6, 0, 0, 0x08205CE0, 0, 0
-	bg_event 15, 12, 0, 0, 0x08205D04, 0, 0
-	bg_event 11, 1, 0, 0, 0x08205CCE, 0, 0
-	bg_event 6, 6, 0, 0, 0x08205CF2, 0, 0
-	bg_event 17, 9, 0, 0, 0x08205D16, 0, 0
-	bg_event 19, 1, 0, 0, 0x08205CE9, 0, 0
-	bg_event 20, 1, 0, 0, 0x08205CE9, 0, 0
-	bg_event 18, 9, 0, 0, 0x08205D16, 0, 0
-	bg_event 18, 11, 0, 0, 0x08205D0D, 0, 0
-	bg_event 16, 9, 0, 0, 0x08205D16, 0, 0
+	.include "data/maps/LilycoveCity_LilycoveMuseum_1F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F
-gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F: @ 0x08509B40
-	map_events LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventObjects, LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventWarps, 0, LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_EventBgEvents
+	.set gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F, LilycoveCity_LilycoveMuseum_1F_MapEvents
 	.globl LILYCOVE_CITY_LILYCOVE_MUSEUM_2F_EventObjects
 LILYCOVE_CITY_LILYCOVE_MUSEUM_2F_EventObjects: @ 0x08509B54
 	object_event 1, 48, 0, 10, 8, 3, 7, 0, 0, 0, 0, LilycoveCity_LilycoveMuseum_2F_EventScript_00206312, 0x0000
