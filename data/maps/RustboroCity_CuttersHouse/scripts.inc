@@ -49,6 +49,3 @@ RustboroCity_CuttersHouse_Text_DadHelpedClearLandOfTrees: @ 0x08203ED7
 	.string "おとうさん　みんなの　ために\l"
 	.string "いあいぎりを　つかって\l"
 	.string "あたりを　きりひらいたんだって！$"
-
-	@ Rustboro City House2 and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x203f15, 0x489
