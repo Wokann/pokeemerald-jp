@@ -1,292 +1,779 @@
-@ DewfordTown scripts (JP map g0 m11 @ 0x081E4C57)
-
 DewfordTown_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, DewfordTown_EventScript_001E4C5D
+	map_script MAP_SCRIPT_ON_TRANSITION, DewfordTown_OnTransition
 	.byte 0
 
-DewfordTown_EventScript_001E4C5D::
-	setflag 0x871
+DewfordTown_OnTransition:
+	setflag FLAG_VISITED_DEWFORD_TOWN
 	end
 
-DewfordTown_EventScript_001E4C61::
+DewfordTown_EventScript_Briney::
 	lock
 	faceplayer
-	checkflag 0xBD
-	goto_if 0x0, DewfordTown_EventScript_001E4CD5
-	message 0x081E5261
+	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, DewfordTown_EventScript_ReturnToPetalburgPrompt
+	message DewfordTown_Text_WhereAreWeBound
 	waitmessage
-	multichoicedefault 0x15, 0x6, 0x0, 0x2, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, DewfordTown_EventScript_001E4CAA
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, DewfordTown_EventScript_001E4CBA
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, DewfordTown_EventScript_001E4CCA
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, DewfordTown_EventScript_001E4CCA
+	multichoicedefault 21, 6, MULTI_BRINEY_ON_DEWFORD, 2, FALSE
+	switch VAR_RESULT
+	case 0, DewfordTown_EventScript_ChoosePetalburg
+	case 1, DewfordTown_EventScript_ChooseSlateport
+	case 2, DewfordTown_EventScript_CancelSailSelect
+	case MULTI_B_PRESSED, DewfordTown_EventScript_CancelSailSelect
 	end
 
-DewfordTown_EventScript_001E4CAA::
-	loadword 0x0, 0x081E5291
-	callstd 0x4
+DewfordTown_EventScript_ChoosePetalburg::
+	msgbox DewfordTown_Text_PetalburgWereSettingSail, MSGBOX_DEFAULT
 	closemessage
-	goto DewfordTown_EventScript_001E4DB0
+	goto DewfordTown_EventScript_SailToPetalburg
+	release
+	end
 
-	.incbin "baserom_jp.gba", 0x1e4cb8, 0x2
-DewfordTown_EventScript_001E4CBA::
-	loadword 0x0, 0x081E52AF
-	callstd 0x4
+DewfordTown_EventScript_ChooseSlateport::
+	msgbox DewfordTown_Text_SlateportWereSettingSail, MSGBOX_DEFAULT
 	closemessage
-	goto DewfordTown_EventScript_001E4E37
+	goto DewfordTown_EventScript_SailToSlateport
+	release
+	end
 
-	.incbin "baserom_jp.gba", 0x1e4cc8, 0x2
-DewfordTown_EventScript_001E4CCA::
-	loadword 0x0, 0x081E52CD
-	callstd 0x4
+DewfordTown_EventScript_CancelSailSelect::
+	msgbox DewfordTown_Text_JustTellMeWhenYouNeedToSetSail, MSGBOX_DEFAULT
 	closemessage
 	release
 	end
 
-DewfordTown_EventScript_001E4CD5::
-	loadword 0x0, 0x081E51BF
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, DewfordTown_EventScript_001E4CF2
-	loadword 0x0, 0x081E5209
-	callstd 0x4
+DewfordTown_EventScript_ReturnToPetalburgPrompt::
+	msgbox DewfordTown_Text_SetSailBackToPetalburg, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
+	msgbox DewfordTown_Text_GoDeliverIllBeWaiting, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_001E4CF2::
-	loadword 0x0, 0x081E51E2
-	callstd 0x4
+DewfordTown_EventScript_SailBackToPetalburg::
+	msgbox DewfordTown_Text_PetalburgWereSettingSail2, MSGBOX_DEFAULT
 	closemessage
-	goto DewfordTown_EventScript_001E4DB0
+	goto DewfordTown_EventScript_SailToPetalburg
 	end
 
-DewfordTown_EventScript_001E4D01::
-	loadword 0x0, 0x081E50F8
-	callstd 0x2
+DewfordTown_EventScript_Woman::
+	msgbox DewfordTown_Text_TinyIslandCommunity, MSGBOX_NPC
 	end
 
-DewfordTown_EventScript_001E4D0A::
-	loadword 0x0, 0x081E512A
-	callstd 0x3
+DewfordTown_EventScript_TownSign::
+	msgbox DewfordTown_Text_TownSign, MSGBOX_SIGN
 	end
 
-DewfordTown_EventScript_001E4D13::
-	loadword 0x0, 0x081E5149
-	callstd 0x3
+DewfordTown_EventScript_GymSign::
+	msgbox DewfordTown_Text_GymSign, MSGBOX_SIGN
 	end
 
-DewfordTown_EventScript_001E4D1C::
-	loadword 0x0, 0x081E516E
-	callstd 0x3
+DewfordTown_EventScript_HallSign::
+	msgbox DewfordTown_Text_HallSign, MSGBOX_SIGN
 	end
 
-DewfordTown_EventScript_001E4D25::
+DewfordTown_EventScript_OldRodFisherman::
 	lock
 	faceplayer
-	checkflag 0x101
-	goto_if 0x1, DewfordTown_EventScript_001E4D7A
-	loadword 0x0, 0x081E52F3
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, DewfordTown_EventScript_001E4D4F
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, DewfordTown_EventScript_001E4D70
+	goto_if_set FLAG_RECEIVED_OLD_ROD, DewfordTown_EventScript_HowsFishing
+	msgbox DewfordTown_Text_GettingItchToFish, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_GiveOldRod
+	goto_if_eq VAR_RESULT, NO, DewfordTown_EventScript_NotGettingItchToFish
 	end
 
-DewfordTown_EventScript_001E4D4F::
-	loadword 0x0, 0x081E5316
-	callstd 0x4
-	setorcopyvar 0x8000, 0x106
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	setflag 0x101
-	loadword 0x0, 0x081E5334
-	callstd 0x4
+DewfordTown_EventScript_GiveOldRod::
+	msgbox DewfordTown_Text_GiveYouOneOfMyRods, MSGBOX_DEFAULT
+	giveitem ITEM_OLD_ROD
+	setflag FLAG_RECEIVED_OLD_ROD
+	msgbox DewfordTown_Text_ThrowInFishingAdvice, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_001E4D70::
-	loadword 0x0, 0x081E53E0
-	callstd 0x4
+DewfordTown_EventScript_NotGettingItchToFish::
+	msgbox DewfordTown_Text_ThatsTooBadThen, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_001E4D7A::
-	message 0x081E53EF
+DewfordTown_EventScript_HowsFishing::
+	message DewfordTown_Text_HowsYourFishing
 	waitmessage
-	multichoice 0x14, 0x8, 0x32, 0x1
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, DewfordTown_EventScript_001E4D9C
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, DewfordTown_EventScript_001E4DA6
+	multichoice 20, 8, MULTI_HOWS_FISHING, TRUE
+	goto_if_eq VAR_RESULT, 0, DewfordTown_EventScript_FishingExcellent
+	goto_if_eq VAR_RESULT, 1, DewfordTown_EventScript_FishingNotSoGood
 	end
 
-DewfordTown_EventScript_001E4D9C::
-	loadword 0x0, 0x081E5401
-	callstd 0x4
+DewfordTown_EventScript_FishingExcellent::
+	msgbox DewfordTown_Text_GreatHaulInSomeBigOnes, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_001E4DA6::
-	loadword 0x0, 0x081E5420
-	callstd 0x4
+DewfordTown_EventScript_FishingNotSoGood::
+	msgbox DewfordTown_Text_FishingAdvice, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_001E4DB0::
-	call 0x08242F21
-	setobjectsubpriority 0x2, 0xB, 0x0
-	setobjectsubpriority 0xFF, 0xB, 0x0
-	applymovement 0x2, 0x081E506D
-	waitmovement 0x0
-	removeobject 0x2
-	applymovement 0xFF, 0x081E5061
-	waitmovement 0x0
-	hideobject_at 0xFF, 0xB
-	call 0x0824312C
-	applymovement 0x4, 0x081E4EF2
-	applymovement 0xFF, 0x081E4EF2
-	waitmovement 0x0
-	showobject_at 0xFF, 0x13
-	call 0x08243134
-	applymovement 0xFF, 0x081E5064
-	waitmovement 0x0
-	showobject_at 0xFF, 0x13
-	clearflag 0x2E3
-	clearflag 0x371
-	clearflag 0x2E6
-	setflag 0x2E7
-	hideobject_at 0x4, 0xB
-	setvar 0x408E, 0x2
-	resetobjectsubpriority 0xFF, 0xB
-	warp 0x1100, 0xFF, 0x5, 0x4
-	copyvar 0x4096, 0x8008
+DewfordTown_EventScript_SailToPetalburg::
+	call EventScript_BackupMrBrineyLocation
+	setobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN, 0
+	setobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN, 0
+	applymovement LOCALID_DEWFORD_BRINEY, DewfordTown_Movement_BrineyBoardBoat
+	waitmovement 0
+	removeobject LOCALID_DEWFORD_BRINEY
+	applymovement LOCALID_PLAYER, DewfordTown_Movement_PlayerBoardBoat
+	waitmovement 0
+	hideobject_at LOCALID_PLAYER, MAP_DEWFORD_TOWN
+	call Common_EventScript_PlayBrineysBoatMusic
+	applymovement LOCALID_DEWFORD_BOAT, DewfordTown_Movement_SailToPetalburg
+	applymovement LOCALID_PLAYER, DewfordTown_Movement_SailToPetalburg
+	waitmovement 0
+	showobject_at LOCALID_PLAYER, MAP_ROUTE104
+	call Common_EventScript_StopBrineysBoatMusic
+	applymovement LOCALID_PLAYER, DewfordTown_Movement_ExitBoatPetalburg
+	waitmovement 0
+	showobject_at LOCALID_PLAYER, MAP_ROUTE104
+	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
+	clearflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	hideobject_at LOCALID_DEWFORD_BOAT, MAP_DEWFORD_TOWN
+	setvar VAR_BOARD_BRINEY_BOAT_STATE, 2
+	resetobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN
+	warp MAP_ROUTE104_MR_BRINEYS_HOUSE, 5, 4
+	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
 	waitstate
 	release
 	end
 
-DewfordTown_EventScript_001E4E37::
-	call 0x08242F21
-	setobjectsubpriority 0x2, 0xB, 0x0
-	setobjectsubpriority 0xFF, 0xB, 0x1
-	applymovement 0x2, 0x081E506D
-	waitmovement 0x0
-	removeobject 0x2
-	applymovement 0xFF, 0x081E5061
-	waitmovement 0x0
-	hideobject_at 0xFF, 0xB
-	call 0x0824312C
-	applymovement 0x4, 0x081E4FB5
-	applymovement 0xFF, 0x081E4FB5
-	waitmovement 0x0
-	call 0x08243134
-	showobject_at 0xFF, 0x18
-	applymovement 0xFF, 0x081E5068
-	waitmovement 0x0
-	setobjectxyperm 0x2, 0x15, 0x1A
-	addobject 0x2
-	setobjectsubpriority 0x2, 0x18, 0x0
-	applymovement 0x2, 0x081E506F
-	waitmovement 0x0
-	clearflag 0x2E5
-	addobject 0x1
-	clearflag 0x2E8
-	setflag 0x2E7
-	hideobject_at 0x4, 0xB
-	checkflag 0x95
-	call_if 0x0, DewfordTown_EventScript_001E4EE0
-	checkflag 0x95
-	call_if 0x1, DewfordTown_EventScript_001E4EE9
+DewfordTown_EventScript_SailToSlateport::
+	call EventScript_BackupMrBrineyLocation
+	setobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN, 0
+	setobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN, 1
+	applymovement LOCALID_DEWFORD_BRINEY, DewfordTown_Movement_BrineyBoardBoat
+	waitmovement 0
+	removeobject LOCALID_DEWFORD_BRINEY
+	applymovement LOCALID_PLAYER, DewfordTown_Movement_PlayerBoardBoat
+	waitmovement 0
+	hideobject_at LOCALID_PLAYER, MAP_DEWFORD_TOWN
+	call Common_EventScript_PlayBrineysBoatMusic
+	applymovement LOCALID_DEWFORD_BOAT, DewfordTown_Movement_SailToSlateport
+	applymovement LOCALID_PLAYER, DewfordTown_Movement_SailToSlateport
+	waitmovement 0
+	call Common_EventScript_StopBrineysBoatMusic
+	showobject_at LOCALID_PLAYER, MAP_ROUTE109
+	applymovement LOCALID_PLAYER, DewfordTown_Movement_ExitBoatSlateport
+	waitmovement 0
+	setobjectxyperm LOCALID_ROUTE109_BRINEY, 21, 26
+	addobject LOCALID_ROUTE109_BRINEY
+	setobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109, 0
+	applymovement LOCALID_ROUTE109_BRINEY, DewfordTown_Movement_BrineyExitBoat
+	waitmovement 0
+	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	addobject LOCALID_ROUTE109_BOAT
+	clearflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	hideobject_at LOCALID_DEWFORD_BOAT, MAP_DEWFORD_TOWN
+	call_if_unset FLAG_DELIVERED_DEVON_GOODS, DewfordTown_EventScript_LandedSlateportDeliverGoods
+	call_if_set FLAG_DELIVERED_DEVON_GOODS, DewfordTown_EventScript_LandedSlateport
 	closemessage
-	copyvar 0x4096, 0x8008
-	resetobjectsubpriority 0xFF, 0xB
-	resetobjectsubpriority 0x2, 0x18
-	moveobjectoffscreen 0x2
+	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
+	resetobjectsubpriority LOCALID_PLAYER, MAP_DEWFORD_TOWN
+	resetobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109
+	moveobjectoffscreen LOCALID_ROUTE109_BRINEY
 	release
 	end
 
-DewfordTown_EventScript_001E4EE0::
-	loadword 0x0, 0x081E8B34
-	callstd 0x4
+DewfordTown_EventScript_LandedSlateportDeliverGoods::
+	msgbox DewfordTown_Text_BrineyLandedInSlateportDeliverGoods, MSGBOX_DEFAULT
 	return
 
-DewfordTown_EventScript_001E4EE9::
-	loadword 0x0, 0x081E8BC7
-	callstd 0x4
+DewfordTown_EventScript_LandedSlateport::
+	msgbox DewfordTown_Text_BrineyLandedInSlateport, MSGBOX_DEFAULT
 	return
 
-	.incbin "baserom_jp.gba", 0x1e4ef2, 0x180
-DewfordTown_EventScript_001E5072::
+DewfordTown_Movement_SailToPetalburg:
+	walk_up
+	walk_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_left
+	walk_fast_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_up
+	walk_fast_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+DewfordTown_Movement_SailToSlateport:
+	walk_right
+	walk_fast_right
+	walk_fast_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_up
+	walk_fast_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
+
+DewfordTown_Movement_PlayerBoardBoat:
+	walk_right
+	walk_up
+	step_end
+
+DewfordTown_Movement_ExitBoatPetalburg:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+DewfordTown_Movement_ExitBoatSlateport:
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+DewfordTown_Movement_BrineyBoardBoat:
+	walk_up
+	step_end
+
+DewfordTown_Movement_BrineyExitBoat:
+	walk_up
+	walk_up
+	step_end
+
+DewfordTown_EventScript_TrendyPhraseBoy::
 	lock
 	faceplayer
-	call 0x08242F17
-	loadword 0x0, 0x081E54D0
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, DewfordTown_EventScript_001E5098
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, DewfordTown_EventScript_001E50A2
+	call Common_EventScript_BufferTrendyPhrase
+	msgbox DewfordTown_Text_XIsTheBiggestHappeningThingRight, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_ConfirmTrendyPhrase
+	goto_if_eq VAR_RESULT, NO, DewfordTown_EventScript_RejectTrendyPhrase
 	end
 
-DewfordTown_EventScript_001E5098::
-	loadword 0x0, 0x081E5649
-	callstd 0x4
+DewfordTown_EventScript_ConfirmTrendyPhrase::
+	msgbox DewfordTown_Text_YeahDefinitionOfInRightNow, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_001E50A2::
-	loadword 0x0, 0x081E5546
-	callstd 0x4
-	setvar 0x8004, 0x9
-	call 0x08242F08
+DewfordTown_EventScript_RejectTrendyPhrase::
+	msgbox DewfordTown_Text_TellMeWhatsNewAndIn, MSGBOX_DEFAULT
+	setvar VAR_0x8004, EASY_CHAT_TYPE_TRENDY_PHRASE
+	call Common_ShowEasyChatScreen
 	lock
 	faceplayer
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, DewfordTown_EventScript_001E50CD
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, DewfordTown_EventScript_001E50E4
+	goto_if_eq VAR_RESULT, TRUE, DewfordTown_EventScript_GiveNewTrendyPhrase
+	goto_if_eq VAR_RESULT, FALSE, DewfordTown_EventScript_CancelNewTrendyPhrase
 	end
 
-DewfordTown_EventScript_001E50CD::
-	incrementgamestat 0x2
-	compare_var_to_value 0x8004, 0x0
-	goto_if 0x1, DewfordTown_EventScript_001E50EE
-	loadword 0x0, 0x081E556D
-	callstd 0x4
+DewfordTown_EventScript_GiveNewTrendyPhrase::
+	incrementgamestat GAME_STAT_STARTED_TRENDS
+	goto_if_eq VAR_0x8004, FALSE, DewfordTown_EventScript_PhraseNotTrendyEnough
+	msgbox DewfordTown_Text_OfCourseIKnowAboutThat, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_001E50E4::
-	loadword 0x0, 0x081E5626
-	callstd 0x4
+DewfordTown_EventScript_CancelNewTrendyPhrase::
+	msgbox DewfordTown_Text_HearOfAnyTrendsComeShareWithMe, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_001E50EE::
-	loadword 0x0, 0x081E55FE
-	callstd 0x4
+DewfordTown_EventScript_PhraseNotTrendyEnough::
+	msgbox DewfordTown_Text_XHuhIThinkYIsCool, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x1e50f8, 0x99
-Route104_Text_LandedInDewfordDeliverLetter:: @ 0x081E5191
-	.globl gJPText_001E5191
-gJPText_001E5191:
+DewfordTown_Text_TinyIslandCommunity:
+	.string "ムロタウンって　ちいさな　しま　だから\n"
+	.string "なにかが　はやりだすと\l"
+	.string "みんな　すぐに　まねを　するのよね$"
+
+DewfordTown_Text_TownSign:
+	.string "ここは　ムロ　タウン\n"
+	.string "あおい　うみに　うかぶ　ちいさな　しま$"
+
+DewfordTown_Text_GymSign:
+	.string "ムロ　タウン　ポケモンジム\n"
+	.string "リーダー　トウキ\l"
+	.string "かくとう　ビッグウェーブ！$"
+
+DewfordTown_Text_HallSign:
+	.string "‘ムロの　しゅうかいじょ’\n"
+	.string "みんなの　じょうほう　こうかんの　ばしょ$"
+
+Route104_Text_LandedInDewfordDeliverLetter:
 	.string "ハギ“ほい！　ムロに　とうちゃく！\p"
 	.string "たしか　ダイゴとやらに\n"
 	.string "てがみを　とどけるんだったな！$"
 
-	.incbin "baserom_jp.gba", 0x1e51bf, 0x6d
-DewfordTown_Text_BrineyLandedInDewford:: @ 0x081E522C
-	.globl gJPText_001E522C
-gJPText_001E522C:
+DewfordTown_Text_SetSailBackToPetalburg:
+	.string "ハギ“てがみは　とどけたのかい？\p"
+	.string "それとも　トウカに　もどるのかね？$"
+
+DewfordTown_Text_PetalburgWereSettingSail2:
+	.string "ハギ“では　トウカに　もどると　しよう！\p"
+	.string "よっしゃ！　いくぞ　ピーコちゃん！$"
+
+DewfordTown_Text_GoDeliverIllBeWaiting:
+	.string "ハギ“では　てがみを　とどけておいで\n"
+	.string "わしは　ここで　まっておるから$"
+
+DewfordTown_Text_BrineyLandedInDewford:
 	.string "ハギ“ほい！　ムロタウンに　とうちゃく！\p"
 	.string "ふねに　のりたくなったら\n"
 	.string "また　わしに　こえを　かけておくれ！$"
 
-	.incbin "baserom_jp.gba", 0x1e5261, 0x401
+DewfordTown_Text_WhereAreWeBound:
+	.string "ハギ“やあ！　きみのため　なら\n"
+	.string "いつでも　ふねを　だそう！\p"
+	.string "きみが　いきたいのは　どこ　かな？$"
+
+DewfordTown_Text_PetalburgWereSettingSail:
+	.string "ハギ“トウカシティ　か\p"
+	.string "よっしゃ！　いくぞ　ピーコちゃん！$"
+
+DewfordTown_Text_SlateportWereSettingSail:
+	.string "ハギ“カイナシティ　か\p"
+	.string "よっしゃ！　いくぞ　ピーコちゃん！$"
+
+DewfordTown_Text_JustTellMeWhenYouNeedToSetSail:
+	.string "ハギ“ふねに　のる　ひつようが　あるときは\n"
+	.string "いつでも　こえを　かけておくれ$"
+
+DewfordTown_Text_GettingItchToFish:
+	.string "このへんは　つりの　めいしょ　なんだ\n"
+	.string "きみも　つりが　したくなった？$"
+
+DewfordTown_Text_GiveYouOneOfMyRods:
+	.string "うんうん　うれしいな\n"
+	.string "わたしの　つりざお　わけてあげよう！$"
+
+DewfordTown_Text_ThrowInFishingAdvice:
+	.string "よーしっ　だいサービス！\n"
+	.string "つりの　コツも　せつめい　しておくよ！\p"
+	.string "まずは　すいめんに　むかって\n"
+	.string "つりざおを　つかう！\p"
+	.string "そして　きもちを　しゅうちゅう　させ⋯⋯\n"
+	.string "ひいてる　ひいてる！！　となったら\l"
+	.string "すばやく　つりざおを　ひくんだ！\p"
+	.string "すぐに　ひきあげられる　ときも　あるけど\n"
+	.string "おおものは　なんども　タイミングを\l"
+	.string "あわせる　ひつようが　あるんだよ！$"
+
+DewfordTown_Text_ThatsTooBadThen:
+	.string "あらら⋯⋯\n"
+	.string "それは　ざんねん$"
+
+DewfordTown_Text_HowsYourFishing:
+	.string "よっ！\n"
+	.string "つりの　ちょうしは　どう？$"
+
+DewfordTown_Text_GreatHaulInSomeBigOnes:
+	.string "そうか！　そりゃ　すごい！\n"
+	.string "おおものを　つりあげて　くれよ！$"
+
+DewfordTown_Text_FishingAdvice:
+	.string "なんだよ　ガッカリ　しないでよ！\n"
+	.string "つりの　コツを　おしえて　あげるから！\p"
+	.string "まずは　すいめんに　むかって\n"
+	.string "つりざおを　つかう！\p"
+	.string "そして　きもちを　しゅうちゅう　させ⋯⋯\n"
+	.string "ひいてる　ひいてる！！　となったら\l"
+	.string "すばやく　つりざおを　ひくんだ！\p"
+	.string "すぐに　ひきあげられる　ときも　あるけど\n"
+	.string "おおものは　なんども　タイミングを\l"
+	.string "あわせる　ひつようが　あるんだよ！$"
+
+DewfordTown_Text_XIsTheBiggestHappeningThingRight:
+	.string "ぼく　はやってる　ものが　すきで\n"
+	.string "いつも　チェック　してるんだ\p"
+	.string "ねぇ　“{STR_VAR_1}”って\n"
+	.string "しってるかい？\p"
+	.string "もちろん　しってるよね！\p"
+	.string "だって　いま\n"
+	.string "“{STR_VAR_1}”が\l"
+	.string "だいりゅうこう　してるからね！\p"
+	.string "きみの　まわりでも\n"
+	.string "“{STR_VAR_1}”が\l"
+	.string "はやってる　だろ？$"
+
+DewfordTown_Text_TellMeWhatsNewAndIn:
+	.string "え？\n"
+	.string "はやって　ないの！？\p"
+	.string "じゃあ　いま　なにが　はやってるか\n"
+	.string "きかせてよ！$"
+
+DewfordTown_Text_OfCourseIKnowAboutThat:
+	.string "え？　“{STR_VAR_2}”？\p"
+	.string "⋯⋯\p"
+	.string "⋯あ！　あぁ！\n"
+	.string "しってる　しってるよ！\p"
+	.string "もっ　もちろん　しってるさ！\n"
+	.string "“{STR_VAR_2}”　だろ？\p"
+	.string "いいよね！\n"
+	.string "“{STR_VAR_2}”　って！\p"
+	.string "いま　すごく　はやってる　よね\n"
+	.string "ぼくが　しらないはず　ないじゃ　ないか！\p"
+	.string "“{STR_VAR_1}”　なんて\n"
+	.string "もう　じだいおくれ\p"
+	.string "いまは　“{STR_VAR_2}”の\n"
+	.string "じだい　だね！$"
+
+DewfordTown_Text_XHuhIThinkYIsCool:
+	.string "ふーん\n"
+	.string "“{STR_VAR_2}”　か⋯\p"
+	.string "でも　ぼくは\n"
+	.string "“{STR_VAR_1}”　のほうが\l"
+	.string "いいと　おもうけどね$"
+
+DewfordTown_Text_HearOfAnyTrendsComeShareWithMe:
+	.string "じゃあ　あたらしい　りゅうこうが　あったら\n"
+	.string "また　きかせて　くれよ！$"
+
+DewfordTown_Text_YeahDefinitionOfInRightNow:
+	.string "そうだろ！\p"
+	.string "やっぱり　いまは\n"
+	.string "“{STR_VAR_1}”　だよね！$"

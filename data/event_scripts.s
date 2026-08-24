@@ -594,6 +594,12 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_ShowPokemartSign, 0x08242EF6
 	.globl Common_EventScript_ShowPokemonCenterSign
 	.set Common_EventScript_ShowPokemonCenterSign, 0x08242EFF
+	.globl Common_ShowEasyChatScreen
+	.set Common_ShowEasyChatScreen, 0x08242F08
+	.globl Common_EventScript_BufferTrendyPhrase
+	.set Common_EventScript_BufferTrendyPhrase, 0x08242F17
+	.globl EventScript_BackupMrBrineyLocation
+	.set EventScript_BackupMrBrineyLocation, 0x08242F21
 
 	.globl EventScript_UseSurf
 EventScript_UseSurf: @ 0x8242F2C

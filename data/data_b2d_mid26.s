@@ -1153,30 +1153,9 @@ gMapEvents_LITTLEROOT_TOWN: @ 0x084FFF4C
 	.include "data/maps/OldaleTown/events.inc"
 	.globl gMapEvents_OLDALE_TOWN
 	.set gMapEvents_OLDALE_TOWN, OldaleTown_MapEvents
-	.globl DEWFORD_TOWN_EventObjects
-DEWFORD_TOWN_EventObjects: @ 0x08500070
-	object_event 1, 20, 0, 7, 12, 3, 5, 1, 0, 0, 0, DewfordTown_EventScript_001E4D01, 0x0000
-	object_event 2, 21, 0, 12, 9, 3, 9, 0, 1, 0, 3, DewfordTown_EventScript_001E4C61, 0x02E4
-	object_event 3, 50, 0, 12, 14, 3, 5, 1, 0, 0, 0, DewfordTown_EventScript_001E4D25, 0x0000
-	object_event 4, 88, 0, 12, 8, 1, 8, 0, 0, 0, 0, 0x00000000, 0x02E7
-	object_event 5, 7, 0, 1, 6, 3, 1, 0, 0, 0, 0, DewfordTown_EventScript_001E5072, 0x0000
-	.globl DEWFORD_TOWN_EventWarps
-DEWFORD_TOWN_EventWarps: @ 0x085000E8
-	warp_def 3, 3, 0, 0, MAP_DEWFORD_TOWN_HALL
-	warp_def 2, 10, 0, 0, MAP_DEWFORD_TOWN_POKEMON_CENTER_1F
-	warp_def 8, 17, 0, 0, MAP_DEWFORD_TOWN_GYM
-	warp_def 17, 14, 0, 0, MAP_DEWFORD_TOWN_HOUSE1
-	warp_def 8, 8, 0, 0, MAP_DEWFORD_TOWN_HOUSE2
-	.globl DEWFORD_TOWN_EventBgEvents
-DEWFORD_TOWN_EventBgEvents: @ 0x08500110
-	bg_event 10, 10, 0, 0, DewfordTown_EventScript_001E4D0A, 0, 0
-	bg_event 11, 16, 0, 0, DewfordTown_EventScript_001E4D13, 0, 0
-	bg_event 4, 10, 0, 1, 0x08242EFF, 0, 0
-	bg_event 3, 10, 0, 1, 0x08242EFF, 0, 0
-	bg_event 2, 4, 0, 0, DewfordTown_EventScript_001E4D1C, 0, 0
+	.include "data/maps/DewfordTown/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN
-gMapEvents_DEWFORD_TOWN: @ 0x0850014C
-	map_events DEWFORD_TOWN_EventObjects, DEWFORD_TOWN_EventWarps, 0, DEWFORD_TOWN_EventBgEvents
+	.set gMapEvents_DEWFORD_TOWN, DewfordTown_MapEvents
 	.globl LAVARIDGE_TOWN_EventObjects
 LAVARIDGE_TOWN_EventObjects: @ 0x08500160
 	object_event 1, 22, 0, 8, 7, 3, 8, 0, 0, 0, 0, LavaridgeTown_EventScript_001E58CA, 0x0000
