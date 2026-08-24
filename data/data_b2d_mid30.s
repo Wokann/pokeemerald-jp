@@ -4867,7 +4867,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_SLATEPORT_CITY_HOUSE (g9 m10)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
 	.4byte gMapEvents_SLATEPORT_CITY_HOUSE  @ events
-	.4byte 0x081FE772  @ mapScripts
+	.4byte SlateportCity_House_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
 	.2byte 0x003C  @ mapLayoutId

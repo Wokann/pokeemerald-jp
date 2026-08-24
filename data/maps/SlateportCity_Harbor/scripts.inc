@@ -533,8 +533,3 @@ SlateportCity_Harbor_Text_HandedScannerToStern:
 SlateportCity_Harbor_Text_ThisWillHelpResearch:
 	.string "クスノキ“{PLAYER}{KUN}　ありがとう！\n"
 	.string "これで　けんきゅうが　はかどるよ$"
-
-@ The immediately following SlateportCity_House script block has not yet
-@ been structurally migrated. Keep the pre-existing successor ownership here
-@ until that map can be converted as its own cohesive change.
-	.incbin "baserom_jp.gba", 0x1fe772, 0x97
