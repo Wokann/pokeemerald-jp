@@ -2434,20 +2434,9 @@ OLDALE_TOWN_POKEMON_CENTER_1F_EventWarps: @ 0x08505FD0
 	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F
 gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F: @ 0x08505FE8
 	map_events OLDALE_TOWN_POKEMON_CENTER_1F_EventObjects, OLDALE_TOWN_POKEMON_CENTER_1F_EventWarps, 0, 0
-	.globl OLDALE_TOWN_POKEMON_CENTER_2F_EventObjects
-OLDALE_TOWN_POKEMON_CENTER_2F_EventObjects: @ 0x08505FFC
-	object_event 1, 85, 0, 6, 2, 3, 8, 1, 1, 0, 0, 0x08244185, 0x0000
-	object_event 2, 85, 0, 2, 2, 3, 8, 1, 1, 0, 0, 0x0824418B, 0x0000
-	object_event 3, 85, 0, 10, 2, 3, 8, 1, 1, 0, 0, 0x08244191, 0x0000
-	object_event 4, 223, 0, 1, 2, 0, 8, 1, 1, 0, 0, 0x08246801, 0x02BE
-	.globl OLDALE_TOWN_POKEMON_CENTER_2F_EventWarps
-OLDALE_TOWN_POKEMON_CENTER_2F_EventWarps: @ 0x0850605C
-	warp_def 1, 6, 4, 2, MAP_OLDALE_TOWN_POKEMON_CENTER_1F
-	warp_def 5, 1, 3, 0, MAP_UNION_ROOM
-	warp_def 9, 1, 3, 0, MAP_TRADE_CENTER
+	.include "data/maps/OldaleTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F
-gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F: @ 0x08506074
-	map_events OLDALE_TOWN_POKEMON_CENTER_2F_EventObjects, OLDALE_TOWN_POKEMON_CENTER_2F_EventWarps, 0, 0
+	.set gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F, OldaleTown_PokemonCenter_2F_MapEvents
 	.globl OLDALE_TOWN_MART_EventObjects
 OLDALE_TOWN_MART_EventObjects: @ 0x08506088
 	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x081F2B0C, 0x0000
