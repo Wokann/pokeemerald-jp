@@ -161,6 +161,9 @@
 	@ The Verdanturf Pokémon Center references the retained Fury Cutter tutor.
 	.globl VerdanturfTown_PokemonCenter_1F_EventScript_FuryCutterTutor
 	.set VerdanturfTown_PokemonCenter_1F_EventScript_FuryCutterTutor, 0x08276902
+	@ The Pacifidlog Pokémon Center references the retained Explosion tutor.
+	.globl PacifidlogTown_PokemonCenter_1F_EventScript_ExplosionTutor
+	.set PacifidlogTown_PokemonCenter_1F_EventScript_ExplosionTutor, 0x08276BDA
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
 	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
 	.globl Common_EventScript_NameReceivedPartyMon
