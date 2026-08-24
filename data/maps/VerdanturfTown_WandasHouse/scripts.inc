@@ -162,6 +162,3 @@ VerdanturfTown_WandasHouse_Text_WallyWasInEverGrande:
 	.string "ミツルくんが　サイユウに　いたって！？\p"
 	.string "そりゃ　トウカの　ごりょうしんも\n"
 	.string "びっくり　するだろうねぇ$"
-
-@ The next unstructured Verdanturf map starts at 0x081F7556.
-	.incbin "baserom_jp.gba", 0x1f7556, 0x2d4

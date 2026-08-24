@@ -2490,17 +2490,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/VerdanturfTown_WandasHouse/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_WANDAS_HOUSE
 	.set gMapEvents_VERDANTURF_TOWN_WANDAS_HOUSE, VerdanturfTown_WandasHouse_MapEvents
-	.globl VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE_EventObjects
-VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE_EventObjects: @ 0x085070F4
-	object_event 1, 20, 0, 3, 4, 3, 8, 0, 0, 0, 0, 0x081F7557, 0x0000
-	object_event 2, 209, 0, 4, 4, 3, 8, 0, 0, 0, 0, 0x081F7600, 0x0000
-	.globl VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE_EventWarps
-VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE_EventWarps: @ 0x08507124
-	warp_def 3, 7, 0, 5, MAP_VERDANTURF_TOWN
-	warp_def 4, 7, 0, 5, MAP_VERDANTURF_TOWN
+	.include "data/maps/VerdanturfTown_FriendshipRatersHouse/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE
-gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE: @ 0x08507134
-	map_events VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE_EventObjects, VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE, VerdanturfTown_FriendshipRatersHouse_MapEvents
 	.globl VERDANTURF_TOWN_HOUSE_EventObjects
 VERDANTURF_TOWN_HOUSE_EventObjects: @ 0x08507148
 	object_event 1, 34, 0, 4, 5, 3, 7, 0, 0, 0, 0, 0x081F7780, 0x0000
