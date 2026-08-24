@@ -60,4 +60,12 @@ Route127_EventScript_ItemRareCandy:: @ 0x08256DA3
 	finditem ITEM_RARE_CANDY
 	end
 
-	.incbin "baserom_jp.gba", 0x256db0, 0xcd9
+Route132_EventScript_ItemRareCandy:: @ 0x08256DB0
+	finditem ITEM_RARE_CANDY
+	end
+
+Route132_EventScript_ItemProtein:: @ 0x08256DBD
+	finditem ITEM_PROTEIN
+	end
+
+	.incbin "baserom_jp.gba", 0x256dca, 0xcbf

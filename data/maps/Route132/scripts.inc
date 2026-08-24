@@ -4,41 +4,41 @@ Route132_MapScripts::
 	.byte 0
 
 Route132_EventScript_Gilbert::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_GILBERT, 0x0, 0x08261B3C, 0x08261B68
-	msgbox 0x08261B77, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_GILBERT, Route132_Text_GilbertIntro, Route132_Text_GilbertDefeat
+	msgbox Route132_Text_GilbertPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route132_EventScript_Dana::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_DANA, 0x0, 0x08261BA4, 0x08261BC3
-	msgbox 0x08261BCD, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_DANA, Route132_Text_DanaIntro, Route132_Text_DanaDefeat
+	msgbox Route132_Text_DanaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route132_EventScript_Ronald::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_RONALD, 0x0, 0x08261BF1, 0x08261C07
-	msgbox 0x08261C14, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_RONALD, Route132_Text_RonaldIntro, Route132_Text_RonaldDefeat
+	msgbox Route132_Text_RonaldPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route132_EventScript_Kiyo::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_KIYO, 0x0, 0x08261C45, 0x08261C6E
-	msgbox 0x08261C7F, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_KIYO, Route132_Text_KiyoIntro, Route132_Text_KiyoDefeat
+	msgbox Route132_Text_KiyoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route132_EventScript_Paxton::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_PAXTON, 0x0, 0x08261D4F, 0x08261D72
-	msgbox 0x08261D7F, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_PAXTON, Route132_Text_PaxtonIntro, Route132_Text_PaxtonDefeat
+	msgbox Route132_Text_PaxtonPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route132_EventScript_Darcy::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_DARCY, 0x0, 0x08261DA0, 0x08261DD6
-	msgbox 0x08261DEE, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_DARCY, Route132_Text_DarcyIntro, Route132_Text_DarcyDefeat
+	msgbox Route132_Text_DarcyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route132_EventScript_Jonathan::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_JONATHAN, 0x0, 0x08261D04, 0x08261D25
-	msgbox 0x08261D2F, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_JONATHAN, Route132_Text_JonathanIntro, Route132_Text_JonathanDefeat
+	msgbox Route132_Text_JonathanPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 Route132_EventScript_Makayla::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_MAKAYLA, 0x0, 0x08261CB3, 0x08261CD0
-	msgbox 0x08261CDD, MSGBOX_AUTOCLOSE
+	trainerbattle_single TRAINER_MAKAYLA, Route132_Text_MakaylaIntro, Route132_Text_MakaylaDefeat
+	msgbox Route132_Text_MakaylaPostBattle, MSGBOX_AUTOCLOSE
 	end

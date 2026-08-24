@@ -4384,4 +4384,100 @@ Route131_Text_KevinPostBattle: @ 0x08261B06
 	.string "お　おこってない　おこってないよ！\p"
 	.string "⋯⋯ハハ　つよいね　きみは！\n"
 	.string "はっハッは！$"
-	.incbin "baserom_jp.gba", 0x261b3c, 0x857
+Route132_Text_GilbertIntro: @ 0x08261B3C
+	.string "ちいさい　ころは　よく　カゼを　ひいたけど\n"
+	.string "すいえいを　はじめて　こんなに　じょうぶ！$"
+
+Route132_Text_GilbertDefeat: @ 0x08261B68
+	.string "もっと　つよくなりたい⋯⋯！$"
+
+Route132_Text_GilbertPostBattle: @ 0x08261B77
+	.string "ポケモン　トレーナーも\n"
+	.string "のやまを　あるき　まわるから\l"
+	.string "とっても　けんこうてき　だよねー！$"
+
+Route132_Text_DanaIntro: @ 0x08261BA4
+	.string "ながれの　つよい　ところでは\n"
+	.string "およがないように　しているのよ$"
+
+Route132_Text_DanaDefeat: @ 0x08261BC3
+	.string "いやああああんっ！$"
+
+Route132_Text_DanaPostBattle: @ 0x08261BCD
+	.string "ながされると　じぶんが　どこに　いるのか\n"
+	.string "わからなく　なっちゃうの⋯⋯$"
+
+Route132_Text_RonaldIntro: @ 0x08261BF1
+	.string "かつか　まけるか\n"
+	.string "やれば　わかることだろ！$"
+
+Route132_Text_RonaldDefeat: @ 0x08261C07
+	.string "わーん\n"
+	.string "まけて　しまった$"
+
+Route132_Text_RonaldPostBattle: @ 0x08261C14
+	.string "かてると　わかる　しょうぶは　しない！\n"
+	.string "かつか　まけるか\l"
+	.string "その　ギリギリの　かんじが　いいんだ！$"
+
+Route132_Text_KiyoIntro: @ 0x08261C45
+	.string "24じかん　ポケモンのこと　かんがえてる\n"
+	.string "そんな　おれに　かてると　おもうか！？$"
+
+Route132_Text_KiyoDefeat: @ 0x08261C6E
+	.string "まけた\n"
+	.string "おまえさんには　まけたわ$"
+
+Route132_Text_KiyoPostBattle: @ 0x08261C7F
+	.string "くう⋯⋯\n"
+	.string "おまえも　ポケモンばか　だな！\p"
+	.string "24じかん　ポケモンのこと　ばかり\n"
+	.string "かんがえて　いるんだろ！$"
+
+Route132_Text_MakaylaIntro: @ 0x08261CB3
+	.string "いつも　いっしょの　じいさんが\n"
+	.string "いなくても　かてるわい！$"
+
+Route132_Text_MakaylaDefeat: @ 0x08261CD0
+	.string "あら　やっぱり　ダメかね$"
+
+Route132_Text_MakaylaPostBattle: @ 0x08261CDD
+	.string "あの　わかい　おとこのこ\n"
+	.string "じいさんの　わかい　ころに　そっくりじゃ\l"
+	.string "ポッ⋯⋯$"
+
+Route132_Text_JonathanIntro: @ 0x08261D04
+	.string "さっき　から　へんな　しせんを\n"
+	.string "かんじると　おもったら　キミか？$"
+
+Route132_Text_JonathanDefeat: @ 0x08261D25
+	.string "へえ！　つよいね！$"
+
+Route132_Text_JonathanPostBattle: @ 0x08261D2F
+	.string "だれかが　ぼくの　ことを\n"
+	.string "みているきが　して　おちつかないっ！$"
+
+Route132_Text_PaxtonIntro: @ 0x08261D4F
+	.string "いつも　いっしょの　ばあさんは　どこかな？\n"
+	.string "ひとりで　かてるじゃろか$"
+
+Route132_Text_PaxtonDefeat: @ 0x08261D72
+	.string "ああ　やっぱり　ダメかね$"
+
+Route132_Text_PaxtonPostBattle: @ 0x08261D7F
+	.string "ばあさんも　わしを　さがしてるじゃろ\n"
+	.string "はよう　みつけて　やらんと$"
+
+Route132_Text_DarcyIntro: @ 0x08261DA0
+	.string "ひとりで　この　ばしょで\n"
+	.string "しゅぎょう　するのが　すきだったのに！\l"
+	.string "おおぜい　やって　くるんだもの　ひどい！$"
+
+Route132_Text_DarcyDefeat: @ 0x08261DD6
+	.string "わかったわよ\n"
+	.string "みんなで　つかえば　いいんでしょ$"
+
+Route132_Text_DarcyPostBattle: @ 0x08261DEE
+	.string "とりあえず　そこの　おじいさんと　くんで\n"
+	.string "むこうの　チームに　いどんで　みようかな？$"
+	.incbin "baserom_jp.gba", 0x261e19, 0x57a

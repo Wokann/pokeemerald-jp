@@ -182,6 +182,37 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
 # the matching US text order have been checked.  jp_text_blocks.py reads this
 # same mapping, so source labels and map references cannot drift apart.
 VERIFIED_SHARED_TEXT_BLOCKS = {
+    'Route132': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x08261B3C,
+        'end': 0x08261E19,
+        'labels': {
+            0x08261B3C: 'Route132_Text_GilbertIntro',
+            0x08261B68: 'Route132_Text_GilbertDefeat',
+            0x08261B77: 'Route132_Text_GilbertPostBattle',
+            0x08261BA4: 'Route132_Text_DanaIntro',
+            0x08261BC3: 'Route132_Text_DanaDefeat',
+            0x08261BCD: 'Route132_Text_DanaPostBattle',
+            0x08261BF1: 'Route132_Text_RonaldIntro',
+            0x08261C07: 'Route132_Text_RonaldDefeat',
+            0x08261C14: 'Route132_Text_RonaldPostBattle',
+            0x08261C45: 'Route132_Text_KiyoIntro',
+            0x08261C6E: 'Route132_Text_KiyoDefeat',
+            0x08261C7F: 'Route132_Text_KiyoPostBattle',
+            0x08261CB3: 'Route132_Text_MakaylaIntro',
+            0x08261CD0: 'Route132_Text_MakaylaDefeat',
+            0x08261CDD: 'Route132_Text_MakaylaPostBattle',
+            0x08261D04: 'Route132_Text_JonathanIntro',
+            0x08261D25: 'Route132_Text_JonathanDefeat',
+            0x08261D2F: 'Route132_Text_JonathanPostBattle',
+            0x08261D4F: 'Route132_Text_PaxtonIntro',
+            0x08261D72: 'Route132_Text_PaxtonDefeat',
+            0x08261D7F: 'Route132_Text_PaxtonPostBattle',
+            0x08261DA0: 'Route132_Text_DarcyIntro',
+            0x08261DD6: 'Route132_Text_DarcyDefeat',
+            0x08261DEE: 'Route132_Text_DarcyPostBattle',
+        },
+    },
     'Route131': {
         'source': 'data/text/trainers.inc',
         'start': 0x08261799,
@@ -4070,6 +4101,11 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081EF5A4: 'Route132_EventScript_Jonathan',
             0x081EF5BB: 'Route132_EventScript_Makayla',
         },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route132']['labels'],
+        'external_labels': {
+            0x08256DB0: 'Route132_EventScript_ItemRareCandy',
+            0x08256DBD: 'Route132_EventScript_ItemProtein',
+        },
         'symbols': {
             'trainers': {
                 0x00A9: 'TRAINER_GILBERT',
@@ -4081,6 +4117,7 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
                 0x0256: 'TRAINER_JONATHAN',
                 0x02F6: 'TRAINER_MAKAYLA',
             },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
         },
     },
     'Route133': {
