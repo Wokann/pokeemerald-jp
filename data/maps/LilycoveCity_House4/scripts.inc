@@ -22,5 +22,3 @@ LilycoveCity_House4_Text_UnderwaterTrenchMossdeepSootopolis: @ 0x0820A56C
 	.string "ふかい　ふかい　かいこうが　ある\p"
 	.string "⋯⋯そんな　はなしも\n"
 	.string "だれかが　いってた　ことなんだけど$"
-
-	.incbin "baserom_jp.gba", 0x20a5af, 0x69f

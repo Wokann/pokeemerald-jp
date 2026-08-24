@@ -3137,26 +3137,9 @@ gMapEvents_LILYCOVE_CITY_HOUSE3: @ 0x0850A750
 	.include "data/maps/LilycoveCity_House4/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE4
 	.set gMapEvents_LILYCOVE_CITY_HOUSE4, LilycoveCity_House4_MapEvents
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventObjects
-LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventObjects: @ 0x0850A7B8
-	object_event 1, 45, 0, 8, 2, 3, 8, 0, 0, 0, 0, 0x0820A5B0, 0x0000
-	object_event 2, 45, 0, 10, 2, 3, 8, 0, 0, 0, 0, 0x0820A5B9, 0x0000
-	object_event 3, 18, 0, 14, 5, 3, 2, 1, 1, 0, 0, 0x0820A74C, 0x0000
-	object_event 4, 12, 0, 4, 4, 3, 2, 1, 1, 0, 0, 0x0820A755, 0x0000
-	object_event 5, 25, 0, 3, 6, 3, 2, 1, 1, 0, 0, 0x0820A75E, 0x0000
-	object_event 6, 210, 0, 2, 6, 3, 1, 1, 1, 0, 0, 0x0820A767, 0x0000
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventWarps
-LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventWarps: @ 0x0850A848
-	warp_def 8, 7, 0, 0, MAP_LILYCOVE_CITY
-	warp_def 9, 7, 0, 0, MAP_LILYCOVE_CITY
-	warp_def 16, 1, 0, 0, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_2F
-	warp_def 2, 1, 0, 0, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventBgEvents
-LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventBgEvents: @ 0x0850A868
-	bg_event 0, 8, 0, 1, 0x0820A77A, 0, 0
+	.include "data/maps/LilycoveCity_DepartmentStore_1F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_1F
-gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_1F: @ 0x0850A874
-	map_events LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventObjects, LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventWarps, 0, LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventBgEvents
+	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_1F, LilycoveCity_DepartmentStore_1F_MapEvents
 	.globl LILYCOVE_CITY_DEPARTMENT_STORE_2F_EventObjects
 LILYCOVE_CITY_DEPARTMENT_STORE_2F_EventObjects: @ 0x0850A888
 	object_event 1, 27, 0, 8, 2, 3, 8, 0, 0, 0, 0, 0x0820A921, 0x0000

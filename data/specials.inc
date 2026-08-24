@@ -364,6 +364,8 @@ gSpecials:
 	def_special SetChampionSaveWarp
 	def_special sub_080EE808
 	def_special sub_080EEDEC
+	.set SPECIAL_TryPutLotteryWinnerReportOnAir, SPECIAL_sub_080EEDEC
+	.set SPECIAL_WAITSTATE_TryPutLotteryWinnerReportOnAir, SPECIAL_WAITSTATE_sub_080EEDEC
 	def_special sub_080EF244
 	def_special sub_080EF2D8
 	def_special nullsub_55
