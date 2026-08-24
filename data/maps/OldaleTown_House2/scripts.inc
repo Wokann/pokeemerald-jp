@@ -3,22 +3,18 @@
 OldaleTown_House2_MapScripts::
 	.byte 0
 
-OldaleTown_House2_EventScript_001F294A::
-	loadword 0x0, gJPText_001F295C
-	callstd 0x2
+OldaleTown_House2_EventScript_Woman::
+	msgbox OldaleTown_House2_Text_PokemonLevelUp, MSGBOX_NPC
 	end
 
-OldaleTown_House2_EventScript_001F2953::
-	loadword 0x0, gJPText_001F297B
-	callstd 0x2
+OldaleTown_House2_EventScript_Man::
+	msgbox OldaleTown_House2_Text_YoullGoFurtherWithStrongPokemon, MSGBOX_NPC
 	end
 
-	.globl gJPText_001F295C
-gJPText_001F295C: @ 0x081F295C
+OldaleTown_House2_Text_PokemonLevelUp:
 	.string "ポケモンって　たたかうと\n"
 	.string "レベルアップして　つよくなるのよ！$"
 
-	.globl gJPText_001F297B
-gJPText_001F297B: @ 0x081F297B
+OldaleTown_House2_Text_YoullGoFurtherWithStrongPokemon:
 	.string "つれて　あるく　ポケモンが　つよかったら\n"
 	.string "とおくまで　いけるように　なるね！$"

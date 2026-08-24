@@ -2414,27 +2414,12 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/LittlerootTown_ProfessorBirchsLab/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB
 	.set gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, LittlerootTown_ProfessorBirchsLab_MapEvents
-	.globl OLDALE_TOWN_HOUSE1_EventObjects
-OLDALE_TOWN_HOUSE1_EventObjects: @ 0x08505EE0
-	object_event 1, 20, 0, 6, 4, 3, 2, 1, 1, 0, 0, 0x081F28D4, 0x0000
-	.globl OLDALE_TOWN_HOUSE1_EventWarps
-OLDALE_TOWN_HOUSE1_EventWarps: @ 0x08505EF8
-	warp_def 3, 8, 0, 0, MAP_OLDALE_TOWN
-	warp_def 4, 8, 0, 0, MAP_OLDALE_TOWN
+	.include "data/maps/OldaleTown_House1/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_HOUSE1
-gMapEvents_OLDALE_TOWN_HOUSE1: @ 0x08505F08
-	map_events OLDALE_TOWN_HOUSE1_EventObjects, OLDALE_TOWN_HOUSE1_EventWarps, 0, 0
-	.globl OLDALE_TOWN_HOUSE2_EventObjects
-OLDALE_TOWN_HOUSE2_EventObjects: @ 0x08505F1C
-	object_event 1, 18, 0, 4, 4, 3, 10, 0, 0, 0, 0, 0x081F294A, 0x0000
-	object_event 2, 38, 0, 7, 4, 3, 9, 0, 0, 0, 0, 0x081F2953, 0x0000
-	.globl OLDALE_TOWN_HOUSE2_EventWarps
-OLDALE_TOWN_HOUSE2_EventWarps: @ 0x08505F4C
-	warp_def 3, 7, 0, 1, MAP_OLDALE_TOWN
-	warp_def 4, 7, 0, 1, MAP_OLDALE_TOWN
+	.set gMapEvents_OLDALE_TOWN_HOUSE1, OldaleTown_House1_MapEvents
+	.include "data/maps/OldaleTown_House2/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_HOUSE2
-gMapEvents_OLDALE_TOWN_HOUSE2: @ 0x08505F5C
-	map_events OLDALE_TOWN_HOUSE2_EventObjects, OLDALE_TOWN_HOUSE2_EventWarps, 0, 0
+	.set gMapEvents_OLDALE_TOWN_HOUSE2, OldaleTown_House2_MapEvents
 	.globl OLDALE_TOWN_POKEMON_CENTER_1F_EventObjects
 OLDALE_TOWN_POKEMON_CENTER_1F_EventObjects: @ 0x08505F70
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, OldaleTown_PokemonCenter_1F_EventScript_001F29B6, 0x0000
