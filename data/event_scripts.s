@@ -140,8 +140,6 @@
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_RightThisWay, 0x0823287D
 	.globl BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait
 	.set BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait, 0x0823288B
-	.globl SlateportCity_BattleTent_EventScript_WarpToLobbyLost
-	.set SlateportCity_BattleTent_EventScript_WarpToLobbyLost, 0x081FBD14
 	.globl BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleTowerLobby_Text_ReceivedPrize, 0x0822064B
 	.globl BattleFrontier_BattleFactoryLobby_Text_RulesAreListed
@@ -476,6 +474,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/SlateportCity_BattleTentLobby/scripts.inc"
 	.include "data/maps/SlateportCity_BattleTentCorridor/scripts.inc"
 	.include "data/maps/SlateportCity_BattleTentBattleRoom/scripts.inc"
+	.include "data/maps/SlateportCity_NameRatersHouse/scripts.inc"
 	.include "data/maps/SlateportCity_OceanicMuseum_1F/scripts.inc"
 	.include "data/maps/SlateportCity_OceanicMuseum_2F/scripts.inc"
 	.include "data/maps/SlateportCity_Harbor/scripts.inc"

@@ -2635,14 +2635,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_BattleTentCorridor/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR
 	.set gMapEvents_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR, SlateportCity_BattleTentCorridor_MapEvents
-	.globl SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM_EventObjects
-SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM_EventObjects: @ 0x08507C08
-	object_event 1, 46, 0, 1, 4, 0, 10, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 2, 240, 0, 5, 1, 3, 8, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 3, 241, 0, 4, 8, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0000
+	.include "data/maps/SlateportCity_BattleTentBattleRoom/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM
-gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM: @ 0x08507C50
-	map_events SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM_EventObjects, 0, 0, 0
+	.set gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM, SlateportCity_BattleTentBattleRoom_MapEvents
 	.globl SLATEPORT_CITY_NAME_RATERS_HOUSE_EventObjects
 SLATEPORT_CITY_NAME_RATERS_HOUSE_EventObjects: @ 0x08507C64
 	object_event 1, 21, 0, 7, 5, 3, 8, 0, 0, 0, 0, 0x081FBD9E, 0x0000

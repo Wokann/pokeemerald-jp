@@ -121,7 +121,8 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	SlateportCity_SternsShipyard_1F \
 	SlateportCity_SternsShipyard_2F \
 	SlateportCity_BattleTentLobby \
-	SlateportCity_BattleTentCorridor
+	SlateportCity_BattleTentCorridor \
+	SlateportCity_BattleTentBattleRoom
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
