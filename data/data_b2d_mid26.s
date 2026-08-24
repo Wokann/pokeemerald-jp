@@ -2689,23 +2689,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/MauvilleCity_Mart/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_MART
 	.set gMapEvents_MAUVILLE_CITY_MART, MauvilleCity_Mart_MapEvents
-	.globl RUSTBORO_CITY_DEVON_CORP_1F_EventObjects
-RUSTBORO_CITY_DEVON_CORP_1F_EventObjects: @ 0x08508AA8
-	object_event 1, 116, 0, 2, 6, 3, 2, 1, 1, 0, 0, RustboroCity_DevonCorp_1F_EventScript_0020104C, 0x0000
-	object_event 2, 116, 0, 15, 5, 3, 2, 2, 1, 0, 0, RustboroCity_DevonCorp_1F_EventScript_0020107E, 0x0000
-	object_event 3, 24, 0, 5, 3, 3, 8, 0, 0, 0, 0, RustboroCity_DevonCorp_1F_EventScript_002010B9, 0x0000
-	.globl RUSTBORO_CITY_DEVON_CORP_1F_EventWarps
-RUSTBORO_CITY_DEVON_CORP_1F_EventWarps: @ 0x08508AF0
-	warp_def 5, 8, 0, 5, MAP_RUSTBORO_CITY
-	warp_def 6, 8, 0, 6, MAP_RUSTBORO_CITY
-	warp_def 14, 1, 0, 0, MAP_RUSTBORO_CITY_DEVON_CORP_2F
-	.globl RUSTBORO_CITY_DEVON_CORP_1F_EventBgEvents
-RUSTBORO_CITY_DEVON_CORP_1F_EventBgEvents: @ 0x08508B08
-	bg_event 3, 2, 0, 0, RustboroCity_DevonCorp_1F_EventScript_002010FD, 0, 0
-	bg_event 8, 2, 0, 0, RustboroCity_DevonCorp_1F_EventScript_002010F4, 0, 0
+	.include "data/maps/RustboroCity_DevonCorp_1F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F
-gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F: @ 0x08508B20
-	map_events RUSTBORO_CITY_DEVON_CORP_1F_EventObjects, RUSTBORO_CITY_DEVON_CORP_1F_EventWarps, 0, RUSTBORO_CITY_DEVON_CORP_1F_EventBgEvents
+	.set gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F, RustboroCity_DevonCorp_1F_MapEvents
 	.globl RUSTBORO_CITY_DEVON_CORP_2F_EventObjects
 RUSTBORO_CITY_DEVON_CORP_2F_EventObjects: @ 0x08508B34
 	object_event 1, 46, 0, 6, 5, 3, 7, 0, 0, 0, 0, RustboroCity_DevonCorp_2F_EventScript_00201441, 0x0000

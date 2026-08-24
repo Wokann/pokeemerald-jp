@@ -1,126 +1,102 @@
 @ RustboroCity_DevonCorp_1F scripts (JP map g11 m0 @ 0x08201030)
 
 RustboroCity_DevonCorp_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_DevonCorp_1F_EventScript_00201036
+	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_DevonCorp_1F_OnTransition
 	.byte 0
 
-RustboroCity_DevonCorp_1F_EventScript_00201036::
-	checkflag 0x90
-	call_if 0x0, RustboroCity_DevonCorp_1F_EventScript_00201040
+RustboroCity_DevonCorp_1F_OnTransition:
+	call_if_unset FLAG_RETURNED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_BlockStairs
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_00201040::
-	setobjectxyperm 0x2, 0xE, 0x2
-	setobjectmovementtype 0x2, 0x8
+RustboroCity_DevonCorp_1F_EventScript_BlockStairs::
+	setobjectxyperm LOCALID_DEVON_CORP_STAIR_GUARD, 14, 2
+	setobjectmovementtype LOCALID_DEVON_CORP_STAIR_GUARD, MOVEMENT_TYPE_FACE_DOWN
 	return
 
-RustboroCity_DevonCorp_1F_EventScript_0020104C::
+RustboroCity_DevonCorp_1F_EventScript_Employee::
 	lock
 	faceplayer
-	checkflag 0x90
-	goto_if 0x1, RustboroCity_DevonCorp_1F_EventScript_00201074
-	checkflag 0x8E
-	goto_if 0x1, RustboroCity_DevonCorp_1F_EventScript_0020106A
-	loadword 0x0, gJPText_00201162
-	callstd 0x4
+	goto_if_set FLAG_RETURNED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_GoodsRecovered
+	goto_if_set FLAG_DEVON_GOODS_STOLEN, RustboroCity_DevonCorp_1F_EventScript_RobberWasntBright
+	msgbox RustboroCity_DevonCorp_1F_Text_ThoseShoesAreOurProduct, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_0020106A::
-	loadword 0x0, gJPText_002011A8
-	callstd 0x4
+RustboroCity_DevonCorp_1F_EventScript_RobberWasntBright::
+	msgbox RustboroCity_DevonCorp_1F_Text_RobberWasntVeryBright, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_00201074::
-	loadword 0x0, gJPText_00201208
-	callstd 0x4
+RustboroCity_DevonCorp_1F_EventScript_GoodsRecovered::
+	msgbox RustboroCity_DevonCorp_1F_Text_SoundsLikeStolenGoodsRecovered, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_0020107E::
+RustboroCity_DevonCorp_1F_EventScript_StairGuard::
 	lock
 	faceplayer
-	checkflag 0x90
-	goto_if 0x1, RustboroCity_DevonCorp_1F_EventScript_002010A5
-	checkflag 0x8F
-	goto_if 0x1, RustboroCity_DevonCorp_1F_EventScript_002010AF
-	checkflag 0x8E
-	goto_if 0x1, RustboroCity_DevonCorp_1F_EventScript_002010AF
-	loadword 0x0, gJPText_00201222
-	callstd 0x4
+	goto_if_set FLAG_RETURNED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_AlwaysWelcome
+	goto_if_set FLAG_RECOVERED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_GotRobbed
+	goto_if_set FLAG_DEVON_GOODS_STOLEN, RustboroCity_DevonCorp_1F_EventScript_GotRobbed
+	msgbox RustboroCity_DevonCorp_1F_Text_OnlyAuthorizedPeopleEnter, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_002010A5::
-	loadword 0x0, gJPText_0020126B
-	callstd 0x4
+RustboroCity_DevonCorp_1F_EventScript_AlwaysWelcome::
+	msgbox RustboroCity_DevonCorp_1F_Text_YoureAlwaysWelcomeHere, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_002010AF::
-	loadword 0x0, gJPText_00201249
-	callstd 0x4
+RustboroCity_DevonCorp_1F_EventScript_GotRobbed::
+	msgbox RustboroCity_DevonCorp_1F_Text_HowCouldWeGetRobbed, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_002010B9::
+RustboroCity_DevonCorp_1F_EventScript_Greeter::
 	lock
 	faceplayer
-	checkflag 0x90
-	goto_if 0x1, RustboroCity_DevonCorp_1F_EventScript_002010E0
-	checkflag 0x8F
-	goto_if 0x1, RustboroCity_DevonCorp_1F_EventScript_002010EA
-	checkflag 0x8E
-	goto_if 0x1, RustboroCity_DevonCorp_1F_EventScript_002010EA
-	loadword 0x0, gJPText_00201106
-	callstd 0x4
+	goto_if_set FLAG_RETURNED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_WelcomeToDevonCorp
+	goto_if_set FLAG_RECOVERED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_StaffGotRobbed
+	goto_if_set FLAG_DEVON_GOODS_STOLEN, RustboroCity_DevonCorp_1F_EventScript_StaffGotRobbed
+	msgbox RustboroCity_DevonCorp_1F_Text_WelcomeToDevonCorp, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_002010E0::
-	loadword 0x0, gJPText_00201106
-	callstd 0x4
+RustboroCity_DevonCorp_1F_EventScript_WelcomeToDevonCorp::
+	msgbox RustboroCity_DevonCorp_1F_Text_WelcomeToDevonCorp, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_002010EA::
-	loadword 0x0, gJPText_00201146
-	callstd 0x4
+RustboroCity_DevonCorp_1F_EventScript_StaffGotRobbed::
+	msgbox RustboroCity_DevonCorp_1F_Text_StaffGotRobbed, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_002010F4::
-	loadword 0x0, gJPText_00201284
-	callstd 0x3
+RustboroCity_DevonCorp_1F_EventScript_RocksMetalDisplay::
+	msgbox RustboroCity_DevonCorp_1F_Text_RocksMetalDisplay, MSGBOX_SIGN
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_002010FD::
-	loadword 0x0, gJPText_00201357
-	callstd 0x3
+RustboroCity_DevonCorp_1F_EventScript_ProductsDisplay::
+	msgbox RustboroCity_DevonCorp_1F_Text_ProductDisplay, MSGBOX_SIGN
 	end
 
-	.globl gJPText_00201106
-gJPText_00201106: @ 0x08201106
+RustboroCity_DevonCorp_1F_Text_WelcomeToDevonCorp: @ 0x08201106
 	.string "いらっしゃいませ！\n"
 	.string "デボン　コーポレーション　です！\p"
 	.string "みなさまの　せいかつに　やくだつ\n"
 	.string "どうぐや　くすりを　おつくりしてます！$"
 
-	.globl gJPText_00201146
-gJPText_00201146: @ 0x08201146
+RustboroCity_DevonCorp_1F_Text_StaffGotRobbed: @ 0x08201146
 	.string "ドジな　けんきゅういんが\n"
 	.string "にもつを　とられちゃって⋯⋯$"
 
-	.globl gJPText_00201162
-gJPText_00201162: @ 0x08201162
+RustboroCity_DevonCorp_1F_Text_ThoseShoesAreOurProduct: @ 0x08201162
 	.string "おっ！　ランニングシューズ！\p"
 	.string "じぶんたちの　かいしゃの　しょうひんを\n"
 	.string "じっさいに　つかっている　ひとを　みると\l"
 	.string "すごく　うれしくなるよね！$"
 
-	.globl gJPText_002011A8
-gJPText_002011A8: @ 0x082011A8
+RustboroCity_DevonCorp_1F_Text_RobberWasntVeryBright: @ 0x082011A8
 	.string "たしかに　あの　にもつは\n"
 	.string "だいじな　もの　だけど\l"
 	.string "ほかの　ひとが　ぬすんでいっても\l"
@@ -128,28 +104,23 @@ gJPText_002011A8: @ 0x082011A8
 	.string "ぼくの　すいりでは　あの　どろぼう⋯⋯\n"
 	.string "たんなる　マヌケ　なんじゃないかな？$"
 
-	.globl gJPText_00201208
-gJPText_00201208: @ 0x08201208
+RustboroCity_DevonCorp_1F_Text_SoundsLikeStolenGoodsRecovered: @ 0x08201208
 	.string "どうやら　デボンのにもつは\n"
 	.string "もどってきた　らしいね$"
 
-	.globl gJPText_00201222
-gJPText_00201222: @ 0x08201222
+RustboroCity_DevonCorp_1F_Text_OnlyAuthorizedPeopleEnter: @ 0x08201222
 	.string "おっと　かんけいしゃ　いがいの　かたは\n"
 	.string "ここから　さきには　はいれませんよ！$"
 
-	.globl gJPText_00201249
-gJPText_00201249: @ 0x08201249
+RustboroCity_DevonCorp_1F_Text_HowCouldWeGetRobbed: @ 0x08201249
 	.string "どろぼうに　にもつを　うばわれるなんて\n"
 	.string "なんて　ドジなんだろう⋯⋯$"
 
-	.globl gJPText_0020126B
-gJPText_0020126B: @ 0x0820126B
+RustboroCity_DevonCorp_1F_Text_YoureAlwaysWelcomeHere: @ 0x0820126B
 	.string "やあ！\n"
 	.string "きみなら　いつでも　だいかんげい　だよ！$"
 
-	.globl gJPText_00201284
-gJPText_00201284: @ 0x08201284
+RustboroCity_DevonCorp_1F_Text_RocksMetalDisplay: @ 0x08201284
 	.string "いしや　きんぞくの　サンプルが\n"
 	.string "ガラスケースの　なかに　ならんでいる！\p"
 	.string "パネルに　せつめいが　かいてあるから\n"
@@ -163,8 +134,7 @@ gJPText_00201284: @ 0x08201284
 	.string "　さまざまな　こうぎょう　せいひんも\n"
 	.string "　つくるように　なったのです’$"
 
-	.globl gJPText_00201357
-gJPText_00201357: @ 0x08201357
+RustboroCity_DevonCorp_1F_Text_ProductDisplay: @ 0x08201357
 	.string "いろんな　どうぐの　しさくひんが\n"
 	.string "ガラスケースの　なかに　ならんでいる！\p"
 	.string "パネルに　せつめいが　かいてあるから\n"
