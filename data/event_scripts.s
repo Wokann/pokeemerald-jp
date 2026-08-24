@@ -559,6 +559,8 @@ EventScript_Questionnaire: @ 0x8244245
 
 	.globl AbnormalWeather_EventScript_EndEventAndCleanup_1
 AbnormalWeather_EventScript_EndEventAndCleanup_1: @ 0x8244749
+	.globl AbnormalWeather_Underwater_SetupEscapeWarp
+	.set AbnormalWeather_Underwater_SetupEscapeWarp, 0x08244C4D
 	.include "data/scripts/gUnknown_8244749.inc"
 gUnknown_8244CF3: @ 0x8244CF3
 	.include "data/scripts/gUnknown_8244CF3.inc"

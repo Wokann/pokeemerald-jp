@@ -1550,6 +1550,49 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
 # is intentionally an allowlist: unreviewed addresses keep deterministic
 # address labels instead of receiving a plausible-but-unproven semantic name.
 MAP_VERIFIED_SEMANTIC_LABELS = {
+    'Underwater_Route105': {
+        'scripts': {
+            0x081EF773: 'Underwater_Route105_OnResume',
+        },
+        'external_labels': {
+            0x08244C4D: 'AbnormalWeather_Underwater_SetupEscapeWarp',
+        },
+    },
+    'Underwater_Route124': {},
+    'Underwater_Route125': {
+        'scripts': {
+            0x081EF77F: 'Underwater_Route125_OnResume',
+        },
+        'external_labels': {
+            0x08244C4D: 'AbnormalWeather_Underwater_SetupEscapeWarp',
+        },
+    },
+    'Underwater_Route126': {},
+    'Underwater_Route127': {
+        'scripts': {
+            0x081EF75A: 'Underwater_Route127_OnResume',
+        },
+        'external_labels': {
+            0x08244C4D: 'AbnormalWeather_Underwater_SetupEscapeWarp',
+        },
+    },
+    'Underwater_Route128': {},
+    'Underwater_Route129': {
+        'scripts': {
+            0x081EF767: 'Underwater_Route129_OnResume',
+        },
+        'external_labels': {
+            0x08244C4D: 'AbnormalWeather_Underwater_SetupEscapeWarp',
+        },
+    },
+    'Underwater_Route134': {
+        'scripts': {
+            0x0821BA00: 'Underwater_Route134_OnResume',
+        },
+        'symbols': {
+            'maps': {0x0031: 'MAP_ROUTE134'},
+        },
+    },
     'RustboroCity_DevonCorp_3F': {
         'scripts': {
             0x08201C39: 'RustboroCity_DevonCorp_3F_OnTransition',
@@ -5260,6 +5303,18 @@ def event_script_symbol_addresses():
     for source in sources:
         for line in source.read_text(encoding='utf-8').splitlines():
             m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*):{1,2}\s*@\s*0x([0-9A-Fa-f]+)', line)
+            if m:
+                labels.setdefault(m.group(1), int(m.group(2), 16))
+                continue
+            # Transitional source may expose a reviewed semantic name for a
+            # script that still lives inside a larger raw owner block.  Only
+            # accept literal ROM-address aliases; symbolic expressions remain
+            # unresolved until their physical owner is structured.
+            m = re.match(
+                r'^\s*\.set\s+([A-Za-z_][A-Za-z0-9_]*),\s*'
+                r'(0x08[0-9A-Fa-f]{6})\s*(?:@.*)?$',
+                line,
+            )
             if m:
                 labels.setdefault(m.group(1), int(m.group(2), 16))
     return labels

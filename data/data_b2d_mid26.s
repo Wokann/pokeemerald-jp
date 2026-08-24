@@ -2377,92 +2377,27 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/Route134/events.inc"
 	.globl gMapEvents_ROUTE134
 	.set gMapEvents_ROUTE134, Route134_MapEvents
-	.globl UNDERWATER_ROUTE124_EventObjects
-UNDERWATER_ROUTE124_EventObjects: @ 0x00000000
-	.globl UNDERWATER_ROUTE124_EventBgEvents
-UNDERWATER_ROUTE124_EventBgEvents: @ 0x085055E0
-	bg_event 42, 51, 0, 7, 0x0042, 0x08, 0x00
-	bg_event 14, 40, 0, 7, 0x0033, 0x09, 0x00
-	bg_event 66, 34, 3, 7, 0x006A, 0x0A, 0x00
-	bg_event 64, 54, 3, 7, 0x006B, 0x0B, 0x00
-	bg_event 70, 64, 3, 7, 0x006F, 0x0D, 0x00
-	bg_event 42, 5, 3, 7, 0x0043, 0x24, 0x00
-	bg_event 45, 36, 3, 7, 0x006F, 0x26, 0x00
+	.include "data/maps/Underwater_Route124/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE124
-gMapEvents_UNDERWATER_ROUTE124: @ 0x08505634
-	map_events 0, 0, 0, UNDERWATER_ROUTE124_EventBgEvents
-	.globl UNDERWATER_ROUTE126_EventObjects
-UNDERWATER_ROUTE126_EventObjects: @ 0x00000000
-	.globl UNDERWATER_ROUTE126_EventWarps
-UNDERWATER_ROUTE126_EventWarps: @ 0x08505648
-	warp_def 45, 65, 0, 0, MAP_UNDERWATER_SOOTOPOLIS_CITY
-	.globl UNDERWATER_ROUTE126_EventBgEvents
-UNDERWATER_ROUTE126_EventBgEvents: @ 0x08505650
-	bg_event 30, 17, 3, 7, 0x006F, 0x0E, 0x00
-	bg_event 41, 19, 3, 7, 0x0002, 0x0F, 0x00
-	bg_event 63, 19, 3, 7, 0x006C, 0x10, 0x00
-	bg_event 10, 36, 3, 7, 0x006A, 0x11, 0x00
-	bg_event 11, 39, 3, 7, 0x0041, 0x13, 0x00
-	bg_event 12, 35, 3, 7, 0x0032, 0x12, 0x00
-	bg_event 65, 60, 3, 7, 0x006B, 0x14, 0x00
-	bg_event 9, 77, 3, 7, 0x0031, 0x0C, 0x00
+	.set gMapEvents_UNDERWATER_ROUTE124, Underwater_Route124_MapEvents
+	.include "data/maps/Underwater_Route126/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE126
-gMapEvents_UNDERWATER_ROUTE126: @ 0x085056B0
-	map_events 0, UNDERWATER_ROUTE126_EventWarps, 0, UNDERWATER_ROUTE126_EventBgEvents
-	.globl UNDERWATER_ROUTE127_EventObjects
-UNDERWATER_ROUTE127_EventObjects: @ 0x00000000
-	.globl UNDERWATER_ROUTE127_EventWarps
-UNDERWATER_ROUTE127_EventWarps: @ 0x085056C4
-	warp_def 57, 5, 0, 0, MAP_UNDERWATER_MARINE_CAVE
-	warp_def 67, 38, 0, 0, MAP_UNDERWATER_MARINE_CAVE
-	.globl UNDERWATER_ROUTE127_EventBgEvents
-UNDERWATER_ROUTE127_EventBgEvents: @ 0x085056D4
-	bg_event 12, 42, 3, 7, 0x006D, 0x15, 0x00
-	bg_event 50, 36, 3, 7, 0x003F, 0x16, 0x00
-	bg_event 34, 72, 3, 7, 0x006F, 0x17, 0x00
-	bg_event 72, 20, 3, 7, 0x0030, 0x18, 0x00
+	.set gMapEvents_UNDERWATER_ROUTE126, Underwater_Route126_MapEvents
+	.include "data/maps/Underwater_Route127/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE127
-gMapEvents_UNDERWATER_ROUTE127: @ 0x08505704
-	map_events 0, UNDERWATER_ROUTE127_EventWarps, 0, UNDERWATER_ROUTE127_EventBgEvents
-	.globl UNDERWATER_ROUTE128_EventObjects
-UNDERWATER_ROUTE128_EventObjects: @ 0x00000000
-	.globl UNDERWATER_ROUTE128_EventWarps
-UNDERWATER_ROUTE128_EventWarps: @ 0x08505718
-	warp_def 38, 26, 3, 0, MAP_UNDERWATER_SEAFLOOR_CAVERN
-	.globl UNDERWATER_ROUTE128_EventBgEvents
-UNDERWATER_ROUTE128_EventBgEvents: @ 0x08505720
-	bg_event 38, 19, 3, 7, 0x0040, 0x19, 0x00
-	bg_event 69, 18, 3, 7, 0x006A, 0x1A, 0x00
+	.set gMapEvents_UNDERWATER_ROUTE127, Underwater_Route127_MapEvents
+	.include "data/maps/Underwater_Route128/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE128
-gMapEvents_UNDERWATER_ROUTE128: @ 0x08505738
-	map_events 0, UNDERWATER_ROUTE128_EventWarps, 0, UNDERWATER_ROUTE128_EventBgEvents
-	.globl UNDERWATER_ROUTE129_EventObjects
-UNDERWATER_ROUTE129_EventObjects: @ 0x00000000
-	.globl UNDERWATER_ROUTE129_EventWarps
-UNDERWATER_ROUTE129_EventWarps: @ 0x0850574C
-	warp_def 26, 3, 0, 0, MAP_UNDERWATER_MARINE_CAVE
-	warp_def 32, 21, 0, 0, MAP_UNDERWATER_MARINE_CAVE
+	.set gMapEvents_UNDERWATER_ROUTE128, Underwater_Route128_MapEvents
+	.include "data/maps/Underwater_Route129/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE129
-gMapEvents_UNDERWATER_ROUTE129: @ 0x0850575C
-	map_events 0, UNDERWATER_ROUTE129_EventWarps, 0, 0
-	.globl UNDERWATER_ROUTE105_EventObjects
-UNDERWATER_ROUTE105_EventObjects: @ 0x00000000
-	.globl UNDERWATER_ROUTE105_EventWarps
-UNDERWATER_ROUTE105_EventWarps: @ 0x08505770
-	warp_def 13, 4, 0, 0, MAP_UNDERWATER_MARINE_CAVE
-	warp_def 17, 66, 0, 0, MAP_UNDERWATER_MARINE_CAVE
+	.set gMapEvents_UNDERWATER_ROUTE129, Underwater_Route129_MapEvents
+	.include "data/maps/Underwater_Route105/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE105
-gMapEvents_UNDERWATER_ROUTE105: @ 0x08505780
-	map_events 0, UNDERWATER_ROUTE105_EventWarps, 0, 0
-	.globl UNDERWATER_ROUTE125_EventObjects
-UNDERWATER_ROUTE125_EventObjects: @ 0x00000000
-	.globl UNDERWATER_ROUTE125_EventWarps
-UNDERWATER_ROUTE125_EventWarps: @ 0x08505794
-	warp_def 22, 10, 0, 0, MAP_UNDERWATER_MARINE_CAVE
-	warp_def 45, 30, 0, 0, MAP_UNDERWATER_MARINE_CAVE
+	.set gMapEvents_UNDERWATER_ROUTE105, Underwater_Route105_MapEvents
+	.include "data/maps/Underwater_Route125/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE125
-gMapEvents_UNDERWATER_ROUTE125: @ 0x085057A4
-	map_events 0, UNDERWATER_ROUTE125_EventWarps, 0, 0
+	.set gMapEvents_UNDERWATER_ROUTE125, Underwater_Route125_MapEvents
 	.globl LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventObjects
 LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventObjects: @ 0x085057B8
 	object_event 1, 215, 0, 2, 6, 3, 10, 0, 0, 0, 0, 0x082581AF, 0x02F6
@@ -5910,7 +5845,11 @@ SEAFLOOR_CAVERN_ROOM4_EventWarps: @ 0x0850E0F0
 	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM4
 gMapEvents_SEAFLOOR_CAVERN_ROOM4: @ 0x0850E110
 	map_events SEAFLOOR_CAVERN_ROOM4_EventObjects, SEAFLOOR_CAVERN_ROOM4_EventWarps, 0, 0
-	.incbin "baserom_jp.gba", 0x50E124, 0x9578
+	.incbin "baserom_jp.gba", 0x50E124, 0x134C
+	.include "data/maps/Underwater_Route134/events.inc"
+	.globl gMapEvents_UNDERWATER_ROUTE134
+	.set gMapEvents_UNDERWATER_ROUTE134, Underwater_Route134_MapEvents
+	.incbin "baserom_jp.gba", 0x50F48C, 0x8210
 
 	.globl sFrozenIceCubeSubspriteTable
 sFrozenIceCubeSubspriteTable: @ 0x851769C
