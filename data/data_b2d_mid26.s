@@ -2422,18 +2422,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/LavaridgeTown_House/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_HOUSE
 	.set gMapEvents_LAVARIDGE_TOWN_HOUSE, LavaridgeTown_House_MapEvents
-	.globl LAVARIDGE_TOWN_MART_EventObjects
-LAVARIDGE_TOWN_MART_EventObjects: @ 0x08506874
-	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x081F4ECD, 0x0000
-	object_event 2, 21, 0, 4, 2, 3, 8, 0, 0, 0, 0, 0x081F4EFA, 0x0000
-	object_event 3, 30, 0, 9, 5, 3, 10, 0, 0, 0, 0, 0x081F4F03, 0x0000
-	.globl LAVARIDGE_TOWN_MART_EventWarps
-LAVARIDGE_TOWN_MART_EventWarps: @ 0x085068BC
-	warp_def 3, 7, 0, 2, MAP_LAVARIDGE_TOWN
-	warp_def 4, 7, 0, 2, MAP_LAVARIDGE_TOWN
+	.include "data/maps/LavaridgeTown_Mart/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_MART
-gMapEvents_LAVARIDGE_TOWN_MART: @ 0x085068CC
-	map_events LAVARIDGE_TOWN_MART_EventObjects, LAVARIDGE_TOWN_MART_EventWarps, 0, 0
+	.set gMapEvents_LAVARIDGE_TOWN_MART, LavaridgeTown_Mart_MapEvents
 	.globl LAVARIDGE_TOWN_POKEMON_CENTER_1F_EventObjects
 LAVARIDGE_TOWN_POKEMON_CENTER_1F_EventObjects: @ 0x085068E0
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, LavaridgeTown_PokemonCenter_1F_EventScript_001F4F99, 0x0000
