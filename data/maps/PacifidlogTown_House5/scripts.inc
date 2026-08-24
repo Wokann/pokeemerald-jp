@@ -3,39 +3,32 @@
 PacifidlogTown_House5_MapScripts::
 	.byte 0
 
-PacifidlogTown_House5_EventScript_001F8056::
+PacifidlogTown_House5_EventScript_MirageIslandWatcher::
 	lock
 	faceplayer
-	specialvar 0x800D, IsMirageIslandPresent
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, PacifidlogTown_House5_EventScript_001F8072
-	loadword 0x0, gJPText_001F8085
-	callstd 0x4
+	specialvar VAR_RESULT, IsMirageIslandPresent
+	goto_if_eq VAR_RESULT, TRUE, PacifidlogTown_House5_EventScript_MirageIslandPresent
+	msgbox PacifidlogTown_House5_Text_CantSeeMirageIslandToday, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House5_EventScript_001F8072::
-	loadword 0x0, gJPText_001F8099
-	callstd 0x4
+PacifidlogTown_House5_EventScript_MirageIslandPresent::
+	msgbox PacifidlogTown_House5_Text_CanSeeMirageIslandToday, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House5_EventScript_001F807C::
-	loadword 0x0, gJPText_001F80B5
-	callstd 0x2
+PacifidlogTown_House5_EventScript_Gentleman::
+	msgbox PacifidlogTown_House5_Text_MirageIslandAppearDependingOnWeather, MSGBOX_NPC
 	end
 
-	.globl gJPText_001F8085
-gJPText_001F8085: @ 0x081F8085
+PacifidlogTown_House5_Text_CantSeeMirageIslandToday:
 	.string "きょうは　マボロシじま　みえんのう⋯⋯$"
 
-	.globl gJPText_001F8099
-gJPText_001F8099: @ 0x081F8099
+PacifidlogTown_House5_Text_CanSeeMirageIslandToday:
 	.string "なっ　なんと！\n"
 	.string "きょうは　マボロシじま　みえるのじゃ！$"
 
-	.globl gJPText_001F80B5
-gJPText_001F80B5: @ 0x081F80B5
+PacifidlogTown_House5_Text_MirageIslandAppearDependingOnWeather:
 	.string "マボロシじま⋯⋯\n"
 	.string "おそらく　しんきろうの　かんけいで\l"
 	.string "みえたり　みえなかったり　するんだろう\p"
