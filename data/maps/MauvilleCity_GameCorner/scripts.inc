@@ -805,7 +805,3 @@ MauvilleCity_GameCorner_Text_HeresSomeSlotsInfo: @ 0x08200BA3
 MauvilleCity_GameCorner_Text_CantPlayWithNoCoinCase: @ 0x08200C41
 	.string "コインケースを\n"
 	.string "もっていないので　あそべません！$"
-
-@ Temporary successor ownership: the next unstructured map-script block starts
-@ at 0x08200C5A and remains byte-exact until its own map migration.
-	.incbin "baserom_jp.gba", 0x200c5a, 0x17a

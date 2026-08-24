@@ -501,6 +501,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MauvilleCity_BikeShop/scripts.inc"
 	.include "data/maps/MauvilleCity_House1/scripts.inc"
 	.include "data/maps/MauvilleCity_GameCorner/scripts.inc"
+	.include "data/maps/MauvilleCity_House2/scripts.inc"
 	.include "data/maps/MauvilleCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/MauvilleCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/RustboroCity_DevonCorp_1F/scripts.inc"

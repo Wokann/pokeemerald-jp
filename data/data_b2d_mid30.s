@@ -4931,7 +4931,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_MAUVILLE_CITY_HOUSE2 (g10 m4)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
 	.4byte gMapEvents_MAUVILLE_CITY_HOUSE2  @ events
-	.4byte 0x08200C5A  @ mapScripts
+	.4byte MauvilleCity_House2_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
 	.2byte 0x003B  @ mapLayoutId

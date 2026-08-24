@@ -2677,16 +2677,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/MauvilleCity_GameCorner/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_GAME_CORNER
 	.set gMapEvents_MAUVILLE_CITY_GAME_CORNER, MauvilleCity_GameCorner_MapEvents
-	.globl MAUVILLE_CITY_HOUSE2_EventObjects
-MAUVILLE_CITY_HOUSE2_EventObjects: @ 0x085088B8
-	object_event 1, 24, 0, 4, 5, 3, 9, 0, 0, 0, 0, 0x08200C5B, 0x0000
-	.globl MAUVILLE_CITY_HOUSE2_EventWarps
-MAUVILLE_CITY_HOUSE2_EventWarps: @ 0x085088D0
-	warp_def 3, 8, 0, 6, MAP_MAUVILLE_CITY
-	warp_def 4, 8, 0, 6, MAP_MAUVILLE_CITY
+	.include "data/maps/MauvilleCity_House2/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_HOUSE2
-gMapEvents_MAUVILLE_CITY_HOUSE2: @ 0x085088E0
-	map_events MAUVILLE_CITY_HOUSE2_EventObjects, MAUVILLE_CITY_HOUSE2_EventWarps, 0, 0
+	.set gMapEvents_MAUVILLE_CITY_HOUSE2, MauvilleCity_House2_MapEvents
 	.globl MAUVILLE_CITY_POKEMON_CENTER_1F_EventObjects
 MAUVILLE_CITY_POKEMON_CENTER_1F_EventObjects: @ 0x085088F4
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, MauvilleCity_PokemonCenter_1F_EventScript_00200DF1, 0x0000
