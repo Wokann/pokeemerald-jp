@@ -386,7 +386,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/FortreeCity/scripts.inc"
 	.include "data/maps/LilycoveCity/scripts.inc"
 	.include "data/maps/MossdeepCity/scripts.inc"
-	.incbin "baserom_jp.gba", 0x1e17a3, 0x553
 	.include "data/maps/SootopolisCity/scripts.inc"
 	.incbin "baserom_jp.gba", 0x1e2c05, 0xd74
 	.include "data/maps/EverGrandeCity/scripts.inc"
