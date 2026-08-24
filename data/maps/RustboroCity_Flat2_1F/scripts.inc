@@ -24,6 +24,3 @@ RustboroCity_Flat2_1F_Text_DevonWorkersLiveHere: @ 0x08203FB6
 
 RustboroCity_Flat2_1F_Text_Skitty: @ 0x08203FDE
 	.string "エネコ“ぎゃー！！$"
-
-	@ Rustboro City Flat2 2F and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x203fe8, 0x3b6
