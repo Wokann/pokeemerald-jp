@@ -1,388 +1,818 @@
 @ LilycoveCity scripts (JP map g0 m5 @ 0x081E0171)
 
 LilycoveCity_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, LilycoveCity_EventScript_001E017C
-	map_script MAP_SCRIPT_ON_LOAD, LilycoveCity_EventScript_001E0196
+	map_script MAP_SCRIPT_ON_TRANSITION, LilycoveCity_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, LilycoveCity_OnLoad
 	.byte 0
 
-LilycoveCity_EventScript_001E017C::
-	setflag 0x87B
-	setvar 0x4086, 0x0
-	setflag 0x322
-	checkflag 0x88A
-	call_if 0x1, 0x08243106
-	call 0x08242F63
+LilycoveCity_OnTransition::
+	setflag FLAG_VISITED_LILYCOVE_CITY
+	setvar VAR_CONTEST_HALL_STATE, 0
+	setflag FLAG_HIDE_LILYCOVE_CONTEST_HALL_REPORTER
+	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
+	call Common_EventScript_SetupRivalGfxId
 	end
 
-LilycoveCity_EventScript_001E0196::
-	checkflag 0x70
-	call_if 0x0, LilycoveCity_EventScript_001E01A0
+LilycoveCity_OnLoad::
+	call_if_unset FLAG_TEAM_AQUA_ESCAPED_IN_SUBMARINE, LilycoveCity_EventScript_SetWailmerMetatiles
 	end
 
-LilycoveCity_EventScript_001E01A0::
-	setmetatile 0x4C, 0xC, 0x290, 0x1
-	setmetatile 0x4D, 0xC, 0x291, 0x1
-	setmetatile 0x4C, 0xD, 0x2A0, 0x1
-	setmetatile 0x4D, 0xD, 0x2A1, 0x1
-	setmetatile 0x4C, 0xE, 0x298, 0x1
-	setmetatile 0x4D, 0xE, 0x299, 0x1
-	setmetatile 0x4C, 0xF, 0x2A0, 0x1
-	setmetatile 0x4D, 0xF, 0x2A1, 0x1
-	setmetatile 0x4D, 0x10, 0x298, 0x1
-	setmetatile 0x4E, 0x10, 0x299, 0x1
-	setmetatile 0x4D, 0x11, 0x2A0, 0x1
-	setmetatile 0x4E, 0x11, 0x2A1, 0x1
+LilycoveCity_EventScript_SetWailmerMetatiles::
+	setmetatile 76, 12, METATILE_Lilycove_Wailmer0, TRUE
+	setmetatile 77, 12, METATILE_Lilycove_Wailmer1, TRUE
+	setmetatile 76, 13, METATILE_Lilycove_Wailmer2, TRUE
+	setmetatile 77, 13, METATILE_Lilycove_Wailmer3, TRUE
+	setmetatile 76, 14, METATILE_Lilycove_Wailmer0_Alt, TRUE
+	setmetatile 77, 14, METATILE_Lilycove_Wailmer1_Alt, TRUE
+	setmetatile 76, 15, METATILE_Lilycove_Wailmer2, TRUE
+	setmetatile 77, 15, METATILE_Lilycove_Wailmer3, TRUE
+	setmetatile 77, 16, METATILE_Lilycove_Wailmer0_Alt, TRUE
+	setmetatile 78, 16, METATILE_Lilycove_Wailmer1_Alt, TRUE
+	setmetatile 77, 17, METATILE_Lilycove_Wailmer2, TRUE
+	setmetatile 78, 17, METATILE_Lilycove_Wailmer3, TRUE
 	return
 
-LilycoveCity_EventScript_001E020D::
+LilycoveCity_EventScript_BerryGentleman::
 	lock
 	faceplayer
 	dotimebasedevents
-	checkflag 0x92F
-	goto_if 0x1, LilycoveCity_EventScript_001E024D
-	loadword 0x0, 0x08263A58
-	callstd 0x4
-	random 0xA
-	addvar 0x800D, 0x85
-	setorcopyvar 0x8000, 0x800D
-	setorcopyvar 0x8001, 0x1
+	goto_if_set FLAG_DAILY_LILYCOVE_RECEIVED_BERRY, LilycoveCity_EventScript_ReceivedBerry
+	msgbox 0x08263A58, MSGBOX_DEFAULT
+	random 10
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
+	setorcopyvar VAR_0x8000, VAR_RESULT
+	setorcopyvar VAR_0x8001, TRUE
 	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0x92F
-	loadword 0x0, 0x08263A9E
-	callstd 0x4
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_DAILY_LILYCOVE_RECEIVED_BERRY
+	msgbox 0x08263A9E, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E024D::
-	loadword 0x0, 0x08263ABA
-	callstd 0x4
+LilycoveCity_EventScript_ReceivedBerry::
+	msgbox 0x08263ABA, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E0257::
-	loadword 0x0, 0x081E0DD4
-	callstd 0x2
+LilycoveCity_EventScript_Man3::
+	msgbox LilycoveCity_Text_ContestHallInTown, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E0260::
+LilycoveCity_EventScript_Girl::
 	lock
 	faceplayer
-	checkflag 0x86D
-	goto_if 0x1, LilycoveCity_EventScript_001E0275
-	loadword 0x0, 0x081E0E2F
-	callstd 0x4
+	goto_if_set FLAG_BADGE07_GET, LilycoveCity_EventScript_GirlAquaGone
+	msgbox LilycoveCity_Text_StrangeCaveInCove, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E0275::
-	loadword 0x0, 0x081E0E50
-	callstd 0x4
+LilycoveCity_EventScript_GirlAquaGone::
+	msgbox LilycoveCity_Text_GoingToMoveDeleterForHMs, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E027F::
-	loadword 0x0, 0x081E0EA8
-	callstd 0x2
+LilycoveCity_EventScript_RichBoy::
+	msgbox LilycoveCity_Text_ImFromKanto, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E0288::
+LilycoveCity_EventScript_Sailor2::
 	lock
 	faceplayer
-	checkflag 0x70
-	goto_if 0x1, LilycoveCity_EventScript_001E029D
-	loadword 0x0, 0x081E0F11
-	callstd 0x4
+	goto_if_set FLAG_TEAM_AQUA_ESCAPED_IN_SUBMARINE, LilycoveCity_EventScript_Sailor2AquaGone
+	msgbox LilycoveCity_Text_TeamAquaBeenTrainingWailmer, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E029D::
-	loadword 0x0, 0x081E0F57
-	callstd 0x4
+LilycoveCity_EventScript_Sailor2AquaGone::
+	msgbox LilycoveCity_Text_SomeonePuntedTeamAquaOut, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E02A7::
+LilycoveCity_EventScript_Woman2::
 	lock
 	faceplayer
-	checkflag 0x70
-	goto_if 0x1, LilycoveCity_EventScript_001E02BC
-	loadword 0x0, 0x081E0FA2
-	callstd 0x4
+	goto_if_set FLAG_TEAM_AQUA_ESCAPED_IN_SUBMARINE, LilycoveCity_EventScript_Woman2AquaGone
+	msgbox LilycoveCity_Text_SomeoneStoleMyPokemon, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E02BC::
-	loadword 0x0, 0x081E0FFF
-	callstd 0x4
+LilycoveCity_EventScript_Woman2AquaGone::
+	msgbox LilycoveCity_Text_MissingPokemonCameBack, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E02C6::
-	loadword 0x0, 0x081E1021
-	callstd 0x2
+LilycoveCity_EventScript_Man2::
+	msgbox LilycoveCity_Text_ImArtDealer, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E02CF::
-	loadword 0x0, 0x081E1092
-	callstd 0x3
+LilycoveCity_EventScript_ExpertM1::
+	msgbox LilycoveCity_Text_SeaRemainsForeverYoung, MSGBOX_SIGN
 	end
 
-LilycoveCity_EventScript_001E02D8::
-	loadword 0x0, 0x081E10D3
-	callstd 0x3
+LilycoveCity_EventScript_ExpertF::
+	msgbox LilycoveCity_Text_SixtyYearsAgoHusbandProposed, MSGBOX_SIGN
 	end
 
-LilycoveCity_EventScript_001E02E1::
+LilycoveCity_EventScript_ExpertM2::
 	lock
 	faceplayer
-	checkflag 0x86D
-	goto_if 0x1, LilycoveCity_EventScript_001E02F6
-	loadword 0x0, 0x081E111B
-	callstd 0x4
+	goto_if_set FLAG_BADGE07_GET, LilycoveCity_EventScript_ExpertM2AquaGone
+	msgbox LilycoveCity_Text_TeamAquaRenovatedCavern, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E02F6::
-	loadword 0x0, 0x081E11AF
-	callstd 0x4
+LilycoveCity_EventScript_ExpertM2AquaGone::
+	msgbox LilycoveCity_Text_TeamAquaLotGoneForGood, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_EventScript_001E0300::
-	loadword 0x0, 0x081E1431
-	callstd 0x2
+LilycoveCity_EventScript_Sailor1::
+	msgbox LilycoveCity_Text_HeardTowerCalledSkyPillar, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E0309::
-	loadword 0x0, 0x081E145A
-	callstd 0x2
+LilycoveCity_EventScript_FatMan::
+	msgbox LilycoveCity_Text_SawTallTowerOnRoute131, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E0312::
+LilycoveCity_EventScript_Man1::
 	lockall
-	loadword 0x0, 0x081E148D
-	callstd 0x2
-	applymovement 0x14, 0x08243625
+	msgbox LilycoveCity_Text_JustArrivedAndSawRarePokemon, MSGBOX_NPC
+	applymovement LOCALID_LILYCOVE_MAN_1, Common_Movement_FaceOriginalDirection
 	end
 
-LilycoveCity_EventScript_001E0323::
+LilycoveCity_EventScript_Woman1::
 	lockall
-	loadword 0x0, 0x081E14F9
-	callstd 0x2
-	applymovement 0x13, 0x08243625
+	msgbox LilycoveCity_Text_HoneymoonVowToSeeRarePokemon, MSGBOX_NPC
+	applymovement LOCALID_LILYCOVE_WOMAN_1, Common_Movement_FaceOriginalDirection
 	end
 
-LilycoveCity_EventScript_001E0334::
-	loadword 0x0, 0x081E11F4
-	callstd 0x3
+LilycoveCity_EventScript_CitySign::
+	msgbox LilycoveCity_Text_CitySign, MSGBOX_SIGN
 	end
 
-LilycoveCity_EventScript_001E033D::
-	loadword 0x0, 0x081E1213
-	callstd 0x3
+LilycoveCity_EventScript_ContestHallSign::
+	msgbox LilycoveCity_Text_ContestHallSign, MSGBOX_SIGN
 	end
 
-LilycoveCity_EventScript_001E0346::
-	loadword 0x0, 0x081E1234
-	callstd 0x3
+LilycoveCity_EventScript_MotelSign::
+	msgbox LilycoveCity_Text_MotelSign, MSGBOX_SIGN
 	end
 
-LilycoveCity_EventScript_001E034F::
+LilycoveCity_EventScript_MuseumSign::
 	lockall
-	specialvar 0x8004, CountPlayerContestPaintings
-	copyvar 0x8000, 0x8004
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, LilycoveCity_EventScript_001E036F
-	loadword 0x0, 0x081E1276
-	callstd 0x4
+	specialvar VAR_0x8004, CountPlayerContestPaintings
+	copyvar VAR_0x8000, VAR_0x8004
+	goto_if_eq VAR_0x8000, 0, LilycoveCity_EventScript_MuseumSignNoPaintings
+	msgbox LilycoveCity_Text_MuseumSignPlayersExhibit, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_EventScript_001E036F::
-	loadword 0x0, 0x081E1254
-	callstd 0x4
+LilycoveCity_EventScript_MuseumSignNoPaintings::
+	msgbox LilycoveCity_Text_MuseumSign, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_EventScript_001E0379::
+LilycoveCity_EventScript_HarborSign::
 	lockall
-	checkflag 0x864
-	goto_if 0x1, LilycoveCity_EventScript_001E038D
-	loadword 0x0, 0x081E129D
-	callstd 0x4
+	goto_if_set FLAG_SYS_GAME_CLEAR, LilycoveCity_EventScript_HarborSignFerryReady
+	msgbox LilycoveCity_Text_HarborSignUnderConstruction, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_EventScript_001E038D::
-	loadword 0x0, 0x081E12E3
-	callstd 0x4
+LilycoveCity_EventScript_HarborSignFerryReady::
+	msgbox LilycoveCity_Text_HarborSign, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_EventScript_001E0397::
-	loadword 0x0, 0x081E1318
-	callstd 0x3
+LilycoveCity_EventScript_TrainerFanClubSign::
+	msgbox LilycoveCity_Text_TrainerFanClubSign, MSGBOX_SIGN
 	end
 
-LilycoveCity_EventScript_001E03A0::
-	loadword 0x0, 0x081E1350
-	callstd 0x3
+LilycoveCity_EventScript_DepartmentStoreSign::
+	msgbox LilycoveCity_Text_DepartmentStoreSign, MSGBOX_SIGN
 	end
 
-LilycoveCity_EventScript_001E03A9::
-	loadword 0x0, 0x081E1383
-	callstd 0x3
+LilycoveCity_EventScript_MoveDeletersHouseSign::
+	msgbox LilycoveCity_Text_MoveDeletersHouseSign, MSGBOX_SIGN
 	end
 
-LilycoveCity_EventScript_001E03B2::
+LilycoveCity_EventScript_WailmerTrainerGrunt::
 	lockall
-	checkflag 0xDA
-	goto_if 0x1, LilycoveCity_EventScript_001E03E5
-	loadword 0x0, 0x081E0D86
-	callstd 0x4
-	applymovement 0x800F, 0x08243621
-	waitmovement 0x0
-	loadword 0x0, 0x081E0DA6
-	callstd 0x4
-	applymovement 0x800F, 0x08243625
-	waitmovement 0x0
-	setflag 0xDA
+	goto_if_set FLAG_MET_WAILMER_TRAINER, LilycoveCity_EventScript_MetWailmerTrainer
+	msgbox LilycoveCity_Text_WailmerLeapOutOfWater, MSGBOX_DEFAULT
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox LilycoveCity_Text_GetLostMessingUpTraining, MSGBOX_DEFAULT
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	setflag FLAG_MET_WAILMER_TRAINER
 	releaseall
 	end
 
-LilycoveCity_EventScript_001E03E5::
-	loadword 0x0, 0x081E0D86
-	callstd 0x4
+LilycoveCity_EventScript_MetWailmerTrainer::
+	msgbox LilycoveCity_Text_WailmerLeapOutOfWater, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_EventScript_001E03EF::
-	loadword 0x0, 0x081E0C6D
-	callstd 0x2
+LilycoveCity_EventScript_AquaGrunt1::
+	msgbox LilycoveCity_Text_MovedLootIntoHideoutToday, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E03F8::
-	loadword 0x0, 0x081E0CAE
-	callstd 0x2
+LilycoveCity_EventScript_AquaGrunt2::
+	msgbox LilycoveCity_Text_ChanceToDoBigThings, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E0401::
-	loadword 0x0, 0x081E0D08
-	callstd 0x2
+LilycoveCity_EventScript_AquaGrunt3::
+	msgbox LilycoveCity_Text_DontGoNearCaveInCove, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E040A::
-	loadword 0x0, 0x081E0D4E
-	callstd 0x2
+LilycoveCity_EventScript_AquaGrunt4::
+	msgbox LilycoveCity_Text_IfWorldBecomesOurs, MSGBOX_NPC
 	end
 
-LilycoveCity_EventScript_001E0413::
+LilycoveCity_EventScript_Rival::
 	lock
 	faceplayer
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LilycoveCity_EventScript_001E042D
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LilycoveCity_EventScript_001E04A0
+	goto_if_eq VAR_RESULT, MALE, LilycoveCity_EventScript_May
+	goto_if_eq VAR_RESULT, FEMALE, LilycoveCity_EventScript_Brendan
 	end
 
-LilycoveCity_EventScript_001E042D::
-	playbgm 0x19F, 0x1
-	checkflag 0x11E
-	call_if 0x1, LilycoveCity_EventScript_001E047D
-	checkflag 0x11E
-	call_if 0x0, LilycoveCity_EventScript_001E0486
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LilycoveCity_EventScript_001E048F
-	loadword 0x0, 0x081E078B
-	callstd 0x4
-	copyvar 0x8000, 0x4023
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, 0x081E0513
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, 0x081E0523
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, 0x081E0533
+LilycoveCity_EventScript_May::
+	playbgm MUS_ENCOUNTER_MAY, TRUE
+	call_if_set FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_MayAskToBattleAgain
+	call_if_unset FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_MayAskToBattle
+	goto_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DeclineMayBattle
+	msgbox LilycoveCity_Text_MayWontBeBeaten, MSGBOX_DEFAULT
+	copyvar VAR_0x8000, VAR_STARTER_MON
+	goto_if_eq VAR_0x8000, 0, LilycoveCity_EventScript_BattleMayTreecko
+	goto_if_eq VAR_0x8000, 1, LilycoveCity_EventScript_BattleMayTorchic
+	goto_if_eq VAR_0x8000, 2, LilycoveCity_EventScript_BattleMayMudkip
 	end
 
-LilycoveCity_EventScript_001E047D::
-	loadword 0x0, 0x081E0769
-	callstd 0x5
+LilycoveCity_EventScript_MayAskToBattleAgain::
+	msgbox LilycoveCity_Text_MayBattleMe, MSGBOX_YESNO
 	return
 
-LilycoveCity_EventScript_001E0486::
-	loadword 0x0, 0x081E0696
-	callstd 0x5
+LilycoveCity_EventScript_MayAskToBattle::
+	msgbox LilycoveCity_Text_MayShoppingLetsBattle, MSGBOX_YESNO
 	return
 
-LilycoveCity_EventScript_001E048F::
-	setflag 0x11E
-	loadword 0x0, 0x081E0733
-	callstd 0x4
-	savebgm 0x0
+LilycoveCity_EventScript_DeclineMayBattle::
+	setflag FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE
+	msgbox LilycoveCity_Text_MayNotRaisingPokemon, MSGBOX_DEFAULT
+	savebgm MUS_DUMMY
 	fadedefaultbgm
 	release
 	end
 
-LilycoveCity_EventScript_001E04A0::
-	playbgm 0x1A5, 0x1
-	checkflag 0x11E
-	call_if 0x1, LilycoveCity_EventScript_001E04F0
-	checkflag 0x11E
-	call_if 0x0, LilycoveCity_EventScript_001E04F9
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LilycoveCity_EventScript_001E0502
-	loadword 0x0, 0x081E0A56
-	callstd 0x4
-	copyvar 0x8000, 0x4023
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, 0x081E0543
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, 0x081E0553
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, 0x081E0563
+LilycoveCity_EventScript_Brendan::
+	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
+	call_if_set FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_BrendanAskToBattleAgain
+	call_if_unset FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE, LilycoveCity_EventScript_BrendanAskToBattle
+	goto_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DeclineBrendanBattle
+	msgbox LilycoveCity_Text_BrendanWontBeBeaten, MSGBOX_DEFAULT
+	copyvar VAR_0x8000, VAR_STARTER_MON
+	goto_if_eq VAR_0x8000, 0, LilycoveCity_EventScript_BattleBrendanTreecko
+	goto_if_eq VAR_0x8000, 1, LilycoveCity_EventScript_BattleBrendanTorchic
+	goto_if_eq VAR_0x8000, 2, LilycoveCity_EventScript_BattleBrendanMudkip
 	end
 
-LilycoveCity_EventScript_001E04F0::
-	loadword 0x0, 0x081E0A2F
-	callstd 0x5
+LilycoveCity_EventScript_BrendanAskToBattleAgain::
+	msgbox LilycoveCity_Text_BrendanBattleMe, MSGBOX_YESNO
 	return
 
-LilycoveCity_EventScript_001E04F9::
-	loadword 0x0, 0x081E09A9
-	callstd 0x5
+LilycoveCity_EventScript_BrendanAskToBattle::
+	msgbox LilycoveCity_Text_BrendanShoppingLetsBattle, MSGBOX_YESNO
 	return
 
-LilycoveCity_EventScript_001E0502::
-	setflag 0x11E
-	loadword 0x0, 0x081E0A1B
-	callstd 0x4
-	savebgm 0x0
+LilycoveCity_EventScript_DeclineBrendanBattle::
+	setflag FLAG_DECLINED_RIVAL_BATTLE_LILYCOVE
+	msgbox LilycoveCity_Text_BrendanNoConfidence, MSGBOX_DEFAULT
+	savebgm MUS_DUMMY
 	fadedefaultbgm
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x1e0513, 0x14f
-LilycoveCity_EventScript_001E0662::
+LilycoveCity_EventScript_BattleMayTreecko::
+	trainerbattle_no_intro TRAINER_MAY_LILYCOVE_TREECKO, LilycoveCity_Text_MayDefeat
+	goto LilycoveCity_EventScript_DefeatedMay
+	end
+
+LilycoveCity_EventScript_BattleMayTorchic::
+	trainerbattle_no_intro TRAINER_MAY_LILYCOVE_TORCHIC, LilycoveCity_Text_MayDefeat
+	goto LilycoveCity_EventScript_DefeatedMay
+	end
+
+LilycoveCity_EventScript_BattleMayMudkip::
+	trainerbattle_no_intro TRAINER_MAY_LILYCOVE_MUDKIP, LilycoveCity_Text_MayDefeat
+	goto LilycoveCity_EventScript_DefeatedMay
+	end
+
+LilycoveCity_EventScript_BattleBrendanTreecko::
+	trainerbattle_no_intro TRAINER_BRENDAN_LILYCOVE_TREECKO, LilycoveCity_Text_BrendanDefeat
+	goto LilycoveCity_EventScript_DefeatedBrendan
+	end
+
+LilycoveCity_EventScript_BattleBrendanTorchic::
+	trainerbattle_no_intro TRAINER_BRENDAN_LILYCOVE_TORCHIC, LilycoveCity_Text_BrendanDefeat
+	goto LilycoveCity_EventScript_DefeatedBrendan
+	end
+
+LilycoveCity_EventScript_BattleBrendanMudkip::
+	trainerbattle_no_intro TRAINER_BRENDAN_LILYCOVE_MUDKIP, LilycoveCity_Text_BrendanDefeat
+	goto LilycoveCity_EventScript_DefeatedBrendan
+	end
+
+LilycoveCity_EventScript_DefeatedMay::
+	msgbox LilycoveCity_Text_MayGoingBackToLittleroot, MSGBOX_DEFAULT
+	setvar VAR_RESULT, FALSE
+	call_if_set FLAG_BADGE06_GET, LilycoveCity_EventScript_CheckFinalBadge
+	call_if_eq VAR_RESULT, FALSE, LilycoveCity_EventScript_MayCollectBadges
+	call_if_eq VAR_RESULT, TRUE, LilycoveCity_EventScript_MayPokemonLeague
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_PICHU_DOLL
+	goto LilycoveCity_EventScript_RivalFlyAway
+	end
+
+LilycoveCity_EventScript_CheckFinalBadge::
+	goto_if_set FLAG_BADGE08_GET, LilycoveCity_EventScript_HasFinalBadge
+	return
+
+LilycoveCity_EventScript_HasFinalBadge::
+	setvar VAR_RESULT, TRUE
+	return
+
+LilycoveCity_EventScript_MayCollectBadges::
+	msgbox LilycoveCity_Text_MayYouGoingToCollectBadges, MSGBOX_DEFAULT
+	return
+
+LilycoveCity_EventScript_MayPokemonLeague::
+	goto_if_set FLAG_SYS_GAME_CLEAR, LilycoveCity_EventScript_MayBattleFrontier
+	msgbox LilycoveCity_Text_MayYouGoingToPokemonLeague, MSGBOX_DEFAULT
+	return
+
+LilycoveCity_EventScript_MayBattleFrontier::
+	msgbox LilycoveCity_Text_MayYouGoingToBattleFrontier, MSGBOX_DEFAULT
+	return
+
+LilycoveCity_EventScript_DefeatedBrendan::
+	msgbox LilycoveCity_Text_BrendanGoingBackToLittleroot, MSGBOX_DEFAULT
+	setvar VAR_RESULT, FALSE
+	call_if_set FLAG_BADGE06_GET, LilycoveCity_EventScript_CheckFinalBadge
+	call_if_eq VAR_RESULT, FALSE, LilycoveCity_EventScript_BrendanCollectBadges
+	call_if_eq VAR_RESULT, TRUE, LilycoveCity_EventScript_BrendanPokemonLeague
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_SWABLU_DOLL
+	goto LilycoveCity_EventScript_RivalFlyAway
+	end
+
+LilycoveCity_EventScript_BrendanCollectBadges::
+	msgbox LilycoveCity_Text_BrendanYouGoingToCollectBadges, MSGBOX_DEFAULT
+	return
+
+LilycoveCity_EventScript_BrendanPokemonLeague::
+	goto_if_set FLAG_SYS_GAME_CLEAR, LilycoveCity_EventScript_BrendanBattleFrontier
+	msgbox LilycoveCity_Text_BrendanYouGoingToPokemonLeague, MSGBOX_DEFAULT
+	return
+
+LilycoveCity_EventScript_BrendanBattleFrontier::
+	msgbox LilycoveCity_Text_BrendanYouGoingToBattleFrontier, MSGBOX_DEFAULT
+	return
+
+LilycoveCity_EventScript_RivalFlyAway::
+	closemessage
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	delay 50
+	setfieldeffectarg 0, 1
+	dofieldeffect FLDEFF_NPCFLY_OUT
+	delay 15
+	removeobject VAR_LAST_TALKED
+	waitfieldeffect FLDEFF_NPCFLY_OUT
+	savebgm MUS_DUMMY
+	fadedefaultbgm
+	setflag FLAG_MET_RIVAL_LILYCOVE
+	release
+	end
+
+LilycoveCity_EventScript_SchoolKidM::
 	lock
 	faceplayer
-	loadword 0x0, 0x081E13A5
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, LilycoveCity_EventScript_001E0684
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, LilycoveCity_EventScript_001E068D
+	msgbox LilycoveCity_Text_DoYouKnowAboutBerryBlender, MSGBOX_YESNO
+	call_if_eq VAR_RESULT, YES, LilycoveCity_EventScript_KnowAboutBerryBlender
+	call_if_eq VAR_RESULT, NO, LilycoveCity_EventScript_DontKnowAboutBerryBlender
 	release
 	end
 
-LilycoveCity_EventScript_001E0684::
-	loadword 0x0, 0x081E13C0
-	callstd 0x4
+LilycoveCity_EventScript_KnowAboutBerryBlender::
+	msgbox LilycoveCity_Text_FasterSpinBetterPokeblocks, MSGBOX_DEFAULT
 	return
 
-LilycoveCity_EventScript_001E068D::
-	loadword 0x0, 0x081E13F5
-	callstd 0x4
+LilycoveCity_EventScript_DontKnowAboutBerryBlender::
+	msgbox LilycoveCity_Text_ExplainBerryBlender, MSGBOX_DEFAULT
 	return
+
+	.globl LilycoveCity_Text_MayShoppingLetsBattle
+LilycoveCity_Text_MayShoppingLetsBattle: @ 0x081E0696
+	.string "ハルカ“あら！？\n"
+	.string "{PLAYER}{KUN}も　おかいもの？\p"
+	.string "あたし　ぬいぐるみとか　ポスター\n"
+	.string "いっぱい　かっちゃった！\p"
+	.string "もちろん　ポケモン　いっぱい　つかまえたし\n"
+	.string "ちゃんと　そだてて　いるんだから！\p"
+	.string "あたし　としては　{PLAYER}{KUN}が\n"
+	.string "ポケモン　そだててるか　しんぱい　だな\p"
+	.string "しょうぶ　してあげるから\n"
+	.string "{PLAYER}{KUN}の　ポケモン　みせてよ！$"
+
+	.globl LilycoveCity_Text_MayNotRaisingPokemon
+LilycoveCity_Text_MayNotRaisingPokemon: @ 0x081E0733
+	.string "ハルカ“えー　なんで？\n"
+	.string "{PLAYER}{KUN}　ポケモン　そだててないの？\p"
+	.string "それじゃあ　トレーナーとして\n"
+	.string "まだまだ　ね！$"
+
+	.globl LilycoveCity_Text_MayBattleMe
+LilycoveCity_Text_MayBattleMe: @ 0x081E0769
+	.string "ハルカ“しょうぶ　してあげるから\n"
+	.string "{PLAYER}{KUN}の　ポケモン　みせてよ！$"
+
+	.globl LilycoveCity_Text_MayWontBeBeaten
+LilycoveCity_Text_MayWontBeBeaten: @ 0x081E078B
+	.string "ハルカ“あたしの　そだてた　ポケモンが\n"
+	.string "{PLAYER}{KUN}の　ポケモンに\l"
+	.string "まけるわけ　ないんだから！$"
+
+	.globl LilycoveCity_Text_MayDefeat
+LilycoveCity_Text_MayDefeat: @ 0x081E07B9
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "103ばん　どうろで\n"
+	.string "{PLAYER}{KUN}と　しょうぶ　したこと\l"
+	.string "おもいだしちゃった！\p"
+	.string "あの　しょうぶが　あったから\n"
+	.string "{PLAYER}{KUN}　ここまで\l"
+	.string "つよく　なったんだね！$"
+
+	.globl LilycoveCity_Text_MayGoingBackToLittleroot
+LilycoveCity_Text_MayGoingBackToLittleroot: @ 0x081E080D
+	.string "ハルカ“あたし　そろそろ\n"
+	.string "ミシロタウンに　かえる　つもりなの\p"
+	.string "いろいろ　ポケモン　つかまえて\n"
+	.string "ずかんも　けっこう　できてきたから\l"
+	.string "おとうさんに　みせるんだ！$"
+
+	.globl LilycoveCity_Text_MayYouGoingToCollectBadges
+LilycoveCity_Text_MayYouGoingToCollectBadges: @ 0x081E085C
+	.string "{PLAYER}{KUN}は　どうするの？\p"
+	.string "あちこちの　ジムバッジを　あつめて\n"
+	.string "ポケモンリーグ　ちょうせん　するの？\p"
+	.string "じゃあ　あたし　{PLAYER}{KUN}が\n"
+	.string "バッジを　あつめている　あいだに\l"
+	.string "ポケモンずかんを　かんせい　させちゃお！\p"
+	.string "じゃね！$"
+
+	.globl LilycoveCity_Text_MayYouGoingToPokemonLeague
+LilycoveCity_Text_MayYouGoingToPokemonLeague: @ 0x081E08C7
+	.string "{PLAYER}{KUN}は　どうするの？\p"
+	.string "ポケモンリーグ　ちょうせん　するの？\p"
+	.string "それとも　ポケモンずかん\l"
+	.string "かんせい　させるの？\p"
+	.string "ポケモンしょうぶ　じゃ　まけちゃったけど\n"
+	.string "ずかんは　あたしの　ほうが\l"
+	.string "さきに　かんせい　させるんだから！\p"
+	.string "じゃね！$"
+
+	.globl LilycoveCity_Text_MayYouGoingToBattleFrontier
+LilycoveCity_Text_MayYouGoingToBattleFrontier: @ 0x081E0939
+	.string "{PLAYER}{KUN}は　どうするの？\p"
+	.string "バトルフロンティアに　ちょうせん　する？\n"
+	.string "それとも　ずかんを　かんせい　させる？\p"
+	.string "ポケモンしょうぶ　じゃ　まけちゃったけど\n"
+	.string "ずかんは　あたしの　ほうが\l"
+	.string "さきに　かんせい　させるんだから！\p"
+	.string "じゃね！$"
+
+	.globl LilycoveCity_Text_BrendanShoppingLetsBattle
+LilycoveCity_Text_BrendanShoppingLetsBattle: @ 0x081E09A9
+	.string "ユウキ“なんだ　{PLAYER}か\p"
+	.string "オレ　とうさんに　たのまれた\n"
+	.string "かいものを　してたんだ\l"
+	.string "べつに　ぬいぐるみ　なんか　かってないよ\p"
+	.string "それよりも　ひさしぶりに　あったんだ\p"
+	.string "どっちが　うまく\n"
+	.string "ポケモン　そだてているか\l"
+	.string "しょうぶ　してやろうか？$"
+
+	.globl LilycoveCity_Text_BrendanNoConfidence
+LilycoveCity_Text_BrendanNoConfidence: @ 0x081E0A1B
+	.string "ユウキ“なんだよ\n"
+	.string "じしんが　ないのかよ$"
+
+	.globl LilycoveCity_Text_BrendanBattleMe
+LilycoveCity_Text_BrendanBattleMe: @ 0x081E0A2F
+	.string "ユウキ“どっちが　うまく\n"
+	.string "ポケモン　そだてているか\l"
+	.string "しょうぶ　してやろうか？$"
+
+	.globl LilycoveCity_Text_BrendanWontBeBeaten
+LilycoveCity_Text_BrendanWontBeBeaten: @ 0x081E0A56
+	.string "ユウキ“まあ　オレが\n"
+	.string "{PLAYER}に　まけるわけ　ないんだけど$"
+
+	.globl LilycoveCity_Text_BrendanDefeat
+LilycoveCity_Text_BrendanDefeat: @ 0x081E0A72
+	.string "ふうん⋯⋯\n"
+	.string "かなり　そだててるんだな\p"
+	.string "ちょっと　くやしいな\n"
+	.string "トレーナーとしては　オレの　ほうが\l"
+	.string "センパイ　だったのに⋯⋯$"
+
+	.globl LilycoveCity_Text_BrendanGoingBackToLittleroot
+LilycoveCity_Text_BrendanGoingBackToLittleroot: @ 0x081E0AAF
+	.string "ユウキ“オレ⋯⋯\n"
+	.string "ミシロタウンに　もどるつもり　なんだ\p"
+	.string "とうさんの　てつだいで　つくっている\n"
+	.string "ポケモンずかんも　けっこう　できてきたし\l"
+	.string "いちど　とうさんに　みせておかないと$"
+
+	.globl LilycoveCity_Text_BrendanYouGoingToCollectBadges
+LilycoveCity_Text_BrendanYouGoingToCollectBadges: @ 0x081E0B06
+	.string "{PLAYER}は　どうする？\p"
+	.string "やっぱり　ぜんぶの　ジムバッジ　あつめて\n"
+	.string "ポケモンリーグ　ちょうせん　するのか？\p"
+	.string "オレも　そうしようかな\p"
+	.string "まあ　いいや\n"
+	.string "とにかく　がんばれよ！$"
+
+	.globl LilycoveCity_Text_BrendanYouGoingToPokemonLeague
+LilycoveCity_Text_BrendanYouGoingToPokemonLeague: @ 0x081E0B58
+	.string "{PLAYER}は　どうする？\p"
+	.string "そんなに　つよいんだから\n"
+	.string "ポケモンリーグに　ちょうせん　するのか？\p"
+	.string "オレだって　もうちょっと\n"
+	.string "ポケモン　そだてれば　{PLAYER}よりも\l"
+	.string "つよくなれる　はずだからな\p"
+	.string "まあ　いいや\n"
+	.string "とにかく　がんばれよ！$"
+
+	.globl LilycoveCity_Text_BrendanYouGoingToBattleFrontier
+LilycoveCity_Text_BrendanYouGoingToBattleFrontier: @ 0x081E0BC3
+	.string "{PLAYER}は　どうする？\p"
+	.string "バトルフロンティアに　ちょうせん　する？\n"
+	.string "それとも　ずかんを　かんせい　させる？\p"
+	.string "そんなに　つよいんだから\n"
+	.string "バトルフロンティアに　ちょうせん　するか？\p"
+	.string "オレだって　もうちょっと\n"
+	.string "ポケモン　そだてれば　{PLAYER}よりも\l"
+	.string "つよくなれる　はずだからな\l"
+	.string "バトルフロンティアに　いってみようかな？\p"
+	.string "まあ　いいや\n"
+	.string "とにかく　がんばれよ！$"
+
+	.globl LilycoveCity_Text_MovedLootIntoHideoutToday
+LilycoveCity_Text_MovedLootIntoHideoutToday: @ 0x081E0C6D
+	.string "ふふふ⋯⋯\p"
+	.string "きょうも　うばった　ブツを\n"
+	.string "アジトに　はこびこんだぞ⋯⋯\p"
+	.string "なっ　なんだ　おまえ！\n"
+	.string "いっ　いまのは　ひとりごと　だぞ！$"
+
+	.globl LilycoveCity_Text_ChanceToDoBigThings
+LilycoveCity_Text_ChanceToDoBigThings: @ 0x081E0CAE
+	.string "リーダーが　なに　かんがえてるのか\n"
+	.string "したっぱの　オレには　わからんが\p"
+	.string "アクアだんに　いると\n"
+	.string "すごいこと　できそうだぜ！\p"
+	.string "なっ　なんだ　おまえ！\n"
+	.string "いっ　いまのは　ひとりごと　だぞ！$"
+
+	.globl LilycoveCity_Text_DontGoNearCaveInCove
+LilycoveCity_Text_DontGoNearCaveInCove: @ 0x081E0D08
+	.string "おい　おまえ！\p"
+	.string "いりえに　ある\n"
+	.string "どうくつには　ちかづくなよ！\p"
+	.string "なぜって？　りゆうは　どうでも　いいんだ！\n"
+	.string "おとなの　いうこと　きけよな！！$"
+
+	.globl LilycoveCity_Text_IfWorldBecomesOurs
+LilycoveCity_Text_IfWorldBecomesOurs: @ 0x081E0D4E
+	.string "この　ひろい　せかい　すべてが\n"
+	.string "おれら　アクアだんの　ものに　なったら\l"
+	.string "ポケモンも　しあわせに　なれるはずだ！$"
+
+	.globl LilycoveCity_Text_WailmerLeapOutOfWater
+LilycoveCity_Text_WailmerLeapOutOfWater: @ 0x081E0D86
+	.string "それっ！　ホエルコ！\n"
+	.string "そこで　すいめんから　ジャンプするのだ！$"
+
+	.globl LilycoveCity_Text_GetLostMessingUpTraining
+LilycoveCity_Text_GetLostMessingUpTraining: @ 0x081E0DA6
+	.string "⋯⋯ん？　なんだ　おまえは？\p"
+	.string "トレーニングの　じゃまに　なるから\n"
+	.string "あっちに　いっててくれ！$"
+
+	.globl LilycoveCity_Text_ContestHallInTown
+LilycoveCity_Text_ContestHallInTown: @ 0x081E0DD4
+	.string "この　まちに　ポケモンコンテストの\n"
+	.string "かいじょうが　あるんだな！\p"
+	.string "ということは　よく　そだった　ポケモンが\n"
+	.string "いっぱい　あつまって　いるんだな！\p"
+	.string "わしの　ハートは　わくわく　なんだな！$"
+
+	.globl LilycoveCity_Text_StrangeCaveInCove
+LilycoveCity_Text_StrangeCaveInCove: @ 0x081E0E2F
+	.string "まちの　はずれの　いりえに\n"
+	.string "おかしな　どうくつが　あるの　みた？$"
+
+	.globl LilycoveCity_Text_GoingToMoveDeleterForHMs
+LilycoveCity_Text_GoingToMoveDeleterForHMs: @ 0x081E0E50
+	.string "あたしの　ポケモン\n"
+	.string "コンテストの　ために　あたらしい　わざを\l"
+	.string "おぼえさせる　つもりなの！\p"
+	.string "だからね　わざわすれ　じいさんに　たのんで\n"
+	.string "ひでんわざを　わすれさせて　もらうのよ！$"
+
+	.globl LilycoveCity_Text_ImFromKanto
+LilycoveCity_Text_ImFromKanto: @ 0x081E0EA8
+	.string "ぼくは　カントーから　きました！\p"
+	.string "ホウエン　ちほうは　みずと　みどりに\n"
+	.string "あふれた　うつくしい　ところ　ですね！\p"
+	.string "⋯⋯ん？　ということは？\p"
+	.string "この　とち　だけに　せいそくする\n"
+	.string "めずらしい　ポケモンが　いるのかも？$"
+
+	.globl LilycoveCity_Text_TeamAquaBeenTrainingWailmer
+LilycoveCity_Text_TeamAquaBeenTrainingWailmer: @ 0x081E0F11
+	.string "アクアだんの　れんちゅうが\n"
+	.string "いりえで　ホエルコを\l"
+	.string "トレーニング　してるんだよ！\p"
+	.string "おいらたち　ふなのり\n"
+	.string "このままじゃ　うみに　でられないよ！$"
+
+	.globl LilycoveCity_Text_SomeonePuntedTeamAquaOut
+LilycoveCity_Text_SomeonePuntedTeamAquaOut: @ 0x081E0F57
+	.string "あんた　しってるかい？\p"
+	.string "だれかが　アクアだんを\n"
+	.string "けちらしてくれた　らしいんだ！\p"
+	.string "おかげで　ホエルコ　いなくなって\n"
+	.string "うみに　でられるように　なったよ！$"
+
+	.globl LilycoveCity_Text_SomeoneStoleMyPokemon
+LilycoveCity_Text_SomeoneStoleMyPokemon: @ 0x081E0FA2
+	.string "うみべの　やどで　なみの　おとを\n"
+	.string "ききながら　のんびり　おひるね\l"
+	.string "⋯⋯を　していたら\p"
+	.string "わたしの　ポケモン　とられちゃった！\p"
+	.string "はんにんは　だれー！？\n"
+	.string "アクアだん？　アクアだん　なのー！？$"
+
+	.globl LilycoveCity_Text_MissingPokemonCameBack
+LilycoveCity_Text_MissingPokemonCameBack: @ 0x081E0FFF
+	.string "いなくなってた　わたしの　ポケモン\n"
+	.string "いつのまにか　かえってきたの！$"
+
+	.globl LilycoveCity_Text_ImArtDealer
+LilycoveCity_Text_ImArtDealer: @ 0x081E1021
+	.string "わたしは　ガショウ　です！\p"
+	.string "いや　そういう　なまえ　なのではなく\n"
+	.string "かちのある　えを　かったり　うったりする\l"
+	.string "しょくぎょうの　なまえ　なんです！\p"
+	.string "このまちの　びじゅつかんに　すばらしい\n"
+	.string "めいが　が　あると　きいたの　ですが⋯⋯$"
+
+	.globl LilycoveCity_Text_SeaRemainsForeverYoung
+LilycoveCity_Text_SeaRemainsForeverYoung: @ 0x081E1092
+	.string "わしらが　しわくちゃに　なっても\n"
+	.string "このうみは　いつまでも　わかわかしく\l"
+	.string "いのちの　かがやきに　あふれとる\p"
+	.string "ふほほ　ふほほほほ⋯⋯$"
+
+	.globl LilycoveCity_Text_SixtyYearsAgoHusbandProposed
+LilycoveCity_Text_SixtyYearsAgoHusbandProposed: @ 0x081E10D3
+	.string "60ねんまえ　ここで　おじいしゃんが\n"
+	.string "わしに　プロポーズ　してくれた　ときから\l"
+	.string "このうみは　うつくしいまま　ですのじゃ\p"
+	.string "むふふ　むふふふふ⋯⋯$"
+
+	.globl LilycoveCity_Text_TeamAquaRenovatedCavern
+LilycoveCity_Text_TeamAquaRenovatedCavern: @ 0x081E111B
+	.string "この　いりえの　ところに　おかしな\n"
+	.string "どうくつの　いりぐちが　ある　じゃろう？\p"
+	.string "いぜんは　てんねんの　どうくつ　だったが\n"
+	.string "アクアだん　とかいう　れんちゅうが\l"
+	.string "かいぞうして　あんなふうに　したんじゃ！\p"
+	.string "‘しぜんを　あいする　アクアだん！’\n"
+	.string "⋯⋯と　いっておるが\p"
+	.string "いうことと　やることが　ちがっとる！$"
+
+	.globl LilycoveCity_Text_TeamAquaLotGoneForGood
+LilycoveCity_Text_TeamAquaLotGoneForGood: @ 0x081E11AF
+	.string "いりえに　あった　どうくつ⋯⋯\n"
+	.string "いつのまにやら　カラッポに　なっておる\p"
+	.string "アクアだんの　れんちゅう\n"
+	.string "どこかへ　いって　しまったらしい　のう$"
+
+	.globl LilycoveCity_Text_CitySign
+LilycoveCity_Text_CitySign: @ 0x081E11F4
+	.string "ここは　ミナモ　シティ\n"
+	.string "りくちの　さいはて　うみの　はじまり$"
+
+	.globl LilycoveCity_Text_ContestHallSign
+LilycoveCity_Text_ContestHallSign: @ 0x081E1213
+	.string "ポケモンコンテスト　かいじょう\n"
+	.string "あつまれ！　ポケモン　トレーナー$"
+
+	.globl LilycoveCity_Text_MotelSign
+LilycoveCity_Text_MotelSign: @ 0x081E1234
+	.string "‘みんしゅく　モナミ’\n"
+	.string "ミナモのモナミ　と　おぼえて　ください$"
+
+	.globl LilycoveCity_Text_MuseumSign
+LilycoveCity_Text_MuseumSign: @ 0x081E1254
+	.string "‘ミナモ　びじゅつかん’\n"
+	.string "ポケモン　めいがてん　かいさい　ちゅう！$"
+
+	.globl LilycoveCity_Text_MuseumSignPlayersExhibit
+LilycoveCity_Text_MuseumSignPlayersExhibit: @ 0x081E1276
+	.string "‘ミナモ　びじゅつかん’\p"
+	.string "{PLAYER}の　ポケモン　コレクション\n"
+	.string "かいさい　ちゅう！$"
+
+	.globl LilycoveCity_Text_HarborSignUnderConstruction
+LilycoveCity_Text_HarborSignUnderConstruction: @ 0x081E129D
+	.string "‘ミナモ　シティ　ふねのりば’\p"
+	.string "れんらくせん　タイドリップごう　は\n"
+	.string "カイナシティにて　けんぞう　ちゅう！\p"
+	.string "もう　しばらく　おまちください！$"
+
+	.globl LilycoveCity_Text_HarborSign
+LilycoveCity_Text_HarborSign: @ 0x081E12E3
+	.string "‘ミナモ　シティ　ふねのりば’\p"
+	.string "れんらくせん　タイドリップごうで\n"
+	.string "ふねの　たびを　おたのしみ　ください！$"
+
+	.globl LilycoveCity_Text_TrainerFanClubSign
+LilycoveCity_Text_TrainerFanClubSign: @ 0x081E1318
+	.string "‘ポケモン　トレーナー　ファンクラブ’\p"
+	.string "かんばんに　いろんな　トレーナーの\n"
+	.string "なまえが　らくがき　されている⋯⋯$"
+
+	.globl LilycoveCity_Text_DepartmentStoreSign
+LilycoveCity_Text_DepartmentStoreSign: @ 0x081E1350
+	.string "‘ミナモ　デパート’\p"
+	.string "グッズ　いっぱい！　ドキドキ　いっぱい！\n"
+	.string "なにかが　みつかる　すてきな　ところ$"
+
+	.globl LilycoveCity_Text_MoveDeletersHouseSign
+LilycoveCity_Text_MoveDeletersHouseSign: @ 0x081E1383
+	.string "‘わざわすれ　じいさんの　いえ’\n"
+	.string "ポケモンの　わざ　わすれさせます$"
+
+	.globl LilycoveCity_Text_DoYouKnowAboutBerryBlender
+LilycoveCity_Text_DoYouKnowAboutBerryBlender: @ 0x081E13A5
+	.string "きのみブレンダー　っていう\n"
+	.string "マシンを　しってるかい？$"
+
+	.globl LilycoveCity_Text_FasterSpinBetterPokeblocks
+LilycoveCity_Text_FasterSpinBetterPokeblocks: @ 0x081E13C0
+	.string "みんなで　こうそくで　まわし　まくるんだ\p"
+	.string "すっげー　はやいと\n"
+	.string "すっげー　いいポロックが　できるらしいぜ！$"
+
+	.globl LilycoveCity_Text_ExplainBerryBlender
+LilycoveCity_Text_ExplainBerryBlender: @ 0x081E13F5
+	.string "ポロックっていう　おかしが　できるんだぜ\p"
+	.string "いいポロックを　つくると　ポケモンの\n"
+	.string "コンディションも　ぐーんと　アップさ！$"
+
+	.globl LilycoveCity_Text_HeardTowerCalledSkyPillar
+LilycoveCity_Text_HeardTowerCalledSkyPillar: @ 0x081E1431
+	.string "あのな　どこかの　すいどうに\n"
+	.string "そらのはしら　とかいう　とうが\l"
+	.string "たってる　らしいぜ$"
+
+	.globl LilycoveCity_Text_SawTallTowerOnRoute131
+LilycoveCity_Text_SawTallTowerOnRoute131: @ 0x081E145A
+	.string "オレな　131ばん　すいどうの　あたりで\n"
+	.string "たかーい　とうを　みたんだけど\l"
+	.string "もしかして　それって⋯⋯？$"
+
+	.globl LilycoveCity_Text_JustArrivedAndSawRarePokemon
+LilycoveCity_Text_JustArrivedAndSawRarePokemon: @ 0x081E148D
+	.string "ぼくら　しんこん　りょこうで\n"
+	.string "このまちに　きたばかり　なんだけど\p"
+	.string "ドラゴンタイプの　ポケモンが\n"
+	.string "そらを　とんで　いくのを　みたんだよ！\p"
+	.string "ホウエン　ちほうには\n"
+	.string "あんな　かっこいい　ポケモンが\l"
+	.string "せいそく　してるのかい？$"
+
+	.globl LilycoveCity_Text_HoneymoonVowToSeeRarePokemon
+LilycoveCity_Text_HoneymoonVowToSeeRarePokemon: @ 0x081E14F9
+	.string "わたしたちの　しんこん　りょこうは\n"
+	.string "かくちの　めずらしい　ポケモンを\l"
+	.string "できるだけ　たくさん　みること　なんです\p"
+	.string "この　まちに　とうちゃく　したら\n"
+	.string "いきなり　めずらしい　ポケモンが　みられて\l"
+	.string "とても　ハッピー　だわ！$"

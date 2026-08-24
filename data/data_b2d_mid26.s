@@ -926,28 +926,28 @@ gMapEvents_FORTREE_CITY: @ 0x084FF3E0
 	map_events FORTREE_CITY_EventObjects, FORTREE_CITY_EventWarps, 0, FORTREE_CITY_EventBgEvents
 	.globl LILYCOVE_CITY_EventObjects
 LILYCOVE_CITY_EventObjects: @ 0x084FF3F4
-	object_event 1, 49, 0, 32, 20, 3, 3, 0, 1, 0, 0, LilycoveCity_EventScript_001E0288, 0x0000
-	object_event 2, 8, 0, 15, 18, 3, 2, 1, 1, 0, 0, LilycoveCity_EventScript_001E0260, 0x0000
-	object_event 3, 19, 0, 28, 28, 3, 1, 0, 0, 0, 0, LilycoveCity_EventScript_001E0257, 0x0000
-	object_event 4, 15, 0, 21, 15, 3, 2, 1, 1, 0, 0, LilycoveCity_EventScript_001E027F, 0x0000
-	object_event 5, 23, 0, 16, 9, 5, 5, 1, 0, 0, 0, LilycoveCity_EventScript_001E02C6, 0x0000
-	object_event 6, 20, 0, 35, 27, 3, 2, 1, 1, 0, 0, LilycoveCity_EventScript_001E02A7, 0x0000
-	object_event 7, 21, 0, 35, 37, 5, 8, 0, 0, 0, 0, LilycoveCity_EventScript_001E02CF, 0x0000
-	object_event 8, 22, 0, 34, 37, 5, 8, 0, 0, 0, 0, LilycoveCity_EventScript_001E02D8, 0x0000
-	object_event 9, 21, 0, 57, 17, 3, 1, 0, 0, 0, 0, LilycoveCity_EventScript_001E02E1, 0x0000
-	object_event 10, 117, 0, 73, 15, 3, 10, 0, 0, 0, 0, LilycoveCity_EventScript_001E03B2, 0x0354
+	object_event 1, 49, 0, 32, 20, 3, 3, 0, 1, 0, 0, LilycoveCity_EventScript_Sailor2, 0x0000
+	object_event 2, 8, 0, 15, 18, 3, 2, 1, 1, 0, 0, LilycoveCity_EventScript_Girl, 0x0000
+	object_event 3, 19, 0, 28, 28, 3, 1, 0, 0, 0, 0, LilycoveCity_EventScript_Man3, 0x0000
+	object_event 4, 15, 0, 21, 15, 3, 2, 1, 1, 0, 0, LilycoveCity_EventScript_RichBoy, 0x0000
+	object_event 5, 23, 0, 16, 9, 5, 5, 1, 0, 0, 0, LilycoveCity_EventScript_Man2, 0x0000
+	object_event 6, 20, 0, 35, 27, 3, 2, 1, 1, 0, 0, LilycoveCity_EventScript_Woman2, 0x0000
+	object_event 7, 21, 0, 35, 37, 5, 8, 0, 0, 0, 0, LilycoveCity_EventScript_ExpertM1, 0x0000
+	object_event 8, 22, 0, 34, 37, 5, 8, 0, 0, 0, 0, LilycoveCity_EventScript_ExpertF, 0x0000
+	object_event 9, 21, 0, 57, 17, 3, 1, 0, 0, 0, 0, LilycoveCity_EventScript_ExpertM2, 0x0000
+	object_event 10, 117, 0, 73, 15, 3, 10, 0, 0, 0, 0, LilycoveCity_EventScript_WailmerTrainerGrunt, 0x0354
 	object_event 11, 59, 0, 61, 36, 5, 1, 0, 0, 0, 0, 0x08256E3F, 0x0412
-	object_event 12, 117, 0, 43, 18, 3, 5, 1, 0, 0, 0, LilycoveCity_EventScript_001E040A, 0x0354
-	object_event 13, 117, 0, 46, 12, 3, 9, 0, 0, 0, 0, LilycoveCity_EventScript_001E03EF, 0x0354
-	object_event 14, 117, 0, 45, 12, 3, 10, 0, 0, 0, 0, LilycoveCity_EventScript_001E03F8, 0x0354
-	object_event 15, 117, 0, 38, 9, 5, 9, 0, 0, 0, 0, LilycoveCity_EventScript_001E0401, 0x0354
-	object_event 16, 48, 0, 50, 7, 5, 2, 1, 1, 0, 0, LilycoveCity_EventScript_001E020D, 0x0000
-	object_event 17, 240, 0, 27, 7, 5, 8, 1, 1, 0, 0, LilycoveCity_EventScript_001E0413, 0x03CB
-	object_event 18, 38, 0, 16, 23, 3, 10, 1, 1, 0, 0, LilycoveCity_EventScript_001E0662, 0x0000
-	object_event 19, 24, 0, 41, 25, 3, 9, 1, 1, 0, 0, LilycoveCity_EventScript_001E0323, 0x0000
-	object_event 20, 23, 0, 40, 25, 3, 10, 1, 1, 0, 0, LilycoveCity_EventScript_001E0312, 0x0000
-	object_event 21, 49, 0, 16, 34, 3, 8, 1, 1, 0, 0, LilycoveCity_EventScript_001E0300, 0x0000
-	object_event 22, 17, 0, 16, 35, 3, 7, 1, 1, 0, 0, LilycoveCity_EventScript_001E0309, 0x0000
+	object_event 12, 117, 0, 43, 18, 3, 5, 1, 0, 0, 0, LilycoveCity_EventScript_AquaGrunt4, 0x0354
+	object_event 13, 117, 0, 46, 12, 3, 9, 0, 0, 0, 0, LilycoveCity_EventScript_AquaGrunt1, 0x0354
+	object_event 14, 117, 0, 45, 12, 3, 10, 0, 0, 0, 0, LilycoveCity_EventScript_AquaGrunt2, 0x0354
+	object_event 15, 117, 0, 38, 9, 5, 9, 0, 0, 0, 0, LilycoveCity_EventScript_AquaGrunt3, 0x0354
+	object_event 16, 48, 0, 50, 7, 5, 2, 1, 1, 0, 0, LilycoveCity_EventScript_BerryGentleman, 0x0000
+	object_event 17, 240, 0, 27, 7, 5, 8, 1, 1, 0, 0, LilycoveCity_EventScript_Rival, 0x03CB
+	object_event 18, 38, 0, 16, 23, 3, 10, 1, 1, 0, 0, LilycoveCity_EventScript_SchoolKidM, 0x0000
+	object_event 19, 24, 0, 41, 25, 3, 9, 1, 1, 0, 0, LilycoveCity_EventScript_Woman1, 0x0000
+	object_event 20, 23, 0, 40, 25, 3, 10, 1, 1, 0, 0, LilycoveCity_EventScript_Man1, 0x0000
+	object_event 21, 49, 0, 16, 34, 3, 8, 1, 1, 0, 0, LilycoveCity_EventScript_Sailor1, 0x0000
+	object_event 22, 17, 0, 16, 35, 3, 7, 1, 1, 0, 0, LilycoveCity_EventScript_FatMan, 0x0000
 	.globl LILYCOVE_CITY_EventWarps
 LILYCOVE_CITY_EventWarps: @ 0x084FF604
 	warp_def 27, 6, 0, 0, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F
@@ -966,16 +966,16 @@ LILYCOVE_CITY_EventWarps: @ 0x084FF604
 	warp_def 12, 5, 0, 1, MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F
 	.globl LILYCOVE_CITY_EventBgEvents
 LILYCOVE_CITY_EventBgEvents: @ 0x084FF674
-	bg_event 19, 7, 0, 0, LilycoveCity_EventScript_001E034F, 0, 0
+	bg_event 19, 7, 0, 0, LilycoveCity_EventScript_MuseumSign, 0, 0
 	bg_event 25, 14, 0, 1, 0x08242EFF, 0, 0
-	bg_event 29, 7, 0, 0, LilycoveCity_EventScript_001E03A0, 0, 0
+	bg_event 29, 7, 0, 0, LilycoveCity_EventScript_DepartmentStoreSign, 0, 0
 	bg_event 26, 14, 0, 1, 0x08242EFF, 0, 0
-	bg_event 6, 15, 0, 0, LilycoveCity_EventScript_001E0334, 0, 0
-	bg_event 29, 24, 0, 0, LilycoveCity_EventScript_001E033D, 0, 0
-	bg_event 35, 24, 0, 0, LilycoveCity_EventScript_001E0346, 0, 0
-	bg_event 6, 30, 3, 0, LilycoveCity_EventScript_001E0379, 0, 0
-	bg_event 36, 14, 0, 0, LilycoveCity_EventScript_001E0397, 0, 0
-	bg_event 34, 6, 0, 0, LilycoveCity_EventScript_001E03A9, 0, 0
+	bg_event 6, 15, 0, 0, LilycoveCity_EventScript_CitySign, 0, 0
+	bg_event 29, 24, 0, 0, LilycoveCity_EventScript_ContestHallSign, 0, 0
+	bg_event 35, 24, 0, 0, LilycoveCity_EventScript_MotelSign, 0, 0
+	bg_event 6, 30, 3, 0, LilycoveCity_EventScript_HarborSign, 0, 0
+	bg_event 36, 14, 0, 0, LilycoveCity_EventScript_TrainerFanClubSign, 0, 0
+	bg_event 34, 6, 0, 0, LilycoveCity_EventScript_MoveDeletersHouseSign, 0, 0
 	bg_event 36, 31, 3, 7, 0x006F, 0x1B, 0x00
 	bg_event 61, 7, 0, 7, 0x0045, 0x2B, 0x00
 	bg_event 64, 31, 0, 7, 0x0004, 0x4B, 0x00
