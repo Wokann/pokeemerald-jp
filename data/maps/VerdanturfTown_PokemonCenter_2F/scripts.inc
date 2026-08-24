@@ -7,4 +7,18 @@ VerdanturfTown_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-	.incbin "baserom_jp.gba", 0x1f70f3, 0x737
+@ The below 3 are unused and leftover from RS.
+VerdanturfTown_PokemonCenter_2F_EventScript_Colosseum::
+	call CableClub_EventScript_Colosseum
+	end
+
+VerdanturfTown_PokemonCenter_2F_EventScript_TradeCenter::
+	call CableClub_EventScript_TradeCenter
+	end
+
+VerdanturfTown_PokemonCenter_2F_EventScript_RecordCorner::
+	call CableClub_EventScript_RecordCorner
+	end
+
+@ The next unstructured Verdanturf map starts at 0x081F7105.
+	.incbin "baserom_jp.gba", 0x1f7105, 0x725
