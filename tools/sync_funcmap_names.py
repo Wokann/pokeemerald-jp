@@ -15,10 +15,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 US_MAP = ROOT / "funcmap_us.txt"
 JP_MAP = ROOT / "funcmap_jp.txt"
-EMERALD_MAP = ROOT.parent / "pokeemerald" / "pokeemerald.map"
-EMERALD_SYM = ROOT.parent / "pokeemerald" / "pokeemerald.sym"
+US_ROOT_CANDIDATES = (ROOT.parent / "pokeemerald", ROOT.parent.parent / "pokeemerald")
+US_ROOT = next((path for path in US_ROOT_CANDIDATES if (path / "src").is_dir()),
+               US_ROOT_CANDIDATES[0])
+EMERALD_MAP = US_ROOT / "pokeemerald.map"
+EMERALD_SYM = US_ROOT / "pokeemerald.sym"
 
-MAP_RE = re.compile(r"^([0-9A-Fa-f]{8})\s+\S+\s+(\S+)\s*$")
+MAP_RE = re.compile(r"^([0-9A-Fa-f]{8})(?:\s+\S+)*\s+(\S+)\s*$")
 
 
 def load_funcmap(path):
@@ -115,7 +118,7 @@ def main():
             if m:
                 addr = int(m.group(1), 16)
                 if addr in rows_by_addr:
-                    lines.append(f"{m.group(1):s} {m.group(2):s} {rows_by_addr[addr]}")
+                    lines.append(line[:m.start(2)] + rows_by_addr[addr])
                     continue
             lines.append(line)
         path.write_text("\n".join(lines) + "\n", encoding="utf-8")
