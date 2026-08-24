@@ -1,422 +1,382 @@
 @ VerdanturfTown_BattleTentLobby scripts (JP map g6 m0 @ 0x081F6365)
 
 VerdanturfTown_BattleTentLobby_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, VerdanturfTown_BattleTentLobby_MapScriptTable_001F6384
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, VerdanturfTown_BattleTentLobby_MapScriptTable_001F6370
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, VerdanturfTown_BattleTentLobby_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, VerdanturfTown_BattleTentLobby_OnWarp
 	.byte 0
 
-VerdanturfTown_BattleTentLobby_MapScriptTable_001F6370::
-	map_script_2 0x4001, 0x0, VerdanturfTown_BattleTentLobby_EventScript_001F637A
+VerdanturfTown_BattleTentLobby_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, VerdanturfTown_BattleTentLobby_EventScript_TurnPlayerNorth
 	.2byte 0
 
-VerdanturfTown_BattleTentLobby_EventScript_001F637A::
-	setvar 0x4001, 0x1
-	turnobject 0xFF, 0x2
+VerdanturfTown_BattleTentLobby_EventScript_TurnPlayerNorth::
+	setvar VAR_TEMP_1, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-VerdanturfTown_BattleTentLobby_MapScriptTable_001F6384::
-	map_script_2 0x4000, 0x0, VerdanturfTown_BattleTentLobby_EventScript_001F63AE
-	map_script_2 0x4000, 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F63B7
-	map_script_2 0x4000, 0x2, VerdanturfTown_BattleTentLobby_EventScript_001F64CC
-	map_script_2 0x4000, 0x3, VerdanturfTown_BattleTentLobby_EventScript_001F63EC
-	map_script_2 0x4000, 0x4, VerdanturfTown_BattleTentLobby_EventScript_001F6492
+VerdanturfTown_BattleTentLobby_OnFrame:
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, VerdanturfTown_BattleTentLobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, VerdanturfTown_BattleTentLobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, VerdanturfTown_BattleTentLobby_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, VerdanturfTown_BattleTentLobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, VerdanturfTown_BattleTentLobby_EventScript_LostChallenge
 	.2byte 0
 
-VerdanturfTown_BattleTentLobby_EventScript_001F63AE::
-	setvar 0x8004, 0x0
-	special CallFrontierUtilFunc
+VerdanturfTown_BattleTentLobby_EventScript_GetChallengeStatus::
+	frontier_getstatus
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F63B7::
+VerdanturfTown_BattleTentLobby_EventScript_QuitWithoutSaving::
 	lockall
-	loadword 0x0, gJPText_0022A7B5
-	callstd 0x4
+	msgbox BattleFrontier_BattlePalaceLobby_Text_FailedToSaveBeforeEndingChallenge, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
 	releaseall
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F63EC::
+VerdanturfTown_BattleTentLobby_EventScript_WonChallenge::
 	lockall
-	loadword 0x0, gJPText_002752A6
-	callstd 0x4
-	message gJPText_002752D8
+	msgbox VerdanturfTown_BattleTentLobby_Text_AchievedThreeWinStreak, MSGBOX_DEFAULT
+	message VerdanturfTown_BattleTentLobby_Text_FeatWillBeRecorded
 	waitmessage
-	setvar 0x8004, 0x6
-	special CallVerdanturfTentFunction
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x5
-	setvar 0x8005, 0x0
-	special CallVerdanturfTentFunction
-	playse 0x37
+	verdanturftent_setrandomprize
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
+	verdanturftent_save 0
+	playse SE_SAVE
 	waitse
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6426::
-	loadword 0x0, gJPText_002752ED
-	callstd 0x4
-	setvar 0x8004, 0x7
-	special CallVerdanturfTentFunction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6472
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	message gJPText_00227865
+VerdanturfTown_BattleTentLobby_EventScript_GivePrize::
+	msgbox VerdanturfTown_BattleTentLobby_Text_PresentYouWithPrize, MSGBOX_DEFAULT
+	verdanturftent_giveprize
+	switch VAR_RESULT
+	case FALSE, VerdanturfTown_BattleTentLobby_EventScript_NoRoomForPrize
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	message BattleFrontier_BattleDomeLobby_Text_ReceivedPrize  @ Odd that it used Dome's copy instead of Palace's
 	waitmessage
-	playfanfare 0x172
+	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
-	loadword 0x0, gJPText_002750A3
-	callstd 0x4
+	msgbox VerdanturfTown_BattleTentLobby_Text_ReturnFortified, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6472::
-	loadword 0x0, gJPText_0022A766
-	callstd 0x4
+VerdanturfTown_BattleTentLobby_EventScript_NoRoomForPrize::
+	msgbox BattleFrontier_BattlePalaceLobby_Text_NoSpaceForPrize, MSGBOX_DEFAULT
 	waitmessage
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6483::
+VerdanturfTown_BattleTentLobby_EventScript_PrizeWaiting::
 	lockall
-	loadword 0x0, gJPText_002752A6
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F6426
+	msgbox VerdanturfTown_BattleTentLobby_Text_AchievedThreeWinStreak, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_GivePrize
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6492::
+VerdanturfTown_BattleTentLobby_EventScript_LostChallenge::
 	lockall
-	message gJPText_0027527B
+	message VerdanturfTown_BattleTentLobby_Text_ResultsWillBeRecorded
 	waitmessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x5
-	setvar 0x8005, 0x0
-	special CallVerdanturfTentFunction
-	playse 0x37
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
+	verdanturftent_save 0
+	playse SE_SAVE
 	waitse
-	loadword 0x0, gJPText_002750A3
-	callstd 0x4
+	msgbox VerdanturfTown_BattleTentLobby_Text_ReturnFortified, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F64CC::
+VerdanturfTown_BattleTentLobby_EventScript_ResumeChallenge::
 	lockall
-	loadword 0x0, gJPText_0022A790
-	callstd 0x4
-	message gJPText_0022A79A
+	msgbox BattleFrontier_BattlePalaceLobby_Text_WeHaveBeenWaiting, MSGBOX_DEFAULT
+	message BattleFrontier_BattlePalaceLobby_Text_MustSaveBeforeChallenge
 	waitmessage
-	setvar 0x8004, 0x5
-	setvar 0x8005, 0x1
-	special CallVerdanturfTentFunction
-	playse 0x37
+	verdanturftent_save CHALLENGE_STATUS_SAVING
+	playse SE_SAVE
 	waitse
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F6643
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	goto VerdanturfTown_BattleTentLobby_EventScript_EnterChallenge
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6508::
+VerdanturfTown_BattleTentLobby_EventScript_Attendant::
 	lock
 	faceplayer
-	setvar 0x8004, 0x1
-	special CallVerdanturfTentFunction
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, VerdanturfTown_BattleTentLobby_EventScript_001F6483
+	verdanturftent_getprize
+	goto_if_ne VAR_RESULT, ITEM_NONE, VerdanturfTown_BattleTentLobby_EventScript_PrizeWaiting
 	special SavePlayerParty
-	loadword 0x0, 0x08274F21
-	callstd 0x4
-
-VerdanturfTown_BattleTentLobby_EventScript_001F6528::
-	message 0x08274F55
+	msgbox VerdanturfTown_BattleTentLobby_Text_WelcomeToBattleTent, MSGBOX_DEFAULT
+VerdanturfTown_BattleTentLobby_EventScript_AskEnterChallenge::
+	message VerdanturfTown_BattleTentLobby_Text_TakeChallenge
 	waitmessage
-	multichoice 0x11, 0x6, 0x17, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6564
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6670
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F66CC
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F66CC
+	multichoice 17, 6, MULTI_CHALLENGEINFO, FALSE
+	switch VAR_RESULT
+	case 0, VerdanturfTown_BattleTentLobby_EventScript_TryEnterChallenge
+	case 1, VerdanturfTown_BattleTentLobby_EventScript_ExplainChallenge
+	case 2, VerdanturfTown_BattleTentLobby_EventScript_CancelChallenge
+	case MULTI_B_PRESSED, VerdanturfTown_BattleTentLobby_EventScript_CancelChallenge
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6564::
-	setvar 0x40CF, 0x2
-	setvar 0x40CE, 0x0
-	setvar 0x800D, 0x2
-	setvar 0x8004, 0xF
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x8004, 0x1
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F667D
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x2
-	special CallFrontierUtilFunc
-	loadword 0x0, 0x0827522E
-	callstd 0x4
-	fadescreen 0x1
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x3
-	special sub_080F9D20
-	waitstate
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F66C9
-	loadword 0x0, 0x0827524A
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F66C9
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F65E9
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F66C9
+VerdanturfTown_BattleTentLobby_EventScript_TryEnterChallenge::
+	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_PALACE
+	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES
+	setvar VAR_RESULT, 2
+	frontier_checkineligible
+	goto_if_eq VAR_0x8004, TRUE, VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMons
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_TENT
+	msgbox VerdanturfTown_BattleTentLobby_Text_SelectThreeMons, MSGBOX_DEFAULT
+	fadescreen FADE_TO_BLACK
+	setvar VAR_0x8004, 1
+	setvar VAR_0x8005, FRONTIER_PARTY_SIZE
+	special ChoosePartyForBattleFrontier
+	goto_if_eq VAR_RESULT, 0, VerdanturfTown_BattleTentLobby_EventScript_LoadPartyCancelChallenge
+	msgbox VerdanturfTown_BattleTentLobby_Text_SaveBeforeChallenge, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, VerdanturfTown_BattleTentLobby_EventScript_LoadPartyCancelChallenge
+	case YES, VerdanturfTown_BattleTentLobby_EventScript_SaveBeforeChallenge
+	case MULTI_B_PRESSED, VerdanturfTown_BattleTentLobby_EventScript_LoadPartyCancelChallenge
 
-VerdanturfTown_BattleTentLobby_EventScript_001F65E9::
-	setvar 0x4000, 0x0
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x4
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x0
-	special CallVerdanturfTentFunction
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x1
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+VerdanturfTown_BattleTentLobby_EventScript_SaveBeforeChallenge::
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
+	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
+	verdanturftent_init
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
 	special LoadPlayerParty
 	closemessage
-	delay 0x2
-	call 0x082423E9
-	setvar 0x4000, 0xFF
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F66B2
-
-VerdanturfTown_BattleTentLobby_EventScript_001F6643::
+	delay 2
+	call Common_EventScript_SaveGame
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	goto_if_eq VAR_RESULT, 0, VerdanturfTown_BattleTentLobby_EventScript_CancelChallengeSaveFailed
+VerdanturfTown_BattleTentLobby_EventScript_EnterChallenge::
 	special SavePlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	loadword 0x0, gJPText_0027526A
-	callstd 0x4
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	msgbox VerdanturfTown_BattleTentLobby_Text_NowFollowMe, MSGBOX_DEFAULT
 	closemessage
-	call VerdanturfTown_BattleTentLobby_EventScript_001F66D6
-	warp 0x601, 0xFF, 0x2, 0x7
-	setvar 0x4000, 0x0
+	call VerdanturfTown_BattleTentLobby_EventScript_WalkToDoor
+	warp MAP_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR, 2, 7
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	waitstate
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6670::
-	loadword 0x0, 0x08274F71
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F6528
+VerdanturfTown_BattleTentLobby_EventScript_ExplainChallenge::
+	msgbox VerdanturfTown_BattleTentLobby_Text_ExplainVerdanturfTent, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_AskEnterChallenge
 
-VerdanturfTown_BattleTentLobby_EventScript_001F667D::
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6698
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F66A5
+VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMons::
+	switch VAR_RESULT
+	case FRONTIER_LVL_50, VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMonsLv50
+	case FRONTIER_LVL_OPEN, VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMonsLvOpen
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6698::
-	loadword 0x0, 0x082750F0
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F66D4
+VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMonsLv50::
+	msgbox VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLv50, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_EndCancelChallenge
 
-VerdanturfTown_BattleTentLobby_EventScript_001F66A5::
-	loadword 0x0, 0x0827518F
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F66D4
+VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMonsLvOpen::
+	msgbox VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_EndCancelChallenge
 
-VerdanturfTown_BattleTentLobby_EventScript_001F66B2::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F66CC
+VerdanturfTown_BattleTentLobby_EventScript_CancelChallengeSaveFailed::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	goto VerdanturfTown_BattleTentLobby_EventScript_CancelChallenge
 
-VerdanturfTown_BattleTentLobby_EventScript_001F66C9::
+VerdanturfTown_BattleTentLobby_EventScript_LoadPartyCancelChallenge::
 	special LoadPlayerParty
-
-VerdanturfTown_BattleTentLobby_EventScript_001F66CC::
-	loadword 0x0, gJPText_002750A3
-	callstd 0x4
-
-VerdanturfTown_BattleTentLobby_EventScript_001F66D4::
+VerdanturfTown_BattleTentLobby_EventScript_CancelChallenge::
+	msgbox VerdanturfTown_BattleTentLobby_Text_ReturnFortified, MSGBOX_DEFAULT
+VerdanturfTown_BattleTentLobby_EventScript_EndCancelChallenge::
 	release
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F66D6::
-	applymovement 0x1, 0x081F6705
-	applymovement 0xFF, 0x081F6705
-	waitmovement 0x0
-	opendoor 0x6, 0x1
+VerdanturfTown_BattleTentLobby_EventScript_WalkToDoor::
+	applymovement LOCALID_VERDANTURF_TENT_ATTENDANT, VerdanturfTown_BattleTentLobby_Movement_WalkToDoor
+	applymovement LOCALID_PLAYER, VerdanturfTown_BattleTentLobby_Movement_WalkToDoor
+	waitmovement 0
+	opendoor 6, 1
+	@ The JP command table retains waitmoncry (0xAE) at these two sites.
 	waitmoncry
-	applymovement 0x1, 0x081F6709
-	applymovement 0xFF, 0x081F670C
-	waitmovement 0x0
-	closedoor 0x6, 0x1
+	applymovement LOCALID_VERDANTURF_TENT_ATTENDANT, VerdanturfTown_BattleTentLobby_Movement_AttendantEnterDoor
+	applymovement LOCALID_PLAYER, VerdanturfTown_BattleTentLobby_Movement_PlayerEnterDoor
+	waitmovement 0
+	closedoor 6, 1
 	waitmoncry
 	return
 
-	.incbin "baserom_jp.gba", 0x1f6705, 0xb
-VerdanturfTown_BattleTentLobby_EventScript_001F6710::
+VerdanturfTown_BattleTentLobby_Movement_WalkToDoor:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+VerdanturfTown_BattleTentLobby_Movement_AttendantEnterDoor:
+	walk_up
+	set_invisible
+	step_end
+
+VerdanturfTown_BattleTentLobby_Movement_PlayerEnterDoor:
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+VerdanturfTown_BattleTentLobby_EventScript_AttractGiver::
 	lock
 	faceplayer
-	checkflag 0xEB
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6747
-	loadword 0x0, 0x081F696C
-	callstd 0x4
-	setorcopyvar 0x8000, 0x14D
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0xEB
-	loadword 0x0, 0x081F69C3
-	callstd 0x4
+	goto_if_set FLAG_RECEIVED_TM_ATTRACT, VerdanturfTown_BattleTentLobby_EventScript_ReceivedAttract
+	msgbox VerdanturfTown_BattleTentLobby_Text_AttractionRunsDeep, MSGBOX_DEFAULT
+	giveitem ITEM_TM_ATTRACT
+	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_TM_ATTRACT
+	msgbox VerdanturfTown_BattleTentLobby_Text_AttractionMutual, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6747::
-	loadword 0x0, 0x081F69C3
-	callstd 0x4
+VerdanturfTown_BattleTentLobby_EventScript_ReceivedAttract::
+	msgbox VerdanturfTown_BattleTentLobby_Text_AttractionMutual, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6751::
-	loadword 0x0, 0x081F6A08
-	callstd 0x2
+VerdanturfTown_BattleTentLobby_EventScript_Boy1::
+	msgbox VerdanturfTown_BattleTentLobby_Text_TaughtWhatKindsOfMoves, MSGBOX_NPC
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F675A::
+VerdanturfTown_BattleTentLobby_EventScript_Boy2::
 	lock
-	loadword 0x0, 0x081F6869
-	callstd 0x4
+	msgbox VerdanturfTown_BattleTentLobby_Text_MonsReluctantToUseDislikedMoves, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6765::
+VerdanturfTown_BattleTentLobby_EventScript_Scott::
 	lock
 	faceplayer
-	checkflag 0x1CC
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6782
-	loadword 0x0, 0x081F6A5B
-	callstd 0x4
-	addvar 0x40D1, 0x1
-	setflag 0x1CC
+	goto_if_set FLAG_MET_SCOTT_IN_VERDANTURF, VerdanturfTown_BattleTentLobby_EventScript_ScottAlreadySpokenTo
+	msgbox VerdanturfTown_BattleTentLobby_Text_ScottCanMeetToughTrainers, MSGBOX_DEFAULT
+	addvar VAR_SCOTT_STATE, 1
+	setflag FLAG_MET_SCOTT_IN_VERDANTURF
 	release
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6782::
-	loadword 0x0, 0x081F6ADD
-	callstd 0x4
+VerdanturfTown_BattleTentLobby_EventScript_ScottAlreadySpokenTo::
+	msgbox VerdanturfTown_BattleTentLobby_Text_ScottVisitRegularly, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F678C::
+VerdanturfTown_BattleTentLobby_EventScript_LittleBoy::
 	lock
-	loadword 0x0, 0x081F6909
-	callstd 0x4
+	msgbox VerdanturfTown_BattleTentLobby_Text_GentleMonsScaryIfAngry, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6797::
+VerdanturfTown_BattleTentLobby_EventScript_RulesBoard::
 	lockall
-	loadword 0x0, 0x08275C42
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F67A6
+	msgbox VerdanturfTown_BattleTentLobby_Text_RulesAreListed, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F67A6::
-	message 0x0822AC54
+VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard::
+	message BattleFrontier_BattlePalaceLobby_Text_ReadWhichHeading
 	waitmessage
-	setvar 0x8004, 0xC
-	special sub_0813A164
-	waitstate
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6813
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6821
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F682F
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F683D
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F684B
-	compare_var_to_value 0x8000, 0x5
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6859
-	compare_var_to_value 0x8000, 0x6
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6867
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, VerdanturfTown_BattleTentLobby_EventScript_001F6867
+	setvar VAR_0x8004, SCROLL_MULTI_BATTLE_TENT_RULES
+	special ShowScrollableMultichoice
+	switch VAR_RESULT
+	case 0, VerdanturfTown_BattleTentLobby_EventScript_RulesLevel
+	case 1, VerdanturfTown_BattleTentLobby_EventScript_RulesBasics
+	case 2, VerdanturfTown_BattleTentLobby_EventScript_RulesNature
+	case 3, VerdanturfTown_BattleTentLobby_EventScript_RulesMoves
+	case 4, VerdanturfTown_BattleTentLobby_EventScript_RulesUnderpowered
+	case 5, VerdanturfTown_BattleTentLobby_EventScript_RulesWhenInDanger
+	case 6, VerdanturfTown_BattleTentLobby_EventScript_ExitRules
+	case MULTI_B_PRESSED, VerdanturfTown_BattleTentLobby_EventScript_ExitRules
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6813::
-	loadword 0x0, 0x08275BCD
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F67A6
+VerdanturfTown_BattleTentLobby_EventScript_RulesLevel::
+	msgbox BattleTentLobby_Text_ExplainLevelRules, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6821::
-	loadword 0x0, 0x0822AC64
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F67A6
+VerdanturfTown_BattleTentLobby_EventScript_RulesBasics::
+	msgbox BattleFrontier_BattlePalaceLobby_Text_ExplainRulesBasics, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F682F::
-	loadword 0x0, 0x0822ACC9
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F67A6
+VerdanturfTown_BattleTentLobby_EventScript_RulesNature::
+	msgbox BattleFrontier_BattlePalaceLobby_Text_ExplainRulesNature, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F683D::
-	loadword 0x0, 0x0822AD4C
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F67A6
+VerdanturfTown_BattleTentLobby_EventScript_RulesMoves::
+	msgbox BattleFrontier_BattlePalaceLobby_Text_ExplainRulesMoves, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F684B::
-	loadword 0x0, 0x0822AE0B
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F67A6
+VerdanturfTown_BattleTentLobby_EventScript_RulesUnderpowered::
+	msgbox BattleFrontier_BattlePalaceLobby_Text_ExplainRulesUnderpowered, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6859::
-	loadword 0x0, 0x0822AEA7
-	callstd 0x4
-	goto VerdanturfTown_BattleTentLobby_EventScript_001F67A6
+VerdanturfTown_BattleTentLobby_EventScript_RulesWhenInDanger::
+	msgbox BattleFrontier_BattlePalaceLobby_Text_ExplainRulesWhenInDanger, MSGBOX_DEFAULT
+	goto VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-VerdanturfTown_BattleTentLobby_EventScript_001F6867::
+VerdanturfTown_BattleTentLobby_EventScript_ExitRules::
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1f6869, 0x2a9
+VerdanturfTown_BattleTentLobby_Text_MonsReluctantToUseDislikedMoves:
+	.string "どんなに　つよい　ポケモンも\n"
+	.string "きらいな　わざは　できるだけ\l"
+	.string "つかいたく　ない　みたい\p"
+	.string "たとえば　おとなしい　せいかくの\n"
+	.string "ポケモンは　あいてを　いため　つけたり\l"
+	.string "するのは　すきじゃ　ない　だろうね\p"
+	.string "きっと　じぶんの　ちからを　はっき　できない\n"
+	.string "とき　って　きらいな　わざを　むりに\l"
+	.string "だそう　として　しっぱい　してるんだよ$"
+
+VerdanturfTown_BattleTentLobby_Text_GentleMonsScaryIfAngry:
+	.string "でもでも　ぼくの　おねえちゃん　って\n"
+	.string "ふだんは　とっても　おとなしい　けど\l"
+	.string "おこると　すっごーーーく　こわーーーいよ！\p"
+	.string "だから　おとなしい　ポケモン　だって\n"
+	.string "おこったら　きっと　こわーーーいよ！！$"
+
+VerdanturfTown_BattleTentLobby_Text_AttractionRunsDeep:
+	.string "あたしの　ポケモンへの　きもち⋯⋯\n"
+	.string "それは　まさに　メロメロなのよ⋯⋯\p"
+	.string "あら　へんなところ　みられちゃった\p"
+	.string "まあ　いいわ\n"
+	.string "あなたの　ポケモンに\l"
+	.string "この　わざマシンは　いかが？$"
+
+VerdanturfTown_BattleTentLobby_Text_AttractionMutual:
+	.string "ポケモンの　あたしへの　きもちも⋯⋯\n"
+	.string "やっぱり　メロメロに　ちがいないわ！\p"
+	.string "だって　あたしの　おもう　とおりに\n"
+	.string "たたかって　くれるもの！$"
+
+VerdanturfTown_BattleTentLobby_Text_TaughtWhatKindsOfMoves:
+	.string "きみの　ポケモンには\n"
+	.string "どんなわざを　もたせて　いるんだい？\p"
+	.string "やっぱり　じぶんを　かいふくしたり\n"
+	.string "ぼうぎょを　あげたり　するわざが　あると\l"
+	.string "ゆうり　だと　おもうんだよ$"
+
+VerdanturfTown_BattleTentLobby_Text_ScottCanMeetToughTrainers:
+	.string "エニシダ“これは　これは\n"
+	.string "{PLAYER}{KUN}　あえると　おもってたよ！\p"
+	.string "バトルテント　って　いうのはさ！\n"
+	.string "どんな　ルール　だって\l"
+	.string "どんな　たたかいかた　だって\l"
+	.string "かんけいなく　つよい　トレーナーと\l"
+	.string "であえる　ばしょだと　おもうよ！\p"
+	.string "{PLAYER}{KUN}も　めいっぱい\n"
+	.string "がんばってよ！$"
+
+VerdanturfTown_BattleTentLobby_Text_ScottVisitRegularly:
+	.string "エニシダ“どんな　ときにも　つよい\n"
+	.string "トレーナーに　あいたくって\l"
+	.string "わたしは　ここに　かよって　いるんだよね$"

@@ -2469,24 +2469,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/FallarborTown_MoveRelearnersHouse/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE
 	.set gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE, FallarborTown_MoveRelearnersHouse_MapEvents
-	.globl VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventObjects
-VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventObjects: @ 0x08506D74
-	object_event 1, 21, 0, 6, 5, 3, 8, 1, 1, 0, 0, VerdanturfTown_BattleTentLobby_EventScript_001F6508, 0x0000
-	object_event 2, 8, 0, 0, 5, 3, 2, 1, 1, 0, 0, VerdanturfTown_BattleTentLobby_EventScript_001F6710, 0x0000
-	object_event 3, 13, 0, 9, 7, 3, 2, 1, 1, 0, 0, VerdanturfTown_BattleTentLobby_EventScript_001F6751, 0x0000
-	object_event 4, 9, 0, 1, 8, 3, 10, 1, 1, 0, 0, VerdanturfTown_BattleTentLobby_EventScript_001F675A, 0x0000
-	object_event 5, 219, 0, 12, 6, 3, 9, 1, 1, 0, 0, VerdanturfTown_BattleTentLobby_EventScript_001F6765, 0x02FE
-	object_event 6, 11, 0, 2, 8, 3, 9, 1, 1, 0, 0, VerdanturfTown_BattleTentLobby_EventScript_001F678C, 0x0000
-	.globl VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventWarps
-VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventWarps: @ 0x08506E04
-	warp_def 6, 9, 0, 0, MAP_VERDANTURF_TOWN
-	warp_def 7, 9, 0, 0, MAP_VERDANTURF_TOWN
-	.globl VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventBgEvents
-VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventBgEvents: @ 0x08506E14
-	bg_event 4, 5, 0, 0, VerdanturfTown_BattleTentLobby_EventScript_001F6797, 0, 0
+	.include "data/maps/VerdanturfTown_BattleTentLobby/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_LOBBY
-gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_LOBBY: @ 0x08506E20
-	map_events VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventObjects, VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventWarps, 0, VERDANTURF_TOWN_BATTLE_TENT_LOBBY_EventBgEvents
+	.set gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_LOBBY, VerdanturfTown_BattleTentLobby_MapEvents
 	.globl VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR_EventObjects
 VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR_EventObjects: @ 0x08506E34
 	object_event 1, 21, 0, 2, 6, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0000

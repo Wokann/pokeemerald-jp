@@ -1,5 +1,11 @@
 	@ Battle Frontier EventScript helpers used by the structured Battle Tent maps.
 
+	@ Get the current challenge status into VAR_TEMP_CHALLENGE_STATUS.
+	.macro frontier_getstatus
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_GET_STATUS
+	special CallFrontierUtilFunc
+	.endm
+
 	@ Get a FRONTIER_DATA_* value into VAR_RESULT.
 	.macro frontier_get data:req
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_GET_DATA
@@ -25,6 +31,13 @@
 	.macro frontier_setpartyorder partySize:req
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_SET_PARTY_ORDER
 	setvar VAR_0x8005, \partySize
+	special CallFrontierUtilFunc
+	.endm
+
+	@ TRUE if the party lacks eligible mons for the current challenge.
+	@ The result is written to VAR_0x8004; VAR_RESULT holds the level mode.
+	.macro frontier_checkineligible
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_CHECK_INELIGIBLE
 	special CallFrontierUtilFunc
 	.endm
 

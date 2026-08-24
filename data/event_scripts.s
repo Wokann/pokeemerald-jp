@@ -72,6 +72,8 @@
 	.set ITEM_TM_OVERHEAT, ITEM_TM50
 	@ TM27 is Return in the JP item table; keep this alias event-script-only.
 	.set ITEM_TM_RETURN, ITEM_TM27
+	@ TM45 is Attract in the JP item table; keep this alias event-script-only.
+	.set ITEM_TM_ATTRACT, ITEM_TM45
 	@ These JP command-table entries retain older names but use the same opcodes
 	@ as the US semantic spellings used by Dewford Gym.
 	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG
@@ -84,6 +86,62 @@
 	@ inside retained JP blocks.  Keeping these aliases in the owning event
 	@ object lets map sources use the same names as pokeemerald without moving
 	@ or duplicating any ROM bytes.
+	@ Verdanturf Battle Tent Lobby shares these retained JP text/script blocks.
+	@ The local map source therefore keeps the pokeemerald semantic labels.
+	.globl Common_EventScript_SaveGame
+	.set Common_EventScript_SaveGame, 0x082423E9
+	.globl BattleFrontier_BattlePalaceLobby_Text_FailedToSaveBeforeEndingChallenge
+	.set BattleFrontier_BattlePalaceLobby_Text_FailedToSaveBeforeEndingChallenge, 0x0822A7B5
+	.globl BattleFrontier_BattleDomeLobby_Text_ReceivedPrize
+	.set BattleFrontier_BattleDomeLobby_Text_ReceivedPrize, 0x08227865
+	.globl BattleFrontier_BattlePalaceLobby_Text_NoSpaceForPrize
+	.set BattleFrontier_BattlePalaceLobby_Text_NoSpaceForPrize, 0x0822A766
+	.globl BattleFrontier_BattlePalaceLobby_Text_WeHaveBeenWaiting
+	.set BattleFrontier_BattlePalaceLobby_Text_WeHaveBeenWaiting, 0x0822A790
+	.globl BattleFrontier_BattlePalaceLobby_Text_MustSaveBeforeChallenge
+	.set BattleFrontier_BattlePalaceLobby_Text_MustSaveBeforeChallenge, 0x0822A79A
+	.globl BattleFrontier_BattlePalaceLobby_Text_ReadWhichHeading
+	.set BattleFrontier_BattlePalaceLobby_Text_ReadWhichHeading, 0x0822AC54
+	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesBasics
+	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesBasics, 0x0822AC64
+	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesNature
+	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesNature, 0x0822ACC9
+	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesMoves
+	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesMoves, 0x0822AD4C
+	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesUnderpowered
+	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesUnderpowered, 0x0822AE0B
+	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesWhenInDanger
+	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesWhenInDanger, 0x0822AEA7
+	.globl BattleTentLobby_Text_ExplainLevelRules
+	.set BattleTentLobby_Text_ExplainLevelRules, 0x08275BCD
+	.globl VerdanturfTown_BattleTentLobby_Text_AchievedThreeWinStreak
+	.set VerdanturfTown_BattleTentLobby_Text_AchievedThreeWinStreak, 0x082752A6
+	.globl VerdanturfTown_BattleTentLobby_Text_FeatWillBeRecorded
+	.set VerdanturfTown_BattleTentLobby_Text_FeatWillBeRecorded, 0x082752D8
+	.globl VerdanturfTown_BattleTentLobby_Text_PresentYouWithPrize
+	.set VerdanturfTown_BattleTentLobby_Text_PresentYouWithPrize, 0x082752ED
+	.globl VerdanturfTown_BattleTentLobby_Text_ReturnFortified
+	.set VerdanturfTown_BattleTentLobby_Text_ReturnFortified, 0x082750A3
+	.globl VerdanturfTown_BattleTentLobby_Text_ResultsWillBeRecorded
+	.set VerdanturfTown_BattleTentLobby_Text_ResultsWillBeRecorded, 0x0827527B
+	.globl VerdanturfTown_BattleTentLobby_Text_WelcomeToBattleTent
+	.set VerdanturfTown_BattleTentLobby_Text_WelcomeToBattleTent, 0x08274F21
+	.globl VerdanturfTown_BattleTentLobby_Text_TakeChallenge
+	.set VerdanturfTown_BattleTentLobby_Text_TakeChallenge, 0x08274F55
+	.globl VerdanturfTown_BattleTentLobby_Text_ExplainVerdanturfTent
+	.set VerdanturfTown_BattleTentLobby_Text_ExplainVerdanturfTent, 0x08274F71
+	.globl VerdanturfTown_BattleTentLobby_Text_SelectThreeMons
+	.set VerdanturfTown_BattleTentLobby_Text_SelectThreeMons, 0x0827522E
+	.globl VerdanturfTown_BattleTentLobby_Text_SaveBeforeChallenge
+	.set VerdanturfTown_BattleTentLobby_Text_SaveBeforeChallenge, 0x0827524A
+	.globl VerdanturfTown_BattleTentLobby_Text_NowFollowMe
+	.set VerdanturfTown_BattleTentLobby_Text_NowFollowMe, 0x0827526A
+	.globl VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLv50
+	.set VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLv50, 0x082750F0
+	.globl VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLvOpen
+	.set VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLvOpen, 0x0827518F
+	.globl VerdanturfTown_BattleTentLobby_Text_RulesAreListed
+	.set VerdanturfTown_BattleTentLobby_Text_RulesAreListed, 0x08275C42
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
 	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
 	.globl Common_EventScript_NameReceivedPartyMon
