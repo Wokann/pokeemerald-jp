@@ -3,7 +3,7 @@
 MossdeepCity_GameCorner_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, MossdeepCity_GameCorner_1F_MapScriptTable_0020E038
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, MossdeepCity_GameCorner_1F_MapScriptTable_0020E02E
-	map_script MAP_SCRIPT_ON_LOAD, 0x082468BC
+	map_script MAP_SCRIPT_ON_LOAD, CableClub_OnLoad
 	.byte 0
 
 MossdeepCity_GameCorner_1F_MapScriptTable_0020E02E::

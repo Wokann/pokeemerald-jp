@@ -86,6 +86,14 @@
 	.set Common_EventScript_TransferredToPC, 0x082441CA
 	.globl Common_EventScript_NoMoreRoomForPokemon
 	.set Common_EventScript_NoMoreRoomForPokemon, 0x0824423B
+	.globl CableClub_OnTransition
+	.set CableClub_OnTransition, 0x082467CD
+	.globl CableClub_OnWarp
+	.set CableClub_OnWarp, 0x0824686A
+	.globl CableClub_OnLoad
+	.set CableClub_OnLoad, 0x082468BC
+	.globl CableClub_OnFrame
+	.set CableClub_OnFrame, 0x08246939
 	.globl SecretBase_EventScript_SetDecorationFlags
 	.set SecretBase_EventScript_SetDecorationFlags, 0x08245D90
 	.globl PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
