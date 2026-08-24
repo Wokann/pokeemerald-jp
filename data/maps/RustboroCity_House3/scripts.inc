@@ -37,6 +37,3 @@ RustboroCity_House3_Text_NamingPikachuPekachu: @ 0x0820416F
 
 RustboroCity_House3_Text_Pekachu: @ 0x082041BF
 	.string "ペカチュウ“ぺかー！$"
-
-	@ Fortree City House1 and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x2041ca, 0x1d4

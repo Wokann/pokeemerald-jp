@@ -529,6 +529,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/RustboroCity_Flat2_2F/scripts.inc"
 	.include "data/maps/RustboroCity_Flat2_3F/scripts.inc"
 	.include "data/maps/RustboroCity_House3/scripts.inc"
+	.include "data/maps/FortreeCity_House1/scripts.inc"
 	.include "data/maps/FortreeCity_Gym/scripts.inc"
 	.include "data/maps/FortreeCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/FortreeCity_PokemonCenter_2F/scripts.inc"
