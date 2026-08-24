@@ -2502,17 +2502,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/PacifidlogTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_2F, PacifidlogTown_PokemonCenter_2F_MapEvents
-	.globl PACIFIDLOG_TOWN_HOUSE1_EventObjects
-PACIFIDLOG_TOWN_HOUSE1_EventObjects: @ 0x085072CC
-	object_event 1, 66, 0, 3, 5, 3, 8, 0, 0, 0, 0, 0x081F793F, 0x0000
-	object_event 2, 26, 0, 6, 4, 3, 9, 0, 0, 0, 0, 0x081F7948, 0x0000
-	.globl PACIFIDLOG_TOWN_HOUSE1_EventWarps
-PACIFIDLOG_TOWN_HOUSE1_EventWarps: @ 0x085072FC
-	warp_def 4, 8, 0, 1, MAP_PACIFIDLOG_TOWN
-	warp_def 5, 8, 0, 1, MAP_PACIFIDLOG_TOWN
+	.include "data/maps/PacifidlogTown_House1/events.inc"
 	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE1
-gMapEvents_PACIFIDLOG_TOWN_HOUSE1: @ 0x0850730C
-	map_events PACIFIDLOG_TOWN_HOUSE1_EventObjects, PACIFIDLOG_TOWN_HOUSE1_EventWarps, 0, 0
+	.set gMapEvents_PACIFIDLOG_TOWN_HOUSE1, PacifidlogTown_House1_MapEvents
 	.globl PACIFIDLOG_TOWN_HOUSE2_EventObjects
 PACIFIDLOG_TOWN_HOUSE2_EventObjects: @ 0x08507320
 	object_event 1, 48, 0, 3, 5, 3, 8, 1, 1, 0, 0, 0x081F7A00, 0x0000

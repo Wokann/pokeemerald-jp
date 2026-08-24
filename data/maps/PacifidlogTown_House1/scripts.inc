@@ -3,18 +3,15 @@
 PacifidlogTown_House1_MapScripts::
 	.byte 0
 
-PacifidlogTown_House1_EventScript_001F793F::
-	loadword 0x0, gJPText_001F7951
-	callstd 0x2
+PacifidlogTown_House1_EventScript_Man::
+	msgbox PacifidlogTown_House1_Text_RegiStory, MSGBOX_NPC
 	end
 
-PacifidlogTown_House1_EventScript_001F7948::
-	loadword 0x0, gJPText_001F79BE
-	callstd 0x2
+PacifidlogTown_House1_EventScript_Woman::
+	msgbox PacifidlogTown_House1_Text_SixDotsOpenThreeDoors, MSGBOX_NPC
 	end
 
-	.globl gJPText_001F7951
-gJPText_001F7951: @ 0x081F7951
+PacifidlogTown_House1_Text_RegiStory:
 	.string "ホウエンちほう　には\n"
 	.string "いわ⋯⋯　こおり⋯⋯　はがね⋯⋯\p"
 	.string "それぞれの　ちからを　つかさどる\n"
@@ -23,8 +20,7 @@ gJPText_001F7951: @ 0x081F7951
 	.string "おれ　ちいさな　ころに\n"
 	.string "そんな　はなしを　きいたことが　あるよ$"
 
-	.globl gJPText_001F79BE
-gJPText_001F79BE: @ 0x081F79BE
+PacifidlogTown_House1_Text_SixDotsOpenThreeDoors:
 	.string "‘むっつの　てんが\n"
 	.string "　みっつの　とびらを　あける’\p"
 	.string "おじいちゃんが　よく　いっていたけど\n"
