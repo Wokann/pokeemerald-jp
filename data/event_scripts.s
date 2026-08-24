@@ -404,6 +404,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/PetalburgCity_Gym/scripts.inc"
 	.include "data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/PetalburgCity_PokemonCenter_2F/scripts.inc"
+	.include "data/maps/PetalburgCity_Mart/scripts.inc"
 	.include "data/maps/SlateportCity_BattleTentLobby/scripts.inc"
 	.include "data/maps/SlateportCity_BattleTentCorridor/scripts.inc"
 	.include "data/maps/SlateportCity_BattleTentBattleRoom/scripts.inc"
