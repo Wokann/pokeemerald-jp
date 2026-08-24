@@ -2356,26 +2356,9 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/Route127/events.inc"
 	.globl gMapEvents_ROUTE127
 	.set gMapEvents_ROUTE127, Route127_MapEvents
-	.globl ROUTE128_EventObjects
-ROUTE128_EventObjects: @ 0x08504FB8
-	object_event 1, 42, 0, 35, 33, 1, 48, 5, 5, 1, 3, 0x081EEEF2, 0x0000
-	object_event 2, 43, 0, 78, 24, 1, 28, 5, 0, 1, 7, 0x081EEF54, 0x0000
-	object_event 3, 134, 0, 40, 22, 3, 8, 0, 0, 0, 0, 0x00000000, 0x0342
-	object_event 4, 195, 0, 37, 22, 3, 9, 1, 1, 0, 0, 0x00000000, 0x03B0
-	object_event 5, 196, 0, 38, 21, 3, 7, 1, 1, 0, 0, 0x00000000, 0x03B1
-	object_event 6, 50, 0, 63, 28, 3, 7, 1, 1, 1, 0, 0x081EEFE4, 0x0000
-	object_event 7, 33, 0, 47, 9, 3, 10, 1, 1, 1, 3, 0x081EEFCD, 0x0000
-	object_event 8, 34, 0, 24, 8, 3, 17, 1, 1, 1, 3, 0x081EEFB6, 0x0000
-	object_event 9, 43, 0, 101, 29, 1, 25, 1, 3, 1, 4, 0x081EF012, 0x0000
-	object_event 10, 42, 0, 101, 22, 1, 26, 1, 3, 1, 4, 0x081EEFFB, 0x0000
-	.globl ROUTE128_EventBgEvents
-ROUTE128_EventBgEvents: @ 0x085050A8
-	bg_event 49, 9, 3, 7, 0x006F, 0x5C, 0x00
-	bg_event 57, 21, 3, 7, 0x006F, 0x5D, 0x00
-	bg_event 31, 33, 3, 7, 0x006F, 0x5E, 0x00
+	.include "data/maps/Route128/events.inc"
 	.globl gMapEvents_ROUTE128
-gMapEvents_ROUTE128: @ 0x085050CC
-	map_events ROUTE128_EventObjects, 0, 0, ROUTE128_EventBgEvents
+	.set gMapEvents_ROUTE128, Route128_MapEvents
 	.globl ROUTE129_EventObjects
 ROUTE129_EventObjects: @ 0x085050E0
 	object_event 1, 42, 0, 28, 16, 1, 50, 3, 4, 1, 3, 0x081EF31C, 0x0000

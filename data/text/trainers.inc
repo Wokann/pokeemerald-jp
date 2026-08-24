@@ -4060,4 +4060,121 @@ Route127_Text_AthenaPostBattle: @ 0x0826116B
 	.string "あおい　いろに　かこまれていると\n"
 	.string "じかんが　すぎるのが\l"
 	.string "ゆっくりに　かんじられる　のよ$"
-	.incbin "baserom_jp.gba", 0x261197, 0x11fc
+Route128_Text_IsaiahIntro: @ 0x08261197
+	.string "サイユウシティは　まだ　とおい⋯⋯$"
+
+Route128_Text_IsaiahDefeat: @ 0x082611A9
+	.string "ボクの　はつしょうりも　とおい⋯⋯$"
+
+Route128_Text_IsaiahPostBattle: @ 0x082611BB
+	.string "まけつづけている　じんせい　ですが\n"
+	.string "けっして　あきらめませんよ⋯⋯！$"
+
+Route128_Text_IsaiahRegister: @ 0x082611DE
+	.string "こんな　ボク　ですけど\n"
+	.string "いつかは　かてると　おもうんです\l"
+	.string "ポケナビの　とうろくを　してください⋯⋯！$"
+
+Route128_Text_IsaiahRematchIntro: @ 0x08261211
+	.string "まだまだ　げんき　ですからね\n"
+	.string "サイユウシティ　めざして　およぎますよ！$"
+
+Route128_Text_IsaiahRematchDefeat: @ 0x08261235
+	.string "また　はつしょうり　ならず⋯⋯$"
+
+Route128_Text_IsaiahPostRematch: @ 0x08261245
+	.string "あきらめなきゃ　いつかは　かてる\n"
+	.string "サイユウシティにも　たどりつく⋯⋯！$"
+
+Route128_Text_KatelynIntro: @ 0x08261269
+	.string "トライアスロンは\n"
+	.string "すいえい　じてんしゃ　マラソン\p"
+	.string "3つの　しゅもくを　つづけて　こなす\n"
+	.string "かこくな　レースなの！$"
+
+Route128_Text_KatelynDefeat: @ 0x082612A1
+	.string "ポケモンしょうぶも　かこく　よね⋯⋯$"
+
+Route128_Text_KatelynPostBattle: @ 0x082612B4
+	.string "つぎは　じてんしゃ　だけど⋯⋯\n"
+	.string "くじけそうだわ⋯⋯$"
+
+Route128_Text_KatelynRegister: @ 0x082612CE
+	.string "まあ　せっかく　だし\n"
+	.string "またいつか　しょうぶを　しましょうよ！$"
+
+Route128_Text_KatelynRematchIntro: @ 0x082612ED
+	.string "トライアスロンも　ながいけど\n"
+	.string "ポケモン　チャンピオンを　めざすのも\l"
+	.string "ながい　みちのり　なのね！$"
+
+Route128_Text_KatelynRematchDefeat: @ 0x0826131D
+	.string "ほんとっ\n"
+	.string "ポケモンしょうぶ　って　きびしい⋯⋯$"
+
+Route128_Text_KatelynPostRematch: @ 0x08261335
+	.string "そろそろ　チャンピオンロードに\n"
+	.string "ちょうせん　してみるのも　あり　かな？$"
+
+Route128_Text_AlexaIntro: @ 0x08261359
+	.string "ポケモンリーグに　ちょうせん　するため\n"
+	.string "いままで　がんばって　きた⋯⋯\p"
+	.string "ここで　まけるわけには　いかないわ！$"
+
+Route128_Text_AlexaDefeat: @ 0x08261390
+	.string "ああっ！\n"
+	.string "なんてこと$"
+
+Route128_Text_AlexaPostBattle: @ 0x0826139B
+	.string "ここまで　きたんですもの\n"
+	.string "いちど　まけたからって　あきらめない$"
+
+Route128_Text_RubenIntro: @ 0x082613BB
+	.string "わたしの　ように　つよい\n"
+	.string "ポケモントレーナーは　ほかに　いない！$"
+
+Route128_Text_RubenDefeat: @ 0x082613DC
+	.string "なんて　ことだ⋯⋯！$"
+
+Route128_Text_RubenPostBattle: @ 0x082613E7
+	.string "きみの　ように　つよい\n"
+	.string "ポケモントレーナーは　ほかに　いないだろう！$"
+
+Route128_Text_WayneIntro: @ 0x0826140A
+	.string "サイユウに　いってみたいから\n"
+	.string "たきのぼりを　おぼえた\l"
+	.string "ポケモンを　つりあげたんだよ！$"
+
+Route128_Text_WayneDefeat: @ 0x08261435
+	.string "その　いきおい\n"
+	.string "まさに　たきのぼり！$"
+
+Route128_Text_WaynePostBattle: @ 0x08261448
+	.string "しまった！\p"
+	.string "たきのぼりを　おぼえた　ポケモン　つっても\n"
+	.string "ルネの　ジムバッジ　もってない！$"
+
+Route128_Text_HarrisonIntro: @ 0x08261475
+	.string "きみが　また　つよそーだもんね！\n"
+	.string "オレ　かてっかな？$"
+
+Route128_Text_HarrisonDefeat: @ 0x08261490
+	.string "あっひゃ\n"
+	.string "やっぱ　かてんわな$"
+
+Route128_Text_HarrisonPostBattle: @ 0x0826149F
+	.string "サイユウシティの　まわりは\n"
+	.string "つよそーな　トレーナーが　いっぱいだぜ！\l"
+	.string "オレ　ばちがいじゃ　ないよな？$"
+
+Route128_Text_CarleeIntro: @ 0x082614D2
+	.string "この　へんは　ひざしが\n"
+	.string "いちだんと　つよいわねえ！$"
+
+Route128_Text_CarleeDefeat: @ 0x082614EC
+	.string "まぶしくて　よく　みえなかったの！$"
+
+Route128_Text_CarleePostBattle: @ 0x082614FE
+	.string "そろそろ　もどって\n"
+	.string "ひやけどめ　ぬりなおさなきゃ$"
+	.incbin "baserom_jp.gba", 0x261517, 0xe7c

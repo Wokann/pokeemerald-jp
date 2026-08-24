@@ -114,10 +114,28 @@ Common_Movement_FacePlayer: @ 0x08243621
 	face_player
 	step_end
 
-	.incbin "baserom_jp.gba", 0x243623, 0x6
+Common_Movement_FaceAwayPlayer: @ 0x08243623
+	face_away_player
+	step_end
+
+Common_Movement_FaceOriginalDirection: @ 0x08243625
+	face_original_direction
+	step_end
+
+Common_Movement_WalkInPlaceFasterLeft: @ 0x08243627
+	walk_in_place_faster_left
+	step_end
 
 Common_Movement_WalkInPlaceFasterUp: @ 0x08243629
 	walk_in_place_faster_up
 	step_end
 
-	.incbin "baserom_jp.gba", 0x24362b, 0x26
+Common_Movement_WalkInPlaceFasterRight: @ 0x0824362B
+	walk_in_place_faster_right
+	step_end
+
+Common_Movement_WalkInPlaceFasterDown: @ 0x0824362D
+	walk_in_place_faster_down
+	step_end
+
+	.incbin "baserom_jp.gba", 0x24362f, 0x22
