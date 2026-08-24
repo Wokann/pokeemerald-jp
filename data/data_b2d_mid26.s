@@ -2365,22 +2365,9 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/Route130/events.inc"
 	.globl gMapEvents_ROUTE130
 	.set gMapEvents_ROUTE130, Route130_MapEvents
-	.globl ROUTE131_EventObjects
-ROUTE131_EventObjects: @ 0x085051E0
-	object_event 1, 42, 0, 41, 32, 1, 29, 5, 7, 1, 3, 0x081EF459, 0x0000
-	object_event 2, 42, 0, 18, 19, 1, 22, 0, 7, 1, 4, 0x081EF470, 0x0000
-	object_event 3, 43, 0, 10, 22, 1, 20, 6, 0, 1, 4, 0x081EF487, 0x0000
-	object_event 4, 43, 0, 31, 25, 1, 47, 3, 5, 1, 3, 0x081EF49E, 0x0000
-	object_event 5, 43, 0, 9, 16, 1, 8, 1, 1, 1, 1, 0x081EF4B5, 0x0000
-	object_event 6, 213, 0, 8, 16, 1, 8, 1, 1, 1, 1, 0x081EF4D0, 0x0000
-	object_event 7, 42, 0, 52, 20, 1, 26, 1, 3, 1, 5, 0x081EF502, 0x0000
-	object_event 8, 43, 0, 52, 27, 1, 25, 1, 3, 1, 5, 0x081EF4EB, 0x0000
-	.globl ROUTE131_EventWarps
-ROUTE131_EventWarps: @ 0x085052A0
-	warp_def 36, 6, 3, 0, MAP_SKY_PILLAR_ENTRANCE
+	.include "data/maps/Route131/events.inc"
 	.globl gMapEvents_ROUTE131
-gMapEvents_ROUTE131: @ 0x085052A8
-	map_events ROUTE131_EventObjects, ROUTE131_EventWarps, 0, 0
+	.set gMapEvents_ROUTE131, Route131_MapEvents
 	.globl ROUTE132_EventObjects
 ROUTE132_EventObjects: @ 0x085052BC
 	object_event 1, 42, 0, 40, 13, 1, 46, 3, 3, 1, 2, 0x081EF51A, 0x0000

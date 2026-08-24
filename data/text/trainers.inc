@@ -4270,4 +4270,118 @@ Route130_Text_SantiagoDefeat: @ 0x08261765
 Route130_Text_SantiagoPostBattle: @ 0x08261776
 	.string "こうして　およいだり　しょうぶしたり⋯⋯\n"
 	.string "オレ　しあわせだなあー⋯⋯$"
-	.incbin "baserom_jp.gba", 0x261799, 0xbfa
+Route131_Text_RichardIntro: @ 0x08261799
+	.string "うみには　ポケモンが　たくさん　いるからね\n"
+	.string "およいで　わたるのも　くろう　するよ！$"
+
+Route131_Text_RichardDefeat: @ 0x082617C3
+	.string "トレーナーの　そだてた　ポケモンは\n"
+	.string "ホントに　つよいなぁ⋯⋯$"
+
+Route131_Text_RichardPostBattle: @ 0x082617E2
+	.string "ひいひい⋯⋯　つかれた⋯⋯\n"
+	.string "いきは　よいよい　かえりは　こわい⋯⋯\l"
+	.string "かえりの　たいりょく　のこってるかなあ⋯⋯$"
+
+Route131_Text_HermanIntro: @ 0x0826181A
+	.string "うみ　うみ　うみ⋯⋯\n"
+	.string "みわたす　かぎり　うみ⋯⋯\l"
+	.string "うみは　もう　あきたぞーっ！$"
+
+Route131_Text_HermanDefeat: @ 0x08261842
+	.string "ひょえええええっ！$"
+
+Route131_Text_HermanPostBattle: @ 0x0826184C
+	.string "うみに　あきても\n"
+	.string "およぎ　つづけるしか　ないのか\p"
+	.string "そんな　オレは\n"
+	.string "ねっからの　スイマー⋯⋯$"
+
+Route131_Text_SusieIntro: @ 0x0826187A
+	.string "ちょっと　あんた\n"
+	.string "わたしと　しょうぶ　しましょ！$"
+
+Route131_Text_SusieDefeat: @ 0x08261893
+	.string "みかけに　よらず\n"
+	.string "つよいわねーっ！$"
+
+Route131_Text_SusiePostBattle: @ 0x082618A5
+	.string "あっちで　うみは　あきた　とか　いってる\n"
+	.string "おとこが　いるでしょ？\p"
+	.string "アレ　くちだけ　なのよ\n"
+	.string "ホントは　うみが　すきで　しょうがないの！$"
+
+Route131_Text_KaraIntro: @ 0x082618E8
+	.string "なんで　オトコって\n"
+	.string "ビキニが　すき　なのかしらね！\p"
+	.string "みんな　わたしの　こと\n"
+	.string "ジロジロ　みるのよ！$"
+
+Route131_Text_KaraDefeat: @ 0x08261919
+	.string "じつりょくが　ちがい　すぎるわ⋯⋯！$"
+
+Route131_Text_KaraPostBattle: @ 0x0826192C
+	.string "みんな　ビキニを　みてるんじゃなくて\n"
+	.string "わたしの　びぼうが　げんいん　かしら⋯⋯？$"
+
+Route131_Text_ReliIntro: @ 0x08261955
+	.string "アミ“きょうだい　ちからを　あわせて\n"
+	.string "がんばっちゃおうかな！？$"
+
+Route131_Text_ReliDefeat: @ 0x08261975
+	.string "アミ“きょうだいで　ちからを　あわせても\n"
+	.string "かてなかったわ$"
+
+Route131_Text_ReliPostBattle: @ 0x08261992
+	.string "アミ“キナギの　にんげんは\n"
+	.string "うまれた　ときから\l"
+	.string "うみと　ポケモンと　いっしょ　なんだ$"
+
+Route131_Text_ReliNotEnoughMons: @ 0x082619BD
+	.string "アミ“ポケモン　2ひき　いないの？\n"
+	.string "ポケモンしょうぶ　たのしめないわね$"
+
+Route131_Text_IanIntro: @ 0x082619E1
+	.string "カツ“きょうだい　ちからを　あわせて\n"
+	.string "がんばりまーす！！$"
+
+Route131_Text_IanDefeat: @ 0x082619FE
+	.string "カツ“あねきと　がんばったのに\n"
+	.string "かてなかったよ⋯⋯$"
+
+Route131_Text_IanPostBattle: @ 0x08261A18
+	.string "カツ“キナギって　うみの　うえに\n"
+	.string "うかんでる　まち　だろ？\p"
+	.string "だから　うみが　つづくかぎり\n"
+	.string "そこは　キナギ　なんだよ！$"
+
+Route131_Text_IanNotEnoughMons: @ 0x08261A53
+	.string "カツ“ポケモン　2ひき　いたら\n"
+	.string "ポケモンしょうぶ　してやるよ！$"
+
+Route131_Text_TaliaIntro: @ 0x08261A73
+	.string "わたしに　かてたら\n"
+	.string "すごい　じょうほう　おしえてあげる！$"
+
+Route131_Text_TaliaDefeat: @ 0x08261A90
+	.string "あら　まけちゃったのね$"
+
+Route131_Text_TaliaPostBattle: @ 0x08261A9C
+	.string "この　そばに　ふしぎな　ばしょが　あるわよ\n"
+	.string "たかい　とうが　そびえているの！\l"
+	.string "みてきたら　どうかしら？$"
+
+Route131_Text_KevinIntro: @ 0x08261AD0
+	.string "キナギには　おおらかな　やつ　ばかりだぜ！\n"
+	.string "ぜったい　おこったり　しないんだ\l"
+	.string "もちろん　オレもな$"
+
+Route131_Text_KevinDefeat: @ 0x08261B01
+	.string "あ⋯⋯っ$"
+
+Route131_Text_KevinPostBattle: @ 0x08261B06
+	.string "ちっ！　⋯⋯じゃ　なかった\n"
+	.string "お　おこってない　おこってないよ！\p"
+	.string "⋯⋯ハハ　つよいね　きみは！\n"
+	.string "はっハッは！$"
+	.incbin "baserom_jp.gba", 0x261b3c, 0x857
