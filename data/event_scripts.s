@@ -401,7 +401,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/FallarborTown/scripts.inc"
 	.include "data/maps/VerdanturfTown/scripts.inc"
 	.include "data/maps/PacifidlogTown/scripts.inc"
-	.incbin "baserom_jp.gba", 0x1e63b7, 0xff
 	.include "data/maps/Route101/scripts.inc"
 	.incbin "baserom_jp.gba", 0x1e6689, 0x19b
 	.include "data/maps/Route102/scripts.inc"
