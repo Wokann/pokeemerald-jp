@@ -8379,132 +8379,42 @@ void Anim_RotateToSides_Twice(struct Sprite *sprite)
     sprite->callback = RotateToSides;
 }
 
-__attribute__((naked)) void Anim_SwingConcave(struct Sprite *sprite)
+void Anim_SwingConcave(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182F40\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x64\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181380\n\t"
-        "	ldr r0, _08182F44\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182F40: .4byte gUnknown_3001240\n\t"
-        "_08182F44: .4byte SwingConcave + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].data = 100;
+    SwingConcave(sprite);
+    sprite->callback = SwingConcave;
 }
 
-__attribute__((naked)) void Anim_SwingConcave_Fast(struct Sprite *sprite)
+void Anim_SwingConcave_Fast(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182F78\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x32\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181380\n\t"
-        "	ldr r0, _08182F7C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182F78: .4byte gUnknown_3001240\n\t"
-        "_08182F7C: .4byte SwingConcave + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].data = 50;
+    gUnknown_3001240[id].runs = 2;
+    SwingConcave(sprite);
+    sprite->callback = SwingConcave;
 }
 
-__attribute__((naked)) void Anim_SwingConvex(struct Sprite *sprite)
+void Anim_SwingConvex(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182FAC\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x64\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181480\n\t"
-        "	ldr r0, _08182FB0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182FAC: .4byte gUnknown_3001240\n\t"
-        "_08182FB0: .4byte SwingConvex + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].data = 100;
+    SwingConvex(sprite);
+    sprite->callback = SwingConvex;
 }
 
-__attribute__((naked)) void Anim_SwingConvex_Fast(struct Sprite *sprite)
+void Anim_SwingConvex_Fast(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182FE4\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x32\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08181480\n\t"
-        "	ldr r0, _08182FE8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182FE4: .4byte gUnknown_3001240\n\t"
-        "_08182FE8: .4byte SwingConvex + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].data = 50;
+    gUnknown_3001240[id].runs = 2;
+    SwingConvex(sprite);
+    sprite->callback = SwingConvex;
 }
 
 __attribute__((naked)) void VerticalShakeBack(struct Sprite *sprite)
