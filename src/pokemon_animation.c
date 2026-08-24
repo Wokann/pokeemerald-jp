@@ -8304,46 +8304,18 @@ void Anim_VerticalShakeTwice_Slow(struct Sprite *sprite)
     sprite->callback = VerticalShakeTwice;
 }
 
-__attribute__((naked)) void Anim_VerticalSlideWobble_Small(struct Sprite *sprite)
+void Anim_VerticalSlideWobble_Small(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081803A4\n\t"
-        "	ldr r0, _08182D9C\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182D9C: .4byte VerticalSlideWobble + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 5;
+    VerticalSlideWobble(sprite);
+    sprite->callback = VerticalSlideWobble;
 }
 
-__attribute__((naked)) void Anim_VerticalJumps_Small(struct Sprite *sprite)
+void Anim_VerticalJumps_Small(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817F8A0\n\t"
-        "	ldr r0, _08182DB8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182DB8: .4byte VerticalJumps + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 3;
+    VerticalJumps(sprite);
+    sprite->callback = VerticalJumps;
 }
 
 __attribute__((naked)) void Anim_Spin(struct Sprite *sprite)
