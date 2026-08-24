@@ -8219,34 +8219,16 @@ __attribute__((naked)) void Anim_BounceRotateToSides_Small(struct Sprite *sprite
     );
 }
 
-__attribute__((naked)) void Anim_BounceRotateToSides_Slow(struct Sprite *sprite)
+void Anim_BounceRotateToSides_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r0, #0x3a]\n\t"
-        "	bl pokemonanimfunc_05\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[6] = 1;
+    Anim_BounceRotateToSides(sprite);
 }
 
-__attribute__((naked)) void Anim_BounceRotateToSides_SmallSlow(struct Sprite *sprite)
+void Anim_BounceRotateToSides_SmallSlow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r0, #0x3a]\n\t"
-        "	bl pokemonanimfunc_48\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[6] = 1;
+    Anim_BounceRotateToSides_Small(sprite);
 }
 
 __attribute__((naked)) void Anim_ZigzagSlow(struct Sprite *sprite)
