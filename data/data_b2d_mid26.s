@@ -2638,16 +2638,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_BattleTentBattleRoom/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM
 	.set gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM, SlateportCity_BattleTentBattleRoom_MapEvents
-	.globl SLATEPORT_CITY_NAME_RATERS_HOUSE_EventObjects
-SLATEPORT_CITY_NAME_RATERS_HOUSE_EventObjects: @ 0x08507C64
-	object_event 1, 21, 0, 7, 5, 3, 8, 0, 0, 0, 0, 0x081FBD9E, 0x0000
-	.globl SLATEPORT_CITY_NAME_RATERS_HOUSE_EventWarps
-SLATEPORT_CITY_NAME_RATERS_HOUSE_EventWarps: @ 0x08507C7C
-	warp_def 3, 7, 0, 6, MAP_SLATEPORT_CITY
-	warp_def 4, 7, 0, 6, MAP_SLATEPORT_CITY
+	.include "data/maps/SlateportCity_NameRatersHouse/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE
-gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE: @ 0x08507C8C
-	map_events SLATEPORT_CITY_NAME_RATERS_HOUSE_EventObjects, SLATEPORT_CITY_NAME_RATERS_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE, SlateportCity_NameRatersHouse_MapEvents
 	.globl SLATEPORT_CITY_POKEMON_FAN_CLUB_EventObjects
 SLATEPORT_CITY_POKEMON_FAN_CLUB_EventObjects: @ 0x08507CA0
 	object_event 1, 19, 0, 11, 4, 0, 8, 0, 0, 0, 0, 0x081FC37A, 0x0000

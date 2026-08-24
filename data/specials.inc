@@ -548,3 +548,14 @@ gSpecials:
 	def_special RemoveRecordsWindow
 	def_special sub_08139C4C
 	def_special TrySetBattleTowerLinkType
+
+	@ Name Rater special aliases matching pokeemerald's semantic script names.
+	@ The JP C symbols retain their existing TV-prefixed linker names.
+	.set SPECIAL_TryPutNameRaterShowOnTheAir, SPECIAL_TV_PutNameRaterShowOnTheAirIfNicknameChanged
+	.set SPECIAL_WAITSTATE_TryPutNameRaterShowOnTheAir, SPECIAL_WAITSTATE_TV_PutNameRaterShowOnTheAirIfNicknameChanged
+	.set SPECIAL_BufferMonNickname, SPECIAL_TV_CopyNicknameToStringVar1AndEnsureTerminated
+	.set SPECIAL_WAITSTATE_BufferMonNickname, SPECIAL_WAITSTATE_TV_CopyNicknameToStringVar1AndEnsureTerminated
+	.set SPECIAL_IsMonOTIDNotPlayers, SPECIAL_TV_CheckMonOTIDEqualsPlayerID
+	.set SPECIAL_WAITSTATE_IsMonOTIDNotPlayers, SPECIAL_WAITSTATE_TV_CheckMonOTIDEqualsPlayerID
+	.set SPECIAL_MonOTNameNotPlayer, SPECIAL_MonOTNameMatchesPlayer
+	.set SPECIAL_WAITSTATE_MonOTNameNotPlayer, SPECIAL_WAITSTATE_MonOTNameMatchesPlayer
