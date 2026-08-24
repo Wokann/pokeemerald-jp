@@ -54,6 +54,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
     # rather than a local map event, but is owned by Birch's lab in the US
     # source and sits inside the lab's exact JP script range.
     'LittlerootTown_ProfessorBirchsLab': (0x081F1A71,),
+    # These unused RS-era Cable Club entry points remain named in the matching
+    # Dewford Pokemon Center 2F US source, but have no local event pointer.
+    'DewfordTown_PokemonCenter_2F': (
+        0x081F2D75,
+        0x081F2D7B,
+        0x081F2D81,
+    ),
 }
 
 # Verified map-local text that has no JP script pointer (for example an
