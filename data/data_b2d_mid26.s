@@ -2623,20 +2623,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/PetalburgCity_Mart/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_MART
 	.set gMapEvents_PETALBURG_CITY_MART, PetalburgCity_Mart_MapEvents
-	.globl SLATEPORT_CITY_STERNS_SHIPYARD_1F_EventObjects
-SLATEPORT_CITY_STERNS_SHIPYARD_1F_EventObjects: @ 0x08507A44
-	object_event 1, 19, 0, 5, 5, 3, 8, 0, 0, 0, 0, 0x081FAB29, 0x0000
-	object_event 2, 46, 0, 10, 7, 3, 7, 0, 0, 0, 0, 0x081FABD6, 0x0000
-	object_event 3, 46, 0, 18, 8, 3, 5, 1, 0, 0, 0, 0x081FABDF, 0x0000
-	object_event 4, 21, 0, 12, 11, 3, 2, 1, 2, 0, 0, 0x081FABE8, 0x0365
-	.globl SLATEPORT_CITY_STERNS_SHIPYARD_1F_EventWarps
-SLATEPORT_CITY_STERNS_SHIPYARD_1F_EventWarps: @ 0x08507AA4
-	warp_def 2, 14, 0, 2, MAP_SLATEPORT_CITY
-	warp_def 3, 14, 0, 2, MAP_SLATEPORT_CITY
-	warp_def 3, 1, 0, 0, MAP_SLATEPORT_CITY_STERNS_SHIPYARD_2F
+	.include "data/maps/SlateportCity_SternsShipyard_1F/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_1F
-gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_1F: @ 0x08507ABC
-	map_events SLATEPORT_CITY_STERNS_SHIPYARD_1F_EventObjects, SLATEPORT_CITY_STERNS_SHIPYARD_1F_EventWarps, 0, 0
+	.set gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_1F, SlateportCity_SternsShipyard_1F_MapEvents
 	.globl SLATEPORT_CITY_STERNS_SHIPYARD_2F_EventObjects
 SLATEPORT_CITY_STERNS_SHIPYARD_2F_EventObjects: @ 0x08507AD0
 	object_event 1, 46, 0, 10, 7, 3, 7, 0, 0, 0, 0, 0x00000000, 0x0000
