@@ -182,6 +182,22 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
 # the matching US text order have been checked.  jp_text_blocks.py reads this
 # same mapping, so source labels and map references cannot drift apart.
 VERIFIED_SHARED_TEXT_BLOCKS = {
+    'Route130': {
+        'source': 'data/text/trainers.inc',
+        'start': 0x0826169F,
+        'end': 0x08261799,
+        'labels': {
+            0x0826169F: 'Route130_Text_RodneyIntro',
+            0x082616CE: 'Route130_Text_RodneyDefeat',
+            0x082616DD: 'Route130_Text_RodneyPostBattle',
+            0x082616FE: 'Route130_Text_KatieIntro',
+            0x08261716: 'Route130_Text_KatieDefeat',
+            0x0826172F: 'Route130_Text_KatiePostBattle',
+            0x08261747: 'Route130_Text_SantiagoIntro',
+            0x08261765: 'Route130_Text_SantiagoDefeat',
+            0x08261776: 'Route130_Text_SantiagoPostBattle',
+        },
+    },
     'Route129': {
         'source': 'data/text/trainers.inc',
         'start': 0x08261517,
@@ -3449,6 +3465,55 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
         },
     },
+    'Route130': {
+        'scripts': {
+            0x081EF395: 'Route130_OnTransition',
+            0x081EF3E1: 'Route130_EventScript_SetMirageIslandLayout',
+            0x081EF3E5: 'Route130_EventScript_CheckSetAbnormalWeather',
+            0x081EF3EF: 'Route130_EventScript_Rodney',
+            0x081EF406: 'Route130_EventScript_Katie',
+            0x081EF41D: 'Route130_EventScript_Santiago',
+        },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route130']['labels'],
+        'external_labels': {
+            0x08243106: 'Common_EventScript_SetAbnormalWeather',
+        },
+        'symbols': {
+            'flags': {
+                0x0011: 'FLAG_TEMP_HIDE_MIRAGE_ISLAND_BERRY_TREE',
+                0x0012: 'FLAG_TEMP_12',
+                0x0013: 'FLAG_TEMP_13',
+                0x0014: 'FLAG_TEMP_14',
+                0x0015: 'FLAG_TEMP_15',
+                0x0016: 'FLAG_TEMP_16',
+                0x0017: 'FLAG_TEMP_17',
+                0x0018: 'FLAG_TEMP_18',
+                0x0019: 'FLAG_TEMP_19',
+                0x001A: 'FLAG_TEMP_1A',
+                0x001B: 'FLAG_TEMP_1B',
+                0x001C: 'FLAG_TEMP_1C',
+                0x001D: 'FLAG_TEMP_1D',
+                0x001E: 'FLAG_TEMP_1E',
+                0x001F: 'FLAG_TEMP_1F',
+                0x088A: 'FLAG_SYS_WEATHER_CTRL',
+            },
+            'vars': {
+                0x405E: 'VAR_SOOTOPOLIS_CITY_STATE',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {0x800D: {0x1: 'TRUE'}},
+            'layouts': {
+                0x002E: 'LAYOUT_ROUTE130_MIRAGE_ISLAND',
+                0x0107: 'LAYOUT_ROUTE130',
+            },
+            'trainers': {
+                0x00A5: 'TRAINER_RODNEY',
+                0x01C7: 'TRAINER_KATIE',
+                0x00A8: 'TRAINER_SANTIAGO',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
     # Route102 is the Wally/tutorial and early-trainer map.  Its JP scripts,
     # object-event order, local text, and the first trainer-text block were
     # checked one-for-one against the US Route102 sources.
@@ -4430,6 +4495,8 @@ def semantic_symbol_formatter(mname):
             return symbols.get('multichoices', {}).get(value)
         if name == 'setweather' and index == 0:
             return symbols.get('weather', {}).get(value)
+        if name == 'setmaplayoutindex' and index == 0:
+            return symbols.get('layouts', {}).get(value)
         if name == 'setstepcallback' and index == 0:
             return symbols.get('step_callbacks', {}).get(value)
         if name in ('dofieldeffect', 'waitfieldeffect') and index == 0:

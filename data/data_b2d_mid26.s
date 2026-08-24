@@ -2362,15 +2362,9 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/Route129/events.inc"
 	.globl gMapEvents_ROUTE129
 	.set gMapEvents_ROUTE129, Route129_MapEvents
-	.globl ROUTE130_EventObjects
-ROUTE130_EventObjects: @ 0x0850516C
-	object_event 1, 42, 0, 70, 21, 1, 51, 3, 6, 1, 3, 0x081EF3EF, 0x0000
-	object_event 2, 43, 0, 7, 21, 1, 26, 1, 4, 1, 5, 0x081EF406, 0x0000
-	object_event 3, 60, 0, 52, 9, 3, 12, 0, 0, 0, 82, 0x08244D23, 0x0011
-	object_event 4, 42, 0, 7, 30, 1, 25, 1, 4, 1, 5, 0x081EF41D, 0x0000
+	.include "data/maps/Route130/events.inc"
 	.globl gMapEvents_ROUTE130
-gMapEvents_ROUTE130: @ 0x085051CC
-	map_events ROUTE130_EventObjects, 0, 0, 0
+	.set gMapEvents_ROUTE130, Route130_MapEvents
 	.globl ROUTE131_EventObjects
 ROUTE131_EventObjects: @ 0x085051E0
 	object_event 1, 42, 0, 41, 32, 1, 29, 5, 7, 1, 3, 0x081EF459, 0x0000

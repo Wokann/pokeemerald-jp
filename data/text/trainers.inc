@@ -4233,4 +4233,41 @@ Route129_Text_ClarenceDefeat: @ 0x08261673
 Route129_Text_ClarencePostBattle: @ 0x08261681
 	.string "ポケモンリーグを　めざしてるのか？\n"
 	.string "がんばれ　がんばれよ！$"
-	.incbin "baserom_jp.gba", 0x26169f, 0xcf4
+Route130_Text_RodneyIntro: @ 0x0826169F
+	.string "うみの　ドまんなかで\n"
+	.string "トレーナーに　であうとは　めずらしいな\l"
+	.string "イッパツ　しょうぶ　するか！？$"
+
+Route130_Text_RodneyDefeat: @ 0x082616CE
+	.string "なんて　つよい　こどもだ⋯⋯$"
+
+Route130_Text_RodneyPostBattle: @ 0x082616DD
+	.string "きびしい　たたかいを　くぐりぬけてきた\n"
+	.string "いい　めを　しているぜ！$"
+
+Route130_Text_KatieIntro: @ 0x082616FE
+	.string "あおい　うみ\n"
+	.string "ブルーな　こころ\l"
+	.string "いやされる⋯⋯$"
+
+Route130_Text_KatieDefeat: @ 0x08261716
+	.string "うみ　ひろく\n"
+	.string "ポケモン　せかい\l"
+	.string "また　ひろし⋯⋯$"
+
+Route130_Text_KatiePostBattle: @ 0x0826172F
+	.string "こどもたち\n"
+	.string "ポケモン　チャンプ\l"
+	.string "めざしてる⋯⋯$"
+
+Route130_Text_SantiagoIntro: @ 0x08261747
+	.string "なにも　ない　うみに　うかんでると⋯⋯\n"
+	.string "へいわだなあー⋯⋯$"
+
+Route130_Text_SantiagoDefeat: @ 0x08261765
+	.string "へいわボケ　してて　まけました！$"
+
+Route130_Text_SantiagoPostBattle: @ 0x08261776
+	.string "こうして　およいだり　しょうぶしたり⋯⋯\n"
+	.string "オレ　しあわせだなあー⋯⋯$"
+	.incbin "baserom_jp.gba", 0x261799, 0xbfa
