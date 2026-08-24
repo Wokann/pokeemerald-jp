@@ -65,5 +65,3 @@ TerraCave_End_EventScript_0021D188::
 	setvar 0x8004, 0x195
 	goto 0x082441A0
 	end
-
-	.incbin "baserom_jp.gba", 0x21d193, 0x9

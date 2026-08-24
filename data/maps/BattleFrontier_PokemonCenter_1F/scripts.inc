@@ -42,5 +42,3 @@ BattleFrontier_PokemonCenter_1F_EventScript_0023B16C::
 	waitdooranim
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x23b17f, 0xa4

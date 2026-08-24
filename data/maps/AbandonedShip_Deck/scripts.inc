@@ -7,5 +7,3 @@ AbandonedShip_Deck_MapScripts::
 AbandonedShip_Deck_EventScript_0021A978::
 	setflag 0x89E
 	end
-
-	.incbin "baserom_jp.gba", 0x21a97c, 0x274

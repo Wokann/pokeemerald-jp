@@ -125,5 +125,3 @@ SootopolisCity_Gym_1F_EventScript_0020E461::
 	callstd 0x4
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x20e46b, 0xb6a

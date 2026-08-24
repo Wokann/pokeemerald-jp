@@ -350,5 +350,3 @@ Route113_GlassWorkshop_EventScript_00240C48::
 	loadword 0x0, 0x08240F6C
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x240c51, 0x347

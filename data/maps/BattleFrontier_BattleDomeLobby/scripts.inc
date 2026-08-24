@@ -620,5 +620,3 @@ gJPText_00227D2E: @ 0x08227D2E
 	.string "バトルドームで\n"
 	.string "さいごに　おこなった　たたかいを\l"
 	.string "フロンティアパスに　きろく　されますか？$"
-
-	.incbin "baserom_jp.gba", 0x227d5c, 0x16d

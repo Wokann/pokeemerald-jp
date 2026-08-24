@@ -24,5 +24,3 @@ AquaHideout_B2F_EventScript_00217FB5::
 	setvar 0x4001, 0x1
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x217fd9, 0x375

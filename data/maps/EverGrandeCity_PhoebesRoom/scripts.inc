@@ -39,5 +39,3 @@ EverGrandeCity_PhoebesRoom_EventScript_002103BC::
 EverGrandeCity_PhoebesRoom_EventScript_002103C2::
 	call 0x082435E2
 	return
-
-	.incbin "baserom_jp.gba", 0x2103c8, 0x15b

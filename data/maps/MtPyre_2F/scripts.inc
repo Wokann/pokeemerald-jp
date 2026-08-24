@@ -20,5 +20,3 @@ MtPyre_2F_EventScript_00216254::
 	loadword 0x0, 0x08216301
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x21625d, 0x8ec

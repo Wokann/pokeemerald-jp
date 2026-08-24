@@ -32,5 +32,3 @@ PacifidlogTown_EventScript_001E63AE::
 	loadword 0x0, 0x081E6499
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x1e63b7, 0xff

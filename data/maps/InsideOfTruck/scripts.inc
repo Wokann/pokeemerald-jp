@@ -55,5 +55,3 @@ InsideOfTruck_EventScript_0021DE15::
 	loadword 0x0, 0x0821DE1E
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x21de1e, 0x28

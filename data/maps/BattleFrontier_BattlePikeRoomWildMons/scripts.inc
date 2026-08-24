@@ -49,5 +49,3 @@ BattleFrontier_BattlePikeRoomWildMons_EventScript_00235331::
 BattleFrontier_BattlePikeRoomWildMons_EventScript_0023535A::
 	setvar 0x4001, 0x1
 	end
-
-	.incbin "baserom_jp.gba", 0x235360, 0x4ecc

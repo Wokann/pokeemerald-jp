@@ -44,5 +44,3 @@ VictoryRoad_1F_EventScript_0021954E::
 	loadword 0x0, 0x082196CA
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x219557, 0x92e

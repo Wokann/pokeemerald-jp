@@ -30,5 +30,3 @@ MossdeepCity_GameCorner_1F_EventScript_0020E054::
 	loadword 0x0, 0x0820E0BA
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x20e05d, 0x1c6

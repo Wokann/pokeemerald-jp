@@ -61,5 +61,3 @@ FallarborTown_EventScript_001E5ECB::
 	loadword 0x0, 0x081E603A
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x1e5ed4, 0x185

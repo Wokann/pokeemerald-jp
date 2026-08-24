@@ -378,5 +378,3 @@ FallarborTown_BattleTentLobby_EventScript_001F5613::
 FallarborTown_BattleTentLobby_EventScript_001F5621::
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x1f5623, 0x1b5

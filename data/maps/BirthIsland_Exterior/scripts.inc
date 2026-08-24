@@ -116,5 +116,3 @@ BirthIsland_Exterior_EventScript_0023B702::
 	setvar 0x8004, 0x19A
 	goto 0x082441A0
 	end
-
-	.incbin "baserom_jp.gba", 0x23b70d, 0x58

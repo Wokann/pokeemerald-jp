@@ -58,5 +58,3 @@ Route114_LanettesHouse_EventScript_0021254E::
 	loadword 0x0, 0x08212770
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x212557, 0x2c9

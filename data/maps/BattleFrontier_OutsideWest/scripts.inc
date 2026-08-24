@@ -314,5 +314,3 @@ BattleFrontier_OutsideWest_EventScript_0021EEAE::
 	loadword 0x0, 0x0821F657
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x21eeb7, 0x805

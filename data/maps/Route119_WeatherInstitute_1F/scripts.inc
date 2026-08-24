@@ -71,5 +71,3 @@ Route119_WeatherInstitute_1F_EventScript_00241275::
 	call 0x0824310F
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x241286, 0x25f

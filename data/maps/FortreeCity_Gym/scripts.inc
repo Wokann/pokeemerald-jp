@@ -59,5 +59,3 @@ FortreeCity_Gym_EventScript_0020456E::
 	callstd 0x4
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x204578, 0x6e5

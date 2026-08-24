@@ -12,5 +12,3 @@ AbandonedShip_Rooms_B1F_EventScript_0021AD87::
 	loadword 0x0, 0x0821AD90
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x21ad90, 0x7a

@@ -85,5 +85,3 @@ AquaHideout_B1F_EventScript_00217D85::
 	setflag 0x1C5
 	goto 0x08244197
 	end
-
-	.incbin "baserom_jp.gba", 0x217d8e, 0x211

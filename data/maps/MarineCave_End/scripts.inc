@@ -65,5 +65,3 @@ MarineCave_End_EventScript_0021D0B7::
 	setvar 0x8004, 0x194
 	goto 0x082441A0
 	end
-
-	.incbin "baserom_jp.gba", 0x21d0c2, 0x9

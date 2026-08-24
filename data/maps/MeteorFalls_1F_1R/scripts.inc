@@ -118,5 +118,3 @@ MeteorFalls_1F_1R_EventScript_00212D67::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x212d71, 0x87d

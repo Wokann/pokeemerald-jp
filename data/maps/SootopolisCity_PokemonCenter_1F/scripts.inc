@@ -52,5 +52,3 @@ SootopolisCity_PokemonCenter_1F_EventScript_0020F03C::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x20f046, 0x14a

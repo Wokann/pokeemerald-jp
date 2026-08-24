@@ -197,5 +197,3 @@ LilycoveCity_DepartmentStoreRooftop_EventScript_0020B0AA::
 	hidemoneybox
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x20b0af, 0x2ba

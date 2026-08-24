@@ -7,5 +7,3 @@ AlteringCave_MapScripts::
 AlteringCave_EventScript_0021D1A2::
 	setflag 0x8DD
 	end
-
-	.incbin "baserom_jp.gba", 0x21d1a6, 0x1cc

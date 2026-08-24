@@ -60,5 +60,3 @@ SootopolisCity_MysteryEventsHouse_B1F_EventScript_002101CD::
 	waitmessage
 	waitbuttonpress
 	return
-
-	.incbin "baserom_jp.gba", 0x2101d8, 0xe

@@ -39,5 +39,3 @@ Route114_FossilManiacsHouse_EventScript_00212178::
 	loadword 0x0, 0x0821224D
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x212181, 0x10c

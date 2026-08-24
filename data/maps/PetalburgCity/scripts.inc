@@ -345,5 +345,3 @@ PetalburgCity_EventScript_001DBD4A::
 	loadword 0x0, 0x081DBD98
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x1dbd53, 0x280

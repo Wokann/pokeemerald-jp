@@ -868,5 +868,3 @@ Route110_TrickHousePuzzle5_EventScript_0023F7F0::
 	applymovement 0x5, 0x0823F81D
 	waitmovement 0x0
 	return
-
-	.incbin "baserom_jp.gba", 0x23f7fb, 0x505

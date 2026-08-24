@@ -31,5 +31,3 @@ EverGrandeCity_ChampionsRoom_EventScript_002108FF::
 	waitmovement 0x0
 	setvar 0x4001, 0x1
 	goto 0x08210926
-
-	.incbin "baserom_jp.gba", 0x210921, 0x74a

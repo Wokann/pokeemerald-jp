@@ -53,5 +53,3 @@ NewMauville_Entrance_EventScript_0021A378::
 NewMauville_Entrance_EventScript_0021A3F9::
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x21a3fb, 0x37

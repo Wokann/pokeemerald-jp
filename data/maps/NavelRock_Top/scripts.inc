@@ -91,5 +91,3 @@ NavelRock_Top_EventScript_0023C234::
 	setvar 0x8004, 0xFA
 	goto 0x082441A0
 	end
-
-	.incbin "baserom_jp.gba", 0x23c23f, 0x1a

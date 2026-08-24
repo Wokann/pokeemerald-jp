@@ -782,5 +782,3 @@ gJPText_0022D2EA: @ 0x0822D2EA
 	.string "ぼうけんしゃよ！\n"
 	.string "あなたの　あつい　ゆうきを　たたえ\l"
 	.string "バトルポイントを　おおくり　しましょう！$"
-
-	.incbin "baserom_jp.gba", 0x22d31a, 0x1e2

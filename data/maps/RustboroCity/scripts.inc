@@ -876,5 +876,3 @@ gJPText_001DFD2A: @ 0x081DFD2A
 gJPText_001DFD3B: @ 0x081DFD3B
 	.string "⋯⋯では　わたしは　しごとに　もどります\p"
 	.string "{MUS_RG_VS_TRAINER}さん　おきをつけて！$"
-
-	.incbin "baserom_jp.gba", 0x1dfd5d, 0x91

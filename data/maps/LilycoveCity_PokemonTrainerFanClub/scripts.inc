@@ -651,5 +651,3 @@ gJPText_00208B22: @ 0x08208B22
 	.string "きみの　ことを　みなおすと　おもうんだ\p"
 	.string "じゃあ　きたい　してるよ！\n"
 	.string "{MUS_RG_VS_TRAINER}！！$"
-
-	.incbin "baserom_jp.gba", 0x208bec, 0x8e8

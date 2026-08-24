@@ -63,5 +63,3 @@ Route114_FossilManiacsTunnel_EventScript_0021232B::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x212335, 0x19c

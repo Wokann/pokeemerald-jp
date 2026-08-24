@@ -904,5 +904,3 @@ PetalburgCity_Gym_Text_DadGoCollectBadges:
 	.string "いずれ　{PLAYER}と　しょうぶ　するだろう\p"
 	.string "だが　それは　{PLAYER}が\n"
 	.string "つよくなってからの　はなし　だよ$"
-
-	.incbin "baserom_jp.gba", 0x1f97e8, 0xfe5

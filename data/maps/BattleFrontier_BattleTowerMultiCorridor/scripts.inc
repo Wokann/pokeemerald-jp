@@ -113,5 +113,3 @@ BattleFrontier_BattleTowerMultiCorridor_EventScript_00226568::
 	warp 0x1A11, 0xFF, 0x4, 0x5
 	waitstate
 	return
-
-	.incbin "baserom_jp.gba", 0x226572, 0x2c

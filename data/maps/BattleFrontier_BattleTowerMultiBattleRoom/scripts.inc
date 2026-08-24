@@ -500,4 +500,3 @@ gUnknown_8226D53:
 	.string "つうしん　たいきちゅう⋯⋯$"
 
 gUnknown_8226D61:: @ 0x08226D61
-	.incbin "baserom_jp.gba", 0x226d61, 0x2b

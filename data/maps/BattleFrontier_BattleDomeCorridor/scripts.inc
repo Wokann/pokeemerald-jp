@@ -46,5 +46,3 @@ BattleFrontier_BattleDomeCorridor_EventScript_00227F5A::
 	warp 0x1A14, 0xFF, 0x5, 0x7
 	waitstate
 	end
-
-	.incbin "baserom_jp.gba", 0x227f6c, 0x58

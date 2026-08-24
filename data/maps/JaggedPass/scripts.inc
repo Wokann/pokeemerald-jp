@@ -68,5 +68,3 @@ JaggedPass_EventScript_00215B57::
 	waitse
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x215bb4, 0x54b

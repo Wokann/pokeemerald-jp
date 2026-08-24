@@ -307,5 +307,3 @@ Route110_TrickHouseEnd_EventScript_0023DA52::
 	turnobject 0x1, 0x4
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x23da9a, 0x42f

@@ -369,5 +369,3 @@ Route124_DivingTreasureHuntersHouse_EventScript_0024218A::
 	loadword 0x0, 0x08242307
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x242193, 0x21c

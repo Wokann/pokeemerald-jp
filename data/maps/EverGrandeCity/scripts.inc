@@ -28,5 +28,3 @@ EverGrandeCity_EventScript_001E39A4::
 	setflag 0x87E
 	setvar 0x4001, 0x1
 	end
-
-	.incbin "baserom_jp.gba", 0x1e39ad, 0x48

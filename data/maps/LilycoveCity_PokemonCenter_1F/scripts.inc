@@ -54,5 +54,3 @@ LilycoveCity_PokemonCenter_1F_EventScript_002082AC::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x2082b6, 0xc0

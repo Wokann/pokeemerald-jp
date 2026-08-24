@@ -706,5 +706,3 @@ gJPText_0023D407: @ 0x0823D407
 	.string "そこの　かけじくから　はいって\n"
 	.string "ちょうせん　するがいい！\l"
 	.string "わがはいは　おくの　へやで　まってるぞ！$"
-
-	.incbin "baserom_jp.gba", 0x23d478, 0x248

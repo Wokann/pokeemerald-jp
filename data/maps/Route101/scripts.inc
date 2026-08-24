@@ -130,5 +130,3 @@ Route101_EventScript_001E6681::
 Route101_EventScript_001E6685::
 	setflag 0x2F8
 	return
-
-	.incbin "baserom_jp.gba", 0x1e6689, 0x19b

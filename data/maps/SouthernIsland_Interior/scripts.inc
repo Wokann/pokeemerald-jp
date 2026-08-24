@@ -132,5 +132,3 @@ SouthernIsland_Interior_EventScript_00222954::
 	setvar 0x8006, 0xBF
 	special CreateObedientEnemyMon
 	return
-
-	.incbin "baserom_jp.gba", 0x222967, 0x1c

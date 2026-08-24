@@ -99,5 +99,3 @@ FortreeCity_EventScript_001DFE8F::
 	setflag 0x127
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x1dfebe, 0x2b3

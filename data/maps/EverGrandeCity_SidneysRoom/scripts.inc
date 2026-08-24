@@ -45,5 +45,3 @@ EverGrandeCity_SidneysRoom_EventScript_0021023C::
 	setvar 0x409C, 0x1
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x210249, 0x128

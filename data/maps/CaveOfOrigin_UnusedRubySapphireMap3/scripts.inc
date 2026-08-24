@@ -8,5 +8,3 @@ CaveOfOrigin_UnusedRubySapphireMap3_EventScript_002190F4::
 	checkflag 0x71
 	call_if 0x1, 0x08243344
 	end
-
-	.incbin "baserom_jp.gba", 0x2190fe, 0x39e

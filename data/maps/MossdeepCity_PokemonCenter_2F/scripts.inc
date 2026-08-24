@@ -12,5 +12,3 @@ MossdeepCity_PokemonCenter_2F_EventScript_0020C571::
 	loadword 0x0, 0x0820C57A
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x20c57a, 0x29c

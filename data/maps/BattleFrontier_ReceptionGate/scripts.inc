@@ -348,5 +348,3 @@ gJPText_0023A6E5: @ 0x0823A6E5
 	.string "あじわって　いって　くれ！\p"
 	.string "わたしの　へやも　あるから\n"
 	.string "ひまが　あるときに　たずねて　きてくれよ！$"
-
-	.incbin "baserom_jp.gba", 0x23a755, 0x9de

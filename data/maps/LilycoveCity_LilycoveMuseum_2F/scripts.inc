@@ -279,5 +279,3 @@ gJPText_0020655D: @ 0x0820655D
 	.string "そのえを　ここに　かざれる　ように\l"
 	.string "あなたから　おねがい　して　くださると\l"
 	.string "たいへん　うれしいです$"
-
-	.incbin "baserom_jp.gba", 0x206607, 0x2ca

@@ -37,5 +37,3 @@ Route111_OldLadysRestStop_EventScript_00211E45::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x211e4f, 0xbb

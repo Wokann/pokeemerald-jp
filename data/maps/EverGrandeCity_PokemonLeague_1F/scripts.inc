@@ -94,5 +94,3 @@ EverGrandeCity_PokemonLeague_1F_EventScript_002111BB::
 	waitmovement 0x0
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x2111da, 0xad

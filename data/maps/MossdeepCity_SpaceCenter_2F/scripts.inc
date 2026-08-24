@@ -309,5 +309,3 @@ gJPText_0020DBEC: @ 0x0820DBEC
 gJPText_0020DC12: @ 0x0820DC12
 	.string "だよな！\n"
 	.string "そのほうが　おりこうさん　だぜ！$"
-
-	.incbin "baserom_jp.gba", 0x20dc28, 0x3f6

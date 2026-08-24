@@ -111,5 +111,3 @@ SafariZone_South_EventScript_0021EB62::
 	loadword 0x0, 0x08262B4E
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x21eb6b, 0x36

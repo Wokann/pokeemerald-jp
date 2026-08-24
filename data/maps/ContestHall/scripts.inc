@@ -490,5 +490,3 @@ ContestHall_EventScript_0021DD55::
 	warp 0xD04, 0xFF, 0xF, 0x4
 	waitstate
 	end
-
-	.incbin "baserom_jp.gba", 0x21dd5f, 0x24

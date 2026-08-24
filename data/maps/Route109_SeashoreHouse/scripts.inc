@@ -90,5 +90,3 @@ Route109_SeashoreHouse_EventScript_0023C4E4::
 	hidemoneybox
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x23c4f1, 0x330

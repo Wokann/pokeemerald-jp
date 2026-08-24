@@ -32,5 +32,3 @@ EverGrandeCity_DrakesRoom_EventScript_00210709::
 EverGrandeCity_DrakesRoom_EventScript_0021070F::
 	call 0x082435E2
 	return
-
-	.incbin "baserom_jp.gba", 0x210715, 0x1bb

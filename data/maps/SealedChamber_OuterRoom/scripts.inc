@@ -132,5 +132,3 @@ SealedChamber_OuterRoom_EventScript_0021BB32::
 	mossdeepgym4
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x21bb3c, 0x9a

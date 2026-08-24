@@ -10,5 +10,3 @@ MirageTower_3F_EventScript_0021CE01::
 	setstepcallback 0x7
 	setholewarp 0x185F, 0xFF, 0x0, 0x0
 	end
-
-	.incbin "baserom_jp.gba", 0x21ce0c, 0x15f

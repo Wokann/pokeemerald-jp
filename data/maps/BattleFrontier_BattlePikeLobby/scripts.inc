@@ -407,5 +407,3 @@ gJPText_00233A0B: @ 0x08233A0B
 gJPText_00233A3E: @ 0x08233A3E
 	.string "おきゃくさまの　つよき　うんを　たたえ\n"
 	.string "バトルポイントを　さしあげます⋯⋯$"
-
-	.incbin "baserom_jp.gba", 0x233a64, 0x19d

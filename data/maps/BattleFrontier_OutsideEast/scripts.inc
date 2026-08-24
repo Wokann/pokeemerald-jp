@@ -219,5 +219,3 @@ BattleFrontier_OutsideEast_EventScript_00222BA4::
 	loadword 0x0, 0x08223411
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x222bad, 0x8c8

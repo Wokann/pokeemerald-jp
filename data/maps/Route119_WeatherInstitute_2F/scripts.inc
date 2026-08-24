@@ -137,5 +137,3 @@ Route119_WeatherInstitute_2F_EventScript_00241752::
 	goto_if 0x1, Route119_WeatherInstitute_2F_EventScript_002416BE
 	goto Route119_WeatherInstitute_2F_EventScript_00241614
 	end
-
-	.incbin "baserom_jp.gba", 0x241763, 0x4ec

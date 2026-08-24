@@ -386,5 +386,3 @@ LilycoveCity_EventScript_001E068D::
 	loadword 0x0, 0x081E13F5
 	callstd 0x4
 	return
-
-	.incbin "baserom_jp.gba", 0x1e0696, 0xecf

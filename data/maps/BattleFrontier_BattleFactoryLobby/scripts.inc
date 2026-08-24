@@ -483,5 +483,3 @@ gJPText_0023188A: @ 0x0823188A
 	.string "バトルファクトリーで\n"
 	.string "さいごに　おこなった　たたかいを\l"
 	.string "フロンティアパスに　きろく　いたしますか？$"
-
-	.incbin "baserom_jp.gba", 0x2318bc, 0x3ec

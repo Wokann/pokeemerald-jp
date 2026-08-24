@@ -66,5 +66,3 @@ SeafloorCavern_Entrance_EventScript_00218519::
 	applymovement 0x1, 0x0824362D
 	waitmovement 0x0
 	return
-
-	.incbin "baserom_jp.gba", 0x218524, 0x13a

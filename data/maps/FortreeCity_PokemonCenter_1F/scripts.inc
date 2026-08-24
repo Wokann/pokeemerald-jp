@@ -31,5 +31,3 @@ FortreeCity_PokemonCenter_1F_EventScript_00204C8C::
 	loadword 0x0, 0x08204D21
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x204c95, 0x101

@@ -44,5 +44,3 @@ Underwater_SeafloorCavern_EventScript_002183EF::
 	loadword 0x0, 0x082183F8
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x2183f8, 0x56

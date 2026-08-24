@@ -57,5 +57,3 @@ AbandonedShip_Corridors_B1F_EventScript_0021AC75::
 	callstd 0x4
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x21ac7f, 0xf9

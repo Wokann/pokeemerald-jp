@@ -187,5 +187,3 @@ MtChimney_EventScript_00214F14::
 	loadword 0x0, 0x082157ED
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x214f1d, 0xbd5

@@ -48,5 +48,3 @@ TrainerHill_Elevator_EventScript_0023C3E8::
 	special ShakeScreenInElevator
 	waitstate
 	return
-
-	.incbin "baserom_jp.gba", 0x23c3ee, 0x13

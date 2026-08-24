@@ -64,5 +64,3 @@ EverGrandeCity_PokemonCenter_1F_EventScript_00211489::
 	applymovement 0x4, 0x0821149B
 	waitmovement 0x0
 	return
-
-	.incbin "baserom_jp.gba", 0x211494, 0x10e

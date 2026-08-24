@@ -911,5 +911,3 @@ SootopolisCity_EventScript_001E2BE6::
 	waitstate
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x1e2c05, 0xd74

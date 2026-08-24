@@ -7,5 +7,3 @@ AbandonedShip_Underwater1_MapScripts::
 AbandonedShip_Underwater1_EventScript_0021AE10::
 	setdivewarp 0x1841, 0xFF, 0x0, 0xA
 	end
-
-	.incbin "baserom_jp.gba", 0x21ae19, 0x518

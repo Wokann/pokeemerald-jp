@@ -140,5 +140,3 @@ SkyPillar_Top_EventScript_0021C00A::
 	setvar 0x40D7, 0x1
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x21c0aa, 0x49

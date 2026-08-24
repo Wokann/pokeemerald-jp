@@ -40,5 +40,3 @@ BattleFrontier_BattleTowerCorridor_EventScript_00221C20::
 	warp 0x1A08, 0xFF, 0x4, 0x8
 	waitstate
 	end
-
-	.incbin "baserom_jp.gba", 0x221c2f, 0xa

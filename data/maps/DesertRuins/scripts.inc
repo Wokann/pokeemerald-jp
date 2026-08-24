@@ -97,5 +97,3 @@ DesertRuins_EventScript_00213ED6::
 	setvar 0x8004, 0x191
 	goto 0x082441A0
 	end
-
-	.incbin "baserom_jp.gba", 0x213ee1, 0x12a

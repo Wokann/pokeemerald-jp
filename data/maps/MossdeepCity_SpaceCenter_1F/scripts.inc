@@ -241,5 +241,3 @@ MossdeepCity_SpaceCenter_1F_EventScript_0020CFEB::
 	callstd 0x4
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x20cff6, 0x68c

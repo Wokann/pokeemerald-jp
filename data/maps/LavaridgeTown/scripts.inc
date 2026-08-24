@@ -313,5 +313,3 @@ gJPText_001E5AB6: @ 0x081E5AB6
 	.string "{MUS_RG_VS_TRAINER}の　とうさん\n"
 	.string "{MUS_RG_VS_TRAINER}と　ちがって　つよそうだからな\p"
 	.string "じゃな！$"
-
-	.incbin "baserom_jp.gba", 0x1e5b4b, 0x318

@@ -14,5 +14,3 @@ FieryPath_EventScript_00216112::
 	setflag 0x2FE
 	clearflag 0x2FF
 	return
-
-	.incbin "baserom_jp.gba", 0x216119, 0x117

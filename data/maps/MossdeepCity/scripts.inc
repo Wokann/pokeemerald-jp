@@ -190,5 +190,3 @@ MossdeepCity_EventScript_001E1791::
 	applymovement 0x10, 0x081E17B1
 	waitmovement 0x0
 	return
-
-	.incbin "baserom_jp.gba", 0x1e17a3, 0x553

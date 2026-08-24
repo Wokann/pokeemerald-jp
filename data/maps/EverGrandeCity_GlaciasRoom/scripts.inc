@@ -39,5 +39,3 @@ EverGrandeCity_GlaciasRoom_EventScript_0021056E::
 EverGrandeCity_GlaciasRoom_EventScript_00210574::
 	call 0x082435E2
 	return
-
-	.incbin "baserom_jp.gba", 0x21057a, 0x144

@@ -243,5 +243,3 @@ gJPText_0021E227: @ 0x0821E227
 gJPText_0021E248: @ 0x0821E248
 	.string "おつかれさまです　ただいま\n"
 	.string "カイナシティに　とうちゃく　しました$"
-
-	.incbin "baserom_jp.gba", 0x21e269, 0x6fc

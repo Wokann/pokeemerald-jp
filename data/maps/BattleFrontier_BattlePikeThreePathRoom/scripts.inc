@@ -332,5 +332,3 @@ gJPText_0023433C: @ 0x0823433C
 	.string "おそろしい　できごとが　おきゃくさまを\l"
 	.string "まちうけている　でしょう⋯⋯\p"
 	.string "かくごして　おいて　ください⋯⋯$"
-
-	.incbin "baserom_jp.gba", 0x234384, 0x23

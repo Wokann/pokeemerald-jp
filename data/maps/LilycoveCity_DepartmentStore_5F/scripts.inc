@@ -99,5 +99,3 @@ LilycoveCity_DepartmentStore_5F_EventScript_0020AD90::
 	loadword 0x0, 0x0820ADD5
 	callstd 0x2
 	end
-
-	.incbin "baserom_jp.gba", 0x20ad99, 0xba

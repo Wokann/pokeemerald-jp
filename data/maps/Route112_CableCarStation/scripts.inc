@@ -62,5 +62,3 @@ Route112_CableCarStation_EventScript_00211FB3::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x211fbd, 0x62

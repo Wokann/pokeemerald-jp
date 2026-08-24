@@ -253,5 +253,3 @@ BattleFrontier_BattlePyramidTop_EventScript_0022ECEE::
 	setvar 0x8005, 0x0
 	special DoSpecialTrainerBattle
 	return
-
-	.incbin "baserom_jp.gba", 0x22ecfe, 0x4cb

@@ -123,5 +123,3 @@ LilycoveCity_House3_EventScript_0020A1B8::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x20a1c2, 0x358

@@ -1278,5 +1278,3 @@ gJPText_00221873: @ 0x08221873
 gJPText_0022189E: @ 0x0822189E
 	.string "{MUS_RG_VS_TRAINER}は　バトルポイントを\n"
 	.string "{B_COPY_VAR_1}　BP　てにいれた！$"
-
-	.incbin "baserom_jp.gba", 0x2218b8, 0x21c

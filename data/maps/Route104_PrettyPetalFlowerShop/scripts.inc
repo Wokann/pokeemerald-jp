@@ -114,5 +114,3 @@ Route104_PrettyPetalFlowerShop_EventScript_00211AEA::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x211af4, 0x2f9

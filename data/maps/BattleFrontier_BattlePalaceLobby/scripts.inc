@@ -552,5 +552,3 @@ gJPText_0022AC13: @ 0x0822AC13
 	.string "バトルパレスで\n"
 	.string "さいごに　おこなった　たたかいを\l"
 	.string "フロンティアパスに　きろく　するか？$"
-
-	.incbin "baserom_jp.gba", 0x22ac3f, 0x2e6

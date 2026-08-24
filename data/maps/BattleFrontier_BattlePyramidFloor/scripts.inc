@@ -128,4 +128,3 @@ BattleFrontier_BattlePyramidFloor_EventScript_0022D69E::
 	return
 
 BattlePyramid_WarpToNextFloor:: @ 0x0822D6B1
-	.incbin "baserom_jp.gba", 0x22d6b1, 0x12f1

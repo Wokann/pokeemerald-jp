@@ -61,5 +61,3 @@ MtChimney_CableCarStation_EventScript_002120C0::
 	callstd 0x4
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x2120ca, 0x62

@@ -380,22 +380,36 @@ gStdScripts: @ 0x81DB7BC
 	.globl gStdScripts_End
 gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/PetalburgCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1dbd53, 0x280
 	.include "data/maps/SlateportCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1dd93e, 0x80
 	.include "data/maps/MauvilleCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1dddf3, 0x903
 	.include "data/maps/RustboroCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1dfd5d, 0x91
 	.include "data/maps/FortreeCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1dfebe, 0x2b3
 	.include "data/maps/LilycoveCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e0696, 0xecf
 	.include "data/maps/MossdeepCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e17a3, 0x553
 	.include "data/maps/SootopolisCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e2c05, 0xd74
 	.include "data/maps/EverGrandeCity/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e39ad, 0x48
 	.include "data/maps/LittlerootTown/scripts.inc"
 	.include "data/maps/OldaleTown/scripts.inc"
 	.include "data/maps/DewfordTown/scripts.inc"
 	.include "data/maps/LavaridgeTown/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e5b4b, 0x318
 	.include "data/maps/FallarborTown/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e5ed4, 0x185
 	.include "data/maps/VerdanturfTown/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e60f0, 0x291
 	.include "data/maps/PacifidlogTown/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e63b7, 0xff
 	.include "data/maps/Route101/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1e6689, 0x19b
 	.include "data/maps/Route102/scripts.inc"
 	.include "data/maps/Route103/scripts.inc"
 	.include "data/maps/Route104/scripts.inc"
@@ -464,6 +478,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LavaridgeTown_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/FallarborTown_Mart/scripts.inc"
 	.include "data/maps/FallarborTown_BattleTentLobby/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1f5623, 0x1b5
 	.include "data/maps/FallarborTown_BattleTentCorridor/scripts.inc"
 	.include "data/maps/FallarborTown_BattleTentBattleRoom/scripts.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/scripts.inc"
@@ -488,6 +503,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/PacifidlogTown_House5/scripts.inc"
 	.include "data/maps/PetalburgCity_WallysHouse/scripts.inc"
 	.include "data/maps/PetalburgCity_Gym/scripts.inc"
+	.incbin "baserom_jp.gba", 0x1f97e8, 0xfe5
 	.include "data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/PetalburgCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/PetalburgCity_Mart/scripts.inc"
@@ -522,6 +538,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/RustboroCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/RustboroCity_Mart/scripts.inc"
 	.include "data/maps/RustboroCity_Flat1_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x203770, 0x458
 	.include "data/maps/RustboroCity_House1/scripts.inc"
 	.include "data/maps/RustboroCity_CuttersHouse/scripts.inc"
 	.include "data/maps/RustboroCity_House2/scripts.inc"
@@ -531,8 +548,11 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/RustboroCity_House3/scripts.inc"
 	.include "data/maps/FortreeCity_House1/scripts.inc"
 	.include "data/maps/FortreeCity_Gym/scripts.inc"
+	.incbin "baserom_jp.gba", 0x204578, 0x6e5
 	.include "data/maps/FortreeCity_PokemonCenter_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x204c95, 0x101
 	.include "data/maps/FortreeCity_PokemonCenter_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x204dab, 0x12
 	.include "data/maps/FortreeCity_Mart/scripts.inc"
 	.include "data/maps/FortreeCity_House2/scripts.inc"
 	.include "data/maps/FortreeCity_House3/scripts.inc"
@@ -543,80 +563,127 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_CoveLilyMotel_2F/scripts.inc"
 	.include "data/maps/LilycoveCity_LilycoveMuseum_1F/scripts.inc"
 	.include "data/maps/LilycoveCity_LilycoveMuseum_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x206607, 0x2ca
 	.include "data/maps/LilycoveCity_ContestLobby/scripts.inc"
+	.incbin "baserom_jp.gba", 0x207640, 0xc0a
 	.include "data/maps/LilycoveCity_PokemonCenter_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2082b6, 0xc0
 	.include "data/maps/LilycoveCity_PokemonCenter_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20838b, 0x12
 	.include "data/maps/LilycoveCity_UnusedMart/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonTrainerFanClub/scripts.inc"
+	.incbin "baserom_jp.gba", 0x208bec, 0x8e8
 	.include "data/maps/LilycoveCity_Harbor/scripts.inc"
+	.incbin "baserom_jp.gba", 0x209ba7, 0x1c9
 	.include "data/maps/LilycoveCity_MoveDeletersHouse/scripts.inc"
 	.include "data/maps/LilycoveCity_House1/scripts.inc"
 	.include "data/maps/LilycoveCity_House2/scripts.inc"
 	.include "data/maps/LilycoveCity_House3/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20a1c2, 0x358
 	.include "data/maps/LilycoveCity_House4/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStore_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20a920, 0x32e
 	.include "data/maps/LilycoveCity_DepartmentStore_5F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20ad99, 0xba
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20b0af, 0x2ba
 	.include "data/maps/MossdeepCity_Gym/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20b7d0, 0xce2
 	.include "data/maps/MossdeepCity_PokemonCenter_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20c4e1, 0x69
 	.include "data/maps/MossdeepCity_PokemonCenter_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20c57a, 0x29c
 	.include "data/maps/MossdeepCity_StevensHouse/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20caaf, 0x2ae
 	.include "data/maps/MossdeepCity_SpaceCenter_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20cff6, 0x68c
 	.include "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20dc28, 0x3f6
 	.include "data/maps/MossdeepCity_GameCorner_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20e05d, 0x1c6
 	.include "data/maps/MossdeepCity_GameCorner_B1F/scripts.inc"
 	.include "data/maps/SootopolisCity_Gym_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20e46b, 0xb6a
 	.include "data/maps/SootopolisCity_PokemonCenter_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20f046, 0x14a
 	.include "data/maps/SootopolisCity_PokemonCenter_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20f1a5, 0xbbb
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_1F/scripts.inc"
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2101d8, 0xe
 	.include "data/maps/EverGrandeCity_SidneysRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x210249, 0x128
 	.include "data/maps/EverGrandeCity_PhoebesRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2103c8, 0x15b
 	.include "data/maps/EverGrandeCity_GlaciasRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21057a, 0x144
 	.include "data/maps/EverGrandeCity_DrakesRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x210715, 0x1bb
 	.include "data/maps/EverGrandeCity_ChampionsRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x210921, 0x74a
 	.include "data/maps/EverGrandeCity_Hall1/scripts.inc"
 	.include "data/maps/EverGrandeCity_Hall2/scripts.inc"
 	.include "data/maps/EverGrandeCity_Hall3/scripts.inc"
 	.include "data/maps/EverGrandeCity_Hall4/scripts.inc"
 	.include "data/maps/EverGrandeCity_Hall5/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonLeague_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2111da, 0xad
 	.include "data/maps/EverGrandeCity_HallOfFame/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonCenter_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x211494, 0x10e
 	.include "data/maps/EverGrandeCity_PokemonCenter_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2115b7, 0x12
 	.include "data/maps/EverGrandeCity_PokemonLeague_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2115de, 0x12
 	.include "data/maps/Route104_MrBrineysHouse/scripts.inc"
 	.include "data/maps/Route104_PrettyPetalFlowerShop/scripts.inc"
+	.incbin "baserom_jp.gba", 0x211af4, 0x2f9
 	.include "data/maps/Route111_OldLadysRestStop/scripts.inc"
+	.incbin "baserom_jp.gba", 0x211e4f, 0xbb
 	.include "data/maps/Route112_CableCarStation/scripts.inc"
+	.incbin "baserom_jp.gba", 0x211fbd, 0x62
 	.include "data/maps/MtChimney_CableCarStation/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2120ca, 0x62
 	.include "data/maps/Route114_FossilManiacsHouse/scripts.inc"
+	.incbin "baserom_jp.gba", 0x212181, 0x10c
 	.include "data/maps/Route114_FossilManiacsTunnel/scripts.inc"
+	.incbin "baserom_jp.gba", 0x212335, 0x19c
 	.include "data/maps/Route114_LanettesHouse/scripts.inc"
+	.incbin "baserom_jp.gba", 0x212557, 0x2c9
 	.include "data/maps/Route116_TunnelersRestHouse/scripts.inc"
 	.include "data/maps/Route117_PokemonDayCare/scripts.inc"
 	.include "data/maps/Route121_SafariZoneEntrance/scripts.inc"
 	.include "data/maps/MeteorFalls_1F_1R/scripts.inc"
+	.incbin "baserom_jp.gba", 0x212d71, 0x87d
 	.include "data/maps/MeteorFalls_B1F_1R/scripts.inc"
 	.include "data/maps/MeteorFalls_B1F_2R/scripts.inc"
 	.include "data/maps/RusturfTunnel/scripts.inc"
 	.include "data/maps/Underwater_SootopolisCity/scripts.inc"
 	.include "data/maps/DesertRuins/scripts.inc"
+	.incbin "baserom_jp.gba", 0x213ee1, 0x12a
 	.include "data/maps/GraniteCave_B1F/scripts.inc"
 	.include "data/maps/GraniteCave_B2F/scripts.inc"
 	.include "data/maps/GraniteCave_StevensRoom/scripts.inc"
 	.include "data/maps/PetalburgWoods/scripts.inc"
 	.include "data/maps/MtChimney/scripts.inc"
+	.incbin "baserom_jp.gba", 0x214f1d, 0xbd5
 	.include "data/maps/JaggedPass/scripts.inc"
+	.incbin "baserom_jp.gba", 0x215bb4, 0x54b
 	.include "data/maps/FieryPath/scripts.inc"
+	.incbin "baserom_jp.gba", 0x216119, 0x117
 	.include "data/maps/MtPyre_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21625d, 0x8ec
 	.include "data/maps/MtPyre_Exterior/scripts.inc"
 	.include "data/maps/MtPyre_Summit/scripts.inc"
+	.incbin "baserom_jp.gba", 0x216f2b, 0xd85
 	.include "data/maps/AquaHideout_B1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x217d8e, 0x211
 	.include "data/maps/AquaHideout_B2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x217fd9, 0x375
 	.include "data/maps/Underwater_SeafloorCavern/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2183f8, 0x56
 	.include "data/maps/SeafloorCavern_Entrance/scripts.inc"
+	.incbin "baserom_jp.gba", 0x218524, 0x13a
 	.include "data/maps/SeafloorCavern_Room1/scripts.inc"
 	.include "data/maps/SeafloorCavern_Room2/scripts.inc"
 	.include "data/maps/SeafloorCavern_Room3/scripts.inc"
@@ -631,27 +698,39 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap1/scripts.inc"
 	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap2/scripts.inc"
 	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap3/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2190fe, 0x39e
 	.include "data/maps/VictoryRoad_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x219557, 0x92e
 	.include "data/maps/ShoalCave_LowTideEntranceRoom/scripts.inc"
 	.include "data/maps/ShoalCave_LowTideInnerRoom/scripts.inc"
 	.include "data/maps/ShoalCave_LowTideStairsRoom/scripts.inc"
 	.include "data/maps/ShoalCave_LowTideLowerRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21a2b6, 0x6e
 	.include "data/maps/ShoalCave_HighTideEntranceRoom/scripts.inc"
 	.include "data/maps/ShoalCave_HighTideInnerRoom/scripts.inc"
 	.include "data/maps/NewMauville_Entrance/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21a3fb, 0x37
 	.include "data/maps/NewMauville_Inside/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21a8f1, 0x81
 	.include "data/maps/AbandonedShip_Deck/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21a97c, 0x274
 	.include "data/maps/AbandonedShip_Corridors_B1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21ac7f, 0xf9
 	.include "data/maps/AbandonedShip_Rooms_B1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21ad90, 0x7a
 	.include "data/maps/AbandonedShip_Underwater1/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21ae19, 0x518
 	.include "data/maps/AbandonedShip_Underwater2/scripts.inc"
 	.include "data/maps/AbandonedShip_HiddenFloorCorridors/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21b4fb, 0xa8
 	.include "data/maps/AbandonedShip_HiddenFloorRooms/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21b758, 0x17
 	.include "data/maps/IslandCave/scripts.inc"
 	.include "data/maps/AncientTomb/scripts.inc"
 	.include "data/maps/Underwater_Route134/scripts.inc"
 	.include "data/maps/Underwater_SealedChamber/scripts.inc"
 	.include "data/maps/SealedChamber_OuterRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21bb3c, 0x9a
 	.include "data/maps/ScorchedSlab/scripts.inc"
 	.include "data/maps/AquaHideout_UnusedRubyMap1/scripts.inc"
 	.include "data/maps/AquaHideout_UnusedRubyMap2/scripts.inc"
@@ -665,78 +744,113 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/ShoalCave_LowTideIceRoom/scripts.inc"
 	.include "data/maps/SkyPillar_5F/scripts.inc"
 	.include "data/maps/SkyPillar_Top/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21c0aa, 0x49
 	.include "data/maps/MagmaHideout_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21c0ff, 0xcc5
 	.include "data/maps/MagmaHideout_3F_3R/scripts.inc"
 	.include "data/maps/MagmaHideout_2F_3R/scripts.inc"
 	.include "data/maps/MirageTower_1F/scripts.inc"
 	.include "data/maps/MirageTower_2F/scripts.inc"
 	.include "data/maps/MirageTower_3F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21ce0c, 0x15f
 	.include "data/maps/DesertUnderpass/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21cfad, 0x25
 	.include "data/maps/ArtisanCave_B1F/scripts.inc"
 	.include "data/maps/ArtisanCave_1F/scripts.inc"
 	.include "data/maps/Underwater_MarineCave/scripts.inc"
 	.include "data/maps/MarineCave_Entrance/scripts.inc"
 	.include "data/maps/MarineCave_End/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21d0c2, 0x9
 	.include "data/maps/TerraCave_Entrance/scripts.inc"
 	.include "data/maps/TerraCave_End/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21d193, 0x9
 	.include "data/maps/AlteringCave/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21d1a6, 0x1cc
 	.include "data/maps/SecretBase_RedCave1/scripts.inc"
 	.include "data/maps/BattleColosseum_2P/scripts.inc"
 	.include "data/maps/TradeCenter/scripts.inc"
 	.include "data/maps/RecordCorner/scripts.inc"
 	.include "data/maps/BattleColosseum_4P/scripts.inc"
 	.include "data/maps/ContestHall/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21dd5f, 0x24
 	.include "data/maps/InsideOfTruck/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21de1e, 0x28
 	.include "data/maps/SSTidalCorridor/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21e269, 0x6fc
 	.include "data/maps/BattlePyramidSquare01/scripts.inc"
 	.include "data/maps/UnionRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21ea00, 0x9
 	.include "data/maps/SafariZone_Northwest/scripts.inc"
 	.include "data/maps/SafariZone_North/scripts.inc"
 	.include "data/maps/SafariZone_Southwest/scripts.inc"
 	.include "data/maps/SafariZone_South/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21eb6b, 0x36
 	.include "data/maps/BattleFrontier_OutsideWest/scripts.inc"
+	.incbin "baserom_jp.gba", 0x21eeb7, 0x805
 	.include "data/maps/BattleFrontier_BattleTowerLobby/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2218b8, 0x21c
 	.include "data/maps/BattleFrontier_BattleTowerElevator/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleTowerCorridor/scripts.inc"
+	.incbin "baserom_jp.gba", 0x221c2f, 0xa
 	.include "data/maps/BattleFrontier_BattleTowerBattleRoom/scripts.inc"
 	.include "data/maps/SouthernIsland_Exterior/scripts.inc"
 	.include "data/maps/SouthernIsland_Interior/scripts.inc"
+	.incbin "baserom_jp.gba", 0x222967, 0x1c
 	.include "data/maps/SafariZone_RestHouse/scripts.inc"
 	.include "data/maps/SafariZone_Northeast/scripts.inc"
 	.include "data/maps/SafariZone_Southeast/scripts.inc"
 	.include "data/maps/BattleFrontier_OutsideEast/scripts.inc"
+	.incbin "baserom_jp.gba", 0x222bad, 0x8c8
 	.include "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleTowerMultiCorridor/scripts.inc"
+	.incbin "baserom_jp.gba", 0x226572, 0x2c
 	.include "data/maps/BattleFrontier_BattleTowerMultiBattleRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x226d61, 0x2b
 	.include "data/maps/BattleFrontier_BattleDomeLobby/scripts.inc"
+	.incbin "baserom_jp.gba", 0x227d5c, 0x16d
 	.include "data/maps/BattleFrontier_BattleDomeCorridor/scripts.inc"
+	.incbin "baserom_jp.gba", 0x227f6c, 0x58
 	.include "data/maps/BattleFrontier_BattleDomePreBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePalaceLobby/scripts.inc"
+	.incbin "baserom_jp.gba", 0x22ac3f, 0x2e6
 	.include "data/maps/BattleFrontier_BattlePalaceCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePalaceBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePyramidLobby/scripts.inc"
+	.incbin "baserom_jp.gba", 0x22d31a, 0x1e2
 	.include "data/maps/BattleFrontier_BattlePyramidFloor/scripts.inc"
+	.incbin "baserom_jp.gba", 0x22d6b1, 0x12f1
 	.include "data/maps/BattleFrontier_BattlePyramidTop/scripts.inc"
+	.incbin "baserom_jp.gba", 0x22ecfe, 0x4cb
 	.include "data/maps/BattleFrontier_BattleArenaLobby/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleArenaCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleFactoryLobby/scripts.inc"
+	.incbin "baserom_jp.gba", 0x2318bc, 0x3ec
 	.include "data/maps/BattleFrontier_BattleFactoryPreBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleFactoryBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePikeLobby/scripts.inc"
+	.incbin "baserom_jp.gba", 0x233a64, 0x19d
 	.include "data/maps/BattleFrontier_BattlePikeCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePikeThreePathRoom/scripts.inc"
+	.incbin "baserom_jp.gba", 0x234384, 0x23
 	.include "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23521c, 0x3d
 	.include "data/maps/BattleFrontier_BattlePikeRoomFinal/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePikeRoomWildMons/scripts.inc"
+	.incbin "baserom_jp.gba", 0x235360, 0x4ecc
 	.include "data/maps/BattleFrontier_ReceptionGate/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23a755, 0x9de
 	.include "data/maps/BattleFrontier_Lounge9/scripts.inc"
 	.include "data/maps/BattleFrontier_PokemonCenter_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23b17f, 0xa4
 	.include "data/maps/BattleFrontier_PokemonCenter_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23b238, 0x124
 	.include "data/maps/FarawayIsland_Entrance/scripts.inc"
 	.include "data/maps/FarawayIsland_Interior/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23b5a9, 0x25
 	.include "data/maps/BirthIsland_Exterior/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23b70d, 0x58
 	.include "data/maps/TrainerHill_Entrance/scripts.inc"
 	.include "data/maps/TrainerHill_1F/scripts.inc"
 	.include "data/maps/TrainerHill_2F/scripts.inc"
@@ -744,6 +858,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/TrainerHill_4F/scripts.inc"
 	.include "data/maps/TrainerHill_Roof/scripts.inc"
 	.include "data/maps/NavelRock_Exterior/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23c0cb, 0x50
 	.include "data/maps/NavelRock_Entrance/scripts.inc"
 	.include "data/maps/NavelRock_B1F/scripts.inc"
 	.include "data/maps/NavelRock_Fork/scripts.inc"
@@ -752,6 +867,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/NavelRock_Up3/scripts.inc"
 	.include "data/maps/NavelRock_Up4/scripts.inc"
 	.include "data/maps/NavelRock_Top/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23c23f, 0x1a
 	.include "data/maps/NavelRock_Down01/scripts.inc"
 	.include "data/maps/NavelRock_Down02/scripts.inc"
 	.include "data/maps/NavelRock_Down03/scripts.inc"
@@ -765,24 +881,39 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/NavelRock_Down11/scripts.inc"
 	.include "data/maps/NavelRock_Bottom/scripts.inc"
 	.include "data/maps/TrainerHill_Elevator/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23c3ee, 0x13
 	.include "data/maps/Route104_Prototype/scripts.inc"
 	.include "data/maps/Route104_PrototypePrettyPetalFlowerShop/scripts.inc"
 	.include "data/maps/Route109_SeashoreHouse/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23c4f1, 0x330
 	.include "data/maps/Route110_TrickHouseEntrance/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23d478, 0x248
 	.include "data/maps/Route110_TrickHouseEnd/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23da9a, 0x42f
 	.include "data/maps/Route110_TrickHouseCorridor/scripts.inc"
 	.include "data/maps/Route110_TrickHousePuzzle1/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23df0e, 0x141
 	.include "data/maps/Route110_TrickHousePuzzle2/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23e151, 0x183
 	.include "data/maps/Route110_TrickHousePuzzle3/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23e9c0, 0x321
 	.include "data/maps/Route110_TrickHousePuzzle5/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23f7fb, 0x505
 	.include "data/maps/Route110_TrickHousePuzzle6/scripts.inc"
+	.incbin "baserom_jp.gba", 0x23fd3a, 0x182
 	.include "data/maps/Route110_TrickHousePuzzle7/scripts.inc"
+	.incbin "baserom_jp.gba", 0x240018, 0x6aa
 	.include "data/maps/Route110_SeasideCyclingRoadNorthEntrance/scripts.inc"
+	.incbin "baserom_jp.gba", 0x240744, 0x73
 	.include "data/maps/Route113_GlassWorkshop/scripts.inc"
+	.incbin "baserom_jp.gba", 0x240c51, 0x347
 	.include "data/maps/Route123_BerryMastersHouse/scripts.inc"
 	.include "data/maps/Route119_WeatherInstitute_1F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x241286, 0x25f
 	.include "data/maps/Route119_WeatherInstitute_2F/scripts.inc"
+	.incbin "baserom_jp.gba", 0x241763, 0x4ec
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/scripts.inc"
+	.incbin "baserom_jp.gba", 0x242193, 0x21c
 gUnknown_82423AF: @ 0x82423AF
 	.include "data/scripts/gUnknown_82423AF.inc"
 gUnknown_82423BA: @ 0x82423BA

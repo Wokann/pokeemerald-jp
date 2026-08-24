@@ -33,5 +33,3 @@ DesertUnderpass_EventScript_0021CF9C::
 	removeobject 0x1
 	release
 	end
-
-	.incbin "baserom_jp.gba", 0x21cfad, 0x25

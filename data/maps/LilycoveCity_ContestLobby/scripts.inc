@@ -1008,5 +1008,3 @@ gJPText_0020760A: @ 0x0820760A
 	.string "いえに　かざります\p"
 	.string "つぎ　がんばると　するか⋯⋯\n"
 	.string "じゃあな$"
-
-	.incbin "baserom_jp.gba", 0x207640, 0xc0a

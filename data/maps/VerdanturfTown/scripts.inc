@@ -74,5 +74,3 @@ VerdanturfTown_EventScript_001E60E7::
 	loadword 0x0, 0x081E6350
 	callstd 0x3
 	end
-
-	.incbin "baserom_jp.gba", 0x1e60f0, 0x291

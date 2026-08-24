@@ -56,5 +56,3 @@ Route110_SeasideCyclingRoadNorthEntrance_EventScript_00240734::
 	setvar 0x4001, 0x0
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x240744, 0x73

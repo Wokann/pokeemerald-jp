@@ -24,5 +24,3 @@ Route110_TrickHousePuzzle1_EventScript_0023DF03::
 	setvar 0x40AB, 0x1
 	goto 0x0823D1B6
 	end
-
-	.incbin "baserom_jp.gba", 0x23df0e, 0x141

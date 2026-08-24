@@ -896,5 +896,3 @@ gJPText_001DD8E2: @ 0x081DD8E2
 	.string "もうすこし　いろんな　まちを\n"
 	.string "たずね　あるいて　みるよ！\p"
 	.string "じゃあね　{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}！$"
-
-	.incbin "baserom_jp.gba", 0x1dd93e, 0x80

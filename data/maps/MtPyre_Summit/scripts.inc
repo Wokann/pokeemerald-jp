@@ -305,5 +305,3 @@ MtPyre_Summit_EventScript_00216F0F::
 	applymovement 0x2, 0x0824362B
 	waitmovement 0x0
 	return
-
-	.incbin "baserom_jp.gba", 0x216f2b, 0xd85

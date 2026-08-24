@@ -267,5 +267,3 @@ NewMauville_Inside_EventScript_0021A8E8::
 	setflag 0x1C3
 	goto 0x08244197
 	end
-
-	.incbin "baserom_jp.gba", 0x21a8f1, 0x81

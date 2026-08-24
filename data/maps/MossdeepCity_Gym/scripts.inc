@@ -93,5 +93,3 @@ MossdeepCity_Gym_EventScript_0020B7C6::
 	callstd 0x4
 	releaseall
 	end
-
-	.incbin "baserom_jp.gba", 0x20b7d0, 0xce2

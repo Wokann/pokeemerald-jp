@@ -165,5 +165,3 @@ gJPText_0020CA36: @ 0x0820CA36
 	.string "もういちど　ダイビングを　つかうんだ\p"
 	.string "ばしょに　よっては\n"
 	.string "うかべない　ばあいも　あるけど$"
-
-	.incbin "baserom_jp.gba", 0x20caaf, 0x2ae

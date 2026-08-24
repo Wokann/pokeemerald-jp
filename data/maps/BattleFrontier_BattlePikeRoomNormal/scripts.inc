@@ -777,5 +777,3 @@ gJPText_00235158: @ 0x08235158
 gJPText_002351FE: @ 0x082351FE
 	.string "では　わたくしどもの　あるじを\n"
 	.string "よんで　まいり　ますね⋯⋯$"
-
-	.incbin "baserom_jp.gba", 0x23521c, 0x3d
