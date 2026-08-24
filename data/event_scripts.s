@@ -380,7 +380,6 @@ gStdScripts: @ 0x81DB7BC
 	.globl gStdScripts_End
 gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/PetalburgCity/scripts.inc"
-	.incbin "baserom_jp.gba", 0x1dbd53, 0x280
 	.include "data/maps/SlateportCity/scripts.inc"
 	.incbin "baserom_jp.gba", 0x1dd93e, 0x80
 	.include "data/maps/MauvilleCity/scripts.inc"

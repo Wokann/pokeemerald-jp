@@ -92,8 +92,7 @@ PetalburgCity_EventScript_001DB8AC::
 PetalburgCity_EventScript_001DB902::
 	lock
 	faceplayer
-	loadword 0x0, 0x081DBE37
-	callstd 0x4
+	msgbox PetalburgCity_Text_WaterReflection, MSGBOX_DEFAULT
 	closemessage
 	applymovement 0x3, 0x08243625
 	waitmovement 0x0
@@ -101,29 +100,24 @@ PetalburgCity_EventScript_001DB902::
 	end
 
 PetalburgCity_EventScript_001DB919::
-	loadword 0x0, 0x081DBD53
-	callstd 0x2
+	msgbox PetalburgCity_Text_WhereIsWally, MSGBOX_NPC
 	end
 
 	.incbin "baserom_jp.gba", 0x1db922, 0x70
 PetalburgCity_EventScript_001DB992::
-	loadword 0x0, 0x081DBEDC
-	callstd 0x3
+	msgbox PetalburgCity_Text_GymSign, MSGBOX_SIGN
 	end
 
 PetalburgCity_EventScript_001DB99B::
-	loadword 0x0, 0x081DBF05
-	callstd 0x3
+	msgbox PetalburgCity_Text_CitySign, MSGBOX_SIGN
 	end
 
 PetalburgCity_EventScript_001DB9A4::
-	loadword 0x0, 0x081DBE8E
-	callstd 0x2
+	msgbox PetalburgCity_Text_FullPartyExplanation, MSGBOX_NPC
 	end
 
 PetalburgCity_EventScript_001DB9AD::
-	loadword 0x0, 0x081DBF22
-	callstd 0x3
+	msgbox PetalburgCity_Text_WallyHouseSign, MSGBOX_SIGN
 	end
 
 PetalburgCity_EventScript_001DB9B6::
@@ -167,8 +161,7 @@ PetalburgCity_EventScript_001DB9E6::
 	call_if 0x1, PetalburgCity_EventScript_001DBABB
 	compare_var_to_value 0x8008, 0x3
 	call_if 0x1, PetalburgCity_EventScript_001DBAD0
-	loadword 0x0, 0x081DBD98
-	callstd 0x4
+	msgbox PetalburgCity_Text_AreYouRookieTrainer, MSGBOX_DEFAULT
 	closemessage
 	compare_var_to_value 0x8008, 0x0
 	call_if 0x1, PetalburgCity_EventScript_001DBAE5
@@ -178,13 +171,11 @@ PetalburgCity_EventScript_001DB9E6::
 	call_if 0x1, PetalburgCity_EventScript_001DBB09
 	compare_var_to_value 0x8008, 0x3
 	call_if 0x1, PetalburgCity_EventScript_001DBB1B
-	loadword 0x0, 0x081DBDFD
-	callstd 0x4
+	msgbox PetalburgCity_Text_ThisIsPetalburgGym, MSGBOX_DEFAULT
 	applymovement 0x8, 0x0824362B
 	applymovement 0xFF, 0x0824362B
 	waitmovement 0x0
-	loadword 0x0, 0x081DBE11
-	callstd 0x4
+	msgbox PetalburgCity_Text_ThisIsGymSign, MSGBOX_DEFAULT
 	closemessage
 	applymovement 0x8, 0x081DBB74
 	waitmovement 0x0
@@ -342,6 +333,69 @@ PetalburgCity_EventScript_001DBCE0::
 
 	.incbin "baserom_jp.gba", 0x1dbcf2, 0x58
 PetalburgCity_EventScript_001DBD4A::
-	loadword 0x0, 0x081DBD98
-	callstd 0x2
+	msgbox PetalburgCity_Text_AreYouRookieTrainer, MSGBOX_NPC
 	end
+
+PetalburgCity_Text_WhereIsWally:
+	.string "うちの　ミツルは　どこまで\n"
+	.string "あそびに　いっちゃったの　かしら⋯⋯\p"
+	.string "もう　そろそろ　シダケタウンに\n"
+	.string "でかける　じかん　だって　いうのに⋯⋯$"
+
+PetalburgCity_Text_AreYouRookieTrainer:
+	.string "きみ！　もしかして⋯⋯\n"
+	.string "トレーナーに　なりたて　かい？\p"
+	.string "ぼくら　ポケモン　トレーナーは\n"
+	.string "あたらしい　まちに　とうちゃく　したら\p"
+	.string "まずは　そこに　どんな　ジムがあるのか\n"
+	.string "かくにん　しておく　ものなんだ！$"
+
+PetalburgCity_Text_ThisIsPetalburgGym:
+	.string "ほら　ここが　トウカシティの　ジムさ！$"
+
+PetalburgCity_Text_ThisIsGymSign:
+	.string "これが　ジムの　かんばん　だから\n"
+	.string "かたちを　よく　おぼえておくと　いいね！$"
+
+PetalburgCity_Text_WaterReflection:
+	.string "ぼくの　かおが　すいめんに　うつってる⋯⋯\p"
+	.string "きぼうに　あふれた\n"
+	.string "かがやく　えがお⋯⋯\p"
+	.string "ふあんと　たたかう\n"
+	.string "しずかな　ちんもく⋯⋯\p"
+	.string "きみの　かおは　どんなふうに　うつってる？$"
+
+PetalburgCity_Text_FullPartyExplanation:
+	.string "ポケモンを　すでに　6ぴき　もってるときに\n"
+	.string "あたらしく　ポケモンを　つかまえる\p"
+	.string "すると　パソコン　つうしんで　じどうてきに\n"
+	.string "ボックスに　おくられるのだよ！$"
+
+PetalburgCity_Text_GymSign:
+	.string "トウカ　シティ　ポケモンジム\n"
+	.string "リーダー　センリ\l"
+	.string "つよさを　おいもとめる　おとこ！$"
+
+PetalburgCity_Text_CitySign:
+	.string "ここは　トウカ　シティ\n"
+	.string "しぜんと　ひとが　ふれあう　まち$"
+
+PetalburgCity_Text_WallyHouseSign:
+	.string "‘ミツルの　いえ’$"
+
+PetalburgCity_Text_AreYouATrainer:
+	.string "きみ！　その　いでたちは⋯⋯\n"
+	.string "ポケモン　トレーナーさん　かい？$"
+
+PetalburgCity_Text_WellMaybeNot:
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "いや　それにしては\n"
+	.string "ふくが　あまり　よごれて　いない⋯⋯\p"
+	.string "デビューしたての　トレーナーか\n"
+	.string "あるいは　ふつうの　おこさま⋯⋯　かな？$"
+
+PetalburgCity_Text_ImLookingForTalentedTrainers:
+	.string "わたしは　さいのうある　トレーナーを\n"
+	.string "さがし　もとめて\l"
+	.string "かくちを　たびして　いるんだ\p"
+	.string "よびとめたりして　すまなかったね$"
