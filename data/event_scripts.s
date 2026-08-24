@@ -142,6 +142,22 @@
 	.set VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLvOpen, 0x0827518F
 	.globl VerdanturfTown_BattleTentLobby_Text_RulesAreListed
 	.set VerdanturfTown_BattleTentLobby_Text_RulesAreListed, 0x08275C42
+	@ Verdanturf Battle Tent Battle Room shares these retained JP battle-flow
+	@ and text blocks with Battle Palace. Keep the pokeemerald labels locally.
+	.globl BattleFrontier_BattlePalaceBattleRoom_EventScript_DoPalaceBattle
+	.set BattleFrontier_BattlePalaceBattleRoom_EventScript_DoPalaceBattle, 0x0822B737
+	.globl BattleFrontier_BattlePalaceBattleRoom_Text_PreparedFor2ndOpponent
+	.set BattleFrontier_BattlePalaceBattleRoom_Text_PreparedFor2ndOpponent, 0x0822B855
+	.globl BattleFrontier_BattlePalaceBattleRoom_Text_PreparedFor3rdOpponent
+	.set BattleFrontier_BattlePalaceBattleRoom_Text_PreparedFor3rdOpponent, 0x0822B873
+	.globl BattleFrontier_BattlePalaceBattleRoom_Text_LetMeRestoreYourMons
+	.set BattleFrontier_BattlePalaceBattleRoom_Text_LetMeRestoreYourMons, 0x0822B83B
+	.globl BattleFrontier_BattlePalaceBattleRoom_Text_SaveAndQuitGame
+	.set BattleFrontier_BattlePalaceBattleRoom_Text_SaveAndQuitGame, 0x0822B909
+	.globl BattleFrontier_BattlePalaceBattleRoom_Text_WishToQuitChallenge
+	.set BattleFrontier_BattlePalaceBattleRoom_Text_WishToQuitChallenge, 0x0822B91F
+	.globl BattleFrontier_BattlePalaceBattleRoom_Text_SavingData
+	.set BattleFrontier_BattlePalaceBattleRoom_Text_SavingData, 0x0822B931
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
 	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
 	.globl Common_EventScript_NameReceivedPartyMon

@@ -2475,14 +2475,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/VerdanturfTown_BattleTentCorridor/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR
 	.set gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR, VerdanturfTown_BattleTentCorridor_MapEvents
-	.globl VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_EventObjects
-VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_EventObjects: @ 0x08506E60
-	object_event 1, 241, 0, 2, 8, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 2, 240, 0, 11, 1, 3, 8, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 3, 21, 0, 2, 4, 0, 10, 1, 1, 0, 0, 0x00000000, 0x0000
+	.include "data/maps/VerdanturfTown_BattleTentBattleRoom/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM
-gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM: @ 0x08506EA8
-	map_events VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM_EventObjects, 0, 0, 0
+	.set gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM, VerdanturfTown_BattleTentBattleRoom_MapEvents
 	.globl VERDANTURF_TOWN_MART_EventObjects
 VERDANTURF_TOWN_MART_EventObjects: @ 0x08506EBC
 	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x081F6F28, 0x0000
