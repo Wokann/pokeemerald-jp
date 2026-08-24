@@ -8318,103 +8318,34 @@ void Anim_VerticalJumps_Small(struct Sprite *sprite)
     sprite->callback = VerticalJumps;
 }
 
-__attribute__((naked)) void Anim_Spin(struct Sprite *sprite)
+void Anim_Spin(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182DEC\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FDE8\n\t"
-        "	ldr r0, _08182DF0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182DEC: .4byte gUnknown_3001240\n\t"
-        "_08182DF0: .4byte Spin + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].delay = 60;
+    gUnknown_3001240[id].data = 30;
+    Spin(sprite);
+    sprite->callback = Spin;
 }
 
-__attribute__((naked)) void Anim_TumblingFrontFlip_Twice(struct Sprite *sprite)
+void Anim_TumblingFrontFlip_Twice(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182E24\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081810C0\n\t"
-        "	ldr r0, _08182E28\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182E24: .4byte gUnknown_3001240\n\t"
-        "_08182E28: .4byte TumblingFrontFlip + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].speed = 1;
+    gUnknown_3001240[id].runs = 2;
+    TumblingFrontFlip(sprite);
+    sprite->callback = TumblingFrontFlip;
 }
 
-__attribute__((naked)) void Anim_DeepVerticalSquishBounce_Twice(struct Sprite *sprite)
+void Anim_DeepVerticalSquishBounce_Twice(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182E5C\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081816BC\n\t"
-        "	ldr r0, _08182E60\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182E5C: .4byte gUnknown_3001240\n\t"
-        "_08182E60: .4byte DeepVerticalSquishBounce + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 4;
+    gUnknown_3001240[id].runs = 2;
+    DeepVerticalSquishBounce(sprite);
+    sprite->callback = DeepVerticalSquishBounce;
 }
 
 __attribute__((naked)) void Anim_HorizontalJumpsVerticalStretch_Twice(struct Sprite *sprite)
