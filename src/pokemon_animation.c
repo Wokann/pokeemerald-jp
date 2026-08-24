@@ -2,6 +2,7 @@
 
 extern bool32 sIsSummaryAnim;
 extern void (*const sMonAnimFunctions[])(struct Sprite *sprite);
+extern const u8 gUnknown_85D34E0[][2];
 #include "pokemon_animation.h"
 #include "sprite.h"
 #include "task.h"
@@ -8612,120 +8613,49 @@ void Anim_HorizontalStretchFar_Slow(struct Sprite *sprite)
     HorizontalStretchFar(sprite);
 }
 
-__attribute__((naked)) void VerticalShakeLowTwice(struct Sprite *sprite)
+void VerticalShakeLowTwice(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r3, _0818347C\n\t"
-        "	movs r1, #0x38\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r5, [r0]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	cmp r5, #0xff\n\t"
-        "	beq _08183452\n\t"
-        "	ldrh r0, [r4, #0x3c]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_08183452:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "	movs r7, #0\n\t"
-        "	cmp r2, #0xfe\n\t"
-        "	beq _0818346E\n\t"
-        "	mov r1, sb\n\t"
-        "	subs r0, r6, r1\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "_0818346E:\n\t"
-        "	cmp r5, #0xff\n\t"
-        "	bne _08183484\n\t"
-        "	ldr r0, _08183480\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	b _081834B6\n\t"
-        "	.align 2, 0\n\t"
-        "_0818347C: .4byte gUnknown_85D34E0\n\t"
-        "_08183480: .4byte SpriteCB_SetDummyOnAnimEnd + 1\n\t"
-        "_08183484:\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r1, #0xc0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl Sin\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strh r0, [r4, #0x26]\n\t"
-        "	cmp sb, r6\n\t"
-        "	bne _081834A8\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _081834B4\n\t"
-        "_081834A8:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	ldrh r0, [r4, #0x3a]\n\t"
-        "	adds r0, #1\n\t"
-        "_081834B4:\n\t"
-        "	strh r0, [r4, #0x3a]\n\t"
-        "_081834B6:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 var6, var7;
+    u8 var8 = sprite->data[2];
+    u8 var9 = sprite->data[6];
+    u8 var5 = gUnknown_85D34E0[sprite->data[5]][0];
+    if (var5 != (u8)-1)
+        var5 = sprite->data[7];
+
+    var6 = gUnknown_85D34E0[sprite->data[5]][1];
+    var7 = 0;
+    if (gUnknown_85D34E0[sprite->data[5]][0] != (u8)-2)
+        var7 = (var6 - var9) * var5 / var6;
+    else
+        var7 = 0;
+
+    if (var5 == (u8)-1)
+    {
+        sprite->callback = SpriteCB_SetDummyOnAnimEnd;
+        sprite->y2 = 0;
+    }
+    else
+    {
+        sprite->y2 = Sin((var8 + 192) % 256, var7) + var7;
+        if (var9 == var6)
+        {
+            sprite->data[5]++;
+            sprite->data[6] = 0;
+        }
+        else
+        {
+            sprite->data[2] += sprite->data[0];
+            sprite->data[6]++;
+        }
+    }
 }
 
-__attribute__((naked)) void Anim_VerticalShakeLowTwice(struct Sprite *sprite)
+void Anim_VerticalShakeLowTwice(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x28\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08183420\n\t"
-        "	ldr r0, _081834E0\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081834E0: .4byte VerticalShakeLowTwice + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 40;
+    sprite->data[7] = 6;
+    VerticalShakeLowTwice(sprite);
+    sprite->callback = VerticalShakeLowTwice;
 }
 
 __attribute__((naked)) void Anim_HorizontalShake_Fast(struct Sprite *sprite)
@@ -8913,50 +8843,20 @@ __attribute__((naked)) void Anim_VerticalShakeBack_Fast(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) void Anim_VerticalShakeLowTwice_Slow(struct Sprite *sprite)
+void Anim_VerticalShakeLowTwice_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #6\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08183420\n\t"
-        "	ldr r0, _08183624\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183624: .4byte VerticalShakeLowTwice + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 24;
+    sprite->data[7] = 6;
+    VerticalShakeLowTwice(sprite);
+    sprite->callback = VerticalShakeLowTwice;
 }
 
-__attribute__((naked)) void Anim_VerticalShakeLowTwice_Fast(struct Sprite *sprite)
+void Anim_VerticalShakeLowTwice_Fast(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x38\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #9\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_08183420\n\t"
-        "	ldr r0, _08183644\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08183644: .4byte VerticalShakeLowTwice + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 56;
+    sprite->data[7] = 9;
+    VerticalShakeLowTwice(sprite);
+    sprite->callback = VerticalShakeLowTwice;
 }
 
 __attribute__((naked)) void Anim_CircleCounterclockwise_Long(struct Sprite *sprite)
