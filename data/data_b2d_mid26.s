@@ -2800,18 +2800,9 @@ gMapEvents_RUSTBORO_CITY_FLAT1_2F: @ 0x085090E0
 	.include "data/maps/RustboroCity_House2/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_HOUSE2
 	.set gMapEvents_RUSTBORO_CITY_HOUSE2, RustboroCity_House2_MapEvents
-	.globl RUSTBORO_CITY_FLAT2_1F_EventObjects
-RUSTBORO_CITY_FLAT2_1F_EventObjects: @ 0x085091F0
-	object_event 1, 203, 0, 11, 4, 3, 9, 0, 0, 0, 0, 0x08203FA3, 0x0000
-	object_event 2, 30, 0, 8, 4, 3, 10, 0, 0, 0, 0, 0x08203F9A, 0x0000
-	.globl RUSTBORO_CITY_FLAT2_1F_EventWarps
-RUSTBORO_CITY_FLAT2_1F_EventWarps: @ 0x08509220
-	warp_def 2, 8, 0, 10, MAP_RUSTBORO_CITY
-	warp_def 3, 8, 0, 10, MAP_RUSTBORO_CITY
-	warp_def 3, 1, 0, 0, MAP_RUSTBORO_CITY_FLAT2_2F
+	.include "data/maps/RustboroCity_Flat2_1F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_FLAT2_1F
-gMapEvents_RUSTBORO_CITY_FLAT2_1F: @ 0x08509238
-	map_events RUSTBORO_CITY_FLAT2_1F_EventObjects, RUSTBORO_CITY_FLAT2_1F_EventWarps, 0, 0
+	.set gMapEvents_RUSTBORO_CITY_FLAT2_1F, RustboroCity_Flat2_1F_MapEvents
 	.globl RUSTBORO_CITY_FLAT2_2F_EventObjects
 RUSTBORO_CITY_FLAT2_2F_EventObjects: @ 0x0850924C
 	object_event 1, 29, 0, 11, 4, 3, 10, 0, 0, 0, 0, 0x08203FE9, 0x0000

@@ -20,6 +20,3 @@ RustboroCity_House2_Text_RoxanneKnowsALot: @ 0x08203F64
 	.string "ジムリーダーの　ツツジ　ねーちゃん\n"
 	.string "すっごい　ポケモン　くわしくて\l"
 	.string "すっごい　ポケモン　つよいんだから！$"
-
-	@ Rustboro City Flat2 1F and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x203f99, 0x405
