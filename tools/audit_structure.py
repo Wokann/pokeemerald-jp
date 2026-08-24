@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import tempfile
 from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -49,6 +50,7 @@ INCBIN_RE = re.compile(r'(?:^|\s)(?:\.incbin\b|INCBIN_[A-Z0-9_]+\b)[^\n]*?"([^"]
 MAP_NAME_RE = re.compile(r'^\s*\.include\s+"data/maps/([^/]+)/scripts\.inc"\s*$')
 US_SYMBOL_RE = re.compile(r"^[0-9A-Fa-f]{8}\s+[A-Za-z]\s+[0-9A-Fa-f]+\s+(\w+)\s*$")
 NAKED_MACRO_RE = re.compile(r"^\s*NAKED\s*$")
+MARKDOWN_SUFFIXES = {".md", ".markdown", ".mdown"}
 
 
 @dataclass(frozen=True)
@@ -723,24 +725,130 @@ def print_report(report: dict[str, object]) -> None:
         maps["event_script_included_owners"], maps["jp_map_json"], maps["jp_map_json_with_scripts"]))
 
 
+def render_markdown_report(report: dict[str, object]) -> str:
+    """Render the reproducible human-facing progress report without a timestamp."""
+    functions = report["functions"]
+    incbin = report["incbin"]
+    assets = report["asset_naming"]
+    maps = report["maps"]
+    transitions = report["transition_files"]
+    return "\n".join([
+        "# 可复现结构审计进度",
+        "",
+        "> 此文件由 `python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md` 生成。",
+        "> `--output` 只写 JSON，且会拒绝 Markdown 路径，避免误覆盖本报告。",
+        "",
+        "## 当前快照",
+        "",
+        f"- 严格 C：{functions['strict_c_addresses']}/{functions['funcmap_unique_addresses']} "
+        f"({functions['strict_c_rate'] * 100:.2f}%)；naked 汇编地址：{functions['naked_assembly_addresses']}；"
+        f"strict/naked 交集：{functions['strict_naked_address_overlap']}。",
+        f"- 模块归位：{functions['standard_owned_addresses']}/{functions['strict_c_addresses']} "
+        f"({functions['module_home_rate'] * 100:.2f}%)；路径对齐：{functions['module_aligned_addresses']}/"
+        f"{functions['strict_c_addresses']} ({functions['path_alignment_rate'] * 100:.2f}%)。",
+        f"- JP 独有 C 迁移记录：{len(report['jp_only_c_manifest'])}；同名多地址 C 定义："
+        f"{len(functions['multi_address_c_definitions'])}。",
+        f"- 过渡文件：tail={transitions['tail']['count']}、rest={transitions['rest']['count']}、"
+        f"mid={transitions['mid']['count']}、stub={transitions['stub']['count']}、"
+        f"address={transitions['address']['count']}。",
+        f"- incbin：{incbin['references']} 引用、{incbin['unique_paths']} 条唯一路径、"
+        f"原始二进制 {incbin['raw_binary_references']}、非原始 {incbin['non_raw_references']}、"
+        f"缺失资源 {incbin['missing_resource_paths']}。",
+        f"- 资产命名：{assets['referenced_graphics_or_sound_paths']} 条 graphics/sound 引用中，"
+        f"精确 US 路径 {assets['exact_us_paths']}、唯一 basename 候选 "
+        f"{assets['unique_us_basename_candidates']}、歧义 "
+        f"{assets['ambiguous_us_basename_candidates']}。",
+        f"- 地图脚本：{maps['first_owner_scripts_inc']}/{maps['map_table_owners']} "
+        f"({maps['jp_scripts_owner_rate'] * 100:.2f}%) 个首 owner 有 scripts.inc；"
+        f"非 owner scripts.inc：{maps['non_owner_scripts_inc']}；map.json："
+        f"{maps['jp_map_json']}（含 scripts：{maps['jp_map_json_with_scripts']}）。",
+        "",
+        "## 指标定义",
+        "",
+        "| 指标 | 口径 |",
+        "| --- | --- |",
+        "| 严格 C 转换率 | 默认预处理分支中有 C 函数体、非 `naked` 且不与 selected naked 定义重叠的唯一 funcmap ROM 地址 / funcmap 唯一地址；同名 static 按 source owner 和地址保留，不建立名称→地址覆盖表。 |",
+        "| 模块归位率 | 严格 C 地址中能按 US 标准名在 US 源树找到定义的地址 / 严格 C 地址。 |",
+        "| 路径对齐率 | 上述地址中 JP 相对 `src/` 路径也属于 US owner 的地址 / 严格 C 地址。 |",
+        "| 过渡文件 | 文件名包含 tail、rest、mid、stub 或地址式片段；分类可重叠。 |",
+        "| incbin | `.incbin` 与 `INCBIN_*` 的引用数，按原始二进制和结构化/编码后缀分组；不是字节转换率。 |",
+        "| 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |",
+        "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
+        "",
+        "## 复现与输入",
+        "",
+        "```sh",
+        "python3 tools/audit_structure.py",
+        "python3 tools/audit_structure.py --json --output build/audit-structure.json \\",
+        "    --manifest build/jp-only-c-manifest.json",
+        "python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md",
+        "# 比较另一份 US 工程时显式指定其根目录",
+        "python3 tools/audit_structure.py --us-root /path/to/pokeemerald --markdown-output DECOMP_PROGRESS.md",
+        "```",
+        "",
+        "源文件、funcmap 和 incbin 清单不读取 `build/`。完整报告仍需要匹配的 "
+        "`baserom_jp.gba` 来解析地图 owner；US 二进制符号统计使用指定 US 树的 "
+        "`pokeemerald.sym`（若存在），资源存在性检查也依赖本地提取资源。",
+        "",
+        "涉及源码或链接输入的变更须执行：",
+        "",
+        "```sh",
+        "flock /tmp/pokeemerald-jp-build.lock bash -lc 'make clean && make -j16 && make compare'",
+        "```",
+        "",
+        "只有末行 `pokeemerald_jp.gba: OK` 才可提交。",
+        "",
+    ])
+
+
+def require_destination_kind(path: Path, expected: str) -> None:
+    """Reject the common JSON/Markdown destination mix-up before auditing."""
+    suffix = path.suffix.lower()
+    if expected == "json" and suffix in MARKDOWN_SUFFIXES:
+        raise SystemExit("--output and --manifest write JSON; use --markdown-output for Markdown paths")
+    if expected == "markdown" and suffix == ".json":
+        raise SystemExit("--markdown-output writes Markdown; use --output for JSON paths")
+
+
+def write_output(path: Path, content: str) -> None:
+    """Atomically replace an output file so a progress report is never partial."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent,
+                                     prefix=f".{path.name}.", suffix=".tmp", delete=False) as output:
+        temporary = Path(output.name)
+        output.write(content)
+    try:
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--us-root", type=Path, default=DEFAULT_US_ROOT)
     parser.add_argument("--json", action="store_true", help="print stable JSON")
-    parser.add_argument("--output", type=Path, help="write the full JSON report")
+    parser.add_argument("--output", type=Path, help="write the full JSON report (never Markdown)")
     parser.add_argument("--manifest", type=Path, help="write only the JP-only C manifest JSON")
+    parser.add_argument("--markdown-output", type=Path,
+                        help="atomically write the human-readable Markdown progress report")
     args = parser.parse_args()
+    if args.output:
+        require_destination_kind(args.output, "json")
+    if args.manifest:
+        require_destination_kind(args.manifest, "json")
+    if args.markdown_output:
+        require_destination_kind(args.markdown_output, "markdown")
     if not (args.us_root / "src").is_dir():
         raise SystemExit("US source root is missing src/: %s" % args.us_root)
     report = build_report(ROOT, args.us_root.resolve())
     encoded = json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     if args.output:
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(encoded, encoding="utf-8")
+        write_output(args.output, encoded)
     if args.manifest:
-        args.manifest.parent.mkdir(parents=True, exist_ok=True)
-        args.manifest.write_text(json.dumps(report["jp_only_c_manifest"], ensure_ascii=False,
-                                             indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        write_output(args.manifest, json.dumps(report["jp_only_c_manifest"], ensure_ascii=False,
+                                                indent=2, sort_keys=True) + "\n")
+    if args.markdown_output:
+        write_output(args.markdown_output, render_markdown_report(report))
     if args.json:
         print(encoded, end="")
     else:

@@ -4,6 +4,7 @@
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -211,6 +212,39 @@ class StructureAuditTests(unittest.TestCase):
             result = audit.map_entries_for_us_root(FakeEmitter, root)
         self.assertEqual(result, [{"path": "map_groups.json"}, True])
         self.assertEqual(FakeEmitter.US_JSON, Path("hard-coded.json"))
+
+    def test_markdown_report_contains_snapshot_definitions_and_reproduction(self):
+        report = audit.build_report(audit.ROOT, audit.DEFAULT_US_ROOT)
+        rendered = audit.render_markdown_report(report)
+        self.assertIn("# 可复现结构审计进度", rendered)
+        self.assertIn("## 当前快照", rendered)
+        self.assertIn("## 指标定义", rendered)
+        self.assertIn("--markdown-output DECOMP_PROGRESS.md", rendered)
+        self.assertIn("--output` 只写 JSON", rendered)
+        self.assertIn("同名 static 按 source owner 和地址保留", rendered)
+
+    def test_json_output_rejects_markdown_destination_without_writing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary) / "DECOMP_PROGRESS.md"
+            destination.write_text("keep this markdown\n", encoding="utf-8")
+            with mock.patch.object(sys, "argv", ["audit_structure.py", "--output", str(destination)]), \
+                 mock.patch.object(audit, "build_report") as build:
+                with self.assertRaisesRegex(SystemExit, "--markdown-output"):
+                    audit.main()
+            self.assertFalse(build.called)
+            self.assertEqual(destination.read_text(encoding="utf-8"), "keep this markdown\n")
+
+    def test_markdown_cli_output_is_explicit_and_atomic(self):
+        report = audit.build_report(audit.ROOT, audit.DEFAULT_US_ROOT)
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary) / "DECOMP_PROGRESS.md"
+            with mock.patch.object(sys, "argv", ["audit_structure.py", "--markdown-output", str(destination)]), \
+                 mock.patch.object(audit, "build_report", return_value=report):
+                audit.main()
+            rendered = destination.read_text(encoding="utf-8")
+        self.assertIn("严格 C：", rendered)
+        self.assertIn("## 复现与输入", rendered)
+        self.assertFalse(list(destination.parent.glob(".DECOMP_PROGRESS.md.*.tmp")))
 
     def test_transition_manifest_preserves_all_matching_categories(self):
         manifest = audit.transition_manifest({"src/module_mid2_tail.c", "data/gUnknown_8123456.inc"})
