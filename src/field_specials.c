@@ -1850,7 +1850,7 @@ void FieldShowRegionMap(void)
     SetMainCallback2(CB2_FieldShowRegionMap);
 }
 
-void DoLotteryCornerComputerEffect(void)
+void DoPCTurnOnEffect(void)
 {
     if (FuncIsActiveTask(Task_PCTurnOnEffect) != TRUE)
     {
@@ -1880,7 +1880,7 @@ __attribute__((naked)) void Task_PCTurnOnEffect(u8 taskId)
         "	cmp r0, #0\n\t"
         "	bne _08138D76\n\t"
         "	adds r0, r1, #0\n\t"
-        "	bl PCTurnOnEffect_0\n\t"
+        "	bl PCTurnOnEffect\n\t"
         "_08138D76:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -1890,7 +1890,7 @@ __attribute__((naked)) void Task_PCTurnOnEffect(u8 taskId)
     );
 }
 
-__attribute__((naked)) void PCTurnOnEffect_0(void)
+__attribute__((naked)) void PCTurnOnEffect(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1935,7 +1935,7 @@ __attribute__((naked)) void PCTurnOnEffect_0(void)
         "	asrs r1, r1, #0x18\n\t"
         "	lsls r2, r5, #0x18\n\t"
         "	asrs r2, r2, #0x18\n\t"
-        "	bl PCTurnOnEffect_1\n\t"
+        "	bl PCTurnOnEffect_SetMetatile\n\t"
         "	bl DrawWholeMapView\n\t"
         "	ldrh r0, [r4, #0x10]\n\t"
         "	movs r1, #1\n\t"
@@ -1961,7 +1961,7 @@ __attribute__((naked)) void PCTurnOnEffect_0(void)
     );
 }
 
-__attribute__((naked)) void PCTurnOnEffect_1(void)
+__attribute__((naked)) void PCTurnOnEffect_SetMetatile(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2138,7 +2138,7 @@ __attribute__((naked)) void PCTurnOffEffect(void)
     );
 }
 
-void DoPCTurnOnEffect(void)
+void DoLotteryCornerComputerEffect(void)
 {
     if (FuncIsActiveTask(Task_LotteryCornerComputerEffect) != TRUE)
     {

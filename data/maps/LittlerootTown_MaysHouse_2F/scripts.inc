@@ -1,235 +1,409 @@
 @ LittlerootTown_MaysHouse_2F scripts (JP map g1 m3 @ 0x081F0AE2)
 
 LittlerootTown_MaysHouse_2F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_MaysHouse_2F_EventScript_001F0AED
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, LittlerootTown_MaysHouse_2F_MapScriptTable_001F0B69
+	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_MaysHouse_2F_OnTransition
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, LittlerootTown_MaysHouse_2F_OnWarp
 	.byte 0
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0AED::
-	compare_var_to_value 0x408D, 0x2
-	call_if 0x0, LittlerootTown_MaysHouse_2F_EventScript_001F0B56
-	compare_var_to_value 0x408D, 0x3
-	call_if 0x4, LittlerootTown_MaysHouse_2F_EventScript_001F0B19
-	compare_var_to_value 0x4092, 0x4
-	call_if 0x1, 0x08257EE8
-	call 0x08245D90
-	setvar 0x4089, 0x0
+LittlerootTown_MaysHouse_2F_OnTransition::
+	call_if_lt VAR_LITTLEROOT_RIVAL_STATE, 0x2, LittlerootTown_MaysHouse_2F_EventScript_CheckSetReadyToMeetMay
+	call_if_ge VAR_LITTLEROOT_RIVAL_STATE, 0x3, LittlerootTown_MaysHouse_2F_EventScript_CheckShouldUpdateMayPos
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 0x4, PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
+	call SecretBase_EventScript_SetDecorationFlags
+	setvar VAR_SECRET_BASE_INITIALIZED, 0x0
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0B19::
-	checkflag 0x124
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0B32
-	compare_var_to_value 0x4084, 0x2
-	goto_if 0x4, LittlerootTown_MaysHouse_2F_EventScript_001F0B55
-	goto LittlerootTown_MaysHouse_2F_EventScript_001F0B32
+LittlerootTown_MaysHouse_2F_EventScript_CheckShouldUpdateMayPos::
+	goto_if_set FLAG_MET_RIVAL_LILYCOVE, LittlerootTown_MaysHouse_2F_EventScript_TryUpdateMayPos
+	goto_if_ge VAR_BIRCH_LAB_STATE, 0x2, LittlerootTown_MaysHouse_2F_EventScript_Ret
+	goto LittlerootTown_MaysHouse_2F_EventScript_TryUpdateMayPos
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0B32::
+LittlerootTown_MaysHouse_2F_EventScript_TryUpdateMayPos::
 	checkplayergender
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0B55
-	compare_var_to_value 0x40D3, 0x2
-	goto_if 0x4, LittlerootTown_MaysHouse_2F_EventScript_001F0B55
-	setobjectxyperm 0x1, 0x8, 0x2
-	setobjectmovementtype 0x1, 0x7
+	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_2F_EventScript_Ret
+	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 0x2, LittlerootTown_MaysHouse_2F_EventScript_Ret
+	setobjectxyperm LOCALID_RIVALS_HOUSE_2F_RIVAL, 0x8, 0x2
+	setobjectmovementtype LOCALID_RIVALS_HOUSE_2F_RIVAL, MOVEMENT_TYPE_FACE_UP
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0B55::
+LittlerootTown_MaysHouse_2F_EventScript_Ret::
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0B56::
+LittlerootTown_MaysHouse_2F_EventScript_CheckSetReadyToMeetMay::
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0B63
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_MaysHouse_2F_EventScript_SetReadyToMeetMay
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0B63::
-	setvar 0x408D, 0x2
+LittlerootTown_MaysHouse_2F_EventScript_SetReadyToMeetMay::
+	setvar VAR_LITTLEROOT_RIVAL_STATE, 0x2
 	return
 
-LittlerootTown_MaysHouse_2F_MapScriptTable_001F0B69::
-	map_script_2 0x4089, 0x0, LittlerootTown_MaysHouse_2F_EventScript_001F0B73
+LittlerootTown_MaysHouse_2F_OnWarp::
+	map_script_2 VAR_SECRET_BASE_INITIALIZED, 0x0, LittlerootTown_MaysHouse_2F_EventScript_CheckInitDecor
 	.2byte 0
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0B73::
+LittlerootTown_MaysHouse_2F_EventScript_CheckInitDecor::
 	checkplayergender
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, 0x08245DBB
+	goto_if_eq VAR_RESULT, FEMALE, SecretBase_EventScript_InitDecorations
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0B80::
+LittlerootTown_MaysHouse_2F_EventScript_RivalsPokeBall::
 	lockall
-	compare_var_to_value 0x408D, 0x2
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0B96
-	loadword 0x0, 0x081F10B0
-	callstd 0x4
+	goto_if_eq VAR_LITTLEROOT_RIVAL_STATE, 0x2, LittlerootTown_MaysHouse_2F_EventScript_MeetMay
+	msgbox RivalsHouse_2F_Text_ItsRivalsPokeBall, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0B96::
+LittlerootTown_MaysHouse_2F_EventScript_MeetMay::
 	delay 0xA
-	addobject 0x1
-	applymovement 0x1, 0x081F0CBB
+	addobject LOCALID_RIVALS_HOUSE_2F_RIVAL
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayEnters
 	waitmovement 0x0
-	playse 0x15
-	applymovement 0x1, 0x0824361B
+	playse SE_PIN
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0x0
-	applymovement 0x1, 0x0824361D
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, Common_Movement_Delay48
 	waitmovement 0x0
 	delay 0xA
-	playbgm 0x19F, 0x1
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0C06
-	compare_var_to_value 0x800C, 0x1
-	call_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0C35
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0C64
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0C8C
-	setvar 0x408D, 0x3
-	setflag 0x332
-	clearflag 0x2D2
-	setvar 0x4050, 0x1
-	savebgm 0x0
+	playbgm MUS_ENCOUNTER_MAY, TRUE
+	call_if_eq VAR_FACING, DIR_NORTH, LittlerootTown_MaysHouse_2F_EventScript_MeetMayNorth
+	call_if_eq VAR_FACING, DIR_SOUTH, LittlerootTown_MaysHouse_2F_EventScript_MeetMaySouth
+	call_if_eq VAR_FACING, DIR_WEST, LittlerootTown_MaysHouse_2F_EventScript_MeetMayWest
+	call_if_eq VAR_FACING, DIR_EAST, LittlerootTown_MaysHouse_2F_EventScript_MeetMayEast
+	setvar VAR_LITTLEROOT_RIVAL_STATE, 0x3
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
+	setvar VAR_LITTLEROOT_TOWN_STATE, 0x1
+	savebgm MUS_DUMMY
 	fadedefaultbgm
 	releaseall
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0C06::
-	applymovement 0x1, 0x081F0CBF
+LittlerootTown_MaysHouse_2F_EventScript_MeetMayNorth::
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerNorth
 	waitmovement 0x0
-	applymovement 0xFF, 0x08243627
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0x0
-	loadword 0x0, 0x081F0DE8
-	callstd 0x4
+	msgbox RivalsHouse_2F_Text_MayWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081F0CCF
-	applymovement 0x1, 0x081F0CC5
+	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayNorth
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCNorth
 	waitmovement 0x0
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0C35::
-	applymovement 0x1, 0x081F0CD7
+LittlerootTown_MaysHouse_2F_EventScript_MeetMaySouth::
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerSouth
 	waitmovement 0x0
-	applymovement 0xFF, 0x08243627
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0x0
-	loadword 0x0, 0x081F0DE8
-	callstd 0x4
+	msgbox RivalsHouse_2F_Text_MayWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081F0CE3
-	applymovement 0x1, 0x081F0CDB
+	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMaySouth
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCSouth
 	waitmovement 0x0
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0C64::
-	applymovement 0x1, 0x081F0CE9
+LittlerootTown_MaysHouse_2F_EventScript_MeetMayWest::
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerWest
 	waitmovement 0x0
-	applymovement 0xFF, 0x08243629
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0x0
-	loadword 0x0, 0x081F0DE8
-	callstd 0x4
+	msgbox RivalsHouse_2F_Text_MayWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x1, 0x081F0CF0
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCWest
 	waitmovement 0x0
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0C8C::
-	applymovement 0x1, 0x081F0CF9
+LittlerootTown_MaysHouse_2F_EventScript_MeetMayEast::
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerEast
 	waitmovement 0x0
-	applymovement 0xFF, 0x08243627
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0x0
-	loadword 0x0, 0x081F0DE8
-	callstd 0x4
+	msgbox RivalsHouse_2F_Text_MayWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081F0D07
-	applymovement 0x1, 0x081F0CFE
+	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayEast
+	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCEast
 	waitmovement 0x0
 	return
 
-	.incbin "baserom_jp.gba", 0x1f0cbb, 0x52
-LittlerootTown_MaysHouse_2F_EventScript_001F0D0D::
+LittlerootTown_MaysHouse_2F_Movement_MayEnters:
+	walk_down
+	walk_down
+	walk_in_place_faster_right
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerNorth:
+	walk_right
+	walk_right
+	walk_down
+	walk_down
+	walk_right
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCNorth:
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_in_place_faster_up
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayNorth:
+	delay_16
+	walk_in_place_faster_up
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	walk_in_place_faster_right
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerSouth:
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCSouth:
+	walk_up
+	walk_in_place_faster_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_in_place_faster_up
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMaySouth:
+	delay_16
+	walk_in_place_faster_up
+	delay_16
+	delay_16
+	walk_in_place_faster_right
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerWest:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_in_place_faster_down
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCWest:
+	walk_up
+	walk_right
+	walk_right
+	walk_in_place_faster_up
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayWest:
+	delay_16
+	delay_16
+	walk_in_place_faster_right
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_MayApproachPlayerEast:
+	walk_right
+	walk_right
+	walk_down
+	walk_in_place_faster_right
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_MayWalkToPCEast:
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_in_place_faster_up
+	step_end
+
+LittlerootTown_MaysHouse_2F_Movement_PlayerWatchMayEast:
+	delay_16
+	walk_in_place_faster_up
+	delay_16
+	delay_16
+	walk_in_place_faster_right
+	step_end
+
+RivalsHouse_2F_EventScript_Rival::
 	lockall
-	checkflag 0x124
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0D43
+	goto_if_set FLAG_MET_RIVAL_LILYCOVE, RivalsHouse_2F_EventScript_RivalPostLilycove
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0D2F
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0D39
+	goto_if_eq VAR_RESULT, MALE, RivalsHouse_2F_EventScript_May
+	goto_if_eq VAR_RESULT, FEMALE, RivalsHouse_2F_EventScript_Brendan
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0D2F::
-	loadword 0x0, 0x081F0F40
-	callstd 0x4
+RivalsHouse_2F_EventScript_May::
+	msgbox RivalsHouse_2F_Text_MayGettingReady, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0D39::
-	loadword 0x0, 0x081F108B
-	callstd 0x4
+RivalsHouse_2F_EventScript_Brendan::
+	msgbox RivalsHouse_2F_Text_BrendanGettingReady, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0D43::
-	applymovement 0x800F, 0x08243621
+RivalsHouse_2F_EventScript_RivalPostLilycove::
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0x0
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0D69
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0D7B
-	setflag 0x125
+	call_if_eq VAR_RESULT, MALE, RivalsHouse_2F_EventScript_MayPostLilycove
+	call_if_eq VAR_RESULT, FEMALE, RivalsHouse_2F_EventScript_BrendanPostLilycove
+	setflag FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE
 	releaseall
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0D69::
-	checkflag 0x125
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0D8D
-	loadword 0x0, 0x081F10CD
-	callstd 0x4
+RivalsHouse_2F_EventScript_MayPostLilycove::
+	goto_if_set FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, RivalsHouse_2F_EventScript_MayWhereShouldIGoNext
+	msgbox RivalsHouse_2F_Text_MayJustCheckingMyPokedex, MSGBOX_DEFAULT
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0D7B::
-	checkflag 0x125
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0D96
-	loadword 0x0, 0x081F117C
-	callstd 0x4
+RivalsHouse_2F_EventScript_BrendanPostLilycove::
+	goto_if_set FLAG_MET_RIVAL_IN_HOUSE_AFTER_LILYCOVE, RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext
+	msgbox RivalsHouse_2F_Text_BrendanJustCheckingMyPokedex, MSGBOX_DEFAULT
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0D8D::
-	loadword 0x0, 0x081F1142
-	callstd 0x4
+RivalsHouse_2F_EventScript_MayWhereShouldIGoNext::
+	msgbox RivalsHouse_2F_Text_MayWhereShouldIGoNext, MSGBOX_DEFAULT
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0D96::
-	loadword 0x0, 0x081F11E3
-	callstd 0x4
+RivalsHouse_2F_EventScript_BrendanWhereShouldIGoNext::
+	msgbox RivalsHouse_2F_Text_BrendanWhereShouldIGoNext, MSGBOX_DEFAULT
 	return
 
-LittlerootTown_MaysHouse_2F_EventScript_PC:: @ 0x081F0D9F
-LittlerootTown_MaysHouse_2F_EventScript_001F0D9F::
+LittlerootTown_MaysHouse_2F_EventScript_PC::
 	lockall
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0DB8
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LittlerootTown_MaysHouse_2F_EventScript_001F0DC2
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC
+	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0DB8::
-	loadword 0x0, 0x08243AA2
-	callstd 0x4
+LittlerootTown_MaysHouse_2F_EventScript_CheckRivalsPC::
+	msgbox gText_PokemonTrainerSchoolEmail, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LittlerootTown_MaysHouse_2F_EventScript_001F0DC2::
-	setvar 0x8004, 0x2
-	special DoLotteryCornerComputerEffect
-	playse 0x4
-	loadword 0x0, 0x08243B10
-	callstd 0x4
+LittlerootTown_MaysHouse_2F_EventScript_CheckPlayersPC::
+	setvar VAR_0x8004, PC_LOCATION_MAYS_HOUSE
+	special DoPCTurnOnEffect
+	playse SE_PC_ON
+	msgbox gText_PlayerHouseBootPC, MSGBOX_DEFAULT
 	special BedroomPC
 	releaseall
 	end
 
-gUnknown_81F0DDB:: @ 0x081F0DDB
-	.incbin "baserom_jp.gba", 0x1f0ddb, 0x451
+LittlerootTown_MaysHouse_2F_EventScript_TurnOffPlayerPC::
+	setvar VAR_0x8004, PC_LOCATION_MAYS_HOUSE
+	playse SE_PC_OFF
+	special DoPCTurnOffEffect
+	releaseall
+	end
+
+RivalsHouse_2F_Text_MayWhoAreYou: @ 0x081F0DE8
+	.string "えっ⋯⋯！？\n"
+	.string "あなた　だれ⋯⋯　なの？\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\n"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "あなたが　{PLAYER}{KUN}⋯⋯\n"
+	.string "そうか　きょう　ひっこし　だったんだ⋯⋯\p"
+	.string "あ　あたし　ハルカ！\n"
+	.string "よ　よろしくね\p"
+	.string "あたし⋯⋯\n"
+	.string "せかいじゅうの　ポケモンと\l"
+	.string "ともだちに　なるのが　ゆめ　なの⋯⋯\p"
+	.string "で　でね\n"
+	.string "おとうさん⋯⋯　オダマキはかせ　から\l"
+	.string "{PLAYER}{KUN}の　おはなし　きいて\p"
+	.string "あたし　{PLAYER}{KUN}　とも\n"
+	.string "おともだちに　なれたらなあ⋯⋯\l"
+	.string "なんて　おもってたの⋯⋯\p"
+	.string "あっ　あたしったら　{PLAYER}{KUN}と\n"
+	.string "はじめて　おはなし　してるのに\l"
+	.string "なに　いってんだろ⋯⋯\p"
+	.string "てへへ⋯⋯\p"
+	.string "あっ　いけない！\p"
+	.string "あたし　おとうさんの　おてつだいで\n"
+	.string "やせいの　ポケモン\l"
+	.string "つかまえに　いくところ　だったんだ！\p"
+	.string "でかける　したくを　するから\n"
+	.string "{PLAYER}{KUN}　また　あとでね！$"
+
+RivalsHouse_2F_Text_MayGettingReady: @ 0x081F0F40
+	.string "ポケモンは　たいりょく　まんたん！\n"
+	.string "どうぐも　これで　よし⋯⋯と！$"
+
+RivalsHouse_2F_Text_BrendanWhoAreYou: @ 0x081F0F62
+	.string "おまえ⋯⋯\p"
+	.string "だれ？\p"
+	.string "あっ　おまえが　となりに\n"
+	.string "ひっこして　きた　{PLAYER}か⋯⋯\p"
+	.string "ふうん\n"
+	.string "おんなのこ　だったんだ⋯⋯\p"
+	.string "とうさん⋯⋯　オダマキはかせ　から\n"
+	.string "となりに　ひっこして　くるのは\l"
+	.string "ジムリーダーの　こども　って　きいてたから\l"
+	.string "かってに　おとこ　だと　おもってたよ\p"
+	.string "オレは　ユウキ\n"
+	.string "まあ　おとなりさんに　なったことだし\l"
+	.string "これから　よろしくな\p"
+	.string "おや？　{PLAYER}は\n"
+	.string "ポケモン　もってないのか？\p"
+	.string "よかったら　オレが\n"
+	.string "つかまえてきて　やろうか？\p"
+	.string "って　わすれてた⋯⋯\p"
+	.string "オレ　とうさんの　てつだいで\n"
+	.string "やせいの　ポケモン\l"
+	.string "つかまえに　いく　ところ　だったんだ\p"
+	.string "でかける　したくを　するから\n"
+	.string "{PLAYER}　また　こんどな！$"
+
+RivalsHouse_2F_Text_BrendanGettingReady: @ 0x081F108B
+	.string "ポケモンは　たいりょく　まんたん\n"
+	.string "どうぐも　これで　だいじょうぶ　⋯⋯か$"
+
+RivalsHouse_2F_Text_ItsRivalsPokeBall: @ 0x081F10B0
+	.string "{RIVAL}の　モンスターボールだ！\p"
+	.string "このままに　しておこう⋯⋯$"
+
+RivalsHouse_2F_Text_MayJustCheckingMyPokedex: @ 0x081F10CD
+	.string "ハルカ“{PLAYER}{KUN}！\p"
+	.string "あたし　いまね\n"
+	.string "ポケモンずかんを　ながめていたの\p"
+	.string "みつけた　だけで\n"
+	.string "つかまえていない　ポケモンや\l"
+	.string "しんか　しそうな　ポケモン\l"
+	.string "まだまだ　いっぱい　いるんだよね\p"
+	.string "こんどは　どこに\n"
+	.string "ポケモン　つかまえに　いこうかな？$"
+
+RivalsHouse_2F_Text_MayWhereShouldIGoNext: @ 0x081F1142
+	.string "ハルカ“こんどは　どこに\n"
+	.string "ポケモン　つかまえに　いこうかな？\p"
+	.string "いった　さきで　また\n"
+	.string "{PLAYER}{KUN}と　であったりして！？$"
+
+RivalsHouse_2F_Text_BrendanJustCheckingMyPokedex: @ 0x081F117C
+	.string "ユウキ“{PLAYER}か\p"
+	.string "いま　ポケモンずかんを\n"
+	.string "チェック　してたんだ\p"
+	.string "まだまだ　つかまえていない\n"
+	.string "ポケモンも　いるけど\l"
+	.string "かなり　いい　かんじだろ？\p"
+	.string "こうして　ずかんを　みていると\n"
+	.string "また　ぼうけんに　いきたくなるな$"
+
+RivalsHouse_2F_Text_BrendanWhereShouldIGoNext: @ 0x081F11E3
+	.string "ユウキ“こんどは　どこで\n"
+	.string "ポケモン　つかまえるか　なやむな⋯⋯\p"
+	.string "もし　ポケモン　つかまえているとき\n"
+	.string "{PLAYER}と　であったら\l"
+	.string "しょうぶ　してやろうか？$"

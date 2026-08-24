@@ -231,10 +231,10 @@ gSpecials:
 	def_special InitBirchState
 	def_special ScriptGetPokedexInfo
 	def_special ShowPokedexRatingMessage
-	def_special DoLotteryCornerComputerEffect
+	def_special DoPCTurnOnEffect
 	def_special DoPCTurnOffEffect
 	def_special SetDepartmentStoreFloorVar
-	def_special DoPCTurnOnEffect
+	def_special DoLotteryCornerComputerEffect
 	def_special EndLotteryCornerComputerEffect
 	def_special ChooseMonForMoveRelearner
 	def_special MoveDeleterChooseMoveToForget

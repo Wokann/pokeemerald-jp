@@ -7,6 +7,7 @@
 #include "constants/secret_bases.h"
 #include "constants/trainer_types.h"
 #include "constants/berry.h"
+#include "constants/vars.h"
 #include "constants/weather.h"
 
 #define NULL 0
@@ -2398,112 +2399,18 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/Underwater_Route125/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE125
 	.set gMapEvents_UNDERWATER_ROUTE125, Underwater_Route125_MapEvents
-	.globl LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventObjects
-LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventObjects: @ 0x085057B8
-	object_event 1, 215, 0, 2, 6, 3, 10, 0, 0, 0, 0, 0x082581AF, 0x02F6
-	object_event 2, 95, 0, 1, 3, 3, 28, 3, 0, 0, 0, 0x082582B7, 0x02F3
-	object_event 3, 96, 0, 4, 5, 3, 65, 0, 0, 0, 0, 0x082582A4, 0x02F2
-	object_event 4, 26, 0, 2, 7, 3, 10, 0, 0, 0, 0, LittlerootTown_MaysHouse_1F_EventScript_001F04A6, 0x0310
-	object_event 5, 129, 0, 5, 6, 3, 9, 1, 1, 0, 0, 0x00000000, 0x02DE
-	object_event 6, 5, 0, 1, 5, 3, 5, 1, 1, 0, 0, LittlerootTown_MaysHouse_1F_EventScript_001F04F0, 0x02DF
-	object_event 7, 100, 0, 8, 8, 3, 7, 1, 1, 0, 0, 0x00000000, 0x02E9
-	.globl LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventWarps
-LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventWarps: @ 0x08505860
-	warp_def 9, 8, 0, 1, MAP_LITTLEROOT_TOWN
-	warp_def 8, 8, 0, 1, MAP_LITTLEROOT_TOWN
-	warp_def 8, 2, 0, 0, MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
-	.globl LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventCoordEvents
-LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventCoordEvents: @ 0x08505878
-	coord_event 8, 8, 0, 16530, 4, LittlerootTown_BrendansHouse_1F_EventScript_001EF8D3
-	coord_event 7, 3, 0, 16525, 2, LittlerootTown_BrendansHouse_1F_EventScript_001EF8EE
-	coord_event 8, 4, 0, 16525, 2, LittlerootTown_BrendansHouse_1F_EventScript_001EF8FA
-	coord_event 9, 3, 0, 16525, 2, LittlerootTown_BrendansHouse_1F_EventScript_001EF906
+	.include "data/maps/LittlerootTown_BrendansHouse_1F/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F
-gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F: @ 0x085058B8
-	map_events LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventObjects, LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventWarps, LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_EventCoordEvents, 0
-	.globl LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventObjects
-LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventObjects: @ 0x085058CC
-	object_event 1, 100, 0, 7, 1, 0, 8, 1, 0, 0, 0, LittlerootTown_MaysHouse_2F_EventScript_001F0D0D, 0x02F8
-	object_event 2, 240, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0x00000000, 0x00AE
-	object_event 3, 241, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0x00000000, 0x00AF
-	object_event 4, 242, 0, 0, 2, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B0
-	object_event 5, 243, 0, 0, 3, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B1
-	object_event 6, 244, 0, 0, 4, 0, 1, 0, 0, 0, 0, 0x00000000, 0x00B2
-	object_event 7, 245, 0, 0, 5, 4, 1, 0, 0, 0, 0, 0x00000000, 0x00B3
-	object_event 8, 246, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0x00000000, 0x00B4
-	object_event 9, 247, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0x00000000, 0x00B5
-	object_event 10, 248, 0, 1, 2, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B6
-	object_event 11, 249, 0, 1, 3, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B7
-	object_event 12, 250, 0, 1, 4, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B8
-	object_event 13, 251, 0, 1, 5, 0, 1, 0, 0, 0, 0, 0x00000000, 0x00B9
-	object_event 14, 215, 0, 7, 1, 3, 8, 1, 0, 0, 0, 0x00000000, 0x02F5
-	object_event 15, 59, 0, 3, 4, 0, 1, 1, 1, 0, 0, LittlerootTown_BrendansHouse_2F_EventScript_001F0030, 0x0331
-	object_event 16, 163, 0, 5, 5, 3, 1, 1, 1, 0, 0, 0x00000000, 0x032F
-	.globl LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventWarps
-LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventWarps: @ 0x08505A4C
-	warp_def 7, 1, 0, 2, MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F
-	.globl LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventBgEvents
-LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventBgEvents: @ 0x08505A54
-	bg_event 0, 1, 0, 1, LittlerootTown_BrendansHouse_2F_EventScript_001F01BC, 0, 0
-	bg_event 1, 1, 0, 0, LittlerootTown_BrendansHouse_2F_EventScript_001F0205, 0, 0
-	bg_event 5, 1, 0, 0, 0x08257F6B, 0, 0
-	bg_event 3, 1, 0, 0, LittlerootTown_BrendansHouse_2F_EventScript_001F020E, 0, 0
+	.set gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F, LittlerootTown_BrendansHouse_1F_MapEvents
+	.include "data/maps/LittlerootTown_BrendansHouse_2F/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
-gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F: @ 0x08505A84
-	map_events LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventObjects, LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventWarps, 0, LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_EventBgEvents
-	.globl LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventObjects
-LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventObjects: @ 0x08505A98
-	object_event 1, 215, 0, 8, 6, 3, 9, 0, 0, 0, 0, 0x082581AF, 0x02F7
-	object_event 2, 96, 0, 6, 5, 3, 65, 0, 0, 0, 0, 0x082582A4, 0x02F2
-	object_event 3, 95, 0, 9, 3, 3, 27, 3, 0, 0, 0, 0x082582B7, 0x02F3
-	object_event 4, 26, 0, 8, 7, 3, 9, 0, 0, 0, 0, LittlerootTown_MaysHouse_1F_EventScript_001F04A6, 0x0311
-	object_event 5, 129, 0, 5, 6, 3, 10, 1, 1, 0, 0, 0x00000000, 0x02DE
-	object_event 6, 5, 0, 9, 5, 3, 5, 1, 1, 0, 0, LittlerootTown_MaysHouse_1F_EventScript_001F04F0, 0x02E0
-	object_event 7, 105, 0, 2, 8, 3, 7, 1, 1, 0, 0, 0x00000000, 0x02EA
-	.globl LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventWarps
-LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventWarps: @ 0x08505B40
-	warp_def 1, 8, 0, 0, MAP_LITTLEROOT_TOWN
-	warp_def 2, 8, 0, 0, MAP_LITTLEROOT_TOWN
-	warp_def 2, 2, 0, 0, MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F
-	.globl LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventCoordEvents
-LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventCoordEvents: @ 0x08505B58
-	coord_event 2, 8, 0, 16530, 4, LittlerootTown_MaysHouse_1F_EventScript_001F04FF
-	coord_event 1, 3, 0, 16525, 2, LittlerootTown_MaysHouse_1F_EventScript_001F051A
-	coord_event 2, 4, 0, 16525, 2, LittlerootTown_MaysHouse_1F_EventScript_001F0526
-	coord_event 3, 3, 0, 16525, 2, LittlerootTown_MaysHouse_1F_EventScript_001F0532
+	.set gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, LittlerootTown_BrendansHouse_2F_MapEvents
+	.include "data/maps/LittlerootTown_MaysHouse_1F/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_1F
-gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_1F: @ 0x08505B98
-	map_events LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventObjects, LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventWarps, LITTLEROOT_TOWN_MAYS_HOUSE_1F_EventCoordEvents, 0
-	.globl LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventObjects
-LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventObjects: @ 0x08505BAC
-	object_event 1, 105, 0, 1, 1, 0, 8, 1, 0, 0, 0, LittlerootTown_MaysHouse_2F_EventScript_001F0D0D, 0x02D2
-	object_event 2, 240, 0, 0, 6, 0, 1, 0, 0, 0, 0, 0x00000000, 0x00AE
-	object_event 3, 241, 0, 1, 6, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00AF
-	object_event 4, 242, 0, 2, 6, 0, 1, 0, 0, 0, 0, 0x00000000, 0x00B0
-	object_event 5, 243, 0, 3, 6, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B1
-	object_event 6, 244, 0, 4, 6, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B2
-	object_event 7, 245, 0, 5, 6, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B3
-	object_event 8, 246, 0, 0, 7, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B4
-	object_event 9, 247, 0, 1, 7, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B5
-	object_event 10, 248, 0, 2, 7, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B6
-	object_event 11, 249, 0, 3, 7, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B7
-	object_event 12, 250, 0, 4, 7, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B8
-	object_event 13, 251, 0, 5, 7, 3, 1, 0, 0, 0, 0, 0x00000000, 0x00B9
-	object_event 14, 215, 0, 1, 1, 3, 8, 1, 0, 0, 0, 0x00000000, 0x02F5
-	object_event 15, 142, 0, 3, 4, 4, 8, 1, 1, 0, 0, 0x00000000, 0x0351
-	object_event 16, 59, 0, 5, 4, 0, 1, 1, 1, 0, 0, LittlerootTown_MaysHouse_2F_EventScript_001F0B80, 0x0332
-	.globl LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventWarps
-LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventWarps: @ 0x08505D2C
-	warp_def 1, 1, 0, 2, MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F
-	.globl LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventBgEvents
-LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventBgEvents: @ 0x08505D34
-	bg_event 5, 1, 0, 0, LittlerootTown_BrendansHouse_2F_EventScript_001F020E, 0, 0
-	bg_event 7, 1, 0, 0, LittlerootTown_BrendansHouse_2F_EventScript_001F0205, 0, 0
-	bg_event 3, 1, 0, 0, 0x08257F77, 0, 0
-	bg_event 8, 1, 0, 0, LittlerootTown_MaysHouse_2F_EventScript_001F0D9F, 0, 0
+	.set gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_1F, LittlerootTown_MaysHouse_1F_MapEvents
+	.include "data/maps/LittlerootTown_MaysHouse_2F/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_2F
-gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_2F: @ 0x08505D64
-	map_events LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventObjects, LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventWarps, 0, LITTLEROOT_TOWN_MAYS_HOUSE_2F_EventBgEvents
+	.set gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_2F, LittlerootTown_MaysHouse_2F_MapEvents
 	.globl LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventObjects
 LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_EventObjects: @ 0x08505D78
 	object_event 1, 46, 0, 9, 8, 3, 2, 1, 1, 0, 0, LittlerootTown_ProfessorBirchsLab_EventScript_001F151F, 0x0000

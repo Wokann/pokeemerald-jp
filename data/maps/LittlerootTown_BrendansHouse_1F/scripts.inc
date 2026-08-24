@@ -1,276 +1,392 @@
 @ LittlerootTown_BrendansHouse_1F scripts (JP map g1 m0 @ 0x081EF785)
 
 LittlerootTown_BrendansHouse_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, LittlerootTown_BrendansHouse_1F_EventScript_001EF795
-	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_BrendansHouse_1F_EventScript_001EF7D4
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, LittlerootTown_BrendansHouse_1F_MapScriptTable_001EF81A
+	map_script MAP_SCRIPT_ON_LOAD, LittlerootTown_BrendansHouse_1F_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, LittlerootTown_BrendansHouse_1F_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, LittlerootTown_BrendansHouse_1F_OnFrame
 	.byte 0
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF795::
-	compare_var_to_value 0x4092, 0x6
-	call_if 0x0, LittlerootTown_BrendansHouse_1F_EventScript_001EF7AA
-	checkflag 0x112
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF7BD
+LittlerootTown_BrendansHouse_1F_OnLoad::
+	call_if_lt VAR_LITTLEROOT_INTRO_STATE, 0x6, LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
+	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF7AA::
-	setmetatile 0x5, 0x4, 0x270, 0x1
-	setmetatile 0x5, 0x2, 0x268, 0x1
+LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes::
+	setmetatile 0x5, 0x4, METATILE_BrendansMaysHouse_MovingBox_Open, TRUE
+	setmetatile 0x5, 0x2, METATILE_BrendansMaysHouse_MovingBox_Closed, TRUE
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF7BD::
+LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual::
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF7CA
+	goto_if_eq VAR_RESULT, MALE, LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF7CA::
-	setmetatile 0x3, 0x7, 0x293, 0x1
+LittlerootTown_BrendansHouse_1F_EventScript_ShowRunningShoesManual::
+	setmetatile 0x3, 0x7, METATILE_BrendansMaysHouse_BookOnTable, TRUE
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF7D4::
-	compare_var_to_value 0x4092, 0x3
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF80E
-	compare_var_to_value 0x4092, 0x5
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF7F6
-	compare_var_to_value 0x4092, 0x6
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF802
+LittlerootTown_BrendansHouse_1F_OnTransition::
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 0x3, LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 0x5, LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs
+	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 0x6, LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF7F6::
-	setobjectxyperm 0x1, 0x8, 0x4
-	setobjectmovementtype 0x1, 0x7
+LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToStairs::
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 0x8, 0x4
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF802::
-	setobjectxyperm 0x1, 0x4, 0x5
-	setobjectmovementtype 0x1, 0x7
+LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToTV::
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 0x4, 0x5
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF80E::
-	setobjectxyperm 0x1, 0x9, 0x8
-	setobjectmovementtype 0x1, 0x7
+LittlerootTown_BrendansHouse_1F_EventScript_MoveMomToDoor::
+	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 0x9, 0x8
+	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
-LittlerootTown_BrendansHouse_1F_MapScriptTable_001EF81A::
-	map_script_2 0x4092, 0x3, LittlerootTown_BrendansHouse_1F_EventScript_001EF86C
-	map_script_2 0x4092, 0x5, LittlerootTown_BrendansHouse_1F_EventScript_001EF844
-	map_script_2 0x4092, 0x6, LittlerootTown_BrendansHouse_1F_EventScript_001EF87D
-	map_script_2 0x4082, 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF88E
-	map_script_2 0x4082, 0x3, 0x082582DC
+LittlerootTown_BrendansHouse_1F_OnFrame::
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 0x3, LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 0x5, LittlerootTown_BrendansHouse_1F_EventScript_GoUpstairsToSetClock
+	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 0x6, LittlerootTown_BrendansHouse_1F_EventScript_PetalburgGymReport
+	map_script_2 VAR_LITTLEROOT_HOUSES_STATE_MAY, 0x1, LittlerootTown_BrendansHouse_1F_EventScript_YoureNewNeighbor
+	map_script_2 VAR_LITTLEROOT_HOUSES_STATE_MAY, 0x3, PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV
 	.2byte 0
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF844::
+LittlerootTown_BrendansHouse_1F_EventScript_GoUpstairsToSetClock::
 	lockall
-	loadword 0x0, gJPText_001EFAFC
-	callstd 0x4
+	msgbox PlayersHouse_1F_Text_GoSetTheClock, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081EF86A
-	applymovement 0x1, 0x081EF86A
+	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs
+	applymovement LOCALID_PLAYERS_HOUSE_1F_MOM, LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs
 	waitmovement 0x0
-	warp 0x101, 0xFF, 0x7, 0x1
+	warp MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, 0x7, 0x1
 	waitstate
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1ef86a, 0x2
-LittlerootTown_BrendansHouse_1F_EventScript_001EF86C::
+LittlerootTown_BrendansHouse_1F_Movement_PushTowardStairs:
+	walk_up
+	step_end
+
+LittlerootTown_BrendansHouse_1F_EventScript_EnterHouseMovingIn::
 	lockall
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x0
-	goto 0x08257EEE
+	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
+	setvar VAR_0x8005, MALE
+	goto PlayersHouse_1F_EventScript_EnterHouseMovingIn
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF87D::
+LittlerootTown_BrendansHouse_1F_EventScript_PetalburgGymReport::
 	lockall
-	setvar 0x8004, 0x0
-	setvar 0x8005, 0x1
-	goto 0x08258057
+	setvar VAR_0x8004, MALE
+	setvar VAR_0x8005, LOCALID_PLAYERS_HOUSE_1F_MOM
+	goto PlayersHouse_1F_EventScript_PetalburgGymReportMale
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF88E::
+LittlerootTown_BrendansHouse_1F_EventScript_YoureNewNeighbor::
 	lockall
-	playse 0x15
-	applymovement 0x4, 0x0824361B
+	playse SE_PIN
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_ExclamationMark
 	waitmovement 0x0
-	applymovement 0x4, 0x0824361D
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_Delay48
 	waitmovement 0x0
-	applymovement 0xFF, 0x08243627
-	applymovement 0x4, 0x081EF8CC
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach
 	waitmovement 0x0
 	special GetRivalSonDaughterString
-	loadword 0x0, gJPText_001F0678
-	callstd 0x4
-	setflag 0x57
-	setvar 0x4082, 0x2
+	msgbox RivalsHouse_1F_Text_OhYoureTheNewNeighbor, MSGBOX_DEFAULT
+	setflag FLAG_MET_RIVAL_MOM
+	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 0x2
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1ef8cc, 0x7
-LittlerootTown_BrendansHouse_1F_EventScript_001EF8D3::
+LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach:
+	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+LittlerootTown_BrendansHouse_1F_EventScript_GoSeeRoom::
 	lockall
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x0
-	applymovement 0x8004, 0x08243627
+	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
+	setvar VAR_0x8005, MALE
+	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0x0
-	goto 0x08257F4F
+	goto PlayersHouse_1F_EventScript_MomGoSeeRoom
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF8EE::
+LittlerootTown_BrendansHouse_1F_EventScript_MeetRival0::
 	lockall
-	setvar 0x8008, 0x0
-	goto LittlerootTown_BrendansHouse_1F_EventScript_001EF912
+	setvar VAR_0x8008, 0x0
+	goto LittlerootTown_BrendansHouse_1F_EventScript_MeetRival
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF8FA::
+LittlerootTown_BrendansHouse_1F_EventScript_MeetRival1::
 	lockall
-	setvar 0x8008, 0x1
-	goto LittlerootTown_BrendansHouse_1F_EventScript_001EF912
+	setvar VAR_0x8008, 0x1
+	goto LittlerootTown_BrendansHouse_1F_EventScript_MeetRival
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF906::
+LittlerootTown_BrendansHouse_1F_EventScript_MeetRival2::
 	lockall
-	setvar 0x8008, 0x2
-	goto LittlerootTown_BrendansHouse_1F_EventScript_001EF912
+	setvar VAR_0x8008, 0x2
+	goto LittlerootTown_BrendansHouse_1F_EventScript_MeetRival
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF912::
-	playse 0x9
+LittlerootTown_BrendansHouse_1F_EventScript_MeetRival::
+	playse SE_EXIT
 	delay 0xA
-	addobject 0x7
+	addobject LOCALID_RIVALS_HOUSE_1F_RIVAL
 	delay 0x1E
-	playse 0x15
-	applymovement 0x7, 0x0824361B
+	playse SE_PIN
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, Common_Movement_ExclamationMark
 	waitmovement 0x0
-	applymovement 0x7, 0x0824361D
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, Common_Movement_Delay48
 	waitmovement 0x0
-	compare_var_to_value 0x8008, 0x1
-	call_if 0x5, LittlerootTown_BrendansHouse_1F_EventScript_001EF9B1
-	playbgm 0x1A5, 0x1
-	compare_var_to_value 0x8008, 0x0
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF9BC
-	compare_var_to_value 0x8008, 0x1
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF9C7
-	compare_var_to_value 0x8008, 0x2
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF9D2
-	loadword 0x0, 0x081F0994
-	callstd 0x4
+	call_if_ne VAR_0x8008, 0x1, LittlerootTown_BrendansHouse_1F_EventScript_PlayerFaceBrendan
+	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
+	call_if_eq VAR_0x8008, 0x0, LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer0
+	call_if_eq VAR_0x8008, 0x1, LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer1
+	call_if_eq VAR_0x8008, 0x2, LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer2
+	msgbox RivalsHouse_1F_Text_BrendanWhoAreYou, MSGBOX_DEFAULT
 	closemessage
-	compare_var_to_value 0x8008, 0x0
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EF9F1
-	compare_var_to_value 0x8008, 0x1
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EFA03
-	compare_var_to_value 0x8008, 0x2
-	call_if 0x1, LittlerootTown_BrendansHouse_1F_EventScript_001EFA15
-	playse 0x9
-	removeobject 0x7
-	setflag 0x2E9
-	setflag 0x331
-	clearflag 0x2F8
+	call_if_eq VAR_0x8008, 0x0, LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs0
+	call_if_eq VAR_0x8008, 0x1, LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs1
+	call_if_eq VAR_0x8008, 0x2, LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs2
+	playse SE_EXIT
+	removeobject LOCALID_RIVALS_HOUSE_1F_RIVAL
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_BRENDAN
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	delay 0x1E
-	setvar 0x408D, 0x3
-	setvar 0x4050, 0x1
-	savebgm 0x0
+	setvar VAR_LITTLEROOT_RIVAL_STATE, 0x3
+	setvar VAR_LITTLEROOT_TOWN_STATE, 0x1
+	savebgm MUS_DUMMY
 	fadedefaultbgm
 	releaseall
 	end
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF9B1::
-	applymovement 0xFF, 0x0824362D
+LittlerootTown_BrendansHouse_1F_EventScript_PlayerFaceBrendan::
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0x0
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF9BC::
-	applymovement 0x7, 0x081EF9DD
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer0::
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer0
 	waitmovement 0x0
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF9C7::
-	applymovement 0x7, 0x081EF9E5
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer1::
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer1
 	waitmovement 0x0
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EF9D2::
-	applymovement 0x7, 0x081EF9E9
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanApproachPlayer2::
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer2
 	waitmovement 0x0
 	return
 
-	.incbin "baserom_jp.gba", 0x1ef9dd, 0x14
-LittlerootTown_BrendansHouse_1F_EventScript_001EF9F1::
-	applymovement 0xFF, 0x081EFA27
-	applymovement 0x7, 0x081EFA36
+LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer0:
+	walk_in_place_faster_left
+	walk_left
+	walk_in_place_faster_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer1:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_BrendanApproachPlayer2:
+	walk_in_place_faster_right
+	walk_right
+	walk_in_place_faster_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs0::
+	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit0
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs0
 	waitmovement 0x0
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EFA03::
-	applymovement 0xFF, 0x081EFA2B
-	applymovement 0x7, 0x081EFA3C
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs1::
+	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit1
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs1
 	waitmovement 0x0
 	return
 
-LittlerootTown_BrendansHouse_1F_EventScript_001EFA15::
-	applymovement 0xFF, 0x081EFA32
-	applymovement 0x7, 0x081EFA46
+LittlerootTown_BrendansHouse_1F_EventScript_BrendanGoUpstairs2::
+	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit2
+	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs2
 	waitmovement 0x0
 	return
 
-	.incbin "baserom_jp.gba", 0x1efa27, 0x25
-	.globl gJPText_001EFA4C
-gJPText_001EFA4C: @ 0x081EFA4C
-	.string "ママ“ほら　{MUS_RG_VS_TRAINER}！\n"
+LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit0:
+	delay_16
+	delay_8
+	walk_in_place_faster_right
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit1:
+	delay_16
+	delay_8
+	walk_in_place_faster_right
+	delay_16
+	delay_16
+	walk_in_place_faster_up
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_PlayerWatchBrendanExit2:
+	delay_16
+	delay_8
+	walk_in_place_faster_left
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs0:
+	walk_in_place_faster_right
+	walk_right
+	walk_in_place_faster_up
+	walk_up
+	walk_up
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs1:
+	walk_in_place_faster_right
+	walk_right
+	walk_in_place_faster_up
+	walk_up
+	walk_up
+	walk_in_place_faster_left
+	walk_left
+	walk_in_place_faster_up
+	walk_up
+	step_end
+
+LittlerootTown_BrendansHouse_1F_Movement_BrendanGoUpstairs2:
+	walk_in_place_faster_left
+	walk_left
+	walk_in_place_faster_up
+	walk_up
+	walk_up
+	step_end
+
+PlayersHouse_1F_Text_IsntItNiceInHere: @ 0x081EFA4C
+	.string "ママ“ほら　{PLAYER}！\n"
 	.string "おうちの　なかも　すてき　でしょ！$"
 
-	.globl gJPText_001EFA68
-gJPText_001EFA68: @ 0x081EFA68
+PlayersHouse_1F_Text_MoversPokemonGoSetClock: @ 0x081EFA68
 	.string "おうちの　かたづけは\n"
 	.string "ひっこしやさんの　ポケモンが\l"
 	.string "てつだって　くれるから　らくちんね！\p"
-	.string "{MUS_RG_VS_TRAINER}も　2かいに　ある\n"
+	.string "{PLAYER}も　2かいに　ある\n"
 	.string "じぶんの　おへやに　いってごらん！\p"
 	.string "パパが　ひっこしの　おいわいに\n"
 	.string "かってくれた　とけいが　あるから\l"
 	.string "じかんを　あわせて　おきなさいよ$"
 
-	.incbin "baserom_jp.gba", 0x1efae5, 0x17
-	.globl gJPText_001EFAFC
-gJPText_001EFAFC: @ 0x081EFAFC
-	.string "ママ“{MUS_RG_VS_TRAINER}\p"
+PlayersHouse_1F_Text_ArentYouInterestedInRoom: @ 0x081EFAE5
+	.string "ママ“{PLAYER}\p"
+	.string "じぶんの　へやを　みてこないの？$"
+
+PlayersHouse_1F_Text_GoSetTheClock: @ 0x081EFAFC
+	.string "ママ“{PLAYER}\p"
 	.string "おへやの　とけい　あわせてきて$"
 
-	.globl gJPText_001EFB12
-gJPText_001EFB12: @ 0x081EFB12
-	.string "ママ“⋯⋯あ！　{MUS_RG_VS_TRAINER}！　{MUS_RG_VS_TRAINER}！\n"
+PlayersHouse_1F_Text_OhComeQuickly: @ 0x081EFB12
+	.string "ママ“⋯⋯あ！　{PLAYER}！　{PLAYER}！\n"
 	.string "はやく　こっちに　いらっしゃい！$"
 
-	.globl gJPText_001EFB33
-gJPText_001EFB33: @ 0x081EFB33
+PlayersHouse_1F_Text_MaybeDadWillBeOn: @ 0x081EFB33
 	.string "ママ“トウカの　ジムが　うつってるわ\n"
 	.string "パパが　でるかもよ！！$"
 
-	.globl gJPText_001EFB52
-gJPText_001EFB52: @ 0x081EFB52
+PlayersHouse_1F_Text_ItsOverWeMissedHim: @ 0x081EFB52
 	.string "ママ“あらら⋯⋯　おわっちゃった\p"
 	.string "パパが　でてたみたい　だったのに　ざんねんね$"
 
-	.globl gJPText_001EFB7A
-gJPText_001EFB7A: @ 0x081EFB7A
+PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor: @ 0x081EFB7A
 	.string "⋯⋯あ　そうそう！　このまち　には\n"
 	.string "オダマキはかせ　っていう\l"
 	.string "パパの　おともだちが　いるの\p"
 	.string "はかせの　いえは　おとなり　だから\n"
 	.string "きちんと　あいさつ　してくると　いいわ！$"
 
-	.incbin "baserom_jp.gba", 0x1efbcf, 0x128
-	.globl gJPText_001EFCF7
-gJPText_001EFCF7: @ 0x081EFCF7
+PlayersHouse_1F_Text_SeeYouHoney: @ 0x081EFBCF
+	.string "ママ“いってらっしゃい！$"
+
+PlayersHouse_1F_Text_DidYouMeetProfBirch: @ 0x081EFBDC
+	.string "ママ“オダマキはかせ　には　あえたの？$"
+
+PlayersHouse_1F_Text_YouShouldRestABit: @ 0x081EFBF0
+	.string "ママ“どう？　{PLAYER}\n"
+	.string "すこし　つかれたんじゃ　ないかしら？\p"
+	.string "おうちで　やすんでいくと　いいわ$"
+
+PlayersHouse_1F_Text_TakeCareHoney: @ 0x081EFC1E
+	.string "ママ“じゃあ　きをつけてね！$"
+
+PlayersHouse_1F_Text_GotDadsBadgeHeresSomethingFromMom: @ 0x081EFC2D
+	.string "ママ“あら\n"
+	.string "その　バッジ　パパから　もらったの！？\p"
+	.string "じゃあ　ママも　これ　あげようかな$"
+
+PlayersHouse_1F_Text_DontPushYourselfTooHard: @ 0x081EFC59
+	.string "あんまり　むりは　しないでね\n"
+	.string "なにか　あれば　かえって　くればいいから\p"
+	.string "じゃあ　がんばってね！$"
+
+PlayersHouse_1F_Text_IsThatAPokenav: @ 0x081EFC89
+	.string "ママ“なあに　それ？　ポケナビ？\n"
+	.string "デボンの　ひとから　いただいたの？\p"
+	.string "じゃあ　ママの　ことも\n"
+	.string "とうろくして　もらっちゃおうかな！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯$"
+
+PlayersHouse_1F_Text_RegisteredMom: @ 0x081EFCD3
+	.string "ママを\n"
+	.string "ポケナビに　とうろく　した！$"
+
+PlayersHouse_1F_Text_Vigoroth1: @ 0x081EFCE6
+	.string "ふぎーっ$"
+
+PlayersHouse_1F_Text_Vigoroth2: @ 0x081EFCEB
+	.string "ふごっ　ふご　ふご⋯⋯$"
+
+PlayersHouse_1F_Text_ReportFromPetalburgGym: @ 0x081EFCF7
 	.string "インタビュアー“⋯⋯　いじょう\n"
 	.string "トウカジムの　まえ　からでした！$"
 
-	.incbin "baserom_jp.gba", 0x1efd18, 0xb0
-	.globl gJPText_001EFDC8
-gJPText_001EFDC8: @ 0x081EFDC8
+PlayersHouse_1F_Text_TheresAMovieOnTV: @ 0x081EFD18
+	.string "テレビで　えいがを　やってる！\p"
+	.string "おとなと　こどもが　ふたり　ならんで\n"
+	.string "おおきな　ピアノの　うえで　おどってる！\p"
+	.string "もう　いかなきゃ！$"
+
+PlayersHouse_1F_Text_RunningShoesManual: @ 0x081EFD5A
+	.string "ランニングシューズの\n"
+	.string "せつめいしょが　ある！\p"
+	.string "‘ランニングシューズは\n"
+	.string "　Bボタンを　おすことで　いままでよりも\l"
+	.string "　はやく　はしれるように　なります！\p"
+	.string "　ランニングシューズを　はいて\n"
+	.string "　おもいっきり　そとを　はしろう！’$"
+
+PlayersHouse_1F_Text_TicketFromBrineyCameForYou: @ 0x081EFDC8
 	.string "パパ“ん？\n"
-	.string "{MUS_RG_VS_TRAINER}じゃ　ないか！\p"
+	.string "{PLAYER}じゃ　ないか！\p"
 	.string "ひさしぶりに　かおを　みたが\n"
 	.string "どこか　たくましくなった⋯⋯\l"
 	.string "そんな　かんじ　だな\p"
@@ -278,32 +394,27 @@ gJPText_001EFDC8: @ 0x081EFDC8
 	.string "ハギさん　という　ひとから\l"
 	.string "おまえあてに　なにか　とどいていたぞ！$"
 
-	.globl gJPText_001EFE2F
-gJPText_001EFE2F: @ 0x081EFE2F
+PlayersHouse_1F_Text_PortsInSlateportLilycove: @ 0x081EFE2F
 	.string "パパ“ふねのチケットか⋯⋯\p"
 	.string "ふねに　のるなら　カイナか　ミナモに\n"
 	.string "ふねのりばが　あったよな$"
 
-	.globl gJPText_001EFE5D
-gJPText_001EFE5D: @ 0x081EFE5D
+PlayersHouse_1F_Text_BetterGetBackToGym: @ 0x081EFE5D
 	.string "では　わたしは\n"
 	.string "トウカの　ジムに　もどるよ\p"
 	.string "ママ\n"
 	.string "いえのこと　たのんだよ$"
 
-	.globl gJPText_001EFE82
-gJPText_001EFE82: @ 0x081EFE82
+PlayersHouse_1F_Text_DadShouldStayLonger: @ 0x081EFE82
 	.string "ママ“パパったら\n"
 	.string "ひさしぶりに　かえって　きたのに\l"
 	.string "ポケモンの　はなし　ばっかり！\p"
 	.string "もっと　ゆっくり　すれば　いいのにね！$"
 
-	.globl gJPText_001EFEC0
-gJPText_001EFEC0: @ 0x081EFEC0
+PlayersHouse_1F_Text_IsThatABreakingStory: @ 0x081EFEC0
 	.string "ママ“なにかの　ニュース　かしら？$"
 
-	.globl gJPText_001EFED2
-gJPText_001EFED2: @ 0x081EFED2
+PlayersHouse_1F_Text_LatiEmergencyNewsFlash: @ 0x081EFED2
 	.string "りんじ　ニュース　です\p"
 	.string "ホウエンちほうの　かくちで\n"
 	.string "⋯⋯いろの　ポケモンが　とんでいた\l"
@@ -313,14 +424,11 @@ gJPText_001EFED2: @ 0x081EFED2
 	.string "では　ひきつづき\n"
 	.string "えいがを　おたのしみ　ください$"
 
-	.globl gJPText_001EFF49
-gJPText_001EFF49: @ 0x081EFF49
-	.string "ママ“ねえ　ねえ　{MUS_RG_VS_TRAINER}\n"
+PlayersHouse_1F_Text_WhatColorDidTheySay: @ 0x081EFF49
+	.string "ママ“ねえ　ねえ　{PLAYER}\n"
 	.string "いまの　ニュース\l"
 	.string "なにいろの　ポケモンって　いってたの？$"
 
-	.globl gJPText_001EFF72
-gJPText_001EFF72: @ 0x081EFF72
+PlayersHouse_1F_Text_StillUnknownPokemon: @ 0x081EFF72
 	.string "ママ“へえー　まだまだ\n"
 	.string "しられていない　ポケモンは　いるのねえ$"
-
