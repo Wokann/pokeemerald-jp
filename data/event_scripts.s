@@ -74,6 +74,9 @@
 	@ as the US semantic spellings used by Dewford Gym.
 	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG
 	.set SCR_OP_SETFLASHLEVEL, SCR_OP_99
+	@ Object visibility commands use the retained JP 0x58/0x59 opcode tokens.
+	.set SCR_OP_SHOWOBJECTAT, SCR_OP_58
+	.set SCR_OP_HIDEOBJECTAT, SCR_OP_59
 
 	@ Reviewed semantic names for shared event/text entries that still live
 	@ inside retained JP blocks.  Keeping these aliases in the owning event
@@ -123,6 +126,28 @@
 	.set CableClub_EventScript_TradeCenter, 0x08246DAD
 	.globl CableClub_EventScript_RecordCorner
 	.set CableClub_EventScript_RecordCorner, 0x08246ED6
+	@ Fallarbor's Battle Tent shares these Battle Arena battle-flow and text
+	@ blocks. Keep the US semantic names without moving their JP byte owners.
+	.globl BattleFrontier_BattleArenaBattleRoom_EventScript_DoArenaBattle
+	.set BattleFrontier_BattleArenaBattleRoom_EventScript_DoArenaBattle, BattleFrontier_BattleArenaBattleRoom_EventScript_0023081C
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_SetKOTourneyBegin
+	.set BattleFrontier_BattleArenaBattleRoom_Text_SetKOTourneyBegin, gJPText_00230916
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_WinnerIsPlayer
+	.set BattleFrontier_BattleArenaBattleRoom_Text_WinnerIsPlayer, gJPText_00230930
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_WinnerIsOpponent
+	.set BattleFrontier_BattleArenaBattleRoom_Text_WinnerIsOpponent, gJPText_00230944
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_MonsWillBeRestored
+	.set BattleFrontier_BattleArenaBattleRoom_Text_MonsWillBeRestored, gJPText_00230958
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_ReadyFor2ndOpponent
+	.set BattleFrontier_BattleArenaBattleRoom_Text_ReadyFor2ndOpponent, gJPText_00230972
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_ReadyFor3rdOpponent
+	.set BattleFrontier_BattleArenaBattleRoom_Text_ReadyFor3rdOpponent, gJPText_00230995
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_SaveAndShutDown
+	.set BattleFrontier_BattleArenaBattleRoom_Text_SaveAndShutDown, gJPText_00230A44
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_RetireFromChallenge
+	.set BattleFrontier_BattleArenaBattleRoom_Text_RetireFromChallenge, gJPText_00230A5E
+	.globl BattleFrontier_BattleArenaBattleRoom_Text_SavingPleaseWait
+	.set BattleFrontier_BattleArenaBattleRoom_Text_SavingPleaseWait, gJPText_00230A7F
 	.globl CableClub_OnResume
 	.set CableClub_OnResume, 0x0824790F
 	.globl SecretBase_EventScript_SetDecorationFlags

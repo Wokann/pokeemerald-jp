@@ -2454,14 +2454,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/FallarborTown_BattleTentCorridor/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR
 	.set gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR, FallarborTown_BattleTentCorridor_MapEvents
-	.globl FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM_EventObjects
-FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM_EventObjects: @ 0x08506B70
-	object_event 1, 241, 0, 4, 8, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 2, 44, 0, 3, 2, 0, 8, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 3, 240, 0, 5, 1, 3, 8, 1, 1, 0, 0, 0x00000000, 0x0000
+	.include "data/maps/FallarborTown_BattleTentBattleRoom/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
-gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM: @ 0x08506BB8
-	map_events FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM_EventObjects, 0, 0, 0
+	.set gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM, FallarborTown_BattleTentBattleRoom_MapEvents
 	.globl FALLARBOR_TOWN_POKEMON_CENTER_1F_EventObjects
 FALLARBOR_TOWN_POKEMON_CENTER_1F_EventObjects: @ 0x08506BCC
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, FallarborTown_PokemonCenter_1F_EventScript_001F5C62, 0x0000

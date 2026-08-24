@@ -1,235 +1,237 @@
-@ FallarborTown_BattleTentBattleRoom scripts (JP map g5 m3 @ 0x081F591A)
-
+@ On this map the player will automatically walk into the room, but the camera is supposed to remain still.
+@ To do this GF sets the player (LOCALID_PLAYER) invisible and creates a fake player object (LOCALID_FALLARBOR_TENT_BATTLE_PLAYER).
+@ The graphics of this fake player object are represented with VAR_OBJ_GFX_ID_1.
+@ The graphics of the opponent are represented with VAR_OBJ_GFX_ID_0, which will ultimately be set by tower_setopponent.
 FallarborTown_BattleTentBattleRoom_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, FallarborTown_BattleTentBattleRoom_EventScript_001F592A
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, FallarborTown_BattleTentBattleRoom_MapScriptTable_001F595E
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, FallarborTown_BattleTentBattleRoom_MapScriptTable_001F5C31
+	map_script MAP_SCRIPT_ON_TRANSITION, FallarborTown_BattleTentBattleRoom_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, FallarborTown_BattleTentBattleRoom_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, FallarborTown_BattleTentBattleRoom_OnWarp
 	.byte 0
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F592A::
-	call FallarborTown_BattleTentBattleRoom_EventScript_001F5930
+FallarborTown_BattleTentBattleRoom_OnTransition:
+	call FallarborTown_BattleTentBattleRoom_EventScript_SetPlayerGfx
 	end
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5930::
+FallarborTown_BattleTentBattleRoom_EventScript_SetPlayerGfx::
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5948
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5953
+	goto_if_eq VAR_RESULT, MALE, FallarborTown_BattleTentBattleRoom_EventScript_SetPlayerGfxMale
+	goto_if_eq VAR_RESULT, FEMALE, FallarborTown_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale
 	return
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5948::
-	setvar 0x4011, 0x64
-	setvar 0x4010, 0x64
+FallarborTown_BattleTentBattleRoom_EventScript_SetPlayerGfxMale::
+	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL
 	return
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5953::
-	setvar 0x4011, 0x69
-	setvar 0x4010, 0x69
+FallarborTown_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale::
+	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_RIVAL_MAY_NORMAL
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_RIVAL_MAY_NORMAL
 	return
 
-FallarborTown_BattleTentBattleRoom_MapScriptTable_001F595E::
-	map_script_2 0x4000, 0x0, FallarborTown_BattleTentBattleRoom_EventScript_001F5968
+FallarborTown_BattleTentBattleRoom_OnFrame:
+	map_script_2 VAR_TEMP_0, 0, FallarborTown_BattleTentBattleRoom_EventScript_EnterRoom
 	.2byte 0
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5968::
+FallarborTown_BattleTentBattleRoom_EventScript_EnterRoom::
 	lockall
-	showobject_at 0x1, 0x503
-	applymovement 0x1, 0x081F5C0E
-	waitmovement 0x0
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, FallarborTown_BattleTentBattleRoom_EventScript_001F5BF4
-
-FallarborTown_BattleTentBattleRoom_EventScript_001F5990::
-	setvar 0x8004, 0x3
-	special sub_08161E88
-	addobject 0x3
-	applymovement 0x3, 0x081F5C17
-	waitmovement 0x0
-	applymovement 0x2, 0x081F5C24
-	playse 0xB9
+	showobjectat LOCALID_FALLARBOR_TENT_BATTLE_PLAYER, MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_PLAYER, FallarborTown_BattleTentBattleRoom_Movement_PlayerEnter
+	waitmovement 0
+	frontier_get FRONTIER_DATA_BATTLE_NUM
+	goto_if_ne VAR_RESULT, 0, FallarborTown_BattleTentBattleRoom_EventScript_ResumeChallenge
+FallarborTown_BattleTentBattleRoom_EventScript_NextOpponentEnter::
+	tower_setopponent
+	addobject LOCALID_FALLARBOR_TENT_BATTLE_OPPONENT
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_OPPONENT, FallarborTown_BattleTentBattleRoom_Movement_OpponentEnter
+	waitmovement 0
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_ATTENDANT, FallarborTown_BattleTentBattleRoom_Movement_AttendantJump
+	playse SE_M_BELLY_DRUM
 	waitse
-	waitmovement 0x0
-	loadword 0x0, gJPText_00230916
-	callstd 0x4
-	setvar 0x8004, 0x4
-	special CallVerdanturfTentFunction
-	loadword 0x0, 0x2021C7C
-	callstd 0x4
+	waitmovement 0
+	msgbox BattleFrontier_BattleArenaBattleRoom_Text_SetKOTourneyBegin, MSGBOX_DEFAULT
+	battletent_getopponentintro
+	msgbox gStringVar4, MSGBOX_DEFAULT
 	waitmessage
-	call 0x0823081C
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5A1D
-	applymovement 0x2, 0x081F5C24
-	playse 0xC5
+	call BattleFrontier_BattleArenaBattleRoom_EventScript_DoArenaBattle
+	switch VAR_RESULT
+	case 1, FallarborTown_BattleTentBattleRoom_EventScript_DefeatedOpponent
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_ATTENDANT, FallarborTown_BattleTentBattleRoom_Movement_AttendantJump
+	playse SE_M_SNORE
 	waitse
-	waitmovement 0x0
-	setvar 0x8004, 0x6
-	special CallFallarborTentFunction
-	loadword 0x0, gJPText_00230944
-	callstd 0x4
-
-FallarborTown_BattleTentBattleRoom_EventScript_001F59FF::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x4
-	special CallFrontierUtilFunc
+	waitmovement 0
+	fallarbortent_getopponentname
+	msgbox BattleFrontier_BattleArenaBattleRoom_Text_WinnerIsOpponent, MSGBOX_DEFAULT
+FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST
 	special LoadPlayerParty
-	warp 0x501, 0xFF, 0x6, 0x6
+	warp MAP_FALLARBOR_TOWN_BATTLE_TENT_LOBBY, 6, 6
 	waitstate
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5A1D::
-	applymovement 0x2, 0x081F5C24
-	playse 0x14
+FallarborTown_BattleTentBattleRoom_EventScript_DefeatedOpponent::
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_ATTENDANT, FallarborTown_BattleTentBattleRoom_Movement_AttendantJump
+	playse SE_BANG
 	waitse
-	waitmovement 0x0
-	loadword 0x0, gJPText_00230930
-	callstd 0x4
+	waitmovement 0
+	msgbox BattleFrontier_BattleArenaBattleRoom_Text_WinnerIsPlayer, MSGBOX_DEFAULT
 	closemessage
-
-FallarborTown_BattleTentBattleRoom_EventScript_001F5A34::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
-	addvar 0x800D, 0x1
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x2
-	copyvar 0x8006, 0x800D
-	special CallFrontierUtilFunc
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5B74
-	applymovement 0x3, 0x081F5C1F
-	waitmovement 0x0
-	removeobject 0x3
-	applymovement 0x2, 0x081F5C27
-	waitmovement 0x0
-	applymovement 0x1, 0x081F5C15
-	waitmovement 0x0
-	loadword 0x0, gJPText_00230958
-	callstd 0x4
+FallarborTown_BattleTentBattleRoom_EventScript_IncrementBattleNum::
+	frontier_get FRONTIER_DATA_BATTLE_NUM
+	addvar VAR_RESULT, 1
+	frontier_set FRONTIER_DATA_BATTLE_NUM, VAR_RESULT
+	switch VAR_RESULT
+	case 3, FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_OPPONENT, FallarborTown_BattleTentBattleRoom_Movement_OpponentExit
+	waitmovement 0
+	removeobject LOCALID_FALLARBOR_TENT_BATTLE_OPPONENT
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_ATTENDANT, FallarborTown_BattleTentBattleRoom_Movement_AttendantApproachPlayer
+	waitmovement 0
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_PLAYER, FallarborTown_BattleTentBattleRoom_Movement_PlayerFaceAttendant
+	waitmovement 0
+	msgbox BattleFrontier_BattleArenaBattleRoom_Text_MonsWillBeRestored, MSGBOX_DEFAULT
 	special LoadPlayerParty
 	special SavePlayerParty
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x3
-	special CallFrontierUtilFunc
-	playfanfare 0x170
+	frontier_setpartyorder FRONTIER_PARTY_SIZE
+	playfanfare MUS_HEAL
 	waitfanfare
 	special HealPlayerParty
+FallarborTown_BattleTentBattleRoom_EventScript_AskContinueChallenge::
+	frontier_get FRONTIER_DATA_BATTLE_NUM
+	call_if_eq VAR_RESULT, 1, FallarborTown_BattleTentBattleRoom_EventScript_ReadyFor2ndOpponent
+	call_if_eq VAR_RESULT, 2, FallarborTown_BattleTentBattleRoom_EventScript_ReadyFor3rdOpponent
+	multichoice 20, 6, MULTI_GO_ON_REST_RETIRE, TRUE
+	switch VAR_RESULT
+	case 0, FallarborTown_BattleTentBattleRoom_EventScript_ContinueChallenge
+	case 1, FallarborTown_BattleTentBattleRoom_EventScript_AskPauseChallenge
+	case 2, FallarborTown_BattleTentBattleRoom_EventScript_AskRetireChallenge
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5AAB::
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5BC4
-	compare_var_to_value 0x800D, 0x2
-	call_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5BCB
-	multichoice 0x14, 0x6, 0x68, 0x1
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5B59
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5AF9
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5B27
+FallarborTown_BattleTentBattleRoom_EventScript_AskPauseChallenge::
+	msgbox BattleFrontier_BattleArenaBattleRoom_Text_SaveAndShutDown, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, FallarborTown_BattleTentBattleRoom_EventScript_AskContinueChallenge
+	case YES, FallarborTown_BattleTentBattleRoom_EventScript_PauseChallenge
+	case MULTI_B_PRESSED, FallarborTown_BattleTentBattleRoom_EventScript_AskContinueChallenge
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5AF9::
-	loadword 0x0, gJPText_00230A44
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5AAB
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5BD2
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5AAB
-
-FallarborTown_BattleTentBattleRoom_EventScript_001F5B27::
-	message gJPText_00230A5E
+FallarborTown_BattleTentBattleRoom_EventScript_AskRetireChallenge::
+	message BattleFrontier_BattleArenaBattleRoom_Text_RetireFromChallenge
 	waitmessage
-	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5AAB
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F59FF
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5AAB
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+	switch VAR_RESULT
+	case 1, FallarborTown_BattleTentBattleRoom_EventScript_AskContinueChallenge
+	case 0, FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost
+	case MULTI_B_PRESSED, FallarborTown_BattleTentBattleRoom_EventScript_AskContinueChallenge
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5B59::
+FallarborTown_BattleTentBattleRoom_EventScript_ContinueChallenge::
 	closemessage
-	applymovement 0x2, 0x081F5C2C
-	waitmovement 0x0
-	applymovement 0x1, 0x081F5C13
-	waitmovement 0x0
-	goto FallarborTown_BattleTentBattleRoom_EventScript_001F5990
-
-	.incbin "baserom_jp.gba", 0x1f5b73, 0x1
-FallarborTown_BattleTentBattleRoom_EventScript_001F5B74::
-	delay 0x3C
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x3
-	special CallFrontierUtilFunc
-	special LoadPlayerParty
-	warp 0x501, 0xFF, 0x6, 0x6
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_ATTENDANT, FallarborTown_BattleTentBattleRoom_Movement_AttendantReturnToPos
+	waitmovement 0
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_PLAYER, FallarborTown_BattleTentBattleRoom_Movement_PlayerFaceBattle
+	waitmovement 0
+	goto FallarborTown_BattleTentBattleRoom_EventScript_NextOpponentEnter
 	waitstate
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special CallBattleArenaFunction
-	compare_var_to_value 0x800D, 0x270F
-	goto_if 0x1, FallarborTown_BattleTentBattleRoom_EventScript_001F5A34
-	addvar 0x800D, 0x1
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	copyvar 0x8006, 0x800D
-	special CallBattleArenaFunction
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5BC4::
-	message gJPText_00230972
+FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon::
+	delay 60
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_WON
+	special LoadPlayerParty
+	warp MAP_FALLARBOR_TOWN_BATTLE_TENT_LOBBY, 6, 6
+	waitstate
+
+@ Unreachable code block? The flow into the next block also doesnt make sense
+	arena_get ARENA_DATA_WIN_STREAK
+	goto_if_eq VAR_RESULT, MAX_STREAK, FallarborTown_BattleTentBattleRoom_EventScript_IncrementBattleNum
+	addvar VAR_RESULT, 1
+	arena_set ARENA_DATA_WIN_STREAK, VAR_RESULT
+@ See above
+
+FallarborTown_BattleTentBattleRoom_EventScript_ReadyFor2ndOpponent::
+	message BattleFrontier_BattleArenaBattleRoom_Text_ReadyFor2ndOpponent
 	waitmessage
 	return
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5BCB::
-	message gJPText_00230995
+FallarborTown_BattleTentBattleRoom_EventScript_ReadyFor3rdOpponent::
+	message BattleFrontier_BattleArenaBattleRoom_Text_ReadyFor3rdOpponent
 	waitmessage
 	return
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5BD2::
-	message gJPText_00230A7F
+FallarborTown_BattleTentBattleRoom_EventScript_PauseChallenge::
+	message BattleFrontier_BattleArenaBattleRoom_Text_SavingPleaseWait
 	waitmessage
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x2
-	special CallFallarborTentFunction
-	playse 0x37
+	fallarbortent_save CHALLENGE_STATUS_PAUSED
+	playse SE_SAVE
 	waitse
-	fadescreen 0x1
-	setvar 0x8004, 0x4
-	special CallFrontierUtilFunc
+	fadescreen FADE_TO_BLACK
+	frontier_reset
 	end
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5BF4::
-	applymovement 0x2, 0x081F5C27
-	waitmovement 0x0
-	applymovement 0x1, 0x081F5C15
-	waitmovement 0x0
-	goto FallarborTown_BattleTentBattleRoom_EventScript_001F5AAB
+FallarborTown_BattleTentBattleRoom_EventScript_ResumeChallenge::
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_ATTENDANT, FallarborTown_BattleTentBattleRoom_Movement_AttendantApproachPlayer
+	waitmovement 0
+	applymovement LOCALID_FALLARBOR_TENT_BATTLE_PLAYER, FallarborTown_BattleTentBattleRoom_Movement_PlayerFaceAttendant
+	waitmovement 0
+	goto FallarborTown_BattleTentBattleRoom_EventScript_AskContinueChallenge
 	end
 
-	.incbin "baserom_jp.gba", 0x1f5c0e, 0x23
-FallarborTown_BattleTentBattleRoom_MapScriptTable_001F5C31::
-	map_script_2 0x4001, 0x0, FallarborTown_BattleTentBattleRoom_EventScript_001F5C3B
+FallarborTown_BattleTentBattleRoom_Movement_PlayerEnter:
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_right
+	step_end
+
+FallarborTown_BattleTentBattleRoom_Movement_PlayerFaceBattle:
+	walk_in_place_faster_right
+	step_end
+
+FallarborTown_BattleTentBattleRoom_Movement_PlayerFaceAttendant:
+	walk_in_place_faster_left
+	step_end
+
+FallarborTown_BattleTentBattleRoom_Movement_OpponentEnter:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_in_place_faster_left
+	step_end
+
+@ Unused
+FallarborTown_BattleTentBattleRoom_Movement_OpponentStepForward:
+	walk_left
+	step_end
+
+FallarborTown_BattleTentBattleRoom_Movement_OpponentExit:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+FallarborTown_BattleTentBattleRoom_Movement_AttendantJump:
+	disable_jump_landing_ground_effect
+	jump_in_place_down
+	step_end
+
+FallarborTown_BattleTentBattleRoom_Movement_AttendantApproachPlayer:
+	walk_down
+	walk_down
+	walk_down
+	walk_in_place_faster_right
+	step_end
+
+FallarborTown_BattleTentBattleRoom_Movement_AttendantReturnToPos:
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+FallarborTown_BattleTentBattleRoom_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, FallarborTown_BattleTentBattleRoom_EventScript_SetUpObjects
 	.2byte 0
 
-FallarborTown_BattleTentBattleRoom_EventScript_001F5C3B::
-	hideobject_at 0xFF, 0x503
-	hideobject_at 0x1, 0x503
-	removeobject 0x3
-	setvar 0x4001, 0x1
+FallarborTown_BattleTentBattleRoom_EventScript_SetUpObjects::
+	hideobjectat LOCALID_PLAYER, MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
+	hideobjectat LOCALID_FALLARBOR_TENT_BATTLE_PLAYER, MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
+	removeobject LOCALID_FALLARBOR_TENT_BATTLE_OPPONENT
+	setvar VAR_TEMP_1, 1
 	end
-
