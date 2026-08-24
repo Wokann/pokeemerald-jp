@@ -104,6 +104,3 @@ VerdanturfTown_FriendshipRatersHouse_Text_DetestsYou:
 
 VerdanturfTown_FriendshipRatersHouse_Text_Pikachu:
 	.string "ピカチュウ“ピカピカッ！$"
-
-@ The next unstructured Verdanturf map starts at 0x081F777F.
-	.incbin "baserom_jp.gba", 0x1f777f, 0xab

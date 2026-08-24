@@ -2493,17 +2493,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/VerdanturfTown_FriendshipRatersHouse/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE
 	.set gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE, VerdanturfTown_FriendshipRatersHouse_MapEvents
-	.globl VERDANTURF_TOWN_HOUSE_EventObjects
-VERDANTURF_TOWN_HOUSE_EventObjects: @ 0x08507148
-	object_event 1, 34, 0, 4, 5, 3, 7, 0, 0, 0, 0, 0x081F7780, 0x0000
-	object_event 2, 34, 0, 4, 4, 3, 8, 0, 0, 0, 0, 0x081F7789, 0x0000
-	.globl VERDANTURF_TOWN_HOUSE_EventWarps
-VERDANTURF_TOWN_HOUSE_EventWarps: @ 0x08507178
-	warp_def 3, 8, 0, 6, MAP_VERDANTURF_TOWN
-	warp_def 4, 8, 0, 6, MAP_VERDANTURF_TOWN
+	.include "data/maps/VerdanturfTown_House/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_HOUSE
-gMapEvents_VERDANTURF_TOWN_HOUSE: @ 0x08507188
-	map_events VERDANTURF_TOWN_HOUSE_EventObjects, VERDANTURF_TOWN_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_VERDANTURF_TOWN_HOUSE, VerdanturfTown_House_MapEvents
 	.globl PACIFIDLOG_TOWN_POKEMON_CENTER_1F_EventObjects
 PACIFIDLOG_TOWN_POKEMON_CENTER_1F_EventObjects: @ 0x0850719C
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, PacifidlogTown_PokemonCenter_1F_EventScript_001F7839, 0x0000
