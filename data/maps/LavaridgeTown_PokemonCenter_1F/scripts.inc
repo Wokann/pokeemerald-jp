@@ -1,36 +1,45 @@
-@ LavaridgeTown_PokemonCenter_1F scripts (JP map g4 m5 @ 0x081F4F85)
-
 LavaridgeTown_PokemonCenter_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_PokemonCenter_1F_EventScript_001F4F90
-	map_script MAP_SCRIPT_ON_RESUME, 0x0824790F
+	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-LavaridgeTown_PokemonCenter_1F_EventScript_001F4F90::
-	setrespawn 0x10
-	call 0x08242978
+LavaridgeTown_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_LAVARIDGE_TOWN
+	call Common_EventScript_UpdateBrineyLocation
 	end
 
-LavaridgeTown_PokemonCenter_1F_EventScript_001F4F99::
-	setvar 0x800B, 0x1
-	call 0x082429B8
+LavaridgeTown_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_LAVARIDGE_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-LavaridgeTown_PokemonCenter_1F_EventScript_001F4FA7::
-	loadword 0x0, 0x081F4FF9
-	callstd 0x2
+LavaridgeTown_PokemonCenter_1F_EventScript_Youngster::
+	msgbox LavaridgeTown_PokemonCenter_1F_Text_HotSpringCanInvigorate, MSGBOX_NPC
 	end
 
-LavaridgeTown_PokemonCenter_1F_EventScript_001F4FB0::
-	loadword 0x0, 0x081F4FC2
-	callstd 0x2
+LavaridgeTown_PokemonCenter_1F_EventScript_Woman::
+	msgbox LavaridgeTown_PokemonCenter_1F_Text_TrainersPokemonSpendTimeTogether, MSGBOX_NPC
 	end
 
-LavaridgeTown_PokemonCenter_1F_EventScript_001F4FB9::
-	loadword 0x0, 0x081F502B
-	callstd 0x2
+LavaridgeTown_PokemonCenter_1F_EventScript_Gentleman::
+	msgbox LavaridgeTown_PokemonCenter_1F_Text_TrainersShouldRestToo, MSGBOX_NPC
 	end
 
-	.incbin "baserom_jp.gba", 0x1f4fc2, 0xaf
+LavaridgeTown_PokemonCenter_1F_Text_TrainersPokemonSpendTimeTogether:
+	.string "ポケモンと　いっしょに　あるいていると\n"
+	.string "なんだか　ポケモンが　なついてくれるような\l"
+	.string "そんな　きが　するのよね$"
+
+LavaridgeTown_PokemonCenter_1F_Text_HotSpringCanInvigorate:
+	.string "おんせんに　はいる　だけで\n"
+	.string "げんきに　なるなんて　ふしぎだなー！\l"
+	.string "ポケモンも　いれて　あげたいなー$"
+
+LavaridgeTown_PokemonCenter_1F_Text_TrainersShouldRestToo:
+	.string "ほっほっほ！　おわかいの\n"
+	.string "ここから　おんせんに　いけますぞ！\p"
+	.string "ポケモンが　ここで　やすむのなら\n"
+	.string "ひとも　おんせんで　ゆっくり　しませんと！$"
