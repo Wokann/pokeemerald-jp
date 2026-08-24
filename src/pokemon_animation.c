@@ -8231,80 +8231,35 @@ void Anim_BounceRotateToSides_SmallSlow(struct Sprite *sprite)
     Anim_BounceRotateToSides_Small(sprite);
 }
 
-__attribute__((naked)) void Anim_ZigzagSlow(struct Sprite *sprite)
+void Anim_ZigzagSlow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r1, #0x32\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08182C8E\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_08182C8E:\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r2, #0x2e\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bgt _08182CA2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FACC\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08182CA4\n\t"
-        "_08182CA2:\n\t"
-        "	subs r0, r1, #1\n\t"
-        "_08182CA4:\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[2] == 0)
+        sprite->data[0] = 0;
+
+    if (sprite->data[0] <= 0)
+    {
+        Zigzag(sprite);
+        sprite->data[0] = 1;
+    }
+    else
+    {
+        sprite->data[0]--;
+    }
 }
 
-__attribute__((naked)) void Anim_HorizontalShake_Slow(struct Sprite *sprite)
+void Anim_HorizontalShake_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FB88\n\t"
-        "	ldr r0, _08182CC8\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182CC8: .4byte HorizontalShake + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 30;
+    sprite->data[7] = 3;
+    HorizontalShake(sprite);
+    sprite->callback = HorizontalShake;
 }
 
-__attribute__((naked)) void Anim_VertialShake_Slow(struct Sprite *sprite)
+void Anim_VertialShake_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FBF0\n\t"
-        "	ldr r0, _08182CE4\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182CE4: .4byte VerticalShake + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 30;
+    VerticalShake(sprite);
+    sprite->callback = VerticalShake;
 }
 
 
