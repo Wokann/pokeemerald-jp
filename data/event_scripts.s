@@ -68,6 +68,8 @@
 	.set ITEM_TM_BULK_UP, ITEM_TM08
 	@ TM36 is Sludge Bomb in the JP item table; keep this alias event-script-only.
 	.set ITEM_TM_SLUDGE_BOMB, ITEM_TM36
+	@ TM50 is Overheat in the JP item table; keep this alias event-script-only.
+	.set ITEM_TM_OVERHEAT, ITEM_TM50
 	@ These JP command-table entries retain older names but use the same opcodes
 	@ as the US semantic spellings used by Dewford Gym.
 	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG
@@ -622,6 +624,8 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_BagIsFull, 0x082430EA
 	.globl Common_EventScript_PlayGymBadgeFanfare
 	.set Common_EventScript_PlayGymBadgeFanfare, 0x0824310A
+	.globl EventScript_GotoTrainerScript
+	.set EventScript_GotoTrainerScript, 0x08244D20
 
 	.globl EventScript_UseSurf
 EventScript_UseSurf: @ 0x8242F2C
