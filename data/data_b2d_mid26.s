@@ -2401,29 +2401,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/DewfordTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_2F, DewfordTown_PokemonCenter_2F_MapEvents
-	.globl DEWFORD_TOWN_GYM_EventObjects
-DEWFORD_TOWN_GYM_EventObjects: @ 0x08506260
-	object_event 1, 126, 0, 4, 3, 0, 8, 0, 0, 0, 0, 0x081F2F0D, 0x0000
-	object_event 2, 44, 0, 2, 18, 0, 7, 0, 0, 1, 3, 0x081F3002, 0x0000
-	object_event 3, 14, 0, 15, 3, 3, 8, 0, 0, 1, 3, 0x081F3024, 0x0000
-	object_event 4, 14, 0, 12, 25, 3, 7, 0, 0, 1, 2, 0x081F3046, 0x0000
-	object_event 5, 23, 0, 5, 24, 3, 8, 0, 0, 0, 0, DewfordTown_Gym_EventScript_001F30CE, 0x0000
-	object_event 6, 44, 0, 7, 8, 1, 10, 1, 1, 1, 3, 0x081F308A, 0x0000
-	object_event 7, 14, 0, 16, 9, 3, 8, 1, 1, 1, 3, 0x081F30AC, 0x0000
-	object_event 8, 49, 0, 14, 12, 1, 10, 1, 1, 1, 2, 0x081F3068, 0x0000
-	.globl DEWFORD_TOWN_GYM_EventWarps
-DEWFORD_TOWN_GYM_EventWarps: @ 0x08506320
-	warp_def 5, 27, 0, 2, MAP_DEWFORD_TOWN
-	warp_def 6, 27, 0, 2, MAP_DEWFORD_TOWN
-	.globl DEWFORD_TOWN_GYM_EventBgEvents
-DEWFORD_TOWN_GYM_EventBgEvents: @ 0x08506330
-	bg_event 4, 23, 3, 1, DewfordTown_Gym_EventScript_001F30ED, 0, 0
-	bg_event 7, 23, 3, 1, DewfordTown_Gym_EventScript_001F30FD, 0, 0
-	bg_event 4, 24, 0, 1, DewfordTown_Gym_EventScript_001F30ED, 0, 0
-	bg_event 7, 24, 0, 1, DewfordTown_Gym_EventScript_001F30FD, 0, 0
+	.include "data/maps/DewfordTown_Gym/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_GYM
-gMapEvents_DEWFORD_TOWN_GYM: @ 0x08506360
-	map_events DEWFORD_TOWN_GYM_EventObjects, DEWFORD_TOWN_GYM_EventWarps, 0, DEWFORD_TOWN_GYM_EventBgEvents
+	.set gMapEvents_DEWFORD_TOWN_GYM, DewfordTown_Gym_MapEvents
 	.globl DEWFORD_TOWN_HALL_EventObjects
 DEWFORD_TOWN_HALL_EventObjects: @ 0x08506374
 	object_event 1, 10, 0, 4, 6, 0, 7, 0, 0, 0, 0, 0x081F3789, 0x0000

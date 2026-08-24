@@ -63,6 +63,13 @@
 	.include "asm/macros/event.inc"
 	.include "constants/gba_constants.inc"
 	.include "constants/global.inc"
+	@ Event-script-only semantic alias. A global C alias would collide with the
+	@ existing FOREACH_TM token-paste expansion while the item tables use TM08.
+	.set ITEM_TM_BULK_UP, ITEM_TM08
+	@ These JP command-table entries retain older names but use the same opcodes
+	@ as the US semantic spellings used by Dewford Gym.
+	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG
+	.set SCR_OP_SETFLASHLEVEL, SCR_OP_99
 
 	@ Reviewed semantic names for shared event/text entries that still live
 	@ inside retained JP blocks.  Keeping these aliases in the owning event
@@ -255,6 +262,9 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/DewfordTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/DewfordTown_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/DewfordTown_Gym/scripts.inc"
+	.include "data/maps/DewfordTown_Hall/scripts.inc"
+	.include "data/maps/DewfordTown_House2/scripts.inc"
+	.include "data/maps/LavaridgeTown_HerbShop/scripts.inc"
 	.include "data/maps/LavaridgeTown_Gym_1F/scripts.inc"
 	.include "data/maps/LavaridgeTown_Gym_B1F/scripts.inc"
 	.include "data/maps/LavaridgeTown_PokemonCenter_1F/scripts.inc"
@@ -600,6 +610,16 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_BufferTrendyPhrase, 0x08242F17
 	.globl EventScript_BackupMrBrineyLocation
 	.set EventScript_BackupMrBrineyLocation, 0x08242F21
+	.globl Common_EventScript_ReadyPetalburgGymForBattle
+	.set Common_EventScript_ReadyPetalburgGymForBattle, 0x08242F10
+	.globl Common_EventScript_SetGymTrainers
+	.set Common_EventScript_SetGymTrainers, 0x08242FCF
+	.globl Common_EventScript_ShowBagIsFull
+	.set Common_EventScript_ShowBagIsFull, 0x082430E0
+	.globl Common_EventScript_BagIsFull
+	.set Common_EventScript_BagIsFull, 0x082430EA
+	.globl Common_EventScript_PlayGymBadgeFanfare
+	.set Common_EventScript_PlayGymBadgeFanfare, 0x0824310A
 
 	.globl EventScript_UseSurf
 EventScript_UseSurf: @ 0x8242F2C
