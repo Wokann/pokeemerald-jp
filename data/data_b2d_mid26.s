@@ -2620,19 +2620,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/PetalburgCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_PETALBURG_CITY_POKEMON_CENTER_2F, PetalburgCity_PokemonCenter_2F_MapEvents
-	.globl PETALBURG_CITY_MART_EventObjects
-PETALBURG_CITY_MART_EventObjects: @ 0x085079C0
-	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x081FA9EA, 0x0000
-	object_event 2, 19, 0, 9, 4, 3, 10, 0, 0, 0, 0, 0x081FAA68, 0x0000
-	object_event 3, 7, 0, 6, 3, 3, 8, 0, 0, 0, 0, 0x081FAA5F, 0x0000
-	object_event 4, 20, 0, 5, 5, 3, 10, 0, 0, 0, 0, 0x081FAA56, 0x0000
-	.globl PETALBURG_CITY_MART_EventWarps
-PETALBURG_CITY_MART_EventWarps: @ 0x08507A20
-	warp_def 3, 7, 0, 5, MAP_PETALBURG_CITY
-	warp_def 4, 7, 0, 5, MAP_PETALBURG_CITY
+	.include "data/maps/PetalburgCity_Mart/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_MART
-gMapEvents_PETALBURG_CITY_MART: @ 0x08507A30
-	map_events PETALBURG_CITY_MART_EventObjects, PETALBURG_CITY_MART_EventWarps, 0, 0
+	.set gMapEvents_PETALBURG_CITY_MART, PetalburgCity_Mart_MapEvents
 	.globl SLATEPORT_CITY_STERNS_SHIPYARD_1F_EventObjects
 SLATEPORT_CITY_STERNS_SHIPYARD_1F_EventObjects: @ 0x08507A44
 	object_event 1, 19, 0, 5, 5, 3, 8, 0, 0, 0, 0, 0x081FAB29, 0x0000
