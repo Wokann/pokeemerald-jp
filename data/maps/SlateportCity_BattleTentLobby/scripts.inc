@@ -1,337 +1,306 @@
 @ SlateportCity_BattleTentLobby scripts (JP map g9 m2 @ 0x081FB033)
 
 SlateportCity_BattleTentLobby_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, SlateportCity_BattleTentLobby_MapScriptTable_001FB052
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, SlateportCity_BattleTentLobby_MapScriptTable_001FB03E
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, SlateportCity_BattleTentLobby_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, SlateportCity_BattleTentLobby_OnWarp
 	.byte 0
 
-SlateportCity_BattleTentLobby_MapScriptTable_001FB03E::
-	map_script_2 0x4001, 0x0, SlateportCity_BattleTentLobby_EventScript_001FB048
+SlateportCity_BattleTentLobby_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, SlateportCity_BattleTentLobby_EventScript_TurnPlayerNorth
 	.2byte 0
 
-SlateportCity_BattleTentLobby_EventScript_001FB048::
-	setvar 0x4001, 0x1
-	turnobject 0xFF, 0x2
+SlateportCity_BattleTentLobby_EventScript_TurnPlayerNorth::
+	setvar VAR_TEMP_1, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-SlateportCity_BattleTentLobby_MapScriptTable_001FB052::
-	map_script_2 0x4000, 0x0, SlateportCity_BattleTentLobby_EventScript_001FB07C
-	map_script_2 0x4000, 0x1, SlateportCity_BattleTentLobby_EventScript_001FB085
-	map_script_2 0x4000, 0x2, SlateportCity_BattleTentLobby_EventScript_001FB174
-	map_script_2 0x4000, 0x3, SlateportCity_BattleTentLobby_EventScript_001FB0BA
-	map_script_2 0x4000, 0x4, SlateportCity_BattleTentLobby_EventScript_001FB13A
+SlateportCity_BattleTentLobby_OnFrame:
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, SlateportCity_BattleTentLobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, SlateportCity_BattleTentLobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, SlateportCity_BattleTentLobby_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, SlateportCity_BattleTentLobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, SlateportCity_BattleTentLobby_EventScript_LostChallenge
 	.2byte 0
 
-SlateportCity_BattleTentLobby_EventScript_001FB07C::
-	setvar 0x8004, 0x0
-	special CallFrontierUtilFunc
+SlateportCity_BattleTentLobby_EventScript_GetChallengeStatus::
+	frontier_getstatus
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB085::
+SlateportCity_BattleTentLobby_EventScript_QuitWithoutSaving::
 	lockall
-	loadword 0x0, gJPText_00275660
-	callstd 0x4
+	msgbox SlateportCity_BattleTentLobby_Text_DidntSaveBeforeQuitting, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
 	releaseall
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB0BA::
+SlateportCity_BattleTentLobby_EventScript_WonChallenge::
 	lockall
-	message gJPText_00275596
+	message SlateportCity_BattleTentLobby_Text_WonThreeMatchesReturnMons
 	waitmessage
-	setvar 0x8004, 0x4
-	special CallSlateportTentFunction
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x0
-	special CallSlateportTentFunction
-	playse 0x37
+	slateporttent_setrandomprize
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
+	slateporttent_save 0
+	playse SE_SAVE
 	waitse
-
-SlateportCity_BattleTentLobby_EventScript_001FB0EC::
-	loadword 0x0, gJPText_002755EC
-	callstd 0x4
-	setvar 0x8004, 0x5
-	special CallSlateportTentFunction
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB12D
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	message gJPText_0022064B
+SlateportCity_BattleTentLobby_EventScript_GivePrize::
+	msgbox SlateportCity_BattleTentLobby_Text_AwardYouThisPrize, MSGBOX_DEFAULT
+	slateporttent_giveprize
+	switch VAR_RESULT
+	case FALSE, SlateportCity_BattleTentLobby_EventScript_NoRoomForPrize
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	message BattleFrontier_BattleTowerLobby_Text_ReceivedPrize
 	waitmessage
-	playfanfare 0x172
+	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
-	goto SlateportCity_BattleTentLobby_EventScript_001FB164
+	goto SlateportCity_BattleTentLobby_EventScript_EndGivePrize
 
-SlateportCity_BattleTentLobby_EventScript_001FB12D::
-	loadword 0x0, gJPText_00275607
-	callstd 0x4
-	goto SlateportCity_BattleTentLobby_EventScript_001FB164
+SlateportCity_BattleTentLobby_EventScript_NoRoomForPrize::
+	msgbox SlateportCity_BattleTentLobby_Text_NoRoomInBagMakeRoom, MSGBOX_DEFAULT
+	goto SlateportCity_BattleTentLobby_EventScript_EndGivePrize
 
-SlateportCity_BattleTentLobby_EventScript_001FB13A::
+SlateportCity_BattleTentLobby_EventScript_LostChallenge::
 	lockall
-	message gJPText_00275524
+	message SlateportCity_BattleTentLobby_Text_ReturnRentalMonsSaveResults
 	waitmessage
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x0
-	special CallSlateportTentFunction
-	playse 0x37
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
+	slateporttent_save 0
+	playse SE_SAVE
 	waitse
 
-SlateportCity_BattleTentLobby_EventScript_001FB164::
-	loadword 0x0, gJPText_0027549D
-	callstd 0x4
+SlateportCity_BattleTentLobby_EventScript_EndGivePrize::
+	msgbox SlateportCity_BattleTentLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4000, 0xFF
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB174::
+SlateportCity_BattleTentLobby_EventScript_ResumeChallenge::
 	lockall
-	message gJPText_00275634
+	message SlateportCity_BattleTentLobby_Text_BeenWaitingForYou
 	waitmessage
-	setvar 0x8004, 0x3
-	setvar 0x8005, 0x1
-	special CallSlateportTentFunction
-	playse 0x37
+	slateporttent_save CHALLENGE_STATUS_SAVING
+	playse SE_SAVE
 	waitse
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	setvar 0x4000, 0xFF
-	setvar 0x8006, 0x2
-	goto SlateportCity_BattleTentLobby_EventScript_001FB2AF
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setvar VAR_0x8006, 2
+	goto SlateportCity_BattleTentLobby_EventScript_EnterChallenge
 
-SlateportCity_BattleTentLobby_EventScript_001FB1AD::
+SlateportCity_BattleTentLobby_EventScript_Attendant::
 	lock
 	faceplayer
-	setvar 0x8004, 0x1
-	special CallSlateportTentFunction
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, SlateportCity_BattleTentLobby_EventScript_001FB0EC
+	slateporttent_getprize
+	goto_if_ne VAR_RESULT, ITEM_NONE, SlateportCity_BattleTentLobby_EventScript_GivePrize
 	special SavePlayerParty
-	loadword 0x0, 0x08275307
-	callstd 0x4
-
-SlateportCity_BattleTentLobby_EventScript_001FB1CD::
-	message 0x08275335
+	msgbox SlateportCity_BattleTentLobby_Text_WelcomeToBattleTent, MSGBOX_DEFAULT
+SlateportCity_BattleTentLobby_EventScript_AskEnterChallenge::
+	message SlateportCity_BattleTentLobby_Text_TakeChallenge
 	waitmessage
-	multichoice 0x11, 0x6, 0x17, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB209
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB30A
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB331
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB331
+	multichoice 17, 6, MULTI_CHALLENGEINFO, FALSE
+	switch VAR_RESULT
+	case 0, SlateportCity_BattleTentLobby_EventScript_TryEnterChallenge
+	case 1, SlateportCity_BattleTentLobby_EventScript_ExplainChallenge
+	case 2, SlateportCity_BattleTentLobby_EventScript_CancelChallenge
+	case MULTI_B_PRESSED, SlateportCity_BattleTentLobby_EventScript_CancelChallenge
 
-SlateportCity_BattleTentLobby_EventScript_001FB209::
-	setvar 0x40CF, 0x4
-	setvar 0x40CE, 0x0
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x1
-	setvar 0x8006, 0x2
-	special CallFrontierUtilFunc
-	loadword 0x0, 0x082754D7
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB32E
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB253
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB32E
+SlateportCity_BattleTentLobby_EventScript_TryEnterChallenge::
+	setvar VAR_FRONTIER_FACILITY, FRONTIER_FACILITY_FACTORY
+	setvar VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES
+	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_TENT
+	msgbox SlateportCity_BattleTentLobby_Text_SaveBeforeChallenge, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, SlateportCity_BattleTentLobby_EventScript_LoadPartyCancelChallenge
+	case YES, SlateportCity_BattleTentLobby_EventScript_SaveBeforeChallenge
+	case MULTI_B_PRESSED, SlateportCity_BattleTentLobby_EventScript_LoadPartyCancelChallenge
 
-SlateportCity_BattleTentLobby_EventScript_001FB253::
-	setvar 0x4000, 0x0
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x4
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x0
-	special CallSlateportTentFunction
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x1
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
+SlateportCity_BattleTentLobby_EventScript_SaveBeforeChallenge::
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
+	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
+	slateporttent_init
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
+	frontier_set FRONTIER_DATA_PAUSED, FALSE
 	closemessage
-	delay 0x2
-	call 0x082423E9
-	setvar 0x4000, 0xFF
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB317
-	setvar 0x8006, 0x0
-
-SlateportCity_BattleTentLobby_EventScript_001FB2AF::
-	loadword 0x0, gJPText_00275515
-	callstd 0x4
+	delay 2
+	call Common_EventScript_SaveGame
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	goto_if_eq VAR_RESULT, 0, SlateportCity_BattleTentLobby_EventScript_CancelChallengeSaveFailed
+	setvar VAR_0x8006, 0
+SlateportCity_BattleTentLobby_EventScript_EnterChallenge::
+	msgbox SlateportCity_BattleTentLobby_Text_StepThisWay, MSGBOX_DEFAULT
 	closemessage
-	call SlateportCity_BattleTentLobby_EventScript_001FB2CC
-	warp 0x903, 0xFF, 0x2, 0x7
-	setvar 0x4000, 0x0
+	call SlateportCity_BattleTentLobby_EventScript_WalkToDoor
+	warp MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR, 2, 7
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	waitstate
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB2CC::
-	applymovement 0x1, 0x081FB2FB
-	applymovement 0xFF, 0x081FB302
-	waitmovement 0x0
-	opendoor 0x6, 0x1
+SlateportCity_BattleTentLobby_EventScript_WalkToDoor::
+	applymovement LOCALID_SLATEPORT_TENT_ATTENDANT, SlateportCity_BattleTentLobby_Movement_AttendantWalkToDoor
+	applymovement LOCALID_PLAYER, SlateportCity_BattleTentLobby_Movement_PlayerWalkToDoor
+	waitmovement 0
+	opendoor 6, 1
+	@ The JP ROM uses waitmoncry here; US uses waitdooranim for the analogous door sequence.
 	waitmoncry
-	applymovement 0x1, 0x081FB2FF
-	applymovement 0xFF, 0x081FB306
-	waitmovement 0x0
-	closedoor 0x6, 0x1
+	applymovement LOCALID_SLATEPORT_TENT_ATTENDANT, SlateportCity_BattleTentLobby_Movement_AttendantEnterDoor
+	applymovement LOCALID_PLAYER, SlateportCity_BattleTentLobby_Movement_PlayerEnterDoor
+	waitmovement 0
+	closedoor 6, 1
 	waitmoncry
 	return
 
-	.incbin "baserom_jp.gba", 0x1fb2fb, 0xf
-SlateportCity_BattleTentLobby_EventScript_001FB30A::
-	loadword 0x0, 0x0827534A
-	callstd 0x4
-	goto SlateportCity_BattleTentLobby_EventScript_001FB1CD
+SlateportCity_BattleTentLobby_Movement_AttendantWalkToDoor:
+	walk_up
+	walk_up
+	walk_up
+	step_end
 
-SlateportCity_BattleTentLobby_EventScript_001FB317::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x0
-	special CallFrontierUtilFunc
-	goto SlateportCity_BattleTentLobby_EventScript_001FB331
+SlateportCity_BattleTentLobby_Movement_AttendantEnterDoor:
+	walk_up
+	set_invisible
+	step_end
 
-SlateportCity_BattleTentLobby_EventScript_001FB32E::
+SlateportCity_BattleTentLobby_Movement_PlayerWalkToDoor:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+SlateportCity_BattleTentLobby_Movement_PlayerEnterDoor:
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+SlateportCity_BattleTentLobby_EventScript_ExplainChallenge::
+	msgbox SlateportCity_BattleTentLobby_Text_ExplainSlateportTent, MSGBOX_DEFAULT
+	goto SlateportCity_BattleTentLobby_EventScript_AskEnterChallenge
+
+SlateportCity_BattleTentLobby_EventScript_CancelChallengeSaveFailed::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	goto SlateportCity_BattleTentLobby_EventScript_CancelChallenge
+
+SlateportCity_BattleTentLobby_EventScript_LoadPartyCancelChallenge::
 	special LoadPlayerParty
-
-SlateportCity_BattleTentLobby_EventScript_001FB331::
-	loadword 0x0, gJPText_0027549D
-	callstd 0x4
+SlateportCity_BattleTentLobby_EventScript_CancelChallenge::
+	msgbox SlateportCity_BattleTentLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x1fb33b, 0x5
-SlateportCity_BattleTentLobby_EventScript_001FB340::
+@ Unused
+SlateportCity_BattleTentLobby_Movement_UnusedEnterDoor::
+	walk_up
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
+SlateportCity_BattleTentLobby_EventScript_TormentGiver::
 	lock
 	faceplayer
-	checkflag 0x109
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB377
-	loadword 0x0, 0x081FB451
-	callstd 0x4
-	setorcopyvar 0x8000, 0x149
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0x109
-	loadword 0x0, 0x081FB4C1
-	callstd 0x4
+	goto_if_set FLAG_RECEIVED_TM_TORMENT, SlateportCity_BattleTentLobby_EventScript_ReceivedTorment
+	msgbox SlateportCity_BattleTentLobby_Text_CouldntFindMonForMe, MSGBOX_DEFAULT
+	giveitem ITEM_TM_TORMENT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_TM_TORMENT
+	msgbox SlateportCity_BattleTentLobby_Text_ExplainTorment, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB377::
-	loadword 0x0, 0x081FB4C1
-	callstd 0x4
+SlateportCity_BattleTentLobby_EventScript_ReceivedTorment::
+	msgbox SlateportCity_BattleTentLobby_Text_ExplainTorment, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB381::
-	loadword 0x0, 0x081FB516
-	callstd 0x2
+SlateportCity_BattleTentLobby_EventScript_Man::
+	msgbox SlateportCity_BattleTentLobby_Text_IllTryUsingBugMons, MSGBOX_NPC
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB38A::
-	loadword 0x0, 0x081FB54A
-	callstd 0x2
+SlateportCity_BattleTentLobby_EventScript_Girl::
+	msgbox SlateportCity_BattleTentLobby_Text_BattleEvenWithoutToughMons, MSGBOX_NPC
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB393::
-	loadword 0x0, 0x081FB570
-	callstd 0x2
+SlateportCity_BattleTentLobby_EventScript_Woman::
+	msgbox SlateportCity_BattleTentLobby_Text_NiceIfMoreSelection, MSGBOX_NPC
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB39C::
+SlateportCity_BattleTentLobby_EventScript_RulesBoard::
 	lockall
-	loadword 0x0, 0x08231A91
-	callstd 0x4
-	goto SlateportCity_BattleTentLobby_EventScript_001FB3AB
+	msgbox BattleFrontier_BattleFactoryLobby_Text_RulesAreListed, MSGBOX_DEFAULT
+	goto SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB3AB::
-	message 0x08231AA7
+SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard::
+	message BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading
 	waitmessage
-	multichoice 0x11, 0x0, 0x6F, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB409
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB417
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB425
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB433
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB441
-	compare_var_to_value 0x8000, 0x5
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB44F
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, SlateportCity_BattleTentLobby_EventScript_001FB44F
+	multichoice 17, 0, MULTI_SLATEPORT_TENT_RULES, FALSE
+	switch VAR_RESULT
+	case 0, SlateportCity_BattleTentLobby_EventScript_RulesBasics
+	case 1, SlateportCity_BattleTentLobby_EventScript_RulesSwapPartner
+	case 2, SlateportCity_BattleTentLobby_EventScript_RulesSwapNumber
+	case 3, SlateportCity_BattleTentLobby_EventScript_RulesSwapNotes
+	case 4, SlateportCity_BattleTentLobby_EventScript_RulesMons
+	case 5, SlateportCity_BattleTentLobby_EventScript_ExitRules
+	case MULTI_B_PRESSED, SlateportCity_BattleTentLobby_EventScript_ExitRules
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB409::
-	loadword 0x0, 0x082756F3
-	callstd 0x4
-	goto SlateportCity_BattleTentLobby_EventScript_001FB3AB
+SlateportCity_BattleTentLobby_EventScript_RulesBasics::
+	msgbox SlateportCity_BattleTentLobby_Text_ExplainBasicRules, MSGBOX_DEFAULT
+	goto SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB417::
-	loadword 0x0, 0x08275757
-	callstd 0x4
-	goto SlateportCity_BattleTentLobby_EventScript_001FB3AB
+SlateportCity_BattleTentLobby_EventScript_RulesSwapPartner::
+	msgbox SlateportCity_BattleTentLobby_Text_ExplainSwapPartnerRules, MSGBOX_DEFAULT
+	goto SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB425::
-	loadword 0x0, 0x082757A8
-	callstd 0x4
-	goto SlateportCity_BattleTentLobby_EventScript_001FB3AB
+SlateportCity_BattleTentLobby_EventScript_RulesSwapNumber::
+	msgbox SlateportCity_BattleTentLobby_Text_ExplainSwapNumberRules, MSGBOX_DEFAULT
+	goto SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB433::
-	loadword 0x0, 0x08275803
-	callstd 0x4
-	goto SlateportCity_BattleTentLobby_EventScript_001FB3AB
+SlateportCity_BattleTentLobby_EventScript_RulesSwapNotes::
+	msgbox SlateportCity_BattleTentLobby_Text_ExplainSwapNotes, MSGBOX_DEFAULT
+	goto SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB441::
-	loadword 0x0, 0x0827589C
-	callstd 0x4
-	goto SlateportCity_BattleTentLobby_EventScript_001FB3AB
+SlateportCity_BattleTentLobby_EventScript_RulesMons::
+	msgbox SlateportCity_BattleTentLobby_Text_ExplainMonRules, MSGBOX_DEFAULT
+	goto SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard
 	end
 
-SlateportCity_BattleTentLobby_EventScript_001FB44F::
+SlateportCity_BattleTentLobby_EventScript_ExitRules::
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1fb451, 0x143
+SlateportCity_BattleTentLobby_Text_CouldntFindMonForMe:
+	.string "なかなか　かりたい　ポケモンが\n"
+	.string "みつからねぇ　からよぉ\l"
+	.string "そこの　にーさんに　もんく　いったけどよぉ\p"
+	.string "ちぃっとも　あいて　してくれねぇのさ\n"
+	.string "くやしいったら　ありゃ　しねぇぜ！\p"
+	.string "おい　おまえ！\n"
+	.string "だまって　これを　うけとれよぉ！$"
+
+SlateportCity_BattleTentLobby_Text_ExplainTorment:
+	.string "わざマシン41は　いちゃもん！\p"
+	.string "あいてによぉ　おなじ　わざを　つづけて\n"
+	.string "ださせねえように　する　わざ　なんだよぉ！\p"
+	.string "いっとくけどなぁ\n"
+	.string "おれは　いちゃもん　つけてねぇぞ！$"
+
+SlateportCity_BattleTentLobby_Text_IllTryUsingBugMons:
+	.string "たまには　にがてな\n"
+	.string "むしタイプの　ポケモンでも\l"
+	.string "つかって　みようかな？\l"
+	.string "スキに　なるかも　しれないし！$"
+
+SlateportCity_BattleTentLobby_Text_BattleEvenWithoutToughMons:
+	.string "つよい　ポケモン　もってなくても\n"
+	.string "ここでなら　いっぱい　しょうぶできるね！$"
+
+SlateportCity_BattleTentLobby_Text_NiceIfMoreSelection:
+	.string "ステキな　トレーナーの　おにいさんも\n"
+	.string "かしだして　くれれば　いいのにぃ$"

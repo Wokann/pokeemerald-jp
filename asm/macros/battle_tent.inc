@@ -49,3 +49,66 @@
 	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_GET_OPPONENT_NAME
 	special CallFallarborTentFunction
 	.endm
+
+	@ Initialize the Slateport Battle Tent challenge.
+	.macro slateporttent_init
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_INIT
+	special CallSlateportTentFunction
+	.endm
+
+	@ Get the current Slateport Battle Tent prize into VAR_RESULT.
+	.macro slateporttent_getprize
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_GET_PRIZE
+	special CallSlateportTentFunction
+	.endm
+
+	@ Unused. Set Slateport Battle Tent's prize item.
+	.macro slateporttent_setprize unusedArg:req, itemId:req
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_SET_PRIZE
+	setvar VAR_0x8005, \unusedArg
+	setvar VAR_0x8006, \itemId
+	special CallSlateportTentFunction
+	.endm
+
+	@ Save the Slateport Tent challenge with the supplied status.
+	.macro slateporttent_save challengeStatus:req
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_SAVE
+	setvar VAR_0x8005, \challengeStatus
+	special CallSlateportTentFunction
+	.endm
+
+	@ Select Slateport Tent's prize item from its reward table.
+	.macro slateporttent_setrandomprize
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE
+	special CallSlateportTentFunction
+	.endm
+
+	@ Give the current Slateport Tent prize; FALSE means the Bag is full.
+	.macro slateporttent_giveprize
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_GIVE_PRIZE
+	special CallSlateportTentFunction
+	.endm
+
+	@ Slateport Tent's version of factory_rentmons.
+	.macro slateporttent_rentmons
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_SELECT_RENT_MONS
+	special CallSlateportTentFunction
+	.endm
+
+	@ Slateport Tent's version of factory_swapmons.
+	.macro slateporttent_swapmons
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_SWAP_RENT_MONS
+	special CallSlateportTentFunction
+	.endm
+
+	@ Slateport Tent's version of factory_generateopponentmons.
+	.macro slateporttent_generateopponentmons
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_GENERATE_OPPONENT_MONS
+	special CallSlateportTentFunction
+	.endm
+
+	@ Slateport Tent's version of factory_generaterentalmons.
+	.macro slateporttent_generaterentalmons
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_GENERATE_RENTAL_MONS
+	special CallSlateportTentFunction
+	.endm

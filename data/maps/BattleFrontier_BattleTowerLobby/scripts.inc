@@ -1200,7 +1200,7 @@ gJPText_00220604: @ 0x08220604
 	.incbin "baserom_jp.gba", 0x220624, 0x27
 	.globl gJPText_0022064B
 gJPText_0022064B: @ 0x0822064B
-	.string "{MUS_RG_VS_TRAINER}は\n"
+	.string "{PLAYER}は\n"
 	.string "{B_COPY_VAR_1}を　もらった！$"
 
 	.incbin "baserom_jp.gba", 0x220659, 0x28

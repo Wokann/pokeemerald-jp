@@ -2629,23 +2629,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_SternsShipyard_2F/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_2F
 	.set gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_2F, SlateportCity_SternsShipyard_2F_MapEvents
-	.globl SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventObjects
-SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventObjects: @ 0x08507B34
-	object_event 1, 46, 0, 6, 5, 3, 8, 1, 1, 0, 0, SlateportCity_BattleTentLobby_EventScript_001FB1AD, 0x0000
-	object_event 2, 49, 0, 1, 5, 3, 2, 1, 1, 0, 0, SlateportCity_BattleTentLobby_EventScript_001FB340, 0x0000
-	object_event 3, 33, 0, 3, 7, 3, 7, 1, 1, 0, 0, SlateportCity_BattleTentLobby_EventScript_001FB381, 0x0000
-	object_event 4, 8, 0, 1, 8, 3, 1, 1, 1, 0, 0, SlateportCity_BattleTentLobby_EventScript_001FB38A, 0x0000
-	object_event 5, 20, 0, 11, 8, 3, 9, 1, 1, 0, 0, SlateportCity_BattleTentLobby_EventScript_001FB393, 0x0000
-	.globl SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventWarps
-SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventWarps: @ 0x08507BAC
-	warp_def 6, 9, 0, 3, MAP_SLATEPORT_CITY
-	warp_def 7, 9, 0, 3, MAP_SLATEPORT_CITY
-	.globl SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventBgEvents
-SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventBgEvents: @ 0x08507BBC
-	bg_event 4, 5, 0, 0, SlateportCity_BattleTentLobby_EventScript_001FB39C, 0, 0
+	.include "data/maps/SlateportCity_BattleTentLobby/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY
-gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY: @ 0x08507BC8
-	map_events SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventObjects, SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventWarps, 0, SLATEPORT_CITY_BATTLE_TENT_LOBBY_EventBgEvents
+	.set gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY, SlateportCity_BattleTentLobby_MapEvents
 	.globl SLATEPORT_CITY_BATTLE_TENT_CORRIDOR_EventObjects
 SLATEPORT_CITY_BATTLE_TENT_CORRIDOR_EventObjects: @ 0x08507BDC
 	object_event 1, 46, 0, 2, 6, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0000
