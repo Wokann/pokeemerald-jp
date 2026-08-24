@@ -66,6 +66,8 @@
 	@ Event-script-only semantic alias. A global C alias would collide with the
 	@ existing FOREACH_TM token-paste expansion while the item tables use TM08.
 	.set ITEM_TM_BULK_UP, ITEM_TM08
+	@ TM36 is Sludge Bomb in the JP item table; keep this alias event-script-only.
+	.set ITEM_TM_SLUDGE_BOMB, ITEM_TM36
 	@ These JP command-table entries retain older names but use the same opcodes
 	@ as the US semantic spellings used by Dewford Gym.
 	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG

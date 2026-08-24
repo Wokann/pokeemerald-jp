@@ -2404,28 +2404,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/DewfordTown_Gym/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_GYM
 	.set gMapEvents_DEWFORD_TOWN_GYM, DewfordTown_Gym_MapEvents
-	.globl DEWFORD_TOWN_HALL_EventObjects
-DEWFORD_TOWN_HALL_EventObjects: @ 0x08506374
-	object_event 1, 10, 0, 4, 6, 0, 7, 0, 0, 0, 0, 0x081F3789, 0x0000
-	object_event 2, 20, 0, 1, 5, 0, 10, 0, 0, 0, 0, 0x081F37B2, 0x0000
-	object_event 3, 19, 0, 5, 4, 0, 9, 0, 0, 0, 0, 0x081F37C3, 0x0000
-	object_event 4, 21, 0, 9, 3, 0, 7, 0, 0, 0, 0, 0x081F3800, 0x0000
-	object_event 5, 6, 0, 5, 2, 3, 7, 0, 0, 0, 0, 0x081F381C, 0x0000
-	object_event 6, 11, 0, 14, 7, 0, 5, 1, 0, 0, 0, 0x081F3838, 0x0000
-	object_event 7, 38, 0, 12, 3, 3, 10, 0, 0, 0, 0, 0x081F38E8, 0x0000
-	object_event 8, 37, 0, 15, 3, 3, 9, 0, 0, 0, 0, 0x081F38F4, 0x0000
-	object_event 9, 39, 0, 8, 6, 3, 5, 1, 0, 0, 0, 0x081F3A93, 0x03AC
-	.globl DEWFORD_TOWN_HALL_EventWarps
-DEWFORD_TOWN_HALL_EventWarps: @ 0x0850644C
-	warp_def 5, 8, 0, 0, MAP_DEWFORD_TOWN
-	warp_def 6, 8, 0, 0, MAP_DEWFORD_TOWN
-	.globl DEWFORD_TOWN_HALL_EventBgEvents
-DEWFORD_TOWN_HALL_EventBgEvents: @ 0x0850645C
-	bg_event 0, 1, 3, 0, 0x081F3849, 0, 0
-	bg_event 7, 1, 3, 0, 0x081F3859, 0, 0
+	.include "data/maps/DewfordTown_Hall/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_HALL
-gMapEvents_DEWFORD_TOWN_HALL: @ 0x08506474
-	map_events DEWFORD_TOWN_HALL_EventObjects, DEWFORD_TOWN_HALL_EventWarps, 0, DEWFORD_TOWN_HALL_EventBgEvents
+	.set gMapEvents_DEWFORD_TOWN_HALL, DewfordTown_Hall_MapEvents
 	.globl DEWFORD_TOWN_HOUSE2_EventObjects
 DEWFORD_TOWN_HOUSE2_EventObjects: @ 0x08506488
 	object_event 1, 33, 0, 6, 5, 3, 10, 0, 0, 0, 0, 0x081F4009, 0x0000

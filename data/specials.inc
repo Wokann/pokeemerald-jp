@@ -145,7 +145,7 @@ gSpecials:
 	def_special TV_CheckMonOTIDEqualsPlayerID
 	def_special BufferTrendyPhraseString
 	def_special IsTrendyPhraseBoring
-	def_special sub_0811F44C
+	def_special BufferDeepLinkPhrase
 	def_special GetDewfordHallPaintingNameIndex
 	def_special SwapRegisteredBike
 	def_special CalculatePlayerPartyCount
