@@ -6,7 +6,7 @@
 	nop 
 	nop 
 	loadbyte 0x0, 0xFB
-	givedecoration 0x8C19
+	adddecoration 0x8C19
 	nop 
 	showcoinsbox 0xE, 0x3B
 	gotopostbattlescript 

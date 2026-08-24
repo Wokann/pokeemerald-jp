@@ -2,7 +2,7 @@
 	.byte 0xF0
 	waitstate
 	return
-	bufferspeciesname 0x87, 0x811
+	bufferdecorationname 0x87, 0x811
 	end
 	nop
 	return

@@ -30,7 +30,7 @@ PacifidlogTown_House3_EventScript_001F7D1B::
 	copyvar 0x8005, 0x800A
 	special CreateInGameTradePokemon
 	special DoInGameTradeScene
-	buffermovename 0x0, 0x8009
+	bufferspeciesname 0x0, 0x8009
 	loadword 0x0, gJPText_001F7E3D
 	callstd 0x4
 	setflag 0x9A
@@ -44,7 +44,7 @@ PacifidlogTown_House3_EventScript_001F7D9D::
 	end
 
 PacifidlogTown_House3_EventScript_001F7DA7::
-	buffermovename 0x0, 0x8009
+	bufferspeciesname 0x0, 0x8009
 	loadword 0x0, gJPText_001F7E77
 	callstd 0x4
 	release

@@ -327,7 +327,7 @@ Route124_DivingTreasureHuntersHouse_EventScript_002420E7::
 	end
 
 Route124_DivingTreasureHuntersHouse_EventScript_00242128::
-	takeitem 0x8008, 0x1
+	removeitem 0x8008, 0x1
 	setorcopyvar 0x8000, 0x8009
 	setorcopyvar 0x8001, 0x1
 	callstd 0x0

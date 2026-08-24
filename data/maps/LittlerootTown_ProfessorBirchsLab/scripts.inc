@@ -305,7 +305,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_001F15FC::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_001F1607::
-	buffermovename 0x0, 0x9B
+	bufferspeciesname 0x0, 0x9B
 	setvar 0x4001, 0x9B
 	givemon 0x9B, 0x5, 0x0
 	compare_var_to_value 0x800D, 0x0
@@ -353,7 +353,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_001F1698::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_001F16A8::
-	buffermovename 0x0, 0x9E
+	bufferspeciesname 0x0, 0x9E
 	setvar 0x4001, 0x9E
 	givemon 0x9E, 0x5, 0x0
 	compare_var_to_value 0x800D, 0x0
@@ -401,7 +401,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_001F1739::
 	end
 
 LittlerootTown_ProfessorBirchsLab_EventScript_001F1749::
-	buffermovename 0x0, 0x98
+	bufferspeciesname 0x0, 0x98
 	setvar 0x4001, 0x98
 	givemon 0x98, 0x5, 0x0
 	compare_var_to_value 0x800D, 0x0

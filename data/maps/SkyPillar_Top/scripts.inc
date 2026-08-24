@@ -89,7 +89,7 @@ SkyPillar_Top_EventScript_0021BFF5::
 	fadescreenswapbuffers 0x1
 	removeobject 0x800F
 	fadescreenswapbuffers 0x0
-	buffermovename 0x0, 0x8004
+	bufferspeciesname 0x0, 0x8004
 	loadword 0x0, 0x08243DF4
 	callstd 0x4
 	releaseall

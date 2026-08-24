@@ -1970,9 +1970,9 @@
 	@ message indicates there is no room, and VAR_RESULT is set to FALSE.
 	@ Otherwise VAR_RESULT is set to TRUE, and the message indicates they have received the item(s).
 	.macro giveitem item:req, amount=1
-	.byte SCR_OP_44
-	.2byte \item
-	.2byte \amount
+	setorcopyvar VAR_0x8000, \item
+	setorcopyvar VAR_0x8001, \amount
+	callstd STD_OBTAIN_ITEM
 	.endm
 
 	@ For picking up items in the overworld. Similar to giveitem, but with different language and
@@ -1985,8 +1985,8 @@
 
 	@ Equivalent to giveitem but for a single decoration.
 	.macro givedecoration decoration:req
-	.byte SCR_OP_4B
-	.2byte \decoration
+	setorcopyvar VAR_0x8000, \decoration
+	callstd STD_OBTAIN_DECORATION
 	.endm
 
 	@ Registers the specified trainer in Match Call and plays a fanfare with a notification message.
@@ -2063,23 +2063,6 @@
 	.byte SCR_OP_20
 	.4byte \address1
 	.4byte \address2
-	.endm
-
-	.macro takeitem item:req, amount=1
-	.byte SCR_OP_45
-	.2byte \item
-	.2byte \amount
-	.endm
-
-	.macro givepcitem item:req, amount=1
-	.byte SCR_OP_49
-	.2byte \item
-	.2byte \amount
-	.endm
-
-	.macro takedecoration decoration:req
-	.byte SCR_OP_4C
-	.2byte \decoration
 	.endm
 
 	.macro showobject_at localId:req, map:req

@@ -18,7 +18,7 @@
 	end 
 	end 
 	nop 
-	givepcitem 0x0, 0x5528
+	addpcitem 0x0, 0x5528
 	choosecontestmon 
 	.byte 0x28
 	.byte 0x08

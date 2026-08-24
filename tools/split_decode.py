@@ -34,7 +34,8 @@ def is_romish(a):
 # commands whose positional args must be small (ids, counts, coords)
 SMALL_ARG_CMDS = re.compile(
     r"^\s*(removeobject_at|showobject_at|hideobject_at|moveobjectoffscreen|"
-    r"givepcitem|setmonmove|setmonmetlocation|checkmonobedience|"
+    r"additem|removeitem|addpcitem|adddecoration|removedecoration|"
+    r"setmonmove|setmonmetlocation|checkmonobedience|"
     r"setdoorclosed|opendoor|setberrytree|initclock|braillemessage|"
     r"yesnobox|multichoice|multichoicedefault|multichoicegrid|"
     r"drawboxtext|warphole|gotonative|callnative)\b")

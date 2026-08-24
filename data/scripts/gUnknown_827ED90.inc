@@ -5,7 +5,7 @@
 	nop
 	return
 	.byte 0x79
-	buffermovename 0x10, 0xA08
+	bufferspeciesname 0x10, 0xA08
 	setworldmapflag 0x82
 	setmysteryeventstatus 0x17
 	.byte 0xEE

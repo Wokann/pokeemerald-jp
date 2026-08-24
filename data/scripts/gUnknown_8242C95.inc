@@ -15,7 +15,7 @@
 	release 
 	return 
 	removeobject 0x800F
-	giveitem 0x8004, 0x8005
+	additem 0x8004, 0x8005
 	specialvar 0x800D, sub_08139938
 	copyvar 0x8008, 0x800D
 	compare_var_to_value 0x8008, 0x1

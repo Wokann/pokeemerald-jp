@@ -1,4 +1,4 @@
-	takeitem 0x102, 0x4128
+	removeitem 0x102, 0x4128
 	end
 	end
 	.incbin "baserom_jp.gba", 0x287263, 0x8A

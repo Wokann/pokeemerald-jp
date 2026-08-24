@@ -8,7 +8,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -20,7 +20,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -50,7 +50,7 @@
 	nop 
 	nop 
 	copybyte 0x2000100, 0x8572AD8
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -62,7 +62,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -74,7 +74,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -86,7 +86,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -98,7 +98,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -110,7 +110,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -122,7 +122,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 
@@ -134,7 +134,7 @@
 	end 
 	cmdD8 
 	clearflag 0x857
-	bufferdecorationname 0x5, 0x0
+	buffermovename 0x5, 0x0
 	nop 
 	nop 
 	nop 

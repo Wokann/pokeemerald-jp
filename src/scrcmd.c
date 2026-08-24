@@ -514,7 +514,7 @@ bool8 ScrCmd_random(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_giveitem(struct ScriptContext *ctx)
+bool8 ScrCmd_additem(struct ScriptContext *ctx)
 {
     u16 item = VarGet(ScriptReadHalfword(ctx));
     u16 amount = VarGet(ScriptReadHalfword(ctx));
@@ -523,7 +523,7 @@ bool8 ScrCmd_giveitem(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_takeitem(struct ScriptContext *ctx)
+bool8 ScrCmd_removeitem(struct ScriptContext *ctx)
 {
     u16 item = VarGet(ScriptReadHalfword(ctx));
     u16 amount = VarGet(ScriptReadHalfword(ctx));
@@ -558,7 +558,7 @@ bool8 ScrCmd_checkitemtype(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_givepcitem(struct ScriptContext *ctx)
+bool8 ScrCmd_addpcitem(struct ScriptContext *ctx)
 {
     u16 item = VarGet(ScriptReadHalfword(ctx));
     u16 amount = VarGet(ScriptReadHalfword(ctx));
@@ -576,7 +576,7 @@ bool8 ScrCmd_checkpcitem(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_givedecoration(struct ScriptContext *ctx)
+bool8 ScrCmd_adddecoration(struct ScriptContext *ctx)
 {
     u16 decoration = VarGet(ScriptReadHalfword(ctx));
 
@@ -584,7 +584,7 @@ bool8 ScrCmd_givedecoration(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_takedecoration(struct ScriptContext *ctx)
+bool8 ScrCmd_removedecoration(struct ScriptContext *ctx)
 {
     u16 decoration = VarGet(ScriptReadHalfword(ctx));
 
@@ -1546,12 +1546,12 @@ bool8 ScrCmd_vmessage(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_buffermovename(struct ScriptContext *ctx)
+bool8 ScrCmd_bufferspeciesname(struct ScriptContext *ctx)
 {
     u8 stringVarIndex = *ctx->scriptPtr++;
-    u16 move = VarGet(ScriptReadHalfword(ctx));
+    u16 species = VarGet(ScriptReadHalfword(ctx));
 
-    StringCopy(sScriptStringVars[stringVarIndex], (const u8 *)(0x082EA31C + move * 6));
+    StringCopy(sScriptStringVars[stringVarIndex], (const u8 *)(0x082EA31C + species * 6));
     return FALSE;
 }
 
@@ -1586,21 +1586,21 @@ bool8 ScrCmd_bufferitemname(struct ScriptContext *ctx)
     return FALSE;
 }
 
-bool8 ScrCmd_bufferspeciesname(struct ScriptContext *ctx)
-{
-    u8 stringVarIndex = *ctx->scriptPtr++;
-    u16 species = VarGet(ScriptReadHalfword(ctx));
-
-    StringCopy(sScriptStringVars[stringVarIndex], (const u8 *)(0x08580CD1 + species * 28));
-    return FALSE;
-}
-
 bool8 ScrCmd_bufferdecorationname(struct ScriptContext *ctx)
 {
     u8 stringVarIndex = *ctx->scriptPtr++;
     u16 decorId = VarGet(ScriptReadHalfword(ctx));
 
-    StringCopy(sScriptStringVars[stringVarIndex], (const u8 *)(0x082EACC4 + decorId * 8));
+    StringCopy(sScriptStringVars[stringVarIndex], (const u8 *)(0x08580CD1 + decorId * 28));
+    return FALSE;
+}
+
+bool8 ScrCmd_buffermovename(struct ScriptContext *ctx)
+{
+    u8 stringVarIndex = *ctx->scriptPtr++;
+    u16 move = VarGet(ScriptReadHalfword(ctx));
+
+    StringCopy(sScriptStringVars[stringVarIndex], (const u8 *)(0x082EACC4 + move * 8));
     return FALSE;
 }
 

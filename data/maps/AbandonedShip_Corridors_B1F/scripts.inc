@@ -39,7 +39,7 @@ AbandonedShip_Corridors_B1F_EventScript_0021AC34::
 	loadword 0x0, 0x0821AD3C
 	callstd 0x4
 	playse 0x15
-	takeitem 0x11D, 0x1
+	removeitem 0x11D, 0x1
 	setflag 0xEF
 	call AbandonedShip_Corridors_B1F_EventScript_0021AC21
 	special DrawWholeMapView

@@ -18,7 +18,7 @@
 	end 
 	end 
 	nop 
-	givepcitem 0x0, 0x5528
+	addpcitem 0x0, 0x5528
 	choosecontestmon 
 	delay 0x1008
 	.byte 0x95

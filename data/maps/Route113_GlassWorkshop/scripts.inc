@@ -163,7 +163,7 @@ Route113_GlassWorkshop_EventScript_002409C2::
 Route113_GlassWorkshop_EventScript_002409FE::
 	setvar 0x8009, 0x1
 	setvar 0x8008, 0xD
-	bufferspeciesname 0x0, 0x8008
+	bufferdecorationname 0x0, 0x8008
 	setvar 0x800A, 0x1770
 	compare_var_to_value 0x4048, 0x1770
 	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
@@ -179,7 +179,7 @@ Route113_GlassWorkshop_EventScript_002409FE::
 Route113_GlassWorkshop_EventScript_00240A3F::
 	setvar 0x8009, 0x1
 	setvar 0x8008, 0x6
-	bufferspeciesname 0x0, 0x8008
+	bufferdecorationname 0x0, 0x8008
 	setvar 0x800A, 0x1F40
 	compare_var_to_value 0x4048, 0x1F40
 	goto_if 0x0, Route113_GlassWorkshop_EventScript_00240AA2
@@ -324,14 +324,14 @@ Route113_GlassWorkshop_EventScript_00240BE7::
 Route113_GlassWorkshop_EventScript_00240BFB::
 	setvar 0x8009, 0x1
 	setvar 0x8008, 0xD
-	bufferspeciesname 0x0, 0xD
+	bufferdecorationname 0x0, 0xD
 	goto Route113_GlassWorkshop_EventScript_00240C23
 	end
 
 Route113_GlassWorkshop_EventScript_00240C0F::
 	setvar 0x8009, 0x1
 	setvar 0x8008, 0x6
-	bufferspeciesname 0x0, 0x6
+	bufferdecorationname 0x0, 0x6
 	goto Route113_GlassWorkshop_EventScript_00240C23
 	end
 

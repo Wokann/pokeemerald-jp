@@ -84,15 +84,15 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_SETHOLEWARP ScrCmd_setholewarp @ 0x41
 	script_cmd_table_entry SCR_OP_GETPLAYERXY ScrCmd_getplayerxy @ 0x42
 	script_cmd_table_entry SCR_OP_GETPARTYSIZE ScrCmd_getpartysize @ 0x43
-	script_cmd_table_entry SCR_OP_44 ScrCmd_giveitem @ 0x44
-	script_cmd_table_entry SCR_OP_45 ScrCmd_takeitem @ 0x45
+	script_cmd_table_entry SCR_OP_ADDITEM ScrCmd_additem @ 0x44
+	script_cmd_table_entry SCR_OP_REMOVEITEM ScrCmd_removeitem @ 0x45
 	script_cmd_table_entry SCR_OP_CHECKITEMSPACE ScrCmd_checkitemspace @ 0x46
 	script_cmd_table_entry SCR_OP_CHECKITEM ScrCmd_checkitem @ 0x47
 	script_cmd_table_entry SCR_OP_CHECKITEMTYPE ScrCmd_checkitemtype @ 0x48
-	script_cmd_table_entry SCR_OP_49 ScrCmd_givepcitem @ 0x49
+	script_cmd_table_entry SCR_OP_ADDPCITEM ScrCmd_addpcitem @ 0x49
 	script_cmd_table_entry SCR_OP_CHECKPCITEM ScrCmd_checkpcitem @ 0x4A
-	script_cmd_table_entry SCR_OP_4B ScrCmd_givedecoration @ 0x4B
-	script_cmd_table_entry SCR_OP_4C ScrCmd_takedecoration @ 0x4C
+	script_cmd_table_entry SCR_OP_ADDDECORATION ScrCmd_adddecoration @ 0x4B
+	script_cmd_table_entry SCR_OP_REMOVEDECORATION ScrCmd_removedecoration @ 0x4C
 	script_cmd_table_entry SCR_OP_CHECKDECOR ScrCmd_checkdecor @ 0x4D
 	script_cmd_table_entry SCR_OP_CHECKDECORSPACE ScrCmd_checkdecorspace @ 0x4E
 	script_cmd_table_entry SCR_OP_APPLYMOVEMENT ScrCmd_applymovement @ 0x4F
@@ -141,12 +141,12 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_GIVEEGG ScrCmd_giveegg @ 0x7A
 	script_cmd_table_entry SCR_OP_SETMONMOVE ScrCmd_setmonmove @ 0x7B
 	script_cmd_table_entry SCR_OP_CHECKPARTYMOVE ScrCmd_checkpartymove @ 0x7C
-	script_cmd_table_entry SCR_OP_BUFFERMOVENAME ScrCmd_buffermovename @ 0x7D
+	script_cmd_table_entry SCR_OP_BUFFERSPECIESNAME ScrCmd_bufferspeciesname @ 0x7D
 	script_cmd_table_entry SCR_OP_BUFFERLEADMONSPECIESNAME ScrCmd_bufferleadmonspeciesname @ 0x7E
 	script_cmd_table_entry SCR_OP_BUFFERPARTYMONNICK ScrCmd_bufferpartymonnick @ 0x7F
 	script_cmd_table_entry SCR_OP_BUFFERITEMNAME ScrCmd_bufferitemname @ 0x80
-	script_cmd_table_entry SCR_OP_BUFFERSPECIESNAME ScrCmd_bufferspeciesname @ 0x81
-	script_cmd_table_entry SCR_OP_BUFFERDECORATIONNAME ScrCmd_bufferdecorationname @ 0x82
+	script_cmd_table_entry SCR_OP_BUFFERDECORATIONNAME ScrCmd_bufferdecorationname @ 0x81
+	script_cmd_table_entry SCR_OP_BUFFERMOVENAME ScrCmd_buffermovename @ 0x82
 	script_cmd_table_entry SCR_OP_BUFFERNUMBERSTRING ScrCmd_buffernumberstring @ 0x83
 	script_cmd_table_entry SCR_OP_BUFFERSTDSTRING ScrCmd_bufferstdstring @ 0x84
 	script_cmd_table_entry SCR_OP_BUFFERSTRING ScrCmd_bufferstring @ 0x85

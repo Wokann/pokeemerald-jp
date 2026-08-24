@@ -72,7 +72,7 @@ Route119_WeatherInstitute_2F_EventScript_002416A2::
 	message 0x08241A56
 	waitmessage
 	waitfanfare
-	buffermovename 0x0, 0x181
+	bufferspeciesname 0x0, 0x181
 	return
 
 Route119_WeatherInstitute_2F_EventScript_002416B1::

@@ -1,4 +1,4 @@
-	takeitem 0x190A, 0x9B00
+	removeitem 0x190A, 0x9B00
 	gotopostbattlescript
 	faceplayer
 	bufferleadmonspeciesname 0x16

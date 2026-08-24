@@ -26,7 +26,7 @@
 	nop 
 	.byte 0xE8
 	.byte 0xFF
-	givedecoration 0x200
+	adddecoration 0x200
 	pokemartdecoration2 0x20856EA
 	return 
 	.byte 0xE8

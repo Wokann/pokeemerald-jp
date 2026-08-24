@@ -1,4 +1,4 @@
-	takeitem 0x701, 0x0
+	removeitem 0x701, 0x0
 	nop 
 	nop 
 	playslotmachine 0xE341

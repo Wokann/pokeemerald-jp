@@ -108,7 +108,7 @@ RustboroCity_DevonCorp_2F_EventScript_00201546::
 	bufferitemname 0x0, 0x11E
 	loadword 0x0, gJPText_00201AB1
 	callstd 0x4
-	takeitem 0x11E, 0x1
+	removeitem 0x11E, 0x1
 	setvar 0x40C4, 0x1
 	setvar 0x40C5, 0x1
 	release
@@ -135,7 +135,7 @@ RustboroCity_DevonCorp_2F_EventScript_002015A4::
 	bufferitemname 0x0, 0x11F
 	loadword 0x0, gJPText_00201AB1
 	callstd 0x4
-	takeitem 0x11F, 0x1
+	removeitem 0x11F, 0x1
 	setvar 0x40C4, 0x1
 	setvar 0x40C5, 0x2
 	release
@@ -161,14 +161,14 @@ RustboroCity_DevonCorp_2F_EventScript_002015D5::
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_002015EC::
-	buffermovename 0x1, 0x184
+	bufferspeciesname 0x1, 0x184
 	loadword 0x0, gJPText_00201B2F
 	callstd 0x4
 	goto RustboroCity_DevonCorp_2F_EventScript_00201610
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_002015FE::
-	buffermovename 0x1, 0x186
+	bufferspeciesname 0x1, 0x186
 	loadword 0x0, gJPText_00201B2F
 	callstd 0x4
 	goto RustboroCity_DevonCorp_2F_EventScript_002016B3
@@ -211,12 +211,12 @@ RustboroCity_DevonCorp_2F_EventScript_0020168B::
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_00201696::
-	buffermovename 0x1, 0x184
+	bufferspeciesname 0x1, 0x184
 	playfanfare 0x172
 	message gJPText_00201B65
 	waitmessage
 	waitfanfare
-	buffermovename 0x0, 0x184
+	bufferspeciesname 0x0, 0x184
 	return
 
 RustboroCity_DevonCorp_2F_EventScript_002016A9::
@@ -262,12 +262,12 @@ RustboroCity_DevonCorp_2F_EventScript_0020172E::
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_00201739::
-	buffermovename 0x1, 0x186
+	bufferspeciesname 0x1, 0x186
 	playfanfare 0x172
 	message gJPText_00201B65
 	waitmessage
 	waitfanfare
-	buffermovename 0x0, 0x186
+	bufferspeciesname 0x0, 0x186
 	return
 
 RustboroCity_DevonCorp_2F_EventScript_0020174C::

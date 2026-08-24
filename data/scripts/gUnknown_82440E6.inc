@@ -62,7 +62,7 @@
 	fadescreenswapbuffers 0x1
 	removeobject 0x800F
 	fadescreenswapbuffers 0x0
-	buffermovename 0x0, 0x8004
+	bufferspeciesname 0x0, 0x8004
 	loadword 0x0, 0x8243DF4
 	callstd 0x4
 	release 
@@ -77,7 +77,7 @@
 	faceplayer 
 	return 
 	bufferboxname 0x0, 0x4036
-	buffermovename 0x1, 0x4001
+	bufferspeciesname 0x1, 0x4001
 	checkflag 0x8AB
 	call_if 0x0, 0x82441E5
 	checkflag 0x8AB

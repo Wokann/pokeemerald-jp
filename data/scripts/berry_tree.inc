@@ -44,7 +44,7 @@ BerryTreeScript: @ 0x8244D23
 	special Bag_ChooseBerry
 	compare_var_to_value 0x800E, 0x0
 	goto_if 0x1, 0x8244DD9
-	takeitem 0x800E, 0x1
+	removeitem 0x800E, 0x1
 	call 0x8244EF2
 	release 
 	end 

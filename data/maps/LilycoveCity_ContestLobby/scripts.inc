@@ -309,7 +309,7 @@ LilycoveCity_ContestLobby_EventScript_00206C89::
 LilycoveCity_ContestLobby_EventScript_00206C8F::
 	setflag 0x307
 	copyvar 0x4094, 0x1
-	giveitem 0x10A, 0x1
+	additem 0x10A, 0x1
 	setvar 0x800B, 0x8
 	setvar 0x8010, 0x3
 	setvar 0x4099, 0x1

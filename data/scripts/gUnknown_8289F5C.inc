@@ -87,5 +87,5 @@
 	dotrainerbattle
 	playbgm 0x80D, 0x4
 	return
-	buffermovename 0x42, 0x815
+	bufferspeciesname 0x42, 0x815
 	.incbin "baserom_jp.gba", 0x28A07F, 0x211

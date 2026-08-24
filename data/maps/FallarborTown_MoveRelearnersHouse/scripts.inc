@@ -50,7 +50,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_001F61DF::
 	goto_if 0x1, FallarborTown_MoveRelearnersHouse_EventScript_001F61A9
 	loadword 0x0, gJPText_001F6310
 	callstd 0x4
-	takeitem 0x6F, 0x1
+	removeitem 0x6F, 0x1
 	goto FallarborTown_MoveRelearnersHouse_EventScript_001F6225
 	end
 

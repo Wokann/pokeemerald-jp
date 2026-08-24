@@ -70,7 +70,7 @@ AbandonedShip_HiddenFloorCorridors_EventScript_0021B3ED::
 	loadword 0x0, 0x0821B577
 	callstd 0x4
 	playse 0x15
-	takeitem 0x119, 0x1
+	removeitem 0x119, 0x1
 	setflag 0xF0
 	call AbandonedShip_HiddenFloorCorridors_EventScript_0021B39D
 	special DrawWholeMapView
@@ -87,7 +87,7 @@ AbandonedShip_HiddenFloorCorridors_EventScript_0021B424::
 	loadword 0x0, 0x0821B577
 	callstd 0x4
 	playse 0x15
-	takeitem 0x11A, 0x1
+	removeitem 0x11A, 0x1
 	setflag 0xF1
 	call AbandonedShip_HiddenFloorCorridors_EventScript_0021B3A7
 	special DrawWholeMapView
@@ -104,7 +104,7 @@ AbandonedShip_HiddenFloorCorridors_EventScript_0021B45B::
 	loadword 0x0, 0x0821B577
 	callstd 0x4
 	playse 0x15
-	takeitem 0x11B, 0x1
+	removeitem 0x11B, 0x1
 	setflag 0xF2
 	call AbandonedShip_HiddenFloorCorridors_EventScript_0021B3B1
 	special DrawWholeMapView
@@ -121,7 +121,7 @@ AbandonedShip_HiddenFloorCorridors_EventScript_0021B492::
 	loadword 0x0, 0x0821B577
 	callstd 0x4
 	playse 0x15
-	takeitem 0x11C, 0x1
+	removeitem 0x11C, 0x1
 	setflag 0xF3
 	call AbandonedShip_HiddenFloorCorridors_EventScript_0021B3BB
 	special DrawWholeMapView

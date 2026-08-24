@@ -1,4 +1,4 @@
-	takeitem 0xE01, 0x4128
+	removeitem 0xE01, 0x4128
 	end
 	end
 	fadedefaultbgm

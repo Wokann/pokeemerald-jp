@@ -112,13 +112,13 @@ MossdeepCity_StevensHouse_EventScript_0020C972::
 	end
 
 MossdeepCity_StevensHouse_EventScript_0020C97D::
-	buffermovename 0x1, 0x18E
+	bufferspeciesname 0x1, 0x18E
 	removeobject 0x2
 	playfanfare 0x172
 	message 0x0820CB39
 	waitmessage
 	waitfanfare
-	buffermovename 0x0, 0x18E
+	bufferspeciesname 0x0, 0x18E
 	return
 
 MossdeepCity_StevensHouse_EventScript_0020C993::

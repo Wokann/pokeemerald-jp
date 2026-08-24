@@ -1,6 +1,6 @@
 	return 
 	resetweather 
-	bufferspeciesname 0x10, 0x208
+	bufferdecorationname 0x10, 0x208
 	setworldmapflag 0x0
 	call 0xA31B18
 	showcoinsbox 0x3F, 0x2
