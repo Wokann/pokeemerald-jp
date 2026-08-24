@@ -150,7 +150,8 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	RustboroCity_House2 \
 	RustboroCity_Flat2_1F \
 	RustboroCity_Flat2_2F \
-	RustboroCity_Flat2_3F
+	RustboroCity_Flat2_3F \
+	RustboroCity_House3
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools

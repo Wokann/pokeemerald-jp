@@ -20,6 +20,3 @@ RustboroCity_Flat2_3F_Text_PresidentsSonAlsoCollectsRareStones: @ 0x082040EE
 	.string "たしか　むすこさんも\n"
 	.string "めずらしい　いしを　あつめるのが\l"
 	.string "しゅみ　だったっけ⋯⋯？$"
-
-	@ Rustboro City House3 and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x204117, 0x287

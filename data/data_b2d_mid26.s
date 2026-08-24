@@ -2809,18 +2809,9 @@ gMapEvents_RUSTBORO_CITY_FLAT1_2F: @ 0x085090E0
 	.include "data/maps/RustboroCity_Flat2_3F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_FLAT2_3F
 	.set gMapEvents_RUSTBORO_CITY_FLAT2_3F, RustboroCity_Flat2_3F_MapEvents
-	.globl RUSTBORO_CITY_HOUSE3_EventObjects
-RUSTBORO_CITY_HOUSE3_EventObjects: @ 0x085092EC
-	object_event 1, 29, 0, 4, 5, 3, 10, 0, 0, 0, 0, 0x08204118, 0x0000
-	object_event 2, 30, 0, 7, 5, 3, 9, 0, 0, 0, 0, 0x08204121, 0x0000
-	object_event 3, 209, 0, 4, 4, 3, 8, 0, 0, 0, 0, 0x0820412A, 0x0000
-	.globl RUSTBORO_CITY_HOUSE3_EventWarps
-RUSTBORO_CITY_HOUSE3_EventWarps: @ 0x08509334
-	warp_def 5, 8, 0, 11, MAP_RUSTBORO_CITY
-	warp_def 6, 8, 0, 11, MAP_RUSTBORO_CITY
+	.include "data/maps/RustboroCity_House3/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_HOUSE3
-gMapEvents_RUSTBORO_CITY_HOUSE3: @ 0x08509344
-	map_events RUSTBORO_CITY_HOUSE3_EventObjects, RUSTBORO_CITY_HOUSE3_EventWarps, 0, 0
+	.set gMapEvents_RUSTBORO_CITY_HOUSE3, RustboroCity_House3_MapEvents
 	.globl FORTREE_CITY_HOUSE1_EventObjects
 FORTREE_CITY_HOUSE1_EventObjects: @ 0x08509358
 	object_event 1, 5, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x082041CB, 0x0000
