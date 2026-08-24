@@ -1,62 +1,43 @@
-@ LavaridgeTown_Gym_B1F scripts (JP map g4 m2 @ 0x081F4DBA)
-
 LavaridgeTown_Gym_B1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_Gym_B1F_EventScript_001F4DC0
+	map_script MAP_SCRIPT_ON_TRANSITION, LavaridgeTown_Gym_B1F_OnTransition
 	.byte 0
 
-LavaridgeTown_Gym_B1F_EventScript_001F4DC0::
-	call LavaridgeTown_Gym_B1F_EventScript_001F4DCB
-	call LavaridgeTown_Gym_B1F_EventScript_001F4E18
+LavaridgeTown_Gym_B1F_OnTransition:
+	call LavaridgeTown_Gym_B1F_EventScript_SetTrainerTempVars
+	call LavaridgeTown_Gym_B1F_EventScript_CheckBuryTrainers
 	end
 
-LavaridgeTown_Gym_B1F_EventScript_001F4DCB::
-	setvar 0x4007, 0x0
-	setvar 0x4008, 0x0
-	setvar 0x4009, 0x0
-	setvar 0x400A, 0x0
-	checktrainerflag 0xCD
-	goto_if 0x1, LavaridgeTown_Gym_B1F_EventScript_001F4DED
-	setvar 0x4007, 0x1
-
-LavaridgeTown_Gym_B1F_EventScript_001F4DED::
-	checktrainerflag 0xCC
-	goto_if 0x1, LavaridgeTown_Gym_B1F_EventScript_001F4DFB
-	setvar 0x4008, 0x1
-
-LavaridgeTown_Gym_B1F_EventScript_001F4DFB::
-	checktrainerflag 0xCA
-	goto_if 0x1, LavaridgeTown_Gym_B1F_EventScript_001F4E09
-	setvar 0x4009, 0x1
-
-LavaridgeTown_Gym_B1F_EventScript_001F4E09::
-	checktrainerflag 0x1F5
-	goto_if 0x1, LavaridgeTown_Gym_B1F_EventScript_001F4E17
-	setvar 0x400A, 0x1
-
-LavaridgeTown_Gym_B1F_EventScript_001F4E17::
+@ Unclear where/if these temp vars are getting checked
+LavaridgeTown_Gym_B1F_EventScript_SetTrainerTempVars::
+	setvar VAR_TEMP_7, 0
+	setvar VAR_TEMP_8, 0
+	setvar VAR_TEMP_9, 0
+	setvar VAR_TEMP_A, 0
+	goto_if_defeated TRAINER_KEEGAN, LavaridgeTown_Gym_B1F_EventScript_SetJaceTempVar
+	setvar VAR_TEMP_7, 1
+LavaridgeTown_Gym_B1F_EventScript_SetJaceTempVar::
+	goto_if_defeated TRAINER_JACE, LavaridgeTown_Gym_B1F_EventScript_SetJeffTempVar
+	setvar VAR_TEMP_8, 1
+LavaridgeTown_Gym_B1F_EventScript_SetJeffTempVar::
+	goto_if_defeated TRAINER_JEFF, LavaridgeTown_Gym_B1F_EventScript_SetEliTempVar
+	setvar VAR_TEMP_9, 1
+LavaridgeTown_Gym_B1F_EventScript_SetEliTempVar::
+	goto_if_defeated TRAINER_ELI, LavaridgeTown_Gym_B1F_EventScript_EndSetTrainerTempVars
+	setvar VAR_TEMP_A, 1
+LavaridgeTown_Gym_B1F_EventScript_EndSetTrainerTempVars::
 	return
 
-LavaridgeTown_Gym_B1F_EventScript_001F4E18::
-	checktrainerflag 0xCD
-	goto_if 0x1, LavaridgeTown_Gym_B1F_EventScript_001F4E25
-	setobjectmovementtype 0x2, 0x3F
-
-LavaridgeTown_Gym_B1F_EventScript_001F4E25::
-	checktrainerflag 0xCC
-	goto_if 0x1, LavaridgeTown_Gym_B1F_EventScript_001F4E32
-	setobjectmovementtype 0x1, 0x3F
-
-LavaridgeTown_Gym_B1F_EventScript_001F4E32::
-	checktrainerflag 0xCA
-	goto_if 0x1, LavaridgeTown_Gym_B1F_EventScript_001F4E3F
-	setobjectmovementtype 0x3, 0x3F
-
-LavaridgeTown_Gym_B1F_EventScript_001F4E3F::
-	checktrainerflag 0x1F5
-	goto_if 0x1, LavaridgeTown_Gym_B1F_EventScript_001F4E4C
-	setobjectmovementtype 0x4, 0x3F
-
-LavaridgeTown_Gym_B1F_EventScript_001F4E4C::
+LavaridgeTown_Gym_B1F_EventScript_CheckBuryTrainers::
+	goto_if_defeated TRAINER_KEEGAN, LavaridgeTown_Gym_B1F_EventScript_CheckBuryJace
+	setobjectmovementtype LOCALID_KEEGAN, MOVEMENT_TYPE_BURIED
+LavaridgeTown_Gym_B1F_EventScript_CheckBuryJace::
+	goto_if_defeated TRAINER_JACE, LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff
+	setobjectmovementtype LOCALID_JACE, MOVEMENT_TYPE_BURIED
+LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff::
+	goto_if_defeated TRAINER_JEFF, LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli
+	setobjectmovementtype LOCALID_JEFF, MOVEMENT_TYPE_BURIED
+LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli::
+	goto_if_defeated TRAINER_ELI, LavaridgeTown_Gym_B1F_EventScript_EndCheckBuryTrainers
+	setobjectmovementtype LOCALID_ELI, MOVEMENT_TYPE_BURIED
+LavaridgeTown_Gym_B1F_EventScript_EndCheckBuryTrainers::
 	return
-
-	.incbin "baserom_jp.gba", 0x1f4e4d, 0x138

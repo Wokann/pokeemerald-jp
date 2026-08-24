@@ -271,6 +271,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LavaridgeTown_HerbShop/scripts.inc"
 	.include "data/maps/LavaridgeTown_Gym_1F/scripts.inc"
 	.include "data/maps/LavaridgeTown_Gym_B1F/scripts.inc"
+	.include "data/maps/LavaridgeTown_House/scripts.inc"
+	.include "data/maps/LavaridgeTown_Mart/scripts.inc"
 	.include "data/maps/LavaridgeTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/LavaridgeTown_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/FallarborTown_BattleTentLobby/scripts.inc"

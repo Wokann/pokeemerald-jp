@@ -2416,41 +2416,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/LavaridgeTown_Gym_1F/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_GYM_1F
 	.set gMapEvents_LAVARIDGE_TOWN_GYM_1F, LavaridgeTown_Gym_1F_MapEvents
-	.globl LAVARIDGE_TOWN_GYM_B1F_EventObjects
-LAVARIDGE_TOWN_GYM_B1F_EventObjects: @ 0x085066D4
-	object_event 1, 66, 0, 4, 18, 3, 8, 1, 1, 3, 1, 0x081F44EE, 0x0000
-	object_event 2, 66, 0, 3, 6, 0, 8, 1, 1, 3, 1, 0x081F449D, 0x0000
-	object_event 3, 66, 0, 13, 17, 0, 8, 1, 1, 3, 1, 0x081F4509, 0x0000
-	object_event 4, 55, 0, 4, 16, 3, 8, 1, 1, 3, 1, 0x081F4524, 0x0000
-	.globl LAVARIDGE_TOWN_GYM_B1F_EventWarps
-LAVARIDGE_TOWN_GYM_B1F_EventWarps: @ 0x08506734
-	warp_def 10, 18, 3, 2, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 0, 17, 3, 6, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 8, 9, 3, 3, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 5, 14, 3, 5, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 4, 18, 3, 4, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 5, 9, 3, 7, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 2, 15, 3, 8, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 3, 14, 3, 9, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 1, 14, 3, 10, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 0, 10, 3, 11, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 3, 10, 3, 12, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 0, 6, 3, 13, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 3, 6, 3, 14, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 5, 6, 3, 15, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 2, 3, 3, 16, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 5, 2, 3, 17, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 7, 2, 3, 18, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 8, 6, 3, 19, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 10, 6, 3, 20, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 12, 3, 3, 22, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 4, 16, 3, 21, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 14, 6, 3, 23, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 13, 17, 3, 24, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 12, 12, 3, 25, MAP_LAVARIDGE_TOWN_GYM_1F
+	.include "data/maps/LavaridgeTown_Gym_B1F/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_GYM_B1F
-gMapEvents_LAVARIDGE_TOWN_GYM_B1F: @ 0x085067F4
-	map_events LAVARIDGE_TOWN_GYM_B1F_EventObjects, LAVARIDGE_TOWN_GYM_B1F_EventWarps, 0, 0
+	.set gMapEvents_LAVARIDGE_TOWN_GYM_B1F, LavaridgeTown_Gym_B1F_MapEvents
 	.globl LAVARIDGE_TOWN_HOUSE_EventObjects
 LAVARIDGE_TOWN_HOUSE_EventObjects: @ 0x08506808
 	object_event 1, 29, 0, 2, 3, 3, 1, 1, 1, 0, 0, 0x081F4E4E, 0x0000
