@@ -553,6 +553,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_House1/scripts.inc"
 	.include "data/maps/LilycoveCity_House2/scripts.inc"
 	.include "data/maps/LilycoveCity_House3/scripts.inc"
+	.include "data/maps/LilycoveCity_House4/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStore_5F/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/scripts.inc"
 	.include "data/maps/MossdeepCity_Gym/scripts.inc"

@@ -3134,17 +3134,9 @@ LILYCOVE_CITY_HOUSE3_EventWarps: @ 0x0850A740
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE3
 gMapEvents_LILYCOVE_CITY_HOUSE3: @ 0x0850A750
 	map_events LILYCOVE_CITY_HOUSE3_EventObjects, LILYCOVE_CITY_HOUSE3_EventWarps, 0, 0
-	.globl LILYCOVE_CITY_HOUSE4_EventObjects
-LILYCOVE_CITY_HOUSE4_EventObjects: @ 0x0850A764
-	object_event 1, 65, 0, 1, 4, 3, 2, 1, 1, 0, 0, 0x0820A51B, 0x0000
-	object_event 2, 19, 0, 7, 4, 3, 2, 1, 1, 0, 0, 0x0820A524, 0x0000
-	.globl LILYCOVE_CITY_HOUSE4_EventWarps
-LILYCOVE_CITY_HOUSE4_EventWarps: @ 0x0850A794
-	warp_def 3, 8, 0, 11, MAP_LILYCOVE_CITY
-	warp_def 4, 8, 0, 11, MAP_LILYCOVE_CITY
+	.include "data/maps/LilycoveCity_House4/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE4
-gMapEvents_LILYCOVE_CITY_HOUSE4: @ 0x0850A7A4
-	map_events LILYCOVE_CITY_HOUSE4_EventObjects, LILYCOVE_CITY_HOUSE4_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_HOUSE4, LilycoveCity_House4_MapEvents
 	.globl LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventObjects
 LILYCOVE_CITY_DEPARTMENT_STORE_1F_EventObjects: @ 0x0850A7B8
 	object_event 1, 45, 0, 8, 2, 3, 8, 0, 0, 0, 0, 0x0820A5B0, 0x0000

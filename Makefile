@@ -161,7 +161,8 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	FortreeCity_DecorationShop \
 	LilycoveCity_CoveLilyMotel_1F \
 	LilycoveCity_CoveLilyMotel_2F \
-	LilycoveCity_LilycoveMuseum_1F
+	LilycoveCity_LilycoveMuseum_1F \
+	LilycoveCity_House4
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
