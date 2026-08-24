@@ -61,29 +61,24 @@ SlateportCity_EventScript_001DC08E::
 	applymovement 0xFF, 0x081DC11A
 	applymovement 0x23, 0x081DC11E
 	waitmovement 0x0
-	loadword 0x0, gJPText_001DD7F5
-	callstd 0x4
+	msgbox SlateportCity_Text_YouDroveTeamAquaAway, MSGBOX_DEFAULT
 	closemessage
 	applymovement 0x23, 0x08243627
 	waitmovement 0x0
 	delay 0x3C
-	loadword 0x0, gJPText_001DD864
-	callstd 0x4
+	msgbox SlateportCity_Text_MaybeThisTrainer, MSGBOX_DEFAULT
 	applymovement 0x23, 0x0824362B
 	waitmovement 0x0
-	loadword 0x0, gJPText_001DD882
-	callstd 0x4
+	msgbox SlateportCity_Text_LetsRegisterEachOther, MSGBOX_DEFAULT
 	closemessage
 	delay 0x1E
 	playfanfare 0x1CC
-	loadword 0x0, gJPText_001DD8C6
-	callstd 0x4
+	msgbox SlateportCity_Text_RegisteredScott, MSGBOX_DEFAULT
 	waitfanfare
 	closemessage
 	delay 0x1E
 	setflag 0xD7
-	loadword 0x0, gJPText_001DD8E2
-	callstd 0x4
+	msgbox SlateportCity_Text_KeepEyeOnTrainersBeSeeingYou, MSGBOX_DEFAULT
 	closemessage
 	applymovement 0x23, 0x081DC126
 	waitmovement 0x0
@@ -839,8 +834,7 @@ SlateportCity_EventScript_001DC950::
 	waitmovement 0x0
 	closedoor 0xA, 0xC
 	waitmoncry
-	loadword 0x0, 0x081DD93E
-	callstd 0x4
+	msgbox SlateportCity_Text_TakingBattleTentChallenge, MSGBOX_DEFAULT
 	closemessage
 	applymovement 0xFF, 0x081DC9A8
 	applymovement 0x23, 0x081DC9AE
@@ -860,8 +854,7 @@ SlateportCity_EventScript_001DC9B7::
 	end
 
 	.incbin "baserom_jp.gba", 0x1dc9be, 0xe37
-	.globl gJPText_001DD7F5
-gJPText_001DD7F5: @ 0x081DD7F5
+SlateportCity_Text_YouDroveTeamAquaAway: @ 0x081DD7F5
 	.string "エニシダ“⋯⋯あれ？\n"
 	.string "きみとは　まえに　どこかで　あったよね\p"
 	.string "じこしょうかい　したっけ？\n"
@@ -870,29 +863,36 @@ gJPText_001DD7F5: @ 0x081DD7F5
 	.string "にげだして　いったけど\l"
 	.string "もしかして　きみが　やっつけたの　かい？$"
 
-	.globl gJPText_001DD864
-gJPText_001DD864: @ 0x081DD864
+SlateportCity_Text_MaybeThisTrainer: @ 0x081DD864
 	.string "エニシダ“うーむ　これは\n"
 	.string "ひょっとして　ひょっとすると⋯⋯$"
 
-	.globl gJPText_001DD882
-gJPText_001DD882: @ 0x081DD882
+SlateportCity_Text_LetsRegisterEachOther: @ 0x081DD882
 	.string "エニシダ“⋯⋯よっし！\n"
 	.string "きみとは　なかよく　なれそう　だから\l"
 	.string "おたがい　ポケナビに\l"
 	.string "なまえを　とうろく　しておこう！\p"
 	.string "⋯⋯　⋯⋯　⋯⋯$"
 
-	.globl gJPText_001DD8C6
-gJPText_001DD8C6: @ 0x081DD8C6
+SlateportCity_Text_RegisteredScott: @ 0x081DD8C6
 	.string "エニシダ　という　ひとを\n"
 	.string "ポケナビに　とうろく　した！$"
 
-	.globl gJPText_001DD8E2
-gJPText_001DD8E2: @ 0x081DD8E2
+SlateportCity_Text_KeepEyeOnTrainersBeSeeingYou: @ 0x081DD8E2
 	.string "エニシダ“ホントは　きみに\n"
 	.string "くっついて　いきたい　ところ　だけど\l"
 	.string "ほかのひとの　さいのうも　きになるし\p"
 	.string "もうすこし　いろんな　まちを\n"
 	.string "たずね　あるいて　みるよ！\p"
-	.string "じゃあね　{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}！$"
+	.string "じゃあね　{PLAYER}{KUN}！$"
+
+SlateportCity_Text_TakingBattleTentChallenge: @ 0x081DD93E
+	.string "エニシダ“お　おおっと\n"
+	.string "{PLAYER}{KUN}か！\p"
+	.string "⋯⋯もしかして　{PLAYER}{KUN}\n"
+	.string "バトルテントに　ちょうせん　するのかい？\p"
+	.string "うん！　それは　いいことだな！\n"
+	.string "ものすごく　いいことだ！\l"
+	.string "バトルテントには　つよい　トレーナーが\l"
+	.string "とっても　ふさわしい　からね\p"
+	.string "じゃ　がんばってね！$"

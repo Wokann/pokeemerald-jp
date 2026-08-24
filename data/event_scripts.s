@@ -381,7 +381,6 @@ gStdScripts: @ 0x81DB7BC
 gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/PetalburgCity/scripts.inc"
 	.include "data/maps/SlateportCity/scripts.inc"
-	.incbin "baserom_jp.gba", 0x1dd93e, 0x80
 	.include "data/maps/MauvilleCity/scripts.inc"
 	.incbin "baserom_jp.gba", 0x1dddf3, 0x903
 	.include "data/maps/RustboroCity/scripts.inc"
