@@ -1219,10 +1219,10 @@ gMapEvents_FALLARBOR_TOWN: @ 0x085003D4
 	map_events FALLARBOR_TOWN_EventObjects, FALLARBOR_TOWN_EventWarps, 0, FALLARBOR_TOWN_EventBgEvents
 	.globl VERDANTURF_TOWN_EventObjects
 VERDANTURF_TOWN_EventObjects: @ 0x085003E8
-	object_event 1, 23, 0, 4, 17, 3, 5, 1, 0, 0, 0, VerdanturfTown_EventScript_001E609B, 0x0000
-	object_event 2, 6, 0, 9, 2, 3, 9, 1, 0, 0, 0, VerdanturfTown_EventScript_001E6068, 0x0000
-	object_event 3, 7, 0, 7, 11, 3, 3, 0, 1, 0, 0, VerdanturfTown_EventScript_001E60AD, 0x0000
-	object_event 4, 31, 0, 7, 6, 3, 5, 1, 0, 0, 0, VerdanturfTown_EventScript_001E60A4, 0x0000
+	object_event 1, 23, 0, 4, 17, 3, 5, 1, 0, 0, 0, VerdanturfTown_EventScript_Man, 0x0000
+	object_event 2, 6, 0, 9, 2, 3, 9, 1, 0, 0, 0, VerdanturfTown_EventScript_Twin, 0x0000
+	object_event 3, 7, 0, 7, 11, 3, 3, 0, 1, 0, 0, VerdanturfTown_EventScript_Boy, 0x0000
+	object_event 4, 31, 0, 7, 6, 3, 5, 1, 0, 0, 0, VerdanturfTown_EventScript_Camper, 0x0000
 	.globl VERDANTURF_TOWN_EventWarps
 VERDANTURF_TOWN_EventWarps: @ 0x08500448
 	warp_def 3, 7, 0, 0, MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY
@@ -1235,13 +1235,13 @@ VERDANTURF_TOWN_EventWarps: @ 0x08500448
 	.globl VERDANTURF_TOWN_EventBgEvents
 VERDANTURF_TOWN_EventBgEvents: @ 0x08500480
 	bg_event 14, 3, 0, 1, 0x08242EF6, 0, 0
-	bg_event 14, 6, 0, 0, VerdanturfTown_EventScript_001E60CC, 0, 0
+	bg_event 14, 6, 0, 0, VerdanturfTown_EventScript_TownSign, 0, 0
 	bg_event 17, 3, 0, 1, 0x08242EFF, 0, 0
-	bg_event 7, 14, 0, 0, VerdanturfTown_EventScript_001E60D5, 0, 0
+	bg_event 7, 14, 0, 0, VerdanturfTown_EventScript_WandasHouseSign, 0, 0
 	bg_event 13, 3, 0, 1, 0x08242EF6, 0, 0
 	bg_event 18, 3, 0, 1, 0x08242EFF, 0, 0
-	bg_event 1, 8, 0, 0, VerdanturfTown_EventScript_001E60DE, 0, 0
-	bg_event 7, 3, 0, 0, VerdanturfTown_EventScript_001E60E7, 0, 0
+	bg_event 1, 8, 0, 0, VerdanturfTown_EventScript_BattleTentSign, 0, 0
+	bg_event 7, 3, 0, 0, VerdanturfTown_EventScript_RusturfTunnelSign, 0, 0
 	.globl gMapEvents_VERDANTURF_TOWN
 gMapEvents_VERDANTURF_TOWN: @ 0x085004E0
 	map_events VERDANTURF_TOWN_EventObjects, VERDANTURF_TOWN_EventWarps, 0, VERDANTURF_TOWN_EventBgEvents
