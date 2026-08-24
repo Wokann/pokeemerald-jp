@@ -1,41 +1,53 @@
 @ MauvilleCity_PokemonCenter_1F scripts (JP map g10 m5 @ 0x08200DD4)
 
 MauvilleCity_PokemonCenter_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, MauvilleCity_PokemonCenter_1F_EventScript_00200DDF
-	map_script MAP_SCRIPT_ON_RESUME, 0x0824790F
+	map_script MAP_SCRIPT_ON_TRANSITION, MauvilleCity_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-MauvilleCity_PokemonCenter_1F_EventScript_00200DDF::
-	setrespawn 0x5
-	call 0x08242978
-	goto MauvilleCity_PokemonCenter_1F_EventScript_00200DED
+MauvilleCity_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_MAUVILLE_CITY
+	call Common_EventScript_UpdateBrineyLocation
+	goto MauvilleCity_PokemonCenter_1F_EventScript_SetMauvilleOldManGfx
 	end
 
-MauvilleCity_PokemonCenter_1F_EventScript_00200DED::
-	special ScrSpecial_SetMauvilleOldManEventObjGfx
+MauvilleCity_PokemonCenter_1F_EventScript_SetMauvilleOldManGfx::
+	special SetMauvilleOldManObjEventGfx
 	end
 
-MauvilleCity_PokemonCenter_1F_EventScript_00200DF1::
-	setvar 0x800B, 0x1
-	call 0x082429B8
+MauvilleCity_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_MAUVILLE_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-MauvilleCity_PokemonCenter_1F_EventScript_00200DFF::
-	loadword 0x0, 0x08200E1A
-	callstd 0x2
+MauvilleCity_PokemonCenter_1F_EventScript_Woman1::
+	msgbox MauvilleCity_PokemonCenter_1F_Text_ManOverThereSaysWeirdThings, MSGBOX_NPC
 	end
 
-MauvilleCity_PokemonCenter_1F_EventScript_00200E08::
-	loadword 0x0, 0x08200E54
-	callstd 0x2
+MauvilleCity_PokemonCenter_1F_EventScript_Woman2::
+	msgbox MauvilleCity_PokemonCenter_1F_Text_MyDataUpdatedFromRecordCorner, MSGBOX_NPC
 	end
 
-MauvilleCity_PokemonCenter_1F_EventScript_00200E11::
-	loadword 0x0, 0x08200E8A
-	callstd 0x2
+MauvilleCity_PokemonCenter_1F_EventScript_Youngster::
+	msgbox MauvilleCity_PokemonCenter_1F_Text_RecordCornerSoundsFun, MSGBOX_NPC
 	end
 
-	.incbin "baserom_jp.gba", 0x200e1a, 0xb5
+MauvilleCity_PokemonCenter_1F_Text_ManOverThereSaysWeirdThings: @ 0x08200E1A
+	.string "あそこに　いる　オヤジ\n"
+	.string "へんなこと　いったり　するの！\p"
+	.string "なんだか　おもしろくって\n"
+	.string "わすれられない　そんざい　だわ！$"
+
+MauvilleCity_PokemonCenter_1F_Text_MyDataUpdatedFromRecordCorner: @ 0x08200E54
+	.string "レコードコーナーを　つかったらね\n"
+	.string "ムロタウンで　はやっている　ものが\l"
+	.string "ともだちと　いっしょに　なったのよ！$"
+
+MauvilleCity_PokemonCenter_1F_Text_RecordCornerSoundsFun: @ 0x08200E8A
+	.string "ポケモンセンターの　2かいに\n"
+	.string "レコードコーナーが　できたんだってさ！\p"
+	.string "よく　わからないけど　おもしろそうだろ？\n"
+	.string "とにかく　やってみるよ！$"

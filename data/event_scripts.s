@@ -70,6 +70,10 @@
 	@ matching pokeemerald script name without changing its table index.
 	.set SPECIAL_BufferTMHMMoveName, 411
 	.set SPECIAL_WAITSTATE_BufferTMHMMoveName, 0
+	@ The JP source retains the older C spelling. Keep map EventScripts aligned
+	@ with pokeemerald without changing the special-table entry.
+	.set SPECIAL_SetMauvilleOldManObjEventGfx, 104
+	.set SPECIAL_WAITSTATE_SetMauvilleOldManObjEventGfx, 0
 	@ These JP command-table entries retain older names but use the same opcodes
 	@ as the US semantic spellings used by Dewford Gym.
 	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG
@@ -89,6 +93,10 @@
 	@ The local map source therefore keeps the pokeemerald semantic labels.
 	.globl Common_EventScript_SaveGame
 	.set Common_EventScript_SaveGame, 0x082423E9
+	@ Mauville's dynamic old-man interaction remains in its retained JP owner.
+	@ Expose the map-local pokeemerald label for generated object events.
+	.globl MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan
+	.set MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan, 0x08254D6B
 	@ Shared Battle Tent text remains in its existing JP byte owners; expose
 	@ the matching US semantic labels for Slateport's map scripts.
 	.globl SlateportCity_BattleTentLobby_Text_WelcomeToBattleTent
