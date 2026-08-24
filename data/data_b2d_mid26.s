@@ -2428,20 +2428,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/LavaridgeTown_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_1F
 	.set gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_1F, LavaridgeTown_PokemonCenter_1F_MapEvents
-	.globl LAVARIDGE_TOWN_POKEMON_CENTER_2F_EventObjects
-LAVARIDGE_TOWN_POKEMON_CENTER_2F_EventObjects: @ 0x08506974
-	object_event 1, 85, 0, 6, 2, 0, 8, 1, 1, 0, 0, 0x08244185, 0x0000
-	object_event 2, 85, 0, 2, 2, 3, 8, 1, 1, 0, 0, 0x0824418B, 0x0000
-	object_event 3, 85, 0, 10, 2, 0, 8, 1, 1, 0, 0, 0x08244191, 0x0000
-	object_event 4, 223, 0, 1, 2, 0, 8, 1, 1, 0, 0, 0x08246801, 0x02BE
-	.globl LAVARIDGE_TOWN_POKEMON_CENTER_2F_EventWarps
-LAVARIDGE_TOWN_POKEMON_CENTER_2F_EventWarps: @ 0x085069D4
-	warp_def 1, 6, 4, 2, MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F
-	warp_def 5, 1, 3, 0, MAP_UNION_ROOM
-	warp_def 9, 1, 3, 0, MAP_TRADE_CENTER
+	.include "data/maps/LavaridgeTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F
-gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F: @ 0x085069EC
-	map_events LAVARIDGE_TOWN_POKEMON_CENTER_2F_EventObjects, LAVARIDGE_TOWN_POKEMON_CENTER_2F_EventWarps, 0, 0
+	.set gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F, LavaridgeTown_PokemonCenter_2F_MapEvents
 	.globl FALLARBOR_TOWN_MART_EventObjects
 FALLARBOR_TOWN_MART_EventObjects: @ 0x08506A00
 	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x081F5099, 0x0000
