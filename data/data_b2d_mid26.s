@@ -2407,17 +2407,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/DewfordTown_Hall/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_HALL
 	.set gMapEvents_DEWFORD_TOWN_HALL, DewfordTown_Hall_MapEvents
-	.globl DEWFORD_TOWN_HOUSE2_EventObjects
-DEWFORD_TOWN_HOUSE2_EventObjects: @ 0x08506488
-	object_event 1, 33, 0, 6, 5, 3, 10, 0, 0, 0, 0, 0x081F4009, 0x0000
-	object_event 2, 9, 0, 2, 3, 3, 1, 0, 0, 0, 0, 0x081F404C, 0x0000
-	.globl DEWFORD_TOWN_HOUSE2_EventWarps
-DEWFORD_TOWN_HOUSE2_EventWarps: @ 0x085064B8
-	warp_def 3, 8, 0, 4, MAP_DEWFORD_TOWN
-	warp_def 4, 8, 0, 4, MAP_DEWFORD_TOWN
+	.include "data/maps/DewfordTown_House2/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_HOUSE2
-gMapEvents_DEWFORD_TOWN_HOUSE2: @ 0x085064C8
-	map_events DEWFORD_TOWN_HOUSE2_EventObjects, DEWFORD_TOWN_HOUSE2_EventWarps, 0, 0
+	.set gMapEvents_DEWFORD_TOWN_HOUSE2, DewfordTown_House2_MapEvents
 	.globl LAVARIDGE_TOWN_HERB_SHOP_EventObjects
 LAVARIDGE_TOWN_HERB_SHOP_EventObjects: @ 0x085064DC
 	object_event 1, 20, 0, 3, 2, 3, 8, 0, 0, 0, 0, 0x081F4186, 0x0000
