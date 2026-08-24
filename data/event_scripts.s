@@ -170,6 +170,8 @@
 	.set Common_EventScript_UpdateBrineyLocation, 0x08242978
 	.globl Common_EventScript_PkmnCenterNurse
 	.set Common_EventScript_PkmnCenterNurse, 0x082429B8
+	.globl ProfileMan_EventScript_Man
+	.set ProfileMan_EventScript_Man, 0x08257290
 	.globl Common_EventScript_GetGiftMonPartySlot
 	.set Common_EventScript_GetGiftMonPartySlot, 0x082441B5
 	.globl Common_EventScript_NameReceivedBoxMon

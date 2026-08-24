@@ -2614,21 +2614,9 @@ PETALBURG_CITY_HOUSE2_EventWarps: @ 0x0850786C
 	.globl gMapEvents_PETALBURG_CITY_HOUSE2
 gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	map_events PETALBURG_CITY_HOUSE2_EventObjects, PETALBURG_CITY_HOUSE2_EventWarps, 0, 0
-	.globl PETALBURG_CITY_POKEMON_CENTER_1F_EventObjects
-PETALBURG_CITY_POKEMON_CENTER_1F_EventObjects: @ 0x08507890
-	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, PetalburgCity_PokemonCenter_1F_EventScript_001FA7E1, 0x0000
-	object_event 2, 65, 0, 11, 2, 3, 8, 0, 0, 0, 0, 0x08257290, 0x0000
-	object_event 3, 17, 0, 2, 3, 3, 8, 0, 0, 0, 0, PetalburgCity_PokemonCenter_1F_EventScript_001FA7EF, 0x0000
-	object_event 4, 35, 0, 9, 6, 3, 2, 1, 1, 0, 0, PetalburgCity_PokemonCenter_1F_EventScript_001FA7F8, 0x0000
-	object_event 5, 34, 0, 5, 4, 3, 1, 1, 1, 0, 0, PetalburgCity_PokemonCenter_1F_EventScript_001FA801, 0x0000
-	.globl PETALBURG_CITY_POKEMON_CENTER_1F_EventWarps
-PETALBURG_CITY_POKEMON_CENTER_1F_EventWarps: @ 0x08507908
-	warp_def 7, 8, 3, 3, MAP_PETALBURG_CITY
-	warp_def 6, 8, 3, 3, MAP_PETALBURG_CITY
-	warp_def 1, 6, 4, 0, MAP_PETALBURG_CITY_POKEMON_CENTER_2F
+	.include "data/maps/PetalburgCity_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F
-gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F: @ 0x08507920
-	map_events PETALBURG_CITY_POKEMON_CENTER_1F_EventObjects, PETALBURG_CITY_POKEMON_CENTER_1F_EventWarps, 0, 0
+	.set gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F, PetalburgCity_PokemonCenter_1F_MapEvents
 	.globl PETALBURG_CITY_POKEMON_CENTER_2F_EventObjects
 PETALBURG_CITY_POKEMON_CENTER_2F_EventObjects: @ 0x08507934
 	object_event 1, 85, 0, 6, 2, 0, 8, 1, 1, 0, 0, 0x08244185, 0x0000

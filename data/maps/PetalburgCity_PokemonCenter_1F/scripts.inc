@@ -1,67 +1,90 @@
 @ PetalburgCity_PokemonCenter_1F scripts (JP map g8 m4 @ 0x081FA7CD)
 
 PetalburgCity_PokemonCenter_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgCity_PokemonCenter_1F_EventScript_001FA7D8
-	map_script MAP_SCRIPT_ON_RESUME, 0x0824790F
+	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgCity_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA7D8::
-	setrespawn 0x3
-	call 0x08242978
+PetalburgCity_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_PETALBURG_CITY
+	call Common_EventScript_UpdateBrineyLocation
 	end
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA7E1::
-	setvar 0x800B, 0x1
-	call 0x082429B8
+PetalburgCity_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_PETALBURG_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA7EF::
-	loadword 0x0, 0x081FA85B
-	callstd 0x2
+PetalburgCity_PokemonCenter_1F_EventScript_FatMan::
+	msgbox PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem, MSGBOX_NPC
 	end
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA7F8::
-	loadword 0x0, 0x081FA894
-	callstd 0x2
+PetalburgCity_PokemonCenter_1F_EventScript_Youngster::
+	msgbox PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP, MSGBOX_NPC
 	end
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA801::
+PetalburgCity_PokemonCenter_1F_EventScript_Woman::
 	lock
 	faceplayer
-	loadword 0x0, 0x081FA8BC
-	callstd 0x4
-	specialvar 0x800D, IsStarterInParty
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, PetalburgCity_PokemonCenter_1F_EventScript_001FA81D
+	msgbox PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon, MSGBOX_DEFAULT
+	specialvar VAR_RESULT, IsStarterInParty
+	goto_if_eq VAR_RESULT, TRUE, PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo
 	release
 	end
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA81D::
-	compare_var_to_value 0x4023, 0x0
-	call_if 0x1, PetalburgCity_PokemonCenter_1F_EventScript_001FA840
-	compare_var_to_value 0x4023, 0x1
-	call_if 0x1, PetalburgCity_PokemonCenter_1F_EventScript_001FA849
-	compare_var_to_value 0x4023, 0x2
-	call_if 0x1, PetalburgCity_PokemonCenter_1F_EventScript_001FA852
+PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo::
+	call_if_eq VAR_STARTER_MON, 0, PetalburgCity_PokemonCenter_1F_EventScript_SayTreeckoType
+	call_if_eq VAR_STARTER_MON, 1, PetalburgCity_PokemonCenter_1F_EventScript_SayTorchicType
+	call_if_eq VAR_STARTER_MON, 2, PetalburgCity_PokemonCenter_1F_EventScript_SayMudkipType
 	release
 	end
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA840::
-	loadword 0x0, 0x081FA907
-	callstd 0x4
+PetalburgCity_PokemonCenter_1F_EventScript_SayTreeckoType::
+	msgbox PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType, MSGBOX_DEFAULT
 	return
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA849::
-	loadword 0x0, 0x081FA946
-	callstd 0x4
+PetalburgCity_PokemonCenter_1F_EventScript_SayTorchicType::
+	msgbox PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType, MSGBOX_DEFAULT
 	return
 
-PetalburgCity_PokemonCenter_1F_EventScript_001FA852::
-	loadword 0x0, 0x081FA984
-	callstd 0x4
+PetalburgCity_PokemonCenter_1F_EventScript_SayMudkipType::
+	msgbox PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType, MSGBOX_DEFAULT
 	return
 
-	.incbin "baserom_jp.gba", 0x1fa85b, 0x167
+PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem:
+	.string "パソコンで　つかえる\n"
+	.string "ポケモン　あずかり　システム⋯⋯\p"
+	.string "つくった　やつは\n"
+	.string "すげー　かがくに　くわしいんだろうな！$"
+
+PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP:
+	.string "ポケモンに　オレンのみ　を　たべさせたら\n"
+	.string "たいりょくが　かいふく　したんだぜ！$"
+
+PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon:
+	.string "ポケモンには\n"
+	.string "いろいろ　タイプが　あるの！\p"
+	.string "で　タイプには　あいしょうが　あるから\n"
+	.string "ポケモンしょうぶの　とき\l"
+	.string "ゆうり　だったり　ふり　だったりするの$"
+
+PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType:
+	.string "たとえば　あなたの　キモリは\n"
+	.string "くさタイプ　でしょ\p"
+	.string "みずタイプや　じめんタイプに　つよくて\n"
+	.string "ほのおタイプが　にがて　なのよね！$"
+
+PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType:
+	.string "たとえば　あなたの\n"
+	.string "アチャモは　ほのおタイプ　でしょ\p"
+	.string "くさタイプや　むしタイプに　つよくて\n"
+	.string "みずタイプが　にがて　なんだ！$"
+
+PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType:
+	.string "たとえば　あなたの\n"
+	.string "ミズゴロウは　みずタイプ　だよね\p"
+	.string "ほのおタイプに　つよくて\n"
+	.string "くさタイプや　でんきタイプが　にがて　ね！$"
