@@ -2769,19 +2769,9 @@ gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL: @ 0x08508E0C
 	.include "data/maps/RustboroCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_2F, RustboroCity_PokemonCenter_2F_MapEvents
-	.globl RUSTBORO_CITY_MART_EventObjects
-RUSTBORO_CITY_MART_EventObjects: @ 0x08508F38
-	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x082035E1, 0x0000
-	object_event 2, 7, 0, 2, 5, 3, 7, 0, 0, 0, 0, 0x08203659, 0x0000
-	object_event 3, 18, 0, 8, 4, 3, 3, 0, 1, 0, 0, 0x08203650, 0x0000
-	object_event 4, 36, 0, 8, 2, 3, 7, 1, 1, 0, 0, 0x08203662, 0x0000
-	.globl RUSTBORO_CITY_MART_EventWarps
-RUSTBORO_CITY_MART_EventWarps: @ 0x08508F98
-	warp_def 3, 7, 0, 2, MAP_RUSTBORO_CITY
-	warp_def 4, 7, 0, 2, MAP_RUSTBORO_CITY
+	.include "data/maps/RustboroCity_Mart/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_MART
-gMapEvents_RUSTBORO_CITY_MART: @ 0x08508FA8
-	map_events RUSTBORO_CITY_MART_EventObjects, RUSTBORO_CITY_MART_EventWarps, 0, 0
+	.set gMapEvents_RUSTBORO_CITY_MART, RustboroCity_Mart_MapEvents
 	.globl RUSTBORO_CITY_FLAT1_1F_EventObjects
 RUSTBORO_CITY_FLAT1_1F_EventObjects: @ 0x08508FBC
 	object_event 1, 33, 0, 9, 4, 3, 10, 0, 0, 0, 0, 0x08203715, 0x0000

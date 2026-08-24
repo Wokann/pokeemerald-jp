@@ -19,6 +19,3 @@ RustboroCity_PokemonCenter_2F_EventScript_TradeCenter::
 RustboroCity_PokemonCenter_2F_EventScript_RecordCorner::
 	call CableClub_EventScript_RecordCorner
 	end
-
-	@ Rustboro City Mart and later unstructured script owners begin here.
-	.incbin "baserom_jp.gba", 0x2035e0, 0xdbe
