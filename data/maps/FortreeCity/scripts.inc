@@ -1,101 +1,159 @@
 @ FortreeCity scripts (JP map g0 m4 @ 0x081DFDEE)
 
 FortreeCity_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, FortreeCity_EventScript_001DFDF9
-	map_script MAP_SCRIPT_ON_RESUME, FortreeCity_EventScript_001DFDFD
+	map_script MAP_SCRIPT_ON_TRANSITION, FortreeCity_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, FortreeCity_OnResume
 	.byte 0
 
-FortreeCity_EventScript_001DFDF9::
-	setflag 0x87A
+FortreeCity_OnTransition::
+	setflag FLAG_VISITED_FORTREE_CITY
 	end
 
-FortreeCity_EventScript_001DFDFD::
-	setstepcallback 0x2
+FortreeCity_OnResume::
+	setstepcallback STEP_CB_FORTREE_BRIDGE
 	end
 
-FortreeCity_EventScript_001DFE00::
-	loadword 0x0, 0x081DFEC0
-	callstd 0x2
+FortreeCity_EventScript_Man::
+	msgbox FortreeCity_Text_SawGiganticPokemonInSky, MSGBOX_NPC
 	end
 
-FortreeCity_EventScript_001DFE09::
+FortreeCity_EventScript_Woman::
 	lock
 	faceplayer
-	checkflag 0x127
-	goto_if 0x1, FortreeCity_EventScript_001DFE1E
-	loadword 0x0, 0x081DFF3B
-	callstd 0x4
+	goto_if_set FLAG_KECLEON_FLED_FORTREE, FortreeCity_EventScript_WomanGymAccessible
+	msgbox FortreeCity_Text_SomethingBlockingGym, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_EventScript_001DFE1E::
-	loadword 0x0, 0x081DFF7D
-	callstd 0x4
+FortreeCity_EventScript_WomanGymAccessible::
+	msgbox FortreeCity_Text_ThisTimeIllBeatWinona, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_EventScript_001DFE28::
-	loadword 0x0, 0x081DFFA2
-	callstd 0x2
+FortreeCity_EventScript_Girl::
+	msgbox FortreeCity_Text_TreesGrowByDrinkingRainwater, MSGBOX_NPC
 	end
 
-FortreeCity_EventScript_001DFE31::
-	loadword 0x0, 0x081DFFEA
-	callstd 0x2
+FortreeCity_EventScript_OldMan::
+	msgbox FortreeCity_Text_EveryoneHealthyAndLively, MSGBOX_NPC
 	end
 
-FortreeCity_EventScript_001DFE3A::
-	loadword 0x0, 0x081E0049
-	callstd 0x2
+FortreeCity_EventScript_Boy::
+	msgbox FortreeCity_Text_BugPokemonComeThroughWindow, MSGBOX_NPC
 	end
 
-FortreeCity_EventScript_001DFE43::
-	loadword 0x0, 0x081E008B
-	callstd 0x2
+FortreeCity_EventScript_GameboyKid::
+	msgbox FortreeCity_Text_PokemonThatEvolveWhenTraded, MSGBOX_NPC
 	end
 
-FortreeCity_EventScript_001DFE4C::
-	loadword 0x0, 0x081E0126
-	callstd 0x3
+FortreeCity_EventScript_CitySign::
+	msgbox FortreeCity_Text_CitySign, MSGBOX_SIGN
 	end
 
-FortreeCity_EventScript_001DFE55::
-	loadword 0x0, 0x081E0148
-	callstd 0x3
+FortreeCity_EventScript_GymSign::
+	msgbox FortreeCity_Text_GymSign, MSGBOX_SIGN
 	end
 
-FortreeCity_EventScript_001DFE5E::
+FortreeCity_EventScript_Kecleon::
 	lock
 	faceplayer
-	checkitem 0x120, 0x1
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, FortreeCity_EventScript_001DFE7A
-	loadword 0x0, 0x081E00B0
-	callstd 0x4
+	checkitem ITEM_DEVON_SCOPE
+	goto_if_eq VAR_RESULT, TRUE, FortreeCity_EventScript_AskUseDevonScope
+	msgbox FortreeCity_Text_SomethingUnseeable, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_EventScript_001DFE7A::
-	loadword 0x0, 0x081E00C0
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, FortreeCity_EventScript_001DFE8F
+FortreeCity_EventScript_AskUseDevonScope::
+	msgbox FortreeCity_Text_UnseeableUseDevonScope, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, FortreeCity_EventScript_UseDevonScope
 	release
 	end
 
-FortreeCity_EventScript_001DFE8F::
-	loadword 0x0, 0x081E00E1
-	callstd 0x4
+FortreeCity_EventScript_UseDevonScope::
+	msgbox FortreeCity_Text_UsedDevonScopePokemonFled, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x0824344A
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, 0x0824344A @ Movement_KecleonAppears remains in a global raw range.
+	waitmovement 0
 	waitse
-	playmoncry 0x13D, 0x2
-	delay 0x28
+	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER
+	delay 40
+	@ JP opcode 0xC5 is waitdooranim here; US uses waitmoncry.
 	waitdooranim
-	applymovement 0x800F, 0x081DFEBE
-	waitmovement 0x0
-	removeobject 0x800F
-	setflag 0x127
+	applymovement VAR_LAST_TALKED, FortreeCity_Movement_KecleonFlee
+	waitmovement 0
+	removeobject VAR_LAST_TALKED
+	setflag FLAG_KECLEON_FLED_FORTREE
 	release
 	end
+
+FortreeCity_Movement_KecleonFlee: @ 0x081DFEBE
+	walk_right
+	step_end
+
+FortreeCity_Text_SawGiganticPokemonInSky: @ 0x081DFEC0
+	.string "だれも　しんじて　くれないけど\n"
+	.string "おおきな　ポケモンが　からだを　くねらせ\l"
+	.string "そらを　とんでいるのを　みたんだ⋯⋯\p"
+	.string "そいつは　131ばん　すいどうの　ほうへ\n"
+	.string "とんでいったよ⋯⋯\p"
+	.string "⋯⋯ところで\n"
+	.string "なんか　きみ　コゲくさいね\p"
+	.string "かざんに　でも　いってきた？$"
+
+FortreeCity_Text_SomethingBlockingGym: @ 0x081DFF3B
+	.string "ポケモンジムに　いきたいのに\n"
+	.string "なにかが　みちを　ふさいでいるのよ！\p"
+	.string "せっかく　120ばん　どうろで\n"
+	.string "ポケモン　そだてて　きたのに！$"
+
+FortreeCity_Text_ThisTimeIllBeatWinona: @ 0x081DFF7D
+	.string "あたしの　じまんの　ポケモンで\n"
+	.string "こんどこそ　ナギさんに　かってみせるわ！$"
+
+FortreeCity_Text_TreesGrowByDrinkingRainwater: @ 0x081DFFA2
+	.string "あめが　じめんに　すいこまれて\n"
+	.string "その　みずを　すって　きがそだつ⋯⋯\p"
+	.string "みずと　つちが　りょうほう　あるから\n"
+	.string "この　ヒワマキシティも　あるのよね$"
+
+FortreeCity_Text_EveryoneHealthyAndLively: @ 0x081DFFEA
+	.string "このまちは　きのうえに\n"
+	.string "いえを　たてて　くらしている⋯⋯\p"
+	.string "そのせいか　みんな　げんきで\n"
+	.string "イキイキと　している　のですよ\p"
+	.string "わしも　このまちに　きてから\n"
+	.string "30ねんほど　わかがえった　きぶんです$"
+
+FortreeCity_Text_BugPokemonComeThroughWindow: @ 0x081E0049
+	.string "きのうえで　くらすのは　いいんだけど\p"
+	.string "ときどき　まどの　そとから\n"
+	.string "むしポケモンが　はいって　きたりして\l"
+	.string "びっくり　しちゃうんだよね$"
+
+FortreeCity_Text_PokemonThatEvolveWhenTraded: @ 0x081E008B
+	.string "ともだちと　こうかんを　すると\n"
+	.string "しんか　する　ポケモンが　いるんだって！$"
+
+FortreeCity_Text_SomethingUnseeable: @ 0x081E00B0
+	.string "みえない　なにかが　いるようだ$"
+
+FortreeCity_Text_UnseeableUseDevonScope: @ 0x081E00C0
+	.string "みえない　なにかが　いるようだ\p"
+	.string "デボンスコープを　つかいますか？$"
+
+FortreeCity_Text_UsedDevonScopePokemonFled: @ 0x081E00E1
+	.string "{PLAYER}は\n"
+	.string "デボンスコープを　つかった！\p"
+	.string "とうめいに　なっていた\n"
+	.string "ポケモンの　すがたが　まるわかりだ！\p"
+	.string "ポケモンは\n"
+	.string "おどろいて　にげだした！$"
+
+FortreeCity_Text_CitySign: @ 0x081E0126
+	.string "ここは　ヒワマキ　シティ\n"
+	.string "きの　うえで　しぜんと　たわむれる　まち$"
+
+FortreeCity_Text_GymSign: @ 0x081E0148
+	.string "ヒワマキ　シティ　ポケモンジム\n"
+	.string "リーダー　ナギ\l"
+	.string "せかいに　はばたく　とりつかい！$"

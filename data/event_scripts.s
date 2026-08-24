@@ -384,7 +384,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MauvilleCity/scripts.inc"
 	.include "data/maps/RustboroCity/scripts.inc"
 	.include "data/maps/FortreeCity/scripts.inc"
-	.incbin "baserom_jp.gba", 0x1dfebe, 0x2b3
 	.include "data/maps/LilycoveCity/scripts.inc"
 	.incbin "baserom_jp.gba", 0x1e0696, 0xecf
 	.include "data/maps/MossdeepCity/scripts.inc"

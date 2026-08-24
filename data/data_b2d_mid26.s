@@ -895,13 +895,13 @@ gMapEvents_RUSTBORO_CITY: @ 0x084FF294
 	map_events RUSTBORO_CITY_EventObjects, RUSTBORO_CITY_EventWarps, RUSTBORO_CITY_EventCoordEvents, RUSTBORO_CITY_EventBgEvents
 	.globl FORTREE_CITY_EventObjects
 FORTREE_CITY_EventObjects: @ 0x084FF2A8
-	object_event 1, 23, 0, 31, 3, 4, 1, 0, 0, 0, 0, FortreeCity_EventScript_001DFE00, 0x0000
-	object_event 2, 8, 0, 32, 16, 3, 2, 1, 1, 0, 0, FortreeCity_EventScript_001DFE28, 0x0000
-	object_event 3, 34, 0, 32, 10, 3, 3, 0, 1, 0, 0, FortreeCity_EventScript_001DFE09, 0x0000
-	object_event 4, 7, 0, 11, 14, 4, 1, 0, 0, 0, 0, FortreeCity_EventScript_001DFE3A, 0x0000
-	object_event 5, 29, 0, 8, 10, 3, 1, 0, 0, 0, 0, FortreeCity_EventScript_001DFE31, 0x0000
-	object_event 6, 189, 0, 9, 16, 3, 8, 0, 0, 0, 0, FortreeCity_EventScript_001DFE43, 0x0000
-	object_event 7, 204, 0, 25, 8, 3, 76, 1, 1, 0, 0, FortreeCity_EventScript_001DFE5E, 0x03C9
+	object_event 1, 23, 0, 31, 3, 4, 1, 0, 0, 0, 0, FortreeCity_EventScript_Man, 0x0000
+	object_event 2, 8, 0, 32, 16, 3, 2, 1, 1, 0, 0, FortreeCity_EventScript_Girl, 0x0000
+	object_event 3, 34, 0, 32, 10, 3, 3, 0, 1, 0, 0, FortreeCity_EventScript_Woman, 0x0000
+	object_event 4, 7, 0, 11, 14, 4, 1, 0, 0, 0, 0, FortreeCity_EventScript_Boy, 0x0000
+	object_event 5, 29, 0, 8, 10, 3, 1, 0, 0, 0, 0, FortreeCity_EventScript_OldMan, 0x0000
+	object_event 6, 189, 0, 9, 16, 3, 8, 0, 0, 0, 0, FortreeCity_EventScript_GameboyKid, 0x0000
+	object_event 7, 204, 0, 25, 8, 3, 76, 1, 1, 0, 0, FortreeCity_EventScript_Kecleon, 0x03C9
 	.globl FORTREE_CITY_EventWarps
 FORTREE_CITY_EventWarps: @ 0x084FF350
 	warp_def 5, 6, 0, 0, MAP_FORTREE_CITY_POKEMON_CENTER_1F
@@ -915,10 +915,10 @@ FORTREE_CITY_EventWarps: @ 0x084FF350
 	warp_def 37, 13, 0, 0, MAP_FORTREE_CITY_DECORATION_SHOP
 	.globl FORTREE_CITY_EventBgEvents
 FORTREE_CITY_EventBgEvents: @ 0x084FF398
-	bg_event 6, 9, 0, 0, FortreeCity_EventScript_001DFE4C, 0, 0
+	bg_event 6, 9, 0, 0, FortreeCity_EventScript_CitySign, 0, 0
 	bg_event 7, 6, 0, 1, 0x08242EFF, 0, 0
 	bg_event 5, 14, 0, 1, 0x08242EF6, 0, 0
-	bg_event 26, 10, 0, 0, FortreeCity_EventScript_001DFE55, 0, 0
+	bg_event 26, 10, 0, 0, FortreeCity_EventScript_GymSign, 0, 0
 	bg_event 6, 6, 0, 1, 0x08242EFF, 0, 0
 	bg_event 6, 14, 0, 1, 0x08242EF6, 0, 0
 	.globl gMapEvents_FORTREE_CITY
