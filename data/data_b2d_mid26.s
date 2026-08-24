@@ -2410,18 +2410,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/DewfordTown_House2/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_HOUSE2
 	.set gMapEvents_DEWFORD_TOWN_HOUSE2, DewfordTown_House2_MapEvents
-	.globl LAVARIDGE_TOWN_HERB_SHOP_EventObjects
-LAVARIDGE_TOWN_HERB_SHOP_EventObjects: @ 0x085064DC
-	object_event 1, 20, 0, 3, 2, 3, 8, 0, 0, 0, 0, 0x081F4186, 0x0000
-	object_event 2, 29, 0, 7, 5, 3, 1, 1, 1, 0, 0, 0x081F41B5, 0x0000
-	object_event 3, 21, 0, 9, 3, 3, 5, 1, 1, 0, 0, 0x081F41AC, 0x0000
-	.globl LAVARIDGE_TOWN_HERB_SHOP_EventWarps
-LAVARIDGE_TOWN_HERB_SHOP_EventWarps: @ 0x08506524
-	warp_def 3, 7, 0, 0, MAP_LAVARIDGE_TOWN
-	warp_def 4, 7, 0, 0, MAP_LAVARIDGE_TOWN
+	.include "data/maps/LavaridgeTown_HerbShop/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_HERB_SHOP
-gMapEvents_LAVARIDGE_TOWN_HERB_SHOP: @ 0x08506534
-	map_events LAVARIDGE_TOWN_HERB_SHOP_EventObjects, LAVARIDGE_TOWN_HERB_SHOP_EventWarps, 0, 0
+	.set gMapEvents_LAVARIDGE_TOWN_HERB_SHOP, LavaridgeTown_HerbShop_MapEvents
 	.globl LAVARIDGE_TOWN_GYM_1F_EventObjects
 LAVARIDGE_TOWN_GYM_1F_EventObjects: @ 0x08506548
 	object_event 1, 128, 0, 13, 9, 3, 8, 0, 0, 0, 0, 0x081F435F, 0x0000
