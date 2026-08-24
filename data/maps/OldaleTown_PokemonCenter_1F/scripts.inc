@@ -1,47 +1,63 @@
 @ OldaleTown_PokemonCenter_1F scripts (JP map g2 m2 @ 0x081F29A2)
 
 OldaleTown_PokemonCenter_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, OldaleTown_PokemonCenter_1F_EventScript_001F29AD
-	map_script MAP_SCRIPT_ON_RESUME, 0x0824790F
+	map_script MAP_SCRIPT_ON_TRANSITION, OldaleTown_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-OldaleTown_PokemonCenter_1F_EventScript_001F29AD::
-	setrespawn 0xE
-	call 0x08242978
+OldaleTown_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_OLDALE_TOWN
+	call Common_EventScript_UpdateBrineyLocation
 	end
 
-OldaleTown_PokemonCenter_1F_EventScript_001F29B6::
-	setvar 0x800B, 0x1
-	call 0x082429B8
+OldaleTown_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_OLDALE_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-OldaleTown_PokemonCenter_1F_EventScript_001F29C4::
-	loadword 0x0, 0x081F29F5
-	callstd 0x2
+OldaleTown_PokemonCenter_1F_EventScript_Gentleman::
+	msgbox OldaleTown_PokemonCenter_1F_Text_TrainersCanUsePC, MSGBOX_NPC
 	end
 
-OldaleTown_PokemonCenter_1F_EventScript_001F29CD::
-	loadword 0x0, 0x081F2A31
-	callstd 0x2
+OldaleTown_PokemonCenter_1F_EventScript_Boy::
+	msgbox OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat, MSGBOX_NPC
 	end
 
-OldaleTown_PokemonCenter_1F_EventScript_001F29D6::
+OldaleTown_PokemonCenter_1F_EventScript_Girl::
 	lock
 	faceplayer
-	checkflag 0x861
-	goto_if 0x1, OldaleTown_PokemonCenter_1F_EventScript_001F29EB
-	loadword 0x0, 0x081F2A73
-	callstd 0x4
+	goto_if_set FLAG_SYS_POKEDEX_GET, OldaleTown_PokemonCenter_1F_EventScript_WirelessClubAvailable
+	msgbox OldaleTown_PokemonCenter_1F_Text_WirelessClubNotAvailable, MSGBOX_DEFAULT
 	release
 	end
 
-OldaleTown_PokemonCenter_1F_EventScript_001F29EB::
-	loadword 0x0, 0x081F2AA9
-	callstd 0x4
+OldaleTown_PokemonCenter_1F_EventScript_WirelessClubAvailable::
+	msgbox OldaleTown_PokemonCenter_1F_Text_TradedInWirelessClub, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x1f29f5, 0xef
+OldaleTown_PokemonCenter_1F_Text_TrainersCanUsePC:
+	.string "すみっこに　おいてある　パソコンは\n"
+	.string "ポケモントレーナーの　ための　ものなんだ\p"
+	.string "きみも　じゆうに　つかって　いいんだよ！$"
+
+OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat:
+	.string "ポケモンセンターって　すごいよな！\p"
+	.string "ポケモン　なんびき　あずけても\n"
+	.string "おかねが　かからないから\l"
+	.string "どんな　ときでも　あんしん　だよね！$"
+
+OldaleTown_PokemonCenter_1F_Text_WirelessClubNotAvailable:
+	.string "2かいの　ポケモン　ワイヤレス　クラブは\n"
+	.string "つい　さいきん　できたの\p"
+	.string "でも　まだ\n"
+	.string "ちょうせいちゅう　ですって$"
+
+OldaleTown_PokemonCenter_1F_Text_TradedInWirelessClub:
+	.string "2かいの　ポケモン　ワイヤレス　クラブは\n"
+	.string "つい　さいきん　できたの\p"
+	.string "あたし　さっそく\n"
+	.string "ポケモンこうかん　しちゃった！$"

@@ -2420,20 +2420,9 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/OldaleTown_House2/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_HOUSE2
 	.set gMapEvents_OLDALE_TOWN_HOUSE2, OldaleTown_House2_MapEvents
-	.globl OLDALE_TOWN_POKEMON_CENTER_1F_EventObjects
-OLDALE_TOWN_POKEMON_CENTER_1F_EventObjects: @ 0x08505F70
-	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, OldaleTown_PokemonCenter_1F_EventScript_001F29B6, 0x0000
-	object_event 2, 48, 0, 4, 4, 3, 8, 0, 0, 0, 0, OldaleTown_PokemonCenter_1F_EventScript_001F29C4, 0x0000
-	object_event 3, 7, 0, 10, 6, 3, 10, 0, 0, 0, 0, OldaleTown_PokemonCenter_1F_EventScript_001F29CD, 0x0000
-	object_event 4, 14, 0, 3, 7, 3, 10, 1, 1, 0, 0, OldaleTown_PokemonCenter_1F_EventScript_001F29D6, 0x0000
-	.globl OLDALE_TOWN_POKEMON_CENTER_1F_EventWarps
-OLDALE_TOWN_POKEMON_CENTER_1F_EventWarps: @ 0x08505FD0
-	warp_def 7, 8, 3, 2, MAP_OLDALE_TOWN
-	warp_def 6, 8, 3, 2, MAP_OLDALE_TOWN
-	warp_def 1, 6, 4, 0, MAP_OLDALE_TOWN_POKEMON_CENTER_2F
+	.include "data/maps/OldaleTown_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F
-gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F: @ 0x08505FE8
-	map_events OLDALE_TOWN_POKEMON_CENTER_1F_EventObjects, OLDALE_TOWN_POKEMON_CENTER_1F_EventWarps, 0, 0
+	.set gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F, OldaleTown_PokemonCenter_1F_MapEvents
 	.include "data/maps/OldaleTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F, OldaleTown_PokemonCenter_2F_MapEvents

@@ -78,6 +78,10 @@
 	.set gText_PlayerHouseBootPC, 0x08243B10
 	.globl gText_NicknameThisPokemon
 	.set gText_NicknameThisPokemon, 0x08243EDB
+	.globl Common_EventScript_UpdateBrineyLocation
+	.set Common_EventScript_UpdateBrineyLocation, 0x08242978
+	.globl Common_EventScript_PkmnCenterNurse
+	.set Common_EventScript_PkmnCenterNurse, 0x082429B8
 	.globl Common_EventScript_GetGiftMonPartySlot
 	.set Common_EventScript_GetGiftMonPartySlot, 0x082441B5
 	.globl Common_EventScript_NameReceivedBoxMon
@@ -108,6 +112,8 @@
 	.set CableClub_EventScript_TradeCenter, 0x08246DAD
 	.globl CableClub_EventScript_RecordCorner
 	.set CableClub_EventScript_RecordCorner, 0x08246ED6
+	.globl CableClub_OnResume
+	.set CableClub_OnResume, 0x0824790F
 	.globl SecretBase_EventScript_SetDecorationFlags
 	.set SecretBase_EventScript_SetDecorationFlags, 0x08245D90
 	.globl PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
