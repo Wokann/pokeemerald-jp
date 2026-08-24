@@ -2656,19 +2656,9 @@ gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
 	.include "data/maps/SlateportCity_House/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_HOUSE
 	.set gMapEvents_SLATEPORT_CITY_HOUSE, SlateportCity_House_MapEvents
-	.globl SLATEPORT_CITY_POKEMON_CENTER_1F_EventObjects
-SLATEPORT_CITY_POKEMON_CENTER_1F_EventObjects: @ 0x0850831C
-	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, SlateportCity_PokemonCenter_1F_EventScript_001FE81D, 0x0000
-	object_event 2, 49, 0, 2, 3, 3, 8, 0, 0, 0, 0, SlateportCity_PokemonCenter_1F_EventScript_001FE82B, 0x0000
-	object_event 3, 34, 0, 10, 7, 3, 10, 0, 0, 0, 0, SlateportCity_PokemonCenter_1F_EventScript_001FE834, 0x0000
-	.globl SLATEPORT_CITY_POKEMON_CENTER_1F_EventWarps
-SLATEPORT_CITY_POKEMON_CENTER_1F_EventWarps: @ 0x08508364
-	warp_def 7, 8, 3, 0, MAP_SLATEPORT_CITY
-	warp_def 6, 8, 3, 0, MAP_SLATEPORT_CITY
-	warp_def 1, 6, 4, 0, MAP_SLATEPORT_CITY_POKEMON_CENTER_2F
+	.include "data/maps/SlateportCity_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_1F
-gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_1F: @ 0x0850837C
-	map_events SLATEPORT_CITY_POKEMON_CENTER_1F_EventObjects, SLATEPORT_CITY_POKEMON_CENTER_1F_EventWarps, 0, 0
+	.set gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_1F, SlateportCity_PokemonCenter_1F_MapEvents
 	.globl SLATEPORT_CITY_POKEMON_CENTER_2F_EventObjects
 SLATEPORT_CITY_POKEMON_CENTER_2F_EventObjects: @ 0x08508390
 	object_event 1, 85, 0, 6, 2, 0, 8, 1, 1, 0, 0, 0x08244185, 0x0000

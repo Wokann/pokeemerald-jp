@@ -1,31 +1,38 @@
-@ SlateportCity_PokemonCenter_1F scripts (JP map g9 m11 @ 0x081FE809)
-
 SlateportCity_PokemonCenter_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_PokemonCenter_1F_EventScript_001FE814
-	map_script MAP_SCRIPT_ON_RESUME, 0x0824790F
+	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-SlateportCity_PokemonCenter_1F_EventScript_001FE814::
-	setrespawn 0x4
-	call 0x08242978
+SlateportCity_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_SLATEPORT_CITY
+	call Common_EventScript_UpdateBrineyLocation
 	end
 
-SlateportCity_PokemonCenter_1F_EventScript_001FE81D::
-	setvar 0x800B, 0x1
-	call 0x082429B8
+SlateportCity_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_SLATEPORT_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-SlateportCity_PokemonCenter_1F_EventScript_001FE82B::
-	loadword 0x0, 0x081FE83D
-	callstd 0x2
+SlateportCity_PokemonCenter_1F_EventScript_Sailor::
+	msgbox SlateportCity_PokemonCenter_1F_Text_RaiseDifferentTypesOfPokemon, MSGBOX_NPC
 	end
 
-SlateportCity_PokemonCenter_1F_EventScript_001FE834::
-	loadword 0x0, 0x081FE89A
-	callstd 0x2
+SlateportCity_PokemonCenter_1F_EventScript_Woman::
+	msgbox SlateportCity_PokemonCenter_1F_Text_TradedMonWithFriend, MSGBOX_NPC
 	end
 
-	.incbin "baserom_jp.gba", 0x1fe83d, 0x95
+SlateportCity_PokemonCenter_1F_Text_RaiseDifferentTypesOfPokemon:
+	.string "しょうぶの　コツ⋯⋯\p"
+	.string "いろんな　ポケモンを\n"
+	.string "バランスよく　そだてることじゃ　ないか？\p"
+	.string "いっぴきだけ　つよくても\n"
+	.string "にがてな　ポケモンに　であってしまうと\l"
+	.string "ても　あしも　でなくなりそうだぜ$"
+
+SlateportCity_PokemonCenter_1F_Text_TradedMonWithFriend:
+	.string "ともだちと　ポケモンこうかん　するでしょ\p"
+	.string "ポケモンが　どうぐを　もっていると\n"
+	.string "2ばい　うれしく　なるよねー！！$"
