@@ -2864,78 +2864,24 @@ FORTREE_CITY_POKEMON_CENTER_2F_EventWarps: @ 0x085095AC
 	.globl gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F
 gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F: @ 0x085095C4
 	map_events FORTREE_CITY_POKEMON_CENTER_2F_EventObjects, FORTREE_CITY_POKEMON_CENTER_2F_EventWarps, 0, 0
-	.globl FORTREE_CITY_MART_EventObjects
-FORTREE_CITY_MART_EventObjects: @ 0x085095D8
-	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x08204DBE, 0x0000
-	object_event 2, 20, 0, 9, 3, 3, 7, 0, 0, 0, 0, 0x08204DF0, 0x0000
-	object_event 3, 14, 0, 8, 5, 3, 2, 1, 1, 0, 0, 0x08204DF9, 0x0000
-	object_event 4, 9, 0, 5, 6, 3, 10, 1, 1, 0, 0, 0x08204E02, 0x0000
-	.globl FORTREE_CITY_MART_EventWarps
-FORTREE_CITY_MART_EventWarps: @ 0x08509638
-	warp_def 3, 7, 0, 3, MAP_FORTREE_CITY
-	warp_def 4, 7, 0, 3, MAP_FORTREE_CITY
+	.include "data/maps/FortreeCity_Mart/events.inc"
 	.globl gMapEvents_FORTREE_CITY_MART
-gMapEvents_FORTREE_CITY_MART: @ 0x08509648
-	map_events FORTREE_CITY_MART_EventObjects, FORTREE_CITY_MART_EventWarps, 0, 0
-	.globl FORTREE_CITY_HOUSE2_EventObjects
-FORTREE_CITY_HOUSE2_EventObjects: @ 0x0850965C
-	object_event 1, 22, 0, 2, 3, 3, 5, 1, 0, 0, 0, 0x08204E9C, 0x0000
-	object_event 2, 21, 0, 6, 3, 3, 9, 1, 0, 0, 0, 0x08276A3A, 0x0000
-	.globl FORTREE_CITY_HOUSE2_EventWarps
-FORTREE_CITY_HOUSE2_EventWarps: @ 0x0850968C
-	warp_def 3, 5, 0, 4, MAP_FORTREE_CITY
-	warp_def 4, 5, 0, 4, MAP_FORTREE_CITY
+	.set gMapEvents_FORTREE_CITY_MART, FortreeCity_Mart_MapEvents
+	.include "data/maps/FortreeCity_House2/events.inc"
 	.globl gMapEvents_FORTREE_CITY_HOUSE2
-gMapEvents_FORTREE_CITY_HOUSE2: @ 0x0850969C
-	map_events FORTREE_CITY_HOUSE2_EventObjects, FORTREE_CITY_HOUSE2_EventWarps, 0, 0
-	.globl FORTREE_CITY_HOUSE3_EventObjects
-FORTREE_CITY_HOUSE3_EventObjects: @ 0x085096B0
-	object_event 1, 39, 0, 0, 3, 3, 10, 0, 0, 0, 0, 0x082050D1, 0x0000
-	object_event 2, 38, 0, 5, 4, 3, 2, 1, 1, 0, 0, 0x082050DA, 0x0000
-	.globl FORTREE_CITY_HOUSE3_EventWarps
-FORTREE_CITY_HOUSE3_EventWarps: @ 0x085096E0
-	warp_def 3, 5, 0, 5, MAP_FORTREE_CITY
-	warp_def 4, 5, 0, 5, MAP_FORTREE_CITY
+	.set gMapEvents_FORTREE_CITY_HOUSE2, FortreeCity_House2_MapEvents
+	.include "data/maps/FortreeCity_House3/events.inc"
 	.globl gMapEvents_FORTREE_CITY_HOUSE3
-gMapEvents_FORTREE_CITY_HOUSE3: @ 0x085096F0
-	map_events FORTREE_CITY_HOUSE3_EventObjects, FORTREE_CITY_HOUSE3_EventWarps, 0, 0
-	.globl FORTREE_CITY_HOUSE4_EventObjects
-FORTREE_CITY_HOUSE4_EventObjects: @ 0x08509704
-	object_event 1, 26, 0, 6, 4, 3, 2, 1, 1, 0, 0, 0x082051A3, 0x0000
-	object_event 2, 13, 0, 1, 3, 3, 8, 0, 0, 0, 0, 0x082051AC, 0x0000
-	object_event 3, 211, 0, 2, 3, 3, 8, 0, 0, 0, 0, 0x08205242, 0x03A5
-	.globl FORTREE_CITY_HOUSE4_EventWarps
-FORTREE_CITY_HOUSE4_EventWarps: @ 0x0850974C
-	warp_def 3, 5, 0, 6, MAP_FORTREE_CITY
-	warp_def 4, 5, 0, 6, MAP_FORTREE_CITY
+	.set gMapEvents_FORTREE_CITY_HOUSE3, FortreeCity_House3_MapEvents
+	.include "data/maps/FortreeCity_House4/events.inc"
 	.globl gMapEvents_FORTREE_CITY_HOUSE4
-gMapEvents_FORTREE_CITY_HOUSE4: @ 0x0850975C
-	map_events FORTREE_CITY_HOUSE4_EventObjects, FORTREE_CITY_HOUSE4_EventWarps, 0, 0
-	.globl FORTREE_CITY_HOUSE5_EventObjects
-FORTREE_CITY_HOUSE5_EventObjects: @ 0x08509770
-	object_event 1, 18, 0, 6, 4, 3, 20, 0, 0, 0, 0, 0x08205344, 0x0000
-	object_event 2, 208, 0, 6, 3, 3, 8, 0, 0, 0, 0, 0x08205356, 0x0000
-	object_event 3, 19, 0, 2, 4, 3, 10, 0, 0, 0, 0, 0x0820534D, 0x0000
-	.globl FORTREE_CITY_HOUSE5_EventWarps
-FORTREE_CITY_HOUSE5_EventWarps: @ 0x085097B8
-	warp_def 3, 5, 0, 7, MAP_FORTREE_CITY
-	warp_def 4, 5, 0, 7, MAP_FORTREE_CITY
+	.set gMapEvents_FORTREE_CITY_HOUSE4, FortreeCity_House4_MapEvents
+	.include "data/maps/FortreeCity_House5/events.inc"
 	.globl gMapEvents_FORTREE_CITY_HOUSE5
-gMapEvents_FORTREE_CITY_HOUSE5: @ 0x085097C8
-	map_events FORTREE_CITY_HOUSE5_EventObjects, FORTREE_CITY_HOUSE5_EventWarps, 0, 0
-	.globl FORTREE_CITY_DECORATION_SHOP_EventObjects
-FORTREE_CITY_DECORATION_SHOP_EventObjects: @ 0x085097DC
-	object_event 1, 25, 0, 6, 5, 3, 1, 1, 1, 0, 0, 0x082053F1, 0x0000
-	object_event 2, 14, 0, 0, 4, 3, 9, 0, 0, 0, 0, 0x082053FA, 0x0000
-	object_event 3, 83, 0, 1, 2, 3, 8, 0, 0, 0, 0, 0x08205403, 0x0000
-	object_event 4, 83, 0, 6, 2, 3, 8, 0, 0, 0, 0, 0x08205430, 0x0000
-	.globl FORTREE_CITY_DECORATION_SHOP_EventWarps
-FORTREE_CITY_DECORATION_SHOP_EventWarps: @ 0x0850983C
-	warp_def 3, 5, 0, 8, MAP_FORTREE_CITY
-	warp_def 4, 5, 0, 8, MAP_FORTREE_CITY
+	.set gMapEvents_FORTREE_CITY_HOUSE5, FortreeCity_House5_MapEvents
+	.include "data/maps/FortreeCity_DecorationShop/events.inc"
 	.globl gMapEvents_FORTREE_CITY_DECORATION_SHOP
-gMapEvents_FORTREE_CITY_DECORATION_SHOP: @ 0x0850984C
-	map_events FORTREE_CITY_DECORATION_SHOP_EventObjects, FORTREE_CITY_DECORATION_SHOP_EventWarps, 0, 0
+	.set gMapEvents_FORTREE_CITY_DECORATION_SHOP, FortreeCity_DecorationShop_MapEvents
 	.globl LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventObjects
 LILYCOVE_CITY_COVE_LILY_MOTEL_1F_EventObjects: @ 0x08509860
 	object_event 1, 19, 0, 10, 3, 3, 7, 0, 0, 0, 0, 0x082054FD, 0x0000

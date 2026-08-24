@@ -7,4 +7,4 @@ FortreeCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-	.incbin "baserom_jp.gba", 0x204dab, 0x143b
+	.incbin "baserom_jp.gba", 0x204dab, 0x12
