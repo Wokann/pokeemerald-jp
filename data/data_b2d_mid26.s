@@ -2431,20 +2431,9 @@ gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
 	.include "data/maps/LavaridgeTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F, LavaridgeTown_PokemonCenter_2F_MapEvents
-	.globl FALLARBOR_TOWN_MART_EventObjects
-FALLARBOR_TOWN_MART_EventObjects: @ 0x08506A00
-	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x081F5099, 0x0000
-	object_event 2, 20, 0, 5, 3, 3, 2, 1, 1, 0, 0, 0x081F50CC, 0x0000
-	object_event 3, 25, 0, 9, 6, 3, 8, 0, 0, 0, 0, 0x081F50D5, 0x0000
-	object_event 4, 203, 0, 2, 5, 3, 1, 1, 1, 0, 0, 0x081F50DE, 0x0000
-	object_event 5, 10, 0, 7, 2, 3, 7, 0, 0, 0, 0, 0x082769D2, 0x0000
-	.globl FALLARBOR_TOWN_MART_EventWarps
-FALLARBOR_TOWN_MART_EventWarps: @ 0x08506A78
-	warp_def 3, 7, 0, 0, MAP_FALLARBOR_TOWN
-	warp_def 4, 7, 0, 0, MAP_FALLARBOR_TOWN
+	.include "data/maps/FallarborTown_Mart/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_MART
-gMapEvents_FALLARBOR_TOWN_MART: @ 0x08506A88
-	map_events FALLARBOR_TOWN_MART_EventObjects, FALLARBOR_TOWN_MART_EventWarps, 0, 0
+	.set gMapEvents_FALLARBOR_TOWN_MART, FallarborTown_Mart_MapEvents
 	.globl FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventObjects
 FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventObjects: @ 0x08506A9C
 	object_event 1, 44, 0, 6, 5, 3, 8, 1, 1, 0, 0, FallarborTown_BattleTentLobby_EventScript_001F5320, 0x0000

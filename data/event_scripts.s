@@ -632,6 +632,9 @@ EventScript_PC: @ 0x8242E1E
 	@ The Lavaridge House event table references the shared Mimic tutor script.
 	.globl LavaridgeTown_House_EventScript_MimicTutor
 	.set LavaridgeTown_House_EventScript_MimicTutor, 0x0827696A
+	@ The Fallarbor Mart event table references the shared Metronome tutor script.
+	.globl FallarborTown_Mart_EventScript_MetronomeTutor
+	.set FallarborTown_Mart_EventScript_MetronomeTutor, 0x082769D2
 
 	.globl EventScript_UseSurf
 EventScript_UseSurf: @ 0x8242F2C
