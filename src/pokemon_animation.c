@@ -7,6 +7,18 @@ extern void (*const sMonAnimFunctions[])(struct Sprite *sprite);
 #include "task.h"
 #include "main.h"
 
+struct PokemonAnimData
+{
+    u16 delay;
+    s16 speed;
+    s16 runs;
+    s16 rotation;
+    s16 data;
+    s16 unused;
+};
+
+extern struct PokemonAnimData gUnknown_3001240[];
+
 void MonAnimDummySpriteCallback(struct Sprite *sprite) {}
 __attribute__((naked)) void SetPosForRotation(struct Sprite *sprite, u16 index, s16 amplitudeX, s16 amplitudeY)
 {
@@ -8263,97 +8275,33 @@ void Anim_VertialShake_Slow(struct Sprite *sprite)
 }
 
 
-__attribute__((naked)) void Anim_Twist_Twice(struct Sprite *sprite)
+void Anim_Twist_Twice(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182D20\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	strh r3, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FCDC\n\t"
-        "	ldr r0, _08182D24\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182D20: .4byte gUnknown_3001240\n\t"
-        "_08182D24: .4byte Twist + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 1024;
+    gUnknown_3001240[id].delay = 0;
+    gUnknown_3001240[id].runs = 2;
+    Twist(sprite);
+    sprite->callback = Twist;
 }
 
-__attribute__((naked)) void Anim_CircleCounterclockwise_Slow(struct Sprite *sprite)
+void Anim_CircleCounterclockwise_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0817F604\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	ldr r2, _08182D60\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	strh r0, [r1, #6]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_0817FE9C\n\t"
-        "	ldr r0, _08182D64\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182D60: .4byte gUnknown_3001240\n\t"
-        "_08182D64: .4byte CircleCounterclockwise + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id = sprite->data[0] = AddNewAnim();
+
+    gUnknown_3001240[id].rotation = 512;
+    gUnknown_3001240[id].data = 3;
+    gUnknown_3001240[id].speed = 12;
+    CircleCounterclockwise(sprite);
+    sprite->callback = CircleCounterclockwise;
 }
 
-__attribute__((naked)) void Anim_VerticalShakeTwice_Slow(struct Sprite *sprite)
+void Anim_VerticalShakeTwice_Slow(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_081801C8\n\t"
-        "	ldr r0, _08182D80\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08182D80: .4byte VerticalShakeTwice + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] = 24;
+    VerticalShakeTwice(sprite);
+    sprite->callback = VerticalShakeTwice;
 }
 
 __attribute__((naked)) void Anim_VerticalSlideWobble_Small(struct Sprite *sprite)
