@@ -26,6 +26,9 @@ gJPText_00243977: @ 0x08243977
 	.string "ざんねん！\n"
 	.string "バッグが　いっぱいだ⋯⋯$"
 
+	.globl gText_TooBadBagIsFull
+	.set gText_TooBadBagIsFull, gJPText_00243977
+
 	.incbin "baserom_jp.gba", 0x24398a, 0xf6
 	.globl gJPText_00243A80
 gJPText_00243A80: @ 0x08243A80

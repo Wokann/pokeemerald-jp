@@ -1150,34 +1150,9 @@ LITTLEROOT_TOWN_EventBgEvents: @ 0x084FFF1C
 	.globl gMapEvents_LITTLEROOT_TOWN
 gMapEvents_LITTLEROOT_TOWN: @ 0x084FFF4C
 	map_events LITTLEROOT_TOWN_EventObjects, LITTLEROOT_TOWN_EventWarps, LITTLEROOT_TOWN_EventCoordEvents, LITTLEROOT_TOWN_EventBgEvents
-	.globl OLDALE_TOWN_EventObjects
-OLDALE_TOWN_EventObjects: @ 0x084FFF60
-	object_event 1, 14, 0, 16, 11, 3, 9, 0, 0, 0, 0, OldaleTown_EventScript_001E47D3, 0x0000
-	object_event 2, 83, 0, 13, 7, 3, 8, 0, 0, 0, 0, OldaleTown_EventScript_001E47DC, 0x0000
-	object_event 3, 39, 0, 8, 9, 3, 10, 0, 0, 0, 0, OldaleTown_EventScript_001E48FF, 0x0000
-	object_event 4, 240, 0, 11, 19, 3, 7, 1, 1, 0, 0, OldaleTown_EventScript_001E4950, 0x03D3
-	.globl OLDALE_TOWN_EventWarps
-OLDALE_TOWN_EventWarps: @ 0x084FFFC0
-	warp_def 5, 7, 0, 0, MAP_OLDALE_TOWN_HOUSE1
-	warp_def 15, 16, 0, 0, MAP_OLDALE_TOWN_HOUSE2
-	warp_def 6, 16, 0, 0, MAP_OLDALE_TOWN_POKEMON_CENTER_1F
-	warp_def 14, 6, 0, 0, MAP_OLDALE_TOWN_MART
-	.globl OLDALE_TOWN_EventCoordEvents
-OLDALE_TOWN_EventCoordEvents: @ 0x084FFFE0
-	coord_event 0, 10, 3, 16465, 0, OldaleTown_EventScript_001E491F
-	coord_event 8, 19, 3, 16583, 1, OldaleTown_EventScript_001E4966
-	coord_event 9, 19, 3, 16583, 1, OldaleTown_EventScript_001E4986
-	coord_event 10, 19, 3, 16583, 1, OldaleTown_EventScript_001E49A6
-	.globl OLDALE_TOWN_EventBgEvents
-OLDALE_TOWN_EventBgEvents: @ 0x08500020
-	bg_event 11, 9, 0, 0, OldaleTown_EventScript_001E47CA, 0, 0
-	bg_event 7, 16, 0, 1, 0x08242EFF, 0, 0
-	bg_event 15, 6, 0, 1, 0x08242EF6, 0, 0
-	bg_event 8, 16, 0, 1, 0x08242EFF, 0, 0
-	bg_event 16, 6, 0, 1, 0x08242EF6, 0, 0
+	.include "data/maps/OldaleTown/events.inc"
 	.globl gMapEvents_OLDALE_TOWN
-gMapEvents_OLDALE_TOWN: @ 0x0850005C
-	map_events OLDALE_TOWN_EventObjects, OLDALE_TOWN_EventWarps, OLDALE_TOWN_EventCoordEvents, OLDALE_TOWN_EventBgEvents
+	.set gMapEvents_OLDALE_TOWN, OldaleTown_MapEvents
 	.globl DEWFORD_TOWN_EventObjects
 DEWFORD_TOWN_EventObjects: @ 0x08500070
 	object_event 1, 20, 0, 7, 12, 3, 5, 1, 0, 0, 0, DewfordTown_EventScript_001E4D01, 0x0000

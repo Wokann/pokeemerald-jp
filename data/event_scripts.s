@@ -590,6 +590,11 @@ EventScript_HiddenItemScript: @ 0x8242D49
 EventScript_PC: @ 0x8242E1E
 	.include "data/scripts/EventScript_PC.inc"
 
+	.globl Common_EventScript_ShowPokemartSign
+	.set Common_EventScript_ShowPokemartSign, 0x08242EF6
+	.globl Common_EventScript_ShowPokemonCenterSign
+	.set Common_EventScript_ShowPokemonCenterSign, 0x08242EFF
+
 	.globl EventScript_UseSurf
 EventScript_UseSurf: @ 0x8242F2C
 	.include "data/scripts/gUnknown_8242F2C.inc"

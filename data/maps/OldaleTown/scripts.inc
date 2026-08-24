@@ -1,230 +1,395 @@
 @ OldaleTown scripts (JP map g0 m10 @ 0x081E4782)
 
 OldaleTown_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, OldaleTown_EventScript_001E4788
+	map_script MAP_SCRIPT_ON_TRANSITION, OldaleTown_OnTransition
 	.byte 0
 
-OldaleTown_EventScript_001E4788::
-	call 0x08242F63
-	setflag 0x870
-	checkflag 0x74
-	call_if 0x0, OldaleTown_EventScript_001E47B2
-	checkflag 0x84
-	call_if 0x0, OldaleTown_EventScript_001E47BE
-	checkflag 0x74
-	call_if 0x1, OldaleTown_EventScript_001E47AC
+OldaleTown_OnTransition:
+	call Common_EventScript_SetupRivalGfxId
+	setflag FLAG_VISITED_OLDALE_TOWN
+	call_if_unset FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_BlockWestEntrance
+	call_if_unset FLAG_RECEIVED_POTION_OLDALE, OldaleTown_EventScript_MoveMartEmployee
+	call_if_set FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_SetOldaleState
 	end
 
-OldaleTown_EventScript_001E47AC::
-	setvar 0x4051, 0x1
+@ This script seems pointless because nothing uses VAR_OLDALE_TOWN_STATE.
+OldaleTown_EventScript_SetOldaleState::
+	setvar VAR_OLDALE_TOWN_STATE, 1
 	return
 
-OldaleTown_EventScript_001E47B2::
-	setobjectxyperm 0x3, 0x1, 0xB
-	setobjectmovementtype 0x3, 0x9
+OldaleTown_EventScript_BlockWestEntrance::
+	setobjectxyperm LOCALID_FOOTPRINTS_MAN, 1, 11
+	setobjectmovementtype LOCALID_FOOTPRINTS_MAN, MOVEMENT_TYPE_FACE_LEFT
 	return
 
-OldaleTown_EventScript_001E47BE::
-	setobjectxyperm 0x2, 0xD, 0xE
-	setobjectmovementtype 0x2, 0x8
+OldaleTown_EventScript_MoveMartEmployee::
+	setobjectxyperm LOCALID_OLDALE_MART_EMPLOYEE, 13, 14
+	setobjectmovementtype LOCALID_OLDALE_MART_EMPLOYEE, MOVEMENT_TYPE_FACE_DOWN
 	return
 
-OldaleTown_EventScript_001E47CA::
-	loadword 0x0, 0x081E4C38
-	callstd 0x3
+OldaleTown_EventScript_TownSign::
+	msgbox OldaleTown_Text_TownSign, MSGBOX_SIGN
 	end
 
-OldaleTown_EventScript_001E47D3::
-	loadword 0x0, 0x081E4A6E
-	callstd 0x2
+OldaleTown_EventScript_Girl::
+	msgbox OldaleTown_Text_SavingMyProgress, MSGBOX_NPC
 	end
 
-OldaleTown_EventScript_001E47DC::
+OldaleTown_EventScript_MartEmployee::
 	lock
 	faceplayer
-	checkflag 0x84
-	goto_if 0x1, OldaleTown_EventScript_001E4899
-	checkflag 0x1
-	goto_if 0x1, OldaleTown_EventScript_001E4899
-	setflag 0x1
-	playbgm 0x1A4, 0x0
-	loadword 0x0, 0x081E4A8A
-	callstd 0x4
+	goto_if_set FLAG_RECEIVED_POTION_OLDALE, OldaleTown_EventScript_ExplainPotion
+	goto_if_set FLAG_TEMP_1, OldaleTown_EventScript_ExplainPotion
+	setflag FLAG_TEMP_1
+	playbgm MUS_FOLLOW_ME, FALSE
+	msgbox OldaleTown_Text_IWorkAtPokemonMart, MSGBOX_DEFAULT
 	closemessage
-	copyvar 0x8000, 0x800C
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, OldaleTown_EventScript_001E4827
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, OldaleTown_EventScript_001E483E
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, OldaleTown_EventScript_001E4855
+	switch VAR_FACING
+	case DIR_SOUTH, OldaleTown_EventScript_GoToMartSouth
+	case DIR_NORTH, OldaleTown_EventScript_GoToMartNorth
+	case DIR_EAST, OldaleTown_EventScript_GoToMartEast
 	end
 
-OldaleTown_EventScript_001E4827::
-	applymovement 0x2, 0x081E48B7
-	applymovement 0xFF, 0x081E48E1
-	waitmovement 0x0
-	goto OldaleTown_EventScript_001E486C
+OldaleTown_EventScript_GoToMartSouth::
+	applymovement LOCALID_OLDALE_MART_EMPLOYEE, OldaleTown_Movement_EmployeeSouth
+	applymovement LOCALID_PLAYER, OldaleTown_Movement_PlayerSouth
+	waitmovement 0
+	goto OldaleTown_EventScript_ExplainPokemonMart
 	end
 
-OldaleTown_EventScript_001E483E::
-	applymovement 0x2, 0x081E48C2
-	applymovement 0xFF, 0x081E48EB
-	waitmovement 0x0
-	goto OldaleTown_EventScript_001E486C
+OldaleTown_EventScript_GoToMartNorth::
+	applymovement LOCALID_OLDALE_MART_EMPLOYEE, OldaleTown_Movement_EmployeeNorth
+	applymovement LOCALID_PLAYER, OldaleTown_Movement_PlayerNorth
+	waitmovement 0
+	goto OldaleTown_EventScript_ExplainPokemonMart
 	end
 
-OldaleTown_EventScript_001E4855::
-	applymovement 0xFF, 0x081E48D9
-	applymovement 0x2, 0x081E48AE
-	waitmovement 0x0
-	goto OldaleTown_EventScript_001E486C
+OldaleTown_EventScript_GoToMartEast::
+	applymovement LOCALID_PLAYER, OldaleTown_Movement_PlayerEast
+	applymovement LOCALID_OLDALE_MART_EMPLOYEE, OldaleTown_Movement_EmployeeEast
+	waitmovement 0
+	goto OldaleTown_EventScript_ExplainPokemonMart
 	end
 
-OldaleTown_EventScript_001E486C::
-	loadword 0x0, 0x081E4AB3
-	callstd 0x4
-	setorcopyvar 0x8000, 0xD
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, OldaleTown_EventScript_001E48A3
-	loadword 0x0, 0x081E4B0F
-	callstd 0x4
-	setflag 0x84
+OldaleTown_EventScript_ExplainPokemonMart::
+	msgbox OldaleTown_Text_ThisIsAPokemonMart, MSGBOX_DEFAULT
+	giveitem ITEM_POTION
+	goto_if_eq VAR_RESULT, FALSE, OldaleTown_EventScript_BagIsFull
+	msgbox OldaleTown_Text_PotionExplanation, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_POTION_OLDALE
 	fadedefaultbgm
 	release
 	end
 
-OldaleTown_EventScript_001E4899::
-	loadword 0x0, 0x081E4B0F
-	callstd 0x4
+OldaleTown_EventScript_ExplainPotion::
+	msgbox OldaleTown_Text_PotionExplanation, MSGBOX_DEFAULT
 	release
 	end
 
-OldaleTown_EventScript_001E48A3::
-	loadword 0x0, gJPText_00243977
-	callstd 0x4
+OldaleTown_EventScript_BagIsFull::
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	fadedefaultbgm
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x1e48ae, 0x51
-OldaleTown_EventScript_001E48FF::
+OldaleTown_Movement_EmployeeEast:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+OldaleTown_Movement_EmployeeSouth:
+	walk_left
+	walk_up
+	walk_up
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+OldaleTown_Movement_EmployeeNorth:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_in_place_faster_down
+	step_end
+
+OldaleTown_Movement_Unknown1:
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	delay_8
+	walk_in_place_faster_down
+	step_end
+
+OldaleTown_Movement_PlayerEast:
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+OldaleTown_Movement_PlayerSouth:
+	delay_16
+	delay_16
+	delay_16
+	delay_16
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+OldaleTown_Movement_PlayerNorth:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+OldaleTown_Movement_Unknown2:
+	walk_left
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+OldaleTown_EventScript_FootprintsMan::
 	lock
 	faceplayer
-	checkflag 0x74
-	goto_if 0x1, OldaleTown_EventScript_001E4946
-	loadword 0x0, 0x081E4B8B
-	callstd 0x4
+	goto_if_set FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_NotBlockingPath
+	msgbox OldaleTown_Text_DiscoveredFootprints, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x3, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_FOOTPRINTS_MAN, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-OldaleTown_EventScript_001E491F::
+OldaleTown_EventScript_BlockedPath::
 	lockall
-	applymovement 0xFF, 0x081E4A62
-	applymovement 0x3, 0x081E4A65
-	waitmovement 0x0
-	loadword 0x0, 0x081E4B44
-	callstd 0x4
+	applymovement LOCALID_PLAYER, OldaleTown_Movement_PlayerStepBack
+	applymovement LOCALID_FOOTPRINTS_MAN, OldaleTown_Movement_BackUp
+	waitmovement 0
+	msgbox OldaleTown_Text_WaitDontComeInHere, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x3, 0x081E4A6B
-	waitmovement 0x0
+	applymovement LOCALID_FOOTPRINTS_MAN, OldaleTown_Movement_ReturnToOriginalPosition
+	waitmovement 0
 	releaseall
 	end
 
-OldaleTown_EventScript_001E4946::
-	loadword 0x0, 0x081E4BBC
-	callstd 0x4
+OldaleTown_EventScript_NotBlockingPath::
+	msgbox OldaleTown_Text_FinishedSketchingFootprints, MSGBOX_DEFAULT
 	release
 	end
 
-OldaleTown_EventScript_001E4950::
+OldaleTown_EventScript_Rival::
 	lockall
-	applymovement 0x4, 0x08243621
-	waitmovement 0x0
-	setvar 0x8009, 0x0
-	goto OldaleTown_EventScript_001E49C6
+	applymovement LOCALID_OLDALE_RIVAL, Common_Movement_FacePlayer
+	waitmovement 0
+	setvar VAR_0x8009, 0
+	goto OldaleTown_EventScript_ShowRivalMessage
 	end
 
-OldaleTown_EventScript_001E4966::
+OldaleTown_EventScript_RivalTrigger1::
 	lockall
-	applymovement 0x4, 0x081E4A50
-	waitmovement 0x0
-	applymovement 0xFF, 0x0824362B
-	waitmovement 0x0
-	setvar 0x8009, 0x1
-	goto OldaleTown_EventScript_001E49C6
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer1
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	setvar VAR_0x8009, 1
+	goto OldaleTown_EventScript_ShowRivalMessage
 	end
 
-OldaleTown_EventScript_001E4986::
+OldaleTown_EventScript_RivalTrigger2::
 	lockall
-	applymovement 0x4, 0x081E4A53
-	waitmovement 0x0
-	applymovement 0xFF, 0x0824362B
-	waitmovement 0x0
-	setvar 0x8009, 0x1
-	goto OldaleTown_EventScript_001E49C6
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer2
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	setvar VAR_0x8009, 1
+	goto OldaleTown_EventScript_ShowRivalMessage
 	end
 
-OldaleTown_EventScript_001E49A6::
+OldaleTown_EventScript_RivalTrigger3::
 	lockall
-	applymovement 0x4, 0x081E4A55
-	waitmovement 0x0
-	applymovement 0xFF, 0x0824362B
-	waitmovement 0x0
-	setvar 0x8009, 0x1
-	goto OldaleTown_EventScript_001E49C6
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalApproachPlayer3
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	setvar VAR_0x8009, 1
+	goto OldaleTown_EventScript_ShowRivalMessage
 	end
 
-OldaleTown_EventScript_001E49C6::
+OldaleTown_EventScript_ShowRivalMessage::
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, OldaleTown_EventScript_001E49DE
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, OldaleTown_EventScript_001E49EC
+	goto_if_eq VAR_RESULT, MALE, OldaleTown_EventScript_ShowMayMessage
+	goto_if_eq VAR_RESULT, FEMALE, OldaleTown_EventScript_ShowBrendanMessage
 	end
 
-OldaleTown_EventScript_001E49DE::
-	loadword 0x0, 0x081E4BF3
-	callstd 0x4
-	goto OldaleTown_EventScript_001E49FA
+OldaleTown_EventScript_ShowMayMessage::
+	msgbox OldaleTown_Text_MayLetsGoBack, MSGBOX_DEFAULT
+	goto OldaleTown_EventScript_RivalFinish
 	end
 
-OldaleTown_EventScript_001E49EC::
-	loadword 0x0, 0x081E4C11
-	callstd 0x4
-	goto OldaleTown_EventScript_001E49FA
+OldaleTown_EventScript_ShowBrendanMessage::
+	msgbox OldaleTown_Text_BrendanLetsGoBack, MSGBOX_DEFAULT
+	goto OldaleTown_EventScript_RivalFinish
 	end
 
-OldaleTown_EventScript_001E49FA::
+OldaleTown_EventScript_RivalFinish::
 	closemessage
-	compare_var_to_value 0x8009, 0x0
-	call_if 0x1, OldaleTown_EventScript_001E4A28
-	compare_var_to_value 0x8009, 0x1
-	call_if 0x1, OldaleTown_EventScript_001E4A3E
-	applymovement 0x4, 0x081E4A57
-	waitmovement 0x0
-	removeobject 0x4
-	setvar 0x40C7, 0x2
-	setflag 0x3D3
+	call_if_eq VAR_0x8009, 0, OldaleTown_EventScript_DoExitMovement1
+	call_if_eq VAR_0x8009, 1, OldaleTown_EventScript_DoExitMovement2
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
+	waitmovement 0
+	removeobject LOCALID_OLDALE_RIVAL
+	setvar VAR_OLDALE_RIVAL_STATE, 2
+	setflag FLAG_HIDE_OLDALE_TOWN_RIVAL
 	releaseall
 	end
 
-OldaleTown_EventScript_001E4A28::
-	compare_var_to_value 0x800C, 0x1
-	goto_if 0x5, OldaleTown_EventScript_001E4A3E
-	applymovement 0x4, 0x081E4A57
-	waitmovement 0x0
+OldaleTown_EventScript_DoExitMovement1::
+	goto_if_ne VAR_FACING, DIR_SOUTH, OldaleTown_EventScript_DoExitMovement2
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
+	waitmovement 0
 	return
 
-OldaleTown_EventScript_001E4A3E::
-	applymovement 0xFF, 0x081E4A5E
-	applymovement 0x4, 0x081E4A57
-	waitmovement 0x0
+OldaleTown_EventScript_DoExitMovement2::
+	applymovement LOCALID_PLAYER, OldaleTown_Movement_WatchRivalExit
+	applymovement LOCALID_OLDALE_RIVAL, OldaleTown_Movement_RivalExit
+	waitmovement 0
 	return
 
-	.incbin "baserom_jp.gba", 0x1e4a50, 0x207
+OldaleTown_Movement_RivalApproachPlayer1:
+	walk_left
+	walk_left
+	step_end
+
+OldaleTown_Movement_RivalApproachPlayer2:
+	walk_left
+	step_end
+
+OldaleTown_Movement_RivalApproachPlayer3:
+	face_left
+	step_end
+
+OldaleTown_Movement_RivalExit:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+OldaleTown_Movement_WatchRivalExit:
+	delay_8
+	delay_4
+	walk_in_place_faster_down
+	step_end
+
+OldaleTown_Movement_PlayerStepBack:
+	delay_8
+	walk_right
+	step_end
+
+OldaleTown_Movement_BackUp:
+	walk_fast_up
+	walk_in_place_faster_left
+	lock_facing_direction
+	walk_right
+	unlock_facing_direction
+	step_end
+
+OldaleTown_Movement_ReturnToOriginalPosition:
+	walk_down
+	walk_left
+	step_end
+
+OldaleTown_Text_SavingMyProgress:
+	.string "ちょっと　ひとやすみ　したいから\n"
+	.string "レポート　かいてるの$"
+
+OldaleTown_Text_IWorkAtPokemonMart:
+	.string "おれ　フレンドリィショップの　てんいん！\p"
+	.string "きみ！　きみ！\n"
+	.string "ちょっと　ついてきて！$"
+
+OldaleTown_Text_ThisIsAPokemonMart:
+	.string "ここが　フレンドリィショップ！\n"
+	.string "あおい　やねが　めじるし　なのさ！\p"
+	.string "ポケモンを　つかまえる　ボールとか\n"
+	.string "いろんな　グッズを　うってるよ！\p"
+	.string "キミには　サービスとして\n"
+	.string "これを　あげよう！$"
+
+OldaleTown_Text_PotionExplanation:
+	.string "どんな　ときでも　つかえる\n"
+	.string "キズぐすりは　ばあいに　よっては\l"
+	.string "ポケモンセンターより　たよりに　なるからね$"
+
+OldaleTown_Text_WaitDontComeInHere:
+	.string "あーー！\n"
+	.string "こっちに　はいらないで　くれよ！\p"
+	.string "めずらしい　ポケモンの　あしあとを\n"
+	.string "はっけん　したんだ！\l"
+	.string "スケッチが　おわるまで　まっててくれよ$"
+
+OldaleTown_Text_DiscoveredFootprints:
+	.string "めずらしい　ポケモンの　あしあとを\n"
+	.string "はっけん　したんだ！\l"
+	.string "スケッチが　おわるまで　まっててくれよ$"
+
+OldaleTown_Text_FinishedSketchingFootprints:
+	.string "かんせい　させた　めずらしい\n"
+	.string "ポケモンの　あしあとの　スケッチ\l"
+	.string "よくみたら　じぶんの　あしあと　だったよ⋯⋯$"
+
+OldaleTown_Text_MayLetsGoBack:
+	.string "ハルカ“{PLAYER}{KUN}！\n"
+	.string "こっち　こっち！\l"
+	.string "はやく　かえろうよ！$"
+
+OldaleTown_Text_BrendanLetsGoBack:
+	.string "ユウキ“オレ　さきに\n"
+	.string "けんきゅうじょに　もどるから\l"
+	.string "{PLAYER}も　はやく　こいよな$"
+
+OldaleTown_Text_TownSign:
+	.string "ここは　コトキ　タウン\n"
+	.string "なにかが　かすかに　はじまる　ところ$"
