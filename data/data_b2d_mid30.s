@@ -2,6 +2,7 @@
 	.section .rodata
 	.include "asm/macros.inc"
 	.include "constants/map_constants.inc"
+	.include "constants/map_header.inc"
 	.include "constants/trainers.inc"
 	.include "constants/battle_string_ids.inc"
 	.include "constants/species.inc"
@@ -4326,45 +4327,15 @@ gMapHeaders: @ 0x0845A8D8
 	.2byte 0x0032  @ mapLayoutId
 	.byte 0x31, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_ROUTE124 (g0 m50)
-	.4byte gMapLayout_UNDERWATER_ROUTE124  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_ROUTE124  @ events
-	.4byte 0x081EF752  @ mapScripts
-	.4byte gMapConnections_UNDERWATER_ROUTE124  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x0112  @ mapLayoutId
-	.byte 0x32, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_Route124/header.inc"
 	@ MAP_UNDERWATER_ROUTE126 (g0 m51)
-	.4byte gMapLayout_UNDERWATER_ROUTE126  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_ROUTE126  @ events
-	.4byte 0x081EF753  @ mapScripts
-	.4byte gMapConnections_UNDERWATER_ROUTE126  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x0033  @ mapLayoutId
-	.byte 0x33, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_Route126/header.inc"
 	@ MAP_UNDERWATER_ROUTE127 (g0 m52)
-	.4byte gMapLayout_UNDERWATER_ROUTE127  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_ROUTE127  @ events
-	.4byte Underwater_Route127_MapScripts  @ mapScripts
-	.4byte gMapConnections_UNDERWATER_ROUTE127  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x0034  @ mapLayoutId
-	.byte 0x34, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_Route127/header.inc"
 	@ MAP_UNDERWATER_ROUTE128 (g0 m53)
-	.4byte gMapLayout_UNDERWATER_ROUTE128  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_ROUTE128  @ events
-	.4byte 0x081EF760  @ mapScripts
-	.4byte gMapConnections_UNDERWATER_ROUTE128  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x0035  @ mapLayoutId
-	.byte 0x35, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_Route128/header.inc"
 	@ MAP_UNDERWATER_ROUTE129 (g0 m54)
-	.4byte gMapLayout_UNDERWATER_ROUTE129  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_ROUTE129  @ events
-	.4byte Underwater_Route129_MapScripts  @ mapScripts
-	.4byte gMapConnections_UNDERWATER_ROUTE129  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x019C  @ mapLayoutId
-	.byte 0xD0, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_Route129/header.inc"
 	@ MAP_UNDERWATER_ROUTE105 (g0 m55)
 	.4byte gMapLayout_UNDERWATER_ROUTE105  @ mapLayout
 	.4byte gMapEvents_UNDERWATER_ROUTE105  @ events
@@ -6757,18 +6728,8 @@ UNDERWATER_ROUTE105_MapConnections: @ 0x0845F144
 gMapConnections_UNDERWATER_ROUTE105: @ 0x0845F150
 	.4byte 1  @ count
 	.4byte UNDERWATER_ROUTE105_MapConnections  @ connections
-	.globl UNDERWATER_ROUTE124_MapConnections
-UNDERWATER_ROUTE124_MapConnections: @ 0x0845F158
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 51, 0x00, 0x00  @ mapGroup, mapNum (0x0033)
-	.byte 0x06, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 39, 0x00, 0x00  @ mapGroup, mapNum (0x0027)
-	.globl gMapConnections_UNDERWATER_ROUTE124
-gMapConnections_UNDERWATER_ROUTE124: @ 0x0845F170
-	.4byte 2  @ count
-	.4byte UNDERWATER_ROUTE124_MapConnections  @ connections
+	@ 0x0845F158: Underwater_Route124 connection list and header.
+	.include "data/maps/Underwater_Route124/connections.inc"
 	.globl UNDERWATER_ROUTE125_MapConnections
 UNDERWATER_ROUTE125_MapConnections: @ 0x0845F178
 	.byte 0x06, 0x00, 0x00, 0x00  @ direction
@@ -6778,57 +6739,14 @@ UNDERWATER_ROUTE125_MapConnections: @ 0x0845F178
 gMapConnections_UNDERWATER_ROUTE125: @ 0x0845F184
 	.4byte 1  @ count
 	.4byte UNDERWATER_ROUTE125_MapConnections  @ connections
-	.globl UNDERWATER_ROUTE126_MapConnections
-UNDERWATER_ROUTE126_MapConnections: @ 0x0845F18C
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 50, 0x00, 0x00  @ mapGroup, mapNum (0x0032)
-	.byte 0x04, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 52, 0x00, 0x00  @ mapGroup, mapNum (0x0034)
-	.byte 0x06, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 41, 0x00, 0x00  @ mapGroup, mapNum (0x0029)
-	.globl gMapConnections_UNDERWATER_ROUTE126
-gMapConnections_UNDERWATER_ROUTE126: @ 0x0845F1B0
-	.4byte 3  @ count
-	.4byte UNDERWATER_ROUTE126_MapConnections  @ connections
-	.globl UNDERWATER_ROUTE127_MapConnections
-UNDERWATER_ROUTE127_MapConnections: @ 0x0845F1B8
-	.byte 0x06, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 42, 0x00, 0x00  @ mapGroup, mapNum (0x002A)
-	.byte 0x03, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 51, 0x00, 0x00  @ mapGroup, mapNum (0x0033)
-	.byte 0x01, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 53, 0x00, 0x00  @ mapGroup, mapNum (0x0035)
-	.globl gMapConnections_UNDERWATER_ROUTE127
-gMapConnections_UNDERWATER_ROUTE127: @ 0x0845F1DC
-	.4byte 3  @ count
-	.4byte UNDERWATER_ROUTE127_MapConnections  @ connections
-	.globl UNDERWATER_ROUTE128_MapConnections
-UNDERWATER_ROUTE128_MapConnections: @ 0x0845F1E4
-	.byte 0x02, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 52, 0x00, 0x00  @ mapGroup, mapNum (0x0034)
-	.byte 0x06, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 43, 0x00, 0x00  @ mapGroup, mapNum (0x002B)
-	.globl gMapConnections_UNDERWATER_ROUTE128
-gMapConnections_UNDERWATER_ROUTE128: @ 0x0845F1FC
-	.4byte 2  @ count
-	.4byte UNDERWATER_ROUTE128_MapConnections  @ connections
-	.globl UNDERWATER_ROUTE129_MapConnections
-UNDERWATER_ROUTE129_MapConnections: @ 0x0845F204
-	.byte 0x06, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 44, 0x00, 0x00  @ mapGroup, mapNum (0x002C)
-	.globl gMapConnections_UNDERWATER_ROUTE129
-gMapConnections_UNDERWATER_ROUTE129: @ 0x0845F210
-	.4byte 1  @ count
-	.4byte UNDERWATER_ROUTE129_MapConnections  @ connections
+	@ 0x0845F18C: Underwater_Route126 connection list and header.
+	.include "data/maps/Underwater_Route126/connections.inc"
+	@ 0x0845F1B8: Underwater_Route127 connection list and header.
+	.include "data/maps/Underwater_Route127/connections.inc"
+	@ 0x0845F1E4: Underwater_Route128 connection list and header.
+	.include "data/maps/Underwater_Route128/connections.inc"
+	@ 0x0845F204: Underwater_Route129 connection list and header.
+	.include "data/maps/Underwater_Route129/connections.inc"
 	.incbin "baserom_jp.gba", 0x45F218, 0x100
 
 	.globl sDummyConnectionFlags

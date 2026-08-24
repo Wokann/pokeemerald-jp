@@ -1,0 +1,179 @@
+#!/usr/bin/env python3
+"""Generate JP-local map header and connection sources from canonical map.json.
+
+The JP project has not yet migrated its complete layouts.json table.  This
+small companion to mapjson therefore emits the normal US-style map source and
+adds only zero-byte aliases from the temporary gMapLayout_* names and legacy
+connection labels.  It never derives data from the US checkout.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+from typing import Any
+
+
+VALID_DIRECTIONS = {"down", "up", "left", "right", "dive", "emerge"}
+
+
+def require_string(data: dict[str, Any], key: str) -> str:
+    value = data.get(key)
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{key} must be a non-empty string")
+    return value
+
+
+def bool_token(value: Any, key: str) -> str:
+    if value is True:
+        return "TRUE"
+    if value is False:
+        return "FALSE"
+    raise ValueError(f"{key} must be a JSON boolean")
+
+
+def warning(map_name: str) -> str:
+    return (
+        "@\n"
+        f"@ DO NOT MODIFY THIS FILE! It is auto-generated from data/maps/{map_name}/map.json\n"
+        "@\n"
+    )
+
+
+def legacy_layout_symbol(layout_id: str) -> str:
+    if not layout_id.startswith("LAYOUT_"):
+        raise ValueError(f"layout must begin with LAYOUT_: {layout_id}")
+    return "gMapLayout_" + layout_id.removeprefix("LAYOUT_")
+
+
+def legacy_connection_stem(map_id: str) -> str:
+    if not map_id.startswith("MAP_"):
+        raise ValueError(f"id must begin with MAP_: {map_id}")
+    return map_id.removeprefix("MAP_")
+
+
+def render_header(data: dict[str, Any]) -> str:
+    name = require_string(data, "name")
+    map_id = require_string(data, "id")
+    layout_id = require_string(data, "layout")
+    connections = data.get("connections", [])
+    if not isinstance(connections, list):
+        raise ValueError("connections must be an array")
+
+    connection_label = (
+        f"{name}_MapConnections"
+        if connections and data.get("connections_no_include") is not True
+        else "NULL"
+    )
+    layout_symbol = legacy_layout_symbol(layout_id)
+
+    return (
+        f"{warning(name)}\n"
+        "@ The JP layout table still exports the legacy gMapLayout_* name.\n"
+        "@ Keep this zero-byte alias until that table is split by map.\n"
+        f"\t.globl {name}_Layout\n"
+        f"\t.set {name}_Layout, {layout_symbol}\n\n"
+        f"{name}:\n"
+        f"\t.4byte {name}_Layout\n"
+        f"\t.4byte {name}_MapEvents\n"
+        f"\t.4byte {name}_MapScripts\n"
+        f"\t.4byte {connection_label}\n"
+        f"\t.2byte {require_string(data, 'music')}\n"
+        f"\t.2byte {layout_id}\n"
+        f"\t.byte {require_string(data, 'region_map_section')}\n"
+        f"\t.byte {bool_token(data.get('requires_flash'), 'requires_flash')}\n"
+        f"\t.byte {require_string(data, 'weather')}\n"
+        f"\t.byte {require_string(data, 'map_type')}\n"
+        "\t.2byte 0\n"
+        "\tmap_header_flags "
+        f"allow_cycling={bool_token(data.get('allow_cycling'), 'allow_cycling')}, "
+        f"allow_escaping={bool_token(data.get('allow_escaping'), 'allow_escaping')}, "
+        f"allow_running={bool_token(data.get('allow_running'), 'allow_running')}, "
+        f"show_map_name={bool_token(data.get('show_map_name'), 'show_map_name')}\n"
+        f"\t.byte {require_string(data, 'battle_scene')}\n"
+    )
+
+
+def render_connections(data: dict[str, Any]) -> str:
+    name = require_string(data, "name")
+    map_id = require_string(data, "id")
+    connections = data.get("connections", [])
+    if not isinstance(connections, list):
+        raise ValueError("connections must be an array")
+    if not connections:
+        return warning(name)
+
+    legacy_stem = legacy_connection_stem(map_id)
+    lines = [warning(name).rstrip(), "", f"{name}_MapConnectionsList:"]
+    for connection in connections:
+        if not isinstance(connection, dict):
+            raise ValueError("each connection must be an object")
+        direction = require_string(connection, "direction")
+        if direction not in VALID_DIRECTIONS:
+            raise ValueError(f"unsupported connection direction: {direction}")
+        offset = connection.get("offset")
+        if not isinstance(offset, int):
+            raise ValueError("connection offset must be an integer")
+        destination = require_string(connection, "map")
+        lines.append(f"\tconnection {direction}, {offset}, {destination}")
+
+    lines.extend(
+        [
+            "",
+            f"\t.globl {legacy_stem}_MapConnections",
+            f"\t.set {legacy_stem}_MapConnections, {name}_MapConnectionsList",
+            "",
+            f"{name}_MapConnections:",
+            f"\t.4byte {len(connections)}",
+            f"\t.4byte {name}_MapConnectionsList",
+            f"\t.globl gMapConnections_{legacy_stem}",
+            f"\t.set gMapConnections_{legacy_stem}, {name}_MapConnections",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def load_map(path: Path) -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("map JSON root must be an object")
+    return data
+
+
+def write_if_changed(path: Path, text: str) -> bool:
+    if path.is_file() and path.read_text(encoding="utf-8") == text:
+        return False
+    path.write_text(text, encoding="utf-8")
+    return True
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("map_json", type=Path)
+    parser.add_argument("output_dir", type=Path)
+    parser.add_argument("--check", action="store_true", help="fail instead of rewriting stale outputs")
+    args = parser.parse_args()
+
+    data = load_map(args.map_json)
+    outputs = {
+        args.output_dir / "header.inc": render_header(data),
+        args.output_dir / "connections.inc": render_connections(data),
+    }
+
+    stale = [path for path, text in outputs.items()
+             if not path.is_file() or path.read_text(encoding="utf-8") != text]
+    if args.check:
+        if stale:
+            raise SystemExit("stale map metadata: " + ", ".join(str(path) for path in stale))
+        return
+
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    changed = [path for path, text in outputs.items() if write_if_changed(path, text)]
+    if changed:
+        print("updated " + ", ".join(str(path) for path in changed))
+
+
+if __name__ == "__main__":
+    main()

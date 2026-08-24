@@ -80,6 +80,23 @@ JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
 	$(MAPJSON) events emerald $< $(@D)
 
+# This adjacent underwater-route family also owns its map headers and
+# connections. The JP layout table is still centralized, so the local
+# generator emits zero-byte compatibility aliases while keeping the canonical
+# US-style header and connection sources beside each map.json.
+JP_STRUCTURED_MAP_METADATA_MAPS := Underwater_Route124 Underwater_Route126 \
+	Underwater_Route127 Underwater_Route128 Underwater_Route129
+JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
+JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
+JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)
+
+data/maps/%/header.inc data/maps/%/connections.inc &: data/maps/%/map.json tools/jp_map_metadata.py
+	python3 tools/jp_map_metadata.py $< $(@D)
+
+# These sources are included by data_b2d_mid30.s. State the ordering directly
+# so a changed map.json cannot race its generated metadata during make -j.
+$(OBJ_DIR)/data/data_b2d_mid30.o: $(JP_STRUCTURED_MAP_METADATA)
+
 # Match the official flash library builds: agb_flash uses -O (not -O2).
 $(C_BUILDDIR)/agb_flash.o: CFLAGS := -O -mthumb-interwork -fhex-asm
 $(C_BUILDDIR)/agb_flash_1m.o: CFLAGS := -O -mthumb-interwork -fhex-asm
