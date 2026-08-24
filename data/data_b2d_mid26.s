@@ -840,7 +840,7 @@ RUSTBORO_CITY_EventObjects: @ 0x084FEEEC
 	object_event 13, 65, 0, 19, 27, 3, 8, 0, 1, 0, 0, RustboroCity_EventScript_001DE987, 0x0000
 	object_event 14, 240, 0, 16, 50, 3, 1, 1, 1, 0, 0, RustboroCity_EventScript_001DEDF1, 0x032E
 	object_event 15, 46, 0, 11, 15, 0, 1, 1, 1, 0, 0, 0x00000000, 0x034C
-	object_event 16, 7, 0, 31, 36, 3, 1, 0, 1, 0, 0, RustboroCity_EventScript_001DF26F, 0x0000
+	object_event 16, 7, 0, 31, 36, 3, 1, 0, 1, 0, 0, RustboroCity_EventScript_Boy1, 0x0000
 	.globl RUSTBORO_CITY_EventWarps
 RUSTBORO_CITY_EventWarps: @ 0x084FF06C
 	warp_def 27, 19, 0, 0, MAP_RUSTBORO_CITY_GYM

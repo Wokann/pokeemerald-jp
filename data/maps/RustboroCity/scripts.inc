@@ -1,39 +1,39 @@
 @ RustboroCity scripts (JP map g0 m3 @ 0x081DE6F6)
 
 RustboroCity_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_EventScript_001DE701
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, RustboroCity_MapScriptTable_001DE744
+	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, RustboroCity_OnFrame
 	.byte 0
 
-RustboroCity_EventScript_001DE701::
+RustboroCity_OnTransition::
 	setflag 0x879
 	call 0x08242F63
 	compare_var_to_value 0x405A, 0x6
-	call_if 0x1, RustboroCity_EventScript_001DE740
+	call_if 0x1, RustboroCity_EventScript_HideMapNamePopup
 	getplayerxy 0x4000, 0x4001
 	compare_var_to_value 0x405A, 0x6
-	goto_if 0x1, RustboroCity_EventScript_001DE725
+	goto_if 0x1, RustboroCity_EventScript_PositionScientistForExit
 	end
 
-RustboroCity_EventScript_001DE725::
+RustboroCity_EventScript_PositionScientistForExit::
 	compare_var_to_value 0x4000, 0xB
-	goto_if 0x1, RustboroCity_EventScript_001DE738
+	goto_if 0x1, RustboroCity_EventScript_PositionScientistLeftExit
 	setobjectxyperm 0xF, 0xC, 0xF
 	end
 
-RustboroCity_EventScript_001DE738::
+RustboroCity_EventScript_PositionScientistLeftExit::
 	setobjectxyperm 0xF, 0xB, 0xF
 	end
 
-RustboroCity_EventScript_001DE740::
+RustboroCity_EventScript_HideMapNamePopup::
 	setflag 0x4000
 	return
 
-RustboroCity_MapScriptTable_001DE744::
-	map_script_2 0x405A, 0x6, RustboroCity_EventScript_001DE74E
+RustboroCity_OnFrame::
+	map_script_2 0x405A, 0x6, RustboroCity_EventScript_ScientistAddMatchCall
 	.2byte 0
 
-RustboroCity_EventScript_001DE74E::
+RustboroCity_EventScript_ScientistAddMatchCall::
 	lockall
 	setvar 0x4063, 0x1
 	applymovement 0xFF, 0x081DE889
@@ -52,8 +52,7 @@ RustboroCity_EventScript_001DE74E::
 	waitmovement 0x0
 	applymovement 0xF, 0x081DE887
 	waitmovement 0x0
-	loadword 0x0, gJPText_001DFC14
-	callstd 0x4
+	msgbox RustboroCity_Text_DevelopedNewPokenavFeature, MSGBOX_DEFAULT
 	closemessage
 	setflag 0x12F
 	applymovement 0xF, 0x08243627
@@ -68,45 +67,42 @@ RustboroCity_EventScript_001DE74E::
 	delay 0x14
 	applymovement 0xF, 0x0824362D
 	waitmovement 0x0
-	loadword 0x0, gJPText_001DFC6A
-	callstd 0x4
+	msgbox RustboroCity_Text_AddedMatchCallPleaseCallMrStone, MSGBOX_DEFAULT
 	closemessage
 	delay 0x14
-	goto RustboroCity_EventScript_001DE7F6
+	goto RustboroCity_EventScript_MatchCallTutorial
 
-RustboroCity_EventScript_001DE7E5::
-	loadword 0x0, gJPText_001DFD2A
-	callstd 0x4
+RustboroCity_EventScript_PleaseSelectPokenav::
+	msgbox RustboroCity_Text_PleaseSelectPokenav, MSGBOX_DEFAULT
 	closemessage
 	delay 0xA
-	goto RustboroCity_EventScript_001DE7F6
+	goto RustboroCity_EventScript_MatchCallTutorial
 
-RustboroCity_EventScript_001DE7F6::
+RustboroCity_EventScript_MatchCallTutorial::
 	setflag 0x130
 	special convert_pixel_width_to_tile_width
 	waitstate
 	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, RustboroCity_EventScript_001DE7E5
+	goto_if 0x1, RustboroCity_EventScript_PleaseSelectPokenav
 	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, RustboroCity_EventScript_001DE7E5
+	goto_if 0x1, RustboroCity_EventScript_PleaseSelectPokenav
 	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, RustboroCity_EventScript_001DE7E5
+	goto_if 0x1, RustboroCity_EventScript_PleaseSelectPokenav
 	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, RustboroCity_EventScript_001DE7E5
+	goto_if 0x1, RustboroCity_EventScript_PleaseSelectPokenav
 	compare_var_to_value 0x8000, 0x5
-	goto_if 0x1, RustboroCity_EventScript_001DE7E5
+	goto_if 0x1, RustboroCity_EventScript_PleaseSelectPokenav
 	compare_var_to_value 0x8000, 0x6
-	goto_if 0x1, RustboroCity_EventScript_001DE7E5
+	goto_if 0x1, RustboroCity_EventScript_PleaseSelectPokenav
 	compare_var_to_value 0x8000, 0x7
-	goto_if 0x1, RustboroCity_EventScript_001DE7E5
+	goto_if 0x1, RustboroCity_EventScript_PleaseSelectPokenav
 	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, RustboroCity_EventScript_001DE7E5
+	goto_if 0x1, RustboroCity_EventScript_PleaseSelectPokenav
 	special OpenPokenavForTutorial
 	waitstate
 	delay 0x14
-	loadword 0x0, gJPText_001DFD3B
-	callstd 0x4
+	msgbox RustboroCity_Text_IdBetterGetBackToWork, MSGBOX_DEFAULT
 	closemessage
 	applymovement 0xF, 0x081DE896
 	waitmovement 0x0
@@ -838,41 +834,46 @@ RustboroCity_EventScript_001DF1F9::
 	end
 
 	.incbin "baserom_jp.gba", 0x1df20e, 0x61
-RustboroCity_EventScript_001DF26F::
-	loadword 0x0, 0x081DFD5D
-	callstd 0x2
+RustboroCity_EventScript_Boy1::
+	msgbox RustboroCity_Text_YouCanHave2On2Battle, MSGBOX_NPC
 	end
 
 	.incbin "baserom_jp.gba", 0x1df278, 0x99c
-	.globl gJPText_001DFC14
-gJPText_001DFC14: @ 0x081DFC14
+RustboroCity_Text_DevelopedNewPokenavFeature: @ 0x081DFC14
 	.string "いま　ポケナビの　ついかきのうを\n"
 	.string "かいはつ　していたのですが⋯⋯\p"
 	.string "うまく　いきましたよ！\p"
-	.string "{MUS_RG_VS_TRAINER}さん！\p"
+	.string "{PLAYER}さん！\p"
 	.string "しゃちょうに　いただいた　そのポケナビ\n"
 	.string "ちょっと　かしてくださいね！$"
 
-	.globl gJPText_001DFC6A
-gJPText_001DFC6A: @ 0x081DFC6A
-	.string "はい！　{MUS_RG_VS_TRAINER}さんの　ポケナビに\n"
+RustboroCity_Text_AddedMatchCallPleaseCallMrStone: @ 0x081DFC6A
+	.string "はい！　{PLAYER}さんの　ポケナビに\n"
 	.string "エントリーコール　という　きのうを\l"
 	.string "ついか　しました！\p"
 	.string "ポケナビに　とうろく　されていれば\n"
 	.string "とおく　はなれた　ところの　ひとと\l"
 	.string "エントリーコールを　つうじて\l"
 	.string "かいわが　できて　しまうんです！\p"
-	.string "{MUS_RG_VS_TRAINER}さんの　ポケナビには\n"
+	.string "{PLAYER}さんの　ポケナビには\n"
 	.string "うちの　ツワブキ　しゃちょうの　なまえが\l"
 	.string "とうろく　してある　はずです\p"
 	.string "ためしに　ちょっと　しゃちょうを\n"
 	.string "よびだして　みてください！$"
 
-	.globl gJPText_001DFD2A
-gJPText_001DFD2A: @ 0x081DFD2A
+RustboroCity_Text_PleaseSelectPokenav: @ 0x081DFD2A
 	.string "ポケナビを　えらんで　ください！$"
 
-	.globl gJPText_001DFD3B
-gJPText_001DFD3B: @ 0x081DFD3B
+RustboroCity_Text_IdBetterGetBackToWork: @ 0x081DFD3B
 	.string "⋯⋯では　わたしは　しごとに　もどります\p"
-	.string "{MUS_RG_VS_TRAINER}さん　おきをつけて！$"
+	.string "{PLAYER}さん　おきをつけて！$"
+
+RustboroCity_Text_YouCanHave2On2Battle: @ 0x081DFD5D
+	.string "きみ　しってる？\n"
+	.string "ふたりづれの　トレーナーとじゃ　なくても\l"
+	.string "2たい2の　しょうぶが　できるんだ！\p"
+	.string "2ひき　いじょう　ポケモンを　もってるとき\n"
+	.string "ふたりの　トレーナーと　めが　あえば\l"
+	.string "しょうぶを　どうじに　いどんで　くるよ！\p"
+	.string "たった　ひとりで　ふたりを　あいてに\n"
+	.string "かてたら　カッコいいよねー！$"
