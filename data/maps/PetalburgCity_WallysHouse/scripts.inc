@@ -1,90 +1,93 @@
 @ PetalburgCity_WallysHouse scripts (JP map g8 m0 @ 0x081F810B)
 
 PetalburgCity_WallysHouse_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, PetalburgCity_WallysHouse_MapScriptTable_001F8129
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PetalburgCity_WallysHouse_MapScriptTable_001F8116
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, PetalburgCity_WallysHouse_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PetalburgCity_WallysHouse_OnWarp
 	.byte 0
 
-PetalburgCity_WallysHouse_MapScriptTable_001F8116::
-	map_script_2 0x4057, 0x4, PetalburgCity_WallysHouse_EventScript_001F8120
+PetalburgCity_WallysHouse_OnWarp:
+	map_script_2 VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther
 	.2byte 0
 
-PetalburgCity_WallysHouse_EventScript_001F8120::
-	turnobject 0xFF, 0x4
-	turnobject 0x1, 0x3
+PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther::
+	turnobject LOCALID_PLAYER, DIR_EAST
+	turnobject LOCALID_WALLYS_HOUSE_WALLYS_DAD, DIR_WEST
 	end
 
-PetalburgCity_WallysHouse_MapScriptTable_001F8129::
-	map_script_2 0x4057, 0x4, PetalburgCity_WallysHouse_EventScript_001F8133
+PetalburgCity_WallysHouse_OnFrame:
+	map_script_2 VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_WallysHouse_EventScript_GiveHMSurf
 	.2byte 0
 
-PetalburgCity_WallysHouse_EventScript_001F8133::
+PetalburgCity_WallysHouse_EventScript_GiveHMSurf::
 	lockall
-	loadword 0x0, gJPText_001F82AE
-	callstd 0x4
-	setorcopyvar 0x8000, 0x155
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	setflag 0x7A
-	loadword 0x0, gJPText_001F83BA
-	callstd 0x4
-	setvar 0x4057, 0x5
+	msgbox PetalburgCity_WallysHouse_Text_PleaseExcuseUs, MSGBOX_DEFAULT
+	giveitem ITEM_HM_SURF
+	setflag FLAG_RECEIVED_HM_SURF
+	msgbox PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces, MSGBOX_DEFAULT
+	setvar VAR_PETALBURG_CITY_STATE, 5
 	releaseall
 	end
 
-PetalburgCity_WallysHouse_EventScript_001F815A::
+PetalburgCity_WallysHouse_EventScript_WallysDad::
 	lock
 	faceplayer
-	checkflag 0x7E
-	goto_if 0x1, PetalburgCity_WallysHouse_EventScript_001F818E
-	checkflag 0x7A
-	goto_if 0x1, PetalburgCity_WallysHouse_EventScript_001F8184
-	checkflag 0x87
-	goto_if 0x1, PetalburgCity_WallysHouse_EventScript_001F8198
-	loadword 0x0, 0x081F81C1
-	callstd 0x4
-	setflag 0x87
+	goto_if_set FLAG_DEFEATED_WALLY_VICTORY_ROAD, PetalburgCity_WallysHouse_EventScript_DefeatedWallyInVictoryRoad
+	goto_if_set FLAG_RECEIVED_HM_SURF, PetalburgCity_WallysHouse_EventScript_ReceievedHMSurf
+	goto_if_set FLAG_THANKED_FOR_PLAYING_WITH_WALLY, PetalburgCity_WallysHouse_EventScript_PlayedWithWally
+	msgbox PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally, MSGBOX_DEFAULT
+	setflag FLAG_THANKED_FOR_PLAYING_WITH_WALLY
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_001F8184::
-	loadword 0x0, 0x081F83E2
-	callstd 0x4
+PetalburgCity_WallysHouse_EventScript_ReceievedHMSurf::
+	msgbox PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_001F818E::
-	loadword 0x0, 0x081F8400
-	callstd 0x4
+PetalburgCity_WallysHouse_EventScript_DefeatedWallyInVictoryRoad::
+	msgbox PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_001F8198::
-	loadword 0x0, 0x081F829E
-	callstd 0x4
+PetalburgCity_WallysHouse_EventScript_PlayedWithWally::
+	msgbox PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_001F81A2::
+PetalburgCity_WallysHouse_EventScript_WallysMom::
 	lock
 	faceplayer
-	checkflag 0x7A
-	goto_if 0x1, PetalburgCity_WallysHouse_EventScript_001F81B7
-	loadword 0x0, 0x081F8465
-	callstd 0x4
+	goto_if_set FLAG_RECEIVED_HM_SURF, PetalburgCity_WallysHouse_EventScript_ReceivedHMSurf
+	msgbox PetalburgCity_WallysHouse_Text_WallyWasReallyHappy, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_001F81B7::
-	loadword 0x0, 0x081F849F
-	callstd 0x4
+PetalburgCity_WallysHouse_EventScript_ReceivedHMSurf::
+	msgbox PetalburgCity_WallysHouse_Text_WallyLeftWithoutTelling, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x1f81c1, 0xed
-	.globl gJPText_001F82AE
-gJPText_001F82AE: @ 0x081F82AE
-	.string "{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}！\n"
+PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally:
+	.string "きみは⋯⋯\n"
+	.string "そうか　{PLAYER}{KUN}　だね？\p"
+	.string "さっきは　ミツルの　あいてを　してくれて\n"
+	.string "ありがとう⋯⋯\p"
+	.string "あのこは　うまれた　ときから\n"
+	.string "からだが　じょうぶでは　なくてね\p"
+	.string "それで　すこしの　あいだ　シダケタウンの\n"
+	.string "わたしの　しんせきの　うちで\l"
+	.string "あずかってもらう　ことに　したんだよ\p"
+	.string "あそこは　ここよりも　ずっと\n"
+	.string "くうきが　きれいな　ところ　だからね！\p"
+	.string "⋯⋯で　ミツルかい？　ミツルなら\n"
+	.string "もう　しゅっぱつ　していったよ\p"
+	.string "いまごろは　どの　あたりかなあ⋯⋯$"
+
+PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing:
+	.string "ミツルは　どうしてるかなあ⋯⋯$"
+
+PetalburgCity_WallysHouse_Text_PleaseExcuseUs:
+	.string "{PLAYER}{KUN}！\n"
 	.string "むりに　よびだして　すまなかったね！\p"
 	.string "ミツルは　シダケタウンに　いってから\n"
 	.string "すっかり　げんきを　とりもどしたよ！\p"
@@ -101,9 +104,32 @@ gJPText_001F82AE: @ 0x081F82AE
 	.string "そのおれい　という　わけでは　ないけど\n"
 	.string "これを　うけとって　くれないか！$"
 
-	.globl gJPText_001F83BA
-gJPText_001F83BA: @ 0x081F83BA
+PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces:
 	.string "なみのりを　つかえるように　なれば\n"
 	.string "いろんな　ばしょに　いけるように　なるよ！$"
 
-	.incbin "baserom_jp.gba", 0x1f83e2, 0x13e
+PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon:
+	.string "もうすぐ　ミツルが　かえってくるぞ！\n"
+	.string "たのしみだなあ⋯⋯！$"
+
+PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity:
+	.string "ええっ！？　サイユウシティで\n"
+	.string "ミツルと　であった　だって⋯⋯？\p"
+	.string "んもう　{PLAYER}{KUN}ってばー\p"
+	.string "いくら　あのこが　げんきに　なったからって\n"
+	.string "そんな　とおくの　まち　まで\l"
+	.string "ひとりで　いけるわけ　ないよねえ⋯⋯$"
+
+PetalburgCity_WallysHouse_Text_WallyWasReallyHappy:
+	.string "ミツルが　ポケモンを　つかまえた　って\n"
+	.string "すごく　うれしそうに　はなしていたの\p"
+	.string "あのこの　あんな　えがお　ひさしぶり$"
+
+PetalburgCity_WallysHouse_Text_WallyLeftWithoutTelling:
+	.string "うちの　しゅじんには　ないしょ　だけど\p"
+	.string "じつは　ミツルったら　シダケタウンを\n"
+	.string "かってに　でて　いっちゃった　らしいの⋯⋯\p"
+	.string "あのこ　からだは　よわかったけど\n"
+	.string "あんがい　しっかりした　せいかく　だから\l"
+	.string "かならず　ぶじで　かえってくると\l"
+	.string "わたしは　しんじてるわ！$"

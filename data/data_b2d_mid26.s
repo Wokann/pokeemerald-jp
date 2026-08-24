@@ -2517,17 +2517,9 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/PacifidlogTown_House5/events.inc"
 	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE5
 	.set gMapEvents_PACIFIDLOG_TOWN_HOUSE5, PacifidlogTown_House5_MapEvents
-	.globl PETALBURG_CITY_WALLYS_HOUSE_EventObjects
-PETALBURG_CITY_WALLYS_HOUSE_EventObjects: @ 0x085074A0
-	object_event 1, 25, 0, 3, 4, 3, 10, 0, 0, 0, 0, PetalburgCity_WallysHouse_EventScript_001F815A, 0x0000
-	object_event 2, 26, 0, 7, 5, 3, 9, 0, 0, 0, 0, PetalburgCity_WallysHouse_EventScript_001F81A2, 0x0000
-	.globl PETALBURG_CITY_WALLYS_HOUSE_EventWarps
-PETALBURG_CITY_WALLYS_HOUSE_EventWarps: @ 0x085074D0
-	warp_def 3, 7, 0, 1, MAP_PETALBURG_CITY
-	warp_def 4, 7, 0, 1, MAP_PETALBURG_CITY
+	.include "data/maps/PetalburgCity_WallysHouse/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_WALLYS_HOUSE
-gMapEvents_PETALBURG_CITY_WALLYS_HOUSE: @ 0x085074E0
-	map_events PETALBURG_CITY_WALLYS_HOUSE_EventObjects, PETALBURG_CITY_WALLYS_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_PETALBURG_CITY_WALLYS_HOUSE, PetalburgCity_WallysHouse_MapEvents
 	.globl PETALBURG_CITY_GYM_EventObjects
 PETALBURG_CITY_GYM_EventObjects: @ 0x085074F4
 	object_event 1, 129, 0, 4, 2, 0, 8, 0, 0, 0, 0, PetalburgCity_Gym_EventScript_001F8688, 0x0304
