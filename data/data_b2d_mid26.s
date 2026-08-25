@@ -2057,16 +2057,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP
 	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP, LilycoveCity_DepartmentStoreRooftop_MapEvents
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_EventObjects
-LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_EventObjects: @ 0x0850ABDC
-	object_event 1, 85, 0, 0, 5, 3, 8, 0, 0, 0, 0, 0x0820B18D, 0x0000
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_EventWarps
-LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_EventWarps: @ 0x0850ABF4
-	warp_def 1, 5, 3, 127, 0x7F7F
-	warp_def 2, 5, 3, 127, 0x7F7F
+	.include "data/maps/LilycoveCity_DepartmentStoreElevator/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
-gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR: @ 0x0850AC04
-	map_events LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_EventObjects, LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR, LilycoveCity_DepartmentStoreElevator_MapEvents
 	.globl MOSSDEEP_CITY_GYM_EventObjects
 MOSSDEEP_CITY_GYM_EventObjects: @ 0x0850AC18
 	object_event 1, 132, 0, 23, 7, 0, 8, 0, 0, 0, 0, 0x0820B401, 0x0000

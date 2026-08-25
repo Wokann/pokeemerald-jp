@@ -333,6 +333,8 @@
 	.set gText_TheBagIsFull, 0x08243947
 	.globl gText_PutItemInPocket
 	.set gText_PutItemInPocket, 0x08243953
+	.globl gText_WhichFloorWouldYouLike
+	.set gText_WhichFloorWouldYouLike, 0x08243A47
 	@ The Rooftop event table points to the retained Substitute tutor script.
 	.globl LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor
 	.set LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor, 0x08276AA2
@@ -344,6 +346,8 @@
 	.set Common_Movement_FaceRight, 0x0824362F
 	.globl Common_Movement_FaceLeft
 	.set Common_Movement_FaceLeft, 0x08243631
+	.globl Common_Movement_WalkInPlaceFasterDown
+	.set Common_Movement_WalkInPlaceFasterDown, 0x0824362D
 	@ These two shared movement streams remain in the retained JP movement
 	@ block; the map source uses the matching pokeemerald semantic names.
 	.globl Common_Movement_QuestionMark
@@ -769,7 +773,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_DepartmentStore_4F/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStore_5F/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20b18c, 0x1dd
+	.include "data/maps/LilycoveCity_DepartmentStoreElevator/scripts.inc"
 	.include "data/maps/MossdeepCity_Gym/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20b7d0, 0xce2
 	.include "data/maps/MossdeepCity_PokemonCenter_1F/scripts.inc"

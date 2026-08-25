@@ -581,6 +581,19 @@ gSpecials:
 	def_special sub_08139C4C
 	def_special TrySetBattleTowerLinkType
 
+	@ Department Store Elevator aliases keep the JP special table byte order
+	@ while allowing map scripts to use the matching pokeemerald names.
+	.set SPECIAL_SetDeptStoreFloor, SPECIAL_SetDepartmentStoreFloorVar
+	.set SPECIAL_WAITSTATE_SetDeptStoreFloor, SPECIAL_WAITSTATE_SetDepartmentStoreFloorVar
+	.set SPECIAL_MoveElevator, SPECIAL_ShakeScreenInElevator
+	.set SPECIAL_WAITSTATE_MoveElevator, SPECIAL_WAITSTATE_ShakeScreenInElevator
+	.set SPECIAL_ShowDeptStoreElevatorFloorSelect, SPECIAL_sub_08139BD4
+	.set SPECIAL_WAITSTATE_ShowDeptStoreElevatorFloorSelect, SPECIAL_WAITSTATE_sub_08139BD4
+	.set SPECIAL_GetDeptStoreDefaultFloorChoice, SPECIAL_sub_08139A68
+	.set SPECIAL_WAITSTATE_GetDeptStoreDefaultFloorChoice, SPECIAL_WAITSTATE_sub_08139A68
+	.set SPECIAL_CloseDeptStoreElevatorWindow, SPECIAL_sub_08139C4C
+	.set SPECIAL_WAITSTATE_CloseDeptStoreElevatorWindow, SPECIAL_WAITSTATE_sub_08139C4C
+
 	@ Name Rater special aliases matching pokeemerald's semantic script names.
 	@ The JP C symbols retain their existing TV-prefixed linker names.
 	.set SPECIAL_TryPutNameRaterShowOnTheAir, SPECIAL_TV_PutNameRaterShowOnTheAirIfNicknameChanged

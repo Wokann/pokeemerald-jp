@@ -1,4 +1,11 @@
-@ Map ID constants (mirrors include/constants/map_groups.h)
+@ Map ID constants (mirrors include/constants/map_groups.h and maps.h)
+@ Dynamic warps are sentinels rather than entries in map_groups.h.
+.set MAP_DYNAMIC, (0x7F | (0x7F << 8))
+.set MAP_UNDEFINED, (0xFF | (0xFF << 8))
+.set WARP_ID_SECRET_BASE, 0x7E
+.set WARP_ID_DYNAMIC, 0x7F
+.set WARP_ID_NONE, -1
+
 .set MAP_PETALBURG_CITY, (0 | (0 << 8))
 .set MAP_SLATEPORT_CITY, (1 | (0 << 8))
 .set MAP_MAUVILLE_CITY, (2 | (0 << 8))

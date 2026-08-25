@@ -7478,6 +7478,90 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The Elevator begins at the next physical owner after the Rooftop.  Its
+# branch sequence, dynamic map IDs, and floor variables match the matching
+# pokeemerald source in physical 1F-to-5F order.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_DepartmentStoreElevator': {
+        'scripts': {
+            0x0820B18D: 'LilycoveCity_DepartmentStoreElevator_EventScript_Attendant',
+            0x0820B1F2: 'LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom5th',
+            0x0820B1FE: 'LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom4th',
+            0x0820B20A: 'LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom3rd',
+            0x0820B216: 'LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom2nd',
+            0x0820B222: 'LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloorFrom1st',
+            0x0820B22E: 'LilycoveCity_DepartmentStoreElevator_EventScript_ChooseFloor',
+            0x0820B281: 'LilycoveCity_DepartmentStoreElevator_EventScript_1stFloor',
+            0x0820B2A9: 'LilycoveCity_DepartmentStoreElevator_EventScript_2ndFloor',
+            0x0820B2D1: 'LilycoveCity_DepartmentStoreElevator_EventScript_3rdFloor',
+            0x0820B2F9: 'LilycoveCity_DepartmentStoreElevator_EventScript_4thFloor',
+            0x0820B321: 'LilycoveCity_DepartmentStoreElevator_EventScript_5thFloor',
+            0x0820B349: 'LilycoveCity_DepartmentStoreElevator_EventScript_ExitFloorSelect',
+            0x0820B34E: 'LilycoveCity_DepartmentStoreElevator_EventScript_MoveElevator',
+            0x0820B365: 'LilycoveCity_DepartmentStoreElevator_EventScript_SetFloor',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08243A47: 'gText_WhichFloorWouldYouLike',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'specials': {
+            'sub_08139BD4': 'ShowDeptStoreElevatorFloorSelect',
+            'sub_08139A68': 'GetDeptStoreDefaultFloorChoice',
+            'sub_08139C4C': 'CloseDeptStoreElevatorWindow',
+            'ShakeScreenInElevator': 'MoveElevator',
+            'SetDepartmentStoreFloorVar': 'SetDeptStoreFloor',
+        },
+        'symbols': {
+            'flags': {0x0002: 'FLAG_TEMP_2'},
+            'vars': {
+                0x4043: 'VAR_DEPT_STORE_FLOOR',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x800D: 'VAR_RESULT',
+            },
+            'maps': {
+                0x0D10: 'MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F',
+                0x0D11: 'MAP_LILYCOVE_CITY_DEPARTMENT_STORE_2F',
+                0x0D12: 'MAP_LILYCOVE_CITY_DEPARTMENT_STORE_3F',
+                0x0D13: 'MAP_LILYCOVE_CITY_DEPARTMENT_STORE_4F',
+                0x0D14: 'MAP_LILYCOVE_CITY_DEPARTMENT_STORE_5F',
+            },
+            'local_ids': {0x800F: 'VAR_LAST_TALKED'},
+            'multichoices': {0x0039: 'MULTI_FLOORS'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'switch_values': {
+                'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'},
+            },
+            'script_var_values': {
+                0x0820B281: {
+                    0x8006: {0x4: 'DEPT_STORE_FLOORNUM_1F'},
+                    0x4043: {0x4: 'DEPT_STORE_FLOORNUM_1F'},
+                },
+                0x0820B2A9: {
+                    0x8006: {0x5: 'DEPT_STORE_FLOORNUM_2F'},
+                    0x4043: {0x5: 'DEPT_STORE_FLOORNUM_2F'},
+                },
+                0x0820B2D1: {
+                    0x8006: {0x6: 'DEPT_STORE_FLOORNUM_3F'},
+                    0x4043: {0x6: 'DEPT_STORE_FLOORNUM_3F'},
+                },
+                0x0820B2F9: {
+                    0x8006: {0x7: 'DEPT_STORE_FLOORNUM_4F'},
+                    0x4043: {0x7: 'DEPT_STORE_FLOORNUM_4F'},
+                },
+                0x0820B321: {
+                    0x8006: {0x8: 'DEPT_STORE_FLOORNUM_5F'},
+                    0x4043: {0x8: 'DEPT_STORE_FLOORNUM_5F'},
+                },
+            },
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'LilycoveCity_DepartmentStore_2F': (
         (0x0820A953, 'LilycoveCity_DepartmentStore_2F_Pokemart1', (
@@ -8183,6 +8267,7 @@ LOCAL_ID_ARGUMENTS = {
     'waitmovement_at': {0},
 }
 MAP_ARGUMENTS = {
+    'setdynamicwarp': {0},
     'setdivewarp': {0},
     'warpdoor': {0},
     'addobject_at': {1},
@@ -8200,7 +8285,7 @@ def collapse_coordinate_warp_macros(lines):
     """Use the canonical three-argument form for coordinate-only warps."""
     out = []
     for name, argstr in lines:
-        if name in ('setdivewarp', 'setescapewarp', 'setwarp', 'warp', 'warpdoor'):
+        if name in ('setdivewarp', 'setdynamicwarp', 'setescapewarp', 'setwarp', 'warp', 'warpdoor'):
             args = [arg.strip() for arg in argstr.split(',')]
             if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
                 argstr = ', '.join((args[0], args[2], args[3]))
@@ -8415,6 +8500,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
         if name in ('multichoice', 'multichoicedefault', 'multichoicegrid') and index == 2:
             return symbols.get('multichoices', {}).get(value)
         if name == 'multichoice' and index == 3:
+            return symbols.get('booleans', {}).get(value)
+        if name == 'multichoicedefault' and index == 4:
             return symbols.get('booleans', {}).get(value)
         if name == 'multichoicegrid' and index == 4:
             return symbols.get('booleans', {}).get(value)
