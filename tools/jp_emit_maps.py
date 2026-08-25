@@ -62,6 +62,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_SpaceCenter_2F': 34,
     'MossdeepCity_GameCorner_1F': 3,
     'SootopolisCity_Gym_1F': 24,
+    'SootopolisCity_Gym_B1F': 10,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -101,6 +102,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_SpaceCenter_1F': 28,
     'MossdeepCity_SpaceCenter_2F': 27,
     'SootopolisCity_Gym_1F': 16,
+    'SootopolisCity_Gym_B1F': 30,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8219,6 +8221,30 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
             'maps': {0x0F01: 'MAP_SOOTOPOLIS_CITY_GYM_B1F'},
             'step_callbacks': {0x4: 'STEP_CB_SOOTOPOLIS_ICE'},
+        },
+    },
+})
+
+# Sootopolis Gym B1F follows the adjacent 1F source range. Its ten trainer
+# scripts and thirty text records match the US source in their independent
+# physical sequences; trainer constants are verified from the JP bytes.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_Gym_B1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'trainers': {
+                0x0265: 'TRAINER_ANDREA',
+                0x0266: 'TRAINER_CRISSY',
+                0x0076: 'TRAINER_BRIANNA',
+                0x0080: 'TRAINER_CONNIE',
+                0x0081: 'TRAINER_BRIDGET',
+                0x0082: 'TRAINER_OLIVIA',
+                0x0083: 'TRAINER_TIFFANY',
+                0x012D: 'TRAINER_BETHANY',
+                0x01F6: 'TRAINER_ANNIKA',
+                0x0073: 'TRAINER_DAPHNE',
+            },
         },
     },
 })

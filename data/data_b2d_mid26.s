@@ -2102,24 +2102,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SootopolisCity_Gym_1F/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_GYM_1F
 	.set gMapEvents_SOOTOPOLIS_CITY_GYM_1F, SootopolisCity_Gym_1F_MapEvents
-	.globl SOOTOPOLIS_CITY_GYM_B1F_EventObjects
-SOOTOPOLIS_CITY_GYM_B1F_EventObjects: @ 0x0850B794
-	object_event 1, 47, 0, 7, 17, 3, 10, 0, 0, 1, 1, 0x0820EAC7, 0x0000
-	object_event 2, 45, 0, 9, 19, 3, 9, 0, 0, 1, 1, 0x0820EB0C, 0x0000
-	object_event 3, 20, 0, 12, 7, 3, 9, 0, 0, 1, 1, 0x0820EAF5, 0x0000
-	object_event 4, 45, 0, 11, 9, 0, 7, 0, 0, 1, 5, 0x0820EB23, 0x0000
-	object_event 5, 45, 0, 5, 6, 3, 8, 0, 0, 1, 4, 0x0820EB51, 0x0000
-	object_event 6, 18, 0, 7, 8, 3, 10, 0, 0, 1, 2, 0x0820EB68, 0x0000
-	object_event 7, 47, 0, 4, 8, 3, 10, 0, 0, 1, 2, 0x0820EADE, 0x0000
-	object_event 8, 45, 0, 9, 7, 3, 8, 0, 0, 1, 3, 0x0820EB3A, 0x0000
-	object_event 9, 20, 0, 6, 13, 3, 10, 1, 1, 1, 3, 0x0820EB96, 0x0000
-	object_event 10, 18, 0, 10, 13, 3, 9, 1, 1, 1, 3, 0x0820EB7F, 0x0000
-	.globl SOOTOPOLIS_CITY_GYM_B1F_EventWarps
-SOOTOPOLIS_CITY_GYM_B1F_EventWarps: @ 0x0850B884
-	warp_def 11, 22, 3, 2, MAP_SOOTOPOLIS_CITY_GYM_1F
+	.include "data/maps/SootopolisCity_Gym_B1F/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_GYM_B1F
-gMapEvents_SOOTOPOLIS_CITY_GYM_B1F: @ 0x0850B88C
-	map_events SOOTOPOLIS_CITY_GYM_B1F_EventObjects, SOOTOPOLIS_CITY_GYM_B1F_EventWarps, 0, 0
+	.set gMapEvents_SOOTOPOLIS_CITY_GYM_B1F, SootopolisCity_Gym_B1F_MapEvents
 	.globl SOOTOPOLIS_CITY_POKEMON_CENTER_1F_EventObjects
 SOOTOPOLIS_CITY_POKEMON_CENTER_1F_EventObjects: @ 0x0850B8A0
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, SootopolisCity_PokemonCenter_1F_EventScript_0020EFE4, 0x0000

@@ -807,7 +807,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MossdeepCity_GameCorner_1F/scripts.inc"
 	.include "data/maps/MossdeepCity_GameCorner_B1F/scripts.inc"
 	.include "data/maps/SootopolisCity_Gym_1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20eac6, 0x50f
+	.include "data/maps/SootopolisCity_Gym_B1F/scripts.inc"
 	.include "data/maps/SootopolisCity_PokemonCenter_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20f046, 0x14a
 	.include "data/maps/SootopolisCity_PokemonCenter_2F/scripts.inc"
