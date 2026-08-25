@@ -96,6 +96,10 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_DrakesRoom': 10,
     # The Champion's room has sixteen reviewed map and story script entries.
     'EverGrandeCity_ChampionsRoom': 16,
+    # The League lobby follows the five connecting halls. Its transition,
+    # nurse, clerk, guard branches, and two player-position helpers were
+    # checked in physical ROM order against the matching US source.
+    'EverGrandeCity_PokemonLeague_1F': 9,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -158,6 +162,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_GlaciasRoom': 3,
     'EverGrandeCity_DrakesRoom': 3,
     'EverGrandeCity_ChampionsRoom': 13,
+    'EverGrandeCity_PokemonLeague_1F': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8891,6 +8896,60 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+    # The League lobby is the next physical EventScript owner.  Its map-local
+    # scripts, four movement streams, three messages, and shop list are all
+    # contained in 0x082110D4-0x08211287; external helpers retain their
+    # already-defined US names through exact JP aliases.
+    'EverGrandeCity_PokemonLeague_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'symbols': {
+            'flags': {
+                0x0107: 'FLAG_ENTERED_ELITE_FOUR',
+                0x086C: 'FLAG_BADGE06_GET',
+                0x08B4: 'FLAG_LANDMARK_POKEMON_LEAGUE',
+            },
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x4001: 'VAR_TEMP_1',
+                0x800B: 'VAR_0x800B',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_LEAGUE_NURSE',
+                0x03: 'LOCALID_LEAGUE_GUARD_1',
+                0x04: 'LOCALID_LEAGUE_GUARD_2',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'heal_locations': {
+                0x14: 'HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE',
+            },
+            'songs': {0x0171: 'MUS_OBTAIN_BADGE'},
+            'sounds': {0x0020: 'SE_FAILURE'},
+        },
+    },
+})
+
+MAP_POKEMART_LISTS.update({
+    'EverGrandeCity_PokemonLeague_1F': (
+        (0x08211123, 'EverGrandeCity_PokemonLeague_1F_Pokemart', (
+            'ITEM_ULTRA_BALL',
+            'ITEM_HYPER_POTION',
+            'ITEM_MAX_POTION',
+            'ITEM_FULL_RESTORE',
+            'ITEM_FULL_HEAL',
+            'ITEM_REVIVE',
+            'ITEM_MAX_REPEL',
+        )),
+    ),
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9298,6 +9357,12 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x08210B20: 'EverGrandeCity_ChampionsRoom_Movement_WallaceExit',
         0x08210B24: 'EverGrandeCity_ChampionsRoom_Movement_BirchArrives',
     },
+    'EverGrandeCity_PokemonLeague_1F': {
+        0x082111DA: 'EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromRight',
+        0x082111DE: 'EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromLeft',
+        0x082111E2: 'EverGrandeCity_PokemonLeague_1F_Movement_LeftGuardOutOfWay',
+        0x082111E5: 'EverGrandeCity_PokemonLeague_1F_Movement_RightGuardOutOfWay',
+    },
 })
 
 MSGBOX_TYPES = {
@@ -9688,6 +9753,7 @@ VARIABLE_ARGUMENTS = {
     'copyvar': {0, 1},
     'setorcopyvar': {0},
     'specialvar': {0},
+    'getplayerxy': {0, 1},
 }
 FLAG_ARGUMENTS = {
     'setflag', 'clearflag', 'checkflag', 'goto_if_set', 'goto_if_unset',

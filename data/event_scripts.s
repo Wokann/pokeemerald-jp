@@ -851,7 +851,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/EverGrandeCity_Hall4/scripts.inc"
 	.include "data/maps/EverGrandeCity_Hall5/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonLeague_1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x2111da, 0xad
 	.include "data/maps/EverGrandeCity_HallOfFame/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonCenter_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x211494, 0x10e

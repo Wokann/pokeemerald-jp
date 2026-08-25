@@ -1,96 +1,137 @@
 @ EverGrandeCity_PokemonLeague_1F scripts (JP map g16 m10 @ 0x082110D4)
 
 EverGrandeCity_PokemonLeague_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, EverGrandeCity_PokemonLeague_1F_EventScript_002110DF
-	map_script MAP_SCRIPT_ON_RESUME, 0x0824790F
+	map_script MAP_SCRIPT_ON_TRANSITION, EverGrandeCity_PokemonLeague_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-EverGrandeCity_PokemonLeague_1F_EventScript_002110DF::
-	setrespawn 0x14
-	setflag 0x8B4
-	checkflag 0x107
-	call_if 0x0, EverGrandeCity_PokemonLeague_1F_EventScript_002110EF
+EverGrandeCity_PokemonLeague_1F_OnTransition:: @ 0x082110DF
+	setrespawn HEAL_LOCATION_EVER_GRANDE_CITY_POKEMON_LEAGUE
+	setflag FLAG_LANDMARK_POKEMON_LEAGUE
+	call_if_unset FLAG_ENTERED_ELITE_FOUR, EverGrandeCity_PokemonLeague_1F_EventScript_GuardsBlockDoor
 	end
 
-EverGrandeCity_PokemonLeague_1F_EventScript_002110EF::
-	setobjectxyperm 0x3, 0x9, 0x2
-	setobjectxyperm 0x4, 0xA, 0x2
+EverGrandeCity_PokemonLeague_1F_EventScript_GuardsBlockDoor:: @ 0x082110EF
+	setobjectxyperm LOCALID_LEAGUE_GUARD_1, 0x9, 0x2
+	setobjectxyperm LOCALID_LEAGUE_GUARD_2, 0xA, 0x2
 	return
 
-EverGrandeCity_PokemonLeague_1F_EventScript_002110FE::
-	setvar 0x800B, 0x1
-	call 0x082429B8
+EverGrandeCity_PokemonLeague_1F_EventScript_Nurse:: @ 0x082110FE
+	setvar VAR_0x800B, LOCALID_LEAGUE_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-EverGrandeCity_PokemonLeague_1F_EventScript_0021110C::
+EverGrandeCity_PokemonLeague_1F_EventScript_Clerk:: @ 0x0821110C
 	lock
 	faceplayer
-	message 0x0824390F
+	message gText_HowMayIServeYou
 	waitmessage
-	pokemart 0x08211124
-	loadword 0x0, 0x08243920
-	callstd 0x4
+	pokemart EverGrandeCity_PokemonLeague_1F_Pokemart
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
-	.incbin "baserom_jp.gba", 0x211123, 0x13
-EverGrandeCity_PokemonLeague_1F_EventScript_00211136::
+	.align 2
+EverGrandeCity_PokemonLeague_1F_Pokemart:
+	.2byte ITEM_ULTRA_BALL
+	.2byte ITEM_HYPER_POTION
+	.2byte ITEM_MAX_POTION
+	.2byte ITEM_FULL_RESTORE
+	.2byte ITEM_FULL_HEAL
+	.2byte ITEM_REVIVE
+	.2byte ITEM_MAX_REPEL
+	pokemartlistend
+
+EverGrandeCity_PokemonLeague_1F_EventScript_DoorGuard:: @ 0x08211136
 	lockall
-	checkflag 0x107
-	goto_if 0x1, EverGrandeCity_PokemonLeague_1F_EventScript_002111BB
-	getplayerxy 0x4000, 0x4001
-	compare_var_to_value 0x4000, 0xB
-	call_if 0x4, EverGrandeCity_PokemonLeague_1F_EventScript_00211198
-	compare_var_to_value 0x4000, 0x8
-	call_if 0x3, EverGrandeCity_PokemonLeague_1F_EventScript_002111A3
-	message 0x082111E8
+	goto_if_set FLAG_ENTERED_ELITE_FOUR, EverGrandeCity_PokemonLeague_1F_EventScript_GoForth
+	getplayerxy VAR_TEMP_0, VAR_TEMP_1
+	call_if_ge VAR_TEMP_0, 0xB, EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromRight
+	call_if_le VAR_TEMP_0, 0x8, EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromLeft
+	message EverGrandeCity_PokemonLeague_1F_Text_MustHaveAllGymBadges
 	waitmessage
 	delay 0x4B
-	checkflag 0x86C
-	goto_if 0x0, EverGrandeCity_PokemonLeague_1F_EventScript_002111AE
+	goto_if_unset FLAG_BADGE06_GET, EverGrandeCity_PokemonLeague_1F_EventScript_NotAllBadges
 	closemessage
-	applymovement 0x3, 0x082111E2
-	applymovement 0x4, 0x082111E5
-	waitmovement 0x0
+	applymovement LOCALID_LEAGUE_GUARD_1, EverGrandeCity_PokemonLeague_1F_Movement_LeftGuardOutOfWay
+	applymovement LOCALID_LEAGUE_GUARD_2, EverGrandeCity_PokemonLeague_1F_Movement_RightGuardOutOfWay
+	waitmovement 0
 	delay 0xA
-	playfanfare 0x171
-	message 0x08211267
+	playfanfare MUS_OBTAIN_BADGE
+	message EverGrandeCity_PokemonLeague_1F_Text_GoForth
 	waitmessage
 	waitfanfare
 	closemessage
-	moveobjectoffscreen 0x3
-	moveobjectoffscreen 0x4
-	setflag 0x107
+	copyobjectxytoperm LOCALID_LEAGUE_GUARD_1
+	copyobjectxytoperm LOCALID_LEAGUE_GUARD_2
+	setflag FLAG_ENTERED_ELITE_FOUR
 	releaseall
 	end
 
-EverGrandeCity_PokemonLeague_1F_EventScript_00211198::
-	applymovement 0xFF, 0x082111DA
-	waitmovement 0x0
+EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromRight:: @ 0x08211198
+	applymovement LOCALID_PLAYER, EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromRight
+	waitmovement 0
 	return
 
-EverGrandeCity_PokemonLeague_1F_EventScript_002111A3::
-	applymovement 0xFF, 0x082111DE
-	waitmovement 0x0
+EverGrandeCity_PokemonLeague_1F_EventScript_PlayerMoveToFrontFromLeft:: @ 0x082111A3
+	applymovement LOCALID_PLAYER, EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromLeft
+	waitmovement 0
 	return
 
-EverGrandeCity_PokemonLeague_1F_EventScript_002111AE::
-	playse 0x20
-	loadword 0x0, 0x08211231
-	callstd 0x4
+EverGrandeCity_PokemonLeague_1F_EventScript_NotAllBadges:: @ 0x082111AE
+	playse SE_FAILURE
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_HaventObtainedAllBadges, MSGBOX_DEFAULT
 	releaseall
 	end
 
-EverGrandeCity_PokemonLeague_1F_EventScript_002111BB::
-	applymovement 0x800F, 0x08243621
-	waitmovement 0x0
-	loadword 0x0, 0x08211267
-	callstd 0x4
+EverGrandeCity_PokemonLeague_1F_EventScript_GoForth:: @ 0x082111BB
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox EverGrandeCity_PokemonLeague_1F_Text_GoForth, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	releaseall
 	end
+
+EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromRight:
+	walk_down
+	walk_left
+	walk_in_place_faster_up
+	step_end
+
+EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromLeft:
+	walk_down
+	walk_right
+	walk_in_place_faster_up
+	step_end
+
+EverGrandeCity_PokemonLeague_1F_Movement_LeftGuardOutOfWay:
+	walk_left
+	walk_in_place_faster_down
+	step_end
+
+EverGrandeCity_PokemonLeague_1F_Movement_RightGuardOutOfWay:
+	walk_right
+	walk_in_place_faster_down
+	step_end
+
+EverGrandeCity_PokemonLeague_1F_Text_MustHaveAllGymBadges: @ 0x082111E8
+	.string "これより　さきは\n"
+	.string "すべての　ジムバッジを　あつめた\l"
+	.string "トレーナーだけが　すすめます！\p"
+	.string "トレーナーよ！　きみの　ジムバッジ\n"
+	.string "かくにん　させてください$"
+
+EverGrandeCity_PokemonLeague_1F_Text_HaventObtainedAllBadges: @ 0x08211231
+	.string "きみは　まだ\n"
+	.string "すべての　ジムバッジを　もっていない！\p"
+	.string "ポケモン　リーグを　めざすなら\n"
+	.string "でなおして　きなさい$"
+
+EverGrandeCity_PokemonLeague_1F_Text_GoForth: @ 0x08211267
+	.string "トレーナーよ！　おのれと\n"
+	.string "ポケモンを　しんじて　すすみたまえ！$"

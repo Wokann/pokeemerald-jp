@@ -2212,22 +2212,9 @@ EVER_GRANDE_CITY_HALL5_EventWarps: @ 0x0850BF58
 	.globl gMapEvents_EVER_GRANDE_CITY_HALL5
 gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	map_events 0, EVER_GRANDE_CITY_HALL5_EventWarps, 0, 0
-	.globl EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_EventObjects
-EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_EventObjects: @ 0x0850BF8C
-	object_event 1, 58, 0, 3, 2, 3, 8, 0, 0, 0, 0, EverGrandeCity_PokemonLeague_1F_EventScript_002110FE, 0x0000
-	object_event 2, 83, 0, 16, 2, 3, 8, 0, 0, 0, 0, EverGrandeCity_PokemonLeague_1F_EventScript_0021110C, 0x0000
-	object_event 3, 33, 0, 8, 2, 3, 8, 1, 1, 0, 0, EverGrandeCity_PokemonLeague_1F_EventScript_00211136, 0x0000
-	object_event 4, 33, 0, 11, 2, 3, 8, 1, 1, 0, 0, EverGrandeCity_PokemonLeague_1F_EventScript_00211136, 0x0000
-	.globl EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_EventWarps
-EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_EventWarps: @ 0x0850BFEC
-	warp_def 9, 11, 3, 0, MAP_EVER_GRANDE_CITY
-	warp_def 10, 11, 3, 0, MAP_EVER_GRANDE_CITY
-	warp_def 9, 1, 3, 0, MAP_EVER_GRANDE_CITY_HALL5
-	warp_def 10, 1, 3, 0, MAP_EVER_GRANDE_CITY_HALL5
-	warp_def 1, 7, 4, 0, MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F
+	.include "data/maps/EverGrandeCity_PokemonLeague_1F/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
-gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F: @ 0x0850C014
-	map_events EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_EventObjects, EVER_GRANDE_CITY_POKEMON_LEAGUE_1F_EventWarps, 0, 0
+	.set gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F, EverGrandeCity_PokemonLeague_1F_MapEvents
 	.globl EVER_GRANDE_CITY_HALL_OF_FAME_EventObjects
 EVER_GRANDE_CITY_HALL_OF_FAME_EventObjects: @ 0x0850C028
 	object_event 1, 133, 0, 6, 16, 3, 7, 0, 0, 0, 0, 0x00000000, 0x0000
