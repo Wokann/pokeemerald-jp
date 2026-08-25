@@ -52,6 +52,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_Gym': 45,
     'MossdeepCity_House1': 3,
     'MossdeepCity_House2': 5,
+    'MossdeepCity_PokemonCenter_1F': 4,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -74,6 +75,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_Gym': 52,
     'MossdeepCity_House1': 4,
     'MossdeepCity_House2': 3,
+    'MossdeepCity_PokemonCenter_1F': 2,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7717,6 +7719,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'species': {0x0135: 'SPECIES_WINGULL'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
             'local_ids': {0x03: 'LOCALID_MOSSDEEP_HOUSE_WINGULL'},
+        },
+    },
+})
+
+# Mossdeep Pokemon Center 1F is already split, but its pre-existing source
+# still uses address labels and raw loadword/callstd text forms.  Keep its
+# common scripts explicit so a regenerated map uses the matching US names.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_PokemonCenter_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'symbols': {
+            'heal_locations': {0x09: 'HEAL_LOCATION_MOSSDEEP_CITY'},
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_MOSSDEEP_NURSE'},
         },
     },
 })
