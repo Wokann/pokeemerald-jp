@@ -29,11 +29,11 @@ LavaridgeTown_MapCoordEvents:
 LavaridgeTown_MapBGEvents:
 	bg_sign_event 14, 16, 0, BG_EVENT_PLAYER_FACING_ANY, LavaridgeTown_EventScript_HerbShopSign
 	bg_sign_event 7, 15, 0, BG_EVENT_PLAYER_FACING_ANY, LavaridgeTown_EventScript_GymSign
-	bg_sign_event 17, 5, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EF6
+	bg_sign_event 17, 5, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemartSign
 	bg_sign_event 13, 8, 0, BG_EVENT_PLAYER_FACING_ANY, LavaridgeTown_EventScript_TownSign
-	bg_sign_event 10, 6, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
-	bg_sign_event 16, 5, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EF6
-	bg_sign_event 11, 6, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 10, 6, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
+	bg_sign_event 16, 5, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemartSign
+	bg_sign_event 11, 6, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_hidden_item_event 4, 5, 3, ITEM_ICE_HEAL, FLAG_HIDDEN_ITEM_LAVARIDGE_TOWN_ICE_HEAL
 
 LavaridgeTown_MapEvents::
