@@ -1160,9 +1160,11 @@ gUnknown_82423E1: @ 0x82423E1
 gUnknown_824252E: @ 0x824252E
 	.include "data/scripts/gUnknown_824252E.inc"
 
-	.globl EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags
-EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags: @ 0x8242678
+	.globl EventScript_ResetAllMapFlags
+EventScript_ResetAllMapFlags: @ 0x8242678
 	.include "data/scripts/EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags.inc"
+	.globl EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags
+	.set EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags, 0x0824285B
 
 	.globl gUnknown_82428F1
 gUnknown_82428F1: @ 0x82428F1

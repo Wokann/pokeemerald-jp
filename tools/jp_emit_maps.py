@@ -100,6 +100,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # nurse, clerk, guard branches, and two player-position helpers were
     # checked in physical ROM order against the matching US source.
     'EverGrandeCity_PokemonLeague_1F': 9,
+    # Hall of Fame immediately follows the League lobby and contains two
+    # map-script tables plus four local sequence branches.
+    'EverGrandeCity_HallOfFame': 6,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -113,6 +116,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'EverGrandeCity_GlaciasRoom': ('OnLoad', 'OnWarp'),
     'EverGrandeCity_DrakesRoom': ('OnLoad', 'OnWarp'),
     'EverGrandeCity_ChampionsRoom': ('OnWarp',),
+    'EverGrandeCity_HallOfFame': ('OnWarp',),
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -163,6 +167,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_DrakesRoom': 3,
     'EverGrandeCity_ChampionsRoom': 13,
     'EverGrandeCity_PokemonLeague_1F': 3,
+    'EverGrandeCity_HallOfFame': 2,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8936,6 +8941,43 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'sounds': {0x0020: 'SE_FAILURE'},
         },
     },
+    # Hall of Fame is the next physical EventScript owner. The game-clear
+    # helper itself is shared data outside this map range, so retain its US
+    # semantic label through the verified JP entry point.
+    'EverGrandeCity_HallOfFame': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824285B: 'EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+        },
+        'symbols': {
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x800D: 'VAR_RESULT',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_HALL_OF_FAME_WALLACE',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {0x02: 'DIR_NORTH'},
+            'heal_locations': {
+                0x01: 'HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F',
+                0x02: 'HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F',
+            },
+            'fade_modes': {0x01: 'FADE_TO_BLACK'},
+            'field_effects': {0x003E: 'FLDEFF_HALL_OF_FAME_RECORD'},
+            'map_script_values': {0x4001: {0x00: '0'}},
+            'script_var_values': {
+                0x082112AB: {
+                    0x4001: {0x01: '1'},
+                    0x800D: {0x00: 'MALE', 0x01: 'FEMALE'},
+                },
+            },
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9362,6 +9404,10 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x082111DE: 'EverGrandeCity_PokemonLeague_1F_Movement_MoveToFrontFromLeft',
         0x082111E2: 'EverGrandeCity_PokemonLeague_1F_Movement_LeftGuardOutOfWay',
         0x082111E5: 'EverGrandeCity_PokemonLeague_1F_Movement_RightGuardOutOfWay',
+    },
+    'EverGrandeCity_HallOfFame': {
+        0x0821135C: 'EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame1',
+        0x08211363: 'EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame2',
     },
 })
 
@@ -10077,7 +10123,7 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('game_stats', {}).get(value)
         if name == 'setrespawn' and index == 0:
             return symbols.get('heal_locations', {}).get(value)
-        if name == 'fadescreen' and index == 0:
+        if name in ('fadescreen', 'fadescreenspeed') and index == 0:
             return symbols.get('fade_modes', {}).get(value)
         if name in ('showcontestwinner', 'showcontestpainting') and index == 0:
             return symbols.get('contest_winners', {}).get(value)

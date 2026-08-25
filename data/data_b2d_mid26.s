@@ -2215,15 +2215,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/EverGrandeCity_PokemonLeague_1F/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
 	.set gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F, EverGrandeCity_PokemonLeague_1F_MapEvents
-	.globl EVER_GRANDE_CITY_HALL_OF_FAME_EventObjects
-EVER_GRANDE_CITY_HALL_OF_FAME_EventObjects: @ 0x0850C028
-	object_event 1, 133, 0, 6, 16, 3, 7, 0, 0, 0, 0, 0x00000000, 0x0000
-	.globl EVER_GRANDE_CITY_HALL_OF_FAME_EventWarps
-EVER_GRANDE_CITY_HALL_OF_FAME_EventWarps: @ 0x0850C040
-	warp_def 7, 11, 3, 1, MAP_EVER_GRANDE_CITY_CHAMPIONS_ROOM
+	.include "data/maps/EverGrandeCity_HallOfFame/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME
-gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME: @ 0x0850C048
-	map_events EVER_GRANDE_CITY_HALL_OF_FAME_EventObjects, EVER_GRANDE_CITY_HALL_OF_FAME_EventWarps, 0, 0
+	.set gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME, EverGrandeCity_HallOfFame_MapEvents
 	.globl EVER_GRANDE_CITY_POKEMON_CENTER_1F_EventObjects
 EVER_GRANDE_CITY_POKEMON_CENTER_1F_EventObjects: @ 0x0850C05C
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, EverGrandeCity_PokemonCenter_1F_EventScript_00211421, 0x0000
