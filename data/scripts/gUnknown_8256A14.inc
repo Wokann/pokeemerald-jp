@@ -108,4 +108,8 @@ LilycoveCity_EventScript_ItemMaxRepel:: @ 0x08256E3F
 	finditem ITEM_MAX_REPEL
 	end
 
-	.incbin "baserom_jp.gba", 0x256e4c, 0xc3d
+MossdeepCity_EventScript_ItemNetBall:: @ 0x08256E4C
+	finditem ITEM_NET_BALL
+	end
+
+	.incbin "baserom_jp.gba", 0x256e59, 0xc30

@@ -262,6 +262,9 @@
 	@ The Pacifidlog Pokémon Center references the retained Explosion tutor.
 	.globl PacifidlogTown_PokemonCenter_1F_EventScript_ExplosionTutor
 	.set PacifidlogTown_PokemonCenter_1F_EventScript_ExplosionTutor, 0x08276BDA
+	@ The Mossdeep event table references the retained DynamicPunch tutor script.
+	.globl MossdeepCity_EventScript_DynamicPunchTutor
+	.set MossdeepCity_EventScript_DynamicPunchTutor, 0x08276B0A
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
 	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
 	.globl Common_EventScript_NameReceivedPartyMon
