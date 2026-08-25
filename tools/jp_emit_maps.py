@@ -80,6 +80,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Its fifteen local scripts plus the on-frame table match the reviewed
     # US source sequence one-to-one.
     'SootopolisCity_MysteryEventsHouse_1F': 16,
+    # B1F is the immediate next owner and has five local scripts plus its
+    # on-frame table in the same reviewed US order.
+    'SootopolisCity_MysteryEventsHouse_B1F': 6,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -8604,6 +8607,44 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+    # B1F immediately follows the 1F source range. The draw text is
+    # physically owned by 1F, while the dynamic greeting is gStringVar4;
+    # both references retain their US names from this map's script source.
+    'SootopolisCity_MysteryEventsHouse_B1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_texts': {
+            0x02021C7C: 'gStringVar4',
+            0x08210098: 'SootopolisCity_MysteryEventsHouse_B1F_Text_MatchEndedUpDraw',
+        },
+        'symbols': {
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x40C0: 'VAR_SOOTOPOLIS_MYSTERY_EVENTS_STATE',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x800D: 'VAR_RESULT',
+            },
+            'local_ids': {0xFF: 'LOCALID_PLAYER'},
+            'maps': {0x0F0D: 'MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F'},
+            'map_script_values': {0x4001: {0x00: '0'}},
+            'script_var_values': {
+                0x0821014D: {
+                    0x4001: {0x01: '1'},
+                    0x8004: {0x02: 'SPECIAL_BATTLE_EREADER'},
+                    0x8005: {0x00: '0'},
+                    0x800D: {
+                        0x01: 'B_OUTCOME_WON',
+                        0x02: 'B_OUTCOME_LOST',
+                        0x03: 'B_OUTCOME_DREW',
+                    },
+                },
+                0x082101B4: {0x40C0: {0x03: '3'}},
+                0x082101C2: {0x40C0: {0x01: '1'}},
+                0x082101CD: {0x40C0: {0x02: '2'}},
+            },
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -8995,6 +9036,10 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x0820FF49: 'SootopolisCity_MysteryEventsHouse_1F_Movement_PlayerEnterBasementWest',
         0x0820FF4D: 'SootopolisCity_MysteryEventsHouse_1F_Movement_OldManMoveAsideLeft',
         0x0820FF50: 'SootopolisCity_MysteryEventsHouse_1F_Movement_OldManMoveAsideRight',
+    },
+    'SootopolisCity_MysteryEventsHouse_B1F': {
+        0x082101D8: 'SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerEnterBasement',
+        0x082101DE: 'SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerExitBasement',
     },
 })
 
