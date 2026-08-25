@@ -1,41 +1,35 @@
 @ Route116_TunnelersRestHouse scripts (JP map g21 m0 @ 0x08212820)
 
 Route116_TunnelersRestHouse_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, Route116_TunnelersRestHouse_EventScript_00212826
+	map_script MAP_SCRIPT_ON_TRANSITION, Route116_TunnelersRestHouse_OnTransition
 	.byte 0
 
-Route116_TunnelersRestHouse_EventScript_00212826::
-	setflag 0x8BA
+Route116_TunnelersRestHouse_OnTransition:: @ 0x08212826
+	setflag FLAG_LANDMARK_TUNNELERS_REST_HOUSE
 	end
 
-Route116_TunnelersRestHouse_EventScript_0021282A::
-	loadword 0x0, gJPText_0021285B
-	callstd 0x2
+Route116_TunnelersRestHouse_EventScript_Tunneler1:: @ 0x0821282A
+	msgbox Route116_TunnelersRestHouse_Text_WeHadToStopBoring, MSGBOX_NPC
 	end
 
-Route116_TunnelersRestHouse_EventScript_00212833::
-	loadword 0x0, gJPText_002128DD
-	callstd 0x2
+Route116_TunnelersRestHouse_EventScript_Tunneler2:: @ 0x08212833
+	msgbox Route116_TunnelersRestHouse_Text_ManDiggingHisWayToVerdanturf, MSGBOX_NPC
 	end
 
-Route116_TunnelersRestHouse_EventScript_0021283C::
+Route116_TunnelersRestHouse_EventScript_Tunneler3:: @ 0x0821283C
 	lock
 	faceplayer
-	checkflag 0xC7
-	goto_if 0x1, Route116_TunnelersRestHouse_EventScript_00212851
-	loadword 0x0, gJPText_0021295A
-	callstd 0x4
+	goto_if_set FLAG_RUSTURF_TUNNEL_OPENED, Route116_TunnelersRestHouse_EventScript_TunnelOpened
+	msgbox Route116_TunnelersRestHouse_Text_GetToVerdanturfWithoutTunnel, MSGBOX_DEFAULT
 	release
 	end
 
-Route116_TunnelersRestHouse_EventScript_00212851::
-	loadword 0x0, gJPText_0021299F
-	callstd 0x4
+Route116_TunnelersRestHouse_EventScript_TunnelOpened:: @ 0x08212851
+	msgbox Route116_TunnelersRestHouse_Text_TunnelHasGoneThrough, MSGBOX_DEFAULT
 	release
 	end
 
-	.globl gJPText_0021285B
-gJPText_0021285B: @ 0x0821285B
+Route116_TunnelersRestHouse_Text_WeHadToStopBoring: @ 0x0821285B
 	.string "あの　カナシダトンネル⋯⋯\p"
 	.string "はじめは　たくさんの　にんげんと\n"
 	.string "さいしんの　キカイで　ほりすすんでいた\p"
@@ -45,8 +39,7 @@ gJPText_0021285B: @ 0x0821285B
 	.string "で　おれら　どうしようもなく\n"
 	.string "ここで　ぼんやりと　しているわけさ$"
 
-	.globl gJPText_002128DD
-gJPText_002128DD: @ 0x082128DD
+Route116_TunnelersRestHouse_Text_ManDiggingHisWayToVerdanturf: @ 0x082128DD
 	.string "どうしても　シダケに　いきたい\n"
 	.string "やつが　じぶんの　ちから　だけで\l"
 	.string "トンネルを　ほっているよ\p"
@@ -55,15 +48,13 @@ gJPText_002128DD: @ 0x082128DD
 	.string "まわりの　しぜんにも　わるい　えいきょうを\l"
 	.string "あたえないで　すむって　いってな$"
 
-	.globl gJPText_0021295A
-gJPText_0021295A: @ 0x0821295A
+Route116_TunnelersRestHouse_Text_GetToVerdanturfWithoutTunnel: @ 0x0821295A
 	.string "トンネルを　つかわずに　ここから\n"
 	.string "シダケに　いくなら　うみを　わたり\l"
 	.string "ムロから　カイナ　そして\l"
 	.string "キンセツを　とおって　いくしか　ないな！$"
 
-	.globl gJPText_0021299F
-gJPText_0021299F: @ 0x0821299F
+Route116_TunnelersRestHouse_Text_TunnelHasGoneThrough: @ 0x0821299F
 	.string "なんでも　シダケ　までの\n"
 	.string "トンネルが　つうじた　らしいぞ！\p"
 	.string "ねがい　つづければ\n"

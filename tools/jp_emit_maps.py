@@ -139,6 +139,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Lanette's house immediately follows with its transition and six local
     # interaction branches in reviewed US source order.
     'Route114_LanettesHouse': 7,
+    # The next physical map owner has its transition plus the three tunnelers
+    # and opened-tunnel branch in the same order as the US source.
+    'Route116_TunnelersRestHouse': 5,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -215,6 +218,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'Route114_FossilManiacsHouse': 4,
     'Route114_FossilManiacsTunnel': 4,
     'Route114_LanettesHouse': 7,
+    'Route116_TunnelersRestHouse': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9468,6 +9472,20 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x800D: 'VAR_RESULT',
             },
             'decorations': {0x0063: 'DECOR_LOTAD_DOLL'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # Tunnelers' Rest House is already decoded, but its pre-existing generic
+    # labels and numeric flags must still be audited against its physical US
+    # counterpart before the canonical map source is regenerated.
+    'Route116_TunnelersRestHouse': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x00C7: 'FLAG_RUSTURF_TUNNEL_OPENED',
+                0x08BA: 'FLAG_LANDMARK_TUNNELERS_REST_HOUSE',
+            },
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },

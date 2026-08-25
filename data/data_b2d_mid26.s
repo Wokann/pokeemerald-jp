@@ -2254,18 +2254,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Route114_LanettesHouse/events.inc"
 	.globl gMapEvents_ROUTE114_LANETTES_HOUSE
 	.set gMapEvents_ROUTE114_LANETTES_HOUSE, Route114_LanettesHouse_MapEvents
-	.globl ROUTE116_TUNNELERS_REST_HOUSE_EventObjects
-ROUTE116_TUNNELERS_REST_HOUSE_EventObjects: @ 0x0850C560
-	object_event 1, 25, 0, 6, 5, 3, 10, 0, 0, 0, 0, Route116_TunnelersRestHouse_EventScript_0021282A, 0x0000
-	object_event 2, 25, 0, 3, 6, 3, 1, 1, 1, 0, 0, Route116_TunnelersRestHouse_EventScript_0021283C, 0x0000
-	object_event 3, 25, 0, 7, 2, 3, 7, 1, 0, 0, 0, Route116_TunnelersRestHouse_EventScript_00212833, 0x0000
-	.globl ROUTE116_TUNNELERS_REST_HOUSE_EventWarps
-ROUTE116_TUNNELERS_REST_HOUSE_EventWarps: @ 0x0850C5A8
-	warp_def 4, 8, 0, 1, MAP_ROUTE116
-	warp_def 5, 8, 0, 1, MAP_ROUTE116
+	.include "data/maps/Route116_TunnelersRestHouse/events.inc"
 	.globl gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE
-gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE: @ 0x0850C5B8
-	map_events ROUTE116_TUNNELERS_REST_HOUSE_EventObjects, ROUTE116_TUNNELERS_REST_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE, Route116_TunnelersRestHouse_MapEvents
 	.globl ROUTE117_POKEMON_DAY_CARE_EventObjects
 ROUTE117_POKEMON_DAY_CARE_EventObjects: @ 0x0850C5CC
 	object_event 1, 30, 0, 2, 2, 3, 8, 0, 0, 0, 0, 0x082577DA, 0x0000
