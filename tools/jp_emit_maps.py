@@ -133,12 +133,16 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MtChimney_CableCarStation': 7,
     # Route 114's Fossil Maniac house follows at the next physical map owner.
     'Route114_FossilManiacsHouse': 5,
+    # The adjoining tunnel has two hooks (including OnLoad), two setup
+    # branches, and four event/condition branches in US source order.
+    'Route114_FossilManiacsTunnel': 8,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
 # their existing matcher behavior, and opt audited maps into only the hooks
 # whose JP entries were checked one-to-one against the US source sequence.
 MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
+    'Route114_FossilManiacsTunnel': ('OnLoad',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -206,6 +210,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'Route112_CableCarStation': 3,
     'MtChimney_CableCarStation': 3,
     'Route114_FossilManiacsHouse': 4,
+    'Route114_FossilManiacsTunnel': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9382,6 +9387,46 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x800D: 'VAR_RESULT',
             },
             'items': {0x013C: 'ITEM_TM_DIG'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # The adjoining Fossil Maniac tunnel owns the complete map source through
+    # 0x082124D1. The shared movement pointers stay external; its local
+    # scripts, texts, flags, items, and metatiles are named from the matching
+    # US map after JP byte/control-flow review.
+    'Route114_FossilManiacsTunnel': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'texts': {
+            0x08212335: 'Route114_FossilManiacsTunnel_Text_LookInDesertForFossils',
+            0x082123BF: 'Route114_FossilManiacsTunnel_Text_DevonCorpRevivingFossils',
+            0x0821244C: 'Route114_FossilManiacsTunnel_Text_FossilsAreWonderful',
+            0x08212467: 'Route114_FossilManiacsTunnel_Text_NotSafeThatWay',
+        },
+        'external_labels': {
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'symbols': {
+            'flags': {
+                0x010B: 'FLAG_RECEIVED_REVIVED_FOSSIL_MON',
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+            },
+            'vars': {
+                0x40CC: 'VAR_FOSSIL_MANIAC_STATE',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {0x40CC: {0x02: '2'}},
+            'items': {
+                0x011E: 'ITEM_ROOT_FOSSIL',
+                0x011F: 'ITEM_CLAW_FOSSIL',
+            },
+            'metatiles': {0x0269: 'METATILE_Fallarbor_RedRockWall'},
+            'local_ids': {
+                0x01: 'LOCALID_FOSSIL_MANIAC',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {0x08: 'MOVEMENT_TYPE_FACE_DOWN'},
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
