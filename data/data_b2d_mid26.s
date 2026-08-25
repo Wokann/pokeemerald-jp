@@ -2027,17 +2027,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_MoveDeletersHouse/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_MOVE_DELETERS_HOUSE
 	.set gMapEvents_LILYCOVE_CITY_MOVE_DELETERS_HOUSE, LilycoveCity_MoveDeletersHouse_MapEvents
-	.globl LILYCOVE_CITY_HOUSE1_EventObjects
-LILYCOVE_CITY_HOUSE1_EventObjects: @ 0x0850A620
-	object_event 1, 21, 0, 4, 5, 3, 9, 1, 1, 0, 0, 0x08209F67, 0x0000
-	object_event 2, 204, 0, 4, 4, 3, 8, 0, 0, 0, 0, 0x08209F70, 0x0000
-	.globl LILYCOVE_CITY_HOUSE1_EventWarps
-LILYCOVE_CITY_HOUSE1_EventWarps: @ 0x0850A650
-	warp_def 3, 8, 0, 8, MAP_LILYCOVE_CITY
-	warp_def 4, 8, 0, 8, MAP_LILYCOVE_CITY
+	.include "data/maps/LilycoveCity_House1/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE1
-gMapEvents_LILYCOVE_CITY_HOUSE1: @ 0x0850A660
-	map_events LILYCOVE_CITY_HOUSE1_EventObjects, LILYCOVE_CITY_HOUSE1_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_HOUSE1, LilycoveCity_House1_MapEvents
 	.globl LILYCOVE_CITY_HOUSE2_EventObjects
 LILYCOVE_CITY_HOUSE2_EventObjects: @ 0x0850A674
 	object_event 1, 17, 0, 0, 4, 3, 8, 0, 0, 0, 0, 0x08209FDD, 0x0000

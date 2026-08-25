@@ -41,6 +41,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_PokemonTrainerFanClub': 65,
     'LilycoveCity_Harbor': 56,
     'LilycoveCity_MoveDeletersHouse': 7,
+    'LilycoveCity_House1': 2,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -52,6 +53,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_PokemonTrainerFanClub': 38,
     'LilycoveCity_Harbor': 11,
     'LilycoveCity_MoveDeletersHouse': 9,
+    'LilycoveCity_House1': 2,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7197,6 +7199,24 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# House1 immediately follows Move Deleter's House. Its two scripts and two
+# text records match the US source in physical order. The JP command-table
+# slots for waitdooranim/waitmoncry are swapped, so only the audited Kecleon
+# cry site uses the dedicated byte-exact semantic macro.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_House1': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x08209F70: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'species': {0x013D: 'SPECIES_KECLEON'},
+            'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'LilycoveCity_LilycoveMuseum_2F': {
         0x0820630D: 'LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft',
@@ -8524,8 +8544,10 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             symbol_formatter = semantic_symbol_formatter(mname, addr)
             decoded_lines = sp.decode_script_lines(
                 scripts[addr], reference_label_map, reference_text_label_map, symbol_formatter)
+            command_aliases = semantic.get('command_aliases', {}).get(addr, {})
             decoded_lines = [
-                (CANONICAL_SCRIPT_COMMAND_NAMES.get(name, name), argstr)
+                (command_aliases.get(
+                    name, CANONICAL_SCRIPT_COMMAND_NAMES.get(name, name)), argstr)
                 for name, argstr in decoded_lines
             ]
             remapped_specials = []
