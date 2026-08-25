@@ -271,32 +271,51 @@ FallarborTown_BattleTentLobby_EventScript_001F54EC::
 	end
 
 FallarborTown_BattleTentLobby_EventScript_001F54EE::
-	applymovement 0x1, 0x081F551D
-	applymovement 0xFF, 0x081F5524
+	applymovement LOCALID_FALLARBOR_TENT_ATTENDANT, FallarborTown_BattleTentLobby_Movement_AttendantWalkToDoor
+	applymovement LOCALID_PLAYER, FallarborTown_BattleTentLobby_Movement_PlayerWalkToDoor
 	waitmovement 0x0
 	opendoor 0x6, 0x1
 	waitmoncry
-	applymovement 0x1, 0x081F5521
-	applymovement 0xFF, 0x081F5528
+	applymovement LOCALID_FALLARBOR_TENT_ATTENDANT, FallarborTown_BattleTentLobby_Movement_AttendantEnterDoor
+	applymovement LOCALID_PLAYER, FallarborTown_BattleTentLobby_Movement_PlayerEnterDoor
 	waitmovement 0x0
 	closedoor 0x6, 0x1
 	waitmoncry
 	return
 
-	.incbin "baserom_jp.gba", 0x1f551d, 0xf
+FallarborTown_BattleTentLobby_Movement_AttendantWalkToDoor:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+FallarborTown_BattleTentLobby_Movement_AttendantEnterDoor:
+	walk_up
+	set_invisible
+	step_end
+
+FallarborTown_BattleTentLobby_Movement_PlayerWalkToDoor:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+FallarborTown_BattleTentLobby_Movement_PlayerEnterDoor:
+	walk_up
+	walk_up
+	set_invisible
+	step_end
+
 FallarborTown_BattleTentLobby_EventScript_001F552C::
-	loadword 0x0, 0x081F56C2
-	callstd 0x2
+	msgbox FallarborTown_BattleTentLobby_Text_CameToCampOut, MSGBOX_NPC
 	end
 
 FallarborTown_BattleTentLobby_EventScript_001F5535::
-	loadword 0x0, 0x081F5623
-	callstd 0x2
+	msgbox FallarborTown_BattleTentLobby_Text_MakeThinkImJustKid, MSGBOX_NPC
 	end
 
 FallarborTown_BattleTentLobby_EventScript_001F553E::
-	loadword 0x0, 0x081F5657
-	callstd 0x2
+	msgbox FallarborTown_BattleTentLobby_Text_FallarborTentMyFavorite, MSGBOX_NPC
 	end
 
 FallarborTown_BattleTentLobby_EventScript_001F5547::
@@ -304,16 +323,14 @@ FallarborTown_BattleTentLobby_EventScript_001F5547::
 	faceplayer
 	checkflag 0x1CD
 	goto_if 0x1, FallarborTown_BattleTentLobby_EventScript_001F5564
-	loadword 0x0, 0x081F5708
-	callstd 0x4
+	msgbox FallarborTown_BattleTentLobby_Text_ScottLookingForSomeone, MSGBOX_DEFAULT
 	addvar 0x40D1, 0x1
 	setflag 0x1CD
 	release
 	end
 
 FallarborTown_BattleTentLobby_EventScript_001F5564::
-	loadword 0x0, 0x081F57A2
-	callstd 0x4
+	msgbox FallarborTown_BattleTentLobby_Text_ScottMakeChallenge, MSGBOX_DEFAULT
 	release
 	end
 
@@ -378,3 +395,41 @@ FallarborTown_BattleTentLobby_EventScript_001F5613::
 FallarborTown_BattleTentLobby_EventScript_001F5621::
 	releaseall
 	end
+
+FallarborTown_BattleTentLobby_Text_MakeThinkImJustKid: @ 0x081F5623
+	.string "ふふふふふふ\p"
+	.string "ほんの　こどもだと　おもわせて\n"
+	.string "みんなを　ゆだん　させて\l"
+	.string "ボクは　ゆうしょう　するのだ！$"
+
+FallarborTown_BattleTentLobby_Text_FallarborTentMyFavorite: @ 0x081F5657
+	.string "バトルテントって　まちに　よって\n"
+	.string "ちょうせん　できる　ことが　ちがうでしょ？\l"
+	.string "あたしは　だんぜん　ハジツゲの\l"
+	.string "バトルテントが　すきなのよね！\p"
+	.string "しんじてる　ポケモンたちと　かちぬくって\n"
+	.string "すごく　かっこいいじゃない？$"
+
+FallarborTown_BattleTentLobby_Text_CameToCampOut: @ 0x081F56C2
+	.string "テントというから　キャンプ　しにきたら⋯\p"
+	.string "さいきんの　テント　というのは\n"
+	.string "ごうかな　もん　だなあ\l"
+	.string "よし　ついでに　ちょうせん　してみるか？$"
+
+FallarborTown_BattleTentLobby_Text_ScottLookingForSomeone: @ 0x081F5708
+	.string "エニシダ“やあ　{PLAYER}{KUN}\n"
+	.string "きたんだね　バトルテントに！\p"
+	.string "どうも　この　ちほうは\n"
+	.string "ノンビリ　した　ひとが　おおくてね\l"
+	.string "もっと　こう⋯⋯\l"
+	.string "かちたい　パワーの　ありまくりな\l"
+	.string "ひとを　わたしは　もとめて　いるんだよ！\l"
+	.string "そういう　トレーナーが　いれば　すぐにでも\p"
+	.string "⋯⋯って　いや　なんでもないよ\n"
+	.string "じゃ　がんばってね！$"
+
+FallarborTown_BattleTentLobby_Text_ScottMakeChallenge: @ 0x081F57A2
+	.string "エニシダ“わたし　なんかに\n"
+	.string "いつまでも　かまって　いないで\l"
+	.string "さっそく　チャレンジ\l"
+	.string "して　みたら　どうだい？$"

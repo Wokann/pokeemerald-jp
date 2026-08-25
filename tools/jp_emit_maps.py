@@ -168,6 +168,12 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x081F1517: 'LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForJohtoStarter',
         0x081F197B: 'LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer',
     },
+    'FallarborTown_BattleTentLobby': {
+        0x081F551D: 'FallarborTown_BattleTentLobby_Movement_AttendantWalkToDoor',
+        0x081F5521: 'FallarborTown_BattleTentLobby_Movement_AttendantEnterDoor',
+        0x081F5524: 'FallarborTown_BattleTentLobby_Movement_PlayerWalkToDoor',
+        0x081F5528: 'FallarborTown_BattleTentLobby_Movement_PlayerEnterDoor',
+    },
     'OldaleTown': {
         0x081E48CB: 'OldaleTown_Movement_Unknown1',
         0x081E48F3: 'OldaleTown_Movement_Unknown2',
@@ -1804,6 +1810,21 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         },
         'field_placeholders': {
             0x081DE1A8: {0x01: 'PLAYER'},
+        },
+    },
+    # These five contiguous texts are reached only by the Fallarbor Battle
+    # Tent lobby scripts.  Their names and Scott's player honorific follow the
+    # matching US map source instead of retaining address-only JP labels.
+    'FallarborTown_BattleTentLobby': {
+        'texts': {
+            0x081F5623: 'FallarborTown_BattleTentLobby_Text_MakeThinkImJustKid',
+            0x081F5657: 'FallarborTown_BattleTentLobby_Text_FallarborTentMyFavorite',
+            0x081F56C2: 'FallarborTown_BattleTentLobby_Text_CameToCampOut',
+            0x081F5708: 'FallarborTown_BattleTentLobby_Text_ScottLookingForSomeone',
+            0x081F57A2: 'FallarborTown_BattleTentLobby_Text_ScottMakeChallenge',
+        },
+        'field_placeholders': {
+            0x081F5708: {0x01: 'PLAYER', 0x05: 'KUN'},
         },
     },
     # The two mirrored houses share PlayersHouse/RivalsHouse handlers, but

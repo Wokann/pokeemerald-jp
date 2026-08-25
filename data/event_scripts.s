@@ -505,7 +505,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LavaridgeTown_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/FallarborTown_Mart/scripts.inc"
 	.include "data/maps/FallarborTown_BattleTentLobby/scripts.inc"
-	.incbin "baserom_jp.gba", 0x1f5623, 0x1b5
 	.include "data/maps/FallarborTown_BattleTentCorridor/scripts.inc"
 	.include "data/maps/FallarborTown_BattleTentBattleRoom/scripts.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/scripts.inc"
