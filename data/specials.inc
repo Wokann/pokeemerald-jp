@@ -548,6 +548,10 @@ gSpecials:
 	def_special ShowTrainerHillRecords, waitstate=1
 	def_special PlayerFaceTrainerAfterBattle
 	def_special sub_0813B9D8
+	@ Keep Petalburg Gym's script-facing name aligned with pokeemerald while
+	@ retaining the verified JP implementation symbol in the special table.
+	.set SPECIAL_ResetHealLocationFromDewford, SPECIAL_sub_0813B9D8
+	.set SPECIAL_WAITSTATE_ResetHealLocationFromDewford, SPECIAL_WAITSTATE_sub_0813B9D8
 	def_special IsLastMonThatKnowsSurf
 	def_special sub_08071CF0
 	def_special TryPrepareSecondApproachingTrainer
