@@ -9,8 +9,6 @@ FortreeCity_PokemonCenter_1F_OnTransition::
 	setrespawn HEAL_LOCATION_FORTREE_CITY
 	end
 
-	.globl FortreeCity_PokemonCenter_1F_EventScript_00204C6C
-FortreeCity_PokemonCenter_1F_EventScript_00204C6C: @ 0x08204C6C
 FortreeCity_PokemonCenter_1F_EventScript_Nurse::
 	setvar VAR_0x800B, LOCALID_FORTREE_NURSE
 	call Common_EventScript_PkmnCenterNurse
@@ -19,20 +17,14 @@ FortreeCity_PokemonCenter_1F_EventScript_Nurse::
 	release
 	end
 
-	.globl FortreeCity_PokemonCenter_1F_EventScript_00204C7A
-FortreeCity_PokemonCenter_1F_EventScript_00204C7A: @ 0x08204C7A
 FortreeCity_PokemonCenter_1F_EventScript_Gentleman::
 	msgbox FortreeCity_PokemonCenter_1F_Text_GoToSafariZone, MSGBOX_NPC
 	end
 
-	.globl FortreeCity_PokemonCenter_1F_EventScript_00204C83
-FortreeCity_PokemonCenter_1F_EventScript_00204C83: @ 0x08204C83
 FortreeCity_PokemonCenter_1F_EventScript_Man::
 	msgbox FortreeCity_PokemonCenter_1F_Text_RecordCornerIsNeat, MSGBOX_NPC
 	end
 
-	.globl FortreeCity_PokemonCenter_1F_EventScript_00204C8C
-FortreeCity_PokemonCenter_1F_EventScript_00204C8C: @ 0x08204C8C
 FortreeCity_PokemonCenter_1F_EventScript_Boy::
 	msgbox FortreeCity_PokemonCenter_1F_Text_DoYouKnowAboutPokenav, MSGBOX_NPC
 	end

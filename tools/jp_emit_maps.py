@@ -6362,14 +6362,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'local_ids': {0x01: 'LOCALID_FORTREE_NURSE'},
             'heal_locations': {0x07: 'HEAL_LOCATION_FORTREE_CITY'},
         },
-        # The legacy PC event table remains in data_b2d_mid26.s.  Preserve
-        # its address-derived targets until that event-table JSON migration.
-        'script_aliases': {
-            0x08204C6C: ('FortreeCity_PokemonCenter_1F_EventScript_00204C6C',),
-            0x08204C7A: ('FortreeCity_PokemonCenter_1F_EventScript_00204C7A',),
-            0x08204C83: ('FortreeCity_PokemonCenter_1F_EventScript_00204C83',),
-            0x08204C8C: ('FortreeCity_PokemonCenter_1F_EventScript_00204C8C',),
-        },
     },
 })
 
