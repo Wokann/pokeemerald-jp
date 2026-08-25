@@ -49,6 +49,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStore_4F': 5,
     'LilycoveCity_DepartmentStore_5F': 10,
     'LilycoveCity_DepartmentStoreRooftop': 23,
+    'MossdeepCity_Gym': 45,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -68,6 +69,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStore_4F': 3,
     'LilycoveCity_DepartmentStore_5F': 4,
     'LilycoveCity_DepartmentStoreRooftop': 8,
+    'MossdeepCity_Gym': 52,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -156,6 +158,22 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x08209A3F,
         0x08209A49,
         0x08209A71,
+    ),
+    # The four RS-era switch pairs and the forced entrance warp are locally
+    # owned complete scripts, but the Emerald event table reaches them only
+    # through indirect/coordinate dispatch. Keep their physical boundaries
+    # explicit instead of leaving the span as an opaque incbin.
+    'MossdeepCity_Gym': (
+        0x0820B502,
+        0x0820B531,
+        0x0820B539,
+        0x0820B55E,
+        0x0820B58D,
+        0x0820B5B2,
+        0x0820B5E1,
+        0x0820B606,
+        0x0820B635,
+        0x0820B65A,
     ),
 }
 
@@ -7562,6 +7580,96 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Mossdeep Gym immediately follows the Department Store Elevator in the JP
+# event-script stream. The map's RS-era switch scripts remain byte-exact but
+# are named after the matching US source; its one player field placeholder is
+# checked against the corresponding US text rather than retained generically.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_Gym': {
+        'scripts': {
+            0x0820B36F: 'MossdeepCity_Gym_OnLoad',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'field_placeholders': {
+            0x0820B83E: {0x01: 'PLAYER'},
+            0x0820BF61: {0x01: 'PLAYER'},
+            0x0820C162: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x08242FCF: 'Common_EventScript_SetGymTrainers',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x082430EA: 'Common_EventScript_BagIsFull',
+            0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
+        },
+        'symbols': {
+            'flags': {
+                0x0064: 'FLAG_MOSSDEEP_GYM_SWITCH_1',
+                0x0065: 'FLAG_MOSSDEEP_GYM_SWITCH_2',
+                0x0066: 'FLAG_MOSSDEEP_GYM_SWITCH_3',
+                0x0067: 'FLAG_MOSSDEEP_GYM_SWITCH_4',
+                0x00AB: 'FLAG_RECEIVED_TM_CALM_MIND',
+                0x01D8: 'FLAG_ENABLE_TATE_AND_LIZA_MATCH_CALL',
+                0x02F1: 'FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_1F_STEVEN',
+                0x02F4: 'FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_1F_TEAM_MAGMA',
+                0x0337: 'FLAG_HIDE_MOSSDEEP_CITY_TEAM_MAGMA',
+                0x035E: 'FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_TEAM_MAGMA',
+                0x035F: 'FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_STEVEN',
+                0x0365: 'FLAG_HIDE_SLATEPORT_CITY_STERNS_SHIPYARD_MR_BRINEY',
+                0x0389: 'FLAG_HIDE_SLATEPORT_CITY_HARBOR_PATRONS',
+                0x0393: 'FLAG_UNKNOWN_0x393',
+                0x039C: 'FLAG_HIDE_AQUA_HIDEOUT_GRUNTS',
+                0x04F6: 'FLAG_DEFEATED_MOSSDEEP_GYM',
+                0x086D: 'FLAG_BADGE07_GET',
+            },
+            'vars': {
+                0x405D: 'VAR_MOSSDEEP_CITY_STATE',
+                0x409F: 'VAR_MOSSDEEP_SPACE_CENTER_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x800D: {0x0: 'FALSE', 0x1: 'TRUE'},
+            },
+            'items': {0x0124: 'ITEM_TM_CALM_MIND'},
+            'trainers': {
+                0x00E9: 'TRAINER_PRESTON',
+                0x00EA: 'TRAINER_VIRGIL',
+                0x00EB: 'TRAINER_BLAKE',
+                0x00F4: 'TRAINER_HANNAH',
+                0x00F5: 'TRAINER_SAMANTHA',
+                0x00F6: 'TRAINER_MAURA',
+                0x010F: 'TRAINER_TATE_AND_LIZA_1',
+                0x023F: 'TRAINER_SYLVIA',
+                0x0246: 'TRAINER_NATE',
+                0x0247: 'TRAINER_KATHLEEN',
+                0x0248: 'TRAINER_CLIFFORD',
+                0x0249: 'TRAINER_NICHOLAS',
+                0x024F: 'TRAINER_MACEY',
+            },
+            'maps': {0x0E00: 'MAP_MOSSDEEP_CITY_GYM'},
+            'local_ids': {0x00FF: 'LOCALID_PLAYER'},
+            'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
+            'sounds': {
+                0x0023: 'SE_SWITCH',
+                0x0024: 'SE_CLICK',
+                0x002F: 'SE_REPEL',
+            },
+            'metatiles': {
+                0x0204: 'METATILE_RSMossdeepGym_RedArrow_Right',
+                0x0205: 'METATILE_RSMossdeepGym_RedArrow_Down',
+                0x020C: 'METATILE_RSMossdeepGym_RedArrow_Left',
+                0x020D: 'METATILE_RSMossdeepGym_RedArrow_Up',
+                0x0238: 'METATILE_RSMossdeepGym_Switch_Up',
+                0x0239: 'METATILE_RSMossdeepGym_Switch_Down',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'LilycoveCity_DepartmentStore_2F': (
         (0x0820A953, 'LilycoveCity_DepartmentStore_2F_Pokemart1', (
@@ -7865,6 +7973,11 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x081E6C9B: 'Route103_Movement_RivalExit2',
         0x081E6CA1: 'Route103_Movement_WatchRivalExitFacingEastOrWest',
     },
+    # This unused RS switch delay sits between the Gym Guide and statue
+    # scripts. It is referenced only by applymovement in the old switch flow.
+    'MossdeepCity_Gym': {
+        0x0820B799: 'MossdeepCity_Gym_Movement_WaitAfterSwitchUse',
+    },
 })
 
 MSGBOX_TYPES = {
@@ -7904,6 +8017,9 @@ TEXT_CODEC = JapaneseScriptTextCodec()
 CANONICAL_SCRIPT_COMMAND_NAMES = {
     'cmdDB': 'messageinstant',
     'getpricereduction': 'getpokenewsactive',
+    'mossdeepgym1': 'moverotatingtileobjects',
+    'mossdeepgym3': 'initrotatingtilepuzzle',
+    'buffercontesttype': 'freerotatingtilepuzzle',
     'showcontestwinner': 'showcontestpainting',
 }
 
@@ -8023,6 +8139,10 @@ def collapse_trainerbattle_macros(lines):
             out.append(('trainerbattle_double', ', '.join((trainer, parts[3], parts[4], parts[5]))))
         elif battle_type == 'TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE' and len(parts) == 7:
             out.append(('trainerbattle_double', ', '.join((trainer, parts[3], parts[4], parts[5], parts[6]))))
+        elif (battle_type == 'TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC'
+              and len(parts) == 7):
+            out.append(('trainerbattle_double', ', '.join(
+                (trainer, parts[3], parts[4], parts[5], parts[6], 'NO_MUSIC'))))
         elif battle_type == 'TRAINER_BATTLE_REMATCH' and len(parts) == 5:
             out.append(('trainerbattle_rematch', ', '.join((trainer, parts[3], parts[4]))))
         elif battle_type == 'TRAINER_BATTLE_REMATCH_DOUBLE' and len(parts) == 6:
@@ -8270,6 +8390,7 @@ MAP_ARGUMENTS = {
     'setdynamicwarp': {0},
     'setdivewarp': {0},
     'warpdoor': {0},
+    'warpmossdeepgym': {0},
     'addobject_at': {1},
     'applymovement_at': {2},
     'hideobject_at': {1},
@@ -8285,7 +8406,7 @@ def collapse_coordinate_warp_macros(lines):
     """Use the canonical three-argument form for coordinate-only warps."""
     out = []
     for name, argstr in lines:
-        if name in ('setdivewarp', 'setdynamicwarp', 'setescapewarp', 'setwarp', 'warp', 'warpdoor'):
+        if name in ('setdivewarp', 'setdynamicwarp', 'setescapewarp', 'setwarp', 'warp', 'warpdoor', 'warpmossdeepgym'):
             args = [arg.strip() for arg in argstr.split(',')]
             if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
                 argstr = ', '.join((args[0], args[2], args[3]))
@@ -8489,6 +8610,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
         if name == 'setmetatile' and index == 2:
             return symbols.get('metatiles', {}).get(value)
         if name == 'setmetatile' and index == 3:
+            return symbols.get('booleans', {}).get(value)
+        if name in ('initrotatingtilepuzzle', 'mossdeepgym3') and index == 0:
             return symbols.get('booleans', {}).get(value)
         if name in ('playmoncry', 'showmonpic', 'setwildbattle'):
             if index == 0:

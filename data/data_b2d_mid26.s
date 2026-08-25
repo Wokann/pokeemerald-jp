@@ -2060,78 +2060,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_DepartmentStoreElevator/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
 	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR, LilycoveCity_DepartmentStoreElevator_MapEvents
-	.globl MOSSDEEP_CITY_GYM_EventObjects
-MOSSDEEP_CITY_GYM_EventObjects: @ 0x0850AC18
-	object_event 1, 132, 0, 23, 7, 0, 8, 0, 0, 0, 0, 0x0820B401, 0x0000
-	object_event 2, 37, 0, 1, 30, 3, 8, 0, 0, 1, 1, 0x0820B666, 0x0000
-	object_event 3, 37, 0, 5, 20, 3, 7, 0, 0, 1, 1, 0x0820B694, 0x0000
-	object_event 4, 47, 0, 4, 29, 3, 7, 0, 0, 1, 1, 0x0820B6D9, 0x0000
-	object_event 5, 47, 0, 4, 23, 0, 7, 0, 0, 1, 1, 0x0820B6C2, 0x0000
-	object_event 6, 37, 0, 6, 9, 3, 8, 0, 0, 1, 1, 0x0820B67D, 0x0000
-	object_event 7, 47, 0, 6, 3, 0, 8, 0, 0, 1, 1, 0x0820B6AB, 0x0000
-	object_event 8, 23, 0, 5, 33, 0, 8, 0, 0, 0, 0, MossdeepCity_Gym_EventScript_0020B77A, 0x0000
-	object_event 9, 131, 0, 24, 7, 0, 8, 0, 0, 0, 0, 0x0820B401, 0x0000
-	object_event 10, 224, 0, 2, 30, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 11, 224, 0, 1, 29, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 12, 224, 0, 4, 30, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 13, 224, 0, 5, 29, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 14, 224, 0, 5, 21, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 15, 224, 0, 7, 9, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 16, 224, 0, 10, 8, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 17, 48, 0, 9, 8, 3, 7, 1, 1, 1, 1, 0x0820B707, 0x0000
-	object_event 18, 40, 0, 7, 5, 3, 10, 1, 1, 1, 1, 0x0820B6F0, 0x0000
-	object_event 19, 224, 0, 6, 6, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 20, 224, 0, 12, 5, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 21, 224, 0, 11, 5, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 22, 224, 0, 11, 34, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 23, 224, 0, 12, 33, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 24, 224, 0, 12, 34, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 25, 48, 0, 22, 25, 3, 7, 1, 1, 1, 1, 0x0820B735, 0x0000
-	object_event 26, 224, 0, 23, 26, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 27, 47, 0, 25, 25, 0, 9, 1, 1, 1, 1, 0x0820B71E, 0x0000
-	object_event 28, 40, 0, 22, 23, 3, 8, 1, 1, 1, 1, 0x0820B763, 0x0000
-	object_event 29, 224, 0, 21, 23, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 30, 224, 0, 21, 22, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 31, 224, 0, 22, 22, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 32, 37, 0, 25, 22, 3, 7, 1, 1, 1, 1, 0x0820B74C, 0x0000
-	object_event 33, 224, 0, 24, 22, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 34, 224, 0, 24, 23, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 35, 224, 0, 6, 5, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 36, 224, 0, 23, 25, 3, 1, 1, 1, 0, 0, 0x00000000, 0x0000
-	.globl MOSSDEEP_CITY_GYM_EventWarps
-MOSSDEEP_CITY_GYM_EventWarps: @ 0x0850AF78
-	warp_def 6, 35, 3, 1, MAP_MOSSDEEP_CITY
-	warp_def 7, 35, 3, 1, MAP_MOSSDEEP_CITY
-	warp_def 3, 28, 0, 3, MAP_MOSSDEEP_CITY_GYM
-	warp_def 1, 23, 3, 2, MAP_MOSSDEEP_CITY_GYM
-	warp_def 7, 18, 0, 5, MAP_MOSSDEEP_CITY_GYM
-	warp_def 8, 12, 0, 4, MAP_MOSSDEEP_CITY_GYM
-	warp_def 9, 18, 0, 7, MAP_MOSSDEEP_CITY_GYM
-	warp_def 23, 20, 0, 6, MAP_MOSSDEEP_CITY_GYM
-	warp_def 1, 33, 3, 9, MAP_MOSSDEEP_CITY_GYM
-	warp_def 20, 24, 0, 8, MAP_MOSSDEEP_CITY_GYM
-	warp_def 11, 3, 0, 11, MAP_MOSSDEEP_CITY_GYM
-	warp_def 11, 35, 3, 10, MAP_MOSSDEEP_CITY_GYM
-	warp_def 13, 32, 0, 13, MAP_MOSSDEEP_CITY_GYM
-	warp_def 21, 10, 0, 12, MAP_MOSSDEEP_CITY_GYM
-	.globl MOSSDEEP_CITY_GYM_EventCoordEvents
-MOSSDEEP_CITY_GYM_EventCoordEvents: @ 0x0850AFE8
-	coord_event 2, 21, 3, 16385, 0, 0x0820B7D0
-	coord_event 8, 10, 3, 16385, 0, 0x0820B7E6
-	coord_event 6, 7, 3, 16385, 0, 0x0820B7E6
-	coord_event 15, 34, 3, 16385, 0, 0x0820B7FC
-	coord_event 23, 24, 3, 16385, 0, 0x0820B812
-	coord_event 23, 21, 3, 16385, 0, 0x0820B812
-	coord_event 8, 6, 3, 16385, 0, 0x0820B828
-	coord_event 21, 6, 0, 16385, 0, 0x0820B65A
-	coord_event 3, 30, 3, 16385, 0, 0x0820B7D0
-	.globl MOSSDEEP_CITY_GYM_EventBgEvents
-MOSSDEEP_CITY_GYM_EventBgEvents: @ 0x0850B078
-	bg_event 4, 34, 0, 1, MossdeepCity_Gym_EventScript_0020B79C, 0, 0
-	bg_event 8, 34, 0, 1, MossdeepCity_Gym_EventScript_0020B7AC, 0, 0
+	.include "data/maps/MossdeepCity_Gym/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_GYM
-gMapEvents_MOSSDEEP_CITY_GYM: @ 0x0850B090
-	map_events MOSSDEEP_CITY_GYM_EventObjects, MOSSDEEP_CITY_GYM_EventWarps, MOSSDEEP_CITY_GYM_EventCoordEvents, MOSSDEEP_CITY_GYM_EventBgEvents
+	.set gMapEvents_MOSSDEEP_CITY_GYM, MossdeepCity_Gym_MapEvents
 	.globl MOSSDEEP_CITY_HOUSE1_EventObjects
 MOSSDEEP_CITY_HOUSE1_EventObjects: @ 0x0850B0A4
 	object_event 1, 44, 0, 3, 3, 3, 3, 1, 1, 0, 0, 0x0820C333, 0x0000

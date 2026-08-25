@@ -227,11 +227,13 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_D0 ScrCmd_nop1 @ 0xD0
 	script_cmd_table_entry SCR_OP_D1 ScrCmd_warpD1 @ 0xD1
 	script_cmd_table_entry SCR_OP_SETMONMETLOCATION ScrCmd_setmonmetlocation @ 0xD2
-	script_cmd_table_entry SCR_OP_D3 ScrCmd_mossdeepgym1 @ 0xD3
-	script_cmd_table_entry SCR_OP_D4 sub_0809B48C @ 0xD4
-	script_cmd_table_entry SCR_OP_D5 ScrCmd_mossdeepgym3 @ 0xD5
-	script_cmd_table_entry SCR_OP_D6 ScrCmd_buffercontesttype @ 0xD6
-	script_cmd_table_entry SCR_OP_D7 ScrCmd_warpD7 @ 0xD7
+	@ These five retained JP handler names implement the canonical Emerald
+	@ rotating-tile / Mossdeep Gym commands named in script_commands.h.
+	script_cmd_table_entry SCR_OP_MOVEROTATINGTILEOBJECTS ScrCmd_mossdeepgym1 @ 0xD3
+	script_cmd_table_entry SCR_OP_TURNROTATINGTILEOBJECTS sub_0809B48C @ 0xD4
+	script_cmd_table_entry SCR_OP_INITROTATINGTILEPUZZLE ScrCmd_mossdeepgym3 @ 0xD5
+	script_cmd_table_entry SCR_OP_FREEROTATINGTILEPUZZLE ScrCmd_buffercontesttype @ 0xD6
+	script_cmd_table_entry SCR_OP_WARPMOSSDEEPGYM ScrCmd_warpD7 @ 0xD7
 	script_cmd_table_entry SCR_OP_D8 ScrCmd_cmdD8 @ 0xD8
 	script_cmd_table_entry SCR_OP_D9 ScrCmd_lockfortrainer @ 0xD9
 	script_cmd_table_entry SCR_OP_DA ScrCmd_mossdeepgym4 @ 0xDA

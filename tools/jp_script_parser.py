@@ -212,6 +212,25 @@ SPECIALS = build_specials_map()
 OPCODE_BY_NAME = build_opcode_table()
 FORMATS = build_macro_formats(OPCODE_BY_NAME)
 
+# The JP macro file retains later RS-era aliases for these commands, which
+# obscures two canonical Emerald forms during automatic macro parsing.  Define
+# the missing no-argument and formatwarp forms explicitly so map extraction
+# can follow Mossdeep Gym's direct coordinate-event scripts.
+FORMATS.setdefault(
+    OPCODE_BY_NAME['SCR_OP_TURNROTATINGTILEOBJECTS'],
+    ('turnrotatingtileobjects', []),
+)
+FORMATS.setdefault(
+    OPCODE_BY_NAME['SCR_OP_WARPMOSSDEEPGYM'],
+    ('warpmossdeepgym', [
+        (1, 'arg_hi', 'map'),
+        (1, 'arg_lo', 'map'),
+        (1, 'arg', 'a'),
+        (2, 'arg', 'b'),
+        (2, 'arg', 'c'),
+    ]),
+)
+
 
 def rd8(addr):
     return ROM[addr - 0x08000000]

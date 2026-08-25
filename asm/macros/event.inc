@@ -2161,17 +2161,17 @@
 	.endm
 
 	.macro mossdeepgym1 a:req
-	.byte SCR_OP_D3
+	.byte SCR_OP_MOVEROTATINGTILEOBJECTS
 	.2byte \a
 	.endm
 
 	.macro mossdeepgym3 a:req
-	.byte SCR_OP_D5
+	.byte SCR_OP_INITROTATINGTILEPUZZLE
 	.2byte \a
 	.endm
 
 	.macro buffercontesttype
-	.byte SCR_OP_D6
+	.byte SCR_OP_FREEROTATINGTILEPUZZLE
 	.endm
 
 	.macro cmdD8
