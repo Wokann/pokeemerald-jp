@@ -136,6 +136,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The adjoining tunnel has two hooks (including OnLoad), two setup
     # branches, and four event/condition branches in US source order.
     'Route114_FossilManiacsTunnel': 8,
+    # Lanette's house immediately follows with its transition and six local
+    # interaction branches in reviewed US source order.
+    'Route114_LanettesHouse': 7,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -211,6 +214,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MtChimney_CableCarStation': 3,
     'Route114_FossilManiacsHouse': 4,
     'Route114_FossilManiacsTunnel': 4,
+    'Route114_LanettesHouse': 7,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9427,6 +9431,43 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0xFF: 'LOCALID_PLAYER',
             },
             'movement_types': {0x08: 'MOVEMENT_TYPE_FACE_DOWN'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # Lanette's house owns the complete source through 0x08212820. The two
+    # player-name placeholders are tied to their exact JP text addresses;
+    # this prevents generic {STRING 0x..} output from concealing their US
+    # semantic roles.
+    'Route114_LanettesHouse': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'texts': {
+            0x08212557: 'Route114_LanettesHouse_Text_EverythingClutteredKeepThis',
+            0x082125B8: 'Route114_LanettesHouse_Text_OrganizeYourBoxes',
+            0x0821260C: 'Route114_LanettesHouse_Text_ResearchNotesPage1',
+            0x08212680: 'Route114_LanettesHouse_Text_ResearchNotesPage2',
+            0x082126E6: 'Route114_LanettesHouse_Text_ResearchNotesPage3',
+            0x08212763: 'Route114_LanettesHouse_Text_ClosedTheNotebook',
+            0x08212770: 'Route114_LanettesHouse_Text_EmailFromBill',
+        },
+        'field_placeholders': {
+            0x08212557: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x08212763: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x082430F3: 'Common_EventScript_ShowNoRoomForDecor',
+        },
+        'symbols': {
+            'flags': {
+                0x0083: 'FLAG_RECEIVED_DOLL_LANETTE',
+                0x08A5: 'FLAG_LANDMARK_LANETTES_HOUSE',
+                0x08AB: 'FLAG_SYS_PC_LANETTE',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x800D: 'VAR_RESULT',
+            },
+            'decorations': {0x0063: 'DECOR_LOTAD_DOLL'},
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },

@@ -2251,21 +2251,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Route114_FossilManiacsTunnel/events.inc"
 	.globl gMapEvents_ROUTE114_FOSSIL_MANIACS_TUNNEL
 	.set gMapEvents_ROUTE114_FOSSIL_MANIACS_TUNNEL, Route114_FossilManiacsTunnel_MapEvents
-	.globl ROUTE114_LANETTES_HOUSE_EventObjects
-ROUTE114_LANETTES_HOUSE_EventObjects: @ 0x0850C500
-	object_event 1, 20, 0, 5, 4, 3, 1, 0, 0, 0, 0, Route114_LanettesHouse_EventScript_002124DB, 0x0366
-	.globl ROUTE114_LANETTES_HOUSE_EventWarps
-ROUTE114_LANETTES_HOUSE_EventWarps: @ 0x0850C518
-	warp_def 5, 7, 0, 2, MAP_ROUTE114
-	warp_def 6, 7, 0, 2, MAP_ROUTE114
-	.globl ROUTE114_LANETTES_HOUSE_EventBgEvents
-ROUTE114_LANETTES_HOUSE_EventBgEvents: @ 0x0850C528
-	bg_event 5, 1, 0, 0, Route114_LanettesHouse_EventScript_00212512, 0, 0
-	bg_event 8, 1, 0, 0, Route114_LanettesHouse_EventScript_0021254E, 0, 0
-	bg_event 7, 1, 0, 0, Route114_LanettesHouse_EventScript_0021254E, 0, 0
+	.include "data/maps/Route114_LanettesHouse/events.inc"
 	.globl gMapEvents_ROUTE114_LANETTES_HOUSE
-gMapEvents_ROUTE114_LANETTES_HOUSE: @ 0x0850C54C
-	map_events ROUTE114_LANETTES_HOUSE_EventObjects, ROUTE114_LANETTES_HOUSE_EventWarps, 0, ROUTE114_LANETTES_HOUSE_EventBgEvents
+	.set gMapEvents_ROUTE114_LANETTES_HOUSE, Route114_LanettesHouse_MapEvents
 	.globl ROUTE116_TUNNELERS_REST_HOUSE_EventObjects
 ROUTE116_TUNNELERS_REST_HOUSE_EventObjects: @ 0x0850C560
 	object_event 1, 25, 0, 6, 5, 3, 10, 0, 0, 0, 0, Route116_TunnelersRestHouse_EventScript_0021282A, 0x0000

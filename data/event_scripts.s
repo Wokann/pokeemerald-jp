@@ -864,7 +864,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/Route114_FossilManiacsHouse/scripts.inc"
 	.include "data/maps/Route114_FossilManiacsTunnel/scripts.inc"
 	.include "data/maps/Route114_LanettesHouse/scripts.inc"
-	.incbin "baserom_jp.gba", 0x212557, 0x2c9
 	.include "data/maps/Route116_TunnelersRestHouse/scripts.inc"
 	.include "data/maps/Route117_PokemonDayCare/scripts.inc"
 	.include "data/maps/Route121_SafariZoneEntrance/scripts.inc"
@@ -1241,6 +1240,8 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_NopReturn, 0x08244178
 	.globl Common_EventScript_BagIsFull
 	.set Common_EventScript_BagIsFull, 0x082430EA
+	.globl Common_EventScript_ShowNoRoomForDecor
+	.set Common_EventScript_ShowNoRoomForDecor, 0x082430F3
 	.globl Common_EventScript_NoRoomForDecor
 	.set Common_EventScript_NoRoomForDecor, 0x082430FD
 	.globl Roulette_EventScript_Table1
