@@ -37,10 +37,42 @@
 	special CallVerdanturfTentFunction
 	.endm
 
+	@ Initialize the Fallarbor Battle Tent challenge.
+	.macro fallarbortent_init
+	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_INIT
+	special CallFallarborTentFunction
+	.endm
+
+	@ Get the current Fallarbor Battle Tent prize into VAR_RESULT.
+	.macro fallarbortent_getprize
+	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_GET_PRIZE
+	special CallFallarborTentFunction
+	.endm
+
+	@ Unused. Set Fallarbor Battle Tent's prize item.
+	.macro fallarbortent_setprize unusedArg:req, itemId:req
+	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_SET_PRIZE
+	setvar VAR_0x8005, \unusedArg
+	setvar VAR_0x8006, \itemId
+	special CallFallarborTentFunction
+	.endm
+
 	@ Save the Fallarbor Tent challenge with the supplied status.
 	.macro fallarbortent_save challengeStatus:req
 	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_SAVE
 	setvar VAR_0x8005, \challengeStatus
+	special CallFallarborTentFunction
+	.endm
+
+	@ Select Fallarbor Tent's prize item from its reward table.
+	.macro fallarbortent_setrandomprize
+	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_SET_RANDOM_PRIZE
+	special CallFallarborTentFunction
+	.endm
+
+	@ Give the current Fallarbor Tent prize; FALSE means the Bag is full.
+	.macro fallarbortent_giveprize
+	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_GIVE_PRIZE
 	special CallFallarborTentFunction
 	.endm
 
