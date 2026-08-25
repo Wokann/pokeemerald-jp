@@ -40,6 +40,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_PokemonCenter_2F': 3,
     'LilycoveCity_PokemonTrainerFanClub': 65,
     'LilycoveCity_Harbor': 56,
+    'LilycoveCity_MoveDeletersHouse': 7,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -50,6 +51,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_PokemonCenter_1F': 3,
     'LilycoveCity_PokemonTrainerFanClub': 38,
     'LilycoveCity_Harbor': 11,
+    'LilycoveCity_MoveDeletersHouse': 9,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7158,6 +7160,43 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Move Deleter's House is the immediate next map owner after Harbor. Its
+# seven scripts and nine text records were checked in physical order against
+# the matching US source; only contextual operands need map-local metadata.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_MoveDeletersHouse': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08243621: 'Common_Movement_FacePlayer',
+        },
+        'field_placeholders': {
+            0x08209EC8: {0x02: 'STR_VAR_1'},
+            0x08209EE2: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x08209EF1: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x08209F4A: {0x02: 'STR_VAR_1'},
+        },
+        'symbols': {
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x800D: 'VAR_RESULT',
+            },
+            'local_ids': {0x01: 'LOCALID_MOVE_DELETER'},
+            'songs': {0x017A: 'MUS_MOVE_DELETED'},
+            'fade_modes': {0x0: 'FADE_FROM_BLACK', 0x1: 'FADE_TO_BLACK'},
+            'var_values': {
+                0x8004: {0xFF: 'PARTY_NOTHING_CHOSEN'},
+                0x8005: {0x4: 'MAX_MON_MOVES'},
+            },
+            'switch_values': {
+                'VAR_RESULT': {0x0: 'NO', 0x1: 'YES'},
+            },
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'LilycoveCity_LilycoveMuseum_2F': {
         0x0820630D: 'LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft',
@@ -7653,6 +7692,12 @@ def name_contextual_result_conditions(lines):
             # FALSE/TRUE meaning as the matching US map source.
             replace_condition(index + 1, {0: 'FALSE'})
             replace_condition(index + 2, {1: 'TRUE'})
+        elif name == 'special' and argstr in (
+                'IsSelectedMonEgg', 'IsLastMonThatKnowsSurf'):
+            # Both special calls return a byte boolean. Keep the following
+            # branch readable without naming unrelated numeric VAR_RESULT
+            # values such as a selected mon's move count.
+            replace_condition(index + 1, {1: 'TRUE'})
         elif name == 'msgbox' and argstr.endswith(', MSGBOX_YESNO'):
             replace_condition(index + 1, {0: 'NO', 1: 'YES'})
             replace_condition(index + 2, {0: 'NO', 1: 'YES'})

@@ -3,134 +3,107 @@
 LilycoveCity_MoveDeletersHouse_MapScripts::
 	.byte 0
 
-LilycoveCity_MoveDeletersHouse_EventScript_00209D71::
+LilycoveCity_MoveDeletersHouse_EventScript_MoveDeleter:: @ 0x08209D71
 	lockall
-	applymovement 0x1, 0x08243621
-	waitmovement 0x0
-	loadword 0x0, gJPText_00209E63
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209DA1
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209E4C
+	applymovement LOCALID_MOVE_DELETER, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox LilycoveCity_MoveDeletersHouse_Text_ICanMakeMonForgetMove, MSGBOX_YESNO
+	switch VAR_RESULT
+	case YES, LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget
+	case NO, LilycoveCity_MoveDeletersHouse_EventScript_ComeAgain
 	releaseall
 	end
 
-LilycoveCity_MoveDeletersHouse_EventScript_00209DA1::
-	loadword 0x0, gJPText_00209EA5
-	callstd 0x4
+LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget:: @ 0x08209DA1
+	msgbox LilycoveCity_MoveDeletersHouse_Text_WhichMonShouldForget, MSGBOX_DEFAULT
 	special ChoosePartyMon
 	waitstate
-	compare_var_to_value 0x8004, 0xFF
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209E4C
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, LilycoveCity_MoveDeletersHouse_EventScript_ComeAgain
 	special IsSelectedMonEgg
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209E42
+	goto_if_eq VAR_RESULT, TRUE, LilycoveCity_MoveDeletersHouse_EventScript_EggCantForgetMoves
 	special GetNumMovesSelectedMonHas
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209E35
-	loadword 0x0, gJPText_00209EB5
-	callstd 0x4
-	fadescreen 0x1
+	goto_if_eq VAR_RESULT, 0x1, LilycoveCity_MoveDeletersHouse_EventScript_MonOnlyKnowsOneMove
+	msgbox LilycoveCity_MoveDeletersHouse_Text_WhichMoveShouldBeForgotten, MSGBOX_DEFAULT
+	fadescreen FADE_TO_BLACK
 	special MoveDeleterChooseMoveToForget
-	fadescreen 0x0
-	compare_var_to_value 0x8005, 0x4
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209DA1
+	fadescreen FADE_FROM_BLACK
+	goto_if_eq VAR_0x8005, MAX_MON_MOVES, LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget
 	special BufferMoveDeleterNicknameAndMove
-	loadword 0x0, gJPText_00209EE2
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209E16
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209E4C
+	msgbox LilycoveCity_MoveDeletersHouse_Text_MonsMoveShouldBeForgotten, MSGBOX_YESNO
+	switch VAR_RESULT
+	case YES, LilycoveCity_MoveDeletersHouse_EventScript_TryForgetMove
+	case NO, LilycoveCity_MoveDeletersHouse_EventScript_ComeAgain
 	releaseall
 	end
 
-LilycoveCity_MoveDeletersHouse_EventScript_00209E16::
+LilycoveCity_MoveDeletersHouse_EventScript_TryForgetMove:: @ 0x08209E16
 	special IsLastMonThatKnowsSurf
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, LilycoveCity_MoveDeletersHouse_EventScript_00209E56
+	goto_if_eq VAR_RESULT, TRUE, LilycoveCity_MoveDeletersHouse_EventScript_LastMonWithSurf
 	special MoveDeleterForgetMove
-	playfanfare 0x17A
+	playfanfare MUS_MOVE_DELETED
 	waitfanfare
-	loadword 0x0, gJPText_00209EF1
-	callstd 0x4
+	msgbox LilycoveCity_MoveDeletersHouse_Text_MonHasForgottenMove, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_MoveDeletersHouse_EventScript_00209E35::
+LilycoveCity_MoveDeletersHouse_EventScript_MonOnlyKnowsOneMove:: @ 0x08209E35
 	special BufferMoveDeleterNicknameAndMove
-	loadword 0x0, gJPText_00209EC8
-	callstd 0x4
+	msgbox LilycoveCity_MoveDeletersHouse_Text_MonOnlyKnowsOneMove, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_MoveDeletersHouse_EventScript_00209E42::
-	loadword 0x0, gJPText_00209F2B
-	callstd 0x4
+LilycoveCity_MoveDeletersHouse_EventScript_EggCantForgetMoves:: @ 0x08209E42
+	msgbox LilycoveCity_MoveDeletersHouse_Text_EggCantForgetMoves, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_MoveDeletersHouse_EventScript_00209E4C::
-	loadword 0x0, gJPText_00209F0F
-	callstd 0x4
+LilycoveCity_MoveDeletersHouse_EventScript_ComeAgain:: @ 0x08209E4C
+	msgbox LilycoveCity_MoveDeletersHouse_Text_ComeAgain, MSGBOX_DEFAULT
 	releaseall
 	end
 
-LilycoveCity_MoveDeletersHouse_EventScript_00209E56::
+LilycoveCity_MoveDeletersHouse_EventScript_LastMonWithSurf:: @ 0x08209E56
 	special BufferMoveDeleterNicknameAndMove
-	loadword 0x0, gJPText_00209F4A
-	callstd 0x4
+	msgbox LilycoveCity_MoveDeletersHouse_Text_CantForgetSurf, MSGBOX_DEFAULT
 	releaseall
 	end
 
-	.globl gJPText_00209E63
-gJPText_00209E63: @ 0x08209E63
+LilycoveCity_MoveDeletersHouse_Text_ICanMakeMonForgetMove: @ 0x08209E63
 	.string "えーと⋯⋯\n"
 	.string "そうじゃ　わし　わすれじいさん\p"
 	.string "ポケモンの　わざを\n"
 	.string "わすれさせる　ことが　できるんじゃ！\p"
 	.string "わざを　わすれ　させるかね？$"
 
-	.globl gJPText_00209EA5
-gJPText_00209EA5: @ 0x08209EA5
+LilycoveCity_MoveDeletersHouse_Text_WhichMonShouldForget: @ 0x08209EA5
 	.string "どの　ポケモンに　するんじゃ？$"
 
-	.globl gJPText_00209EB5
-gJPText_00209EB5: @ 0x08209EB5
+LilycoveCity_MoveDeletersHouse_Text_WhichMoveShouldBeForgotten: @ 0x08209EB5
 	.string "どの　わざを\n"
 	.string "わすれ　させるんじゃ？$"
 
-	.globl gJPText_00209EC8
-gJPText_00209EC8: @ 0x08209EC8
-	.string "{STRING 0x02}は　わざを　1つしか\n"
+LilycoveCity_MoveDeletersHouse_Text_MonOnlyKnowsOneMove: @ 0x08209EC8
+	.string "{STR_VAR_1}は　わざを　1つしか\n"
 	.string "もってない　ようじゃ⋯⋯$"
 
-	.globl gJPText_00209EE2
-gJPText_00209EE2: @ 0x08209EE2
+LilycoveCity_MoveDeletersHouse_Text_MonsMoveShouldBeForgotten: @ 0x08209EE2
 	.string "むむ！\n"
-	.string "{STRING 0x02}の　{STRING 0x03}じゃな？$"
+	.string "{STR_VAR_1}の　{STR_VAR_2}じゃな？$"
 
-	.globl gJPText_00209EF1
-gJPText_00209EF1: @ 0x08209EF1
+LilycoveCity_MoveDeletersHouse_Text_MonHasForgottenMove: @ 0x08209EF1
 	.string "だいせいこう　じゃ！\p"
-	.string "{STRING 0x02}は　{STRING 0x03}を\n"
+	.string "{STR_VAR_1}は　{STR_VAR_2}を\n"
 	.string "わすれた　ようじゃ！$"
 
-	.globl gJPText_00209F0F
-gJPText_00209F0F: @ 0x08209F0F
+LilycoveCity_MoveDeletersHouse_Text_ComeAgain: @ 0x08209F0F
 	.string "わすれさせたい　わざが　あったら\n"
 	.string "また　くるのじゃぞ！$"
 
-	.globl gJPText_00209F2B
-gJPText_00209F2B: @ 0x08209F2B
+LilycoveCity_MoveDeletersHouse_Text_EggCantForgetMoves: @ 0x08209F2B
 	.string "なぬ！？　タマゴは\n"
 	.string "わざを　おぼえていない　ようじゃが⋯⋯？$"
 
-	.globl gJPText_00209F4A
-gJPText_00209F4A: @ 0x08209F4A
+LilycoveCity_MoveDeletersHouse_Text_CantForgetSurf: @ 0x08209F4A
 	.string "むむ！\p"
-	.string "{STRING 0x02}は　なみのりを\n"
+	.string "{STR_VAR_1}は　なみのりを\n"
 	.string "わすれたくない　ようじゃ！$"
