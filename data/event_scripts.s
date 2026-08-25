@@ -331,6 +331,11 @@
 	@ retained JP text block.  Export the pokeemerald spellings for map scripts.
 	.globl gText_TheBagIsFull
 	.set gText_TheBagIsFull, 0x08243947
+	.globl gText_PutItemInPocket
+	.set gText_PutItemInPocket, 0x08243953
+	@ The Rooftop event table points to the retained Substitute tutor script.
+	.globl LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor
+	.set LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor, 0x08276AA2
 	.globl gText_ComeBackWithSecretPower
 	.set gText_ComeBackWithSecretPower, 0x08243B96
 	@ Rustboro uses these retained shared movement streams under the upstream
@@ -764,7 +769,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_DepartmentStore_4F/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStore_5F/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20b0af, 0x2ba
+	.incbin "baserom_jp.gba", 0x20b18c, 0x1dd
 	.include "data/maps/MossdeepCity_Gym/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20b7d0, 0xce2
 	.include "data/maps/MossdeepCity_PokemonCenter_1F/scripts.inc"

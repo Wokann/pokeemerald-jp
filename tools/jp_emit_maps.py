@@ -48,6 +48,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStore_3F': 5,
     'LilycoveCity_DepartmentStore_4F': 5,
     'LilycoveCity_DepartmentStore_5F': 10,
+    'LilycoveCity_DepartmentStoreRooftop': 23,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -66,6 +67,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStore_3F': 3,
     'LilycoveCity_DepartmentStore_4F': 3,
     'LilycoveCity_DepartmentStore_5F': 4,
+    'LilycoveCity_DepartmentStoreRooftop': 8,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7393,6 +7395,89 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The Rooftop follows Department Store 5F in the physical EventScript stream.
+# Its sale, vending machine, and local text records were checked against the
+# matching US map in physical order; its source boundary stops before the
+# separate Department Store Elevator owner at 0x0820B18C.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_DepartmentStoreRooftop': {
+        'scripts': {
+            0x0820AE59: 'LilycoveCity_DepartmentStoreRooftop_OnTransition',
+            0x0820AE73: 'LilycoveCity_DepartmentStoreRooftop_EventScript_ShowSaleWoman',
+            0x0820AE77: 'LilycoveCity_DepartmentStoreRooftop_EventScript_HideSaleWoman',
+            0x0820AE7B: 'LilycoveCity_DepartmentStoreRooftop_EventScript_SaleWoman',
+            0x0820AEB4: 'LilycoveCity_DepartmentStoreRooftop_EventScript_Man',
+            0x0820AECE: 'LilycoveCity_DepartmentStoreRooftop_EventScript_ManClearOutSale',
+            0x0820AED8: 'LilycoveCity_DepartmentStoreRooftop_EventScript_ThirstyMan',
+            0x0820AEE1: 'LilycoveCity_DepartmentStoreRooftop_EventScript_VendingMachine',
+            0x0820AEF2: 'LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseDrink',
+            0x0820AF30: 'LilycoveCity_DepartmentStoreRooftop_EventScript_FreshWater',
+            0x0820AF3B: 'LilycoveCity_DepartmentStoreRooftop_EventScript_SodaPop',
+            0x0820AF46: 'LilycoveCity_DepartmentStoreRooftop_EventScript_Lemonade',
+            0x0820AF51: 'LilycoveCity_DepartmentStoreRooftop_EventScript_CheckMoneyFreshWater',
+            0x0820AF58: 'LilycoveCity_DepartmentStoreRooftop_EventScript_CheckMoneySodaPop',
+            0x0820AF5F: 'LilycoveCity_DepartmentStoreRooftop_EventScript_CheckMoneyLemonade',
+            0x0820AF66: 'LilycoveCity_DepartmentStoreRooftop_EventScript_RemoveMoneyFreshWater',
+            0x0820AF6D: 'LilycoveCity_DepartmentStoreRooftop_EventScript_RemoveMoneySodaPop',
+            0x0820AF74: 'LilycoveCity_DepartmentStoreRooftop_EventScript_RemoveMoneyLemonade',
+            0x0820AF7B: 'LilycoveCity_DepartmentStoreRooftop_EventScript_TryBuyDrink',
+            0x0820B082: 'LilycoveCity_DepartmentStoreRooftop_EventScript_ChooseNewDrink',
+            0x0820B08E: 'LilycoveCity_DepartmentStoreRooftop_EventScript_NotEnoughMoneyForDrink',
+            0x0820B09C: 'LilycoveCity_DepartmentStoreRooftop_EventScript_NoRoomForDrink',
+            0x0820B0AA: 'LilycoveCity_DepartmentStoreRooftop_EventScript_ExitVendingMachine',
+        },
+        'texts': {
+            0x0820B0AF: 'LilycoveCity_DepartmentStoreRooftop_Text_SetDatesForClearOutSales',
+            0x0820B0EA: 'LilycoveCity_DepartmentStoreRooftop_Text_BeenWaitingForClearOutSale',
+            0x0820B120: 'LilycoveCity_DepartmentStoreRooftop_Text_BoneDryThirsty',
+            0x0820B12E: 'LilycoveCity_DepartmentStoreRooftop_Text_WhichDrinkWouldYouLike',
+            0x0820B14A: 'LilycoveCity_DepartmentStoreRooftop_Text_CanOfDrinkDroppedDown',
+            0x0820B159: 'LilycoveCity_DepartmentStoreRooftop_Text_ExtraCanOfDrinkDroppedDown',
+            0x0820B175: 'LilycoveCity_DepartmentStoreRooftop_Text_NotEnoughMoney',
+            0x0820B180: 'LilycoveCity_DepartmentStoreRooftop_Text_DecidedAgainstBuyingDrink',
+        },
+        # The vending sequence writes the selected drink into STR_VAR_1
+        # before each message.  The JP byte 0x02 therefore has the same
+        # concrete meaning as the matching US text's {STR_VAR_1} control.
+        'field_placeholders': {
+            0x0820B14A: {0x02: 'STR_VAR_1'},
+            0x0820B159: {0x02: 'STR_VAR_1'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+            0x08243947: 'gText_TheBagIsFull',
+            0x08243953: 'gText_PutItemInPocket',
+            0x08276AA2: 'LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor',
+        },
+        'symbols': {
+            'flags': {
+                0x03C2: 'FLAG_HIDE_LILYCOVE_DEPARTMENT_STORE_ROOFTOP_SALE_WOMAN',
+            },
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x4001: 'VAR_TEMP_1',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x800D: {0x0: 'FALSE', 0x1: 'TRUE'},
+            },
+            'items': {
+                0x001A: 'ITEM_FRESH_WATER',
+                0x001B: 'ITEM_SODA_POP',
+                0x001C: 'ITEM_LEMONADE',
+            },
+            'pokenews': {0x3: 'POKENEWS_LILYCOVE'},
+            'multichoices': {0x2A: 'MULTI_VENDING_MACHINE'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'sounds': {0x006A: 'SE_VEND'},
+            'stdstrings': {0xE: 'STDSTRING_ITEMS'},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'LilycoveCity_DepartmentStore_2F': (
         (0x0820A953, 'LilycoveCity_DepartmentStore_2F_Pokemart1', (
@@ -7511,6 +7596,27 @@ MAP_POKEMART_LISTS.update({
             'DECOR_GLITTER_MAT',
             'DECOR_JUMP_MAT',
             'DECOR_SPIN_MAT',
+        )),
+    ),
+})
+
+MAP_POKEMART_LISTS.update({
+    'LilycoveCity_DepartmentStoreRooftop': (
+        (0x0820AE92, 'LilycoveCity_DepartmentStoreRooftop_PokemartDecor_ClearOutSale', (
+            'DECOR_MUD_BALL',
+            'DECOR_FENCE_LENGTH',
+            'DECOR_FENCE_WIDTH',
+            'DECOR_TIRE',
+            'DECOR_BREAKABLE_DOOR',
+            'DECOR_SOLID_BOARD',
+            'DECOR_SAND_ORNAMENT',
+            'DECOR_STAND',
+            'DECOR_SLIDE',
+            'DECOR_TV',
+            'DECOR_ROUND_TV',
+            'DECOR_CUTE_TV',
+            'DECOR_WAILMER_DOLL',
+            'DECOR_RHYDON_DOLL',
         )),
     ),
 })
@@ -8277,6 +8383,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('items', {}).get(value)
         if name.startswith('buffer') and index == 0:
             return {0: 'STR_VAR_1', 1: 'STR_VAR_2', 2: 'STR_VAR_3'}.get(value)
+        if name == 'bufferstdstring' and index == 1:
+            return symbols.get('stdstrings', {}).get(value)
         if name in ('playbgm', 'playfanfare', 'savebgm', 'fadenewbgm') and index == 0:
             return symbols.get('songs', {}).get(value)
         if name == 'playbgm' and index == 1:
