@@ -19,7 +19,7 @@ RustboroCity_Mart_EventScript_PokemartBasic::
 	end
 
 	.align 2
-RustboroCity_Mart_Pokemart_Basic: @ 0x0820360C
+RustboroCity_Mart_Pokemart_Basic:
 	.2byte ITEM_POKE_BALL
 	.2byte ITEM_POTION
 	.2byte ITEM_SUPER_POTION
@@ -39,7 +39,7 @@ RustboroCity_Mart_EventScript_PokemartExpanded::
 	end
 
 	.align 2
-RustboroCity_Mart_Pokemart_Expanded: @ 0x08203634
+RustboroCity_Mart_Pokemart_Expanded:
 	.2byte ITEM_POKE_BALL
 	.2byte ITEM_TIMER_BALL
 	.2byte ITEM_REPEAT_BALL

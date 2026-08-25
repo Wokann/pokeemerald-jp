@@ -61,6 +61,14 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
     # logic, not from a Route119 map event, but remains in the Route119 owner.
     'Route119': (0x081ED2AD,),
     'RustboroCity_Gym': (0x08202410,),  # EventScript_RegisterRoxanne
+    # These unused RS-era Cable Club entry points remain named immediately
+    # after the Rustboro Pokemon Center 2F map-script table in the matching
+    # US source, despite having no event-table pointer.
+    'RustboroCity_PokemonCenter_2F': (
+        0x082035CE,
+        0x082035D4,
+        0x082035DA,
+    ),
     # The two player-PC shutdown handlers are exported entry points in the US
     # map sources, but no local event pointer calls them directly.
     'LittlerootTown_BrendansHouse_2F': (0x081F01EE,),
@@ -402,6 +410,34 @@ MAP_POKEMART_LISTS = {
         (0x081DC563, 'SlateportCity_Pokemart_PowerTMs', (
             'ITEM_TM_HIDDEN_POWER',
             'ITEM_TM_SECRET_POWER',
+        )),
+    ),
+    'RustboroCity_Mart': (
+        (0x0820360B, 'RustboroCity_Mart_Pokemart_Basic', (
+            'ITEM_POKE_BALL',
+            'ITEM_POTION',
+            'ITEM_SUPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_ESCAPE_ROPE',
+            'ITEM_REPEL',
+            'ITEM_X_SPEED',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
+        )),
+        (0x08203633, 'RustboroCity_Mart_Pokemart_Expanded', (
+            'ITEM_POKE_BALL',
+            'ITEM_TIMER_BALL',
+            'ITEM_REPEAT_BALL',
+            'ITEM_POTION',
+            'ITEM_SUPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_ESCAPE_ROPE',
+            'ITEM_REPEL',
+            'ITEM_X_SPEED',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
         )),
     ),
 }
@@ -6362,6 +6398,50 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08246BB2: 'CableClub_EventScript_Colosseum',
             0x08246DAD: 'CableClub_EventScript_TradeCenter',
             0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+    },
+})
+
+# Rustboro's adjacent Pokemon Center 2F and Mart ranges have the same source
+# ownership as the US maps. The Cable Club leftovers are intentionally unused,
+# while the two shop lists follow their clerk scripts with one-byte alignment.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'RustboroCity_PokemonCenter_2F': {
+        'scripts': {
+            0x082035CE: 'RustboroCity_PokemonCenter_2F_EventScript_Colosseum',
+            0x082035D4: 'RustboroCity_PokemonCenter_2F_EventScript_TradeCenter',
+            0x082035DA: 'RustboroCity_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+    },
+    'RustboroCity_Mart': {
+        'scripts': {
+            0x082035E1: 'RustboroCity_Mart_EventScript_Clerk',
+            0x082035FC: 'RustboroCity_Mart_EventScript_PokemartBasic',
+            0x08203624: 'RustboroCity_Mart_EventScript_PokemartExpanded',
+            0x08203650: 'RustboroCity_Mart_EventScript_PokefanF',
+            0x08203659: 'RustboroCity_Mart_EventScript_Boy',
+            0x08203662: 'RustboroCity_Mart_EventScript_BugCatcher',
+        },
+        'texts': {
+            0x0820366B: 'RustboroCity_Mart_Text_BuyingHealsInCaseOfShroomish',
+            0x0820369D: 'RustboroCity_Mart_Text_ShouldBuySuperPotionsInstead',
+            0x082036D4: 'RustboroCity_Mart_Text_GettingEscapeRopeJustInCase',
+        },
+        'symbols': {
+            'flags': {0x011F: 'FLAG_MET_DEVON_EMPLOYEE'},
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
         },
     },
 })
