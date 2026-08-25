@@ -3141,6 +3141,20 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081EA0F2: 'Route110_Text_RegisteredBirchInPokenav',
             0x081EA10A: 'Route110_Text_KeepAnEyeOutForRival',
         },
+        # These field messages are paired one-for-one with the matching US
+        # Route110 text.  Use the proven placeholder meanings instead of
+        # exposing their raw FD indices in regenerated source.
+        'field_placeholders': {
+            0x081E97B9: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081E981E: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081E9851: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081E98F4: {0x01: 'PLAYER'},
+            0x081E9940: {0x01: 'PLAYER'},
+            0x081E9C26: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x081E9FC0: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x081EA02B: {0x01: 'PLAYER', 0x05: 'KUN', 0x06: 'RIVAL'},
+            0x081EA10A: {0x01: 'PLAYER', 0x05: 'KUN', 0x06: 'RIVAL'},
+        },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route110']['labels'],
         'external_labels': {
             0x08242F63: 'Common_EventScript_SetupRivalGfxId',

@@ -759,7 +759,7 @@ Route110_Text_AquaActionsBringSmiles: @ 0x081E9798
 	.string "きっと　みんなを　えがおに　するだろう$"
 
 Route110_Text_MayLetsBattle: @ 0x081E97B9
-	.string "ハルカ“{STRING 0x01}{STRING 0x05}　ひさしぶり！\p"
+	.string "ハルカ“{PLAYER}{KUN}　ひさしぶり！\p"
 	.string "いろいろ　ポケモン　さがしてる　あいだに\n"
 	.string "あたしの　ポケモンも　つよくなったんだ！\p"
 	.string "だから⋯⋯\n"
@@ -770,7 +770,7 @@ Route110_Text_MayDefeated: @ 0x081E9809
 	.string "おもってたより　つよいよ！$"
 
 Route110_Text_MayTakeThis: @ 0x081E981E
-	.string "ハルカ“{STRING 0x01}{STRING 0x05}も\n"
+	.string "ハルカ“{PLAYER}{KUN}も\n"
 	.string "ポケモン　そだててるんだね！\p"
 	.string "うん　じゃあ　これは\n"
 	.string "あたしからの　プレゼントよ！$"
@@ -781,14 +781,14 @@ Route110_Text_MayExplainItemfinder: @ 0x081E9851
 	.string "めには　みえなくても　おちている\l"
 	.string "どうぐが　あると　はんのう　して\l"
 	.string "おとで　おしえて　くれるのよ！\p"
-	.string "じゃあ　{STRING 0x01}{STRING 0x05}\n"
+	.string "じゃあ　{PLAYER}{KUN}\n"
 	.string "また　どこかで　あおうね！\p"
 	.string "まけた　あたしが　いうのも　なんだけど\n"
 	.string "そのときまでに　もっと　ポケモン\l"
 	.string "そだてて　おいた　ほうが　いいかもよ！$"
 
 Route110_Text_BrendanLetsBattle: @ 0x081E98F4
-	.string "ユウキ“{STRING 0x01}か\n"
+	.string "ユウキ“{PLAYER}か\n"
 	.string "こんなところに　いたんだ\l"
 	.string "ちょうしは　どう？\p"
 	.string "ポケモン　そだててるか　どうか\n"
@@ -799,7 +799,7 @@ Route110_Text_BrendanDefeated: @ 0x081E9931
 	.string "なかなか　やるね$"
 
 Route110_Text_BrendanTakeThis: @ 0x081E9940
-	.string "ユウキ“{STRING 0x01}も　いつのまにか\n"
+	.string "ユウキ“{PLAYER}も　いつのまにか\n"
 	.string "ポケモン　そだててたのか⋯⋯\p"
 	.string "よし！\n"
 	.string "これを　やるよ$"
@@ -862,9 +862,9 @@ Route110_Text_WhichShouldIChoose: @ 0x081E9BF1
 
 Route110_Text_CyclingChallengeResultSummary: @ 0x081E9C26
 	.string "ぶつかった　かいすう\n"
-	.string "　⋯⋯　{STRING 0x02}！\p"
+	.string "　⋯⋯　{STR_VAR_1}！\p"
 	.string "かかった　タイム\n"
-	.string "　⋯⋯　{STRING 0x03}！$"
+	.string "　⋯⋯　{STR_VAR_2}！$"
 
 Route110_Text_ChallengeReactionBest: @ 0x081E9C4A
 	.string "ブラボー！！　すばらしい！！\p"
@@ -955,9 +955,9 @@ Route110_Text_TrickHouseSign: @ 0x081E9F95
 Route110_Text_BestRecord: @ 0x081E9FC0
 	.string "いままでの　さいこう　きろく⋯⋯\p"
 	.string "ぶつかった　かいすう\n"
-	.string "　⋯⋯　{STRING 0x02}！\p"
+	.string "　⋯⋯　{STR_VAR_1}！\p"
 	.string "かかった　タイム\n"
-	.string "　⋯⋯　{STRING 0x03}！$"
+	.string "　⋯⋯　{STR_VAR_2}！$"
 
 Route110_Text_ThereIsNoRecord: @ 0x081E9FF5
 	.string "いままでの　さいこう　きろく⋯⋯\p"
@@ -965,9 +965,9 @@ Route110_Text_ThereIsNoRecord: @ 0x081E9FF5
 	.string "なにも　きろく　されていない！$"
 
 Route110_Text_ImagineSeeingYouHere: @ 0x081EA02B
-	.string "オダマキ“おお　{STRING 0x01}{STRING 0x05}！\n"
+	.string "オダマキ“おお　{PLAYER}{KUN}！\n"
 	.string "こんな　ところに　いたのかい！\p"
-	.string "えーと　うちの　{STRING 0x06}は⋯⋯$"
+	.string "えーと　うちの　{RIVAL}は⋯⋯$"
 
 Route110_Text_HeardYouInstallMatchCall: @ 0x081EA057
 	.string "そうか！\n"
@@ -986,8 +986,8 @@ Route110_Text_RegisteredBirchInPokenav: @ 0x081EA0F2
 	.string "ポケナビに　とうろく　した！$"
 
 Route110_Text_KeepAnEyeOutForRival: @ 0x081EA10A
-	.string "オダマキ“{STRING 0x01}{STRING 0x05}⋯⋯\p"
-	.string "{STRING 0x06}のこと　よろしく　たのむよ\n"
+	.string "オダマキ“{PLAYER}{KUN}⋯⋯\p"
+	.string "{RIVAL}のこと　よろしく　たのむよ\n"
 	.string "⋯⋯　⋯⋯　⋯⋯\p"
 	.string "じゃあ　わたしは　これで　しつれいする\n"
-	.string "またな　{STRING 0x01}{STRING 0x05}！$"
+	.string "またな　{PLAYER}{KUN}！$"
