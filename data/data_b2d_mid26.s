@@ -1919,47 +1919,12 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/RustboroCity_DevonCorp_3F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F
 	.set gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F, RustboroCity_DevonCorp_3F_MapEvents
-	.globl RUSTBORO_CITY_GYM_EventObjects
-RUSTBORO_CITY_GYM_EventObjects: @ 0x08508C64
-	object_event 1, 125, 0, 5, 2, 3, 8, 0, 0, 0, 0, 0x082022C6, 0x0000
-	object_event 2, 35, 0, 5, 13, 3, 8, 0, 0, 1, 2, 0x08202378, 0x0000
-	object_event 3, 35, 0, 3, 9, 3, 9, 0, 0, 1, 3, 0x0820238F, 0x0000
-	object_event 4, 23, 0, 3, 18, 3, 8, 0, 0, 0, 0, 0x082023BD, 0x0000
-	object_event 5, 55, 0, 1, 6, 3, 8, 1, 1, 1, 3, 0x082023A6, 0x0000
-	.globl RUSTBORO_CITY_GYM_EventWarps
-RUSTBORO_CITY_GYM_EventWarps: @ 0x08508CDC
-	warp_def 5, 19, 0, 0, MAP_RUSTBORO_CITY
-	warp_def 6, 19, 0, 0, MAP_RUSTBORO_CITY
-	.globl RUSTBORO_CITY_GYM_EventBgEvents
-RUSTBORO_CITY_GYM_EventBgEvents: @ 0x08508CEC
-	bg_event 2, 18, 0, 1, 0x082023DC, 0, 0
-	bg_event 8, 18, 0, 1, 0x082023EC, 0, 0
+	.include "data/maps/RustboroCity_Gym/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_GYM
-gMapEvents_RUSTBORO_CITY_GYM: @ 0x08508D04
-	map_events RUSTBORO_CITY_GYM_EventObjects, RUSTBORO_CITY_GYM_EventWarps, 0, RUSTBORO_CITY_GYM_EventBgEvents
-	.globl RUSTBORO_CITY_POKEMON_SCHOOL_EventObjects
-RUSTBORO_CITY_POKEMON_SCHOOL_EventObjects: @ 0x08508D18
-	object_event 1, 189, 0, 8, 6, 3, 10, 0, 0, 0, 0, 0x08202CD1, 0x0000
-	object_event 2, 189, 0, 9, 6, 3, 9, 0, 0, 0, 0, 0x08202CDA, 0x0000
-	object_event 3, 15, 0, 3, 8, 3, 7, 0, 0, 0, 0, 0x08202CE3, 0x0000
-	object_event 4, 47, 0, 10, 8, 3, 7, 0, 0, 0, 0, 0x08202CEC, 0x0000
-	object_event 5, 38, 0, 3, 6, 3, 8, 0, 0, 0, 0, 0x08202CF5, 0x0000
-	object_event 6, 48, 0, 5, 3, 3, 8, 1, 1, 0, 0, 0x08202D07, 0x0000
-	object_event 7, 219, 0, 0, 10, 0, 7, 1, 1, 0, 0, 0x08202DB2, 0x03E7
-	.globl RUSTBORO_CITY_POKEMON_SCHOOL_EventWarps
-RUSTBORO_CITY_POKEMON_SCHOOL_EventWarps: @ 0x08508DC0
-	warp_def 5, 10, 0, 4, MAP_RUSTBORO_CITY
-	warp_def 6, 10, 0, 4, MAP_RUSTBORO_CITY
-	.globl RUSTBORO_CITY_POKEMON_SCHOOL_EventBgEvents
-RUSTBORO_CITY_POKEMON_SCHOOL_EventBgEvents: @ 0x08508DD0
-	bg_event 5, 2, 0, 0, 0x08202C1B, 0, 0
-	bg_event 4, 2, 0, 0, 0x08202C1B, 0, 0
-	bg_event 6, 2, 0, 0, 0x08202C1B, 0, 0
-	bg_event 7, 2, 0, 0, 0x08202C1B, 0, 0
-	bg_event 3, 5, 0, 0, 0x08202CFE, 0, 0
+	.set gMapEvents_RUSTBORO_CITY_GYM, RustboroCity_Gym_MapEvents
+	.include "data/maps/RustboroCity_PokemonSchool/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL
-gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL: @ 0x08508E0C
-	map_events RUSTBORO_CITY_POKEMON_SCHOOL_EventObjects, RUSTBORO_CITY_POKEMON_SCHOOL_EventWarps, 0, RUSTBORO_CITY_POKEMON_SCHOOL_EventBgEvents
+	.set gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL, RustboroCity_PokemonSchool_MapEvents
 	.include "data/maps/RustboroCity_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_1F
 	.set gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_1F, RustboroCity_PokemonCenter_1F_MapEvents
