@@ -131,6 +131,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Mt. Chimney's paired cable-car station immediately follows and has the
     # same seven locally owned map/event entries in reviewed US source order.
     'MtChimney_CableCarStation': 7,
+    # Route 114's Fossil Maniac house follows at the next physical map owner.
+    'Route114_FossilManiacsHouse': 5,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -203,6 +205,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'Route111_OldLadysRestStop': 4,
     'Route112_CableCarStation': 3,
     'MtChimney_CableCarStation': 3,
+    'Route114_FossilManiacsHouse': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9351,6 +9354,35 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
             'game_stats': {0x30: 'GAME_STAT_RODE_CABLE_CAR'},
+        },
+    },
+    # Route 114's Fossil Maniac house owns its four local text records through
+    # 0x0821228D. Their names and the item/flag conditions are checked against
+    # the matching US source before the first generated source is written.
+    'Route114_FossilManiacsHouse': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'texts': {
+            0x08212181: 'Route114_FossilManiacsHouse_Text_HaveThisToDigLikeMyBrother',
+            0x082121F9: 'Route114_FossilManiacsHouse_Text_DigReturnsYouToEntrance',
+            0x08212229: 'Route114_FossilManiacsHouse_Text_RocksFillDisplayCase',
+            0x0821224D: 'Route114_FossilManiacsHouse_Text_CrammedWithBooks',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'symbols': {
+            'flags': {
+                0x0105: 'FLAG_RECEIVED_TM_DIG',
+                0x08B7: 'FLAG_LANDMARK_FOSSIL_MANIACS_HOUSE',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x013C: 'ITEM_TM_DIG'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
 })

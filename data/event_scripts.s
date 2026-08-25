@@ -862,7 +862,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/Route112_CableCarStation/scripts.inc"
 	.include "data/maps/MtChimney_CableCarStation/scripts.inc"
 	.include "data/maps/Route114_FossilManiacsHouse/scripts.inc"
-	.incbin "baserom_jp.gba", 0x212181, 0x10c
 	.include "data/maps/Route114_FossilManiacsTunnel/scripts.inc"
 	.incbin "baserom_jp.gba", 0x212335, 0x19c
 	.include "data/maps/Route114_LanettesHouse/scripts.inc"

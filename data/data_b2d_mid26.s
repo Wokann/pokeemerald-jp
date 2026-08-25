@@ -2245,23 +2245,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MtChimney_CableCarStation/events.inc"
 	.globl gMapEvents_MT_CHIMNEY_CABLE_CAR_STATION
 	.set gMapEvents_MT_CHIMNEY_CABLE_CAR_STATION, MtChimney_CableCarStation_MapEvents
-	.globl ROUTE114_FOSSIL_MANIACS_HOUSE_EventObjects
-ROUTE114_FOSSIL_MANIACS_HOUSE_EventObjects: @ 0x0850C428
-	object_event 1, 5, 0, 3, 2, 3, 8, 1, 1, 0, 0, Route114_FossilManiacsHouse_EventScript_00212136, 0x0000
-	.globl ROUTE114_FOSSIL_MANIACS_HOUSE_EventWarps
-ROUTE114_FOSSIL_MANIACS_HOUSE_EventWarps: @ 0x0850C440
-	warp_def 4, 7, 0, 1, MAP_ROUTE114
-	warp_def 5, 7, 0, 1, MAP_ROUTE114
-	warp_def 4, 1, 0, 0, MAP_ROUTE114_FOSSIL_MANIACS_TUNNEL
-	.globl ROUTE114_FOSSIL_MANIACS_HOUSE_EventBgEvents
-ROUTE114_FOSSIL_MANIACS_HOUSE_EventBgEvents: @ 0x0850C458
-	bg_event 5, 3, 0, 1, Route114_FossilManiacsHouse_EventScript_0021216F, 0, 0
-	bg_event 6, 3, 0, 1, Route114_FossilManiacsHouse_EventScript_0021216F, 0, 0
-	bg_event 7, 2, 0, 1, Route114_FossilManiacsHouse_EventScript_00212178, 0, 0
-	bg_event 8, 2, 0, 1, Route114_FossilManiacsHouse_EventScript_00212178, 0, 0
+	.include "data/maps/Route114_FossilManiacsHouse/events.inc"
 	.globl gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE
-gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE: @ 0x0850C488
-	map_events ROUTE114_FOSSIL_MANIACS_HOUSE_EventObjects, ROUTE114_FOSSIL_MANIACS_HOUSE_EventWarps, 0, ROUTE114_FOSSIL_MANIACS_HOUSE_EventBgEvents
+	.set gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE, Route114_FossilManiacsHouse_MapEvents
 	.globl ROUTE114_FOSSIL_MANIACS_TUNNEL_EventObjects
 ROUTE114_FOSSIL_MANIACS_TUNNEL_EventObjects: @ 0x0850C49C
 	object_event 1, 39, 0, 5, 3, 3, 7, 1, 1, 0, 0, Route114_FossilManiacsTunnel_EventScript_002122EC, 0x0000
