@@ -6147,6 +6147,43 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Fortree Pokemon Center 1F follows Fortree Gym in physical script order.
+# Its map hooks, nurse, three NPCs, and text order were checked against the
+# matching US source before naming the complete map range.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_PokemonCenter_1F': {
+        'scripts': {
+            0x08204C68: 'FortreeCity_PokemonCenter_1F_OnTransition',
+            0x08204C6C: 'FortreeCity_PokemonCenter_1F_EventScript_Nurse',
+            0x08204C7A: 'FortreeCity_PokemonCenter_1F_EventScript_Gentleman',
+            0x08204C83: 'FortreeCity_PokemonCenter_1F_EventScript_Man',
+            0x08204C8C: 'FortreeCity_PokemonCenter_1F_EventScript_Boy',
+        },
+        'texts': {
+            0x08204C95: 'FortreeCity_PokemonCenter_1F_Text_GoToSafariZone',
+            0x08204CCE: 'FortreeCity_PokemonCenter_1F_Text_RecordCornerIsNeat',
+            0x08204D21: 'FortreeCity_PokemonCenter_1F_Text_DoYouKnowAboutPokenav',
+        },
+        'external_labels': {
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'symbols': {
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_FORTREE_NURSE'},
+            'heal_locations': {0x07: 'HEAL_LOCATION_FORTREE_CITY'},
+        },
+        # The legacy PC event table remains in data_b2d_mid26.s.  Preserve
+        # its address-derived targets until that event-table JSON migration.
+        'script_aliases': {
+            0x08204C6C: ('FortreeCity_PokemonCenter_1F_EventScript_00204C6C',),
+            0x08204C7A: ('FortreeCity_PokemonCenter_1F_EventScript_00204C7A',),
+            0x08204C83: ('FortreeCity_PokemonCenter_1F_EventScript_00204C83',),
+            0x08204C8C: ('FortreeCity_PokemonCenter_1F_EventScript_00204C8C',),
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     # Route101 retains four unreferenced movement records between the Birch
     # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
@@ -6717,6 +6754,12 @@ def semantic_symbol_formatter(mname, script_addr=None):
         if (name == 'setvar' and index == 1 and args
                 and args[0] == 0x8004):
             return symbols.get('trainers', {}).get(value)
+        # VAR_0x800B is the map-local recipient used by the Pokémon Center
+        # nurse helper.  Render a local ID only where the map's reviewed
+        # semantic table explicitly supplies one.
+        if (name == 'setvar' and index == 1 and args
+                and args[0] == 0x800B):
+            return symbols.get('local_ids', {}).get(value)
         if name == 'setorcopyvar' and index == 1 and args and args[0] == 0x8000:
             return (symbols.get('items', {}).get(value)
                     or symbols.get('trainers', {}).get(value))
@@ -6730,6 +6773,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('booleans', {}).get(value)
         if name == 'playse' and index == 0:
             return symbols.get('sounds', {}).get(value)
+        if name == 'setrespawn' and index == 0:
+            return symbols.get('heal_locations', {}).get(value)
         if name == 'setmetatile' and index == 2:
             return symbols.get('metatiles', {}).get(value)
         if name == 'setmetatile' and index == 3:
@@ -7194,8 +7239,10 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                         lines.append('\tmap_script %s, %s' % (MAP_SCRIPT_NAMES.get(t, str(t)), tbl))
                     else:
                         lines.append('\tmap_script %s, 0x%08X' % (MAP_SCRIPT_NAMES.get(t, str(t)), p))
-                elif p in label_map:
-                    lines.append('\tmap_script %s, %s' % (MAP_SCRIPT_NAMES.get(t, str(t)), label_map[p]))
+                elif p in label_map or p in external_labels:
+                    lines.append('\tmap_script %s, %s' % (
+                        MAP_SCRIPT_NAMES.get(t, str(t)),
+                        label_map.get(p) or external_labels[p]))
                 else:
                     lines.append('\tmap_script %s, 0x%08X' % (MAP_SCRIPT_NAMES.get(t, str(t)), p))
             lines.append('\t.byte 0')
