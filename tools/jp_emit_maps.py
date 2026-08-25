@@ -72,6 +72,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House4': 3,
     'SootopolisCity_House5': 2,
     'SootopolisCity_House6': 4,
+    'SootopolisCity_House7': 2,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -120,6 +121,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House4': 3,
     'SootopolisCity_House5': 2,
     'SootopolisCity_House6': 5,
+    'SootopolisCity_House7': 2,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8431,6 +8433,12 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'decorations': {0x0075: 'DECOR_WAILMER_DOLL'},
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
         },
+    },
+    # House 7 is the following physical owner; both NPC scripts and text
+    # records match the US source in direct physical order.
+    'SootopolisCity_House7': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 
