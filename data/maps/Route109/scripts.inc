@@ -1,66 +1,67 @@
-@ Route109 scripts (JP map g0 m24 @ 0x081E8676)
+@ NOTE: Route 109's sail to Dewford script references local IDs from Dewford's map.
+@  These are labeled in DewfordTown/scripts.inc
 
 Route109_MapScripts::
 	.byte 0
 
 Route109_EventScript_StartDepartForDewford::
-	call 0x08242F21
-	setobjectsubpriority 0x2, 0x18, 0x0
-	setobjectsubpriority 0xFF, 0x18, 0x0
-	applymovement 0x2, Route109_Movement_BrineyEnterBoat
-	waitmovement 0x0
-	removeobject 0x2
-	copyvar VAR_0x8000, 0x800C
-	goto_if_eq VAR_0x8000, 0x1, Route109_EventScript_EnterBoatSouth
-	goto_if_eq VAR_0x8000, 0x3, Route109_EventScript_EnterBoatWest
-	goto_if_eq VAR_0x8000, 0x4, Route109_EventScript_EnterBoatEast
+	call EventScript_BackupMrBrineyLocation
+	setobjectsubpriority LOCALID_ROUTE109_BRINEY, MAP_ROUTE109, 0
+	setobjectsubpriority LOCALID_PLAYER, MAP_ROUTE109, 0
+	applymovement LOCALID_ROUTE109_BRINEY, Route109_Movement_BrineyEnterBoat
+	waitmovement 0
+	removeobject LOCALID_ROUTE109_BRINEY
+	switch VAR_FACING
+	case DIR_SOUTH, Route109_EventScript_EnterBoatSouth
+	case DIR_WEST, Route109_EventScript_EnterBoatWest
+	case DIR_EAST, Route109_EventScript_EnterBoatEast
 	end
 
 Route109_EventScript_EnterBoatSouth::
-	applymovement 0xFF, Route109_Movement_PlayerEnterBoatSouth
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, Route109_Movement_PlayerEnterBoatSouth
+	waitmovement 0
 	goto Route109_EventScript_DoSailToDewford
 	end
 
 Route109_EventScript_EnterBoatEast::
-	applymovement 0xFF, Route109_Movement_PlayerEnterBoatEast
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, Route109_Movement_PlayerEnterBoatEast
+	waitmovement 0
 	goto Route109_EventScript_DoSailToDewford
 	end
 
 Route109_EventScript_EnterBoatWest::
-	applymovement 0xFF, Route109_Movement_PlayerEnterBoatWest
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, Route109_Movement_PlayerEnterBoatWest
+	waitmovement 0
 	goto Route109_EventScript_DoSailToDewford
 	end
 
 Route109_EventScript_DoSailToDewford::
-	hideobject_at 0xFF, 0x18
-	call 0x0824312C
-	applymovement 0x1, Route109_Movement_SailToDewford
-	applymovement 0xFF, Route109_Movement_SailToDewford
-	waitmovement 0x0
-	delay 0x32
-	call 0x08243134
-	showobject_at 0xFF, 0xB
-	applymovement 0xFF, Route109_Movement_PlayerExitBoat
-	waitmovement 0x0
-	addobject 0x4
+	hideobjectat LOCALID_PLAYER, MAP_ROUTE109
+	call Common_EventScript_PlayBrineysBoatMusic
+	applymovement LOCALID_ROUTE109_BOAT, Route109_Movement_SailToDewford
+	applymovement LOCALID_PLAYER, Route109_Movement_SailToDewford
+	waitmovement 0
+	delay 50
+	call Common_EventScript_StopBrineysBoatMusic
+	showobjectat LOCALID_PLAYER, MAP_DEWFORD_TOWN
+	applymovement LOCALID_PLAYER, Route109_Movement_PlayerExitBoat
+	waitmovement 0
+	addobject LOCALID_DEWFORD_BOAT
 	clearflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
-	setobjectxyperm 0x2, 0xC, 0x8
-	addobject 0x2
-	setobjectsubpriority 0x2, 0xB, 0x0
-	applymovement 0x2, Route109_Movement_BrineyExitBoat
-	waitmovement 0x0
+	setobjectxyperm LOCALID_DEWFORD_BRINEY, 12, 8
+	addobject LOCALID_DEWFORD_BRINEY
+	setobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN, 0
+	applymovement LOCALID_DEWFORD_BRINEY, Route109_Movement_BrineyExitBoat
+	waitmovement 0
 	clearflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
 	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
-	hideobject_at 0x1, 0x18
-	msgbox 0x081E522C, MSGBOX_DEFAULT
+	hideobjectat LOCALID_ROUTE109_BOAT, MAP_ROUTE109
+	msgbox DewfordTown_Text_BrineyLandedInDewford, MSGBOX_DEFAULT
 	closemessage
 	copyvar VAR_BRINEY_LOCATION, VAR_0x8008
-	resetobjectsubpriority 0xFF, 0x18
-	resetobjectsubpriority 0x2, 0xB
-	moveobjectoffscreen 0x2
+	resetobjectsubpriority LOCALID_PLAYER, MAP_ROUTE109
+	resetobjectsubpriority LOCALID_DEWFORD_BRINEY, MAP_DEWFORD_TOWN
+	copyobjectxytoperm LOCALID_DEWFORD_BRINEY
 	release
 	end
 
@@ -281,18 +282,18 @@ Route109_EventScript_MrBriney::
 Route109_EventScript_HaveNotDeliveredDevonGood::
 	message Route109_Text_BrineySailToDewfordQuestion
 	msgbox Route109_Text_BrineySailToDewfordQuestion, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, 0x0, Route109_EventScript_StayHere
+	goto_if_eq VAR_RESULT, NO, Route109_EventScript_StayHere
 	goto Route109_EventScript_SailToDewford
 	end
 
 Route109_EventScript_DeliveredDevonGoods::
 	message Route109_Text_BrineyWhereAreWeBound
 	waitmessage
-	multichoicedefault 0x15, 0x8, MULTI_BRINEY_OFF_DEWFORD, 0x1, 0x0
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, Route109_EventScript_SailToDewford
-	goto_if_eq VAR_0x8000, 0x1, Route109_EventScript_ChoseNotToSail
-	goto_if_eq VAR_0x8000, 0x7F, Route109_EventScript_ChoseNotToSail
+	multichoicedefault 21, 8, MULTI_BRINEY_OFF_DEWFORD, 1, FALSE
+	switch VAR_RESULT
+	case 0, Route109_EventScript_SailToDewford
+	case 1, Route109_EventScript_ChoseNotToSail
+	case MULTI_B_PRESSED, Route109_EventScript_ChoseNotToSail
 	end
 
 Route109_EventScript_SailToDewford::
@@ -320,8 +321,8 @@ Route109_EventScript_SandCastleBoy::
 	faceplayer
 	msgbox Route109_Text_SandCastleTakingLongTime, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
@@ -331,21 +332,19 @@ Route109_EventScript_SoftSandGirl::
 	special GetPlayerBigGuyGirlString
 	goto_if_set FLAG_RECEIVED_SOFT_SAND, Route109_EventScript_AlreadyReceivedSoftSand
 	msgbox Route109_Text_YouCanHaveThis, MSGBOX_DEFAULT
-	setorcopyvar VAR_0x8000, ITEM_SOFT_SAND
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	goto_if_eq VAR_RESULT, 0x0, 0x082430E0
+	giveitem ITEM_SOFT_SAND
+	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
 	closemessage
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	setflag FLAG_RECEIVED_SOFT_SAND
 	release
 	end
 
 Route109_EventScript_AlreadyReceivedSoftSand::
 	msgbox Route109_Text_WereGoingToMakeBigCastle, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
@@ -361,9 +360,10 @@ Route109_EventScript_Zigzagoon::
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_ZIGZAGOON, 0x0
+	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox Route109_Text_ZigzagoonCry, MSGBOX_DEFAULT
-	waitdooranim
+	@ JP ROM uses SCR_OP_WAITDOORANIM (0xC5) at this US waitmoncry site.
+	waitmoncry_jp
 	release
 	end
 
@@ -405,7 +405,7 @@ Route109_EventScript_Ricky::
 
 Route109_EventScript_RickyRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route109_Text_RickyRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_RICKY_1
 	release
@@ -426,7 +426,7 @@ Route109_EventScript_Lola::
 
 Route109_EventScript_LolaRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route109_Text_LolaRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_LOLA_1
 	release
@@ -525,14 +525,14 @@ Route109_Text_SandCastleTakingLongTime: @ 0x081E8CC7
 	.string "なかなか　すなの　おしろ　できないね$"
 
 Route109_Text_YouCanHaveThis: @ 0x081E8CDA
-	.string "{STRING 0x02}　これ　あげる！$"
+	.string "{STR_VAR_1}　これ　あげる！$"
 
 Route109_Text_WereGoingToMakeBigCastle: @ 0x081E8CE5
 	.string "すなはまの　すなを　ぜーんぶ　あつめて\n"
 	.string "おっきな　おしろを　つくるの\p"
 	.string "それで　あたしたち\n"
 	.string "おうさまと　おうじょさまに　なるの\p"
-	.string "{STRING 0x02}は\n"
+	.string "{STR_VAR_1}は\n"
 	.string "けらいに　してあげるね$"
 
 Route109_Text_ZigzagoonPicksUpLitter: @ 0x081E8D34
