@@ -89,6 +89,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Phoebe's room is the immediate successor. Its seven map-script records
     # and three object-event branches match the reviewed US source sequence.
     'EverGrandeCity_PhoebesRoom': 10,
+    # Glacia's room follows with the same reviewed ten-entry layout.
+    'EverGrandeCity_GlaciasRoom': 10,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -99,6 +101,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
     'EverGrandeCity_PhoebesRoom': ('OnLoad', 'OnWarp'),
+    'EverGrandeCity_GlaciasRoom': ('OnLoad', 'OnWarp'),
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -145,6 +148,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_LotadAndSeedotHouse': 16,
     'EverGrandeCity_SidneysRoom': 3,
     'EverGrandeCity_PhoebesRoom': 3,
+    'EverGrandeCity_GlaciasRoom': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8724,6 +8728,40 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'script_var_values': {
                 0x0821039A: {0x409C: {0x02: '2'}},
                 0x082103A7: {0x409C: {0x02: '2'}},
+            },
+        },
+    },
+    # Glacia's room is the next contiguous Elite Four owner.  The shared
+    # helpers remain in their JP owner while local state uses US semantics.
+    'EverGrandeCity_GlaciasRoom': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824347B: 'PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles',
+            0x082434F8: 'PokemonLeague_EliteFour_EventScript_WalkInCloseDoor',
+            0x0824353F: 'PokemonLeague_EliteFour_EventScript_ResetAdvanceToNextRoom',
+            0x082435E2: 'PokemonLeague_EliteFour_EventScript_CloseDoor',
+        },
+        'symbols': {
+            'flags': {
+                0x04FD: 'FLAG_DEFEATED_ELITE_4_GLACIA',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x409C: 'VAR_ELITE_4_STATE',
+            },
+            'local_ids': {0xFF: 'LOCALID_PLAYER'},
+            'directions': {0x02: 'DIR_NORTH'},
+            'songs': {0x01C2: 'MUS_ENCOUNTER_ELITE_FOUR'},
+            'trainers': {0x0107: 'TRAINER_GLACIA'},
+            'booleans': {0x00: 'FALSE'},
+            'map_script_values': {
+                0x4001: {0x00: '0'},
+                0x409C: {0x02: '2'},
+            },
+            'script_var_values': {
+                0x0821054C: {0x409C: {0x03: '3'}},
+                0x08210559: {0x409C: {0x03: '3'}},
             },
         },
     },
