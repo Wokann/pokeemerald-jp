@@ -5136,6 +5136,17 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
 }
 
 MAP_MOVEMENT_SCRIPT_LABELS.update({
+    # Route101 retains four unreferenced movement records between the Birch
+    # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
+    # 0x081E65B8 (FE), 0x081E65EA (FE), 0x081E65F0 (09 09 FE), and
+    # 0x081E65F3 (09 0A 09 FE); expose them so the generator does not hide
+    # byte-exact data behind raw spans.
+    'Route101': {
+        0x081E65B8: 'Route101_Movement_Unused1',
+        0x081E65EA: 'Route101_Movement_Unused2',
+        0x081E65F0: 'Route101_Movement_Unused3',
+        0x081E65F3: 'Route101_Movement_Unused4',
+    },
     'SeafloorCavern_Room9': {
         0x08218C5F: 'SeafloorCavern_Room9_Movement_ArchieApproachPlayer',
         0x08218C67: 'SeafloorCavern_Room9_Movement_Unused1',
