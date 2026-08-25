@@ -66,6 +66,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_PokemonCenter_1F': 6,
     'SootopolisCity_PokemonCenter_2F': 3,
     'SootopolisCity_Mart': 5,
+    'SootopolisCity_House1': 3,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -108,6 +109,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_Gym_B1F': 30,
     'SootopolisCity_PokemonCenter_1F': 4,
     'SootopolisCity_Mart': 4,
+    'SootopolisCity_House1': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8321,6 +8323,34 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'flags': {0x0081: 'FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN'},
             'vars': {0x40CA: 'VAR_SKY_PILLAR_STATE'},
             'var_values': {0x40CA: {0x02: '2'}},
+        },
+    },
+})
+
+# Sootopolis House 1 follows the Mart directly in physical EventScript order.
+# Its TM gift, the shared bag-full branch, and the Kecleon cry use the matching
+# US labels and constants; the JP command table requires a byte-exact cry-wait
+# alias at the reviewed call site.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_House1': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'command_aliases': {
+            0x0820F342: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {0x0079: 'FLAG_RECEIVED_TM_BRICK_BREAK'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x013F: 'ITEM_TM_BRICK_BREAK'},
+            'species': {0x013D: 'SPECIES_KECLEON'},
+            'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
         },
     },
 })

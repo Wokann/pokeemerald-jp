@@ -814,7 +814,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/SootopolisCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/SootopolisCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/SootopolisCity_Mart/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20f300, 0xa60
+	.include "data/maps/SootopolisCity_House1/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20f3c6, 0x99a
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_1F/scripts.inc"
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x2101d8, 0xe
