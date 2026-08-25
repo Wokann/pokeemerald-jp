@@ -68,6 +68,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_Mart': 5,
     'SootopolisCity_House1': 3,
     'SootopolisCity_House2': 3,
+    'SootopolisCity_House3': 3,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -112,6 +113,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_Mart': 4,
     'SootopolisCity_House1': 3,
     'SootopolisCity_House2': 3,
+    'SootopolisCity_House3': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8361,6 +8363,18 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 # yes/no branch and three text records match the US map source in sequence.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'SootopolisCity_House2': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {0x800D: 'VAR_RESULT'},
+        },
+    },
+})
+
+# Sootopolis House 3 follows House 2 in physical EventScript order. Its
+# reviewed yes/no dialogue and NPC text labels are synchronized to the US map.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_House3': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
         'symbols': {
