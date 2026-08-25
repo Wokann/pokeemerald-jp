@@ -63,6 +63,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_GameCorner_1F': 3,
     'SootopolisCity_Gym_1F': 24,
     'SootopolisCity_Gym_B1F': 10,
+    'SootopolisCity_PokemonCenter_1F': 6,
+    'SootopolisCity_PokemonCenter_2F': 3,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -103,6 +105,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_SpaceCenter_2F': 27,
     'SootopolisCity_Gym_1F': 16,
     'SootopolisCity_Gym_B1F': 30,
+    'SootopolisCity_PokemonCenter_1F': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -214,6 +217,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x0820C55F,
         0x0820C565,
         0x0820C56B,
+    ),
+    # The Sootopolis 2F table is followed by the same unused RS-era Cable
+    # Club wrappers, which remain map-owned named entries in the US source.
+    'SootopolisCity_PokemonCenter_2F': (
+        0x0820F1A5,
+        0x0820F1AB,
+        0x0820F1B1,
     ),
     # The RS-era Dive item ball is unused in Emerald but remains an explicit
     # named script in the matching Stevens House source.
@@ -8249,6 +8259,51 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Sootopolis Pokemon Center 1F follows the Gym B1F script range. Its local
+# entries are named through the reviewed US script sequence; these map-local
+# operands and cross-range targets are verified from the JP bytes.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_PokemonCenter_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'local_scripts': (0x0820EFE0,),
+        'external_labels': {
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+            0x08276B72: 'SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor',
+        },
+        'symbols': {
+            'flags': {0x0081: 'FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN'},
+            'vars': {
+                0x40CA: 'VAR_SKY_PILLAR_STATE',
+                0x800B: 'VAR_0x800B',
+            },
+            'var_values': {0x40CA: {0x02: '2'}},
+            'local_ids': {0x01: 'LOCALID_SOOTOPOLIS_NURSE'},
+            'heal_locations': {0x0A: 'HEAL_LOCATION_SOOTOPOLIS_CITY'},
+        },
+    },
+})
+
+# Sootopolis Pokemon Center 2F immediately follows its 1F map range. The
+# three unused RS wrappers and the map hooks all target retained Cable Club
+# source, so keep the matching semantic entry points while the bytes remain
+# physically owned by this map.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_PokemonCenter_2F': {
+        'preserve_region_script_aliases': False,
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'MossdeepCity_Mart': (
         (0x0820C5CA, 'MossdeepCity_Mart_Pokemart', (
@@ -9866,7 +9921,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 if alias != label_map[addr]:
                     lines.append('\t.globl %s' % alias)
                     lines.append('%s: @ 0x%08X' % (alias, addr))
-            lines.append('%s:: @ 0x%08X' % (label_map[addr], addr))
+            label_terminator = ':' if addr in semantic.get('local_scripts', ()) else '::'
+            lines.append('%s%s @ 0x%08X' % (label_map[addr], label_terminator, addr))
             symbol_formatter = semantic_symbol_formatter(mname, addr)
             decoded_lines = sp.decode_script_lines(
                 scripts[addr], reference_label_map, reference_text_label_map, symbol_formatter)

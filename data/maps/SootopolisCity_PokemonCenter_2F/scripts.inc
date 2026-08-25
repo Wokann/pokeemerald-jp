@@ -6,3 +6,15 @@ SootopolisCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, CableClub_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
+
+SootopolisCity_PokemonCenter_2F_EventScript_Colosseum:: @ 0x0820F1A5
+	call CableClub_EventScript_Colosseum
+	end
+
+SootopolisCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 0x0820F1AB
+	call CableClub_EventScript_TradeCenter
+	end
+
+SootopolisCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 0x0820F1B1
+	call CableClub_EventScript_RecordCorner
+	end

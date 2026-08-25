@@ -338,6 +338,9 @@
 	@ The Rooftop event table points to the retained Substitute tutor script.
 	.globl LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor
 	.set LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor, 0x08276AA2
+	@ The Sootopolis Center event table points to the retained Double-Edge tutor script.
+	.globl SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor
+	.set SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor, 0x08276B72
 	.globl gText_ComeBackWithSecretPower
 	.set gText_ComeBackWithSecretPower, 0x08243B96
 	@ Space Center 2F's post-battle calls target retained Match Call text.
@@ -809,9 +812,9 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/SootopolisCity_Gym_1F/scripts.inc"
 	.include "data/maps/SootopolisCity_Gym_B1F/scripts.inc"
 	.include "data/maps/SootopolisCity_PokemonCenter_1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20f046, 0x14a
 	.include "data/maps/SootopolisCity_PokemonCenter_2F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20f1a5, 0xbbb
+	.align 2
+	.incbin "baserom_jp.gba", 0x20f1b8, 0xba8
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_1F/scripts.inc"
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x2101d8, 0xe
