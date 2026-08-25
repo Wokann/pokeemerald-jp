@@ -71,6 +71,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House3': 3,
     'SootopolisCity_House4': 3,
     'SootopolisCity_House5': 2,
+    'SootopolisCity_House6': 4,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -118,6 +119,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House3': 4,
     'SootopolisCity_House4': 3,
     'SootopolisCity_House5': 2,
+    'SootopolisCity_House6': 5,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8408,6 +8410,28 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    # House 6 is the subsequent physical owner. The Wailmer Doll branch is
+    # checked against its matching US source, including the shared no-room
+    # message and the decoration-giving macro expansion.
+    'SootopolisCity_House6': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_texts': {
+            0x082439A8: 'gText_NoRoomLeftForAnother',
+        },
+        'symbols': {
+            'flags': {0x00F5: 'FLAG_RECEIVED_WAILMER_DOLL'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x0820F6D1: {0x8000: {0x0075: 'DECOR_WAILMER_DOLL'}},
+            },
+            'decorations': {0x0075: 'DECOR_WAILMER_DOLL'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9465,6 +9489,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
                     or symbols.get('trainers', {}).get(value)
                     or symbols.get('decorations', {}).get(value))
         if name == 'givedecoration' and index == 0:
+            return symbols.get('decorations', {}).get(value)
+        if name == 'bufferdecorationname' and index == 1:
             return symbols.get('decorations', {}).get(value)
         if index in ITEM_ARGUMENTS.get(name, ()):
             return symbols.get('items', {}).get(value)

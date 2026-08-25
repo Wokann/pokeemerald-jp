@@ -2129,16 +2129,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SootopolisCity_House5/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE5
 	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE5, SootopolisCity_House5_MapEvents
-	.globl SOOTOPOLIS_CITY_HOUSE6_EventObjects
-SOOTOPOLIS_CITY_HOUSE6_EventObjects: @ 0x0850BBC8
-	object_event 1, 20, 0, 4, 3, 3, 2, 1, 1, 0, 0, 0x0820F6D1, 0x0000
-	.globl SOOTOPOLIS_CITY_HOUSE6_EventWarps
-SOOTOPOLIS_CITY_HOUSE6_EventWarps: @ 0x0850BBE0
-	warp_def 3, 6, 0, 9, MAP_SOOTOPOLIS_CITY
-	warp_def 4, 6, 0, 9, MAP_SOOTOPOLIS_CITY
+	.include "data/maps/SootopolisCity_House6/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE6
-gMapEvents_SOOTOPOLIS_CITY_HOUSE6: @ 0x0850BBF0
-	map_events SOOTOPOLIS_CITY_HOUSE6_EventObjects, SOOTOPOLIS_CITY_HOUSE6_EventWarps, 0, 0
+	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE6, SootopolisCity_House6_MapEvents
 	.globl SOOTOPOLIS_CITY_HOUSE7_EventObjects
 SOOTOPOLIS_CITY_HOUSE7_EventObjects: @ 0x0850BC04
 	object_event 1, 29, 0, 5, 3, 3, 9, 0, 0, 0, 0, 0x0820F7BB, 0x0000

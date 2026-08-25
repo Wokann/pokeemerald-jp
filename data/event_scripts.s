@@ -819,7 +819,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/SootopolisCity_House3/scripts.inc"
 	.include "data/maps/SootopolisCity_House4/scripts.inc"
 	.include "data/maps/SootopolisCity_House5/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20f6d0, 0x690
+	.include "data/maps/SootopolisCity_House6/scripts.inc"
+	.incbin "baserom_jp.gba", 0x20f7ba, 0x5a6
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_1F/scripts.inc"
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x2101d8, 0xe

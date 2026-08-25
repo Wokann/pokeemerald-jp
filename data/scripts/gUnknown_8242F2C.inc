@@ -143,11 +143,11 @@ Common_EventScript_ShowBagIsFull:: @ 0x082430E0
 	loadword 0x0, 0x8243977
 	callstd 0x4
 	return 
-	loadword 0x0, 0x82439A8
+	loadword 0x0, gText_NoRoomLeftForAnother
 	callstd 0x4
 	release 
 	end 
-	loadword 0x0, 0x82439A8
+	loadword 0x0, gText_NoRoomLeftForAnother
 	callstd 0x4
 	return 
 
