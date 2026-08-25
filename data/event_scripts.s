@@ -836,7 +836,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/scripts.inc"
 	.include "data/maps/EverGrandeCity_SidneysRoom/scripts.inc"
 	.include "data/maps/EverGrandeCity_PhoebesRoom/scripts.inc"
-	.incbin "baserom_jp.gba", 0x2103c8, 0x15b
 	.include "data/maps/EverGrandeCity_GlaciasRoom/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21057a, 0x144
 	.include "data/maps/EverGrandeCity_DrakesRoom/scripts.inc"

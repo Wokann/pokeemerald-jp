@@ -86,6 +86,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Sidney's room follows immediately. Its eight initial records plus the
     # three object-event branches match the reviewed US source sequence.
     'EverGrandeCity_SidneysRoom': 11,
+    # Phoebe's room is the immediate successor. Its seven map-script records
+    # and three object-event branches match the reviewed US source sequence.
+    'EverGrandeCity_PhoebesRoom': 10,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -95,6 +98,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
+    'EverGrandeCity_PhoebesRoom': ('OnLoad', 'OnWarp'),
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -140,6 +144,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # checked in ROM order against the matching US owner.
     'SootopolisCity_LotadAndSeedotHouse': 16,
     'EverGrandeCity_SidneysRoom': 3,
+    'EverGrandeCity_PhoebesRoom': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8684,6 +8689,41 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'script_var_values': {
                 0x08210202: {0x409C: {0x01: '1'}},
                 0x0821023C: {0x409C: {0x01: '1'}},
+            },
+        },
+    },
+    # Phoebe's room immediately follows Sidney's range and uses the same
+    # retained Elite Four helpers.  Its local flags, state, and trainer are
+    # mapped from the reviewed US owner while JP bytes remain authoritative.
+    'EverGrandeCity_PhoebesRoom': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824347B: 'PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles',
+            0x082434F8: 'PokemonLeague_EliteFour_EventScript_WalkInCloseDoor',
+            0x0824353F: 'PokemonLeague_EliteFour_EventScript_ResetAdvanceToNextRoom',
+            0x082435E2: 'PokemonLeague_EliteFour_EventScript_CloseDoor',
+        },
+        'symbols': {
+            'flags': {
+                0x04FC: 'FLAG_DEFEATED_ELITE_4_PHOEBE',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x409C: 'VAR_ELITE_4_STATE',
+            },
+            'local_ids': {0xFF: 'LOCALID_PLAYER'},
+            'directions': {0x02: 'DIR_NORTH'},
+            'songs': {0x01C2: 'MUS_ENCOUNTER_ELITE_FOUR'},
+            'trainers': {0x0106: 'TRAINER_PHOEBE'},
+            'booleans': {0x00: 'FALSE'},
+            'map_script_values': {
+                0x4001: {0x00: '0'},
+                0x409C: {0x01: '1'},
+            },
+            'script_var_values': {
+                0x0821039A: {0x409C: {0x02: '2'}},
+                0x082103A7: {0x409C: {0x02: '2'}},
             },
         },
     },

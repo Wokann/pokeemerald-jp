@@ -2147,16 +2147,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/EverGrandeCity_SidneysRoom/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM
 	.set gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM, EverGrandeCity_SidneysRoom_MapEvents
-	.globl EVER_GRANDE_CITY_PHOEBES_ROOM_EventObjects
-EVER_GRANDE_CITY_PHOEBES_ROOM_EventObjects: @ 0x0850BD78
-	object_event 1, 122, 0, 6, 5, 3, 8, 0, 0, 0, 0, 0x082103C8, 0x0000
-	.globl EVER_GRANDE_CITY_PHOEBES_ROOM_EventWarps
-EVER_GRANDE_CITY_PHOEBES_ROOM_EventWarps: @ 0x0850BD90
-	warp_def 6, 13, 3, 1, MAP_EVER_GRANDE_CITY_HALL1
-	warp_def 6, 2, 0, 0, MAP_EVER_GRANDE_CITY_HALL2
+	.include "data/maps/EverGrandeCity_PhoebesRoom/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM
-gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM: @ 0x0850BDA0
-	map_events EVER_GRANDE_CITY_PHOEBES_ROOM_EventObjects, EVER_GRANDE_CITY_PHOEBES_ROOM_EventWarps, 0, 0
+	.set gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM, EverGrandeCity_PhoebesRoom_MapEvents
 	.globl EVER_GRANDE_CITY_GLACIAS_ROOM_EventObjects
 EVER_GRANDE_CITY_GLACIAS_ROOM_EventObjects: @ 0x0850BDB4
 	object_event 1, 123, 0, 6, 5, 3, 8, 0, 0, 0, 0, 0x0821057A, 0x0000
