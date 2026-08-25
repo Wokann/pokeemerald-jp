@@ -6214,6 +6214,148 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
+# painting metatiles, movement records, and all display text were checked
+# against the matching US map source before replacing its remaining raw tail.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_LilycoveMuseum_2F': {
+        'scripts': {
+            0x082061F1: 'LilycoveCity_LilycoveMuseum_2F_OnLoad',
+            0x08206200: 'LilycoveCity_LilycoveMuseum_2F_EventScript_CheckBeautyPainting',
+            0x0820620F: 'LilycoveCity_LilycoveMuseum_2F_EventScript_CheckCutePainting',
+            0x0820621E: 'LilycoveCity_LilycoveMuseum_2F_EventScript_CheckSmartPainting',
+            0x0820622D: 'LilycoveCity_LilycoveMuseum_2F_EventScript_CheckToughPainting',
+            0x08206237: 'LilycoveCity_LilycoveMuseum_2F_EventScript_SetCoolPainting',
+            0x0820624F: 'LilycoveCity_LilycoveMuseum_2F_EventScript_SetBeautyPainting',
+            0x08206267: 'LilycoveCity_LilycoveMuseum_2F_EventScript_SetCutePainting',
+            0x0820627F: 'LilycoveCity_LilycoveMuseum_2F_EventScript_SetSmartPainting',
+            0x08206297: 'LilycoveCity_LilycoveMuseum_2F_EventScript_SetToughPainting',
+            0x082062B4: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ShowExhibitHall',
+            0x08206312: 'LilycoveCity_LilycoveMuseum_2F_EventScript_Curator',
+            0x08206366: 'LilycoveCity_LilycoveMuseum_2F_EventScript_AddedPainting',
+            0x0820636F: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ThankPlayer',
+            0x08206396: 'LilycoveCity_LilycoveMuseum_2F_EventScript_GiveGlassOrnament',
+            0x082063BD: 'LilycoveCity_LilycoveMuseum_2F_EventScript_NoRoomForGlassOrnament',
+            0x082063CD: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ReceivedGlassOrnament',
+            0x082063D7: 'LilycoveCity_LilycoveMuseum_2F_EventScript_CutePainting',
+            0x082063EA: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ToughPainting',
+            0x082063FD: 'LilycoveCity_LilycoveMuseum_2F_EventScript_CoolPainting',
+            0x08206410: 'LilycoveCity_LilycoveMuseum_2F_EventScript_BeautyPainting',
+            0x08206423: 'LilycoveCity_LilycoveMuseum_2F_EventScript_SmartPainting',
+            0x08206436: 'LilycoveCity_LilycoveMuseum_2F_EventScript_Girl',
+            0x0820643F: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ExpertM',
+            0x08206448: 'LilycoveCity_LilycoveMuseum_2F_EventScript_RichBoy',
+            0x08206451: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ShowCoolPainting',
+            0x0820645F: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ShowBeautyPainting',
+            0x0820646D: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ShowCutePainting',
+            0x0820647B: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ShowSmartPainting',
+            0x08206489: 'LilycoveCity_LilycoveMuseum_2F_EventScript_ShowToughPainting',
+        },
+        'tables': {
+            0x082062AA: 'LilycoveCity_LilycoveMuseum_2F_OnFrame',
+        },
+        # The legacy event table remains in data_b2d_mid26.s.  Retain only
+        # its address-derived targets until that independent JSON migration.
+        'script_aliases': {
+            0x08206312: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206312',),
+            0x082063D7: ('LilycoveCity_LilycoveMuseum_2F_EventScript_002063D7',),
+            0x082063EA: ('LilycoveCity_LilycoveMuseum_2F_EventScript_002063EA',),
+            0x082063FD: ('LilycoveCity_LilycoveMuseum_2F_EventScript_002063FD',),
+            0x08206410: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206410',),
+            0x08206423: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206423',),
+            0x08206436: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206436',),
+            0x0820643F: ('LilycoveCity_LilycoveMuseum_2F_EventScript_0020643F',),
+            0x08206448: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206448',),
+        },
+        'texts': {
+            0x08206497: 'LilycoveCity_LilycoveMuseum_2F_Text_ThisIsExhibitHall',
+            0x082064A9: 'LilycoveCity_LilycoveMuseum_2F_Text_ExplainExhibitHall',
+            0x0820655D: 'LilycoveCity_LilycoveMuseum_2F_Text_PleaseObtainPaintingsForExhibit',
+            0x08206607: 'LilycoveCity_LilycoveMuseum_2F_Text_WishToFillExhibit',
+            0x08206636: 'LilycoveCity_LilycoveMuseum_2F_Text_ThanksAddedNewPainting',
+            0x08206681: 'LilycoveCity_LilycoveMuseum_2F_Text_ItsYouPlayer',
+            0x0820668E: 'LilycoveCity_LilycoveMuseum_2F_Text_PaintingsAttractedMoreGuests',
+            0x0820670F: 'LilycoveCity_LilycoveMuseum_2F_Text_TokenOfGratitude',
+            0x08206729: 'LilycoveCity_LilycoveMuseum_2F_Text_KeepThisForYou',
+            0x08206743: 'LilycoveCity_LilycoveMuseum_2F_Text_HonorToHaveYouVisit',
+            0x08206788: 'LilycoveCity_LilycoveMuseum_2F_Text_ItsPinkPictureFrame',
+            0x0820679E: 'LilycoveCity_LilycoveMuseum_2F_Text_ItsYellowPictureFrame',
+            0x082067B3: 'LilycoveCity_LilycoveMuseum_2F_Text_ItsBluePictureFrame',
+            0x082067C7: 'LilycoveCity_LilycoveMuseum_2F_Text_ItsRedPictureFrame',
+            0x082067DB: 'LilycoveCity_LilycoveMuseum_2F_Text_ItsGreenPictureFrame',
+            0x082067F2: 'LilycoveCity_LilycoveMuseum_2F_Text_ItsPaintingOfPokemon',
+            0x08206803: 'LilycoveCity_LilycoveMuseum_2F_Text_NewPaintingsSurprisedMe',
+            0x0820684E: 'LilycoveCity_LilycoveMuseum_2F_Text_NewPaintingsRatherAmusing',
+            0x08206898: 'LilycoveCity_LilycoveMuseum_2F_Text_ThesePaintingsOfYourPokemon',
+        },
+        'external_labels': {
+            0x082430FD: 'Common_EventScript_NoRoomForDecor',
+            0x08243621: 'Common_Movement_FacePlayer',
+        },
+        # The paired US curator messages prove that FD 01 is the player name
+        # in these three JP text records; do not expose raw control indices.
+        'field_placeholders': {
+            0x08206681: {0x01: 'PLAYER'},
+            0x0820668E: {0x01: 'PLAYER'},
+            0x08206743: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'flags': {
+                0x00A0: 'FLAG_COOL_PAINTING_MADE',
+                0x00A1: 'FLAG_BEAUTY_PAINTING_MADE',
+                0x00A2: 'FLAG_CUTE_PAINTING_MADE',
+                0x00A3: 'FLAG_SMART_PAINTING_MADE',
+                0x00A4: 'FLAG_TOUGH_PAINTING_MADE',
+                0x00EC: 'FLAG_RECEIVED_GLASS_ORNAMENT',
+            },
+            'vars': {
+                0x4094: 'VAR_LILYCOVE_MUSEUM_2F_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                # The following callstd is the decoration-giving wrapper, so
+                # this VAR_0x8000 value is a decoration rather than an item.
+                0x08206396: {0x8000: {0x002C: 'DECOR_GLASS_ORNAMENT'}},
+            },
+            'local_ids': {
+                0x01: 'LOCALID_MUSEUM_2F_CURATOR',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'metatiles': {
+                0x025A: 'METATILE_LilycoveMuseum_Painting0_Left',
+                0x025B: 'METATILE_LilycoveMuseum_Painting0_Right',
+                0x025C: 'METATILE_LilycoveMuseum_Painting1_Left',
+                0x025D: 'METATILE_LilycoveMuseum_Painting1_Right',
+                0x025E: 'METATILE_LilycoveMuseum_Painting2_Left',
+                0x025F: 'METATILE_LilycoveMuseum_Painting2_Right',
+                0x0260: 'METATILE_LilycoveMuseum_Painting3_Left',
+                0x0261: 'METATILE_LilycoveMuseum_Painting3_Right',
+                0x0262: 'METATILE_LilycoveMuseum_Painting4_Left',
+                0x0263: 'METATILE_LilycoveMuseum_Painting4_Right',
+            },
+            'decorations': {0x002C: 'DECOR_GLASS_ORNAMENT'},
+            'contest_winners': {
+                0x09: 'CONTEST_WINNER_MUSEUM_COOL',
+                0x0A: 'CONTEST_WINNER_MUSEUM_BEAUTY',
+                0x0B: 'CONTEST_WINNER_MUSEUM_CUTE',
+                0x0C: 'CONTEST_WINNER_MUSEUM_SMART',
+                0x0D: 'CONTEST_WINNER_MUSEUM_TOUGH',
+            },
+            'fade_modes': {0x1: 'FADE_TO_BLACK'},
+        },
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'LilycoveCity_LilycoveMuseum_2F': {
+        0x0820630D: 'LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft',
+        0x0820630F: 'LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall',
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     # Route101 retains four unreferenced movement records between the Birch
     # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
@@ -6637,6 +6779,8 @@ def name_contextual_result_conditions(lines):
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
         elif name == 'giveitem':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
+        elif name == 'givedecoration':
+            replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
     return out
 
 
@@ -6731,6 +6875,28 @@ def collapse_giveitem_macros(lines):
     return out
 
 
+def collapse_givedecoration_macros(lines):
+    """Restore the byte-exact ``givedecoration`` wrapper where reviewed."""
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 1 < len(lines):
+            first_name, first_args = lines[index]
+            second_name, second_args = lines[index + 1]
+            first = [part.strip() for part in first_args.split(',', 1)]
+            if (first_name == 'setorcopyvar'
+                    and second_name == 'callstd'
+                    and first[:1] == ['VAR_0x8000']
+                    and len(first) == 2
+                    and second_args in ('0x7', 'STD_OBTAIN_DECORATION')):
+                out.append(('givedecoration', first[1]))
+                index += 2
+                continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
 def omit_default_macro_arguments(lines):
     """Drop explicit defaults only where the canonical macro proves them."""
     out = []
@@ -6791,8 +6957,14 @@ def semantic_symbol_formatter(mname, script_addr=None):
                 and args[0] == 0x800B):
             return symbols.get('local_ids', {}).get(value)
         if name == 'setorcopyvar' and index == 1 and args and args[0] == 0x8000:
-            return (symbols.get('items', {}).get(value)
-                    or symbols.get('trainers', {}).get(value))
+            reviewed = (symbols.get('script_var_values', {})
+                        .get(script_addr, {}).get(args[0], {}).get(value))
+            return (reviewed
+                    or symbols.get('items', {}).get(value)
+                    or symbols.get('trainers', {}).get(value)
+                    or symbols.get('decorations', {}).get(value))
+        if name == 'givedecoration' and index == 0:
+            return symbols.get('decorations', {}).get(value)
         if index in ITEM_ARGUMENTS.get(name, ()):
             return symbols.get('items', {}).get(value)
         if name.startswith('buffer') and index == 0:
@@ -6805,6 +6977,10 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('sounds', {}).get(value)
         if name == 'setrespawn' and index == 0:
             return symbols.get('heal_locations', {}).get(value)
+        if name == 'fadescreen' and index == 0:
+            return symbols.get('fade_modes', {}).get(value)
+        if name in ('showcontestwinner', 'showcontestpainting') and index == 0:
+            return symbols.get('contest_winners', {}).get(value)
         if name == 'setmetatile' and index == 2:
             return symbols.get('metatiles', {}).get(value)
         if name == 'setmetatile' and index == 3:
@@ -7322,6 +7498,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_switch_macros(decoded_lines)
             decoded_lines = collapse_coordinate_warp_macros(decoded_lines)
             decoded_lines = collapse_giveitem_macros(decoded_lines)
+            decoded_lines = collapse_givedecoration_macros(decoded_lines)
             decoded_lines = omit_default_macro_arguments(decoded_lines)
             decoded_lines = name_contextual_result_conditions(decoded_lines)
             for name, argstr in decoded_lines:

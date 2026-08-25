@@ -587,7 +587,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_CoveLilyMotel_2F/scripts.inc"
 	.include "data/maps/LilycoveCity_LilycoveMuseum_1F/scripts.inc"
 	.include "data/maps/LilycoveCity_LilycoveMuseum_2F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x206607, 0x2ca
 	.include "data/maps/LilycoveCity_ContestLobby/scripts.inc"
 	.incbin "baserom_jp.gba", 0x207640, 0xc0a
 	.include "data/maps/LilycoveCity_PokemonCenter_1F/scripts.inc"
