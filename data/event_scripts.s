@@ -579,8 +579,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/PacifidlogTown_House5/scripts.inc"
 	.include "data/maps/PetalburgCity_WallysHouse/scripts.inc"
 	.include "data/maps/PetalburgCity_Gym/scripts.inc"
-	@ Unowned gap after Petalburg Gym's map-local scripts (0x081FA63D-0x081FA7CD).
-	.incbin "baserom_jp.gba", 0x1fa63d, 0x190
+	.include "data/maps/PetalburgCity_House1/scripts.inc"
+	.include "data/maps/PetalburgCity_House2/scripts.inc"
 	.include "data/maps/PetalburgCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/PetalburgCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/PetalburgCity_Mart/scripts.inc"

@@ -5823,6 +5823,34 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
     },
 }
 
+# Petalburg's two residential houses immediately follow the Gym in the
+# physical event-script owner. Their four NPC scripts and four text objects
+# were aligned with the matching US map sources before directory migration.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'PetalburgCity_House1': {
+        'scripts': {
+            0x081FA63E: 'PetalburgCity_House1_EventScript_Man',
+            0x081FA647: 'PetalburgCity_House1_EventScript_Woman',
+        },
+        'texts': {
+            0x081FA650: 'PetalburgCity_House1_Text_TravelingIsWonderful',
+            0x081FA67F: 'PetalburgCity_House1_Text_GoOnAdventure',
+        },
+        'preserve_region_script_aliases': False,
+    },
+    'PetalburgCity_House2': {
+        'scripts': {
+            0x081FA721: 'PetalburgCity_House2_EventScript_Woman',
+            0x081FA72A: 'PetalburgCity_House2_EventScript_SchoolKid',
+        },
+        'texts': {
+            0x081FA733: 'PetalburgCity_House2_Text_NormanBecameGymLeader',
+            0x081FA775: 'PetalburgCity_House2_Text_BattledNormanOnce',
+        },
+        'preserve_region_script_aliases': False,
+    },
+})
+
 # Rustboro Devon Corp 2F is a complete, contiguous JP map-script owner.
 # Every local script/text address below was aligned with the matching US map
 # by event position, control-flow shape, and text order before enabling names.

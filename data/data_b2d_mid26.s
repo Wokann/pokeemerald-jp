@@ -1829,28 +1829,12 @@ PETALBURG_CITY_GYM_EventBgEvents: @ 0x0850772C
 	.globl gMapEvents_PETALBURG_CITY_GYM
 gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	map_events PETALBURG_CITY_GYM_EventObjects, PETALBURG_CITY_GYM_EventWarps, 0, PETALBURG_CITY_GYM_EventBgEvents
-	.globl PETALBURG_CITY_HOUSE1_EventObjects
-PETALBURG_CITY_HOUSE1_EventObjects: @ 0x085077E8
-	object_event 1, 8, 0, 7, 4, 3, 2, 2, 2, 0, 0, 0x081FA647, 0x0000
-	object_event 2, 21, 0, 4, 4, 3, 8, 0, 0, 0, 0, 0x081FA63E, 0x0000
-	.globl PETALBURG_CITY_HOUSE1_EventWarps
-PETALBURG_CITY_HOUSE1_EventWarps: @ 0x08507818
-	warp_def 3, 8, 0, 0, MAP_PETALBURG_CITY
-	warp_def 4, 8, 0, 0, MAP_PETALBURG_CITY
+	.include "data/maps/PetalburgCity_House1/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_HOUSE1
-gMapEvents_PETALBURG_CITY_HOUSE1: @ 0x08507828
-	map_events PETALBURG_CITY_HOUSE1_EventObjects, PETALBURG_CITY_HOUSE1_EventWarps, 0, 0
-	.globl PETALBURG_CITY_HOUSE2_EventObjects
-PETALBURG_CITY_HOUSE2_EventObjects: @ 0x0850783C
-	object_event 1, 18, 0, 2, 5, 3, 2, 1, 1, 0, 0, 0x081FA721, 0x0000
-	object_event 2, 38, 0, 7, 5, 3, 8, 0, 0, 0, 0, 0x081FA72A, 0x0000
-	.globl PETALBURG_CITY_HOUSE2_EventWarps
-PETALBURG_CITY_HOUSE2_EventWarps: @ 0x0850786C
-	warp_def 3, 7, 0, 4, MAP_PETALBURG_CITY
-	warp_def 4, 7, 0, 4, MAP_PETALBURG_CITY
+	.set gMapEvents_PETALBURG_CITY_HOUSE1, PetalburgCity_House1_MapEvents
+	.include "data/maps/PetalburgCity_House2/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_HOUSE2
-gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
-	map_events PETALBURG_CITY_HOUSE2_EventObjects, PETALBURG_CITY_HOUSE2_EventWarps, 0, 0
+	.set gMapEvents_PETALBURG_CITY_HOUSE2, PetalburgCity_House2_MapEvents
 	.include "data/maps/PetalburgCity_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F
 	.set gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F, PetalburgCity_PokemonCenter_1F_MapEvents
