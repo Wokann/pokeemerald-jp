@@ -714,32 +714,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LavaridgeTown/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN
 	.set gMapEvents_LAVARIDGE_TOWN, LavaridgeTown_MapEvents
-	.globl FALLARBOR_TOWN_EventObjects
-FALLARBOR_TOWN_EventObjects: @ 0x085002EC
-	object_event 1, 8, 0, 8, 11, 3, 8, 0, 1, 0, 0, FallarborTown_EventScript_Girl, 0x0000
-	object_event 2, 21, 0, 11, 9, 3, 5, 1, 0, 0, 0, FallarborTown_EventScript_ExpertM, 0x0000
-	object_event 3, 48, 0, 11, 15, 3, 3, 1, 1, 0, 0, FallarborTown_EventScript_Gentleman, 0x0000
-	object_event 4, 214, 0, 8, 12, 3, 1, 1, 0, 0, 0, FallarborTown_EventScript_Azurill, 0x038B
-	.globl FALLARBOR_TOWN_EventWarps
-FALLARBOR_TOWN_EventWarps: @ 0x0850034C
-	warp_def 15, 15, 0, 0, MAP_FALLARBOR_TOWN_MART
-	warp_def 8, 7, 0, 0, MAP_FALLARBOR_TOWN_BATTLE_TENT_LOBBY
-	warp_def 14, 7, 0, 0, MAP_FALLARBOR_TOWN_POKEMON_CENTER_1F
-	warp_def 6, 17, 0, 0, MAP_FALLARBOR_TOWN_COZMOS_HOUSE
-	warp_def 1, 6, 0, 0, MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE
-	.globl FALLARBOR_TOWN_EventBgEvents
-FALLARBOR_TOWN_EventBgEvents: @ 0x08500374
-	bg_event 16, 15, 0, 1, 0x08242EF6, 0, 0
-	bg_event 15, 7, 0, 1, 0x08242EFF, 0, 0
-	bg_event 6, 8, 0, 0, FallarborTown_EventScript_BattleTentSign, 0, 0
-	bg_event 16, 7, 0, 1, 0x08242EFF, 0, 0
-	bg_event 10, 11, 0, 0, FallarborTown_EventScript_TownSign, 0, 0
-	bg_event 17, 15, 0, 1, 0x08242EF6, 0, 0
-	bg_event 3, 7, 0, 0, FallarborTown_EventScript_MoveTutorSign, 0, 0
-	bg_event 2, 15, 3, 7, 0x006E, 0x1C, 0x00
+	.include "data/maps/FallarborTown/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN
-gMapEvents_FALLARBOR_TOWN: @ 0x085003D4
-	map_events FALLARBOR_TOWN_EventObjects, FALLARBOR_TOWN_EventWarps, 0, FALLARBOR_TOWN_EventBgEvents
+	.set gMapEvents_FALLARBOR_TOWN, FallarborTown_MapEvents
 	.globl VERDANTURF_TOWN_EventObjects
 VERDANTURF_TOWN_EventObjects: @ 0x085003E8
 	object_event 1, 23, 0, 4, 17, 3, 5, 1, 0, 0, 0, VerdanturfTown_EventScript_Man, 0x0000

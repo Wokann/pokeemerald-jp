@@ -92,6 +92,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	LavaridgeTown_Mart \
 	LavaridgeTown_PokemonCenter_1F \
 	LavaridgeTown_PokemonCenter_2F \
+	FallarborTown \
 	FallarborTown_Mart \
 	FallarborTown_BattleTentCorridor \
 	FallarborTown_BattleTentBattleRoom \
