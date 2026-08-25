@@ -53,6 +53,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_House1': 3,
     'MossdeepCity_House2': 5,
     'MossdeepCity_PokemonCenter_1F': 4,
+    'MossdeepCity_PokemonCenter_2F': 4,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -76,6 +77,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_House1': 4,
     'MossdeepCity_House2': 3,
     'MossdeepCity_PokemonCenter_1F': 2,
+    'MossdeepCity_PokemonCenter_2F': 1,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -180,6 +182,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x0820B606,
         0x0820B635,
         0x0820B65A,
+    ),
+    # These three RS-era Cable Club wrappers are unused in Emerald but remain
+    # map-owned named entries immediately after the 2F table in the US source.
+    'MossdeepCity_PokemonCenter_2F': (
+        0x0820C55F,
+        0x0820C565,
+        0x0820C56B,
     ),
 }
 
@@ -7738,6 +7747,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'heal_locations': {0x09: 'HEAL_LOCATION_MOSSDEEP_CITY'},
             'vars': {0x800B: 'VAR_0x800B'},
             'local_ids': {0x01: 'LOCALID_MOSSDEEP_NURSE'},
+        },
+    },
+})
+
+# Mossdeep Pokemon Center 2F owns three unused RS Cable Club wrappers and one
+# NPC message.  The local JP bytes use the same semantic entry points as the
+# matching US source, so retain them as names rather than a map-local incbin.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_PokemonCenter_2F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
         },
     },
 })

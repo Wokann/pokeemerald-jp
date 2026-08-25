@@ -7,8 +7,23 @@ MossdeepCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-	.incbin "baserom_jp.gba", 0x20c55f, 0x12
-MossdeepCity_PokemonCenter_2F_EventScript_0020C571::
-	loadword 0x0, 0x0820C57A
-	callstd 0x2
+MossdeepCity_PokemonCenter_2F_EventScript_Colosseum:: @ 0x0820C55F
+	call CableClub_EventScript_Colosseum
 	end
+
+MossdeepCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 0x0820C565
+	call CableClub_EventScript_TradeCenter
+	end
+
+MossdeepCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 0x0820C56B
+	call CableClub_EventScript_RecordCorner
+	end
+
+MossdeepCity_PokemonCenter_2F_EventScript_Woman5:: @ 0x0820C571
+	msgbox MossdeepCity_PokemonCenter_2F_Text_Woman5, MSGBOX_NPC
+	end
+
+MossdeepCity_PokemonCenter_2F_Text_Woman5: @ 0x0820C57A
+	.string "つうしん　たいせんで　かちまくって\n"
+	.string "みんなに　あたしの　みりょくを\l"
+	.string "アピールしたら　ファンが　ふえちゃうかな！$"
