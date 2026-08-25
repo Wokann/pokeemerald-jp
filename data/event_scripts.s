@@ -1019,6 +1019,10 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_FerryDepart, 0x08243265
 	.globl Common_EventScript_PlayGymBadgeFanfare
 	.set Common_EventScript_PlayGymBadgeFanfare, 0x0824310A
+	@ The Kecleon reveal movement remains in the retained shared event block.
+	@ Its JP byte stream is the same set-visible / blink sequence used upstream.
+	.globl Movement_KecleonAppears
+	.set Movement_KecleonAppears, 0x0824344A
 	.globl EventScript_GotoTrainerScript
 	.set EventScript_GotoTrainerScript, 0x08244D20
 	@ The Lavaridge House event table references the shared Mimic tutor script.

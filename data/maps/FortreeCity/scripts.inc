@@ -72,7 +72,7 @@ FortreeCity_EventScript_AskUseDevonScope::
 FortreeCity_EventScript_UseDevonScope::
 	msgbox FortreeCity_Text_UsedDevonScopePokemonFled, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, 0x0824344A @ Movement_KecleonAppears remains in a global raw range.
+	applymovement VAR_LAST_TALKED, Movement_KecleonAppears
 	waitmovement 0
 	waitse
 	playmoncry SPECIES_KECLEON, CRY_MODE_ENCOUNTER

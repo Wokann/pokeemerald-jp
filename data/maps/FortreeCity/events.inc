@@ -26,11 +26,11 @@ FortreeCity_MapWarps:
 
 FortreeCity_MapBGEvents:
 	bg_sign_event 6, 9, 0, BG_EVENT_PLAYER_FACING_ANY, FortreeCity_EventScript_CitySign
-	bg_sign_event 7, 6, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
-	bg_sign_event 5, 14, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EF6
+	bg_sign_event 7, 6, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
+	bg_sign_event 5, 14, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemartSign
 	bg_sign_event 26, 10, 0, BG_EVENT_PLAYER_FACING_ANY, FortreeCity_EventScript_GymSign
-	bg_sign_event 6, 6, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
-	bg_sign_event 6, 14, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EF6
+	bg_sign_event 6, 6, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
+	bg_sign_event 6, 14, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemartSign
 
 FortreeCity_MapEvents::
 	map_events FortreeCity_ObjectEvents, FortreeCity_MapWarps, NULL, FortreeCity_MapBGEvents
