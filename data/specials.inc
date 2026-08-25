@@ -569,3 +569,28 @@ gSpecials:
 	.set SPECIAL_WAITSTATE_IsMonOTIDNotPlayers, SPECIAL_WAITSTATE_TV_CheckMonOTIDEqualsPlayerID
 	.set SPECIAL_MonOTNameNotPlayer, SPECIAL_MonOTNameMatchesPlayer
 	.set SPECIAL_WAITSTATE_MonOTNameNotPlayer, SPECIAL_WAITSTATE_MonOTNameMatchesPlayer
+
+	@ Lilycove City Contest Lobby semantic aliases.  These retain the verified
+	@ JP special-table slots while allowing scripts to use pokeemerald-style names.
+	@ The JP scripts keep their explicit waitstate commands, so these aliases
+	@ deliberately inherit the current table metadata.
+	.set SPECIAL_BufferContestWinnerMonName, SPECIAL_sub_080F8C14
+	.set SPECIAL_WAITSTATE_BufferContestWinnerMonName, SPECIAL_WAITSTATE_sub_080F8C14
+	.set SPECIAL_GetContestPlayerId, SPECIAL_sub_080F8D34
+	.set SPECIAL_WAITSTATE_GetContestPlayerId, SPECIAL_WAITSTATE_sub_080F8D34
+	.set SPECIAL_TryEnterContestMon, SPECIAL_sub_080F87C0
+	.set SPECIAL_WAITSTATE_TryEnterContestMon, SPECIAL_WAITSTATE_sub_080F87C0
+	.set SPECIAL_SetLinkContestPlayerGfx, SPECIAL_sub_080F938C
+	.set SPECIAL_WAITSTATE_SetLinkContestPlayerGfx, SPECIAL_WAITSTATE_sub_080F938C
+	.set SPECIAL_IsContestDebugActive, SPECIAL_sub_080F95B4
+	.set SPECIAL_WAITSTATE_IsContestDebugActive, SPECIAL_WAITSTATE_sub_080F95B4
+	.set SPECIAL_SaveMuseumContestPainting, SPECIAL_sub_080F916C
+	.set SPECIAL_WAITSTATE_SaveMuseumContestPainting, SPECIAL_WAITSTATE_sub_080F916C
+	.set SPECIAL_CountPlayerMuseumPaintings, SPECIAL_CountPlayerContestPaintings
+	.set SPECIAL_WAITSTATE_CountPlayerMuseumPaintings, SPECIAL_WAITSTATE_CountPlayerContestPaintings
+	.set SPECIAL_ClearLinkContestFlags, SPECIAL_sub_080F99E4
+	.set SPECIAL_WAITSTATE_ClearLinkContestFlags, SPECIAL_WAITSTATE_sub_080F99E4
+	.set SPECIAL_TryBecomeLinkLeader, SPECIAL_BerryBlenderLinkBecomeLeader
+	.set SPECIAL_WAITSTATE_TryBecomeLinkLeader, SPECIAL_WAITSTATE_BerryBlenderLinkBecomeLeader
+	.set SPECIAL_TryJoinLinkGroup, SPECIAL_BerryBlenderLinkJoinGroup
+	.set SPECIAL_WAITSTATE_TryJoinLinkGroup, SPECIAL_WAITSTATE_BerryBlenderLinkJoinGroup

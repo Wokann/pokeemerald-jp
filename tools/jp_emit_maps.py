@@ -19,6 +19,23 @@ _MAP_HEADERS, _MAP_TABLES = map_metadata.build_metadata()
 MAP_HEADERS = map_metadata.legacy_map_headers(_MAP_HEADERS)
 MAP_TABLES = map_metadata.legacy_map_tables(_MAP_TABLES)
 US_JSON = Path('/home/kenny/pokeemerald/data/maps/map_groups.json')
+US_MAPS = US_JSON.parent
+
+# A map source file can end before the next map-script table when the JP ROM
+# packs shared contest/link data between the two owners.  Keep these physical
+# source boundaries explicit so ``--write`` never absorbs the next raw owner.
+MAP_SOURCE_REGION_ENDS = {
+    'LilycoveCity_ContestLobby': 0x08207640,
+}
+
+# These maps have had their JP and US map-local script entry sequences checked
+# one-to-one.  The emitter derives only their reviewed semantic label names
+# from the matching US source; JP bytes, parser output, and the ROM boundary
+# remain authoritative.  The count is a guard against a stale or mismatched
+# reference file silently renaming an unrelated entry.
+MAP_US_LABEL_SEQUENCE_COUNTS = {
+    'LilycoveCity_ContestLobby': 105,
+}
 
 MAP_SCRIPT_NAMES = {
     1: 'MAP_SCRIPT_ON_LOAD',
@@ -6553,10 +6570,283 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Contest Lobby's 105 script/table entry points are populated from its
+# reviewed US sequence above.  These local text and movement address maps are
+# intentionally explicit because the JP source ends at 0x08207640, before the
+# following raw owner contains the remaining NPC text records.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_ContestLobby': {
+        'texts': {
+            0x082073D0: 'LilycoveCity_ContestLobby_Text_LadyGaveMePokeblockCase',
+            0x082073F8: 'LilycoveCity_ContestLobby_Text_MakePokeblocksDifferentBerries',
+            0x08207435: 'LilycoveCity_ContestLobby_Text_YourPokemonSpurredMeToPaint',
+            0x082074A1: 'LilycoveCity_ContestLobby_Text_ShouldITakePaintingToMuseum',
+            0x08207519: 'LilycoveCity_ContestLobby_Text_IllTakePaintingToMuseum',
+            0x0820757C: 'LilycoveCity_ContestLobby_Text_TakeMementoOfPainting',
+            0x082075A5: 'LilycoveCity_ContestLobby_Text_ReceivedARibbon',
+            0x082075B4: 'LilycoveCity_ContestLobby_Text_PutTheRibbonOnMon',
+            0x082075CA: 'LilycoveCity_ContestLobby_Text_OkaySeeYou',
+            0x082075D1: 'LilycoveCity_ContestLobby_Text_TakeHomeButIdLikeToTakeToMuseum',
+            0x0820760A: 'LilycoveCity_ContestLobby_Text_FineThatsTheWayItIs',
+        },
+        # All old gJPText_* labels are local-only address placeholders.  The
+        # semantic names above replace them rather than retaining aliases.
+        'preserve_region_text_aliases': False,
+        'field_placeholders': {
+            # The paired US ribbon messages prove FD 01 is the player and FD
+            # 02 is STR_VAR_1 here; do not retain the ambiguous STRING form.
+            0x082075A5: {0x01: 'PLAYER'},
+            0x082075B4: {0x01: 'PLAYER', 0x02: 'STR_VAR_1'},
+        },
+        'external_labels': {
+            0x0821DD5F: 'LilycoveCity_ContestLobby_EventScript_SetPlayerGfx',
+            0x082423E9: 'Common_EventScript_SaveGame',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x08248AF4: 'LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist',
+            0x08249BC1: 'LilycoveCity_ContestLobby_EventScript_DelayIfContestWithRSPlayer',
+            0x08253F43: 'LilycoveCity_ContestLobby_EventScript_TryShowContestReporter',
+        },
+        # These map-owned NPC strings and shared contest/blender strings live
+        # outside the physical Contest Lobby owner.  Their semantic aliases
+        # are exported by the following top-level raw owner until it is
+        # structured in its own address-order pass.
+        'external_texts': {
+            0x08207640: 'LilycoveCity_ContestLobby_Text_MasterRankHereICome',
+            0x08207692: 'LilycoveCity_ContestLobby_Text_WholeVarietyOfPokemonHere',
+            0x082076BA: 'LilycoveCity_ContestLobby_Text_ContestFeastForEyes',
+            0x082076E6: 'LilycoveCity_ContestLobby_Text_ToughContestIsExtreme',
+            0x0820771C: 'LilycoveCity_ContestLobby_Text_LavishedCareOnMon',
+            0x0820775B: 'LilycoveCity_ContestLobby_Text_MadePokeblocksWithFamily',
+            0x08247D67: 'Text_LinkErrorPleaseReset',
+            0x08249FDD: 'LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank',
+            0x0824A10A: 'LilycoveCity_ContestLobby_Text_ComeThroughHere',
+            0x0824A50F: 'LilycoveCity_ContestLobby_Text_ProgressWillBeSaved',
+            0x0824A52D: 'LilycoveCity_ContestLobby_Text_ParticipateAnotherTime',
+            0x0824A60C: 'LilycoveCity_ContestLobby_Text_Transmitting',
+            0x0824A619: 'LilycoveCity_ContestLobby_Text_TransmissionError',
+            0x0824A629: 'LilycoveCity_ContestLobby_Text_PlayersChoseDifferentContest',
+            0x0824A646: 'LilycoveCity_ContestLobby_Text_PlayersMadeDifferentChoice',
+            0x0824A65D: 'LilycoveCity_ContestLobby_Text_PleaseWaitBButtonCancel',
+            0x0824A6AA: 'LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX',
+            0x0824A6E8: 'LilycoveCity_ContestLobby_Text_ContestBeginShortly',
+            0x0824A6FB: 'LilycoveCity_ContestLobby_Text_LinkContestReception',
+            0x0824A734: 'LilycoveCity_ContestLobby_Text_WhichTopic2',
+            0x0824A744: 'LilycoveCity_ContestLobby_Text_EnterContest3',
+            0x0824A755: 'LilycoveCity_ContestLobby_Text_EnterWhichContest3',
+            0x0824A769: 'LilycoveCity_ContestLobby_Text_MonInNoCondition2',
+            0x0824A790: 'LilycoveCity_ContestLobby_Text_EggCannotTakePart2',
+            0x0824A7AE: 'LilycoveCity_ContestLobby_Text_EnterWhichPokemon3',
+            0x0824A7C2: 'LilycoveCity_ContestLobby_Text_PleaseDecideLinkLeader',
+            0x0824A801: 'LilycoveCity_ContestLobby_Text_PlayerAt4PCounterUseGMode',
+            0x0824A86C: 'LilycoveCity_ContestLobby_Text_ExplainLinkContest',
+            0x0824A9B5: 'LilycoveCity_ContestLobby_Text_ExplainEMode',
+            0x0824AA8A: 'LilycoveCity_ContestLobby_Text_ExplainGMode',
+            0x0824AB11: 'LilycoveCity_ContestLobby_Text_NoWirelessAdapterInGMode',
+            0x0824AB68: 'LilycoveCity_ContestLobby_Text_WhichContestMode',
+            0x082587AE: 'BerryBlender_Text_LetsGetBlendingAlready',
+            0x082587BA: 'BerryBlender_Text_WhatKindOfPokeblockWillIGet',
+            0x08274705: 'BerryBlender_Text_BlendWithTheBlendMaster',
+            0x0827495B: 'BerryBlender_Text_WhoaAwesome',
+            0x08274961: 'BerryBlender_Text_WickedlyFast',
+            0x08274966: 'BerryBlender_Text_WhatAnExpert',
+            0x0827496C: 'BerryBlender_Text_MadeAmazingPokeblocksWithMaster',
+            0x08274990: 'BerryBlender_Text_QualitiesOfBlendMaster',
+            0x082749E1: 'BerryBlender_Text_MasterWorksOnSkillsInMountains',
+        },
+        'specials': {
+            'sub_080F8C14': 'BufferContestWinnerMonName',
+            'sub_080F8D34': 'GetContestPlayerId',
+            'sub_080F916C': 'SaveMuseumContestPainting',
+            'sub_080F938C': 'SetLinkContestPlayerGfx',
+            'sub_080F95B4': 'IsContestDebugActive',
+            'sub_080F99E4': 'ClearLinkContestFlags',
+            'sub_080F87C0': 'TryEnterContestMon',
+            'CountPlayerContestPaintings': 'CountPlayerMuseumPaintings',
+            'BerryBlenderLinkBecomeLeader': 'TryBecomeLinkLeader',
+            'BerryBlenderLinkJoinGroup': 'TryJoinLinkGroup',
+        },
+        'symbols': {
+            'flags': {
+                0x005F: 'FLAG_RECEIVED_POKEBLOCK_CASE',
+                0x00A0: 'FLAG_COOL_PAINTING_MADE',
+                0x00A1: 'FLAG_BEAUTY_PAINTING_MADE',
+                0x00A2: 'FLAG_CUTE_PAINTING_MADE',
+                0x00A3: 'FLAG_SMART_PAINTING_MADE',
+                0x00A4: 'FLAG_TOUGH_PAINTING_MADE',
+                0x0155: 'FLAG_ENTERED_CONTEST',
+                0x0307: 'FLAG_HIDE_LILYCOVE_MUSEUM_CURATOR',
+                0x0308: 'FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_1',
+                0x0309: 'FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_2',
+                0x030A: 'FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_3',
+                0x030B: 'FLAG_HIDE_LILYCOVE_MUSEUM_PATRON_4',
+                0x030C: 'FLAG_HIDE_LILYCOVE_MUSEUM_TOURISTS',
+                0x0340: 'FLAG_HIDE_LILYCOVE_CONTEST_HALL_BLEND_MASTER',
+                0x0369: 'FLAG_HIDE_LILYCOVE_CONTEST_HALL_BLEND_MASTER_REPLACEMENT',
+                0x089B: 'FLAG_SYS_RIBBON_GET',
+            },
+            'vars': {
+                0x400C: 'VAR_TEMP_C',
+                0x400D: 'VAR_TEMP_D',
+                0x4086: 'VAR_CONTEST_HALL_STATE',
+                0x4088: 'VAR_CONTEST_TYPE',
+                0x4094: 'VAR_LILYCOVE_MUSEUM_2F_STATE',
+                0x4099: 'VAR_LILYCOVE_CONTEST_LOBBY_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8008: 'VAR_0x8008',
+                0x800B: 'VAR_0x800B',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+                0x8010: 'VAR_CONTEST_RANK',
+                0x8011: 'VAR_CONTEST_CATEGORY',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_CONTEST_LOBBY_RECEPTIONIST',
+                0x02: 'LOCALID_CONTEST_LOBBY_LINK_RECEPTIONIST',
+                0x04: 'LOCALID_CONTEST_LOBBY_ARTIST',
+                0x0B: 'LOCALID_CONTEST_LOBBY_LINK_ARTIST',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'pokenews': {0x4: 'POKENEWS_BLENDMASTER'},
+            'items': {0x010A: 'ITEM_CONTEST_PASS'},
+            'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
+            'sounds': {0x0015: 'SE_PIN', 0x0047: 'SE_BRIDGE_WALK'},
+            'game_stats': {0x2A: 'GAME_STAT_RECEIVED_RIBBONS'},
+            'fade_modes': {0x1: 'FADE_TO_BLACK'},
+            'contest_winners': {
+                0x0: 'CONTEST_WINNER_ARTIST',
+                0x1: 'CONTEST_WINNER_HALL_1',
+                0x2: 'CONTEST_WINNER_HALL_2',
+                0x3: 'CONTEST_WINNER_HALL_3',
+                0x4: 'CONTEST_WINNER_HALL_4',
+                0x5: 'CONTEST_WINNER_HALL_5',
+                0x6: 'CONTEST_WINNER_HALL_6',
+            },
+            'maps': {
+                0x1923: 'MAP_CONTEST_HALL_BEAUTY',
+                0x1924: 'MAP_CONTEST_HALL_TOUGH',
+                0x1925: 'MAP_CONTEST_HALL_COOL',
+                0x1926: 'MAP_CONTEST_HALL_SMART',
+                0x1927: 'MAP_CONTEST_HALL_CUTE',
+            },
+            'metatiles': {
+                0x0221: 'METATILE_Contest_WallShadow',
+                0x0261: 'METATILE_Contest_FloorShadow',
+                0x02D1: 'METATILE_Contest_CounterFlap_Top',
+                0x02D9: 'METATILE_Contest_CounterFlap_Bottom',
+            },
+            'multichoices': {
+                0x02: 'MULTI_ENTERINFO',
+                0x04: 'MULTI_CONTEST_TYPE',
+                0x51: 'MULTI_LINK_LEADER',
+                0x54: 'MULTI_LINK_CONTEST_INFO',
+                0x55: 'MULTI_LINK_CONTEST_MODE',
+            },
+            'frontier_results': {
+                # The reviewed Link Contest result sequence is the exact
+                # frontier_results FACILITY_LINK_CONTEST macro expansion.
+                (0x7, 0x7): 'FACILITY_LINK_CONTEST',
+            },
+            'var_values': {
+                0x4088: {
+                    0x1: 'CONTEST_TYPE_NPC_NORMAL',
+                    0x2: 'CONTEST_TYPE_NPC_SUPER',
+                    0x3: 'CONTEST_TYPE_NPC_HYPER',
+                    0x4: 'CONTEST_TYPE_NPC_MASTER',
+                    0x5: 'CONTEST_TYPE_LINK',
+                },
+                0x8010: {
+                    0x0: 'CONTEST_RANK_NORMAL',
+                    0x1: 'CONTEST_RANK_SUPER',
+                    0x2: 'CONTEST_RANK_HYPER',
+                    0x3: 'CONTEST_RANK_MASTER',
+                },
+                0x8011: {
+                    0x0: 'CONTEST_CATEGORY_COOL',
+                    0x1: 'CONTEST_CATEGORY_BEAUTY',
+                    0x2: 'CONTEST_CATEGORY_CUTE',
+                    0x3: 'CONTEST_CATEGORY_SMART',
+                    0x4: 'CONTEST_CATEGORY_TOUGH',
+                },
+            },
+            'switch_values': {
+                'VAR_RESULT': {
+                    0x5: 'CONTEST_CATEGORIES_COUNT',
+                    0x7F: 'MULTI_B_PRESSED',
+                },
+            },
+            'script_var_values': {
+                0x0820704C: {
+                    0x800D: {
+                        0x0: 'CANT_ENTER_CONTEST',
+                        0x1: 'CAN_ENTER_CONTEST_EQUAL_RANK',
+                        0x2: 'CAN_ENTER_CONTEST_HIGH_RANK',
+                        0x3: 'CANT_ENTER_CONTEST_EGG',
+                        0x4: 'CANT_ENTER_CONTEST_FAINTED',
+                    },
+                },
+                0x082070D5: {
+                    0x800D: {
+                        0x3: 'LINKUP_DIFF_SELECTIONS',
+                        0x4: 'LINKUP_WRONG_NUM_PLAYERS',
+                        0x5: 'LINKUP_FAILED',
+                        0x6: 'LINKUP_CONNECTION_ERROR',
+                        0xA: 'LINKUP_FAILED_CONTEST_GMODE',
+                    },
+                },
+                0x082072A3: {
+                    0x800D: {
+                        0x1: 'LINKUP_SUCCESS',
+                        0x5: 'LINKUP_FAILED',
+                        0x8: 'LINKUP_RETRY_ROLE_ASSIGN',
+                    },
+                },
+                0x082072CB: {
+                    0x800D: {
+                        0x1: 'LINKUP_SUCCESS',
+                        0x5: 'LINKUP_FAILED',
+                        0x8: 'LINKUP_RETRY_ROLE_ASSIGN',
+                    },
+                },
+            },
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'LilycoveCity_LilycoveMuseum_2F': {
         0x0820630D: 'LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft',
         0x0820630F: 'LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'LilycoveCity_ContestLobby': {
+        0x08206AC7: 'LilycoveCity_ContestLobby_Movement_ArtistApproachPlayer',
+        0x08206ACF: 'LilycoveCity_ContestLobby_Movement_ArtistExit',
+        0x08206AD8: 'LilycoveCity_ContestLobby_Movement_PlayerFaceArtist',
+        0x08206ADA: 'LilycoveCity_ContestLobby_Movement_ArtistBeginToExit',
+        0x08206ADE: 'LilycoveCity_ContestLobby_Movement_ArtistReturnToPlayer',
+        0x08206BF3: 'LilycoveCity_ContestLobby_Movement_LinkArtistApproachPlayer',
+        0x08206BFC: 'LilycoveCity_ContestLobby_Movement_LinkArtistExit',
+        0x08206C05: 'LilycoveCity_ContestLobby_Movement_PlayerFaceLinkArtist',
+        0x08206C07: 'LilycoveCity_ContestLobby_Movement_LinkArtistBeginExit',
+        0x08206C0B: 'LilycoveCity_ContestLobby_Movement_LinkArtistReturnToPlayer',
+        0x08206DA8: 'LilycoveCity_ContestLobby_Movement_PlayerWalkToContestHall',
+        0x08206DB2: 'LilycoveCity_ContestLobby_Movement_PlayerApproachReceptionist',
+        0x08206DB5: 'LilycoveCity_ContestLobby_Movement_ReceptionistApproachCounter',
+        0x08206DB9: 'LilycoveCity_ContestLobby_Movement_ReceptionistExitCounter',
+        0x08206DBD: 'LilycoveCity_ContestLobby_Movement_ReceptionistWalkToContestHall',
+        0x08206DC6: 'LilycoveCity_ContestLobby_Movement_ReceptionistFacePlayer',
+        0x08207390: 'LilycoveCity_ContestLobby_Movement_PlayerWalkToLinkContestHall',
+        0x0820739B: 'LilycoveCity_ContestLobby_Movement_PlayerApproachLinkReceptionist',
+        0x0820739D: 'LilycoveCity_ContestLobby_Movement_LinkReceptionistApproachCounter',
+        0x082073A1: 'LilycoveCity_ContestLobby_Movement_LinkReceptionistExitCounter',
+        0x082073A5: 'LilycoveCity_ContestLobby_Movement_LinkReceptionistWalkToContestHall',
+        0x082073AF: 'LilycoveCity_ContestLobby_Movement_LinkReceptionistFacePlayer',
     },
 })
 
@@ -6693,6 +6983,16 @@ def build_map_names():
 
 MAP_NAMES = build_map_names()
 TEXT_CODEC = JapaneseScriptTextCodec()
+
+# The JP command table still exposes three RS-era handler names, while the
+# byte-identical Emerald macro names describe their actual script semantics.
+# Keep the parser's raw names for ROM decoding, then canonicalize only source
+# output through the shared opcode constants.
+CANONICAL_SCRIPT_COMMAND_NAMES = {
+    'cmdDB': 'messageinstant',
+    'getpricereduction': 'getpokenewsactive',
+    'showcontestwinner': 'showcontestpainting',
+}
 
 
 def build_movement_action_names():
@@ -7035,6 +7335,7 @@ LOCAL_ID_ARGUMENTS = {
     'setobjectsubpriority': {0},
     'showobject_at': {0},
     'turnobject': {0},
+    'waitmovement': {0},
     'waitmovement_at': {0},
 }
 MAP_ARGUMENTS = {
@@ -7055,10 +7356,56 @@ def collapse_coordinate_warp_macros(lines):
     """Use the canonical three-argument form for coordinate-only warps."""
     out = []
     for name, argstr in lines:
-        if name in ('setdivewarp', 'warp', 'warpdoor'):
+        if name in ('setdivewarp', 'setwarp', 'warp', 'warpdoor'):
             args = [arg.strip() for arg in argstr.split(',')]
             if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
                 argstr = ', '.join((args[0], args[2], args[3]))
+        out.append((name, argstr))
+    return out
+
+
+def collapse_frontier_results_macros(lines, facilities):
+    """Restore reviewed ``frontier_results`` macro expansions conservatively."""
+    if not facilities:
+        return lines
+
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 2 < len(lines):
+            first_name, first_args = lines[index]
+            second_name, second_args = lines[index + 1]
+            third_name, third_args = lines[index + 2]
+            first = [part.strip() for part in first_args.split(',', 1)]
+            second = [part.strip() for part in second_args.split(',', 1)]
+            if (first_name == 'setvar' and second_name == 'setvar'
+                    and third_name == 'special'
+                    and first[:1] == ['VAR_0x8004']
+                    and second[:1] == ['VAR_0x8005']
+                    and len(first) == 2 and len(second) == 2
+                    and third_args == 'CallFrontierUtilFunc'):
+                try:
+                    key = (int(first[1], 0), int(second[1], 0))
+                except ValueError:
+                    key = None
+                facility = facilities.get(key)
+                if facility is not None:
+                    out.append(('frontier_results', facility))
+                    index += 3
+                    continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
+def annotate_literal_copyvars(lines):
+    """Suppress the macro's diagnostic for byte-accurate literal copyvars."""
+    out = []
+    for name, argstr in lines:
+        args = [part.strip() for part in argstr.split(',')]
+        if (name == 'copyvar' and len(args) == 2
+                and not args[1].startswith('VAR_')):
+            argstr = '%s, warn=FALSE' % argstr
         out.append((name, argstr))
     return out
 
@@ -7196,8 +7543,12 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('songs', {}).get(value)
         if name == 'playbgm' and index == 1:
             return symbols.get('booleans', {}).get(value)
+        if name in ('getpokenewsactive', 'getpricereduction') and index == 0:
+            return symbols.get('pokenews', {}).get(value)
         if name == 'playse' and index == 0:
             return symbols.get('sounds', {}).get(value)
+        if name == 'incrementgamestat' and index == 0:
+            return symbols.get('game_stats', {}).get(value)
         if name == 'setrespawn' and index == 0:
             return symbols.get('heal_locations', {}).get(value)
         if name == 'fadescreen' and index == 0:
@@ -7229,11 +7580,13 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('step_callbacks', {}).get(value)
         if name in ('dofieldeffect', 'waitfieldeffect') and index == 0:
             return symbols.get('field_effects', {}).get(value)
-        if name == 'warp' and index == 0:
+        if name in ('warp', 'setwarp') and index == 0:
             return symbols.get('maps', {}).get(value)
         if index in MAP_ARGUMENTS.get(name, ()):
             return symbols.get('maps', {}).get(value)
         if index in LOCAL_ID_ARGUMENTS.get(name, ()):
+            if name == 'waitmovement' and value == 0:
+                return '0'
             local = symbols.get('local_ids', {}).get(value)
             if local is not None:
                 return local
@@ -7485,6 +7838,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     special_aliases = semantic.get('specials', {})
     script_aliases = semantic.get('script_aliases', {})
     preserve_region_script_aliases = semantic.get('preserve_region_script_aliases', True)
+    preserve_region_text_aliases = semantic.get('preserve_region_text_aliases', True)
     implicit_waitstate_specials = semantic.get('implicit_waitstate_specials', ())
     shop_lists = {}
     for raw_start, label, products in MAP_POKEMART_LISTS.get(mname, ()):
@@ -7712,7 +8066,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         elif kind == 'frame_table':
             table_label = verified_table_labels.get(
                 start, '%s_MapScriptTable_%08X' % (mname, start & 0xFFFFFF))
-            lines.append('%s::' % table_label)
+            lines.append('%s:: @ 0x%08X' % (table_label, start))
             for var, cmp, sptr in parse_frame_table(start):
                 rendered_var = semantic_map_variable(mname, var) or '0x%X' % var
                 rendered_cmp = semantic_map_variable(mname, cmp) or '0x%X' % cmp
@@ -7737,10 +8091,14 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 if alias != label_map[addr]:
                     lines.append('\t.globl %s' % alias)
                     lines.append('%s: @ 0x%08X' % (alias, addr))
-            lines.append('%s::' % label_map[addr])
+            lines.append('%s:: @ 0x%08X' % (label_map[addr], addr))
             symbol_formatter = semantic_symbol_formatter(mname, addr)
             decoded_lines = sp.decode_script_lines(
                 scripts[addr], reference_label_map, reference_text_label_map, symbol_formatter)
+            decoded_lines = [
+                (CANONICAL_SCRIPT_COMMAND_NAMES.get(name, name), argstr)
+                for name, argstr in decoded_lines
+            ]
             decoded_lines = [
                 (name, special_aliases.get(argstr, argstr) if name == 'special' else argstr)
                 for name, argstr in decoded_lines
@@ -7753,11 +8111,15 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 decoded_lines,
                 semantic.get('symbols', {}).get('switch_values', {}))
             decoded_lines = collapse_coordinate_warp_macros(decoded_lines)
+            decoded_lines = collapse_frontier_results_macros(
+                decoded_lines,
+                semantic.get('symbols', {}).get('frontier_results', {}))
             decoded_lines = collapse_giveitem_macros(decoded_lines)
             decoded_lines = collapse_givedecoration_macros(decoded_lines)
             decoded_lines = omit_implicit_special_waitstates(
                 decoded_lines, implicit_waitstate_specials)
             decoded_lines = omit_default_macro_arguments(decoded_lines)
+            decoded_lines = annotate_literal_copyvars(decoded_lines)
             decoded_lines = name_contextual_result_conditions(decoded_lines)
             for name, argstr in decoded_lines:
                 if argstr:
@@ -7795,7 +8157,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             lines.append('%s: @ 0x%08X' % (label, tp))
             aliases = []
             old = region_labels.get(tp)
-            if old and old != label:
+            if preserve_region_text_aliases and old and old != label:
                 aliases.append(old)
             aliases.extend(semantic.get('text_aliases', {}).get(tp, ()))
             for alias in dict.fromkeys(aliases):
@@ -7838,8 +8200,86 @@ def collect_all_text_ptrs(entries):
     return all_ptrs
 
 
+def apply_us_label_sequence_metadata():
+    """Populate reviewed script/table names from a checked US label sequence.
+
+    This is deliberately narrower than a generic text replacement: only maps
+    named in ``MAP_US_LABEL_SEQUENCE_COUNTS`` participate, every JP entry must
+    expose a ROM address, and the exact expected entry count is checked before
+    an address is associated with a US semantic label.
+    """
+    for mname, expected_count in MAP_US_LABEL_SEQUENCE_COUNTS.items():
+        jp_path = ROOT / 'data' / 'maps' / mname / 'scripts.inc'
+        us_path = US_MAPS / mname / 'scripts.inc'
+        if not jp_path.is_file() or not us_path.is_file():
+            raise RuntimeError('missing reviewed map source for %s' % mname)
+
+        label_re = re.compile(
+            r'^(%s_(?:EventScript(?:_[A-Za-z0-9_]+)?|OnTransition|OnFrame|'
+            r'MapScriptTable(?:_[A-Za-z0-9_]+)?)):{1,2}' % re.escape(mname))
+        address_re = re.compile(r'@\s*(0x08[0-9A-Fa-f]{6})\b')
+        suffix_re = re.compile(r'_([0-9A-Fa-f]{8})$')
+
+        jp_entries = []
+        for line in jp_path.read_text(encoding='utf-8').splitlines():
+            match = label_re.match(line)
+            if match is None:
+                continue
+            label = match.group(1)
+            address_match = address_re.search(line)
+            if address_match is not None:
+                address = int(address_match.group(1), 16)
+            else:
+                suffix_match = suffix_re.search(label)
+                if suffix_match is None:
+                    raise RuntimeError(
+                        'reviewed JP label %s lacks a ROM address' % label)
+                address = 0x08000000 | int(suffix_match.group(1), 16)
+            jp_entries.append((label, address, 'MapScriptTable_' in label))
+
+        us_entries = []
+        for line in us_path.read_text(encoding='utf-8').splitlines():
+            match = label_re.match(line)
+            if match is not None:
+                us_entries.append(match.group(1))
+
+        if len(jp_entries) != expected_count or len(us_entries) != expected_count:
+            raise RuntimeError(
+                'reviewed label sequence count mismatch for %s: JP=%d US=%d expected=%d'
+                % (mname, len(jp_entries), len(us_entries), expected_count))
+        if len({address for _label, address, _is_table in jp_entries}) != len(jp_entries):
+            raise RuntimeError('duplicate JP map-script address in %s' % mname)
+
+        table_addresses = {
+            pointer
+            for _map_addr, map_name, _gi, _mi, entries, _events_addr
+            in map_entries(include_empty=True)
+            if map_name == mname
+            for tag, pointer in entries
+            if tag in (2, 4)
+        }
+        semantic = MAP_VERIFIED_SEMANTIC_LABELS.setdefault(mname, {})
+        scripts = semantic.setdefault('scripts', {})
+        tables = semantic.setdefault('tables', {})
+        # A regenerated source already has names such as ``OnFrame`` rather
+        # than the old ``MapScriptTable_xxxxxxxx`` spelling, so classify by
+        # the ROM's actual map-script-table pointers instead of label text.
+        for address in table_addresses:
+            scripts.pop(address, None)
+        for (_jp_label, address, _is_table), us_label in zip(jp_entries, us_entries):
+            is_table = address in table_addresses
+            target = tables if is_table else scripts
+            previous = target.get(address)
+            if previous is not None and previous != us_label:
+                raise RuntimeError(
+                    'reviewed label mismatch for %s at 0x%08X: %s != %s'
+                    % (mname, address, previous, us_label))
+            target[address] = us_label
+
+
 def event_script_symbol_addresses():
     """Return every source label that has a known JP ROM address."""
+    apply_us_label_sequence_metadata()
     labels = {}
 
     def add_reviewed(name, address):
@@ -7931,7 +8371,12 @@ def main():
         j = i + 1
         while j < len(entries) and entries[j][0] == ms:
             j += 1
-        region_end = entries[j][0] if j < len(entries) else last_map_end
+        natural_region_end = entries[j][0] if j < len(entries) else last_map_end
+        region_end = MAP_SOURCE_REGION_ENDS.get(mname, natural_region_end)
+        if not ms < region_end <= natural_region_end:
+            raise RuntimeError(
+                'invalid physical source end for %s: 0x%08X (natural 0x%08X)'
+                % (mname, region_end, natural_region_end))
         region_labels = {a: n for a, n in all_labels.items() if ms <= a < region_end}
         if m and mname == m:
             print('region_labels for', mname, ':', len(region_labels),

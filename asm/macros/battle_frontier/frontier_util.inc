@@ -46,3 +46,13 @@
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_SOFT_RESET
 	special CallFrontierUtilFunc
 	.endm
+
+	@ Shows the results window for a Battle Frontier facility.
+	.macro frontier_results facility:req, mode=0xFF
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_RESULTS_WINDOW
+	setvar VAR_0x8005, \facility
+	.if \mode != 0xFF
+	setvar VAR_0x8006, \mode
+	.endif
+	special CallFrontierUtilFunc
+	.endm
