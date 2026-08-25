@@ -5683,6 +5683,127 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
     },
 }
 
+# Rustboro Devon Corp 2F is a complete, contiguous JP map-script owner.
+# Every local script/text address below was aligned with the matching US map
+# by event position, control-flow shape, and text order before enabling names.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'RustboroCity_DevonCorp_2F': {
+        'scripts': {
+            0x0820142F: 'RustboroCity_DevonCorp_2F_OnTransition',
+            0x0820143B: 'RustboroCity_DevonCorp_2F_EventScript_SetFossilReady',
+            0x08201441: 'RustboroCity_DevonCorp_2F_EventScript_TalkToPokemonScientist',
+            0x08201458: 'RustboroCity_DevonCorp_2F_EventScript_BallScientist',
+            0x08201478: 'RustboroCity_DevonCorp_2F_EventScript_DevelopedBalls',
+            0x08201482: 'RustboroCity_DevonCorp_2F_EventScript_PokenavScientist',
+            0x082014A2: 'RustboroCity_DevonCorp_2F_EventScript_HasPokenav',
+            0x082014AC: 'RustboroCity_DevonCorp_2F_EventScript_PokemonDreamsScientist',
+            0x082014C3: 'RustboroCity_DevonCorp_2F_EventScript_FossilScientist',
+            0x08201505: 'RustboroCity_DevonCorp_2F_EventScript_NoticeRootFossil',
+            0x08201546: 'RustboroCity_DevonCorp_2F_EventScript_GiveRootFossil',
+            0x08201563: 'RustboroCity_DevonCorp_2F_EventScript_NoticeClawFossil',
+            0x082015A4: 'RustboroCity_DevonCorp_2F_EventScript_GiveClawFossil',
+            0x082015C1: 'RustboroCity_DevonCorp_2F_EventScript_DeclineGiveFossil',
+            0x082015CB: 'RustboroCity_DevonCorp_2F_EventScript_StillRegenerating',
+            0x082015D5: 'RustboroCity_DevonCorp_2F_EventScript_FossilMonReady',
+            0x082015EC: 'RustboroCity_DevonCorp_2F_EventScript_LileepReady',
+            0x082015FE: 'RustboroCity_DevonCorp_2F_EventScript_AnorithReady',
+            0x08201610: 'RustboroCity_DevonCorp_2F_EventScript_ReceiveLileep',
+            0x08201640: 'RustboroCity_DevonCorp_2F_EventScript_ReceiveLileepParty',
+            0x08201668: 'RustboroCity_DevonCorp_2F_EventScript_ReceiveLileepPC',
+            0x0820168B: 'RustboroCity_DevonCorp_2F_EventScript_TransferLileepToPC',
+            0x08201696: 'RustboroCity_DevonCorp_2F_EventScript_ReceivedLileepFanfare',
+            0x082016A9: 'RustboroCity_DevonCorp_2F_EventScript_FinishReceivingLileep',
+            0x082016B3: 'RustboroCity_DevonCorp_2F_EventScript_ReceiveAnorith',
+            0x082016E3: 'RustboroCity_DevonCorp_2F_EventScript_ReceiveAnorithParty',
+            0x0820170B: 'RustboroCity_DevonCorp_2F_EventScript_ReceiveAnorithPC',
+            0x0820172E: 'RustboroCity_DevonCorp_2F_EventScript_TransferAnorithToPC',
+            0x08201739: 'RustboroCity_DevonCorp_2F_EventScript_ReceivedAnorithFanfare',
+            0x0820174C: 'RustboroCity_DevonCorp_2F_EventScript_FinishReceivingAnorith',
+            0x08201756: 'RustboroCity_DevonCorp_2F_EventScript_ChooseFossil',
+            0x08201793: 'RustboroCity_DevonCorp_2F_EventScript_ChooseClawFossil',
+            0x08201799: 'RustboroCity_DevonCorp_2F_EventScript_ChooseRootFossil',
+            0x0820179F: 'RustboroCity_DevonCorp_2F_EventScript_CancelFossilSelect',
+            0x082017A1: 'RustboroCity_DevonCorp_2F_EventScript_MatchCallScientist',
+            0x082017C3: 'RustboroCity_DevonCorp_2F_EventScript_WorkOnNext',
+        },
+        'texts': {
+            0x082017CD: 'RustboroCity_DevonCorp_2F_Text_DeviceForTalkingToPokemon',
+            0x082017FF: 'RustboroCity_DevonCorp_2F_Text_DevelopingNewBalls',
+            0x08201831: 'RustboroCity_DevonCorp_2F_Text_WeFinallyMadeNewBalls',
+            0x082018CD: 'RustboroCity_DevonCorp_2F_Text_IMadePokenav',
+            0x08201908: 'RustboroCity_DevonCorp_2F_Text_WowThatsAPokenav',
+            0x08201983: 'RustboroCity_DevonCorp_2F_Text_DeviceToVisualizePokemonDreams',
+            0x082019BF: 'RustboroCity_DevonCorp_2F_Text_DevelopDeviceToResurrectFossils',
+            0x082019FB: 'RustboroCity_DevonCorp_2F_Text_WantToBringFossilBackToLife',
+            0x08201A42: 'RustboroCity_DevonCorp_2F_Text_OhIsThatSo',
+            0x08201A5F: 'RustboroCity_DevonCorp_2F_Text_TwoFossilsPickOne',
+            0x08201AB1: 'RustboroCity_DevonCorp_2F_Text_HandedFossilToResearcher',
+            0x08201ADF: 'RustboroCity_DevonCorp_2F_Text_FossilRegeneratorTakesTime',
+            0x08201B2F: 'RustboroCity_DevonCorp_2F_Text_FossilizedMonBroughtBackToLife',
+            0x08201B65: 'RustboroCity_DevonCorp_2F_Text_ReceivedMonFromResearcher',
+            0x08201B83: 'RustboroCity_DevonCorp_2F_Text_TooManyPokemon',
+            0x08201B99: 'RustboroCity_DevonCorp_2F_Text_DevelopNewPokenavFeature',
+            0x08201BCC: 'RustboroCity_DevonCorp_2F_Text_WhatToWorkOnNext',
+        },
+        'field_placeholders': {
+            0x08201AB1: {0x01: 'PLAYER', 0x02: 'STR_VAR_1'},
+            0x08201B2F: {0x03: 'STR_VAR_2'},
+            0x08201B65: {0x01: 'PLAYER', 0x03: 'STR_VAR_2'},
+        },
+        # Map-event records in data_b2d_mid26.s have not yet moved to JSON.
+        # Keep their old, address-derived targets as assembler aliases until
+        # that event table is migrated with the map as one coherent change.
+        'script_aliases': {
+            0x08201441: ('RustboroCity_DevonCorp_2F_EventScript_00201441',),
+            0x08201458: ('RustboroCity_DevonCorp_2F_EventScript_00201458',),
+            0x08201482: ('RustboroCity_DevonCorp_2F_EventScript_00201482',),
+            0x082014AC: ('RustboroCity_DevonCorp_2F_EventScript_002014AC',),
+            0x082014C3: ('RustboroCity_DevonCorp_2F_EventScript_002014C3',),
+            0x082017A1: ('RustboroCity_DevonCorp_2F_EventScript_002017A1',),
+        },
+        'external_texts': {
+            0x08243EDB: 'gText_NicknameThisPokemon',
+        },
+        'external_labels': {
+            0x08243460: 'Common_EventScript_NameReceivedPartyMon',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x082441B5: 'Common_EventScript_GetGiftMonPartySlot',
+            0x082441C1: 'Common_EventScript_NameReceivedBoxMon',
+            0x082441CA: 'Common_EventScript_TransferredToPC',
+            0x0824423B: 'Common_EventScript_NoMoreRoomForPokemon',
+        },
+        'symbols': {
+            'vars': {
+                0x4001: 'VAR_TEMP_TRANSFERRED_SPECIES',
+                0x405A: 'VAR_RUSTBORO_CITY_STATE',
+                0x40C4: 'VAR_FOSSIL_RESURRECTION_STATE',
+                0x40C5: 'VAR_WHICH_FOSSIL_REVIVED',
+                0x8000: 'VAR_0x8000',
+                0x800D: 'VAR_RESULT',
+            },
+            'flags': {
+                0x00BC: 'FLAG_RECEIVED_POKENAV',
+                0x010B: 'FLAG_RECEIVED_REVIVED_FOSSIL_MON',
+                0x011F: 'FLAG_MET_DEVON_EMPLOYEE',
+            },
+            'items': {
+                0x011E: 'ITEM_ROOT_FOSSIL',
+                0x011F: 'ITEM_CLAW_FOSSIL',
+            },
+            'species': {
+                0x0184: 'SPECIES_LILEEP',
+                0x0186: 'SPECIES_ANORITH',
+            },
+            'local_ids': {0x05: 'LOCALID_FOSSIL_SCIENTIST'},
+            'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
+            'sounds': {0x15: 'SE_PIN'},
+            'multichoices': {0x5D: 'MULTI_FOSSIL'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     # Route101 retains four unreferenced movement records between the Birch
     # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
@@ -6057,6 +6178,8 @@ def name_contextual_result_conditions(lines):
             replace_condition(index + 1, result_names)
             replace_condition(index + 2, result_names)
             replace_condition(index + 3, result_names)
+        elif name == 'checkitem':
+            replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
         elif name == 'giveitem':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
     return out
@@ -6160,12 +6283,17 @@ def omit_default_macro_arguments(lines):
         args = [part.strip() for part in argstr.split(',')]
         if name == 'givemon' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
             argstr = ', '.join(args[:2])
+        elif name in ('checkitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
+            argstr = args[0]
         out.append((name, argstr))
     return out
 
 
 ITEM_ARGUMENTS = {
     'giveitem': {0},
+    'checkitem': {0},
+    'removeitem': {0},
+    'bufferitemname': {1},
 }
 
 
@@ -6225,8 +6353,10 @@ def semantic_symbol_formatter(mname, script_addr=None):
                 return symbols.get('cry_modes', {}).get(value)
         if name in ('bufferspeciesname', 'givemon') and index in ({1} if name == 'bufferspeciesname' else {0}):
             return symbols.get('species', {}).get(value)
-        if name == 'multichoicedefault' and index == 2:
+        if name in ('multichoice', 'multichoicedefault') and index == 2:
             return symbols.get('multichoices', {}).get(value)
+        if name == 'multichoice' and index == 3:
+            return symbols.get('booleans', {}).get(value)
         if name == 'setweather' and index == 0:
             return symbols.get('weather', {}).get(value)
         if name == 'setmaplayoutindex' and index == 0:
