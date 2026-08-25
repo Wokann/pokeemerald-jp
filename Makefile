@@ -100,6 +100,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	FallarborTown_PokemonCenter_2F \
 	FallarborTown_CozmosHouse \
 	FallarborTown_MoveRelearnersHouse \
+	VerdanturfTown \
 	VerdanturfTown_BattleTentLobby \
 	VerdanturfTown_BattleTentCorridor \
 	VerdanturfTown_BattleTentBattleRoom \
