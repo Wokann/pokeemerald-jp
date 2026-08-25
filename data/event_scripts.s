@@ -565,7 +565,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/RustboroCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/RustboroCity_Mart/scripts.inc"
 	.include "data/maps/RustboroCity_Flat1_1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x203770, 0x458
+	.include "data/maps/RustboroCity_Flat1_2F/scripts.inc"
 	.include "data/maps/RustboroCity_House1/scripts.inc"
 	.include "data/maps/RustboroCity_CuttersHouse/scripts.inc"
 	.include "data/maps/RustboroCity_House2/scripts.inc"

@@ -5975,6 +5975,66 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Rustboro Flat1 2F is the next physical map-script owner after Flat1 1F.
+# The Walda phrase flow, object events, and every text record were aligned to
+# the matching US map before enabling semantic labels and placeholders.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'RustboroCity_Flat1_2F': {
+        'scripts': {
+            0x08203771: 'RustboroCity_Flat1_2F_EventScript_WaldasDad',
+            0x0820378E: 'RustboroCity_Flat1_2F_EventScript_GivePhrase',
+            0x082037C4: 'RustboroCity_Flat1_2F_EventScript_WaldasDadFirstPhrase',
+            0x082037E4: 'RustboroCity_Flat1_2F_EventScript_WaldasDadNewPhrase',
+            0x08203804: 'RustboroCity_Flat1_2F_EventScript_DeclineGivePhrase',
+            0x0820380E: 'RustboroCity_Flat1_2F_EventScript_CancelGivePhrase',
+            0x08203818: 'RustboroCity_Flat1_2F_EventScript_CancelGiveFirstPhrase',
+            0x0820382F: 'RustboroCity_Flat1_2F_EventScript_WaldaLikesPhrase',
+            0x08203858: 'RustboroCity_Flat1_2F_EventScript_WaldaDoesntLikePhrase',
+            0x0820386F: 'RustboroCity_Flat1_2F_EventScript_WaldasDadFaceWalda',
+            0x08203874: 'RustboroCity_Flat1_2F_EventScript_WaldasMom',
+            0x0820387D: 'RustboroCity_Flat1_2F_EventScript_PokeDoll',
+        },
+        'texts': {
+            0x08203886: 'RustboroCity_Flat1_2F_Text_ComingUpWithMealsIsHard',
+            0x082038E4: 'RustboroCity_Flat1_2F_Text_HelloDoYouKnowFunnyPhrase',
+            0x0820398A: 'RustboroCity_Flat1_2F_Text_BeenSayingXDoYouKnowBetterPhrase',
+            0x082039B9: 'RustboroCity_Flat1_2F_Text_WonderfulLetsHearSuggestion',
+            0x082039D3: 'RustboroCity_Flat1_2F_Text_OhIsThatRight',
+            0x082039FB: 'RustboroCity_Flat1_2F_Text_LetsGiveItATry2',
+            0x08203A10: 'RustboroCity_Flat1_2F_Text_OhShesLaughing',
+            0x08203A2F: 'RustboroCity_Flat1_2F_Text_LetsGiveItATry',
+            0x08203A44: 'RustboroCity_Flat1_2F_Text_ShesNotSmilingAtAll',
+            0x08203A63: 'RustboroCity_Flat1_2F_Text_ThinkOfMyOwnPhrase',
+            0x08203A9D: 'RustboroCity_Flat1_2F_Text_ShesNotSmilingAtAll2',
+            0x08203ABC: 'RustboroCity_Flat1_2F_Text_OhYouDontKnowAny',
+            0x08203B01: 'RustboroCity_Flat1_2F_Text_ThankYouIllGiveYouWallpaper',
+            0x08203BB9: 'RustboroCity_Flat1_2F_Text_ItsAPokemonPlushDoll',
+        },
+        'field_placeholders': {
+            0x0820398A: {0x02: 'STR_VAR_1'},
+            0x08203A10: {0x02: 'STR_VAR_1'},
+            0x08203A44: {0x02: 'STR_VAR_1'},
+            0x08203A63: {0x02: 'STR_VAR_1'},
+            0x08203A9D: {0x02: 'STR_VAR_1'},
+        },
+        'external_labels': {
+            0x08243621: 'Common_Movement_FacePlayer',
+        },
+        'symbols': {
+            'vars': {
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x08203771: {0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+                0x0820378E: {0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+            },
+            'local_ids': {0x06: 'LOCALID_WALDAS_DAD'},
+            'directions': {0x04: 'DIR_EAST'},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     # Route101 retains four unreferenced movement records between the Birch
     # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
