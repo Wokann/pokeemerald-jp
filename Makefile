@@ -110,6 +110,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	VerdanturfTown_WandasHouse \
 	VerdanturfTown_FriendshipRatersHouse \
 	VerdanturfTown_House \
+	PacifidlogTown \
 	PacifidlogTown_PokemonCenter_1F \
 	PacifidlogTown_PokemonCenter_2F \
 	PacifidlogTown_House1 \

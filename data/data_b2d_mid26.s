@@ -720,27 +720,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/VerdanturfTown/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN
 	.set gMapEvents_VERDANTURF_TOWN, VerdanturfTown_MapEvents
-	.globl PACIFIDLOG_TOWN_EventObjects
-PACIFIDLOG_TOWN_EventObjects: @ 0x085004F4
-	object_event 1, 8, 0, 10, 23, 3, 9, 0, 0, 0, 0, PacifidlogTown_EventScript_Girl, 0x0000
-	object_event 2, 50, 0, 11, 14, 3, 10, 0, 0, 0, 0, PacifidlogTown_EventScript_Fisherman, 0x0000
-	object_event 3, 5, 0, 9, 16, 3, 8, 0, 0, 0, 0, PacifidlogTown_EventScript_NinjaBoy, 0x0000
-	.globl PACIFIDLOG_TOWN_EventWarps
-PACIFIDLOG_TOWN_EventWarps: @ 0x0850053C
-	warp_def 8, 15, 0, 0, MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_1F
-	warp_def 16, 13, 0, 0, MAP_PACIFIDLOG_TOWN_HOUSE1
-	warp_def 3, 22, 0, 0, MAP_PACIFIDLOG_TOWN_HOUSE2
-	warp_def 12, 24, 0, 0, MAP_PACIFIDLOG_TOWN_HOUSE3
-	warp_def 2, 12, 0, 0, MAP_PACIFIDLOG_TOWN_HOUSE4
-	warp_def 17, 21, 0, 0, MAP_PACIFIDLOG_TOWN_HOUSE5
-	.globl PACIFIDLOG_TOWN_EventBgEvents
-PACIFIDLOG_TOWN_EventBgEvents: @ 0x0850056C
-	bg_event 9, 15, 0, 1, 0x08242EFF, 0, 0
-	bg_event 7, 16, 0, 0, PacifidlogTown_EventScript_TownSign, 0, 0
-	bg_event 10, 15, 0, 1, 0x08242EFF, 0, 0
+	.include "data/maps/PacifidlogTown/events.inc"
 	.globl gMapEvents_PACIFIDLOG_TOWN
-gMapEvents_PACIFIDLOG_TOWN: @ 0x08500590
-	map_events PACIFIDLOG_TOWN_EventObjects, PACIFIDLOG_TOWN_EventWarps, 0, PACIFIDLOG_TOWN_EventBgEvents
+	.set gMapEvents_PACIFIDLOG_TOWN, PacifidlogTown_MapEvents
 	.globl ROUTE101_EventObjects
 ROUTE101_EventObjects: @ 0x085005A4
 	object_event 1, 35, 0, 16, 8, 3, 1, 0, 0, 0, 0, Route101_EventScript_001E65F7, 0x0000
