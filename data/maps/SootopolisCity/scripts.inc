@@ -8,15 +8,6 @@ SootopolisCity_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, SootopolisCity_OnWarp
 	.byte 0
 
-@ These JP strings still reside in the shared event-text range. Keep the
-@ map-local US names while that earlier range is converted separately.
-.set SootopolisCity_Text_NameIsKiriHaveOneOfThese, 0x08263F33
-.set SootopolisCity_Text_GiveYouThisBerryToo, 0x08263FB4
-.set SootopolisCity_Text_WhatKindOfWishInYourName, 0x08263FD5
-.set SootopolisCity_Text_LikeSeasonBornIn, 0x08263FF1
-.set SootopolisCity_Text_ThenILoveAutumn, 0x08264025
-.set SootopolisCity_Text_OhDoesntMatter, 0x0826404E
-
 SootopolisCity_OnLoad::
 	call_if_unset FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE, SootopolisCity_EventScript_LockGymDoor
 	goto_if_unset FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN, SootopolisCity_EventScript_LegendariesNotArrived

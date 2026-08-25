@@ -286,6 +286,19 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
             0x08263ABA: 'LilycoveCity_Text_PokeblocksSuitPokemon',
         },
     },
+    'SootopolisCity_Kiri': {
+        'source': 'data/scripts/gUnknown_826316A.inc',
+        'start': 0x08263F33,
+        'end': 0x0826406F,
+        'labels': {
+            0x08263F33: 'SootopolisCity_Text_NameIsKiriHaveOneOfThese',
+            0x08263FB4: 'SootopolisCity_Text_GiveYouThisBerryToo',
+            0x08263FD5: 'SootopolisCity_Text_WhatKindOfWishInYourName',
+            0x08263FF1: 'SootopolisCity_Text_LikeSeasonBornIn',
+            0x08264025: 'SootopolisCity_Text_ThenILoveAutumn',
+            0x0826404E: 'SootopolisCity_Text_OhDoesntMatter',
+        },
+    },
     'Route134': {
         'source': 'data/text/trainers.inc',
         'start': 0x08262069,

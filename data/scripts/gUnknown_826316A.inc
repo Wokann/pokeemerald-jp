@@ -17,7 +17,40 @@ LilycoveCity_Text_PokeblocksSuitPokemon: @ 0x08263ABA
 	.string "やっぱり\p"
 	.string "わたしに　シンプルさが　にあうように\n"
 	.string "ポケモンには　ポロックが　にあうな$"
-	.incbin "baserom_jp.gba", 0x263ae4, 0x787
+	.incbin "baserom_jp.gba", 0x263ae4, 0x44f
+SootopolisCity_Text_NameIsKiriHaveOneOfThese: @ 0x08263F33
+	.string "{STR_VAR_1}　なまえ　なんていうの？\p"
+	.string "⋯⋯⋯　⋯⋯⋯　⋯⋯⋯\n"
+	.string "へー　いいねー\p"
+	.string "わたしは　キリ　っていう　なまえなの\p"
+	.string "パパと　ママが　すくすくと　そだって\n"
+	.string "こころの　あたたかい　おんなのこに　なって\l"
+	.string "ほしいっていう　ねがいを　こめたんだって！\p"
+	.string "{STR_VAR_1}にも　これ　あげる$"
+
+SootopolisCity_Text_GiveYouThisBerryToo: @ 0x08263FB4
+	.string "あと　{STR_VAR_1}には　キリの　だいすきな\n"
+	.string "この　きのみも　あげちゃう！$"
+
+SootopolisCity_Text_WhatKindOfWishInYourName: @ 0x08263FD5
+	.string "{STR_VAR_1}の　なまえには\n"
+	.string "どんな　ねがいが　こめられてるの？$"
+
+SootopolisCity_Text_LikeSeasonBornIn: @ 0x08263FF1
+	.string "はる　なつ　あき　ふゆ\n"
+	.string "はるに　うまれると　はるが　すきで\l"
+	.string "なつに　うまれると　なつが　すきなのかな？$"
+
+SootopolisCity_Text_ThenILoveAutumn: @ 0x08264025
+	.string "じゃあ　キリは　あきに　うまれたから\n"
+	.string "あきが　だいすき！\p"
+	.string "{STR_VAR_1}は　いつが　すき？$"
+
+SootopolisCity_Text_OhDoesntMatter: @ 0x0826404E
+	.string "そっか⋯\n"
+	.string "かんけいないのか⋯\p"
+	.string "しりたいことって　たくさんあるなー$"
+	.incbin "baserom_jp.gba", 0x26406f, 0x1fc
 	.globl gJPText_0026426B
 gJPText_0026426B: @ 0x0826426B
 	.string "ポケモンえほんが　そろってる！$"
