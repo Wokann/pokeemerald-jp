@@ -119,6 +119,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The adjoining flower shop follows with its transition and ten local
     # scripts, including the named decoration-list owner.
     'Route104_PrettyPetalFlowerShop': 11,
+    # The next top-level raw owner is the Winstrate house: its four object
+    # scripts and three shared branches follow the US source order exactly.
+    'Route111_WinstrateFamilysHouse': 7,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -187,6 +190,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_PokemonCenter_1F': 3,
     # Mr. Briney's nine map-owned messages immediately follow its scripts.
     'Route104_MrBrineysHouse': 9,
+    'Route111_WinstrateFamilysHouse': 6,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9211,6 +9215,46 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                         0x0085: 'FIRST_BERRY_INDEX',
                     },
                 },
+            },
+        },
+    },
+    # Route 111's Winstrate house is the next physical EventScript owner.
+    # Every local script and text record lies within 0x08211AF4-0x08211DED;
+    # semantic names and constants are matched against the US map source.
+    'Route111_WinstrateFamilysHouse': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+        },
+        'symbols': {
+            'flags': {
+                0x0004: 'FLAG_TEMP_4',
+                0x0115: 'FLAG_RECEIVED_MACHO_BRACE',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'items': {0x00B5: 'ITEM_MACHO_BRACE'},
+            'local_ids': {
+                0x01: 'LOCALID_WINSTRATE_HOUSE_VIVI',
+                0x02: 'LOCALID_WINSTRATE_HOUSE_VICTOR',
+                0x03: 'LOCALID_WINSTRATE_HOUSE_VICTORIA',
+                0x04: 'LOCALID_WINSTRATE_HOUSE_VICKY',
+            },
+            # VAR_0x8008 carries the person whose original direction must
+            # be restored after each dialogue. The local IDs are proven by
+            # the matching object-event entries and the US script order.
+            'script_var_values': {
+                0x08211AF5: {0x8008: {0x02: 'LOCALID_WINSTRATE_HOUSE_VICTOR'}},
+                0x08211B0A: {0x8008: {0x03: 'LOCALID_WINSTRATE_HOUSE_VICTORIA'}},
+                0x08211B50: {0x8008: {0x01: 'LOCALID_WINSTRATE_HOUSE_VIVI'}},
+                0x08211B65: {0x8008: {0x04: 'LOCALID_WINSTRATE_HOUSE_VICKY'}},
             },
         },
     },

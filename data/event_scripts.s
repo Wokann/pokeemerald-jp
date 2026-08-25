@@ -857,7 +857,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/EverGrandeCity_PokemonLeague_2F/scripts.inc"
 	.include "data/maps/Route104_MrBrineysHouse/scripts.inc"
 	.include "data/maps/Route104_PrettyPetalFlowerShop/scripts.inc"
-	.incbin "baserom_jp.gba", 0x211af4, 0x2f9
+	.include "data/maps/Route111_WinstrateFamilysHouse/scripts.inc"
 	.include "data/maps/Route111_OldLadysRestStop/scripts.inc"
 	.incbin "baserom_jp.gba", 0x211e4f, 0xbb
 	.include "data/maps/Route112_CableCarStation/scripts.inc"

@@ -2233,19 +2233,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Route104_PrettyPetalFlowerShop/events.inc"
 	.globl gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP
 	.set gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP, Route104_PrettyPetalFlowerShop_MapEvents
-	.globl ROUTE111_WINSTRATE_FAMILYS_HOUSE_EventObjects
-ROUTE111_WINSTRATE_FAMILYS_HOUSE_EventObjects: @ 0x0850C2C0
-	object_event 1, 47, 0, 7, 5, 3, 9, 0, 0, 0, 0, 0x08211B50, 0x0000
-	object_event 2, 19, 0, 4, 5, 3, 10, 0, 0, 0, 0, 0x08211AF5, 0x0000
-	object_event 3, 18, 0, 7, 4, 3, 9, 1, 0, 0, 0, 0x08211B0A, 0x0000
-	object_event 4, 22, 0, 4, 4, 3, 10, 0, 0, 0, 0, 0x08211B65, 0x0000
-	.globl ROUTE111_WINSTRATE_FAMILYS_HOUSE_EventWarps
-ROUTE111_WINSTRATE_FAMILYS_HOUSE_EventWarps: @ 0x0850C320
-	warp_def 3, 7, 0, 0, MAP_ROUTE111
-	warp_def 4, 7, 0, 0, MAP_ROUTE111
+	.include "data/maps/Route111_WinstrateFamilysHouse/events.inc"
 	.globl gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE
-gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE: @ 0x0850C330
-	map_events ROUTE111_WINSTRATE_FAMILYS_HOUSE_EventObjects, ROUTE111_WINSTRATE_FAMILYS_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE, Route111_WinstrateFamilysHouse_MapEvents
 	.globl ROUTE111_OLD_LADYS_REST_STOP_EventObjects
 ROUTE111_OLD_LADYS_REST_STOP_EventObjects: @ 0x0850C344
 	object_event 1, 22, 0, 6, 3, 3, 9, 0, 0, 0, 0, Route111_OldLadysRestStop_EventScript_00211DF7, 0x0000
