@@ -2123,18 +2123,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SootopolisCity_House3/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE3
 	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE3, SootopolisCity_House3_MapEvents
-	.globl SOOTOPOLIS_CITY_HOUSE4_EventObjects
-SOOTOPOLIS_CITY_HOUSE4_EventObjects: @ 0x0850BB08
-	object_event 1, 19, 0, 2, 4, 3, 10, 0, 0, 0, 0, 0x0820F594, 0x0000
-	object_event 2, 26, 0, 5, 2, 3, 7, 1, 2, 0, 0, 0x0820F59D, 0x0000
-	object_event 3, 210, 0, 2, 3, 3, 1, 1, 1, 0, 0, 0x0820F5A6, 0x0000
-	.globl SOOTOPOLIS_CITY_HOUSE4_EventWarps
-SOOTOPOLIS_CITY_HOUSE4_EventWarps: @ 0x0850BB50
-	warp_def 3, 6, 0, 7, MAP_SOOTOPOLIS_CITY
-	warp_def 4, 6, 0, 7, MAP_SOOTOPOLIS_CITY
+	.include "data/maps/SootopolisCity_House4/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE4
-gMapEvents_SOOTOPOLIS_CITY_HOUSE4: @ 0x0850BB60
-	map_events SOOTOPOLIS_CITY_HOUSE4_EventObjects, SOOTOPOLIS_CITY_HOUSE4_EventWarps, 0, 0
+	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE4, SootopolisCity_House4_MapEvents
 	.globl SOOTOPOLIS_CITY_HOUSE5_EventObjects
 SOOTOPOLIS_CITY_HOUSE5_EventObjects: @ 0x0850BB74
 	object_event 1, 39, 0, 3, 3, 3, 10, 0, 0, 0, 0, 0x0820F658, 0x0000

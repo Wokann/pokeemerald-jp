@@ -69,6 +69,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House1': 3,
     'SootopolisCity_House2': 3,
     'SootopolisCity_House3': 3,
+    'SootopolisCity_House4': 3,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -114,6 +115,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House1': 3,
     'SootopolisCity_House2': 3,
     'SootopolisCity_House3': 4,
+    'SootopolisCity_House4': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8379,6 +8381,23 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_text_aliases': False,
         'symbols': {
             'vars': {0x800D: 'VAR_RESULT'},
+        },
+    },
+})
+
+# Sootopolis House 4 is the next physical owner. The Azumarill cry matches the
+# US script semantics while retaining the JP command-table byte through the
+# dedicated cry-wait alias.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_House4': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x0820F5A6: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'species': {0x00B8: 'SPECIES_AZUMARILL'},
+            'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
         },
     },
 })
