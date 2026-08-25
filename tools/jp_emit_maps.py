@@ -54,6 +54,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_House2': 5,
     'MossdeepCity_PokemonCenter_1F': 4,
     'MossdeepCity_PokemonCenter_2F': 4,
+    'MossdeepCity_Mart': 4,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -78,6 +79,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_House2': 3,
     'MossdeepCity_PokemonCenter_1F': 2,
     'MossdeepCity_PokemonCenter_2F': 1,
+    'MossdeepCity_Mart': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7768,6 +7770,36 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08246ED6: 'CableClub_EventScript_RecordCorner',
         },
     },
+})
+
+# Mossdeep Mart uses the shared clerk dialogue around its local product list.
+# Retain those cross-map text symbols and give the local scripts and text the
+# reviewed US names when regenerating the byte-exact JP source.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_Mart': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+    },
+})
+
+MAP_POKEMART_LISTS.update({
+    'MossdeepCity_Mart': (
+        (0x0820C5CA, 'MossdeepCity_Mart_Pokemart', (
+            'ITEM_ULTRA_BALL',
+            'ITEM_NET_BALL',
+            'ITEM_DIVE_BALL',
+            'ITEM_HYPER_POTION',
+            'ITEM_FULL_HEAL',
+            'ITEM_REVIVE',
+            'ITEM_MAX_REPEL',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
+        )),
+    ),
 })
 
 MAP_POKEMART_LISTS.update({
