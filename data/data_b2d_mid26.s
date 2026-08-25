@@ -2093,23 +2093,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MossdeepCity_SpaceCenter_2F/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F
 	.set gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F, MossdeepCity_SpaceCenter_2F_MapEvents
-	.globl MOSSDEEP_CITY_GAME_CORNER_1F_EventObjects
-MOSSDEEP_CITY_GAME_CORNER_1F_EventObjects: @ 0x0850B66C
-	object_event 1, 21, 0, 6, 2, 0, 8, 0, 0, 0, 0, MossdeepCity_GameCorner_1F_EventScript_0020E04B, 0x0000
-	object_event 2, 65, 0, 4, 2, 0, 8, 0, 0, 0, 0, MossdeepCity_GameCorner_1F_EventScript_0020E042, 0x0000
-	.globl MOSSDEEP_CITY_GAME_CORNER_1F_EventWarps
-MOSSDEEP_CITY_GAME_CORNER_1F_EventWarps: @ 0x0850B69C
-	warp_def 5, 9, 0, 9, MAP_MOSSDEEP_CITY
-	warp_def 6, 9, 0, 9, MAP_MOSSDEEP_CITY
-	warp_def 2, 0, 0, 0, MAP_MOSSDEEP_CITY_GAME_CORNER_B1F
-	.globl MOSSDEEP_CITY_GAME_CORNER_1F_EventBgEvents
-MOSSDEEP_CITY_GAME_CORNER_1F_EventBgEvents: @ 0x0850B6B4
-	bg_event 3, 0, 0, 0, MossdeepCity_GameCorner_1F_EventScript_0020E054, 0, 0
-	bg_event 0, 1, 0, 0, 0x08247B79, 0, 0
-	bg_event 1, 1, 0, 0, 0x08247B72, 0, 0
+	.include "data/maps/MossdeepCity_GameCorner_1F/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F
-gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F: @ 0x0850B6D8
-	map_events MOSSDEEP_CITY_GAME_CORNER_1F_EventObjects, MOSSDEEP_CITY_GAME_CORNER_1F_EventWarps, 0, MOSSDEEP_CITY_GAME_CORNER_1F_EventBgEvents
+	.set gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F, MossdeepCity_GameCorner_1F_MapEvents
 	.globl MOSSDEEP_CITY_GAME_CORNER_B1F_EventObjects
 MOSSDEEP_CITY_GAME_CORNER_B1F_EventObjects: @ 0x0850B6EC
 	object_event 1, 240, 0, 6, 5, 3, 9, 0, 0, 0, 0, 0x00000000, 0x0000

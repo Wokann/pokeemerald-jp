@@ -400,6 +400,19 @@ def parse_script(addr, maxlen=0x4000):
                 if r2 is not None:
                     out.append((pos - addr, r2[1], r2[2], r2[3]))
                     pos += r2[0]
+            else:
+                # A few retained RS map scripts leave their old ``release``
+                # and ``end`` tail after an unconditional jump. It is dead
+                # code, but it is part of the source-owned byte span and is
+                # written explicitly in the matching pokeemerald map file.
+                r2 = decode_instruction(pos)
+                if r2 is not None and r2[1] in ('release', 'releaseall'):
+                    r3 = decode_instruction(pos + r2[0])
+                    if r3 is not None and r3[1] == 'end':
+                        out.append((pos - addr, r2[1], r2[2], r2[3]))
+                        pos += r2[0]
+                        out.append((pos - addr, r3[1], r3[2], r3[3]))
+                        pos += r3[0]
             break
         if pos >= end:
             break

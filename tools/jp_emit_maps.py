@@ -60,6 +60,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_House4': 5,
     'MossdeepCity_SpaceCenter_1F': 34,
     'MossdeepCity_SpaceCenter_2F': 34,
+    'MossdeepCity_GameCorner_1F': 3,
 }
 
 # This map's complete, physical JP script sequence includes both entry points.
@@ -251,6 +252,20 @@ MAP_AUXILIARY_TEXT_ADDRESSES = {
     # This no-space message is unreachable in the final Beldum flow, but the
     # complete JP string remains map-owned and is named in the US source.
     'MossdeepCity_StevensHouse': (0x0820CB4A,),
+    # The Game Corner replaced this RS Mystery Events house. Its unused
+    # house text remains a complete, contiguous map-owned source span.
+    'MossdeepCity_GameCorner_1F': (
+        0x0820E05D,
+        0x0820E0BA,
+        0x0820E0D0,
+        0x0820E104,
+        0x0820E124,
+        0x0820E168,
+        0x0820E18B,
+        0x0820E19F,
+        0x0820E1CC,
+        0x0820E1F4,
+    ),
 }
 
 # Map-owned movement scripts confirmed by their JP addresses and the matching
@@ -8105,6 +8120,50 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Mossdeep's Game Corner occupies the former RS Mystery Events house.  The
+# entire 0x0820E01E-0x0820E223 source range is map-owned, including the
+# intentionally unused RS door flow and contiguous house text. Its map-script
+# entries match the US sequence; RS labels below retain their
+# upstream shared owner spelling rather than forcing a misleading map prefix.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_GameCorner_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x0820E054: 'RS_MysteryEventsHouse_EventScript_Door',
+        },
+        'tables': {
+            0x0820E02E: 'MossdeepCity_GameCorner_1F_OnWarp',
+        },
+        'texts': {
+            0x0820E05D: 'RS_MysteryEventsHouse_Text_OldManGreeting',
+            0x0820E0BA: 'RS_MysteryEventsHouse_Text_DoorIsLocked',
+            0x0820E0D0: 'RS_MysteryEventsHouse_Text_ChallengeVisitingTrainer',
+            0x0820E104: 'RS_MysteryEventsHouse_Text_YouWontBattle',
+            0x0820E124: 'RS_MysteryEventsHouse_Text_KeepItToA3On3',
+            0x0820E168: 'RS_MysteryEventsHouse_Text_SaveYourProgress',
+            0x0820E18B: 'RS_MysteryEventsHouse_Text_HopeToSeeAGoodMatch',
+            0x0820E19F: 'RS_MysteryEventsHouse_Text_BattleTie',
+            0x0820E1CC: 'RS_MysteryEventsHouse_Text_BattleWon',
+            0x0820E1F4: 'RS_MysteryEventsHouse_Text_BattleLost',
+        },
+        'field_placeholders': {
+            0x0820E0D0: {0x02: 'STR_VAR_1'},
+        },
+        'external_labels': {
+            0x082468AC: 'CableClub_EventScript_CheckTurnAttendant',
+            0x082468BC: 'CableClub_OnLoad',
+            0x0824699B: 'CableClub_EventScript_ExitMinigameRoom',
+            0x08247913: 'MossdeepCity_GameCorner_1F_EventScript_InfoMan2',
+            0x08247970: 'MossdeepCity_GameCorner_1F_EventScript_OldMan2',
+        },
+        'symbols': {
+            'vars': {0x4087: 'VAR_CABLE_CLUB_STATE'},
+            'map_script_values': {0x4087: {0x8: 'USING_MINIGAME'}},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'MossdeepCity_Mart': (
         (0x0820C5CA, 'MossdeepCity_Mart_Pokemart', (
@@ -9692,7 +9751,11 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             lines.append('%s:: @ 0x%08X' % (table_label, start))
             for var, cmp, sptr in parse_frame_table(start):
                 rendered_var = semantic_map_variable(mname, var) or '0x%X' % var
-                rendered_cmp = semantic_map_variable(mname, cmp) or '0x%X' % cmp
+                rendered_cmp = (
+                    semantic.get('symbols', {}).get('map_script_values', {})
+                    .get(var, {}).get(cmp)
+                    or semantic_map_variable(mname, cmp)
+                    or '0x%X' % cmp)
                 script_label = label_map.get(sptr) or external_labels.get(sptr)
                 if script_label is not None:
                     lines.append('\tmap_script_2 %s, %s, %s' % (

@@ -387,6 +387,20 @@
 	.set CableClub_OnWarp, 0x0824686A
 	.globl CableClub_OnLoad
 	.set CableClub_OnLoad, 0x082468BC
+	.globl CableClub_EventScript_CheckTurnAttendant
+	.set CableClub_EventScript_CheckTurnAttendant, 0x082468AC
+	.globl CableClub_EventScript_ExitMinigameRoom
+	.set CableClub_EventScript_ExitMinigameRoom, 0x0824699B
+	@ The Mossdeep Game Corner retains these RS house continuations in the
+	@ shared Cable Club script block.
+	.globl MossdeepCity_GameCorner_1F_EventScript_InfoMan2
+	.set MossdeepCity_GameCorner_1F_EventScript_InfoMan2, 0x08247913
+	.globl MossdeepCity_GameCorner_1F_EventScript_OldMan2
+	.set MossdeepCity_GameCorner_1F_EventScript_OldMan2, 0x08247970
+	.globl MossdeepCity_GameCorner_1F_EventScript_DodrioBerryPickingRecords
+	.set MossdeepCity_GameCorner_1F_EventScript_DodrioBerryPickingRecords, 0x08247B79
+	.globl MossdeepCity_GameCorner_1F_EventScript_PokemonJumpRecords
+	.set MossdeepCity_GameCorner_1F_EventScript_PokemonJumpRecords, 0x08247B72
 	.globl CableClub_OnFrame
 	.set CableClub_OnFrame, 0x08246939
 	.globl CableClub_EventScript_MysteryGiftMan
@@ -791,7 +805,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MossdeepCity_SpaceCenter_1F/scripts.inc"
 	.include "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc"
 	.include "data/maps/MossdeepCity_GameCorner_1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20e05d, 0x1c6
 	.include "data/maps/MossdeepCity_GameCorner_B1F/scripts.inc"
 	.include "data/maps/SootopolisCity_Gym_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20e46b, 0xb6a
