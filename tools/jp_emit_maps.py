@@ -3838,6 +3838,10 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081ECCAF: 'Route118_Text_RouteSignMauville',
             0x081ECCC9: 'Route118_Text_RouteSign119',
         },
+        # The matching US Steven scene identifies both FD placeholders.
+        'field_placeholders': {
+            0x081ECAEB: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route118']['labels'],
         'external_labels': {
             0x0824473D: 'AbnormalWeather_EventScript_HideMapNamePopup',

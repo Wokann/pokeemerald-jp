@@ -247,7 +247,7 @@ Route118_EventScript_Deandre::
 	end
 
 Route118_Text_StevenQuestions: @ 0x081ECAEB
-	.string "ダイゴ“やあ　{STRING 0x01}{STRING 0x05}！\p"
+	.string "ダイゴ“やあ　{PLAYER}{KUN}！\p"
 	.string "ムロタウンの　どうくつで　あった\n"
 	.string "ダイゴだよ！\p"
 	.string "あれから　きみは　どれだけ\n"
