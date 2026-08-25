@@ -6035,6 +6035,118 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Fortree Gym occupies one contiguous physical script range. The rotating-gate
+# setup, every trainer and statue event, and the Winona reward/rematch flow
+# were aligned with the US map before the two remaining raw spans were opened.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_Gym': {
+        'scripts': {
+            0x082043A9: 'FortreeCity_Gym_OnTransition',
+            0x082043B7: 'FortreeCity_Gym_EventScript_InitRotatingGates',
+            0x082043BB: 'FortreeCity_Gym_EventScript_Winona',
+            0x082043F0: 'FortreeCity_Gym_EventScript_WinonaDefeated',
+            0x08204439: 'FortreeCity_Gym_EventScript_GiveAerialAce2',
+            0x0820445D: 'FortreeCity_Gym_EventScript_GiveAerialAce',
+            0x08204480: 'FortreeCity_Gym_EventScript_WinonaRematch',
+            0x0820449B: 'FortreeCity_Gym_EventScript_Jared',
+            0x082044B2: 'FortreeCity_Gym_EventScript_Edwardo',
+            0x082044C9: 'FortreeCity_Gym_EventScript_Flint',
+            0x082044E0: 'FortreeCity_Gym_EventScript_Ashley',
+            0x082044F7: 'FortreeCity_Gym_EventScript_Humberto',
+            0x0820450E: 'FortreeCity_Gym_EventScript_Darius',
+            0x08204525: 'FortreeCity_Gym_EventScript_GymGuide',
+            0x0820453A: 'FortreeCity_Gym_EventScript_GymGuidePostVictory',
+            0x08204544: 'FortreeCity_Gym_EventScript_LeftGymStatue',
+            0x08204554: 'FortreeCity_Gym_EventScript_RightGymStatue',
+            0x08204564: 'FortreeCity_Gym_EventScript_GymStatueCertified',
+            0x0820456E: 'FortreeCity_Gym_EventScript_GymStatue',
+        },
+        'tables': {0x082043AD: 'FortreeCity_Gym_OnWarp'},
+        'texts': {
+            0x08204578: 'FortreeCity_Gym_Text_GymGuideAdvice',
+            0x08204609: 'FortreeCity_Gym_Text_GymGuidePostVictory',
+            0x0820461B: 'FortreeCity_Gym_Text_JaredIntro',
+            0x08204638: 'FortreeCity_Gym_Text_JaredDefeat',
+            0x08204646: 'FortreeCity_Gym_Text_JaredPostBattle',
+            0x08204690: 'FortreeCity_Gym_Text_EdwardoIntro',
+            0x082046D8: 'FortreeCity_Gym_Text_EdwardoDefeat',
+            0x082046EA: 'FortreeCity_Gym_Text_EdwardoPostBattle',
+            0x08204727: 'FortreeCity_Gym_Text_FlintIntro',
+            0x0820475A: 'FortreeCity_Gym_Text_FlintDefeat',
+            0x0820476A: 'FortreeCity_Gym_Text_FlintPostBattle',
+            0x08204793: 'FortreeCity_Gym_Text_AshleyIntro',
+            0x082047B9: 'FortreeCity_Gym_Text_AshleyDefeat',
+            0x082047C5: 'FortreeCity_Gym_Text_AshleyPostBattle',
+            0x082047EA: 'FortreeCity_Gym_Text_HumbertoIntro',
+            0x0820481C: 'FortreeCity_Gym_Text_HumbertoDefeat',
+            0x0820482F: 'FortreeCity_Gym_Text_HumbertoPostBattle',
+            0x08204851: 'FortreeCity_Gym_Text_DariusIntro',
+            0x08204880: 'FortreeCity_Gym_Text_DariusDefeat',
+            0x0820488D: 'FortreeCity_Gym_Text_DariusPostBattle',
+            0x082048B1: 'FortreeCity_Gym_Text_WinonaIntro',
+            0x08204936: 'FortreeCity_Gym_Text_WinonaDefeat',
+            0x08204982: 'FortreeCity_Gym_Text_ReceivedFeatherBadge',
+            0x0820499A: 'FortreeCity_Gym_Text_ExplainFeatherBadgeTakeThis',
+            0x08204A14: 'FortreeCity_Gym_Text_ExplainAerialAce',
+            0x08204A59: 'FortreeCity_Gym_Text_RegisteredWinona',
+            0x08204A73: 'FortreeCity_Gym_Text_WinonaPostBattle',
+            0x08204AA0: 'FortreeCity_Gym_Text_GymStatue',
+            0x08204AAF: 'FortreeCity_Gym_Text_GymStatueCertified',
+            0x08204AD0: 'FortreeCity_Gym_Text_WinonaPreRematch',
+            0x08204B49: 'FortreeCity_Gym_Text_WinonaRematchDefeat',
+            0x08204B57: 'FortreeCity_Gym_Text_WinonaPostRematch',
+            0x08204BA1: 'FortreeCity_Gym_Text_WinonaRematchNeedTwoMons',
+        },
+        'field_placeholders': {
+            0x08204578: {0x01: 'PLAYER'},
+            0x08204982: {0x01: 'PLAYER'},
+            0x08204AAF: {0x01: 'PLAYER'},
+        },
+        # The legacy Fortree Gym event table still names these three targets.
+        # Retain zero-byte aliases until its independent JSON migration.
+        'script_aliases': {
+            0x08204525: ('FortreeCity_Gym_EventScript_00204525',),
+            0x08204544: ('FortreeCity_Gym_EventScript_00204544',),
+            0x08204554: ('FortreeCity_Gym_EventScript_00204554',),
+        },
+        'external_labels': {
+            0x08242FCF: 'Common_EventScript_SetGymTrainers',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x082430EA: 'Common_EventScript_BagIsFull',
+            0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
+        },
+        'symbols': {
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x40F3: 'VAR_SCOTT_FORTREE_CALL_STEP_COUNTER',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'flags': {
+                0x008A: 'FLAG_SCOTT_CALL_FORTREE_GYM',
+                0x00AA: 'FLAG_RECEIVED_TM_AERIAL_ACE',
+                0x01D7: 'FLAG_ENABLE_WINONA_MATCH_CALL',
+                0x04F5: 'FLAG_DEFEATED_FORTREE_GYM',
+                0x086C: 'FLAG_BADGE06_GET',
+            },
+            'trainers': {
+                0x010E: 'TRAINER_WINONA_1',
+                0x0191: 'TRAINER_JARED',
+                0x0192: 'TRAINER_HUMBERTO',
+                0x0194: 'TRAINER_EDWARDO',
+                0x028E: 'TRAINER_FLINT',
+                0x028F: 'TRAINER_ASHLEY',
+                0x0323: 'TRAINER_DARIUS',
+            },
+            'items': {0x0148: 'ITEM_TM_AERIAL_ACE'},
+            'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     # Route101 retains four unreferenced movement records between the Birch
     # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
@@ -7094,13 +7206,14 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             lines.append('%s::' % table_label)
             for var, cmp, sptr in parse_frame_table(start):
                 rendered_var = semantic_map_variable(mname, var) or '0x%X' % var
+                rendered_cmp = semantic_map_variable(mname, cmp) or '0x%X' % cmp
                 script_label = label_map.get(sptr) or external_labels.get(sptr)
                 if script_label is not None:
-                    lines.append('\tmap_script_2 %s, 0x%X, %s' % (
-                        rendered_var, cmp, script_label))
+                    lines.append('\tmap_script_2 %s, %s, %s' % (
+                        rendered_var, rendered_cmp, script_label))
                 else:
-                    lines.append('\tmap_script_2 %s, 0x%X, 0x%08X' % (
-                        rendered_var, cmp, sptr))
+                    lines.append('\tmap_script_2 %s, %s, 0x%08X' % (
+                        rendered_var, rendered_cmp, sptr))
             lines.append('\t.2byte 0')
             lines.append('')
         elif kind == 'script':

@@ -575,7 +575,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/RustboroCity_House3/scripts.inc"
 	.include "data/maps/FortreeCity_House1/scripts.inc"
 	.include "data/maps/FortreeCity_Gym/scripts.inc"
-	.incbin "baserom_jp.gba", 0x204578, 0x6e5
 	.include "data/maps/FortreeCity_PokemonCenter_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x204c95, 0x101
 	.include "data/maps/FortreeCity_PokemonCenter_2F/scripts.inc"
