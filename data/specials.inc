@@ -385,6 +385,10 @@ gSpecials:
 	def_special SetSecretBaseSecretsTvFlags_SmallDecorationSpot
 	def_special SetSecretBaseSecretsTvFlags_Poster
 	def_special sub_0818D6EC
+	@ Retain the JP implementation symbol while scripts use the matching
+	@ pokeemerald special name for the Lilycove Lady selector.
+	.set SPECIAL_SetLilycoveLadyGfx, SPECIAL_sub_0818D6EC
+	.set SPECIAL_WAITSTATE_SetLilycoveLadyGfx, SPECIAL_WAITSTATE_sub_0818D6EC
 	def_special sub_0818D818
 	def_special sub_0818D914
 	def_special sub_0818D958

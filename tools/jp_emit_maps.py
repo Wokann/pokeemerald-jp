@@ -36,6 +36,7 @@ MAP_SOURCE_REGION_ENDS = {
 MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_ContestLobby': 105,
     'LilycoveCity_ContestHall': 35,
+    'LilycoveCity_PokemonCenter_1F': 8,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -43,6 +44,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
 # semantic pokeemerald names directly.
 MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_ContestHall': 36,
+    'LilycoveCity_PokemonCenter_1F': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6869,6 +6871,38 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Pokemon Center 1F directly follows Contest Hall in physical EventScript
+# order. Its eight local script entries and three text records are guarded by
+# the reviewed US sequences above; these entries name only the JP-specific
+# external calls and numeric operands needed to render that source faithfully.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_PokemonCenter_1F': {
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+            0x08264373: 'LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady',
+            0x082649CF: 'LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon',
+        },
+        'specials': {
+            'sub_0818D6EC': 'SetLilycoveLadyGfx',
+        },
+        'symbols': {
+            'flags': {
+                0x03E1: 'FLAG_HIDE_LILYCOVE_POKEMON_CENTER_CONTEST_LADY_MON',
+                0x086D: 'FLAG_BADGE07_GET',
+            },
+            'vars': {
+                0x800B: 'VAR_0x800B',
+                0x800D: 'VAR_RESULT',
+            },
+            'local_ids': {0x01: 'LOCALID_LILYCOVE_NURSE'},
+            'heal_locations': {0x08: 'HEAL_LOCATION_LILYCOVE_CITY'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'LilycoveCity_LilycoveMuseum_2F': {
         0x0820630D: 'LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft',
@@ -7331,6 +7365,12 @@ def name_contextual_result_conditions(lines):
             replace_condition(index + 2, {1: 'FEMALE'})
         elif name == 'specialvar' and argstr == 'VAR_RESULT, ShouldTryRematchBattle':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
+        elif name == 'special' and argstr == 'SetLilycoveLadyGfx':
+            # This special returns whether the selected Lilycove Lady is the
+            # Contest Lady; the adjacent branch pair therefore has the same
+            # FALSE/TRUE meaning as the matching US map source.
+            replace_condition(index + 1, {0: 'FALSE'})
+            replace_condition(index + 2, {1: 'TRUE'})
         elif name == 'msgbox' and argstr.endswith(', MSGBOX_YESNO'):
             replace_condition(index + 1, {0: 'NO', 1: 'YES'})
             replace_condition(index + 2, {0: 'NO', 1: 'YES'})

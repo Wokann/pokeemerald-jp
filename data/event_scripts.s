@@ -743,7 +743,12 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/text/lilycove_contest_lobby.inc"
 	.include "data/maps/LilycoveCity_ContestHall/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonCenter_1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x2082b6, 0xc0
+	@ These two object scripts remain in the later shared Lilycove Lady raw
+	@ owner. Export semantic aliases for this map's generated event table.
+	.globl LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady
+	.set LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady, 0x08264373
+	.globl LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon
+	.set LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon, 0x082649CF
 	.include "data/maps/LilycoveCity_PokemonCenter_2F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20838b, 0x12
 	.include "data/maps/LilycoveCity_UnusedMart/scripts.inc"
