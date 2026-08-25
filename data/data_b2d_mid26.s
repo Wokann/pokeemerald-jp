@@ -2090,23 +2090,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MossdeepCity_SpaceCenter_1F/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F
 	.set gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F, MossdeepCity_SpaceCenter_1F_MapEvents
-	.globl MOSSDEEP_CITY_SPACE_CENTER_2F_EventObjects
-MOSSDEEP_CITY_SPACE_CENTER_2F_EventObjects: @ 0x0850B578
-	object_event 1, 15, 0, 6, 2, 3, 7, 0, 0, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D82D, 0x0000
-	object_event 2, 48, 0, 11, 8, 3, 7, 0, 0, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D7F2, 0x0000
-	object_event 3, 46, 0, 5, 6, 3, 2, 1, 1, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D7B7, 0x0000
-	object_event 4, 134, 0, 1, 8, 3, 8, 1, 1, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D8A4, 0x035F
-	object_event 5, 119, 0, 12, 2, 3, 10, 1, 1, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D868, 0x035E
-	object_event 6, 119, 0, 13, 3, 3, 7, 1, 1, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D87A, 0x035E
-	object_event 7, 119, 0, 14, 2, 3, 9, 1, 1, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D871, 0x035E
-	object_event 8, 119, 0, 0, 8, 3, 10, 1, 1, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D883, 0x035E
-	object_event 9, 196, 0, 1, 9, 3, 7, 1, 1, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D899, 0x035E
-	.globl MOSSDEEP_CITY_SPACE_CENTER_2F_EventWarps
-MOSSDEEP_CITY_SPACE_CENTER_2F_EventWarps: @ 0x0850B650
-	warp_def 13, 1, 0, 2, MAP_MOSSDEEP_CITY_SPACE_CENTER_1F
+	.include "data/maps/MossdeepCity_SpaceCenter_2F/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F
-gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F: @ 0x0850B658
-	map_events MOSSDEEP_CITY_SPACE_CENTER_2F_EventObjects, MOSSDEEP_CITY_SPACE_CENTER_2F_EventWarps, 0, 0
+	.set gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F, MossdeepCity_SpaceCenter_2F_MapEvents
 	.globl MOSSDEEP_CITY_GAME_CORNER_1F_EventObjects
 MOSSDEEP_CITY_GAME_CORNER_1F_EventObjects: @ 0x0850B66C
 	object_event 1, 21, 0, 6, 2, 0, 8, 0, 0, 0, 0, MossdeepCity_GameCorner_1F_EventScript_0020E04B, 0x0000

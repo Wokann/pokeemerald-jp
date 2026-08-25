@@ -59,6 +59,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_StevensHouse': 17,
     'MossdeepCity_House4': 5,
     'MossdeepCity_SpaceCenter_1F': 34,
+    'MossdeepCity_SpaceCenter_2F': 34,
 }
 
 # This map's complete, physical JP script sequence includes both entry points.
@@ -95,6 +96,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_StevensHouse': 9,
     'MossdeepCity_House4': 5,
     'MossdeepCity_SpaceCenter_1F': 28,
+    'MossdeepCity_SpaceCenter_2F': 27,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -210,6 +212,16 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
     # The RS-era Dive item ball is unused in Emerald but remains an explicit
     # named script in the matching Stevens House source.
     'MossdeepCity_StevensHouse': (0x0820C9B8,),
+    # Maxie/Tabitha battle entries and the post-battle Match Call branch are
+    # physically map-owned by Space Center 2F despite having no local event
+    # pointer that reaches them.
+    'MossdeepCity_SpaceCenter_2F': (
+        0x0820DA81,
+        0x0820DA90,
+        0x0820DA9F,
+        0x0820DABD,
+        0x0820DAC4,
+    ),
 }
 
 # Verified map-local text that has no JP script pointer (for example an
@@ -7985,6 +7997,114 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Space Center 2F is one continuous JP source range from its map-script table
+# through the final Steven text.  Its 34 executable entries and 27 map-local
+# text records were matched in physical order against the US map source; the
+# Tabitha defeat text retains its shared US owner name.  Constants and text
+# placeholders below are limited to values proved by the JP bytes and the
+# surrounding US script context.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_SpaceCenter_2F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'allow_single_case_switch': True,
+        'frontier_macros': True,
+        'field_placeholders': {
+            0x0820DE3B: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x0820DFB6: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'texts': {
+            0x0820DEAF: 'MossdeepCity_SpaceCenter_Text_TabithaDefeat',
+        },
+        'external_texts': {
+            0x0826AB1B: 'MatchCall_Text_MayRayquazaCall',
+            0x0826ABC8: 'MatchCall_Text_BrendanRayquazaCall',
+        },
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'symbols': {
+            'flags': {
+                0x0075: 'FLAG_DEFEATED_MAGMA_SPACE_CENTER',
+                0x00CD: 'FLAG_INTERACTED_WITH_STEVEN_SPACE_CENTER',
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+                0x02E1: 'FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_MAGMA_NOTE',
+                0x02F4: 'FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_1F_TEAM_MAGMA',
+                0x0314: 'FLAG_HIDE_MOSSDEEP_CITY_SCOTT',
+                0x0337: 'FLAG_HIDE_MOSSDEEP_CITY_TEAM_MAGMA',
+                0x035E: 'FLAG_HIDE_MOSSDEEP_CITY_SPACE_CENTER_2F_TEAM_MAGMA',
+                0x03C7: 'FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_STEVEN',
+            },
+            'vars': {
+                0x405D: 'VAR_MOSSDEEP_CITY_STATE',
+                0x409F: 'VAR_MOSSDEEP_SPACE_CENTER_STATE',
+                0x40C6: 'VAR_STEVENS_HOUSE_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'script_var_values': {
+                0x0820D6E9: {0x800D: {0x1: 'YES'}},
+                0x0820D904: {0x800D: {0x1: 'YES'}},
+                0x0820D95C: {
+                    0x8004: {
+                        0x2: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x6: 'FRONTIER_UTIL_FUNC_SAVE_PARTY',
+                        0x8: 'SPECIAL_BATTLE_STEVEN',
+                    },
+                    0x8005: {0x4: 'FRONTIER_DATA_SELECTED_MON_ORDER'},
+                },
+                0x0820DA9F: {0x800D: {0x0: 'MALE', 0x1: 'FEMALE'}},
+            },
+            'switch_values': {
+                'VAR_FACING': {0x1: 'DIR_SOUTH', 0x3: 'DIR_WEST'},
+            },
+            'trainers': {
+                0x0202: 'TRAINER_TABITHA_MOSSDEEP',
+                0x024C: 'TRAINER_GRUNT_SPACE_CENTER_5',
+                0x024D: 'TRAINER_GRUNT_SPACE_CENTER_6',
+                0x024E: 'TRAINER_GRUNT_SPACE_CENTER_7',
+                0x02DE: 'TRAINER_MAXIE_MOSSDEEP',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_SPACE_CENTER_2F_RICH_BOY',
+                0x02: 'LOCALID_SPACE_CENTER_2F_GENTLEMAN',
+                0x03: 'LOCALID_SPACE_CENTER_2F_SCIENTIST',
+                0x04: 'LOCALID_SPACE_CENTER_2F_STEVEN',
+                0x05: 'LOCALID_SPACE_CENTER_GRUNT_6',
+                0x06: 'LOCALID_SPACE_CENTER_GRUNT_5',
+                0x07: 'LOCALID_SPACE_CENTER_GRUNT_7',
+                0x08: 'LOCALID_SPACE_CENTER_TABITHA',
+                0x09: 'LOCALID_SPACE_CENTER_MAXIE',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {
+                0x02: 'MOVEMENT_TYPE_WANDER_AROUND',
+                0x0A: 'MOVEMENT_TYPE_FACE_RIGHT',
+            },
+            'directions': {
+                0x01: 'DIR_SOUTH',
+                0x02: 'DIR_NORTH',
+                0x03: 'DIR_WEST',
+                0x04: 'DIR_EAST',
+            },
+            'fade_modes': {0x0: 'FADE_FROM_BLACK', 0x1: 'FADE_TO_BLACK'},
+            'sounds': {0x0C: 'SE_NOT_EFFECTIVE', 0x15: 'SE_PIN'},
+            'maps': {0x0E09: 'MAP_MOSSDEEP_CITY_SPACE_CENTER_1F'},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'MossdeepCity_Mart': (
         (0x0820C5CA, 'MossdeepCity_Mart_Pokemart', (
@@ -8333,6 +8453,17 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     },
 })
 
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'MossdeepCity_SpaceCenter_2F': {
+        0x0820D731: 'MossdeepCity_SpaceCenter_2F_Movement_PlayerExit',
+        0x0820D7AB: 'MossdeepCity_SpaceCenter_2F_Movement_Grunt6Defeated',
+        0x0820D7AF: 'MossdeepCity_SpaceCenter_2F_Movement_Grunt5Defeated',
+        0x0820D7B3: 'MossdeepCity_SpaceCenter_2F_Movement_Grunt7Defeated',
+        0x0820D8F0: 'MossdeepCity_SpaceCenter_2F_Movement_StevenFight',
+        0x0820D8F9: 'MossdeepCity_SpaceCenter_2F_Movement_StevenFightSouth',
+    },
+})
+
 MSGBOX_TYPES = {
     2: 'MSGBOX_NPC',
     3: 'MSGBOX_SIGN',
@@ -8587,12 +8718,13 @@ def collapse_condition_macros(lines):
     return out
 
 
-def collapse_switch_macros(lines, value_names=None):
+def collapse_switch_macros(lines, value_names=None, minimum_cases=2):
     """Restore byte-proven ``switch``/``case`` dispatch tables.
 
     The script macros expand to a copy into VAR_0x8000 followed by one
-    goto_if_eq per case. Require at least two consecutive cases so ordinary
-    one-off comparisons retain their direct conditional form.
+    goto_if_eq per case. The default requires at least two consecutive cases
+    so ordinary one-off comparisons retain their direct conditional form;
+    maps whose checked US source uses a one-case switch may opt in explicitly.
     """
     value_names = value_names or {}
     out = []
@@ -8624,7 +8756,7 @@ def collapse_switch_macros(lines, value_names=None):
                         value = str(numeric)
                 cases.append((value, case_args[2]))
                 cursor += 1
-            if len(cases) >= 2:
+            if len(cases) >= minimum_cases:
                 out.append(('switch', copy_args[1]))
                 out.extend(('case', '%s, %s' % case) for case in cases)
                 index = cursor
@@ -8801,6 +8933,48 @@ def collapse_frontier_results_macros(lines, facilities):
     return out
 
 
+def collapse_frontier_utility_macros(lines, enabled=False):
+    """Restore reviewed Frontier utility wrappers for an opted-in map.
+
+    These macros are only presentation wrappers around byte-exact command
+    sequences.  Keep the transformation opt-in because FRONTIER_UTIL values
+    have context-dependent meanings outside a reviewed map script.
+    """
+    if not enabled:
+        return lines
+
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 2 < len(lines):
+            first_name, first_args = lines[index]
+            second_name, second_args = lines[index + 1]
+            third_name, third_args = lines[index + 2]
+            first = [part.strip() for part in first_args.split(',', 1)]
+            second = [part.strip() for part in second_args.split(',', 1)]
+            if (first_name == 'setvar' and second_name == 'setvar'
+                    and third_name == 'special'
+                    and first == ['VAR_0x8004', 'FRONTIER_UTIL_FUNC_SET_DATA']
+                    and second == ['VAR_0x8005', 'FRONTIER_DATA_SELECTED_MON_ORDER']
+                    and third_args == 'CallFrontierUtilFunc'):
+                out.append(('frontier_set', 'FRONTIER_DATA_SELECTED_MON_ORDER'))
+                index += 3
+                continue
+        if index + 1 < len(lines):
+            first_name, first_args = lines[index]
+            second_name, second_args = lines[index + 1]
+            first = [part.strip() for part in first_args.split(',', 1)]
+            if (first_name == 'setvar' and second_name == 'special'
+                    and first == ['VAR_0x8004', 'FRONTIER_UTIL_FUNC_SAVE_PARTY']
+                    and second_args == 'CallFrontierUtilFunc'):
+                out.append(('frontier_saveparty', ''))
+                index += 2
+                continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
 def annotate_literal_copyvars(lines):
     """Suppress the macro's diagnostic for byte-accurate literal copyvars."""
     out = []
@@ -8925,6 +9099,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('flags', {}).get(value)
         if name == 'trainerbattle' and index == 1:
             return symbols.get('trainers', {}).get(value)
+        if name == 'trainerbattle' and index == 2 and value == 0:
+            return 'LOCALID_NONE'
         if name == 'checktrainerflag' and index == 0:
             return symbols.get('trainers', {}).get(value)
         if name == 'warpdoor' and index in (1, 2, 3):
@@ -9568,8 +9744,11 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_condition_macros(decoded_lines)
             decoded_lines = collapse_switch_macros(
                 decoded_lines,
-                semantic.get('symbols', {}).get('switch_values', {}))
+                semantic.get('symbols', {}).get('switch_values', {}),
+                1 if semantic.get('allow_single_case_switch') else 2)
             decoded_lines = collapse_coordinate_warp_macros(decoded_lines)
+            decoded_lines = collapse_frontier_utility_macros(
+                decoded_lines, semantic.get('frontier_macros', False))
             decoded_lines = collapse_frontier_results_macros(
                 decoded_lines,
                 semantic.get('symbols', {}).get('frontier_results', {}))

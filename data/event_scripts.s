@@ -340,6 +340,11 @@
 	.set LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor, 0x08276AA2
 	.globl gText_ComeBackWithSecretPower
 	.set gText_ComeBackWithSecretPower, 0x08243B96
+	@ Space Center 2F's post-battle calls target retained Match Call text.
+	.globl MatchCall_Text_MayRayquazaCall
+	.set MatchCall_Text_MayRayquazaCall, 0x0826AB1B
+	.globl MatchCall_Text_BrendanRayquazaCall
+	.set MatchCall_Text_BrendanRayquazaCall, 0x0826ABC8
 	@ Rustboro uses these retained shared movement streams under the upstream
 	@ names; their JP byte addresses match the map-scene behavior exactly.
 	.globl Common_Movement_FaceRight
@@ -785,7 +790,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MossdeepCity_House4/scripts.inc"
 	.include "data/maps/MossdeepCity_SpaceCenter_1F/scripts.inc"
 	.include "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20dc28, 0x3f6
 	.include "data/maps/MossdeepCity_GameCorner_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20e05d, 0x1c6
 	.include "data/maps/MossdeepCity_GameCorner_B1F/scripts.inc"
