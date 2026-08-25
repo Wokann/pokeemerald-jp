@@ -6298,13 +6298,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08204982: {0x01: 'PLAYER'},
             0x08204AAF: {0x01: 'PLAYER'},
         },
-        # The legacy Fortree Gym event table still names these three targets.
-        # Retain zero-byte aliases until its independent JSON migration.
-        'script_aliases': {
-            0x08204525: ('FortreeCity_Gym_EventScript_00204525',),
-            0x08204544: ('FortreeCity_Gym_EventScript_00204544',),
-            0x08204554: ('FortreeCity_Gym_EventScript_00204554',),
-        },
         'external_labels': {
             0x08242FCF: 'Common_EventScript_SetGymTrainers',
             0x082430E0: 'Common_EventScript_ShowBagIsFull',

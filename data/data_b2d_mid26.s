@@ -1964,27 +1964,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/FortreeCity_House1/events.inc"
 	.globl gMapEvents_FORTREE_CITY_HOUSE1
 	.set gMapEvents_FORTREE_CITY_HOUSE1, FortreeCity_House1_MapEvents
-	.globl FORTREE_CITY_GYM_EventObjects
-FORTREE_CITY_GYM_EventObjects: @ 0x085093C4
-	object_event 1, 130, 0, 15, 2, 3, 8, 0, 0, 0, 0, 0x082043BB, 0x0000
-	object_event 2, 66, 0, 4, 14, 3, 8, 0, 0, 1, 3, 0x0820449B, 0x0000
-	object_event 3, 31, 0, 10, 10, 3, 9, 0, 0, 1, 2, 0x082044C9, 0x0000
-	object_event 4, 32, 0, 5, 17, 3, 9, 0, 0, 1, 1, 0x082044E0, 0x0000
-	object_event 5, 66, 0, 9, 8, 3, 8, 0, 0, 1, 2, 0x082044B2, 0x0000
-	object_event 6, 23, 0, 15, 21, 3, 8, 0, 0, 0, 0, FortreeCity_Gym_EventScript_00204525, 0x0000
-	object_event 7, 66, 0, 4, 23, 3, 10, 1, 1, 1, 1, 0x082044F7, 0x0000
-	object_event 8, 66, 0, 1, 10, 3, 7, 1, 1, 1, 3, 0x0820450E, 0x0000
-	.globl FORTREE_CITY_GYM_EventWarps
-FORTREE_CITY_GYM_EventWarps: @ 0x08509484
-	warp_def 15, 24, 0, 2, MAP_FORTREE_CITY
-	warp_def 16, 24, 0, 2, MAP_FORTREE_CITY
-	.globl FORTREE_CITY_GYM_EventBgEvents
-FORTREE_CITY_GYM_EventBgEvents: @ 0x08509494
-	bg_event 14, 21, 0, 1, FortreeCity_Gym_EventScript_00204544, 0, 0
-	bg_event 17, 21, 0, 1, FortreeCity_Gym_EventScript_00204554, 0, 0
+	.include "data/maps/FortreeCity_Gym/events.inc"
 	.globl gMapEvents_FORTREE_CITY_GYM
-gMapEvents_FORTREE_CITY_GYM: @ 0x085094AC
-	map_events FORTREE_CITY_GYM_EventObjects, FORTREE_CITY_GYM_EventWarps, 0, FORTREE_CITY_GYM_EventBgEvents
+	.set gMapEvents_FORTREE_CITY_GYM, FortreeCity_Gym_MapEvents
 	.globl FORTREE_CITY_POKEMON_CENTER_1F_EventObjects
 FORTREE_CITY_POKEMON_CENTER_1F_EventObjects: @ 0x085094C0
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, FortreeCity_PokemonCenter_1F_EventScript_00204C6C, 0x0000

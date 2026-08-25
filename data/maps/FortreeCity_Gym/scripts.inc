@@ -99,8 +99,6 @@ FortreeCity_Gym_EventScript_Darius::
 	msgbox FortreeCity_Gym_Text_DariusPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-	.globl FortreeCity_Gym_EventScript_00204525
-FortreeCity_Gym_EventScript_00204525: @ 0x08204525
 FortreeCity_Gym_EventScript_GymGuide::
 	lock
 	faceplayer
@@ -114,16 +112,12 @@ FortreeCity_Gym_EventScript_GymGuidePostVictory::
 	release
 	end
 
-	.globl FortreeCity_Gym_EventScript_00204544
-FortreeCity_Gym_EventScript_00204544: @ 0x08204544
 FortreeCity_Gym_EventScript_LeftGymStatue::
 	lockall
 	goto_if_set FLAG_BADGE06_GET, FortreeCity_Gym_EventScript_GymStatueCertified
 	goto FortreeCity_Gym_EventScript_GymStatue
 	end
 
-	.globl FortreeCity_Gym_EventScript_00204554
-FortreeCity_Gym_EventScript_00204554: @ 0x08204554
 FortreeCity_Gym_EventScript_RightGymStatue::
 	lockall
 	goto_if_set FLAG_BADGE06_GET, FortreeCity_Gym_EventScript_GymStatueCertified
