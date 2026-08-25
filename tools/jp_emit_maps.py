@@ -61,13 +61,15 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_SpaceCenter_1F': 34,
     'MossdeepCity_SpaceCenter_2F': 34,
     'MossdeepCity_GameCorner_1F': 3,
+    'SootopolisCity_Gym_1F': 24,
 }
 
-# This map's complete, physical JP script sequence includes both entry points.
-# Most older reviewed ranges predate semantic OnLoad labels, so retain their
-# existing matcher behavior and opt only this audited sequence into OnLoad.
-MAP_US_LABEL_SEQUENCE_INCLUDE_ONLOAD = {
-    'MossdeepCity_SpaceCenter_1F',
+# Most older reviewed ranges predate semantic map-script hook labels. Keep
+# their existing matcher behavior, and opt audited maps into only the hooks
+# whose JP entries were checked one-to-one against the US source sequence.
+MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
+    'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
+    'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -98,6 +100,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_House4': 5,
     'MossdeepCity_SpaceCenter_1F': 28,
     'MossdeepCity_SpaceCenter_2F': 27,
+    'SootopolisCity_Gym_1F': 16,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8164,6 +8167,62 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Sootopolis Gym 1F is one contiguous JP source range through the final Juan
+# rematch text. Its 24 executable/table entries and 16 text records match the
+# US map source in physical order. Constants below are limited to values
+# verified against the JP byte stream and the corresponding US script flow.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_Gym_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'field_placeholders': {
+            0x0820E46B: {0x01: 'PLAYER'},
+            0x0820E729: {0x01: 'PLAYER'},
+            0x0820E8F2: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x08242FCF: 'Common_EventScript_SetGymTrainers',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x082430EA: 'Common_EventScript_BagIsFull',
+            0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
+        },
+        'symbols': {
+            'flags': {
+                0x00AC: 'FLAG_RECEIVED_TM_WATER_PULSE',
+                0x04F7: 'FLAG_DEFEATED_SOOTOPOLIS_GYM',
+                0x086C: 'FLAG_BADGE06_GET',
+                0x086E: 'FLAG_BADGE08_GET',
+                0x01D9: 'FLAG_ENABLE_JUAN_MATCH_CALL',
+                0x0330: 'FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE',
+                0x0347: 'FLAG_HIDE_SOOTOPOLIS_CITY_MAN_1',
+                0x0356: 'FLAG_HIDE_SOOTOPOLIS_CITY_RESIDENTS',
+                0x03CD: 'FLAG_HIDE_SOOTOPOLIS_CITY_STEVEN',
+            },
+            'vars': {
+                0x4022: 'VAR_ICE_STEP_COUNT',
+                0x405E: 'VAR_SOOTOPOLIS_CITY_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+            'map_script_values': {
+                0x4022: {0x0: '0', 0x8: '8', 0x1C: '28', 0x43: '67'},
+            },
+            'items': {0x0123: 'ITEM_TM_WATER_PULSE'},
+            'trainers': {0x0110: 'TRAINER_JUAN_1'},
+            'local_ids': {0xFF: 'LOCALID_PLAYER'},
+            'metatiles': {0x0207: 'METATILE_SootopolisGym_Stairs'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'sounds': {0x28: 'SE_ICE_STAIRS', 0x2B: 'SE_FALL'},
+            'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
+            'maps': {0x0F01: 'MAP_SOOTOPOLIS_CITY_GYM_B1F'},
+            'step_callbacks': {0x4: 'STEP_CB_SOOTOPOLIS_ICE'},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'MossdeepCity_Mart': (
         (0x0820C5CA, 'MossdeepCity_Mart_Pokemart', (
@@ -8505,6 +8564,9 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
 })
 
 MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'SootopolisCity_Gym_1F': {
+        0x0820E31A: 'SootopolisCity_Gym_1F_Movement_FallThroughIce',
+    },
     'MossdeepCity_SpaceCenter_1F': {
         0x0820D0B6: 'MossdeepCity_SpaceCenter_1F_Movement_MoveGruntFromStairsWest',
         0x0820D0BA: 'MossdeepCity_SpaceCenter_1F_Movement_MoveGruntFromStairsEast',
@@ -8934,6 +8996,7 @@ MAP_ARGUMENTS = {
     'setdynamicwarp': {0},
     'setdivewarp': {0},
     'warpdoor': {0},
+    'warphole': {0},
     'warpmossdeepgym': {0},
     'addobject_at': {1},
     'applymovement_at': {2},
@@ -9931,8 +9994,8 @@ def apply_us_label_sequence_metadata():
         entry_pattern = (
             r'EventScript(?:_[A-Za-z0-9_]+)?|OnTransition|OnFrame|'
             r'MapScriptTable(?:_[A-Za-z0-9_]+)?')
-        if mname in MAP_US_LABEL_SEQUENCE_INCLUDE_ONLOAD:
-            entry_pattern += r'|OnLoad'
+        for hook in MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS.get(mname, ()):
+            entry_pattern += r'|' + re.escape(hook)
         label_re = re.compile(
             r'^(%s_(?:%s)):{1,2}' % (re.escape(mname), entry_pattern))
         address_re = re.compile(r'@\s*(0x08[0-9A-Fa-f]{6})\b')
