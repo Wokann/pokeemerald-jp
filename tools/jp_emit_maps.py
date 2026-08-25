@@ -153,6 +153,10 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x081F1517: 'LittlerootTown_ProfessorBirchsLab_Movement_PlayerEnterLabForJohtoStarter',
         0x081F197B: 'LittlerootTown_ProfessorBirchsLab_Movement_RivalApproachPlayer',
     },
+    'OldaleTown': {
+        0x081E48CB: 'OldaleTown_Movement_Unknown1',
+        0x081E48F3: 'OldaleTown_Movement_Unknown2',
+    },
     'Route128': {
         0x081EEEAA: 'Route128_Movement_Unused1',
         0x081EEEAC: 'Route128_Movement_Unused2',
