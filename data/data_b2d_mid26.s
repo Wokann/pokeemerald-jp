@@ -2096,15 +2096,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MossdeepCity_GameCorner_1F/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F
 	.set gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F, MossdeepCity_GameCorner_1F_MapEvents
-	.globl MOSSDEEP_CITY_GAME_CORNER_B1F_EventObjects
-MOSSDEEP_CITY_GAME_CORNER_B1F_EventObjects: @ 0x0850B6EC
-	object_event 1, 240, 0, 6, 5, 3, 9, 0, 0, 0, 0, 0x00000000, 0x0000
-	.globl MOSSDEEP_CITY_GAME_CORNER_B1F_EventWarps
-MOSSDEEP_CITY_GAME_CORNER_B1F_EventWarps: @ 0x0850B704
-	warp_def 3, 1, 0, 2, MAP_MOSSDEEP_CITY_GAME_CORNER_1F
+	.include "data/maps/MossdeepCity_GameCorner_B1F/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F
-gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F: @ 0x0850B70C
-	map_events MOSSDEEP_CITY_GAME_CORNER_B1F_EventObjects, MOSSDEEP_CITY_GAME_CORNER_B1F_EventWarps, 0, 0
+	.set gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F, MossdeepCity_GameCorner_B1F_MapEvents
 	.globl SOOTOPOLIS_CITY_GYM_1F_EventObjects
 SOOTOPOLIS_CITY_GYM_1F_EventObjects: @ 0x0850B720
 	object_event 1, 218, 0, 8, 2, 0, 8, 0, 0, 0, 0, 0x0820E31C, 0x0000
