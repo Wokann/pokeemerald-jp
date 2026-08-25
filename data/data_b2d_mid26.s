@@ -2015,15 +2015,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F, LilycoveCity_PokemonCenter_2F_MapEvents
-	.globl LILYCOVE_CITY_UNUSED_MART_EventObjects
-LILYCOVE_CITY_UNUSED_MART_EventObjects: @ 0x00000000
-	.globl LILYCOVE_CITY_UNUSED_MART_EventWarps
-LILYCOVE_CITY_UNUSED_MART_EventWarps: @ 0x0850A428
-	warp_def 3, 7, 0, 0, MAP_LILYCOVE_CITY
-	warp_def 4, 7, 0, 0, MAP_LILYCOVE_CITY
+	.include "data/maps/LilycoveCity_UnusedMart/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_UNUSED_MART
-gMapEvents_LILYCOVE_CITY_UNUSED_MART: @ 0x0850A438
-	map_events 0, LILYCOVE_CITY_UNUSED_MART_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_UNUSED_MART, LilycoveCity_UnusedMart_MapEvents
 	.globl LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_EventObjects
 LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_EventObjects: @ 0x0850A44C
 	object_event 1, 47, 0, 3, 11, 3, 7, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_002086A7, 0x0000
