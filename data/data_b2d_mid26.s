@@ -2018,24 +2018,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_UnusedMart/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_UNUSED_MART
 	.set gMapEvents_LILYCOVE_CITY_UNUSED_MART, LilycoveCity_UnusedMart_MapEvents
-	.globl LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_EventObjects
-LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_EventObjects: @ 0x0850A44C
-	object_event 1, 47, 0, 3, 11, 3, 7, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_002086A7, 0x0000
-	object_event 2, 65, 0, 8, 10, 3, 9, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_00208630, 0x0000
-	object_event 3, 25, 0, 6, 11, 3, 7, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_0020871E, 0x0000
-	object_event 4, 12, 0, 5, 8, 3, 8, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_00208795, 0x0000
-	object_event 5, 5, 0, 7, 11, 3, 7, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_0020880C, 0x0317
-	object_event 6, 9, 0, 1, 9, 3, 8, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_0020886E, 0x0316
-	object_event 7, 24, 0, 3, 10, 3, 10, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_002088D0, 0x0318
-	object_event 8, 22, 0, 10, 10, 3, 9, 0, 0, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_00208932, 0x0315
-	object_event 9, 7, 0, 11, 5, 3, 8, 1, 1, 0, 0, LilycoveCity_PokemonTrainerFanClub_EventScript_00208994, 0x02DA
-	.globl LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_EventWarps
-LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_EventWarps: @ 0x0850A524
-	warp_def 6, 13, 0, 5, MAP_LILYCOVE_CITY
-	warp_def 5, 13, 0, 5, MAP_LILYCOVE_CITY
+	.include "data/maps/LilycoveCity_PokemonTrainerFanClub/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB
-gMapEvents_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB: @ 0x0850A534
-	map_events LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_EventObjects, LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB, LilycoveCity_PokemonTrainerFanClub_MapEvents
 	.globl LILYCOVE_CITY_HARBOR_EventObjects
 LILYCOVE_CITY_HARBOR_EventObjects: @ 0x0850A548
 	object_event 1, 45, 0, 8, 10, 3, 8, 0, 0, 0, 0, LilycoveCity_Harbor_EventScript_002094E3, 0x038C

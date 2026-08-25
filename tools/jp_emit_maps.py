@@ -38,6 +38,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_ContestHall': 35,
     'LilycoveCity_PokemonCenter_1F': 8,
     'LilycoveCity_PokemonCenter_2F': 3,
+    'LilycoveCity_PokemonTrainerFanClub': 65,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -46,6 +47,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
 MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_ContestHall': 36,
     'LilycoveCity_PokemonCenter_1F': 3,
+    'LilycoveCity_PokemonTrainerFanClub': 38,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6929,10 +6931,135 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Lilycove's Trainer Fan Club is the next full EventScript owner after the
+# unused Mart. Its JP and US entry/text sequences were audited one-to-one;
+# this metadata only supplies contextual constants and references that the
+# JP bytes alone cannot name safely.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_PokemonTrainerFanClub': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08242F08: 'Common_ShowEasyChatScreen',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'external_texts': {
+            0x0824DE14: 'LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer',
+            0x0824DE37: 'LilycoveCity_PokemonTrainerFanClub_Text_ThatsWhatYouThink',
+            0x0824DE51: 'LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer',
+            0x0824DE64: 'LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer2',
+            0x0824DE82: 'LilycoveCity_PokemonTrainerFanClub_Text_HowStrongRateTrainer',
+            0x0824DEA3: 'LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer2',
+            0x0824DEB6: 'LilycoveCity_PokemonTrainerFanClub_Text_YouShouldMeetTrainer',
+            0x0824DEE0: 'LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo',
+            0x0824DF29: 'LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial',
+        },
+        'specials': {
+            'ShouldMoveLilycoveFanClubMember': 'IsFanClubMemberFanOfPlayer',
+            'GetNumMovedLilycoveFanClubMembers': 'GetNumFansOfPlayerInTrainerFanClub',
+            'BufferStreakTrainerText': 'BufferFanClubTrainerName',
+            'UpdateMovedLilycoveFanClubMembers': 'TryLoseFansFromPlayTime',
+            'sub_080EF244': 'TryPutTrainerFanClubOnAir',
+            'sub_080EF2D8': 'ShouldHideFanClubInterviewer',
+            'sub_0813A164': 'ShowScrollableMultichoice',
+        },
+        'field_placeholders': {
+            0x08208B19: {0x01: 'PLAYER'},
+            0x08208B22: {0x01: 'PLAYER'},
+            0x08208BEC: {0x01: 'PLAYER'},
+            0x08208C00: {0x01: 'PLAYER'},
+            0x08208C38: {0x02: 'STR_VAR_1'},
+            0x08208C7A: {0x02: 'STR_VAR_1'},
+            0x08208CE8: {0x01: 'PLAYER'},
+            0x08208FA5: {0x01: 'PLAYER'},
+            0x08208FC6: {0x01: 'PLAYER'},
+            0x08209015: {0x02: 'STR_VAR_1'},
+            0x08209039: {0x02: 'STR_VAR_1'},
+            0x082090AC: {0x01: 'PLAYER'},
+            0x082090DB: {0x01: 'PLAYER'},
+            0x08209116: {0x02: 'STR_VAR_1'},
+            0x08209134: {0x02: 'STR_VAR_1'},
+            0x0820917D: {0x01: 'PLAYER'},
+            0x08209216: {0x02: 'STR_VAR_1'},
+            0x0820926D: {0x02: 'STR_VAR_1'},
+            0x08209340: {0x02: 'STR_VAR_1'},
+            0x0820938D: {0x02: 'STR_VAR_1'},
+        },
+        'symbols': {
+            'flags': {
+                0x00D2: 'FLAG_FAN_CLUB_STRENGTH_SHARED',
+                0x02DA: 'FLAG_HIDE_LILYCOVE_FAN_CLUB_INTERVIEWER',
+            },
+            'vars': {
+                0x4095: 'VAR_LILYCOVE_FAN_CLUB_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x800A: 'VAR_0x800A',
+                0x800D: 'VAR_RESULT',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_TRAINER_FAN_CLUB_LASS',
+                0x02: 'LOCALID_TRAINER_FAN_CLUB_MAN',
+                0x03: 'LOCALID_TRAINER_FAN_CLUB_POKEFAN_M',
+                0x04: 'LOCALID_TRAINER_FAN_CLUB_LITTLE_GIRL',
+                0x05: 'LOCALID_TRAINER_FAN_CLUB_NINJA_BOY',
+                0x06: 'LOCALID_TRAINER_FAN_CLUB_BOY',
+                0x07: 'LOCALID_TRAINER_FAN_CLUB_WOMAN',
+                0x08: 'LOCALID_TRAINER_FAN_CLUB_EXPERT_F',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'script_var_values': {
+                0x08208442: {
+                    0x8004: {0x8: 'FANCLUB_MEMBER1', 0x9: 'FANCLUB_MEMBER2', 0xA: 'FANCLUB_MEMBER3', 0xB: 'FANCLUB_MEMBER4', 0xC: 'FANCLUB_MEMBER5', 0xD: 'FANCLUB_MEMBER6', 0xE: 'FANCLUB_MEMBER7', 0xF: 'FANCLUB_MEMBER8'},
+                    0x800D: {0x0: 'FALSE'},
+                },
+                0x082084F3: {0x800D: {0x1: 'TRUE'}},
+                0x0820850E: {
+                    0x8005: {0x8: 'NUM_TRAINER_FAN_CLUB_MEMBERS'},
+                    0x8004: {0x8: 'FANCLUB_MEMBER1', 0x9: 'FANCLUB_MEMBER2', 0xA: 'FANCLUB_MEMBER3', 0xB: 'FANCLUB_MEMBER4', 0xC: 'FANCLUB_MEMBER5', 0xD: 'FANCLUB_MEMBER6', 0xE: 'FANCLUB_MEMBER7', 0xF: 'FANCLUB_MEMBER8'},
+                    0x800D: {0x0: 'FALSE'},
+                },
+                0x08208630: {0x8004: {0xD: 'FANCLUB_MEMBER6'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
+                0x082086A7: {0x8004: {0x8: 'FANCLUB_MEMBER1'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
+                0x0820871E: {0x8004: {0x9: 'FANCLUB_MEMBER2'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
+                0x08208795: {0x8004: {0xA: 'FANCLUB_MEMBER3'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
+                0x0820880C: {0x8004: {0xB: 'FANCLUB_MEMBER4'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
+                0x0820886E: {0x8004: {0xC: 'FANCLUB_MEMBER5'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
+                0x082088D0: {0x8004: {0xE: 'FANCLUB_MEMBER7'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
+                0x08208932: {0x8004: {0xF: 'FANCLUB_MEMBER8'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
+                0x082089A9: {0x8005: {0xB: 'TVSHOW_FAN_CLUB_SPECIAL'}, 0x8004: {0x8: 'FANCLUB_MEMBER1', 0xE: 'EASY_CHAT_TYPE_FAN_QUESTION'}, 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+                0x08208A07: {0x8004: {0x8: 'FANCLUB_MEMBER1'}, 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+                0x08208A2E: {0x8004: {0x8: 'FANCLUB_MEMBER1', 0xE: 'EASY_CHAT_TYPE_FAN_QUESTION'}, 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+                0x08208A66: {0x8004: {0x2: 'SCROLL_MULTI_POKEMON_FAN_CLUB_RATER', 0x8: 'FANCLUB_MEMBER1'}},
+                0x08208AB8: {0x8004: {0x8: 'FANCLUB_MEMBER1'}, 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+                0x08208ADF: {0x8004: {0x8: 'FANCLUB_MEMBER1'}},
+                0x08208AF1: {0x8004: {0x8: 'FANCLUB_MEMBER1'}},
+                0x08208B06: {0x8004: {0x8: 'FANCLUB_MEMBER1'}},
+            },
+            'switch_values': {
+                'VAR_RESULT': {0xB: '11', 0x7F: 'MULTI_B_PRESSED'},
+            },
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'LilycoveCity_LilycoveMuseum_2F': {
         0x0820630D: 'LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft',
         0x0820630F: 'LilycoveCity_LilycoveMuseum_2F_Movement_FaceExhibitHall',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'LilycoveCity_PokemonTrainerFanClub': {
+        0x0820840E: 'LilycoveCity_PokemonTrainerFanClub_Movement_FanApproachPlayer',
+        0x08208416: 'LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlWatchPlayer',
+        0x0820841D: 'LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlMoveCloserToPlayer',
+        0x08208420: 'LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer',
     },
 })
 
@@ -8218,10 +8345,20 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 (CANONICAL_SCRIPT_COMMAND_NAMES.get(name, name), argstr)
                 for name, argstr in decoded_lines
             ]
-            decoded_lines = [
-                (name, special_aliases.get(argstr, argstr) if name == 'special' else argstr)
-                for name, argstr in decoded_lines
-            ]
+            remapped_specials = []
+            for name, argstr in decoded_lines:
+                if name == 'special':
+                    argstr = special_aliases.get(argstr, argstr)
+                elif name == 'specialvar':
+                    # A specialvar carries the destination followed by the
+                    # special. Rename only that latter operand so semantic
+                    # aliases remain byte-exact for both command forms.
+                    parts = [part.strip() for part in argstr.split(',', 1)]
+                    if len(parts) == 2:
+                        argstr = '%s, %s' % (
+                            parts[0], special_aliases.get(parts[1], parts[1]))
+                remapped_specials.append((name, argstr))
+            decoded_lines = remapped_specials
             decoded_lines = collapse_msgbox_macros(decoded_lines)
             decoded_lines = collapse_trainerbattle_macros(decoded_lines)
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)

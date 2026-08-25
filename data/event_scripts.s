@@ -752,7 +752,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/LilycoveCity_UnusedMart/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonTrainerFanClub/scripts.inc"
-	.incbin "baserom_jp.gba", 0x208bec, 0x8e8
 	.include "data/maps/LilycoveCity_Harbor/scripts.inc"
 	.incbin "baserom_jp.gba", 0x209ba7, 0x1c9
 	.include "data/maps/LilycoveCity_MoveDeletersHouse/scripts.inc"
@@ -1149,6 +1148,26 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_ShowPokemonCenterSign, 0x08242EFF
 	.globl Common_ShowEasyChatScreen
 	.set Common_ShowEasyChatScreen, 0x08242F08
+	@ These Fan Club interview strings remain in the later shared TV-text raw
+	@ owner. Export semantic aliases until that physical text owner is split.
+	.globl LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer
+	.set LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer, 0x0824DE14
+	.globl LilycoveCity_PokemonTrainerFanClub_Text_ThatsWhatYouThink
+	.set LilycoveCity_PokemonTrainerFanClub_Text_ThatsWhatYouThink, 0x0824DE37
+	.globl LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer
+	.set LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer, 0x0824DE51
+	.globl LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer2
+	.set LilycoveCity_PokemonTrainerFanClub_Text_WhatsYourOpinionOfTrainer2, 0x0824DE64
+	.globl LilycoveCity_PokemonTrainerFanClub_Text_HowStrongRateTrainer
+	.set LilycoveCity_PokemonTrainerFanClub_Text_HowStrongRateTrainer, 0x0824DE82
+	.globl LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer2
+	.set LilycoveCity_PokemonTrainerFanClub_Text_HaveYouForgottenTrainer2, 0x0824DEA3
+	.globl LilycoveCity_PokemonTrainerFanClub_Text_YouShouldMeetTrainer
+	.set LilycoveCity_PokemonTrainerFanClub_Text_YouShouldMeetTrainer, 0x0824DEB6
+	.globl LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo
+	.set LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo, 0x0824DEE0
+	.globl LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial
+	.set LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial, 0x0824DF29
 	.globl Common_EventScript_BufferTrendyPhrase
 	.set Common_EventScript_BufferTrendyPhrase, 0x08242F17
 	.globl EventScript_BackupMrBrineyLocation

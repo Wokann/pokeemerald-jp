@@ -185,6 +185,14 @@ gSpecials:
 	def_special BufferStreakTrainerText
 	def_special sub_0813BA68
 	def_special UpdateMovedLilycoveFanClubMembers
+	.set SPECIAL_IsFanClubMemberFanOfPlayer, SPECIAL_ShouldMoveLilycoveFanClubMember
+	.set SPECIAL_WAITSTATE_IsFanClubMemberFanOfPlayer, SPECIAL_WAITSTATE_ShouldMoveLilycoveFanClubMember
+	.set SPECIAL_GetNumFansOfPlayerInTrainerFanClub, SPECIAL_GetNumMovedLilycoveFanClubMembers
+	.set SPECIAL_WAITSTATE_GetNumFansOfPlayerInTrainerFanClub, SPECIAL_WAITSTATE_GetNumMovedLilycoveFanClubMembers
+	.set SPECIAL_BufferFanClubTrainerName, SPECIAL_BufferStreakTrainerText
+	.set SPECIAL_WAITSTATE_BufferFanClubTrainerName, SPECIAL_WAITSTATE_BufferStreakTrainerText
+	.set SPECIAL_TryLoseFansFromPlayTime, SPECIAL_UpdateMovedLilycoveFanClubMembers
+	.set SPECIAL_WAITSTATE_TryLoseFansFromPlayTime, SPECIAL_WAITSTATE_UpdateMovedLilycoveFanClubMembers
 	def_special sub_0813BF84
 	def_special sub_0813BA98
 	def_special sub_0813BFA0
@@ -368,6 +376,10 @@ gSpecials:
 	.set SPECIAL_WAITSTATE_TryPutLotteryWinnerReportOnAir, SPECIAL_WAITSTATE_sub_080EEDEC
 	def_special sub_080EF244
 	def_special sub_080EF2D8
+	.set SPECIAL_TryPutTrainerFanClubOnAir, SPECIAL_sub_080EF244
+	.set SPECIAL_WAITSTATE_TryPutTrainerFanClubOnAir, SPECIAL_WAITSTATE_sub_080EF244
+	.set SPECIAL_ShouldHideFanClubInterviewer, SPECIAL_sub_080EF2D8
+	.set SPECIAL_WAITSTATE_ShouldHideFanClubInterviewer, SPECIAL_WAITSTATE_sub_080EF2D8
 	def_special nullsub_55
 	def_special PutFanClubSpecialOnTheAir
 	def_special sub_080EF814
