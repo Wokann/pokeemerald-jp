@@ -212,6 +212,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Rout
 	MossdeepCity_House3 \
 	MossdeepCity_StevensHouse \
 	MossdeepCity_House4 \
+	MossdeepCity_SpaceCenter_1F \
 	SootopolisCity \
 	EverGrandeCity \
 	LittlerootTown

@@ -58,6 +58,14 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_House3': 3,
     'MossdeepCity_StevensHouse': 17,
     'MossdeepCity_House4': 5,
+    'MossdeepCity_SpaceCenter_1F': 34,
+}
+
+# This map's complete, physical JP script sequence includes both entry points.
+# Most older reviewed ranges predate semantic OnLoad labels, so retain their
+# existing matcher behavior and opt only this audited sequence into OnLoad.
+MAP_US_LABEL_SEQUENCE_INCLUDE_ONLOAD = {
+    'MossdeepCity_SpaceCenter_1F',
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -86,6 +94,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_House3': 5,
     'MossdeepCity_StevensHouse': 9,
     'MossdeepCity_House4': 5,
+    'MossdeepCity_SpaceCenter_1F': 28,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7910,6 +7919,72 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Space Center 1F is one complete JP source range from its map-script table
+# through the final Team Magma notice. The 34 script entries and 28 texts are
+# matched in physical order against the US map source. JP text control bytes
+# are mapped only where the surrounding script and matching US text prove the
+# placeholder meaning.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_SpaceCenter_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'field_placeholders': {
+            0x0820D0D8: {0x02: 'STR_VAR_1'},
+            0x0820D126: {0x02: 'STR_VAR_1'},
+            0x0820D3DA: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+        },
+        'symbols': {
+            'flags': {
+                0x00BF: 'FLAG_DEFEATED_GRUNT_SPACE_CENTER_1F',
+                0x00C0: 'FLAG_RECEIVED_SUN_STONE_MOSSDEEP',
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+            },
+            'vars': {
+                0x405D: 'VAR_MOSSDEEP_CITY_STATE',
+                0x409E: 'VAR_MOSSDEEP_SPACE_CENTER_STAIR_GUARD_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'script_var_values': {
+                0x0820CDF4: {0x800D: {0x0: '0', 0x1: '1'}},
+                0x0820CE40: {0x800D: {0x0: '0', 0x1: '1'}},
+                0x0820CEAA: {0x800D: {0x0: 'FALSE'}},
+                0x0820CEF6: {0x800D: {0x0: 'FALSE'}},
+            },
+            'switch_values': {
+                'VAR_FACING': {0x3: 'DIR_WEST'},
+            },
+            'items': {0x005D: 'ITEM_SUN_STONE'},
+            'trainers': {
+                0x0016: 'TRAINER_GRUNT_SPACE_CENTER_1',
+                0x0074: 'TRAINER_GRUNT_SPACE_CENTER_2',
+                0x024A: 'TRAINER_GRUNT_SPACE_CENTER_3',
+                0x024B: 'TRAINER_GRUNT_SPACE_CENTER_4',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_SPACE_CENTER_1F_SCIENTIST_1',
+                0x02: 'LOCALID_SPACE_CENTER_1F_SCIENTIST_2',
+                0x03: 'LOCALID_SPACE_CENTER_1F_SAILOR',
+                0x04: 'LOCALID_SPACE_CENTER_1F_OLD_MAN',
+                0x05: 'LOCALID_SPACE_CENTER_1F_WOMAN',
+                0x09: 'LOCALID_SPACE_CENTER_1F_STAIR_GRUNT',
+            },
+            'movement_types': {0x0A: 'MOVEMENT_TYPE_FACE_RIGHT'},
+            'directions': {0x03: 'DIR_WEST'},
+            'metatiles': {0x03E4: 'METATILE_Facility_DataPad'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'MossdeepCity_Mart': (
         (0x0820C5CA, 'MossdeepCity_Mart_Pokemart', (
@@ -8247,6 +8322,14 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     'MossdeepCity_StevensHouse': {
         0x0820C8C5: 'MossdeepCity_StevensHouse_Movement_StevenApproachPlayer',
         0x0820C8CD: 'MossdeepCity_StevensHouse_Movement_StevenReturn',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'MossdeepCity_SpaceCenter_1F': {
+        0x0820D0B6: 'MossdeepCity_SpaceCenter_1F_Movement_MoveGruntFromStairsWest',
+        0x0820D0BA: 'MossdeepCity_SpaceCenter_1F_Movement_MoveGruntFromStairsEast',
+        0x0820D0BE: 'MossdeepCity_SpaceCenter_1F_Movement_MoveGruntFromStairs',
     },
 })
 
@@ -8886,6 +8969,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('items', {}).get(value)
         if name.startswith('buffer') and index == 0:
             return {0: 'STR_VAR_1', 1: 'STR_VAR_2', 2: 'STR_VAR_3'}.get(value)
+        if name == 'buffernumberstring' and index == 1:
+            return symbols.get('vars', {}).get(value)
         if name == 'bufferstdstring' and index == 1:
             return symbols.get('stdstrings', {}).get(value)
         if name in ('playbgm', 'playfanfare', 'savebgm', 'fadenewbgm') and index == 0:
@@ -9601,9 +9686,13 @@ def apply_us_label_sequence_metadata():
         if not jp_path.is_file() or not us_path.is_file():
             raise RuntimeError('missing reviewed map source for %s' % mname)
 
+        entry_pattern = (
+            r'EventScript(?:_[A-Za-z0-9_]+)?|OnTransition|OnFrame|'
+            r'MapScriptTable(?:_[A-Za-z0-9_]+)?')
+        if mname in MAP_US_LABEL_SEQUENCE_INCLUDE_ONLOAD:
+            entry_pattern += r'|OnLoad'
         label_re = re.compile(
-            r'^(%s_(?:EventScript(?:_[A-Za-z0-9_]+)?|OnTransition|OnFrame|'
-            r'MapScriptTable(?:_[A-Za-z0-9_]+)?)):{1,2}' % re.escape(mname))
+            r'^(%s_(?:%s)):{1,2}' % (re.escape(mname), entry_pattern))
         address_re = re.compile(r'@\s*(0x08[0-9A-Fa-f]{6})\b')
         suffix_re = re.compile(r'_([0-9A-Fa-f]{8})$')
 

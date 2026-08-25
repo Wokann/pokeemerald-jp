@@ -2087,27 +2087,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MossdeepCity_House4/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_HOUSE4
 	.set gMapEvents_MOSSDEEP_CITY_HOUSE4, MossdeepCity_House4_MapEvents
-	.globl MOSSDEEP_CITY_SPACE_CENTER_1F_EventObjects
-MOSSDEEP_CITY_SPACE_CENTER_1F_EventObjects: @ 0x0850B444
-	object_event 1, 46, 0, 7, 2, 3, 7, 0, 0, 0, 0, MossdeepCity_SpaceCenter_1F_EventScript_0020CDF4, 0x0000
-	object_event 2, 46, 0, 2, 2, 3, 7, 0, 0, 0, 0, MossdeepCity_SpaceCenter_1F_EventScript_0020CE7F, 0x0000
-	object_event 3, 49, 0, 6, 6, 3, 9, 0, 0, 0, 0, MossdeepCity_SpaceCenter_1F_EventScript_0020CEAA, 0x0000
-	object_event 4, 29, 0, 10, 2, 3, 7, 0, 0, 0, 0, MossdeepCity_SpaceCenter_1F_EventScript_0020CF84, 0x0000
-	object_event 5, 26, 0, 14, 7, 3, 3, 1, 1, 0, 0, MossdeepCity_SpaceCenter_1F_EventScript_0020CF49, 0x0000
-	object_event 6, 120, 0, 12, 9, 3, 9, 1, 1, 1, 2, 0x0820CFF6, 0x02F4
-	object_event 7, 119, 0, 11, 6, 3, 9, 1, 1, 1, 2, 0x0820D00D, 0x02F4
-	object_event 8, 119, 0, 10, 2, 3, 8, 1, 1, 1, 2, 0x0820D024, 0x02F4
-	object_event 9, 119, 0, 13, 2, 3, 8, 1, 1, 1, 0, 0x0820D03B, 0x02F4
-	object_event 10, 5, 0, 2, 5, 0, 76, 1, 1, 0, 0, MossdeepCity_SpaceCenter_1F_EventScript_0020CFEB, 0x02E1
-	object_event 11, 134, 0, 1, 4, 3, 8, 1, 1, 0, 0, MossdeepCity_SpaceCenter_1F_EventScript_0020CFD5, 0x02F1
-	.globl MOSSDEEP_CITY_SPACE_CENTER_1F_EventWarps
-MOSSDEEP_CITY_SPACE_CENTER_1F_EventWarps: @ 0x0850B54C
-	warp_def 7, 9, 0, 8, MAP_MOSSDEEP_CITY
-	warp_def 8, 9, 0, 8, MAP_MOSSDEEP_CITY
-	warp_def 13, 1, 0, 0, MAP_MOSSDEEP_CITY_SPACE_CENTER_2F
+	.include "data/maps/MossdeepCity_SpaceCenter_1F/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F
-gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F: @ 0x0850B564
-	map_events MOSSDEEP_CITY_SPACE_CENTER_1F_EventObjects, MOSSDEEP_CITY_SPACE_CENTER_1F_EventWarps, 0, 0
+	.set gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F, MossdeepCity_SpaceCenter_1F_MapEvents
 	.globl MOSSDEEP_CITY_SPACE_CENTER_2F_EventObjects
 MOSSDEEP_CITY_SPACE_CENTER_2F_EventObjects: @ 0x0850B578
 	object_event 1, 15, 0, 6, 2, 3, 7, 0, 0, 0, 0, MossdeepCity_SpaceCenter_2F_EventScript_0020D82D, 0x0000
