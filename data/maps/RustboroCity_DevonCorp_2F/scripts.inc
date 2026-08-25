@@ -12,8 +12,6 @@ RustboroCity_DevonCorp_2F_EventScript_SetFossilReady::
 	setvar VAR_FOSSIL_RESURRECTION_STATE, 0x2
 	return
 
-	.globl RustboroCity_DevonCorp_2F_EventScript_00201441
-RustboroCity_DevonCorp_2F_EventScript_00201441: @ 0x08201441
 RustboroCity_DevonCorp_2F_EventScript_TalkToPokemonScientist::
 	lock
 	faceplayer
@@ -22,8 +20,6 @@ RustboroCity_DevonCorp_2F_EventScript_TalkToPokemonScientist::
 	release
 	end
 
-	.globl RustboroCity_DevonCorp_2F_EventScript_00201458
-RustboroCity_DevonCorp_2F_EventScript_00201458: @ 0x08201458
 RustboroCity_DevonCorp_2F_EventScript_BallScientist::
 	lock
 	faceplayer
@@ -38,8 +34,6 @@ RustboroCity_DevonCorp_2F_EventScript_DevelopedBalls::
 	release
 	end
 
-	.globl RustboroCity_DevonCorp_2F_EventScript_00201482
-RustboroCity_DevonCorp_2F_EventScript_00201482: @ 0x08201482
 RustboroCity_DevonCorp_2F_EventScript_PokenavScientist::
 	lock
 	faceplayer
@@ -54,8 +48,6 @@ RustboroCity_DevonCorp_2F_EventScript_HasPokenav::
 	release
 	end
 
-	.globl RustboroCity_DevonCorp_2F_EventScript_002014AC
-RustboroCity_DevonCorp_2F_EventScript_002014AC: @ 0x082014AC
 RustboroCity_DevonCorp_2F_EventScript_PokemonDreamsScientist::
 	lock
 	faceplayer
@@ -64,8 +56,6 @@ RustboroCity_DevonCorp_2F_EventScript_PokemonDreamsScientist::
 	release
 	end
 
-	.globl RustboroCity_DevonCorp_2F_EventScript_002014C3
-RustboroCity_DevonCorp_2F_EventScript_002014C3: @ 0x082014C3
 RustboroCity_DevonCorp_2F_EventScript_FossilScientist::
 	lock
 	faceplayer
@@ -246,11 +236,11 @@ RustboroCity_DevonCorp_2F_EventScript_ChooseFossil::
 	message RustboroCity_DevonCorp_2F_Text_TwoFossilsPickOne
 	waitmessage
 	multichoice 0x11, 0x6, MULTI_FOSSIL, FALSE
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0x0, RustboroCity_DevonCorp_2F_EventScript_ChooseClawFossil
-	goto_if_eq VAR_0x8000, 0x1, RustboroCity_DevonCorp_2F_EventScript_ChooseRootFossil
-	goto_if_eq VAR_0x8000, 0x2, RustboroCity_DevonCorp_2F_EventScript_CancelFossilSelect
-	goto_if_eq VAR_0x8000, 0x7F, RustboroCity_DevonCorp_2F_EventScript_CancelFossilSelect
+	switch VAR_RESULT
+	case 0, RustboroCity_DevonCorp_2F_EventScript_ChooseClawFossil
+	case 1, RustboroCity_DevonCorp_2F_EventScript_ChooseRootFossil
+	case 2, RustboroCity_DevonCorp_2F_EventScript_CancelFossilSelect
+	case MULTI_B_PRESSED, RustboroCity_DevonCorp_2F_EventScript_CancelFossilSelect
 	end
 
 RustboroCity_DevonCorp_2F_EventScript_ChooseClawFossil::
@@ -265,8 +255,6 @@ RustboroCity_DevonCorp_2F_EventScript_CancelFossilSelect::
 	release
 	end
 
-	.globl RustboroCity_DevonCorp_2F_EventScript_002017A1
-RustboroCity_DevonCorp_2F_EventScript_002017A1: @ 0x082017A1
 RustboroCity_DevonCorp_2F_EventScript_MatchCallScientist::
 	lock
 	faceplayer

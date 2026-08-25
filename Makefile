@@ -151,6 +151,8 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Rout
 	MauvilleCity_Mart \
 	RustboroCity \
 	RustboroCity_DevonCorp_1F \
+	RustboroCity_DevonCorp_2F \
+	RustboroCity_DevonCorp_3F \
 	RustboroCity_PokemonCenter_1F \
 	RustboroCity_PokemonCenter_2F \
 	RustboroCity_Mart \

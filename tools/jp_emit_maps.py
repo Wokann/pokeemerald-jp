@@ -5918,17 +5918,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08201B2F: {0x03: 'STR_VAR_2'},
             0x08201B65: {0x01: 'PLAYER', 0x03: 'STR_VAR_2'},
         },
-        # Map-event records in data_b2d_mid26.s have not yet moved to JSON.
-        # Keep their old, address-derived targets as assembler aliases until
-        # that event table is migrated with the map as one coherent change.
-        'script_aliases': {
-            0x08201441: ('RustboroCity_DevonCorp_2F_EventScript_00201441',),
-            0x08201458: ('RustboroCity_DevonCorp_2F_EventScript_00201458',),
-            0x08201482: ('RustboroCity_DevonCorp_2F_EventScript_00201482',),
-            0x082014AC: ('RustboroCity_DevonCorp_2F_EventScript_002014AC',),
-            0x082014C3: ('RustboroCity_DevonCorp_2F_EventScript_002014C3',),
-            0x082017A1: ('RustboroCity_DevonCorp_2F_EventScript_002017A1',),
-        },
         'external_texts': {
             0x08243EDB: 'gText_NicknameThisPokemon',
         },
@@ -5967,6 +5956,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
             'sounds': {0x15: 'SE_PIN'},
             'multichoices': {0x5D: 'MULTI_FOSSIL'},
+            'switch_values': {
+                'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'},
+            },
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
         },
     },

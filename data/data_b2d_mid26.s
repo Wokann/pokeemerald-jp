@@ -1913,36 +1913,12 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/RustboroCity_DevonCorp_1F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F
 	.set gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F, RustboroCity_DevonCorp_1F_MapEvents
-	.globl RUSTBORO_CITY_DEVON_CORP_2F_EventObjects
-RUSTBORO_CITY_DEVON_CORP_2F_EventObjects: @ 0x08508B34
-	object_event 1, 46, 0, 6, 5, 3, 7, 0, 0, 0, 0, RustboroCity_DevonCorp_2F_EventScript_00201441, 0x0000
-	object_event 2, 46, 0, 1, 5, 3, 10, 0, 0, 0, 0, RustboroCity_DevonCorp_2F_EventScript_00201458, 0x0000
-	object_event 3, 46, 0, 2, 6, 3, 15, 0, 0, 0, 0, RustboroCity_DevonCorp_2F_EventScript_00201482, 0x0000
-	object_event 4, 46, 0, 10, 5, 3, 7, 0, 10, 0, 0, RustboroCity_DevonCorp_2F_EventScript_002014AC, 0x0000
-	object_event 5, 46, 0, 14, 8, 3, 7, 1, 1, 0, 0, RustboroCity_DevonCorp_2F_EventScript_002014C3, 0x0000
-	object_event 6, 46, 0, 14, 5, 3, 7, 1, 1, 0, 0, RustboroCity_DevonCorp_2F_EventScript_002017A1, 0x0000
-	.globl RUSTBORO_CITY_DEVON_CORP_2F_EventWarps
-RUSTBORO_CITY_DEVON_CORP_2F_EventWarps: @ 0x08508BC4
-	warp_def 14, 1, 0, 2, MAP_RUSTBORO_CITY_DEVON_CORP_1F
-	warp_def 2, 1, 0, 0, MAP_RUSTBORO_CITY_DEVON_CORP_3F
+	.include "data/maps/RustboroCity_DevonCorp_2F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F
-gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F: @ 0x08508BD4
-	map_events RUSTBORO_CITY_DEVON_CORP_2F_EventObjects, RUSTBORO_CITY_DEVON_CORP_2F_EventWarps, 0, 0
-	.globl RUSTBORO_CITY_DEVON_CORP_3F_EventObjects
-RUSTBORO_CITY_DEVON_CORP_3F_EventObjects: @ 0x08508BE8
-	object_event 1, 48, 0, 17, 5, 3, 9, 0, 0, 0, 0, RustboroCity_DevonCorp_3F_EventScript_MrStone, 0x0000
-	object_event 2, 23, 0, 3, 5, 3, 10, 0, 0, 0, 0, RustboroCity_DevonCorp_3F_EventScript_Employee, 0x03B5
-	object_event 3, 48, 0, 15, 5, 3, 76, 1, 1, 0, 0, RustboroCity_DevonCorp_3F_EventScript_MrStone, 0x0000
-	.globl RUSTBORO_CITY_DEVON_CORP_3F_EventWarps
-RUSTBORO_CITY_DEVON_CORP_3F_EventWarps: @ 0x08508C30
-	warp_def 2, 1, 0, 1, MAP_RUSTBORO_CITY_DEVON_CORP_2F
-	.globl RUSTBORO_CITY_DEVON_CORP_3F_EventBgEvents
-RUSTBORO_CITY_DEVON_CORP_3F_EventBgEvents: @ 0x08508C38
-	bg_event 1, 5, 3, 0, RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay, 0, 0
-	bg_event 1, 7, 3, 0, RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay, 0, 0
+	.set gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F, RustboroCity_DevonCorp_2F_MapEvents
+	.include "data/maps/RustboroCity_DevonCorp_3F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F
-gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F: @ 0x08508C50
-	map_events RUSTBORO_CITY_DEVON_CORP_3F_EventObjects, RUSTBORO_CITY_DEVON_CORP_3F_EventWarps, 0, RUSTBORO_CITY_DEVON_CORP_3F_EventBgEvents
+	.set gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F, RustboroCity_DevonCorp_3F_MapEvents
 	.globl RUSTBORO_CITY_GYM_EventObjects
 RUSTBORO_CITY_GYM_EventObjects: @ 0x08508C64
 	object_event 1, 125, 0, 5, 2, 3, 8, 0, 0, 0, 0, 0x082022C6, 0x0000
