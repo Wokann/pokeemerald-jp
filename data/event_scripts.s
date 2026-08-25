@@ -855,7 +855,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/EverGrandeCity_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/EverGrandeCity_PokemonLeague_2F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x2115de, 0x12
 	.include "data/maps/Route104_MrBrineysHouse/scripts.inc"
 	.include "data/maps/Route104_PrettyPetalFlowerShop/scripts.inc"
 	.incbin "baserom_jp.gba", 0x211af4, 0x2f9

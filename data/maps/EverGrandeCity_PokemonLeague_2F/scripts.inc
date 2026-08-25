@@ -6,3 +6,15 @@ EverGrandeCity_PokemonLeague_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, CableClub_OnLoad
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
+
+EverGrandeCity_PokemonLeague_2F_EventScript_Colosseum:: @ 0x082115DE
+	call CableClub_EventScript_Colosseum
+	end
+
+EverGrandeCity_PokemonLeague_2F_EventScript_TradeCenter:: @ 0x082115E4
+	call CableClub_EventScript_TradeCenter
+	end
+
+EverGrandeCity_PokemonLeague_2F_EventScript_RecordCorner:: @ 0x082115EA
+	call CableClub_EventScript_RecordCorner
+	end

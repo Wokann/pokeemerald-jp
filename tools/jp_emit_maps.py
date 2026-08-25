@@ -110,6 +110,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The adjacent Cable Club floor retains three unused RS-era wrapper
     # entries after its shared map-script hooks.
     'EverGrandeCity_PokemonCenter_2F': 3,
+    # The neighboring League Cable Club floor retains the same three
+    # explicitly named, but unused, RS-era wrapper entries.
+    'EverGrandeCity_PokemonLeague_2F': 3,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -302,6 +305,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x082115B7,
         0x082115BD,
         0x082115C3,
+    ),
+    # The League Cable Club floor immediately follows with the same three
+    # unused RS-era wrappers in its own physical map-owned range.
+    'EverGrandeCity_PokemonLeague_2F': (
+        0x082115DE,
+        0x082115E4,
+        0x082115EA,
     ),
     # The RS-era Dive item ball is unused in Emerald but remains an explicit
     # named script in the matching Stevens House source.
@@ -9047,6 +9057,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082115B7: 'EverGrandeCity_PokemonCenter_2F_EventScript_Colosseum',
             0x082115BD: 'EverGrandeCity_PokemonCenter_2F_EventScript_TradeCenter',
             0x082115C3: 'EverGrandeCity_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+    },
+    # This immediately following League Cable Club floor uses the same
+    # shared hooks and RS-era wrappers, with its own physical local labels.
+    'EverGrandeCity_PokemonLeague_2F': {
+        'preserve_region_script_aliases': False,
+        'scripts': {
+            0x082115DE: 'EverGrandeCity_PokemonLeague_2F_EventScript_Colosseum',
+            0x082115E4: 'EverGrandeCity_PokemonLeague_2F_EventScript_TradeCenter',
+            0x082115EA: 'EverGrandeCity_PokemonLeague_2F_EventScript_RecordCorner',
         },
         'external_labels': {
             0x082467CD: 'CableClub_OnTransition',
