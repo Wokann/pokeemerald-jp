@@ -693,62 +693,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LilycoveCity/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY
 	.set gMapEvents_LILYCOVE_CITY, LilycoveCity_MapEvents
-	.globl MOSSDEEP_CITY_EventObjects
-MOSSDEEP_CITY_EventObjects: @ 0x084FF724
-	object_event 1, 49, 0, 38, 12, 5, 2, 1, 1, 0, 0, MossdeepCity_EventScript_Sailor, 0x0000
-	object_event 2, 21, 0, 50, 34, 5, 5, 1, 0, 0, 0, MossdeepCity_EventScript_ExpertM, 0x0000
-	object_event 3, 18, 0, 32, 12, 5, 2, 1, 1, 0, 0, MossdeepCity_EventScript_PokefanF, 0x0000
-	object_event 4, 5, 0, 26, 21, 5, 3, 0, 1, 0, 0, MossdeepCity_EventScript_NinjaBoy, 0x0000
-	object_event 5, 8, 0, 45, 18, 7, 9, 0, 0, 0, 0, MossdeepCity_EventScript_Girl, 0x0000
-	object_event 6, 59, 0, 62, 35, 5, 1, 0, 0, 0, 0, 0x08256E4C, 0x0413
-	object_event 7, 19, 0, 55, 5, 7, 7, 0, 0, 0, 0, MossdeepCity_EventScript_Man, 0x0000
-	object_event 8, 16, 0, 56, 21, 7, 10, 1, 1, 0, 0, MossdeepCity_EventScript_Woman, 0x0000
-	object_event 9, 9, 0, 23, 13, 5, 2, 1, 1, 0, 0, MossdeepCity_EventScript_KingsRockBoy, 0x0000
-	object_event 10, 119, 0, 44, 23, 5, 8, 1, 1, 0, 0, 0x00000000, 0x0337
-	object_event 11, 119, 0, 44, 24, 5, 7, 1, 1, 0, 0, 0x00000000, 0x0337
-	object_event 12, 119, 0, 44, 25, 5, 8, 1, 1, 0, 0, 0x00000000, 0x0337
-	object_event 13, 119, 0, 44, 26, 5, 7, 1, 1, 0, 0, 0x00000000, 0x0337
-	object_event 14, 196, 0, 45, 25, 5, 9, 1, 1, 0, 0, 0x00000000, 0x0337
-	object_event 15, 44, 0, 19, 25, 3, 64, 3, 3, 0, 0, 0x08276B0A, 0x0000
-	object_event 16, 219, 0, 61, 29, 5, 17, 0, 0, 0, 0, MossdeepCity_EventScript_Scott, 0x0314
-	object_event 17, 44, 0, 31, 29, 3, 64, 3, 3, 0, 0, MossdeepCity_EventScript_BlackBelt, 0x0000
-	.globl MOSSDEEP_CITY_EventWarps
-MOSSDEEP_CITY_EventWarps: @ 0x084FF8BC
-	warp_def 28, 9, 0, 0, MAP_MOSSDEEP_CITY_HOUSE1
-	warp_def 38, 9, 0, 0, MAP_MOSSDEEP_CITY_GYM
-	warp_def 28, 16, 0, 0, MAP_MOSSDEEP_CITY_POKEMON_CENTER_1F
-	warp_def 67, 25, 0, 0, MAP_MOSSDEEP_CITY_HOUSE2
-	warp_def 37, 18, 0, 0, MAP_MOSSDEEP_CITY_MART
-	warp_def 49, 6, 0, 0, MAP_MOSSDEEP_CITY_HOUSE3
-	warp_def 19, 10, 0, 0, MAP_MOSSDEEP_CITY_STEVENS_HOUSE
-	warp_def 18, 16, 0, 1, MAP_MOSSDEEP_CITY_HOUSE4
-	warp_def 64, 15, 0, 0, MAP_MOSSDEEP_CITY_SPACE_CENTER_1F
-	warp_def 36, 24, 0, 0, MAP_MOSSDEEP_CITY_GAME_CORNER_1F
-	.globl MOSSDEEP_CITY_EventCoordEvents
-MOSSDEEP_CITY_EventCoordEvents: @ 0x084FF90C
-	coord_event 25, 25, 0, 16385, 0, MossdeepCity_EventScript_VisitedMossdeep
-	coord_event 26, 25, 0, 16385, 0, MossdeepCity_EventScript_VisitedMossdeep
-	coord_event 32, 27, 0, 16385, 0, MossdeepCity_EventScript_VisitedMossdeep
-	coord_event 33, 27, 0, 16385, 0, MossdeepCity_EventScript_VisitedMossdeep
-	coord_event 42, 21, 5, 16477, 1, MossdeepCity_EventScript_TeamMagmaEnterSpaceCenter
-	coord_event 41, 22, 5, 16477, 1, MossdeepCity_EventScript_TeamMagmaEnterSpaceCenter
-	coord_event 41, 23, 5, 16477, 1, MossdeepCity_EventScript_TeamMagmaEnterSpaceCenter
-	coord_event 41, 24, 5, 16477, 1, MossdeepCity_EventScript_TeamMagmaEnterSpaceCenter
-	coord_event 40, 25, 5, 16477, 1, MossdeepCity_EventScript_TeamMagmaEnterSpaceCenter
-	coord_event 40, 26, 5, 16477, 1, MossdeepCity_EventScript_TeamMagmaEnterSpaceCenter
-	.globl MOSSDEEP_CITY_EventBgEvents
-MOSSDEEP_CITY_EventBgEvents: @ 0x084FF9AC
-	bg_event 25, 16, 0, 0, MossdeepCity_EventScript_CitySign, 0, 0
-	bg_event 34, 9, 0, 0, MossdeepCity_EventScript_GymSign, 0, 0
-	bg_event 29, 16, 0, 1, 0x08242EFF, 0, 0
-	bg_event 38, 18, 0, 1, 0x08242EF6, 0, 0
-	bg_event 66, 16, 0, 0, MossdeepCity_EventScript_SpaceCenterSign, 0, 0
-	bg_event 30, 16, 0, 1, 0x08242EFF, 0, 0
-	bg_event 39, 18, 0, 1, 0x08242EF6, 0, 0
-	bg_event 57, 21, 7, 0, MossdeepCity_EventScript_WhiteRock, 0, 0
+	.include "data/maps/MossdeepCity/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY
-gMapEvents_MOSSDEEP_CITY: @ 0x084FFA0C
-	map_events MOSSDEEP_CITY_EventObjects, MOSSDEEP_CITY_EventWarps, MOSSDEEP_CITY_EventCoordEvents, MOSSDEEP_CITY_EventBgEvents
+	.set gMapEvents_MOSSDEEP_CITY, MossdeepCity_MapEvents
 	.globl SOOTOPOLIS_CITY_EventObjects
 SOOTOPOLIS_CITY_EventObjects: @ 0x084FFA20
 	object_event 1, 21, 0, 31, 18, 3, 8, 0, 0, 0, 0, SootopolisCity_EventScript_CaveOfOriginExpert, 0x0000
