@@ -1937,22 +1937,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/RustboroCity_Flat1_1F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_FLAT1_1F
 	.set gMapEvents_RUSTBORO_CITY_FLAT1_1F, RustboroCity_Flat1_1F_MapEvents
-	.globl RUSTBORO_CITY_FLAT1_2F_EventObjects
-RUSTBORO_CITY_FLAT1_2F_EventObjects: @ 0x08509018
-	object_event 1, 18, 0, 4, 6, 3, 5, 3, 1, 0, 0, 0x08203874, 0x0000
-	object_event 2, 6, 0, 9, 5, 3, 8, 1, 1, 0, 0, 0x00000000, 0x0000
-	object_event 3, 162, 0, 9, 4, 3, 1, 1, 1, 0, 0, 0x0820387D, 0x0000
-	object_event 4, 154, 0, 10, 5, 3, 1, 1, 1, 0, 0, 0x0820387D, 0x0000
-	object_event 5, 155, 0, 10, 6, 3, 1, 1, 1, 0, 0, 0x0820387D, 0x0000
-	object_event 6, 19, 0, 8, 5, 3, 10, 1, 1, 0, 0, 0x08203771, 0x0000
-	object_event 7, 156, 0, 8, 6, 3, 1, 1, 1, 0, 0, 0x0820387D, 0x0000
-	object_event 8, 143, 0, 9, 7, 3, 1, 1, 1, 0, 0, 0x0820387D, 0x0000
-	.globl RUSTBORO_CITY_FLAT1_2F_EventWarps
-RUSTBORO_CITY_FLAT1_2F_EventWarps: @ 0x085090D8
-	warp_def 2, 1, 0, 2, MAP_RUSTBORO_CITY_FLAT1_1F
+	.include "data/maps/RustboroCity_Flat1_2F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_FLAT1_2F
-gMapEvents_RUSTBORO_CITY_FLAT1_2F: @ 0x085090E0
-	map_events RUSTBORO_CITY_FLAT1_2F_EventObjects, RUSTBORO_CITY_FLAT1_2F_EventWarps, 0, 0
+	.set gMapEvents_RUSTBORO_CITY_FLAT1_2F, RustboroCity_Flat1_2F_MapEvents
 	.include "data/maps/RustboroCity_House1/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_HOUSE1
 	.set gMapEvents_RUSTBORO_CITY_HOUSE1, RustboroCity_House1_MapEvents

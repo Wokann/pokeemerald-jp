@@ -159,6 +159,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Rout
 	RustboroCity_PokemonCenter_2F \
 	RustboroCity_Mart \
 	RustboroCity_Flat1_1F \
+	RustboroCity_Flat1_2F \
 	RustboroCity_House1 \
 	RustboroCity_CuttersHouse \
 	RustboroCity_House2 \
