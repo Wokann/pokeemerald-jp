@@ -128,6 +128,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The Route 112 cable-car station follows with two map hooks, four
     # branches, and the attendant interaction entry.
     'Route112_CableCarStation': 7,
+    # Mt. Chimney's paired cable-car station immediately follows and has the
+    # same seven locally owned map/event entries in reviewed US source order.
+    'MtChimney_CableCarStation': 7,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -199,6 +202,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'Route111_WinstrateFamilysHouse': 6,
     'Route111_OldLadysRestStop': 4,
     'Route112_CableCarStation': 3,
+    'MtChimney_CableCarStation': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9311,6 +9315,44 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'game_stats': {0x30: 'GAME_STAT_RODE_CABLE_CAR'},
         },
     },
+    # This is the immediate physical successor of Route 112's paired
+    # station. Its movement records and texts finish exactly at the next
+    # map's source boundary, so all names below are reviewed against the
+    # matching US map rather than inherited from numeric JP labels.
+    'MtChimney_CableCarStation': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        # The existing JP source kept these records in the adjacent top-level
+        # raw span. Seed their independently checked US names once so the
+        # first generated source can itself participate in the sequence guard.
+        'texts': {
+            0x082120DE: 'MtChimney_CableCarStation_Text_CableCarReadyGetOn',
+            0x08212105: 'MtChimney_CableCarStation_Text_StepThisWay',
+            0x08212112: 'MtChimney_CableCarStation_Text_RideAnotherTime',
+        },
+        'symbols': {
+            'vars': {
+                0x40A3: 'VAR_CABLE_CAR_STATION_STATE',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x40A3: {0x00: '0', 0x01: '1', 0x02: '2'},
+                0x8004: {0x01: 'TRUE'},
+            },
+            'map_script_values': {0x40A3: {0x01: '1'}},
+            'local_ids': {
+                0x01: 'LOCALID_MT_CHIMNEY_CABLE_CAR_ATTENDANT',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {
+                0x08: 'MOVEMENT_TYPE_FACE_DOWN',
+                0x0A: 'MOVEMENT_TYPE_FACE_RIGHT',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'game_stats': {0x30: 'GAME_STAT_RODE_CABLE_CAR'},
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9523,6 +9565,15 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x08211FC2: 'Route112_CableCarStation_Movement_FollowPlayerOutFromCableCar',
         0x08211FC7: 'Route112_CableCarStation_Movement_BoardCableCar',
         0x08211FCC: 'Route112_CableCarStation_Movement_ExitCableCar',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'MtChimney_CableCarStation': {
+        0x082120CA: 'MtChimney_CableCarStation_Movement_LeadPlayerToCableCar',
+        0x082120CF: 'MtChimney_CableCarStation_Movement_FollowPlayerOutFromCableCar',
+        0x082120D4: 'MtChimney_CableCarStation_Movement_BoardCableCar',
+        0x082120D9: 'MtChimney_CableCarStation_Movement_ExitCableCar',
     },
 })
 
