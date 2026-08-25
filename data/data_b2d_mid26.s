@@ -2257,16 +2257,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Route116_TunnelersRestHouse/events.inc"
 	.globl gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE
 	.set gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE, Route116_TunnelersRestHouse_MapEvents
-	.globl ROUTE117_POKEMON_DAY_CARE_EventObjects
-ROUTE117_POKEMON_DAY_CARE_EventObjects: @ 0x0850C5CC
-	object_event 1, 30, 0, 2, 2, 3, 8, 0, 0, 0, 0, 0x082577DA, 0x0000
-	.globl ROUTE117_POKEMON_DAY_CARE_EventWarps
-ROUTE117_POKEMON_DAY_CARE_EventWarps: @ 0x0850C5E4
-	warp_def 2, 8, 0, 0, MAP_ROUTE117
-	warp_def 3, 8, 0, 0, MAP_ROUTE117
+	.include "data/maps/Route117_PokemonDayCare/events.inc"
 	.globl gMapEvents_ROUTE117_POKEMON_DAY_CARE
-gMapEvents_ROUTE117_POKEMON_DAY_CARE: @ 0x0850C5F4
-	map_events ROUTE117_POKEMON_DAY_CARE_EventObjects, ROUTE117_POKEMON_DAY_CARE_EventWarps, 0, 0
+	.set gMapEvents_ROUTE117_POKEMON_DAY_CARE, Route117_PokemonDayCare_MapEvents
 	.globl ROUTE121_SAFARI_ZONE_ENTRANCE_EventObjects
 ROUTE121_SAFARI_ZONE_ENTRANCE_EventObjects: @ 0x0850C608
 	object_event 1, 32, 0, 17, 9, 3, 9, 0, 0, 0, 0, Route121_SafariZoneEntrance_EventScript_00212A10, 0x0000

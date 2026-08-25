@@ -1881,6 +1881,10 @@ EventScript_UseDiveUnderwater: @ 0x8256935
 	.globl EventScript_FailSweetScent
 EventScript_FailSweetScent: @ 0x8256A14
 	.include "data/scripts/gUnknown_8256A14.inc"
+	@ The Day-Care Woman logic remains inside the later shared raw owner.
+	@ Export its reviewed map-event entry without moving that owner early.
+	.globl Route117_PokemonDayCare_EventScript_DaycareWoman
+	.set Route117_PokemonDayCare_EventScript_DaycareWoman, 0x082577DA
 
 	.globl EventScript_EggHatch
 EventScript_EggHatch: @ 0x8257A89

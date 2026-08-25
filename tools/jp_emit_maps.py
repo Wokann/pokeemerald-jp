@@ -142,6 +142,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The next physical map owner has its transition plus the three tunnelers
     # and opened-tunnel branch in the same order as the US source.
     'Route116_TunnelersRestHouse': 5,
+    # The following Day-Care map owns only its landmark transition; its woman
+    # interaction remains in the later shared day-care script owner.
+    'Route117_PokemonDayCare': 1,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -9487,6 +9490,19 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x08BA: 'FLAG_LANDMARK_TUNNELERS_REST_HOUSE',
             },
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # Route 117 Day-Care ends at the next physical map-script owner. Its
+    # object event targets the reviewed shared Day-Care Woman entry instead
+    # of retaining an opaque absolute address in the event table.
+    'Route117_PokemonDayCare': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082577DA: 'Route117_PokemonDayCare_EventScript_DaycareWoman',
+        },
+        'symbols': {
+            'flags': {0x08A6: 'FLAG_LANDMARK_POKEMON_DAYCARE'},
         },
     },
 })
