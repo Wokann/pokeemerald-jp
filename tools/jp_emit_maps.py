@@ -276,6 +276,16 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
 # the matching US text order have been checked.  jp_text_blocks.py reads this
 # same mapping, so source labels and map references cannot drift apart.
 VERIFIED_SHARED_TEXT_BLOCKS = {
+    'LilycoveCity_BerryGentleman': {
+        'source': 'data/scripts/gUnknown_826316A.inc',
+        'start': 0x08263A58,
+        'end': 0x08263AE4,
+        'labels': {
+            0x08263A58: 'LilycoveCity_Text_BerrySuitsYou',
+            0x08263A9E: 'LilycoveCity_Text_BecauseYoureTrainer',
+            0x08263ABA: 'LilycoveCity_Text_PokeblocksSuitPokemon',
+        },
+    },
     'Route134': {
         'source': 'data/text/trainers.inc',
         'start': 0x08262069,

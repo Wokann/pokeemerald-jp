@@ -1,7 +1,23 @@
 	compare_local_to_value 0x21, 0x1C
 	compare_var_to_value 0x3F00, 0xA2E
 	gotostd 0x13
-	.incbin "baserom_jp.gba", 0x263174, 0x10F7
+	.incbin "baserom_jp.gba", 0x263174, 0x8e4
+LilycoveCity_Text_BerrySuitsYou: @ 0x08263A58
+	.string "やっぱり\p"
+	.string "わたしに　スーツが　にあうように\n"
+	.string "うみには　しおかぜが　にあうな\l"
+	.string "そして　きみには　きのみが　にあいそうだ⋯⋯\p"
+	.string "なんでだろうね？$"
+
+LilycoveCity_Text_BecauseYoureTrainer: @ 0x08263A9E
+	.string "やっぱり　それは⋯⋯⋯⋯\p"
+	.string "きみが　トレーナーだからだ！$"
+
+LilycoveCity_Text_PokeblocksSuitPokemon: @ 0x08263ABA
+	.string "やっぱり\p"
+	.string "わたしに　シンプルさが　にあうように\n"
+	.string "ポケモンには　ポロックが　にあうな$"
+	.incbin "baserom_jp.gba", 0x263ae4, 0x787
 	.globl gJPText_0026426B
 gJPText_0026426B: @ 0x0826426B
 	.string "ポケモンえほんが　そろってる！$"

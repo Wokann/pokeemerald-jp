@@ -104,4 +104,8 @@ RustboroCity_EventScript_ItemXDefend:: @ 0x08256E32
 	finditem ITEM_X_DEFEND
 	end
 
-	.incbin "baserom_jp.gba", 0x256e3f, 0xc4a
+LilycoveCity_EventScript_ItemMaxRepel:: @ 0x08256E3F
+	finditem ITEM_MAX_REPEL
+	end
+
+	.incbin "baserom_jp.gba", 0x256e4c, 0xc3d

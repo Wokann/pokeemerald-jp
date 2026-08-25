@@ -15,7 +15,7 @@ LilycoveCity_ObjectEvents:
 	object_event 8, OBJ_EVENT_GFX_EXPERT_F, 34, 37, 5, MOVEMENT_TYPE_FACE_DOWN, 0, 0, TRAINER_TYPE_NONE, 0, LilycoveCity_EventScript_ExpertF, 0
 	object_event 9, OBJ_EVENT_GFX_EXPERT_M, 57, 17, 3, MOVEMENT_TYPE_LOOK_AROUND, 0, 0, TRAINER_TYPE_NONE, 0, LilycoveCity_EventScript_ExpertM2, 0
 	object_event 10, OBJ_EVENT_GFX_AQUA_MEMBER_M, 73, 15, 3, MOVEMENT_TYPE_FACE_RIGHT, 0, 0, TRAINER_TYPE_NONE, 0, LilycoveCity_EventScript_WailmerTrainerGrunt, FLAG_HIDE_LILYCOVE_CITY_AQUA_GRUNTS
-	object_event 11, OBJ_EVENT_GFX_ITEM_BALL, 61, 36, 5, MOVEMENT_TYPE_LOOK_AROUND, 0, 0, TRAINER_TYPE_NONE, 0, 0x08256E3F, FLAG_ITEM_LILYCOVE_CITY_MAX_REPEL
+	object_event 11, OBJ_EVENT_GFX_ITEM_BALL, 61, 36, 5, MOVEMENT_TYPE_LOOK_AROUND, 0, 0, TRAINER_TYPE_NONE, 0, LilycoveCity_EventScript_ItemMaxRepel, FLAG_ITEM_LILYCOVE_CITY_MAX_REPEL
 	object_event 12, OBJ_EVENT_GFX_AQUA_MEMBER_M, 43, 18, 3, MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT, 1, 0, TRAINER_TYPE_NONE, 0, LilycoveCity_EventScript_AquaGrunt4, FLAG_HIDE_LILYCOVE_CITY_AQUA_GRUNTS
 	object_event 13, OBJ_EVENT_GFX_AQUA_MEMBER_M, 46, 12, 3, MOVEMENT_TYPE_FACE_LEFT, 0, 0, TRAINER_TYPE_NONE, 0, LilycoveCity_EventScript_AquaGrunt1, FLAG_HIDE_LILYCOVE_CITY_AQUA_GRUNTS
 	object_event 14, OBJ_EVENT_GFX_AQUA_MEMBER_M, 45, 12, 3, MOVEMENT_TYPE_FACE_RIGHT, 0, 0, TRAINER_TYPE_NONE, 0, LilycoveCity_EventScript_AquaGrunt2, FLAG_HIDE_LILYCOVE_CITY_AQUA_GRUNTS
@@ -46,9 +46,9 @@ LilycoveCity_MapWarps:
 
 LilycoveCity_MapBGEvents:
 	bg_sign_event 19, 7, 0, BG_EVENT_PLAYER_FACING_ANY, LilycoveCity_EventScript_MuseumSign
-	bg_sign_event 25, 14, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 25, 14, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_sign_event 29, 7, 0, BG_EVENT_PLAYER_FACING_ANY, LilycoveCity_EventScript_DepartmentStoreSign
-	bg_sign_event 26, 14, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 26, 14, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_sign_event 6, 15, 0, BG_EVENT_PLAYER_FACING_ANY, LilycoveCity_EventScript_CitySign
 	bg_sign_event 29, 24, 0, BG_EVENT_PLAYER_FACING_ANY, LilycoveCity_EventScript_ContestHallSign
 	bg_sign_event 35, 24, 0, BG_EVENT_PLAYER_FACING_ANY, LilycoveCity_EventScript_MotelSign
