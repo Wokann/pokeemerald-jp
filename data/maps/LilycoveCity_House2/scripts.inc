@@ -3,38 +3,29 @@
 LilycoveCity_House2_MapScripts::
 	.byte 0
 
-LilycoveCity_House2_EventScript_00209FDD::
+LilycoveCity_House2_EventScript_FatMan:: @ 0x08209FDD
 	lock
 	faceplayer
-	checkflag 0xEA
-	goto_if 0x1, LilycoveCity_House2_EventScript_0020A014
-	loadword 0x0, gJPText_0020A01E
-	callstd 0x4
-	setorcopyvar 0x8000, 0x14C
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
-	setflag 0xEA
-	loadword 0x0, gJPText_0020A03E
-	callstd 0x4
+	goto_if_set FLAG_RECEIVED_TM_REST, LilycoveCity_House2_EventScript_ReceivedRest
+	msgbox LilycoveCity_House2_Text_NotAwakeYetHaveThis, MSGBOX_DEFAULT
+	giveitem ITEM_TM_REST
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_RECEIVED_TM_REST
+	msgbox LilycoveCity_House2_Text_SleepIsEssential, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_House2_EventScript_0020A014::
-	loadword 0x0, gJPText_0020A03E
-	callstd 0x4
+LilycoveCity_House2_EventScript_ReceivedRest:: @ 0x0820A014
+	msgbox LilycoveCity_House2_Text_SleepIsEssential, MSGBOX_DEFAULT
 	release
 	end
 
-	.globl gJPText_0020A01E
-gJPText_0020A01E: @ 0x0820A01E
+LilycoveCity_House2_Text_NotAwakeYetHaveThis: @ 0x0820A01E
 	.string "むにゃむにゃ⋯⋯\p"
 	.string "ぼく　ねぼけて　いるから\n"
 	.string "これを　あげる⋯⋯$"
 
-	.globl gJPText_0020A03E
-gJPText_0020A03E: @ 0x0820A03E
+LilycoveCity_House2_Text_SleepIsEssential: @ 0x0820A03E
 	.string "むにゃむにゃ⋯⋯\p"
 	.string "ねる　こは　そだつ⋯⋯\n"
 	.string "ねむって　たいりょく　かいふく⋯⋯$"

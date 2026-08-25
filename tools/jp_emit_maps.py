@@ -42,6 +42,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_Harbor': 56,
     'LilycoveCity_MoveDeletersHouse': 7,
     'LilycoveCity_House1': 2,
+    'LilycoveCity_House2': 2,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -54,6 +55,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_Harbor': 11,
     'LilycoveCity_MoveDeletersHouse': 9,
     'LilycoveCity_House1': 2,
+    'LilycoveCity_House2': 2,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7213,6 +7215,27 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'symbols': {
             'species': {0x013D: 'SPECIES_KECLEON'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
+        },
+    },
+})
+
+# House2 follows House1 in physical EventScript order. Its item gift, flag,
+# and text sequence match the corresponding US map source one-to-one.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_House2': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'symbols': {
+            'flags': {0x00EA: 'FLAG_RECEIVED_TM_REST'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x014C: 'ITEM_TM_REST'},
         },
     },
 })

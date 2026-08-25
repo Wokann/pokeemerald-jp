@@ -2030,16 +2030,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_House1/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE1
 	.set gMapEvents_LILYCOVE_CITY_HOUSE1, LilycoveCity_House1_MapEvents
-	.globl LILYCOVE_CITY_HOUSE2_EventObjects
-LILYCOVE_CITY_HOUSE2_EventObjects: @ 0x0850A674
-	object_event 1, 17, 0, 0, 4, 3, 8, 0, 0, 0, 0, 0x08209FDD, 0x0000
-	.globl LILYCOVE_CITY_HOUSE2_EventWarps
-LILYCOVE_CITY_HOUSE2_EventWarps: @ 0x0850A68C
-	warp_def 2, 7, 0, 9, MAP_LILYCOVE_CITY
-	warp_def 3, 7, 0, 9, MAP_LILYCOVE_CITY
+	.include "data/maps/LilycoveCity_House2/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE2
-gMapEvents_LILYCOVE_CITY_HOUSE2: @ 0x0850A69C
-	map_events LILYCOVE_CITY_HOUSE2_EventObjects, LILYCOVE_CITY_HOUSE2_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_HOUSE2, LilycoveCity_House2_MapEvents
 	.globl LILYCOVE_CITY_HOUSE3_EventObjects
 LILYCOVE_CITY_HOUSE3_EventObjects: @ 0x0850A6B0
 	object_event 1, 189, 0, 3, 4, 3, 8, 1, 1, 0, 0, LilycoveCity_House3_EventScript_0020A166, 0x0000
