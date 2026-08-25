@@ -74,6 +74,10 @@
 	@ with pokeemerald without changing the special-table entry.
 	.set SPECIAL_SetMauvilleOldManObjEventGfx, 104
 	.set SPECIAL_WAITSTATE_SetMauvilleOldManObjEventGfx, 0
+	@ Rustboro's tutorial special uses the retained JP table slot, while the
+	@ original bytecode includes the waitstate expressed by pokeemerald's name.
+	.set SPECIAL_ScriptMenu_CreateStartMenuForPokenavTutorial, 469
+	.set SPECIAL_WAITSTATE_ScriptMenu_CreateStartMenuForPokenavTutorial, 1
 	@ The JP special table retains the address-style C name. Its verified
 	@ index and implicit waitstate match pokeemerald's Rayquaza scene entry.
 	.set SPECIAL_Script_DoRayquazaScene, 505
@@ -272,6 +276,12 @@
 	.set gText_TheBagIsFull, 0x08243947
 	.globl gText_ComeBackWithSecretPower
 	.set gText_ComeBackWithSecretPower, 0x08243B96
+	@ Rustboro uses these retained shared movement streams under the upstream
+	@ names; their JP byte addresses match the map-scene behavior exactly.
+	.globl Common_Movement_FaceRight
+	.set Common_Movement_FaceRight, 0x0824362F
+	.globl Common_Movement_FaceLeft
+	.set Common_Movement_FaceLeft, 0x08243631
 	@ These two shared movement streams remain in the retained JP movement
 	@ block; the map source uses the matching pokeemerald semantic names.
 	.globl Common_Movement_QuestionMark

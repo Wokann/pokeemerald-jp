@@ -100,4 +100,8 @@ MauvilleCity_EventScript_ItemXSpeed:: @ 0x08256E25
 	finditem ITEM_X_SPEED
 	end
 
-	.incbin "baserom_jp.gba", 0x256e32, 0xc57
+RustboroCity_EventScript_ItemXDefend:: @ 0x08256E32
+	finditem ITEM_X_DEFEND
+	end
+
+	.incbin "baserom_jp.gba", 0x256e3f, 0xc4a
