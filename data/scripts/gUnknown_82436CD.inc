@@ -21,6 +21,8 @@ gText_PleaseComeAgain: @ 0x08243920
 	.string "またどうぞ！$"
 
 	.incbin "baserom_jp.gba", 0x243927, 0x50
+	.globl gText_PlayerWhatCanIDoForYou
+	.set gText_PlayerWhatCanIDoForYou, 0x08243927
 	.globl gJPText_00243977
 gJPText_00243977: @ 0x08243977
 	.string "ざんねん！\n"

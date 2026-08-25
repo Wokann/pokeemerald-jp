@@ -116,6 +116,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Route 104's cottage follows the League 2F range in physical ROM order.
     # Its transition script and eleven local branches match the US sequence.
     'Route104_MrBrineysHouse': 12,
+    # The adjoining flower shop follows with its transition and ten local
+    # scripts, including the named decoration-list owner.
+    'Route104_PrettyPetalFlowerShop': 11,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -9160,6 +9163,72 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
         },
     },
+    # The adjacent Pretty Petal Flower Shop has no local text bytes: its
+    # reviewed berry dialogue belongs to the later shared text owner.  Its
+    # local scripts, decoration list, event table, and external text pointers
+    # nevertheless map one-to-one to the matching US source.
+    'Route104_PrettyPetalFlowerShop': {
+        'preserve_region_script_aliases': False,
+        # The matching US source intentionally compares giveitem's result as
+        # the literal zero rather than a generic boolean spelling.
+        'literal_result_commands': ('giveitem',),
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'external_texts': {
+            0x08243920: 'gText_PleaseComeAgain',
+            0x08243927: 'gText_PlayerWhatCanIDoForYou',
+            0x08263C9E: 'Route104_PrettyPetalFlowerShop_Text_ThisIsPrettyPetalFlowerShop',
+            0x08263CC6: 'Route104_PrettyPetalFlowerShop_Text_LearnAboutBerries',
+            0x08263CD9: 'Route104_PrettyPetalFlowerShop_Text_IntroLearnAboutBerries',
+            0x08263D0D: 'Route104_PrettyPetalFlowerShop_Text_BerriesExplanation',
+            0x08263DCA: 'Route104_PrettyPetalFlowerShop_Text_FlowersBringHappiness',
+            0x08263DE8: 'Route104_PrettyPetalFlowerShop_Text_YouCanHaveThis',
+            0x08263E32: 'Route104_PrettyPetalFlowerShop_Text_WailmerPailExplanation',
+            0x08263EA4: 'Route104_PrettyPetalFlowerShop_Text_ImGrowingFlowers',
+            0x08263ED1: 'Route104_PrettyPetalFlowerShop_Text_MachineMixesBerries',
+        },
+        'symbols': {
+            'flags': {
+                0x0001: 'FLAG_TEMP_1',
+                0x005E: 'FLAG_RECEIVED_WAILMER_PAIL',
+                0x007F: 'FLAG_MET_PRETTY_PETAL_SHOP_OWNER',
+                0x0869: 'FLAG_BADGE03_GET',
+                0x089C: 'FLAG_LANDMARK_FLOWER_SHOP',
+                0x0930: 'FLAG_DAILY_FLOWER_SHOP_RECEIVED_BERRY',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x010C: 'ITEM_WAILMER_PAIL'},
+            'local_ids': {0x01: 'LOCALID_FLOWER_SHOP_OWNER'},
+            'script_var_values': {
+                0x08211AAA: {
+                    0x800D: {
+                        0x0000: '0',
+                        0x0085: 'FIRST_BERRY_INDEX',
+                    },
+                },
+            },
+        },
+    },
+})
+
+MAP_POKEMART_LISTS.update({
+    'Route104_PrettyPetalFlowerShop': (
+        # Three alignment bytes, six decorations, and the JP
+        # pokemartlistend trailer are verified by the emitter against ROM.
+        (0x08211A61, 'Route104_PrettyPetalFlowerShop_Pokemart_Plants', (
+            'DECOR_RED_PLANT',
+            'DECOR_TROPICAL_PLANT',
+            'DECOR_PRETTY_FLOWERS',
+            'DECOR_COLORFUL_PLANT',
+            'DECOR_BIG_PLANT',
+            'DECOR_GORGEOUS_PLANT',
+        )),
+    ),
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9899,7 +9968,7 @@ def collapse_switch_macros(lines, value_names=None, minimum_cases=2):
     return out
 
 
-def name_contextual_result_conditions(lines):
+def name_contextual_result_conditions(lines, literal_result_commands=()):
     """Name result values only when their producing command proves the type.
 
     ``VAR_RESULT`` carries many unrelated result families.  In particular,
@@ -9965,7 +10034,7 @@ def name_contextual_result_conditions(lines):
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
         elif name == 'specialvar' and argstr == 'VAR_RESULT, IsEnigmaBerryValid':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
-        elif name == 'giveitem':
+        elif name == 'giveitem' and name not in literal_result_commands:
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
         elif name == 'givedecoration':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
@@ -10262,7 +10331,7 @@ def semantic_symbol_formatter(mname, script_addr=None):
             if reviewed is not None:
                 return reviewed
             return symbols.get('var_values', {}).get(args[0], {}).get(value)
-        if name == 'setvar' and index == 1 and args:
+        if name in ('setvar', 'addvar') and index == 1 and args:
             reviewed = (symbols.get('script_var_values', {})
                         .get(script_addr, {}).get(args[0], {}).get(value))
             if reviewed is None:
@@ -10284,13 +10353,19 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return (reviewed
                     or symbols.get('items', {}).get(value)
                     or symbols.get('trainers', {}).get(value)
-                    or symbols.get('decorations', {}).get(value))
+                    or symbols.get('decorations', {}).get(value)
+                    or symbols.get('vars', {}).get(value))
         if name == 'givedecoration' and index == 0:
             return symbols.get('decorations', {}).get(value)
         if name == 'bufferdecorationname' and index == 1:
             return symbols.get('decorations', {}).get(value)
         if index in ITEM_ARGUMENTS.get(name, ()):
-            return symbols.get('items', {}).get(value)
+            # A few byte-exact scripts pass a variable such as VAR_RESULT to
+            # giveitem instead of a literal item ID. A reviewed variable is
+            # unambiguous here because normal item IDs do not occupy that
+            # variable range.
+            return (symbols.get('items', {}).get(value)
+                    or symbols.get('vars', {}).get(value))
         if name.startswith('buffer') and index == 0:
             return {0: 'STR_VAR_1', 1: 'STR_VAR_2', 2: 'STR_VAR_3'}.get(value)
         if name == 'buffernumberstring' and index == 1:
@@ -10928,7 +11003,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 decoded_lines, implicit_waitstate_specials)
             decoded_lines = omit_default_macro_arguments(decoded_lines)
             decoded_lines = annotate_literal_copyvars(decoded_lines)
-            decoded_lines = name_contextual_result_conditions(decoded_lines)
+            decoded_lines = name_contextual_result_conditions(
+                decoded_lines, semantic.get('literal_result_commands', ()))
             for name, argstr in decoded_lines:
                 if argstr:
                     lines.append('\t%s %s' % (name, argstr))

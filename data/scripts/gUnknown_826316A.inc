@@ -36,6 +36,26 @@ LilycoveCity_Text_PokeblocksSuitPokemon: @ 0x08263ABA
 	.string "わたしに　シンプルさが　にあうように\n"
 	.string "ポケモンには　ポロックが　にあうな$"
 	.incbin "baserom_jp.gba", 0x263ae4, 0x44f
+	@ Pretty Petal Flower Shop's berry dialogue remains physically owned by
+	@ this later shared text block until that full data range is structured.
+	.globl Route104_PrettyPetalFlowerShop_Text_ThisIsPrettyPetalFlowerShop
+	.set Route104_PrettyPetalFlowerShop_Text_ThisIsPrettyPetalFlowerShop, 0x08263C9E
+	.globl Route104_PrettyPetalFlowerShop_Text_LearnAboutBerries
+	.set Route104_PrettyPetalFlowerShop_Text_LearnAboutBerries, 0x08263CC6
+	.globl Route104_PrettyPetalFlowerShop_Text_IntroLearnAboutBerries
+	.set Route104_PrettyPetalFlowerShop_Text_IntroLearnAboutBerries, 0x08263CD9
+	.globl Route104_PrettyPetalFlowerShop_Text_BerriesExplanation
+	.set Route104_PrettyPetalFlowerShop_Text_BerriesExplanation, 0x08263D0D
+	.globl Route104_PrettyPetalFlowerShop_Text_FlowersBringHappiness
+	.set Route104_PrettyPetalFlowerShop_Text_FlowersBringHappiness, 0x08263DCA
+	.globl Route104_PrettyPetalFlowerShop_Text_YouCanHaveThis
+	.set Route104_PrettyPetalFlowerShop_Text_YouCanHaveThis, 0x08263DE8
+	.globl Route104_PrettyPetalFlowerShop_Text_WailmerPailExplanation
+	.set Route104_PrettyPetalFlowerShop_Text_WailmerPailExplanation, 0x08263E32
+	.globl Route104_PrettyPetalFlowerShop_Text_ImGrowingFlowers
+	.set Route104_PrettyPetalFlowerShop_Text_ImGrowingFlowers, 0x08263EA4
+	.globl Route104_PrettyPetalFlowerShop_Text_MachineMixesBerries
+	.set Route104_PrettyPetalFlowerShop_Text_MachineMixesBerries, 0x08263ED1
 SootopolisCity_Text_NameIsKiriHaveOneOfThese: @ 0x08263F33
 	.string "{STR_VAR_1}　なまえ　なんていうの？\p"
 	.string "⋯⋯⋯　⋯⋯⋯　⋯⋯⋯\n"

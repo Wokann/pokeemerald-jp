@@ -2230,18 +2230,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Route104_MrBrineysHouse/events.inc"
 	.globl gMapEvents_ROUTE104_MR_BRINEYS_HOUSE
 	.set gMapEvents_ROUTE104_MR_BRINEYS_HOUSE, Route104_MrBrineysHouse_MapEvents
-	.globl ROUTE104_PRETTY_PETAL_FLOWER_SHOP_EventObjects
-ROUTE104_PRETTY_PETAL_FLOWER_SHOP_EventObjects: @ 0x0850C254
-	object_event 1, 20, 0, 0, 3, 3, 10, 0, 0, 0, 0, Route104_PrettyPetalFlowerShop_EventScript_002119DB, 0x0000
-	object_event 2, 14, 0, 7, 3, 3, 5, 1, 0, 0, 0, Route104_PrettyPetalFlowerShop_EventScript_00211A74, 0x0000
-	object_event 3, 8, 0, 11, 6, 4, 2, 2, 2, 0, 0, Route104_PrettyPetalFlowerShop_EventScript_00211AAA, 0x0000
-	.globl ROUTE104_PRETTY_PETAL_FLOWER_SHOP_EventWarps
-ROUTE104_PRETTY_PETAL_FLOWER_SHOP_EventWarps: @ 0x0850C29C
-	warp_def 2, 8, 0, 1, MAP_ROUTE104
-	warp_def 3, 8, 0, 1, MAP_ROUTE104
+	.include "data/maps/Route104_PrettyPetalFlowerShop/events.inc"
 	.globl gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP
-gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP: @ 0x0850C2AC
-	map_events ROUTE104_PRETTY_PETAL_FLOWER_SHOP_EventObjects, ROUTE104_PRETTY_PETAL_FLOWER_SHOP_EventWarps, 0, 0
+	.set gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP, Route104_PrettyPetalFlowerShop_MapEvents
 	.globl ROUTE111_WINSTRATE_FAMILYS_HOUSE_EventObjects
 ROUTE111_WINSTRATE_FAMILYS_HOUSE_EventObjects: @ 0x0850C2C0
 	object_event 1, 47, 0, 7, 5, 3, 9, 0, 0, 0, 0, 0x08211B50, 0x0000
