@@ -3,136 +3,109 @@
 RustboroCity_PokemonSchool_MapScripts::
 	.byte 0
 
-RustboroCity_PokemonSchool_EventScript_00202C1B::
+RustboroCity_PokemonSchool_EventScript_Blackboard::
 	lockall
-	loadword 0x0, gJPText_00202E24
-	callstd 0x4
-	goto RustboroCity_PokemonSchool_EventScript_00202C2A
+	msgbox RustboroCity_PokemonSchool_Text_BlackboardListsStatusChanges, MSGBOX_DEFAULT
+	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202C2A::
-	message gJPText_00202E54
+RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic::
+	message RustboroCity_PokemonSchool_Text_ReadWhichTopic
 	waitmessage
-	multichoicegrid 0x8, 0x1, 0xD, 0x3, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202C89
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202C97
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202CA5
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202CB3
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202CC1
-	compare_var_to_value 0x8000, 0x5
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202CCF
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202CCF
+	multichoicegrid 0x8, 0x1, MULTI_STATUS_INFO, 0x3, FALSE
+	switch VAR_RESULT
+	case 0, RustboroCity_PokemonSchool_EventScript_Poison
+	case 1, RustboroCity_PokemonSchool_EventScript_Paralysis
+	case 2, RustboroCity_PokemonSchool_EventScript_Sleep
+	case 3, RustboroCity_PokemonSchool_EventScript_Burn
+	case 4, RustboroCity_PokemonSchool_EventScript_Freeze
+	case 5, RustboroCity_PokemonSchool_EventScript_ExitTopicSelect
+	case MULTI_B_PRESSED, RustboroCity_PokemonSchool_EventScript_ExitTopicSelect
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202C89::
-	loadword 0x0, gJPText_00202E63
-	callstd 0x4
-	goto RustboroCity_PokemonSchool_EventScript_00202C2A
+RustboroCity_PokemonSchool_EventScript_Poison::
+	msgbox RustboroCity_PokemonSchool_Text_ExplainPoison, MSGBOX_DEFAULT
+	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202C97::
-	loadword 0x0, gJPText_00202EAF
-	callstd 0x4
-	goto RustboroCity_PokemonSchool_EventScript_00202C2A
+RustboroCity_PokemonSchool_EventScript_Paralysis::
+	msgbox RustboroCity_PokemonSchool_Text_ExplainParalysis, MSGBOX_DEFAULT
+	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CA5::
-	loadword 0x0, gJPText_00202EF5
-	callstd 0x4
-	goto RustboroCity_PokemonSchool_EventScript_00202C2A
+RustboroCity_PokemonSchool_EventScript_Sleep::
+	msgbox RustboroCity_PokemonSchool_Text_ExplainSleep, MSGBOX_DEFAULT
+	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CB3::
-	loadword 0x0, gJPText_00202F56
-	callstd 0x4
-	goto RustboroCity_PokemonSchool_EventScript_00202C2A
+RustboroCity_PokemonSchool_EventScript_Burn::
+	msgbox RustboroCity_PokemonSchool_Text_ExplainBurn, MSGBOX_DEFAULT
+	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CC1::
-	loadword 0x0, gJPText_00202FA7
-	callstd 0x4
-	goto RustboroCity_PokemonSchool_EventScript_00202C2A
+RustboroCity_PokemonSchool_EventScript_Freeze::
+	msgbox RustboroCity_PokemonSchool_Text_ExplainFreeze, MSGBOX_DEFAULT
+	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CCF::
+RustboroCity_PokemonSchool_EventScript_ExitTopicSelect::
 	releaseall
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CD1::
-	loadword 0x0, gJPText_002030B2
-	callstd 0x2
+RustboroCity_PokemonSchool_EventScript_GameboyKid1::
+	msgbox RustboroCity_PokemonSchool_Text_TradingRightNow, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CDA::
-	loadword 0x0, gJPText_002030CD
-	callstd 0x2
+RustboroCity_PokemonSchool_EventScript_GameboyKid2::
+	msgbox RustboroCity_PokemonSchool_Text_AlwaysWantedSeedot, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CE3::
-	loadword 0x0, gJPText_002030EA
-	callstd 0x2
+RustboroCity_PokemonSchool_EventScript_RichBoy::
+	msgbox RustboroCity_PokemonSchool_Text_PokemontCantUseManMadeItems, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CEC::
-	loadword 0x0, gJPText_00203128
-	callstd 0x2
+RustboroCity_PokemonSchool_EventScript_Lass::
+	msgbox RustboroCity_PokemonSchool_Text_ConfusedPokemonAttacksItself, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CF5::
-	loadword 0x0, gJPText_0020318A
-	callstd 0x2
+RustboroCity_PokemonSchool_EventScript_SchoolKidM::
+	msgbox RustboroCity_PokemonSchool_Text_PokemonHealItselfWithBerry, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202CFE::
-	loadword 0x0, gJPText_002031E4
-	callstd 0x3
+RustboroCity_PokemonSchool_EventScript_StudentNotebook::
+	msgbox RustboroCity_PokemonSchool_Text_StudentsNotes, MSGBOX_SIGN
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202D07::
+RustboroCity_PokemonSchool_EventScript_Teacher::
 	lock
 	faceplayer
-	checkflag 0x113
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202D6D
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, RustboroCity_PokemonSchool_EventScript_00202D57
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, RustboroCity_PokemonSchool_EventScript_00202D62
-	loadword 0x0, gJPText_00202FE5
-	callstd 0x4
-	setorcopyvar 0x8000, 0xB7
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, 0x082430E0
+	goto_if_set FLAG_RECEIVED_QUICK_CLAW, RustboroCity_PokemonSchool_EventScript_GaveQuickClaw
+	call_if_eq VAR_FACING, DIR_EAST, RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsEast
+	call_if_eq VAR_FACING, DIR_WEST, RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsWest
+	msgbox RustboroCity_PokemonSchool_Text_StudentsWhoDontStudyGetQuickClaw, MSGBOX_DEFAULT
+	giveitem ITEM_QUICK_CLAW
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	closemessage
-	applymovement 0x800F, 0x0824362D
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0x0
-	setflag 0x113
+	setflag FLAG_RECEIVED_QUICK_CLAW
 	release
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202D57::
-	applymovement 0x800F, RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast
+RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsEast::
+	applymovement VAR_LAST_TALKED, RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast
 	waitmovement 0x0
 	return
 
-RustboroCity_PokemonSchool_EventScript_00202D62::
-	applymovement 0x800F, RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest
+RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsWest::
+	applymovement VAR_LAST_TALKED, RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest
 	waitmovement 0x0
 	return
 
-RustboroCity_PokemonSchool_EventScript_00202D6D::
-	loadword 0x0, gJPText_00203045
-	callstd 0x4
+RustboroCity_PokemonSchool_EventScript_GaveQuickClaw::
+	msgbox RustboroCity_PokemonSchool_Text_ExplainQuickClaw, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x0824362D
+	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
 	waitmovement 0x0
 	release
 	end
@@ -189,81 +162,67 @@ RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast:
 	walk_left
 	step_end
 
-RustboroCity_PokemonSchool_EventScript_00202DB2::
+RustboroCity_PokemonSchool_EventScript_Scott::
 	lock
 	faceplayer
-	checkflag 0x1CB
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202E1A
-	checkflag 0x136
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202DE1
-	checkflag 0x867
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202DF4
-	loadword 0x0, gJPText_00203274
-	callstd 0x4
-	addvar 0x40D1, 0x1
-	setflag 0x136
+	goto_if_set FLAG_MET_SCOTT_AFTER_OBTAINING_STONE_BADGE, RustboroCity_PokemonSchool_EventScript_ScottWatchStudents
+	goto_if_set FLAG_MET_SCOTT_RUSTBORO, RustboroCity_PokemonSchool_EventScript_ScottSpokeAlready
+	goto_if_set FLAG_BADGE01_GET, RustboroCity_PokemonSchool_EventScript_ScottGreetHasBadge
+	msgbox RustboroCity_PokemonSchool_Text_ScottMetAlreadyCut, MSGBOX_DEFAULT
+	addvar VAR_SCOTT_STATE, 0x1
+	setflag FLAG_MET_SCOTT_RUSTBORO
 	release
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202DE1::
-	checkflag 0x867
-	goto_if 0x1, RustboroCity_PokemonSchool_EventScript_00202E02
-	loadword 0x0, gJPText_00203339
-	callstd 0x4
+RustboroCity_PokemonSchool_EventScript_ScottSpokeAlready::
+	goto_if_set FLAG_BADGE01_GET, RustboroCity_PokemonSchool_EventScript_ScottNoticeBadge
+	msgbox RustboroCity_PokemonSchool_Text_StudentTalentLevelUnknown, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202DF4::
-	loadword 0x0, gJPText_002033DD
-	callstd 0x4
-	goto RustboroCity_PokemonSchool_EventScript_00202E10
+RustboroCity_PokemonSchool_EventScript_ScottGreetHasBadge::
+	msgbox RustboroCity_PokemonSchool_Text_ScottMetAlreadyStoneBadge, MSGBOX_DEFAULT
+	goto RustboroCity_PokemonSchool_EventScript_MetScottAfterBadge
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202E02::
-	loadword 0x0, gJPText_0020336D
-	callstd 0x4
-	goto RustboroCity_PokemonSchool_EventScript_00202E10
+RustboroCity_PokemonSchool_EventScript_ScottNoticeBadge::
+	msgbox RustboroCity_PokemonSchool_Text_ScottStoneBadge, MSGBOX_DEFAULT
+	goto RustboroCity_PokemonSchool_EventScript_MetScottAfterBadge
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202E10::
-	addvar 0x40D1, 0x1
-	setflag 0x1CB
+RustboroCity_PokemonSchool_EventScript_MetScottAfterBadge::
+	addvar VAR_SCOTT_STATE, 0x1
+	setflag FLAG_MET_SCOTT_AFTER_OBTAINING_STONE_BADGE
 	release
 	end
 
-RustboroCity_PokemonSchool_EventScript_00202E1A::
-	loadword 0x0, gJPText_00203339
-	callstd 0x4
+RustboroCity_PokemonSchool_EventScript_ScottWatchStudents::
+	msgbox RustboroCity_PokemonSchool_Text_StudentTalentLevelUnknown, MSGBOX_DEFAULT
 	release
 	end
 
-	.globl gJPText_00202E24
-gJPText_00202E24: @ 0x08202E24
+RustboroCity_PokemonSchool_Text_BlackboardListsStatusChanges: @ 0x08202E24
 	.string "こくばんに\n"
 	.string "ポケモンが　たたかってるときに　おこる\l"
 	.string "たいちょうの　へんかに　ついて　かかれてる$"
 
-	.globl gJPText_00202E54
-gJPText_00202E54: @ 0x08202E54
+RustboroCity_PokemonSchool_Text_ReadWhichTopic: @ 0x08202E54
 	.string "どの　こうもくを　みますか？$"
 
-	.globl gJPText_00202E63
-gJPText_00202E63: @ 0x08202E63
+RustboroCity_PokemonSchool_Text_ExplainPoison: @ 0x08202E63
 	.string "どくを　うけると\n"
 	.string "たいりょくが　へっていきます\p"
 	.string "せんとうのあとも　どくは　のこるので\n"
 	.string "あるくたびに　たいりょくが　へります\l"
 	.string "どくけしで　なおしましょう$"
 
-	.globl gJPText_00202EAF
-gJPText_00202EAF: @ 0x08202EAF
+RustboroCity_PokemonSchool_Text_ExplainParalysis: @ 0x08202EAF
 	.string "まひすると　すばやさが　さがり\n"
 	.string "ときどき　わざが　だせなくなります\p"
 	.string "たたかい　おわっても　まひした　ままです\n"
 	.string "まひなおしで　なおしましょう$"
 
-	.globl gJPText_00202EF5
-gJPText_00202EF5: @ 0x08202EF5
+RustboroCity_PokemonSchool_Text_ExplainSleep: @ 0x08202EF5
 	.string "ねむって　しまうと\n"
 	.string "その　あいだ　こうげき　できません\p"
 	.string "じぶんで　めざめることも　ありますが\n"
@@ -271,21 +230,18 @@ gJPText_00202EF5: @ 0x08202EF5
 	.string "ずっと　ねむっています\p"
 	.string "ねむけざましで　おこして　あげましょう$"
 
-	.globl gJPText_00202F56
-gJPText_00202F56: @ 0x08202F56
+RustboroCity_PokemonSchool_Text_ExplainBurn: @ 0x08202F56
 	.string "やけどは　こうげきりょくが　さがるだけでなく\n"
 	.string "たいりょくも　どんどん　へっていきます\p"
 	.string "せんとうが　おわっても　やけどの　ままです\n"
 	.string "やけどなおしで　なおしましょう$"
 
-	.globl gJPText_00202FA7
-gJPText_00202FA7: @ 0x08202FA7
+RustboroCity_PokemonSchool_Text_ExplainFreeze: @ 0x08202FA7
 	.string "こおって　しまうと　なにも　できなくなります\p"
 	.string "たたかい　おわっても　こおりついた　ままです\n"
 	.string "こおりなおしで　とかしましょう$"
 
-	.globl gJPText_00202FE5
-gJPText_00202FE5: @ 0x08202FE5
+RustboroCity_PokemonSchool_Text_StudentsWhoDontStudyGetQuickClaw: @ 0x08202FE5
 	.string "べんきょうを　しない　せいとは\n"
 	.string "わたくしの　ツメの　あかを\l"
 	.string "せんじて　のませるのです！\p"
@@ -293,8 +249,7 @@ gJPText_00202FE5: @ 0x08202FE5
 	.string "この　どうぐを　つかいこなせるか　どうかで\l"
 	.string "わかること　でしょう！$"
 
-	.globl gJPText_00203045
-gJPText_00203045: @ 0x08203045
+RustboroCity_PokemonSchool_Text_ExplainQuickClaw: @ 0x08203045
 	.string "ポケモンに　せんせいのツメを　もたせると\n"
 	.string "ときどき　ですが　すばやくなって\l"
 	.string "せんせい　こうげきを　するのです！\p"
@@ -302,25 +257,21 @@ gJPText_00203045: @ 0x08203045
 	.string "どうぐの　こと　だけでも\l"
 	.string "べんきょう　することは　いっぱい　なのです！$"
 
-	.globl gJPText_002030B2
-gJPText_002030B2: @ 0x082030B2
+RustboroCity_PokemonSchool_Text_TradingRightNow: @ 0x082030B2
 	.string "いま　ともだちと\n"
 	.string "ポケモンを　こうかん　してるんだ！$"
 
-	.globl gJPText_002030CD
-gJPText_002030CD: @ 0x082030CD
+RustboroCity_PokemonSchool_Text_AlwaysWantedSeedot: @ 0x082030CD
 	.string "ほしかった　タネボーちゃん　が\n"
 	.string "やっと　てに　はいるよ！$"
 
-	.globl gJPText_002030EA
-gJPText_002030EA: @ 0x082030EA
+RustboroCity_PokemonSchool_Text_PokemontCantUseManMadeItems: @ 0x082030EA
 	.string "ポケモンも　どうぐ　もてるけど\n"
 	.string "キズぐすりとか　どくけしとか\l"
 	.string "ひとが　つくった　どうぐは\l"
 	.string "つかいかたが　わからない　みたい$"
 
-	.globl gJPText_00203128
-gJPText_00203128: @ 0x08203128
+RustboroCity_PokemonSchool_Text_ConfusedPokemonAttacksItself: @ 0x08203128
 	.string "ポケモンの　わざで\n"
 	.string "こんらん　することが　あるでしょ？\p"
 	.string "こんらん　すると　たまに　まちがえて\n"
@@ -328,8 +279,7 @@ gJPText_00203128: @ 0x08203128
 	.string "でも　いちどでも　せんとうから　はなれると\n"
 	.string "もとに　もどるわよ！$"
 
-	.globl gJPText_0020318A
-gJPText_0020318A: @ 0x0820318A
+RustboroCity_PokemonSchool_Text_PokemonHealItselfWithBerry: @ 0x0820318A
 	.string "⋯⋯ポケモンに　きのみを　もたせると\n"
 	.string "じぶんで　たいりょくを　かいふくする\p"
 	.string "ポケモンが　もてる　どうぐは\n"
@@ -337,8 +287,7 @@ gJPText_0020318A: @ 0x0820318A
 	.string "ノートを　ちゃんと　とるのは\n"
 	.string "たいへんだなあ⋯⋯$"
 
-	.globl gJPText_002031E4
-gJPText_002031E4: @ 0x082031E4
+RustboroCity_PokemonSchool_Text_StudentsNotes: @ 0x082031E4
 	.string "このこの　ノートだ⋯⋯\p"
 	.string "ポケモンは　モンスターボールで　つかまえて\n"
 	.string "どうじに　6ぴき　もちあるける\p"
@@ -349,8 +298,7 @@ gJPText_002031E4: @ 0x082031E4
 	.string "かくちの　ポケモンジムに　いる\l"
 	.string "つよい　トレーナーに　かつこと！$"
 
-	.globl gJPText_00203274
-gJPText_00203274: @ 0x08203274
+RustboroCity_PokemonSchool_Text_ScottMetAlreadyCut: @ 0x08203274
 	.string "おや？　きみとは　たしか\n"
 	.string "トウカシティで　あった　きがするね\p"
 	.string "わたしの　なまえは　エニシダ\p"
@@ -364,14 +312,12 @@ gJPText_00203274: @ 0x08203274
 	.string "いあいぎりは　たしか　このまちの\n"
 	.string "だれかが　もっていた　はずだよ$"
 
-	.globl gJPText_00203339
-gJPText_00203339: @ 0x08203339
+RustboroCity_PokemonSchool_Text_StudentTalentLevelUnknown: @ 0x08203339
 	.string "エニシダ“うーん　ここに　いる\n"
 	.string "せいとさん　たちの　さいのうは\l"
 	.string "まだまだ　みちすう！　これから　だな！$"
 
-	.globl gJPText_0020336D
-gJPText_0020336D: @ 0x0820336D
+RustboroCity_PokemonSchool_Text_ScottStoneBadge: @ 0x0820336D
 	.string "エニシダ“ん　それは⋯⋯\n"
 	.string "ストーンバッジ　だね\l"
 	.string "なかなか　やるじゃ　ないか！\p"
@@ -381,8 +327,7 @@ gJPText_0020336D: @ 0x0820336D
 	.string "どんな　トレーナー　なのかは\l"
 	.string "よく　わからない　からね$"
 
-	.globl gJPText_002033DD
-gJPText_002033DD: @ 0x082033DD
+RustboroCity_PokemonSchool_Text_ScottMetAlreadyStoneBadge: @ 0x082033DD
 	.string "おや？　きみとは　たしか\n"
 	.string "トウカシティで　あった　きがするね\p"
 	.string "わたしの　なまえは　エニシダ\p"

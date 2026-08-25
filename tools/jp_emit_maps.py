@@ -5892,6 +5892,89 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Rustboro's Pokemon School follows the same contiguous ownership model. Its
+# blackboard dispatch, teacher gift, and Scott progression paths were matched
+# to US source by event position, control flow, movement targets, and text
+# order before source-level names were enabled.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'RustboroCity_PokemonSchool': {
+        'scripts': {
+            0x08202C1B: 'RustboroCity_PokemonSchool_EventScript_Blackboard',
+            0x08202C2A: 'RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic',
+            0x08202C89: 'RustboroCity_PokemonSchool_EventScript_Poison',
+            0x08202C97: 'RustboroCity_PokemonSchool_EventScript_Paralysis',
+            0x08202CA5: 'RustboroCity_PokemonSchool_EventScript_Sleep',
+            0x08202CB3: 'RustboroCity_PokemonSchool_EventScript_Burn',
+            0x08202CC1: 'RustboroCity_PokemonSchool_EventScript_Freeze',
+            0x08202CCF: 'RustboroCity_PokemonSchool_EventScript_ExitTopicSelect',
+            0x08202CD1: 'RustboroCity_PokemonSchool_EventScript_GameboyKid1',
+            0x08202CDA: 'RustboroCity_PokemonSchool_EventScript_GameboyKid2',
+            0x08202CE3: 'RustboroCity_PokemonSchool_EventScript_RichBoy',
+            0x08202CEC: 'RustboroCity_PokemonSchool_EventScript_Lass',
+            0x08202CF5: 'RustboroCity_PokemonSchool_EventScript_SchoolKidM',
+            0x08202CFE: 'RustboroCity_PokemonSchool_EventScript_StudentNotebook',
+            0x08202D07: 'RustboroCity_PokemonSchool_EventScript_Teacher',
+            0x08202D57: 'RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsEast',
+            0x08202D62: 'RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsWest',
+            0x08202D6D: 'RustboroCity_PokemonSchool_EventScript_GaveQuickClaw',
+            0x08202DB2: 'RustboroCity_PokemonSchool_EventScript_Scott',
+            0x08202DE1: 'RustboroCity_PokemonSchool_EventScript_ScottSpokeAlready',
+            0x08202DF4: 'RustboroCity_PokemonSchool_EventScript_ScottGreetHasBadge',
+            0x08202E02: 'RustboroCity_PokemonSchool_EventScript_ScottNoticeBadge',
+            0x08202E10: 'RustboroCity_PokemonSchool_EventScript_MetScottAfterBadge',
+            0x08202E1A: 'RustboroCity_PokemonSchool_EventScript_ScottWatchStudents',
+        },
+        'texts': {
+            0x08202E24: 'RustboroCity_PokemonSchool_Text_BlackboardListsStatusChanges',
+            0x08202E54: 'RustboroCity_PokemonSchool_Text_ReadWhichTopic',
+            0x08202E63: 'RustboroCity_PokemonSchool_Text_ExplainPoison',
+            0x08202EAF: 'RustboroCity_PokemonSchool_Text_ExplainParalysis',
+            0x08202EF5: 'RustboroCity_PokemonSchool_Text_ExplainSleep',
+            0x08202F56: 'RustboroCity_PokemonSchool_Text_ExplainBurn',
+            0x08202FA7: 'RustboroCity_PokemonSchool_Text_ExplainFreeze',
+            0x08202FE5: 'RustboroCity_PokemonSchool_Text_StudentsWhoDontStudyGetQuickClaw',
+            0x08203045: 'RustboroCity_PokemonSchool_Text_ExplainQuickClaw',
+            0x082030B2: 'RustboroCity_PokemonSchool_Text_TradingRightNow',
+            0x082030CD: 'RustboroCity_PokemonSchool_Text_AlwaysWantedSeedot',
+            0x082030EA: 'RustboroCity_PokemonSchool_Text_PokemontCantUseManMadeItems',
+            0x08203128: 'RustboroCity_PokemonSchool_Text_ConfusedPokemonAttacksItself',
+            0x0820318A: 'RustboroCity_PokemonSchool_Text_PokemonHealItselfWithBerry',
+            0x082031E4: 'RustboroCity_PokemonSchool_Text_StudentsNotes',
+            0x08203274: 'RustboroCity_PokemonSchool_Text_ScottMetAlreadyCut',
+            0x08203339: 'RustboroCity_PokemonSchool_Text_StudentTalentLevelUnknown',
+            0x0820336D: 'RustboroCity_PokemonSchool_Text_ScottStoneBadge',
+            0x082033DD: 'RustboroCity_PokemonSchool_Text_ScottMetAlreadyStoneBadge',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'symbols': {
+            'vars': {
+                0x40D1: 'VAR_SCOTT_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'var_values': {
+                0x8000: {0x7F: 'MULTI_B_PRESSED'},
+                0x800C: {0x03: 'DIR_WEST', 0x04: 'DIR_EAST'},
+            },
+            'flags': {
+                0x0113: 'FLAG_RECEIVED_QUICK_CLAW',
+                0x0136: 'FLAG_MET_SCOTT_RUSTBORO',
+                0x01CB: 'FLAG_MET_SCOTT_AFTER_OBTAINING_STONE_BADGE',
+                0x0867: 'FLAG_BADGE01_GET',
+            },
+            'items': {0x00B7: 'ITEM_QUICK_CLAW'},
+            'multichoices': {0x0D: 'MULTI_STATUS_INFO'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     # Route101 retains four unreferenced movement records between the Birch
     # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
@@ -6225,6 +6308,47 @@ def collapse_condition_macros(lines):
     return out
 
 
+def collapse_switch_macros(lines):
+    """Restore byte-proven ``switch``/``case`` dispatch tables.
+
+    The script macros expand to a copy into VAR_0x8000 followed by one
+    goto_if_eq per case. Require at least two consecutive cases so ordinary
+    one-off comparisons retain their direct conditional form.
+    """
+    out = []
+    index = 0
+    while index < len(lines):
+        name, argstr = lines[index]
+        args = [arg.strip() for arg in argstr.split(',')]
+        if (name == 'copyvar' and len(args) == 2
+                and args[0] == 'VAR_0x8000'):
+            cases = []
+            cursor = index + 1
+            while cursor < len(lines):
+                case_name, case_argstr = lines[cursor]
+                case_args = [arg.strip() for arg in case_argstr.split(',')]
+                if (case_name != 'goto_if_eq' or len(case_args) != 3
+                        or case_args[0] != 'VAR_0x8000'):
+                    break
+                value = case_args[1]
+                try:
+                    numeric = int(value, 0)
+                except ValueError:
+                    numeric = None
+                if numeric is not None and 0 <= numeric <= 9:
+                    value = str(numeric)
+                cases.append((value, case_args[2]))
+                cursor += 1
+            if len(cases) >= 2:
+                out.append(('switch', args[1]))
+                out.extend(('case', '%s, %s' % case) for case in cases)
+                index = cursor
+                continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
 def name_contextual_result_conditions(lines):
     """Name result values only when their producing command proves the type.
 
@@ -6445,9 +6569,11 @@ def semantic_symbol_formatter(mname, script_addr=None):
                 return symbols.get('cry_modes', {}).get(value)
         if name in ('bufferspeciesname', 'givemon') and index in ({1} if name == 'bufferspeciesname' else {0}):
             return symbols.get('species', {}).get(value)
-        if name in ('multichoice', 'multichoicedefault') and index == 2:
+        if name in ('multichoice', 'multichoicedefault', 'multichoicegrid') and index == 2:
             return symbols.get('multichoices', {}).get(value)
         if name == 'multichoice' and index == 3:
+            return symbols.get('booleans', {}).get(value)
+        if name == 'multichoicegrid' and index == 4:
             return symbols.get('booleans', {}).get(value)
         if name == 'setweather' and index == 0:
             return symbols.get('weather', {}).get(value)
@@ -6940,6 +7066,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_trainerbattle_macros(decoded_lines)
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)
             decoded_lines = collapse_condition_macros(decoded_lines)
+            decoded_lines = collapse_switch_macros(decoded_lines)
             decoded_lines = collapse_coordinate_warp_macros(decoded_lines)
             decoded_lines = collapse_giveitem_macros(decoded_lines)
             decoded_lines = omit_default_macro_arguments(decoded_lines)
