@@ -27,7 +27,7 @@ Route106_EventScript_Elliot::
 
 Route106_EventScript_ElliotRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route106_Text_ElliotRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_ELLIOT_1
 	release

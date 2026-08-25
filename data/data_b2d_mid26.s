@@ -738,25 +738,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route105/events.inc"
 	.globl gMapEvents_ROUTE105
 	.set gMapEvents_ROUTE105, Route105_MapEvents
-	.globl ROUTE106_EventObjects
-ROUTE106_EventObjects: @ 0x08500EF0
-	object_event 1, 42, 0, 18, 5, 1, 27, 4, 0, 1, 3, Route106_EventScript_Douglas, 0x0000
-	object_event 2, 43, 0, 29, 10, 1, 1, 0, 0, 1, 3, Route106_EventScript_Kyla, 0x0000
-	object_event 3, 50, 0, 51, 14, 3, 10, 0, 0, 1, 4, Route106_EventScript_Elliot, 0x0000
-	object_event 4, 50, 0, 65, 14, 3, 1, 0, 0, 1, 3, Route106_EventScript_Ned, 0x0000
-	object_event 5, 59, 0, 29, 14, 3, 1, 0, 0, 0, 0, 0x08256A97, 0x03EC
-	.globl ROUTE106_EventWarps
-ROUTE106_EventWarps: @ 0x08500F68
-	warp_def 48, 16, 0, 0, MAP_GRANITE_CAVE_1F
-	.globl ROUTE106_EventBgEvents
-ROUTE106_EventBgEvents: @ 0x08500F70
-	bg_event 41, 11, 3, 7, 0x0004, 0x3F, 0x00
-	bg_event 53, 12, 0, 7, 0x006C, 0x2E, 0x00
-	bg_event 68, 15, 3, 7, 0x006F, 0x2F, 0x00
-	bg_event 59, 13, 3, 0, Route106_EventScript_TrainerTipsSign, 0, 0
+	.include "data/maps/Route106/events.inc"
 	.globl gMapEvents_ROUTE106
-gMapEvents_ROUTE106: @ 0x08500FA0
-	map_events ROUTE106_EventObjects, ROUTE106_EventWarps, 0, ROUTE106_EventBgEvents
+	.set gMapEvents_ROUTE106, Route106_MapEvents
 	.globl ROUTE107_EventObjects
 ROUTE107_EventObjects: @ 0x08500FB4
 	object_event 1, 42, 0, 41, 10, 1, 24, 1, 1, 1, 3, Route107_EventScript_Darrin, 0x0000
