@@ -35,6 +35,14 @@ MAP_SOURCE_REGION_ENDS = {
 # reference file silently renaming an unrelated entry.
 MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_ContestLobby': 105,
+    'LilycoveCity_ContestHall': 35,
+}
+
+# Text labels use the same reviewed physical ordering rule.  JP generic text
+# labels are accepted only as an input form; regenerated map sources use the
+# semantic pokeemerald names directly.
+MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
+    'LilycoveCity_ContestHall': 36,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6816,6 +6824,51 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Contest Hall is the next physical map owner after the six shared Contest
+# Lobby strings at 0x08207640-0x082077B9.  Its labels are populated by the
+# guarded US script/text sequences above; only its JP-local object and common
+# movement references need explicit metadata here.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_ContestHall': {
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+        },
+        'symbols': {
+            'local_ids': {
+                0x04: 'LOCALID_SMART_MC',
+                0x05: 'LOCALID_SMART_JUDGE',
+                0x06: 'LOCALID_SMART_CONTESTANT_1',
+                0x07: 'LOCALID_SMART_CONTESTANT_2',
+                0x08: 'LOCALID_SMART_CONTESTANT_3',
+                0x09: 'LOCALID_SMART_CONTESTANT_4',
+                0x0B: 'LOCALID_SMART_AUDIENCE_4',
+                0x0C: 'LOCALID_SMART_AUDIENCE_2',
+                0x0D: 'LOCALID_BEAUTY_MC',
+                0x0E: 'LOCALID_BEAUTY_JUDGE',
+                0x0F: 'LOCALID_BEAUTY_CONTESTANT_1',
+                0x10: 'LOCALID_BEAUTY_CONTESTANT_2',
+                0x11: 'LOCALID_BEAUTY_CONTESTANT_3',
+                0x12: 'LOCALID_BEAUTY_CONTESTANT_4',
+                0x13: 'LOCALID_BEAUTY_AUDIENCE_1',
+                0x14: 'LOCALID_BEAUTY_AUDIENCE_3',
+                0x15: 'LOCALID_BEAUTY_AUDIENCE_2',
+                0x16: 'LOCALID_SMART_AUDIENCE_3',
+                0x17: 'LOCALID_CUTE_MC',
+                0x18: 'LOCALID_CUTE_JUDGE',
+                0x19: 'LOCALID_CUTE_CONTESTANT_1',
+                0x1A: 'LOCALID_CUTE_CONTESTANT_2',
+                0x1B: 'LOCALID_CUTE_CONTESTANT_3',
+                0x1C: 'LOCALID_CUTE_CONTESTANT_4',
+                0x1D: 'LOCALID_CUTE_AUDIENCE_1',
+                0x1E: 'LOCALID_CUTE_AUDIENCE_3',
+                0x1F: 'LOCALID_CUTE_AUDIENCE_2',
+            },
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'LilycoveCity_LilycoveMuseum_2F': {
         0x0820630D: 'LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft',
@@ -8275,6 +8328,54 @@ def apply_us_label_sequence_metadata():
                     'reviewed label mismatch for %s at 0x%08X: %s != %s'
                     % (mname, address, previous, us_label))
             target[address] = us_label
+
+    for mname, expected_count in MAP_US_TEXT_LABEL_SEQUENCE_COUNTS.items():
+        jp_path = ROOT / 'data' / 'maps' / mname / 'scripts.inc'
+        us_path = US_MAPS / mname / 'scripts.inc'
+        if not jp_path.is_file() or not us_path.is_file():
+            raise RuntimeError('missing reviewed map text source for %s' % mname)
+
+        address_re = re.compile(r'@\s*(0x08[0-9A-Fa-f]{6})\b')
+        generic_re = re.compile(r'^gJPText_[0-9A-Fa-f]+:{1,2}')
+        semantic_re = re.compile(
+            r'^(%s_Text_[A-Za-z0-9_]+):{1,2}' % re.escape(mname))
+        generic_entries = []
+        semantic_entries = []
+        for line in jp_path.read_text(encoding='utf-8').splitlines():
+            address_match = address_re.search(line)
+            if address_match is None:
+                continue
+            address = int(address_match.group(1), 16)
+            if generic_re.match(line):
+                generic_entries.append(address)
+            elif semantic_re.match(line):
+                semantic_entries.append(address)
+        # The initial JP source has generic gJPText labels.  Once regenerated
+        # with preserve_region_text_aliases=False it instead has the semantic
+        # labels, so support both states while enforcing one exact sequence.
+        jp_entries = (generic_entries if len(generic_entries) == expected_count
+                      else semantic_entries)
+        us_entries = []
+        for line in us_path.read_text(encoding='utf-8').splitlines():
+            match = semantic_re.match(line)
+            if match is not None:
+                us_entries.append(match.group(1))
+        if len(jp_entries) != expected_count or len(us_entries) != expected_count:
+            raise RuntimeError(
+                'reviewed text sequence count mismatch for %s: JP=%d US=%d expected=%d'
+                % (mname, len(jp_entries), len(us_entries), expected_count))
+        if len(set(jp_entries)) != len(jp_entries):
+            raise RuntimeError('duplicate JP text address in %s' % mname)
+
+        semantic = MAP_VERIFIED_SEMANTIC_LABELS.setdefault(mname, {})
+        texts = semantic.setdefault('texts', {})
+        for address, us_label in zip(jp_entries, us_entries):
+            previous = texts.get(address)
+            if previous is not None and previous != us_label:
+                raise RuntimeError(
+                    'reviewed text mismatch for %s at 0x%08X: %s != %s'
+                    % (mname, address, previous, us_label))
+            texts[address] = us_label
 
 
 def event_script_symbol_addresses():

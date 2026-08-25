@@ -642,10 +642,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_LilycoveMuseum_1F/scripts.inc"
 	.include "data/maps/LilycoveCity_LilycoveMuseum_2F/scripts.inc"
 	.include "data/maps/LilycoveCity_ContestLobby/scripts.inc"
-	@ The following retained owner begins at 0x08207640.  It still contains
-	@ Contest Lobby NPC text, while the map's structured scripts above use the
-	@ same semantic labels as pokeemerald.  These aliases emit no bytes and make
-	@ that ownership boundary explicit until this physical range is structured.
+	@ Semantic aliases for retained shared Contest and Berry Blender blocks
+	@ referenced by the structured Contest Lobby source. They emit no bytes.
 	.globl LilycoveCity_ContestLobby_EventScript_SetPlayerGfx
 	.set LilycoveCity_ContestLobby_EventScript_SetPlayerGfx, 0x0821DD5F
 	.globl LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist
@@ -672,18 +670,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.set BerryBlender_EventScript_BerryBlender1, 0x08258D6E
 	.globl BerryBlender_EventScript_BerryBlender2
 	.set BerryBlender_EventScript_BerryBlender2, 0x08258E7D
-	.globl LilycoveCity_ContestLobby_Text_MasterRankHereICome
-	.set LilycoveCity_ContestLobby_Text_MasterRankHereICome, 0x08207640
-	.globl LilycoveCity_ContestLobby_Text_WholeVarietyOfPokemonHere
-	.set LilycoveCity_ContestLobby_Text_WholeVarietyOfPokemonHere, 0x08207692
-	.globl LilycoveCity_ContestLobby_Text_ContestFeastForEyes
-	.set LilycoveCity_ContestLobby_Text_ContestFeastForEyes, 0x082076BA
-	.globl LilycoveCity_ContestLobby_Text_ToughContestIsExtreme
-	.set LilycoveCity_ContestLobby_Text_ToughContestIsExtreme, 0x082076E6
-	.globl LilycoveCity_ContestLobby_Text_LavishedCareOnMon
-	.set LilycoveCity_ContestLobby_Text_LavishedCareOnMon, 0x0820771C
-	.globl LilycoveCity_ContestLobby_Text_MadePokeblocksWithFamily
-	.set LilycoveCity_ContestLobby_Text_MadePokeblocksWithFamily, 0x0820775B
 	.globl Text_LinkErrorPleaseReset
 	.set Text_LinkErrorPleaseReset, 0x08247D67
 	.globl LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank
@@ -754,7 +740,8 @@ gStdScripts_End: @ 0x81DB7E8
 	.set BerryBlender_Text_QualitiesOfBlendMaster, 0x08274990
 	.globl BerryBlender_Text_MasterWorksOnSkillsInMountains
 	.set BerryBlender_Text_MasterWorksOnSkillsInMountains, 0x082749E1
-	.incbin "baserom_jp.gba", 0x207640, 0xc0a
+	.include "data/text/lilycove_contest_lobby.inc"
+	.include "data/maps/LilycoveCity_ContestHall/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonCenter_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x2082b6, 0xc0
 	.include "data/maps/LilycoveCity_PokemonCenter_2F/scripts.inc"

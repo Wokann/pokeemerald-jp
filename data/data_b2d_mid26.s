@@ -2006,57 +2006,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_ContestLobby/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_CONTEST_LOBBY
 	.set gMapEvents_LILYCOVE_CITY_CONTEST_LOBBY, LilycoveCity_ContestLobby_MapEvents
-	.globl LILYCOVE_CITY_CONTEST_HALL_EventObjects
-LILYCOVE_CITY_CONTEST_HALL_EventObjects: @ 0x08509F7C
-	object_event 1, 7, 0, 30, 30, 3, 2, 4, 4, 0, 0, 0x082077BA, 0x0000
-	object_event 2, 13, 0, 11, 7, 3, 2, 3, 3, 0, 0, 0x082077C3, 0x0000
-	object_event 3, 14, 0, 40, 8, 3, 2, 2, 2, 0, 0, 0x082077CC, 0x0000
-	object_event 4, 24, 0, 12, 22, 3, 8, 0, 0, 0, 0, 0x082077DE, 0x0000
-	object_event 5, 190, 0, 15, 22, 3, 8, 0, 0, 0, 0, 0x082077F5, 0x0000
-	object_event 6, 44, 0, 10, 25, 3, 7, 0, 0, 0, 0, 0x0820780C, 0x0000
-	object_event 7, 21, 0, 12, 25, 3, 7, 0, 0, 0, 0, 0x08207823, 0x0000
-	object_event 8, 39, 0, 14, 25, 3, 7, 0, 0, 0, 0, 0x0820783A, 0x0000
-	object_event 9, 28, 0, 16, 25, 3, 7, 0, 0, 0, 0, 0x08207851, 0x0000
-	object_event 10, 22, 0, 8, 24, 3, 10, 0, 0, 0, 0, 0x08207868, 0x0000
-	object_event 11, 34, 0, 18, 24, 3, 9, 0, 0, 0, 0, 0x0820789F, 0x0000
-	object_event 12, 7, 0, 8, 22, 3, 10, 0, 0, 0, 0, 0x08207871, 0x0000
-	object_event 13, 24, 0, 24, 10, 3, 8, 0, 0, 0, 0, 0x082078B6, 0x0000
-	object_event 14, 190, 0, 27, 10, 3, 8, 0, 0, 0, 0, 0x082078CD, 0x0000
-	object_event 15, 26, 0, 22, 13, 3, 7, 0, 0, 0, 0, 0x082078E4, 0x0000
-	object_event 16, 6, 0, 24, 13, 3, 7, 0, 0, 0, 0, 0x082078FB, 0x0000
-	object_event 17, 37, 0, 26, 13, 3, 7, 0, 0, 0, 0, 0x08207912, 0x0000
-	object_event 18, 18, 0, 28, 13, 3, 7, 0, 0, 0, 0, 0x08207929, 0x0000
-	object_event 19, 20, 0, 20, 10, 3, 10, 0, 0, 0, 0, 0x08207940, 0x0000
-	object_event 20, 16, 0, 30, 11, 3, 9, 0, 0, 0, 0, 0x0820796E, 0x0000
-	object_event 21, 19, 0, 26, 8, 3, 8, 0, 0, 0, 0, 0x08207957, 0x0000
-	object_event 22, 31, 0, 13, 20, 3, 8, 0, 0, 0, 0, 0x08207888, 0x0000
-	object_event 23, 24, 0, 36, 22, 3, 8, 0, 0, 0, 0, 0x08207985, 0x0000
-	object_event 24, 190, 0, 39, 22, 3, 8, 0, 0, 0, 0, 0x0820799C, 0x0000
-	object_event 25, 9, 0, 34, 25, 3, 7, 0, 0, 0, 0, 0x082079B3, 0x0000
-	object_event 26, 10, 0, 36, 25, 3, 7, 0, 0, 0, 0, 0x082079CA, 0x0000
-	object_event 27, 13, 0, 38, 25, 3, 7, 0, 0, 0, 0, 0x082079E1, 0x0000
-	object_event 28, 22, 0, 40, 25, 3, 7, 0, 0, 0, 0, 0x082079F8, 0x0000
-	object_event 29, 20, 0, 32, 23, 3, 10, 0, 0, 0, 0, 0x08207A0F, 0x0000
-	object_event 30, 19, 0, 37, 20, 3, 8, 0, 0, 0, 0, 0x08207A51, 0x0000
-	object_event 31, 12, 0, 42, 24, 3, 9, 0, 0, 0, 0, 0x08207A3A, 0x0000
-	object_event 32, 49, 0, 23, 26, 3, 2, 1, 1, 0, 0, 0x082077D5, 0x0000
-	.globl LILYCOVE_CITY_CONTEST_HALL_EventWarps
-LILYCOVE_CITY_CONTEST_HALL_EventWarps: @ 0x0850A27C
-	warp_def 19, 32, 0, 2, MAP_LILYCOVE_CITY_CONTEST_LOBBY
-	warp_def 30, 32, 0, 3, MAP_LILYCOVE_CITY_CONTEST_LOBBY
-	warp_def 20, 32, 0, 2, MAP_LILYCOVE_CITY_CONTEST_LOBBY
-	warp_def 31, 32, 0, 3, MAP_LILYCOVE_CITY_CONTEST_LOBBY
-	.globl LILYCOVE_CITY_CONTEST_HALL_EventBgEvents
-LILYCOVE_CITY_CONTEST_HALL_EventBgEvents: @ 0x0850A29C
-	bg_event 27, 16, 0, 0, 0x08207A68, 0, 0
-	bg_event 39, 28, 0, 0, 0x08207A71, 0, 0
-	bg_event 11, 28, 0, 0, 0x08207A7A, 0, 0
-	bg_event 15, 28, 0, 0, 0x08207A7A, 0, 0
-	bg_event 23, 16, 0, 0, 0x08207A68, 0, 0
-	bg_event 35, 28, 0, 0, 0x08207A71, 0, 0
+	.include "data/maps/LilycoveCity_ContestHall/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_CONTEST_HALL
-gMapEvents_LILYCOVE_CITY_CONTEST_HALL: @ 0x0850A2E4
-	map_events LILYCOVE_CITY_CONTEST_HALL_EventObjects, LILYCOVE_CITY_CONTEST_HALL_EventWarps, 0, LILYCOVE_CITY_CONTEST_HALL_EventBgEvents
+	.set gMapEvents_LILYCOVE_CITY_CONTEST_HALL, LilycoveCity_ContestHall_MapEvents
 	.globl LILYCOVE_CITY_POKEMON_CENTER_1F_EventObjects
 LILYCOVE_CITY_POKEMON_CENTER_1F_EventObjects: @ 0x0850A2F8
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, LilycoveCity_PokemonCenter_1F_EventScript_00208280, 0x0000
