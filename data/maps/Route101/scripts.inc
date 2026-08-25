@@ -1,132 +1,299 @@
 @ Route101 scripts (JP map g0 m16 @ 0x081E64B6)
 
 Route101_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, Route101_EventScript_001E64C1
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route101_MapScriptTable_001E64C7
+	map_script MAP_SCRIPT_ON_TRANSITION, Route101_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route101_OnFrame
 	.byte 0
 
-Route101_EventScript_001E64C1::
-	call 0x08243139
+Route101_OnTransition:
+	call ProfBirch_EventScript_UpdateLocation
 	end
 
-Route101_MapScriptTable_001E64C7::
-	map_script_2 0x4060, 0x0, Route101_EventScript_001E64D1
+Route101_OnFrame:
+	map_script_2 VAR_ROUTE101_STATE, 0, Route101_EventScript_HideMapNamePopup
 	.2byte 0
 
-Route101_EventScript_001E64D1::
-	setflag 0x4000
-	setvar 0x4060, 0x1
+Route101_EventScript_HideMapNamePopup::
+	setflag FLAG_HIDE_MAP_NAME_POPUP
+	setvar VAR_ROUTE101_STATE, 1
 	end
 
-Route101_EventScript_001E64DA::
+Route101_EventScript_StartBirchRescue::
 	lockall
-	playbgm 0x19A, 0x1
-	loadword 0x0, 0x081E668B
-	callstd 0x4
+	playbgm MUS_HELP, TRUE
+	msgbox Route101_Text_HelpMe, MSGBOX_DEFAULT
 	closemessage
-	setobjectxy 0x2, 0x0, 0xF
-	setobjectxy 0x4, 0x0, 0x10
-	applymovement 0xFF, 0x081E65BE
-	applymovement 0x2, 0x081E65E3
-	applymovement 0x4, 0x081E65B1
-	waitmovement 0x0
-	applymovement 0x4, 0x081E6592
-	applymovement 0x2, 0x081E65C4
-	waitmovement 0x0
-	applymovement 0x2, 0x0824362B
-	waitmovement 0x0
-	applymovement 0x4, 0x081E65B9
-	applymovement 0x2, 0x081E65EB
-	waitmovement 0x0
-	loadword 0x0, 0x081E669A
-	callstd 0x4
+	setobjectxy LOCALID_ROUTE101_BIRCH, 0, 15
+	setobjectxy LOCALID_ROUTE101_ZIGZAGOON, 0, 16
+	applymovement LOCALID_PLAYER, Route101_Movement_EnterScene
+	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunAway1
+	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonChase1
+	waitmovement 0
+	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonChaseInCircles
+	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchRunInCircles
+	waitmovement 0
+	applymovement LOCALID_ROUTE101_BIRCH, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	applymovement LOCALID_ROUTE101_ZIGZAGOON, Route101_Movement_ZigzagoonFaceBirch
+	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchFaceZigzagoon
+	waitmovement 0
+	msgbox Route101_Text_PleaseHelp, MSGBOX_DEFAULT
 	closemessage
-	setvar 0x4060, 0x2
+	setvar VAR_ROUTE101_STATE, 2
 	releaseall
 	end
 
-Route101_EventScript_001E654A::
+Route101_EventScript_PreventExitSouth::
 	lockall
-	loadword 0x0, 0x081E66D1
-	callstd 0x4
+	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081E658C
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, Route101_Movement_PreventExitSouth
+	waitmovement 0
 	releaseall
 	end
 
-Route101_EventScript_001E6560::
+Route101_EventScript_PreventExitWest::
 	lockall
-	loadword 0x0, 0x081E66D1
-	callstd 0x4
+	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081E658E
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, Route101_Movement_PreventExitWest
+	waitmovement 0
 	releaseall
 	end
 
-Route101_EventScript_001E6576::
+Route101_EventScript_PreventExitNorth::
 	lockall
-	loadword 0x0, 0x081E66D1
-	callstd 0x4
+	msgbox Route101_Text_DontLeaveMe, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x081E6590
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, Route101_Movement_PreventExitNorth
+	waitmovement 0
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x1e658c, 0x6b
-Route101_EventScript_001E65F7::
-	loadword 0x0, 0x081E6782
-	callstd 0x2
+Route101_Movement_PreventExitSouth:
+	walk_up
+	step_end
+
+Route101_Movement_PreventExitWest:
+	walk_right
+	step_end
+
+Route101_Movement_PreventExitNorth:
+	walk_down
+	step_end
+
+Route101_Movement_ZigzagoonChaseInCircles:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_down
+	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_up
+	walk_fast_up
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_down
+	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_up
+	walk_fast_up
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_down
+	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	step_end
+
+Route101_Movement_ZigzagoonChase1:
+	walk_fast_up
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_up
+	step_end
+
+@ Leftover data? This command is unused.
+	step_end
+
+Route101_Movement_ZigzagoonFaceBirch:
+	walk_in_place_fast_left
+	walk_in_place_fast_left
+	walk_in_place_fast_left
+	walk_in_place_fast_left
+	step_end
+
+Route101_Movement_EnterScene:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_in_place_faster_left
+	step_end
+
+Route101_Movement_BirchRunInCircles:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_down
+	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_up
+	walk_fast_up
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_down
+	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_up
+	walk_fast_up
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_down
+	walk_fast_down
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	step_end
+
+Route101_Movement_BirchRunAway1:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_up
+	walk_fast_up
+	step_end
+
+@ Leftover data? This command is unused.
+	step_end
+
+Route101_Movement_BirchFaceZigzagoon:
+	walk_in_place_fast_right
+	walk_in_place_fast_right
+	walk_in_place_fast_right
+	walk_in_place_fast_right
+	step_end
+
+Route101_Movement_Unused1:
+	walk_up
+	walk_up
+	step_end
+
+Route101_Movement_Unused2:
+	walk_up
+	walk_left
+	walk_up
+	step_end
+
+Route101_EventScript_Youngster::
+	msgbox Route101_Text_TakeTiredPokemonToPokeCenter, MSGBOX_NPC
 	end
 
-Route101_EventScript_001E6600::
-	loadword 0x0, 0x081E67C3
-	callstd 0x2
+Route101_EventScript_Boy::
+	msgbox Route101_Text_WildPokemonInTallGrass, MSGBOX_NPC
 	end
 
-Route101_EventScript_001E6609::
-	loadword 0x0, 0x081E680B
-	callstd 0x3
+Route101_EventScript_RouteSign::
+	msgbox Route101_Text_RouteSign, MSGBOX_SIGN
 	end
 
-Route101_EventScript_001E6612::
+Route101_EventScript_BirchsBag::
 	lock
 	faceplayer
-	setflag 0x860
-	setflag 0x52
-	fadescreen 0x1
-	removeobject 0x4
-	setobjectxy 0xFF, 0x6, 0xD
-	applymovement 0xFF, 0x08243627
-	waitmovement 0x0
+	setflag FLAG_SYS_POKEMON_GET
+	setflag FLAG_RESCUED_BIRCH
+	fadescreen FADE_TO_BLACK
+	removeobject LOCALID_ROUTE101_ZIGZAGOON
+	setobjectxy LOCALID_PLAYER, 6, 13
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
 	special ChooseStarter
-	applymovement 0x2, 0x081E6689
-	waitmovement 0x0
-	loadword 0x0, 0x081E66F2
-	callstd 0x4
+	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchApproachPlayer
+	waitmovement 0
+	msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
 	special HealPlayerParty
-	setflag 0x2D0
-	clearflag 0x2D1
-	setflag 0x2BC
-	setvar 0x4084, 0x2
-	setvar 0x4060, 0x3
-	clearflag 0x4000
+	setflag FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
+	setflag FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG
+	setvar VAR_BIRCH_LAB_STATE, 2
+	setvar VAR_ROUTE101_STATE, 3
+	clearflag FLAG_HIDE_MAP_NAME_POPUP
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route101_EventScript_001E6681
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, Route101_EventScript_001E6685
-	warp 0x104, 0xFF, 0x6, 0x5
+	call_if_eq VAR_RESULT, MALE, Route101_EventScript_HideMayInBedroom
+	call_if_eq VAR_RESULT, FEMALE, Route101_EventScript_HideBrendanInBedroom
+	warp MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, 6, 5
 	waitstate
 	release
 	end
 
-Route101_EventScript_001E6681::
-	setflag 0x2D2
+Route101_EventScript_HideMayInBedroom::
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
 	return
 
-Route101_EventScript_001E6685::
-	setflag 0x2F8
+Route101_EventScript_HideBrendanInBedroom::
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	return
+
+Route101_Movement_BirchApproachPlayer:
+	walk_right
+	step_end
+
+Route101_Text_HelpMe:
+	.string "たっ　たすけて　くれーっ！！$"
+
+Route101_Text_PleaseHelp:
+	.string "おーい！　そこの　きみ！\n"
+	.string "たすけて　おくれーっ！！\p"
+	.string "そこに　ある　カバンに\n"
+	.string "モンスターボールが　はいってる！$"
+
+Route101_Text_DontLeaveMe:
+	.string "どっ　どこへ　いくんだ！？\n"
+	.string "わたしを　みすてないで　おくれーっ！$"
+
+Route101_Text_YouSavedMe:
+	.string "オダマキ“はあ　はあ⋯⋯\p"
+	.string "やせいの　ポケモンを　ちょうさ　しようと\n"
+	.string "くさむらに　はいったら\l"
+	.string "とつぜん　ポケモンに　おそわれて⋯⋯\p"
+	.string "とにかく　たすかったよ　ありがとう！\p"
+	.string "⋯⋯おや？\p"
+	.string "きみは　{PLAYER}{KUN}　じゃないか！\p"
+	.string "こんな　ところでは　なんだから\n"
+	.string "ちょっと　けんきゅうじょ　まで　きておくれ$"
+
+Route101_Text_TakeTiredPokemonToPokeCenter:
+	.string "ポケモンが　よわってきたら\n"
+	.string "ポケモンセンターに　いくと　いいよ！\p"
+	.string "ポケモンセンターなら　すぐ　ちかく\n"
+	.string "コトキタウンに　あるからね$"
+
+Route101_Text_WildPokemonInTallGrass:
+	.string "やせいの　ポケモンは\n"
+	.string "くさむらから　とびだしてくる　からな！\p"
+	.string "こうして　くさむらの　なかに　はいって\n"
+	.string "つかまえたい　ポケモンを　さがすんだよ！$"
+
+Route101_Text_RouteSign:
+	.string "ここは　101ばん　どうろ\n"
+	.string "{UP_ARROW}　コトキタウン$"
