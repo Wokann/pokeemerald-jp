@@ -5,18 +5,18 @@ Route103_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Route103_OnLoad
 	.byte 0
 
-Route103_OnTransition::
+Route103_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call ProfBirch_EventScript_UpdateLocation
 	end
 
-Route103_OnLoad::
+Route103_OnLoad:
 	call_if_set FLAG_SYS_GAME_CLEAR, Route103_EventScript_OpenAlteringCave
 	end
 
 Route103_EventScript_OpenAlteringCave::
-	setmetatile 0x2D, 0x5, METATILE_General_CaveEntrance_Top, TRUE
-	setmetatile 0x2D, 0x6, METATILE_General_CaveEntrance_Bottom, FALSE
+	setmetatile 45, 5, METATILE_General_CaveEntrance_Top, TRUE
+	setmetatile 45, 6, METATILE_General_CaveEntrance_Bottom, FALSE
 	return
 
 Route103_EventScript_Rival::
@@ -31,16 +31,16 @@ Route103_EventScript_RivalMay::
 	closemessage
 	playbgm MUS_ENCOUNTER_MAY, TRUE
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_FacePlayer
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_ExclamationMark
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_Delay48
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route103_Text_MayLetsBattle, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_STARTER_MON
-	goto_if_eq VAR_0x8000, 0x0, Route103_EventScript_StartMayBattleTreecko
-	goto_if_eq VAR_0x8000, 0x1, Route103_EventScript_StartMayBattleTorchic
-	goto_if_eq VAR_0x8000, 0x2, Route103_EventScript_StartMayBattleMudkip
+	switch VAR_STARTER_MON
+	case 0, Route103_EventScript_StartMayBattleTreecko
+	case 1, Route103_EventScript_StartMayBattleTorchic
+	case 2, Route103_EventScript_StartMayBattleMudkip
 	end
 
 Route103_EventScript_RivalBrendan::
@@ -48,16 +48,16 @@ Route103_EventScript_RivalBrendan::
 	closemessage
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_FacePlayer
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_ExclamationMark
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_ROUTE103_RIVAL, Common_Movement_Delay48
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route103_Text_BrendanLetsBattle, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_STARTER_MON
-	goto_if_eq VAR_0x8000, 0x0, Route103_EventScript_StartBrendanBattleTreecko
-	goto_if_eq VAR_0x8000, 0x1, Route103_EventScript_StartBrendanBattleTorchic
-	goto_if_eq VAR_0x8000, 0x2, Route103_EventScript_StartBrendanBattleMudkip
+	switch VAR_STARTER_MON
+	case 0, Route103_EventScript_StartBrendanBattleTreecko
+	case 1, Route103_EventScript_StartBrendanBattleTorchic
+	case 2, Route103_EventScript_StartBrendanBattleMudkip
 	end
 
 Route103_EventScript_StartMayBattleTreecko::
@@ -102,48 +102,48 @@ Route103_EventScript_AfterBrendanBattle::
 
 Route103_EventScript_RivalExit::
 	closemessage
-	copyvar VAR_0x8000, VAR_FACING
-	goto_if_eq VAR_0x8000, 0x1, Route103_EventScript_RivalExitFacingSouth
-	goto_if_eq VAR_0x8000, 0x2, Route103_EventScript_RivalExitFacingNorth
-	goto_if_eq VAR_0x8000, 0x3, Route103_EventScript_RivalExitFacingEastOrWest
-	goto_if_eq VAR_0x8000, 0x4, Route103_EventScript_RivalExitFacingEastOrWest
+	switch VAR_FACING
+	case DIR_SOUTH, Route103_EventScript_RivalExitFacingSouth
+	case DIR_NORTH, Route103_EventScript_RivalExitFacingNorth
+	case DIR_WEST, Route103_EventScript_RivalExitFacingEastOrWest
+	case DIR_EAST, Route103_EventScript_RivalExitFacingEastOrWest
 	end
 
 Route103_EventScript_RivalExitFacingNorth::
 	applymovement LOCALID_PLAYER, Route103_Movement_WatchRivalExitFacingNorth
 	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExitFacingNorth1
-	waitmovement 0x0
+	waitmovement 0
 	playse SE_LEDGE
 	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExitFacingNorth2
-	waitmovement 0x0
+	waitmovement 0
 	goto Route103_EventScript_RivalEnd
 	end
 
 Route103_EventScript_RivalExitFacingEastOrWest::
 	applymovement LOCALID_PLAYER, Route103_Movement_WatchRivalExitFacingEastOrWest
 	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit1
-	waitmovement 0x0
+	waitmovement 0
 	playse SE_LEDGE
 	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit2
-	waitmovement 0x0
+	waitmovement 0
 	goto Route103_EventScript_RivalEnd
 	end
 
 Route103_EventScript_RivalExitFacingSouth::
 	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit1
-	waitmovement 0x0
+	waitmovement 0
 	playse SE_LEDGE
 	applymovement LOCALID_ROUTE103_RIVAL, Route103_Movement_RivalExit2
-	waitmovement 0x0
+	waitmovement 0
 	goto Route103_EventScript_RivalEnd
 	end
 
 Route103_EventScript_RivalEnd::
 	removeobject LOCALID_ROUTE103_RIVAL
-	setvar VAR_BIRCH_LAB_STATE, 0x4
+	setvar VAR_BIRCH_LAB_STATE, 4
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_RIVAL
 	setflag FLAG_DEFEATED_RIVAL_ROUTE103
-	setvar VAR_OLDALE_RIVAL_STATE, 0x1
+	setvar VAR_OLDALE_RIVAL_STATE, 1
 	clearflag FLAG_HIDE_OLDALE_TOWN_RIVAL
 	savebgm MUS_DUMMY
 	fadedefaultbgm
@@ -257,7 +257,7 @@ Route103_EventScript_Miguel::
 
 Route102_EventScript_MiguelRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route103_Text_MiguelRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_MIGUEL_1
 	release
