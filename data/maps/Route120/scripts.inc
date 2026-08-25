@@ -365,14 +365,14 @@ Route120_EventScript_Callie::
 	end
 
 Route120_Text_StevenGreeting: @ 0x081EDE10
-	.string "ダイゴ“ん？　{STRING 0x01}{STRING 0x05}か\n"
+	.string "ダイゴ“ん？　{PLAYER}{KUN}か\n"
 	.string "ひさしぶり　だね\p"
 	.string "ここに　みえない　なにかが　いるよね？\p"
 	.string "で　みえない　なにかに　むかって\n"
 	.string "この　どうぐを　つかうと⋯⋯\p"
 	.string "ちがうな⋯⋯　せつめい　するよりも\n"
 	.string "じっさいに　つかった　ほうが　たのしそうだ\p"
-	.string "{STRING 0x01}{STRING 0x05}　きみの　ポケモン\n"
+	.string "{PLAYER}{KUN}　きみの　ポケモン\n"
 	.string "たたかう　じゅんびは　できて　いるのかい？$"
 
 Route120_Text_StevenIllWaitHere: @ 0x081EDEA6
@@ -381,11 +381,11 @@ Route120_Text_StevenIllWaitHere: @ 0x081EDEA6
 	.string "じゅんびを　すると　いいよ$"
 
 Route120_Text_StevenReadyForBattle: @ 0x081EDECC
-	.string "ダイゴ“{STRING 0x01}{STRING 0x05}　きみの　ポケモン\n"
+	.string "ダイゴ“{PLAYER}{KUN}　きみの　ポケモン\n"
 	.string "たたかう　じゅんびは　できて　いるのかい？$"
 
 Route120_Text_StevenShowMeYourPower: @ 0x081EDEF4
-	.string "ダイゴ“{STRING 0x01}{STRING 0x05}\n"
+	.string "ダイゴ“{PLAYER}{KUN}\n"
 	.string "きみの　トレーナー　としての\l"
 	.string "じつりょく　みせてもらうよ！$"
 
@@ -408,7 +408,7 @@ Route120_Text_StevenGiveDevonScope: @ 0x081EDF65
 	.string "ポケモンは　いるかも　しれないから$"
 
 Route120_Text_StevenGoodbye: @ 0x081EDFE1
-	.string "ダイゴ“{STRING 0x01}{STRING 0x05}\p"
+	.string "ダイゴ“{PLAYER}{KUN}\p"
 	.string "ボクは　がんばっている\n"
 	.string "トレーナーと　ポケモンが　すきだから\p"
 	.string "きみのこと　いいと　おもうよ\p"
@@ -423,7 +423,7 @@ Kecleon_Text_WantToUseDevonScope: @ 0x081EE039
 	.string "デボンスコープを　つかいますか？$"
 
 Kecleon_Text_UseDevonScopeMonAttacked: @ 0x081EE05A
-	.string "{STRING 0x01}は\n"
+	.string "{PLAYER}は\n"
 	.string "デボンスコープを　つかった！\p"
 	.string "とうめいに　なっていた\n"
 	.string "ポケモンの　すがたが　まるわかりだ！\p"

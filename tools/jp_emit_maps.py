@@ -4114,6 +4114,15 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081EE0A3: 'Route120_Text_RouteSignFortree',
             0x081EE0BD: 'Route120_Text_RouteSign121',
         },
+        # The matching US Steven and Kecleon messages prove the field
+        # placeholder meanings for these JP text objects.
+        'field_placeholders': {
+            0x081EDE10: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081EDECC: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081EDEF4: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081EDFE1: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081EE05A: {0x01: 'PLAYER'},
+        },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route120']['labels'],
         'external_labels': {
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
