@@ -25,10 +25,10 @@ EverGrandeCity_MapCoordEvents:
 
 EverGrandeCity_MapBGEvents:
 	bg_sign_event 19, 43, 5, BG_EVENT_PLAYER_FACING_ANY, EverGrandeCity_EventScript_VictoryRoadSign
-	bg_sign_event 29, 48, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 29, 48, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_sign_event 18, 52, 5, BG_EVENT_PLAYER_FACING_ANY, EverGrandeCity_EventScript_CitySign
 	bg_sign_event 23, 15, 0, BG_EVENT_PLAYER_FACING_ANY, EverGrandeCity_EventScript_PokemonLeagueSign
-	bg_sign_event 28, 48, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 28, 48, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 
 EverGrandeCity_MapEvents::
 	map_events NULL, EverGrandeCity_MapWarps, EverGrandeCity_MapCoordEvents, EverGrandeCity_MapBGEvents
