@@ -76,6 +76,14 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x081F2D7B,
         0x081F2D81,
     ),
+    # These unused RS-era Cable Club entry points are likewise map-owned in
+    # the matching Fortree Pokemon Center 2F source but have no event-table
+    # pointer in the JP ROM.
+    'FortreeCity_PokemonCenter_2F': (
+        0x08204DAB,
+        0x08204DB1,
+        0x08204DB7,
+    ),
 }
 
 # Verified map-local text that has no JP script pointer (for example an
@@ -6184,6 +6192,28 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The three RS-era Cable Club entries sit immediately after the 2F map-script
+# table.  They are not reached by its event table, but the matching US source
+# retains them as named map-local scripts.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_PokemonCenter_2F': {
+        'scripts': {
+            0x08204DAB: 'FortreeCity_PokemonCenter_2F_EventScript_Colosseum',
+            0x08204DB1: 'FortreeCity_PokemonCenter_2F_EventScript_TradeCenter',
+            0x08204DB7: 'FortreeCity_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     # Route101 retains four unreferenced movement records between the Birch
     # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
@@ -7237,6 +7267,9 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                         tbl = verified_table_labels.get(
                             p, '%s_MapScriptTable_%08X' % (mname, p & 0xFFFFFF))
                         lines.append('\tmap_script %s, %s' % (MAP_SCRIPT_NAMES.get(t, str(t)), tbl))
+                    elif p in external_labels:
+                        lines.append('\tmap_script %s, %s' % (
+                            MAP_SCRIPT_NAMES.get(t, str(t)), external_labels[p]))
                     else:
                         lines.append('\tmap_script %s, 0x%08X' % (MAP_SCRIPT_NAMES.get(t, str(t)), p))
                 elif p in label_map or p in external_labels:
