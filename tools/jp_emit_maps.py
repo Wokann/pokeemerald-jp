@@ -56,6 +56,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_PokemonCenter_2F': 4,
     'MossdeepCity_Mart': 4,
     'MossdeepCity_House3': 3,
+    'MossdeepCity_StevensHouse': 17,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -82,6 +83,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_PokemonCenter_2F': 1,
     'MossdeepCity_Mart': 3,
     'MossdeepCity_House3': 5,
+    'MossdeepCity_StevensHouse': 9,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -194,6 +196,9 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x0820C565,
         0x0820C56B,
     ),
+    # The RS-era Dive item ball is unused in Emerald but remains an explicit
+    # named script in the matching Stevens House source.
+    'MossdeepCity_StevensHouse': (0x0820C9B8,),
 }
 
 # Verified map-local text that has no JP script pointer (for example an
@@ -220,6 +225,9 @@ MAP_AUXILIARY_TEXT_ADDRESSES = {
         0x081F263D,
         0x081F26DC,
     ),
+    # This no-space message is unreachable in the final Beldum flow, but the
+    # complete JP string remains map-owned and is named in the US source.
+    'MossdeepCity_StevensHouse': (0x0820CB4A,),
 }
 
 # Map-owned movement scripts confirmed by their JP addresses and the matching
@@ -7807,6 +7815,75 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Stevens House immediately follows House 3 in the physical EventScript
+# stream.  Its 18 script/table records and nine strings align one-to-one with
+# the US map source; keep the semantic names and control codes reproducible
+# from the JP ROM instead of accepting address-only labels.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_StevensHouse': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        # OnLoad is intentionally excluded from the sequence matcher because
+        # existing reviewed maps may already carry that label; retain this
+        # direct, ROM-addressed association across fresh emissions.
+        'scripts': {
+            0x0820C826: 'MossdeepCity_StevensHouse_OnLoad',
+        },
+        'field_placeholders': {
+            0x0820C9C8: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x0820CAF7: {0x01: 'PLAYER'},
+            0x0820CB39: {0x01: 'PLAYER'},
+            0x0820CB5D: {0x01: 'PLAYER'},
+            0x0820CB77: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'external_labels': {
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x0824423B: 'Common_EventScript_NoMoreRoomForPokemon',
+            0x08243EDB: 'gText_NicknameThisPokemon',
+            0x082441B5: 'Common_EventScript_GetGiftMonPartySlot',
+            0x08243460: 'Common_EventScript_NameReceivedPartyMon',
+            0x082441C1: 'Common_EventScript_NameReceivedBoxMon',
+            0x082441CA: 'Common_EventScript_TransferredToPC',
+        },
+        'symbols': {
+            'flags': {
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+                0x007B: 'FLAG_RECEIVED_HM_DIVE',
+                0x012E: 'FLAG_OMIT_DIVE_FROM_STEVEN_LETTER',
+                0x0314: 'FLAG_HIDE_MOSSDEEP_CITY_SCOTT',
+                0x03AD: 'FLAG_HIDE_SEAFLOOR_CAVERN_ENTRANCE_AQUA_GRUNT',
+                0x03C8: 'FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_BELDUM_POKEBALL',
+                0x012A: 'FLAG_RECEIVED_BELDUM',
+            },
+            'vars': {
+                0x40C6: 'VAR_STEVENS_HOUSE_STATE',
+                0x4001: 'VAR_TEMP_TRANSFERRED_SPECIES',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x0820C8F7: {
+                    0x4001: {0x018E: 'SPECIES_BELDUM'},
+                },
+            },
+            'items': {0x015A: 'ITEM_HM_DIVE'},
+            'species': {0x018E: 'SPECIES_BELDUM'},
+            'local_ids': {
+                0x01: 'LOCALID_STEVENS_HOUSE_STEVEN',
+                0x02: 'LOCALID_STEVENS_HOUSE_BALL',
+            },
+            'movement_types': {0x07: 'MOVEMENT_TYPE_FACE_UP'},
+            'metatiles': {0x02F1: 'METATILE_GenericBuilding_TableEdge'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'sounds': {0x0015: 'SE_PIN'},
+            'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'MossdeepCity_Mart': (
         (0x0820C5CA, 'MossdeepCity_Mart_Pokemart', (
@@ -8137,6 +8214,13 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     'MossdeepCity_House2': {
         0x0820C42E: 'MossdeepCity_House2_Movement_WingullExitNorth',
         0x0820C435: 'MossdeepCity_House2_Movement_WingullExitEast',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'MossdeepCity_StevensHouse': {
+        0x0820C8C5: 'MossdeepCity_StevensHouse_Movement_StevenApproachPlayer',
+        0x0820C8CD: 'MossdeepCity_StevensHouse_Movement_StevenReturn',
     },
 })
 
@@ -8650,6 +8734,32 @@ def collapse_giveitem_macros(lines):
     return out
 
 
+def collapse_finditem_macros(lines):
+    """Restore the byte-exact ``finditem`` wrapper used by item balls."""
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 2 < len(lines):
+            first_name, first_args = lines[index]
+            second_name, second_args = lines[index + 1]
+            third_name, third_args = lines[index + 2]
+            first = [part.strip() for part in first_args.split(',', 1)]
+            second = [part.strip() for part in second_args.split(',', 1)]
+            if (first_name == 'setorcopyvar'
+                    and second_name == 'setorcopyvar'
+                    and third_name == 'callstd'
+                    and first[:1] == ['VAR_0x8000']
+                    and second[:1] == ['VAR_0x8001']
+                    and len(first) == 2 and len(second) == 2
+                    and third_args in ('0x1', 'STD_FIND_ITEM')):
+                out.append(('finditem', '%s, %s' % (first[1], second[1])))
+                index += 3
+                continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
 def collapse_givedecoration_macros(lines):
     """Restore the byte-exact ``givedecoration`` wrapper where reviewed."""
     out = []
@@ -8679,7 +8789,7 @@ def omit_default_macro_arguments(lines):
         args = [part.strip() for part in argstr.split(',')]
         if name == 'givemon' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
             argstr = ', '.join(args[:2])
-        elif name in ('giveitem', 'checkitem', 'checkpcitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
+        elif name in ('giveitem', 'finditem', 'checkitem', 'checkpcitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
             argstr = args[0]
         out.append((name, argstr))
     return out
@@ -8687,6 +8797,7 @@ def omit_default_macro_arguments(lines):
 
 ITEM_ARGUMENTS = {
     'giveitem': {0},
+    'finditem': {0},
     'checkitem': {0},
     'checkpcitem': {0},
     'removeitem': {0},
@@ -9352,6 +9463,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 decoded_lines,
                 semantic.get('symbols', {}).get('frontier_results', {}))
             decoded_lines = collapse_giveitem_macros(decoded_lines)
+            decoded_lines = collapse_finditem_macros(decoded_lines)
             decoded_lines = collapse_givedecoration_macros(decoded_lines)
             decoded_lines = omit_implicit_special_waitstates(
                 decoded_lines, implicit_waitstate_specials)
