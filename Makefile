@@ -156,6 +156,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	RustboroCity_Flat2_2F \
 	RustboroCity_Flat2_3F \
 	RustboroCity_House3 \
+	FortreeCity \
 	FortreeCity_House1 \
 	FortreeCity_Mart \
 	FortreeCity_House2 \

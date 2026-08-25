@@ -687,37 +687,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/RustboroCity/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY
 	.set gMapEvents_RUSTBORO_CITY, RustboroCity_MapEvents
-	.globl FORTREE_CITY_EventObjects
-FORTREE_CITY_EventObjects: @ 0x084FF2A8
-	object_event 1, 23, 0, 31, 3, 4, 1, 0, 0, 0, 0, FortreeCity_EventScript_Man, 0x0000
-	object_event 2, 8, 0, 32, 16, 3, 2, 1, 1, 0, 0, FortreeCity_EventScript_Girl, 0x0000
-	object_event 3, 34, 0, 32, 10, 3, 3, 0, 1, 0, 0, FortreeCity_EventScript_Woman, 0x0000
-	object_event 4, 7, 0, 11, 14, 4, 1, 0, 0, 0, 0, FortreeCity_EventScript_Boy, 0x0000
-	object_event 5, 29, 0, 8, 10, 3, 1, 0, 0, 0, 0, FortreeCity_EventScript_OldMan, 0x0000
-	object_event 6, 189, 0, 9, 16, 3, 8, 0, 0, 0, 0, FortreeCity_EventScript_GameboyKid, 0x0000
-	object_event 7, 204, 0, 25, 8, 3, 76, 1, 1, 0, 0, FortreeCity_EventScript_Kecleon, 0x03C9
-	.globl FORTREE_CITY_EventWarps
-FORTREE_CITY_EventWarps: @ 0x084FF350
-	warp_def 5, 6, 0, 0, MAP_FORTREE_CITY_POKEMON_CENTER_1F
-	warp_def 10, 3, 0, 0, MAP_FORTREE_CITY_HOUSE1
-	warp_def 22, 11, 0, 0, MAP_FORTREE_CITY_GYM
-	warp_def 4, 14, 0, 0, MAP_FORTREE_CITY_MART
-	warp_def 17, 3, 0, 0, MAP_FORTREE_CITY_HOUSE2
-	warp_def 25, 3, 0, 0, MAP_FORTREE_CITY_HOUSE3
-	warp_def 32, 2, 0, 0, MAP_FORTREE_CITY_HOUSE4
-	warp_def 12, 13, 0, 0, MAP_FORTREE_CITY_HOUSE5
-	warp_def 37, 13, 0, 0, MAP_FORTREE_CITY_DECORATION_SHOP
-	.globl FORTREE_CITY_EventBgEvents
-FORTREE_CITY_EventBgEvents: @ 0x084FF398
-	bg_event 6, 9, 0, 0, FortreeCity_EventScript_CitySign, 0, 0
-	bg_event 7, 6, 0, 1, 0x08242EFF, 0, 0
-	bg_event 5, 14, 0, 1, 0x08242EF6, 0, 0
-	bg_event 26, 10, 0, 0, FortreeCity_EventScript_GymSign, 0, 0
-	bg_event 6, 6, 0, 1, 0x08242EFF, 0, 0
-	bg_event 6, 14, 0, 1, 0x08242EF6, 0, 0
+	.include "data/maps/FortreeCity/events.inc"
 	.globl gMapEvents_FORTREE_CITY
-gMapEvents_FORTREE_CITY: @ 0x084FF3E0
-	map_events FORTREE_CITY_EventObjects, FORTREE_CITY_EventWarps, 0, FORTREE_CITY_EventBgEvents
+	.set gMapEvents_FORTREE_CITY, FortreeCity_MapEvents
 	.globl LILYCOVE_CITY_EventObjects
 LILYCOVE_CITY_EventObjects: @ 0x084FF3F4
 	object_event 1, 49, 0, 32, 20, 3, 3, 0, 1, 0, 0, LilycoveCity_EventScript_Sailor2, 0x0000
