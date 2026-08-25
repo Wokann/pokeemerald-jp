@@ -711,41 +711,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/DewfordTown/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN
 	.set gMapEvents_DEWFORD_TOWN, DewfordTown_MapEvents
-	.globl LAVARIDGE_TOWN_EventObjects
-LAVARIDGE_TOWN_EventObjects: @ 0x08500160
-	object_event 1, 22, 0, 8, 7, 3, 8, 0, 0, 0, 0, LavaridgeTown_EventScript_ExpertF, 0x0000
-	object_event 2, 21, 0, 5, 1, 3, 8, 0, 0, 0, 0, LavaridgeTown_EventScript_ExpertM, 0x0000
-	object_event 3, 29, 0, 5, 8, 3, 8, 0, 0, 0, 0, LavaridgeTown_EventScript_OldMan, 0x0000
-	object_event 4, 6, 0, 10, 13, 3, 3, 0, 2, 0, 0, LavaridgeTown_EventScript_Twin, 0x0000
-	object_event 5, 139, 0, 4, 4, 3, 18, 0, 0, 0, 0, LavaridgeTown_EventScript_HotSpringsOldWoman1, 0x0000
-	object_event 6, 139, 0, 5, 4, 3, 17, 0, 0, 0, 0, LavaridgeTown_EventScript_HotSpringsOldWoman2, 0x0000
-	object_event 7, 243, 0, 6, 16, 3, 9, 0, 0, 0, 0, 0x00000000, 0x03A2
-	object_event 8, 240, 0, 12, 15, 0, 8, 0, 0, 0, 0, 0x00000000, 0x03A1
-	object_event 9, 22, 0, 4, 7, 3, 8, 1, 1, 0, 0, LavaridgeTown_EventScript_EggWoman, 0x0000
-	.globl LAVARIDGE_TOWN_EventWarps
-LAVARIDGE_TOWN_EventWarps: @ 0x08500238
-	warp_def 12, 15, 0, 0, MAP_LAVARIDGE_TOWN_HERB_SHOP
-	warp_def 5, 15, 0, 0, MAP_LAVARIDGE_TOWN_GYM_1F
-	warp_def 15, 5, 0, 0, MAP_LAVARIDGE_TOWN_MART
-	warp_def 9, 6, 0, 0, MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F
-	warp_def 16, 15, 0, 0, MAP_LAVARIDGE_TOWN_HOUSE
-	warp_def 9, 2, 3, 3, MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F
-	.globl LAVARIDGE_TOWN_EventCoordEvents
-LAVARIDGE_TOWN_EventCoordEvents: @ 0x08500268
-	coord_event 6, 3, 3, 0, 0, LavaridgeTown_EventScript_HotSpringsTrigger
-	.globl LAVARIDGE_TOWN_EventBgEvents
-LAVARIDGE_TOWN_EventBgEvents: @ 0x08500278
-	bg_event 14, 16, 0, 0, LavaridgeTown_EventScript_HerbShopSign, 0, 0
-	bg_event 7, 15, 0, 0, LavaridgeTown_EventScript_GymSign, 0, 0
-	bg_event 17, 5, 0, 1, 0x08242EF6, 0, 0
-	bg_event 13, 8, 0, 0, LavaridgeTown_EventScript_TownSign, 0, 0
-	bg_event 10, 6, 0, 1, 0x08242EFF, 0, 0
-	bg_event 16, 5, 0, 1, 0x08242EF6, 0, 0
-	bg_event 11, 6, 0, 1, 0x08242EFF, 0, 0
-	bg_event 4, 5, 3, 7, 0x0010, 0x00, 0x00
+	.include "data/maps/LavaridgeTown/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN
-gMapEvents_LAVARIDGE_TOWN: @ 0x085002D8
-	map_events LAVARIDGE_TOWN_EventObjects, LAVARIDGE_TOWN_EventWarps, LAVARIDGE_TOWN_EventCoordEvents, LAVARIDGE_TOWN_EventBgEvents
+	.set gMapEvents_LAVARIDGE_TOWN, LavaridgeTown_MapEvents
 	.globl FALLARBOR_TOWN_EventObjects
 FALLARBOR_TOWN_EventObjects: @ 0x085002EC
 	object_event 1, 8, 0, 8, 11, 3, 8, 0, 1, 0, 0, FallarborTown_EventScript_Girl, 0x0000

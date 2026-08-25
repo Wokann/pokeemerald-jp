@@ -84,6 +84,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	DewfordTown_Gym \
 	DewfordTown_Hall \
 	DewfordTown_House2 \
+	LavaridgeTown \
 	LavaridgeTown_HerbShop \
 	LavaridgeTown_Gym_1F \
 	LavaridgeTown_Gym_B1F \
