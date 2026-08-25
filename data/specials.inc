@@ -535,6 +535,10 @@ gSpecials:
 	def_special sub_0813B844
 	def_special DestroyMewEmergingGrassSprite
 	def_special sub_08022230
+	@ Keep Slateport's script-facing name aligned with pokeemerald while the
+	@ JP special table retains the verified implementation symbol.
+	.set SPECIAL_ShowBerryCrushRankings, SPECIAL_sub_08022230
+	.set SPECIAL_WAITSTATE_ShowBerryCrushRankings, 0
 	def_special TryBufferWaldaPhrase
 	def_special DoWaldaNamingScreen, waitstate=1
 	def_special TryGetWallpaperWithWaldaPhrase

@@ -262,6 +262,18 @@
 	.set gText_PokemonTrainerSchoolEmail, 0x08243AA2
 	.globl gText_PlayerHouseBootPC
 	.set gText_PlayerHouseBootPC, 0x08243B10
+	@ Slateport's shared bag and Secret Power text still belongs to the
+	@ retained JP text block.  Export the pokeemerald spellings for map scripts.
+	.globl gText_TheBagIsFull
+	.set gText_TheBagIsFull, 0x08243947
+	.globl gText_ComeBackWithSecretPower
+	.set gText_ComeBackWithSecretPower, 0x08243B96
+	@ These two shared movement streams remain in the retained JP movement
+	@ block; the map source uses the matching pokeemerald semantic names.
+	.globl Common_Movement_QuestionMark
+	.set Common_Movement_QuestionMark, 0x08243619
+	.globl Common_Movement_FaceUp
+	.set Common_Movement_FaceUp, 0x08243635
 	.globl gText_NicknameThisPokemon
 	.set gText_NicknameThisPokemon, 0x08243EDB
 	.globl Common_EventScript_UpdateBrineyLocation
