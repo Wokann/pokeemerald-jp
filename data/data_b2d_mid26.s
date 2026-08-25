@@ -726,24 +726,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route101/events.inc"
 	.globl gMapEvents_ROUTE101
 	.set gMapEvents_ROUTE101, Route101_MapEvents
-	.globl ROUTE102_EventObjects
-ROUTE102_EventObjects: @ 0x085006E4
-	object_event 1, 11, 0, 18, 11, 3, 1, 0, 0, 0, 0, 0x081E6825, 0x0000
-	object_event 2, 35, 0, 33, 14, 3, 8, 0, 0, 1, 3, 0x081E6849, 0x0000
-	object_event 3, 36, 0, 25, 15, 3, 7, 0, 0, 1, 2, 0x081E68F7, 0x0000
-	object_event 4, 47, 0, 8, 7, 3, 18, 0, 0, 1, 3, 0x081E690E, 0x0000
-	object_event 5, 7, 0, 37, 4, 3, 2, 1, 1, 0, 0, 0x081E6840, 0x0000
-	object_event 6, 59, 0, 11, 15, 3, 8, 0, 0, 0, 0, 0x08256A2F, 0x03E8
-	object_event 7, 60, 0, 24, 2, 3, 12, 0, 0, 0, 2, 0x08244D23, 0x0000
-	object_event 8, 60, 0, 25, 2, 3, 12, 0, 0, 0, 1, 0x08244D23, 0x0000
-	object_event 9, 35, 0, 19, 4, 3, 8, 1, 1, 1, 3, 0x081E6925, 0x0000
-	.globl ROUTE102_EventBgEvents
-ROUTE102_EventBgEvents: @ 0x085007BC
-	bg_event 17, 2, 0, 0, 0x081E6837, 0, 0
-	bg_event 40, 9, 0, 0, 0x081E682E, 0, 0
+	.include "data/maps/Route102/events.inc"
 	.globl gMapEvents_ROUTE102
-gMapEvents_ROUTE102: @ 0x085007D4
-	map_events ROUTE102_EventObjects, 0, 0, ROUTE102_EventBgEvents
+	.set gMapEvents_ROUTE102, Route102_MapEvents
 	.globl ROUTE103_EventObjects
 ROUTE103_EventObjects: @ 0x085007E8
 	object_event 1, 33, 0, 49, 12, 3, 9, 0, 0, 0, 0, Route103_EventScript_Man, 0x0000
