@@ -702,41 +702,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/EverGrandeCity/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY
 	.set gMapEvents_EVER_GRANDE_CITY, EverGrandeCity_MapEvents
-	.globl LITTLEROOT_TOWN_EventObjects
-LITTLEROOT_TOWN_EventObjects: @ 0x084FFDB4
-	object_event 1, 6, 0, 16, 10, 3, 2, 1, 2, 0, 0, LittlerootTown_EventScript_Twin, 0x0000
-	object_event 2, 17, 0, 12, 13, 3, 2, 2, 1, 0, 0, LittlerootTown_EventScript_FatMan, 0x0364
-	object_event 3, 9, 0, 14, 17, 3, 2, 2, 1, 0, 0, LittlerootTown_EventScript_Boy, 0x0000
-	object_event 4, 215, 0, 5, 8, 3, 7, 0, 0, 0, 0, LittlerootTown_EventScript_Mom, 0x02F0
-	object_event 5, 94, 0, 2, 10, 4, 10, 0, 0, 0, 0, 0x00000000, 0x02F9
-	object_event 6, 94, 0, 11, 10, 4, 10, 0, 0, 0, 0, 0x00000000, 0x02FA
-	object_event 7, 240, 0, 13, 10, 3, 7, 1, 1, 0, 0, 0x00000000, 0x031A
-	object_event 8, 64, 0, 14, 10, 3, 7, 1, 1, 0, 0, 0x00000000, 0x031B
-	.globl LITTLEROOT_TOWN_EventWarps
-LITTLEROOT_TOWN_EventWarps: @ 0x084FFE74
-	warp_def 14, 8, 0, 1, MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F
-	warp_def 5, 8, 0, 1, MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F
-	warp_def 7, 16, 0, 0, MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB
-	.globl LITTLEROOT_TOWN_EventCoordEvents
-LITTLEROOT_TOWN_EventCoordEvents: @ 0x084FFE8C
-	coord_event 10, 1, 3, 16464, 0, LittlerootTown_EventScript_NeedPokemonTriggerLeft
-	coord_event 11, 1, 3, 16464, 0, LittlerootTown_EventScript_NeedPokemonTriggerRight
-	coord_event 11, 1, 3, 16464, 1, LittlerootTown_EventScript_GoSaveBirchTrigger
-	coord_event 8, 9, 3, 16464, 3, LittlerootTown_EventScript_GiveRunningShoesTrigger4
-	coord_event 9, 9, 3, 16464, 3, LittlerootTown_EventScript_GiveRunningShoesTrigger5
-	coord_event 10, 9, 3, 16464, 3, LittlerootTown_EventScript_GiveRunningShoesTrigger2
-	coord_event 11, 9, 3, 16464, 3, LittlerootTown_EventScript_GiveRunningShoesTrigger3
-	coord_event 10, 2, 3, 16464, 3, LittlerootTown_EventScript_GiveRunningShoesTrigger0
-	coord_event 11, 2, 3, 16464, 3, LittlerootTown_EventScript_GiveRunningShoesTrigger1
-	.globl LITTLEROOT_TOWN_EventBgEvents
-LITTLEROOT_TOWN_EventBgEvents: @ 0x084FFF1C
-	bg_event 15, 13, 0, 0, LittlerootTown_EventScript_TownSign, 0, 0
-	bg_event 6, 17, 0, 0, LittlerootTown_EventScript_BirchsLabSign, 0, 0
-	bg_event 7, 8, 3, 0, LittlerootTown_EventScript_BrendansHouseSign, 0, 0
-	bg_event 12, 8, 3, 0, LittlerootTown_EventScript_MaysHouseSign, 0, 0
+	.include "data/maps/LittlerootTown/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN
-gMapEvents_LITTLEROOT_TOWN: @ 0x084FFF4C
-	map_events LITTLEROOT_TOWN_EventObjects, LITTLEROOT_TOWN_EventWarps, LITTLEROOT_TOWN_EventCoordEvents, LITTLEROOT_TOWN_EventBgEvents
+	.set gMapEvents_LITTLEROOT_TOWN, LittlerootTown_MapEvents
 	.include "data/maps/OldaleTown/events.inc"
 	.globl gMapEvents_OLDALE_TOWN
 	.set gMapEvents_OLDALE_TOWN, OldaleTown_MapEvents
