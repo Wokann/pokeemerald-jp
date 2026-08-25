@@ -14,7 +14,7 @@ MauvilleCity_House1_EventScript_RockSmashDude::
     release
     end
 
-MauvilleCity_House1_EventScript_ReceivedRockSmash:
+MauvilleCity_House1_EventScript_ReceivedRockSmash::
     msgbox MauvilleCity_House1_Text_MonCanFlyOutOfSmashedRock, MSGBOX_DEFAULT
     release
     end

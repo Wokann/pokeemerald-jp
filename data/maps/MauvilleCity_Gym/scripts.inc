@@ -12,11 +12,11 @@ MauvilleCity_Gym_OnLoad:
     case 4, MauvilleCity_Gym_EventScript_Switch4Pressed
     end
 
-MauvilleCity_Gym_EventScript_UpdateBarriers:
+MauvilleCity_Gym_EventScript_UpdateBarriers::
     goto_if_set FLAG_MAUVILLE_GYM_BARRIERS_STATE, MauvilleCity_Gym_EventScript_SetAltBarriers
     end
 
-MauvilleCity_Gym_EventScript_SetAltBarriers:
+MauvilleCity_Gym_EventScript_SetAltBarriers::
     setmetatile 3, 11, METATILE_MauvilleGym_RedBeamV1_On, TRUE
     setmetatile 3, 12, METATILE_MauvilleGym_RedBeamV2_On, TRUE
     setmetatile 3, 13, METATILE_MauvilleGym_PoleTop_On, TRUE
@@ -45,31 +45,31 @@ MauvilleCity_Gym_EventScript_SetAltBarriers:
     setmetatile 5, 7, METATILE_MauvilleGym_GreenBeamH4_Off, FALSE
     end
 
-MauvilleCity_Gym_EventScript_Switch1Pressed:
+MauvilleCity_Gym_EventScript_Switch1Pressed::
     setvar VAR_0x8004, 0
     special MauvilleGymPressSwitch
     goto MauvilleCity_Gym_EventScript_UpdateBarriers
     end
 
-MauvilleCity_Gym_EventScript_Switch2Pressed:
+MauvilleCity_Gym_EventScript_Switch2Pressed::
     setvar VAR_0x8004, 1
     special MauvilleGymPressSwitch
     goto MauvilleCity_Gym_EventScript_UpdateBarriers
     end
 
-MauvilleCity_Gym_EventScript_Switch3Pressed:
+MauvilleCity_Gym_EventScript_Switch3Pressed::
     setvar VAR_0x8004, 2
     special MauvilleGymPressSwitch
     goto MauvilleCity_Gym_EventScript_UpdateBarriers
     end
 
-MauvilleCity_Gym_EventScript_Switch4Pressed:
+MauvilleCity_Gym_EventScript_Switch4Pressed::
     setvar VAR_0x8004, 3
     special MauvilleGymPressSwitch
     goto MauvilleCity_Gym_EventScript_UpdateBarriers
     end
 
-MauvilleCity_Gym_EventScript_DeactivatePuzzle:
+MauvilleCity_Gym_EventScript_DeactivatePuzzle::
     special MauvilleGymDeactivatePuzzle
     end
 
@@ -83,7 +83,7 @@ MauvilleCity_Gym_EventScript_Wattson::
     release
     end
 
-MauvilleCity_Gym_EventScript_WattsonDefeated:
+MauvilleCity_Gym_EventScript_WattsonDefeated::
     message MauvilleCity_Gym_Text_ReceivedDynamoBadge
     waitmessage
     call Common_EventScript_PlayGymBadgeFanfare
@@ -111,7 +111,7 @@ MauvilleCity_Gym_EventScript_WattsonDefeated:
     release
     end
 
-MauvilleCity_Gym_EventScript_GiveShockWave2:
+MauvilleCity_Gym_EventScript_GiveShockWave2::
     giveitem ITEM_TM_SHOCK_WAVE
     goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
     msgbox MauvilleCity_Gym_Text_ExplainShockWave, MSGBOX_DEFAULT
@@ -119,19 +119,19 @@ MauvilleCity_Gym_EventScript_GiveShockWave2:
     release
     end
 
-MauvilleCity_Gym_EventScript_GiveShockWave:
+MauvilleCity_Gym_EventScript_GiveShockWave::
     giveitem ITEM_TM_SHOCK_WAVE
     goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
     msgbox MauvilleCity_Gym_Text_ExplainShockWave, MSGBOX_DEFAULT
     setflag FLAG_RECEIVED_TM_SHOCK_WAVE
     return
 
-MauvilleCity_Gym_EventScript_CompletedNewMauville:
+MauvilleCity_Gym_EventScript_CompletedNewMauville::
     msgbox MauvilleCity_Gym_Text_WattsonGoForthAndEndeavor, MSGBOX_DEFAULT
     release
     end
 
-MauvilleCity_Gym_EventScript_WattsonRematch:
+MauvilleCity_Gym_EventScript_WattsonRematch::
     trainerbattle_rematch_double TRAINER_WATTSON_1, MauvilleCity_Gym_Text_WattsonPreRematch, MauvilleCity_Gym_Text_WattsonRematchDefeat, MauvilleCity_Gym_Text_WattsonRematchNeedTwoMons
     msgbox MauvilleCity_Gym_Text_WattsonPostRematch, MSGBOX_AUTOCLOSE
     end
@@ -172,7 +172,7 @@ MauvilleCity_Gym_EventScript_Switch4::
     goto MauvilleCity_Gym_EventScript_PressFloorSwitch
     end
 
-MauvilleCity_Gym_EventScript_PressFloorSwitch:
+MauvilleCity_Gym_EventScript_PressFloorSwitch::
     special MauvilleGymSetDefaultBarriers
     special MauvilleGymPressSwitch
     special DrawWholeMapView
@@ -182,16 +182,16 @@ MauvilleCity_Gym_EventScript_PressFloorSwitch:
     releaseall
     end
 
-MauvilleCity_Gym_EventScript_SwitchDoNothing:
+MauvilleCity_Gym_EventScript_SwitchDoNothing::
     releaseall
     end
 
-MauvilleCity_Gym_EventScript_SetBarriersAltState:
+MauvilleCity_Gym_EventScript_SetBarriersAltState::
     setflag FLAG_MAUVILLE_GYM_BARRIERS_STATE
     releaseall
     end
 
-MauvilleCity_Gym_EventScript_ClearBarriersAltState:
+MauvilleCity_Gym_EventScript_ClearBarriersAltState::
     clearflag FLAG_MAUVILLE_GYM_BARRIERS_STATE
     releaseall
     end
@@ -229,7 +229,7 @@ MauvilleCity_Gym_EventScript_GymGuide::
     release
     end
 
-MauvilleCity_Gym_EventScript_GymGuidePostVictory:
+MauvilleCity_Gym_EventScript_GymGuidePostVictory::
     msgbox MauvilleCity_Gym_Text_GymGuidePostVictory, MSGBOX_DEFAULT
     release
     end
@@ -246,12 +246,12 @@ MauvilleCity_Gym_EventScript_RightGymStatue::
     goto MauvilleCity_Gym_EventScript_GymStatue
     end
 
-MauvilleCity_Gym_EventScript_GymStatueCertified:
+MauvilleCity_Gym_EventScript_GymStatueCertified::
     msgbox MauvilleCity_Gym_Text_GymStatueCertified, MSGBOX_DEFAULT
     releaseall
     end
 
-MauvilleCity_Gym_EventScript_GymStatue:
+MauvilleCity_Gym_EventScript_GymStatue::
     msgbox MauvilleCity_Gym_Text_GymStatue, MSGBOX_DEFAULT
     releaseall
     end
