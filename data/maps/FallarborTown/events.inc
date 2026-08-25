@@ -18,12 +18,12 @@ FallarborTown_MapWarps:
 	warp_def 1, 6, 0, 0, MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE
 
 FallarborTown_MapBGEvents:
-	bg_sign_event 16, 15, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EF6
-	bg_sign_event 15, 7, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 16, 15, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemartSign
+	bg_sign_event 15, 7, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_sign_event 6, 8, 0, BG_EVENT_PLAYER_FACING_ANY, FallarborTown_EventScript_BattleTentSign
-	bg_sign_event 16, 7, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 16, 7, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_sign_event 10, 11, 0, BG_EVENT_PLAYER_FACING_ANY, FallarborTown_EventScript_TownSign
-	bg_sign_event 17, 15, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EF6
+	bg_sign_event 17, 15, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemartSign
 	bg_sign_event 3, 7, 0, BG_EVENT_PLAYER_FACING_ANY, FallarborTown_EventScript_MoveTutorSign
 	bg_hidden_item_event 2, 15, 3, ITEM_NUGGET, FLAG_HIDDEN_ITEM_FALLARBOR_TOWN_NUGGET
 
