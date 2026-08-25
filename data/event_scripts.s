@@ -859,7 +859,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/Route104_PrettyPetalFlowerShop/scripts.inc"
 	.include "data/maps/Route111_WinstrateFamilysHouse/scripts.inc"
 	.include "data/maps/Route111_OldLadysRestStop/scripts.inc"
-	.incbin "baserom_jp.gba", 0x211e4f, 0xbb
 	.include "data/maps/Route112_CableCarStation/scripts.inc"
 	.incbin "baserom_jp.gba", 0x211fbd, 0x62
 	.include "data/maps/MtChimney_CableCarStation/scripts.inc"

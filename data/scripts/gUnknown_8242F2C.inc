@@ -157,6 +157,7 @@ Common_EventScript_SetAbnormalWeather:: @ 0x08243106
 	playfanfare 0x171
 	waitfanfare 
 	return 
+Common_EventScript_OutOfCenterPartyHeal:: @ 0x0824310F
 	fadescreen 0x1
 	playfanfare 0x170
 	waitfanfare 

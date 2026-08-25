@@ -122,6 +122,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The next top-level raw owner is the Winstrate house: its four object
     # scripts and three shared branches follow the US source order exactly.
     'Route111_WinstrateFamilysHouse': 7,
+    # The immediately following rest stop has a transition hook and three
+    # dialogue branches, with its four text records in the adjacent bytes.
+    'Route111_OldLadysRestStop': 4,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -191,6 +194,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Mr. Briney's nine map-owned messages immediately follow its scripts.
     'Route104_MrBrineysHouse': 9,
     'Route111_WinstrateFamilysHouse': 6,
+    'Route111_OldLadysRestStop': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9256,6 +9260,21 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x08211B50: {0x8008: {0x01: 'LOCALID_WINSTRATE_HOUSE_VIVI'}},
                 0x08211B65: {0x8008: {0x04: 'LOCALID_WINSTRATE_HOUSE_VICKY'}},
             },
+        },
+    },
+    # The rest stop follows the Winstrate house in top-level source order.
+    # Its four texts are physically contiguous with its scripts and are
+    # converted in the same map owner rather than left as a top-level blob.
+    'Route111_OldLadysRestStop': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824310F: 'Common_EventScript_OutOfCenterPartyHeal',
+        },
+        'symbols': {
+            'flags': {0x08A1: 'FLAG_LANDMARK_OLD_LADY_REST_SHOP'},
+            'vars': {0x800D: 'VAR_RESULT'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
 })
