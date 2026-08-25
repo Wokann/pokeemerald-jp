@@ -35,18 +35,236 @@
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
+#include "trig.h"
 #include "util.h"
 #include "window.h"
 
 extern u8 sCurrentBoxOption;
+extern u8 gUnknown_20399A0;
+u8 GetCurrentBoxOption(void);
+void EnterPokeStorage(u8 boxOption);
+extern bool8 gUnknown_20399AC;
+extern u8 gUnknown_20399AE;
+extern const u8 gUnknown_8556618[];
+extern const u8 gUnknown_8556620[];
+extern const u16 gUnknown_854C754[];
+extern const u16 gUnknown_854C76C[];
+extern const u8 gUnknown_85564E0[];
+extern const u8 gUnknown_85564F8[];
+extern const struct SpriteTemplate gUnknown_855654C;
+extern const struct SpriteTemplate gUnknown_8556564;
+extern const u32 gUnknown_854BBFC[];
+extern const u32 gUnknown_854BC94[];
+extern const u32 gUnknown_854BF9C[];
+extern const u32 gUnknown_854BDC0[];
+extern const struct BgTemplate gUnknown_854C9E4[];
+extern const u16 gUnknown_854BEFC[];
+extern const u16 gUnknown_854BF1C[];
+extern const u16 gUnknown_854BF5C[];
+extern const u16 gUnknown_854BF7C[];
+extern const u16 gUnknown_854C9A4[];
+extern const u16 gUnknown_854BF3C[];
+extern const u32 gUnknown_854C65C[];
+extern const u16 gUnknown_854C70C[];
+extern const struct SpriteSheet gUnknown_854C9FC;
+extern const struct SpriteTemplate gUnknown_854CB6C;
+extern const struct SpriteTemplate gUnknown_854CA04;
+extern const struct Wallpaper gUnknown_8551868[];
+extern const struct Wallpaper gUnknown_8555A40[];
+extern const u8 *const gUnknown_8555B00[];
+extern u8 gUnknown_3000F78[];
+extern u16 gUnknown_2037434[];
+extern const u8 gUnknown_855676C[];
+extern const u8 *const gUnknown_855657C[];
+extern const struct InputFunc gUnknown_85564B8[] __attribute__((aligned(4)));
+struct UnkUtil;
+struct UnkUtilData;
+extern const u8 *GetMovingItemName(void);
+extern u32 GetWaldaWallpaperPatternId(void);
+extern u32 GetWaldaWallpaperIconId(void);
+extern u16 *GetWaldaWallpaperColorsPtr(void);
+extern void sub_080CC2B0(const void *tilemap, s8 direction, u8 offset);
+extern void sub_080CC354(void *tilemap);
+extern void LoadCursorMonSprite(void);
+extern void sub_080C99C8(void);
+extern void sub_080C9A38(void);
+extern void RefreshCursorMonData(void);
+extern void LoadCursorMonGfx(u16 species, u32 personality);
+extern void PrintCursorMonInfo(void);
+extern void sub_080C9EC0(void);
+extern void sub_080C9B44(struct Sprite *sprite);
+extern void sub_080D1EE4(u8 id, u8 bg, const void *tilemap, u16 width, u16 height);
+extern void sub_080D2010(u8 id, u16 x, u16 y);
+extern void sub_080D1E3C(u8 count);
+extern const u8 gUnknown_854BEBC[];
+extern const u8 gUnknown_854B234[];
+extern const u8 gUnknown_854B258[];
+extern const u16 gUnknown_854B25C[];
+extern const u8 gUnknown_854B27C[];
+extern const u8 gUnknown_854BA7C[];
+extern const u8 gUnknown_85CB584[];
+struct PokemonStorageMenuText
+{
+    const u8 *text;
+    const u8 *desc;
+};
+
+extern const struct PokemonStorageMenuText gUnknown_854B1E4[];
+extern const struct WindowTemplate gUnknown_854B20C[];
+extern const u8 gUnknown_85CB534[];
+extern const u8 gUnknown_85CB55C[];
+extern void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u32 max);
+extern void sub_080D0A34(void);
+extern void Cb_MainPSS(void);
+void Cb_ShowPartyPokemon(void);
+void Cb_ShowPSS(void);
+void Cb_ReshowPSS(void);
+extern void Cb_HidePartyPokemon(void);
+void Cb_OnCloseBoxPressed(void);
+void Cb_OnBPressed(void);
+void Cb_HandleBoxOptions(void);
+void Cb_OnSelectedMon(void);
+extern void sub_080C8F0C(void);
+extern void Cb_CloseBoxWhileHoldingItem(void);
+extern void Cb_PrintCantStoreMail(void);
+extern void Cb_NameBox(void);
+extern void Cb_HandleWallpapers(void);
+extern void Cb_JumpBox(void);
+extern void Cb_ChangeScreen(u8 taskId);
+extern void PrintStorageActionText(u8 id);
+extern void ShowYesNoWindow(s8 cursorPos);
+extern void ClearBottomWindow(void);
+extern void sub_080CA444(void);
+extern bool8 IsMonBeingMoved(void);
+extern u16 GetMovingItemId(void);
+extern void FreePSSData(void);
+void sub_080CDFDC(void);
+void sub_080CE064(void);
+bool8 sub_080CF948(void);
+s16 sub_080CF94C(void);
+u8 sub_080CF268(void);
+void sub_080CF724(void);
+void sub_080CF748(void);
+bool8 sub_080CFA84(void);
+void SetUpScrollToBox(u8 boxId);
+bool8 ScrollToBox(void);
+void SetCurrentBox(u8 boxId);
+void sub_080CA384(void);
+void sub_080CA224(void);
+void StopFlashingCloseBoxButton(void);
+void BoxSetMosaic(void);
+bool8 sub_080CCDD0(void);
+bool8 IsCursorOnCloseBox(void);
+void MultiMove_SetFunction(u8 id);
+void sub_080CB1C4(void);
+u8 GetNumPartySpritesCompacting(void);
+void AddWallpaperSetsMenu(void);
+void AddWallpapersMenu(u8 wallpaperSet);
+void SetWallpaperForCurrentBox(u8 wallpaperId);
+bool8 DoWallpaperGfxChange(void);
+void Cb_HandleMovingMonFromParty(void);
+void sub_080D10B8(void);
+bool8 sub_080D10EC(void);
+bool8 sub_080D1184(void);
+void sub_080CD888(void);
+void Item_SwitchMonsWithMoving(u8 cursorArea, u8 cursorPos);
+void Item_TakeMons(u8 cursorArea, u8 cursorPos);
+void Item_GiveMovingToMon(u8 cursorArea, u8 cursorPos);
+void Item_FromMonToMoving(u8 cursorArea, u8 cursorPos);
+void SetMonMarkings(u8 markings);
+bool8 TryStorePartyMonInBox(u8 boxId);
+void sub_080CDAA8(void);
+void SaveCursorPos(void);
+void InitMonPlaceChange(u8 type);
+bool8 DoMonPlaceChange(void);
+void SetMovingMonPriority(u8 priority);
+void SetUpDoShowPartyMenu(void);
+bool8 DoShowPartyMenu(void);
+void Cb_MoveMon(void);
+void Cb_PlaceMon(void);
+void Cb_ShiftMon(void);
+void Cb_WithdrawMon(void);
+void Cb_DepositMenu(void);
+void Cb_ShowMonSummary(void);
+void Cb_ShowMarkMenu(void);
+void Cb_TakeItemForMoving(void);
+void Cb_GiveMovingItemToMon(void);
+void Cb_ItemToBag(void);
+void Cb_SwitchSelectedItem(void);
+void Cb_GiveItemFromBag(void);
+void Cb_ShowItemInfo(void);
+void Cb_ReleaseMon(void);
+u8 sub_080C9B2C(void);
+bool8 CanMovePartyMon(void);
+bool8 CanShiftMon(void);
+void sub_080C743C(void);
+void sub_080C7470(void);
+void sub_080C74A0(void);
+void sub_080C7528(u8 *str, u16 x, u16 y);
+void sub_080C7590(struct Sprite *sprite);
+void FieldCb_ReturnToPcMenu(void);
+void sub_080C6E88(u8 whichMenu, s16 *windowIdPtr);
+extern void sub_080C6738(u8 *str, void *dest, u16 width, u8 fillValue, u8 textColor, u8 shadowColor, void *unused);
+struct Sprite *sub_080CCB64(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority);
+u8 sub_081984B0(u8 windowId, u8 fontId, u8 left, u8 top, u8 cursorHeight, u8 itemCount, u8 initialCursorPos);
+void InitCanRelaseMonVars(void);
+void sub_080CDACC(void);
+bool8 sub_080CDB24(void);
+void ReleaseMon(void);
+void sub_080CB8D8(void);
+bool8 sub_080CB914(void);
+void sub_080CDBA0(void);
 
 #define WALDA_WALLPAPERS_COUNT 16
 #define WALDA_WALLPAPER_ICONS_COUNT 30
+
+enum
+{
+    MSG_VAR_NONE,
+    MSG_VAR_MON_NAME_1,
+    MSG_VAR_MON_NAME_2,
+    MSG_VAR_MON_NAME_3,
+    MSG_VAR_RELEASE_MON_1,
+    MSG_VAR_RELEASE_MON_2,
+    MSG_VAR_RELEASE_MON_3,
+    MSG_VAR_ITEM_NAME,
+};
+
+struct StorageMessage
+{
+    const u8 *text;
+    u8 format;
+};
+
+extern const struct StorageMessage gUnknown_854CA1C[];
+
+struct Wallpaper
+{
+    const u32 *tiles;
+    const u32 *tilemap;
+    const u16 *palettes;
+};
 
 struct StorageMenu
 {
     const u8 *text;
     int textId;
+};
+
+struct InputFunc
+{
+    u8 (*func)(void);
+    s8 area;
+};
+
+struct CursorSpriteSheetData
+{
+    struct SpriteSheet sheets[3];
+};
+
+struct CursorSpritePaletteData
+{
+    struct SpritePalette palettes[2];
 };
 
 struct UnkUtilData
@@ -72,7 +290,9 @@ struct ChooseBoxMenu
     struct Sprite *menuSideSprites[4];
     u32 unused1[3];
     struct Sprite *arrowSprites[2];
-    u8 unused2[0x214];
+    u8 unused2[0x200];
+    u8 boxName[9];
+    u8 unused2a[0xB];
     bool32 loadedPalette;
     u16 tileTag;
     u16 paletteTag;
@@ -93,6 +313,11 @@ struct ItemIcon
 
 #define MAX_MON_ICONS max(IN_BOX_COUNT + PARTY_SIZE + 1, 40)
 #define MAX_ITEM_ICONS 3
+#define GFXTAG_ITEM_ICON_0 7
+#define PALTAG_ITEM_ICON_0 0xDACB
+#define GFXTAG_BOX_TITLE 3
+#define GFXTAG_BOX_TITLE_ALT 4
+#define PALTAG_BOX_TITLE 0xDAC9
 #define STORAGE_MON_NAME_LENGTH 11 // Fixed US-style display buffer; JP kana names are shorter.
 
 enum
@@ -101,6 +326,112 @@ enum
     CURSOR_AREA_IN_PARTY,
     CURSOR_AREA_BOX_TITLE,
     CURSOR_AREA_BUTTONS, // Party Pokemon and Close Box
+};
+#define CURSOR_AREA_IN_HAND CURSOR_AREA_BOX_TITLE // Alternate name while moving items.
+
+enum
+{
+    INPUT_NONE,
+    INPUT_MOVE_CURSOR,
+    INPUT_2,
+    INPUT_3,
+    INPUT_CLOSE_BOX,
+    INPUT_SHOW_PARTY,
+    INPUT_HIDE_PARTY,
+    INPUT_BOX_OPTIONS,
+    INPUT_IN_MENU,
+    INPUT_SCROLL_RIGHT,
+    INPUT_SCROLL_LEFT,
+    INPUT_DEPOSIT,
+    INPUT_WITHDRAW,
+    INPUT_MOVE_MON,
+    INPUT_SHIFT_MON,
+    INPUT_PLACE_MON,
+    INPUT_TAKE_ITEM,
+    INPUT_GIVE_ITEM,
+    INPUT_SWITCH_ITEMS,
+    INPUT_PRESSED_B,
+    INPUT_MULTIMOVE_START,
+    INPUT_MULTIMOVE_CHANGE_SELECTION,
+    INPUT_MULTIMOVE_SINGLE,
+    INPUT_MULTIMOVE_GRAB_SELECTION,
+    INPUT_MULTIMOVE_UNABLE,
+    INPUT_MULTIMOVE_MOVE_MONS,
+    INPUT_MULTIMOVE_PLACE_MONS,
+};
+
+enum
+{
+    MOVE_MODE_NORMAL,
+    MOVE_MODE_MULTIPLE_SELECTING,
+    MOVE_MODE_MULTIPLE_MOVING,
+};
+
+enum
+{
+    MENU_CANCEL,
+    MENU_STORE,
+    MENU_WITHDRAW,
+    MENU_MOVE,
+    MENU_SHIFT,
+    MENU_PLACE,
+    MENU_SUMMARY,
+    MENU_RELEASE,
+    MENU_MARK,
+    MENU_JUMP,
+    MENU_WALLPAPER,
+    MENU_NAME,
+    MENU_TAKE,
+    MENU_GIVE,
+    MENU_GIVE_2,
+    MENU_SWITCH,
+    MENU_BAG,
+    MENU_INFO,
+    MENU_SCENERY_1,
+    MENU_SCENERY_2,
+    MENU_SCENERY_3,
+    MENU_ETCETERA,
+    MENU_FRIENDS,
+    MENU_FOREST,
+    MENU_CITY,
+    MENU_DESERT,
+    MENU_SAVANNA,
+    MENU_CRAG,
+    MENU_VOLCANO,
+    MENU_SNOW,
+    MENU_CAVE,
+    MENU_BEACH,
+    MENU_SEAFLOOR,
+    MENU_RIVER,
+    MENU_SKY,
+    MENU_POLKADOT,
+    MENU_POKECENTER,
+    MENU_MACHINE,
+    MENU_SIMPLE,
+};
+#define MENU_WALLPAPER_SETS_START MENU_SCENERY_1
+
+enum
+{
+    ITEM_CB_WAIT_ANIM,
+    ITEM_CB_TO_HAND,
+    ITEM_CB_TO_MON,
+    ITEM_CB_SWAP_TO_HAND,
+    ITEM_CB_SWAP_TO_MON,
+    ITEM_CB_UNUSED_5,
+    ITEM_CB_UNUSED_6,
+    ITEM_CB_HIDE_PARTY,
+};
+
+enum
+{
+    ITEM_ANIM_NONE,
+    ITEM_ANIM_APPEAR,
+    ITEM_ANIM_DISAPPEAR,
+    ITEM_ANIM_PICK_UP,
+    ITEM_ANIM_PUT_DOWN,
+    ITEM_ANIM_PUT_AWAY,
+    ITEM_ANIM_LARGE,
 };
 
 enum
@@ -297,18 +628,75 @@ struct MultiMove
     struct BoxPokemon boxMons[IN_BOX_COUNT];
 };
 
+struct TilemapUtil_RectData
+{
+    s16 x;
+    s16 y;
+    u16 width;
+    u16 height;
+    s16 destX;
+    s16 destY;
+};
+
+struct TilemapUtil
+{
+    struct TilemapUtil_RectData prev;
+    struct TilemapUtil_RectData cur;
+    const void *savedTilemap;
+    const void *tilemap;
+    u16 altWidth;
+    u16 altHeight;
+    u16 width;
+    u16 height;
+    u16 rowSize;
+    u8 tileSize;
+    u8 bg;
+    bool8 active;
+};
+
+struct TilemapDimensions
+{
+    u16 width;
+    u16 height;
+};
+
+struct RestrictedReleaseMove
+{
+    s8 mapGroup;
+    s8 mapNum;
+    u16 move;
+};
+
 extern struct PokemonStorageSystemData *sStorage;
 
 extern bool8 (*const sPlaceChangeFuncs[])(void);
 extern const u8 *ItemId_GetName(u16 itemId);
+extern const u8 gText_EggNickname[];
 extern void TilemapUtil_Free(void);
 extern void MultiMove_Free(void);
+void RemoveMenu(void);
+extern void PrintTextArray(u8 windowId, u8 fontId, u8 x, u8 y, u8 lineHeight, u8 itemCount, const void *texts);
+extern u8 sub_081984F0(u8 windowId, u8 fontId, u8 x, u8 y, u8 itemCount, u8 initialCursorPos);
 extern struct MultiMove *sMultiMove;
-extern void *sTilemapUtil;
+extern struct TilemapUtil *sTilemapUtil;
+extern struct ChooseBoxMenu *gUnknown_20399A4;
+extern u16 gUnknown_2039A28;
+extern const struct TilemapDimensions gUnknown_8556784[][4];
+extern const struct RestrictedReleaseMove gUnknown_85564A0[];
+
+#define sNumTilemapUtilIds gUnknown_2039A28
+#define sTilemapDimensions gUnknown_8556784
 extern struct UnkUtil *sUnkUtil;
 extern struct Pokemon sSavedMovingMon;
 extern s8 sCursorArea;
 extern s8 sCursorPosition;
+extern s8 gUnknown_2039A18;
+extern s8 gUnknown_2039A19;
+extern bool8 gUnknown_2039A1D;
+extern bool8 gUnknown_2039A1A;
+extern u8 gUnknown_2039A1B;
+extern u8 gUnknown_2039A1C;
+extern u8 gUnknown_20399AF;
 extern bool8 sIsMonBeingMoved;
 extern u8 sLastUsedBox;
 extern u16 sMovingItemId;
@@ -318,12 +706,169 @@ extern void UpdateCloseBoxButtonFlash(void);
 extern void UpdateCloseBoxButtonTilemap(bool8 state);
 extern void UnkUtil_Run(void);
 extern void ScrollBackground(void);
-extern void Task_InitPokeStorage(void);
+extern void Task_InitPokeStorage(u8 taskId);
 extern const struct WindowTemplate sPSSWindowTemplates[];
 extern const struct SpritePalette sWaveformSpritePalette;
 extern void SetCursorMonData(const void *data, u8 mode);
+extern void LoadPSSMenuGfx(void);
+extern void LoadWaveformSpritePalette(void);
+extern bool8 InitPokeStorageWindows(void);
+extern void sub_080CA778(void);
+extern void sub_080CCBE8(void);
+extern void sub_080CCC68(void);
+extern bool8 sub_080CFA04(void);
+extern void SetScrollingBackground(void);
+extern void sub_080CA480(void);
+extern void sub_080C994C(void);
+extern void sub_080C9F68(void);
+extern void sub_080CBBA0(u8 boxId);
+extern bool8 sub_080CBBD0(void);
+extern void sub_080CE00C(void);
+extern void sub_080CE160(void);
+extern void GiveChosenBagItem(void);
+extern void sub_080CA720(void);
+extern void sub_080D0500(void);
+extern void sub_080CA2D8(void);
+extern void sub_080CA30C(u8 partyId, bool8 hasMon);
+extern bool8 ShowPartyMenu(void);
+extern void CreatePartyMonsSprites(bool8 visible);
+extern void sub_080CB364(s16 yDelta);
+extern void DestroyAllPartyMonIcons(void);
+extern s16 CompactPartySlots(void);
+extern void sub_080CD41C(void);
+extern void SetUpDoShowPartyMenu(void);
+extern bool8 DoShowPartyMenu(void);
+extern void SetUpHidePartyMenu(void);
+extern bool8 HidePartyMenu(void);
+extern void sub_080CD474(u8 cursorBoxPosition);
+extern u8 GetSavedCursorPos(void);
+extern bool8 sub_080CCDD0(void);
+extern void BoxSetMosaic(void);
 extern u8 SetMenuTexts_Mon(void);
 extern u8 SetMenuTexts_Item(void);
+extern const u8 *ItemId_GetHoldEffect(u16 itemId);
+extern void sub_080D0EA4(u8 id, u8 callbackId, u8 cursorArea, u8 cursorPos);
+extern void sub_080D1378(struct Sprite *sprite);
+extern u8 sub_080D0C10(u8 cursorArea, u8 cursorPos);
+extern bool32 sub_080D0BC4(u8 cursorArea, u8 cursorPos);
+extern void sub_080D0CAC(u8 id, u8 cursorArea, u8 cursorPos);
+extern u8 sub_080D0B88(void);
+extern void sub_080D0DC4(u8 id, const u32 *itemTiles, const u32 *itemPal);
+extern void sub_080D0E74(u8 id, u8 animNum);
+extern void sub_080D0FE0(u8 id, bool8 active);
+extern void sub_080D0A6C(void);
+extern u8 GetCursorPosition(void);
+extern void StartCursorAnim(u8 anim);
+extern void sub_080D07D8(u16 itemId);
+extern void sub_080D062C(u8 cursorArea, u8 cursorPos);
+extern void sub_080D06F0(u8 cursorArea, u8 cursorPos);
+extern const void *GetItemIconPic(u16 itemId);
+extern const void *GetItemIconPalette(u16 itemId);
+extern void DestroyBoxMonIconAtPosition(u8 boxPosition);
+extern void DestroyBoxMonIcon(struct Sprite *sprite);
+extern void SpriteCB_HeldMon(struct Sprite *sprite);
+extern const struct SpriteTemplate gUnknown_854CB84;
+extern const union AffineAnimCmd *const gUnknown_854CBCC[];
+extern void LoadWallpaperGfx(u8 boxId, s8 direction);
+extern bool32 WaitForWallpaperGfxLoad(void);
+extern void sub_080CC3C4(u8 boxId);
+extern void sub_080CC8A8(void);
+extern void SetBoxWallpaper(u8 boxId, u8 wallpaperId);
+extern s8 sub_080CBEB8(u8 boxId);
+extern void sub_080CAD40(u8 boxId, s8 direction);
+extern bool8 sub_080CADF8(void);
+extern void sub_080CC57C(u8 boxId, s8 direction);
+extern void sub_080CC934(s8 direction);
+extern void sub_080CC76C(void);
+extern void sub_080CC9D4(void);
+extern void sub_080CCA24(bool8 animate);
+extern void sub_080CC828(void);
+extern void sub_080CC7BC(struct Sprite *sprite);
+extern void sub_080CC7F0(struct Sprite *sprite);
+extern const u16 gUnknown_8551824[][2];
+extern const struct SpriteTemplate gUnknown_8555BA4;
+extern const struct SpriteSheet gUnknown_8555B7C;
+extern const struct SpriteTemplate gUnknown_8555BDC;
+extern void sub_080C66A4(const u8 *str, u8 *buffer, u8 x, u8 y, void *decompBuffer);
+extern bool8 sub_080D0AB8(void);
+extern bool8 IsActiveItemMoving(void);
+extern void sub_080CD2E4(void);
+extern void ClearSavedCursorPos(void);
+extern void sub_080CF490(void);
+extern void ReshowDisplayMon(void);
+extern void CreateMovingMonIcon(void);
+extern u8 GetBoxWallpaper(u8 boxId);
+extern s16 GetBoxTitleBaseX(u16 len);
+extern bool8 IsCursorOnBoxTitle(void);
+extern struct Sprite *sub_080CBAA4(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority);
+extern void sub_080CAAA8(struct Sprite *sprite);
+extern void sub_080CAAEC(struct Sprite *sprite);
+extern void sub_080CB244(struct Sprite *sprite, u16 partyId);
+extern void sub_080CB2B0(struct Sprite *sprite);
+extern void ZeroBoxMonAt(u8 boxId, u8 boxPosition);
+extern void sub_080D0050(u8 x, u8 y);
+extern void sub_080D00D4(u8 x, u8 y);
+extern void sub_080CFF70(u8 column, u8 minRow, u8 maxRow);
+extern void sub_080CFFA8(u8 row, u8 minColumn, u8 maxColumn);
+extern void sub_080CFFE0(u8 column, u8 minRow, u8 maxRow);
+extern void sub_080D0018(u8 row, u8 minColumn, u8 maxColumn);
+extern void MultiMove_InitMove(u16 x, u16 y, u16 moveSteps);
+extern void sub_080CFECC(void);
+extern bool8 sub_080CFAEC(void);
+extern bool8 sub_080CFBE4(void);
+extern bool8 sub_080CFC50(void);
+extern bool8 sub_080CFCC0(void);
+extern bool8 sub_080CFD40(void);
+extern bool8 sub_080CFD68(void);
+extern u8 sub_080D0134(void);
+extern void sub_080D016C(void);
+extern void sub_080D0244(void);
+extern void sub_080D02BC(void);
+extern void sub_080D034C(void);
+extern void sub_080D03FC(void);
+extern void InitMultiMonPlaceChange(bool8 isMoving);
+extern bool8 MonPlaceChange_CursorDown(void);
+extern bool8 MonPlaceChange_CursorUp(void);
+extern void MoveMon(void);
+extern void PlaceMon(void);
+extern void sub_080CB488(u8 mode, u8 id);
+extern void sub_080CB520(u8 boxId, u8 position);
+extern void sub_080CB5D0(u8 boxId, u8 position);
+extern bool8 sub_080CB638(void);
+extern void SetBoxSpeciesAndPersonalities(u8 boxId);
+extern u32 GetCurrentBoxMonData(u8 boxPosition, s32 request);
+extern void SetMovedMonData(u8 boxId, u8 position);
+extern void SetPlacedMonData(u8 boxId, u8 position);
+extern void SetShiftedMonData(u8 boxId, u8 position);
+extern bool32 AtLeastThreeUsableMons(void);
+extern s8 RunCanReleaseMon(void);
+extern bool8 MultiMonPlaceChange_Down(void);
+extern bool8 MultiMonPlaceChange_Up(void);
+extern bool8 InBoxInput_Normal(void);
+extern bool8 InBoxInput_GrabbingMultiple(void);
+extern bool8 InBoxInput_MovingMultiple(void);
+extern u8 SetSelectionMenuTexts(void);
+extern void sub_080CF640(void);
+extern s8 sub_080CF814(u8 menuIdx);
+extern bool8 sub_080CFE20(u8 dir);
+extern u8 sub_080D0444(void);
+extern bool8 sub_080D0460(void);
+extern void AddBoxOptionsMenu(void);
+extern void InitMenu(void);
+extern void SetMenuText(u8 textId);
+extern void AddMenu(void);
+extern bool32 IsWaldaWallpaperUnlocked(void);
+extern const struct WindowTemplate gUnknown_854CB14;
+extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
+extern void sub_080D204C(u8 id, u16 x, u16 y, u16 width, u16 height);
+extern void sub_080D2094(u8 id, u8 mode, s8 val);
+extern void sub_080D21B8(u8 id);
+extern void PurgeMonOrBoxMon(u8 boxId, u8 position);
+extern void TryRefreshDisplayMon(void);
+extern void sub_080C71F0(u8 boxId);
+extern void sub_080C73D0(void);
+extern void sub_080CBBE4(u8 taskId);
+extern const u16 *GetTextWindowPalette(u8 id);
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -416,1451 +961,399 @@ u8 *StringCopyAndFillWithSpaces(u8 *dst, const u8 *src, u16 n)
     return str;
 }
 
-__attribute__((naked)) void sub_080C69B4(void)
+void sub_080C69B4(u16 *dest, u16 destLeft, u16 destTop, const u16 *src, u16 srcLeft, u16 srcTop, u16 destWidth, u16 destHeight, u16 srcWidth)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r7, r3, #0\n\t"
-        "	ldr r5, [sp, #0x1c]\n\t"
-        "	ldr r4, [sp, #0x20]\n\t"
-        "	ldr r0, [sp, #0x24]\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	ldr r3, [sp, #0x2c]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	mov r0, sb\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	mov sb, r0\n\t"
-        "	lsrs r2, r2, #0xb\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r6, r6, r2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	muls r0, r3, r0\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r7, r7, r0\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r4, r8\n\t"
-        "	bhs _080C6A24\n\t"
-        "	mov r0, sb\n\t"
-        "	lsrs r0, r0, #1\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r5, r3, #1\n\t"
-        "_080C6A0A:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	mov r3, sb\n\t"
-        "	lsrs r2, r3, #0x10\n\t"
-        "	bl CpuSet\n\t"
-        "	adds r6, #0x40\n\t"
-        "	adds r7, r7, r5\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, r8\n\t"
-        "	blo _080C6A0A\n\t"
-        "_080C6A24:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    destWidth *= 2;
+    dest += destTop * 0x20 + destLeft;
+    src += srcTop * srcWidth + srcLeft;
+    for (i = 0; i < destHeight; i++)
+    {
+        CpuCopy16(src, dest, destWidth);
+        dest += 0x20;
+        src += srcWidth;
+    }
 }
 
-__attribute__((naked)) void sub_080C6A30(void)
+void sub_080C6A30(u16 *dest, u16 destLeft, u16 destTop, u16 width, u16 height)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	lsrs r2, r2, #0xb\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	lsls r3, r3, #0x11\n\t"
-        "	lsrs r0, r3, #0x10\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	cmp r0, sl\n\t"
-        "	bhs _080C6ADA\n\t"
-        "	movs r6, #0x80\n\t"
-        "	lsls r6, r6, #5\n\t"
-        "	mov r5, sp\n\t"
-        "	ldr r7, _080C6A9C\n\t"
-        "	lsrs r3, r3, #0x11\n\t"
-        "	mov sb, r3\n\t"
-        "	mov r1, sb\n\t"
-        "	movs r2, #0x81\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	orrs r1, r2\n\t"
-        "	mov sb, r1\n\t"
-        "_080C6A76:\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r0, #1\n\t"
-        "	mov ip, r0\n\t"
-        "	cmp r2, r6\n\t"
-        "	bhi _080C6AA0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5]\n\t"
-        "	mov r2, sp\n\t"
-        "	str r2, [r7]\n\t"
-        "	str r4, [r7, #4]\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [r7, #8]\n\t"
-        "	ldr r0, [r7, #8]\n\t"
-        "	b _080C6ACE\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6A9C: .4byte 0x040000D4\n\t"
-        "_080C6AA0:\n\t"
-        "	movs r4, #0\n\t"
-        "	strh r4, [r5]\n\t"
-        "	ldr r1, _080C6AEC\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r3, [r1, #4]\n\t"
-        "	ldr r0, _080C6AF0\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	subs r2, r2, r6\n\t"
-        "	cmp r2, r6\n\t"
-        "	bhi _080C6AA0\n\t"
-        "	strh r4, [r5]\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r3, [r1, #4]\n\t"
-        "	lsrs r0, r2, #1\n\t"
-        "	movs r2, #0x81\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	orrs r0, r2\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "_080C6ACE:\n\t"
-        "	mov r4, r8\n\t"
-        "	mov r1, ip\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, sl\n\t"
-        "	blo _080C6A76\n\t"
-        "_080C6ADA:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6AEC: .4byte 0x040000D4\n\t"
-        "_080C6AF0: .4byte 0x81000800\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    dest += destTop * 0x20 + destLeft;
+    width *= 2;
+    for (i = 0; i < height; dest += 0x20, i++)
+        Dma3FillLarge16_(0, dest, width);
 }
 
-__attribute__((naked)) void Task_PokemonStorageSystemPC(u8 taskId)
+void Task_PokemonStorageSystemPC(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080C6B1C\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bls _080C6B10\n\t"
-        "	b _080C6DF6\n\t"
-        "_080C6B10:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C6B20\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6B1C: .4byte gTasks\n\t"
-        "_080C6B20: .4byte 0x080C6B24\n\t"
-        "_080C6B24: @ jump table\n\t"
-        "	.4byte _080C6B38 @ case 0\n\t"
-        "	.4byte _080C6B98 @ case 1\n\t"
-        "	.4byte _080C6BAC @ case 2\n\t"
-        "	.4byte _080C6CF6 @ case 3\n\t"
-        "	.4byte _080C6DD0 @ case 4\n\t"
-        "_080C6B38:\n\t"
-        "	ldrb r0, [r5, #0xa]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x26\n\t"
-        "	bl sub_080C6E88\n\t"
-        "	bl LoadMessageBoxAndBorderGfx\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DrawDialogueFrame\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r1, _080C6B94\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0xff\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	b _080C6BA4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6B94: .4byte gUnknown_854B1E4\n\t"
-        "_080C6B98:\n\t"
-        "	bl IsWeatherNotFadingIn\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C6BA4\n\t"
-        "	b _080C6DF6\n\t"
-        "_080C6BA4:\n\t"
-        "	ldrh r0, [r5, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _080C6DF6\n\t"
-        "_080C6BAC:\n\t"
-        "	bl Menu_ProcessInput\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0xc]\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r1, [r5, r3]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080C6C5C\n\t"
-        "	cmp r1, r0\n\t"
-        "	bgt _080C6BCE\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080C6BD4\n\t"
-        "	b _080C6C82\n\t"
-        "_080C6BCE:\n\t"
-        "	cmp r1, #4\n\t"
-        "	beq _080C6C5C\n\t"
-        "	b _080C6C82\n\t"
-        "_080C6BD4:\n\t"
-        "	ldrh r3, [r5, #0xa]\n\t"
-        "	strh r3, [r5, #0xe]\n\t"
-        "	ldr r2, _080C6C54\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C6BF2\n\t"
-        "	subs r0, r3, #1\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080C6BF2\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "_080C6BF2:\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C6C0E\n\t"
-        "	ldrh r0, [r5, #0xe]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _080C6C0E\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0xe]\n\t"
-        "_080C6C0E:\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	ldrh r2, [r5, #0xe]\n\t"
-        "	movs r3, #0xe\n\t"
-        "	ldrsh r1, [r5, r3]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080C6C1E\n\t"
-        "	b _080C6DF6\n\t"
-        "_080C6C1E:\n\t"
-        "	movs r4, #0\n\t"
-        "	strh r2, [r5, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r1, _080C6C58\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	b _080C6DF6\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6C54: .4byte gMain\n\t"
-        "_080C6C58: .4byte gUnknown_854B1E4\n\t"
-        "_080C6C5C:\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearStdWindowAndFrame\n\t"
-        "	bl UnlockPlayerFieldControls\n\t"
-        "	bl ScriptContext_Enable\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl RemoveWindow\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080C6DF6\n\t"
-        "_080C6C82:\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r4, [r5, r3]\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080C6CB4\n\t"
-        "	bl CountPartyMons\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _080C6CB4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, _080C6CB0\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r4, #3\n\t"
-        "	str r4, [sp, #0xc]\n\t"
-        "	b _080C6DBE\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6CB0: .4byte gUnknown_85CB55C\n\t"
-        "_080C6CB4:\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080C6CE8\n\t"
-        "	bl CountPartyMons\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _080C6CE8\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, _080C6CE4\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r4, [sp, #8]\n\t"
-        "	movs r4, #3\n\t"
-        "	str r4, [sp, #0xc]\n\t"
-        "	b _080C6DBE\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6CE4: .4byte gUnknown_85CB534\n\t"
-        "_080C6CE8:\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FadeScreen\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #8]\n\t"
-        "	b _080C6DF6\n\t"
-        "_080C6CF6:\n\t"
-        "	ldr r0, _080C6D20\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r7, #3\n\t"
-        "	adds r4, r7, #0\n\t"
-        "	ands r4, r1\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080C6D28\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r1, _080C6D24\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	b _080C6DB4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6D20: .4byte gMain\n\t"
-        "_080C6D24: .4byte gUnknown_854B1E4\n\t"
-        "_080C6D28:\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _080C6D74\n\t"
-        "	ldrh r0, [r5, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080C6D44\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "_080C6D44:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	bl Menu_MoveCursor\n\t"
-        "	bl Menu_GetCursorPos\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r1, _080C6D70\n\t"
-        "	movs r3, #0xa\n\t"
-        "	ldrsh r0, [r5, r3]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	str r4, [sp]\n\t"
-        "	b _080C6DB4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6D70: .4byte gUnknown_854B1E4\n\t"
-        "_080C6D74:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C6DF6\n\t"
-        "	ldrh r0, [r5, #0xa]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _080C6D8C\n\t"
-        "	strh r6, [r5, #0xa]\n\t"
-        "_080C6D8C:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl Menu_MoveCursor\n\t"
-        "	bl Menu_GetCursorPos\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	strh r0, [r5, #0xa]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r1, _080C6DCC\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	str r6, [sp]\n\t"
-        "_080C6DB4:\n\t"
-        "	movs r4, #2\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	str r7, [sp, #0xc]\n\t"
-        "_080C6DBE:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized2\n\t"
-        "	strh r4, [r5, #8]\n\t"
-        "	b _080C6DF6\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6DCC: .4byte gUnknown_854B1E4\n\t"
-        "_080C6DD0:\n\t"
-        "	ldr r0, _080C6E00\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C6DF6\n\t"
-        "	bl CleanupOverworldWindowsAndTilemaps\n\t"
-        "	ldrb r0, [r5, #0xc]\n\t"
-        "	bl EnterPokeStorage\n\t"
-        "	ldrh r0, [r5, #0x26]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl RemoveWindow\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_080C6DF6:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6E00: .4byte gPaletteFade\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->data[0])
+    {
+    case 0:
+        sub_080C6E88(task->data[1], &task->data[15]);
+        LoadMessageBoxAndBorderGfx();
+        DrawDialogueFrame(0, FALSE);
+        FillWindowPixelBuffer(0, PIXEL_FILL(1));
+        AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, TEXT_SKIP_DRAW, NULL, 2, 1, 3);
+        CopyWindowToVram(0, COPYWIN_FULL);
+        CopyWindowToVram(task->data[15], COPYWIN_FULL);
+        task->data[0]++;
+        break;
+    case 1:
+        if (IsWeatherNotFadingIn())
+            task->data[0]++;
+        break;
+    case 2:
+        task->data[2] = Menu_ProcessInput();
+        switch (task->data[2])
+        {
+        case -2:
+            task->data[3] = task->data[1];
+            if ((gMain.newKeys & DPAD_UP) && --task->data[3] < 0)
+                task->data[3] = 4;
+            if ((gMain.newKeys & DPAD_DOWN) && ++task->data[3] > 4)
+                task->data[3] = 0;
+
+            if (task->data[1] != task->data[3])
+            {
+                task->data[1] = task->data[3];
+                FillWindowPixelBuffer(0, PIXEL_FILL(1));
+                AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            }
+            break;
+        case -1:
+        case 4:
+            ClearStdWindowAndFrame(task->data[15], TRUE);
+            UnlockPlayerFieldControls();
+            ScriptContext_Enable();
+            RemoveWindow(task->data[15]);
+            DestroyTask(taskId);
+            break;
+        default:
+            if (task->data[2] == 0 && CountPartyMons() == PARTY_SIZE)
+            {
+                FillWindowPixelBuffer(0, PIXEL_FILL(1));
+                AddTextPrinterParameterized2(0, 1, gUnknown_85CB55C, 0, NULL, 2, 1, 3);
+                task->data[0] = 3;
+            }
+            else if (task->data[2] == 1 && CountPartyMons() == 1)
+            {
+                FillWindowPixelBuffer(0, PIXEL_FILL(1));
+                AddTextPrinterParameterized2(0, 1, gUnknown_85CB534, 0, NULL, 2, 1, 3);
+                task->data[0] = 3;
+            }
+            else
+            {
+                FadeScreen(1, 0);
+                task->data[0] = 4;
+            }
+            break;
+        }
+        break;
+    case 3:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON))
+        {
+            FillWindowPixelBuffer(0, PIXEL_FILL(1));
+            AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            task->data[0] = 2;
+        }
+        else if (gMain.newKeys & DPAD_UP)
+        {
+            if (--task->data[1] < 0)
+                task->data[1] = 4;
+            Menu_MoveCursor(-1);
+            task->data[1] = Menu_GetCursorPos();
+            FillWindowPixelBuffer(0, PIXEL_FILL(1));
+            AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            task->data[0] = 2;
+        }
+        else if (gMain.newKeys & DPAD_DOWN)
+        {
+            if (++task->data[1] > 3)
+                task->data[1] = 0;
+            Menu_MoveCursor(1);
+            task->data[1] = Menu_GetCursorPos();
+            FillWindowPixelBuffer(0, PIXEL_FILL(1));
+            AddTextPrinterParameterized2(0, 1, gUnknown_854B1E4[task->data[1]].desc, 0, NULL, 2, 1, 3);
+            task->data[0] = 2;
+        }
+        break;
+    case 4:
+        if (!gPaletteFade.active)
+        {
+            CleanupOverworldWindowsAndTilemaps();
+            EnterPokeStorage(task->data[2]);
+            RemoveWindow(task->data[15]);
+            DestroyTask(taskId);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void ShowPokemonStorageSystemPC(void)
+void ShowPokemonStorageSystemPC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C6E2C\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080C6E30\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	strh r0, [r1, #0xa]\n\t"
-        "	bl LockPlayerFieldControls\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6E2C: .4byte Task_PokemonStorageSystemPC + 1\n\t"
-        "_080C6E30: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(Task_PokemonStorageSystemPC, 80);
+
+    gTasks[taskId].data[0] = 0;
+    gTasks[taskId].data[1] = 0;
+    LockPlayerFieldControls();
 }
 
-__attribute__((naked)) void FieldCb_ReturnToPcMenu(void)
+void FieldCb_ReturnToPcMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _080C6E78\n\t"
-        "	ldr r5, [r0, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	ldr r4, _080C6E7C\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x50\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080C6E80\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r2, [r1, #8]\n\t"
-        "	ldr r2, _080C6E84\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	strh r2, [r1, #0xa]\n\t"
-        "	bl _call_via_r4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	bl FadeInFromBlack\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6E78: .4byte gMain\n\t"
-        "_080C6E7C: .4byte Task_PokemonStorageSystemPC + 1\n\t"
-        "_080C6E80: .4byte gTasks\n\t"
-        "_080C6E84: .4byte gUnknown_20399A0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId;
+    MainCallback vblankCb = gMain.vblankCallback;
+
+    SetVBlankCallback(NULL);
+    taskId = CreateTask(Task_PokemonStorageSystemPC, 80);
+    gTasks[taskId].data[0] = 0;
+    gTasks[taskId].data[1] = gUnknown_20399A0;
+    Task_PokemonStorageSystemPC(taskId);
+    SetVBlankCallback(vblankCb);
+    FadeInFromBlack();
 }
 
-__attribute__((naked)) void sub_080C6E88(void)
+void sub_080C6E88(u8 whichMenu, s16 *windowIdPtr)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r5, sb\n\t"
-        "	mov r4, r8\n\t"
-        "	push {r4, r5, r6}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov sl, r1\n\t"
-        "	lsls r6, r6, #0x18\n\t"
-        "	lsrs r6, r6, #0x18\n\t"
-        "	ldr r0, _080C6F08\n\t"
-        "	bl AddWindow\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r4, r5, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DrawStdWindowFrame\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetFontAttribute\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #0x10\n\t"
-        "	mov sb, r0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #5\n\t"
-        "	mov r8, r0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, _080C6F0C\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl PrintTextArray\n\t"
-        "	mov r0, sb\n\t"
-        "	str r0, [sp]\n\t"
-        "	mov r0, r8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081984B0\n\t"
-        "	mov r0, sl\n\t"
-        "	strh r5, [r0]\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6F08: .4byte gUnknown_854B20C\n\t"
-        "_080C6F0C: .4byte gUnknown_854B1E4\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 windowId = AddWindow(gUnknown_854B20C);
+
+    DrawStdWindowFrame(windowId, FALSE);
+    PrintTextArray(windowId, 1, GetFontAttribute(1, 0), 2, 0x10, 5, gUnknown_854B1E4);
+    sub_081984B0(windowId, 1, 0, 2, 0x10, 5, whichMenu);
+    *windowIdPtr = windowId;
 }
 
-__attribute__((naked)) void CB2_ExitPokeStorage(void)
+void CB2_ExitPokeStorage(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetCurrentBoxOption\n\t"
-        "	ldr r1, _080C6F2C\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _080C6F30\n\t"
-        "	ldr r0, _080C6F34\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080C6F38\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6F2C: .4byte gUnknown_20399A0\n\t"
-        "_080C6F30: .4byte gFieldCallback\n\t"
-        "_080C6F34: .4byte FieldCb_ReturnToPcMenu + 1\n\t"
-        "_080C6F38: .4byte CB2_ReturnToField + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    gUnknown_20399A0 = GetCurrentBoxOption();
+    gFieldCallback = FieldCb_ReturnToPcMenu;
+    SetMainCallback2(CB2_ReturnToField);
 }
 
-__attribute__((naked)) u8 StorageSystemGetNextMonIndex(u8 a, u8 b)
+s16 StorageSystemGetNextMonIndex(struct BoxPokemon *box, s8 startIdx, u8 stopIdx, u8 mode)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r0, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r7, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	ldr r2, _080C6FA0\n\t"
-        "	cmp r3, #1\n\t"
-        "	bhi _080C6F5E\n\t"
-        "	movs r2, #1\n\t"
-        "	cmp r3, #1\n\t"
-        "	beq _080C6F62\n\t"
-        "_080C6F5E:\n\t"
-        "	cmp r4, #3\n\t"
-        "	bne _080C6FAC\n\t"
-        "_080C6F62:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r1, r2, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	blt _080C6FF8\n\t"
-        "	cmp r1, r7\n\t"
-        "	bgt _080C6FF8\n\t"
-        "_080C6F7A:\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	add r0, r8\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C6FA4\n\t"
-        "	asrs r0, r6, #0x10\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0\n\t"
-        "	blt _080C6FF8\n\t"
-        "	cmp r2, r7\n\t"
-        "	ble _080C6F7A\n\t"
-        "	b _080C6FF8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C6FA0: .4byte 0x0000FFFF\n\t"
-        "_080C6FA4:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	b _080C6FFC\n\t"
-        "_080C6FA8:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	b _080C6FFC\n\t"
-        "_080C6FAC:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r1, r2, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	blt _080C6FF8\n\t"
-        "	cmp r1, r7\n\t"
-        "	bgt _080C6FF8\n\t"
-        "_080C6FC4:\n\t"
-        "	asrs r5, r0, #0x10\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C6FE8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C6FA8\n\t"
-        "_080C6FE8:\n\t"
-        "	asrs r0, r6, #0x10\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0\n\t"
-        "	blt _080C6FF8\n\t"
-        "	cmp r2, r7\n\t"
-        "	ble _080C6FC4\n\t"
-        "_080C6FF8:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_080C6FFC:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+    s16 direction;
+
+    if (mode == 0 || mode == 1)
+        direction = 1;
+    else
+        direction = -1;
+
+    if (mode == 1 || mode == 3)
+    {
+        for (i = startIdx + direction; i >= 0 && i <= stopIdx; i += direction)
+        {
+            if (GetBoxMonData(box + i, MON_DATA_SPECIES) != 0)
+                return i;
+        }
+    }
+    else
+    {
+        for (i = startIdx + direction; i >= 0 && i <= stopIdx; i += direction)
+        {
+            if (GetBoxMonData(box + i, MON_DATA_SPECIES) != 0 && !GetBoxMonData(box + i, MON_DATA_IS_EGG))
+                return i;
+        }
+    }
+
+    return -1;
 }
 
-__attribute__((naked)) void ResetPokemonStorageSystem(void)
+void ResetPokemonStorageSystem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetCurrentBox\n\t"
-        "	movs r5, #0\n\t"
-        "_080C7012:\n\t"
-        "	movs r4, #0\n\t"
-        "	lsls r6, r5, #0x18\n\t"
-        "_080C7016:\n\t"
-        "	lsls r1, r4, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsrs r0, r6, #0x18\n\t"
-        "	bl ZeroBoxMonAt\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0x1d\n\t"
-        "	bls _080C7016\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0xd\n\t"
-        "	bls _080C7012\n\t"
-        "	movs r5, #0\n\t"
-        "_080C7036:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBoxNamePtr\n\t"
-        "	ldr r1, _080C707C\n\t"
-        "	bl StringCopy\n\t"
-        "	adds r4, r5, #1\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r5, r4, #0x10\n\t"
-        "	cmp r5, #0xd\n\t"
-        "	bls _080C7036\n\t"
-        "	movs r5, #0\n\t"
-        "_080C705A:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r1, r5\n\t"
-        "	bl SetBoxWallpaper\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0xd\n\t"
-        "	bls _080C705A\n\t"
-        "	bl ResetWaldaWallpaper\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C707C: .4byte gUnknown_85CB584\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 boxId;
+    u16 boxPosition;
+
+    SetCurrentBox(0);
+    for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
+    {
+        for (boxPosition = 0; boxPosition < IN_BOX_COUNT; boxPosition++)
+            ZeroBoxMonAt(boxId, boxPosition);
+    }
+
+    for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
+    {
+        u8 *dest = StringCopy(GetBoxNamePtr(boxId), gUnknown_85CB584);
+
+        ConvertIntToDecimalStringN(dest, boxId + 1, 0, 2);
+    }
+
+    for (boxId = 0; boxId < TOTAL_BOXES_COUNT; boxId++)
+        SetBoxWallpaper(boxId, boxId % 4);
+
+    ResetWaldaWallpaper();
 }
 
-__attribute__((naked)) void sub_080C7080(void)
+void sub_080C7080(struct ChooseBoxMenu *menu, u16 tileTag, u16 paletteTag, u8 subpriority, bool32 loadPalette)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	adds r7, r2, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov r8, r3\n\t"
-        "	ldr r0, _080C7114\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	ldr r1, _080C7118\n\t"
-        "	add r4, sp, #0x18\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r7\n\t"
-        "	str r0, [r4, #4]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _080C711C\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r1, #4]\n\t"
-        "	strh r6, [r1, #6]\n\t"
-        "	ldr r0, _080C7120\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	add r0, sp, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl memset\n\t"
-        "	ldr r0, [sp, #0x38]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C70DE\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "_080C70DE:\n\t"
-        "	mov r0, sp\n\t"
-        "	bl LoadSpriteSheets\n\t"
-        "	ldr r0, _080C7124\n\t"
-        "	str r5, [r0]\n\t"
-        "	movs r1, #0x90\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	strh r6, [r0]\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	strh r7, [r0]\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r1, #0x8f\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	ldr r1, [sp, #0x38]\n\t"
-        "	str r1, [r0]\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7114: .4byte gUnknown_854B25C\n\t"
-        "_080C7118: .4byte 0xFFFF0000\n\t"
-        "_080C711C: .4byte gUnknown_854B27C\n\t"
-        "_080C7120: .4byte gUnknown_854BA7C\n\t"
-        "_080C7124: .4byte gUnknown_20399A4\n\t"
-        ".syntax divided\n\t"
-    );
+    struct SpritePalette palette =
+    {
+        gUnknown_854B25C, paletteTag
+    };
+    struct SpriteSheet sheets[] =
+    {
+        {gUnknown_854B27C, 0x800, tileTag},
+        {gUnknown_854BA7C, 0x180, tileTag + 1},
+        {}
+    };
+
+    if (loadPalette)
+        LoadSpritePalette(&palette);
+
+    LoadSpriteSheets(sheets);
+    gUnknown_20399A4 = menu;
+    menu->tileTag = tileTag;
+    menu->paletteTag = paletteTag;
+    menu->subpriority = subpriority;
+    menu->loadedPalette = loadPalette;
 }
 
-__attribute__((naked)) void sub_080C7128(void)
+void sub_080C7128(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _080C7168\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r2, #0x8f\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7144\n\t"
-        "	adds r2, #6\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "_080C7144:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0x90\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7168: .4byte gUnknown_20399A4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_20399A4->loadedPalette)
+        FreeSpritePaletteByTag(gUnknown_20399A4->paletteTag);
+
+    FreeSpriteTilesByTag(gUnknown_20399A4->tileTag);
+    FreeSpriteTilesByTag(gUnknown_20399A4->tileTag + 1);
 }
 
-__attribute__((naked)) void sub_080C716C(void)
+void sub_080C716C(u8 boxId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_080C71F0\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080C71F0(boxId);
+}
+void sub_080C717C(void)
+{
+    sub_080C73D0();
+}
+bool8 HandleBoxChooseSelectionInput(void)
+{
+    if (gMain.newKeys & B_BUTTON)
+    {
+        PlaySE(SE_SELECT);
+        return 201;
+    }
+    if (gMain.newKeys & A_BUTTON)
+    {
+        PlaySE(SE_SELECT);
+        return gUnknown_20399A4->curBox;
+    }
+    if (gMain.newKeys & DPAD_LEFT)
+    {
+        PlaySE(SE_SELECT);
+        sub_080C7470();
+    }
+    else if (gMain.newKeys & DPAD_RIGHT)
+    {
+        PlaySE(SE_SELECT);
+        sub_080C743C();
+    }
+
+    return 200;
 }
 
-__attribute__((naked)) void sub_080C717C(void)
+void sub_080C71F0(u8 boxId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_080C73D0\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u8 spriteId;
+    struct SpriteTemplate template;
+    struct OamData oamData = {};
+
+    oamData.size = SPRITE_SIZE(64x64);
+    oamData.paletteNum = 1;
+    template = (struct SpriteTemplate){
+        0, 0, &oamData, gDummySpriteAnimTable, NULL, gDummySpriteAffineAnimTable, SpriteCallbackDummy
+    };
+    {
+        u8 text[4];
+
+        memcpy(text, gUnknown_854B258, sizeof(text));
+        gUnknown_20399A4->curBox = boxId;
+        template.tileTag = gUnknown_20399A4->tileTag;
+        template.paletteTag = gUnknown_20399A4->paletteTag;
+
+        spriteId = CreateSprite(&template, 160, 96, 0);
+        gUnknown_20399A4->menuSprite = &gSprites[spriteId];
+
+        oamData.shape = SPRITE_SHAPE(8x32);
+        oamData.size = SPRITE_SIZE(8x32);
+        template.tileTag = gUnknown_20399A4->tileTag + 1;
+        template.anims = (const union AnimCmd *const *)gUnknown_854B234;
+        for (i = 0; i < ARRAY_COUNT(gUnknown_20399A4->menuSideSprites); i++)
+        {
+            u16 anim;
+
+            spriteId = CreateSprite(&template, 124, 80, gUnknown_20399A4->subpriority);
+            gUnknown_20399A4->menuSideSprites[i] = &gSprites[spriteId];
+            anim = 0;
+            if (i & 2)
+            {
+                gUnknown_20399A4->menuSideSprites[i]->x = 196;
+                anim = 2;
+            }
+            if (i & 1)
+            {
+                gUnknown_20399A4->menuSideSprites[i]->y = 112;
+                gUnknown_20399A4->menuSideSprites[i]->oam.size = 0;
+                anim++;
+            }
+            StartSpriteAnim(gUnknown_20399A4->menuSideSprites[i], anim);
+        }
+
+        for (i = 0; i < ARRAY_COUNT(gUnknown_20399A4->arrowSprites); i++)
+        {
+            gUnknown_20399A4->arrowSprites[i] = sub_080CCB64(72 * i + 124, 88, i, 0, gUnknown_20399A4->subpriority);
+            if (gUnknown_20399A4->arrowSprites[i])
+            {
+                gUnknown_20399A4->arrowSprites[i]->data[0] = (i == 0 ? -1 : 1);
+                gUnknown_20399A4->arrowSprites[i]->callback = sub_080C7590;
+            }
+        }
+
+        sub_080C74A0();
+        sub_080C7528(text, 5, 3);
+    }
 }
 
-__attribute__((naked)) bool8 HandleBoxChooseSelectionInput(void)
+void sub_080C73D0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C71A0\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C71A4\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0xc9\n\t"
-        "	b _080C71EC\n\t"
-        "	.align 2, 0\n\t"
-        "_080C71A0: .4byte gMain\n\t"
-        "_080C71A4:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C71C4\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C71C0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x91\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _080C71EC\n\t"
-        "	.align 2, 0\n\t"
-        "_080C71C0: .4byte gUnknown_20399A4\n\t"
-        "_080C71C4:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C71D8\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl sub_080C7470\n\t"
-        "	b _080C71EA\n\t"
-        "_080C71D8:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C71EA\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl sub_080C743C\n\t"
-        "_080C71EA:\n\t"
-        "	movs r0, #0xc8\n\t"
-        "_080C71EC:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    if (gUnknown_20399A4->menuSprite)
+    {
+        DestroySprite(gUnknown_20399A4->menuSprite);
+        gUnknown_20399A4->menuSprite = NULL;
+    }
+
+    for (i = 0; i < ARRAY_COUNT(gUnknown_20399A4->menuSideSprites); i++)
+    {
+        if (gUnknown_20399A4->menuSideSprites[i])
+        {
+            DestroySprite(gUnknown_20399A4->menuSideSprites[i]);
+            gUnknown_20399A4->menuSideSprites[i] = NULL;
+        }
+    }
+
+    for (i = 0; i < ARRAY_COUNT(gUnknown_20399A4->arrowSprites); i++)
+    {
+        if (gUnknown_20399A4->arrowSprites[i])
+            DestroySprite(gUnknown_20399A4->arrowSprites[i]);
+    }
 }
 
-__attribute__((naked)) void sub_080C71F0(void)
+void sub_080C743C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0x3c\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r0, [sp, #0x34]\n\t"
-        "	str r1, [sp, #0x38]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r0, [sp, #0x34]\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [sp, #0x34]\n\t"
-        "	ldr r1, _080C73A4\n\t"
-        "	add r4, sp, #0x34\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r4, #4]\n\t"
-        "	add r0, sp, #0x1c\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	mov r0, sp\n\t"
-        "	adds r0, #0x1e\n\t"
-        "	strh r1, [r0]\n\t"
-        "	str r4, [sp, #0x20]\n\t"
-        "	ldr r0, _080C73A8\n\t"
-        "	str r0, [sp, #0x24]\n\t"
-        "	str r1, [sp, #0x28]\n\t"
-        "	ldr r0, _080C73AC\n\t"
-        "	str r0, [sp, #0x2c]\n\t"
-        "	ldr r0, _080C73B0\n\t"
-        "	str r0, [sp, #0x30]\n\t"
-        "	add r0, sp, #4\n\t"
-        "	mov r1, r8\n\t"
-        "	movs r2, #0x18\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r1, _080C73B4\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r2, #4\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r6, _080C73B8\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r1, #0x91\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r5, [r0]\n\t"
-        "	add r2, sp, #4\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r5, #0x90\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r3, _080C73BC\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	strh r0, [r2, #2]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	movs r2, #0x60\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C73C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r3]\n\t"
-        "	ldrb r2, [r4, #1]\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	movs r2, #0x80\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #0x40\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r4, #3]\n\t"
-        "	add r1, sp, #4\n\t"
-        "	adds r3, r3, r5\n\t"
-        "	ldrh r0, [r3]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080C73C4\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r7, r8\n\t"
-        "_080C72BC:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r1, _080C73C8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r1, #0x7c\n\t"
-        "	movs r2, #0x50\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	lsls r3, r4, #2\n\t"
-        "	adds r2, #4\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C73C0\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	str r1, [r2]\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C72F6\n\t"
-        "	movs r0, #0xc4\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	movs r5, #2\n\t"
-        "_080C72F6:\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C731A\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	movs r0, #0x70\n\t"
-        "	strh r0, [r2, #0x22]\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #3]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "_080C731A:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #4\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #3\n\t"
-        "	bls _080C72BC\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r5, _080C73B8\n\t"
-        "_080C7338:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #0x13\n\t"
-        "	movs r3, #0xf8\n\t"
-        "	lsls r3, r3, #0xf\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r2, r4, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r3, _080C73C8\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0x58\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080CCB64\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r0, #0x20\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r2, [r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080C7380\n\t"
-        "	movs r1, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080C7378\n\t"
-        "	movs r3, #1\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "_080C7378:\n\t"
-        "	strh r1, [r2, #0x2e]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080C73CC\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_080C7380:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #1\n\t"
-        "	bls _080C7338\n\t"
-        "	bl sub_080C74A0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	movs r2, #3\n\t"
-        "	bl sub_080C7528\n\t"
-        "	add sp, #0x3c\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C73A4: .4byte 0xFFFF0FFF\n\t"
-        "_080C73A8: .4byte gDummySpriteAnimTable\n\t"
-        "_080C73AC: .4byte gDummySpriteAffineAnimTable\n\t"
-        "_080C73B0: .4byte SpriteCallbackDummy + 1\n\t"
-        "_080C73B4: .4byte gUnknown_854B234 + 0x24\n\t"
-        "_080C73B8: .4byte gUnknown_20399A4\n\t"
-        "_080C73BC: .4byte 0x00000242\n\t"
-        "_080C73C0: .4byte gSprites\n\t"
-        "_080C73C4: .4byte gUnknown_854B234\n\t"
-        "_080C73C8: .4byte 0x00000246\n\t"
-        "_080C73CC: .4byte sub_080C7590 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (++gUnknown_20399A4->curBox > 13)
+        gUnknown_20399A4->curBox = 0;
+
+    sub_080C74A0();
 }
 
-__attribute__((naked)) void sub_080C73D0(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r4, _080C7438\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C73E6\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "_080C73E6:\n\t"
-        "	movs r5, #0\n\t"
-        "	adds r6, r4, #0\n\t"
-        "_080C73EA:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r0, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7406\n\t"
-        "	bl DestroySprite\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080C7406:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #3\n\t"
-        "	bls _080C73EA\n\t"
-        "	movs r5, #0\n\t"
-        "_080C7412:\n\t"
-        "	ldr r0, _080C7438\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	adds r0, #0x20\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7426\n\t"
-        "	bl DestroySprite\n\t"
-        "_080C7426:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #1\n\t"
-        "	bls _080C7412\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7438: .4byte gUnknown_20399A4\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080C743C(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _080C746C\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	movs r0, #0x91\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	bls _080C7462\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	movs r1, #0x91\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080C7462:\n\t"
-        "	bl sub_080C74A0\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C746C: .4byte gUnknown_20399A4\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+// Kept as naked asm: agbcc uses a different temporary field-pointer/register
+// allocation for the wraparound decrement despite five equivalent C formulations.
 __attribute__((naked)) void sub_080C7470(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1893,166 +1386,41 @@ __attribute__((naked)) void sub_080C7470(void)
     );
 }
 
-__attribute__((naked)) void sub_080C74A0(void)
+void sub_080C74A0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r6, _080C7524\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r5, #0x91\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl CountMonsInBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r1, #0x8a\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBoxNamePtr\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StringCopy\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r2, #0x8c\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	cmp r1, r0\n\t"
-        "	bhs _080C74EC\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r3, r6, #0\n\t"
-        "_080C74E0:\n\t"
-        "	strb r4, [r1]\n\t"
-        "	adds r1, #1\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	cmp r1, r0\n\t"
-        "	blo _080C74E0\n\t"
-        "_080C74EC:\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r5, _080C7524\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0x8a\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl sub_080C7528\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #2\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #3\n\t"
-        "	movs r2, #3\n\t"
-        "	bl sub_080C7528\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7524: .4byte gUnknown_20399A4\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 numMons = CountMonsInBox(gUnknown_20399A4->curBox);
+    u8 *str = StringCopy(gUnknown_20399A4->boxName, GetBoxNamePtr(gUnknown_20399A4->curBox));
+
+    while (str < gUnknown_20399A4->boxName + 8)
+        *str++ = 0;
+    *str = EOS;
+
+    sub_080C7528(gUnknown_20399A4->boxName, 0, 1);
+    ConvertIntToDecimalStringN(gUnknown_20399A4->boxName, numMons, 1, 2);
+    sub_080C7528(gUnknown_20399A4->boxName, 3, 3);
 }
 
-__attribute__((naked)) void sub_080C7528(void)
+void sub_080C7528(u8 *str, u16 x, u16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r6, _080C7588\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r1, #0x90\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0xb\n\t"
-        "	lsls r4, r4, #8\n\t"
-        "	ldr r0, _080C758C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r5, r5, #5\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	movs r0, #0xf\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xe\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, #0x28\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r3, #4\n\t"
-        "	bl sub_080C6738\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7588: .4byte gUnknown_20399A4\n\t"
-        "_080C758C: .4byte 0x06010000\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080C6738(str,
+                 (void *)(0x06010000 + (GetSpriteTileStartByTag(gUnknown_20399A4->tileTag) << 5) + (y << 8) + (x << 5)),
+                 0x100, 4, 0xF, 0xE, gUnknown_20399A4->unused2);
 }
 
-__attribute__((naked)) void sub_080C7590(struct Sprite *sprite)
+void sub_080C7590(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _080C75C0\n\t"
-        "	strh r2, [r1, #0x30]\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	ldrh r3, [r1, #0x24]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r1, #0x24]\n\t"
-        "	ldrh r0, [r1, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _080C75C0\n\t"
-        "	strh r2, [r1, #0x32]\n\t"
-        "	strh r2, [r1, #0x24]\n\t"
-        "_080C75C0:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[1]++;
+    if (sprite->data[1] > 3)
+    {
+        sprite->data[1] = 0;
+        sprite->x2 += sprite->data[0];
+        sprite->data[2]++;
+        if (sprite->data[2] > 5)
+        {
+            sprite->data[2] = 0;
+            sprite->x2 = 0;
+        }
+    }
 }
 
 void VBlankCB_PokeStorage(void)
@@ -2113,159 +1481,51 @@ void CB2_ReturnToPokeStorage(void)
     }
 }
 
-__attribute__((naked)) void ResetAllBgCoords(void)
+void ResetAllBgCoords(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x12\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x14\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x16\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(0x10, 0);
+    SetGpuReg(0x12, 0);
+    SetGpuReg(0x14, 0);
+    SetGpuReg(0x16, 0);
+    SetGpuReg(0x18, 0);
+    SetGpuReg(0x1A, 0);
+    SetGpuReg(0x1C, 0);
+    SetGpuReg(0x1E, 0);
 }
 
-__attribute__((naked)) void sub_080C7734(void)
+void sub_080C7734(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	bl ResetPaletteFade\n\t"
-        "	bl ResetSpriteData\n\t"
-        "	bl FreeSpriteTileRanges\n\t"
-        "	bl FreeAllSpritePalettes\n\t"
-        "	bl ClearDma3Requests\n\t"
-        "	ldr r1, _080C77A4\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r4, _080C77A8\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #8\n\t"
-        "	adds r1, #0x10\n\t"
-        "	movs r2, #8\n\t"
-        "	bl UnkUtil_Init\n\t"
-        "	ldr r1, _080C77AC\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bl ClearScheduledBgCopiesToVram\n\t"
-        "	movs r0, #3\n\t"
-        "	bl sub_080D1E3C\n\t"
-        "	ldr r2, _080C77B0\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_080D1EE4\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	bl sub_080D2010\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C77B4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C77A4: .4byte gReservedSpriteTileCount\n\t"
-        "_080C77A8: .4byte gUnknown_20399A8\n\t"
-        "_080C77AC: .4byte gKeyRepeatStartDelay\n\t"
-        "_080C77B0: .4byte gUnknown_854BEBC\n\t"
-        "_080C77B4: .4byte 0x000002C7\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetPaletteFade();
+    ResetSpriteData();
+    FreeSpriteTileRanges();
+    FreeAllSpritePalettes();
+    ClearDma3Requests();
+    gReservedSpriteTileCount = 0x280;
+    UnkUtil_Init(&sStorage->unkUtil, sStorage->unkUtilData, 8);
+    gKeyRepeatStartDelay = 20;
+    ClearScheduledBgCopiesToVram();
+    sub_080D1E3C(3);
+    sub_080D1EE4(0, 1, gUnknown_854BEBC, 8, 4);
+    sub_080D2010(0, 1, 0);
+    sStorage->closeBoxFlashing = FALSE;
 }
 
-__attribute__((naked)) void sub_080C77B8(void)
+void sub_080C77B8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ClearSavedCursorPos\n\t"
-        "	ldr r2, _080C77DC\n\t"
-        "	movs r1, #0\n\t"
-        "	ldr r0, _080C77E0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080C77CE\n\t"
-        "	movs r1, #1\n\t"
-        "_080C77CE:\n\t"
-        "	strb r1, [r2]\n\t"
-        "	ldr r1, _080C77E4\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C77DC: .4byte gUnknown_20399AC\n\t"
-        "_080C77E0: .4byte gUnknown_20399A8\n\t"
-        "_080C77E4: .4byte gUnknown_20399AE\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearSavedCursorPos();
+    gUnknown_20399AC = (sStorage->boxOption == 1);
+    gUnknown_20399AE = 0;
 }
 
-__attribute__((naked)) void sub_080C77E8(void)
+void sub_080C77E8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C7814\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080C7806\n\t"
-        "	movs r1, #0xfc\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	movs r0, #0x50\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _080C7818\n\t"
-        "	movs r0, #0x52\n\t"
-        "	bl SetGpuReg\n\t"
-        "_080C7806:\n\t"
-        "	movs r1, #0xfa\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7814: .4byte gUnknown_20399A8\n\t"
-        "_080C7818: .4byte 0x00000B07\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->boxOption == 3)
+    {
+        SetGpuReg(0x50, 0xFC << 6);
+        SetGpuReg(0x52, 0xB07);
+    }
+
+    SetGpuReg(0, 0xFA << 5);
 }
 
 void SetPSSCallback(void (*func)(void))
@@ -2274,3913 +1534,1683 @@ void SetPSSCallback(void (*func)(void))
     sStorage->state = 0;
 }
 
-__attribute__((naked)) void Task_InitPokeStorage(void)
+void Task_InitPokeStorage(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080C7860\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xa\n\t"
-        "	bls _080C7854\n\t"
-        "	b _080C7A3E\n\t"
-        "_080C7854:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C7864\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7860: .4byte gUnknown_20399A8\n\t"
-        "_080C7864: .4byte 0x080C7868\n\t"
-        "_080C7868: @ jump table\n\t"
-        "	.4byte _080C7894 @ case 0\n\t"
-        "	.4byte _080C78EC @ case 1\n\t"
-        "	.4byte _080C78FA @ case 2\n\t"
-        "	.4byte _080C7928 @ case 3\n\t"
-        "	.4byte _080C7944 @ case 4\n\t"
-        "	.4byte _080C7962 @ case 5\n\t"
-        "	.4byte _080C7982 @ case 6\n\t"
-        "	.4byte _080C7988 @ case 7\n\t"
-        "	.4byte _080C798E @ case 8\n\t"
-        "	.4byte _080C799C @ case 9\n\t"
-        "	.4byte _080C79E6 @ case 10\n\t"
-        "_080C7894:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl sub_080C7734\n\t"
-        "	ldr r0, _080C78C4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C78E2\n\t"
-        "	ldr r0, _080C78C8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C78D2\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080C78CC\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C78D8\n\t"
-        "	b _080C78E2\n\t"
-        "	.align 2, 0\n\t"
-        "_080C78C4: .4byte gUnknown_20399A8\n\t"
-        "_080C78C8: .4byte gUnknown_20399AF\n\t"
-        "_080C78CC:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080C78DE\n\t"
-        "	b _080C78E2\n\t"
-        "_080C78D2:\n\t"
-        "	bl sub_080CE00C\n\t"
-        "	b _080C78E2\n\t"
-        "_080C78D8:\n\t"
-        "	bl sub_080CE160\n\t"
-        "	b _080C78E2\n\t"
-        "_080C78DE:\n\t"
-        "	bl GiveChosenBagItem\n\t"
-        "_080C78E2:\n\t"
-        "	bl LoadPSSMenuGfx\n\t"
-        "	bl LoadWaveformSpritePalette\n\t"
-        "	b _080C7A34\n\t"
-        "_080C78EC:\n\t"
-        "	bl InitPokeStorageWindows\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C78F8\n\t"
-        "	b _080C7A34\n\t"
-        "_080C78F8:\n\t"
-        "	b _080C796C\n\t"
-        "_080C78FA:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	ldr r2, _080C7924\n\t"
-        "	mov r0, sp\n\t"
-        "	bl CpuSet\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	movs r2, #0xe0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "	b _080C7A34\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7924: .4byte 0x05000080\n\t"
-        "_080C7928:\n\t"
-        "	bl ResetAllBgCoords\n\t"
-        "	ldr r0, _080C7940\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7938\n\t"
-        "	b _080C7A34\n\t"
-        "_080C7938:\n\t"
-        "	bl sub_080C77B8\n\t"
-        "	b _080C7A34\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7940: .4byte gUnknown_20399A8\n\t"
-        "_080C7944:\n\t"
-        "	bl sub_080CA778\n\t"
-        "	ldr r0, _080C7958\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C795C\n\t"
-        "	bl sub_080CCBE8\n\t"
-        "	b _080C7A34\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7958: .4byte gUnknown_20399A8\n\t"
-        "_080C795C:\n\t"
-        "	bl sub_080CCC68\n\t"
-        "	b _080C7A34\n\t"
-        "_080C7962:\n\t"
-        "	bl sub_080CFA04\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7978\n\t"
-        "_080C796C:\n\t"
-        "	ldr r0, _080C7974\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C7A3E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7974: .4byte Cb_ChangeScreen + 1\n\t"
-        "_080C7978:\n\t"
-        "	bl SetScrollingBackground\n\t"
-        "	bl sub_080CA480\n\t"
-        "	b _080C7A34\n\t"
-        "_080C7982:\n\t"
-        "	bl sub_080C994C\n\t"
-        "	b _080C7A34\n\t"
-        "_080C7988:\n\t"
-        "	bl sub_080C9F68\n\t"
-        "	b _080C7A34\n\t"
-        "_080C798E:\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_080CBBA0\n\t"
-        "	b _080C7A34\n\t"
-        "_080C799C:\n\t"
-        "	bl sub_080CBBD0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7A3E\n\t"
-        "	ldr r0, _080C79CC\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C79DC\n\t"
-        "	ldr r1, _080C79D0\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	movs r1, #0xd\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _080C79D4\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	ldr r1, _080C79D8\n\t"
-        "	strh r1, [r2]\n\t"
-        "	bl InitMonMarkingsMenu\n\t"
-        "	bl BufferMonMarkingsMenuTiles\n\t"
-        "	b _080C7A34\n\t"
-        "	.align 2, 0\n\t"
-        "_080C79CC: .4byte gUnknown_20399A8\n\t"
-        "_080C79D0: .4byte 0x00000DA4\n\t"
-        "_080C79D4: .4byte 0x00000DA6\n\t"
-        "_080C79D8: .4byte 0x0000DACE\n\t"
-        "_080C79DC:\n\t"
-        "	bl sub_080D0500\n\t"
-        "	bl sub_080CA720\n\t"
-        "	b _080C7A34\n\t"
-        "_080C79E6:\n\t"
-        "	bl sub_080C77E8\n\t"
-        "	ldr r0, _080C7A08\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7A10\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	ldr r0, _080C7A0C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C7A22\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7A08: .4byte gUnknown_20399A8\n\t"
-        "_080C7A0C: .4byte Cb_ShowPSS + 1\n\t"
-        "_080C7A10:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BlendPalettes\n\t"
-        "	ldr r0, _080C7A2C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C7A22:\n\t"
-        "	ldr r0, _080C7A30\n\t"
-        "	bl SetVBlankCallback\n\t"
-        "	b _080C7A3E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7A2C: .4byte Cb_ReshowPSS + 1\n\t"
-        "_080C7A30: .4byte VBlankCB_PokeStorage + 1\n\t"
-        "_080C7A34:\n\t"
-        "	ldr r0, _080C7A44\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080C7A3E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7A44: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        SetVBlankCallback(NULL);
+        SetGpuReg(0, 0);
+        sub_080C7734();
+        if (sStorage->isReopening)
+        {
+            switch (gUnknown_20399AF)
+            {
+            case 1:
+                sub_080CE00C();
+                break;
+            case 0:
+                sub_080CE160();
+                break;
+            case 2:
+                GiveChosenBagItem();
+                break;
+            }
+        }
+        LoadPSSMenuGfx();
+        LoadWaveformSpritePalette();
+        break;
+    case 1:
+        if (!InitPokeStorageWindows())
+        {
+            SetPSSCallback((void (*)(void))Cb_ChangeScreen);
+            return;
+        }
+        break;
+    case 2:
+        PutWindowTilemap(0);
+        ClearWindowTilemap(1);
+        CpuFill32(0, (void *)VRAM, 0x200);
+        LoadUserWindowBorderGfx(1, 0xB, 0xE0);
+        break;
+    case 3:
+        ResetAllBgCoords();
+        if (!sStorage->isReopening)
+            sub_080C77B8();
+        break;
+    case 4:
+        sub_080CA778();
+        if (!sStorage->isReopening)
+            sub_080CCBE8();
+        else
+            sub_080CCC68();
+        break;
+    case 5:
+        if (!sub_080CFA04())
+        {
+            SetPSSCallback((void (*)(void))Cb_ChangeScreen);
+            return;
+        }
+        else
+        {
+            SetScrollingBackground();
+            sub_080CA480();
+        }
+        break;
+    case 6:
+        sub_080C994C();
+        break;
+    case 7:
+        sub_080C9F68();
+        break;
+    case 8:
+        sub_080CBBA0(StorageGetCurrentBox());
+        break;
+    case 9:
+        if (sub_080CBBD0())
+            return;
+
+        if (sStorage->boxOption != 3)
+        {
+            sStorage->markMenu.baseTileTag = 0xD;
+            sStorage->markMenu.basePaletteTag = 0xDACE;
+            InitMonMarkingsMenu(&sStorage->markMenu);
+            BufferMonMarkingsMenuTiles();
+        }
+        else
+        {
+            sub_080D0500();
+            sub_080CA720();
+        }
+        break;
+    case 10:
+        sub_080C77E8();
+        if (!sStorage->isReopening)
+        {
+            BlendPalettes(-1, 16, 0);
+            SetPSSCallback(Cb_ShowPSS);
+        }
+        else
+        {
+            BlendPalettes(-1, 16, 0);
+            SetPSSCallback(Cb_ReshowPSS);
+        }
+        SetVBlankCallback(VBlankCB_PokeStorage);
+        return;
+    default:
+        return;
+    }
+
+    sStorage->state++;
 }
 
-__attribute__((naked)) void Cb_ShowPSS(void)
+void Cb_ShowPSS(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C7A5C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7A60\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C7A7A\n\t"
-        "	b _080C7A8A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7A5C: .4byte gUnknown_20399A8\n\t"
-        "_080C7A60:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x14\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl ComputerScreenOpenEffect\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C7A8A\n\t"
-        "_080C7A7A:\n\t"
-        "	bl IsComputerScreenOpenEffectActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7A8A\n\t"
-        "	ldr r0, _080C7A90\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C7A8A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7A90: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        PlaySE(2);
+        ComputerScreenOpenEffect(20, 0, 1);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!IsComputerScreenOpenEffectActive())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_ReshowPSS(void)
+void Cb_ReshowPSS(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, _080C7AAC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C7ACC\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080C7AB0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7ABA\n\t"
-        "	b _080C7B3C\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7AAC: .4byte gUnknown_20399A8\n\t"
-        "_080C7AB0:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080C7B04\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C7B2C\n\t"
-        "	b _080C7B3C\n\t"
-        "_080C7ABA:\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	b _080C7B1E\n\t"
-        "_080C7ACC:\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7B3C\n\t"
-        "	ldr r0, _080C7AF0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080C7AF8\n\t"
-        "	ldr r0, _080C7AF4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7AF8\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	b _080C7B1E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7AF0: .4byte gUnknown_20399AF\n\t"
-        "_080C7AF4: .4byte gSpecialVar_ItemId\n\t"
-        "_080C7AF8:\n\t"
-        "	ldr r0, _080C7B00\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C7B3C\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7B00: .4byte Cb_MainPSS + 1\n\t"
-        "_080C7B04:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7B3C\n\t"
-        "	ldr r0, _080C7B28\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7B3C\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "_080C7B1E:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C7B3C\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7B28: .4byte gMain\n\t"
-        "_080C7B2C:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7B3C\n\t"
-        "	ldr r0, _080C7B44\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C7B3C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7B44: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        BeginNormalPaletteFade(-1, -1, 16, 0, 0);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!UpdatePaletteFade())
+        {
+            if (gUnknown_20399AF == 2 && gSpecialVar_ItemId != 0)
+            {
+                PrintStorageActionText(28);
+                sStorage->state++;
+            }
+            else
+            {
+                SetPSSCallback(Cb_MainPSS);
+            }
+        }
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            if (gMain.newKeys & (A_BUTTON | B_BUTTON))
+            {
+                ClearBottomWindow();
+                sStorage->state++;
+            }
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_MainPSS(void)
+void Cb_MainPSS(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _080C7B60\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	bls _080C7B56\n\t"
-        "	b _080C803A\n\t"
-        "_080C7B56:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C7B64\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7B60: .4byte gUnknown_20399A8\n\t"
-        "_080C7B64: .4byte 0x080C7B68\n\t"
-        "_080C7B68: @ jump table\n\t"
-        "	.4byte _080C7B98 @ case 0\n\t"
-        "	.4byte _080C7EB8 @ case 1\n\t"
-        "	.4byte _080C7EF8 @ case 2\n\t"
-        "	.4byte _080C7F50 @ case 3\n\t"
-        "	.4byte _080C7F74 @ case 4\n\t"
-        "	.4byte _080C7F7E @ case 5\n\t"
-        "	.4byte _080C7F98 @ case 6\n\t"
-        "	.4byte _080C7FB8 @ case 7\n\t"
-        "	.4byte _080C7FBE @ case 8\n\t"
-        "	.4byte _080C7FD4 @ case 9\n\t"
-        "	.4byte _080C8000 @ case 10\n\t"
-        "	.4byte _080C8028 @ case 11\n\t"
-        "_080C7B98:\n\t"
-        "	bl sub_080CF268\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #1\n\t"
-        "	cmp r0, #0x19\n\t"
-        "	bls _080C7BA8\n\t"
-        "	b _080C803A\n\t"
-        "_080C7BA8:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C7BB4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7BB4: .4byte 0x080C7BB8\n\t"
-        "_080C7BB8: @ jump table\n\t"
-        "	.4byte _080C7C20 @ case 0\n\t"
-        "	.4byte _080C803A @ case 1\n\t"
-        "	.4byte _080C803A @ case 2\n\t"
-        "	.4byte _080C7CB0 @ case 3\n\t"
-        "	.4byte _080C7C34 @ case 4\n\t"
-        "	.4byte _080C7C68 @ case 5\n\t"
-        "	.4byte _080C7CC8 @ case 6\n\t"
-        "	.4byte _080C7CDC @ case 7\n\t"
-        "	.4byte _080C7CE8 @ case 8\n\t"
-        "	.4byte _080C7D20 @ case 9\n\t"
-        "	.4byte _080C7D64 @ case 10\n\t"
-        "	.4byte _080C7DE8 @ case 11\n\t"
-        "	.4byte _080C7DA8 @ case 12\n\t"
-        "	.4byte _080C7DBA @ case 13\n\t"
-        "	.4byte _080C7DFC @ case 14\n\t"
-        "	.4byte _080C7E10 @ case 15\n\t"
-        "	.4byte _080C7E24 @ case 16\n\t"
-        "	.4byte _080C7E38 @ case 17\n\t"
-        "	.4byte _080C7CBC @ case 18\n\t"
-        "	.4byte _080C7E4C @ case 19\n\t"
-        "	.4byte _080C7E6C @ case 20\n\t"
-        "	.4byte _080C7E56 @ case 21\n\t"
-        "	.4byte _080C7E76 @ case 22\n\t"
-        "	.4byte _080C7EB0 @ case 23\n\t"
-        "	.4byte _080C7E7A @ case 24\n\t"
-        "	.4byte _080C7E94 @ case 25\n\t"
-        "_080C7C20:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7C30\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7C30: .4byte gUnknown_20399A8\n\t"
-        "_080C7C34:\n\t"
-        "	ldr r4, _080C7C54\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	subs r0, #2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _080C7C58\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7C54: .4byte gUnknown_20399A8\n\t"
-        "_080C7C58:\n\t"
-        "	bl ClearSavedCursorPos\n\t"
-        "	ldr r0, _080C7C64\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7C64: .4byte Cb_ShowPartyPokemon + 1\n\t"
-        "_080C7C68:\n\t"
-        "	ldr r4, _080C7C94\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080C7C9C\n\t"
-        "	bl IsMonBeingMoved\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7CA2\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C7C98\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7C90\n\t"
-        "	b _080C7D82\n\t"
-        "_080C7C90:\n\t"
-        "	b _080C7CA2\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7C94: .4byte gUnknown_20399A8\n\t"
-        "_080C7C98: .4byte 0x00000CE6\n\t"
-        "_080C7C9C:\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C7CA2\n\t"
-        "	b _080C803A\n\t"
-        "_080C7CA2:\n\t"
-        "	ldr r0, _080C7CAC\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7CAC: .4byte Cb_HidePartyPokemon + 1\n\t"
-        "_080C7CB0:\n\t"
-        "	ldr r0, _080C7CB8\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7CB8: .4byte Cb_OnCloseBoxPressed + 1\n\t"
-        "_080C7CBC:\n\t"
-        "	ldr r0, _080C7CC4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7CC4: .4byte Cb_OnBPressed + 1\n\t"
-        "_080C7CC8:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7CD8\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7CD8: .4byte Cb_HandleBoxOptions + 1\n\t"
-        "_080C7CDC:\n\t"
-        "	ldr r0, _080C7CE4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7CE4: .4byte Cb_OnSelectedMon + 1\n\t"
-        "_080C7CE8:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	ldr r4, _080C7D18\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r0, #1\n\t"
-        "	ldr r2, _080C7D1C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	ble _080C7D0A\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080C7D0A:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C7D58\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	b _080C8012\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7D18: .4byte gUnknown_20399A8\n\t"
-        "_080C7D1C: .4byte 0x000002CA\n\t"
-        "_080C7D20:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	ldr r4, _080C7D50\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	subs r0, #1\n\t"
-        "	ldr r2, _080C7D54\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080C7D42\n\t"
-        "	movs r0, #0xd\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080C7D42:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C7D58\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	b _080C8012\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7D50: .4byte gUnknown_20399A8\n\t"
-        "_080C7D54: .4byte 0x000002CA\n\t"
-        "_080C7D58:\n\t"
-        "	bl sub_080CF724\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "_080C7D64:\n\t"
-        "	bl CanMovePartyMon\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7DC4\n\t"
-        "	ldr r4, _080C7D8C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C7D90\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7D94\n\t"
-        "_080C7D82:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7D8C: .4byte gUnknown_20399A8\n\t"
-        "_080C7D90: .4byte 0x00000CE6\n\t"
-        "_080C7D94:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7DA4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7DA4: .4byte Cb_DepositMenu + 1\n\t"
-        "_080C7DA8:\n\t"
-        "	bl CanMovePartyMon\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7DC4\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080C7FC8\n\t"
-        "_080C7DBA:\n\t"
-        "	bl CanShiftMon\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7DD4\n\t"
-        "_080C7DC4:\n\t"
-        "	ldr r0, _080C7DD0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7DD0: .4byte gUnknown_20399A8\n\t"
-        "_080C7DD4:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7DE4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7DE4: .4byte Cb_ShiftMon + 1\n\t"
-        "_080C7DE8:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7DF8\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7DF8: .4byte Cb_WithdrawMon + 1\n\t"
-        "_080C7DFC:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7E0C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7E0C: .4byte Cb_PlaceMon + 1\n\t"
-        "_080C7E10:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7E20\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7E20: .4byte Cb_TakeItemForMoving + 1\n\t"
-        "_080C7E24:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7E34\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7E34: .4byte Cb_GiveMovingItemToMon + 1\n\t"
-        "_080C7E38:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C7E48\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7E48: .4byte Cb_SwitchSelectedItem + 1\n\t"
-        "_080C7E4C:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080C7E9C\n\t"
-        "_080C7E56:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl MultiMove_SetFunction\n\t"
-        "	ldr r0, _080C7E68\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #8\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7E68: .4byte gUnknown_20399A8\n\t"
-        "_080C7E6C:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #2\n\t"
-        "	b _080C7E82\n\t"
-        "_080C7E76:\n\t"
-        "	movs r0, #3\n\t"
-        "	b _080C7E9C\n\t"
-        "_080C7E7A:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #4\n\t"
-        "_080C7E82:\n\t"
-        "	bl MultiMove_SetFunction\n\t"
-        "	ldr r0, _080C7E90\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #9\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7E90: .4byte gUnknown_20399A8\n\t"
-        "_080C7E94:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #5\n\t"
-        "_080C7E9C:\n\t"
-        "	bl MultiMove_SetFunction\n\t"
-        "	ldr r0, _080C7EAC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #7\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7EAC: .4byte gUnknown_20399A8\n\t"
-        "_080C7EB0:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080C803A\n\t"
-        "_080C7EB8:\n\t"
-        "	bl sub_080CCDD0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7EC4\n\t"
-        "	b _080C803A\n\t"
-        "_080C7EC4:\n\t"
-        "	bl IsCursorOnCloseBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7ED4\n\t"
-        "	bl sub_080CA224\n\t"
-        "	b _080C7ED8\n\t"
-        "_080C7ED4:\n\t"
-        "	bl StopFlashingCloseBoxButton\n\t"
-        "_080C7ED8:\n\t"
-        "	ldr r4, _080C7EF0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C7EF4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7EEA\n\t"
-        "	bl BoxSetMosaic\n\t"
-        "_080C7EEA:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	b _080C7F64\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7EF0: .4byte gUnknown_20399A8\n\t"
-        "_080C7EF4: .4byte 0x00000CEA\n\t"
-        "_080C7EF8:\n\t"
-        "	bl ScrollToBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7F04\n\t"
-        "	b _080C803A\n\t"
-        "_080C7F04:\n\t"
-        "	ldr r0, _080C7F44\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080C7F48\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetCurrentBox\n\t"
-        "	ldr r0, _080C7F4C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7F2C\n\t"
-        "	bl IsMonBeingMoved\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7F2C\n\t"
-        "	bl sub_080CD888\n\t"
-        "	bl BoxSetMosaic\n\t"
-        "_080C7F2C:\n\t"
-        "	ldr r4, _080C7F44\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080C7F64\n\t"
-        "	bl sub_080CF748\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0xb\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7F44: .4byte gUnknown_20399A8\n\t"
-        "_080C7F48: .4byte 0x000002CA\n\t"
-        "_080C7F4C: .4byte gUnknown_20399AC\n\t"
-        "_080C7F50:\n\t"
-        "	ldr r0, _080C7F6C\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C803A\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C7F70\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_080C7F64:\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7F6C: .4byte gMain\n\t"
-        "_080C7F70: .4byte gUnknown_20399A8\n\t"
-        "_080C7F74:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0xd\n\t"
-        "	b _080C7F86\n\t"
-        "_080C7F7E:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x16\n\t"
-        "_080C7F86:\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C7F94\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7F94: .4byte gUnknown_20399A8\n\t"
-        "_080C7F98:\n\t"
-        "	ldr r0, _080C7FB0\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C803A\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C7FB4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7FB0: .4byte gMain\n\t"
-        "_080C7FB4: .4byte Cb_MainPSS + 1\n\t"
-        "_080C7FB8:\n\t"
-        "	bl sub_080CFA84\n\t"
-        "	b _080C802C\n\t"
-        "_080C7FBE:\n\t"
-        "	bl sub_080CFA84\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C803A\n\t"
-        "_080C7FC8:\n\t"
-        "	ldr r0, _080C7FD0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7FD0: .4byte Cb_MoveMon + 1\n\t"
-        "_080C7FD4:\n\t"
-        "	bl sub_080CFA84\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080C803A\n\t"
-        "	ldr r5, _080C7FF8\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080C7FFC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C7FF2\n\t"
-        "	bl BoxSetMosaic\n\t"
-        "_080C7FF2:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	strb r4, [r0]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7FF8: .4byte gUnknown_20399A8\n\t"
-        "_080C7FFC: .4byte 0x00000CEA\n\t"
-        "_080C8000:\n\t"
-        "	bl sub_080D0AB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C803A\n\t"
-        "	ldr r4, _080C8020\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C8024\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_080C8012:\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetUpScrollToBox\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C803A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8020: .4byte gUnknown_20399A8\n\t"
-        "_080C8024: .4byte 0x000002CA\n\t"
-        "_080C8028:\n\t"
-        "	bl sub_080D0AB8\n\t"
-        "_080C802C:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080C803A\n\t"
-        "	ldr r0, _080C8040\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080C803A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8040: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        switch (sub_080CF268())
+        {
+        case INPUT_MOVE_CURSOR:
+            PlaySE(SE_SELECT);
+            sStorage->state = 1;
+            break;
+        case INPUT_SHOW_PARTY:
+            if (sStorage->boxOption != OPTION_MOVE_MONS && sStorage->boxOption != OPTION_MOVE_ITEMS)
+            {
+                PrintStorageActionText(16);
+                sStorage->state = 3;
+            }
+            else
+            {
+                ClearSavedCursorPos();
+                SetPSSCallback(Cb_ShowPartyPokemon);
+            }
+            break;
+        case INPUT_HIDE_PARTY:
+            if (sStorage->boxOption == OPTION_MOVE_MONS)
+            {
+                if (IsMonBeingMoved() && ItemIsMail(sStorage->displayMonItemId))
+                    sStorage->state = 5;
+                else
+                    SetPSSCallback(Cb_HidePartyPokemon);
+            }
+            else if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+            {
+                SetPSSCallback(Cb_HidePartyPokemon);
+            }
+            break;
+        case INPUT_CLOSE_BOX:
+            SetPSSCallback(Cb_OnCloseBoxPressed);
+            break;
+        case INPUT_PRESSED_B:
+            SetPSSCallback(Cb_OnBPressed);
+            break;
+        case INPUT_BOX_OPTIONS:
+            PlaySE(SE_SELECT);
+            SetPSSCallback(Cb_HandleBoxOptions);
+            break;
+        case INPUT_IN_MENU:
+            SetPSSCallback(Cb_OnSelectedMon);
+            break;
+        case INPUT_SCROLL_RIGHT:
+            PlaySE(SE_SELECT);
+            sStorage->newCurrBoxId = StorageGetCurrentBox() + 1;
+            if (sStorage->newCurrBoxId >= TOTAL_BOXES_COUNT)
+                sStorage->newCurrBoxId = 0;
+            if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+            {
+                SetUpScrollToBox(sStorage->newCurrBoxId);
+                sStorage->state = 2;
+            }
+            else
+            {
+                sub_080CF724();
+                sStorage->state = 10;
+            }
+            break;
+        case INPUT_SCROLL_LEFT:
+            PlaySE(SE_SELECT);
+            sStorage->newCurrBoxId = StorageGetCurrentBox() - 1;
+            if (sStorage->newCurrBoxId < 0)
+                sStorage->newCurrBoxId = TOTAL_BOXES_COUNT - 1;
+            if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+            {
+                SetUpScrollToBox(sStorage->newCurrBoxId);
+                sStorage->state = 2;
+            }
+            else
+            {
+                sub_080CF724();
+                sStorage->state = 10;
+            }
+            break;
+        case INPUT_DEPOSIT:
+            if (!CanMovePartyMon())
+            {
+                if (ItemIsMail(sStorage->displayMonItemId))
+                {
+                    sStorage->state = 5;
+                }
+                else
+                {
+                    PlaySE(SE_SELECT);
+                    SetPSSCallback(Cb_DepositMenu);
+                }
+            }
+            else
+            {
+                sStorage->state = 4;
+            }
+            break;
+        case INPUT_MOVE_MON:
+            if (CanMovePartyMon())
+            {
+                sStorage->state = 4;
+            }
+            else
+            {
+                PlaySE(SE_SELECT);
+                SetPSSCallback(Cb_MoveMon);
+            }
+            break;
+        case INPUT_SHIFT_MON:
+            if (!CanShiftMon())
+            {
+                sStorage->state = 4;
+            }
+            else
+            {
+                PlaySE(SE_SELECT);
+                SetPSSCallback(Cb_ShiftMon);
+            }
+            break;
+        case INPUT_WITHDRAW:
+            PlaySE(SE_SELECT);
+            SetPSSCallback(Cb_WithdrawMon);
+            break;
+        case INPUT_PLACE_MON:
+            PlaySE(SE_SELECT);
+            SetPSSCallback(Cb_PlaceMon);
+            break;
+        case INPUT_TAKE_ITEM:
+            PlaySE(SE_SELECT);
+            SetPSSCallback(Cb_TakeItemForMoving);
+            break;
+        case INPUT_GIVE_ITEM:
+            PlaySE(SE_SELECT);
+            SetPSSCallback(Cb_GiveMovingItemToMon);
+            break;
+        case INPUT_SWITCH_ITEMS:
+            PlaySE(SE_SELECT);
+            SetPSSCallback(Cb_SwitchSelectedItem);
+            break;
+        case INPUT_MULTIMOVE_START:
+            PlaySE(SE_SELECT);
+            MultiMove_SetFunction(0);
+            sStorage->state = 7;
+            break;
+        case INPUT_MULTIMOVE_SINGLE:
+            MultiMove_SetFunction(1);
+            sStorage->state = 8;
+            break;
+        case INPUT_MULTIMOVE_CHANGE_SELECTION:
+            PlaySE(SE_SELECT);
+            MultiMove_SetFunction(2);
+            sStorage->state = 9;
+            break;
+        case INPUT_MULTIMOVE_GRAB_SELECTION:
+            MultiMove_SetFunction(3);
+            sStorage->state = 7;
+            break;
+        case INPUT_MULTIMOVE_MOVE_MONS:
+            PlaySE(SE_SELECT);
+            MultiMove_SetFunction(4);
+            sStorage->state = 9;
+            break;
+        case INPUT_MULTIMOVE_PLACE_MONS:
+            PlaySE(SE_SELECT);
+            MultiMove_SetFunction(5);
+            sStorage->state = 7;
+            break;
+        case INPUT_MULTIMOVE_UNABLE:
+            PlaySE(SE_FAILURE);
+            break;
+        }
+        break;
+    case 1:
+        if (!sub_080CCDD0())
+        {
+            if (IsCursorOnCloseBox())
+                sub_080CA224();
+            else
+                StopFlashingCloseBoxButton();
+
+            if (sStorage->setMosaic)
+                BoxSetMosaic();
+            sStorage->state = 0;
+        }
+        break;
+    case 2:
+        if (!ScrollToBox())
+        {
+            SetCurrentBox(sStorage->newCurrBoxId);
+            if (!gUnknown_20399AC && !IsMonBeingMoved())
+            {
+                sub_080CD888();
+                BoxSetMosaic();
+            }
+
+            if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+            {
+                sub_080CF748();
+                sStorage->state = 11;
+            }
+            else
+            {
+                sStorage->state = 0;
+            }
+        }
+        break;
+    case 3:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            sStorage->state = 0;
+        }
+        break;
+    case 4:
+        PlaySE(SE_FAILURE);
+        PrintStorageActionText(13);
+        sStorage->state = 6;
+        break;
+    case 5:
+        PlaySE(SE_FAILURE);
+        PrintStorageActionText(22);
+        sStorage->state = 6;
+        break;
+    case 6:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    case 7:
+        if (!sub_080CFA84())
+            sStorage->state = 0;
+        break;
+    case 8:
+        if (!sub_080CFA84())
+            SetPSSCallback(Cb_MoveMon);
+        break;
+    case 9:
+        if (!sub_080CFA84())
+        {
+            if (sStorage->setMosaic)
+                BoxSetMosaic();
+            sStorage->state = 0;
+        }
+        break;
+    case 10:
+        if (!sub_080D0AB8())
+        {
+            SetUpScrollToBox(sStorage->newCurrBoxId);
+            sStorage->state = 2;
+        }
+        break;
+    case 11:
+        if (!sub_080D0AB8())
+            sStorage->state = 0;
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_ShowPartyPokemon(void)
+void Cb_ShowPartyPokemon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C8058\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C805C\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C806A\n\t"
-        "	b _080C807A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8058: .4byte gUnknown_20399A8\n\t"
-        "_080C805C:\n\t"
-        "	bl SetUpDoShowPartyMenu\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C807A\n\t"
-        "_080C806A:\n\t"
-        "	bl DoShowPartyMenu\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C807A\n\t"
-        "	ldr r0, _080C8080\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C807A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8080: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        SetUpDoShowPartyMenu();
+        sStorage->state++;
+        break;
+    case 1:
+        if (!DoShowPartyMenu())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_HidePartyPokemon(void)
+void Cb_HidePartyPokemon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C809C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C80B2\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080C80A0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C80A6\n\t"
-        "	b _080C80F2\n\t"
-        "	.align 2, 0\n\t"
-        "_080C809C: .4byte gUnknown_20399A8\n\t"
-        "_080C80A0:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080C80D2\n\t"
-        "	b _080C80F2\n\t"
-        "_080C80A6:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl SetUpHidePartyMenu\n\t"
-        "	b _080C80C8\n\t"
-        "_080C80B2:\n\t"
-        "	bl HidePartyMenu\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C80F2\n\t"
-        "	bl GetSavedCursorPos\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_080CD474\n\t"
-        "_080C80C8:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C80F2\n\t"
-        "_080C80D2:\n\t"
-        "	bl sub_080CCDD0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C80F2\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C80F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C80EC\n\t"
-        "	bl BoxSetMosaic\n\t"
-        "_080C80EC:\n\t"
-        "	ldr r0, _080C80FC\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C80F2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C80F8: .4byte 0x00000CEA\n\t"
-        "_080C80FC: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        PlaySE(5);
+        SetUpHidePartyMenu();
+        sStorage->state++;
+        break;
+    case 1:
+        if (!HidePartyMenu())
+        {
+            sub_080CD474(GetSavedCursorPos());
+            sStorage->state++;
+        }
+        break;
+    case 2:
+        if (!sub_080CCDD0())
+        {
+            if (sStorage->setMosaic)
+                BoxSetMosaic();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_OnSelectedMon(void)
+void Cb_OnSelectedMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080C8118\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bls _080C810E\n\t"
-        "	b _080C841E\n\t"
-        "_080C810E:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C811C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8118: .4byte gUnknown_20399A8\n\t"
-        "_080C811C: .4byte 0x080C8120\n\t"
-        "_080C8120: @ jump table\n\t"
-        "	.4byte _080C813C @ case 0\n\t"
-        "	.4byte _080C81A0 @ case 1\n\t"
-        "	.4byte _080C81BC @ case 2\n\t"
-        "	.4byte _080C83D8 @ case 3\n\t"
-        "	.4byte _080C83EC @ case 4\n\t"
-        "	.4byte _080C83E2 @ case 5\n\t"
-        "	.4byte _080C8408 @ case 6\n\t"
-        "_080C813C:\n\t"
-        "	bl sub_080C9B2C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8148\n\t"
-        "	b _080C841E\n\t"
-        "_080C8148:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r4, _080C8160\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C8164\n\t"
-        "	movs r0, #4\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	b _080C818E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8160: .4byte gUnknown_20399A8\n\t"
-        "_080C8164:\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C817A\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C8184\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8188\n\t"
-        "_080C817A:\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	b _080C818E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8184: .4byte 0x00000CE6\n\t"
-        "_080C8188:\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "_080C818E:\n\t"
-        "	bl AddMenu\n\t"
-        "	ldr r0, _080C819C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C819C: .4byte gUnknown_20399A8\n\t"
-        "_080C81A0:\n\t"
-        "	bl sub_080CF948\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C81AC\n\t"
-        "	b _080C841E\n\t"
-        "_080C81AC:\n\t"
-        "	ldr r0, _080C81B8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C81B8: .4byte gUnknown_20399A8\n\t"
-        "_080C81BC:\n\t"
-        "	bl sub_080CF94C\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x12\n\t"
-        "	bls _080C81CC\n\t"
-        "	b _080C841E\n\t"
-        "_080C81CC:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C81D8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C81D8: .4byte 0x080C81DC\n\t"
-        "_080C81DC: @ jump table\n\t"
-        "	.4byte _080C8228 @ case 0\n\t"
-        "	.4byte _080C8228 @ case 1\n\t"
-        "	.4byte _080C82A8 @ case 2\n\t"
-        "	.4byte _080C8290 @ case 3\n\t"
-        "	.4byte _080C8238 @ case 4\n\t"
-        "	.4byte _080C8270 @ case 5\n\t"
-        "	.4byte _080C8258 @ case 6\n\t"
-        "	.4byte _080C8348 @ case 7\n\t"
-        "	.4byte _080C82E4 @ case 8\n\t"
-        "	.4byte _080C835C @ case 9\n\t"
-        "	.4byte _080C841E @ case 10\n\t"
-        "	.4byte _080C841E @ case 11\n\t"
-        "	.4byte _080C841E @ case 12\n\t"
-        "	.4byte _080C8370 @ case 13\n\t"
-        "	.4byte _080C8384 @ case 14\n\t"
-        "	.4byte _080C83B8 @ case 15\n\t"
-        "	.4byte _080C83A4 @ case 16\n\t"
-        "	.4byte _080C8398 @ case 17\n\t"
-        "	.4byte _080C83CC @ case 18\n\t"
-        "_080C8228:\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C8234\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8234: .4byte Cb_MainPSS + 1\n\t"
-        "_080C8238:\n\t"
-        "	bl CanMovePartyMon\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C82EE\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C8254\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8254: .4byte Cb_MoveMon + 1\n\t"
-        "_080C8258:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C826C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C826C: .4byte Cb_PlaceMon + 1\n\t"
-        "_080C8270:\n\t"
-        "	bl CanShiftMon\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C82EE\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C828C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C828C: .4byte Cb_ShiftMon + 1\n\t"
-        "_080C8290:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C82A4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C82A4: .4byte Cb_WithdrawMon + 1\n\t"
-        "_080C82A8:\n\t"
-        "	bl CanMovePartyMon\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C82EE\n\t"
-        "	ldr r4, _080C82D8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080C82DC\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8328\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C82E0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C82D8: .4byte gUnknown_20399A8\n\t"
-        "_080C82DC: .4byte 0x00000CE6\n\t"
-        "_080C82E0: .4byte Cb_DepositMenu + 1\n\t"
-        "_080C82E4:\n\t"
-        "	bl CanMovePartyMon\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C82FC\n\t"
-        "_080C82EE:\n\t"
-        "	ldr r0, _080C82F8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C82F8: .4byte gUnknown_20399A8\n\t"
-        "_080C82FC:\n\t"
-        "	ldr r4, _080C8310\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080C8314\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8318\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8310: .4byte gUnknown_20399A8\n\t"
-        "_080C8314: .4byte 0x00000CED\n\t"
-        "_080C8318:\n\t"
-        "	ldr r2, _080C8330\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8334\n\t"
-        "_080C8328:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8330: .4byte 0x00000CE6\n\t"
-        "_080C8334:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C8344\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8344: .4byte Cb_ReleaseMon + 1\n\t"
-        "_080C8348:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C8358\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8358: .4byte Cb_ShowMonSummary + 1\n\t"
-        "_080C835C:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C836C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C836C: .4byte Cb_ShowMarkMenu + 1\n\t"
-        "_080C8370:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C8380\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8380: .4byte Cb_TakeItemForMoving + 1\n\t"
-        "_080C8384:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C8394\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8394: .4byte Cb_GiveMovingItemToMon + 1\n\t"
-        "_080C8398:\n\t"
-        "	ldr r0, _080C83A0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C83A0: .4byte Cb_ItemToBag + 1\n\t"
-        "_080C83A4:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C83B4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C83B4: .4byte Cb_SwitchSelectedItem + 1\n\t"
-        "_080C83B8:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C83C8\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C83C8: .4byte Cb_GiveItemFromBag + 1\n\t"
-        "_080C83CC:\n\t"
-        "	ldr r0, _080C83D4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C83D4: .4byte Cb_ShowItemInfo + 1\n\t"
-        "_080C83D8:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0xd\n\t"
-        "	b _080C83F4\n\t"
-        "_080C83E2:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x11\n\t"
-        "	b _080C83F4\n\t"
-        "_080C83EC:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x16\n\t"
-        "_080C83F4:\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C8404\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #6\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C841E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8404: .4byte gUnknown_20399A8\n\t"
-        "_080C8408:\n\t"
-        "	ldr r0, _080C8424\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C841E\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C8428\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C841E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8424: .4byte gMain\n\t"
-        "_080C8428: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        if (!sub_080C9B2C())
+        {
+            PlaySE(5);
+            if (sStorage->boxOption != 3)
+                PrintStorageActionText(4);
+            else if (IsActiveItemMoving() || sStorage->displayMonItemId != ITEM_NONE)
+                PrintStorageActionText(23);
+            else
+                PrintStorageActionText(24);
+
+            AddMenu();
+            sStorage->state = 1;
+        }
+        break;
+    case 1:
+        if (!sub_080CF948())
+            sStorage->state = 2;
+        break;
+    case 2:
+        switch (sub_080CF94C())
+        {
+        case -1:
+        case 0:
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+            break;
+        case 3:
+            if (CanMovePartyMon())
+            {
+                sStorage->state = 3;
+            }
+            else
+            {
+                PlaySE(5);
+                ClearBottomWindow();
+                SetPSSCallback(Cb_MoveMon);
+            }
+            break;
+        case 5:
+            PlaySE(5);
+            ClearBottomWindow();
+            SetPSSCallback(Cb_PlaceMon);
+            break;
+        case 4:
+            if (!CanShiftMon())
+            {
+                sStorage->state = 3;
+            }
+            else
+            {
+                PlaySE(5);
+                ClearBottomWindow();
+                SetPSSCallback(Cb_ShiftMon);
+            }
+            break;
+        case 2:
+            PlaySE(5);
+            ClearBottomWindow();
+            SetPSSCallback(Cb_WithdrawMon);
+            break;
+        case 1:
+            if (CanMovePartyMon())
+            {
+                sStorage->state = 3;
+            }
+            else if (ItemIsMail(sStorage->displayMonItemId))
+            {
+                sStorage->state = 4;
+            }
+            else
+            {
+                PlaySE(5);
+                ClearBottomWindow();
+                SetPSSCallback(Cb_DepositMenu);
+            }
+            break;
+        case 7:
+            if (CanMovePartyMon())
+            {
+                sStorage->state = 3;
+            }
+            else if (sStorage->displayMonIsEgg)
+            {
+                sStorage->state = 5;
+            }
+            else if (ItemIsMail(sStorage->displayMonItemId))
+            {
+                sStorage->state = 4;
+            }
+            else
+            {
+                PlaySE(5);
+                SetPSSCallback(Cb_ReleaseMon);
+            }
+            break;
+        case 6:
+            PlaySE(5);
+            SetPSSCallback(Cb_ShowMonSummary);
+            break;
+        case 8:
+            PlaySE(5);
+            SetPSSCallback(Cb_ShowMarkMenu);
+            break;
+        case 12:
+            PlaySE(5);
+            SetPSSCallback(Cb_TakeItemForMoving);
+            break;
+        case 13:
+            PlaySE(5);
+            SetPSSCallback(Cb_GiveMovingItemToMon);
+            break;
+        case 16:
+            SetPSSCallback(Cb_ItemToBag);
+            break;
+        case 15:
+            PlaySE(5);
+            SetPSSCallback(Cb_SwitchSelectedItem);
+            break;
+        case 14:
+            PlaySE(5);
+            SetPSSCallback(Cb_GiveItemFromBag);
+            break;
+        case 17:
+            SetPSSCallback(Cb_ShowItemInfo);
+            break;
+        }
+        break;
+    case 3:
+        PlaySE(32);
+        PrintStorageActionText(13);
+        sStorage->state = 6;
+        break;
+    case 5:
+        PlaySE(32);
+        PrintStorageActionText(17);
+        sStorage->state = 6;
+        break;
+    case 4:
+        PlaySE(32);
+        PrintStorageActionText(22);
+        sStorage->state = 6;
+        break;
+    case 6:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_MoveMon(void)
+void Cb_MoveMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C8440\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8444\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C8454\n\t"
-        "	b _080C847E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8440: .4byte gUnknown_20399A8\n\t"
-        "_080C8444:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl InitMonPlaceChange\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C847E\n\t"
-        "_080C8454:\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C847E\n\t"
-        "	ldr r0, _080C8470\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8478\n\t"
-        "	ldr r0, _080C8474\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C847E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8470: .4byte gUnknown_20399AC\n\t"
-        "_080C8474: .4byte sub_080C8F0C + 1\n\t"
-        "_080C8478:\n\t"
-        "	ldr r0, _080C8484\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C847E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8484: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        InitMonPlaceChange(0);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!DoMonPlaceChange())
+        {
+            if (gUnknown_20399AC)
+                SetPSSCallback(sub_080C8F0C);
+            else
+                SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_PlaceMon(void)
+void Cb_PlaceMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C849C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C84A0\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C84B0\n\t"
-        "	b _080C84DA\n\t"
-        "	.align 2, 0\n\t"
-        "_080C849C: .4byte gUnknown_20399A8\n\t"
-        "_080C84A0:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl InitMonPlaceChange\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C84DA\n\t"
-        "_080C84B0:\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C84DA\n\t"
-        "	ldr r0, _080C84CC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C84D4\n\t"
-        "	ldr r0, _080C84D0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C84DA\n\t"
-        "	.align 2, 0\n\t"
-        "_080C84CC: .4byte gUnknown_20399AC\n\t"
-        "_080C84D0: .4byte sub_080C8F0C + 1\n\t"
-        "_080C84D4:\n\t"
-        "	ldr r0, _080C84E0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C84DA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C84E0: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        InitMonPlaceChange(1);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!DoMonPlaceChange())
+        {
+            if (gUnknown_20399AC)
+                SetPSSCallback(sub_080C8F0C);
+            else
+                SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_ShiftMon(void)
+void Cb_ShiftMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C84F8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C84FC\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C850C\n\t"
-        "	b _080C8520\n\t"
-        "	.align 2, 0\n\t"
-        "_080C84F8: .4byte gUnknown_20399A8\n\t"
-        "_080C84FC:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl InitMonPlaceChange\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8520\n\t"
-        "_080C850C:\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8520\n\t"
-        "	bl BoxSetMosaic\n\t"
-        "	ldr r0, _080C8528\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8520:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8528: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        InitMonPlaceChange(2);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!DoMonPlaceChange())
+        {
+            BoxSetMosaic();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
 
-__attribute__((naked)) void Cb_WithdrawMon(void)
+void Cb_WithdrawMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C8544\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _080C860A\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C8548\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8544: .4byte gUnknown_20399A8\n\t"
-        "_080C8548: .4byte 0x080C854C\n\t"
-        "_080C854C: @ jump table\n\t"
-        "	.4byte _080C8564 @ case 0\n\t"
-        "	.4byte _080C859C @ case 1\n\t"
-        "	.4byte _080C85BC @ case 2\n\t"
-        "	.4byte _080C85D2 @ case 3\n\t"
-        "	.4byte _080C85E4 @ case 4\n\t"
-        "	.4byte _080C8604 @ case 5\n\t"
-        "_080C8564:\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _080C8584\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C8580\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C860A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8580: .4byte gUnknown_20399A8\n\t"
-        "_080C8584:\n\t"
-        "	bl SaveCursorPos\n\t"
-        "	movs r0, #0\n\t"
-        "	bl InitMonPlaceChange\n\t"
-        "	ldr r0, _080C8598\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C860A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8598: .4byte gUnknown_20399A8\n\t"
-        "_080C859C:\n\t"
-        "	ldr r0, _080C85B4\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C860A\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C85B8\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C860A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C85B4: .4byte gMain\n\t"
-        "_080C85B8: .4byte Cb_MainPSS + 1\n\t"
-        "_080C85BC:\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C860A\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetMovingMonPriority\n\t"
-        "	bl SetUpDoShowPartyMenu\n\t"
-        "	b _080C85F2\n\t"
-        "_080C85D2:\n\t"
-        "	bl DoShowPartyMenu\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C860A\n\t"
-        "	movs r0, #1\n\t"
-        "	bl InitMonPlaceChange\n\t"
-        "	b _080C85F2\n\t"
-        "_080C85E4:\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C860A\n\t"
-        "	bl sub_080CA384\n\t"
-        "_080C85F2:\n\t"
-        "	ldr r0, _080C8600\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C860A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8600: .4byte gUnknown_20399A8\n\t"
-        "_080C8604:\n\t"
-        "	ldr r0, _080C8610\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C860A:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8610: .4byte Cb_HidePartyPokemon + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        if (CalculatePlayerPartyCount() == PARTY_SIZE)
+        {
+            PrintStorageActionText(14);
+            sStorage->state = 1;
+        }
+        else
+        {
+            SaveCursorPos();
+            InitMonPlaceChange(0);
+            sStorage->state = 2;
+        }
+        break;
+    case 1:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    case 2:
+        if (!DoMonPlaceChange())
+        {
+            SetMovingMonPriority(1);
+            SetUpDoShowPartyMenu();
+            sStorage->state++;
+        }
+        break;
+    case 3:
+        if (!DoShowPartyMenu())
+        {
+            InitMonPlaceChange(1);
+            sStorage->state++;
+        }
+        break;
+    case 4:
+        if (!DoMonPlaceChange())
+        {
+            sub_080CA384();
+            sStorage->state++;
+        }
+        break;
+    case 5:
+        SetPSSCallback(Cb_HidePartyPokemon);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_DepositMenu(void)
+void Cb_DepositMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080C8630\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bls _080C8624\n\t"
-        "	b _080C873E\n\t"
-        "_080C8624:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C8634\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8630: .4byte gUnknown_20399A8\n\t"
-        "_080C8634: .4byte 0x080C8638\n\t"
-        "_080C8638: @ jump table\n\t"
-        "	.4byte _080C864C @ case 0\n\t"
-        "	.4byte _080C8688 @ case 1\n\t"
-        "	.4byte _080C86E8 @ case 2\n\t"
-        "	.4byte _080C8700 @ case 3\n\t"
-        "	.4byte _080C8724 @ case 4\n\t"
-        "_080C864C:\n\t"
-        "	movs r0, #6\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r4, _080C8678\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C867C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, _080C8680\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	movs r3, #3\n\t"
-        "	bl sub_080C7080\n\t"
-        "	ldr r0, _080C8684\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl sub_080C716C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080C873C\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8678: .4byte gUnknown_20399A8\n\t"
-        "_080C867C: .4byte 0x00001E5C\n\t"
-        "_080C8680: .4byte 0x0000DAC7\n\t"
-        "_080C8684: .4byte gUnknown_20399AE\n\t"
-        "_080C8688:\n\t"
-        "	bl HandleBoxChooseSelectionInput\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r0, #0xc8\n\t"
-        "	beq _080C873E\n\t"
-        "	cmp r0, #0xc9\n\t"
-        "	bne _080C86A8\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	bl sub_080C717C\n\t"
-        "	bl sub_080C7128\n\t"
-        "	b _080C8716\n\t"
-        "_080C86A8:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl TryStorePartyMonInBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C86D4\n\t"
-        "	ldr r0, _080C86CC\n\t"
-        "	strb r4, [r0]\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	bl sub_080C717C\n\t"
-        "	bl sub_080C7128\n\t"
-        "	ldr r0, _080C86D0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	b _080C873C\n\t"
-        "	.align 2, 0\n\t"
-        "_080C86CC: .4byte gUnknown_20399AE\n\t"
-        "_080C86D0: .4byte gUnknown_20399A8\n\t"
-        "_080C86D4:\n\t"
-        "	movs r0, #8\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C86E4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	b _080C873C\n\t"
-        "	.align 2, 0\n\t"
-        "_080C86E4: .4byte gUnknown_20399A8\n\t"
-        "_080C86E8:\n\t"
-        "	bl CompactPartySlots\n\t"
-        "	bl sub_080CB1C4\n\t"
-        "	ldr r0, _080C86FC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080C873C\n\t"
-        "	.align 2, 0\n\t"
-        "_080C86FC: .4byte gUnknown_20399A8\n\t"
-        "_080C8700:\n\t"
-        "	bl GetNumPartySpritesCompacting\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C873E\n\t"
-        "	bl sub_080CDAA8\n\t"
-        "	bl BoxSetMosaic\n\t"
-        "	bl sub_080CA384\n\t"
-        "_080C8716:\n\t"
-        "	ldr r0, _080C8720\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C873E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8720: .4byte Cb_MainPSS + 1\n\t"
-        "_080C8724:\n\t"
-        "	ldr r0, _080C8748\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C873E\n\t"
-        "	movs r0, #6\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C874C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "_080C873C:\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080C873E:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8748: .4byte gMain\n\t"
-        "_080C874C: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 boxId;
+
+    switch (sStorage->state)
+    {
+    case 0:
+        PrintStorageActionText(6);
+        sub_080C7080(&sStorage->chooseBoxMenu, 10, 0xDAC7, 3, FALSE);
+        sub_080C716C(gUnknown_20399AE);
+        sStorage->state++;
+        break;
+    case 1:
+        boxId = HandleBoxChooseSelectionInput();
+        switch (boxId)
+        {
+        case 0xC8:
+            break;
+        case 0xC9:
+            ClearBottomWindow();
+            sub_080C717C();
+            sub_080C7128();
+            SetPSSCallback(Cb_MainPSS);
+            break;
+        default:
+            if (TryStorePartyMonInBox(boxId))
+            {
+                gUnknown_20399AE = boxId;
+                ClearBottomWindow();
+                sub_080C717C();
+                sub_080C7128();
+                sStorage->state = 2;
+            }
+            else
+            {
+                PrintStorageActionText(8);
+                sStorage->state = 4;
+            }
+            break;
+        }
+        break;
+    case 2:
+        CompactPartySlots();
+        sub_080CB1C4();
+        sStorage->state++;
+        break;
+    case 3:
+        if (GetNumPartySpritesCompacting() == 0)
+        {
+            sub_080CDAA8();
+            BoxSetMosaic();
+            sub_080CA384();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    case 4:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            PrintStorageActionText(6);
+            sStorage->state = 1;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_ReleaseMon(void)
+void Cb_ReleaseMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C8768\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	bls _080C875E\n\t"
-        "	b _080C8932\n\t"
-        "_080C875E:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C876C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8768: .4byte gUnknown_20399A8\n\t"
-        "_080C876C: .4byte 0x080C8770\n\t"
-        "_080C8770: @ jump table\n\t"
-        "	.4byte _080C87A8 @ case 0\n\t"
-        "	.4byte _080C87BE @ case 1\n\t"
-        "	.4byte _080C87F6 @ case 2\n\t"
-        "	.4byte _080C881C @ case 3\n\t"
-        "	.4byte _080C8828 @ case 4\n\t"
-        "	.4byte _080C8840 @ case 5\n\t"
-        "	.4byte _080C887C @ case 6\n\t"
-        "	.4byte _080C8894 @ case 7\n\t"
-        "	.4byte _080C88A0 @ case 8\n\t"
-        "	.4byte _080C88A4 @ case 9\n\t"
-        "	.4byte _080C88B8 @ case 10\n\t"
-        "	.4byte _080C88D4 @ case 11\n\t"
-        "	.4byte _080C88E6 @ case 12\n\t"
-        "	.4byte _080C891C @ case 13\n\t"
-        "_080C87A8:\n\t"
-        "	movs r0, #9\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowYesNoWindow\n\t"
-        "	ldr r0, _080C87D8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080C87BE:\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080C87E8\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _080C87DC\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080C87E2\n\t"
-        "	b _080C8932\n\t"
-        "	.align 2, 0\n\t"
-        "_080C87D8: .4byte gUnknown_20399A8\n\t"
-        "_080C87DC:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080C87E2\n\t"
-        "	b _080C8932\n\t"
-        "_080C87E2:\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	b _080C8894\n\t"
-        "_080C87E8:\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	bl InitCanRelaseMonVars\n\t"
-        "	bl sub_080CDACC\n\t"
-        "	b _080C88F8\n\t"
-        "_080C87F6:\n\t"
-        "	bl RunCanReleaseMon\n\t"
-        "	bl sub_080CDB24\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8806\n\t"
-        "	b _080C8932\n\t"
-        "_080C8806:\n\t"
-        "	b _080C880E\n\t"
-        "_080C8808:\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C880E\n\t"
-        "	b _080C890C\n\t"
-        "_080C880E:\n\t"
-        "	bl RunCanReleaseMon\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080C8808\n\t"
-        "	b _080C88F8\n\t"
-        "_080C881C:\n\t"
-        "	bl ReleaseMon\n\t"
-        "	bl RefreshCursorMonData\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _080C88F4\n\t"
-        "_080C8828:\n\t"
-        "	ldr r0, _080C883C\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8836\n\t"
-        "	b _080C8932\n\t"
-        "_080C8836:\n\t"
-        "	movs r0, #0xb\n\t"
-        "	b _080C88F4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C883C: .4byte gMain\n\t"
-        "_080C8840:\n\t"
-        "	ldr r0, _080C8864\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8932\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C8868\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C886C\n\t"
-        "	bl CompactPartySlots\n\t"
-        "	bl sub_080CB1C4\n\t"
-        "	b _080C88F8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8864: .4byte gMain\n\t"
-        "_080C8868: .4byte gUnknown_20399AC\n\t"
-        "_080C886C:\n\t"
-        "	ldr r0, _080C8878\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #7\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8932\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8878: .4byte gUnknown_20399A8\n\t"
-        "_080C887C:\n\t"
-        "	bl GetNumPartySpritesCompacting\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8932\n\t"
-        "	bl sub_080CD888\n\t"
-        "	bl BoxSetMosaic\n\t"
-        "	bl sub_080CA384\n\t"
-        "	b _080C88F8\n\t"
-        "_080C8894:\n\t"
-        "	ldr r0, _080C889C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C8932\n\t"
-        "	.align 2, 0\n\t"
-        "_080C889C: .4byte Cb_MainPSS + 1\n\t"
-        "_080C88A0:\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _080C88F4\n\t"
-        "_080C88A4:\n\t"
-        "	ldr r0, _080C88B4\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8932\n\t"
-        "	movs r0, #0x15\n\t"
-        "	b _080C88F4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C88B4: .4byte gMain\n\t"
-        "_080C88B8:\n\t"
-        "	ldr r0, _080C88D0\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8932\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	bl sub_080CB8D8\n\t"
-        "	b _080C88F8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C88D0: .4byte gMain\n\t"
-        "_080C88D4:\n\t"
-        "	bl sub_080CB914\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8932\n\t"
-        "	bl sub_080CDBA0\n\t"
-        "	movs r0, #0x13\n\t"
-        "	b _080C88F4\n\t"
-        "_080C88E6:\n\t"
-        "	ldr r0, _080C8904\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8932\n\t"
-        "	movs r0, #0x14\n\t"
-        "_080C88F4:\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "_080C88F8:\n\t"
-        "	ldr r0, _080C8908\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8932\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8904: .4byte gMain\n\t"
-        "_080C8908: .4byte gUnknown_20399A8\n\t"
-        "_080C890C:\n\t"
-        "	ldr r0, _080C8918\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #8\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8932\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8918: .4byte gUnknown_20399A8\n\t"
-        "_080C891C:\n\t"
-        "	ldr r0, _080C8938\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8932\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C893C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8932:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8938: .4byte gMain\n\t"
-        "_080C893C: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        PrintStorageActionText(9);
+        ShowYesNoWindow(1);
+        sStorage->state++;
+        // fall through
+    case 1:
+        switch (Menu_ProcessInputNoWrapClearOnChoose())
+        {
+        case -1:
+        case 1:
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+            break;
+        case 0:
+            ClearBottomWindow();
+            InitCanRelaseMonVars();
+            sub_080CDACC();
+            sStorage->state++;
+            break;
+        }
+        break;
+    case 2:
+        RunCanReleaseMon();
+        if (!sub_080CDB24())
+        {
+            while (1)
+            {
+                s8 canRelease = RunCanReleaseMon();
+
+                if (canRelease == 1)
+                {
+                    sStorage->state++;
+                    break;
+                }
+                else if (!canRelease)
+                {
+                    sStorage->state = 8;
+                    break;
+                }
+            }
+        }
+        break;
+    case 3:
+        ReleaseMon();
+        RefreshCursorMonData();
+        PrintStorageActionText(10);
+        sStorage->state++;
+        break;
+    case 4:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            PrintStorageActionText(11);
+            sStorage->state++;
+        }
+        break;
+    case 5:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            if (gUnknown_20399AC)
+            {
+                CompactPartySlots();
+                sub_080CB1C4();
+                sStorage->state++;
+            }
+            else
+            {
+                sStorage->state = 7;
+            }
+        }
+        break;
+    case 6:
+        if (!GetNumPartySpritesCompacting())
+        {
+            sub_080CD888();
+            BoxSetMosaic();
+            sub_080CA384();
+            sStorage->state++;
+        }
+        break;
+    case 7:
+        SetPSSCallback(Cb_MainPSS);
+        break;
+    case 8:
+        PrintStorageActionText(10);
+        sStorage->state++;
+        break;
+    case 9:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            PrintStorageActionText(21);
+            sStorage->state++;
+        }
+        break;
+    case 10:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            sub_080CB8D8();
+            sStorage->state++;
+        }
+        break;
+    case 11:
+        if (!sub_080CB914())
+        {
+            sub_080CDBA0();
+            PrintStorageActionText(19);
+            sStorage->state++;
+        }
+        break;
+    case 12:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            PrintStorageActionText(20);
+            sStorage->state++;
+        }
+        break;
+    case 13:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_ShowMarkMenu(void)
+void Cb_ShowMarkMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C8954\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8958\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C898C\n\t"
-        "	b _080C89B4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8954: .4byte gUnknown_20399A8\n\t"
-        "_080C8958:\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080C8984\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ldr r3, _080C8988\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0xb0\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl OpenMonMarkingsMenu\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C89B4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8984: .4byte 0x00000CEB\n\t"
-        "_080C8988: .4byte 0x00000DA8\n\t"
-        "_080C898C:\n\t"
-        "	bl HandleMonMarkingsMenuInput\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C89B4\n\t"
-        "	bl FreeMonMarkingsMenu\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C89BC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetMonMarkings\n\t"
-        "	bl RefreshCursorMonData\n\t"
-        "	ldr r0, _080C89C0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C89B4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C89BC: .4byte 0x00000DA8\n\t"
-        "_080C89C0: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        PrintStorageActionText(12);
+        sStorage->markMenu.markings = sStorage->displayMonMarkings;
+        OpenMonMarkingsMenu(sStorage->displayMonMarkings, 0xB0, 0x10);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!HandleMonMarkingsMenuInput())
+        {
+            FreeMonMarkingsMenu();
+            ClearBottomWindow();
+            SetMonMarkings(sStorage->markMenu.markings);
+            RefreshCursorMonData();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_TakeItemForMoving(void)
+void Cb_TakeItemForMoving(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _080C89DC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080C8A10\n\t"
-        "	cmp r1, #1\n\t"
-        "	bgt _080C89E0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080C89EA\n\t"
-        "	b _080C8A6E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C89DC: .4byte gUnknown_20399A8\n\t"
-        "_080C89E0:\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _080C8A38\n\t"
-        "	cmp r1, #3\n\t"
-        "	beq _080C8A5E\n\t"
-        "	b _080C8A6E\n\t"
-        "_080C89EA:\n\t"
-        "	ldr r1, _080C8A00\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8A04\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	b _080C8A54\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8A00: .4byte 0x00000CE6\n\t"
-        "_080C8A04:\n\t"
-        "	ldr r0, _080C8A0C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C8A6E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8A0C: .4byte Cb_PrintCantStoreMail + 1\n\t"
-        "_080C8A10:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	ldr r0, _080C8A34\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	rsbs r4, r0, #0\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsrs r4, r4, #0x1f\n\t"
-        "	bl GetCursorPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Item_FromMonToMoving\n\t"
-        "	b _080C8A54\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8A34: .4byte gUnknown_20399AC\n\t"
-        "_080C8A38:\n\t"
-        "	bl sub_080D0AB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8A6E\n\t"
-        "	movs r0, #3\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	bl sub_080CD888\n\t"
-        "	bl PrintCursorMonInfo\n\t"
-        "_080C8A54:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8A6E\n\t"
-        "_080C8A5E:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8A6E\n\t"
-        "	ldr r0, _080C8A74\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8A6E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8A74: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        if (!ItemIsMail(sStorage->displayMonItemId))
+        {
+            ClearBottomWindow();
+            sStorage->state++;
+        }
+        else
+        {
+            SetPSSCallback(Cb_PrintCantStoreMail);
+        }
+        break;
+    case 1:
+        StartCursorAnim(2);
+        Item_FromMonToMoving(gUnknown_20399AC ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetCursorPosition());
+        sStorage->state++;
+        break;
+    case 2:
+        if (!sub_080D0AB8())
+        {
+            StartCursorAnim(3);
+            ClearBottomWindow();
+            sub_080CD888();
+            PrintCursorMonInfo();
+            sStorage->state++;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_GiveMovingItemToMon(void)
+void Cb_GiveMovingItemToMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080C8A90\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _080C8B28\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C8A94\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8A90: .4byte gUnknown_20399A8\n\t"
-        "_080C8A94: .4byte 0x080C8A98\n\t"
-        "_080C8A98: @ jump table\n\t"
-        "	.4byte _080C8B00 @ case 0\n\t"
-        "	.4byte _080C8AAC @ case 1\n\t"
-        "	.4byte _080C8AD4 @ case 2\n\t"
-        "	.4byte _080C8AF4 @ case 3\n\t"
-        "	.4byte _080C8B18 @ case 4\n\t"
-        "_080C8AAC:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	ldr r0, _080C8AD0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	rsbs r4, r0, #0\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsrs r4, r4, #0x1f\n\t"
-        "	bl GetCursorPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Item_GiveMovingToMon\n\t"
-        "	b _080C8B04\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8AD0: .4byte gUnknown_20399AC\n\t"
-        "_080C8AD4:\n\t"
-        "	bl sub_080D0AB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8B28\n\t"
-        "	movs r0, #0\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	bl sub_080CD888\n\t"
-        "	bl PrintCursorMonInfo\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	b _080C8B04\n\t"
-        "_080C8AF4:\n\t"
-        "	ldr r0, _080C8B10\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8B28\n\t"
-        "_080C8B00:\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "_080C8B04:\n\t"
-        "	ldr r0, _080C8B14\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8B28\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8B10: .4byte gMain\n\t"
-        "_080C8B14: .4byte gUnknown_20399A8\n\t"
-        "_080C8B18:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8B28\n\t"
-        "	ldr r0, _080C8B30\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8B28:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8B30: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        ClearBottomWindow();
+        sStorage->state++;
+        break;
+    case 1:
+        StartCursorAnim(2);
+        Item_GiveMovingToMon(gUnknown_20399AC ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetCursorPosition());
+        sStorage->state++;
+        break;
+    case 2:
+        if (!sub_080D0AB8())
+        {
+            StartCursorAnim(0);
+            sub_080CD888();
+            PrintCursorMonInfo();
+            PrintStorageActionText(28);
+            sStorage->state++;
+        }
+        break;
+    case 3:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            sStorage->state++;
+        }
+        break;
+    case 4:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_ItemToBag(void)
+void Cb_ItemToBag(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r1, _080C8B50\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r0, #4\n\t"
-        "	bls _080C8B44\n\t"
-        "	b _080C8C3E\n\t"
-        "_080C8B44:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C8B54\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8B50: .4byte gUnknown_20399A8\n\t"
-        "_080C8B54: .4byte 0x080C8B58\n\t"
-        "_080C8B58: @ jump table\n\t"
-        "	.4byte _080C8B6C @ case 0\n\t"
-        "	.4byte _080C8BC4 @ case 1\n\t"
-        "	.4byte _080C8BE4 @ case 2\n\t"
-        "	.4byte _080C8C28 @ case 3\n\t"
-        "	.4byte _080C8C10 @ case 4\n\t"
-        "_080C8B6C:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080C8B94\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddBagItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8B98\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8C3E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8B94: .4byte 0x00000CE6\n\t"
-        "_080C8B98:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C8BC0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	rsbs r4, r0, #0\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsrs r4, r4, #0x1f\n\t"
-        "	bl GetCursorPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Item_TakeMons\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8C3E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8BC0: .4byte gUnknown_20399AC\n\t"
-        "_080C8BC4:\n\t"
-        "	bl sub_080D0AB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8C3E\n\t"
-        "	movs r0, #0x19\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C8BE0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8C3E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8BE0: .4byte gUnknown_20399A8\n\t"
-        "_080C8BE4:\n\t"
-        "	ldr r0, _080C8C08\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8C3E\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	bl sub_080CD888\n\t"
-        "	bl PrintCursorMonInfo\n\t"
-        "	ldr r0, _080C8C0C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8C3E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8C08: .4byte gMain\n\t"
-        "_080C8C0C: .4byte gUnknown_20399A8\n\t"
-        "_080C8C10:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8C3E\n\t"
-        "	ldr r0, _080C8C24\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C8C3E\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8C24: .4byte Cb_MainPSS + 1\n\t"
-        "_080C8C28:\n\t"
-        "	ldr r0, _080C8C44\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8C3E\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C8C48\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8C3E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8C44: .4byte gMain\n\t"
-        "_080C8C48: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        if (!AddBagItem(sStorage->displayMonItemId, 1))
+        {
+            PlaySE(SE_FAILURE);
+            PrintStorageActionText(26);
+            sStorage->state = 3;
+        }
+        else
+        {
+            PlaySE(SE_SELECT);
+            Item_TakeMons(gUnknown_20399AC ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetCursorPosition());
+            sStorage->state = 1;
+        }
+        break;
+    case 1:
+        if (!sub_080D0AB8())
+        {
+            PrintStorageActionText(25);
+            sStorage->state = 2;
+        }
+        break;
+    case 2:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            sub_080CD888();
+            PrintCursorMonInfo();
+            sStorage->state = 4;
+        }
+        break;
+    case 4:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    case 3:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_SwitchSelectedItem(void)
+void Cb_SwitchSelectedItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _080C8C64\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _080C8D28\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C8C68\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8C64: .4byte gUnknown_20399A8\n\t"
-        "_080C8C68: .4byte 0x080C8C6C\n\t"
-        "_080C8C6C: @ jump table\n\t"
-        "	.4byte _080C8C80 @ case 0\n\t"
-        "	.4byte _080C8CAC @ case 1\n\t"
-        "	.4byte _080C8CD4 @ case 2\n\t"
-        "	.4byte _080C8CF4 @ case 3\n\t"
-        "	.4byte _080C8D18 @ case 4\n\t"
-        "_080C8C80:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C8C9C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8CA0\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	b _080C8D08\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8C9C: .4byte 0x00000CE6\n\t"
-        "_080C8CA0:\n\t"
-        "	ldr r0, _080C8CA8\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C8D28\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8CA8: .4byte Cb_PrintCantStoreMail + 1\n\t"
-        "_080C8CAC:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	ldr r0, _080C8CD0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	rsbs r4, r0, #0\n\t"
-        "	orrs r4, r0\n\t"
-        "	lsrs r4, r4, #0x1f\n\t"
-        "	bl GetCursorPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Item_SwitchMonsWithMoving\n\t"
-        "	b _080C8D04\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8CD0: .4byte gUnknown_20399AC\n\t"
-        "_080C8CD4:\n\t"
-        "	bl sub_080D0AB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8D28\n\t"
-        "	movs r0, #3\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	bl sub_080CD888\n\t"
-        "	bl PrintCursorMonInfo\n\t"
-        "	movs r0, #0x1d\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	b _080C8D04\n\t"
-        "_080C8CF4:\n\t"
-        "	ldr r0, _080C8D10\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8D28\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "_080C8D04:\n\t"
-        "	ldr r0, _080C8D14\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_080C8D08:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8D28\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8D10: .4byte gMain\n\t"
-        "_080C8D14: .4byte gUnknown_20399A8\n\t"
-        "_080C8D18:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8D28\n\t"
-        "	ldr r0, _080C8D30\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8D28:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8D30: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        if (!ItemIsMail(sStorage->displayMonItemId))
+        {
+            ClearBottomWindow();
+            sStorage->state++;
+        }
+        else
+        {
+            SetPSSCallback(Cb_PrintCantStoreMail);
+        }
+        break;
+    case 1:
+        StartCursorAnim(2);
+        Item_SwitchMonsWithMoving(gUnknown_20399AC ? CURSOR_AREA_IN_PARTY : CURSOR_AREA_IN_BOX, GetCursorPosition());
+        sStorage->state++;
+        break;
+    case 2:
+        if (!sub_080D0AB8())
+        {
+            StartCursorAnim(3);
+            sub_080CD888();
+            PrintCursorMonInfo();
+            PrintStorageActionText(29);
+            sStorage->state++;
+        }
+        break;
+    case 3:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            sStorage->state++;
+        }
+        break;
+    case 4:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_ShowItemInfo(void)
+void Cb_ShowItemInfo(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C8D4C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bhi _080C8DE0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C8D50\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8D4C: .4byte gUnknown_20399A8\n\t"
-        "_080C8D50: .4byte 0x080C8D54\n\t"
-        "_080C8D54: @ jump table\n\t"
-        "	.4byte _080C8D70 @ case 0\n\t"
-        "	.4byte _080C8D76 @ case 1\n\t"
-        "	.4byte _080C8D90 @ case 2\n\t"
-        "	.4byte _080C8D96 @ case 3\n\t"
-        "	.4byte _080C8D9C @ case 4\n\t"
-        "	.4byte _080C8DB4 @ case 5\n\t"
-        "	.4byte _080C8DD0 @ case 6\n\t"
-        "_080C8D70:\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	b _080C8DBE\n\t"
-        "_080C8D76:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8DE0\n\t"
-        "	movs r0, #6\n\t"
-        "	bl PlaySE\n\t"
-        "	bl Cb_HandleMovingMonFromParty\n\t"
-        "	bl sub_080D10B8\n\t"
-        "	b _080C8DBE\n\t"
-        "_080C8D90:\n\t"
-        "	bl sub_080D10EC\n\t"
-        "	b _080C8DB8\n\t"
-        "_080C8D96:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	b _080C8DB8\n\t"
-        "_080C8D9C:\n\t"
-        "	ldr r0, _080C8DB0\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8DE0\n\t"
-        "	movs r0, #6\n\t"
-        "	bl PlaySE\n\t"
-        "	b _080C8DBE\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8DB0: .4byte gMain\n\t"
-        "_080C8DB4:\n\t"
-        "	bl sub_080D1184\n\t"
-        "_080C8DB8:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8DE0\n\t"
-        "_080C8DBE:\n\t"
-        "	ldr r0, _080C8DCC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8DE0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8DCC: .4byte gUnknown_20399A8\n\t"
-        "_080C8DD0:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8DE0\n\t"
-        "	ldr r0, _080C8DE4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8DE0:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8DE4: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        ClearBottomWindow();
+        sStorage->state++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            PlaySE(SE_WIN_OPEN);
+            Cb_HandleMovingMonFromParty();
+            sub_080D10B8();
+            sStorage->state++;
+        }
+        break;
+    case 2:
+        if (!sub_080D10EC())
+            sStorage->state++;
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            sStorage->state++;
+        break;
+    case 4:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            PlaySE(SE_WIN_OPEN);
+            sStorage->state++;
+        }
+        break;
+    case 5:
+        if (!sub_080D1184())
+            sStorage->state++;
+        break;
+    case 6:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_CloseBoxWhileHoldingItem(void)
+void Cb_CloseBoxWhileHoldingItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080C8E00\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bls _080C8DF6\n\t"
-        "	b _080C8F00\n\t"
-        "_080C8DF6:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C8E04\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8E00: .4byte gUnknown_20399A8\n\t"
-        "_080C8E04: .4byte 0x080C8E08\n\t"
-        "_080C8E08: @ jump table\n\t"
-        "	.4byte _080C8E20 @ case 0\n\t"
-        "	.4byte _080C8E40 @ case 1\n\t"
-        "	.4byte _080C8E9E @ case 2\n\t"
-        "	.4byte _080C8EC0 @ case 3\n\t"
-        "	.4byte _080C8ED4 @ case 4\n\t"
-        "	.4byte _080C8EF0 @ case 5\n\t"
-        "_080C8E20:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x1b\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowYesNoWindow\n\t"
-        "	ldr r0, _080C8E3C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8F00\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8E3C: .4byte gUnknown_20399A8\n\t"
-        "_080C8E40:\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080C8E64\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _080C8E5A\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080C8E5E\n\t"
-        "	b _080C8F00\n\t"
-        "_080C8E5A:\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _080C8F00\n\t"
-        "_080C8E5E:\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	b _080C8EE4\n\t"
-        "_080C8E64:\n\t"
-        "	ldr r4, _080C8E88\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C8E8C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddBagItem\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080C8E90\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8F00\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8E88: .4byte gUnknown_20399A8\n\t"
-        "_080C8E8C: .4byte 0x00002234\n\t"
-        "_080C8E90:\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8F00\n\t"
-        "_080C8E9E:\n\t"
-        "	ldr r0, _080C8EB8\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8F00\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C8EBC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8F00\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8EB8: .4byte gMain\n\t"
-        "_080C8EBC: .4byte gUnknown_20399A8\n\t"
-        "_080C8EC0:\n\t"
-        "	bl sub_080D0A34\n\t"
-        "	ldr r0, _080C8ED0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8F00\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8ED0: .4byte gUnknown_20399A8\n\t"
-        "_080C8ED4:\n\t"
-        "	bl sub_080D0AB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8F00\n\t"
-        "	movs r0, #0\n\t"
-        "	bl StartCursorAnim\n\t"
-        "_080C8EE4:\n\t"
-        "	ldr r0, _080C8EEC\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C8F00\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8EEC: .4byte Cb_MainPSS + 1\n\t"
-        "_080C8EF0:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8F00\n\t"
-        "	ldr r0, _080C8F08\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8F00:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8F08: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        PrintStorageActionText(27);
+        ShowYesNoWindow(0);
+        sStorage->state = 1;
+        break;
+    case 1:
+        switch (Menu_ProcessInputNoWrapClearOnChoose())
+        {
+        case -1:
+        case 1:
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+            break;
+        case 0:
+            if (AddBagItem(sStorage->movingItemId, 1) == TRUE)
+            {
+                ClearBottomWindow();
+                sStorage->state = 3;
+            }
+            else
+            {
+                PrintStorageActionText(26);
+                sStorage->state = 2;
+            }
+            break;
+        }
+        break;
+    case 2:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            sStorage->state = 5;
+        }
+        break;
+    case 3:
+        sub_080D0A34();
+        sStorage->state = 4;
+        break;
+    case 4:
+        if (!sub_080D0AB8())
+        {
+            StartCursorAnim(0);
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    case 5:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080C8F0C(void)
+void sub_080C8F0C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C8F20\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8F24\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C8F36\n\t"
-        "	b _080C8F4A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8F20: .4byte gUnknown_20399A8\n\t"
-        "_080C8F24:\n\t"
-        "	bl CompactPartySlots\n\t"
-        "	bl sub_080CB1C4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8F4A\n\t"
-        "_080C8F36:\n\t"
-        "	bl GetNumPartySpritesCompacting\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8F4A\n\t"
-        "	bl sub_080CA384\n\t"
-        "	ldr r0, _080C8F50\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8F4A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8F50: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        CompactPartySlots();
+        sub_080CB1C4();
+        sStorage->state++;
+        break;
+    case 1:
+        if (GetNumPartySpritesCompacting() == 0)
+        {
+            sub_080CA384();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_PrintCantStoreMail(void)
+void Cb_PrintCantStoreMail(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C8F6C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C8F82\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080C8F70\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8F7A\n\t"
-        "	b _080C8FBC\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8F6C: .4byte gUnknown_20399A8\n\t"
-        "_080C8F70:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080C8F8E\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C8FAC\n\t"
-        "	b _080C8FBC\n\t"
-        "_080C8F7A:\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	b _080C8F9E\n\t"
-        "_080C8F82:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8FBC\n\t"
-        "	b _080C8F9E\n\t"
-        "_080C8F8E:\n\t"
-        "	ldr r0, _080C8FA8\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8FBC\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "_080C8F9E:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C8FBC\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8FA8: .4byte gMain\n\t"
-        "_080C8FAC:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C8FBC\n\t"
-        "	ldr r0, _080C8FC4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C8FBC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8FC4: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        PrintStorageActionText(30);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            sStorage->state++;
+        break;
+    case 2:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            sStorage->state++;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetPSSCallback(Cb_MainPSS);
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_HandleBoxOptions(void)
+void Cb_HandleBoxOptions(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080C8FE0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080C8FFE\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080C8FE4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C8FEA\n\t"
-        "	b _080C90B4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C8FE0: .4byte gUnknown_20399A8\n\t"
-        "_080C8FE4:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080C9010\n\t"
-        "	b _080C90B4\n\t"
-        "_080C8FEA:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	bl AddMenu\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C90B4\n\t"
-        "_080C8FFE:\n\t"
-        "	bl sub_080CF948\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C90B4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080C9010:\n\t"
-        "	bl sub_080CF94C\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xc\n\t"
-        "	bhi _080C90B4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C9028\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9028: .4byte 0x080C902C\n\t"
-        "_080C902C: @ jump table\n\t"
-        "	.4byte _080C9060 @ case 0\n\t"
-        "	.4byte _080C9060 @ case 1\n\t"
-        "	.4byte _080C90B4 @ case 2\n\t"
-        "	.4byte _080C90B4 @ case 3\n\t"
-        "	.4byte _080C90B4 @ case 4\n\t"
-        "	.4byte _080C90B4 @ case 5\n\t"
-        "	.4byte _080C90B4 @ case 6\n\t"
-        "	.4byte _080C90B4 @ case 7\n\t"
-        "	.4byte _080C90B4 @ case 8\n\t"
-        "	.4byte _080C90B4 @ case 9\n\t"
-        "	.4byte _080C90A4 @ case 10\n\t"
-        "	.4byte _080C908C @ case 11\n\t"
-        "	.4byte _080C9078 @ case 12\n\t"
-        "_080C9060:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CCA24\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C9074\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C90B4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9074: .4byte Cb_MainPSS + 1\n\t"
-        "_080C9078:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, _080C9088\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C90B4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9088: .4byte Cb_NameBox + 1\n\t"
-        "_080C908C:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C90A0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C90B4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C90A0: .4byte Cb_HandleWallpapers + 1\n\t"
-        "_080C90A4:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C90BC\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C90B4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C90BC: .4byte Cb_JumpBox + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        PrintStorageActionText(1);
+        AddMenu();
+        sStorage->state++;
+        break;
+    case 1:
+        if (sub_080CF948())
+            return;
+        sStorage->state++;
+        // fall through
+    case 2:
+        switch (sub_080CF94C())
+        {
+        case -1:
+        case 0:
+            sub_080CCA24(TRUE);
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+            break;
+        case 11:
+            PlaySE(SE_SELECT);
+            SetPSSCallback(Cb_NameBox);
+            break;
+        case 10:
+            PlaySE(SE_SELECT);
+            ClearBottomWindow();
+            SetPSSCallback(Cb_HandleWallpapers);
+            break;
+        case 9:
+            PlaySE(SE_SELECT);
+            ClearBottomWindow();
+            SetPSSCallback(Cb_JumpBox);
+            break;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_HandleWallpapers(void)
+void Cb_HandleWallpapers(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _080C90D8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bls _080C90CE\n\t"
-        "	b _080C9268\n\t"
-        "_080C90CE:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C90DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C90D8: .4byte gUnknown_20399A8\n\t"
-        "_080C90DC: .4byte 0x080C90E0\n\t"
-        "_080C90E0: @ jump table\n\t"
-        "	.4byte _080C90FC @ case 0\n\t"
-        "	.4byte _080C9114 @ case 1\n\t"
-        "	.4byte _080C9130 @ case 2\n\t"
-        "	.4byte _080C91A8 @ case 3\n\t"
-        "	.4byte _080C91D8 @ case 4\n\t"
-        "	.4byte _080C922C @ case 5\n\t"
-        "	.4byte _080C9248 @ case 6\n\t"
-        "_080C90FC:\n\t"
-        "	bl AddWallpaperSetsMenu\n\t"
-        "	movs r0, #2\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C9110\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080C9266\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9110: .4byte gUnknown_20399A8\n\t"
-        "_080C9114:\n\t"
-        "	bl sub_080CF948\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9120\n\t"
-        "	b _080C9268\n\t"
-        "_080C9120:\n\t"
-        "	ldr r0, _080C912C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080C9266\n\t"
-        "	.align 2, 0\n\t"
-        "_080C912C: .4byte gUnknown_20399A8\n\t"
-        "_080C9130:\n\t"
-        "	bl sub_080CF94C\n\t"
-        "	ldr r4, _080C9154\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r5, _080C9158\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	cmp r1, #0x15\n\t"
-        "	bgt _080C915C\n\t"
-        "	cmp r1, #0x12\n\t"
-        "	bge _080C916E\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080C9162\n\t"
-        "	b _080C9268\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9154: .4byte gUnknown_20399A8\n\t"
-        "_080C9158: .4byte 0x0000078E\n\t"
-        "_080C915C:\n\t"
-        "	cmp r1, #0x16\n\t"
-        "	beq _080C9188\n\t"
-        "	b _080C9268\n\t"
-        "_080C9162:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CCA24\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	b _080C923C\n\t"
-        "_080C916E:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl RemoveMenu\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r2, r1, r5\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	subs r0, #0x12\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080C9266\n\t"
-        "_080C9188:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0xf2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bl RemoveMenu\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #6\n\t"
-        "	b _080C9266\n\t"
-        "_080C91A8:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C9268\n\t"
-        "	ldr r4, _080C91D0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C91D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl AddWallpapersMenu\n\t"
-        "	movs r0, #3\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080C9266\n\t"
-        "	.align 2, 0\n\t"
-        "_080C91D0: .4byte gUnknown_20399A8\n\t"
-        "_080C91D4: .4byte 0x0000078E\n\t"
-        "_080C91D8:\n\t"
-        "	bl sub_080CF94C\n\t"
-        "	ldr r4, _080C9204\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r5, #0xf2\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsh r1, [r1, r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080C9268\n\t"
-        "	adds r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080C9208\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080C9266\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9204: .4byte gUnknown_20399A8\n\t"
-        "_080C9208:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #0x17\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl SetWallpaperForCurrentBox\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	b _080C9266\n\t"
-        "_080C922C:\n\t"
-        "	bl DoWallpaperGfxChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C9268\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CCA24\n\t"
-        "_080C923C:\n\t"
-        "	ldr r0, _080C9244\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C9268\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9244: .4byte Cb_MainPSS + 1\n\t"
-        "_080C9248:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C9268\n\t"
-        "	ldr r4, _080C9270\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0xf2\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetWallpaperForCurrentBox\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #5\n\t"
-        "_080C9266:\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080C9268:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9270: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        AddWallpaperSetsMenu();
+        PrintStorageActionText(2);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!sub_080CF948())
+            sStorage->state++;
+        break;
+    case 2:
+        sStorage->wallpaperSetId = sub_080CF94C();
+        switch (sStorage->wallpaperSetId)
+        {
+        case -1:
+            sub_080CCA24(TRUE);
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+            break;
+        case 18:
+        case 19:
+        case 20:
+        case 21:
+            PlaySE(SE_SELECT);
+            RemoveMenu();
+            sStorage->wallpaperSetId -= 18;
+            sStorage->state++;
+            break;
+        case 22:
+            PlaySE(SE_SELECT);
+            sStorage->wallpaperId = 16;
+            RemoveMenu();
+            ClearBottomWindow();
+            sStorage->state = 6;
+            break;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            AddWallpapersMenu((u8)sStorage->wallpaperSetId);
+            PrintStorageActionText(3);
+            sStorage->state++;
+        }
+        break;
+    case 4:
+        sStorage->wallpaperId = sub_080CF94C();
+        switch (sStorage->wallpaperId)
+        {
+        case -2:
+            break;
+        case -1:
+            ClearBottomWindow();
+            sStorage->state = 0;
+            break;
+        default:
+            PlaySE(SE_SELECT);
+            ClearBottomWindow();
+            sStorage->wallpaperId -= 23;
+            SetWallpaperForCurrentBox((u8)sStorage->wallpaperId);
+            sStorage->state++;
+            break;
+        }
+        break;
+    case 5:
+        if (!DoWallpaperGfxChange())
+        {
+            sub_080CCA24(TRUE);
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    case 6:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            SetWallpaperForCurrentBox((u8)sStorage->wallpaperId);
+            sStorage->state = 5;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_JumpBox(void)
+void Cb_JumpBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r5, _080C928C\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	cmp r4, #1\n\t"
-        "	beq _080C92C8\n\t"
-        "	cmp r4, #1\n\t"
-        "	bgt _080C9290\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080C929A\n\t"
-        "	b _080C9354\n\t"
-        "	.align 2, 0\n\t"
-        "_080C928C: .4byte gUnknown_20399A8\n\t"
-        "_080C9290:\n\t"
-        "	cmp r4, #2\n\t"
-        "	beq _080C9320\n\t"
-        "	cmp r4, #3\n\t"
-        "	beq _080C9338\n\t"
-        "	b _080C9354\n\t"
-        "_080C929A:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080C92C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, _080C92C4\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r1, #0xa\n\t"
-        "	movs r3, #3\n\t"
-        "	bl sub_080C7080\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_080C716C\n\t"
-        "	b _080C932A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C92C0: .4byte 0x00001E5C\n\t"
-        "_080C92C4: .4byte 0x0000DAC7\n\t"
-        "_080C92C8:\n\t"
-        "	bl HandleBoxChooseSelectionInput\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080C9318\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0xc8\n\t"
-        "	beq _080C9354\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	bl sub_080C717C\n\t"
-        "	bl sub_080C7128\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r2, _080C9318\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0xc9\n\t"
-        "	beq _080C9308\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bne _080C932A\n\t"
-        "_080C9308:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CCA24\n\t"
-        "	ldr r0, _080C931C\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C9354\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9318: .4byte 0x000002CA\n\t"
-        "_080C931C: .4byte Cb_MainPSS + 1\n\t"
-        "_080C9320:\n\t"
-        "	ldr r1, _080C9334\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetUpScrollToBox\n\t"
-        "_080C932A:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C9354\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9334: .4byte 0x000002CA\n\t"
-        "_080C9338:\n\t"
-        "	bl ScrollToBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C9354\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r2, _080C935C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl SetCurrentBox\n\t"
-        "	ldr r0, _080C9360\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C9354:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C935C: .4byte 0x000002CA\n\t"
-        "_080C9360: .4byte Cb_MainPSS + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        PrintStorageActionText(5);
+        sub_080C7080(&sStorage->chooseBoxMenu, 10, 0xDAC7, 3, FALSE);
+        sub_080C716C(StorageGetCurrentBox());
+        sStorage->state++;
+        break;
+    case 1:
+        sStorage->newCurrBoxId = HandleBoxChooseSelectionInput();
+        switch (sStorage->newCurrBoxId)
+        {
+        case 0xC8:
+            break;
+        default:
+            ClearBottomWindow();
+            sub_080C717C();
+            sub_080C7128();
+            if (sStorage->newCurrBoxId == 0xC9 || sStorage->newCurrBoxId == StorageGetCurrentBox())
+            {
+                sub_080CCA24(TRUE);
+                SetPSSCallback(Cb_MainPSS);
+            }
+            else
+            {
+                sStorage->state++;
+            }
+            break;
+        }
+        break;
+    case 2:
+        SetUpScrollToBox((u8)sStorage->newCurrBoxId);
+        sStorage->state++;
+        break;
+    case 3:
+        if (!ScrollToBox())
+        {
+            SetCurrentBox((u8)sStorage->newCurrBoxId);
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_NameBox(void)
+void Cb_NameBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r5, _080C9378\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080C937C\n\t"
-        "	cmp r4, #1\n\t"
-        "	beq _080C939A\n\t"
-        "	b _080C93B4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9378: .4byte gUnknown_20399A8\n\t"
-        "_080C937C:\n\t"
-        "	bl sub_080CDFDC\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C93B4\n\t"
-        "_080C939A:\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C93B4\n\t"
-        "	ldr r0, _080C93BC\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	ldr r0, _080C93C0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C93B4:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C93BC: .4byte gUnknown_20399AF\n\t"
-        "_080C93C0: .4byte Cb_ChangeScreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        sub_080CDFDC();
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!UpdatePaletteFade())
+        {
+            gUnknown_20399AF = 1;
+            sStorage->screenChangeType = 2;
+            SetPSSCallback((void (*)(void))Cb_ChangeScreen);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_ShowMonSummary(void)
+void Cb_ShowMonSummary(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r5, _080C93D8\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080C93DC\n\t"
-        "	cmp r4, #1\n\t"
-        "	beq _080C93FA\n\t"
-        "	b _080C9414\n\t"
-        "	.align 2, 0\n\t"
-        "_080C93D8: .4byte gUnknown_20399A8\n\t"
-        "_080C93DC:\n\t"
-        "	bl sub_080CE064\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C9414\n\t"
-        "_080C93FA:\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080C9414\n\t"
-        "	ldr r0, _080C941C\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	strb r4, [r0, #2]\n\t"
-        "	ldr r0, _080C9420\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C9414:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C941C: .4byte gUnknown_20399AF\n\t"
-        "_080C9420: .4byte Cb_ChangeScreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        sub_080CE064();
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!UpdatePaletteFade())
+        {
+            gUnknown_20399AF = 0;
+            sStorage->screenChangeType = 1;
+            SetPSSCallback((void (*)(void))Cb_ChangeScreen);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_GiveItemFromBag(void)
+void Cb_GiveItemFromBag(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r4, _080C9438\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080C943C\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080C9456\n\t"
-        "	b _080C9472\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9438: .4byte gUnknown_20399A8\n\t"
-        "_080C943C:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C9472\n\t"
-        "_080C9456:\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C9472\n\t"
-        "	ldr r1, _080C947C\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	ldr r0, _080C9480\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C9472:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C947C: .4byte gUnknown_20399AF\n\t"
-        "_080C9480: .4byte Cb_ChangeScreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        sStorage->state++;
+        break;
+    case 1:
+        if (!UpdatePaletteFade())
+        {
+            gUnknown_20399AF = 2;
+            sStorage->screenChangeType = 3;
+            SetPSSCallback((void (*)(void))Cb_ChangeScreen);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_OnCloseBoxPressed(void)
+void Cb_OnCloseBoxPressed(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080C949C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bls _080C9492\n\t"
-        "	b _080C95A4\n\t"
-        "_080C9492:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C94A0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C949C: .4byte gUnknown_20399A8\n\t"
-        "_080C94A0: .4byte 0x080C94A4\n\t"
-        "_080C94A4: @ jump table\n\t"
-        "	.4byte _080C94B8 @ case 0\n\t"
-        "	.4byte _080C9514 @ case 1\n\t"
-        "	.4byte _080C9528 @ case 2\n\t"
-        "	.4byte _080C9564 @ case 3\n\t"
-        "	.4byte _080C9580 @ case 4\n\t"
-        "_080C94B8:\n\t"
-        "	bl IsMonBeingMoved\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C94DC\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0xf\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C94D8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C95A4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C94D8: .4byte gUnknown_20399A8\n\t"
-        "_080C94DC:\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C94F4\n\t"
-        "	ldr r0, _080C94F0\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C95A4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C94F0: .4byte Cb_CloseBoxWhileHoldingItem + 1\n\t"
-        "_080C94F4:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowYesNoWindow\n\t"
-        "	ldr r0, _080C9510\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C95A4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9510: .4byte gUnknown_20399A8\n\t"
-        "_080C9514:\n\t"
-        "	ldr r0, _080C9524\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C95A4\n\t"
-        "	b _080C9546\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9524: .4byte gMain\n\t"
-        "_080C9528:\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080C9558\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _080C9542\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080C9546\n\t"
-        "	b _080C95A4\n\t"
-        "_080C9542:\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _080C95A4\n\t"
-        "_080C9546:\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C9554\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C95A4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9554: .4byte Cb_MainPSS + 1\n\t"
-        "_080C9558:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	b _080C956E\n\t"
-        "_080C9564:\n\t"
-        "	movs r0, #0x14\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl ComputerScreenCloseEffect\n\t"
-        "_080C956E:\n\t"
-        "	ldr r0, _080C957C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C95A4\n\t"
-        "	.align 2, 0\n\t"
-        "_080C957C: .4byte gUnknown_20399A8\n\t"
-        "_080C9580:\n\t"
-        "	bl IsComputerScreenCloseEffectActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080C95A4\n\t"
-        "	bl sub_080CA444\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	ldr r1, _080C95AC\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080C95B0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strb r4, [r0, #2]\n\t"
-        "	ldr r0, _080C95B4\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C95A4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C95AC: .4byte gPlayerPartyCount\n\t"
-        "_080C95B0: .4byte gUnknown_20399A8\n\t"
-        "_080C95B4: .4byte Cb_ChangeScreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        if (IsMonBeingMoved())
+        {
+            PlaySE(SE_FAILURE);
+            PrintStorageActionText(15);
+            sStorage->state = 1;
+        }
+        else if (IsActiveItemMoving())
+        {
+            SetPSSCallback(Cb_CloseBoxWhileHoldingItem);
+        }
+        else
+        {
+            PlaySE(SE_SELECT);
+            PrintStorageActionText(0);
+            ShowYesNoWindow(0);
+            sStorage->state = 2;
+        }
+        break;
+    case 1:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    case 2:
+        switch (Menu_ProcessInputNoWrapClearOnChoose())
+        {
+        case -1:
+        case 1:
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+            break;
+        case 0:
+            PlaySE(SE_PC_OFF);
+            ClearBottomWindow();
+            sStorage->state++;
+            break;
+        }
+        break;
+    case 3:
+        ComputerScreenCloseEffect(20, 0, 1);
+        sStorage->state++;
+        break;
+    case 4:
+        if (!IsComputerScreenCloseEffectActive())
+        {
+            sub_080CA444();
+            gPlayerPartyCount = CalculatePlayerPartyCount();
+            sStorage->screenChangeType = 0;
+            SetPSSCallback((void (*)(void))Cb_ChangeScreen);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void Cb_OnBPressed(void)
+void Cb_OnBPressed(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080C95D0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bls _080C95C6\n\t"
-        "	b _080C96D8\n\t"
-        "_080C95C6:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C95D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C95D0: .4byte gUnknown_20399A8\n\t"
-        "_080C95D4: .4byte 0x080C95D8\n\t"
-        "_080C95D8: @ jump table\n\t"
-        "	.4byte _080C95EC @ case 0\n\t"
-        "	.4byte _080C9648 @ case 1\n\t"
-        "	.4byte _080C965C @ case 2\n\t"
-        "	.4byte _080C9698 @ case 3\n\t"
-        "	.4byte _080C96B4 @ case 4\n\t"
-        "_080C95EC:\n\t"
-        "	bl IsMonBeingMoved\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9610\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0xf\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	ldr r0, _080C960C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C96D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C960C: .4byte gUnknown_20399A8\n\t"
-        "_080C9610:\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9628\n\t"
-        "	ldr r0, _080C9624\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C96D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9624: .4byte Cb_CloseBoxWhileHoldingItem + 1\n\t"
-        "_080C9628:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #0x12\n\t"
-        "	bl PrintStorageActionText\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowYesNoWindow\n\t"
-        "	ldr r0, _080C9644\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C96D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9644: .4byte gUnknown_20399A8\n\t"
-        "_080C9648:\n\t"
-        "	ldr r0, _080C9658\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #0xf3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C96D8\n\t"
-        "	b _080C967C\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9658: .4byte gMain\n\t"
-        "_080C965C:\n\t"
-        "	bl Menu_ProcessInputNoWrapClearOnChoose\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080C967C\n\t"
-        "	cmp r1, #0\n\t"
-        "	bgt _080C9676\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080C968C\n\t"
-        "	b _080C96D8\n\t"
-        "_080C9676:\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080C968C\n\t"
-        "	b _080C96D8\n\t"
-        "_080C967C:\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	ldr r0, _080C9688\n\t"
-        "	bl SetPSSCallback\n\t"
-        "	b _080C96D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9688: .4byte Cb_MainPSS + 1\n\t"
-        "_080C968C:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl PlaySE\n\t"
-        "	bl ClearBottomWindow\n\t"
-        "	b _080C96A2\n\t"
-        "_080C9698:\n\t"
-        "	movs r0, #0x14\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ComputerScreenCloseEffect\n\t"
-        "_080C96A2:\n\t"
-        "	ldr r0, _080C96B0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C96D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080C96B0: .4byte gUnknown_20399A8\n\t"
-        "_080C96B4:\n\t"
-        "	bl IsComputerScreenCloseEffectActive\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080C96D8\n\t"
-        "	bl sub_080CA444\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	ldr r1, _080C96E0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080C96E4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strb r4, [r0, #2]\n\t"
-        "	ldr r0, _080C96E8\n\t"
-        "	bl SetPSSCallback\n\t"
-        "_080C96D8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C96E0: .4byte gPlayerPartyCount\n\t"
-        "_080C96E4: .4byte gUnknown_20399A8\n\t"
-        "_080C96E8: .4byte Cb_ChangeScreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->state)
+    {
+    case 0:
+        if (IsMonBeingMoved())
+        {
+            PlaySE(SE_FAILURE);
+            PrintStorageActionText(15);
+            sStorage->state = 1;
+        }
+        else if (IsActiveItemMoving())
+        {
+            SetPSSCallback(Cb_CloseBoxWhileHoldingItem);
+        }
+        else
+        {
+            PlaySE(SE_SELECT);
+            PrintStorageActionText(18);
+            ShowYesNoWindow(0);
+            sStorage->state = 2;
+        }
+        break;
+    case 1:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON | DPAD_ANY))
+        {
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+        }
+        break;
+    case 2:
+        switch (Menu_ProcessInputNoWrapClearOnChoose())
+        {
+        case 0:
+            ClearBottomWindow();
+            SetPSSCallback(Cb_MainPSS);
+            break;
+        case 1:
+        case -1:
+            PlaySE(SE_PC_OFF);
+            ClearBottomWindow();
+            sStorage->state++;
+            break;
+        }
+        break;
+    case 3:
+        ComputerScreenCloseEffect(20, 0, 0);
+        sStorage->state++;
+        break;
+    case 4:
+        if (!IsComputerScreenCloseEffectActive())
+        {
+            sub_080CA444();
+            gPlayerPartyCount = CalculatePlayerPartyCount();
+            sStorage->screenChangeType = 0;
+            SetPSSCallback((void (*)(void))Cb_ChangeScreen);
+        }
+        break;
+    }
 }
 
 
-__attribute__((naked)) void Cb_ChangeScreen(u8 a)
+void Cb_ChangeScreen(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	ldr r0, _080C9718\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r4, [r0, #2]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080C9720\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080C9720\n\t"
-        "	bl GetMovingItemId\n\t"
-        "	ldr r1, _080C971C\n\t"
-        "	b _080C9724\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9718: .4byte gUnknown_20399A8\n\t"
-        "_080C971C: .4byte gUnknown_20399B2\n\t"
-        "_080C9720:\n\t"
-        "	ldr r1, _080C9744\n\t"
-        "	movs r0, #0\n\t"
-        "_080C9724:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	cmp r4, #1\n\t"
-        "	beq _080C974C\n\t"
-        "	cmp r4, #1\n\t"
-        "	ble _080C9736\n\t"
-        "	cmp r4, #2\n\t"
-        "	beq _080C9790\n\t"
-        "	cmp r4, #3\n\t"
-        "	beq _080C97BC\n\t"
-        "_080C9736:\n\t"
-        "	bl FreePSSData\n\t"
-        "	ldr r0, _080C9748\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _080C97CA\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9744: .4byte gUnknown_20399B2\n\t"
-        "_080C9748: .4byte CB2_ExitPokeStorage + 1\n\t"
-        "_080C974C:\n\t"
-        "	ldr r0, _080C9780\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080C9784\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov r8, r0\n\t"
-        "	subs r2, #5\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r6, [r0]\n\t"
-        "	subs r2, #1\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r5, [r0]\n\t"
-        "	ldr r0, _080C9788\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r4, [r1]\n\t"
-        "	bl FreePSSData\n\t"
-        "	ldr r0, _080C978C\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl ShowPokemonSummaryScreen\n\t"
-        "	b _080C97CA\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9780: .4byte gUnknown_20399A8\n\t"
-        "_080C9784: .4byte 0x0000218C\n\t"
-        "_080C9788: .4byte 0x00002188\n\t"
-        "_080C978C: .4byte CB2_ReturnToPokeStorage + 1\n\t"
-        "_080C9790:\n\t"
-        "	bl FreePSSData\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBoxNamePtr\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r0, _080C97B8\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DoNamingScreen\n\t"
-        "	b _080C97CA\n\t"
-        "	.align 2, 0\n\t"
-        "_080C97B8: .4byte CB2_ReturnToPokeStorage + 1\n\t"
-        "_080C97BC:\n\t"
-        "	bl FreePSSData\n\t"
-        "	ldr r2, _080C97DC\n\t"
-        "	movs r0, #0xb\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GoToBagMenu\n\t"
-        "_080C97CA:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C97DC: .4byte CB2_ReturnToPokeStorage + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct BoxPokemon *boxMons;
+    u8 mode;
+    u8 monIndex;
+    u8 maxMonIndex;
+    u8 screenChangeType = sStorage->screenChangeType;
+
+    if (sStorage->boxOption == OPTION_MOVE_ITEMS && IsActiveItemMoving() == TRUE)
+        sMovingItemId = GetMovingItemId();
+    else
+        sMovingItemId = ITEM_NONE;
+
+    switch (screenChangeType)
+    {
+    case 0:
+    default:
+        FreePSSData();
+        SetMainCallback2(CB2_ExitPokeStorage);
+        break;
+    case 1:
+        boxMons = sStorage->summaryMon.box;
+        monIndex = sStorage->summaryStartPos;
+        maxMonIndex = sStorage->summaryMaxPos;
+        mode = sStorage->summaryScreenMode;
+        FreePSSData();
+        ShowPokemonSummaryScreen(mode, boxMons, monIndex, maxMonIndex, CB2_ReturnToPokeStorage);
+        break;
+    case 2:
+        FreePSSData();
+        DoNamingScreen(1, GetBoxNamePtr(StorageGetCurrentBox()), 0, 0, 0, CB2_ReturnToPokeStorage);
+        break;
+    case 3:
+        FreePSSData();
+        GoToBagMenu(11, 0, CB2_ReturnToPokeStorage);
+        break;
+    }
+
+    DestroyTask(taskId);
 }
 
-__attribute__((naked)) void GiveChosenBagItem(void)
+void GiveChosenBagItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080C9814\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080C9834\n\t"
-        "	bl GetCursorPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r0, _080C9818\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9820\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080C981C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	b _080C982A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9814: .4byte gSpecialVar_ItemId\n\t"
-        "_080C9818: .4byte gUnknown_20399AC\n\t"
-        "_080C981C: .4byte gPlayerParty\n\t"
-        "_080C9820:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetCurrentBoxMonData\n\t"
-        "_080C982A:\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl RemoveBagItem\n\t"
-        "_080C9834:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 itemId = gSpecialVar_ItemId;
+
+    if (itemId != ITEM_NONE)
+    {
+        u8 pos = GetCursorPosition();
+
+        if (gUnknown_20399AC)
+            SetMonData(&gPlayerParty[pos], MON_DATA_HELD_ITEM, &itemId);
+        else
+            SetCurrentBoxMonData(pos, MON_DATA_HELD_ITEM, &itemId);
+
+        RemoveBagItem(itemId, 1);
+    }
 }
 
 void FreePSSData(void)
@@ -6192,35 +3222,11 @@ void FreePSSData(void)
     FreeAllWindowBuffers();
 }
 
-__attribute__((naked)) void SetScrollingBackground(void)
+void SetScrollingBackground(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _080C988C\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl SetGpuReg\n\t"
-        "	ldr r1, _080C9890\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DecompressAndLoadBgGfxUsingHeap\n\t"
-        "	ldr r0, _080C9894\n\t"
-        "	ldr r1, _080C9898\n\t"
-        "	bl LZ77UnCompVram\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C988C: .4byte 0x00001F0F\n\t"
-        "_080C9890: .4byte gUnknown_854BBFC\n\t"
-        "_080C9894: .4byte gUnknown_854BC94\n\t"
-        "_080C9898: .4byte 0x0600F800\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(REG_OFFSET_BG3CNT, BGCNT_PRIORITY(3) | BGCNT_CHARBASE(3) | BGCNT_16COLOR | BGCNT_SCREENBASE(31));
+    DecompressAndLoadBgGfxUsingHeap(3, gUnknown_854BBFC, 0, 0, 0);
+    LZ77UnCompVram(gUnknown_854BC94, (void *)BG_SCREEN_ADDR(31));
 }
 
 void ScrollBackground(void)
@@ -6229,49 +3235,14 @@ void ScrollBackground(void)
     ChangeBgY(3, 128, BG_COORD_SUB);
 }
 
-__attribute__((naked)) void LoadPSSMenuGfx(void)
+void LoadPSSMenuGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _080C9904\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	bl InitBgsFromTemplates\n\t"
-        "	ldr r1, _080C9908\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DecompressAndLoadBgGfxUsingHeap\n\t"
-        "	ldr r0, _080C990C\n\t"
-        "	ldr r5, _080C9910\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r4, _080C9914\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	bl LZ77UnCompWram\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9904: .4byte gUnknown_854C9E4\n\t"
-        "_080C9908: .4byte gUnknown_854BF9C\n\t"
-        "_080C990C: .4byte gUnknown_854BDC0\n\t"
-        "_080C9910: .4byte gUnknown_20399A8\n\t"
-        "_080C9914: .4byte 0x00005AC4\n\t"
-        ".syntax divided\n\t"
-    );
+    InitBgsFromTemplates(0, gUnknown_854C9E4, 4);
+    DecompressAndLoadBgGfxUsingHeap(1, gUnknown_854BF9C, 0, 0, 0);
+    LZ77UnCompWram(gUnknown_854BDC0, sStorage->displayMenuTilemapBuffer);
+    SetBgTilemapBuffer(1, sStorage->displayMenuTilemapBuffer);
+    ShowBg(1);
+    ScheduleBgCopyTilemapToVram(1);
 }
 
 bool8 InitPokeStorageWindows(void)
@@ -6287,1195 +3258,310 @@ void LoadWaveformSpritePalette(void)
     LoadSpritePalette(&sWaveformSpritePalette);
 }
 
-__attribute__((naked)) void sub_080C994C(void)
+void sub_080C994C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C9984\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, _080C9988\n\t"
-        "	movs r1, #0x20\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, _080C998C\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, _080C9990\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C9998\n\t"
-        "	ldr r0, _080C9994\n\t"
-        "	movs r1, #0x30\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _080C99A2\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9984: .4byte gUnknown_854BEFC\n\t"
-        "_080C9988: .4byte gUnknown_854BF1C\n\t"
-        "_080C998C: .4byte gUnknown_854C9A4\n\t"
-        "_080C9990: .4byte gUnknown_20399A8\n\t"
-        "_080C9994: .4byte gUnknown_854BF5C\n\t"
-        "_080C9998:\n\t"
-        "	ldr r0, _080C99C0\n\t"
-        "	movs r1, #0x30\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "_080C99A2:\n\t"
-        "	ldr r1, _080C99C4\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bl SetGpuReg\n\t"
-        "	bl LoadCursorMonSprite\n\t"
-        "	bl sub_080C99C8\n\t"
-        "	bl sub_080C9A38\n\t"
-        "	bl RefreshCursorMonData\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C99C0: .4byte gUnknown_854BF7C\n\t"
-        "_080C99C4: .4byte 0x00001E05\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadPalette(gUnknown_854BEFC, BG_PLTT_ID(0), 0x20);
+    LoadPalette(gUnknown_854BF1C, BG_PLTT_ID(2), 0x20);
+    LoadPalette(gUnknown_854C9A4, BG_PLTT_ID(15), 0x20);
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        LoadPalette(gUnknown_854BF5C, BG_PLTT_ID(3), 0x20);
+    else
+        LoadPalette(gUnknown_854BF7C, BG_PLTT_ID(3), 0x20);
+
+    SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(1) | BGCNT_16COLOR | BGCNT_SCREENBASE(30));
+    LoadCursorMonSprite();
+    sub_080C99C8();
+    sub_080C9A38();
+    RefreshCursorMonData();
 }
 
-__attribute__((naked)) void sub_080C99C8(void)
+void sub_080C99C8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _080C9A28\n\t"
-        "	movs r0, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	bl CreateMonMarkingComboSprite\n\t"
-        "	ldr r4, _080C9A2C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r3, _080C9A30\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r1, #0x28\n\t"
-        "	strh r1, [r2, #0x20]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x96\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r2, #0xda\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0xb\n\t"
-        "	ldr r2, _080C9A34\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9A28: .4byte 0x0000DAC8\n\t"
-        "_080C9A2C: .4byte gUnknown_20399A8\n\t"
-        "_080C9A30: .4byte 0x00000D94\n\t"
-        "_080C9A34: .4byte 0x06010000\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->markingComboSprite = CreateMonMarkingComboSprite(0x10, 0xDAC8, NULL);
+    sStorage->markingComboSprite->oam.priority = 1;
+    sStorage->markingComboSprite->subpriority = 1;
+    sStorage->markingComboSprite->x = 40;
+    sStorage->markingComboSprite->y = 150;
+    sStorage->markingComboTilesPtr = (void *)OBJ_VRAM0 + 32 * GetSpriteTileStartByTag(0x10);
 }
 
-__attribute__((naked)) void sub_080C9A38(void)
+void sub_080C9A38(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r0, _080C9A90\n\t"
-        "	ldr r1, [r0, #4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	movs r4, #0\n\t"
-        "_080C9A4E:\n\t"
-        "	lsls r1, r4, #6\n\t"
-        "	subs r1, r1, r4\n\t"
-        "	adds r1, #8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldr r0, _080C9A94\n\t"
-        "	movs r2, #9\n\t"
-        "	movs r3, #2\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080C9A98\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	ldr r3, _080C9A9C\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080C9AA0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [r2]\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #1\n\t"
-        "	bls _080C9A4E\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9A90: .4byte gUnknown_854C9FC\n\t"
-        "_080C9A94: .4byte gUnknown_854CB6C\n\t"
-        "_080C9A98: .4byte gUnknown_20399A8\n\t"
-        "_080C9A9C: .4byte 0x00000D98\n\t"
-        "_080C9AA0: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    struct SpriteSheet sheet = gUnknown_854C9FC;
+
+    LoadSpriteSheet(&sheet);
+    for (i = 0; i < 2; i++)
+    {
+        u8 spriteId = CreateSprite(&gUnknown_854CB6C, i * 63 + 8, 9, 2);
+        sStorage->waveformSprites[i] = &gSprites[spriteId];
+    }
 }
 
-__attribute__((naked)) void RefreshCursorMonData(void)
+void RefreshCursorMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C9ACC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080C9AD0\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	subs r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl LoadCursorMonGfx\n\t"
-        "	bl PrintCursorMonInfo\n\t"
-        "	bl sub_080C9EC0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9ACC: .4byte gUnknown_20399A8\n\t"
-        "_080C9AD0: .4byte 0x00000CE4\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadCursorMonGfx(sStorage->displayMonSpecies, sStorage->displayMonPersonality);
+    PrintCursorMonInfo();
+    sub_080C9EC0();
+    ScheduleBgCopyTilemapToVram(0);
 }
 
-__attribute__((naked)) void BoxSetMosaic(void)
+void BoxSetMosaic(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RefreshCursorMonData\n\t"
-        "	ldr r3, _080C9B24\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	movs r1, #0x89\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080C9B20\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #0x89\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r0, _080C9B28\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrh r0, [r0, #0x2e]\n\t"
-        "	lsls r1, r0, #0xc\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	bl SetGpuReg\n\t"
-        "_080C9B20:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9B24: .4byte gUnknown_20399A8\n\t"
-        "_080C9B28: .4byte sub_080C9B44 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    RefreshCursorMonData();
+    if (sStorage->displayMonSprite)
+    {
+        sStorage->displayMonSprite->oam.mosaic = TRUE;
+        sStorage->displayMonSprite->data[0] = 10;
+        sStorage->displayMonSprite->data[1] = 1;
+        sStorage->displayMonSprite->callback = sub_080C9B44;
+        SetGpuReg(REG_OFFSET_MOSAIC, (sStorage->displayMonSprite->data[0] << 12) | (sStorage->displayMonSprite->data[0] << 8));
+    }
 }
 
-__attribute__((naked)) void sub_080C9B2C(void)
+u8 sub_080C9B2C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080C9B40\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x89\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	lsls r0, r0, #0x1b\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9B40: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    return sStorage->displayMonSprite->oam.mosaic;
 }
 
-__attribute__((naked)) void sub_080C9B44(void)
+void sub_080C9B44(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080C9B5A\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_080C9B5A:\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	lsls r1, r0, #0xc\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C9B82\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x11\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #1]\n\t"
-        "	ldr r0, _080C9B88\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_080C9B82:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9B88: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[0] -= sprite->data[1];
+    if (sprite->data[0] < 0)
+        sprite->data[0] = 0;
+    SetGpuReg(REG_OFFSET_MOSAIC, (sprite->data[0] << 12) | (sprite->data[0] << 8));
+    if (sprite->data[0] == 0)
+    {
+        sprite->oam.mosaic = FALSE;
+        sprite->callback = SpriteCallbackDummy;
+    }
 }
 
-__attribute__((naked)) void LoadCursorMonSprite(void)
+void LoadCursorMonSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x28\n\t"
-        "	ldr r0, _080C9C20\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r4, _080C9C24\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	add r3, sp, #0x18\n\t"
-        "	movs r0, #0x82\n\t"
-        "	lsls r0, r0, #0xa\n\t"
-        "	str r0, [r3, #4]\n\t"
-        "	ldr r5, _080C9C28\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	str r1, [sp, #0x20]\n\t"
-        "	ldr r0, _080C9C2C\n\t"
-        "	add r2, sp, #0x20\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _080C9C30\n\t"
-        "	ldm r0!, {r5, r6, r7}\n\t"
-        "	stm r1!, {r5, r6, r7}\n\t"
-        "	ldm r0!, {r5, r6, r7}\n\t"
-        "	stm r1!, {r5, r6, r7}\n\t"
-        "	movs r6, #0\n\t"
-        "	adds r7, r2, #0\n\t"
-        "	mov r5, ip\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _080C9C34\n\t"
-        "_080C9BC6:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strb r2, [r0]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, r1\n\t"
-        "	bls _080C9BC6\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r5, _080C9C20\n\t"
-        "	ldr r4, _080C9C28\n\t"
-        "	movs r2, #0\n\t"
-        "_080C9BE0:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r2, [r0]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #0xf\n\t"
-        "	bls _080C9BE0\n\t"
-        "	ldr r0, _080C9C20\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r6, #0x89\n\t"
-        "	lsls r6, r6, #6\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080C9C94\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xff\n\t"
-        "	beq _080C9C94\n\t"
-        "	b _080C9C80\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9C20: .4byte gUnknown_20399A8\n\t"
-        "_080C9C24: .4byte 0x000022C4\n\t"
-        "_080C9C28: .4byte 0x00002244\n\t"
-        "_080C9C2C: .4byte 0x0000DAC6\n\t"
-        "_080C9C30: .4byte gUnknown_854CA04\n\t"
-        "_080C9C34: .4byte 0x000007FF\n\t"
-        "_080C9C38:\n\t"
-        "	ldr r0, _080C9C6C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r7, #0x89\n\t"
-        "	lsls r7, r7, #6\n\t"
-        "	adds r3, r2, r7\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C9C70\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r3]\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r3, _080C9C74\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r6, _080C9C78\n\t"
-        "	adds r2, r2, r6\n\t"
-        "	lsls r0, r5, #5\n\t"
-        "	ldr r7, _080C9C7C\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	str r0, [r2]\n\t"
-        "	b _080C9C94\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9C6C: .4byte gUnknown_20399A8\n\t"
-        "_080C9C70: .4byte gSprites\n\t"
-        "_080C9C74: .4byte 0x0000223A\n\t"
-        "_080C9C78: .4byte 0x0000223C\n\t"
-        "_080C9C7C: .4byte 0x06010000\n\t"
-        "_080C9C80:\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r1, #0x28\n\t"
-        "	movs r2, #0x30\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x40\n\t"
-        "	bne _080C9C38\n\t"
-        "_080C9C94:\n\t"
-        "	ldr r0, _080C9CB8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x89\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C9CB0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	ldr r0, _080C9CBC\n\t"
-        "	bl FreeSpritePaletteByTag\n\t"
-        "_080C9CB0:\n\t"
-        "	add sp, #0x28\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9CB8: .4byte gUnknown_20399A8\n\t"
-        "_080C9CBC: .4byte 0x0000DAC6\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u16 tileStart;
+    u8 palSlot;
+    u8 spriteId;
+    struct SpriteSheet sheet = {sStorage->tileBuffer, MON_PIC_SIZE, 2};
+    struct SpritePalette palette = {sStorage->displayMonPalBuffer, 0xDAC6};
+    struct SpriteTemplate template = gUnknown_854CA04;
+
+    for (i = 0; i < MON_PIC_SIZE; i++)
+        sStorage->tileBuffer[i] = 0;
+    for (i = 0; i < 16; i++)
+        sStorage->displayMonPalBuffer[i] = 0;
+
+    sStorage->displayMonSprite = NULL;
+
+    do
+    {
+        tileStart = LoadSpriteSheet(&sheet);
+        if (tileStart == 0)
+            break;
+
+        palSlot = LoadSpritePalette(&palette);
+        if (palSlot == 0xFF)
+            break;
+
+        spriteId = CreateSprite(&template, 40, 48, 0);
+        if (spriteId == MAX_SPRITES)
+            break;
+
+        sStorage->displayMonSprite = &gSprites[spriteId];
+        sStorage->displayMonPalOffset = OBJ_PLTT_ID(palSlot);
+        sStorage->displayMonTilePtr = (void *)OBJ_VRAM0 + tileStart * TILE_SIZE_4BPP;
+    } while (0);
+
+    if (sStorage->displayMonSprite == NULL)
+    {
+        FreeSpriteTilesByTag(2);
+        FreeSpritePaletteByTag(0xDAC6);
+    }
 }
 
-__attribute__((naked)) void LoadCursorMonGfx(u16 a, struct Sprite *sprite)
+void LoadCursorMonGfx(u16 species, u32 personality)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r6, _080C9D3C\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	movs r7, #0x89\n\t"
-        "	lsls r7, r7, #6\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9D66\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080C9D5C\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	ldr r1, _080C9D40\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r5, _080C9D44\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	movs r2, #1\n\t"
-        "	str r2, [sp]\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	bl LoadSpecialPokePic\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r2, _080C9D48\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r4, _080C9D4C\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	bl LZ77UnCompWram\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r5, r0, r5\n\t"
-        "	ldr r1, _080C9D50\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080C9D54\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r4, r0, r4\n\t"
-        "	ldr r2, _080C9D58\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080C9D66\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9D3C: .4byte gUnknown_20399A8\n\t"
-        "_080C9D40: .4byte gMonFrontPicTable\n\t"
-        "_080C9D44: .4byte 0x000022C4\n\t"
-        "_080C9D48: .4byte 0x00000CDC\n\t"
-        "_080C9D4C: .4byte 0x00002244\n\t"
-        "_080C9D50: .4byte 0x0000223C\n\t"
-        "_080C9D54: .4byte 0x04000200\n\t"
-        "_080C9D58: .4byte 0x0000223A\n\t"
-        "_080C9D5C:\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080C9D66:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->displayMonSprite == NULL)
+        return;
+
+    if (species != SPECIES_NONE)
+    {
+        LoadSpecialPokePic(&gMonFrontPicTable[species], sStorage->tileBuffer, species, personality, TRUE);
+        LZ77UnCompWram(sStorage->displayMonPalette, sStorage->displayMonPalBuffer);
+        CpuCopy32(sStorage->tileBuffer, sStorage->displayMonTilePtr, MON_PIC_SIZE);
+        LoadPalette(sStorage->displayMonPalBuffer, sStorage->displayMonPalOffset, PLTT_SIZE_4BPP);
+        sStorage->displayMonSprite->invisible = FALSE;
+    }
+    else
+    {
+        sStorage->displayMonSprite->invisible = TRUE;
+    }
 }
 
-__attribute__((naked)) void PrintCursorMonInfo(void)
+void PrintCursorMonInfo(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r6, _080C9DF0\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080C9DFC\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	mov r8, r6\n\t"
-        "_080C9D90:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080C9DF4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	movs r3, #0\n\t"
-        "	cmp r4, #2\n\t"
-        "	bne _080C9DA8\n\t"
-        "	movs r3, #4\n\t"
-        "_080C9DA8:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r7, #0xff\n\t"
-        "	str r7, [sp, #4]\n\t"
-        "	movs r6, #0\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0xd\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r4, #2\n\t"
-        "	bls _080C9D90\n\t"
-        "	ldr r0, _080C9DF0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _080C9DF8\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r5, #2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r7, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	b _080C9E52\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9DF0: .4byte gUnknown_20399A8\n\t"
-        "_080C9DF4: .4byte 0x00000CF9\n\t"
-        "_080C9DF8: .4byte 0x00000D65\n\t"
-        "_080C9DFC:\n\t"
-        "	ldr r1, _080C9E8C\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r5, #0xf\n\t"
-        "_080C9E16:\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _080C9E90\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	movs r3, #0\n\t"
-        "	cmp r4, #2\n\t"
-        "	bne _080C9E2C\n\t"
-        "	movs r3, #4\n\t"
-        "_080C9E2C:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0xd\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r4, #2\n\t"
-        "	bls _080C9E16\n\t"
-        "_080C9E52:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	ldr r4, _080C9E94\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080C9E98\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9EA0\n\t"
-        "	adds r2, #7\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, #0xb5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl UpdateMonMarkingTiles\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080C9E9C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	b _080C9EAE\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9E8C: .4byte 0x00000D65\n\t"
-        "_080C9E90: .4byte 0x00000CF9\n\t"
-        "_080C9E94: .4byte gUnknown_20399A8\n\t"
-        "_080C9E98: .4byte 0x00000CE4\n\t"
-        "_080C9E9C: .4byte 0x00000D94\n\t"
-        "_080C9EA0:\n\t"
-        "	ldr r2, _080C9EBC\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "_080C9EAE:\n\t"
-        "	strb r0, [r1]\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9EBC: .4byte 0x00000D94\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u16 y;
+
+    FillWindowPixelBuffer(0, PIXEL_FILL(1));
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+    {
+        for (i = 0, y = 0; i < 3; i++, y += 13)
+            AddTextPrinterParameterized(0, 1, &sStorage->displayMonNameText[i * 36], (i == 2) ? 4 : 0, y, 0xff, NULL);
+
+        AddTextPrinterParameterized(0, 0, sStorage->displayMonItemName, 0, y + 2, 0xff, NULL);
+    }
+    else
+    {
+        AddTextPrinterParameterized(0, 0, sStorage->displayMonItemName, 0, 0, 0xff, NULL);
+        for (i = 0, y = 15; i < 3; i++, y += 13)
+            AddTextPrinterParameterized(0, 1, &sStorage->displayMonNameText[i * 36], (i == 2) ? 4 : 0, y, 0xff, NULL);
+    }
+
+    CopyWindowToVram(0, COPYWIN_GFX);
+    if (sStorage->displayMonSpecies != SPECIES_NONE)
+    {
+        UpdateMonMarkingTiles(sStorage->displayMonMarkings, sStorage->markingComboTilesPtr);
+        sStorage->markingComboSprite->invisible = FALSE;
+    }
+    else
+    {
+        sStorage->markingComboSprite->invisible = TRUE;
+    }
 }
 
-__attribute__((naked)) void sub_080C9EC0(void)
+void sub_080C9EC0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080C9F0C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080C9F10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9F18\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_080D204C\n\t"
-        "	movs r4, #0\n\t"
-        "_080C9EE4:\n\t"
-        "	ldr r0, _080C9F0C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	ldr r2, _080C9F14\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, #1\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl StartSpriteAnimIfDifferent\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #1\n\t"
-        "	bls _080C9EE4\n\t"
-        "	b _080C9F4A\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9F0C: .4byte gUnknown_20399A8\n\t"
-        "_080C9F10: .4byte 0x00000CE4\n\t"
-        "_080C9F14: .4byte 0x00000D98\n\t"
-        "_080C9F18:\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #8\n\t"
-        "	bl sub_080D204C\n\t"
-        "	movs r4, #0\n\t"
-        "_080C9F2A:\n\t"
-        "	ldr r0, _080C9F60\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	ldr r2, _080C9F64\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r4, #0x19\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #1\n\t"
-        "	bls _080C9F2A\n\t"
-        "_080C9F4A:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9F60: .4byte gUnknown_20399A8\n\t"
-        "_080C9F64: .4byte 0x00000D98\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    if (sStorage->displayMonSpecies != SPECIES_NONE)
+    {
+        sub_080D204C(0, 0, 0, 8, 2);
+        for (i = 0; i < 2; i++)
+            StartSpriteAnimIfDifferent(sStorage->waveformSprites[i], i * 2 + 1);
+    }
+    else
+    {
+        sub_080D204C(0, 0, 2, 8, 2);
+        for (i = 0; i < 2; i++)
+            StartSpriteAnim(sStorage->waveformSprites[i], i * 2);
+    }
+
+    sub_080D21B8(0);
+    ScheduleBgCopyTilemapToVram(1);
 }
 
-__attribute__((naked)) void sub_080C9F68(void)
+void sub_080C9F68(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080C9FE0\n\t"
-        "	ldr r4, _080C9FE4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, #0xb0\n\t"
-        "	bl LZ77UnCompWram\n\t"
-        "	ldr r0, _080C9FE8\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r2, #0xb0\n\t"
-        "	movs r0, #0x16\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0xc\n\t"
-        "	bl sub_080D1EE4\n\t"
-        "	ldr r2, _080C9FEC\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #9\n\t"
-        "	bl sub_080D1EE4\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0xa\n\t"
-        "	movs r2, #0\n\t"
-        "	bl sub_080D2010\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0x15\n\t"
-        "	movs r2, #0\n\t"
-        "	bl sub_080D2010\n\t"
-        "	bl sub_080CA2D8\n\t"
-        "	ldr r0, _080C9FF0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080C9FF4\n\t"
-        "	movs r0, #1\n\t"
-        "	bl UpdateCloseBoxButtonTilemap\n\t"
-        "	movs r0, #1\n\t"
-        "	bl CreatePartyMonsSprites\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	b _080CA016\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9FE0: .4byte gUnknown_854C65C\n\t"
-        "_080C9FE4: .4byte gUnknown_20399A8\n\t"
-        "_080C9FE8: .4byte gUnknown_854BF3C\n\t"
-        "_080C9FEC: .4byte gUnknown_854C70C\n\t"
-        "_080C9FF0: .4byte gUnknown_20399AC\n\t"
-        "_080C9FF4:\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x14\n\t"
-        "	movs r3, #0xc\n\t"
-        "	bl sub_080D204C\n\t"
-        "	movs r0, #1\n\t"
-        "	bl UpdateCloseBoxButtonTilemap\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_080D21B8\n\t"
-        "_080CA016:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r0, _080CA030\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CA034\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA030: .4byte gUnknown_20399A8\n\t"
-        "_080CA034: .4byte 0x000002C7\n\t"
-        ".syntax divided\n\t"
-    );
+    LZ77UnCompWram(gUnknown_854C65C, sStorage->partyMenuTilemapBuffer);
+    LoadPalette(gUnknown_854BF3C, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    sub_080D1EE4(1, 1, sStorage->partyMenuTilemapBuffer, 12, 22);
+    sub_080D1EE4(2, 1, gUnknown_854C70C, 9, 4);
+    sub_080D2010(1, 10, 0);
+    sub_080D2010(2, 21, 0);
+    sub_080CA2D8();
+    if (gUnknown_20399AC)
+    {
+        UpdateCloseBoxButtonTilemap(TRUE);
+        CreatePartyMonsSprites(TRUE);
+        sub_080D21B8(2);
+        sub_080D21B8(1);
+    }
+    else
+    {
+        sub_080D204C(1, 0, 20, 12, 2);
+        UpdateCloseBoxButtonTilemap(TRUE);
+        sub_080D21B8(1);
+        sub_080D21B8(2);
+    }
+
+    ScheduleBgCopyTilemapToVram(1);
+    sStorage->closeBoxFlashing = FALSE;
 }
 
 
-__attribute__((naked)) void SetUpShowPartyMenu(void)
+void SetUpShowPartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CA064\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r0, #0x14\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, _080CA068\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, _080CA06C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strb r3, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl CreatePartyMonsSprites\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA064: .4byte gUnknown_20399A8\n\t"
-        "_080CA068: .4byte 0x000002C2\n\t"
-        "_080CA06C: .4byte 0x000002C5\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->partyMenuUnused1 = 20;
+    sStorage->partyMenuY = 2;
+    sStorage->partyMenuMoveTimer = 0;
+    CreatePartyMonsSprites(FALSE);
 }
-
-__attribute__((naked)) void ShowPartyMenu(void)
+bool8 ShowPartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CA0CC\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r1, _080CA0D0\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	beq _080CA0DE\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080CA0D4\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	movs r2, #1\n\t"
-        "	bl sub_080D2094\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r0, #8\n\t"
-        "	bl sub_080CB364\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, _080CA0D0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	beq _080CA0D8\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080CA0E0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA0CC: .4byte gUnknown_20399A8\n\t"
-        "_080CA0D0: .4byte 0x000002C5\n\t"
-        "_080CA0D4: .4byte 0x000002C2\n\t"
-        "_080CA0D8:\n\t"
-        "	ldr r1, _080CA0E8\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CA0DE:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CA0E0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA0E8: .4byte gUnknown_20399AC\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (sStorage->partyMenuMoveTimer == 20)
+        return FALSE;
 
-__attribute__((naked)) void SetUpHidePartyMenu(void)
+    sStorage->partyMenuUnused1--;
+    sStorage->partyMenuY++;
+    sub_080D2094(1, 3, 1);
+    sub_080D21B8(1);
+    ScheduleBgCopyTilemapToVram(1);
+    sub_080CB364(8);
+    if (++sStorage->partyMenuMoveTimer == 20)
+    {
+        gUnknown_20399AC = TRUE;
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
+}
+void SetUpHidePartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CA120\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, _080CA124\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	movs r0, #0x16\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, _080CA128\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strb r3, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080CA118\n\t"
-        "	bl sub_080D0A6C\n\t"
-        "_080CA118:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA120: .4byte gUnknown_20399A8\n\t"
-        "_080CA124: .4byte 0x000002C2\n\t"
-        "_080CA128: .4byte 0x000002C5\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->partyMenuUnused1 = 0;
+    sStorage->partyMenuY = 22;
+    sStorage->partyMenuMoveTimer = 0;
+    if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+        sub_080D0A6C();
 }
-
-__attribute__((naked)) void HidePartyMenu(void)
+bool8 HidePartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r5, _080CA1A4\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldr r1, _080CA1A8\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	beq _080CA1D8\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r4, _080CA1AC\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r2, #1\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	bl sub_080D2094\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r2, #0xa\n\t"
-        "	bl FillBgTilemapBufferRect_Palette0\n\t"
-        "	movs r0, #8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	bl sub_080CB364\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r0, _080CA1A8\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x14\n\t"
-        "	beq _080CA1B0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080CA1DA\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA1A4: .4byte gUnknown_20399A8\n\t"
-        "_080CA1A8: .4byte 0x000002C5\n\t"
-        "_080CA1AC: .4byte 0x000002C2\n\t"
-        "_080CA1B0:\n\t"
-        "	ldr r0, _080CA1E4\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl DestroyAllPartyMonIcons\n\t"
-        "	bl CompactPartySlots\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #9\n\t"
-        "	bl sub_080D204C\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "_080CA1D8:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CA1DA:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA1E4: .4byte gUnknown_20399AC\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (sStorage->partyMenuMoveTimer != 20)
+    {
+        sStorage->partyMenuUnused1++;
+        sStorage->partyMenuY--;
+        sub_080D2094(1, 3, -1);
+        sub_080D21B8(1);
+        FillBgTilemapBufferRect_Palette0(1, 0x100, 10, sStorage->partyMenuY, 12, 1);
+        sub_080CB364(-8);
+        if (++sStorage->partyMenuMoveTimer != 20)
+        {
+            ScheduleBgCopyTilemapToVram(1);
+            return TRUE;
+        }
+        else
+        {
+            gUnknown_20399AC = FALSE;
+            DestroyAllPartyMonIcons();
+            CompactPartySlots();
+            sub_080D204C(2, 0, 0, 9, 2);
+            sub_080D21B8(2);
+            ScheduleBgCopyTilemapToVram(1);
+            return FALSE;
+        }
+    }
 
-__attribute__((naked)) void UpdateCloseBoxButtonTilemap(bool8 state)
+    return FALSE;
+}
+void UpdateCloseBoxButtonTilemap(bool8 state)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA202\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #9\n\t"
-        "	bl sub_080D204C\n\t"
-        "	b _080CA210\n\t"
-        "_080CA202:\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #9\n\t"
-        "	bl sub_080D204C\n\t"
-        "_080CA210:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (state)
+        sub_080D204C(2, 0, 0, 9, 2);
+    else
+        sub_080D204C(2, 0, 2, 9, 2);
 
-__attribute__((naked)) void sub_080CA224(void)
+    sub_080D21B8(2);
+    ScheduleBgCopyTilemapToVram(1);
+}
+void sub_080CA224(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _080CA244\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CA248\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r3, #1\n\t"
-        "	strb r3, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x1e\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CA24C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r3, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA244: .4byte gUnknown_20399A8\n\t"
-        "_080CA248: .4byte 0x000002C7\n\t"
-        "_080CA24C: .4byte 0x000002C9\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->closeBoxFlashing = TRUE;
+    sStorage->closeBoxFlashTimer = 30;
+    sStorage->closeBoxFlashState = TRUE;
 }
-
 void StopFlashingCloseBoxButton(void)
 {
     if (sStorage->closeBoxFlashing)
@@ -7485,186 +3571,58 @@ void StopFlashingCloseBoxButton(void)
     }
 }
 
-__attribute__((naked)) void UpdateCloseBoxButtonFlash(void)
+void UpdateCloseBoxButtonFlash(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r3, _080CA2CC\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r2, _080CA2D0\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA2C4\n\t"
-        "	movs r0, #0xb2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x1e\n\t"
-        "	bls _080CA2C4\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	movs r1, #0xb2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r4, _080CA2D4\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CA2B8\n\t"
-        "	movs r2, #1\n\t"
-        "_080CA2B8:\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl UpdateCloseBoxButtonTilemap\n\t"
-        "_080CA2C4:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA2CC: .4byte gUnknown_20399A8\n\t"
-        "_080CA2D0: .4byte 0x000002C7\n\t"
-        "_080CA2D4: .4byte 0x000002C9\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->closeBoxFlashing && ++sStorage->closeBoxFlashTimer > 30)
+    {
+        sStorage->closeBoxFlashTimer = 0;
+        sStorage->closeBoxFlashState = (sStorage->closeBoxFlashState == FALSE);
+        UpdateCloseBoxButtonTilemap(sStorage->closeBoxFlashState);
+    }
+}
+void sub_080CA2D8(void)
+{
+    u8 i;
+
+    for (i = 1; i < PARTY_SIZE; i++)
+    {
+        s32 species = GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES);
+        sub_080CA30C(i, species != SPECIES_NONE);
+    }
 }
 
-__attribute__((naked)) void sub_080CA2D8(void)
+void sub_080CA30C(u8 partyId, bool8 hasMon)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r4, #1\n\t"
-        "_080CA2DC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _080CA308\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	rsbs r1, r0, #0\n\t"
-        "	orrs r1, r0\n\t"
-        "	lsrs r1, r1, #0x1f\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080CA30C\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #5\n\t"
-        "	bls _080CA2DC\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA308: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u16 j;
+    u16 index;
+    const u16 *data;
+
+    if (hasMon)
+        data = gUnknown_854C754;
+    else
+        data = gUnknown_854C76C;
+
+    index = 3 * (3 * (partyId - 1) + 1);
+    index *= 4;
+    index += 7;
+    for (i = 0; i < 3; i++)
+    {
+        for (j = 0; j < 4; j++)
+            sStorage->partyMenuTilemapBuffer[index + j] = data[j];
+
+        data += 4;
+        index += 12;
+    }
 }
 
-__attribute__((naked)) void sub_080CA30C(void)
+void sub_080CA384(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r7, _080CA378\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CA31C\n\t"
-        "	ldr r7, _080CA37C\n\t"
-        "_080CA31C:\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, #1\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x12\n\t"
-        "	movs r1, #0xe0\n\t"
-        "	lsls r1, r1, #0xb\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	ldr r1, _080CA380\n\t"
-        "	mov ip, r1\n\t"
-        "_080CA338:\n\t"
-        "	movs r2, #0\n\t"
-        "	adds r4, r7, #0\n\t"
-        "	adds r4, #8\n\t"
-        "	adds r5, r3, #0\n\t"
-        "	adds r5, #0xc\n\t"
-        "	adds r6, r0, #1\n\t"
-        "_080CA344:\n\t"
-        "	mov r0, ip\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, #0xb0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #3\n\t"
-        "	bls _080CA344\n\t"
-        "	adds r7, r4, #0\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	bls _080CA338\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA378: .4byte gUnknown_854C76C\n\t"
-        "_080CA37C: .4byte gUnknown_854C754\n\t"
-        "_080CA380: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080CA2D8();
+    sub_080D204C(1, 0, 0, 12, 22);
+    sub_080D21B8(1);
+    ScheduleBgCopyTilemapToVram(1);
 }
-
-__attribute__((naked)) void sub_080CA384(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	bl sub_080CA2D8\n\t"
-        "	movs r0, #0x16\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0xc\n\t"
-        "	bl sub_080D204C\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080D21B8\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
 void SetUpDoShowPartyMenu(void)
 {
     sStorage->showPartyMenuState = 0;
@@ -7672,565 +3630,180 @@ void SetUpDoShowPartyMenu(void)
     SetUpShowPartyMenu();
 }
 
-__attribute__((naked)) void DoShowPartyMenu(void)
+bool8 DoShowPartyMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _080CA3F0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r5, _080CA3F4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CA40E\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CA3F8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA3FE\n\t"
-        "	b _080CA43C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA3F0: .4byte gUnknown_20399A8\n\t"
-        "_080CA3F4: .4byte 0x000002C6\n\t"
-        "_080CA3F8:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CA438\n\t"
-        "	b _080CA43C\n\t"
-        "_080CA3FE:\n\t"
-        "	bl ShowPartyMenu\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CA43C\n\t"
-        "	bl sub_080CD41C\n\t"
-        "	b _080CA428\n\t"
-        "_080CA40E:\n\t"
-        "	bl sub_080CCDD0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CA43C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CA434\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA428\n\t"
-        "	bl BoxSetMosaic\n\t"
-        "_080CA428:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CA43C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA434: .4byte 0x00000CEA\n\t"
-        "_080CA438:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CA43E\n\t"
-        "_080CA43C:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CA43E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->showPartyMenuState)
+    {
+    case 0:
+        if (!ShowPartyMenu())
+        {
+            sub_080CD41C();
+            sStorage->showPartyMenuState++;
+        }
+        break;
+    case 1:
+        if (!sub_080CCDD0())
+        {
+            if (sStorage->setMosaic)
+                BoxSetMosaic();
+            sStorage->showPartyMenuState++;
+        }
+        break;
+    case 2:
+        return FALSE;
+    }
+
+    return TRUE;
+}
+void sub_080CA444(void)
+{
+    if (sLastUsedBox != StorageGetCurrentBox())
+    {
+        FlagClear(FLAG_SHOWN_BOX_WAS_FULL_MESSAGE);
+        VarSet(VAR_PC_BOX_TO_SEND_MON, StorageGetCurrentBox());
+    }
+}
+void sub_080CA480(void)
+{
+    SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_PRIORITY(0) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(29));
+    LoadUserWindowBorderGfx(1, 2, BG_PLTT_ID(13));
+    FillBgTilemapBufferRect(0, 0, 0, 0, 32, 20, 17);
+    CopyBgTilemapBufferToVram(0);
+}
+void PrintStorageActionText(u8 id)
+{
+    u8 *txtPtr;
+
+    DynamicPlaceholderTextUtil_Reset();
+    switch (gUnknown_854CA1C[id].format)
+    {
+    case MSG_VAR_NONE:
+        break;
+    case MSG_VAR_MON_NAME_1:
+    case MSG_VAR_MON_NAME_2:
+    case MSG_VAR_MON_NAME_3:
+        DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sStorage->displayMonName);
+        break;
+    case MSG_VAR_RELEASE_MON_1:
+    case MSG_VAR_RELEASE_MON_2:
+    case MSG_VAR_RELEASE_MON_3:
+        DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sStorage->releaseMonName);
+        break;
+    case MSG_VAR_ITEM_NAME:
+        if (IsActiveItemMoving())
+            txtPtr = StringCopy(sStorage->itemName, GetMovingItemName());
+        else
+            txtPtr = StringCopy(sStorage->itemName, sStorage->displayMonItemName);
+
+        while (*(txtPtr - 1) == CHAR_SPACE)
+            txtPtr--;
+
+        *txtPtr = EOS;
+        DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sStorage->itemName);
+        break;
+    }
+
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(sStorage->messageText, gUnknown_854CA1C[id].text);
+    FillWindowPixelBuffer(1, PIXEL_FILL(1));
+    AddTextPrinterParameterized(1, 1, sStorage->messageText, 0, 2, 0xff, NULL);
+    DrawTextBorderOuter(1, 2, 14);
+    PutWindowTilemap(1);
+    CopyWindowToVram(1, COPYWIN_GFX);
+    ScheduleBgCopyTilemapToVram(0);
 }
 
-__attribute__((naked)) void sub_080CA444(void)
+void ShowYesNoWindow(s8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CA474\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080CA46E\n\t"
-        "	ldr r0, _080CA478\n\t"
-        "	bl FlagClear\n\t"
-        "	ldr r4, _080CA47C\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl VarSet\n\t"
-        "_080CA46E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA474: .4byte gUnknown_20399B0\n\t"
-        "_080CA478: .4byte 0x000008D7\n\t"
-        "_080CA47C: .4byte 0x00004036\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateYesNoMenuAtPos(&gUnknown_854CB14, 1, 2, 2, 11, 14, 0);
+    Menu_MoveCursorNoWrapAround(cursorPos);
 }
-
-__attribute__((naked)) void sub_080CA480(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r1, #0xe8\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	movs r0, #8\n\t"
-        "	bl SetGpuReg\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #0xd0\n\t"
-        "	bl LoadUserWindowBorderGfx\n\t"
-        "	movs r0, #0x20\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #0\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void PrintStorageActionText(u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	bl DynamicPlaceholderTextUtil_Reset\n\t"
-        "	ldr r1, _080CA4E0\n\t"
-        "	lsls r0, r6, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	cmp r0, #7\n\t"
-        "	bhi _080CA594\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CA4E4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA4E0: .4byte gUnknown_854CA1C\n\t"
-        "_080CA4E4: .4byte 0x080CA4E8\n\t"
-        "_080CA4E8: @ jump table\n\t"
-        "	.4byte _080CA594 @ case 0\n\t"
-        "	.4byte _080CA508 @ case 1\n\t"
-        "	.4byte _080CA508 @ case 2\n\t"
-        "	.4byte _080CA508 @ case 3\n\t"
-        "	.4byte _080CA51C @ case 4\n\t"
-        "	.4byte _080CA51C @ case 5\n\t"
-        "	.4byte _080CA51C @ case 6\n\t"
-        "	.4byte _080CA534 @ case 7\n\t"
-        "_080CA508:\n\t"
-        "	ldr r0, _080CA514\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080CA518\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _080CA524\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA514: .4byte gUnknown_20399A8\n\t"
-        "_080CA518: .4byte 0x00000CEE\n\t"
-        "_080CA51C:\n\t"
-        "	ldr r0, _080CA52C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CA530\n\t"
-        "	adds r1, r1, r2\n\t"
-        "_080CA524:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-        "	b _080CA594\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA52C: .4byte gUnknown_20399A8\n\t"
-        "_080CA530: .4byte 0x000021E0\n\t"
-        "_080CA534:\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA558\n\t"
-        "	ldr r0, _080CA550\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	ldr r0, _080CA554\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	bl GetMovingItemName\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	b _080CA564\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA550: .4byte gUnknown_20399A8\n\t"
-        "_080CA554: .4byte 0x000021EB\n\t"
-        "_080CA558:\n\t"
-        "	ldr r0, _080CA56C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CA570\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r2, _080CA574\n\t"
-        "	adds r1, r1, r2\n\t"
-        "_080CA564:\n\t"
-        "	bl StringCopy\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	b _080CA57A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA56C: .4byte gUnknown_20399A8\n\t"
-        "_080CA570: .4byte 0x000021EB\n\t"
-        "_080CA574: .4byte 0x00000D65\n\t"
-        "_080CA578:\n\t"
-        "	adds r2, r1, #0\n\t"
-        "_080CA57A:\n\t"
-        "	subs r1, r2, #1\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA578\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _080CA5F0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080CA5F4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-        "_080CA594:\n\t"
-        "	ldr r5, _080CA5F0\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r4, _080CA5F8\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r2, _080CA5FC\n\t"
-        "	lsls r1, r6, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl DynamicPlaceholderTextUtil_ExpandPlaceholders\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #0xe\n\t"
-        "	bl DrawTextBorderOuter\n\t"
-        "	movs r0, #1\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA5F0: .4byte gUnknown_20399A8\n\t"
-        "_080CA5F4: .4byte 0x000021EB\n\t"
-        "_080CA5F8: .4byte 0x00002190\n\t"
-        "_080CA5FC: .4byte gUnknown_854CA1C\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) bool8 ShowYesNoWindow(u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080CA634\n\t"
-        "	movs r1, #0xb\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #2\n\t"
-        "	bl CreateYesNoMenuAtPos\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Menu_MoveCursorNoWrapAround\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA634: .4byte gUnknown_854CB14\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
 void ClearBottomWindow(void)
 {
     ClearStdWindowAndFrameToTransparent(1, 0);
     ScheduleBgCopyTilemapToVram(0);
 }
 
-__attribute__((naked)) void AddWallpaperSetsMenu(void)
+void AddWallpaperSetsMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl InitMenu\n\t"
-        "	movs r0, #0x12\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x13\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x14\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x15\n\t"
-        "	bl SetMenuText\n\t"
-        "	bl IsWaldaWallpaperUnlocked\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA678\n\t"
-        "	movs r0, #0x16\n\t"
-        "	bl SetMenuText\n\t"
-        "_080CA678:\n\t"
-        "	bl AddMenu\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMenu();
+    SetMenuText(MENU_SCENERY_1);
+    SetMenuText(MENU_SCENERY_2);
+    SetMenuText(MENU_SCENERY_3);
+    SetMenuText(MENU_ETCETERA);
+    if (IsWaldaWallpaperUnlocked())
+        SetMenuText(MENU_FRIENDS);
+    AddMenu();
 }
-
-__attribute__((naked)) void AddWallpapersMenu(u8 a)
+void AddWallpapersMenu(u8 wallpaperSet)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r5, r4, #0\n\t"
-        "	bl InitMenu\n\t"
-        "	cmp r4, #1\n\t"
-        "	beq _080CA6BE\n\t"
-        "	cmp r4, #1\n\t"
-        "	bgt _080CA69A\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080CA6A4\n\t"
-        "	b _080CA70A\n\t"
-        "_080CA69A:\n\t"
-        "	cmp r5, #2\n\t"
-        "	beq _080CA6D8\n\t"
-        "	cmp r5, #3\n\t"
-        "	beq _080CA6F2\n\t"
-        "	b _080CA70A\n\t"
-        "_080CA6A4:\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x18\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x19\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CA70A\n\t"
-        "_080CA6BE:\n\t"
-        "	movs r0, #0x1b\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x1d\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x1e\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CA70A\n\t"
-        "_080CA6D8:\n\t"
-        "	movs r0, #0x1f\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x20\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x21\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x22\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CA70A\n\t"
-        "_080CA6F2:\n\t"
-        "	movs r0, #0x23\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x24\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x25\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x26\n\t"
-        "	bl SetMenuText\n\t"
-        "_080CA70A:\n\t"
-        "	bl AddMenu\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMenu();
+    switch (wallpaperSet)
+    {
+    case MENU_SCENERY_1 - MENU_WALLPAPER_SETS_START:
+        SetMenuText(MENU_FOREST);
+        SetMenuText(MENU_CITY);
+        SetMenuText(MENU_DESERT);
+        SetMenuText(MENU_SAVANNA);
+        break;
+    case MENU_SCENERY_2 - MENU_WALLPAPER_SETS_START:
+        SetMenuText(MENU_CRAG);
+        SetMenuText(MENU_VOLCANO);
+        SetMenuText(MENU_SNOW);
+        SetMenuText(MENU_CAVE);
+        break;
+    case MENU_SCENERY_3 - MENU_WALLPAPER_SETS_START:
+        SetMenuText(MENU_BEACH);
+        SetMenuText(MENU_SEAFLOOR);
+        SetMenuText(MENU_RIVER);
+        SetMenuText(MENU_SKY);
+        break;
+    case MENU_ETCETERA - MENU_WALLPAPER_SETS_START:
+        SetMenuText(MENU_POLKADOT);
+        SetMenuText(MENU_POKECENTER);
+        SetMenuText(MENU_MACHINE);
+        SetMenuText(MENU_SIMPLE);
+        break;
+    }
+    AddMenu();
 }
-
-
 u8 GetCurrentBoxOption(void)
 {
     return sCurrentBoxOption;
 }
 
-__attribute__((naked)) void sub_080CA720(void)
+void sub_080CA720(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsCursorOnBoxTitle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CA75C\n\t"
-        "	ldr r0, _080CA748\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA74C\n\t"
-        "	bl GetCursorPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080D062C\n\t"
-        "	b _080CA75C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA748: .4byte gUnknown_20399AC\n\t"
-        "_080CA74C:\n\t"
-        "	bl GetCursorPosition\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080D062C\n\t"
-        "_080CA75C:\n\t"
-        "	ldr r1, _080CA774\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA76E\n\t"
-        "	bl sub_080D07D8\n\t"
-        "	movs r0, #3\n\t"
-        "	bl StartCursorAnim\n\t"
-        "_080CA76E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA774: .4byte gUnknown_20399B2\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (!IsCursorOnBoxTitle())
+    {
+        if (gUnknown_20399AC)
+            sub_080D062C(CURSOR_AREA_IN_PARTY, GetCursorPosition());
+        else
+            sub_080D062C(CURSOR_AREA_IN_BOX, GetCursorPosition());
+    }
 
-__attribute__((naked)) void sub_080CA778(void)
+    if (sMovingItemId != ITEM_NONE)
+    {
+        sub_080D07D8(sMovingItemId);
+        StartCursorAnim(3);
+    }
+}
+void sub_080CA778(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	bl LoadMonIconPalettes\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r3, _080CA808\n\t"
-        "	ldr r5, _080CA80C\n\t"
-        "	movs r4, #0\n\t"
-        "	adds r6, r3, #0\n\t"
-        "_080CA788:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0x27\n\t"
-        "	bls _080CA788\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _080CA808\n\t"
-        "	ldr r4, _080CA810\n\t"
-        "	movs r3, #0\n\t"
-        "_080CA7A4:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r3, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0x27\n\t"
-        "	bls _080CA7A4\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _080CA808\n\t"
-        "	movs r4, #0xa7\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	movs r3, #0\n\t"
-        "_080CA7C2:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r3, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #5\n\t"
-        "	bls _080CA7C2\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _080CA808\n\t"
-        "	ldr r4, _080CA814\n\t"
-        "	movs r3, #0\n\t"
-        "_080CA7DE:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r3, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0x1d\n\t"
-        "	bls _080CA7DE\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r2, _080CA818\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	str r2, [r1]\n\t"
-        "	ldr r1, _080CA81C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r2, [r0]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA808: .4byte gUnknown_20399A8\n\t"
-        "_080CA80C: .4byte 0x00000B08\n\t"
-        "_080CA810: .4byte 0x00000B58\n\t"
-        "_080CA814: .4byte 0x00000A88\n\t"
-        "_080CA818: .4byte 0x00000A6C\n\t"
-        "_080CA81C: .4byte 0x0000078C\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u16 i;
 
+    LoadMonIconPalettes();
+    for (i = 0; i < MAX_MON_ICONS; i++)
+        sStorage->numIconsPerSpecies[i] = 0;
+    for (i = 0; i < MAX_MON_ICONS; i++)
+        sStorage->iconSpeciesList[i] = SPECIES_NONE;
+    for (i = 0; i < PARTY_SIZE; i++)
+        sStorage->partySprites[i] = NULL;
+    for (i = 0; i < IN_BOX_COUNT; i++)
+        sStorage->boxMonsSprites[i] = NULL;
+
+    sStorage->movingMonSprite = NULL;
+    sStorage->unkUnused1 = 0;
+}
 u8 GetMonIconPriorityByCursorPos(void)
 {
     u8 inBox = IsCursorInBox();
@@ -8238,2393 +3811,601 @@ u8 GetMonIconPriorityByCursorPos(void)
     return (inBox ? 2 : 1);
 }
 
-__attribute__((naked)) void CreateMovingMonIcon(void)
+void CreateMovingMonIcon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r5, _080CA88C\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r4, _080CA890\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	bl GetMonIconPriorityByCursorPos\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #7\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080CBAA4\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r2, _080CA894\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r1, _080CA898\n\t"
-        "	str r1, [r0, #0x1c]\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA88C: .4byte gUnknown_20399A8\n\t"
-        "_080CA890: .4byte 0x000020A4\n\t"
-        "_080CA894: .4byte 0x00000A6C\n\t"
-        "_080CA898: .4byte SpriteCB_HeldMon + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u32 personality = GetMonData3(&sStorage->movingMon, MON_DATA_PERSONALITY);
+    u16 species = GetMonData3(&sStorage->movingMon, MON_DATA_SPECIES_OR_EGG);
+    u8 priority = GetMonIconPriorityByCursorPos();
+
+    sStorage->movingMonSprite = sub_080CBAA4(species, personality, 0, 0, priority, 7);
+    sStorage->movingMonSprite->callback = SpriteCB_HeldMon;
+}
+void sub_080CA89C(u8 boxId)
+{
+    u8 boxPosition;
+    u16 i;
+    u16 j;
+    u16 count;
+    u16 species;
+    u32 personality;
+
+    count = 0;
+    boxPosition = 0;
+
+    for (i = 0; i < IN_BOX_ROWS; i++)
+    {
+        for (j = 0; j < IN_BOX_COLUMNS; j++)
+        {
+            species = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_SPECIES_OR_EGG);
+            if (species != SPECIES_NONE)
+            {
+                personality = GetBoxMonDataAt(boxId, boxPosition, MON_DATA_PERSONALITY);
+                sStorage->boxMonsSprites[count] = sub_080CBAA4(species, personality, 8 * (3 * j) + 100, 8 * (3 * i) + 44, 2, 19 - j);
+            }
+            else
+            {
+                sStorage->boxMonsSprites[count] = NULL;
+            }
+            boxPosition++;
+            count++;
+        }
+    }
+
+    if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+    {
+        for (boxPosition = 0; boxPosition < IN_BOX_COUNT; boxPosition++)
+        {
+            if (GetBoxMonDataAt(boxId, boxPosition, MON_DATA_HELD_ITEM) == ITEM_NONE)
+                sStorage->boxMonsSprites[boxPosition]->oam.objMode = ST_OAM_OBJ_BLEND;
+        }
+    }
+}
+void sub_080CA9B4(u8 boxPosition)
+{
+    u16 species = GetCurrentBoxMonData(boxPosition, MON_DATA_SPECIES_OR_EGG);
+
+    if (species != SPECIES_NONE)
+    {
+        s16 x = 8 * (3 * (boxPosition % IN_BOX_COLUMNS)) + 100;
+        s16 y = 8 * (3 * (boxPosition / IN_BOX_COLUMNS)) + 44;
+        u32 personality = GetCurrentBoxMonData(boxPosition, MON_DATA_PERSONALITY);
+
+        sStorage->boxMonsSprites[boxPosition] = sub_080CBAA4(species, personality, x, y, 2, 19 - (boxPosition % IN_BOX_COLUMNS));
+        if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+            sStorage->boxMonsSprites[boxPosition]->oam.objMode = ST_OAM_OBJ_BLEND;
+    }
+}
+void sub_080CAA64(s16 speed)
+{
+    u16 i;
+
+    for (i = 0; i < IN_BOX_COUNT; i++)
+    {
+        if (sStorage->boxMonsSprites[i] != NULL)
+        {
+            sStorage->boxMonsSprites[i]->data[2] = speed;
+            sStorage->boxMonsSprites[i]->data[4] = 1;
+            sStorage->boxMonsSprites[i]->callback = sub_080CAAEC;
+        }
+    }
+}
+void sub_080CAAA8(struct Sprite *sprite)
+{
+    if (sprite->data[1] != 0)
+    {
+        sprite->data[1]--;
+        sprite->x += sprite->data[2];
+    }
+    else
+    {
+        sStorage->iconScrollNumIncoming--;
+        sprite->x = sprite->data[3];
+        sprite->callback = SpriteCallbackDummy;
+    }
+}
+void sub_080CAAEC(struct Sprite *sprite)
+{
+    if (sprite->data[4] != 0)
+    {
+        sprite->data[4]--;
+    }
+    else
+    {
+        sprite->x += sprite->data[2];
+        sprite->data[5] = sprite->x + sprite->x2;
+
+        if (sprite->data[5] <= 68 || sprite->data[5] >= 252)
+            sprite->callback = SpriteCallbackDummy;
+    }
+}
+void DestroyAllIconsInRow(u8 column)
+{
+    u16 row;
+    u8 boxPosition = column;
+
+    for (row = 0; row < IN_BOX_ROWS; row++)
+    {
+        if (sStorage->boxMonsSprites[boxPosition] != NULL)
+        {
+            DestroyBoxMonIcon(sStorage->boxMonsSprites[boxPosition]);
+            sStorage->boxMonsSprites[boxPosition] = NULL;
+        }
+        boxPosition += IN_BOX_COLUMNS;
+    }
+}
+u8 sub_080CAB6C(u8 column, u16 distance, s16 speed)
+{
+    s32 i;
+    u16 y = 44;
+    s16 xDest = 8 * (3 * column) + 100;
+    u16 x = xDest - ((distance + 1) * speed);
+    u8 subpriority = 19 - column;
+    u8 iconsCreated = 0;
+    u8 boxPosition = column;
+
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+    {
+        for (i = 0; i < IN_BOX_ROWS; i++)
+        {
+            if (sStorage->boxSpecies[boxPosition] != SPECIES_NONE)
+            {
+                sStorage->boxMonsSprites[boxPosition] = sub_080CBAA4(sStorage->boxSpecies[boxPosition],
+                                                                     sStorage->boxPersonalities[boxPosition],
+                                                                     x, y, 2, subpriority);
+                if (sStorage->boxMonsSprites[boxPosition] != NULL)
+                {
+                    sStorage->boxMonsSprites[boxPosition]->data[1] = distance;
+                    sStorage->boxMonsSprites[boxPosition]->data[2] = speed;
+                    sStorage->boxMonsSprites[boxPosition]->data[3] = xDest;
+                    sStorage->boxMonsSprites[boxPosition]->callback = sub_080CAAA8;
+                    iconsCreated++;
+                }
+            }
+            boxPosition += IN_BOX_COLUMNS;
+            y += 24;
+        }
+    }
+    else
+    {
+        for (i = 0; i < IN_BOX_ROWS; i++)
+        {
+            if (sStorage->boxSpecies[boxPosition] != SPECIES_NONE)
+            {
+                sStorage->boxMonsSprites[boxPosition] = sub_080CBAA4(sStorage->boxSpecies[boxPosition],
+                                                                     sStorage->boxPersonalities[boxPosition],
+                                                                     x, y, 2, subpriority);
+                if (sStorage->boxMonsSprites[boxPosition] != NULL)
+                {
+                    sStorage->boxMonsSprites[boxPosition]->data[1] = distance;
+                    sStorage->boxMonsSprites[boxPosition]->data[2] = speed;
+                    sStorage->boxMonsSprites[boxPosition]->data[3] = xDest;
+                    sStorage->boxMonsSprites[boxPosition]->callback = sub_080CAAA8;
+                    if (GetBoxMonDataAt(sStorage->incomingBoxId, boxPosition, MON_DATA_HELD_ITEM) == ITEM_NONE)
+                        sStorage->boxMonsSprites[boxPosition]->oam.objMode = ST_OAM_OBJ_BLEND;
+                    iconsCreated++;
+                }
+            }
+            boxPosition += IN_BOX_COLUMNS;
+            y += 24;
+        }
+    }
+
+    return iconsCreated;
+}
+void sub_080CAD40(u8 boxId, s8 direction)
+{
+    sStorage->iconScrollState = 0;
+    sStorage->iconScrollToBoxId = boxId;
+    sStorage->iconScrollDirection = direction;
+    sStorage->iconScrollDistance = 32;
+    sStorage->iconScrollSpeed = -(6 * direction);
+    sStorage->iconScrollNumIncoming = 0;
+    SetBoxSpeciesAndPersonalities(boxId);
+    if (direction > 0)
+        sStorage->iconScrollCurColumn = 0;
+    else
+        sStorage->iconScrollCurColumn = IN_BOX_COLUMNS - 1;
+
+    sStorage->iconScrollPos = (24 * sStorage->iconScrollCurColumn) + 100;
+    sub_080CAA64(sStorage->iconScrollSpeed);
+}
+bool8 sub_080CADF8(void)
+{
+    if (sStorage->iconScrollDistance != 0)
+        sStorage->iconScrollDistance--;
+
+    switch (sStorage->iconScrollState)
+    {
+    case 0:
+        sStorage->iconScrollPos += sStorage->iconScrollSpeed;
+        if (sStorage->iconScrollPos <= 64 || sStorage->iconScrollPos >= 252)
+        {
+            DestroyAllIconsInRow(sStorage->iconScrollCurColumn);
+            sStorage->iconScrollPos += sStorage->iconScrollDirection * 24;
+            sStorage->iconScrollState++;
+        }
+        break;
+    case 1:
+        sStorage->iconScrollPos += sStorage->iconScrollSpeed;
+        sStorage->iconScrollNumIncoming += sub_080CAB6C(sStorage->iconScrollCurColumn, sStorage->iconScrollDistance, sStorage->iconScrollSpeed);
+
+        if ((sStorage->iconScrollDirection > 0 && sStorage->iconScrollCurColumn == IN_BOX_COLUMNS - 1)
+         || (sStorage->iconScrollDirection < 0 && sStorage->iconScrollCurColumn == 0))
+        {
+            sStorage->iconScrollState++;
+        }
+        else
+        {
+            sStorage->iconScrollCurColumn += sStorage->iconScrollDirection;
+            sStorage->iconScrollState = 0;
+        }
+        break;
+    case 2:
+        if (sStorage->iconScrollNumIncoming == 0)
+        {
+            sStorage->iconScrollDistance++;
+            return FALSE;
+        }
+        break;
+    default:
+        return FALSE;
+    }
+
+    return TRUE;
+}
+void SetBoxSpeciesAndPersonalities(u8 a)
+{
+    s32 i, j, boxPosition;
+
+    boxPosition = 0;
+    for (i = 0; i < IN_BOX_ROWS; i++)
+    {
+        for (j = 0; j < IN_BOX_COLUMNS; j++)
+        {
+            sStorage->boxSpecies[boxPosition] = GetBoxMonDataAt(a, boxPosition, MON_DATA_SPECIES_OR_EGG);
+            if (sStorage->boxSpecies[boxPosition] != SPECIES_NONE)
+                sStorage->boxPersonalities[boxPosition] = GetBoxMonDataAt(a, boxPosition, MON_DATA_PERSONALITY);
+            boxPosition++;
+        }
+    }
+
+    sStorage->incomingBoxId = a;
 }
 
-__attribute__((naked)) void sub_080CA89C(void)
+void DestroyBoxMonIconAtPosition(u8 a)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r7, #0\n\t"
-        "_080CA8B6:\n\t"
-        "	movs r5, #0\n\t"
-        "	adds r1, r7, #1\n\t"
-        "	mov sl, r1\n\t"
-        "_080CA8BC:\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0x41\n\t"
-        "	bl GetBoxMonDataAt\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080CA924\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetBoxMonDataAt\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r2, r5, #1\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	lsls r2, r2, #0x13\n\t"
-        "	movs r3, #0xc8\n\t"
-        "	lsls r3, r3, #0xf\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	lsls r3, r7, #1\n\t"
-        "	adds r3, r3, r7\n\t"
-        "	lsls r3, r3, #0x13\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #0xe\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x13\n\t"
-        "	subs r0, r0, r5\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	bl sub_080CBAA4\n\t"
-        "	ldr r1, _080CA91C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	mov r3, r8\n\t"
-        "	lsls r2, r3, #2\n\t"
-        "	ldr r3, _080CA920\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r0, [r1]\n\t"
-        "	b _080CA934\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA91C: .4byte gUnknown_20399A8\n\t"
-        "_080CA920: .4byte 0x00000A88\n\t"
-        "_080CA924:\n\t"
-        "	ldr r0, _080CA9AC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	ldr r3, _080CA9B0\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r4, [r0]\n\t"
-        "_080CA934:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _080CA8BC\n\t"
-        "	mov r1, sl\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	cmp r7, #4\n\t"
-        "	bls _080CA8B6\n\t"
-        "	ldr r0, _080CA9AC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080CA99A\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r2, #0xd\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "_080CA96A:\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	movs r2, #0xc\n\t"
-        "	bl GetBoxMonDataAt\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CA990\n\t"
-        "	ldr r0, _080CA9AC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r6, #2\n\t"
-        "	ldr r3, _080CA9B0\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	ands r0, r4\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "_080CA990:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0x1d\n\t"
-        "	bls _080CA96A\n\t"
-        "_080CA99A:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CA9AC: .4byte gUnknown_20399A8\n\t"
-        "_080CA9B0: .4byte 0x00000A88\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->boxMonsSprites[a] != NULL)
+    {
+        DestroyBoxMonIcon(sStorage->boxMonsSprites[a]);
+        sStorage->boxMonsSprites[a] = NULL;
+    }
 }
 
-__attribute__((naked)) void sub_080CA9B4(void)
+void SetBoxMonIconObjMode(u8 a, u8 b)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAA4E\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r5, r0, #1\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsls r5, r5, #0x13\n\t"
-        "	movs r0, #0xc8\n\t"
-        "	lsls r0, r0, #0xf\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #1\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x13\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #0xe\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x13\n\t"
-        "	subs r0, r0, r6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl sub_080CBAA4\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldr r0, _080CAA5C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	lsls r1, r7, #2\n\t"
-        "	ldr r4, _080CAA60\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r3, [r0]\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080CAA4E\n\t"
-        "	ldrb r0, [r3, #1]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #4\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r3, #1]\n\t"
-        "_080CAA4E:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAA5C: .4byte gUnknown_20399A8\n\t"
-        "_080CAA60: .4byte 0x00000A88\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->boxMonsSprites[a] != NULL)
+        sStorage->boxMonsSprites[a]->oam.objMode = b;
 }
 
-__attribute__((naked)) void sub_080CAA64(void)
+void CreatePartyMonsSprites(bool8 visible)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r7, _080CAA9C\n\t"
-        "	ldr r6, _080CAAA0\n\t"
-        "	movs r5, #1\n\t"
-        "	ldr r4, _080CAAA4\n\t"
-        "_080CAA74:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAA8C\n\t"
-        "	strh r3, [r0, #0x32]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r5, [r0, #0x36]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	str r4, [r0, #0x1c]\n\t"
-        "_080CAA8C:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0x1d\n\t"
-        "	bls _080CAA74\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAA9C: .4byte gUnknown_20399A8\n\t"
-        "_080CAAA0: .4byte 0x00000A88\n\t"
-        "_080CAAA4: .4byte sub_080CAAEC + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i, count;
+    u16 species = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES_OR_EGG);
+    u32 personality = GetMonData(&gPlayerParty[0], MON_DATA_PERSONALITY);
+
+    sStorage->partySprites[0] = sub_080CBAA4(species, personality, 104, 64, 1, 12);
+    count = 1;
+    for (i = 1; i < PARTY_SIZE; i++)
+    {
+        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        if (species != SPECIES_NONE)
+        {
+            personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
+            sStorage->partySprites[i] = sub_080CBAA4(species, personality, 152, 8 * (3 * (i - 1)) + 16, 1, 12);
+            count++;
+        }
+        else
+        {
+            sStorage->partySprites[i] = NULL;
+        }
+    }
+
+    if (!visible)
+    {
+        for (i = 0; i < count; i++)
+        {
+            sStorage->partySprites[i]->y -= DISPLAY_HEIGHT;
+            sStorage->partySprites[i]->invisible = TRUE;
+        }
+    }
+
+    if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (sStorage->partySprites[i] != NULL && GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM) == ITEM_NONE)
+                sStorage->partySprites[i]->oam.objMode = ST_OAM_OBJ_BLEND;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_080CAAA8(void)
+void sub_080CB1C4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r1, [r2, #0x30]\n\t"
-        "	movs r3, #0x30\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAAC4\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	ldrh r0, [r2, #0x32]\n\t"
-        "	ldrh r1, [r2, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	b _080CAADA\n\t"
-        "_080CAAC4:\n\t"
-        "	ldr r0, _080CAAE0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r3, _080CAAE4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r2, #0x34]\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	ldr r0, _080CAAE8\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "_080CAADA:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAAE0: .4byte gUnknown_20399A8\n\t"
-        "_080CAAE4: .4byte 0x00000C66\n\t"
-        "_080CAAE8: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i, targetSlot;
+
+    sStorage->numPartyToCompact = 0;
+    for (i = 0, targetSlot = 0; i < PARTY_SIZE; i++)
+    {
+        if (sStorage->partySprites[i] != NULL)
+        {
+            if (i != targetSlot)
+            {
+                sub_080CB244(sStorage->partySprites[i], targetSlot);
+                sStorage->partySprites[i] = NULL;
+                sStorage->numPartyToCompact++;
+            }
+            targetSlot++;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_080CAAEC(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r1, [r2, #0x36]\n\t"
-        "	movs r3, #0x36\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAB00\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r2, #0x36]\n\t"
-        "	b _080CAB1C\n\t"
-        "_080CAB00:\n\t"
-        "	ldrh r0, [r2, #0x32]\n\t"
-        "	ldrh r1, [r2, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	ldrh r1, [r2, #0x24]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	subs r0, #0x45\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb6\n\t"
-        "	bls _080CAB1C\n\t"
-        "	ldr r0, _080CAB20\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "_080CAB1C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAB20: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void DestroyAllIconsInRow(u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r7, _080CAB64\n\t"
-        "_080CAB2E:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	ldr r1, _080CAB68\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAB4E\n\t"
-        "	bl DestroyBoxMonIcon\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r1, _080CAB68\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080CAB4E:\n\t"
-        "	adds r0, r5, #6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #4\n\t"
-        "	bls _080CAB2E\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAB64: .4byte gUnknown_20399A8\n\t"
-        "_080CAB68: .4byte 0x00000A88\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080CAB6C(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	movs r1, #0x2c\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	movs r3, #0xc8\n\t"
-        "	lsls r3, r3, #0xf\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	str r1, [sp, #0x10]\n\t"
-        "	ldr r1, [sp, #8]\n\t"
-        "	adds r1, #1\n\t"
-        "	lsrs r6, r2, #0x10\n\t"
-        "	str r6, [sp, #0xc]\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	ldr r2, [sp, #0x10]\n\t"
-        "	subs r1, r2, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r2, r1, #0x10\n\t"
-        "	movs r1, #0x13\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	str r1, [sp, #0x14]\n\t"
-        "	movs r3, #0\n\t"
-        "	mov sb, r3\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r1, _080CAC50\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080CAC64\n\t"
-        "	movs r7, #4\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	mov sl, r2\n\t"
-        "_080CABCC:\n\t"
-        "	ldr r6, _080CAC50\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	ldr r3, _080CAC54\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAC36\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	ldr r6, _080CAC58\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r3, r2, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	movs r2, #2\n\t"
-        "	str r2, [sp]\n\t"
-        "	ldr r6, [sp, #0x14]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	mov r6, sl\n\t"
-        "	asrs r2, r6, #0x10\n\t"
-        "	bl sub_080CBAA4\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r1, _080CAC50\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r3, _080CAC5C\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	str r2, [r1]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080CAC36\n\t"
-        "	mov r6, sp\n\t"
-        "	ldrh r6, [r6, #8]\n\t"
-        "	strh r6, [r2, #0x30]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrh r2, [r2, #0xc]\n\t"
-        "	strh r2, [r0, #0x32]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	mov r3, sp\n\t"
-        "	ldrh r3, [r3, #0x10]\n\t"
-        "	strh r3, [r0, #0x34]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r0, _080CAC60\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "_080CAC36:\n\t"
-        "	adds r0, r5, #6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r0, #0x18\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	subs r7, #1\n\t"
-        "	cmp r7, #0\n\t"
-        "	bge _080CABCC\n\t"
-        "	b _080CAD1A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAC50: .4byte gUnknown_20399A8\n\t"
-        "_080CAC54: .4byte 0x00000BA8\n\t"
-        "_080CAC58: .4byte 0x00000BE4\n\t"
-        "_080CAC5C: .4byte 0x00000A88\n\t"
-        "_080CAC60: .4byte sub_080CAAA8 + 1\n\t"
-        "_080CAC64:\n\t"
-        "	mov sl, r1\n\t"
-        "	movs r7, #4\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	str r2, [sp, #0x18]\n\t"
-        "_080CAC6C:\n\t"
-        "	mov r6, sl\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	ldr r3, _080CAD2C\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAD04\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	ldr r6, _080CAD30\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	mov r2, r8\n\t"
-        "	lsls r3, r2, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	movs r2, #2\n\t"
-        "	str r2, [sp]\n\t"
-        "	ldr r6, [sp, #0x14]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	ldr r6, [sp, #0x18]\n\t"
-        "	asrs r2, r6, #0x10\n\t"
-        "	bl sub_080CBAA4\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	mov r0, sl\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r1, _080CAD34\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	str r2, [r1]\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080CAD04\n\t"
-        "	mov r6, sp\n\t"
-        "	ldrh r6, [r6, #8]\n\t"
-        "	strh r6, [r2, #0x30]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrh r2, [r2, #0xc]\n\t"
-        "	strh r2, [r0, #0x32]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	mov r6, sp\n\t"
-        "	ldrh r6, [r6, #0x10]\n\t"
-        "	strh r6, [r0, #0x34]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r0, _080CAD38\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	ldr r1, _080CAD3C\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0xc\n\t"
-        "	bl GetBoxMonDataAt\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CACFA\n\t"
-        "	mov r2, sl\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r3, _080CAD34\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r6, #0xd\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #4\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r2, #1]\n\t"
-        "_080CACFA:\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "_080CAD04:\n\t"
-        "	adds r0, r5, #6\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r0, #0x18\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	subs r7, #1\n\t"
-        "	cmp r7, #0\n\t"
-        "	bge _080CAC6C\n\t"
-        "_080CAD1A:\n\t"
-        "	mov r0, sb\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAD2C: .4byte 0x00000BA8\n\t"
-        "_080CAD30: .4byte 0x00000BE4\n\t"
-        "_080CAD34: .4byte 0x00000A88\n\t"
-        "_080CAD38: .4byte sub_080CAAA8 + 1\n\t"
-        "_080CAD3C: .4byte 0x00000C5C\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080CAD40(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r6, _080CADA0\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r2, _080CADA4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r5, #0\n\t"
-        "	strb r5, [r1]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r3, _080CADA8\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r7, _080CADAC\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	strb r4, [r1]\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	movs r1, #0xc6\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r2, r3, r1\n\t"
-        "	movs r1, #0x20\n\t"
-        "	strh r1, [r2]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	subs r7, #5\n\t"
-        "	adds r2, r3, r7\n\t"
-        "	strh r1, [r2]\n\t"
-        "	ldr r1, _080CADB0\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	strh r5, [r3]\n\t"
-        "	bl SetBoxSpeciesAndPersonalities\n\t"
-        "	cmp r4, #0\n\t"
-        "	ble _080CADB8\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r2, _080CADB4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0\n\t"
-        "	b _080CADC0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CADA0: .4byte gUnknown_20399A8\n\t"
-        "_080CADA4: .4byte 0x00000C6A\n\t"
-        "_080CADA8: .4byte 0x00000C6B\n\t"
-        "_080CADAC: .4byte 0x00000C69\n\t"
-        "_080CADB0: .4byte 0x00000C66\n\t"
-        "_080CADB4: .4byte 0x00000C68\n\t"
-        "_080CADB8:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r3, _080CADEC\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #5\n\t"
-        "_080CADC0:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _080CADF0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r7, _080CADEC\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, #0x64\n\t"
-        "	ldr r3, _080CADF4\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	subs r7, #4\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	bl sub_080CAA64\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CADEC: .4byte 0x00000C68\n\t"
-        "_080CADF0: .4byte gUnknown_20399A8\n\t"
-        "_080CADF4: .4byte 0x00000C62\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080CADF8(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r5, _080CAE24\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0xc6\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAE0E\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080CAE0E:\n\t"
-        "	ldr r3, [r5]\n\t"
-        "	ldr r6, _080CAE28\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CAE90\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CAE2C\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAE34\n\t"
-        "	b _080CAF52\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAE24: .4byte gUnknown_20399A8\n\t"
-        "_080CAE28: .4byte 0x00000C6A\n\t"
-        "_080CAE2C:\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080CAE32\n\t"
-        "	b _080CAF40\n\t"
-        "_080CAE32:\n\t"
-        "	b _080CAF52\n\t"
-        "_080CAE34:\n\t"
-        "	ldr r0, _080CAE80\n\t"
-        "	adds r1, r3, r0\n\t"
-        "	ldr r2, _080CAE84\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	subs r0, #0x41\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xba\n\t"
-        "	bhi _080CAE50\n\t"
-        "	b _080CAF5C\n\t"
-        "_080CAE50:\n\t"
-        "	ldr r1, _080CAE88\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl DestroyAllIconsInRow\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldr r0, _080CAE80\n\t"
-        "	adds r3, r2, r0\n\t"
-        "	ldr r1, _080CAE8C\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldrh r1, [r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r2, r2, r6\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	b _080CAF5C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAE80: .4byte 0x00000C62\n\t"
-        "_080CAE84: .4byte 0x00000C64\n\t"
-        "_080CAE88: .4byte 0x00000C68\n\t"
-        "_080CAE8C: .4byte 0x00000C69\n\t"
-        "_080CAE90:\n\t"
-        "	ldr r2, _080CAEF4\n\t"
-        "	adds r1, r3, r2\n\t"
-        "	ldr r6, _080CAEF8\n\t"
-        "	adds r2, r3, r6\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	ldrh r6, [r1]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r6, _080CAEFC\n\t"
-        "	adds r0, r3, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, r3, r4\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r2, [r2, r3]\n\t"
-        "	bl sub_080CAB6C\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldr r3, _080CAF00\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080CAF04\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	cmp r1, #0\n\t"
-        "	ble _080CAED6\n\t"
-        "	adds r0, r2, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #5\n\t"
-        "	beq _080CAEE2\n\t"
-        "_080CAED6:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _080CAF10\n\t"
-        "	adds r0, r2, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CAF10\n\t"
-        "_080CAEE2:\n\t"
-        "	ldr r0, _080CAF08\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CAF0C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CAF5C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAEF4: .4byte 0x00000C62\n\t"
-        "_080CAEF8: .4byte 0x00000C64\n\t"
-        "_080CAEFC: .4byte 0x00000C68\n\t"
-        "_080CAF00: .4byte 0x00000C66\n\t"
-        "_080CAF04: .4byte 0x00000C69\n\t"
-        "_080CAF08: .4byte gUnknown_20399A8\n\t"
-        "_080CAF0C: .4byte 0x00000C6A\n\t"
-        "_080CAF10:\n\t"
-        "	ldr r3, _080CAF30\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r6, _080CAF34\n\t"
-        "	adds r1, r0, r6\n\t"
-        "	ldr r2, _080CAF38\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrb r6, [r1]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CAF3C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r2, [r0]\n\t"
-        "	b _080CAF5C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAF30: .4byte gUnknown_20399A8\n\t"
-        "_080CAF34: .4byte 0x00000C68\n\t"
-        "_080CAF38: .4byte 0x00000C69\n\t"
-        "_080CAF3C: .4byte 0x00000C6A\n\t"
-        "_080CAF40:\n\t"
-        "	ldr r2, _080CAF58\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CAF5C\n\t"
-        "	adds r1, r3, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080CAF52:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CAF5E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAF58: .4byte 0x00000C66\n\t"
-        "_080CAF5C:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CAF5E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SetBoxSpeciesAndPersonalities(u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldr r1, _080CAFDC\n\t"
-        "	mov sb, r1\n\t"
-        "_080CAF78:\n\t"
-        "	adds r0, #1\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r7, #5\n\t"
-        "_080CAF7E:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0x41\n\t"
-        "	bl GetBoxMonDataAt\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	lsls r2, r5, #1\n\t"
-        "	ldr r3, _080CAFE0\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CAFB8\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl GetBoxMonDataAt\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	lsls r2, r5, #2\n\t"
-        "	ldr r3, _080CAFE4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r0, [r1]\n\t"
-        "_080CAFB8:\n\t"
-        "	adds r5, #1\n\t"
-        "	subs r7, #1\n\t"
-        "	cmp r7, #0\n\t"
-        "	bge _080CAF7E\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _080CAF78\n\t"
-        "	ldr r0, _080CAFDC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CAFE8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CAFDC: .4byte gUnknown_20399A8\n\t"
-        "_080CAFE0: .4byte 0x00000BA8\n\t"
-        "_080CAFE4: .4byte 0x00000BE4\n\t"
-        "_080CAFE8: .4byte 0x00000C5C\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void DestroyBoxMonIconAtPosition(u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r5, _080CB018\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsrs r4, r0, #0x16\n\t"
-        "	ldr r0, _080CB01C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB012\n\t"
-        "	bl DestroyBoxMonIcon\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080CB01C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080CB012:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB018: .4byte gUnknown_20399A8\n\t"
-        "_080CB01C: .4byte 0x00000A88\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void SetBoxMonIconObjMode(u8 a, u8 b)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r2, r1, #0x18\n\t"
-        "	ldr r1, _080CB054\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	ldr r3, _080CB058\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _080CB04E\n\t"
-        "	movs r0, #3\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r2, [r3, #1]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #1]\n\t"
-        "_080CB04E:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB054: .4byte gUnknown_20399A8\n\t"
-        "_080CB058: .4byte 0x00000A88\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void CreatePartyMonsSprites(u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r4, _080CB100\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #0x68\n\t"
-        "	movs r3, #0x40\n\t"
-        "	bl sub_080CBAA4\n\t"
-        "	ldr r1, _080CB104\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0xa7\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r7, #1\n\t"
-        "	movs r6, #1\n\t"
-        "_080CB0A4:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _080CB100\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080CB108\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	subs r0, r6, #1\n\t"
-        "	lsls r3, r0, #1\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	lsls r3, r3, #0x13\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0xd\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #0x98\n\t"
-        "	bl sub_080CBAA4\n\t"
-        "	ldr r1, _080CB104\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r2, r6, #2\n\t"
-        "	movs r3, #0xa7\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	b _080CB118\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB100: .4byte gPlayerParty\n\t"
-        "_080CB104: .4byte gUnknown_20399A8\n\t"
-        "_080CB108:\n\t"
-        "	ldr r0, _080CB1BC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r6, #2\n\t"
-        "	movs r2, #0xa7\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r5, [r0]\n\t"
-        "_080CB118:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #5\n\t"
-        "	bls _080CB0A4\n\t"
-        "	ldr r3, _080CB1BC\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CB15E\n\t"
-        "	movs r6, #0\n\t"
-        "	cmp r6, r7\n\t"
-        "	bhs _080CB15E\n\t"
-        "	mov ip, r3\n\t"
-        "	movs r5, #0xa7\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	movs r4, #4\n\t"
-        "_080CB138:\n\t"
-        "	mov r2, ip\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrh r0, [r2, #0x22]\n\t"
-        "	subs r0, #0xa0\n\t"
-        "	strh r0, [r2, #0x22]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	orrs r0, r4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, r7\n\t"
-        "	blo _080CB138\n\t"
-        "_080CB15E:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080CB1B0\n\t"
-        "	movs r6, #0\n\t"
-        "	adds r7, r3, #0\n\t"
-        "	movs r5, #0xa7\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "_080CB16E:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	lsls r4, r6, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB1A6\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r1, _080CB1C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CB1A6\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r3, #0xd\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	movs r0, #4\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r2, #1]\n\t"
-        "_080CB1A6:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #5\n\t"
-        "	bls _080CB16E\n\t"
-        "_080CB1B0:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB1BC: .4byte gUnknown_20399A8\n\t"
-        "_080CB1C0: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080CB1C4(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080CB228\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CB22C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r6, #0\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r7, #0xa7\n\t"
-        "	lsls r7, r7, #4\n\t"
-        "_080CB1DE:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB214\n\t"
-        "	cmp r5, r6\n\t"
-        "	beq _080CB20E\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	str r3, [sp]\n\t"
-        "	bl sub_080CB244\n\t"
-        "	ldr r3, [sp]\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r0, _080CB22C\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080CB20E:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "_080CB214:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _080CB1DE\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB228: .4byte gUnknown_20399A8\n\t"
-        "_080CB22C: .4byte 0x00000C5E\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-u32 GetNumPartySpritesCompacting(void)
+u8 GetNumPartySpritesCompacting(void)
 {
     return sStorage->numPartyToCompact;
 }
 
 
-__attribute__((naked)) void sub_080CB244(void)
+void sub_080CB244(struct Sprite *sprite, u16 partyId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	strh r1, [r2, #0x30]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080CB258\n\t"
-        "	movs r3, #0x68\n\t"
-        "	movs r4, #0x40\n\t"
-        "	b _080CB26A\n\t"
-        "_080CB258:\n\t"
-        "	movs r3, #0x98\n\t"
-        "	subs r1, #1\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x13\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xd\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "_080CB26A:\n\t"
-        "	ldrh r0, [r2, #0x20]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	ldrh r0, [r2, #0x22]\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	strh r0, [r2, #0x34]\n\t"
-        "	lsls r1, r3, #3\n\t"
-        "	movs r3, #0x32\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CB284\n\t"
-        "	adds r0, #7\n\t"
-        "_080CB284:\n\t"
-        "	asrs r0, r0, #3\n\t"
-        "	strh r0, [r2, #0x36]\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0xd\n\t"
-        "	movs r3, #0x34\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CB298\n\t"
-        "	adds r0, #7\n\t"
-        "_080CB298:\n\t"
-        "	asrs r0, r0, #3\n\t"
-        "	strh r0, [r2, #0x38]\n\t"
-        "	movs r0, #8\n\t"
-        "	strh r0, [r2, #0x3a]\n\t"
-        "	ldr r0, _080CB2AC\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB2AC: .4byte sub_080CB2B0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x, y;
+
+    sprite->data[1] = partyId;
+    if (partyId == 0)
+        x = 104, y = 64;
+    else
+        x = 152, y = 8 * (3 * (partyId - 1)) + 16;
+
+    sprite->data[2] = (u16)(sprite->x) * 8;
+    sprite->data[3] = (u16)(sprite->y) * 8;
+    sprite->data[4] = ((x * 8) - sprite->data[2]) / 8;
+    sprite->data[5] = ((y * 8) - sprite->data[3]) / 8;
+    sprite->data[6] = 8;
+    sprite->callback = sub_080CB2B0;
 }
 
-__attribute__((naked)) void sub_080CB2B0(void)
+void sub_080CB2B0(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrh r2, [r3, #0x3a]\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB2E0\n\t"
-        "	ldrh r0, [r3, #0x36]\n\t"
-        "	ldrh r4, [r3, #0x32]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	ldrh r1, [r3, #0x38]\n\t"
-        "	ldrh r4, [r3, #0x34]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	strh r1, [r3, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x13\n\t"
-        "	strh r0, [r3, #0x20]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x13\n\t"
-        "	strh r1, [r3, #0x22]\n\t"
-        "	subs r0, r2, #1\n\t"
-        "	strh r0, [r3, #0x3a]\n\t"
-        "	b _080CB326\n\t"
-        "_080CB2E0:\n\t"
-        "	movs r1, #0x30\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CB2F0\n\t"
-        "	movs r0, #0x68\n\t"
-        "	strh r0, [r3, #0x20]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	b _080CB302\n\t"
-        "_080CB2F0:\n\t"
-        "	movs r0, #0x98\n\t"
-        "	strh r0, [r3, #0x20]\n\t"
-        "	movs r4, #0x30\n\t"
-        "	ldrsh r1, [r3, r4]\n\t"
-        "	subs r1, #1\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, #0x10\n\t"
-        "_080CB302:\n\t"
-        "	strh r0, [r3, #0x22]\n\t"
-        "	ldr r0, _080CB32C\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "	ldr r0, _080CB330\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0x30\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	movs r4, #0xa7\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r3, [r0]\n\t"
-        "	ldr r0, _080CB334\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080CB326:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB32C: .4byte SpriteCallbackDummy + 1\n\t"
-        "_080CB330: .4byte gUnknown_20399A8\n\t"
-        "_080CB334: .4byte 0x00000C5E\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[6] != 0)
+    {
+        s16 x = sprite->data[2] += sprite->data[4];
+        s16 y = sprite->data[3] += sprite->data[5];
+        sprite->x = x / 8u;
+        sprite->y = y / 8u;
+        sprite->data[6]--;
+    }
+    else
+    {
+        if (sprite->data[1] == 0)
+        {
+            sprite->x = 104;
+            sprite->y = 64;
+        }
+        else
+        {
+            sprite->x = 152;
+            sprite->y = 8 * (3 * (sprite->data[1] - 1)) + 16;
+        }
+        sprite->callback = SpriteCallbackDummy;
+        sStorage->partySprites[sprite->data[1]] = sprite;
+        sStorage->numPartyToCompact--;
+    }
 }
 
-__attribute__((naked)) void DestroyMovingMonIcon(void)
+void DestroyMovingMonIcon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CB35C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CB360\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB356\n\t"
-        "	bl DestroyBoxMonIcon\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CB360\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080CB356:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB35C: .4byte gUnknown_20399A8\n\t"
-        "_080CB360: .4byte 0x00000A6C\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->movingMonSprite != NULL)
+    {
+        DestroyBoxMonIcon(sStorage->movingMonSprite);
+        sStorage->movingMonSprite = NULL;
+    }
+}
+void sub_080CB364(s16 yDelta)
+{
+    u16 i, posY;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (sStorage->partySprites[i] != NULL)
+        {
+            sStorage->partySprites[i]->y += yDelta;
+            posY = sStorage->partySprites[i]->y + sStorage->partySprites[i]->y2 + sStorage->partySprites[i]->centerToCornerVecY;
+            posY += 16;
+            if (posY > 192)
+                sStorage->partySprites[i]->invisible = TRUE;
+            else
+                sStorage->partySprites[i]->invisible = FALSE;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_080CB364(void)
+void DestroyPartyMonIcon(u8 partyId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r6, _080CB3BC\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	movs r5, #5\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "_080CB372:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r1, r3, #2\n\t"
-        "	movs r2, #0xa7\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CB3CA\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	ldrh r1, [r2, #0x26]\n\t"
-        "	ldrh r0, [r2, #0x22]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x29\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xd\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xc0\n\t"
-        "	bls _080CB3C0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080CB3CA\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB3BC: .4byte gUnknown_20399A8\n\t"
-        "_080CB3C0:\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080CB3CA:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #5\n\t"
-        "	bls _080CB372\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->partySprites[partyId] != NULL)
+    {
+        DestroyBoxMonIcon(sStorage->partySprites[partyId]);
+        sStorage->partySprites[partyId] = NULL;
+    }
+}
+void DestroyAllPartyMonIcons(void)
+{
+    u16 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (sStorage->partySprites[i] != NULL)
+        {
+            DestroyBoxMonIcon(sStorage->partySprites[i]);
+            sStorage->partySprites[i] = NULL;
+        }
+    }
+}
+void SetPartyMonIconObjMode(u8 partyId, u8 objMode)
+{
+    if (sStorage->partySprites[partyId] != NULL)
+        sStorage->partySprites[partyId]->oam.objMode = objMode;
+}
+void sub_080CB488(u8 mode, u8 id)
+{
+    if (mode == MODE_PARTY)
+    {
+        sStorage->movingMonSprite = sStorage->partySprites[id];
+        sStorage->partySprites[id] = NULL;
+    }
+    else if (mode == MODE_BOX)
+    {
+        sStorage->movingMonSprite = sStorage->boxMonsSprites[id];
+        sStorage->boxMonsSprites[id] = NULL;
+    }
+    else
+    {
+        return;
+    }
+
+    sStorage->movingMonSprite->callback = SpriteCB_HeldMon;
+    sStorage->movingMonSprite->oam.priority = GetMonIconPriorityByCursorPos();
+    sStorage->movingMonSprite->subpriority = 7;
 }
 
-__attribute__((naked)) void DestroyPartyMonIcon(u8 a)
+void sub_080CB520(u8 boxId, u8 position)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r5, _080CB40C\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsrs r4, r0, #0x16\n\t"
-        "	movs r0, #0xa7\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB406\n\t"
-        "	bl DestroyBoxMonIcon\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r1, #0xa7\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080CB406:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB40C: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (boxId == TOTAL_BOXES_COUNT)
+    {
+        sStorage->partySprites[position] = sStorage->movingMonSprite;
+        sStorage->partySprites[position]->oam.priority = 1;
+        sStorage->partySprites[position]->subpriority = 12;
+    }
+    else
+    {
+        sStorage->boxMonsSprites[position] = sStorage->movingMonSprite;
+        sStorage->boxMonsSprites[position]->oam.priority = 2;
+        sStorage->boxMonsSprites[position]->subpriority = 19 - (position % IN_BOX_COLUMNS);
+    }
+    sStorage->movingMonSprite->callback = SpriteCallbackDummy;
+    sStorage->movingMonSprite = NULL;
 }
 
-__attribute__((naked)) void DestroyAllPartyMonIcons(void)
+void sub_080CB5D0(u8 boxId, u8 position)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r6, _080CB44C\n\t"
-        "_080CB416:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r4, r5, #2\n\t"
-        "	movs r1, #0xa7\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB43A\n\t"
-        "	bl DestroyBoxMonIcon\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	movs r1, #0xa7\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080CB43A:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _080CB416\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB44C: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (boxId == TOTAL_BOXES_COUNT)
+        sStorage->shiftMonSpritePtr = &sStorage->partySprites[position];
+    else
+        sStorage->shiftMonSpritePtr = &sStorage->boxMonsSprites[position];
+
+    sStorage->movingMonSprite->callback = SpriteCallbackDummy;
+    sStorage->shiftTimer = 0;
 }
 
-__attribute__((naked)) void SetPartyMonIconObjMode(u8 a, u8 b)
+bool8 sub_080CB638(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r2, r1, #0x18\n\t"
-        "	ldr r1, _080CB484\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	movs r3, #0xa7\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _080CB480\n\t"
-        "	movs r0, #3\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r2, [r3, #1]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #1]\n\t"
-        "_080CB480:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB484: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->shiftTimer == 16)
+        return FALSE;
+
+    sStorage->shiftTimer++;
+    if (sStorage->shiftTimer & 1)
+    {
+        (*sStorage->shiftMonSpritePtr)->y--;
+        sStorage->movingMonSprite->y++;
+    }
+
+    (*sStorage->shiftMonSpritePtr)->x2 = gSineTable[sStorage->shiftTimer * 8] / 16;
+    sStorage->movingMonSprite->x2 = -(gSineTable[sStorage->shiftTimer * 8] / 16);
+    if (sStorage->shiftTimer == 8)
+    {
+        sStorage->movingMonSprite->oam.priority = (*sStorage->shiftMonSpritePtr)->oam.priority;
+        sStorage->movingMonSprite->subpriority = (*sStorage->shiftMonSpritePtr)->subpriority;
+        (*sStorage->shiftMonSpritePtr)->oam.priority = GetMonIconPriorityByCursorPos();
+        (*sStorage->shiftMonSpritePtr)->subpriority = 7;
+    }
+
+    if (sStorage->shiftTimer == 16)
+    {
+        struct Sprite *sprite = sStorage->movingMonSprite;
+        sStorage->movingMonSprite = (*sStorage->shiftMonSpritePtr);
+        *sStorage->shiftMonSpritePtr = sprite;
+
+        sStorage->movingMonSprite->callback = SpriteCB_HeldMon;
+        (*sStorage->shiftMonSpritePtr)->callback = SpriteCallbackDummy;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080CB488(void)
+void sub_080CB788(u8 mode, u8 cursorPosition)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080CB4B8\n\t"
-        "	ldr r3, _080CB4B0\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r5, _080CB4B4\n\t"
-        "	adds r2, r0, r5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r5, #4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	str r1, [r2]\n\t"
-        "	str r4, [r0]\n\t"
-        "	b _080CB4D4\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB4B0: .4byte gUnknown_20399A8\n\t"
-        "_080CB4B4: .4byte 0x00000A6C\n\t"
-        "_080CB4B8:\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _080CB50A\n\t"
-        "	ldr r3, _080CB510\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CB514\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	ldr r4, _080CB518\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	str r1, [r2]\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080CB4D4:\n\t"
-        "	adds r5, r3, #0\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r4, _080CB514\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080CB51C\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	bl GetMonIconPriorityByCursorPos\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r2, [r3, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #5]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	movs r1, #7\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080CB50A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB510: .4byte gUnknown_20399A8\n\t"
-        "_080CB514: .4byte 0x00000A6C\n\t"
-        "_080CB518: .4byte 0x00000A88\n\t"
-        "_080CB51C: .4byte SpriteCB_HeldMon + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (mode)
+    {
+    case MODE_PARTY:
+        sStorage->releaseMonSpritePtr = &sStorage->partySprites[cursorPosition];
+        break;
+    case MODE_BOX:
+        sStorage->releaseMonSpritePtr = &sStorage->boxMonsSprites[cursorPosition];
+        break;
+    case MODE_MOVE:
+        sStorage->releaseMonSpritePtr = &sStorage->movingMonSprite;
+        break;
+    default:
+        return;
+    }
+
+    if (*sStorage->releaseMonSpritePtr != NULL)
+    {
+        InitSpriteAffineAnim(*sStorage->releaseMonSpritePtr);
+        (*sStorage->releaseMonSpritePtr)->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+        (*sStorage->releaseMonSpritePtr)->affineAnims = gUnknown_854CBCC;
+        StartSpriteAffineAnim(*sStorage->releaseMonSpritePtr, 0);
+    }
 }
 
-__attribute__((naked)) void sub_080CB520(void)
+bool8 sub_080CB84C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bne _080CB56C\n\t"
-        "	ldr r3, _080CB564\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	lsls r5, r6, #2\n\t"
-        "	movs r4, #0xa7\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r2, _080CB568\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	str r2, [r0]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	movs r1, #0xc\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080CB5A8\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB564: .4byte gUnknown_20399A8\n\t"
-        "_080CB568: .4byte 0x00000A6C\n\t"
-        "_080CB56C:\n\t"
-        "	ldr r5, _080CB5C0\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r4, r6, #2\n\t"
-        "	ldr r3, _080CB5C4\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r2, _080CB5C8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	str r2, [r0]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	movs r1, #0x13\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	adds r4, #0x43\n\t"
-        "	strb r1, [r4]\n\t"
-        "	adds r3, r5, #0\n\t"
-        "_080CB5A8:\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r0, _080CB5C8\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r0, _080CB5CC\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB5C0: .4byte gUnknown_20399A8\n\t"
-        "_080CB5C4: .4byte 0x00000A88\n\t"
-        "_080CB5C8: .4byte 0x00000A6C\n\t"
-        "_080CB5CC: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (*sStorage->releaseMonSpritePtr == NULL
+     || (*sStorage->releaseMonSpritePtr)->invisible)
+        return FALSE;
+
+    if ((*sStorage->releaseMonSpritePtr)->affineAnimEnded)
+        (*sStorage->releaseMonSpritePtr)->invisible = TRUE;
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080CB5D0(void)
+void sub_080CB894(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bne _080CB5F4\n\t"
-        "	ldr r3, _080CB5F0\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	movs r4, #0xa7\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	b _080CB602\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB5F0: .4byte gUnknown_20399A8\n\t"
-        "_080CB5F4:\n\t"
-        "	ldr r3, _080CB624\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	ldr r4, _080CB628\n\t"
-        "_080CB602:\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [r2]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r2, _080CB62C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _080CB630\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	ldr r4, _080CB634\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB624: .4byte gUnknown_20399A8\n\t"
-        "_080CB628: .4byte 0x00000A88\n\t"
-        "_080CB62C: .4byte 0x00000A6C\n\t"
-        "_080CB630: .4byte SpriteCallbackDummy + 1\n\t"
-        "_080CB634: .4byte 0x00000C5D\n\t"
-        ".syntax divided\n\t"
-    );
+    if (*sStorage->releaseMonSpritePtr != NULL)
+    {
+        FreeOamMatrix((*sStorage->releaseMonSpritePtr)->oam.matrixNum);
+        DestroyBoxMonIcon(*sStorage->releaseMonSpritePtr);
+        *sStorage->releaseMonSpritePtr = NULL;
+    }
 }
 
-__attribute__((naked)) void sub_080CB638(void)
+void sub_080CB8D8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	ldr r6, _080CB654\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r1, _080CB658\n\t"
-        "	mov sb, r1\n\t"
-        "	adds r1, r0, r1\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bne _080CB65C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CB768\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB654: .4byte gUnknown_20399A8\n\t"
-        "_080CB658: .4byte 0x00000C5D\n\t"
-        "_080CB65C:\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldr r5, _080CB774\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB68C\n\t"
-        "	movs r1, #0xb0\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	ldr r5, _080CB778\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrh r0, [r1, #0x22]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "_080CB68C:\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	movs r7, #0xb0\n\t"
-        "	lsls r7, r7, #4\n\t"
-        "	adds r4, r3, r7\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r5, _080CB77C\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r1, r3, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CB6B0\n\t"
-        "	adds r0, #0xf\n\t"
-        "_080CB6B0:\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	ldr r0, _080CB778\n\t"
-        "	mov r8, r0\n\t"
-        "	add r3, r8\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r5, #0\n\t"
-        "	ldrsh r0, [r0, r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CB6CE\n\t"
-        "	adds r0, #0xf\n\t"
-        "_080CB6CE:\n\t"
-        "	asrs r0, r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #8\n\t"
-        "	bne _080CB732\n\t"
-        "	ldr r3, [r3]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	movs r5, #3\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ands r1, r0\n\t"
-        "	ldrb r2, [r3, #5]\n\t"
-        "	movs r4, #0xd\n\t"
-        "	rsbs r4, r4, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #5]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, #0x43\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl GetMonIconPriorityByCursorPos\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ands r5, r0\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	ands r4, r0\n\t"
-        "	orrs r4, r5\n\t"
-        "	strb r4, [r1, #5]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	movs r1, #7\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080CB732:\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	mov r5, sb\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x10\n\t"
-        "	bne _080CB766\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r2]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	str r3, [r0]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _080CB780\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080CB784\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "_080CB766:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CB768:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB774: .4byte 0x00000C5D\n\t"
-        "_080CB778: .4byte 0x00000A6C\n\t"
-        "_080CB77C: .4byte gSineTable\n\t"
-        "_080CB780: .4byte SpriteCB_HeldMon + 1\n\t"
-        "_080CB784: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (*sStorage->releaseMonSpritePtr != NULL)
+    {
+        (*sStorage->releaseMonSpritePtr)->invisible = FALSE;
+        StartSpriteAffineAnim(*sStorage->releaseMonSpritePtr, 1);
+    }
 }
 
-__attribute__((naked)) void sub_080CB788(void)
+bool8 sub_080CB914(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CB7C0\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CB7A2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB7A8\n\t"
-        "	b _080CB834\n\t"
-        "_080CB7A2:\n\t"
-        "	cmp r2, #2\n\t"
-        "	beq _080CB7E4\n\t"
-        "	b _080CB834\n\t"
-        "_080CB7A8:\n\t"
-        "	ldr r3, _080CB7B8\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r0, _080CB7BC\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	movs r4, #0xa7\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	b _080CB7CC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB7B8: .4byte gUnknown_20399A8\n\t"
-        "_080CB7BC: .4byte 0x00000B04\n\t"
-        "_080CB7C0:\n\t"
-        "	ldr r3, _080CB7D8\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r0, _080CB7DC\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	ldr r4, _080CB7E0\n\t"
-        "_080CB7CC:\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [r2]\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	b _080CB7F4\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB7D8: .4byte gUnknown_20399A8\n\t"
-        "_080CB7DC: .4byte 0x00000B04\n\t"
-        "_080CB7E0: .4byte 0x00000A88\n\t"
-        "_080CB7E4:\n\t"
-        "	ldr r0, _080CB83C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r3, _080CB840\n\t"
-        "	adds r2, r1, r3\n\t"
-        "	ldr r4, _080CB844\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	str r1, [r2]\n\t"
-        "	adds r4, r0, #0\n\t"
-        "_080CB7F4:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CB840\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB834\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r3, _080CB840\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r0, #4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _080CB848\n\t"
-        "	str r0, [r2, #0x10]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_080CB834:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB83C: .4byte gUnknown_20399A8\n\t"
-        "_080CB840: .4byte 0x00000B04\n\t"
-        "_080CB844: .4byte 0x00000A6C\n\t"
-        "_080CB848: .4byte gUnknown_854CBCC\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if (sStorage->releaseMonSpritePtr == NULL)
+        return FALSE;
 
-__attribute__((naked)) void sub_080CB84C(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CB870\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CB874\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CB86C\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB878\n\t"
-        "_080CB86C:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CB88E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB870: .4byte gUnknown_20399A8\n\t"
-        "_080CB874: .4byte 0x00000B04\n\t"
-        "_080CB878:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB88C\n\t"
-        "	movs r0, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r3]\n\t"
-        "_080CB88C:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CB88E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    if ((*sStorage->releaseMonSpritePtr)->affineAnimEnded)
+        sStorage->releaseMonSpritePtr = NULL;
 
-__attribute__((naked)) void sub_080CB894(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CB8D0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CB8D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB8CA\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CB8D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl DestroyBoxMonIcon\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CB8D4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "_080CB8CA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB8D0: .4byte gUnknown_20399A8\n\t"
-        "_080CB8D4: .4byte 0x00000B04\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080CB8D8(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r3, _080CB90C\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CB910\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB908\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CB910\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_080CB908:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB90C: .4byte gUnknown_20399A8\n\t"
-        "_080CB910: .4byte 0x00000B04\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_080CB914(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CB928\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CB92C\n\t"
-        "	adds r2, r0, r1\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CB930\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CB944\n\t"
-        "	.align 2, 0\n\t"
-        "_080CB928: .4byte gUnknown_20399A8\n\t"
-        "_080CB92C: .4byte 0x00000B04\n\t"
-        "_080CB930:\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB942\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r2]\n\t"
-        "_080CB942:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CB944:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return TRUE;
 }
 
 void SetMovingMonPriority(u8 priority)
@@ -10638,3568 +4419,948 @@ void SpriteCB_HeldMon(struct Sprite *sprite)
     sprite->y = sStorage->cursorSprite->y + sStorage->cursorSprite->y2 + 4;
 }
 
-__attribute__((naked)) void sub_080CB998(void)
+u16 sub_080CB998(u16 species)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r1, _080CBA00\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _080CBA04\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, r3\n\t"
-        "	beq _080CB9CC\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	ldr r5, _080CBA04\n\t"
-        "_080CB9B4:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0x27\n\t"
-        "	bhi _080CB9CC\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _080CB9B4\n\t"
-        "_080CB9CC:\n\t"
-        "	cmp r4, #0x28\n\t"
-        "	bne _080CBA0C\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r5, _080CBA04\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CB9F8\n\t"
-        "	adds r6, r2, #0\n\t"
-        "_080CB9E0:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0x27\n\t"
-        "	bhi _080CB9F8\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CB9E0\n\t"
-        "_080CB9F8:\n\t"
-        "	cmp r4, #0x28\n\t"
-        "	bne _080CBA0C\n\t"
-        "	ldr r0, _080CBA08\n\t"
-        "	b _080CBA3E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBA00: .4byte gUnknown_20399A8\n\t"
-        "_080CBA04: .4byte 0x00000B58\n\t"
-        "_080CBA08: .4byte 0x0000FFFF\n\t"
-        "_080CBA0C:\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	lsls r2, r4, #1\n\t"
-        "	ldr r5, _080CBA44\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r3, [r0]\n\t"
-        "	ldr r0, _080CBA48\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r4, r4, #0x14\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetMonIconTiles\n\t"
-        "	lsls r1, r4, #5\n\t"
-        "	ldr r2, _080CBA4C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _080CBA50\n\t"
-        "	bl CpuSet\n\t"
-        "	adds r0, r4, #0\n\t"
-        "_080CBA3E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBA44: .4byte 0x00000B58\n\t"
-        "_080CBA48: .4byte 0x00000B08\n\t"
-        "_080CBA4C: .4byte 0x06010000\n\t"
-        "_080CBA50: .4byte 0x04000080\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i, offset;
+
+    for (i = 0; i < MAX_MON_ICONS; i++)
+    {
+        if (sStorage->iconSpeciesList[i] == species)
+            break;
+    }
+
+    if (i == MAX_MON_ICONS)
+    {
+        for (i = 0; i < MAX_MON_ICONS; i++)
+        {
+            if (sStorage->iconSpeciesList[i] == 0)
+                break;
+        }
+
+        if (i == MAX_MON_ICONS)
+            return 0xFFFF;
+    }
+
+    sStorage->iconSpeciesList[i] = species;
+    sStorage->numIconsPerSpecies[i]++;
+    offset = 16 * i;
+    CpuCopy32(GetMonIconTiles(species, TRUE), (void *)(OBJ_VRAM0) + offset * TILE_SIZE_4BPP, 0x200);
+
+    return offset;
 }
 
-__attribute__((naked)) void sub_080CBA54(void)
+void sub_080CBA54(u16 species)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r6, _080CBA88\n\t"
-        "_080CBA5E:\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	lsls r2, r3, #1\n\t"
-        "	ldr r4, _080CBA8C\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	adds r4, r0, r2\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _080CBA94\n\t"
-        "	ldr r0, _080CBA90\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CBA9E\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _080CBA9E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBA88: .4byte gUnknown_20399A8\n\t"
-        "_080CBA8C: .4byte 0x00000B58\n\t"
-        "_080CBA90: .4byte 0x00000B08\n\t"
-        "_080CBA94:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #0x27\n\t"
-        "	bls _080CBA5E\n\t"
-        "_080CBA9E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    for (i = 0; i < MAX_MON_ICONS; i++)
+    {
+        if (sStorage->iconSpeciesList[i] == species)
+        {
+            if (--sStorage->numIconsPerSpecies[i] == 0)
+                sStorage->iconSpeciesList[i] = SPECIES_NONE;
+            break;
+        }
+    }
 }
 
-
-__attribute__((naked)) void sub_080CBAA4(void)
+struct Sprite *sub_080CBAA4(u16 species, u32 personality, s16 x, s16 y, u8 oamPriority, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	ldr r4, [sp, #0x3c]\n\t"
-        "	ldr r5, [sp, #0x40]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	str r2, [sp, #0x18]\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	mov r8, r3\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	mov sb, r5\n\t"
-        "	mov r2, sp\n\t"
-        "	ldr r0, _080CBB54\n\t"
-        "	ldm r0!, {r3, r5, r7}\n\t"
-        "	stm r2!, {r3, r5, r7}\n\t"
-        "	ldm r0!, {r3, r5, r7}\n\t"
-        "	stm r2!, {r3, r5, r7}\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetIconSpecies\n\t"
-        "	mov sl, r0\n\t"
-        "	mov r6, sl\n\t"
-        "	mov r2, sp\n\t"
-        "	ldr r1, _080CBB58\n\t"
-        "	adds r1, r6, r1\n\t"
-        "	ldr r3, _080CBB5C\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #2]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_080CB998\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldr r0, _080CBB60\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080CBB76\n\t"
-        "	ldr r7, [sp, #0x18]\n\t"
-        "	lsls r1, r7, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r2, r0, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	mov r0, sp\n\t"
-        "	mov r3, sb\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x40\n\t"
-        "	beq _080CBB70\n\t"
-        "	ldr r1, _080CBB64\n\t"
-        "	lsls r0, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, _080CBB68\n\t"
-        "	ands r2, r5\n\t"
-        "	ldrh r3, [r0, #4]\n\t"
-        "	ldr r1, _080CBB6C\n\t"
-        "	ands r1, r3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strh r1, [r0, #4]\n\t"
-        "	movs r1, #3\n\t"
-        "	ands r4, r1\n\t"
-        "	lsls r3, r4, #2\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	orrs r1, r3\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	mov r1, sl\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	b _080CBB78\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBB54: .4byte gUnknown_854CB84\n\t"
-        "_080CBB58: .4byte gMonIconPaletteIndices\n\t"
-        "_080CBB5C: .4byte 0x0000DAC0\n\t"
-        "_080CBB60: .4byte 0x0000FFFF\n\t"
-        "_080CBB64: .4byte gSprites\n\t"
-        "_080CBB68: .4byte 0x000003FF\n\t"
-        "_080CBB6C: .4byte 0xFFFFFC00\n\t"
-        "_080CBB70:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_080CBA54\n\t"
-        "_080CBB76:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CBB78:\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 tileNum;
+    u8 spriteId;
+    struct SpriteTemplate template = gUnknown_854CB84;
+
+    species = GetIconSpecies(species, personality);
+    template.paletteTag = 0xDAC0 + gMonIconPaletteIndices[species];
+    tileNum = sub_080CB998(species);
+    if (tileNum == 0xFFFF)
+        return NULL;
+
+    spriteId = CreateSprite(&template, x, y, subpriority);
+    if (spriteId == MAX_SPRITES)
+    {
+        sub_080CBA54(species);
+        return NULL;
+    }
+
+    gSprites[spriteId].oam.tileNum = tileNum;
+    gSprites[spriteId].oam.priority = oamPriority;
+    gSprites[spriteId].data[0] = species;
+    return &gSprites[spriteId];
 }
 
-__attribute__((naked)) void DestroyBoxMonIcon(struct Sprite *sprite)
+void DestroyBoxMonIcon(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	bl sub_080CBA54\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080CBA54(sprite->data[0]);
+    DestroySprite(sprite);
 }
 
-__attribute__((naked)) void sub_080CBBA0(void)
+void sub_080CBBA0(u8 boxId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080CBBC8\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080CBBCC\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r4, [r1, #0xc]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBBC8: .4byte sub_080CBBE4 + 1\n\t"
-        "_080CBBCC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = CreateTask(sub_080CBBE4, 2);
+
+    gTasks[taskId].data[2] = boxId;
+}
+bool8 sub_080CBBD0(void)
+{
+    return FuncIsActiveTask(sub_080CBBE4);
+}
+void sub_080CBBE4(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->data[0])
+    {
+    case 0:
+        sStorage->wallpaperOffset = 0;
+        sStorage->bg2_X = 0;
+        task->data[1] = RequestDma3Fill(0, sStorage->wallpaperBgTilemapBuffer, sizeof(sStorage->wallpaperBgTilemapBuffer), 1);
+        break;
+    case 1:
+        if (CheckForSpaceForDma3Request(task->data[1]) == -1)
+            return;
+
+        SetBgTilemapBuffer(2, sStorage->wallpaperBgTilemapBuffer);
+        ShowBg(2);
+        break;
+    case 2:
+        LoadWallpaperGfx(task->data[2], 0);
+        break;
+    case 3:
+        if (!WaitForWallpaperGfxLoad())
+            return;
+
+        sub_080CC3C4(task->data[2]);
+        sub_080CC8A8();
+        sub_080CA89C(task->data[2]);
+        SetGpuReg(REG_OFFSET_BG2CNT, 0x5B0A);
+        break;
+    case 4:
+        DestroyTask(taskId);
+        break;
+    default:
+        task->data[0] = 0;
+        return;
+    }
+
+    task->data[0]++;
 }
 
-__attribute__((naked)) void sub_080CBBD0(void)
+void SetUpScrollToBox(u8 a)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CBBE0\n\t"
-        "	bl FuncIsActiveTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBBE0: .4byte sub_080CBBE4 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s8 direction = sub_080CBEB8(a);
+
+    sStorage->scrollSpeed = (direction > 0) ? 6 : -6;
+    sStorage->scrollUnused1 = (direction > 0) ? 1 : 2;
+    sStorage->scrollTimer = 32;
+    sStorage->scrollToBoxIdUnused = a;
+    sStorage->scrollUnused2 = (direction <= 0) ? 5 : 0;
+    sStorage->scrollDirectionUnused = direction;
+
+    sStorage->scrollUnused3 = (direction > 0) ? 264 : 56;
+    sStorage->scrollUnused4 = (direction <= 0) ? 5 : 0;
+    sStorage->scrollUnused5 = 0;
+    sStorage->scrollUnused6 = 2;
+    sStorage->scrollToBoxId = a;
+    sStorage->scrollDirection = direction;
+    sStorage->scrollState = 0;
 }
 
-__attribute__((naked)) void sub_080CBBE4(void)
+bool8 ScrollToBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _080CBC08\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _080CBCC8\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CBC0C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBC08: .4byte gTasks\n\t"
-        "_080CBC0C: .4byte 0x080CBC10\n\t"
-        "_080CBC10: @ jump table\n\t"
-        "	.4byte _080CBC24 @ case 0\n\t"
-        "	.4byte _080CBC5C @ case 1\n\t"
-        "	.4byte _080CBC90 @ case 2\n\t"
-        "	.4byte _080CBC9A @ case 3\n\t"
-        "	.4byte _080CBCC0 @ case 4\n\t"
-        "_080CBC24:\n\t"
-        "	ldr r1, _080CBC50\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _080CBC54\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r3, #0xb3\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, _080CBC58\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl RequestDma3Fill\n\t"
-        "	strh r0, [r4, #0xa]\n\t"
-        "	b _080CBCCC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBC50: .4byte gUnknown_20399A8\n\t"
-        "_080CBC54: .4byte 0x000002D2\n\t"
-        "_080CBC58: .4byte 0x00004AC4\n\t"
-        "_080CBC5C:\n\t"
-        "	movs r1, #0xa\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	bl CheckForSpaceForDma3Request\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _080CBCD2\n\t"
-        "	ldr r0, _080CBC88\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CBC8C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetBgTilemapBuffer\n\t"
-        "	movs r0, #2\n\t"
-        "	bl ShowBg\n\t"
-        "	b _080CBCCC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBC88: .4byte gUnknown_20399A8\n\t"
-        "_080CBC8C: .4byte 0x00004AC4\n\t"
-        "_080CBC90:\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl LoadWallpaperGfx\n\t"
-        "	b _080CBCCC\n\t"
-        "_080CBC9A:\n\t"
-        "	bl WaitForWallpaperGfxLoad\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CBCD2\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	bl sub_080CC3C4\n\t"
-        "	bl sub_080CC8A8\n\t"
-        "	ldrb r0, [r4, #0xc]\n\t"
-        "	bl sub_080CA89C\n\t"
-        "	ldr r1, _080CBCBC\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl SetGpuReg\n\t"
-        "	b _080CBCCC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBCBC: .4byte 0x00005B0A\n\t"
-        "_080CBCC0:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	b _080CBCCC\n\t"
-        "_080CBCC8:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CBCD0\n\t"
-        "_080CBCCC:\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "_080CBCD0:\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_080CBCD2:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 iconsScrolling;
+
+    switch (sStorage->scrollState)
+    {
+    case 0:
+        LoadWallpaperGfx(sStorage->scrollToBoxId, sStorage->scrollDirection);
+        sStorage->scrollState++;
+    case 1:
+        if (!WaitForWallpaperGfxLoad())
+            return TRUE;
+
+        sub_080CAD40(sStorage->scrollToBoxId, sStorage->scrollDirection);
+        sub_080CC57C(sStorage->scrollToBoxId, sStorage->scrollDirection);
+        sub_080CC934(sStorage->scrollDirection);
+        break;
+    case 2:
+        iconsScrolling = sub_080CADF8();
+        if (sStorage->scrollTimer != 0)
+        {
+            sStorage->bg2_X += sStorage->scrollSpeed;
+            if (--sStorage->scrollTimer != 0)
+                return TRUE;
+            sub_080CC76C();
+            sub_080CC9D4();
+        }
+        return iconsScrolling;
+    }
+
+    sStorage->scrollState++;
+    return TRUE;
 }
 
-__attribute__((naked)) void SetUpScrollToBox(u8 a)
+s8 sub_080CBEB8(u8 boxId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	mov r8, r4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080CBEB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	ldr r5, _080CBD9C\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	asrs r3, r0, #0x18\n\t"
-        "	movs r0, #6\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r3, #0\n\t"
-        "	ble _080CBD04\n\t"
-        "	movs r1, #6\n\t"
-        "_080CBD04:\n\t"
-        "	ldr r7, _080CBDA0\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	cmp r3, #0\n\t"
-        "	ble _080CBD12\n\t"
-        "	movs r1, #1\n\t"
-        "_080CBD12:\n\t"
-        "	ldr r7, _080CBDA4\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	movs r0, #0xb4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	movs r0, #0x20\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r1, #0xb5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	movs r1, #0\n\t"
-        "	cmp r3, #0\n\t"
-        "	bgt _080CBD36\n\t"
-        "	movs r1, #5\n\t"
-        "_080CBD36:\n\t"
-        "	ldr r4, _080CBDA8\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r7, #0xb6\n\t"
-        "	lsls r7, r7, #2\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	strh r3, [r0]\n\t"
-        "	movs r1, #0x38\n\t"
-        "	cmp r3, #0\n\t"
-        "	ble _080CBD50\n\t"
-        "	movs r0, #0x84\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r1, r0, #0\n\t"
-        "_080CBD50:\n\t"
-        "	ldr r4, _080CBDAC\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	strh r1, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	cmp r3, #0\n\t"
-        "	bgt _080CBD5E\n\t"
-        "	movs r1, #5\n\t"
-        "_080CBD5E:\n\t"
-        "	movs r7, #0xb7\n\t"
-        "	lsls r7, r7, #2\n\t"
-        "	adds r0, r2, r7\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r0, _080CBDB0\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	movs r3, #0xb8\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r4, _080CBDB4\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	mov r7, r8\n\t"
-        "	strb r7, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080CBDB8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r3, _080CBDBC\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBD9C: .4byte gUnknown_20399A8\n\t"
-        "_080CBDA0: .4byte 0x000002CE\n\t"
-        "_080CBDA4: .4byte 0x000002D3\n\t"
-        "_080CBDA8: .4byte 0x000002D6\n\t"
-        "_080CBDAC: .4byte 0x000002DA\n\t"
-        "_080CBDB0: .4byte 0x000002DE\n\t"
-        "_080CBDB4: .4byte 0x00000A64\n\t"
-        "_080CBDB8: .4byte 0x00000A65\n\t"
-        "_080CBDBC: .4byte 0x00000A63\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 curBoxId = StorageGetCurrentBox();
+    u8 steps = 0;
+
+    while (curBoxId != boxId)
+    {
+        curBoxId++;
+        if (curBoxId > TOTAL_BOXES_COUNT - 1)
+            curBoxId = 0;
+        steps++;
+    }
+
+    return (steps <= 6) ? 1 : -1;
 }
 
-__attribute__((naked)) void ScrollToBox(void)
+void SetWallpaperForCurrentBox(u8 a)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r4, _080CBDDC\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r5, _080CBDE0\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CBE08\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CBDE4\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CBDEA\n\t"
-        "	b _080CBE98\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBDDC: .4byte gUnknown_20399A8\n\t"
-        "_080CBDE0: .4byte 0x00000A63\n\t"
-        "_080CBDE4:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CBE58\n\t"
-        "	b _080CBE98\n\t"
-        "_080CBDEA:\n\t"
-        "	ldr r2, _080CBE4C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	bl LoadWallpaperGfx\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CBE08:\n\t"
-        "	bl WaitForWallpaperGfxLoad\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CBEA6\n\t"
-        "	ldr r6, _080CBE50\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r4, _080CBE4C\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r5, _080CBE54\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	bl sub_080CAD40\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r4, r1, r4\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	bl sub_080CC57C\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl sub_080CC934\n\t"
-        "	b _080CBE98\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBE4C: .4byte 0x00000A64\n\t"
-        "_080CBE50: .4byte gUnknown_20399A8\n\t"
-        "_080CBE54: .4byte 0x00000A65\n\t"
-        "_080CBE58:\n\t"
-        "	bl sub_080CADF8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	movs r4, #0xb4\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r3, r2, r4\n\t"
-        "	ldrh r0, [r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CBE94\n\t"
-        "	movs r0, #0xb3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	subs r4, #2\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r2, [r1]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r3]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r3]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CBEA6\n\t"
-        "	bl sub_080CC76C\n\t"
-        "	bl sub_080CC9D4\n\t"
-        "_080CBE94:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	b _080CBEA8\n\t"
-        "_080CBE98:\n\t"
-        "	ldr r0, _080CBEB0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r4, _080CBEB4\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CBEA6:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CBEA8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBEB0: .4byte gUnknown_20399A8\n\t"
-        "_080CBEB4: .4byte 0x00000A63\n\t"
-        ".syntax divided\n\t"
-    );
+    SetBoxWallpaper(StorageGetCurrentBox(), a);
+    sStorage->wallpaperChangeState = 0;
 }
 
-__attribute__((naked)) void sub_080CBEB8(void)
+bool8 DoWallpaperGfxChange(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	cmp r1, r4\n\t"
-        "	beq _080CBEE2\n\t"
-        "_080CBECC:\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0xd\n\t"
-        "	bls _080CBED8\n\t"
-        "	movs r1, #0\n\t"
-        "_080CBED8:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r1, r4\n\t"
-        "	bne _080CBECC\n\t"
-        "_080CBEE2:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r2, #6\n\t"
-        "	bhi _080CBEEC\n\t"
-        "	movs r0, #1\n\t"
-        "_080CBEEC:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->wallpaperChangeState)
+    {
+    case 0:
+        BeginNormalPaletteFade(sStorage->wallpaperPalBits, 1, 0, 16, RGB_WHITEALPHA);
+        sStorage->wallpaperChangeState++;
+        break;
+    case 1:
+        if (!UpdatePaletteFade())
+        {
+            u8 curBox = StorageGetCurrentBox();
+            LoadWallpaperGfx(curBox, 0);
+            sStorage->wallpaperChangeState++;
+        }
+        break;
+    case 2:
+        if (WaitForWallpaperGfxLoad() == TRUE)
+        {
+            sub_080CC828();
+            BeginNormalPaletteFade(sStorage->wallpaperPalBits, 1, 16, 0, RGB_WHITEALPHA);
+            sStorage->wallpaperChangeState++;
+        }
+        break;
+    case 3:
+        if (!UpdatePaletteFade())
+            sStorage->wallpaperChangeState++;
+        break;
+    case 4:
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void SetWallpaperForCurrentBox(u8 a)
+void LoadWallpaperGfx(u8 boxId, s8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetBoxWallpaper\n\t"
-        "	ldr r0, _080CBF1C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CBF20\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBF1C: .4byte gUnknown_20399A8\n\t"
-        "_080CBF20: .4byte 0x00000A62\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 wallpaperId;
+    const struct Wallpaper *wallpaper;
+    void *iconGfx;
+    u32 tilesSize;
+    u32 iconSize;
+
+    sStorage->wallpaperLoadState = 0;
+    sStorage->wallpaperLoadBoxId = boxId;
+    sStorage->wallpaperLoadDir = direction;
+    if (sStorage->wallpaperLoadDir != 0)
+    {
+        sStorage->wallpaperOffset = (sStorage->wallpaperOffset == 0);
+        sub_080CC354(sStorage->wallpaperBgTilemapBuffer);
+    }
+
+    wallpaperId = GetBoxWallpaper(sStorage->wallpaperLoadBoxId);
+    if (wallpaperId != 16)
+    {
+        wallpaper = &gUnknown_8551868[wallpaperId];
+        LZ77UnCompWram(wallpaper->tilemap, sStorage->wallpaperTilemap);
+        sub_080CC2B0(sStorage->wallpaperTilemap, sStorage->wallpaperLoadDir, sStorage->wallpaperOffset);
+
+        if (sStorage->wallpaperLoadDir != 0)
+            LoadPalette(wallpaper->palettes, BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2), 2 * PLTT_SIZE_4BPP);
+        else
+            CpuCopy16(wallpaper->palettes, gUnknown_2037434 + sStorage->wallpaperOffset * 32, 2 * PLTT_SIZE_4BPP);
+
+        sStorage->wallpaperTiles = malloc_and_decompress(wallpaper->tiles, &tilesSize);
+        LoadBgTiles(2, sStorage->wallpaperTiles, tilesSize, sStorage->wallpaperOffset << 8);
+    }
+    else
+    {
+        wallpaper = &gUnknown_8555A40[GetWaldaWallpaperPatternId()];
+        LZ77UnCompWram(wallpaper->tilemap, sStorage->wallpaperTilemap);
+        sub_080CC2B0(sStorage->wallpaperTilemap, sStorage->wallpaperLoadDir, sStorage->wallpaperOffset);
+
+        CpuCopy16(wallpaper->palettes, sStorage->wallpaperTilemap, 0x40);
+        CpuCopy16(GetWaldaWallpaperColorsPtr(), &sStorage->wallpaperTilemap[1], 4);
+        CpuCopy16(GetWaldaWallpaperColorsPtr(), &sStorage->wallpaperTilemap[17], 4);
+
+        if (sStorage->wallpaperLoadDir != 0)
+            LoadPalette(sStorage->wallpaperTilemap, BG_PLTT_ID(4) + BG_PLTT_ID(sStorage->wallpaperOffset * 2), 2 * PLTT_SIZE_4BPP);
+        else
+            CpuCopy16(sStorage->wallpaperTilemap, gUnknown_2037434 + sStorage->wallpaperOffset * 32, 2 * PLTT_SIZE_4BPP);
+
+        sStorage->wallpaperTiles = malloc_and_decompress(wallpaper->tiles, &tilesSize);
+        iconGfx = malloc_and_decompress(gUnknown_8555B00[GetWaldaWallpaperIconId()], &iconSize);
+        CpuCopy32(iconGfx, sStorage->wallpaperTiles + 0x800, iconSize);
+        Free(iconGfx);
+        LoadBgTiles(2, sStorage->wallpaperTiles, tilesSize, sStorage->wallpaperOffset << 8);
+    }
+
+    CopyBgTilemapBufferToVram(2);
 }
 
-__attribute__((naked)) void DoWallpaperGfxChange(void)
+bool32 WaitForWallpaperGfxLoad(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _080CBF44\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _080CBF48\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _080CC008\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CBF4C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBF44: .4byte gUnknown_20399A8\n\t"
-        "_080CBF48: .4byte 0x00000A62\n\t"
-        "_080CBF4C: .4byte 0x080CBF50\n\t"
-        "_080CBF50: @ jump table\n\t"
-        "	.4byte _080CBF64 @ case 0\n\t"
-        "	.4byte _080CBF8C @ case 1\n\t"
-        "	.4byte _080CBFA6 @ case 2\n\t"
-        "	.4byte _080CBFE0 @ case 3\n\t"
-        "	.4byte _080CC004 @ case 4\n\t"
-        "_080CBF64:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0xe7\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CBF84\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080CBF88\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _080CBFF2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBF84: .4byte 0x0000FFFF\n\t"
-        "_080CBF88: .4byte 0x00000A62\n\t"
-        "_080CBF8C:\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CC008\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl LoadWallpaperGfx\n\t"
-        "	b _080CBFEA\n\t"
-        "_080CBFA6:\n\t"
-        "	bl WaitForWallpaperGfxLoad\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CC008\n\t"
-        "	bl sub_080CC828\n\t"
-        "	ldr r4, _080CBFD4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0xe7\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CBFD8\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080CBFDC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	b _080CBFF2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBFD4: .4byte gUnknown_20399A8\n\t"
-        "_080CBFD8: .4byte 0x0000FFFF\n\t"
-        "_080CBFDC: .4byte 0x00000A62\n\t"
-        "_080CBFE0:\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CC008\n\t"
-        "_080CBFEA:\n\t"
-        "	ldr r0, _080CBFFC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080CC000\n\t"
-        "	adds r1, r1, r0\n\t"
-        "_080CBFF2:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CC008\n\t"
-        "	.align 2, 0\n\t"
-        "_080CBFFC: .4byte gUnknown_20399A8\n\t"
-        "_080CC000: .4byte 0x00000A62\n\t"
-        "_080CC004:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CC00A\n\t"
-        "_080CC008:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CC00A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsDma3ManagerBusyWithBgCopy())
+        return FALSE;
+
+    TRY_FREE_AND_SET_NULL(sStorage->wallpaperTiles);
+
+    return TRUE;
 }
 
-__attribute__((naked)) void LoadWallpaperGfx(void)
+void sub_080CC2B0(const void *tilemap, s8 direction, u8 offset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r4, _080CC0C8\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r3, _080CC0CC\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	movs r3, #0\n\t"
-        "	strb r3, [r2]\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r3, _080CC0D0\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080CC0D4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r2, r1, r2\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CC05A\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _080CC0D8\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CC04E\n\t"
-        "	movs r3, #1\n\t"
-        "_080CC04E:\n\t"
-        "	strb r3, [r2]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CC0DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl sub_080CC354\n\t"
-        "_080CC05A:\n\t"
-        "	ldr r7, _080CC0C8\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r2, _080CC0D0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBoxWallpaper\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x10\n\t"
-        "	beq _080CC138\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CC0E0\n\t"
-        "	adds r6, r0, r1\n\t"
-        "	ldr r0, [r6, #4]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r5, _080CC0E4\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	bl LZ77UnCompWram\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r5, r0, r5\n\t"
-        "	ldr r4, _080CC0D4\n\t"
-        "	adds r1, r0, r4\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080CC0D8\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_080CC2B0\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r4, r1, r4\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CC0E8\n\t"
-        "	ldr r0, [r6, #8]\n\t"
-        "	ldr r2, _080CC0D8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x15\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #0xf\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r2, #0x40\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _080CC0FC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC0C8: .4byte gUnknown_20399A8\n\t"
-        "_080CC0CC: .4byte 0x000006F9\n\t"
-        "_080CC0D0: .4byte 0x000006FA\n\t"
-        "_080CC0D4: .4byte 0x000006FB\n\t"
-        "_080CC0D8: .4byte 0x000002D2\n\t"
-        "_080CC0DC: .4byte 0x00004AC4\n\t"
-        "_080CC0E0: .4byte gUnknown_8551868\n\t"
-        "_080CC0E4: .4byte 0x00000792\n\t"
-        "_080CC0E8:\n\t"
-        "	ldr r0, [r6, #8]\n\t"
-        "	ldr r2, _080CC128\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	ldr r2, _080CC12C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl CpuSet\n\t"
-        "_080CC0FC:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	mov r1, sp\n\t"
-        "	bl malloc_and_decompress\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _080CC130\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r2, _080CC134\n\t"
-        "	adds r0, r3, r2\n\t"
-        "	str r1, [r0]\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	ldr r0, _080CC128\n\t"
-        "	adds r3, r3, r0\n\t"
-        "	ldrb r3, [r3]\n\t"
-        "	lsls r3, r3, #8\n\t"
-        "	movs r0, #2\n\t"
-        "	bl LoadBgTiles\n\t"
-        "	b _080CC24E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC128: .4byte 0x000002D2\n\t"
-        "_080CC12C: .4byte gUnknown_2037434\n\t"
-        "_080CC130: .4byte gUnknown_20399A8\n\t"
-        "_080CC134: .4byte 0x00000A68\n\t"
-        "_080CC138:\n\t"
-        "	bl GetWaldaWallpaperPatternId\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080CC1BC\n\t"
-        "	adds r6, r1, r0\n\t"
-        "	ldr r0, [r6, #4]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r4, _080CC1C0\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	bl LZ77UnCompWram\n\t"
-        "	ldr r2, [r7]\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	ldr r5, _080CC1C4\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080CC1C8\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	bl sub_080CC2B0\n\t"
-        "	ldr r0, [r6, #8]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl CpuSet\n\t"
-        "	bl GetWaldaWallpaperColorsPtr\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r2, _080CC1CC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl CpuSet\n\t"
-        "	bl GetWaldaWallpaperColorsPtr\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r3, _080CC1D0\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r2, #2\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r5, r1, r5\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CC1D4\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldr r2, _080CC1C8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x15\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #0xf\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r2, #0x40\n\t"
-        "	bl LoadPalette\n\t"
-        "	b _080CC1EA\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC1BC: .4byte gUnknown_8555A40\n\t"
-        "_080CC1C0: .4byte 0x00000792\n\t"
-        "_080CC1C4: .4byte 0x000006FB\n\t"
-        "_080CC1C8: .4byte 0x000002D2\n\t"
-        "_080CC1CC: .4byte 0x00000794\n\t"
-        "_080CC1D0: .4byte 0x000007B4\n\t"
-        "_080CC1D4:\n\t"
-        "	ldr r2, _080CC25C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r3, _080CC260\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	ldr r2, _080CC264\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl CpuSet\n\t"
-        "_080CC1EA:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	mov r1, sp\n\t"
-        "	bl malloc_and_decompress\n\t"
-        "	ldr r6, _080CC268\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r5, _080CC26C\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r4, _080CC270\n\t"
-        "	bl GetWaldaWallpaperIconId\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	add r1, sp, #4\n\t"
-        "	bl malloc_and_decompress\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [sp, #4]\n\t"
-        "	lsls r2, r2, #9\n\t"
-        "	lsrs r2, r2, #0xb\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x13\n\t"
-        "	orrs r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl CpuSet\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r5, r0, r5\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	ldr r3, _080CC260\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	lsls r3, r3, #8\n\t"
-        "	movs r0, #2\n\t"
-        "	bl LoadBgTiles\n\t"
-        "_080CC24E:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC25C: .4byte 0x00000792\n\t"
-        "_080CC260: .4byte 0x000002D2\n\t"
-        "_080CC264: .4byte gUnknown_2037434\n\t"
-        "_080CC268: .4byte gUnknown_20399A8\n\t"
-        "_080CC26C: .4byte 0x00000A68\n\t"
-        "_080CC270: .4byte gUnknown_8555B00\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 tileOffset = offset * 256;
+    s16 paletteNum = (offset * 2) + 3;
+    s16 x = ((sStorage->bg2_X / 8 + 10) + (direction * 24)) & 0x3F;
+
+    CopyRectToBgTilemapBufferRect(2, tilemap, 0, 0, 20, 18, x, 2, 20, 18, 17, tileOffset, paletteNum);
+
+    if (direction == 0)
+        return;
+    if (direction > 0)
+        x += 20;
+    else
+        x -= 4;
+
+    FillBgTilemapBufferRect(2, 0, x, 2, 4, 0x12, 17);
 }
 
-__attribute__((naked)) bool8 WaitForWallpaperGfxLoad(void)
+void sub_080CC354(void *tilemap)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080CC286\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CC2A2\n\t"
-        "_080CC286:\n\t"
-        "	ldr r5, _080CC2A8\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080CC2AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CC2A0\n\t"
-        "	bl Free\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080CC2AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r4, [r0]\n\t"
-        "_080CC2A0:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CC2A2:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC2A8: .4byte gUnknown_20399A8\n\t"
-        "_080CC2AC: .4byte 0x00000A68\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u16 *dest = tilemap;
+    s16 r3 = ((sStorage->bg2_X / 8) + 30) & 0x3F;
+
+    if (r3 <= 31)
+        dest += r3 + 0x260;
+    else
+        dest += r3 + 0x640;
+
+    for (i = 0; i < 0x2C; i++)
+    {
+        *dest++ = 0;
+        r3 = (r3 + 1) & 0x3F;
+        if (r3 == 0)
+            dest -= 0x420;
+        if (r3 == 0x20)
+            dest += 0x3e0;
+    }
 }
 
-__attribute__((naked)) void sub_080CC2B0(void)
+void sub_080CC3C4(u8 boxId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x24\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	lsls r4, r2, #0x11\n\t"
-        "	ldr r0, _080CC320\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r3, #0xb3\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r3, [r0]\n\t"
-        "	lsrs r3, r3, #3\n\t"
-        "	adds r3, #0xa\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r7, r1, #0x18\n\t"
-        "	lsls r0, r7, #1\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r6, r3, r0\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r6, r0\n\t"
-        "	movs r3, #0x14\n\t"
-        "	str r3, [sp]\n\t"
-        "	movs r1, #0x12\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	str r3, [sp, #0x10]\n\t"
-        "	str r1, [sp, #0x14]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	str r2, [sp, #0x1c]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #0xa\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	str r4, [sp, #0x20]\n\t"
-        "	movs r0, #2\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl CopyRectToBgTilemapBufferRect\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _080CC346\n\t"
-        "	cmp r7, #0\n\t"
-        "	ble _080CC324\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0xd\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	b _080CC32A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC320: .4byte gUnknown_20399A8\n\t"
-        "_080CC324:\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	ldr r3, _080CC350\n\t"
-        "	adds r0, r0, r3\n\t"
-        "_080CC32A:\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	lsls r2, r6, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #4\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "_080CC346:\n\t"
-        "	add sp, #0x24\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC350: .4byte 0xFFFC0000\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 tagIndex;
+    s16 x;
+    u16 i;
+
+    struct SpriteSheet spriteSheet = {sStorage->boxTitleTiles, 0x200, GFXTAG_BOX_TITLE};
+    struct SpritePalette palettes[] = {
+        {sStorage->boxTitlePal, PALTAG_BOX_TITLE},
+        {}
+    };
+
+    u16 wallpaperId = GetBoxWallpaper(boxId);
+
+    sStorage->boxTitlePal[14] = gUnknown_8551824[wallpaperId][0];
+    sStorage->boxTitlePal[15] = gUnknown_8551824[wallpaperId][1];
+    LoadSpritePalettes(palettes);
+    sStorage->wallpaperPalBits = 0x3f0;
+
+    tagIndex = IndexOfSpritePaletteTag(PALTAG_BOX_TITLE);
+    sStorage->boxTitlePalOffset = OBJ_PLTT_ID(tagIndex) + 14;
+    sStorage->wallpaperPalBits |= (1 << 16) << tagIndex;
+
+    tagIndex = IndexOfSpritePaletteTag(PALTAG_BOX_TITLE);
+    sStorage->boxTitleAltPalOffset = OBJ_PLTT_ID(tagIndex) + 14;
+    sStorage->wallpaperPalBits |= (1 << 16) << tagIndex;
+
+    StringCopyPadded(sStorage->boxTitleText, GetBoxNamePtr(boxId), 0, BOX_NAME_LENGTH);
+    sub_080C66A4(sStorage->boxTitleText, sStorage->boxTitleTiles, 0, 0, sStorage->boxTitleTiles + 0x200);
+    LoadSpriteSheet(&spriteSheet);
+    x = GetBoxTitleBaseX(StringLength(GetBoxNamePtr(boxId)));
+
+    for (i = 0; i < 2; i++)
+    {
+        u8 spriteId = CreateSprite(&gUnknown_8555BA4, x + i * 32, 28, 24);
+        sStorage->curBoxTitleSprites[i] = &gSprites[spriteId];
+        StartSpriteAnim(sStorage->curBoxTitleSprites[i], i);
+    }
+    sStorage->boxTitleCycleId = 0;
 }
 
-__attribute__((naked)) void sub_080CC354(void)
+void sub_080CC57C(u8 boxId, s8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r0, _080CC380\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xb3\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsrs r0, r0, #3\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x1e\n\t"
-        "	movs r0, #0x3f\n\t"
-        "	ands r3, r0\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	cmp r0, #0x1f\n\t"
-        "	bgt _080CC384\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r6, #0x98\n\t"
-        "	lsls r6, r6, #3\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	b _080CC38C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC380: .4byte gUnknown_20399A8\n\t"
-        "_080CC384:\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r1, #0xc8\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_080CC38C:\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r4, #0x3f\n\t"
-        "_080CC394:\n\t"
-        "	strh r5, [r2]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r3, #1\n\t"
-        "	ands r3, r4\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080CC3A6\n\t"
-        "	ldr r6, _080CC3C0\n\t"
-        "	adds r2, r2, r6\n\t"
-        "_080CC3A6:\n\t"
-        "	cmp r1, #0x20\n\t"
-        "	bne _080CC3B0\n\t"
-        "	movs r1, #0xf8\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r2, r2, r1\n\t"
-        "_080CC3B0:\n\t"
-        "	adds r0, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x2b\n\t"
-        "	bls _080CC394\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC3C0: .4byte 0xFFFFF7C0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 palOffset;
+    s16 x, adjustedX;
+    u16 i;
+    struct SpriteSheet spriteSheet = {sStorage->boxTitleTiles, 0x200, GFXTAG_BOX_TITLE};
+    struct SpriteTemplate template = gUnknown_8555BA4;
+
+    sStorage->boxTitleCycleId = (sStorage->boxTitleCycleId == 0);
+    if (sStorage->boxTitleCycleId == 0)
+    {
+        spriteSheet.tag = GFXTAG_BOX_TITLE;
+        palOffset = sStorage->boxTitlePalOffset;
+    }
+    else
+    {
+        spriteSheet.tag = GFXTAG_BOX_TITLE_ALT;
+        palOffset = sStorage->boxTitlePalOffset;
+        template.tileTag = GFXTAG_BOX_TITLE_ALT;
+        template.paletteTag = PALTAG_BOX_TITLE;
+    }
+
+    StringCopyPadded(sStorage->boxTitleText, GetBoxNamePtr(boxId), 0, BOX_NAME_LENGTH);
+    sub_080C66A4(sStorage->boxTitleText, sStorage->boxTitleTiles, 0, 0, sStorage->boxTitleTiles + 0x200);
+    LoadSpriteSheet(&spriteSheet);
+    LoadPalette(gUnknown_8551824[GetBoxWallpaper(boxId)], palOffset, sizeof(gUnknown_8551824[0]));
+    x = GetBoxTitleBaseX(StringLength(GetBoxNamePtr(boxId)));
+    adjustedX = x;
+    adjustedX += direction * 192;
+
+    for (i = 0; i < 2; i++)
+    {
+        u8 spriteId = CreateSprite(&template, i * 32 + adjustedX, 28, 24);
+
+        sStorage->nextBoxTitleSprites[i] = &gSprites[spriteId];
+        sStorage->nextBoxTitleSprites[i]->data[0] = (-direction) * 6;
+        sStorage->nextBoxTitleSprites[i]->data[1] = i * 32 + x;
+        sStorage->nextBoxTitleSprites[i]->data[2] = 0;
+        sStorage->nextBoxTitleSprites[i]->callback = sub_080CC7BC;
+        StartSpriteAnim(sStorage->nextBoxTitleSprites[i], i);
+
+        sStorage->curBoxTitleSprites[i]->data[0] = (-direction) * 6;
+        sStorage->curBoxTitleSprites[i]->data[1] = 1;
+        sStorage->curBoxTitleSprites[i]->callback = sub_080CC7F0;
+    }
 }
 
-__attribute__((naked)) void sub_080CC3C4(void)
+void sub_080CC76C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x30\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, _080CC550\n\t"
-        "	mov sl, r1\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0xbe\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	str r0, [sp, #0x24]\n\t"
-        "	mov r3, sp\n\t"
-        "	adds r3, #0x24\n\t"
-        "	str r3, [sp, #0x2c]\n\t"
-        "	ldr r0, _080CC554\n\t"
-        "	str r0, [r3, #4]\n\t"
-        "	ldr r4, _080CC558\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	str r1, [sp, #0x14]\n\t"
-        "	add r0, sp, #0x18\n\t"
-        "	ldr r7, _080CC55C\n\t"
-        "	strh r7, [r0]\n\t"
-        "	add r0, sp, #0x1c\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl memset\n\t"
-        "	add r1, sp, #0x14\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r2, #0x10\n\t"
-        "	bl memcpy\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetBoxWallpaper\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	mov r5, sl\n\t"
-        "	ldr r4, [r5]\n\t"
-        "	ldr r2, _080CC560\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r3, [r1]\n\t"
-        "	movs r5, #0xe3\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r1, r4, r5\n\t"
-        "	strh r3, [r1]\n\t"
-        "	adds r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldr r1, _080CC564\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	strh r0, [r4]\n\t"
-        "	add r0, sp, #4\n\t"
-        "	bl LoadSpritePalettes\n\t"
-        "	mov r2, sl\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	movs r6, #0xe7\n\t"
-        "	lsls r6, r6, #3\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0xfc\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	str r1, [r0]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r4, sl\n\t"
-        "	ldr r3, [r4]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	movs r5, #0x87\n\t"
-        "	lsls r5, r5, #1\n\t"
-        "	mov sb, r5\n\t"
-        "	add r1, sb\n\t"
-        "	ldr r4, _080CC568\n\t"
-        "	adds r2, r3, r4\n\t"
-        "	strh r1, [r2]\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #9\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	lsls r1, r0\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r3]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, sl\n\t"
-        "	ldr r4, [r1]\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	add r1, sb\n\t"
-        "	ldr r3, _080CC56C\n\t"
-        "	adds r2, r4, r3\n\t"
-        "	strh r1, [r2]\n\t"
-        "	adds r6, r4, r6\n\t"
-        "	lsls r5, r0\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	orrs r0, r5\n\t"
-        "	str r0, [r6]\n\t"
-        "	ldr r5, _080CC570\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetBoxNamePtr\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl StringCopyPadded\n\t"
-        "	mov r4, sl\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r5, r0, r5\n\t"
-        "	movs r2, #0xbe\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	movs r3, #0x9f\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080C66A4\n\t"
-        "	ldr r0, [sp, #0x2c]\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	mov r0, r8\n\t"
-        "	bl GetBoxNamePtr\n\t"
-        "	bl StringLength\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl GetBoxTitleBaseX\n\t"
-        "	movs r4, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r6, r0, #0x10\n\t"
-        "_080CC4F0:\n\t"
-        "	lsls r1, r4, #5\n\t"
-        "	adds r1, r6, r1\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldr r0, _080CC574\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0x18\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r5, _080CC550\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	movs r3, #0xe4\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CC578\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r2]\n\t"
-        "	lsls r1, r4, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #1\n\t"
-        "	bls _080CC4F0\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0xdf\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	add sp, #0x30\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC550: .4byte gUnknown_20399A8\n\t"
-        "_080CC554: .4byte 0x00030200\n\t"
-        "_080CC558: .4byte 0x000006FC\n\t"
-        "_080CC55C: .4byte 0x0000DAC9\n\t"
-        "_080CC560: .4byte gUnknown_8551824\n\t"
-        "_080CC564: .4byte 0x0000071A\n\t"
-        "_080CC568: .4byte 0x0000071C\n\t"
-        "_080CC56C: .4byte 0x0000071E\n\t"
-        "_080CC570: .4byte 0x000021B8\n\t"
-        "_080CC574: .4byte gUnknown_8555BA4\n\t"
-        "_080CC578: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->boxTitleCycleId == 0)
+        FreeSpriteTilesByTag(GFXTAG_BOX_TITLE_ALT);
+    else
+        FreeSpriteTilesByTag(GFXTAG_BOX_TITLE);
+
+    sStorage->curBoxTitleSprites[0] = sStorage->nextBoxTitleSprites[0];
+    sStorage->curBoxTitleSprites[1] = sStorage->nextBoxTitleSprites[1];
 }
 
-__attribute__((naked)) void sub_080CC57C(void)
+void sub_080CC7BC(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x2c\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #0x28]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov sl, r1\n\t"
-        "	ldr r4, _080CC5F8\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	movs r1, #0xbe\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	str r0, [sp, #0x1c]\n\t"
-        "	add r3, sp, #0x1c\n\t"
-        "	ldr r5, _080CC5FC\n\t"
-        "	mov ip, r5\n\t"
-        "	movs r6, #0xc0\n\t"
-        "	lsls r6, r6, #0xa\n\t"
-        "	mov sb, r6\n\t"
-        "	ldr r0, _080CC600\n\t"
-        "	str r0, [r3, #4]\n\t"
-        "	add r1, sp, #4\n\t"
-        "	ldr r0, _080CC604\n\t"
-        "	ldm r0!, {r5, r6, r7}\n\t"
-        "	stm r1!, {r5, r6, r7}\n\t"
-        "	ldm r0!, {r5, r6, r7}\n\t"
-        "	stm r1!, {r5, r6, r7}\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r5, #0xdf\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	mov r8, r4\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CC5D0\n\t"
-        "	movs r1, #1\n\t"
-        "_080CC5D0:\n\t"
-        "	strb r1, [r2]\n\t"
-        "	mov r7, r8\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CC60C\n\t"
-        "	ldr r0, [r6, #4]\n\t"
-        "	mov r1, ip\n\t"
-        "	ands r0, r1\n\t"
-        "	mov r2, sb\n\t"
-        "	orrs r0, r2\n\t"
-        "	str r0, [r6, #4]\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r3, _080CC608\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	mov sb, r0\n\t"
-        "	b _080CC630\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC5F8: .4byte gUnknown_20399A8\n\t"
-        "_080CC5FC: .4byte 0x0000FFFF\n\t"
-        "_080CC600: .4byte 0x00030200\n\t"
-        "_080CC604: .4byte gUnknown_8555BA4\n\t"
-        "_080CC608: .4byte 0x0000071C\n\t"
-        "_080CC60C:\n\t"
-        "	ldr r0, [r6, #4]\n\t"
-        "	mov r5, ip\n\t"
-        "	ands r0, r5\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0xb\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r6, #4]\n\t"
-        "	mov r7, r8\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r1, _080CC750\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	mov sb, r0\n\t"
-        "	add r1, sp, #4\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080CC754\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "_080CC630:\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r4, [r2]\n\t"
-        "	ldr r5, _080CC758\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	bl GetBoxNamePtr\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl StringCopyPadded\n\t"
-        "	mov r3, r8\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r5, r0, r5\n\t"
-        "	movs r7, #0xbe\n\t"
-        "	lsls r7, r7, #2\n\t"
-        "	adds r1, r0, r7\n\t"
-        "	movs r2, #0x9f\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080C66A4\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	bl GetBoxWallpaper\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	ldr r1, _080CC75C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r1, sb\n\t"
-        "	movs r2, #4\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, [sp, #0x28]\n\t"
-        "	bl GetBoxNamePtr\n\t"
-        "	bl StringLength\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl GetBoxTitleBaseX\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	mov r3, sl\n\t"
-        "	lsls r2, r3, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	str r5, [sp, #0x24]\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r7, #0\n\t"
-        "	mov sb, r8\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	mov r8, r2\n\t"
-        "_080CC6BA:\n\t"
-        "	lsls r6, r7, #5\n\t"
-        "	mov r0, sl\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	add r0, sp, #4\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0x18\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r5, r7, #2\n\t"
-        "	movs r3, #0xe5\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080CC760\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [r2]\n\t"
-        "	mov r0, r8\n\t"
-        "	lsls r4, r0, #1\n\t"
-        "	add r4, r8\n\t"
-        "	lsls r4, r4, #1\n\t"
-        "	strh r4, [r1, #0x2e]\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r3, [sp, #0x24]\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strh r0, [r1, #0x30]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	movs r6, #0\n\t"
-        "	strh r6, [r0, #0x32]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CC764\n\t"
-        "	str r1, [r0, #0x1c]\n\t"
-        "	lsls r1, r7, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	movs r2, #0xe4\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	strh r4, [r1, #0x2e]\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	strh r1, [r2, #0x30]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080CC768\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	cmp r7, #1\n\t"
-        "	bls _080CC6BA\n\t"
-        "	add sp, #0x2c\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC750: .4byte 0x0000071C\n\t"
-        "_080CC754: .4byte 0x0000DAC9\n\t"
-        "_080CC758: .4byte 0x000021B8\n\t"
-        "_080CC75C: .4byte gUnknown_8551824\n\t"
-        "_080CC760: .4byte gSprites\n\t"
-        "_080CC764: .4byte sub_080CC7BC + 1\n\t"
-        "_080CC768: .4byte sub_080CC7F0 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[2] != 0)
+        sprite->data[2]--;
+    else if ((sprite->x += sprite->data[0]) == sprite->data[1])
+        sprite->callback = SpriteCallbackDummy;
 }
 
-__attribute__((naked)) void sub_080CC76C(void)
+void sub_080CC7F0(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CC788\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xdf\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CC78C\n\t"
-        "	movs r0, #4\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "	b _080CC792\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC788: .4byte gUnknown_20399A8\n\t"
-        "_080CC78C:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl FreeSpriteTilesByTag\n\t"
-        "_080CC792:\n\t"
-        "	ldr r0, _080CC7B4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r3, #0xe4\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r2, r0, r3\n\t"
-        "	adds r3, #8\n\t"
-        "	adds r1, r0, r3\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	str r1, [r2]\n\t"
-        "	ldr r2, _080CC7B8\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	adds r3, #4\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC7B4: .4byte gUnknown_20399A8\n\t"
-        "_080CC7B8: .4byte 0x00000724\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->data[1] != 0)
+    {
+        sprite->data[1]--;
+    }
+    else
+    {
+        sprite->x += sprite->data[0];
+        sprite->data[2] = sprite->x + sprite->x2;
+        if (sprite->data[2] < 64 || sprite->data[2] > DISPLAY_WIDTH + 16)
+            DestroySprite(sprite);
+    }
 }
 
-__attribute__((naked)) void sub_080CC7BC(void)
+void sub_080CC828(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r1, [r2, #0x32]\n\t"
-        "	movs r3, #0x32\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CC7D0\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	b _080CC7E8\n\t"
-        "_080CC7D0:\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	ldrh r1, [r2, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r3, #0x30\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080CC7E8\n\t"
-        "	ldr r0, _080CC7EC\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "_080CC7E8:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC7EC: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u8 boxId = StorageGetCurrentBox();
+    u8 wallpaperId = GetBoxWallpaper(boxId);
 
-__attribute__((naked)) void sub_080CC7F0(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r1, [r2, #0x30]\n\t"
-        "	movs r3, #0x30\n\t"
-        "	ldrsh r0, [r2, r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CC804\n\t"
-        "	subs r0, r1, #1\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	b _080CC822\n\t"
-        "_080CC804:\n\t"
-        "	ldrh r0, [r2, #0x2e]\n\t"
-        "	ldrh r1, [r2, #0x20]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	ldrh r1, [r2, #0x24]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	subs r0, #0x40\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xc0\n\t"
-        "	bls _080CC822\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "_080CC822:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->boxTitleCycleId == 0)
+        CpuCopy16(gUnknown_8551824[wallpaperId], &gPlttBufferUnfaded[sStorage->boxTitlePalOffset], PLTT_SIZEOF(2));
+    else
+        CpuCopy16(gUnknown_8551824[wallpaperId], &gPlttBufferUnfaded[sStorage->boxTitleAltPalOffset], PLTT_SIZEOF(2));
 }
-
-__attribute__((naked)) void sub_080CC828(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetBoxWallpaper\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r0, _080CC864\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r3, #0xdf\n\t"
-        "	lsls r3, r3, #3\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CC870\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	ldr r1, _080CC868\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r3, #0x24\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r2, _080CC86C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl CpuSet\n\t"
-        "	b _080CC888\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC864: .4byte gUnknown_20399A8\n\t"
-        "_080CC868: .4byte gUnknown_8551824\n\t"
-        "_080CC86C: .4byte gPlttBufferUnfaded\n\t"
-        "_080CC870:\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	ldr r1, _080CC88C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r3, _080CC890\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r2, _080CC894\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl CpuSet\n\t"
-        "_080CC888:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC88C: .4byte gUnknown_8551824\n\t"
-        "_080CC890: .4byte 0x0000071E\n\t"
-        "_080CC894: .4byte gPlttBufferUnfaded\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
 
 s16 GetBoxTitleBaseX(u16 len)
 {
     return (s16)(0xB0 - (len << 2));
 }
 
-__attribute__((naked)) void sub_080CC8A8(void)
+void sub_080CC8A8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _080CC924\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	movs r5, #0\n\t"
-        "_080CC8B2:\n\t"
-        "	lsls r1, r5, #4\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	movs r0, #0xb8\n\t"
-        "	lsls r0, r0, #0xf\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	ldr r0, _080CC928\n\t"
-        "	movs r2, #0x1c\n\t"
-        "	movs r3, #0x16\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x40\n\t"
-        "	beq _080CC904\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CC92C\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	lsls r1, r5, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r0, #1\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080CC8F2\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "_080CC8F2:\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	ldr r0, _080CC930\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r5, #2\n\t"
-        "	movs r2, #0xe6\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r4, [r0]\n\t"
-        "_080CC904:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #1\n\t"
-        "	bls _080CC8B2\n\t"
-        "	bl IsCursorOnBoxTitle\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CC91E\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CCA24\n\t"
-        "_080CC91E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC924: .4byte gUnknown_8555B7C\n\t"
-        "_080CC928: .4byte gUnknown_8555BDC\n\t"
-        "_080CC92C: .4byte gSprites\n\t"
-        "_080CC930: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    LoadSpriteSheet(&gUnknown_8555B7C);
+    for (i = 0; i < 2; i++)
+    {
+        u8 spriteId = CreateSprite(&gUnknown_8555BDC, 92 + i * 136, 28, 22);
+        if (spriteId != MAX_SPRITES)
+        {
+            struct Sprite *sprite = &gSprites[spriteId];
+            StartSpriteAnim(sprite, i);
+            sprite->data[3] = (i == 0) ? -1 : 1;
+            sStorage->arrowSprites[i] = sprite;
+        }
+    }
+    if (IsCursorOnBoxTitle())
+        sub_080CCA24(TRUE);
 }
 
-__attribute__((naked)) void sub_080CC934(void)
+void sub_080CC934(s8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r7, _080CC988\n\t"
-        "	mov ip, r7\n\t"
-        "	movs r6, #0xe6\n\t"
-        "	lsls r6, r6, #3\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r3, #2\n\t"
-        "_080CC948:\n\t"
-        "	mov r0, ip\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r4, [r0, #0x24]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r3, [r0, #0x2e]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #1\n\t"
-        "	bls _080CC948\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CC990\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	movs r2, #0xe6\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r3, r1, r2\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	movs r0, #0x1d\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	ldr r0, _080CC98C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	movs r2, #0x48\n\t"
-        "	b _080CC9AC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC988: .4byte gUnknown_20399A8\n\t"
-        "_080CC98C: .4byte 0x00000734\n\t"
-        "_080CC990:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	movs r2, #0xe6\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r3, r1, r2\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	movs r0, #5\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	ldr r0, _080CC9D0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	movs r0, #0x1d\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	movs r2, #0xf8\n\t"
-        "_080CC9AC:\n\t"
-        "	strh r2, [r0, #0x32]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r2, [r0, #0x32]\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	movs r2, #0xe6\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "	ldr r0, _080CC9D0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x3c]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CC9D0: .4byte 0x00000734\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    for (i = 0; i < 2; i++)
+    {
+        sStorage->arrowSprites[i]->x2 = 0;
+        sStorage->arrowSprites[i]->data[0] = 2;
+    }
+    if (direction < 0)
+    {
+        sStorage->arrowSprites[0]->data[1] = 29;
+        sStorage->arrowSprites[1]->data[1] = 5;
+        sStorage->arrowSprites[0]->data[2] = 72;
+        sStorage->arrowSprites[1]->data[2] = 72;
+    }
+    else
+    {
+        sStorage->arrowSprites[0]->data[1] = 5;
+        sStorage->arrowSprites[1]->data[1] = 29;
+        sStorage->arrowSprites[0]->data[2] = DISPLAY_WIDTH + 8;
+        sStorage->arrowSprites[1]->data[2] = DISPLAY_WIDTH + 8;
+    }
+    sStorage->arrowSprites[0]->data[7] = 0;
+    sStorage->arrowSprites[1]->data[7] = 1;
 }
 
-__attribute__((naked)) void sub_080CC9D4(void)
+void sub_080CC9D4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r6, #5\n\t"
-        "	rsbs r6, r6, #0\n\t"
-        "	ldr r4, _080CCA20\n\t"
-        "_080CC9E0:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	movs r2, #0xe6\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	lsls r0, r3, #4\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, #0x5c\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r5, [r0, #0x24]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r3, #1\n\t"
-        "	bls _080CC9E0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CCA24\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCA20: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    for (i = 0; i < 2; i++)
+    {
+        sStorage->arrowSprites[i]->x = 136 * i + 92;
+        sStorage->arrowSprites[i]->x2 = 0;
+        sStorage->arrowSprites[i]->invisible = FALSE;
+    }
+    sub_080CCA24(TRUE);
 }
 
-__attribute__((naked)) void sub_080CCA24(void)
+void sub_080CCA24(bool8 animate)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CCA60\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r6, _080CCA5C\n\t"
-        "	movs r5, #0xe6\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r4, #1\n\t"
-        "_080CCA38:\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r4, [r0, #0x2e]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r3, [r0, #0x30]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r3, [r0, #0x32]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	strh r3, [r0, #0x36]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #1\n\t"
-        "	bls _080CCA38\n\t"
-        "	b _080CCA80\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCA5C: .4byte gUnknown_20399A8\n\t"
-        "_080CCA60:\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _080CCA88\n\t"
-        "	movs r4, #0xe6\n\t"
-        "	lsls r4, r4, #3\n\t"
-        "	movs r3, #0\n\t"
-        "_080CCA6A:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strh r3, [r0, #0x2e]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, #1\n\t"
-        "	bls _080CCA6A\n\t"
-        "_080CCA80:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCA88: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    if (animate)
+    {
+        for (i = 0; i < 2; i++)
+        {
+            sStorage->arrowSprites[i]->data[0] = 1;
+            sStorage->arrowSprites[i]->data[1] = 0;
+            sStorage->arrowSprites[i]->data[2] = 0;
+            sStorage->arrowSprites[i]->data[4] = 0;
+        }
+    }
+    else
+    {
+        for (i = 0; i < 2; i++)
+            sStorage->arrowSprites[i]->data[0] = 0;
+    }
 }
 
-__attribute__((naked)) void sub_080CCA8C(void)
+void sub_080CCA8C(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _080CCB58\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CCAA4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCAA4: .4byte 0x080CCAA8\n\t"
-        "_080CCAA8: @ jump table\n\t"
-        "	.4byte _080CCABC @ case 0\n\t"
-        "	.4byte _080CCAC2 @ case 1\n\t"
-        "	.4byte _080CCAF0 @ case 2\n\t"
-        "	.4byte _080CCAF6 @ case 3\n\t"
-        "	.4byte _080CCB48 @ case 4\n\t"
-        "_080CCABC:\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	b _080CCB58\n\t"
-        "_080CCAC2:\n\t"
-        "	ldrh r0, [r2, #0x30]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _080CCB58\n\t"
-        "	strh r1, [r2, #0x30]\n\t"
-        "	ldrh r0, [r2, #0x34]\n\t"
-        "	ldrh r3, [r2, #0x24]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2, #0x24]\n\t"
-        "	ldrh r0, [r2, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r2, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _080CCB58\n\t"
-        "	strh r1, [r2, #0x32]\n\t"
-        "	strh r1, [r2, #0x24]\n\t"
-        "	b _080CCB58\n\t"
-        "_080CCAF0:\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	b _080CCB58\n\t"
-        "_080CCAF6:\n\t"
-        "	ldr r0, _080CCB40\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _080CCB44\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r2, #0x20]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	subs r0, #0x49\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xae\n\t"
-        "	bls _080CCB1C\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "_080CCB1C:\n\t"
-        "	ldrh r0, [r2, #0x30]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r2, #0x30]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CCB58\n\t"
-        "	ldrh r0, [r2, #0x32]\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	adds r3, #0x3e\n\t"
-        "	ldrb r1, [r3]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r3]\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r2, #0x2e]\n\t"
-        "	b _080CCB58\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCB40: .4byte gUnknown_20399A8\n\t"
-        "_080CCB44: .4byte 0x000002CE\n\t"
-        "_080CCB48:\n\t"
-        "	ldr r0, _080CCB5C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CCB60\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r2, #0x20]\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r2, #0x20]\n\t"
-        "_080CCB58:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCB5C: .4byte gUnknown_20399A8\n\t"
-        "_080CCB60: .4byte 0x000002CE\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->x2 = 0;
+        break;
+    case 1:
+        if (++sprite->data[1] > 3)
+        {
+            sprite->data[1] = 0;
+            sprite->x2 += sprite->data[3];
+            if (++sprite->data[2] > 5)
+            {
+                sprite->data[2] = 0;
+                sprite->x2 = 0;
+            }
+        }
+        break;
+    case 2:
+        sprite->data[0] = 3;
+        break;
+    case 3:
+        sprite->x -= sStorage->scrollSpeed;
+        if (sprite->x <= 72 || sprite->x >= DISPLAY_WIDTH + 8)
+            sprite->invisible = TRUE;
+        if (--sprite->data[1] == 0)
+        {
+            sprite->x = sprite->data[2];
+            sprite->invisible = FALSE;
+            sprite->data[0] = 4;
+        }
+        break;
+    case 4:
+        sprite->x -= sStorage->scrollSpeed;
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080CCB64(void)
+struct Sprite *sub_080CCB64(u16 x, u16 y, u8 animId, u8 priority, u8 subpriority)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldr r4, [sp, #0x18]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r7, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	mov r8, r3\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _080CCBD0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	asrs r6, r6, #0x10\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _080CCBDC\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r1, r7\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r5, _080CCBD4\n\t"
-        "	adds r6, r4, r5\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r0, #3\n\t"
-        "	mov r1, r8\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldrb r2, [r6, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6, #5]\n\t"
-        "	adds r5, #0x1c\n\t"
-        "	adds r4, r4, r5\n\t"
-        "	ldr r0, _080CCBD8\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	b _080CCBDE\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCBD0: .4byte gUnknown_8555BDC\n\t"
-        "_080CCBD4: .4byte gSprites\n\t"
-        "_080CCBD8: .4byte SpriteCallbackDummy + 1\n\t"
-        "_080CCBDC:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CCBDE:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSprite(&gUnknown_8555BDC, x, y, subpriority);
+
+    if (spriteId == MAX_SPRITES)
+    {
+        return NULL;
+    }
+    else
+    {
+        u8 anim = animId & 1;
+
+        StartSpriteAnim(&gSprites[spriteId], anim);
+        gSprites[spriteId].oam.priority = priority;
+        gSprites[spriteId].callback = SpriteCallbackDummy;
+        return &gSprites[spriteId];
+    }
 }
 
-__attribute__((naked)) void sub_080CCBE8(void)
+void sub_080CCBE8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CCBFC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080CCC04\n\t"
-        "	ldr r1, _080CCC00\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CCC08\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCBFC: .4byte gUnknown_20399A8\n\t"
-        "_080CCC00: .4byte gUnknown_2039A18\n\t"
-        "_080CCC04:\n\t"
-        "	ldr r0, _080CCC44\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080CCC08:\n\t"
-        "	ldr r0, _080CCC48\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _080CCC4C\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _080CCC50\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _080CCC54\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _080CCC58\n\t"
-        "	strb r1, [r0]\n\t"
-        "	bl ClearSavedCursorPos\n\t"
-        "	bl sub_080CF490\n\t"
-        "	ldr r2, _080CCC5C\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CCC60\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r3, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CCC64\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r3, [r0]\n\t"
-        "	bl TryRefreshDisplayMon\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCC44: .4byte gUnknown_2039A18\n\t"
-        "_080CCC48: .4byte gUnknown_2039A19\n\t"
-        "_080CCC4C: .4byte gUnknown_2039A1A\n\t"
-        "_080CCC50: .4byte gUnknown_2039A1B\n\t"
-        "_080CCC54: .4byte gUnknown_2039A1C\n\t"
-        "_080CCC58: .4byte gUnknown_2039A1D\n\t"
-        "_080CCC5C: .4byte gUnknown_20399A8\n\t"
-        "_080CCC60: .4byte 0x00000CD6\n\t"
-        "_080CCC64: .4byte 0x000021FF\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->boxOption != OPTION_DEPOSIT)
+        gUnknown_2039A18 = CURSOR_AREA_IN_BOX;
+    else
+        gUnknown_2039A18 = CURSOR_AREA_IN_PARTY;
+
+    gUnknown_2039A19 = 0;
+    gUnknown_2039A1A = FALSE;
+    gUnknown_2039A1B = 0;
+    gUnknown_2039A1C = 0;
+    gUnknown_2039A1D = FALSE;
+    ClearSavedCursorPos();
+    sub_080CF490();
+    sStorage->cursorPrevHorizPos = 1;
+    sStorage->inBoxMovingMode = 0;
+    TryRefreshDisplayMon();
 }
 
-__attribute__((naked)) void sub_080CCC68(void)
+void sub_080CCC68(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_080CF490\n\t"
-        "	bl ReshowDisplayMon\n\t"
-        "	ldr r3, _080CCCA8\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CCCAC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CCCB0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r0, _080CCCB4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CCCA2\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CCCB8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080CCCBC\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	bl CreateMovingMonIcon\n\t"
-        "_080CCCA2:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCCA8: .4byte gUnknown_20399A8\n\t"
-        "_080CCCAC: .4byte 0x00000CD6\n\t"
-        "_080CCCB0: .4byte 0x000021FF\n\t"
-        "_080CCCB4: .4byte gUnknown_2039A1A\n\t"
-        "_080CCCB8: .4byte 0x000020A4\n\t"
-        "_080CCCBC: .4byte gUnknown_20399B4\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080CF490();
+    ReshowDisplayMon();
+    sStorage->cursorPrevHorizPos = 1;
+    sStorage->inBoxMovingMode = 0;
+    if (gUnknown_2039A1A)
+    {
+        sStorage->movingMon = sSavedMovingMon;
+        CreateMovingMonIcon();
+    }
 }
 
-__attribute__((naked)) void sub_080CCCC0(void)
+void sub_080CCCC0(u8 cursorArea, u8 cursorPosition, u16 *x, u16 *y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bhi _080CCD78\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CCCDC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCCDC: .4byte 0x080CCCE0\n\t"
-        "_080CCCE0: @ jump table\n\t"
-        "	.4byte _080CCCF4 @ case 0\n\t"
-        "	.4byte _080CCD22 @ case 1\n\t"
-        "	.4byte _080CCD4A @ case 2\n\t"
-        "	.4byte _080CCD52 @ case 3\n\t"
-        "	.4byte _080CCD70 @ case 4\n\t"
-        "_080CCCF4:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, #0x64\n\t"
-        "	strh r1, [r4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, #0x20\n\t"
-        "	strh r1, [r6]\n\t"
-        "	b _080CCD78\n\t"
-        "_080CCD22:\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080CCD2E\n\t"
-        "	movs r0, #0x68\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r0, #0x34\n\t"
-        "	b _080CCD76\n\t"
-        "_080CCD2E:\n\t"
-        "	cmp r5, #6\n\t"
-        "	bne _080CCD3A\n\t"
-        "	movs r0, #0x98\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r0, #0x84\n\t"
-        "	b _080CCD76\n\t"
-        "_080CCD3A:\n\t"
-        "	movs r0, #0x98\n\t"
-        "	strh r0, [r4]\n\t"
-        "	subs r1, r5, #1\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, #4\n\t"
-        "	b _080CCD76\n\t"
-        "_080CCD4A:\n\t"
-        "	movs r0, #0xa2\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	b _080CCD76\n\t"
-        "_080CCD52:\n\t"
-        "	ldr r0, _080CCD6C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0xe\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CCD5E\n\t"
-        "	movs r1, #8\n\t"
-        "_080CCD5E:\n\t"
-        "	strh r1, [r6]\n\t"
-        "	movs r0, #0x58\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	adds r0, #0x78\n\t"
-        "	strh r0, [r4]\n\t"
-        "	b _080CCD78\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCD6C: .4byte gUnknown_2039A1A\n\t"
-        "_080CCD70:\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r0, #0x60\n\t"
-        "_080CCD76:\n\t"
-        "	strh r0, [r6]\n\t"
-        "_080CCD78:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (cursorArea)
+    {
+    case CURSOR_AREA_IN_BOX:
+        *x = (cursorPosition % IN_BOX_COLUMNS) * 24 + 100;
+        *y = (cursorPosition / IN_BOX_COLUMNS) * 24 + 32;
+        break;
+    case CURSOR_AREA_IN_PARTY:
+        if (cursorPosition == 0)
+        {
+            *x = 104;
+            *y = 52;
+        }
+        else if (cursorPosition == PARTY_SIZE)
+        {
+            *x = 152;
+            *y = 132;
+        }
+        else
+        {
+            *x = 152;
+            *y = (cursorPosition - 1) * 24 + 4;
+        }
+        break;
+    case CURSOR_AREA_BOX_TITLE:
+        *x = 162;
+        *y = 12;
+        break;
+    case CURSOR_AREA_BUTTONS:
+        *y = gUnknown_2039A1A ? 8 : 14;
+        *x = cursorPosition * 88 + 120;
+        break;
+    case 4:
+        *x = 160;
+        *y = 96;
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080CCD80(void)
+u16 sub_080CCD80(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CCDA8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CCDB4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CCDC8\n\t"
-        "	ldr r0, _080CCDAC\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080CCDB0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	b _080CCDBE\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCDA8: .4byte gUnknown_2039A18\n\t"
-        "_080CCDAC: .4byte gUnknown_2039A19\n\t"
-        "_080CCDB0: .4byte gPlayerParty\n\t"
-        "_080CCDB4:\n\t"
-        "	ldr r0, _080CCDC4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "_080CCDBE:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	b _080CCDCA\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCDC4: .4byte gUnknown_2039A19\n\t"
-        "_080CCDC8:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CCDCA:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gUnknown_2039A18)
+    {
+    case CURSOR_AREA_IN_PARTY:
+        return GetMonData3(&gPlayerParty[gUnknown_2039A19], MON_DATA_SPECIES);
+    case CURSOR_AREA_IN_BOX:
+        return GetCurrentBoxMonData(gUnknown_2039A19, MON_DATA_SPECIES);
+    default:
+        return SPECIES_NONE;
+    }
 }
 
-__attribute__((naked)) void sub_080CCDD0(void)
+bool8 sub_080CCDD0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r7, _080CCDEC\n\t"
-        "	ldr r5, [r7]\n\t"
-        "	movs r0, #0xcd\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r5, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CCDFA\n\t"
-        "	ldrb r0, [r5, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080CCDF0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CCF16\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCDEC: .4byte gUnknown_20399A8\n\t"
-        "_080CCDF0:\n\t"
-        "	bl sub_080D0AB8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _080CCF16\n\t"
-        "_080CCDFA:\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CCEF8\n\t"
-        "	ldr r1, _080CCEE4\n\t"
-        "	adds r4, r5, r1\n\t"
-        "	ldr r2, _080CCEE8\n\t"
-        "	adds r1, r5, r2\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r0, #0xcc\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r3, r5, r0\n\t"
-        "	adds r2, #4\n\t"
-        "	adds r1, r5, r2\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r3]\n\t"
-        "	ldr r6, _080CCEEC\n\t"
-        "	adds r1, r5, r6\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r2, #0x20]\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	asrs r0, r0, #8\n\t"
-        "	strh r0, [r2, #0x22]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldrh r2, [r1, #0x20]\n\t"
-        "	movs r3, #0x20\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	cmp r0, r3\n\t"
-        "	ble _080CCE56\n\t"
-        "	ldr r4, _080CCEF0\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r0, #0x40\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "_080CCE56:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrh r2, [r1, #0x20]\n\t"
-        "	movs r4, #0x20\n\t"
-        "	ldrsh r0, [r1, r4]\n\t"
-        "	cmp r0, #0x3f\n\t"
-        "	bgt _080CCE72\n\t"
-        "	movs r0, #0x40\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r0, r3, r0\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "_080CCE72:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrh r2, [r1, #0x22]\n\t"
-        "	movs r3, #0x22\n\t"
-        "	ldrsh r0, [r1, r3]\n\t"
-        "	cmp r0, #0xb0\n\t"
-        "	ble _080CCE8E\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	subs r0, #0xb0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r0, #0x10\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "_080CCE8E:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrh r3, [r2, #0x22]\n\t"
-        "	movs r4, #0x22\n\t"
-        "	ldrsh r0, [r2, r4]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _080CCEAE\n\t"
-        "	subs r0, r1, r3\n\t"
-        "	movs r1, #0xb0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r2, #0x22]\n\t"
-        "_080CCEAE:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	ldr r2, _080CCEF4\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CCF14\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CCF14\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r2, #0x3f\n\t"
-        "	ldrb r3, [r2]\n\t"
-        "	lsrs r1, r3, #1\n\t"
-        "	movs r0, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	ands r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r0, #3\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	b _080CCF14\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCEE4: .4byte 0x00000CBC\n\t"
-        "_080CCEE8: .4byte 0x00000CC4\n\t"
-        "_080CCEEC: .4byte 0x00000CB4\n\t"
-        "_080CCEF0: .4byte 0xFFFFFF00\n\t"
-        "_080CCEF4: .4byte 0x00000CD7\n\t"
-        "_080CCEF8:\n\t"
-        "	ldr r3, _080CCF1C\n\t"
-        "	adds r2, r5, r3\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r4, _080CCF20\n\t"
-        "	adds r0, r5, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1, #0x20]\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r2, _080CCF24\n\t"
-        "	adds r0, r5, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	bl sub_080CD2E4\n\t"
-        "_080CCF14:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CCF16:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCF1C: .4byte 0x00000CB4\n\t"
-        "_080CCF20: .4byte 0x00000CCC\n\t"
-        "_080CCF24: .4byte 0x00000CCE\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 tmp;
+
+    if (sStorage->cursorMoveSteps == 0)
+    {
+        if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+            return FALSE;
+        else
+            return sub_080D0AB8();
+    }
+    else if (--sStorage->cursorMoveSteps != 0)
+    {
+        sStorage->cursorNewX += sStorage->cursorSpeedX;
+        sStorage->cursorNewY += sStorage->cursorSpeedY;
+        sStorage->cursorSprite->x = sStorage->cursorNewX >> 8;
+        sStorage->cursorSprite->y = sStorage->cursorNewY >> 8;
+
+        if (sStorage->cursorSprite->x > DISPLAY_WIDTH + 16)
+        {
+            tmp = sStorage->cursorSprite->x - (DISPLAY_WIDTH + 16);
+            sStorage->cursorSprite->x = tmp + 64;
+        }
+
+        if (sStorage->cursorSprite->x < 64)
+        {
+            tmp = 64 - sStorage->cursorSprite->x;
+            sStorage->cursorSprite->x = DISPLAY_WIDTH + 16 - tmp;
+        }
+
+        if (sStorage->cursorSprite->y > DISPLAY_HEIGHT + 16)
+        {
+            tmp = sStorage->cursorSprite->y - (DISPLAY_HEIGHT + 16);
+            sStorage->cursorSprite->y = tmp - 16;
+        }
+
+        if (sStorage->cursorSprite->y < -16)
+        {
+            tmp = -16 - sStorage->cursorSprite->y;
+            sStorage->cursorSprite->y = DISPLAY_HEIGHT + 16 - tmp;
+        }
+
+        if (sStorage->cursorFlipTimer && --sStorage->cursorFlipTimer == 0)
+            sStorage->cursorSprite->vFlip = (sStorage->cursorSprite->vFlip == FALSE);
+    }
+    else
+    {
+        sStorage->cursorSprite->x = sStorage->cursorTargetX;
+        sStorage->cursorSprite->y = sStorage->cursorTargetY;
+        sub_080CD2E4();
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080CCF28(void)
+void sub_080CCF28(u8 newCursorArea, u8 newCursorPosition)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r5, r5, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	mov r6, sp\n\t"
-        "	adds r6, #2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	bl sub_080CCCC0\n\t"
-        "	ldr r1, _080CCF78\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _080CCF7C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r3, _080CCF80\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	mov r0, sp\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	subs r3, #9\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	ldr r2, _080CCF84\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCF78: .4byte gUnknown_20399A8\n\t"
-        "_080CCF7C: .4byte 0x00000CD4\n\t"
-        "_080CCF80: .4byte 0x00000CD5\n\t"
-        "_080CCF84: .4byte 0x00000CCE\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 x, y;
+
+    sub_080CCCC0(newCursorArea, newCursorPosition, &x, &y);
+    sStorage->newCursorArea = newCursorArea;
+    sStorage->newCursorPosition = newCursorPosition;
+    sStorage->cursorTargetX = x;
+    sStorage->cursorTargetY = y;
 }
 
-__attribute__((naked)) void sub_080CCF88(void)
+void sub_080CCF88(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r0, _080CCFA4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r3, _080CCFA8\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CCFAC\n\t"
-        "	movs r0, #0xcd\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	movs r0, #0xc\n\t"
-        "	b _080CCFB4\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCFA4: .4byte gUnknown_20399A8\n\t"
-        "_080CCFA8: .4byte 0x00000CD2\n\t"
-        "_080CCFAC:\n\t"
-        "	movs r3, #0xcd\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	movs r0, #6\n\t"
-        "_080CCFB4:\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, _080CCFF8\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CCFCE\n\t"
-        "	movs r3, #0xcd\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsrs r0, r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080CCFCE:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r1, _080CCFFC\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080CD008\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080CD028\n\t"
-        "	ldr r3, _080CD000\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	ldr r3, _080CD004\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	b _080CD03C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CCFF8: .4byte 0x00000CD7\n\t"
-        "_080CCFFC: .4byte 0x00000CD2\n\t"
-        "_080CD000: .4byte 0x00000CCE\n\t"
-        "_080CD004: .4byte 0x00000CB4\n\t"
-        "_080CD008:\n\t"
-        "	ldr r3, _080CD020\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	ldr r3, _080CD024\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	adds r0, #0xc0\n\t"
-        "	b _080CD03C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD020: .4byte 0x00000CCE\n\t"
-        "_080CD024: .4byte 0x00000CB4\n\t"
-        "_080CD028:\n\t"
-        "	ldr r3, _080CD068\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	ldr r3, _080CD06C\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x22\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	subs r0, #0xc0\n\t"
-        "_080CD03C:\n\t"
-        "	subs r7, r1, r0\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r3, _080CD070\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080CD078\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080CD098\n\t"
-        "	ldr r1, _080CD074\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	ldr r3, _080CD06C\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	b _080CD0AC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD068: .4byte 0x00000CCE\n\t"
-        "_080CD06C: .4byte 0x00000CB4\n\t"
-        "_080CD070: .4byte 0x00000CD3\n\t"
-        "_080CD074: .4byte 0x00000CCC\n\t"
-        "_080CD078:\n\t"
-        "	ldr r3, _080CD090\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	ldr r3, _080CD094\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	adds r0, #0xc0\n\t"
-        "	b _080CD0AC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD090: .4byte 0x00000CCC\n\t"
-        "_080CD094: .4byte 0x00000CB4\n\t"
-        "_080CD098:\n\t"
-        "	ldr r3, _080CD0FC\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r0, r3]\n\t"
-        "	ldr r3, _080CD100\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	ldrsh r0, [r0, r2]\n\t"
-        "	subs r0, #0xc0\n\t"
-        "_080CD0AC:\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r7, r7, #8\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	ldr r3, _080CD104\n\t"
-        "	adds r6, r4, r3\n\t"
-        "	movs r1, #0xcd\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r5, r4, r1\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	bl __divsi3\n\t"
-        "	str r0, [r6]\n\t"
-        "	ldr r2, _080CD108\n\t"
-        "	adds r6, r4, r2\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl __divsi3\n\t"
-        "	str r0, [r6]\n\t"
-        "	ldr r3, _080CD10C\n\t"
-        "	adds r2, r4, r3\n\t"
-        "	ldr r0, _080CD100\n\t"
-        "	adds r1, r4, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	movs r3, #0x20\n\t"
-        "	ldrsh r0, [r0, r3]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	str r0, [r2]\n\t"
-        "	movs r0, #0xcc\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	movs r1, #0x22\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	str r0, [r4]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD0FC: .4byte 0x00000CCC\n\t"
-        "_080CD100: .4byte 0x00000CB4\n\t"
-        "_080CD104: .4byte 0x00000CC4\n\t"
-        "_080CD108: .4byte 0x00000CC8\n\t"
-        "_080CD10C: .4byte 0x00000CBC\n\t"
-        ".syntax divided\n\t"
-    );
+    int yDistance, xDistance;
+
+    if (sStorage->cursorVerticalWrap != 0 || sStorage->cursorHorizontalWrap != 0)
+        sStorage->cursorMoveSteps = 12;
+    else
+        sStorage->cursorMoveSteps = 6;
+
+    if (sStorage->cursorFlipTimer)
+        sStorage->cursorFlipTimer = sStorage->cursorMoveSteps >> 1;
+
+    switch (sStorage->cursorVerticalWrap)
+    {
+    default:
+        yDistance = sStorage->cursorTargetY - sStorage->cursorSprite->y;
+        break;
+    case -1:
+        yDistance = sStorage->cursorTargetY - 192 - sStorage->cursorSprite->y;
+        break;
+    case 1:
+        yDistance = sStorage->cursorTargetY + 192 - sStorage->cursorSprite->y;
+        break;
+    }
+
+    switch (sStorage->cursorHorizontalWrap)
+    {
+    default:
+        xDistance = sStorage->cursorTargetX - sStorage->cursorSprite->x;
+        break;
+    case -1:
+        xDistance = sStorage->cursorTargetX - 192 - sStorage->cursorSprite->x;
+        break;
+    case 1:
+        xDistance = sStorage->cursorTargetX + 192 - sStorage->cursorSprite->x;
+        break;
+    }
+
+    yDistance <<= 8;
+    xDistance <<= 8;
+    sStorage->cursorSpeedX = xDistance / sStorage->cursorMoveSteps;
+    sStorage->cursorSpeedY = yDistance / sStorage->cursorMoveSteps;
+    sStorage->cursorNewX = sStorage->cursorSprite->x << 8;
+    sStorage->cursorNewY = sStorage->cursorSprite->y << 8;
 }
 
-__attribute__((naked)) void sub_080CD110(void)
+void sub_080CD110(u8 newCursorArea, u8 newCursorPosition)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl sub_080CCF28\n\t"
-        "	bl sub_080CCF88\n\t"
-        "	ldr r5, _080CD150\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080CD160\n\t"
-        "	ldr r2, _080CD154\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD178\n\t"
-        "	ldr r0, _080CD158\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD178\n\t"
-        "	ldr r2, _080CD15C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	b _080CD178\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD150: .4byte gUnknown_20399A8\n\t"
-        "_080CD154: .4byte 0x000021FF\n\t"
-        "_080CD158: .4byte gUnknown_2039A1A\n\t"
-        "_080CD15C: .4byte 0x00000CB4\n\t"
-        "_080CD160:\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD178\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080CD19C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_080CD178:\n\t"
-        "	ldr r0, _080CD1A0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080CD1D8\n\t"
-        "	ldr r0, _080CD1A4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD1AC\n\t"
-        "	ldr r0, _080CD1A8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080D06F0\n\t"
-        "	b _080CD1BA\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD19C: .4byte 0x00000CB4\n\t"
-        "_080CD1A0: .4byte gUnknown_20399A8\n\t"
-        "_080CD1A4: .4byte gUnknown_2039A18\n\t"
-        "_080CD1A8: .4byte gUnknown_2039A19\n\t"
-        "_080CD1AC:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CD1BA\n\t"
-        "	ldr r0, _080CD1C8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080D06F0\n\t"
-        "_080CD1BA:\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080CD1CC\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl sub_080D062C\n\t"
-        "	b _080CD1D8\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD1C8: .4byte gUnknown_2039A19\n\t"
-        "_080CD1CC:\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _080CD204\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl sub_080D062C\n\t"
-        "_080CD1D8:\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _080CD204\n\t"
-        "	ldr r0, _080CD24C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CD204\n\t"
-        "	ldr r1, _080CD250\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _080CD254\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080CD258\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CD204:\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080CD260\n\t"
-        "	cmp r4, #0\n\t"
-        "	blt _080CD2D2\n\t"
-        "	cmp r4, #3\n\t"
-        "	bgt _080CD2D2\n\t"
-        "	ldr r5, _080CD250\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r2, _080CD25C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	ldrb r1, [r4, #5]\n\t"
-        "	movs r2, #0xd\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r4, #5]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r4, _080CD258\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	ands r2, r0\n\t"
-        "	orrs r2, r3\n\t"
-        "	strb r2, [r1, #5]\n\t"
-        "	b _080CD2D2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD24C: .4byte gUnknown_2039A18\n\t"
-        "_080CD250: .4byte gUnknown_20399A8\n\t"
-        "_080CD254: .4byte 0x00000CD6\n\t"
-        "_080CD258: .4byte 0x00000CB8\n\t"
-        "_080CD25C: .4byte 0x00000CB4\n\t"
-        "_080CD260:\n\t"
-        "	ldr r3, _080CD294\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r2, _080CD298\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD2A4\n\t"
-        "	ldr r2, _080CD29C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CD2A0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CD2D2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD294: .4byte gUnknown_20399A8\n\t"
-        "_080CD298: .4byte 0x000021FF\n\t"
-        "_080CD29C: .4byte 0x00000CB4\n\t"
-        "_080CD2A0: .4byte 0x00000CB8\n\t"
-        "_080CD2A4:\n\t"
-        "	ldr r2, _080CD2D8\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	ldr r0, _080CD2DC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD2D2\n\t"
-        "	ldr r0, _080CD2E0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD2D2\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetMovingMonPriority\n\t"
-        "_080CD2D2:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD2D8: .4byte 0x00000CB4\n\t"
-        "_080CD2DC: .4byte gUnknown_2039A18\n\t"
-        "_080CD2E0: .4byte gUnknown_2039A1A\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080CCF28(newCursorArea, newCursorPosition);
+    sub_080CCF88();
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+    {
+        if (sStorage->inBoxMovingMode == 0 && !gUnknown_2039A1A)
+            StartSpriteAnim(sStorage->cursorSprite, 1);
+    }
+    else
+    {
+        if (!IsActiveItemMoving())
+            StartSpriteAnim(sStorage->cursorSprite, 1);
+    }
+
+    if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+    {
+        if (gUnknown_2039A18 == CURSOR_AREA_IN_BOX)
+            sub_080D06F0(CURSOR_AREA_IN_BOX, gUnknown_2039A19);
+        else if (gUnknown_2039A18 == CURSOR_AREA_IN_PARTY)
+            sub_080D06F0(CURSOR_AREA_IN_PARTY, gUnknown_2039A19);
+
+        if (newCursorArea == CURSOR_AREA_IN_BOX)
+            sub_080D062C(newCursorArea, newCursorPosition);
+        else if (newCursorArea == CURSOR_AREA_IN_PARTY)
+            sub_080D062C(newCursorArea, newCursorPosition);
+    }
+
+    if (newCursorArea == CURSOR_AREA_IN_PARTY && gUnknown_2039A18 != CURSOR_AREA_IN_PARTY)
+    {
+        sStorage->cursorPrevHorizPos = 1;
+        sStorage->cursorShadowSprite->invisible = TRUE;
+    }
+
+    switch (newCursorArea)
+    {
+    case CURSOR_AREA_IN_PARTY:
+    case CURSOR_AREA_BOX_TITLE:
+    case CURSOR_AREA_BUTTONS:
+        sStorage->cursorSprite->oam.priority = 1;
+        sStorage->cursorShadowSprite->invisible = TRUE;
+        sStorage->cursorShadowSprite->oam.priority = 1;
+        break;
+    case CURSOR_AREA_IN_BOX:
+        if (sStorage->inBoxMovingMode != 0)
+        {
+            sStorage->cursorSprite->oam.priority = 0;
+            sStorage->cursorShadowSprite->invisible = TRUE;
+        }
+        else
+        {
+            sStorage->cursorSprite->oam.priority = 2;
+            if (gUnknown_2039A18 == CURSOR_AREA_IN_BOX && gUnknown_2039A1A)
+                SetMovingMonPriority(2);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080CD2E4(void)
+void sub_080CD2E4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _080CD324\n\t"
-        "	ldr r4, _080CD328\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r3, _080CD32C\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, _080CD330\n\t"
-        "	adds r3, #1\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrb r0, [r2, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080CD33C\n\t"
-        "	ldr r1, _080CD334\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD354\n\t"
-        "	ldr r0, _080CD338\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD354\n\t"
-        "	subs r3, #0x21\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	b _080CD354\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD324: .4byte gUnknown_2039A18\n\t"
-        "_080CD328: .4byte gUnknown_20399A8\n\t"
-        "_080CD32C: .4byte 0x00000CD4\n\t"
-        "_080CD330: .4byte gUnknown_2039A19\n\t"
-        "_080CD334: .4byte 0x000021FF\n\t"
-        "_080CD338: .4byte gUnknown_2039A1A\n\t"
-        "_080CD33C:\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD354\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CD370\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_080CD354:\n\t"
-        "	bl TryRefreshDisplayMon\n\t"
-        "	ldr r0, _080CD374\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CD38A\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CD378\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD3AC\n\t"
-        "	b _080CD406\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD370: .4byte 0x00000CB4\n\t"
-        "_080CD374: .4byte gUnknown_2039A18\n\t"
-        "_080CD378:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CD382\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080CD406\n\t"
-        "	b _080CD39A\n\t"
-        "_080CD382:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CCA24\n\t"
-        "	b _080CD406\n\t"
-        "_080CD38A:\n\t"
-        "	ldr r0, _080CD3A4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080CD3A8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	movs r1, #0xd\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080CD39A:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetMovingMonPriority\n\t"
-        "	b _080CD406\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD3A4: .4byte gUnknown_20399A8\n\t"
-        "_080CD3A8: .4byte 0x00000CB8\n\t"
-        "_080CD3AC:\n\t"
-        "	ldr r4, _080CD40C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r3, _080CD410\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD406\n\t"
-        "	ldr r2, _080CD414\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldrb r1, [r3, #5]\n\t"
-        "	movs r2, #0xd\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #5]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r3, _080CD418\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	ands r2, r0\n\t"
-        "	movs r0, #8\n\t"
-        "	orrs r2, r0\n\t"
-        "	strb r2, [r1, #5]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	movs r1, #0x15\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetMovingMonPriority\n\t"
-        "_080CD406:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD40C: .4byte gUnknown_20399A8\n\t"
-        "_080CD410: .4byte 0x000021FF\n\t"
-        "_080CD414: .4byte 0x00000CB4\n\t"
-        "_080CD418: .4byte 0x00000CB8\n\t"
-        ".syntax divided\n\t"
-    );
+    gUnknown_2039A18 = sStorage->newCursorArea;
+    gUnknown_2039A19 = sStorage->newCursorPosition;
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+    {
+        if (sStorage->inBoxMovingMode == 0 && !gUnknown_2039A1A)
+            StartSpriteAnim(sStorage->cursorSprite, 0);
+    }
+    else
+    {
+        if (!IsActiveItemMoving())
+            StartSpriteAnim(sStorage->cursorSprite, 0);
+    }
+
+    TryRefreshDisplayMon();
+    switch (gUnknown_2039A18)
+    {
+    case CURSOR_AREA_BUTTONS:
+        SetMovingMonPriority(1);
+        break;
+    case CURSOR_AREA_BOX_TITLE:
+        sub_080CCA24(TRUE);
+        break;
+    case CURSOR_AREA_IN_PARTY:
+        sStorage->cursorShadowSprite->subpriority = 13;
+        SetMovingMonPriority(1);
+        break;
+    case CURSOR_AREA_IN_BOX:
+        if (sStorage->inBoxMovingMode == 0)
+        {
+            sStorage->cursorSprite->oam.priority = 1;
+            sStorage->cursorShadowSprite->oam.priority = 2;
+            sStorage->cursorShadowSprite->subpriority = 21;
+            sStorage->cursorShadowSprite->invisible = FALSE;
+            SetMovingMonPriority(2);
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080CD41C(void)
+void sub_080CD41C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CD42C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD430\n\t"
-        "	movs r3, #0\n\t"
-        "	b _080CD43E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD42C: .4byte gUnknown_2039A1A\n\t"
-        "_080CD430:\n\t"
-        "	bl CalculatePlayerPartyCount\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #5\n\t"
-        "	bls _080CD43E\n\t"
-        "	movs r3, #5\n\t"
-        "_080CD43E:\n\t"
-        "	ldr r0, _080CD468\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r1, _080CD46C\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD45C\n\t"
-        "	ldr r0, _080CD470\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CD45C:\n\t"
-        "	movs r0, #1\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl sub_080CD110\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD468: .4byte gUnknown_20399A8\n\t"
-        "_080CD46C: .4byte 0x00000CB4\n\t"
-        "_080CD470: .4byte 0x00000CD7\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 partyCount;
+
+    if (!gUnknown_2039A1A)
+    {
+        partyCount = 0;
+    }
+    else
+    {
+        partyCount = CalculatePlayerPartyCount();
+        if (partyCount >= PARTY_SIZE)
+            partyCount = PARTY_SIZE - 1;
+    }
+
+    if (sStorage->cursorSprite->vFlip)
+        sStorage->cursorFlipTimer = 1;
+    sub_080CD110(CURSOR_AREA_IN_PARTY, partyCount);
 }
 
-__attribute__((naked)) void sub_080CD474(void)
+void sub_080CD474(u8 cursorBoxPosition)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CD110\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080CD110(CURSOR_AREA_IN_BOX, cursorBoxPosition);
 }
 
 void ClearSavedCursorPos(void)
@@ -14223,46 +5384,14 @@ void InitMonPlaceChange(u8 type)
     sStorage->monPlaceChangeState = 0;
 }
 
-__attribute__((naked)) void InitMultiMonPlaceChange(void)
+void InitMultiMonPlaceChange(bool8 isMoving)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD500\n\t"
-        "	ldr r0, _080CD4F4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CD4F8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _080CD4FC\n\t"
-        "	b _080CD50A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD4F4: .4byte gUnknown_20399A8\n\t"
-        "_080CD4F8: .4byte 0x00000D8C\n\t"
-        "_080CD4FC: .4byte MultiMonPlaceChange_Down + 1\n\t"
-        "_080CD500:\n\t"
-        "	ldr r0, _080CD51C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CD520\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, _080CD524\n\t"
-        "_080CD50A:\n\t"
-        "	str r2, [r1]\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0xd9\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD51C: .4byte gUnknown_20399A8\n\t"
-        "_080CD520: .4byte 0x00000D8C\n\t"
-        "_080CD524: .4byte MultiMonPlaceChange_Up + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!isMoving)
+        sStorage->monPlaceChangeFunc = MultiMonPlaceChange_Down;
+    else
+        sStorage->monPlaceChangeFunc = MultiMonPlaceChange_Up;
+
+    sStorage->monPlaceChangeState = 0;
 }
 
 bool8 DoMonPlaceChange(void)
@@ -14270,479 +5399,181 @@ bool8 DoMonPlaceChange(void)
     return sStorage->monPlaceChangeFunc();
 }
 
-__attribute__((naked)) void MonPlaceChange_Grab(void)
+bool8 MonPlaceChange_Grab(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _080CD564\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r5, #0xd9\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CD598\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CD568\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD572\n\t"
-        "	b _080CD5D0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD564: .4byte gUnknown_20399A8\n\t"
-        "_080CD568:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CD5BC\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080CD57A\n\t"
-        "	b _080CD5D0\n\t"
-        "_080CD572:\n\t"
-        "	ldr r0, _080CD580\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD584\n\t"
-        "_080CD57A:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CD5D2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD580: .4byte gUnknown_2039A1A\n\t"
-        "_080CD584:\n\t"
-        "	ldr r2, _080CD594\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	b _080CD5C6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD594: .4byte 0x00000CB4\n\t"
-        "_080CD598:\n\t"
-        "	bl MonPlaceChange_CursorDown\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD5D0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CD5B8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	bl MoveMon\n\t"
-        "	b _080CD5C6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD5B8: .4byte 0x00000CB4\n\t"
-        "_080CD5BC:\n\t"
-        "	bl MonPlaceChange_CursorUp\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD5D0\n\t"
-        "_080CD5C6:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CD5D0:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CD5D2:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->monPlaceChangeState)
+    {
+    case 0:
+        if (gUnknown_2039A1A)
+            return FALSE;
+        StartSpriteAnim(sStorage->cursorSprite, 2);
+        sStorage->monPlaceChangeState++;
+        break;
+    case 1:
+        if (!MonPlaceChange_CursorDown())
+        {
+            StartSpriteAnim(sStorage->cursorSprite, 3);
+            MoveMon();
+            sStorage->monPlaceChangeState++;
+        }
+        break;
+    case 2:
+        if (!MonPlaceChange_CursorUp())
+            sStorage->monPlaceChangeState++;
+        break;
+    case 3:
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void MonPlaceChange_Place(void)
+bool8 MonPlaceChange_Place(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _080CD5F4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r5, #0xd9\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CD620\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CD5F8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD5FE\n\t"
-        "	b _080CD64C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD5F4: .4byte gUnknown_20399A8\n\t"
-        "_080CD5F8:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CD648\n\t"
-        "	b _080CD64C\n\t"
-        "_080CD5FE:\n\t"
-        "	bl MonPlaceChange_CursorDown\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD64C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CD61C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	bl PlaceMon\n\t"
-        "	b _080CD638\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD61C: .4byte 0x00000CB4\n\t"
-        "_080CD620:\n\t"
-        "	bl MonPlaceChange_CursorUp\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD64C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CD644\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_080CD638:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CD64C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD644: .4byte 0x00000CB4\n\t"
-        "_080CD648:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CD64E\n\t"
-        "_080CD64C:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CD64E:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->monPlaceChangeState)
+    {
+    case 0:
+        if (!MonPlaceChange_CursorDown())
+        {
+            StartSpriteAnim(sStorage->cursorSprite, 2);
+            PlaceMon();
+            sStorage->monPlaceChangeState++;
+        }
+        break;
+    case 1:
+        if (!MonPlaceChange_CursorUp())
+        {
+            StartSpriteAnim(sStorage->cursorSprite, 0);
+            sStorage->monPlaceChangeState++;
+        }
+        break;
+    case 2:
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void MonPlaceChange_Shift(void)
+bool8 MonPlaceChange_Shift(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _080CD670\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r5, #0xd9\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CD6E4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CD674\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD67A\n\t"
-        "	b _080CD728\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD670: .4byte gUnknown_20399A8\n\t"
-        "_080CD674:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CD724\n\t"
-        "	b _080CD728\n\t"
-        "_080CD67A:\n\t"
-        "	ldr r0, _080CD694\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD69C\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CD724\n\t"
-        "	ldr r0, _080CD698\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xe\n\t"
-        "	b _080CD6A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD694: .4byte gUnknown_2039A18\n\t"
-        "_080CD698: .4byte 0x00000D91\n\t"
-        "_080CD69C:\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080CD6D4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "_080CD6A6:\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _080CD6D8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CD6DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080CD6D4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _080CD6E0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl sub_080CB5D0\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0xd9\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _080CD710\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD6D4: .4byte 0x00000D91\n\t"
-        "_080CD6D8: .4byte gUnknown_20399A8\n\t"
-        "_080CD6DC: .4byte 0x00000CB4\n\t"
-        "_080CD6E0: .4byte gUnknown_2039A19\n\t"
-        "_080CD6E4:\n\t"
-        "	bl sub_080CB638\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD728\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CD718\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080CD71C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _080CD720\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl SetShiftedMonData\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "_080CD710:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CD728\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD718: .4byte 0x00000CB4\n\t"
-        "_080CD71C: .4byte 0x00000D91\n\t"
-        "_080CD720: .4byte gUnknown_2039A19\n\t"
-        "_080CD724:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CD72A\n\t"
-        "_080CD728:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CD72A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->monPlaceChangeState)
+    {
+    case 0:
+        switch (gUnknown_2039A18)
+        {
+        case CURSOR_AREA_IN_PARTY:
+            sStorage->shiftBoxId = TOTAL_BOXES_COUNT;
+            break;
+        case CURSOR_AREA_IN_BOX:
+            sStorage->shiftBoxId = StorageGetCurrentBox();
+            break;
+        default:
+            return FALSE;
+        }
+        StartSpriteAnim(sStorage->cursorSprite, 2);
+        sub_080CB5D0(sStorage->shiftBoxId, gUnknown_2039A19);
+        sStorage->monPlaceChangeState++;
+        break;
+    case 1:
+        if (!sub_080CB638())
+        {
+            StartSpriteAnim(sStorage->cursorSprite, 3);
+            SetShiftedMonData(sStorage->shiftBoxId, gUnknown_2039A19);
+            sStorage->monPlaceChangeState++;
+        }
+        break;
+    case 2:
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void MultiMonPlaceChange_Down(void)
+bool8 MultiMonPlaceChange_Down(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl MonPlaceChange_CursorDown\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return MonPlaceChange_CursorDown();
 }
 
-__attribute__((naked)) void MultiMonPlaceChange_Up(void)
+bool8 MultiMonPlaceChange_Up(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl MonPlaceChange_CursorUp\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return MonPlaceChange_CursorUp();
 }
 
-__attribute__((naked)) void MonPlaceChange_CursorDown(void)
+bool8 MonPlaceChange_CursorDown(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CD770\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CD774\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD768\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _080CD778\n\t"
-        "_080CD768:\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	b _080CD77C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD770: .4byte gUnknown_20399A8\n\t"
-        "_080CD774: .4byte 0x00000CB4\n\t"
-        "_080CD778:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CD77E\n\t"
-        "_080CD77C:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CD77E:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->cursorSprite->y2)
+    {
+    default:
+        sStorage->cursorSprite->y2++;
+        break;
+    case 0:
+        sStorage->cursorSprite->y2++;
+        break;
+    case 8:
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void MonPlaceChange_CursorUp(void)
+bool8 MonPlaceChange_CursorUp(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CD7A4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CD7A8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r2, #0x26\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD7AC\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080CD7AE\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD7A4: .4byte gUnknown_20399A8\n\t"
-        "_080CD7A8: .4byte 0x00000CB4\n\t"
-        "_080CD7AC:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CD7AE:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->cursorSprite->y2)
+    {
+    case 0:
+        return FALSE;
+    default:
+        sStorage->cursorSprite->y2--;
+        break;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void MoveMon(void)
+void MoveMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080CD7DC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD7E4\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CD810\n\t"
-        "	ldr r4, _080CD7E0\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl SetMovedMonData\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CB488\n\t"
-        "	b _080CD80A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD7DC: .4byte gUnknown_2039A18\n\t"
-        "_080CD7E0: .4byte gUnknown_2039A19\n\t"
-        "_080CD7E4:\n\t"
-        "	ldr r0, _080CD818\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CD81C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CD80A\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r4, _080CD820\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	bl SetMovedMonData\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CB488\n\t"
-        "_080CD80A:\n\t"
-        "	ldr r1, _080CD824\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CD810:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD818: .4byte gUnknown_20399A8\n\t"
-        "_080CD81C: .4byte 0x000021FF\n\t"
-        "_080CD820: .4byte gUnknown_2039A19\n\t"
-        "_080CD824: .4byte gUnknown_2039A1A\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (gUnknown_2039A18)
+    {
+    case CURSOR_AREA_IN_PARTY:
+        SetMovedMonData(TOTAL_BOXES_COUNT, gUnknown_2039A19);
+        sub_080CB488(0, gUnknown_2039A19);
+        break;
+    case CURSOR_AREA_IN_BOX:
+        if (sStorage->inBoxMovingMode == 0)
+        {
+            SetMovedMonData(StorageGetCurrentBox(), gUnknown_2039A19);
+            sub_080CB488(1, gUnknown_2039A19);
+        }
+        break;
+    default:
+        return;
+    }
+
+    gUnknown_2039A1A = TRUE;
 }
 
-__attribute__((naked)) void PlaceMon(void)
+void PlaceMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _080CD850\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CD858\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CD87A\n\t"
-        "	ldr r4, _080CD854\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl SetPlacedMonData\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl sub_080CB520\n\t"
-        "	b _080CD874\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD850: .4byte gUnknown_2039A18\n\t"
-        "_080CD854: .4byte gUnknown_2039A19\n\t"
-        "_080CD858:\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r5, _080CD880\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetPlacedMonData\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080CB520\n\t"
-        "_080CD874:\n\t"
-        "	ldr r1, _080CD884\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CD87A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD880: .4byte gUnknown_2039A19\n\t"
-        "_080CD884: .4byte gUnknown_2039A1A\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 boxId;
+
+    switch (gUnknown_2039A18)
+    {
+    case CURSOR_AREA_IN_PARTY:
+        SetPlacedMonData(TOTAL_BOXES_COUNT, gUnknown_2039A19);
+        sub_080CB520(TOTAL_BOXES_COUNT, gUnknown_2039A19);
+        break;
+    case CURSOR_AREA_IN_BOX:
+        boxId = StorageGetCurrentBox();
+        SetPlacedMonData(boxId, gUnknown_2039A19);
+        sub_080CB520(boxId, gUnknown_2039A19);
+        break;
+    default:
+        return;
+    }
+
+    gUnknown_2039A1A = FALSE;
 }
+
 void sub_080CD888(void)
 {
     TryRefreshDisplayMon();
@@ -14750,1439 +5581,415 @@ void sub_080CD888(void)
 
 
 
-__attribute__((naked)) void SetMovedMonData(u8 a, u8 b)
+void SetMovedMonData(u8 boxId, u8 position)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	cmp r4, #0xe\n\t"
-        "	bne _080CD8D0\n\t"
-        "	ldr r0, _080CD8C0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CD8C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r3, _080CD8C8\n\t"
-        "	ldr r1, _080CD8CC\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsb r2, [r1, r2]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	b _080CD8E0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD8C0: .4byte gUnknown_20399A8\n\t"
-        "_080CD8C4: .4byte 0x000020A4\n\t"
-        "_080CD8C8: .4byte gPlayerParty\n\t"
-        "_080CD8CC: .4byte gUnknown_2039A19\n\t"
-        "_080CD8D0:\n\t"
-        "	ldr r0, _080CD8F8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _080CD8FC\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl BoxMonAtToMon\n\t"
-        "_080CD8E0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl PurgeMonOrBoxMon\n\t"
-        "	ldr r0, _080CD900\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, _080CD904\n\t"
-        "	strb r5, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD8F8: .4byte gUnknown_20399A8\n\t"
-        "_080CD8FC: .4byte 0x000020A4\n\t"
-        "_080CD900: .4byte gUnknown_2039A1B\n\t"
-        "_080CD904: .4byte gUnknown_2039A1C\n\t"
-        ".syntax divided\n\t"
-    );
+    if (boxId == TOTAL_BOXES_COUNT)
+        sStorage->movingMon = gPlayerParty[sCursorPosition];
+    else
+        BoxMonAtToMon(boxId, position, &sStorage->movingMon);
+
+    PurgeMonOrBoxMon(boxId, position);
+    gUnknown_2039A1B = boxId;
+    gUnknown_2039A1C = position;
 }
 
-__attribute__((naked)) void SetPlacedMonData(u8 a, u8 b)
+void SetPlacedMonData(u8 boxId, u8 position)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	cmp r6, #0xe\n\t"
-        "	bne _080CD93C\n\t"
-        "	ldr r1, _080CD930\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080CD934\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _080CD938\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	b _080CD954\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD930: .4byte gPlayerParty\n\t"
-        "_080CD934: .4byte gUnknown_20399A8\n\t"
-        "_080CD938: .4byte 0x000020A4\n\t"
-        "_080CD93C:\n\t"
-        "	ldr r5, _080CD95C\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r4, _080CD960\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl BoxMonRestorePP\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl SetBoxMonAt\n\t"
-        "_080CD954:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD95C: .4byte gUnknown_20399A8\n\t"
-        "_080CD960: .4byte 0x000020A4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (boxId == TOTAL_BOXES_COUNT)
+    {
+        gPlayerParty[position] = sStorage->movingMon;
+    }
+    else
+    {
+        BoxMonRestorePP(&sStorage->movingMon.box);
+        SetBoxMonAt(boxId, position, &sStorage->movingMon.box);
+    }
 }
 
-__attribute__((naked)) void PurgeMonOrBoxMon(void)
+void PurgeMonOrBoxMon(u8 boxId, u8 position)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bne _080CD984\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080CD980\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl ZeroMonData\n\t"
-        "	b _080CD988\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD980: .4byte gPlayerParty\n\t"
-        "_080CD984:\n\t"
-        "	bl ZeroBoxMonAt\n\t"
-        "_080CD988:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (boxId == TOTAL_BOXES_COUNT)
+        ZeroMonData(&gPlayerParty[position]);
+    else
+        ZeroBoxMonAt(boxId, position);
 }
 
-__attribute__((naked)) void SetShiftedMonData(u8 a, u8 b)
+void SetShiftedMonData(u8 boxId, u8 position)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	cmp r6, #0xe\n\t"
-        "	bne _080CD9C0\n\t"
-        "	ldr r0, _080CD9B4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CD9B8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, _080CD9BC\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r7, r1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	b _080CD9D0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD9B4: .4byte gUnknown_20399A8\n\t"
-        "_080CD9B8: .4byte 0x00002108\n\t"
-        "_080CD9BC: .4byte gPlayerParty\n\t"
-        "_080CD9C0:\n\t"
-        "	ldr r0, _080CDA04\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _080CDA08\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl BoxMonAtToMon\n\t"
-        "_080CD9D0:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl SetPlacedMonData\n\t"
-        "	ldr r5, _080CDA04\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r4, _080CDA0C\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldr r2, _080CDA08\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetCursorMonData\n\t"
-        "	ldr r0, _080CDA10\n\t"
-        "	strb r6, [r0]\n\t"
-        "	ldr r0, _080CDA14\n\t"
-        "	strb r7, [r0]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDA04: .4byte gUnknown_20399A8\n\t"
-        "_080CDA08: .4byte 0x00002108\n\t"
-        "_080CDA0C: .4byte 0x000020A4\n\t"
-        "_080CDA10: .4byte gUnknown_2039A1B\n\t"
-        "_080CDA14: .4byte gUnknown_2039A1C\n\t"
-        ".syntax divided\n\t"
-    );
+    if (boxId == TOTAL_BOXES_COUNT)
+        sStorage->tempMon = gPlayerParty[position];
+    else
+        BoxMonAtToMon(boxId, position, &sStorage->tempMon);
+
+    SetPlacedMonData(boxId, position);
+    sStorage->movingMon = sStorage->tempMon;
+    SetCursorMonData(&sStorage->movingMon, MODE_PARTY);
+    gUnknown_2039A1B = boxId;
+    gUnknown_2039A1C = position;
 }
 
-__attribute__((naked)) bool8 TryStorePartyMonInBox(u8 boxId)
+bool8 TryStorePartyMonInBox(u8 boxId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetFirstFreeBoxSpot\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080CDA36\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CDA96\n\t"
-        "_080CDA36:\n\t"
-        "	ldr r5, _080CDA54\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDA58\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r1, r4, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl SetPlacedMonData\n\t"
-        "	bl DestroyMovingMonIcon\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r5]\n\t"
-        "	b _080CDA72\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDA54: .4byte gUnknown_2039A1A\n\t"
-        "_080CDA58:\n\t"
-        "	ldr r5, _080CDA9C\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl SetMovedMonData\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r1, r4, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl SetPlacedMonData\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	bl DestroyPartyMonIcon\n\t"
-        "_080CDA72:\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r6, r0\n\t"
-        "	bne _080CDA84\n\t"
-        "	lsrs r0, r4, #0x18\n\t"
-        "	bl sub_080CA9B4\n\t"
-        "_080CDA84:\n\t"
-        "	ldr r0, _080CDAA0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CDAA4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r0, #1\n\t"
-        "_080CDA96:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDA9C: .4byte gUnknown_2039A19\n\t"
-        "_080CDAA0: .4byte gUnknown_20399A8\n\t"
-        "_080CDAA4: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 boxPosition = GetFirstFreeBoxSpot(boxId);
+
+    if (boxPosition == -1)
+        return FALSE;
+
+    if (gUnknown_2039A1A)
+    {
+        SetPlacedMonData(boxId, boxPosition);
+        DestroyMovingMonIcon();
+        gUnknown_2039A1A = FALSE;
+    }
+    else
+    {
+        SetMovedMonData(TOTAL_BOXES_COUNT, sCursorPosition);
+        SetPlacedMonData(boxId, boxPosition);
+        DestroyPartyMonIcon(sCursorPosition);
+    }
+
+    if (boxId == StorageGetCurrentBox())
+        sub_080CA9B4(boxPosition);
+
+    StartSpriteAnim(sStorage->cursorSprite, 1);
+    return TRUE;
 }
 
 
-__attribute__((naked)) void sub_080CDAA8(void)
+void sub_080CDAA8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CDAC4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CDAC8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	bl TryRefreshDisplayMon\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDAC4: .4byte gUnknown_20399A8\n\t"
-        "_080CDAC8: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnim(sStorage->cursorSprite, 0);
+    TryRefreshDisplayMon();
 }
 
-__attribute__((naked)) void sub_080CDACC(void)
+void sub_080CDACC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CDADC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDAE0\n\t"
-        "	movs r2, #2\n\t"
-        "	b _080CDAF0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDADC: .4byte gUnknown_2039A1A\n\t"
-        "_080CDAE0:\n\t"
-        "	ldr r0, _080CDB10\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r2, #1\n\t"
-        "	eors r1, r2\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	lsrs r2, r0, #0x1f\n\t"
-        "_080CDAF0:\n\t"
-        "	ldr r0, _080CDB14\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_080CB788\n\t"
-        "	ldr r0, _080CDB18\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CDB1C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r2, _080CDB20\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	bl StringCopy\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDB10: .4byte gUnknown_2039A18\n\t"
-        "_080CDB14: .4byte gUnknown_2039A19\n\t"
-        "_080CDB18: .4byte gUnknown_20399A8\n\t"
-        "_080CDB1C: .4byte 0x000021E0\n\t"
-        "_080CDB20: .4byte 0x00000CEE\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 mode;
+
+    if (gUnknown_2039A1A)
+        mode = MODE_MOVE;
+    else if (sCursorArea == CURSOR_AREA_IN_PARTY)
+        mode = MODE_PARTY;
+    else
+        mode = MODE_BOX;
+
+    sub_080CB788(mode, sCursorPosition);
+    StringCopy(sStorage->releaseMonName, sStorage->displayMonName);
 }
 
-__attribute__((naked)) void sub_080CDB24(void)
+bool8 sub_080CDB24(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_080CB84C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDB34\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080CDB46\n\t"
-        "_080CDB34:\n\t"
-        "	ldr r0, _080CDB4C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CDB50\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	movs r0, #0\n\t"
-        "_080CDB46:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDB4C: .4byte gUnknown_20399A8\n\t"
-        "_080CDB50: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!sub_080CB84C())
+    {
+        StartSpriteAnim(sStorage->cursorSprite, 0);
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
 }
 
-__attribute__((naked)) void ReleaseMon(void)
+void ReleaseMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_080CB894\n\t"
-        "	ldr r1, _080CDB68\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDB6C\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CDB92\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDB68: .4byte gUnknown_2039A1A\n\t"
-        "_080CDB6C:\n\t"
-        "	ldr r0, _080CDB7C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CDB80\n\t"
-        "	movs r2, #0xe\n\t"
-        "	b _080CDB88\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDB7C: .4byte gUnknown_2039A18\n\t"
-        "_080CDB80:\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "_080CDB88:\n\t"
-        "	ldr r0, _080CDB9C\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl PurgeMonOrBoxMon\n\t"
-        "_080CDB92:\n\t"
-        "	bl TryRefreshDisplayMon\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDB9C: .4byte gUnknown_2039A19\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 boxId;
+
+    sub_080CB894();
+    if (gUnknown_2039A1A)
+    {
+        gUnknown_2039A1A = FALSE;
+    }
+    else
+    {
+        if (sCursorArea == CURSOR_AREA_IN_PARTY)
+            boxId = TOTAL_BOXES_COUNT;
+        else
+            boxId = StorageGetCurrentBox();
+
+        PurgeMonOrBoxMon(boxId, sCursorPosition);
+    }
+    TryRefreshDisplayMon();
 }
 
-__attribute__((naked)) void sub_080CDBA0(void)
+void sub_080CDBA0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CDBC0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDBBA\n\t"
-        "	ldr r0, _080CDBC4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CDBC8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_080CDBBA:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDBC0: .4byte gUnknown_2039A1A\n\t"
-        "_080CDBC4: .4byte gUnknown_20399A8\n\t"
-        "_080CDBC8: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2039A1A)
+        StartSpriteAnim(sStorage->cursorSprite, 3);
 }
 
-__attribute__((naked)) void sub_080CDBCC(void)
+void sub_080CDBCC(u16 *moves)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r4, _080CDC10\n\t"
-        "_080CDBD4:\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	cmp r1, #0x22\n\t"
-        "	beq _080CDBF4\n\t"
-        "	ldr r0, _080CDC14\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080CDBFA\n\t"
-        "	movs r1, #1\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080CDBFA\n\t"
-        "_080CDBF4:\n\t"
-        "	ldrh r0, [r4, #2]\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r3, #2\n\t"
-        "_080CDBFA:\n\t"
-        "	adds r4, #4\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _080CDBD4\n\t"
-        "	ldr r1, _080CDC18\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	strh r0, [r3]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDC10: .4byte gUnknown_85564A0\n\t"
-        "_080CDC14: .4byte gSaveBlock1Ptr\n\t"
-        "_080CDC18: .4byte SPECIAL_sub_080EBE30\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    for (i = 0; i < (u32)6; i++)
+    {
+        if (gUnknown_85564A0[i].mapGroup == MAP_GROUPS_COUNT
+         || (gUnknown_85564A0[i].mapGroup == gSaveBlock1Ptr->location.mapGroup
+          && gUnknown_85564A0[i].mapNum == gSaveBlock1Ptr->location.mapNum))
+        {
+            *moves = gUnknown_85564A0[i].move;
+            moves++;
+        }
+    }
+    *moves = MOVES_COUNT;
 }
 
-__attribute__((naked)) void InitCanRelaseMonVars(void)
+void InitCanRelaseMonVars(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	bl AtLeastThreeUsableMons\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _080CDC4C\n\t"
-        "	ldr r2, _080CDC40\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CDC44\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r2, _080CDC48\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r3, [r0]\n\t"
-        "	b _080CDD80\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDC40: .4byte gUnknown_20399A8\n\t"
-        "_080CDC44: .4byte 0x0000216D\n\t"
-        "_080CDC48: .4byte 0x0000216C\n\t"
-        "_080CDC4C:\n\t"
-        "	ldr r0, _080CDC7C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDC94\n\t"
-        "	ldr r4, _080CDC80\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r3, _080CDC84\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldr r2, _080CDC88\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r3, _080CDC8C\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0xff\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CDC90\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	b _080CDD10\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDC7C: .4byte gUnknown_2039A1A\n\t"
-        "_080CDC80: .4byte gUnknown_20399A8\n\t"
-        "_080CDC84: .4byte 0x00002108\n\t"
-        "_080CDC88: .4byte 0x000020A4\n\t"
-        "_080CDC8C: .4byte 0x00002170\n\t"
-        "_080CDC90: .4byte 0x00002171\n\t"
-        "_080CDC94:\n\t"
-        "	ldr r0, _080CDCC8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CDCE0\n\t"
-        "	ldr r4, _080CDCCC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080CDCD0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r3, _080CDCD4\n\t"
-        "	ldr r1, _080CDCD8\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsb r2, [r1, r2]\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r1, r2, r1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r3, _080CDCDC\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0xe\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080CDD04\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDCC8: .4byte gUnknown_2039A18\n\t"
-        "_080CDCCC: .4byte gUnknown_20399A8\n\t"
-        "_080CDCD0: .4byte 0x00002108\n\t"
-        "_080CDCD4: .4byte gPlayerParty\n\t"
-        "_080CDCD8: .4byte gUnknown_2039A19\n\t"
-        "_080CDCDC: .4byte 0x00002170\n\t"
-        "_080CDCE0:\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080CDD44\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ldr r4, _080CDD48\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r3, _080CDD4C\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	bl BoxMonAtToMon\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080CDD50\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CDD04:\n\t"
-        "	ldr r0, _080CDD48\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CDD44\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ldr r3, _080CDD54\n\t"
-        "	adds r0, r0, r3\n\t"
-        "_080CDD10:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r5, _080CDD48\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r4, _080CDD58\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl sub_080CDBCC\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldr r1, _080CDD4C\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	movs r1, #0x51\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldr r3, _080CDD5C\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDD64\n\t"
-        "	ldr r0, _080CDD60\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CDD74\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDD44: .4byte gUnknown_2039A19\n\t"
-        "_080CDD48: .4byte gUnknown_20399A8\n\t"
-        "_080CDD4C: .4byte 0x00002108\n\t"
-        "_080CDD50: .4byte 0x00002170\n\t"
-        "_080CDD54: .4byte 0x00002171\n\t"
-        "_080CDD58: .4byte 0x00002176\n\t"
-        "_080CDD5C: .4byte 0x00002174\n\t"
-        "_080CDD60: .4byte 0x0000216D\n\t"
-        "_080CDD64:\n\t"
-        "	ldr r1, _080CDD88\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r2, _080CDD8C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080CDD74:\n\t"
-        "	ldr r0, _080CDD90\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r3, _080CDD94\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "_080CDD80:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDD88: .4byte 0x0000216D\n\t"
-        "_080CDD8C: .4byte 0x0000216C\n\t"
-        "_080CDD90: .4byte gUnknown_20399A8\n\t"
-        "_080CDD94: .4byte 0x00002172\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!AtLeastThreeUsableMons())
+    {
+        sStorage->releaseStatusResolved = TRUE;
+        sStorage->canReleaseMon = FALSE;
+        return;
+    }
+
+    if (gUnknown_2039A1A)
+    {
+        memcpy(&sStorage->tempMon, &sStorage->movingMon, sizeof(sStorage->tempMon));
+        sStorage->releaseBoxId = -1;
+        sStorage->releaseBoxPos = -1;
+    }
+    else
+    {
+        if (gUnknown_2039A18 == CURSOR_AREA_IN_PARTY)
+        {
+            sStorage->tempMon = gPlayerParty[gUnknown_2039A19];
+            sStorage->releaseBoxId = TOTAL_BOXES_COUNT;
+        }
+        else
+        {
+            BoxMonAtToMon(StorageGetCurrentBox(), gUnknown_2039A19, &sStorage->tempMon);
+            sStorage->releaseBoxId = StorageGetCurrentBox();
+        }
+        sStorage->releaseBoxPos = gUnknown_2039A19;
+    }
+
+    sub_080CDBCC(sStorage->restrictedMoveList);
+    sStorage->restrictedReleaseMonMoves = GetMonData3(&sStorage->tempMon, MON_DATA_KNOWN_MOVES, (u8 *)sStorage->restrictedMoveList);
+    if (sStorage->restrictedReleaseMonMoves != 0)
+    {
+        sStorage->releaseStatusResolved = FALSE;
+    }
+    else
+    {
+        sStorage->releaseStatusResolved = TRUE;
+        sStorage->canReleaseMon = TRUE;
+    }
+
+    sStorage->releaseCheckState = 0;
 }
 
-__attribute__((naked)) bool32 AtLeastThreeUsableMons(void)
+bool32 AtLeastThreeUsableMons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _080CDDC8\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	lsrs r5, r0, #0x1f\n\t"
-        "	movs r4, #0\n\t"
-        "_080CDDA6:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r4, r0\n\t"
-        "	ldr r1, _080CDDCC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDDBA\n\t"
-        "	adds r5, #1\n\t"
-        "_080CDDBA:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #5\n\t"
-        "	ble _080CDDA6\n\t"
-        "	cmp r5, #2\n\t"
-        "	ble _080CDDD0\n\t"
-        "_080CDDC4:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080CDDF4\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDDC8: .4byte gUnknown_2039A1A\n\t"
-        "_080CDDCC: .4byte gPlayerParty\n\t"
-        "_080CDDD0:\n\t"
-        "	movs r6, #0\n\t"
-        "_080CDDD2:\n\t"
-        "	movs r4, #0\n\t"
-        "_080CDDD4:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl CheckBoxMonSanityAt\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDDE6\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #2\n\t"
-        "	bgt _080CDDC4\n\t"
-        "_080CDDE6:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #0x1d\n\t"
-        "	ble _080CDDD4\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #0xd\n\t"
-        "	ble _080CDDD2\n\t"
-        "	movs r0, #0\n\t"
-        "_080CDDF4:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j;
+    s32 count = (gUnknown_2039A1A != FALSE);
+
+    for (j = 0; j < PARTY_SIZE; j++)
+    {
+        if (GetMonData3(&gPlayerParty[j], MON_DATA_SANITY_HAS_SPECIES))
+            count++;
+    }
+
+    if (count >= 3)
+        return TRUE;
+
+    for (i = 0; i < TOTAL_BOXES_COUNT; i++)
+    {
+        for (j = 0; j < IN_BOX_COUNT; j++)
+        {
+            if (CheckBoxMonSanityAt(i, j))
+            {
+                if (++count >= 3)
+                    return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
 }
 
-__attribute__((naked)) void RunCanReleaseMon(void)
+s8 RunCanReleaseMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	ldr r0, _080CDE20\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r3, _080CDE24\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CDE2C\n\t"
-        "	ldr r1, _080CDE28\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	b _080CDFB2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDE20: .4byte gUnknown_20399A8\n\t"
-        "_080CDE24: .4byte 0x0000216D\n\t"
-        "_080CDE28: .4byte 0x0000216C\n\t"
-        "_080CDE2C:\n\t"
-        "	ldr r3, _080CDE3C\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDE40\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CDF0C\n\t"
-        "	b _080CDFAE\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDE3C: .4byte 0x00002172\n\t"
-        "_080CDE40:\n\t"
-        "	movs r6, #0\n\t"
-        "_080CDE42:\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldr r1, _080CDEAC\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bne _080CDE60\n\t"
-        "	ldr r3, _080CDEB0\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, r6\n\t"
-        "	beq _080CDE82\n\t"
-        "_080CDE60:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	ldr r1, _080CDEB4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080CDEB8\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r1, #0x51\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r2, _080CDEBC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	bics r0, r4\n\t"
-        "	strh r0, [r1]\n\t"
-        "_080CDE82:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #5\n\t"
-        "	bls _080CDE42\n\t"
-        "	ldr r2, _080CDEC0\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r3, _080CDEBC\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CDEC8\n\t"
-        "	subs r3, #7\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r2, _080CDEC4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080CDFAE\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDEAC: .4byte 0x00002170\n\t"
-        "_080CDEB0: .4byte 0x00002171\n\t"
-        "_080CDEB4: .4byte gPlayerParty\n\t"
-        "_080CDEB8: .4byte 0x00002176\n\t"
-        "_080CDEBC: .4byte 0x00002174\n\t"
-        "_080CDEC0: .4byte gUnknown_20399A8\n\t"
-        "_080CDEC4: .4byte 0x0000216C\n\t"
-        "_080CDEC8:\n\t"
-        "	ldr r3, _080CDEE8\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r3, #1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r0, _080CDEEC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _080CDFAE\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDEE8: .4byte 0x0000216E\n\t"
-        "_080CDEEC: .4byte 0x00002172\n\t"
-        "_080CDEF0:\n\t"
-        "	ldr r1, _080CDF04\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r3, _080CDF08\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080CDFAE\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDF04: .4byte 0x0000216D\n\t"
-        "_080CDF08: .4byte 0x0000216C\n\t"
-        "_080CDF0C:\n\t"
-        "	movs r6, #0\n\t"
-        "	mov r8, r5\n\t"
-        "	ldr r7, _080CDFBC\n\t"
-        "_080CDF12:\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r1, _080CDFC0\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r2, _080CDFC4\n\t"
-        "	adds r1, r3, r2\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r2, #7\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	movs r2, #0x51\n\t"
-        "	bl GetAndCopyBoxMonDataAt\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080CDF5C\n\t"
-        "	ldr r5, [r5]\n\t"
-        "	ldr r3, _080CDFC8\n\t"
-        "	adds r0, r5, r3\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	ldr r1, _080CDFC0\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	ldrh r3, [r0]\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080CDF5C\n\t"
-        "	ldr r2, _080CDFCC\n\t"
-        "	adds r1, r5, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	bics r0, r4\n\t"
-        "	strh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDEF0\n\t"
-        "_080CDF5C:\n\t"
-        "	ldr r2, _080CDFD0\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r3, _080CDFC4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	adds r5, r2, #0\n\t"
-        "	cmp r0, #0x1d\n\t"
-        "	ble _080CDFA4\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CDFC4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r3, [r0]\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r0, _080CDFC0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	ble _080CDFA4\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CDFD4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r2, _080CDFD8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r3, [r0]\n\t"
-        "_080CDFA4:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #0x1d\n\t"
-        "	bls _080CDF12\n\t"
-        "_080CDFAE:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_080CDFB2:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDFBC: .4byte 0x0000FFFF\n\t"
-        "_080CDFC0: .4byte 0x0000216E\n\t"
-        "_080CDFC4: .4byte 0x0000216F\n\t"
-        "_080CDFC8: .4byte 0x00002170\n\t"
-        "_080CDFCC: .4byte 0x00002174\n\t"
-        "_080CDFD0: .4byte gUnknown_20399A8\n\t"
-        "_080CDFD4: .4byte 0x0000216D\n\t"
-        "_080CDFD8: .4byte 0x0000216C\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+    u16 knownMoves;
+
+    if (sStorage->releaseStatusResolved)
+        return sStorage->canReleaseMon;
+
+    switch (sStorage->releaseCheckState)
+    {
+    case 0:
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (sStorage->releaseBoxId != TOTAL_BOXES_COUNT || sStorage->releaseBoxPos != i)
+            {
+                knownMoves = GetMonData3(&gPlayerParty[i], MON_DATA_KNOWN_MOVES, (u8 *)sStorage->restrictedMoveList);
+                sStorage->restrictedReleaseMonMoves &= ~(knownMoves);
+            }
+        }
+        if (sStorage->restrictedReleaseMonMoves == 0)
+        {
+            sStorage->releaseStatusResolved = TRUE;
+            sStorage->canReleaseMon = TRUE;
+        }
+        else
+        {
+            sStorage->releaseCheckBoxId = 0;
+            sStorage->releaseCheckBoxPos = 0;
+            sStorage->releaseCheckState++;
+        }
+        break;
+    case 1:
+        for (i = 0; i < IN_BOX_COUNT; i++)
+        {
+            knownMoves = GetAndCopyBoxMonDataAt(sStorage->releaseCheckBoxId, sStorage->releaseCheckBoxPos, MON_DATA_KNOWN_MOVES, (u8 *)sStorage->restrictedMoveList);
+            if (knownMoves != 0
+             && !(sStorage->releaseBoxId == sStorage->releaseCheckBoxId
+               && sStorage->releaseBoxPos == sStorage->releaseCheckBoxPos))
+            {
+                sStorage->restrictedReleaseMonMoves &= ~(knownMoves);
+                if (sStorage->restrictedReleaseMonMoves == 0)
+                {
+                    sStorage->releaseStatusResolved = TRUE;
+                    sStorage->canReleaseMon = TRUE;
+                    break;
+                }
+            }
+            if (++sStorage->releaseCheckBoxPos >= IN_BOX_COUNT)
+            {
+                sStorage->releaseCheckBoxPos = 0;
+                if (++sStorage->releaseCheckBoxId >= TOTAL_BOXES_COUNT)
+                {
+                    sStorage->releaseStatusResolved = TRUE;
+                    sStorage->canReleaseMon = FALSE;
+                }
+            }
+        }
+        break;
+    }
+
+    return -1;
 }
 
-__attribute__((naked)) void sub_080CDFDC(void)
+void sub_080CDFDC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CDFFC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CDFF6\n\t"
-        "	ldr r0, _080CE000\n\t"
-        "	ldr r1, _080CE004\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _080CE008\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "_080CDFF6:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CDFFC: .4byte gUnknown_2039A1A\n\t"
-        "_080CE000: .4byte gUnknown_20399B4\n\t"
-        "_080CE004: .4byte gUnknown_20399A8\n\t"
-        "_080CE008: .4byte 0x000020A4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2039A1A)
+        sSavedMovingMon = sStorage->movingMon;
 }
 
-__attribute__((naked)) void sub_080CE00C(void)
+void sub_080CE00C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CE030\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE054\n\t"
-        "	ldr r0, _080CE034\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bne _080CE044\n\t"
-        "	ldr r0, _080CE038\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CE03C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080CE040\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "	b _080CE054\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE030: .4byte gUnknown_2039A1A\n\t"
-        "_080CE034: .4byte gUnknown_2039A1B\n\t"
-        "_080CE038: .4byte gUnknown_20399A8\n\t"
-        "_080CE03C: .4byte 0x000020A4\n\t"
-        "_080CE040: .4byte gUnknown_20399B4\n\t"
-        "_080CE044:\n\t"
-        "	ldr r0, _080CE058\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CE05C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _080CE060\n\t"
-        "	movs r2, #0x50\n\t"
-        "	bl memcpy\n\t"
-        "_080CE054:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE058: .4byte gUnknown_20399A8\n\t"
-        "_080CE05C: .4byte 0x000020A4\n\t"
-        "_080CE060: .4byte gUnknown_20399B4\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2039A1A)
+    {
+        if (sMovingMonOrigBoxId == TOTAL_BOXES_COUNT)
+            sStorage->movingMon = sSavedMovingMon;
+        else
+            sStorage->movingMon.box = sSavedMovingMon.box;
+    }
 }
 
-__attribute__((naked)) void sub_080CE064(void)
+void sub_080CE064(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r0, _080CE098\n\t"
-        "	ldrb r5, [r0]\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080CE0B4\n\t"
-        "	bl sub_080CDFDC\n\t"
-        "	ldr r3, _080CE09C\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r0, _080CE0A0\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	ldr r0, _080CE0A4\n\t"
-        "	str r0, [r2]\n\t"
-        "	ldr r2, _080CE0A8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r2, [r1]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r4, _080CE0AC\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strb r2, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CE0B0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r2, [r0]\n\t"
-        "	b _080CE146\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE098: .4byte gUnknown_2039A1A\n\t"
-        "_080CE09C: .4byte gUnknown_20399A8\n\t"
-        "_080CE0A0: .4byte 0x0000218C\n\t"
-        "_080CE0A4: .4byte gUnknown_20399B4\n\t"
-        "_080CE0A8: .4byte 0x00002187\n\t"
-        "_080CE0AC: .4byte 0x00002186\n\t"
-        "_080CE0B0: .4byte 0x00002188\n\t"
-        "_080CE0B4:\n\t"
-        "	ldr r0, _080CE0F0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CE110\n\t"
-        "	ldr r4, _080CE0F4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, _080CE0F8\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	ldr r0, _080CE0FC\n\t"
-        "	str r0, [r2]\n\t"
-        "	ldr r0, _080CE100\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r2, _080CE104\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl CountPartyMons\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	subs r0, #1\n\t"
-        "	ldr r2, _080CE108\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r4, _080CE10C\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strb r5, [r0]\n\t"
-        "	b _080CE146\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE0F0: .4byte gUnknown_2039A18\n\t"
-        "_080CE0F4: .4byte gUnknown_20399A8\n\t"
-        "_080CE0F8: .4byte 0x0000218C\n\t"
-        "_080CE0FC: .4byte gPlayerParty\n\t"
-        "_080CE100: .4byte gUnknown_2039A19\n\t"
-        "_080CE104: .4byte 0x00002187\n\t"
-        "_080CE108: .4byte 0x00002186\n\t"
-        "_080CE10C: .4byte 0x00002188\n\t"
-        "_080CE110:\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBoxedMonPtr\n\t"
-        "	ldr r3, _080CE14C\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	ldr r4, _080CE150\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080CE154\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _080CE158\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r2, _080CE15C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0x1d\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	subs r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #2\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080CE146:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE14C: .4byte gUnknown_20399A8\n\t"
-        "_080CE150: .4byte 0x0000218C\n\t"
-        "_080CE154: .4byte gUnknown_2039A19\n\t"
-        "_080CE158: .4byte 0x00002187\n\t"
-        "_080CE15C: .4byte 0x00002186\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2039A1A)
+    {
+        sub_080CDFDC();
+        sStorage->summaryMon.mon = &sSavedMovingMon;
+        sStorage->summaryStartPos = 0;
+        sStorage->summaryMaxPos = 0;
+        sStorage->summaryScreenMode = 0;
+    }
+    else if (gUnknown_2039A18 == CURSOR_AREA_IN_PARTY)
+    {
+        sStorage->summaryMon.mon = gPlayerParty;
+        sStorage->summaryStartPos = gUnknown_2039A19;
+        sStorage->summaryMaxPos = CountPartyMons() - 1;
+        sStorage->summaryScreenMode = 0;
+    }
+    else
+    {
+        sStorage->summaryMon.box = GetBoxedMonPtr(StorageGetCurrentBox(), 0);
+        sStorage->summaryStartPos = gUnknown_2039A19;
+        sStorage->summaryMaxPos = IN_BOX_COUNT - 1;
+        sStorage->summaryScreenMode = 2;
+    }
 }
 
-__attribute__((naked)) void sub_080CE160(void)
+void sub_080CE160(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CE170\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE174\n\t"
-        "	bl sub_080CE00C\n\t"
-        "	b _080CE17C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE170: .4byte gUnknown_2039A1A\n\t"
-        "_080CE174:\n\t"
-        "	ldr r0, _080CE180\n\t"
-        "	ldr r1, _080CE184\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080CE17C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE180: .4byte gUnknown_2039A19\n\t"
-        "_080CE184: .4byte gLastViewedMonIndex\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2039A1A)
+        sub_080CE00C();
+    else
+        gUnknown_2039A19 = gLastViewedMonIndex;
 }
 
-__attribute__((naked)) s16 CompactPartySlots(void)
+s16 CompactPartySlots(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	ldr r7, _080CE1D4\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r1, _080CE1D8\n\t"
-        "	mov r8, r1\n\t"
-        "	subs r0, #0x65\n\t"
-        "	mov sl, r0\n\t"
-        "_080CE1A4:\n\t"
-        "	mov r0, sb\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE1DC\n\t"
-        "	cmp r6, r5\n\t"
-        "	beq _080CE1CC\n\t"
-        "	mov r0, sb\n\t"
-        "	muls r0, r5, r0\n\t"
-        "	add r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0x64\n\t"
-        "	bl memcpy\n\t"
-        "_080CE1CC:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	b _080CE1E6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE1D4: .4byte 0x0000FFFF\n\t"
-        "_080CE1D8: .4byte gPlayerParty\n\t"
-        "_080CE1DC:\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, sl\n\t"
-        "	bne _080CE1E6\n\t"
-        "	adds r7, r6, #0\n\t"
-        "_080CE1E6:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	cmp r6, #5\n\t"
-        "	bls _080CE1A4\n\t"
-        "	lsls r7, r7, #0x10\n\t"
-        "	cmp r5, #5\n\t"
-        "	bhi _080CE20E\n\t"
-        "	movs r6, #0x64\n\t"
-        "	ldr r4, _080CE220\n\t"
-        "_080CE1FA:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl ZeroMonData\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	cmp r5, #5\n\t"
-        "	bls _080CE1FA\n\t"
-        "_080CE20E:\n\t"
-        "	asrs r0, r7, #0x10\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE220: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 retVal = -1;
+    u16 i, last;
+
+    for (i = 0, last = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES);
+
+        if (species != SPECIES_NONE)
+        {
+            if (i != last)
+                gPlayerParty[last] = gPlayerParty[i];
+            last++;
+        }
+        else if (retVal == -1)
+        {
+            retVal = i;
+        }
+    }
+
+    for (; last < PARTY_SIZE; last++)
+        ZeroMonData(&gPlayerParty[last]);
+
+    return retVal;
 }
 
-__attribute__((naked)) void SetMonMarkings(u8 markings)
+void SetMonMarkings(u8 markings)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r1, sp\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, _080CE254\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r3, _080CE258\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080CE25C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE264\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CE260\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	b _080CE298\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE254: .4byte gUnknown_20399A8\n\t"
-        "_080CE258: .4byte 0x00000CEB\n\t"
-        "_080CE25C: .4byte gUnknown_2039A1A\n\t"
-        "_080CE260: .4byte 0x000020A4\n\t"
-        "_080CE264:\n\t"
-        "	ldr r4, _080CE2A0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CE284\n\t"
-        "	ldr r0, _080CE2A4\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r0, r1]\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _080CE2A8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "_080CE284:\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE298\n\t"
-        "	ldr r0, _080CE2A4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #8\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetCurrentBoxMonData\n\t"
-        "_080CE298:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE2A0: .4byte gUnknown_2039A18\n\t"
-        "_080CE2A4: .4byte gUnknown_2039A19\n\t"
-        "_080CE2A8: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->displayMonMarkings = markings;
+    if (gUnknown_2039A1A)
+    {
+        SetMonData(&sStorage->movingMon, MON_DATA_MARKINGS, &markings);
+    }
+    else
+    {
+        if (gUnknown_2039A18 == CURSOR_AREA_IN_PARTY)
+            SetMonData(&gPlayerParty[gUnknown_2039A19], MON_DATA_MARKINGS, &markings);
+        if (gUnknown_2039A18 == CURSOR_AREA_IN_BOX)
+            SetCurrentBoxMonData(gUnknown_2039A19, MON_DATA_MARKINGS, &markings);
+    }
 }
 
-__attribute__((naked)) bool8 CanMovePartyMon(void)
+bool8 CanMovePartyMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CE2D4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CE2E0\n\t"
-        "	ldr r0, _080CE2D8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE2E0\n\t"
-        "	ldr r0, _080CE2DC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl CountPartyAliveNonEggMonsExcept\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE2E0\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080CE2E2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE2D4: .4byte gUnknown_2039A18\n\t"
-        "_080CE2D8: .4byte gUnknown_2039A1A\n\t"
-        "_080CE2DC: .4byte gUnknown_2039A19\n\t"
-        "_080CE2E0:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CE2E2:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2039A18 == CURSOR_AREA_IN_PARTY
+     && !gUnknown_2039A1A
+     && CountPartyAliveNonEggMonsExcept(gUnknown_2039A19) == 0)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) bool8 CanShiftMon(void)
+bool8 CanShiftMon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CE32C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE344\n\t"
-        "	ldr r0, _080CE330\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CE328\n\t"
-        "	ldr r0, _080CE334\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl CountPartyAliveNonEggMonsExcept\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE328\n\t"
-        "	ldr r0, _080CE338\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CE33C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE344\n\t"
-        "	ldr r2, _080CE340\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE344\n\t"
-        "_080CE328:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080CE346\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE32C: .4byte gUnknown_2039A1A\n\t"
-        "_080CE330: .4byte gUnknown_2039A18\n\t"
-        "_080CE334: .4byte gUnknown_2039A19\n\t"
-        "_080CE338: .4byte gUnknown_20399A8\n\t"
-        "_080CE33C: .4byte 0x00000CED\n\t"
-        "_080CE340: .4byte 0x000020A4\n\t"
-        "_080CE344:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CE346:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (gUnknown_2039A1A)
+    {
+        if (gUnknown_2039A18 == CURSOR_AREA_IN_PARTY
+         && CountPartyAliveNonEggMonsExcept(gUnknown_2039A19) == 0)
+        {
+            if (sStorage->displayMonIsEgg
+             || GetMonData3(&sStorage->movingMon, MON_DATA_HP) == 0)
+                return FALSE;
+        }
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 bool8 IsMonBeingMoved(void)
@@ -16242,1849 +6049,752 @@ void ReshowDisplayMon(void)
         TryRefreshDisplayMon();
 }
 
-__attribute__((naked)) void SetCursorMonData(const void *data, u8 mode)
+void SetCursorMonData(const void *data, u8 mode)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r0, _080CE4E0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r3, _080CE4E4\n\t"
-        "	adds r2, r1, r3\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2]\n\t"
-        "	mov sb, r0\n\t"
-        "	mov sl, r0\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080CE594\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r3, _080CE4E8\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE4C0\n\t"
-        "	b _080CE6B0\n\t"
-        "_080CE4C0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE4F0\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _080CE4EC\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "	b _080CE502\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE4E0: .4byte gUnknown_20399A8\n\t"
-        "_080CE4E4: .4byte 0x00000CE6\n\t"
-        "_080CE4E8: .4byte 0x00000CE4\n\t"
-        "_080CE4EC: .4byte 0x00000CED\n\t"
-        "_080CE4F0:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r3, r8\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r2, _080CE578\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CE502:\n\t"
-        "	ldr r4, _080CE57C\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r5, _080CE580\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	bl StringGet_Nickname\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0x38\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r3, _080CE584\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080CE588\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r3, #0xce\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetMonFrontSpritePal\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080CE58C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r0, [r1]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl GetMonGender\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r3, _080CE590\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _080CE6A2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE578: .4byte 0x00000CED\n\t"
-        "_080CE57C: .4byte gUnknown_20399A8\n\t"
-        "_080CE580: .4byte 0x00000CEE\n\t"
-        "_080CE584: .4byte 0x00000CEC\n\t"
-        "_080CE588: .4byte 0x00000CEB\n\t"
-        "_080CE58C: .4byte 0x00000CDC\n\t"
-        "_080CE590: .4byte 0x00000CE6\n\t"
-        "_080CE594:\n\t"
-        "	cmp r5, #1\n\t"
-        "	beq _080CE59A\n\t"
-        "	b _080CE698\n\t"
-        "_080CE59A:\n\t"
-        "	adds r7, r4, #0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r3, _080CE5E0\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CE5B6\n\t"
-        "	b _080CE6B0\n\t"
-        "_080CE5B6:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE5E8\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _080CE5E4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r5, [r0]\n\t"
-        "	b _080CE5FA\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE5E0: .4byte 0x00000CE4\n\t"
-        "_080CE5E4: .4byte 0x00000CED\n\t"
-        "_080CE5E8:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	mov r3, r8\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldr r2, _080CE67C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CE5FA:\n\t"
-        "	ldr r5, _080CE680\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldr r4, _080CE684\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	bl StringGet_Nickname\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	bl GetLevelFromBoxMonExp\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r3, _080CE688\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r2, _080CE68C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r6, #0xce\n\t"
-        "	lsls r6, r6, #4\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	str r2, [r0]\n\t"
-        "	subs r4, #0xa\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	mov r1, sb\n\t"
-        "	bl GetMonSpritePalFromSpeciesAndPersonality\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r3, _080CE690\n\t"
-        "	adds r2, r1, r3\n\t"
-        "	str r0, [r2]\n\t"
-        "	adds r4, r1, r4\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	bl GetGenderFromSpeciesAndPersonality\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r2, _080CE694\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _080CE6A2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE67C: .4byte 0x00000CED\n\t"
-        "_080CE680: .4byte gUnknown_20399A8\n\t"
-        "_080CE684: .4byte 0x00000CEE\n\t"
-        "_080CE688: .4byte 0x00000CEC\n\t"
-        "_080CE68C: .4byte 0x00000CEB\n\t"
-        "_080CE690: .4byte 0x00000CDC\n\t"
-        "_080CE694: .4byte 0x00000CE6\n\t"
-        "_080CE698:\n\t"
-        "	ldr r3, _080CE6F4\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	mov r1, sb\n\t"
-        "	strh r1, [r0]\n\t"
-        "	strh r1, [r2]\n\t"
-        "_080CE6A2:\n\t"
-        "	ldr r0, _080CE6F8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r2, _080CE6F4\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrh r2, [r0]\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080CE710\n\t"
-        "_080CE6B0:\n\t"
-        "	ldr r4, _080CE6F8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r3, _080CE6FC\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #5\n\t"
-        "	bl StringFill\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CE700\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl StringFill\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080CE704\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl StringFill\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r3, _080CE708\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl StringFill\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CE70C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	b _080CE76E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE6F4: .4byte 0x00000CE4\n\t"
-        "_080CE6F8: .4byte gUnknown_20399A8\n\t"
-        "_080CE6FC: .4byte 0x00000CEE\n\t"
-        "_080CE700: .4byte 0x00000CF9\n\t"
-        "_080CE704: .4byte 0x00000D1D\n\t"
-        "_080CE708: .4byte 0x00000D41\n\t"
-        "_080CE70C: .4byte 0x00000D65\n\t"
-        "_080CE710:\n\t"
-        "	ldr r3, _080CE734\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE790\n\t"
-        "	mov r0, sl\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE73C\n\t"
-        "	ldr r2, _080CE738\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	adds r3, #1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #5\n\t"
-        "	bl StringCopyPadded\n\t"
-        "	b _080CE74A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE734: .4byte 0x00000CED\n\t"
-        "_080CE738: .4byte 0x00000CF9\n\t"
-        "_080CE73C:\n\t"
-        "	ldr r2, _080CE778\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r1, _080CE77C\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl StringCopyPadded\n\t"
-        "_080CE74A:\n\t"
-        "	ldr r4, _080CE780\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r3, _080CE784\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl StringFill\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CE788\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl StringFill\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080CE78C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "_080CE76E:\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl StringFill\n\t"
-        "	b _080CE934\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE778: .4byte 0x00000CF9\n\t"
-        "_080CE77C: .4byte gText_EggNickname\n\t"
-        "_080CE780: .4byte gUnknown_20399A8\n\t"
-        "_080CE784: .4byte 0x00000D1D\n\t"
-        "_080CE788: .4byte 0x00000D41\n\t"
-        "_080CE78C: .4byte 0x00000D65\n\t"
-        "_080CE790:\n\t"
-        "	cmp r2, #0x1d\n\t"
-        "	beq _080CE798\n\t"
-        "	cmp r2, #0x20\n\t"
-        "	bne _080CE79C\n\t"
-        "_080CE798:\n\t"
-        "	movs r3, #0xff\n\t"
-        "	mov sb, r3\n\t"
-        "_080CE79C:\n\t"
-        "	ldr r4, _080CE81C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _080CE820\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldr r3, _080CE824\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #5\n\t"
-        "	bl StringCopyPadded\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r0, _080CE828\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	movs r0, #0xba\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r3, _080CE82C\n\t"
-        "	adds r2, r1, r3\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CE830\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r0, _080CE834\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #5\n\t"
-        "	bl StringCopyPadded\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	ldr r3, _080CE838\n\t"
-        "	adds r2, r4, r3\n\t"
-        "	movs r0, #0xfc\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _080CE83C\n\t"
-        "	adds r2, r4, r0\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r1, _080CE840\n\t"
-        "	adds r2, r4, r1\n\t"
-        "	mov r3, sb\n\t"
-        "	cmp r3, #0\n\t"
-        "	beq _080CE850\n\t"
-        "	cmp r3, #0xfe\n\t"
-        "	beq _080CE87C\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _080CE844\n\t"
-        "	adds r2, r4, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r1, #2\n\t"
-        "	adds r2, r4, r1\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r3, _080CE848\n\t"
-        "	adds r2, r4, r3\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _080CE84C\n\t"
-        "	adds r2, r4, r0\n\t"
-        "	b _080CE89C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE81C: .4byte gUnknown_20399A8\n\t"
-        "_080CE820: .4byte 0x00000CF9\n\t"
-        "_080CE824: .4byte 0x00000CEE\n\t"
-        "_080CE828: .4byte 0x00000D1D\n\t"
-        "_080CE82C: .4byte 0x00000D1E\n\t"
-        "_080CE830: .4byte 0x00000CE4\n\t"
-        "_080CE834: .4byte gSpeciesNames\n\t"
-        "_080CE838: .4byte 0x00000D41\n\t"
-        "_080CE83C: .4byte 0x00000D42\n\t"
-        "_080CE840: .4byte 0x00000D43\n\t"
-        "_080CE844: .4byte 0x00000D44\n\t"
-        "_080CE848: .4byte 0x00000D46\n\t"
-        "_080CE84C: .4byte 0x00000D47\n\t"
-        "_080CE850:\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r1, _080CE870\n\t"
-        "	adds r2, r4, r1\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r3, _080CE874\n\t"
-        "	adds r2, r4, r3\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _080CE878\n\t"
-        "	adds r2, r4, r0\n\t"
-        "	movs r0, #0xb5\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r1, #3\n\t"
-        "	adds r2, r4, r1\n\t"
-        "	b _080CE89C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE870: .4byte 0x00000D44\n\t"
-        "_080CE874: .4byte 0x00000D45\n\t"
-        "_080CE878: .4byte 0x00000D46\n\t"
-        "_080CE87C:\n\t"
-        "	movs r0, #6\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r3, _080CE90C\n\t"
-        "	adds r2, r4, r3\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _080CE910\n\t"
-        "	adds r2, r4, r0\n\t"
-        "	movs r0, #7\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r1, _080CE914\n\t"
-        "	adds r2, r4, r1\n\t"
-        "	movs r0, #0xb6\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r3, #3\n\t"
-        "	adds r2, r4, r3\n\t"
-        "_080CE89C:\n\t"
-        "	movs r0, #0xfc\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r2, #1\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r2, #1\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r2, #1\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r2, #1\n\t"
-        "	movs r0, #3\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r2, #1\n\t"
-        "	movs r5, #0\n\t"
-        "	strb r5, [r2]\n\t"
-        "	adds r2, #1\n\t"
-        "	movs r0, #0xf9\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r2, #1\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r2, #1\n\t"
-        "	ldr r4, _080CE918\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080CE91C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #3\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	strb r5, [r2]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	ldr r2, _080CE920\n\t"
-        "	adds r1, r4, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE928\n\t"
-        "	ldr r3, _080CE924\n\t"
-        "	adds r4, r4, r3\n\t"
-        "	bl ItemId_GetName\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #8\n\t"
-        "	bl StringCopyPadded\n\t"
-        "	b _080CE934\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE90C: .4byte 0x00000D44\n\t"
-        "_080CE910: .4byte 0x00000D45\n\t"
-        "_080CE914: .4byte 0x00000D46\n\t"
-        "_080CE918: .4byte gUnknown_20399A8\n\t"
-        "_080CE91C: .4byte 0x00000CEC\n\t"
-        "_080CE920: .4byte 0x00000CE6\n\t"
-        "_080CE924: .4byte 0x00000D65\n\t"
-        "_080CE928:\n\t"
-        "	ldr r1, _080CE944\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl StringFill\n\t"
-        "_080CE934:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE944: .4byte 0x00000D65\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *txtPtr;
+    u16 gender;
+    bool8 sanityIsBadEgg;
+
+    sStorage->displayMonItemId = ITEM_NONE;
+    gender = MON_MALE;
+    sanityIsBadEgg = FALSE;
+    if (mode == MODE_PARTY)
+    {
+        struct Pokemon *mon = (struct Pokemon *)data;
+
+        sStorage->displayMonSpecies = GetMonData3(mon, MON_DATA_SPECIES_OR_EGG);
+        if (sStorage->displayMonSpecies != SPECIES_NONE)
+        {
+            sanityIsBadEgg = GetMonData3(mon, MON_DATA_SANITY_IS_BAD_EGG);
+            if (sanityIsBadEgg)
+                sStorage->displayMonIsEgg = TRUE;
+            else
+                sStorage->displayMonIsEgg = GetMonData3(mon, MON_DATA_IS_EGG);
+
+            GetMonData3(mon, MON_DATA_NICKNAME, sStorage->displayMonName);
+            StringGet_Nickname(sStorage->displayMonName);
+            sStorage->displayMonLevel = GetMonData3(mon, MON_DATA_LEVEL);
+            sStorage->displayMonMarkings = GetMonData3(mon, MON_DATA_MARKINGS);
+            sStorage->displayMonPersonality = GetMonData3(mon, MON_DATA_PERSONALITY);
+            sStorage->displayMonPalette = GetMonFrontSpritePal(mon);
+            gender = GetMonGender(mon);
+            sStorage->displayMonItemId = GetMonData3(mon, MON_DATA_HELD_ITEM);
+        }
+    }
+    else if (mode == MODE_BOX)
+    {
+        struct BoxPokemon *boxMon = (struct BoxPokemon *)data;
+
+        sStorage->displayMonSpecies = GetBoxMonData(data, MON_DATA_SPECIES_OR_EGG);
+        if (sStorage->displayMonSpecies != SPECIES_NONE)
+        {
+            u32 otId = GetBoxMonData(boxMon, MON_DATA_OT_ID);
+            sanityIsBadEgg = GetBoxMonData(boxMon, MON_DATA_SANITY_IS_BAD_EGG);
+            if (sanityIsBadEgg)
+                sStorage->displayMonIsEgg = TRUE;
+            else
+                sStorage->displayMonIsEgg = GetBoxMonData(boxMon, MON_DATA_IS_EGG);
+
+
+            GetBoxMonData(boxMon, MON_DATA_NICKNAME, sStorage->displayMonName);
+            StringGet_Nickname(sStorage->displayMonName);
+            sStorage->displayMonLevel = GetLevelFromBoxMonExp(boxMon);
+            sStorage->displayMonMarkings = GetBoxMonData(boxMon, MON_DATA_MARKINGS);
+            sStorage->displayMonPersonality = GetBoxMonData(boxMon, MON_DATA_PERSONALITY);
+            sStorage->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonality(sStorage->displayMonSpecies, otId, sStorage->displayMonPersonality);
+            gender = GetGenderFromSpeciesAndPersonality(sStorage->displayMonSpecies, sStorage->displayMonPersonality);
+            sStorage->displayMonItemId = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM);
+        }
+    }
+    else
+    {
+        sStorage->displayMonSpecies = SPECIES_NONE;
+        sStorage->displayMonItemId = ITEM_NONE;
+    }
+
+    if (sStorage->displayMonSpecies == SPECIES_NONE)
+    {
+        StringFill(sStorage->displayMonName, CHAR_SPACE, 5);
+        StringFill(sStorage->displayMonNameText, CHAR_SPACE, 8);
+        StringFill(sStorage->displayMonSpeciesName, CHAR_SPACE, 8);
+        StringFill(sStorage->displayMonGenderLvlText, CHAR_SPACE, 8);
+        StringFill(sStorage->displayMonItemName, CHAR_SPACE, 8);
+    }
+    else if (sStorage->displayMonIsEgg)
+    {
+        if (sanityIsBadEgg)
+            StringCopyPadded(sStorage->displayMonNameText, sStorage->displayMonName, CHAR_SPACE, 5);
+        else
+            StringCopyPadded(sStorage->displayMonNameText, gText_EggNickname, CHAR_SPACE, 8);
+
+        StringFill(sStorage->displayMonSpeciesName, CHAR_SPACE, 8);
+        StringFill(sStorage->displayMonGenderLvlText, CHAR_SPACE, 8);
+        StringFill(sStorage->displayMonItemName, CHAR_SPACE, 8);
+    }
+    else
+    {
+        if (sStorage->displayMonSpecies == SPECIES_NIDORAN_F || sStorage->displayMonSpecies == SPECIES_NIDORAN_M)
+            gender = MON_GENDERLESS;
+
+        StringCopyPadded(sStorage->displayMonNameText, sStorage->displayMonName, CHAR_SPACE, 5);
+
+        txtPtr = sStorage->displayMonSpeciesName;
+        *(txtPtr)++ = CHAR_SLASH;
+        StringCopyPadded(txtPtr, gSpeciesNames[sStorage->displayMonSpecies], CHAR_SPACE, 5);
+
+        txtPtr = sStorage->displayMonGenderLvlText;
+        *(txtPtr)++ = EXT_CTRL_CODE_BEGIN;
+        *(txtPtr)++ = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+        switch (gender)
+        {
+        case MON_MALE:
+            *(txtPtr)++ = TEXT_COLOR_RED;
+            *(txtPtr)++ = TEXT_COLOR_WHITE;
+            *(txtPtr)++ = TEXT_COLOR_LIGHT_RED;
+            *(txtPtr)++ = CHAR_MALE;
+            break;
+        case MON_FEMALE:
+            *(txtPtr)++ = TEXT_COLOR_GREEN;
+            *(txtPtr)++ = TEXT_COLOR_WHITE;
+            *(txtPtr)++ = TEXT_COLOR_LIGHT_GREEN;
+            *(txtPtr)++ = CHAR_FEMALE;
+            break;
+        default:
+            *(txtPtr)++ = TEXT_COLOR_DARK_GRAY;
+            *(txtPtr)++ = TEXT_COLOR_WHITE;
+            *(txtPtr)++ = TEXT_COLOR_LIGHT_GRAY;
+            *(txtPtr)++ = 0; // JP genderless spacer
+            break;
+        }
+
+        *(txtPtr++) = EXT_CTRL_CODE_BEGIN;
+        *(txtPtr++) = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+        *(txtPtr++) = TEXT_COLOR_DARK_GRAY;
+        *(txtPtr++) = TEXT_COLOR_WHITE;
+        *(txtPtr++) = TEXT_COLOR_LIGHT_GRAY;
+        *(txtPtr++) = CHAR_SPACE;
+        *(txtPtr++) = CHAR_EXTRA_SYMBOL;
+        *(txtPtr++) = CHAR_LV_2;
+
+        txtPtr = ConvertIntToDecimalStringN(txtPtr, sStorage->displayMonLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
+        txtPtr[0] = CHAR_SPACE;
+        txtPtr[1] = EOS;
+
+        if (sStorage->displayMonItemId != ITEM_NONE)
+            StringCopyPadded(sStorage->displayMonItemName, ItemId_GetName(sStorage->displayMonItemId), CHAR_SPACE, 8);
+        else
+            StringFill(sStorage->displayMonItemName, CHAR_SPACE, 8);
+    }
 }
 
-__attribute__((naked)) bool8 HandleInput_InBox(void)
+
+bool8 HandleInput_InBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CE968\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CE96C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CE970\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _080CE960\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CE976\n\t"
-        "_080CE960:\n\t"
-        "	bl InBoxInput_Normal\n\t"
-        "	b _080CE97A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CE968: .4byte gUnknown_20399A8\n\t"
-        "_080CE96C: .4byte 0x000021FF\n\t"
-        "_080CE970:\n\t"
-        "	bl InBoxInput_GrabbingMultiple\n\t"
-        "	b _080CE97A\n\t"
-        "_080CE976:\n\t"
-        "	bl InBoxInput_MovingMultiple\n\t"
-        "_080CE97A:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sStorage->inBoxMovingMode)
+    {
+    case 0:
+    default:
+        return InBoxInput_Normal();
+    case 1:
+        return InBoxInput_GrabbingMultiple();
+    case 2:
+        return InBoxInput_MovingMultiple();
+    }
 }
 
-__attribute__((naked)) bool8 InBoxInput_Normal(void)
+bool8 InBoxInput_Normal(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	ldr r0, _080CEA08\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r2, _080CEA0C\n\t"
-        "	ldrb r4, [r2]\n\t"
-        "	ldr r5, _080CEA10\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080CEA14\n\t"
-        "	mov sl, r1\n\t"
-        "	add r0, sl\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r7, _080CEA18\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r3, _080CEA1C\n\t"
-        "	mov sb, r3\n\t"
-        "	add r0, sb\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r6, _080CEA20\n\t"
-        "	ldrh r1, [r6, #0x30]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CE9C8\n\t"
-        "	b _080CEBB8\n\t"
-        "_080CE9C8:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEA24\n\t"
-        "	movs r6, #1\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x1d\n\t"
-        "	bgt _080CE9E4\n\t"
-        "	b _080CEBD4\n\t"
-        "_080CE9E4:\n\t"
-        "	movs r2, #3\n\t"
-        "	mov r8, r2\n\t"
-        "	subs r0, #0x1e\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	add r0, sl\n\t"
-        "	strb r6, [r0]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	add r0, sb\n\t"
-        "	strb r6, [r0]\n\t"
-        "	b _080CEBD4\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEA08: .4byte gUnknown_2039A18\n\t"
-        "_080CEA0C: .4byte gUnknown_2039A19\n\t"
-        "_080CEA10: .4byte gUnknown_20399A8\n\t"
-        "_080CEA14: .4byte 0x00000CD2\n\t"
-        "_080CEA18: .4byte 0x00000CD3\n\t"
-        "_080CEA1C: .4byte 0x00000CD7\n\t"
-        "_080CEA20: .4byte gMain\n\t"
-        "_080CEA24:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEA5A\n\t"
-        "	movs r6, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r3, r0]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEA46\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	movs r3, #0xff\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	b _080CEBC8\n\t"
-        "_080CEA46:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	movs r1, #0xff\n\t"
-        "	strb r1, [r0]\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #0x13\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	b _080CEBD4\n\t"
-        "_080CEA5A:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEA8E\n\t"
-        "	movs r6, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r3, r0]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __modsi3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEA80\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0x11\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	b _080CEBD4\n\t"
-        "_080CEA80:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	strb r6, [r0]\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	movs r3, #0xfb\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	b _080CEBC8\n\t"
-        "_080CEA8E:\n\t"
-        "	ldrh r1, [r6, #0x2e]\n\t"
-        "	movs r0, #8\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEA9C\n\t"
-        "	movs r6, #1\n\t"
-        "	b _080CEBCE\n\t"
-        "_080CEA9C:\n\t"
-        "	movs r4, #1\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEB60\n\t"
-        "	bl SetSelectionMenuTexts\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEB60\n\t"
-        "	ldr r0, _080CEABC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CEAC0\n\t"
-        "	movs r0, #8\n\t"
-        "	b _080CEBE2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEABC: .4byte gUnknown_2039A1D\n\t"
-        "_080CEAC0:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080CEAD0\n\t"
-        "	ldr r0, _080CEAEC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CEB50\n\t"
-        "_080CEAD0:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CF814\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bhi _080CEB60\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CEAF0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEAEC: .4byte gUnknown_2039A1A\n\t"
-        "_080CEAF0: .4byte 0x080CEAF4\n\t"
-        "_080CEAF4: @ jump table\n\t"
-        "	.4byte _080CEB30 @ case 0\n\t"
-        "	.4byte _080CEB34 @ case 1\n\t"
-        "	.4byte _080CEB38 @ case 2\n\t"
-        "	.4byte _080CEB3C @ case 3\n\t"
-        "	.4byte _080CEB40 @ case 4\n\t"
-        "	.4byte _080CEB60 @ case 5\n\t"
-        "	.4byte _080CEB60 @ case 6\n\t"
-        "	.4byte _080CEB60 @ case 7\n\t"
-        "	.4byte _080CEB60 @ case 8\n\t"
-        "	.4byte _080CEB60 @ case 9\n\t"
-        "	.4byte _080CEB60 @ case 10\n\t"
-        "	.4byte _080CEB44 @ case 11\n\t"
-        "	.4byte _080CEB48 @ case 12\n\t"
-        "	.4byte _080CEB60 @ case 13\n\t"
-        "	.4byte _080CEB4C @ case 14\n\t"
-        "_080CEB30:\n\t"
-        "	movs r0, #0xb\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEB34:\n\t"
-        "	movs r0, #0xc\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEB38:\n\t"
-        "	movs r0, #0xd\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEB3C:\n\t"
-        "	movs r0, #0xe\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEB40:\n\t"
-        "	movs r0, #0xf\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEB44:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEB48:\n\t"
-        "	movs r0, #0x11\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEB4C:\n\t"
-        "	movs r0, #0x12\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEB50:\n\t"
-        "	ldr r2, _080CEB5C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "	movs r0, #0x14\n\t"
-        "	b _080CEBE2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEB5C: .4byte 0x000021FF\n\t"
-        "_080CEB60:\n\t"
-        "	ldr r2, _080CEB70\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEB74\n\t"
-        "	movs r0, #0x13\n\t"
-        "	b _080CEBE2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEB70: .4byte gMain\n\t"
-        "_080CEB74:\n\t"
-        "	ldr r0, _080CEB90\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0x13]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CEBA2\n\t"
-        "	ldrh r1, [r2, #0x2c]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEB94\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _080CEBE2\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEB90: .4byte gSaveBlock2Ptr\n\t"
-        "_080CEB94:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEBA2\n\t"
-        "	movs r0, #9\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEBA2:\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEBB4\n\t"
-        "	bl sub_080CF640\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CEBE2\n\t"
-        "_080CEBB4:\n\t"
-        "	movs r6, #0\n\t"
-        "	b _080CEBE0\n\t"
-        "_080CEBB8:\n\t"
-        "	movs r6, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _080CEBCE\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	movs r3, #0xfa\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "_080CEBC8:\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	b _080CEBD4\n\t"
-        "_080CEBCE:\n\t"
-        "	movs r0, #2\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r4, #0\n\t"
-        "_080CEBD4:\n\t"
-        "	cmp r6, #0\n\t"
-        "	beq _080CEBE0\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_080CD110\n\t"
-        "_080CEBE0:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "_080CEBE2:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 retVal;
+    s8 cursorArea;
+    s8 cursorPosition;
+
+    do
+    {
+        cursorArea = gUnknown_2039A18;
+        cursorPosition = gUnknown_2039A19;
+        sStorage->cursorVerticalWrap = 0;
+        sStorage->cursorHorizontalWrap = 0;
+        sStorage->cursorFlipTimer = 0;
+
+        if (JOY_REPEAT(DPAD_UP))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            if (gUnknown_2039A19 >= IN_BOX_COLUMNS)
+            {
+                cursorPosition -= IN_BOX_COLUMNS;
+            }
+            else
+            {
+                cursorArea = CURSOR_AREA_BOX_TITLE;
+                cursorPosition = 0;
+            }
+            break;
+        }
+        else if (JOY_REPEAT(DPAD_DOWN))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            cursorPosition += IN_BOX_COLUMNS;
+            if (cursorPosition >= IN_BOX_COUNT)
+            {
+                cursorArea = CURSOR_AREA_BUTTONS;
+                cursorPosition -= IN_BOX_COUNT;
+                cursorPosition /= 3;
+                sStorage->cursorVerticalWrap = 1;
+                sStorage->cursorFlipTimer = 1;
+            }
+            break;
+        }
+        else if (JOY_REPEAT(DPAD_LEFT))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            if (gUnknown_2039A19 % IN_BOX_COLUMNS != 0)
+            {
+                cursorPosition--;
+            }
+            else
+            {
+                sStorage->cursorHorizontalWrap = -1;
+                cursorPosition += (IN_BOX_COLUMNS - 1);
+            }
+            break;
+        }
+        else if (JOY_REPEAT(DPAD_RIGHT))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            if ((gUnknown_2039A19 + 1) % IN_BOX_COLUMNS != 0)
+            {
+                cursorPosition++;
+            }
+            else
+            {
+                sStorage->cursorHorizontalWrap = 1;
+                cursorPosition -= (IN_BOX_COLUMNS - 1);
+            }
+            break;
+        }
+        else if (JOY_NEW(START_BUTTON))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            cursorArea = CURSOR_AREA_BOX_TITLE;
+            cursorPosition = 0;
+            break;
+        }
+
+        if ((JOY_NEW(A_BUTTON)) && SetSelectionMenuTexts())
+        {
+            if (!gUnknown_2039A1D)
+                return INPUT_IN_MENU;
+
+            if (sStorage->boxOption != OPTION_MOVE_MONS || gUnknown_2039A1A == TRUE)
+            {
+                switch (sub_080CF814(0))
+                {
+                case MENU_STORE:
+                    return INPUT_DEPOSIT;
+                case MENU_WITHDRAW:
+                    return INPUT_WITHDRAW;
+                case MENU_MOVE:
+                    return INPUT_MOVE_MON;
+                case MENU_SHIFT:
+                    return INPUT_SHIFT_MON;
+                case MENU_PLACE:
+                    return INPUT_PLACE_MON;
+                case MENU_TAKE:
+                    return INPUT_TAKE_ITEM;
+                case MENU_GIVE:
+                    return INPUT_GIVE_ITEM;
+                case MENU_SWITCH:
+                    return INPUT_SWITCH_ITEMS;
+                }
+            }
+            else
+            {
+                sStorage->inBoxMovingMode = MOVE_MODE_MULTIPLE_SELECTING;
+                return INPUT_MULTIMOVE_START;
+            }
+        }
+
+        if (JOY_NEW(B_BUTTON))
+            return INPUT_PRESSED_B;
+
+        if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
+        {
+            if (JOY_HELD(L_BUTTON))
+                return INPUT_SCROLL_LEFT;
+            if (JOY_HELD(R_BUTTON))
+                return INPUT_SCROLL_RIGHT;
+        }
+
+        if (JOY_NEW(SELECT_BUTTON))
+        {
+            sub_080CF640();
+            return INPUT_NONE;
+        }
+
+        retVal = INPUT_NONE;
+
+    } while (0);
+
+    if (retVal)
+        sub_080CD110(cursorArea, cursorPosition);
+
+    return retVal;
 }
 
-__attribute__((naked)) bool8 InBoxInput_GrabbingMultiple(void)
+
+
+bool8 InBoxInput_GrabbingMultiple(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r1, _080CEC20\n\t"
-        "	ldrh r0, [r1, #0x2c]\n\t"
-        "	movs r4, #1\n\t"
-        "	ands r4, r0\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080CECA4\n\t"
-        "	ldrh r1, [r1, #0x30]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEC28\n\t"
-        "	ldr r4, _080CEC24\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEC9C\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	subs r1, #6\n\t"
-        "	b _080CEC8A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEC20: .4byte gMain\n\t"
-        "_080CEC24: .4byte gUnknown_2039A19\n\t"
-        "_080CEC28:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEC48\n\t"
-        "	ldr r1, _080CEC44\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	adds r0, #6\n\t"
-        "	cmp r0, #0x1d\n\t"
-        "	bgt _080CEC9C\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	adds r1, #6\n\t"
-        "	b _080CEC8A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEC44: .4byte gUnknown_2039A19\n\t"
-        "_080CEC48:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEC6C\n\t"
-        "	ldr r4, _080CEC68\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __modsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEC9C\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	subs r1, #1\n\t"
-        "	b _080CEC8A\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEC68: .4byte gUnknown_2039A19\n\t"
-        "_080CEC6C:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CECA0\n\t"
-        "	ldr r4, _080CEC98\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __modsi3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEC9C\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	adds r1, #1\n\t"
-        "_080CEC8A:\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CD110\n\t"
-        "	movs r0, #0x15\n\t"
-        "	b _080CED18\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEC98: .4byte gUnknown_2039A19\n\t"
-        "_080CEC9C:\n\t"
-        "	movs r0, #0x18\n\t"
-        "	b _080CED18\n\t"
-        "_080CECA0:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CED18\n\t"
-        "_080CECA4:\n\t"
-        "	bl sub_080D0444\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080CECE0\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	asrs r1, r1, #0x18\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _080CECF8\n\t"
-        "	ldr r2, _080CECE4\n\t"
-        "	ldr r0, _080CECE8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r3, _080CECEC\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, _080CECF0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	ldr r1, _080CECF4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0x17\n\t"
-        "	b _080CED18\n\t"
-        "	.align 2, 0\n\t"
-        "_080CECE0: .4byte gUnknown_2039A19\n\t"
-        "_080CECE4: .4byte gUnknown_2039A1A\n\t"
-        "_080CECE8: .4byte gUnknown_20399A8\n\t"
-        "_080CECEC: .4byte 0x00000CE4\n\t"
-        "_080CECF0: .4byte 0x000021FF\n\t"
-        "_080CECF4: .4byte gUnknown_2039A1B\n\t"
-        "_080CECF8:\n\t"
-        "	ldr r1, _080CED20\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _080CED24\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r3, _080CED28\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r2, [r1]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0x16\n\t"
-        "_080CED18:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CED20: .4byte gUnknown_20399A8\n\t"
-        "_080CED24: .4byte 0x000021FF\n\t"
-        "_080CED28: .4byte 0x00000CB8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_HELD(A_BUTTON))
+    {
+        if (JOY_REPEAT(DPAD_UP))
+        {
+            if (gUnknown_2039A19 / IN_BOX_COLUMNS != 0)
+            {
+                sub_080CD110(CURSOR_AREA_IN_BOX, gUnknown_2039A19 - IN_BOX_COLUMNS);
+                return INPUT_MULTIMOVE_CHANGE_SELECTION;
+            }
+            else
+            {
+                return INPUT_MULTIMOVE_UNABLE;
+            }
+        }
+        else if (JOY_REPEAT(DPAD_DOWN))
+        {
+            if (gUnknown_2039A19 + IN_BOX_COLUMNS < IN_BOX_COUNT)
+            {
+                sub_080CD110(CURSOR_AREA_IN_BOX, gUnknown_2039A19 + IN_BOX_COLUMNS);
+                return INPUT_MULTIMOVE_CHANGE_SELECTION;
+            }
+            else
+            {
+                return INPUT_MULTIMOVE_UNABLE;
+            }
+        }
+        else if (JOY_REPEAT(DPAD_LEFT))
+        {
+            if (gUnknown_2039A19 % IN_BOX_COLUMNS != 0)
+            {
+                sub_080CD110(CURSOR_AREA_IN_BOX, gUnknown_2039A19 - 1);
+                return INPUT_MULTIMOVE_CHANGE_SELECTION;
+            }
+            else
+            {
+                return INPUT_MULTIMOVE_UNABLE;
+            }
+        }
+        else if (JOY_REPEAT(DPAD_RIGHT))
+        {
+            if ((gUnknown_2039A19 + 1) % IN_BOX_COLUMNS != 0)
+            {
+                sub_080CD110(CURSOR_AREA_IN_BOX, gUnknown_2039A19 + 1);
+                return INPUT_MULTIMOVE_CHANGE_SELECTION;
+            }
+            else
+            {
+                return INPUT_MULTIMOVE_UNABLE;
+            }
+        }
+        else
+        {
+            return INPUT_NONE;
+        }
+    }
+    else
+    {
+        if (sub_080D0444() == gUnknown_2039A19)
+        {
+            // Doing a multiple mon selection but only chose 1 mon
+            sStorage->inBoxMovingMode = MOVE_MODE_NORMAL;
+            sStorage->cursorShadowSprite->invisible = FALSE;
+            return INPUT_MULTIMOVE_SINGLE;
+        }
+        else
+        {
+            gUnknown_2039A1A = (sStorage->displayMonSpecies != SPECIES_NONE);
+            sStorage->inBoxMovingMode = MOVE_MODE_MULTIPLE_MOVING;
+            sMovingMonOrigBoxId = StorageGetCurrentBox();
+            return INPUT_MULTIMOVE_GRAB_SELECTION;
+        }
+    }
 }
 
-__attribute__((naked)) bool8 InBoxInput_MovingMultiple(void)
+
+bool8 InBoxInput_MovingMultiple(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r2, _080CED50\n\t"
-        "	ldrh r1, [r2, #0x30]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CED58\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CFE20\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE04\n\t"
-        "	ldr r0, _080CED54\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	subs r1, #6\n\t"
-        "	b _080CEDB6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CED50: .4byte gMain\n\t"
-        "_080CED54: .4byte gUnknown_2039A19\n\t"
-        "_080CED58:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CED78\n\t"
-        "	movs r0, #1\n\t"
-        "	bl sub_080CFE20\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE04\n\t"
-        "	ldr r0, _080CED74\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r1, #6\n\t"
-        "	b _080CEDB6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CED74: .4byte gUnknown_2039A19\n\t"
-        "_080CED78:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CED98\n\t"
-        "	movs r0, #2\n\t"
-        "	bl sub_080CFE20\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE1E\n\t"
-        "	ldr r0, _080CED94\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	subs r1, #1\n\t"
-        "	b _080CEDB6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CED94: .4byte gUnknown_2039A19\n\t"
-        "_080CED98:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080CEDC8\n\t"
-        "	movs r0, #3\n\t"
-        "	bl sub_080CFE20\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE32\n\t"
-        "	ldr r0, _080CEDC4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	adds r1, #1\n\t"
-        "_080CEDB6:\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CD110\n\t"
-        "	movs r0, #0x19\n\t"
-        "	b _080CEE38\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEDC4: .4byte gUnknown_2039A19\n\t"
-        "_080CEDC8:\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEDFC\n\t"
-        "	bl sub_080D0460\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE04\n\t"
-        "	ldr r0, _080CEDF0\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, _080CEDF4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CEDF8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r4, [r0]\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	b _080CEE38\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEDF0: .4byte gUnknown_2039A1A\n\t"
-        "_080CEDF4: .4byte gUnknown_20399A8\n\t"
-        "_080CEDF8: .4byte 0x000021FF\n\t"
-        "_080CEDFC:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE08\n\t"
-        "_080CEE04:\n\t"
-        "	movs r0, #0x18\n\t"
-        "	b _080CEE38\n\t"
-        "_080CEE08:\n\t"
-        "	ldr r0, _080CEE24\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0x13]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CEE36\n\t"
-        "	ldrh r1, [r2, #0x2c]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE28\n\t"
-        "_080CEE1E:\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _080CEE38\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEE24: .4byte gSaveBlock2Ptr\n\t"
-        "_080CEE28:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE36\n\t"
-        "_080CEE32:\n\t"
-        "	movs r0, #9\n\t"
-        "	b _080CEE38\n\t"
-        "_080CEE36:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CEE38:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_REPEAT(DPAD_UP))
+    {
+        if (sub_080CFE20(0))
+        {
+            sub_080CD110(CURSOR_AREA_IN_BOX, gUnknown_2039A19 - IN_BOX_COLUMNS);
+            return INPUT_MULTIMOVE_MOVE_MONS;
+        }
+        else
+        {
+            return INPUT_MULTIMOVE_UNABLE;
+        }
+    }
+    else if (JOY_REPEAT(DPAD_DOWN))
+    {
+        if (sub_080CFE20(1))
+        {
+            sub_080CD110(CURSOR_AREA_IN_BOX, gUnknown_2039A19 + IN_BOX_COLUMNS);
+            return INPUT_MULTIMOVE_MOVE_MONS;
+        }
+        else
+        {
+            return INPUT_MULTIMOVE_UNABLE;
+        }
+    }
+    else if (JOY_REPEAT(DPAD_LEFT))
+    {
+        if (sub_080CFE20(2))
+        {
+            sub_080CD110(CURSOR_AREA_IN_BOX, gUnknown_2039A19 - 1);
+            return INPUT_MULTIMOVE_MOVE_MONS;
+        }
+        else
+        {
+            return INPUT_SCROLL_LEFT;
+        }
+    }
+    else if (JOY_REPEAT(DPAD_RIGHT))
+    {
+        if (sub_080CFE20(3))
+        {
+            sub_080CD110(CURSOR_AREA_IN_BOX, gUnknown_2039A19 + 1);
+            return INPUT_MULTIMOVE_MOVE_MONS;
+        }
+        else
+        {
+            return INPUT_SCROLL_RIGHT;
+        }
+    }
+    else if (JOY_NEW(A_BUTTON))
+    {
+        if (sub_080D0460())
+        {
+            gUnknown_2039A1A = FALSE;
+            sStorage->inBoxMovingMode = MOVE_MODE_NORMAL;
+            return INPUT_MULTIMOVE_PLACE_MONS;
+        }
+        else
+        {
+            return INPUT_MULTIMOVE_UNABLE;
+        }
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        return INPUT_MULTIMOVE_UNABLE;
+    }
+    else
+    {
+        if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
+        {
+            if (JOY_HELD(L_BUTTON))
+                return INPUT_SCROLL_LEFT;
+            if (JOY_HELD(R_BUTTON))
+                return INPUT_SCROLL_RIGHT;
+        }
+
+        return INPUT_NONE;
+    }
 }
 
-__attribute__((naked)) bool8 HandleInput_InParty(void)
+
+
+bool8 HandleInput_InParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	ldr r0, _080CEEB0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r6, _080CEEB4\n\t"
-        "	ldrb r4, [r6]\n\t"
-        "	ldr r2, _080CEEB8\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CEEBC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r3, _080CEEC0\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r3, #5\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	mov r8, r1\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r1, _080CEEC4\n\t"
-        "	ldrh r3, [r1, #0x30]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r3\n\t"
-        "	adds r5, r6, #0\n\t"
-        "	mov ip, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEE84\n\t"
-        "	b _080CF024\n\t"
-        "_080CEE84:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEEC8\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #6\n\t"
-        "	ble _080CEE9E\n\t"
-        "	movs r4, #0\n\t"
-        "_080CEE9E:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r5, r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080CEEAC\n\t"
-        "	b _080CF042\n\t"
-        "_080CEEAC:\n\t"
-        "	movs r7, #1\n\t"
-        "	b _080CF046\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEEB0: .4byte gUnknown_2039A18\n\t"
-        "_080CEEB4: .4byte gUnknown_2039A19\n\t"
-        "_080CEEB8: .4byte gUnknown_20399A8\n\t"
-        "_080CEEBC: .4byte 0x00000CD3\n\t"
-        "_080CEEC0: .4byte 0x00000CD2\n\t"
-        "_080CEEC4: .4byte gMain\n\t"
-        "_080CEEC8:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEEEC\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEEEC\n\t"
-        "	movs r7, #1\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r2, _080CEEE8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	movs r4, #0\n\t"
-        "	b _080CF042\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEEE8: .4byte 0x00000CD6\n\t"
-        "_080CEEEC:\n\t"
-        "	mov r3, ip\n\t"
-        "	ldrh r1, [r3, #0x30]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEF1A\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CEF10\n\t"
-        "	movs r7, #1\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CEF0C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r4, [r0]\n\t"
-        "	b _080CF042\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEF0C: .4byte 0x00000CD6\n\t"
-        "_080CEF10:\n\t"
-        "	movs r7, #6\n\t"
-        "	movs r2, #0\n\t"
-        "	mov sb, r2\n\t"
-        "	movs r4, #0\n\t"
-        "	b _080CF042\n\t"
-        "_080CEF1A:\n\t"
-        "	mov r3, ip\n\t"
-        "	ldrh r1, [r3, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEFD8\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bne _080CEF40\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CEF3A\n\t"
-        "	movs r0, #4\n\t"
-        "	b _080CF054\n\t"
-        "_080CEF3A:\n\t"
-        "	movs r0, #1\n\t"
-        "	mov r8, r0\n\t"
-        "	b _080CEFD8\n\t"
-        "_080CEF40:\n\t"
-        "	bl SetSelectionMenuTexts\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CEFD8\n\t"
-        "	ldr r0, _080CEF58\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CEF5C\n\t"
-        "	movs r0, #8\n\t"
-        "	b _080CF054\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEF58: .4byte gUnknown_2039A1D\n\t"
-        "_080CEF5C:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CF814\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0xe\n\t"
-        "	bhi _080CEFD8\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CEF78\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEF78: .4byte 0x080CEF7C\n\t"
-        "_080CEF7C: @ jump table\n\t"
-        "	.4byte _080CEFB8 @ case 0\n\t"
-        "	.4byte _080CEFBC @ case 1\n\t"
-        "	.4byte _080CEFC0 @ case 2\n\t"
-        "	.4byte _080CEFC4 @ case 3\n\t"
-        "	.4byte _080CEFC8 @ case 4\n\t"
-        "	.4byte _080CEFD8 @ case 5\n\t"
-        "	.4byte _080CEFD8 @ case 6\n\t"
-        "	.4byte _080CEFD8 @ case 7\n\t"
-        "	.4byte _080CEFD8 @ case 8\n\t"
-        "	.4byte _080CEFD8 @ case 9\n\t"
-        "	.4byte _080CEFD8 @ case 10\n\t"
-        "	.4byte _080CEFCC @ case 11\n\t"
-        "	.4byte _080CEFD0 @ case 12\n\t"
-        "	.4byte _080CEFD8 @ case 13\n\t"
-        "	.4byte _080CEFD4 @ case 14\n\t"
-        "_080CEFB8:\n\t"
-        "	movs r0, #0xb\n\t"
-        "	b _080CF054\n\t"
-        "_080CEFBC:\n\t"
-        "	movs r0, #0xc\n\t"
-        "	b _080CF054\n\t"
-        "_080CEFC0:\n\t"
-        "	movs r0, #0xd\n\t"
-        "	b _080CF054\n\t"
-        "_080CEFC4:\n\t"
-        "	movs r0, #0xe\n\t"
-        "	b _080CF054\n\t"
-        "_080CEFC8:\n\t"
-        "	movs r0, #0xf\n\t"
-        "	b _080CF054\n\t"
-        "_080CEFCC:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	b _080CF054\n\t"
-        "_080CEFD0:\n\t"
-        "	movs r0, #0x11\n\t"
-        "	b _080CF054\n\t"
-        "_080CEFD4:\n\t"
-        "	movs r0, #0x12\n\t"
-        "	b _080CF054\n\t"
-        "_080CEFD8:\n\t"
-        "	ldr r2, _080CEFF4\n\t"
-        "	ldrh r1, [r2, #0x2e]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	mov ip, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF000\n\t"
-        "	ldr r0, _080CEFF8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CEFFC\n\t"
-        "	movs r0, #0x13\n\t"
-        "	b _080CF054\n\t"
-        "	.align 2, 0\n\t"
-        "_080CEFF4: .4byte gMain\n\t"
-        "_080CEFF8: .4byte gUnknown_20399A8\n\t"
-        "_080CEFFC:\n\t"
-        "	movs r1, #1\n\t"
-        "	mov r8, r1\n\t"
-        "_080CF000:\n\t"
-        "	mov r2, r8\n\t"
-        "	cmp r2, #0\n\t"
-        "	beq _080CF010\n\t"
-        "	movs r7, #6\n\t"
-        "	movs r3, #0\n\t"
-        "	mov sb, r3\n\t"
-        "	movs r4, #0\n\t"
-        "	b _080CF042\n\t"
-        "_080CF010:\n\t"
-        "	mov r0, ip\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF042\n\t"
-        "	bl sub_080CF640\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CF054\n\t"
-        "_080CF024:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	movs r1, #0xff\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CF034\n\t"
-        "	movs r4, #6\n\t"
-        "_080CF034:\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r6, r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _080CF042\n\t"
-        "	movs r7, #1\n\t"
-        "_080CF042:\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _080CF052\n\t"
-        "_080CF046:\n\t"
-        "	cmp r7, #6\n\t"
-        "	beq _080CF052\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_080CD110\n\t"
-        "_080CF052:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "_080CF054:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 retVal;
+    bool8 gotoBox;
+    s8 cursorArea;
+    s8 cursorPosition;
+
+    do
+    {
+        cursorArea = gUnknown_2039A18;
+        cursorPosition = gUnknown_2039A19;
+        sStorage->cursorHorizontalWrap = 0;
+        sStorage->cursorVerticalWrap = 0;
+        sStorage->cursorFlipTimer = 0;
+        gotoBox = FALSE;
+        retVal = INPUT_NONE;
+
+        if (JOY_REPEAT(DPAD_UP))
+        {
+            if (--cursorPosition < 0)
+                cursorPosition = PARTY_SIZE;
+            if (cursorPosition != gUnknown_2039A19)
+                retVal = INPUT_MOVE_CURSOR;
+            break;
+        }
+        else if (JOY_REPEAT(DPAD_DOWN))
+        {
+            if (++cursorPosition > PARTY_SIZE)
+                cursorPosition = 0;
+            if (cursorPosition != gUnknown_2039A19)
+                retVal = INPUT_MOVE_CURSOR;
+            break;
+        }
+        else if (JOY_REPEAT(DPAD_LEFT) && gUnknown_2039A19 != 0)
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            sStorage->cursorPrevHorizPos = gUnknown_2039A19;
+            cursorPosition = 0;
+            break;
+        }
+        else if (JOY_REPEAT(DPAD_RIGHT))
+        {
+            if (gUnknown_2039A19 == 0)
+            {
+                retVal = INPUT_MOVE_CURSOR;
+                cursorPosition = sStorage->cursorPrevHorizPos;
+            }
+            else
+            {
+                retVal = INPUT_HIDE_PARTY;
+                cursorArea = CURSOR_AREA_IN_BOX;
+                cursorPosition = 0;
+            }
+            break;
+        }
+
+        if (JOY_NEW(A_BUTTON))
+        {
+            if (gUnknown_2039A19 == PARTY_SIZE)
+            {
+                if (sStorage->boxOption == OPTION_DEPOSIT)
+                    return INPUT_CLOSE_BOX;
+
+                gotoBox = TRUE;
+            }
+            else if (SetSelectionMenuTexts())
+            {
+                if (!gUnknown_2039A1D)
+                    return INPUT_IN_MENU;
+
+                switch (sub_080CF814(0))
+                {
+                case MENU_STORE:
+                    return INPUT_DEPOSIT;
+                case MENU_WITHDRAW:
+                    return INPUT_WITHDRAW;
+                case MENU_MOVE:
+                    return INPUT_MOVE_MON;
+                case MENU_SHIFT:
+                    return INPUT_SHIFT_MON;
+                case MENU_PLACE:
+                    return INPUT_PLACE_MON;
+                case MENU_TAKE:
+                    return INPUT_TAKE_ITEM;
+                case MENU_GIVE:
+                    return INPUT_GIVE_ITEM;
+                case MENU_SWITCH:
+                    return INPUT_SWITCH_ITEMS;
+                }
+            }
+        }
+
+        if (JOY_NEW(B_BUTTON))
+        {
+            if (sStorage->boxOption == OPTION_DEPOSIT)
+                return INPUT_PRESSED_B;
+
+            gotoBox = TRUE;
+        }
+
+        if (gotoBox)
+        {
+            retVal = INPUT_HIDE_PARTY;
+            cursorArea = CURSOR_AREA_IN_BOX;
+            cursorPosition = 0;
+        }
+        else if (JOY_NEW(SELECT_BUTTON))
+        {
+            sub_080CF640();
+            return INPUT_NONE;
+        }
+
+    } while (0);
+
+    if (retVal != INPUT_NONE)
+    {
+        if (retVal != INPUT_HIDE_PARTY)
+            sub_080CD110(cursorArea, cursorPosition);
+    }
+
+    return retVal;
 }
 
-__attribute__((naked)) bool8 HandleInput_OnBox(void)
+
+bool8 HandleInput_OnBox(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r3, _080CF09C\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CF0A0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r2, _080CF0A4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r5, _080CF0A8\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, _080CF0AC\n\t"
-        "	ldrh r2, [r1, #0x30]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF126\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF0B0\n\t"
-        "	movs r4, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r6, #2\n\t"
-        "	b _080CF132\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF09C: .4byte gUnknown_20399A8\n\t"
-        "_080CF0A0: .4byte 0x00000CD3\n\t"
-        "_080CF0A4: .4byte 0x00000CD2\n\t"
-        "_080CF0A8: .4byte 0x00000CD7\n\t"
-        "_080CF0AC: .4byte gMain\n\t"
-        "_080CF0B0:\n\t"
-        "	ldrh r2, [r1, #0x2c]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF0D6\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF0EA\n\t"
-        "	ldr r0, _080CF0DC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #0x13]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CF0EE\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF0E0\n\t"
-        "_080CF0D6:\n\t"
-        "	movs r0, #0xa\n\t"
-        "	b _080CF14E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF0DC: .4byte gSaveBlock2Ptr\n\t"
-        "_080CF0E0:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF0EE\n\t"
-        "_080CF0EA:\n\t"
-        "	movs r0, #9\n\t"
-        "	b _080CF14E\n\t"
-        "_080CF0EE:\n\t"
-        "	ldrh r1, [r1, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF106\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CCA24\n\t"
-        "	bl AddBoxOptionsMenu\n\t"
-        "	movs r0, #7\n\t"
-        "	b _080CF14E\n\t"
-        "_080CF106:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF112\n\t"
-        "	movs r0, #0x13\n\t"
-        "	b _080CF14E\n\t"
-        "_080CF112:\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF122\n\t"
-        "	bl sub_080CF640\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CF14E\n\t"
-        "_080CF122:\n\t"
-        "	movs r4, #0\n\t"
-        "	b _080CF14C\n\t"
-        "_080CF126:\n\t"
-        "	movs r4, #1\n\t"
-        "	movs r1, #3\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strb r4, [r0]\n\t"
-        "_080CF132:\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080CF14C\n\t"
-        "	lsls r5, r1, #0x18\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _080CF142\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080CCA24\n\t"
-        "_080CF142:\n\t"
-        "	lsrs r0, r5, #0x18\n\t"
-        "	lsls r1, r6, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	bl sub_080CD110\n\t"
-        "_080CF14C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "_080CF14E:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 retVal;
+    s8 cursorArea;
+    s8 cursorPosition;
+
+    do
+    {
+        sStorage->cursorHorizontalWrap = 0;
+        sStorage->cursorVerticalWrap = 0;
+        sStorage->cursorFlipTimer = 0;
+
+        if (JOY_REPEAT(DPAD_UP))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            cursorArea = CURSOR_AREA_BUTTONS;
+            cursorPosition = 0;
+            sStorage->cursorFlipTimer = 1;
+            break;
+        }
+        else if (JOY_REPEAT(DPAD_DOWN))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            cursorArea = CURSOR_AREA_IN_BOX;
+            cursorPosition = 2;
+            break;
+        }
+
+        if (JOY_HELD(DPAD_LEFT))
+            return INPUT_SCROLL_LEFT;
+        if (JOY_HELD(DPAD_RIGHT))
+            return INPUT_SCROLL_RIGHT;
+
+        if (gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)
+        {
+            if (JOY_HELD(L_BUTTON))
+                return INPUT_SCROLL_LEFT;
+            if (JOY_HELD(R_BUTTON))
+                return INPUT_SCROLL_RIGHT;
+        }
+
+        if (JOY_NEW(A_BUTTON))
+        {
+            sub_080CCA24(FALSE);
+            AddBoxOptionsMenu();
+            return INPUT_BOX_OPTIONS;
+        }
+
+        if (JOY_NEW(B_BUTTON))
+            return INPUT_PRESSED_B;
+
+        if (JOY_NEW(SELECT_BUTTON))
+        {
+            sub_080CF640();
+            return INPUT_NONE;
+        }
+
+        retVal = INPUT_NONE;
+
+    } while (0);
+
+    if (retVal != INPUT_NONE)
+    {
+        if (cursorArea != CURSOR_AREA_BOX_TITLE)
+            sub_080CCA24(FALSE);
+        sub_080CD110(cursorArea, cursorPosition);
+    }
+
+    return retVal;
 }
 
-__attribute__((naked)) bool8 HandleInput_OnButtons(void)
+
+bool8 HandleInput_OnButtons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	ldr r0, _080CF1A4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, _080CF1A8\n\t"
-        "	mov ip, r0\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	ldr r3, _080CF1AC\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _080CF1B0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r6, _080CF1B4\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r5, _080CF1B8\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r7, _080CF1BC\n\t"
-        "	ldrh r1, [r7, #0x30]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF22E\n\t"
-        "	movs r0, #0x88\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF1C0\n\t"
-        "	movs r7, #1\n\t"
-        "	movs r0, #2\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	b _080CF24C\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF1A4: .4byte gUnknown_2039A18\n\t"
-        "_080CF1A8: .4byte gUnknown_2039A19\n\t"
-        "_080CF1AC: .4byte gUnknown_20399A8\n\t"
-        "_080CF1B0: .4byte 0x00000CD3\n\t"
-        "_080CF1B4: .4byte 0x00000CD2\n\t"
-        "_080CF1B8: .4byte 0x00000CD7\n\t"
-        "_080CF1BC: .4byte gMain\n\t"
-        "_080CF1C0:\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF1DC\n\t"
-        "	movs r7, #1\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	movs r1, #0xff\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CF250\n\t"
-        "	movs r2, #1\n\t"
-        "	b _080CF250\n\t"
-        "_080CF1DC:\n\t"
-        "	movs r0, #0x10\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF1FA\n\t"
-        "	movs r7, #1\n\t"
-        "	lsls r0, r2, #0x18\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	ble _080CF250\n\t"
-        "	movs r2, #0\n\t"
-        "	b _080CF250\n\t"
-        "_080CF1FA:\n\t"
-        "	ldrh r1, [r7, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF20E\n\t"
-        "	movs r0, #4\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _080CF25E\n\t"
-        "	movs r0, #5\n\t"
-        "	b _080CF25E\n\t"
-        "_080CF20E:\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF21A\n\t"
-        "	movs r0, #0x13\n\t"
-        "	b _080CF25E\n\t"
-        "_080CF21A:\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF22A\n\t"
-        "	bl sub_080CF640\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CF25E\n\t"
-        "_080CF22A:\n\t"
-        "	movs r7, #0\n\t"
-        "	b _080CF25C\n\t"
-        "_080CF22E:\n\t"
-        "	movs r7, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	movs r1, #0xff\n\t"
-        "	strb r1, [r0]\n\t"
-        "	mov r1, ip\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	movs r2, #0x1d\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF24A\n\t"
-        "	movs r2, #0x18\n\t"
-        "_080CF24A:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "_080CF24C:\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	strb r7, [r0]\n\t"
-        "_080CF250:\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _080CF25C\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl sub_080CD110\n\t"
-        "_080CF25C:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "_080CF25E:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 retVal;
+    s8 cursorArea;
+    s8 cursorPosition;
+
+    do
+    {
+        cursorArea = gUnknown_2039A18;
+        cursorPosition = gUnknown_2039A19;
+        sStorage->cursorHorizontalWrap = 0;
+        sStorage->cursorVerticalWrap = 0;
+        sStorage->cursorFlipTimer = 0;
+
+        if (JOY_REPEAT(DPAD_UP))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            cursorArea = CURSOR_AREA_IN_BOX;
+            sStorage->cursorVerticalWrap = -1;
+            if (gUnknown_2039A19 == 0)
+                cursorPosition = IN_BOX_COUNT - 1 - 5;
+            else
+                cursorPosition = IN_BOX_COUNT - 1;
+            sStorage->cursorFlipTimer = 1;
+            break;
+        }
+
+        if (JOY_REPEAT(DPAD_DOWN | START_BUTTON))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            cursorArea = CURSOR_AREA_BOX_TITLE;
+            cursorPosition = 0;
+            sStorage->cursorFlipTimer = 1;
+            break;
+        }
+
+        if (JOY_REPEAT(DPAD_LEFT))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            if (--cursorPosition < 0)
+                cursorPosition = 1;
+            break;
+        }
+        else if (JOY_REPEAT(DPAD_RIGHT))
+        {
+            retVal = INPUT_MOVE_CURSOR;
+            if (++cursorPosition > 1)
+                cursorPosition = 0;
+            break;
+        }
+
+        // Button was pressed, determine which
+        if (JOY_NEW(A_BUTTON))
+            return (cursorPosition == 0) ? INPUT_SHOW_PARTY : INPUT_CLOSE_BOX;
+
+        if (JOY_NEW(B_BUTTON))
+            return INPUT_PRESSED_B;
+
+        if (JOY_NEW(SELECT_BUTTON))
+        {
+            sub_080CF640();
+            return INPUT_NONE;
+        }
+
+        retVal = INPUT_NONE;
+    } while (0);
+
+    if (retVal != INPUT_NONE)
+        sub_080CD110(cursorArea, cursorPosition);
+
+    return retVal;
 }
 
-__attribute__((naked)) void sub_080CF268(void)
+
+
+u8 sub_080CF268(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _080CF294\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CF2AC\n\t"
-        "	ldr r5, _080CF298\n\t"
-        "_080CF278:\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r2, r0, r4\n\t"
-        "	movs r1, #4\n\t"
-        "	ldrsb r1, [r2, r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r5, r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bne _080CF29C\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _080CF2AE\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF294: .4byte gUnknown_85564B8\n\t"
-        "_080CF298: .4byte gUnknown_2039A18\n\t"
-        "_080CF29C:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	lsls r0, r3, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF278\n\t"
-        "_080CF2AC:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CF2AE:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i = 0;
+
+    while (gUnknown_85564B8[i].func != NULL)
+    {
+        if (gUnknown_85564B8[i].area == gUnknown_2039A18)
+            return gUnknown_85564B8[i].func();
+        i++;
+    }
+
+    return INPUT_NONE;
 }
 
-__attribute__((naked)) void AddBoxOptionsMenu(void)
+void AddBoxOptionsMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl InitMenu\n\t"
-        "	movs r0, #9\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0xa\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0xb\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetMenuText\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMenu();
+    SetMenuText(MENU_JUMP);
+    SetMenuText(MENU_WALLPAPER);
+    SetMenuText(MENU_NAME);
+    SetMenuText(MENU_CANCEL);
 }
 
 u8 SetSelectionMenuTexts(void)
@@ -18096,460 +6806,169 @@ u8 SetSelectionMenuTexts(void)
         return SetMenuTexts_Item();
 }
 
-__attribute__((naked)) u8 SetMenuTexts_Mon(void)
+u8 SetMenuTexts_Mon(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_080CCD80\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	ldr r0, _080CF320\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CF32A\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CF324\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF336\n\t"
-        "	b _080CF370\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF320: .4byte gUnknown_20399A8\n\t"
-        "_080CF324:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CF342\n\t"
-        "	b _080CF370\n\t"
-        "_080CF32A:\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CF370\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF374\n\t"
-        "_080CF336:\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CF370\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF374\n\t"
-        "_080CF342:\n\t"
-        "	ldr r0, _080CF358\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF364\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CF35C\n\t"
-        "	movs r0, #4\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF374\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF358: .4byte gUnknown_2039A1A\n\t"
-        "_080CF35C:\n\t"
-        "	movs r0, #5\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF374\n\t"
-        "_080CF364:\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080CF370\n\t"
-        "	movs r0, #3\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF374\n\t"
-        "_080CF370:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CF3BA\n\t"
-        "_080CF374:\n\t"
-        "	movs r0, #6\n\t"
-        "	bl SetMenuText\n\t"
-        "	ldr r0, _080CF398\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080CF3A6\n\t"
-        "	ldr r0, _080CF39C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF3A0\n\t"
-        "	movs r0, #2\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF3A6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF398: .4byte gUnknown_20399A8\n\t"
-        "_080CF39C: .4byte gUnknown_2039A18\n\t"
-        "_080CF3A0:\n\t"
-        "	movs r0, #1\n\t"
-        "	bl SetMenuText\n\t"
-        "_080CF3A6:\n\t"
-        "	movs r0, #8\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #7\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #1\n\t"
-        "_080CF3BA:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    u16 species = sub_080CCD80();
 
-__attribute__((naked)) u8 SetMenuTexts_Item(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _080CF3FC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r5, _080CF400\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	movs r0, #0xce\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080CF456\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF428\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r0, _080CF404\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF408\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF456\n\t"
-        "	movs r0, #0xe\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF460\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF3FC: .4byte gUnknown_20399A8\n\t"
-        "_080CF400: .4byte 0x00000CE4\n\t"
-        "_080CF404: .4byte 0x00000CE6\n\t"
-        "_080CF408:\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF420\n\t"
-        "	movs r0, #0xc\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl SetMenuText\n\t"
-        "_080CF420:\n\t"
-        "	movs r0, #0x11\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF460\n\t"
-        "_080CF428:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r0, _080CF444\n\t"
-        "	adds r1, r2, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF448\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF456\n\t"
-        "	movs r0, #0xd\n\t"
-        "	bl SetMenuText\n\t"
-        "	b _080CF460\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF444: .4byte 0x00000CE6\n\t"
-        "_080CF448:\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	bl ItemIsMail\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CF45A\n\t"
-        "_080CF456:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CF468\n\t"
-        "_080CF45A:\n\t"
-        "	movs r0, #0xf\n\t"
-        "	bl SetMenuText\n\t"
-        "_080CF460:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl SetMenuText\n\t"
-        "	movs r0, #1\n\t"
-        "_080CF468:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    switch (sStorage->boxOption)
+    {
+    case OPTION_DEPOSIT:
+        if (species != SPECIES_NONE)
+            SetMenuText(MENU_STORE);
+        else
+            return FALSE;
+        break;
+    case OPTION_WITHDRAW:
+        if (species != SPECIES_NONE)
+            SetMenuText(MENU_WITHDRAW);
+        else
+            return FALSE;
+        break;
+    case OPTION_MOVE_MONS:
+        if (gUnknown_2039A1A)
+        {
+            if (species != SPECIES_NONE)
+                SetMenuText(MENU_SHIFT);
+            else
+                SetMenuText(MENU_PLACE);
+        }
+        else
+        {
+            if (species != SPECIES_NONE)
+                SetMenuText(MENU_MOVE);
+            else
+                return FALSE;
+        }
+        break;
+    case OPTION_MOVE_ITEMS:
+    default:
+        return FALSE;
+    }
 
-__attribute__((naked)) void sub_080CF470(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080CF488\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _080CF48C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	ldrh r2, [r2, #0x20]\n\t"
-        "	strh r2, [r0, #0x20]\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldrh r1, [r1, #0x22]\n\t"
-        "	adds r1, #0x14\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF488: .4byte gUnknown_20399A8\n\t"
-        "_080CF48C: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
-}
+    SetMenuText(MENU_SUMMARY);
+    if (sStorage->boxOption == OPTION_MOVE_MONS)
+    {
+        if (gUnknown_2039A18 == CURSOR_AREA_IN_BOX)
+            SetMenuText(MENU_WITHDRAW);
+        else
+            SetMenuText(MENU_STORE);
+    }
 
-__attribute__((naked)) void sub_080CF490(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #0x2c\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _080CF55C\n\t"
-        "	ldm r0!, {r2, r3, r4}\n\t"
-        "	stm r1!, {r2, r3, r4}\n\t"
-        "	ldm r0!, {r2, r3, r5}\n\t"
-        "	stm r1!, {r2, r3, r5}\n\t"
-        "	add r4, sp, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	ldr r0, _080CF560\n\t"
-        "	ldm r0!, {r2, r3, r5}\n\t"
-        "	stm r1!, {r2, r3, r5}\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1]\n\t"
-        "	mov r0, sp\n\t"
-        "	bl LoadSpriteSheets\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl LoadSpritePalettes\n\t"
-        "	ldr r0, _080CF564\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	ldr r6, _080CF568\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r4, _080CF56C\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080CF570\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldr r5, _080CF574\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080CF578\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _080CF57C\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	add r4, sp, #0x28\n\t"
-        "	mov r5, sp\n\t"
-        "	adds r5, #0x2a\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_080CCCC0\n\t"
-        "	ldr r0, _080CF580\n\t"
-        "	movs r2, #0\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r2, [r5, r3]\n\t"
-        "	movs r3, #6\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _080CF594\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldr r4, _080CF584\n\t"
-        "	adds r3, r2, r4\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080CF588\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [r3]\n\t"
-        "	ldr r0, _080CF58C\n\t"
-        "	ldr r5, _080CF56C\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	ldrb r3, [r1, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r3\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	ldr r0, _080CF590\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF59E\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	b _080CF59E\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF55C: .4byte gUnknown_85564E0\n\t"
-        "_080CF560: .4byte gUnknown_85564F8\n\t"
-        "_080CF564: .4byte 0x0000DACA\n\t"
-        "_080CF568: .4byte gUnknown_20399A8\n\t"
-        "_080CF56C: .4byte 0x00000CD8\n\t"
-        "_080CF570: .4byte 0x0000DAC7\n\t"
-        "_080CF574: .4byte 0x00000CD9\n\t"
-        "_080CF578: .4byte gUnknown_2039A18\n\t"
-        "_080CF57C: .4byte gUnknown_2039A19\n\t"
-        "_080CF580: .4byte gUnknown_855654C\n\t"
-        "_080CF584: .4byte 0x00000CB4\n\t"
-        "_080CF588: .4byte gSprites\n\t"
-        "_080CF58C: .4byte gUnknown_2039A1D\n\t"
-        "_080CF590: .4byte gUnknown_2039A1A\n\t"
-        "_080CF594:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldr r1, _080CF5B0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080CF59E:\n\t"
-        "	ldr r0, _080CF5B4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080CF5B8\n\t"
-        "	movs r3, #0xd\n\t"
-        "	movs r4, #1\n\t"
-        "	b _080CF5BC\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF5B0: .4byte 0x00000CB4\n\t"
-        "_080CF5B4: .4byte gUnknown_2039A18\n\t"
-        "_080CF5B8:\n\t"
-        "	movs r3, #0x15\n\t"
-        "	movs r4, #2\n\t"
-        "_080CF5BC:\n\t"
-        "	ldr r0, _080CF610\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _080CF624\n\t"
-        "	ldr r5, _080CF614\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	ldr r3, _080CF618\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080CF61C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [r2]\n\t"
-        "	lsls r3, r4, #2\n\t"
-        "	ldrb r2, [r1, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldr r0, _080CF620\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF630\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r4, _080CF618\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	b _080CF630\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF610: .4byte gUnknown_8556564\n\t"
-        "_080CF614: .4byte gUnknown_20399A8\n\t"
-        "_080CF618: .4byte 0x00000CB8\n\t"
-        "_080CF61C: .4byte gSprites\n\t"
-        "_080CF620: .4byte gUnknown_2039A18\n\t"
-        "_080CF624:\n\t"
-        "	ldr r0, _080CF638\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r5, _080CF63C\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0]\n\t"
-        "_080CF630:\n\t"
-        "	add sp, #0x2c\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF638: .4byte gUnknown_20399A8\n\t"
-        "_080CF63C: .4byte 0x00000CB8\n\t"
-        ".syntax divided\n\t"
-    );
+    SetMenuText(MENU_MARK);
+    SetMenuText(MENU_RELEASE);
+    SetMenuText(MENU_CANCEL);
+    return TRUE;
 }
-
-__attribute__((naked)) void sub_080CF640(void)
+u8 SetMenuTexts_Item(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _080CF674\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF64E\n\t"
-        "	movs r1, #1\n\t"
-        "_080CF64E:\n\t"
-        "	strb r1, [r2]\n\t"
-        "	ldr r0, _080CF678\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r3, _080CF67C\n\t"
-        "	adds r1, r0, r3\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	ldr r1, _080CF680\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	ldrb r2, [r3, #5]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r3, #5]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF674: .4byte gUnknown_2039A1D\n\t"
-        "_080CF678: .4byte gUnknown_20399A8\n\t"
-        "_080CF67C: .4byte 0x00000CB4\n\t"
-        "_080CF680: .4byte 0x00000CD8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->displayMonSpecies == SPECIES_EGG)
+        return FALSE;
+
+    if (!IsActiveItemMoving())
+    {
+        if (sStorage->displayMonItemId == ITEM_NONE)
+        {
+            if (sStorage->displayMonSpecies == SPECIES_NONE)
+                return FALSE;
+
+            SetMenuText(MENU_GIVE_2);
+        }
+        else
+        {
+            if (!ItemIsMail(sStorage->displayMonItemId))
+            {
+                SetMenuText(MENU_TAKE);
+                SetMenuText(MENU_BAG);
+            }
+            SetMenuText(MENU_INFO);
+        }
+    }
+    else
+    {
+        if (sStorage->displayMonItemId == ITEM_NONE)
+        {
+            if (sStorage->displayMonSpecies == SPECIES_NONE)
+                return FALSE;
+
+            SetMenuText(MENU_GIVE);
+        }
+        else
+        {
+            if (ItemIsMail(sStorage->displayMonItemId) == TRUE)
+                return FALSE;
+
+            SetMenuText(MENU_SWITCH);
+        }
+    }
+
+    SetMenuText(MENU_CANCEL);
+    return TRUE;
+}
+void sub_080CF470(struct Sprite *sprite)
+{
+    sprite->x = sStorage->cursorSprite->x;
+    sprite->y = sStorage->cursorSprite->y + 20;
+}
+void sub_080CF490(void)
+{
+    u16 x;
+    u16 y;
+    u8 spriteId;
+    u8 priority;
+    u8 subpriority;
+    struct CursorSpriteSheetData spriteSheets;
+    struct CursorSpritePaletteData spritePalettes;
+
+    spriteSheets = *(const struct CursorSpriteSheetData *)gUnknown_85564E0;
+    spritePalettes = *(const struct CursorSpritePaletteData *)gUnknown_85564F8;
+    LoadSpriteSheets(spriteSheets.sheets);
+    LoadSpritePalettes(spritePalettes.palettes);
+    sStorage->cursorPalNums[0] = IndexOfSpritePaletteTag(0xDACA);
+    sStorage->cursorPalNums[1] = IndexOfSpritePaletteTag(0xDAC7);
+
+    sub_080CCCC0(gUnknown_2039A18, gUnknown_2039A19, &x, &y);
+    spriteId = CreateSprite(&gUnknown_855654C, x, y, 6);
+    if (spriteId != MAX_SPRITES)
+    {
+        sStorage->cursorSprite = &gSprites[spriteId];
+        sStorage->cursorSprite->oam.paletteNum = sStorage->cursorPalNums[gUnknown_2039A1D];
+        sStorage->cursorSprite->oam.priority = 1;
+        if (gUnknown_2039A1A)
+            StartSpriteAnim(sStorage->cursorSprite, 3);
+    }
+    else
+    {
+        sStorage->cursorSprite = NULL;
+    }
+
+    if (gUnknown_2039A18 == CURSOR_AREA_IN_PARTY)
+    {
+        subpriority = 13;
+        priority = 1;
+    }
+    else
+    {
+        subpriority = 21;
+        priority = 2;
+    }
+
+    spriteId = CreateSprite(&gUnknown_8556564, 0, 0, subpriority);
+    if (spriteId != MAX_SPRITES)
+    {
+        sStorage->cursorShadowSprite = &gSprites[spriteId];
+        sStorage->cursorShadowSprite->oam.priority = priority;
+        if (gUnknown_2039A18)
+            sStorage->cursorShadowSprite->invisible = TRUE;
+    }
+    else
+    {
+        sStorage->cursorShadowSprite = NULL;
+    }
+}
+void sub_080CF640(void)
+{
+    gUnknown_2039A1D = !gUnknown_2039A1D;
+    sStorage->cursorSprite->oam.paletteNum = sStorage->cursorPalNums[gUnknown_2039A1D];
 }
 
 u8 GetCursorPosition(void)
@@ -18558,43 +6977,18 @@ u8 GetCursorPosition(void)
 }
 
 
-__attribute__((naked)) void sub_080CF690(void)
+void sub_080CF690(u8 *column, u8 *row)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	ldr r0, _080CF6BC\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF6C4\n\t"
-        "	ldr r4, _080CF6C0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __modsi3\n\t"
-        "	strb r0, [r5]\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __divsi3\n\t"
-        "	b _080CF6C8\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF6BC: .4byte gUnknown_2039A18\n\t"
-        "_080CF6C0: .4byte gUnknown_2039A19\n\t"
-        "_080CF6C4:\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r5]\n\t"
-        "_080CF6C8:\n\t"
-        "	strb r0, [r6]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sCursorArea == CURSOR_AREA_IN_BOX)
+    {
+        *column = sCursorPosition % IN_BOX_COLUMNS;
+        *row = sCursorPosition / IN_BOX_COLUMNS;
+    }
+    else
+    {
+        *column = 0;
+        *row = 0;
+    }
 }
 
 void StartCursorAnim(u8 anim)
@@ -18612,389 +7006,108 @@ void SetCursorPriority(void)
     sStorage->cursorSprite->oam.priority = 1;
 }
 
-__attribute__((naked)) void sub_080CF724(void)
+void sub_080CF724(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CF740\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF73C\n\t"
-        "	ldr r0, _080CF744\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080D06F0\n\t"
-        "_080CF73C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF740: .4byte gUnknown_2039A18\n\t"
-        "_080CF744: .4byte gUnknown_2039A19\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sCursorArea == CURSOR_AREA_IN_BOX)
+        sub_080D06F0(CURSOR_AREA_IN_BOX, sCursorPosition);
 }
 
-__attribute__((naked)) void sub_080CF748(void)
+void sub_080CF748(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CF764\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF760\n\t"
-        "	ldr r0, _080CF768\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080D062C\n\t"
-        "_080CF760:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF764: .4byte gUnknown_2039A18\n\t"
-        "_080CF768: .4byte gUnknown_2039A19\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sCursorArea == CURSOR_AREA_IN_BOX)
+        sub_080D062C(CURSOR_AREA_IN_BOX, sCursorPosition);
 }
 
-__attribute__((naked)) void InitMenu(void)
+void InitMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _080CF7A0\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CF7A4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r3, _080CF7A8\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	subs r3, #0x41\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080CF7AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xf\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r3, #6\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	movs r1, #0x5c\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF7A0: .4byte gUnknown_20399A8\n\t"
-        "_080CF7A4: .4byte 0x00000CAC\n\t"
-        "_080CF7A8: .4byte 0x00000CAD\n\t"
-        "_080CF7AC: .4byte 0x00000C71\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->menuItemsCount = 0;
+    sStorage->menuWidth = 0;
+    sStorage->menuWindow.bg = 0;
+    sStorage->menuWindow.paletteNum = 15;
+    sStorage->menuWindow.baseBlock = 92;
 }
 
-__attribute__((naked)) void SetMenuText(u8 id)
+void SetMenuText(u8 textId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r4, _080CF800\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r5, _080CF804\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #6\n\t"
-        "	bhi _080CF7FA\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _080CF808\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	ldr r2, _080CF80C\n\t"
-        "	lsls r0, r3, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r3, [r1, #4]\n\t"
-        "	bl StringLength\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r2, _080CF810\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	cmp r1, r2\n\t"
-        "	bls _080CF7F0\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080CF7F0:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080CF7FA:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF800: .4byte gUnknown_20399A8\n\t"
-        "_080CF804: .4byte 0x00000CAC\n\t"
-        "_080CF808: .4byte 0x00000C74\n\t"
-        "_080CF80C: .4byte gUnknown_855657C\n\t"
-        "_080CF810: .4byte 0x00000CAD\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->menuItemsCount < ARRAY_COUNT(sStorage->menuItems))
+    {
+        u8 len;
+        struct StorageMenu *menu = &sStorage->menuItems[sStorage->menuItemsCount];
+
+        menu->text = gUnknown_855657C[textId];
+        menu->textId = textId;
+        len = StringLength(menu->text);
+        if (len > sStorage->menuWidth)
+            sStorage->menuWidth = len;
+
+        sStorage->menuItemsCount++;
+    }
 }
 
-__attribute__((naked)) void sub_080CF814(void)
+s8 sub_080CF814(u8 menuIdx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _080CF838\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r3, _080CF83C\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhs _080CF844\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	ldr r2, _080CF840\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r1, r0]\n\t"
-        "	b _080CF848\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF838: .4byte gUnknown_20399A8\n\t"
-        "_080CF83C: .4byte 0x00000CAC\n\t"
-        "_080CF840: .4byte 0x00000C78\n\t"
-        "_080CF844:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_080CF848:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (menuIdx >= sStorage->menuItemsCount)
+        return -1;
+    else
+        return sStorage->menuItems[menuIdx].textId;
 }
 
-__attribute__((naked)) void AddMenu(void)
+void AddMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	ldr r5, _080CF928\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r2, _080CF92C\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	subs r2, #0x3e\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r3, #0\n\t"
-        "	mov sb, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r6, _080CF930\n\t"
-        "	adds r0, r1, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	movs r3, #0xc7\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r2, r1, r2\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	movs r0, #0x1d\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	ldr r2, _080CF934\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r3, r1, r3\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	ldr r3, _080CF938\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, _080CF93C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl AddWindow\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	movs r4, #0xcb\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	movs r2, #0\n\t"
-        "	mov r8, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xb\n\t"
-        "	movs r3, #0xe\n\t"
-        "	bl DrawStdFrameWithCustomTileAndPalette\n\t"
-        "	ldr r2, [r5]\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	str r1, [sp]\n\t"
-        "	adds r1, r2, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	ldr r3, _080CF940\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	str r2, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #8\n\t"
-        "	movs r3, #2\n\t"
-        "	bl PrintTextArray\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r4, r1, r4\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	str r1, [sp]\n\t"
-        "	mov r1, sb\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	bl sub_081984F0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r2, _080CF944\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	mov r3, r8\n\t"
-        "	strb r3, [r0]\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF928: .4byte gUnknown_20399A8\n\t"
-        "_080CF92C: .4byte 0x00000CAD\n\t"
-        "_080CF930: .4byte 0x00000CAC\n\t"
-        "_080CF934: .4byte 0x00000C6D\n\t"
-        "_080CF938: .4byte 0x00000C6E\n\t"
-        "_080CF93C: .4byte 0x00000C6C\n\t"
-        "_080CF940: .4byte 0x00000C74\n\t"
-        "_080CF944: .4byte 0x00000CAE\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->menuWindow.width = sStorage->menuWidth + 2;
+    sStorage->menuWindow.height = 2 * sStorage->menuItemsCount;
+    sStorage->menuWindow.tilemapLeft = 29 - sStorage->menuWindow.width;
+    sStorage->menuWindow.tilemapTop = 15 - sStorage->menuWindow.height;
+    sStorage->menuWindowId = AddWindow(&sStorage->menuWindow);
+    ClearWindowTilemap(sStorage->menuWindowId);
+    DrawStdFrameWithCustomTileAndPalette(sStorage->menuWindowId, FALSE, 11, 14);
+    PrintTextArray(sStorage->menuWindowId, 1, 8, 2, 0x10, sStorage->menuItemsCount, sStorage->menuItems);
+    sub_081984F0(sStorage->menuWindowId, 1, 0, 2, sStorage->menuItemsCount, 0);
+    ScheduleBgCopyTilemapToVram(0);
+    sStorage->menuUnusedField = 0;
 }
 
-__attribute__((naked)) void sub_080CF948(void)
+bool8 sub_080CF948(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
 
-__attribute__((naked)) void sub_080CF94C(void)
+s16 sub_080CF94C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r5, #2\n\t"
-        "	rsbs r5, r5, #0\n\t"
-        "	ldr r4, _080CF988\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CF9A2\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF96E\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	adds r5, #1\n\t"
-        "_080CF96E:\n\t"
-        "	ldrh r1, [r4, #0x2e]\n\t"
-        "	movs r0, #0x40\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF98C\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	bl Menu_MoveCursor\n\t"
-        "	b _080CF9AA\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF988: .4byte gMain\n\t"
-        "_080CF98C:\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CF9AA\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #1\n\t"
-        "	bl Menu_MoveCursor\n\t"
-        "	b _080CF9AA\n\t"
-        "_080CF9A2:\n\t"
-        "	bl Menu_GetCursorPos\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "_080CF9AA:\n\t"
-        "	movs r0, #2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	cmp r5, r0\n\t"
-        "	beq _080CF9B6\n\t"
-        "	bl RemoveMenu\n\t"
-        "_080CF9B6:\n\t"
-        "	cmp r5, #0\n\t"
-        "	blt _080CF9C8\n\t"
-        "	ldr r0, _080CF9D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r5, #3\n\t"
-        "	ldr r2, _080CF9D8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r5, [r0]\n\t"
-        "_080CF9C8:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF9D4: .4byte gUnknown_20399A8\n\t"
-        "_080CF9D8: .4byte 0x00000C78\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 input = MENU_NOTHING_CHOSEN;
+
+    do
+    {
+        if (JOY_NEW(A_BUTTON))
+        {
+            input = Menu_GetCursorPos();
+            break;
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            input = MENU_B_PRESSED;
+        }
+
+        if (JOY_NEW(DPAD_UP))
+        {
+            PlaySE(SE_SELECT);
+            Menu_MoveCursor(-1);
+        }
+        else if (JOY_NEW(DPAD_DOWN))
+        {
+            PlaySE(SE_SELECT);
+            Menu_MoveCursor(1);
+        }
+    } while (0);
+
+    if (input != MENU_NOTHING_CHOSEN)
+        RemoveMenu();
+
+    if (input >= 0)
+        input = sStorage->menuItems[input].textId;
+
+    return input;
 }
 
 void RemoveMenu(void)
@@ -19003,49 +7116,20 @@ void RemoveMenu(void)
     RemoveWindow(sStorage->menuWindowId);
 }
 
-__attribute__((naked)) void sub_080CFA04(void)
+bool8 sub_080CFA04(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CFA40\n\t"
-        "	ldr r0, _080CFA44\n\t"
-        "	bl Alloc\n\t"
-        "	str r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFA50\n\t"
-        "	ldr r0, _080CFA48\n\t"
-        "	bl AddWindow8Bit\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _080CFA4C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x88\n\t"
-        "	lsls r2, r2, #6\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _080CFA50\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080CFA52\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFA40: .4byte gUnknown_2039A20\n\t"
-        "_080CFA44: .4byte 0x00000974\n\t"
-        "_080CFA48: .4byte gUnknown_8556618\n\t"
-        "_080CFA4C: .4byte gUnknown_20399A8\n\t"
-        "_080CFA50:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CFA52:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    sMultiMove = Alloc(sizeof(*sMultiMove));
+    if (sMultiMove != NULL)
+    {
+        sStorage->multiMoveWindowId = AddWindow8Bit((const struct WindowTemplate *)gUnknown_8556618);
+        if (sStorage->multiMoveWindowId != WINDOW_NONE)
+        {
+            FillWindowPixelBuffer(sStorage->multiMoveWindowId, PIXEL_FILL(0));
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 void MultiMove_Free(void)
@@ -19060,947 +7144,342 @@ void MultiMove_SetFunction(u8 id)
     sMultiMove->state = 0;
 }
 
-__attribute__((naked)) void sub_080CFA84(void)
+bool8 sub_080CFA84(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CFA9C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #5\n\t"
-        "	bhi _080CFAE4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _080CFAA0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFA9C: .4byte gUnknown_2039A20\n\t"
-        "_080CFAA0: .4byte 0x080CFAA4\n\t"
-        "_080CFAA4: @ jump table\n\t"
-        "	.4byte _080CFABC @ case 0\n\t"
-        "	.4byte _080CFAC2 @ case 1\n\t"
-        "	.4byte _080CFAC8 @ case 2\n\t"
-        "	.4byte _080CFACE @ case 3\n\t"
-        "	.4byte _080CFAD4 @ case 4\n\t"
-        "	.4byte _080CFADA @ case 5\n\t"
-        "_080CFABC:\n\t"
-        "	bl sub_080CFAEC\n\t"
-        "	b _080CFADE\n\t"
-        "_080CFAC2:\n\t"
-        "	bl sub_080CFBE4\n\t"
-        "	b _080CFADE\n\t"
-        "_080CFAC8:\n\t"
-        "	bl sub_080CFC50\n\t"
-        "	b _080CFADE\n\t"
-        "_080CFACE:\n\t"
-        "	bl sub_080CFCC0\n\t"
-        "	b _080CFADE\n\t"
-        "_080CFAD4:\n\t"
-        "	bl sub_080CFD40\n\t"
-        "	b _080CFADE\n\t"
-        "_080CFADA:\n\t"
-        "	bl sub_080CFD68\n\t"
-        "_080CFADE:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _080CFAE6\n\t"
-        "_080CFAE4:\n\t"
-        "	movs r0, #0\n\t"
-        "_080CFAE6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sMultiMove->funcId)
+    {
+    case 0:
+        return sub_080CFAEC();
+    case 1:
+        return sub_080CFBE4();
+    case 2:
+        return sub_080CFC50();
+    case 3:
+        return sub_080CFCC0();
+    case 4:
+        return sub_080CFD40();
+    case 5:
+        return sub_080CFD68();
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080CFAEC(void)
+bool8 sub_080CFAEC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r6, _080CFB04\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CFB1C\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CFB08\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFB0E\n\t"
-        "	b _080CFBD8\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFB04: .4byte gUnknown_2039A20\n\t"
-        "_080CFB08:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CFBC4\n\t"
-        "	b _080CFBD8\n\t"
-        "_080CFB0E:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl HideBg\n\t"
-        "	movs r0, #0x80\n\t"
-        "	bl TryLoadAllMonIconPalettesAtOffset\n\t"
-        "	b _080CFBAE\n\t"
-        "_080CFB1C:\n\t"
-        "	adds r0, r1, #2\n\t"
-        "	adds r1, #3\n\t"
-        "	bl sub_080CF690\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r0, [r1, #2]\n\t"
-        "	strb r0, [r1, #4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r0, [r1, #3]\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldr r4, _080CFBB8\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #0x20\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect_Palette0\n\t"
-        "	ldr r5, _080CFBBC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0x88\n\t"
-        "	lsls r4, r4, #6\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer8Bit\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r0, [r1, #2]\n\t"
-        "	ldrb r1, [r1, #3]\n\t"
-        "	bl sub_080D0050\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetBgAttribute\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram8Bit\n\t"
-        "	movs r0, #0xfc\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	ldr r2, _080CFBC0\n\t"
-        "	movs r1, #8\n\t"
-        "	bl BlendPalettes\n\t"
-        "	movs r0, #2\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl SetGpuRegBits\n\t"
-        "_080CFBAE:\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	b _080CFBD8\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFBB8: .4byte 0xFFFFFC00\n\t"
-        "_080CFBBC: .4byte gUnknown_20399A8\n\t"
-        "_080CFBC0: .4byte 0x00007FFF\n\t"
-        "_080CFBC4:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFBD8\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFBDA\n\t"
-        "_080CFBD8:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CFBDA:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sMultiMove->state)
+    {
+    case 0:
+        HideBg(0);
+        TryLoadAllMonIconPalettesAtOffset(BG_PLTT_ID(8));
+        sMultiMove->state++;
+        break;
+    case 1:
+        sub_080CF690(&sMultiMove->fromColumn, &sMultiMove->fromRow);
+        sMultiMove->toColumn = sMultiMove->fromColumn;
+        sMultiMove->toRow = sMultiMove->fromRow;
+        ChangeBgX(0, -1024, BG_COORD_SET);
+        ChangeBgY(0, -1024, BG_COORD_SET);
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
+        FillWindowPixelBuffer8Bit(sStorage->multiMoveWindowId, PIXEL_FILL(0));
+        sub_080D0050(sMultiMove->fromColumn, sMultiMove->fromRow);
+        SetBgAttribute(0, BG_ATTR_PALETTEMODE, 1);
+        PutWindowTilemap(sStorage->multiMoveWindowId);
+        CopyWindowToVram8Bit(sStorage->multiMoveWindowId, COPYWIN_FULL);
+        BlendPalettes(0x3F00, 8, RGB_WHITE);
+        StartCursorAnim(2);
+        SetGpuRegBits(REG_OFFSET_BG0CNT, BGCNT_256COLOR);
+        sMultiMove->state++;
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            ShowBg(0);
+            return FALSE;
+        }
+        break;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080CFBE4(void)
+bool8 sub_080CFBE4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CFBFC\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CFC0E\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CFC00\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFC06\n\t"
-        "	b _080CFC48\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFBFC: .4byte gUnknown_2039A20\n\t"
-        "_080CFC00:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CFC22\n\t"
-        "	b _080CFC48\n\t"
-        "_080CFC06:\n\t"
-        "	movs r0, #0\n\t"
-        "	bl HideBg\n\t"
-        "	b _080CFC18\n\t"
-        "_080CFC0E:\n\t"
-        "	bl sub_080D03FC\n\t"
-        "	movs r0, #0\n\t"
-        "	bl StartCursorAnim\n\t"
-        "_080CFC18:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	b _080CFC48\n\t"
-        "_080CFC22:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFC48\n\t"
-        "	bl SetCursorPriority\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetTextWindowPalette\n\t"
-        "	movs r1, #0xd0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFC4A\n\t"
-        "_080CFC48:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CFC4A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sMultiMove->state)
+    {
+    case 0:
+        HideBg(0);
+        sMultiMove->state++;
+        break;
+    case 1:
+        sub_080D03FC();
+        StartCursorAnim(0);
+        sMultiMove->state++;
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            SetCursorPriority();
+            LoadPalette(GetTextWindowPalette(3), BG_PLTT_ID(13), PLTT_SIZE_4BPP);
+            ShowBg(0);
+            return FALSE;
+        }
+        break;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080CFC50(void)
+bool8 sub_080CFC50(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CFC64\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFC68\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CFCAC\n\t"
-        "	b _080CFCB6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFC64: .4byte gUnknown_2039A20\n\t"
-        "_080CFC68:\n\t"
-        "	bl sub_080CCDD0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFCB6\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r0, r1, #6\n\t"
-        "	adds r1, #7\n\t"
-        "	bl sub_080CF690\n\t"
-        "	bl sub_080CFECC\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #6]\n\t"
-        "	strb r0, [r1, #4]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #7]\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	ldr r0, _080CFCA8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x88\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #2\n\t"
-        "	bl CopyWindowToVram8Bit\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	b _080CFCB6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFCA8: .4byte gUnknown_20399A8\n\t"
-        "_080CFCAC:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	b _080CFCB8\n\t"
-        "_080CFCB6:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CFCB8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sMultiMove->state)
+    {
+    case 0:
+        if (!sub_080CCDD0())
+        {
+            sub_080CF690(&sMultiMove->cursorColumn, &sMultiMove->cursorRow);
+            sub_080CFECC();
+            sMultiMove->toColumn = sMultiMove->cursorColumn;
+            sMultiMove->toRow = sMultiMove->cursorRow;
+            CopyWindowToVram8Bit(sStorage->multiMoveWindowId, COPYWIN_GFX);
+            sMultiMove->state++;
+        }
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    return TRUE;
 }
 
 
-__attribute__((naked)) void sub_080CFCC0(void)
+bool8 sub_080CFCC0(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CFCD8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CFCEE\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CFCDC\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFCE2\n\t"
-        "	b _080CFD38\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFCD8: .4byte gUnknown_2039A20\n\t"
-        "_080CFCDC:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CFD1A\n\t"
-        "	b _080CFD38\n\t"
-        "_080CFCE2:\n\t"
-        "	bl sub_080D016C\n\t"
-        "	bl sub_080D0244\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFD0C\n\t"
-        "_080CFCEE:\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFD38\n\t"
-        "	movs r0, #3\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl MultiMove_InitMove\n\t"
-        "	movs r0, #1\n\t"
-        "_080CFD0C:\n\t"
-        "	bl InitMultiMonPlaceChange\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	b _080CFD38\n\t"
-        "_080CFD1A:\n\t"
-        "	bl sub_080D0134\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080CFD38\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFD38\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFD3A\n\t"
-        "_080CFD38:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CFD3A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 movingBg;
+    bool8 movingMon;
+
+    switch (sMultiMove->state)
+    {
+    case 0:
+        sub_080D016C();
+        sub_080D0244();
+        InitMultiMonPlaceChange(FALSE);
+        sMultiMove->state++;
+        break;
+    case 1:
+        if (!DoMonPlaceChange())
+        {
+            StartCursorAnim(3);
+            MultiMove_InitMove(0, Q_8_8(1), 8);
+            InitMultiMonPlaceChange(TRUE);
+            sMultiMove->state++;
+        }
+        break;
+    case 2:
+        movingBg = sub_080D0134();
+        movingMon = DoMonPlaceChange();
+        if (!movingBg && !movingMon)
+            return FALSE;
+        break;
+    }
+
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080CFD40(void)
+bool8 sub_080CFD40(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl sub_080CCDD0\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl sub_080D0134\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080CFD60\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFD60\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFD62\n\t"
-        "_080CFD60:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CFD62:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 movingCursor = sub_080CCDD0();
+    bool8 movingBg = sub_080D0134();
+
+    if (!movingCursor && !movingBg)
+        return FALSE;
+    else
+        return TRUE;
 }
 
-__attribute__((naked)) void sub_080CFD68(void)
+bool8 sub_080CFD68(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080CFD80\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CFDA6\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CFD84\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFD8E\n\t"
-        "	b _080CFE16\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFD80: .4byte gUnknown_2039A20\n\t"
-        "_080CFD84:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _080CFDD2\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _080CFDF0\n\t"
-        "	b _080CFE16\n\t"
-        "_080CFD8E:\n\t"
-        "	bl sub_080D034C\n\t"
-        "	movs r1, #0xff\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #8\n\t"
-        "	bl MultiMove_InitMove\n\t"
-        "	movs r0, #0\n\t"
-        "	bl InitMultiMonPlaceChange\n\t"
-        "	b _080CFDE6\n\t"
-        "_080CFDA6:\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFE16\n\t"
-        "	bl sub_080D0134\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFE16\n\t"
-        "	bl sub_080D02BC\n\t"
-        "	movs r0, #2\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	movs r0, #1\n\t"
-        "	bl InitMultiMonPlaceChange\n\t"
-        "	movs r0, #0\n\t"
-        "	bl HideBg\n\t"
-        "	b _080CFDE6\n\t"
-        "_080CFDD2:\n\t"
-        "	bl DoMonPlaceChange\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFE16\n\t"
-        "	movs r0, #0\n\t"
-        "	bl StartCursorAnim\n\t"
-        "	bl sub_080D03FC\n\t"
-        "_080CFDE6:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r1, #1]\n\t"
-        "	b _080CFE16\n\t"
-        "_080CFDF0:\n\t"
-        "	bl IsDma3ManagerBusyWithBgCopy\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080CFE16\n\t"
-        "	movs r0, #3\n\t"
-        "	bl GetTextWindowPalette\n\t"
-        "	movs r1, #0xd0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	bl SetCursorPriority\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ShowBg\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFE18\n\t"
-        "_080CFE16:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CFE18:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sMultiMove->state)
+    {
+    case 0:
+        sub_080D034C();
+        MultiMove_InitMove(0, Q_8_8(-1), 8);
+        InitMultiMonPlaceChange(FALSE);
+        sMultiMove->state++;
+        break;
+    case 1:
+        if (!DoMonPlaceChange() && !sub_080D0134())
+        {
+            sub_080D02BC();
+            StartCursorAnim(2);
+            InitMultiMonPlaceChange(TRUE);
+            HideBg(0);
+            sMultiMove->state++;
+        }
+        break;
+    case 2:
+        if (!DoMonPlaceChange())
+        {
+            StartCursorAnim(0);
+            sub_080D03FC();
+            sMultiMove->state++;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            LoadPalette(GetTextWindowPalette(3), BG_PLTT_ID(13), PLTT_SIZE_4BPP);
+            SetCursorPriority();
+            ShowBg(0);
+            return FALSE;
+        }
+        break;
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080CFE20(void)
+bool8 sub_080CFE20(u8 dir)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080CFE5C\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080CFE36\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFE40\n\t"
-        "	b _080CFEC4\n\t"
-        "_080CFE36:\n\t"
-        "	cmp r1, #2\n\t"
-        "	beq _080CFE7C\n\t"
-        "	cmp r1, #3\n\t"
-        "	beq _080CFE9C\n\t"
-        "	b _080CFEC4\n\t"
-        "_080CFE40:\n\t"
-        "	ldr r0, _080CFE58\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #9]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFEAA\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1, #9]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFE90\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFE58: .4byte gUnknown_2039A20\n\t"
-        "_080CFE5C:\n\t"
-        "	ldr r0, _080CFE78\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r2, [r1, #9]\n\t"
-        "	ldrb r0, [r1, #0xb]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	cmp r0, #4\n\t"
-        "	bgt _080CFEAA\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strb r0, [r1, #9]\n\t"
-        "	movs r1, #0xfc\n\t"
-        "	lsls r1, r1, #8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFE90\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFE78: .4byte gUnknown_2039A20\n\t"
-        "_080CFE7C:\n\t"
-        "	ldr r0, _080CFE98\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #8]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CFEAA\n\t"
-        "	subs r0, #1\n\t"
-        "	strb r0, [r1, #8]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	movs r1, #0\n\t"
-        "_080CFE90:\n\t"
-        "	movs r2, #6\n\t"
-        "	bl MultiMove_InitMove\n\t"
-        "	b _080CFEC4\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFE98: .4byte gUnknown_2039A20\n\t"
-        "_080CFE9C:\n\t"
-        "	ldr r0, _080CFEB0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r2, [r1, #8]\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	adds r0, r2, r0\n\t"
-        "	cmp r0, #5\n\t"
-        "	ble _080CFEB4\n\t"
-        "_080CFEAA:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080CFEC6\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFEB0: .4byte gUnknown_2039A20\n\t"
-        "_080CFEB4:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strb r0, [r1, #8]\n\t"
-        "	movs r0, #0xfc\n\t"
-        "	lsls r0, r0, #8\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #6\n\t"
-        "	bl MultiMove_InitMove\n\t"
-        "_080CFEC4:\n\t"
-        "	movs r0, #1\n\t"
-        "_080CFEC6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (dir)
+    {
+    case 0:
+        if (sMultiMove->minRow == 0)
+            return FALSE;
+        sMultiMove->minRow--;
+        MultiMove_InitMove(0, Q_8_8(4), 6);
+        break;
+    case 1:
+        if (sMultiMove->minRow + sMultiMove->rowsTotal >= IN_BOX_ROWS)
+            return FALSE;
+        sMultiMove->minRow++;
+        MultiMove_InitMove(0, Q_8_8(-4), 6);
+        break;
+    case 2:
+        if (sMultiMove->minColumn == 0)
+            return FALSE;
+        sMultiMove->minColumn--;
+        MultiMove_InitMove(Q_8_8(4), 0, 6);
+        break;
+    case 3:
+        if (sMultiMove->minColumn + sMultiMove->columnsTotal >= IN_BOX_COLUMNS)
+            return FALSE;
+        sMultiMove->minColumn++;
+        MultiMove_InitMove(Q_8_8(-4), 0, 6);
+        break;
+    }
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080CFECC(void)
+void sub_080CFECC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	ldr r6, _080CFF6C\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r3, [r2, #2]\n\t"
-        "	ldrb r5, [r2, #6]\n\t"
-        "	subs r1, r3, r5\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _080CFEDE\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "_080CFEDE:\n\t"
-        "	ldrb r0, [r2, #4]\n\t"
-        "	subs r0, r3, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CFEE8\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_080CFEE8:\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	ldrb r0, [r2, #7]\n\t"
-        "	subs r3, r1, r0\n\t"
-        "	cmp r3, #0\n\t"
-        "	bge _080CFEFA\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "_080CFEFA:\n\t"
-        "	ldrb r2, [r2, #5]\n\t"
-        "	subs r0, r1, r2\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080CFF04\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_080CFF04:\n\t"
-        "	subs r0, r3, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	ble _080CFF18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_080CFF70\n\t"
-        "_080CFF18:\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _080CFF34\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r0, [r2, #4]\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	ldrb r2, [r2, #5]\n\t"
-        "	bl sub_080CFFE0\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r0, [r2, #6]\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	ldrb r2, [r2, #5]\n\t"
-        "	bl sub_080CFF70\n\t"
-        "_080CFF34:\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	ble _080CFF48\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r0, [r2, #7]\n\t"
-        "	ldrb r1, [r2, #2]\n\t"
-        "	ldrb r2, [r2, #4]\n\t"
-        "	bl sub_080CFFA8\n\t"
-        "_080CFF48:\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _080CFF64\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	ldrb r1, [r2, #2]\n\t"
-        "	ldrb r2, [r2, #4]\n\t"
-        "	bl sub_080D0018\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldrb r0, [r2, #7]\n\t"
-        "	ldrb r1, [r2, #2]\n\t"
-        "	ldrb r2, [r2, #4]\n\t"
-        "	bl sub_080CFFA8\n\t"
-        "_080CFF64:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFF6C: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 columnChange = (abs(sMultiMove->fromColumn - sMultiMove->cursorColumn)) - (abs(sMultiMove->fromColumn - sMultiMove->toColumn));
+    s16 rowChange = (abs(sMultiMove->fromRow - sMultiMove->cursorRow)) - (abs(sMultiMove->fromRow - sMultiMove->toRow));
+
+    if (columnChange > 0)
+        sub_080CFF70(sMultiMove->cursorColumn, sMultiMove->fromRow, sMultiMove->toRow);
+
+    if (columnChange < 0)
+    {
+        sub_080CFFE0(sMultiMove->toColumn, sMultiMove->fromRow, sMultiMove->toRow);
+        sub_080CFF70(sMultiMove->cursorColumn, sMultiMove->fromRow, sMultiMove->toRow);
+    }
+
+    if (rowChange > 0)
+        sub_080CFFA8(sMultiMove->cursorRow, sMultiMove->fromColumn, sMultiMove->toColumn);
+
+    if (rowChange < 0)
+    {
+        sub_080D0018(sMultiMove->toRow, sMultiMove->fromColumn, sMultiMove->toColumn);
+        sub_080CFFA8(sMultiMove->cursorRow, sMultiMove->fromColumn, sMultiMove->toColumn);
+    }
 }
 
-__attribute__((naked)) void sub_080CFF70(void)
+void sub_080CFF70(u8 column, u8 minRow, u8 maxRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bls _080CFF8E\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r0, r5\n\t"
-        "	bhi _080CFFA0\n\t"
-        "_080CFF8E:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_080D0050\n\t"
-        "	cmp r4, r5\n\t"
-        "	bls _080CFF8E\n\t"
-        "_080CFFA0:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (minRow > maxRow)
+    {
+        u8 temp;
+        SWAP(minRow, maxRow, temp);
+    }
+
+    while (minRow <= maxRow)
+        sub_080D0050(column, minRow++);
 }
 
-__attribute__((naked)) void sub_080CFFA8(void)
+void sub_080CFFA8(u8 row, u8 minColumn, u8 maxColumn)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bls _080CFFC6\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r0, r5\n\t"
-        "	bhi _080CFFD8\n\t"
-        "_080CFFC6:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl sub_080D0050\n\t"
-        "	cmp r4, r5\n\t"
-        "	bls _080CFFC6\n\t"
-        "_080CFFD8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (minColumn > maxColumn)
+    {
+        u8 temp;
+        SWAP(minColumn, maxColumn, temp);
+    }
+
+    while (minColumn <= maxColumn)
+        sub_080D0050(minColumn++, row);
 }
 
-__attribute__((naked)) void sub_080CFFE0(void)
+void sub_080CFFE0(u8 column, u8 minRow, u8 maxRow)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bls _080CFFFE\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r0, r5\n\t"
-        "	bhi _080D0010\n\t"
-        "_080CFFFE:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_080D00D4\n\t"
-        "	cmp r4, r5\n\t"
-        "	bls _080CFFFE\n\t"
-        "_080D0010:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (minRow > maxRow)
+    {
+        u8 temp;
+        SWAP(minRow, maxRow, temp);
+    }
+
+    while (minRow <= maxRow)
+        sub_080D00D4(column, minRow++);
 }
 
-__attribute__((naked)) void sub_080D0018(void)
+void sub_080D0018(u8 row, u8 minColumn, u8 maxColumn)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r5, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bls _080D0036\n\t"
-        "	adds r4, r5, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	cmp r0, r5\n\t"
-        "	bhi _080D0048\n\t"
-        "_080D0036:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r0, #1\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl sub_080D00D4\n\t"
-        "	cmp r4, r5\n\t"
-        "	bls _080D0036\n\t"
-        "_080D0048:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (minColumn > maxColumn)
+    {
+        u8 temp;
+        SWAP(minColumn, maxColumn, temp);
+    }
+
+    while (minColumn <= maxColumn)
+        sub_080D00D4(minColumn++, row);
 }
 
-__attribute__((naked)) void sub_080D0050(void)
+void sub_080D0050(u8 x, u8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0x1c\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	lsls r4, r7, #1\n\t"
-        "	adds r4, r6, r4\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080D00C8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl GetMonIconPtr\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetValidMonIconPalIndex\n\t"
-        "	adds r0, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r1, _080D00D0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0x88\n\t"
-        "	lsls r2, r2, #6\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	movs r2, #0x20\n\t"
-        "	str r2, [sp]\n\t"
-        "	str r2, [sp, #4]\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	lsls r1, r7, #3\n\t"
-        "	str r1, [sp, #0xc]\n\t"
-        "	str r2, [sp, #0x10]\n\t"
-        "	str r2, [sp, #0x14]\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BlitBitmapRectToWindow4BitTo8Bit\n\t"
-        "_080D00C8:\n\t"
-        "	add sp, #0x1c\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D00D0: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 position = x + (IN_BOX_COLUMNS * y);
+    u16 species = GetCurrentBoxMonData(position, MON_DATA_SPECIES_OR_EGG);
+    u32 personality = GetCurrentBoxMonData(position, MON_DATA_PERSONALITY);
+
+    if (species != SPECIES_NONE)
+    {
+        const u8 *iconGfx = GetMonIconPtr(species, personality, 1);
+        u8 index = GetValidMonIconPalIndex(species) + 8;
+
+        BlitBitmapRectToWindow4BitTo8Bit(sStorage->multiMoveWindowId,
+                                         iconGfx,
+                                         0,
+                                         0,
+                                         32,
+                                         32,
+                                         24 * x,
+                                         24 * y,
+                                         32,
+                                         32,
+                                         index);
+    }
 }
 
-__attribute__((naked)) void sub_080D00D4(void)
+void sub_080D00D4(u8 x, u8 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0118\n\t"
-        "	ldr r0, _080D0120\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x88\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r2, r4, #1\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	lsls r2, r2, #3\n\t"
-        "	lsls r3, r5, #3\n\t"
-        "	movs r1, #0x20\n\t"
-        "	str r1, [sp]\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelRect8Bit\n\t"
-        "_080D0118:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0120: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 position = x + (IN_BOX_COLUMNS * y);
+    u16 species = GetCurrentBoxMonData(position, MON_DATA_SPECIES_OR_EGG);
+
+    if (species != SPECIES_NONE)
+    {
+        FillWindowPixelRect8Bit(sStorage->multiMoveWindowId,
+                                PIXEL_FILL(0),
+                                24 * x,
+                                24 * y,
+                                32,
+                                32);
+    }
 }
 
 void MultiMove_InitMove(u16 x, u16 y, u16 moveSteps)
@@ -20010,1400 +7489,402 @@ void MultiMove_InitMove(u16 x, u16 y, u16 moveSteps)
     sMultiMove->bgMoveSteps = moveSteps;
 }
 
-__attribute__((naked)) void sub_080D0134(void)
+u8 sub_080D0134(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _080D0168\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrh r0, [r1, #0x10]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D015E\n\t"
-        "	ldrh r1, [r1, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl ChangeBgX\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrh r1, [r0, #0xe]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl ChangeBgY\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrh r0, [r1, #0x10]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "_080D015E:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0x10]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0168: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sMultiMove->bgMoveSteps != 0)
+    {
+        ChangeBgX(0, sMultiMove->bgX, BG_COORD_ADD);
+        ChangeBgY(0, sMultiMove->bgY, BG_COORD_ADD);
+        sMultiMove->bgMoveSteps--;
+    }
+
+    return sMultiMove->bgMoveSteps;
 }
 
-__attribute__((naked)) void sub_080D016C(void)
+void sub_080D016C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	ldr r4, _080D0240\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #4]\n\t"
-        "	ldrb r2, [r1, #2]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bls _080D0184\n\t"
-        "	adds r0, r2, #0\n\t"
-        "_080D0184:\n\t"
-        "	strb r0, [r1, #8]\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #5]\n\t"
-        "	ldrb r2, [r1, #3]\n\t"
-        "	cmp r0, r2\n\t"
-        "	bls _080D0192\n\t"
-        "	adds r0, r2, #0\n\t"
-        "_080D0192:\n\t"
-        "	strb r0, [r1, #9]\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrb r1, [r2, #2]\n\t"
-        "	ldrb r0, [r2, #4]\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080D01A2\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_080D01A2:\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r2, #0xa]\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	ldrb r0, [r2, #5]\n\t"
-        "	subs r0, r1, r0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _080D01B4\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_080D01B4:\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r2, #0xb]\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r2, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #0xa]\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	mov r8, r2\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov sb, r0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r2, sb\n\t"
-        "	bge _080D0230\n\t"
-        "_080D01DC:\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r3, _080D0240\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldrb r3, [r1, #8]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrb r4, [r1, #8]\n\t"
-        "	adds r7, r2, #1\n\t"
-        "	cmp r4, r8\n\t"
-        "	bge _080D022A\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r4, r0, r4\n\t"
-        "_080D01FA:\n\t"
-        "	mov r0, sl\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl GetBoxedMonPtr\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r2, _080D0240\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	lsls r2, r6, #2\n\t"
-        "	adds r2, r2, r6\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, #0x14\n\t"
-        "	movs r2, #0x50\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	subs r4, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080D01FA\n\t"
-        "_080D022A:\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	cmp r2, sb\n\t"
-        "	blt _080D01DC\n\t"
-        "_080D0230:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0240: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j;
+    s32 columnCount, rowCount;
+    u8 boxId;
+    u8 monArrayId;
+
+    sMultiMove->minColumn = min(sMultiMove->fromColumn, sMultiMove->toColumn);
+    sMultiMove->minRow = min(sMultiMove->fromRow, sMultiMove->toRow);
+    sMultiMove->columnsTotal = abs(sMultiMove->fromColumn - sMultiMove->toColumn) + 1;
+    sMultiMove->rowsTotal = abs(sMultiMove->fromRow - sMultiMove->toRow) + 1;
+    boxId = StorageGetCurrentBox();
+    monArrayId = 0;
+    columnCount = sMultiMove->minColumn + sMultiMove->columnsTotal;
+    rowCount = sMultiMove->minRow + sMultiMove->rowsTotal;
+    for (i = sMultiMove->minRow; i < rowCount; i++)
+    {
+        u8 boxPosition = (IN_BOX_COLUMNS * i) + sMultiMove->minColumn;
+        for (j = sMultiMove->minColumn; j < columnCount; j++)
+        {
+            struct BoxPokemon *boxMon = GetBoxedMonPtr(boxId, boxPosition);
+            sMultiMove->boxMons[monArrayId] = *boxMon;
+
+            monArrayId++;
+            boxPosition++;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_080D0244(void)
+void sub_080D0244(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	ldr r4, _080D02B8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r2, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #0xa]\n\t"
-        "	adds r7, r2, r1\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov sb, r1\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r2, [r0, #9]\n\t"
-        "	cmp r2, sb\n\t"
-        "	bge _080D02AC\n\t"
-        "_080D0270:\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r1, _080D02B8\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldrb r3, [r1, #8]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrb r4, [r1, #8]\n\t"
-        "	adds r6, r2, #1\n\t"
-        "	cmp r4, r7\n\t"
-        "	bge _080D02A6\n\t"
-        "	subs r4, r7, r4\n\t"
-        "_080D028C:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl DestroyBoxMonIconAtPosition\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ZeroBoxMonAt\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	subs r4, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080D028C\n\t"
-        "_080D02A6:\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	cmp r2, sb\n\t"
-        "	blt _080D0270\n\t"
-        "_080D02AC:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D02B8: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j;
+    s32 columnCount = sMultiMove->minColumn + sMultiMove->columnsTotal;
+    s32 rowCount = sMultiMove->minRow + sMultiMove->rowsTotal;
+    u8 boxId = StorageGetCurrentBox();
+
+    for (i = sMultiMove->minRow; i < rowCount; i++)
+    {
+        u8 boxPosition = (IN_BOX_COLUMNS * i) + sMultiMove->minColumn;
+        for (j = sMultiMove->minColumn; j < columnCount; j++)
+        {
+            DestroyBoxMonIconAtPosition(boxPosition);
+            ZeroBoxMonAt(boxId, boxPosition);
+            boxPosition++;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_080D02BC(void)
+void sub_080D02BC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	ldr r0, _080D0348\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r2, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #0xa]\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	mov r8, r2\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov sl, r0\n\t"
-        "	movs r6, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r2, sl\n\t"
-        "	bge _080D0338\n\t"
-        "_080D02E2:\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r3, _080D0348\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldrb r4, [r1, #8]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrb r4, [r1, #8]\n\t"
-        "	adds r7, r2, #1\n\t"
-        "	cmp r4, r8\n\t"
-        "	bge _080D0332\n\t"
-        "	mov sb, r3\n\t"
-        "	mov r0, r8\n\t"
-        "	subs r4, r0, r4\n\t"
-        "_080D0302:\n\t"
-        "	lsls r1, r6, #2\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, #0x14\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0320\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_080CA9B4\n\t"
-        "_080D0320:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	subs r4, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080D0302\n\t"
-        "_080D0332:\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	cmp r2, sl\n\t"
-        "	blt _080D02E2\n\t"
-        "_080D0338:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0348: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j;
+    s32 columnCount = sMultiMove->minColumn + sMultiMove->columnsTotal;
+    s32 rowCount = sMultiMove->minRow + sMultiMove->rowsTotal;
+    u8 monArrayId = 0;
+
+    for (i = sMultiMove->minRow; i < rowCount; i++)
+    {
+        u8 boxPosition = (IN_BOX_COLUMNS * i) + sMultiMove->minColumn;
+        for (j = sMultiMove->minColumn; j < columnCount; j++)
+        {
+            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SANITY_HAS_SPECIES))
+                sub_080CA9B4(boxPosition);
+            monArrayId++;
+            boxPosition++;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_080D034C(void)
+void sub_080D034C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	ldr r4, _080D03F8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r2, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #0xa]\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	mov sl, r2\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [sp]\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r7, #0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r3, [r0, #9]\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	cmp r3, r0\n\t"
-        "	bge _080D03E6\n\t"
-        "_080D0382:\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r2, _080D03F8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldrb r4, [r1, #8]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldrb r5, [r1, #8]\n\t"
-        "	adds r3, #1\n\t"
-        "	mov sb, r3\n\t"
-        "	cmp r5, sl\n\t"
-        "	bge _080D03DE\n\t"
-        "	mov r8, r2\n\t"
-        "	mov r0, sl\n\t"
-        "	subs r5, r0, r5\n\t"
-        "_080D03A4:\n\t"
-        "	lsls r0, r7, #2\n\t"
-        "	adds r0, r0, r7\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r4, #0x14\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D03CC\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	ldr r0, [sp, #4]\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl SetBoxMonAt\n\t"
-        "_080D03CC:\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	subs r5, #1\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _080D03A4\n\t"
-        "_080D03DE:\n\t"
-        "	mov r3, sb\n\t"
-        "	ldr r1, [sp]\n\t"
-        "	cmp r3, r1\n\t"
-        "	blt _080D0382\n\t"
-        "_080D03E6:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D03F8: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j;
+    s32 columnCount = sMultiMove->minColumn + sMultiMove->columnsTotal;
+    s32 rowCount = sMultiMove->minRow + sMultiMove->rowsTotal;
+    u8 boxId = StorageGetCurrentBox();
+    u8 monArrayId = 0;
+
+    for (i = sMultiMove->minRow; i < rowCount; i++)
+    {
+        u8 boxPosition = (IN_BOX_COLUMNS * i) + sMultiMove->minColumn;
+        for (j = sMultiMove->minColumn; j < columnCount; j++)
+        {
+            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SANITY_HAS_SPECIES))
+                SetBoxMonAt(boxId, boxPosition, &sMultiMove->boxMons[monArrayId]);
+            boxPosition++;
+            monArrayId++;
+        }
+    }
 }
 
-__attribute__((naked)) void sub_080D03FC(void)
+void sub_080D03FC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgX\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl ChangeBgY\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetBgAttribute\n\t"
-        "	movs r0, #8\n\t"
-        "	movs r1, #0x80\n\t"
-        "	bl ClearGpuRegBits\n\t"
-        "	movs r0, #0x20\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl FillBgTilemapBufferRect_Palette0\n\t"
-        "	movs r0, #0\n\t"
-        "	bl CopyBgTilemapBufferToVram\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    ChangeBgX(0, 0, BG_COORD_SET);
+    ChangeBgY(0, 0, BG_COORD_SET);
+    SetBgAttribute(0, BG_ATTR_PALETTEMODE, 0);
+    ClearGpuRegBits(REG_OFFSET_BG0CNT, BGCNT_256COLOR);
+    FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 32, 32);
+    CopyBgTilemapBufferToVram(0);
 }
 
-__attribute__((naked)) void sub_080D0444(void)
+u8 sub_080D0444(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080D045C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #3]\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldrb r2, [r2, #2]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D045C: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    return (IN_BOX_COLUMNS * sMultiMove->fromRow) + sMultiMove->fromColumn;
 }
 
-__attribute__((naked)) void sub_080D0460(void)
+bool8 sub_080D0460(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080D04CC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r2, [r0, #8]\n\t"
-        "	ldrb r1, [r0, #0xa]\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	mov sb, r2\n\t"
-        "	ldrb r1, [r0, #9]\n\t"
-        "	ldrb r0, [r0, #0xb]\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r7, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	cmp r6, r0\n\t"
-        "	bge _080D04EE\n\t"
-        "	lsls r0, r6, #1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	mov r8, r0\n\t"
-        "_080D0490:\n\t"
-        "	ldr r2, _080D04CC\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldrb r0, [r1, #8]\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	ldrb r4, [r1, #8]\n\t"
-        "	cmp r4, sb\n\t"
-        "	bge _080D04E2\n\t"
-        "	mov sl, r2\n\t"
-        "_080D04A4:\n\t"
-        "	lsls r1, r7, #2\n\t"
-        "	adds r1, r1, r7\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, #0x14\n\t"
-        "	mov r2, sl\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D04D0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D04D0\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080D04F0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D04CC: .4byte gUnknown_2039A20\n\t"
-        "_080D04D0:\n\t"
-        "	adds r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, sb\n\t"
-        "	blt _080D04A4\n\t"
-        "_080D04E2:\n\t"
-        "	movs r0, #6\n\t"
-        "	add r8, r0\n\t"
-        "	adds r6, #1\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	cmp r6, r2\n\t"
-        "	blt _080D0490\n\t"
-        "_080D04EE:\n\t"
-        "	movs r0, #1\n\t"
-        "_080D04F0:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j;
+    s32 columnCount = sMultiMove->minColumn + sMultiMove->columnsTotal;
+    s32 rowCount = sMultiMove->minRow + sMultiMove->rowsTotal;
+    u8 monArrayId = 0;
+
+    for (i = sMultiMove->minRow; i < rowCount; i++)
+    {
+        u8 boxPosition = (IN_BOX_COLUMNS * i) + sMultiMove->minColumn;
+        for (j = sMultiMove->minColumn; j < columnCount; j++)
+        {
+            if (GetBoxMonData(&sMultiMove->boxMons[monArrayId], MON_DATA_SANITY_HAS_SPECIES)
+                && GetCurrentBoxMonData(boxPosition, MON_DATA_SANITY_HAS_SPECIES))
+                return FALSE;
+
+            monArrayId++;
+            boxPosition++;
+        }
+    }
+    return TRUE;
 }
 
 
-__attribute__((naked)) void sub_080D0500(void)
+void sub_080D0500(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #0x20\n\t"
-        "	ldr r3, _080D05FC\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D05DE\n\t"
-        "	ldr r0, _080D0600\n\t"
-        "	str r0, [sp, #0x18]\n\t"
-        "	ldr r1, _080D0604\n\t"
-        "	add r2, sp, #0x18\n\t"
-        "	ldr r0, [r2, #4]\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldr r0, _080D0608\n\t"
-        "	ldm r0!, {r4, r5, r6}\n\t"
-        "	stm r1!, {r4, r5, r6}\n\t"
-        "	ldm r0!, {r4, r5, r6}\n\t"
-        "	stm r1!, {r4, r5, r6}\n\t"
-        "	movs r7, #0\n\t"
-        "	mov sb, r2\n\t"
-        "	mov r8, r3\n\t"
-        "	movs r0, #0\n\t"
-        "	mov sl, r0\n\t"
-        "_080D0540:\n\t"
-        "	adds r6, r7, #7\n\t"
-        "	lsls r1, r6, #0x10\n\t"
-        "	mov r2, sb\n\t"
-        "	ldrh r0, [r2, #4]\n\t"
-        "	orrs r0, r1\n\t"
-        "	str r0, [r2, #4]\n\t"
-        "	mov r0, sb\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	mov r4, sb\n\t"
-        "	ldrh r0, [r4, #6]\n\t"
-        "	bl GetSpriteTileStartByTag\n\t"
-        "	mov r5, r8\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	lsls r5, r7, #4\n\t"
-        "	ldr r2, _080D060C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0xb\n\t"
-        "	ldr r4, _080D0610\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _080D0614\n\t"
-        "	adds r4, r7, r0\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl AllocSpritePalette\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080D0618\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r6, [r0]\n\t"
-        "	strh r4, [r0, #2]\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0xb\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r4, r8\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r6, _080D061C\n\t"
-        "	adds r2, r2, r6\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _080D0620\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r1, [r2]\n\t"
-        "	adds r1, #0x3e\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	ldr r1, _080D0624\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r2, sl\n\t"
-        "	strb r2, [r0]\n\t"
-        "	adds r7, #1\n\t"
-        "	cmp r7, #2\n\t"
-        "	ble _080D0540\n\t"
-        "_080D05DE:\n\t"
-        "	ldr r0, _080D05FC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r4, _080D0628\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r1, [r0]\n\t"
-        "	add sp, #0x20\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D05FC: .4byte gUnknown_20399A8\n\t"
-        "_080D0600: .4byte gUnknown_3000F78\n\t"
-        "_080D0604: .4byte 0xFFFF0000\n\t"
-        "_080D0608: .4byte gUnknown_855676C\n\t"
-        "_080D060C: .4byte 0x00002208\n\t"
-        "_080D0610: .4byte 0x06010000\n\t"
-        "_080D0614: .4byte 0xFFFFDACB\n\t"
-        "_080D0618: .4byte 0x0000220C\n\t"
-        "_080D061C: .4byte 0x00002204\n\t"
-        "_080D0620: .4byte gSprites\n\t"
-        "_080D0624: .4byte 0x00002210\n\t"
-        "_080D0628: .4byte 0x00002234\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    u8 spriteId;
+    struct CompressedSpriteSheet spriteSheet;
+    struct SpriteTemplate spriteTemplate;
+
+    if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+    {
+        spriteSheet.data = gUnknown_3000F78;
+        spriteSheet.size = 0x200;
+        spriteTemplate = *(const struct SpriteTemplate *)gUnknown_855676C;
+
+        for (i = 0; i < MAX_ITEM_ICONS; i++)
+        {
+            spriteSheet.tag = GFXTAG_ITEM_ICON_0 + i;
+            LoadCompressedSpriteSheet(&spriteSheet);
+            sStorage->itemIcons[i].tiles = GetSpriteTileStartByTag(spriteSheet.tag) * TILE_SIZE_4BPP + (void *)(OBJ_VRAM0);
+            sStorage->itemIcons[i].palIndex = AllocSpritePalette(PALTAG_ITEM_ICON_0 + i);
+            sStorage->itemIcons[i].palIndex = OBJ_PLTT_ID(sStorage->itemIcons[i].palIndex);
+            spriteTemplate.tileTag = GFXTAG_ITEM_ICON_0 + i;
+            spriteTemplate.paletteTag = PALTAG_ITEM_ICON_0 + i;
+            spriteId = CreateSprite(&spriteTemplate, 0, 0, 11);
+            sStorage->itemIcons[i].sprite = &gSprites[spriteId];
+            sStorage->itemIcons[i].sprite->invisible = TRUE;
+            sStorage->itemIcons[i].active = FALSE;
+        }
+    }
+    sStorage->movingItemId = ITEM_NONE;
 }
 
-__attribute__((naked)) void sub_080D062C(void)
+void sub_080D062C(u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	ldr r0, _080D0660\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D06E2\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl sub_080D0BC4\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D06E2\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0664\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080D067A\n\t"
-        "	b _080D06E2\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0660: .4byte gUnknown_20399A8\n\t"
-        "_080D0664:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D06E2\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	b _080D069C\n\t"
-        "_080D067A:\n\t"
-        "	cmp r7, #5\n\t"
-        "	bhi _080D06E2\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	ldr r0, _080D06EC\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D06E2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "_080D069C:\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080D06E2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetItemIconPic\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetItemIconPalette\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	bl sub_080D0B88\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	bl sub_080D0CAC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl sub_080D0DC4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_080D0FE0\n\t"
-        "_080D06E2:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D06EC: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 heldItem;
+
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        return;
+
+    if (sub_080D0BC4(cursorArea, cursorPos))
+        return;
+
+    switch (cursorArea)
+    {
+    case CURSOR_AREA_IN_BOX:
+        if (!GetCurrentBoxMonData(cursorPos, MON_DATA_SANITY_HAS_SPECIES))
+            return;
+        heldItem = GetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM);
+        break;
+    case CURSOR_AREA_IN_PARTY:
+        if (cursorPos >= PARTY_SIZE || !GetMonData3(&gPlayerParty[cursorPos], MON_DATA_SANITY_HAS_SPECIES))
+            return;
+        heldItem = GetMonData3(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM);
+        break;
+    default:
+        return;
+    }
+
+    if (heldItem != ITEM_NONE)
+    {
+        const u32 *tiles = GetItemIconPic(heldItem);
+        const u32 *pal = GetItemIconPalette(heldItem);
+        u8 id = sub_080D0B88();
+
+        sub_080D0CAC(id, cursorArea, cursorPos);
+        sub_080D0DC4(id, tiles, pal);
+        sub_080D0E74(id, ITEM_ANIM_APPEAR);
+        sub_080D0FE0(id, TRUE);
+    }
 }
 
-__attribute__((naked)) void sub_080D06F0(void)
+void sub_080D06F0(u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	ldr r0, _080D072C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D0726\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_080D0C10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "_080D0726:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D072C: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id;
+
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        return;
+
+    id = sub_080D0C10(cursorArea, cursorPos);
+    sub_080D0E74(id, ITEM_ANIM_DISAPPEAR);
+    sub_080D0EA4(id, ITEM_CB_WAIT_ANIM, cursorArea, cursorPos);
 }
 
-__attribute__((naked)) bool8 Item_FromMonToMoving(u8 a)
+void Item_FromMonToMoving(u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	adds r7, r5, #0\n\t"
-        "	ldr r0, _080D0794\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D07C0\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_080D0C10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl sub_080D0CAC\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _080D0798\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetCurrentBoxMonData\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetBoxMonIconObjMode\n\t"
-        "	b _080D07B0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0794: .4byte gUnknown_20399A8\n\t"
-        "_080D0798:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	ldr r1, _080D07C8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetPartyMonIconObjMode\n\t"
-        "_080D07B0:\n\t"
-        "	ldr r0, _080D07CC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D07D0\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	ldr r2, _080D07D4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r1, [r0]\n\t"
-        "_080D07C0:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D07C8: .4byte gPlayerParty\n\t"
-        "_080D07CC: .4byte gUnknown_20399A8\n\t"
-        "_080D07D0: .4byte 0x00000CE6\n\t"
-        "_080D07D4: .4byte 0x00002234\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id;
+    u16 itemId;
+
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        return;
+
+    id = sub_080D0C10(cursorArea, cursorPos);
+    itemId = ITEM_NONE;
+    sub_080D0E74(id, ITEM_ANIM_PICK_UP);
+    sub_080D0EA4(id, ITEM_CB_TO_HAND, cursorArea, cursorPos);
+    sub_080D0CAC(id, CURSOR_AREA_IN_HAND, 0);
+    if (cursorArea == CURSOR_AREA_IN_BOX)
+    {
+        SetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM, &itemId);
+        SetBoxMonIconObjMode(cursorPos, ST_OAM_OBJ_BLEND);
+    }
+    else
+    {
+        SetMonData(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM, &itemId);
+        SetPartyMonIconObjMode(cursorPos, ST_OAM_OBJ_BLEND);
+    }
+
+    sStorage->movingItemId = sStorage->displayMonItemId;
 }
 
-__attribute__((naked)) void sub_080D07D8(void)
+void sub_080D07D8(u16 itemId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetItemIconPic\n\t"
-        "	mov r8, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetItemIconPalette\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	bl sub_080D0B88\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl sub_080D0DC4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl sub_080D0CAC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl sub_080D0FE0\n\t"
-        "	ldr r0, _080D0844\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D0848\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r5, [r0]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0844: .4byte gUnknown_20399A8\n\t"
-        "_080D0848: .4byte 0x00002234\n\t"
-        ".syntax divided\n\t"
-    );
+    const u32 *tiles = GetItemIconPic(itemId);
+    const u32 *pal = GetItemIconPalette(itemId);
+    u8 id = sub_080D0B88();
+
+    sub_080D0DC4(id, tiles, pal);
+    sub_080D0E74(id, ITEM_ANIM_LARGE);
+    sub_080D0EA4(id, ITEM_CB_TO_HAND, CURSOR_AREA_IN_BOX, 0);
+    sub_080D0CAC(id, CURSOR_AREA_IN_HAND, 0);
+    sub_080D0FE0(id, TRUE);
+    sStorage->movingItemId = itemId;
 }
 
-__attribute__((naked)) void Item_SwitchMonsWithMoving(void)
+void Item_SwitchMonsWithMoving(u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	ldr r0, _080D08B4\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D090A\n\t"
-        "	mov r0, sb\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl sub_080D0C10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "	mov r1, sb\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _080D08BC\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetCurrentBoxMonData\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r4, _080D08B8\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetCurrentBoxMonData\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	b _080D08E8\n\t"
-        "	.align 2, 0\n\t"
-        "_080D08B4: .4byte gUnknown_20399A8\n\t"
-        "_080D08B8: .4byte 0x00002234\n\t"
-        "_080D08BC:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r4, r7, #0\n\t"
-        "	muls r4, r0, r4\n\t"
-        "	ldr r0, _080D0918\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r5, _080D091C\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r1, r8\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "_080D08E8:\n\t"
-        "	strh r6, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_080D0C10\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	mov r2, sb\n\t"
-        "	adds r3, r7, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "_080D090A:\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0918: .4byte gPlayerParty\n\t"
-        "_080D091C: .4byte 0x00002234\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id;
+    u16 itemId;
+
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        return;
+
+    id = sub_080D0C10(cursorArea, cursorPos);
+    sub_080D0E74(id, ITEM_ANIM_PICK_UP);
+    sub_080D0EA4(id, ITEM_CB_SWAP_TO_HAND, CURSOR_AREA_IN_HAND, 0);
+    if (cursorArea == CURSOR_AREA_IN_BOX)
+    {
+        itemId = GetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM);
+        SetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM, &sStorage->movingItemId);
+        sStorage->movingItemId = itemId;
+    }
+    else
+    {
+        itemId = GetMonData3(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM);
+        SetMonData(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM, &sStorage->movingItemId);
+        sStorage->movingItemId = itemId;
+    }
+
+    id = sub_080D0C10(CURSOR_AREA_IN_HAND, 0);
+    sub_080D0E74(id, ITEM_ANIM_PUT_DOWN);
+    sub_080D0EA4(id, ITEM_CB_SWAP_TO_MON, cursorArea, cursorPos);
 }
 
-__attribute__((naked)) bool8 Item_GiveMovingToMon(u8 a)
+void Item_GiveMovingToMon(u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	mov r8, r5\n\t"
-        "	ldr r6, _080D0978\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D09A0\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_080D0C10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #4\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	adds r2, r7, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _080D0980\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldr r0, _080D097C\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetCurrentBoxMonData\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetBoxMonIconObjMode\n\t"
-        "	b _080D09A0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0978: .4byte gUnknown_20399A8\n\t"
-        "_080D097C: .4byte 0x00002234\n\t"
-        "_080D0980:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	mov r1, r8\n\t"
-        "	muls r1, r0, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ldr r1, _080D09AC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	ldr r1, _080D09B0\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	bl SetMonData\n\t"
-        "	mov r0, r8\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetPartyMonIconObjMode\n\t"
-        "_080D09A0:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D09AC: .4byte gPlayerParty\n\t"
-        "_080D09B0: .4byte 0x00002234\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id;
+
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        return;
+
+    id = sub_080D0C10(CURSOR_AREA_IN_HAND, 0);
+    sub_080D0E74(id, ITEM_ANIM_PUT_DOWN);
+    sub_080D0EA4(id, ITEM_CB_TO_MON, cursorArea, cursorPos);
+    if (cursorArea == CURSOR_AREA_IN_BOX)
+    {
+        SetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM, &sStorage->movingItemId);
+        SetBoxMonIconObjMode(cursorPos, ST_OAM_OBJ_NORMAL);
+    }
+    else
+    {
+        SetMonData(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM, &sStorage->movingItemId);
+        SetPartyMonIconObjMode(cursorPos, ST_OAM_OBJ_NORMAL);
+    }
 }
 
-__attribute__((naked)) bool8 Item_TakeMons(u8 a)
+void Item_TakeMons(u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	adds r7, r5, #0\n\t"
-        "	ldr r0, _080D0A0C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D0A28\n\t"
-        "	movs r1, #0\n\t"
-        "	mov r0, sp\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl sub_080D0C10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _080D0A10\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetCurrentBoxMonData\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetBoxMonIconObjMode\n\t"
-        "	b _080D0A28\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0A0C: .4byte gUnknown_20399A8\n\t"
-        "_080D0A10:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	ldr r1, _080D0A30\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	mov r2, sp\n\t"
-        "	bl SetMonData\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl SetPartyMonIconObjMode\n\t"
-        "_080D0A28:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0A30: .4byte gPlayerParty\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 id;
+    u16 itemId;
+
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        return;
+
+    itemId = ITEM_NONE;
+    id = sub_080D0C10(cursorArea, cursorPos);
+    sub_080D0E74(id, ITEM_ANIM_DISAPPEAR);
+    sub_080D0EA4(id, ITEM_CB_WAIT_ANIM, cursorArea, cursorPos);
+    if (cursorArea == CURSOR_AREA_IN_BOX)
+    {
+        SetCurrentBoxMonData(cursorPos, MON_DATA_HELD_ITEM, &itemId);
+        SetBoxMonIconObjMode(cursorPos, ST_OAM_OBJ_BLEND);
+    }
+    else
+    {
+        SetMonData(&gPlayerParty[cursorPos], MON_DATA_HELD_ITEM, &itemId);
+        SetPartyMonIconObjMode(cursorPos, ST_OAM_OBJ_BLEND);
+    }
 }
 
-__attribute__((naked)) void sub_080D0A34(void)
+void sub_080D0A34(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080D0A68\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D0A62\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_080D0C10\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #5\n\t"
-        "	bl sub_080D0E74\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "_080D0A62:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0A68: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+    {
+        u8 id = sub_080D0C10(CURSOR_AREA_IN_HAND, 0);
+        sub_080D0E74(id, ITEM_ANIM_PUT_AWAY);
+        sub_080D0EA4(id, ITEM_CB_WAIT_ANIM, CURSOR_AREA_IN_HAND, 0);
+    }
 }
 
-__attribute__((naked)) void sub_080D0A6C(void)
+void sub_080D0A6C(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _080D0AB0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D0AAA\n\t"
-        "	movs r4, #0\n\t"
-        "_080D0A7A:\n\t"
-        "	ldr r0, _080D0AB0\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r2, _080D0AB4\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0AA4\n\t"
-        "	subs r2, #2\n\t"
-        "	adds r0, r1, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080D0AA4\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #7\n\t"
-        "	movs r2, #2\n\t"
-        "	movs r3, #0\n\t"
-        "	bl sub_080D0EA4\n\t"
-        "_080D0AA4:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #2\n\t"
-        "	ble _080D0A7A\n\t"
-        "_080D0AAA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0AB0: .4byte gUnknown_20399A8\n\t"
-        "_080D0AB4: .4byte 0x00002210\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    if (sStorage->boxOption != OPTION_MOVE_ITEMS)
+        return;
+
+    for (i = 0; i < MAX_ITEM_ICONS; i++)
+    {
+        if (sStorage->itemIcons[i].active
+         && sStorage->itemIcons[i].area == CURSOR_AREA_IN_PARTY)
+            sub_080D0EA4(i, ITEM_CB_HIDE_PARTY, CURSOR_AREA_IN_HAND, 0);
+    }
 }
 
-__attribute__((naked)) void sub_080D0AB8(void)
+bool8 sub_080D0AB8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r0, _080D0AF4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D0AF8\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	adds r3, r0, #0\n\t"
-        "_080D0AC6:\n\t"
-        "	ldr r1, _080D0AFC\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0B08\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x28\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #8\n\t"
-        "	beq _080D0AEE\n\t"
-        "	ldr r1, [r2, #0x1c]\n\t"
-        "	ldr r0, _080D0B00\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080D0B08\n\t"
-        "	ldr r0, _080D0B04\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080D0B08\n\t"
-        "_080D0AEE:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080D0B14\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0AF4: .4byte gUnknown_20399A8\n\t"
-        "_080D0AF8: .4byte 0x00002204\n\t"
-        "_080D0AFC: .4byte 0x00002210\n\t"
-        "_080D0B00: .4byte SpriteCallbackDummy + 1\n\t"
-        "_080D0B04: .4byte sub_080D1378 + 1\n\t"
-        "_080D0B08:\n\t"
-        "	adds r4, #0x10\n\t"
-        "	adds r3, #0x10\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r5, #2\n\t"
-        "	ble _080D0AC6\n\t"
-        "	movs r0, #0\n\t"
-        "_080D0B14:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    for (i = 0; i < MAX_ITEM_ICONS; i++)
+    {
+        if (sStorage->itemIcons[i].active)
+        {
+            if (!sStorage->itemIcons[i].sprite->affineAnimEnded
+             && sStorage->itemIcons[i].sprite->affineAnimBeginning)
+                return TRUE;
+            if (sStorage->itemIcons[i].sprite->callback != SpriteCallbackDummy
+             && sStorage->itemIcons[i].sprite->callback != sub_080D1378)
+                return TRUE;
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 IsActiveItemMoving(void)
+bool8 IsActiveItemMoving(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080D0B40\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldrb r0, [r1, #1]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bne _080D0B50\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _080D0B44\n\t"
-        "	adds r1, r1, r0\n\t"
-        "_080D0B2E:\n\t"
-        "	ldrb r0, [r1, #2]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0B48\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _080D0B48\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080D0B52\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0B40: .4byte gUnknown_20399A8\n\t"
-        "_080D0B44: .4byte 0x0000220E\n\t"
-        "_080D0B48:\n\t"
-        "	adds r1, #0x10\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #2\n\t"
-        "	ble _080D0B2E\n\t"
-        "_080D0B50:\n\t"
-        "	movs r0, #0\n\t"
-        "_080D0B52:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    if (sStorage->boxOption == OPTION_MOVE_ITEMS)
+    {
+        for (i = 0; i < MAX_ITEM_ICONS; i++)
+        {
+            if (sStorage->itemIcons[i].active
+             && sStorage->itemIcons[i].area == CURSOR_AREA_IN_HAND)
+                return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 const u8 *GetMovingItemName(void)
@@ -21416,451 +7897,126 @@ u16 GetMovingItemId(void)
     return sStorage->movingItemId;
 }
 
-__attribute__((naked)) void sub_080D0B88(void)
+u8 sub_080D0B88(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r5, _080D0BA8\n\t"
-        "	ldr r3, _080D0BAC\n\t"
-        "	movs r4, #1\n\t"
-        "_080D0B92:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r0, r3\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D0BB0\n\t"
-        "	strb r4, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _080D0BBC\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0BA8: .4byte gUnknown_20399A8\n\t"
-        "_080D0BAC: .4byte 0x00002210\n\t"
-        "_080D0BB0:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #2\n\t"
-        "	bls _080D0B92\n\t"
-        "	movs r0, #3\n\t"
-        "_080D0BBC:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < MAX_ITEM_ICONS; i++)
+    {
+        if (!sStorage->itemIcons[i].active)
+        {
+            sStorage->itemIcons[i].active = TRUE;
+            return i;
+        }
+    }
+    return MAX_ITEM_ICONS;
 }
 
-__attribute__((naked)) void sub_080D0BC4(void)
+bool32 sub_080D0BC4(u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _080D0BF8\n\t"
-        "	ldr r2, [r0]\n\t"
-        "_080D0BD4:\n\t"
-        "	ldr r5, _080D0BFC\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0C00\n\t"
-        "	subs r5, #2\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _080D0C00\n\t"
-        "	adds r5, #1\n\t"
-        "	adds r0, r2, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _080D0C00\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080D0C0A\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0BF8: .4byte gUnknown_20399A8\n\t"
-        "_080D0BFC: .4byte 0x00002210\n\t"
-        "_080D0C00:\n\t"
-        "	adds r2, #0x10\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, #2\n\t"
-        "	ble _080D0BD4\n\t"
-        "	movs r0, #0\n\t"
-        "_080D0C0A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    for (i = 0; i < MAX_ITEM_ICONS; i++)
+    {
+        if (sStorage->itemIcons[i].active
+         && sStorage->itemIcons[i].area == cursorArea
+         && sStorage->itemIcons[i].pos == cursorPos)
+            return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void sub_080D0C10(void)
+u8 sub_080D0C10(u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r0, _080D0C48\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_080D0C20:\n\t"
-        "	lsls r0, r3, #4\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	ldr r6, _080D0C4C\n\t"
-        "	adds r0, r2, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0C50\n\t"
-        "	subs r6, #2\n\t"
-        "	adds r0, r2, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _080D0C50\n\t"
-        "	adds r6, #1\n\t"
-        "	adds r0, r2, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r4\n\t"
-        "	bne _080D0C50\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	b _080D0C5C\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0C48: .4byte gUnknown_20399A8\n\t"
-        "_080D0C4C: .4byte 0x00002210\n\t"
-        "_080D0C50:\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #2\n\t"
-        "	bls _080D0C20\n\t"
-        "	movs r0, #3\n\t"
-        "_080D0C5C:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < MAX_ITEM_ICONS; i++)
+    {
+        if (sStorage->itemIcons[i].active
+         && sStorage->itemIcons[i].area == cursorArea
+         && sStorage->itemIcons[i].pos == cursorPos)
+            return i;
+    }
+    return MAX_ITEM_ICONS;
 }
 
-__attribute__((naked)) void sub_080D0C64(void)
+u8 sub_080D0C64(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _080D0C8C\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r0, _080D0C90\n\t"
-        "	adds r4, r3, r0\n\t"
-        "	ldr r6, _080D0C94\n\t"
-        "_080D0C74:\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r0, r3, r1\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D0C98\n\t"
-        "	adds r0, r4, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _080D0C98\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _080D0CA4\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0C8C: .4byte gUnknown_20399A8\n\t"
-        "_080D0C90: .4byte 0x00002204\n\t"
-        "_080D0C94: .4byte 0x00002210\n\t"
-        "_080D0C98:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #2\n\t"
-        "	bls _080D0C74\n\t"
-        "	movs r0, #3\n\t"
-        "_080D0CA4:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < MAX_ITEM_ICONS; i++)
+    {
+        if (sStorage->itemIcons[i].active
+         && sStorage->itemIcons[i].sprite == sprite)
+            return i;
+    }
+    return MAX_ITEM_ICONS;
 }
 
-__attribute__((naked)) void sub_080D0CAC(void)
+void sub_080D0CAC(u8 id, u8 cursorArea, u8 cursorPos)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r7, r2, #0x18\n\t"
-        "	cmp r5, #2\n\t"
-        "	bhi _080D0DAA\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080D0CD8\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080D0D34\n\t"
-        "	ldr r4, _080D0CD4\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	b _080D0D94\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0CD4: .4byte gUnknown_20399A8\n\t"
-        "_080D0CD8:\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __umodsi3\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl __udivsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r6, _080D0D2C\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	ldr r1, _080D0D30\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	adds r2, r2, r5\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, #0x70\n\t"
-        "	strh r1, [r3, #0x20]\n\t"
-        "	ldr r3, [r2]\n\t"
-        "	lsls r1, r0, #1\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, #0x38\n\t"
-        "	strh r1, [r3, #0x22]\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #8\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "	adds r4, r6, #0\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	b _080D0D94\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0D2C: .4byte gUnknown_20399A8\n\t"
-        "_080D0D30: .4byte 0x00002204\n\t"
-        "_080D0D34:\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _080D0D5C\n\t"
-        "	ldr r4, _080D0D54\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	ldr r1, _080D0D58\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r1, #0x74\n\t"
-        "	strh r1, [r2, #0x20]\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	strh r0, [r1, #0x22]\n\t"
-        "	b _080D0D7C\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0D54: .4byte gUnknown_20399A8\n\t"
-        "_080D0D58: .4byte 0x00002204\n\t"
-        "_080D0D5C:\n\t"
-        "	ldr r4, _080D0DB4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r3, r5, #4\n\t"
-        "	ldr r1, _080D0DB8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	movs r1, #0xa4\n\t"
-        "	strh r1, [r2, #0x20]\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	subs r1, r7, #1\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	strh r0, [r2, #0x22]\n\t"
-        "_080D0D7C:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _080D0DB8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r1, [r2, #5]\n\t"
-        "	movs r0, #0xd\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #5]\n\t"
-        "_080D0D94:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, _080D0DBC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	mov r1, r8\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldr r1, _080D0DC0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r7, [r0]\n\t"
-        "_080D0DAA:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0DB4: .4byte gUnknown_20399A8\n\t"
-        "_080D0DB8: .4byte 0x00002204\n\t"
-        "_080D0DBC: .4byte 0x0000220E\n\t"
-        "_080D0DC0: .4byte 0x0000220F\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 x, y;
+
+    if (id >= MAX_ITEM_ICONS)
+        return;
+
+    switch (cursorArea)
+    {
+    case CURSOR_AREA_IN_BOX:
+        x = cursorPos % IN_BOX_COLUMNS;
+        y = cursorPos / IN_BOX_COLUMNS;
+        sStorage->itemIcons[id].sprite->x = (24 * x) + 112;
+        sStorage->itemIcons[id].sprite->y = (24 * y) + 56;
+        sStorage->itemIcons[id].sprite->oam.priority = 2;
+        break;
+    case CURSOR_AREA_IN_PARTY:
+        if (cursorPos == 0)
+        {
+            sStorage->itemIcons[id].sprite->x = 116;
+            sStorage->itemIcons[id].sprite->y = 76;
+        }
+        else
+        {
+            sStorage->itemIcons[id].sprite->x = 164;
+            sStorage->itemIcons[id].sprite->y = 24 * (cursorPos - 1) + 28;
+        }
+        sStorage->itemIcons[id].sprite->oam.priority = 1;
+        break;
+    }
+
+    sStorage->itemIcons[id].area = cursorArea;
+    sStorage->itemIcons[id].pos = cursorPos;
 }
 
-__attribute__((naked)) void sub_080D0DC4(void)
+void sub_080D0DC4(u8 id, const u32 *itemTiles, const u32 *itemPal)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r8, r1\n\t"
-        "	mov sb, r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #2\n\t"
-        "	bhi _080D0E4C\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	ldr r4, _080D0E5C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r6, _080D0E60\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldr r2, _080D0E64\n\t"
-        "	mov r0, sp\n\t"
-        "	bl CpuFastSet\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r5, _080D0E68\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	mov r0, r8\n\t"
-        "	bl LZ77UnCompWram\n\t"
-        "	lsls r7, r7, #4\n\t"
-        "	mov r8, r7\n\t"
-        "	adds r7, r4, #0\n\t"
-        "	movs r4, #2\n\t"
-        "_080D0E02:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	adds r0, r1, r5\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	movs r2, #0x18\n\t"
-        "	bl CpuFastSet\n\t"
-        "	adds r6, #0x80\n\t"
-        "	adds r5, #0x60\n\t"
-        "	subs r4, #1\n\t"
-        "	cmp r4, #0\n\t"
-        "	bge _080D0E02\n\t"
-        "	ldr r5, _080D0E5C\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	ldr r4, _080D0E60\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldr r2, _080D0E6C\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	add r1, r8\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl CpuFastSet\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	mov r0, sb\n\t"
-        "	bl LZ77UnCompWram\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r4, r0, r4\n\t"
-        "	add r0, r8\n\t"
-        "	ldr r1, _080D0E70\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "_080D0E4C:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0E5C: .4byte gUnknown_20399A8\n\t"
-        "_080D0E60: .4byte 0x000042C4\n\t"
-        "_080D0E64: .4byte 0x01000080\n\t"
-        "_080D0E68: .4byte 0x000022C4\n\t"
-        "_080D0E6C: .4byte 0x00002208\n\t"
-        "_080D0E70: .4byte 0x0000220C\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    if (id >= MAX_ITEM_ICONS)
+        return;
+
+    CpuFastFill(0, sStorage->itemIconBuffer, 0x200);
+    LZ77UnCompWram(itemTiles, sStorage->tileBuffer);
+    for (i = 0; i < 3; i++)
+        CpuFastCopy(&sStorage->tileBuffer[i * 0x60], &sStorage->itemIconBuffer[i * 0x80], 0x60);
+
+    CpuFastCopy(sStorage->itemIconBuffer, sStorage->itemIcons[id].tiles, 0x200);
+    LZ77UnCompWram(itemPal, sStorage->itemIconBuffer);
+    LoadPalette(sStorage->itemIconBuffer, sStorage->itemIcons[id].palIndex, PLTT_SIZE_4BPP);
 }
 
 
-__attribute__((naked)) void sub_080D0E74(void)
+void sub_080D0E74(u8 id, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r3, r1, #0x18\n\t"
-        "	cmp r2, #2\n\t"
-        "	bhi _080D0E96\n\t"
-        "	ldr r0, _080D0E9C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	ldr r2, _080D0EA0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl StartSpriteAffineAnim\n\t"
-        "_080D0E96:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D0E9C: .4byte gUnknown_20399A8\n\t"
-        "_080D0EA0: .4byte 0x00002204\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id >= MAX_ITEM_ICONS)
+        return;
+
+    StartSpriteAffineAnim(sStorage->itemIcons[id].sprite, animNum);
 }
 
-__attribute__((naked)) void sub_080D0EA4(void)
+// Kept as naked asm: JP callback IDs retain cases 6/7, so the US-shaped dispatcher
+// emits 0x134 rather than the JP 0x13C bytes and differs after relocation normalization.
+__attribute__((naked)) void sub_080D0EA4(u8 id, u8 callbackId, u8 cursorArea, u8 cursorPos)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -22016,53 +8172,13 @@ __attribute__((naked)) void sub_080D0EA4(void)
     );
 }
 
-__attribute__((naked)) void sub_080D0FE0(void)
+void sub_080D0FE0(u8 id, bool8 active)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	cmp r2, #2\n\t"
-        "	bhi _080D1020\n\t"
-        "	ldr r1, _080D1028\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r3, _080D102C\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r4, [r0]\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r1, _080D1030\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r3, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	bne _080D100E\n\t"
-        "	movs r3, #1\n\t"
-        "_080D100E:\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	orrs r0, r3\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080D1020:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1028: .4byte gUnknown_20399A8\n\t"
-        "_080D102C: .4byte 0x00002210\n\t"
-        "_080D1030: .4byte 0x00002204\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id >= MAX_ITEM_ICONS)
+        return;
+
+    sStorage->itemIcons[id].active = active;
+    sStorage->itemIcons[id].sprite->invisible = (active == FALSE);
 }
 
 const void *GetItemIconPic(u16 itemId)
@@ -22075,755 +8191,209 @@ const void *GetItemIconPalette(u16 itemId)
     return GetItemIconPicOrPalette(itemId, 1);
 }
 
-__attribute__((naked)) void Cb_HandleMovingMonFromParty(void)
+void Cb_HandleMovingMonFromParty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #0x14\n\t"
-        "	bl IsActiveItemMoving\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1074\n\t"
-        "	ldr r0, _080D106C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D1070\n\t"
-        "	b _080D107A\n\t"
-        "	.align 2, 0\n\t"
-        "_080D106C: .4byte gUnknown_20399A8\n\t"
-        "_080D1070: .4byte 0x00002234\n\t"
-        "_080D1074:\n\t"
-        "	ldr r0, _080D10B0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D10B4\n\t"
-        "_080D107A:\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemId_GetHoldEffect\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #0x11\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp, #0x10]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	movs r3, #4\n\t"
-        "	bl AddTextPrinterParameterized5\n\t"
-        "	add sp, #0x14\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D10B0: .4byte gUnknown_20399A8\n\t"
-        "_080D10B4: .4byte 0x00000CE6\n\t"
-        ".syntax divided\n\t"
-    );
+    const u8 *description;
+
+    if (IsActiveItemMoving())
+        description = ItemId_GetHoldEffect(sStorage->movingItemId);
+    else
+        description = ItemId_GetHoldEffect(sStorage->displayMonItemId);
+
+    FillWindowPixelBuffer(2, PIXEL_FILL(1));
+    AddTextPrinterParameterized5(2, 1, description, 4, 0, 0, NULL, 0, 1);
 }
 
-__attribute__((naked)) void sub_080D10B8(void)
+void sub_080D1254(u32 x);
+
+void sub_080D10B8(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080D10E0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D10E4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x15\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, _080D10E8\n\t"
-        "	movs r3, #0x9d\n\t"
-        "	lsls r3, r3, #1\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0x80\n\t"
-        "	bl LoadBgTiles\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_080D1254\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D10E0: .4byte gUnknown_20399A8\n\t"
-        "_080D10E4: .4byte 0x00002236\n\t"
-        "_080D10E8: .4byte gUnknown_8556620\n\t"
-        ".syntax divided\n\t"
-    );
+    sStorage->itemInfoWindowOffset = 21;
+    LoadBgTiles(0, gUnknown_8556620, 0x80, 0x13A);
+    sub_080D1254(0);
 }
 
-__attribute__((naked)) void sub_080D10EC(void)
+bool8 sub_080D10EC(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	ldr r0, _080D1104\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D1108\n\t"
-        "	adds r1, r0, r2\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D110C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080D1172\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1104: .4byte gUnknown_20399A8\n\t"
-        "_080D1108: .4byte 0x00002236\n\t"
-        "_080D110C:\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	subs r5, r0, r1\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bge _080D115C\n\t"
-        "_080D111C:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl GetBgAttribute\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _080D117C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D1180\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r1, #0x14\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r4, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #7\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl WriteSequenceToBgTilemapBuffer\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, r5\n\t"
-        "	blt _080D111C\n\t"
-        "_080D115C:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_080D1254\n\t"
-        "	ldr r0, _080D117C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D1180\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	orrs r0, r1\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "_080D1172:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D117C: .4byte gUnknown_20399A8\n\t"
-        "_080D1180: .4byte 0x00002236\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, pos;
+
+    if (sStorage->itemInfoWindowOffset == 0)
+        return FALSE;
+
+    sStorage->itemInfoWindowOffset--;
+    pos = 21 - sStorage->itemInfoWindowOffset;
+    for (i = 0; i < pos; i++)
+        WriteSequenceToBgTilemapBuffer(0, GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sStorage->itemInfoWindowOffset + i, i, 13, 1, 7, 15, 21);
+
+    sub_080D1254(pos);
+    return (sStorage->itemInfoWindowOffset != 0);
 }
 
-__attribute__((naked)) void sub_080D1184(void)
+bool8 sub_080D1184(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0x10\n\t"
-        "	ldr r5, _080D119C\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r4, _080D11A0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r0, #0x16\n\t"
-        "	bne _080D11A4\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080D1244\n\t"
-        "	.align 2, 0\n\t"
-        "_080D119C: .4byte gUnknown_20399A8\n\t"
-        "_080D11A0: .4byte 0x00002236\n\t"
-        "_080D11A4:\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D11C0\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #9\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0x15\n\t"
-        "	movs r3, #0xc\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "_080D11C0:\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	subs r5, r0, r1\n\t"
-        "	movs r4, #0\n\t"
-        "	cmp r4, r5\n\t"
-        "	bge _080D1216\n\t"
-        "_080D11D6:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0xa\n\t"
-        "	bl GetBgAttribute\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldr r0, _080D124C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080D1250\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	adds r1, #0x14\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	lsls r2, r4, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #7\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0xf\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	str r0, [sp, #0xc]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl WriteSequenceToBgTilemapBuffer\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, r5\n\t"
-        "	blt _080D11D6\n\t"
-        "_080D1216:\n\t"
-        "	cmp r5, #0\n\t"
-        "	blt _080D1220\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl sub_080D1254\n\t"
-        "_080D1220:\n\t"
-        "	adds r2, r5, #1\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #9\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r0, #0x11\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r3, #0xc\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	movs r0, #1\n\t"
-        "_080D1244:\n\t"
-        "	add sp, #0x10\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D124C: .4byte gUnknown_20399A8\n\t"
-        "_080D1250: .4byte 0x00002236\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, pos;
+
+    if (sStorage->itemInfoWindowOffset == 22)
+        return FALSE;
+
+    if (sStorage->itemInfoWindowOffset == 0)
+        FillBgTilemapBufferRect(0, 0, 21, 12, 1, 9, 17);
+
+    sStorage->itemInfoWindowOffset++;
+    pos = 21 - sStorage->itemInfoWindowOffset;
+    for (i = 0; i < pos; i++)
+    {
+        WriteSequenceToBgTilemapBuffer(0, GetBgAttribute(0, BG_ATTR_BASETILE) + 0x14 + sStorage->itemInfoWindowOffset + i, i, 13, 1, 7, 15, 21);
+    }
+
+    if (pos >= 0)
+        sub_080D1254(pos);
+
+    FillBgTilemapBufferRect(0, 0, pos + 1, 12, 1, 9, 17);
+    ScheduleBgCopyTilemapToVram(0);
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080D1254(void)
+void sub_080D1254(u32 x)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	cmp r7, #0\n\t"
-        "	beq _080D128C\n\t"
-        "	movs r1, #0x9d\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	lsls r4, r7, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r6, #1\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	movs r5, #0xf\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0xc\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _080D12DC\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r6, [sp, #4]\n\t"
-        "	str r5, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x14\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "_080D128C:\n\t"
-        "	ldr r1, _080D12E0\n\t"
-        "	lsls r5, r7, #0x18\n\t"
-        "	lsrs r5, r5, #0x18\n\t"
-        "	movs r4, #1\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r0, #7\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	movs r6, #0xf\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0xd\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r1, #0x9e\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0xc\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	ldr r1, _080D12E4\n\t"
-        "	str r4, [sp]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	str r6, [sp, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0x14\n\t"
-        "	bl FillBgTilemapBufferRect\n\t"
-        "	movs r0, #0\n\t"
-        "	bl ScheduleBgCopyTilemapToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D12DC: .4byte 0x0000093A\n\t"
-        "_080D12E0: .4byte SPECIAL_FoundBlackGlasses\n\t"
-        "_080D12E4: .4byte SPECIAL_DoDiveWarp\n\t"
-        ".syntax divided\n\t"
-    );
+    if (x != 0)
+    {
+        FillBgTilemapBufferRect(0, 0x13A, 0, 0xC, x, 1, 15);
+        FillBgTilemapBufferRect(0, 0x93A, 0, 0x14, x, 1, 15);
+    }
+    FillBgTilemapBufferRect(0, 0x13B, x, 0xD, 1, 7, 15);
+    FillBgTilemapBufferRect(0, 0x13C, x, 0xC, 1, 1, 15);
+    FillBgTilemapBufferRect(0, 0x13D, x, 0x14, 1, 1, 15);
+    ScheduleBgCopyTilemapToVram(0);
 }
 
-__attribute__((naked)) void sub_080D12E8(void)
+void sub_080D12E8(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1308\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_080D0FE0\n\t"
-        "	ldr r0, _080D1310\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_080D1308:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1310: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->affineAnimEnded)
+    {
+        sub_080D0FE0(sprite->data[0], FALSE);
+        sprite->callback = SpriteCallbackDummy;
+    }
 }
 
-__attribute__((naked)) void sub_080D1314(void)
+void sub_080D1378(struct Sprite *sprite);
+
+void sub_080D1314(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r3, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080D1326\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080D1342\n\t"
-        "	b _080D1370\n\t"
-        "_080D1326:\n\t"
-        "	ldrh r0, [r3, #0x20]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r3, #0x30]\n\t"
-        "	ldrh r0, [r3, #0x22]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r3, #0x34]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	strh r0, [r3, #0x36]\n\t"
-        "	strh r1, [r3, #0x38]\n\t"
-        "	ldrh r0, [r3, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x2e]\n\t"
-        "_080D1342:\n\t"
-        "	ldrh r1, [r3, #0x30]\n\t"
-        "	ldrh r0, [r3, #0x34]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r3, #0x30]\n\t"
-        "	ldrh r0, [r3, #0x32]\n\t"
-        "	ldrh r2, [r3, #0x36]\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x14\n\t"
-        "	strh r1, [r3, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	strh r0, [r3, #0x22]\n\t"
-        "	ldrh r0, [r3, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	ble _080D1370\n\t"
-        "	ldr r0, _080D1374\n\t"
-        "	str r0, [r3, #0x1c]\n\t"
-        "_080D1370:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1374: .4byte sub_080D1378 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->data[1] = sprite->x << 4;
+        sprite->data[2] = sprite->y << 4;
+        sprite->data[3] = 10;
+        sprite->data[4] = 21;
+        sprite->data[5] = 0;
+        sprite->data[0]++;
+    case 1:
+        sprite->data[1] -= sprite->data[3];
+        sprite->data[2] -= sprite->data[4];
+        sprite->x = sprite->data[1] >> 4;
+        sprite->y = sprite->data[2] >> 4;
+        if (++sprite->data[5] > 11)
+            sprite->callback = sub_080D1378;
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080D1378(void)
+void sub_080D1378(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080D13AC\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	ldr r1, _080D13B0\n\t"
-        "	adds r3, r3, r1\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldrh r1, [r1, #0x20]\n\t"
-        "	adds r1, #4\n\t"
-        "	strh r1, [r0, #0x20]\n\t"
-        "	ldr r2, [r3]\n\t"
-        "	ldrh r1, [r2, #0x26]\n\t"
-        "	ldrh r2, [r2, #0x22]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, #8\n\t"
-        "	strh r1, [r0, #0x22]\n\t"
-        "	ldr r1, [r3]\n\t"
-        "	ldrb r1, [r1, #5]\n\t"
-        "	movs r2, #0xc\n\t"
-        "	ands r2, r1\n\t"
-        "	ldrb r3, [r0, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D13AC: .4byte gUnknown_20399A8\n\t"
-        "_080D13B0: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->x = sStorage->cursorSprite->x + 4;
+    sprite->y = sStorage->cursorSprite->y + sStorage->cursorSprite->y2 + 8;
+    sprite->oam.priority = sStorage->cursorSprite->oam.priority;
 }
 
-__attribute__((naked)) void sub_080D13B4(void)
+void sub_080D13B4(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080D13C6\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080D13E2\n\t"
-        "	b _080D142A\n\t"
-        "_080D13C6:\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_080D13E2:\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r1, [r4, #0x36]\n\t"
-        "	ldrh r2, [r4, #0x32]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x14\n\t"
-        "	strh r1, [r4, #0x22]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	ble _080D142A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080D0C64\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrh r2, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl sub_080D0CAC\n\t"
-        "	ldr r0, _080D1430\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_080D142A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1430: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->data[1] = sprite->x << 4;
+        sprite->data[2] = sprite->y << 4;
+        sprite->data[3] = 10;
+        sprite->data[4] = 21;
+        sprite->data[5] = 0;
+        sprite->data[0]++;
+    case 1:
+        sprite->data[1] += sprite->data[3];
+        sprite->data[2] += sprite->data[4];
+        sprite->x = sprite->data[1] >> 4;
+        sprite->y = sprite->data[2] >> 4;
+        if (++sprite->data[5] > 11)
+        {
+            sub_080D0CAC(sub_080D0C64(sprite), sprite->data[6], sprite->data[7]);
+            sprite->callback = SpriteCallbackDummy;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080D1434(void)
+void sub_080D1434(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080D1446\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080D1462\n\t"
-        "	b _080D14C0\n\t"
-        "_080D1446:\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_080D1462:\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x32]\n\t"
-        "	ldrh r2, [r4, #0x36]\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x14\n\t"
-        "	strh r1, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	strh r0, [r4, #0x22]\n\t"
-        "	ldr r1, _080D14C8\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	ble _080D14C0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080D0C64\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrh r2, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl sub_080D0CAC\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldr r0, _080D14CC\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "_080D14C0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D14C8: .4byte gSineTable\n\t"
-        "_080D14CC: .4byte sub_080D1378 + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->data[1] = sprite->x << 4;
+        sprite->data[2] = sprite->y << 4;
+        sprite->data[3] = 10;
+        sprite->data[4] = 21;
+        sprite->data[5] = 0;
+        sprite->data[0]++;
+    case 1:
+        sprite->data[1] -= sprite->data[3];
+        sprite->data[2] -= sprite->data[4];
+        sprite->x = sprite->data[1] >> 4;
+        sprite->y = sprite->data[2] >> 4;
+        sprite->x2 = gSineTable[sprite->data[5] * 8] >> 4;
+        if (++sprite->data[5] > 11)
+        {
+            sub_080D0CAC(sub_080D0C64(sprite), sprite->data[6], sprite->data[7]);
+            sprite->x2 = 0;
+            sprite->callback = sub_080D1378;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080D14D0(void)
+void sub_080D14D0(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080D14E2\n\t"
-        "	cmp r1, #1\n\t"
-        "	beq _080D14FE\n\t"
-        "	b _080D155E\n\t"
-        "_080D14E2:\n\t"
-        "	ldrh r0, [r4, #0x20]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r0, [r4, #0x22]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #0xa\n\t"
-        "	strh r0, [r4, #0x34]\n\t"
-        "	movs r0, #0x15\n\t"
-        "	strh r0, [r4, #0x36]\n\t"
-        "	strh r1, [r4, #0x38]\n\t"
-        "	ldrh r0, [r4, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x2e]\n\t"
-        "_080D14FE:\n\t"
-        "	ldrh r0, [r4, #0x34]\n\t"
-        "	ldrh r1, [r4, #0x30]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r4, #0x30]\n\t"
-        "	ldrh r1, [r4, #0x36]\n\t"
-        "	ldrh r2, [r4, #0x32]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r1, [r4, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	strh r0, [r4, #0x20]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x14\n\t"
-        "	strh r1, [r4, #0x22]\n\t"
-        "	ldr r1, _080D1564\n\t"
-        "	movs r2, #0x38\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x14\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "	ldrh r0, [r4, #0x38]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #0x38]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xb\n\t"
-        "	ble _080D155E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl sub_080D0C64\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldrh r1, [r4, #0x3a]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrh r2, [r4, #0x3c]\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl sub_080D0CAC\n\t"
-        "	ldr r0, _080D1568\n\t"
-        "	str r0, [r4, #0x1c]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4, #0x24]\n\t"
-        "_080D155E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1564: .4byte gSineTable\n\t"
-        "_080D1568: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->data[1] = sprite->x << 4;
+        sprite->data[2] = sprite->y << 4;
+        sprite->data[3] = 10;
+        sprite->data[4] = 21;
+        sprite->data[5] = 0;
+        sprite->data[0]++;
+    case 1:
+        sprite->data[1] += sprite->data[3];
+        sprite->data[2] += sprite->data[4];
+        sprite->x = sprite->data[1] >> 4;
+        sprite->y = sprite->data[2] >> 4;
+        sprite->x2 = -(gSineTable[sprite->data[5] * 8] >> 4);
+        if (++sprite->data[5] > 11)
+        {
+            sub_080D0CAC(sub_080D0C64(sprite), sprite->data[6], sprite->data[7]);
+            sprite->callback = SpriteCallbackDummy;
+            sprite->x2 = 0;
+        }
+        break;
+    }
 }
 
-__attribute__((naked)) void sub_080D156C(void)
+void sub_080D156C(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	ldrh r0, [r2, #0x22]\n\t"
-        "	subs r0, #8\n\t"
-        "	strh r0, [r2, #0x22]\n\t"
-        "	movs r1, #0x22\n\t"
-        "	ldrsh r0, [r2, r1]\n\t"
-        "	movs r3, #0x26\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x10\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bge _080D159C\n\t"
-        "	ldr r0, _080D15A0\n\t"
-        "	str r0, [r2, #0x1c]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_080D0C64\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0\n\t"
-        "	bl sub_080D0FE0\n\t"
-        "_080D159C:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D15A0: .4byte SpriteCallbackDummy + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->y -= 8;
+    if (sprite->y + sprite->y2 < -16)
+    {
+        sprite->callback = SpriteCallbackDummy;
+        sub_080D0FE0(sub_080D0C64(sprite), FALSE);
+    }
 }
 
 void nullsub_98(void) {}
@@ -22980,374 +8550,100 @@ bool8 CheckFreePokemonStorageSpace(void)
     return FALSE;
 }
 
-__attribute__((naked)) void sub_080D19EC(void)
+s16 sub_080D19EC(struct BoxPokemon *boxMons, u8 currIndex, u8 maxIndex, u8 mode)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r0, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r7, r2, #0x18\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	ldr r2, _080D1A50\n\t"
-        "	cmp r3, #1\n\t"
-        "	bhi _080D1A0E\n\t"
-        "	movs r2, #1\n\t"
-        "	cmp r3, #1\n\t"
-        "	beq _080D1A12\n\t"
-        "_080D1A0E:\n\t"
-        "	cmp r4, #3\n\t"
-        "	bne _080D1A5C\n\t"
-        "_080D1A12:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r1, r2, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	blt _080D1AA8\n\t"
-        "	cmp r1, r7\n\t"
-        "	bgt _080D1AA8\n\t"
-        "_080D1A2A:\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	add r0, r8\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D1A54\n\t"
-        "	asrs r0, r6, #0x10\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0\n\t"
-        "	blt _080D1AA8\n\t"
-        "	cmp r2, r7\n\t"
-        "	ble _080D1A2A\n\t"
-        "	b _080D1AA8\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1A50: .4byte 0x0000FFFF\n\t"
-        "_080D1A54:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	b _080D1AAC\n\t"
-        "_080D1A58:\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	b _080D1AAC\n\t"
-        "_080D1A5C:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r1, r2, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	asrs r1, r0, #0x10\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	cmp r1, #0\n\t"
-        "	blt _080D1AA8\n\t"
-        "	cmp r1, r7\n\t"
-        "	bgt _080D1AA8\n\t"
-        "_080D1A74:\n\t"
-        "	asrs r5, r0, #0x10\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	mov r1, r8\n\t"
-        "	adds r4, r1, r0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1A98\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2d\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1A58\n\t"
-        "_080D1A98:\n\t"
-        "	asrs r0, r6, #0x10\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r2, r0, #0x10\n\t"
-        "	cmp r2, #0\n\t"
-        "	blt _080D1AA8\n\t"
-        "	cmp r2, r7\n\t"
-        "	ble _080D1A74\n\t"
-        "_080D1AA8:\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "_080D1AAC:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+    s16 direction = -1;
+
+    if (mode == 0 || mode == 1)
+        direction = 1;
+
+    if (mode == 1 || mode == 3)
+    {
+        for (i = (s8)currIndex + direction; i >= 0 && i <= maxIndex; i += direction)
+        {
+            if (GetBoxMonData(&boxMons[i], MON_DATA_SPECIES) != SPECIES_NONE)
+                return i;
+        }
+    }
+    else
+    {
+        for (i = (s8)currIndex + direction; i >= 0 && i <= maxIndex; i += direction)
+        {
+            if (GetBoxMonData(&boxMons[i], MON_DATA_SPECIES) != SPECIES_NONE
+                && !GetBoxMonData(&boxMons[i], MON_DATA_IS_EGG))
+                return i;
+        }
+    }
+
+    return -1;
 }
 
-__attribute__((naked)) bool32 CheckBoxMonSanityAt(u32 boxId, u32 boxPosition)
+bool32 CheckBoxMonSanityAt(u32 boxId, u32 boxPosition)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	bhi _080D1B68\n\t"
-        "	cmp r2, #0x1d\n\t"
-        "	bhi _080D1B68\n\t"
-        "	ldr r6, _080D1B64\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	adds r5, r0, #4\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r1, r2, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r4, r1, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1B68\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #6\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D1B68\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #4\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D1B68\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080D1B6A\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1B64: .4byte gPokemonStoragePtr\n\t"
-        "_080D1B68:\n\t"
-        "	movs r0, #0\n\t"
-        "_080D1B6A:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (boxId < TOTAL_BOXES_COUNT
+        && boxPosition < IN_BOX_COUNT
+        && GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES)
+        && !GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_EGG)
+        && !GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_IS_BAD_EGG))
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) u32 CountStorageNonEggMons(void)
+u32 CountStorageNonEggMons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldr r1, _080D1BD8\n\t"
-        "	mov sb, r1\n\t"
-        "_080D1B80:\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r2, r0, #1\n\t"
-        "	mov r8, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r5, #0\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	adds r4, r0, #4\n\t"
-        "	movs r6, #0x1d\n\t"
-        "_080D1B94:\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1BBA\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #6\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D1BBA\n\t"
-        "	adds r7, #1\n\t"
-        "_080D1BBA:\n\t"
-        "	adds r5, #0x50\n\t"
-        "	subs r6, #1\n\t"
-        "	cmp r6, #0\n\t"
-        "	bge _080D1B94\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	ble _080D1B80\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1BD8: .4byte gPokemonStoragePtr\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j;
+    u32 count = 0;
+
+    for (i = 0; i < TOTAL_BOXES_COUNT; i++)
+    {
+        for (j = 0; j < IN_BOX_COUNT; j++)
+        {
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES)
+                && !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG))
+                count++;
+        }
+    }
+
+    return count;
 }
 
-__attribute__((naked)) u32 CountAllStorageMons(void)
+u32 CountAllStorageMons(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	movs r7, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldr r1, _080D1C44\n\t"
-        "	mov sb, r1\n\t"
-        "_080D1BEC:\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r2, r0, #1\n\t"
-        "	mov r8, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r5, #0\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #5\n\t"
-        "	adds r4, r0, #4\n\t"
-        "	movs r6, #0x1d\n\t"
-        "_080D1C00:\n\t"
-        "	mov r1, sb\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D1C24\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	movs r1, #6\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1C26\n\t"
-        "_080D1C24:\n\t"
-        "	adds r7, #1\n\t"
-        "_080D1C26:\n\t"
-        "	adds r5, #0x50\n\t"
-        "	subs r6, #1\n\t"
-        "	cmp r6, #0\n\t"
-        "	bge _080D1C00\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	ble _080D1BEC\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1C44: .4byte gPokemonStoragePtr\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i, j;
+    u32 count = 0;
+
+    for (i = 0; i < TOTAL_BOXES_COUNT; i++)
+    {
+        for (j = 0; j < IN_BOX_COUNT; j++)
+        {
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES)
+                || GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG))
+                count++;
+        }
+    }
+
+    return count;
 }
 
-__attribute__((naked)) bool32 AnyStorageMonWithMove(u16 move)
+bool32 AnyStorageMonWithMove(u16 move)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov r1, sp\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _080D1C9C\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	movs r0, #0\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r7, _080D1CA0\n\t"
-        "	movs r5, #4\n\t"
-        "_080D1C60:\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r4, #0\n\t"
-        "_080D1C64:\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #5\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1CA4\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #6\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080D1CA4\n\t"
-        "	ldr r0, [r7]\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	movs r1, #0x51\n\t"
-        "	mov r2, sp\n\t"
-        "	bl GetBoxMonData\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1CA4\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080D1CBE\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1C9C: .4byte SPECIAL_sub_080EBE30\n\t"
-        "_080D1CA0: .4byte gPokemonStoragePtr\n\t"
-        "_080D1CA4:\n\t"
-        "	adds r4, #0x50\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #0x1d\n\t"
-        "	ble _080D1C64\n\t"
-        "	movs r0, #0x96\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	add r8, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	cmp r0, #0xd\n\t"
-        "	ble _080D1C60\n\t"
-        "	movs r0, #0\n\t"
-        "_080D1CBE:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 moves[] = {move, MOVES_COUNT};
+    s32 i, j;
+
+    for (i = 0; i < TOTAL_BOXES_COUNT; i++)
+    {
+        for (j = 0; j < IN_BOX_COUNT; j++)
+        {
+            if (GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES)
+                && !GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_IS_EGG)
+                && GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_KNOWN_MOVES, (u8 *)moves))
+                return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 void ResetWaldaWallpaper(void)
@@ -23418,55 +8714,17 @@ bool32 IsWaldaPhraseEmpty(void)
     return gSaveBlock1Ptr->waldaPhrase.text[0] == EOS;
 }
 
-__attribute__((naked)) void sub_080D1E3C(void)
+void sub_080D1E3C(u8 count)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r6, _080D1E88\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	bl Alloc\n\t"
-        "	str r0, [r6]\n\t"
-        "	ldr r5, _080D1E8C\n\t"
-        "	movs r1, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1E5A\n\t"
-        "	adds r1, r4, #0\n\t"
-        "_080D1E5A:\n\t"
-        "	strh r1, [r5]\n\t"
-        "	movs r2, #0\n\t"
-        "	cmp r2, r1\n\t"
-        "	bhs _080D1E82\n\t"
-        "	movs r3, #0\n\t"
-        "	adds r4, r5, #0\n\t"
-        "_080D1E66:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	str r3, [r1, #0x18]\n\t"
-        "	adds r1, #0x2c\n\t"
-        "	strb r3, [r1]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	ldrh r0, [r4]\n\t"
-        "	cmp r2, r0\n\t"
-        "	blo _080D1E66\n\t"
-        "_080D1E82:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1E88: .4byte gUnknown_2039A24\n\t"
-        "_080D1E8C: .4byte gUnknown_2039A28\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    sTilemapUtil = Alloc(sizeof(*sTilemapUtil) * count);
+    sNumTilemapUtilIds = (sTilemapUtil == NULL) ? 0 : count;
+    for (i = 0; i < sNumTilemapUtilIds; i++)
+    {
+        sTilemapUtil[i].savedTilemap = NULL;
+        sTilemapUtil[i].active = FALSE;
+    }
 }
 
 void TilemapUtil_Free(void)
@@ -23474,663 +8732,168 @@ void TilemapUtil_Free(void)
     Free(sTilemapUtil);
 }
 
-__attribute__((naked)) void sub_080D1EA4(void)
+void sub_080D2200(u8 id);
+void sub_080D2298(u8 id);
+void sub_080D21B8(u8 id);
+
+void sub_080D1EA4(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _080D1EDC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	bge _080D1ED4\n\t"
-        "	movs r5, #0\n\t"
-        "_080D1EB2:\n\t"
-        "	ldr r0, _080D1EE0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _080D1EC8\n\t"
-        "	lsls r0, r4, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl sub_080D21B8\n\t"
-        "_080D1EC8:\n\t"
-        "	adds r5, #0x30\n\t"
-        "	adds r4, #1\n\t"
-        "	ldr r0, _080D1EDC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r4, r0\n\t"
-        "	blt _080D1EB2\n\t"
-        "_080D1ED4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1EDC: .4byte gUnknown_2039A28\n\t"
-        "_080D1EE0: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    for (i = 0; i < sNumTilemapUtilIds; i++)
+    {
+        if (sTilemapUtil[i].active == TRUE)
+            sub_080D21B8(i);
+    }
 }
 
-__attribute__((naked)) void sub_080D1EE4(void)
+void sub_080D1EE4(u8 id, u8 bg, const void *tilemap, u16 width, u16 height)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	ldr r2, [sp, #0x24]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	mov sl, r3\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	str r2, [sp]\n\t"
-        "	ldr r0, _080D1F7C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bhs _080D1FCC\n\t"
-        "	ldr r0, _080D1F80\n\t"
-        "	mov sb, r0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r5, r1, r6\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [r0, #0x18]\n\t"
-        "	str r4, [r0, #0x1c]\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	strb r7, [r0]\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	mov r3, sl\n\t"
-        "	strh r3, [r0, #0x24]\n\t"
-        "	mov r1, sp\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	strh r1, [r0, #0x26]\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetBgAttribute\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r0, r7, #0\n\t"
-        "	movs r1, #9\n\t"
-        "	bl GetBgAttribute\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r2, sb\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r5, r5, r1\n\t"
-        "	ldr r2, _080D1F84\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	adds r4, r4, r2\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	strh r1, [r5, #0x20]\n\t"
-        "	ldrh r1, [r4, #2]\n\t"
-        "	strh r1, [r5, #0x22]\n\t"
-        "	mov r2, r8\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D1F88\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x2a\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080D1F8E\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1F7C: .4byte gUnknown_2039A28\n\t"
-        "_080D1F80: .4byte gUnknown_2039A24\n\t"
-        "_080D1F84: .4byte gUnknown_8556784\n\t"
-        "_080D1F88:\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	adds r1, #0x2a\n\t"
-        "	movs r0, #2\n\t"
-        "_080D1F8E:\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r4, _080D1FDC\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	adds r2, r2, r6\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r2, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x2a\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	mov r3, sl\n\t"
-        "	muls r3, r0, r3\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r3, [r1, #0x28]\n\t"
-        "	mov r3, sl\n\t"
-        "	strh r3, [r1, #0x10]\n\t"
-        "	mov r5, sp\n\t"
-        "	ldrh r5, [r5]\n\t"
-        "	strh r5, [r1, #0x12]\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	strh r0, [r1, #0x14]\n\t"
-        "	strh r0, [r1, #0x16]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xc\n\t"
-        "	ldm r0!, {r3, r5, r6}\n\t"
-        "	stm r1!, {r3, r5, r6}\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2]\n\t"
-        "_080D1FCC:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1FDC: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 bgScreenSize, bgType;
+
+    if (id >= sNumTilemapUtilIds)
+        return;
+
+    sTilemapUtil[id].savedTilemap = NULL;
+    sTilemapUtil[id].tilemap = tilemap;
+    sTilemapUtil[id].bg = bg;
+    sTilemapUtil[id].width = width;
+    sTilemapUtil[id].height = height;
+
+    bgScreenSize = GetBgAttribute(bg, BG_ATTR_SCREENSIZE);
+    bgType = GetBgAttribute(bg, BG_ATTR_TYPE);
+    sTilemapUtil[id].altWidth = sTilemapDimensions[bgType][bgScreenSize].width;
+    sTilemapUtil[id].altHeight = sTilemapDimensions[bgType][bgScreenSize].height;
+    if (bgType != 0)
+        sTilemapUtil[id].tileSize = 1;
+    else
+        sTilemapUtil[id].tileSize = 2;
+
+    sTilemapUtil[id].rowSize = sTilemapUtil[id].tileSize * width;
+    sTilemapUtil[id].cur.width = width;
+    sTilemapUtil[id].cur.height = height;
+    sTilemapUtil[id].cur.x = 0;
+    sTilemapUtil[id].cur.y = 0;
+    sTilemapUtil[id].cur.destX = 0;
+    sTilemapUtil[id].cur.destY = 0;
+    sTilemapUtil[id].prev = sTilemapUtil[id].cur;
+    sTilemapUtil[id].active = TRUE;
 }
 
 
-__attribute__((naked)) void sub_080D1FE0(void)
+void sub_080D1FE0(u8 id, const void *tilemap)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r0, _080D2008\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhs _080D2004\n\t"
-        "	ldr r0, _080D200C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r2, #1\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r3, [r0, #0x18]\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080D2004:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2008: .4byte gUnknown_2039A28\n\t"
-        "_080D200C: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id >= sNumTilemapUtilIds)
+        return;
+
+    sTilemapUtil[id].savedTilemap = tilemap;
+    sTilemapUtil[id].active = TRUE;
 }
 
-__attribute__((naked)) void sub_080D2010(void)
+void sub_080D2010(u8 id, u16 x, u16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r4, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	ldr r0, _080D2044\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r3, r0\n\t"
-        "	bhs _080D203C\n\t"
-        "	ldr r0, _080D2048\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0, #0x14]\n\t"
-        "	strh r2, [r0, #0x16]\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080D203C:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2044: .4byte gUnknown_2039A28\n\t"
-        "_080D2048: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id >= sNumTilemapUtilIds)
+        return;
+
+    sTilemapUtil[id].cur.destX = x;
+    sTilemapUtil[id].cur.destY = y;
+    sTilemapUtil[id].active = TRUE;
 }
 
-__attribute__((naked)) void sub_080D204C(void)
+void sub_080D204C(u8 id, u16 x, u16 y, u16 width, u16 height)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r4, [sp, #0x10]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _080D208C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	bhs _080D2086\n\t"
-        "	ldr r0, _080D2090\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r6, [r0, #0xc]\n\t"
-        "	strh r2, [r0, #0xe]\n\t"
-        "	strh r3, [r0, #0x10]\n\t"
-        "	strh r4, [r0, #0x12]\n\t"
-        "	adds r0, #0x2c\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r0]\n\t"
-        "_080D2086:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D208C: .4byte gUnknown_2039A28\n\t"
-        "_080D2090: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id >= sNumTilemapUtilIds)
+        return;
+
+    sTilemapUtil[id].cur.x = x;
+    sTilemapUtil[id].cur.y = y;
+    sTilemapUtil[id].cur.width = width;
+    sTilemapUtil[id].cur.height = height;
+    sTilemapUtil[id].active = TRUE;
 }
 
-__attribute__((naked)) void sub_080D2094(void)
+void sub_080D2094(u8 id, u8 mode, s8 val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	ldr r0, _080D20C0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r5, r0\n\t"
-        "	blo _080D20AC\n\t"
-        "	b _080D21AE\n\t"
-        "_080D20AC:\n\t"
-        "	ldr r4, _080D20C4\n\t"
-        "	lsls r2, r5, #1\n\t"
-        "	cmp r1, #5\n\t"
-        "	bls _080D20B6\n\t"
-        "	b _080D21A0\n\t"
-        "_080D20B6:\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	ldr r1, _080D20C8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D20C0: .4byte gUnknown_2039A28\n\t"
-        "_080D20C4: .4byte gUnknown_2039A24\n\t"
-        "_080D20C8: .4byte 0x080D20CC\n\t"
-        "_080D20CC: @ jump table\n\t"
-        "	.4byte _080D20E4 @ case 0\n\t"
-        "	.4byte _080D2104 @ case 1\n\t"
-        "	.4byte _080D2128 @ case 2\n\t"
-        "	.4byte _080D2148 @ case 3\n\t"
-        "	.4byte _080D216C @ case 4\n\t"
-        "	.4byte _080D2188 @ case 5\n\t"
-        "_080D20E4:\n\t"
-        "	ldr r4, _080D2100\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r3, r5, #1\n\t"
-        "	adds r1, r3, r5\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r2, r6, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	ldrh r0, [r1, #0x14]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1, #0x14]\n\t"
-        "	ldrh r0, [r1, #0x10]\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	b _080D211E\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2100: .4byte gUnknown_2039A24\n\t"
-        "_080D2104:\n\t"
-        "	ldr r4, _080D2124\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r3, r5, #1\n\t"
-        "	adds r1, r3, r5\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r2, r6, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	ldrh r0, [r1, #0xc]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1, #0xc]\n\t"
-        "	ldrh r0, [r1, #0x10]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "_080D211E:\n\t"
-        "	strh r0, [r1, #0x10]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	b _080D21A0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2124: .4byte gUnknown_2039A24\n\t"
-        "_080D2128:\n\t"
-        "	ldr r4, _080D2144\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r3, r5, #1\n\t"
-        "	adds r1, r3, r5\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r2, r6, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	ldrh r0, [r1, #0x16]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r1, #0x16]\n\t"
-        "	ldrh r0, [r1, #0x12]\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	b _080D2162\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2144: .4byte gUnknown_2039A24\n\t"
-        "_080D2148:\n\t"
-        "	ldr r4, _080D2168\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r3, r5, #1\n\t"
-        "	adds r1, r3, r5\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r2, r6, #0x18\n\t"
-        "	asrs r2, r2, #0x18\n\t"
-        "	ldrh r0, [r1, #0xe]\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	strh r0, [r1, #0xe]\n\t"
-        "	ldrh r0, [r1, #0x12]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "_080D2162:\n\t"
-        "	strh r0, [r1, #0x12]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	b _080D21A0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2168: .4byte gUnknown_2039A24\n\t"
-        "_080D216C:\n\t"
-        "	ldr r3, _080D2184\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	lsls r2, r5, #1\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r4, [r1, #0x14]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r0, [r1, #0x14]\n\t"
-        "	b _080D219E\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2184: .4byte gUnknown_2039A24\n\t"
-        "_080D2188:\n\t"
-        "	ldr r3, _080D21B4\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	lsls r2, r5, #1\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	ldrh r4, [r1, #0x16]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r0, [r1, #0x16]\n\t"
-        "_080D219E:\n\t"
-        "	adds r4, r3, #0\n\t"
-        "_080D21A0:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r1, r2, r5\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	adds r1, #0x2c\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r1]\n\t"
-        "_080D21AE:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D21B4: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id >= sNumTilemapUtilIds)
+        return;
+
+    switch (mode)
+    {
+    case 0:
+        sTilemapUtil[id].cur.destX += val;
+        sTilemapUtil[id].cur.width -= val;
+        break;
+    case 1:
+        sTilemapUtil[id].cur.x += val;
+        sTilemapUtil[id].cur.width += val;
+        break;
+    case 2:
+        sTilemapUtil[id].cur.destY += val;
+        sTilemapUtil[id].cur.height -= val;
+        break;
+    case 3:
+        sTilemapUtil[id].cur.y -= val;
+        sTilemapUtil[id].cur.height += val;
+        break;
+    case 4:
+        sTilemapUtil[id].cur.destX += val;
+        break;
+    case 5:
+        sTilemapUtil[id].cur.destY += val;
+        break;
+    }
+
+    sTilemapUtil[id].active = TRUE;
 }
 
-__attribute__((naked)) void sub_080D21B8(void)
+void sub_080D21B8(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r6, r2, #0\n\t"
-        "	ldr r0, _080D21F8\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r2, r0\n\t"
-        "	bhs _080D21F2\n\t"
-        "	ldr r5, _080D21FC\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r4, r1, #4\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	ldr r0, [r0, #0x18]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D21E0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl sub_080D2200\n\t"
-        "_080D21E0:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	bl sub_080D2298\n\t"
-        "	ldr r1, [r5]\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0xc\n\t"
-        "	ldm r0!, {r2, r3, r4}\n\t"
-        "	stm r1!, {r2, r3, r4}\n\t"
-        "_080D21F2:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D21F8: .4byte gUnknown_2039A28\n\t"
-        "_080D21FC: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    if (id >= sNumTilemapUtilIds)
+        return;
+
+    if (sTilemapUtil[id].savedTilemap != NULL)
+        sub_080D2200(id);
+
+    sub_080D2298(id);
+    sTilemapUtil[id].prev = sTilemapUtil[id].cur;
 }
 
-__attribute__((naked)) void sub_080D2200(void)
+void sub_080D2200(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r4, _080D2294\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r5, r0, #1\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x2a\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	ldrh r1, [r0, #0x20]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	mov sb, r2\n\t"
-        "	movs r6, #0xa\n\t"
-        "	ldrsh r1, [r0, r6]\n\t"
-        "	mov r2, sb\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	ldr r1, [r0, #0x18]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r6, #8\n\t"
-        "	ldrsh r2, [r0, r6]\n\t"
-        "	muls r2, r3, r2\n\t"
-        "	adds r7, r1, r2\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrh r0, [r0, #6]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bge _080D2284\n\t"
-        "	mov sl, r4\n\t"
-        "_080D224A:\n\t"
-        "	mov r0, sl\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r4, r5, r2\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrb r2, [r1, #8]\n\t"
-        "	ldrb r3, [r1, #0xa]\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl CopyToBgTilemapBufferRect\n\t"
-        "	add r7, sb\n\t"
-        "	adds r6, #1\n\t"
-        "	mov r1, sl\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r4, [r4, #6]\n\t"
-        "	cmp r6, r4\n\t"
-        "	blt _080D224A\n\t"
-        "_080D2284:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2294: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    u32 adder = sTilemapUtil[id].tileSize * sTilemapUtil[id].altWidth;
+    const void *tiles = (sTilemapUtil[id].savedTilemap + (adder * sTilemapUtil[id].prev.destY))
+                      + (sTilemapUtil[id].tileSize * sTilemapUtil[id].prev.destX);
+
+    for (i = 0; i < sTilemapUtil[id].prev.height; i++)
+    {
+        CopyToBgTilemapBufferRect(sTilemapUtil[id].bg,
+                                  tiles,
+                                  sTilemapUtil[id].prev.destX,
+                                  sTilemapUtil[id].prev.destY + i,
+                                  sTilemapUtil[id].prev.width,
+                                  1);
+        tiles += adder;
+    }
 }
 
-__attribute__((naked)) void sub_080D2298(void)
+void sub_080D2298(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov r8, r0\n\t"
-        "	ldr r4, _080D232C\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r5, r0, #1\n\t"
-        "	adds r0, r5, r0\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	adds r1, #0x2a\n\t"
-        "	ldrb r3, [r1]\n\t"
-        "	ldrh r1, [r0, #0x24]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	mov sb, r2\n\t"
-        "	movs r6, #0xe\n\t"
-        "	ldrsh r1, [r0, r6]\n\t"
-        "	mov r2, sb\n\t"
-        "	muls r2, r1, r2\n\t"
-        "	ldr r1, [r0, #0x1c]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r6, #0xc\n\t"
-        "	ldrsh r2, [r0, r6]\n\t"
-        "	muls r2, r3, r2\n\t"
-        "	adds r7, r1, r2\n\t"
-        "	movs r6, #0\n\t"
-        "	ldrh r0, [r0, #0x12]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bge _080D231C\n\t"
-        "	mov sl, r4\n\t"
-        "_080D22E2:\n\t"
-        "	mov r0, sl\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	mov r2, r8\n\t"
-        "	adds r4, r5, r2\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r1, r4, r1\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r0, #0x2b\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldrb r2, [r1, #0x14]\n\t"
-        "	ldrb r3, [r1, #0x16]\n\t"
-        "	adds r3, r3, r6\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	ldrb r1, [r1, #0x10]\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r1, #1\n\t"
-        "	str r1, [sp, #4]\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	bl CopyToBgTilemapBufferRect\n\t"
-        "	add r7, sb\n\t"
-        "	adds r6, #1\n\t"
-        "	mov r1, sl\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrh r4, [r4, #0x12]\n\t"
-        "	cmp r6, r4\n\t"
-        "	blt _080D22E2\n\t"
-        "_080D231C:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D232C: .4byte gUnknown_2039A24\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+    u32 adder = sTilemapUtil[id].tileSize * sTilemapUtil[id].width;
+    const void *tiles = (sTilemapUtil[id].tilemap + (adder * sTilemapUtil[id].cur.y))
+                      + (sTilemapUtil[id].tileSize * sTilemapUtil[id].cur.x);
+
+    for (i = 0; i < sTilemapUtil[id].cur.height; i++)
+    {
+        CopyToBgTilemapBufferRect(sTilemapUtil[id].bg,
+                                  tiles,
+                                  sTilemapUtil[id].cur.destX,
+                                  sTilemapUtil[id].cur.destY + i,
+                                  sTilemapUtil[id].cur.width,
+                                  1);
+        tiles += adder;
+    }
 }
 
 void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u32 max)
@@ -24141,320 +8904,76 @@ void UnkUtil_Init(struct UnkUtil *util, struct UnkUtilData *data, u32 max)
     util->numActive = 0;
 }
 
-__attribute__((naked)) void UnkUtil_Run(void)
+void UnkUtil_Run(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r2, _080D2388\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldrb r0, [r1, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080D2382\n\t"
-        "	movs r4, #0\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	cmp r4, r1\n\t"
-        "	bhs _080D237A\n\t"
-        "	adds r5, r2, #0\n\t"
-        "_080D235A:\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	lsls r1, r4, #2\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, [r0, #0x10]\n\t"
-        "	bl _call_via_r1\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	cmp r4, r0\n\t"
-        "	blo _080D235A\n\t"
-        "_080D237A:\n\t"
-        "	ldr r0, _080D2388\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #4]\n\t"
-        "_080D2382:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2388: .4byte gUnknown_2039A2C\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    if (sUnkUtil->numActive)
+    {
+        for (i = 0; i < sUnkUtil->numActive; i++)
+        {
+            struct UnkUtilData *data = &sUnkUtil->data[i];
+            data->func(data);
+        }
+        sUnkUtil->numActive = 0;
+    }
 }
 
-__attribute__((naked)) void sub_080D238C(void)
+void sub_080D2428(struct UnkUtilData *data);
+
+bool8 sub_080D238C(u8 *dest, u16 dLeft, u16 dTop, const u8 *src, u16 sLeft, u16 sTop, u16 width, u16 height, u16 unkArg)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	mov sb, r0\n\t"
-        "	mov sl, r3\n\t"
-        "	ldr r0, [sp, #0x24]\n\t"
-        "	ldr r3, [sp, #0x28]\n\t"
-        "	ldr r4, [sp, #0x2c]\n\t"
-        "	ldr r5, [sp, #0x30]\n\t"
-        "	ldr r6, [sp, #0x34]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	mov ip, r1\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r2, r2, #0x10\n\t"
-        "	str r2, [sp]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	mov r8, r0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	lsls r6, r6, #0x10\n\t"
-        "	lsrs r6, r6, #0x10\n\t"
-        "	ldr r0, _080D240C\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r2, #4]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrb r7, [r2, #5]\n\t"
-        "	cmp r1, r7\n\t"
-        "	bhs _080D2414\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r2, #4]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r4, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	ldr r2, [sp]\n\t"
-        "	lsls r0, r2, #5\n\t"
-        "	add r0, ip\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sb\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	muls r0, r6, r0\n\t"
-        "	add r0, r8\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, sl\n\t"
-        "	str r0, [r1]\n\t"
-        "	strh r5, [r1, #0xc]\n\t"
-        "	strh r6, [r1, #0xa]\n\t"
-        "	ldr r0, _080D2410\n\t"
-        "	str r0, [r1, #0x10]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080D2416\n\t"
-        "	.align 2, 0\n\t"
-        "_080D240C: .4byte gUnknown_2039A2C\n\t"
-        "_080D2410: .4byte sub_080D2428 + 1\n\t"
-        "_080D2414:\n\t"
-        "	movs r0, #0\n\t"
-        "_080D2416:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct UnkUtilData *data;
+
+    if (sUnkUtil->numActive >= sUnkUtil->max)
+        return FALSE;
+
+    data = &sUnkUtil->data[sUnkUtil->numActive++];
+    data->size = width * 2;
+    data->dest = dest + 2 * (dTop * 32 + dLeft);
+    data->src = src + 2 * (sTop * unkArg + sLeft);
+    data->height = height;
+    data->unk = unkArg;
+    data->func = sub_080D2428;
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080D2428(void)
+void sub_080D2428(struct UnkUtilData *data)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "	b _080D2452\n\t"
-        "_080D2430:\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, [r4, #4]\n\t"
-        "	ldrh r2, [r4, #8]\n\t"
-        "	lsrs r2, r2, #1\n\t"
-        "	bl CpuSet\n\t"
-        "	ldr r0, [r4, #4]\n\t"
-        "	adds r0, #0x40\n\t"
-        "	str r0, [r4, #4]\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "_080D2452:\n\t"
-        "	ldrh r0, [r4, #0xc]\n\t"
-        "	cmp r5, r0\n\t"
-        "	blo _080D2430\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    for (i = 0; i < data->height; i++)
+    {
+        CpuSet(data->src, data->dest, data->size / 2);
+        data->dest += 64;
+        data->src += data->unk * 2;
+    }
 }
 
-__attribute__((naked)) void sub_080D2460(void)
+void sub_080D24BC(struct UnkUtilData *data);
+
+bool8 sub_080D2460(void *dest, u16 dLeft, u16 dTop, u16 width, u16 height)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov ip, r0\n\t"
-        "	ldr r0, [sp, #0x14]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	lsrs r4, r2, #0x10\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	ldr r0, _080D24AC\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r2, #4]\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrb r7, [r2, #5]\n\t"
-        "	cmp r1, r7\n\t"
-        "	bhs _080D24B4\n\t"
-        "	adds r0, #1\n\t"
-        "	strb r0, [r2, #4]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	strh r0, [r1, #8]\n\t"
-        "	lsls r0, r4, #5\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	add r0, ip\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	strh r5, [r1, #0xc]\n\t"
-        "	ldr r0, _080D24B0\n\t"
-        "	str r0, [r1, #0x10]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080D24B6\n\t"
-        "	.align 2, 0\n\t"
-        "_080D24AC: .4byte gUnknown_2039A2C\n\t"
-        "_080D24B0: .4byte sub_080D24BC + 1\n\t"
-        "_080D24B4:\n\t"
-        "	movs r0, #0\n\t"
-        "_080D24B6:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    struct UnkUtilData *data;
+
+    if (sUnkUtil->numActive >= sUnkUtil->max)
+        return FALSE;
+
+    data = &sUnkUtil->data[sUnkUtil->numActive++];
+    data->size = width * 2;
+    data->dest = dest + (dTop * 32 + dLeft) * 2;
+    data->height = height;
+    data->func = sub_080D24BC;
+    return TRUE;
 }
 
-__attribute__((naked)) void sub_080D24BC(void)
+void sub_080D24BC(struct UnkUtilData *data)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrh r1, [r6, #0xc]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bhs _080D254A\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #5\n\t"
-        "	mov r5, sp\n\t"
-        "	ldr r2, _080D2508\n\t"
-        "	mov r8, r2\n\t"
-        "	movs r1, #0x81\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	mov sl, r1\n\t"
-        "_080D24E2:\n\t"
-        "	ldr r2, [r6, #4]\n\t"
-        "	ldrh r3, [r6, #8]\n\t"
-        "	mov ip, r2\n\t"
-        "	adds r0, #1\n\t"
-        "	mov sb, r0\n\t"
-        "	cmp r3, r7\n\t"
-        "	bhi _080D250C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5]\n\t"
-        "	mov r2, sp\n\t"
-        "	mov r0, r8\n\t"
-        "	str r2, [r0]\n\t"
-        "	mov r1, ip\n\t"
-        "	str r1, [r0, #4]\n\t"
-        "	lsrs r0, r3, #1\n\t"
-        "	mov r2, sl\n\t"
-        "	orrs r0, r2\n\t"
-        "	mov r1, r8\n\t"
-        "	b _080D2534\n\t"
-        "	.align 2, 0\n\t"
-        "_080D2508: .4byte 0x040000D4\n\t"
-        "_080D250C:\n\t"
-        "	movs r4, #0\n\t"
-        "	strh r4, [r5]\n\t"
-        "	ldr r1, _080D255C\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r2, [r1, #4]\n\t"
-        "	ldr r0, _080D2560\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	adds r2, r2, r7\n\t"
-        "	subs r3, r3, r7\n\t"
-        "	cmp r3, r7\n\t"
-        "	bhi _080D250C\n\t"
-        "	strh r4, [r5]\n\t"
-        "	mov r0, sp\n\t"
-        "	str r0, [r1]\n\t"
-        "	str r2, [r1, #4]\n\t"
-        "	lsrs r0, r3, #1\n\t"
-        "	mov r2, sl\n\t"
-        "	orrs r0, r2\n\t"
-        "_080D2534:\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, [r1, #8]\n\t"
-        "	mov r0, ip\n\t"
-        "	adds r0, #0x40\n\t"
-        "	str r0, [r6, #4]\n\t"
-        "	mov r1, sb\n\t"
-        "	lsls r0, r1, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldrh r2, [r6, #0xc]\n\t"
-        "	cmp r0, r2\n\t"
-        "	blo _080D24E2\n\t"
-        "_080D254A:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080D255C: .4byte 0x040000D4\n\t"
-        "_080D2560: .4byte 0x81000800\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    for (i = 0; i < data->height; i++)
+    {
+        Dma3FillLarge16_(0, data->dest, data->size);
+        data->dest += 64;
+    }
 }
