@@ -44,6 +44,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_House1': 2,
     'LilycoveCity_House2': 2,
     'LilycoveCity_House3': 12,
+    'LilycoveCity_DepartmentStore_2F': 5,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -58,6 +59,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_House1': 2,
     'LilycoveCity_House2': 2,
     'LilycoveCity_House3': 8,
+    'LilycoveCity_DepartmentStore_2F': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7264,6 +7266,62 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+})
+
+# Department Store 2F is the first owner in the still-visible 0x20A920 raw
+# range. Its five entry scripts, two shop lists, and three local texts match
+# the US map source in physical order.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_DepartmentStore_2F': {
+        'scripts': {
+            0x0820A921: 'LilycoveCity_DepartmentStore_2F_EventScript_Cook',
+            0x0820A92A: 'LilycoveCity_DepartmentStore_2F_EventScript_PokefanF',
+            0x0820A933: 'LilycoveCity_DepartmentStore_2F_EventScript_Sailor',
+            0x0820A93C: 'LilycoveCity_DepartmentStore_2F_EventScript_ClerkLeft',
+            0x0820A96E: 'LilycoveCity_DepartmentStore_2F_EventScript_ClerkRight',
+        },
+        'texts': {
+            0x0820A9A0: 'LilycoveCity_DepartmentStore_2F_Text_LearnToUseItemsProperly',
+            0x0820A9C7: 'LilycoveCity_DepartmentStore_2F_Text_GoodGiftForHusband',
+            0x0820A9EB: 'LilycoveCity_DepartmentStore_2F_Text_StockUpOnItems',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+    },
+})
+
+MAP_POKEMART_LISTS.update({
+    'LilycoveCity_DepartmentStore_2F': (
+        (0x0820A953, 'LilycoveCity_DepartmentStore_2F_Pokemart1', (
+            'ITEM_POKE_BALL',
+            'ITEM_GREAT_BALL',
+            'ITEM_ULTRA_BALL',
+            'ITEM_ESCAPE_ROPE',
+            'ITEM_FULL_HEAL',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_BURN_HEAL',
+            'ITEM_ICE_HEAL',
+            'ITEM_AWAKENING',
+            'ITEM_FLUFFY_TAIL',
+        )),
+        (0x0820A985, 'LilycoveCity_DepartmentStore_2F_Pokemart2', (
+            'ITEM_POTION',
+            'ITEM_SUPER_POTION',
+            'ITEM_HYPER_POTION',
+            'ITEM_MAX_POTION',
+            'ITEM_REVIVE',
+            'ITEM_REPEL',
+            'ITEM_SUPER_REPEL',
+            'ITEM_MAX_REPEL',
+            'ITEM_WAVE_MAIL',
+            'ITEM_MECH_MAIL',
+        )),
+    ),
 })
 
 MAP_MOVEMENT_SCRIPT_LABELS.update({
