@@ -88,4 +88,12 @@ Route134_EventScript_ItemStarPiece:: @ 0x08256DFE
 	finditem ITEM_STAR_PIECE
 	end
 
-	.incbin "baserom_jp.gba", 0x256e0b, 0xc7e
+PetalburgCity_EventScript_ItemMaxRevive:: @ 0x08256E0B
+	finditem ITEM_MAX_REVIVE
+	end
+
+PetalburgCity_EventScript_ItemEther:: @ 0x08256E18
+	finditem ITEM_ETHER
+	end
+
+	.incbin "baserom_jp.gba", 0x256e25, 0xc64

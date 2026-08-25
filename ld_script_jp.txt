@@ -39,6 +39,7 @@ gText_MoveToBag = 0x085CA962;
 gText_Give2 = 0x085CA96B;
 gText_GoBackPrevMenu = 0x085C9423;
 gTypeNamesJP = gTypeNames;
+LoadWallyZigzagoon = PutZigzagoonInPlayerParty;
 gPlayerPCItemPageInfo = gUnknown_203B984;
 gFrontierBannedSpecies = gUnknown_85DD48E;
 gSelectedMonPartyId = gUnknown_203CBB5;

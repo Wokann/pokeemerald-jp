@@ -85,6 +85,12 @@
 	@ Object visibility commands use the retained JP 0x58/0x59 opcode tokens.
 	.set SCR_OP_SHOWOBJECTAT, SCR_OP_58
 	.set SCR_OP_HIDEOBJECTAT, SCR_OP_59
+	@ Cross-map object commands retain numbered JP table tokens.  Export the
+	@ upstream semantic spellings so the standard event macros remain usable.
+	.set SCR_OP_APPLYMOVEMENTAT, SCR_OP_50
+	.set SCR_OP_WAITMOVEMENTAT, SCR_OP_52
+	.set SCR_OP_REMOVEOBJECTAT, SCR_OP_54
+	.set SCR_OP_ADDOBJECTAT, SCR_OP_56
 	@ Coin commands use the retained JP 0xB4/0xB5 opcode tokens.
 	.set SCR_OP_ADDCOINS, SCR_OP_B4
 	.set SCR_OP_REMOVECOINS, SCR_OP_B5
