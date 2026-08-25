@@ -3968,6 +3968,16 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081ED801: 'Route119_Text_WeatherInstitute',
             0x081ED80F: 'Route119_Text_TrainerTipsDecoration',
         },
+        # The paired US rival and Scott messages establish these field
+        # placeholders without relying on raw FD indices.
+        'field_placeholders': {
+            0x081ED2BE: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081ED318: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081ED387: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081ED441: {0x01: 'PLAYER'},
+            0x081ED524: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081ED5EB: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route119']['labels'],
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
         'symbols': {

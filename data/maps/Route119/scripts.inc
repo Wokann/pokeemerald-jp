@@ -470,7 +470,6 @@ Route119_EventScript_TrainerTipsDecoration::
 	msgbox Route119_Text_TrainerTipsDecoration, MSGBOX_SIGN
 	end
 
-Route119_EventScript_ScottWonAtFortreeGymCall:: @ 0x081ED2AD
 Route119_EventScript_ScottWonAtFortreeGymCall::
 	lockall
 	pokenavcall Route119_Text_ScottYouWonAtFortreeGym
@@ -481,7 +480,7 @@ Route119_EventScript_ScottWonAtFortreeGymCall::
 	end
 
 Route119_Text_MayIntro: @ 0x081ED2BE
-	.string "ハルカ“{STRING 0x01}{STRING 0x05}！\n"
+	.string "ハルカ“{PLAYER}{KUN}！\n"
 	.string "どこに　いたのよ？　さがしたわ！\p"
 	.string "どれくらい　つよく　なったのか\n"
 	.string "ちょっと　ためして　あげる！\p"
@@ -490,7 +489,7 @@ Route119_Text_MayIntro: @ 0x081ED2BE
 
 Route119_Text_MayDefeat: @ 0x081ED318
 	.string "あっちゃー！\n"
-	.string "{STRING 0x01}{STRING 0x05}　つよい　じゃない！\p"
+	.string "{PLAYER}{KUN}　つよい　じゃない！\p"
 	.string "ポケモン　そだってなくて\n"
 	.string "こまってるかも　って　しんぱい　してたのに$"
 
@@ -508,13 +507,13 @@ Route119_Text_MayExplainFly: @ 0x081ED387
 	.string "これ　だいじだから　わすれないでね！\p"
 	.string "たまには　そらをとぶで\n"
 	.string "ミシロに　かえるのも　いいんじゃない？\p"
-	.string "{STRING 0x01}{STRING 0x05}の　おかあさん\n"
+	.string "{PLAYER}{KUN}の　おかあさん\n"
 	.string "しんぱい　してるかも　しれないし⋯⋯\p"
 	.string "じゃあ\n"
 	.string "また　どこかで　あおうね！$"
 
 Route119_Text_BrendanIntro: @ 0x081ED441
-	.string "ユウキ“{STRING 0x01}！\n"
+	.string "ユウキ“{PLAYER}！\n"
 	.string "ここで　ポケモン　さがしてたのか？\p"
 	.string "どれくらい　つよく　なったか\n"
 	.string "ためして　やるよ\p"
@@ -540,7 +539,7 @@ Route119_Text_BrendanExplainFly: @ 0x081ED4CF
 
 Route119_Text_ScottWayToGoBeSeeingYou: @ 0x081ED524
 	.string "エニシダ“うふふ！\n"
-	.string "やるねえ　{STRING 0x01}{STRING 0x05}⋯⋯！\p"
+	.string "やるねえ　{PLAYER}{KUN}⋯⋯！\p"
 	.string "いま　じてんしゃに　のった　トレーナーと\n"
 	.string "すれちがったん　だけどさ\l"
 	.string "きみ　あのトレーナーに　かったんだろ？\l"
@@ -557,7 +556,7 @@ Route119_Text_ScottYouWonAtFortreeGym: @ 0x081ED5EB
 	.string "⋯⋯　⋯⋯　⋯⋯\n"
 	.string "⋯⋯　⋯⋯　⋯⋯　ピッ！\p"
 	.string "エニシダ“やあどうも\n"
-	.string "{STRING 0x01}{STRING 0x05}　わたしだよ！\p"
+	.string "{PLAYER}{KUN}　わたしだよ！\p"
 	.string "おもった　とおり！\n"
 	.string "ヒワマキジム　でも　きみは　かったね！\p"
 	.string "きみの　その　つよさ　もしかしたら⋯⋯\n"
