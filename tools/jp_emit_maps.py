@@ -76,6 +76,10 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The fourteen local branches are contiguous after House7 and match the
     # reviewed US source order (Seedot brother through Lotad size record).
     'SootopolisCity_LotadAndSeedotHouse': 14,
+    # This is the immediate physical successor of the Lotad/Seedot house.
+    # Its fifteen local scripts plus the on-frame table match the reviewed
+    # US source sequence one-to-one.
+    'SootopolisCity_MysteryEventsHouse_1F': 16,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -309,6 +313,14 @@ MAP_AUXILIARY_TEXT_ADDRESSES = {
     'SootopolisCity_LotadAndSeedotHouse': (
         0x0820FAA3,
         0x0820FC82,
+    ),
+    # Four complete strings in the Mystery Events House range are unused by
+    # live JP pointers, but are retained and named by the matching US source.
+    'SootopolisCity_MysteryEventsHouse_1F': (
+        0x0820FFB0,
+        0x08210095,
+        0x082100D7,
+        0x08210102,
     ),
 }
 
@@ -8499,6 +8511,99 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+    # The Mystery Events House immediately follows the Lotad/Seedot range.
+    # Names, result meanings, movement streams, and the B1F-owned draw text
+    # have all been checked against the JP byte range and matching US source.
+    'SootopolisCity_MysteryEventsHouse_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'frontier_macros': True,
+        'external_labels': {
+            0x082423E9: 'Common_EventScript_SaveGame',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+        },
+        'field_placeholders': {
+            0x0820FFC6: {0x02: 'STR_VAR_1'},
+            0x08210095: {0x02: 'STR_VAR_1'},
+            0x082100D7: {0x02: 'STR_VAR_1'},
+            0x08210102: {0x02: 'STR_VAR_1'},
+        },
+        'texts': {
+            0x0820FF53: 'SootopolisCity_MysteryEventsHouse_1F_Text_OnlyAmusementWatchingBattles',
+            0x0820FFB0: 'SootopolisCity_MysteryEventsHouse_1F_Text_DoorAppearsToBeLocked',
+            0x0820FFC6: 'SootopolisCity_MysteryEventsHouse_1F_Text_ChallengeVisitingTrainer',
+            0x0820FFFA: 'SootopolisCity_MysteryEventsHouse_1F_Text_YouWontBattle',
+            0x0821001A: 'SootopolisCity_MysteryEventsHouse_1F_Text_KeepItTo3On3',
+            0x0821005E: 'SootopolisCity_MysteryEventsHouse_1F_Text_SaveProgressBeforeBattle',
+            0x08210081: 'SootopolisCity_MysteryEventsHouse_1F_Text_HopeToSeeGoodMatch',
+            0x08210095: 'SootopolisCity_MysteryEventsHouse_1F_Text_StrVar1Tie',
+            0x08210098: 'SootopolisCity_MysteryEventsHouse_B1F_Text_MatchEndedUpDraw',
+            0x082100AA: 'SootopolisCity_MysteryEventsHouse_1F_Text_BrilliantStandoff',
+            0x082100D7: 'SootopolisCity_MysteryEventsHouse_1F_Text_StrVar1Won',
+            0x082100DA: 'SootopolisCity_MysteryEventsHouse_1F_Text_ThatWasSuperlative',
+            0x08210102: 'SootopolisCity_MysteryEventsHouse_1F_Text_StrVar1Lost',
+            0x08210105: 'SootopolisCity_MysteryEventsHouse_1F_Text_TooBadForYou',
+        },
+        # B1F remains unstructured at this stage and still references the
+        # legacy global symbol. Keep it as a compatibility alias until its
+        # own physical range is migrated.
+        'text_aliases': {
+            0x08210098: ('gJPText_00210098',),
+        },
+        'symbols': {
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x40C0: 'VAR_SOOTOPOLIS_MYSTERY_EVENTS_STATE',
+                0x8004: 'VAR_0x8004',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_MYSTERY_EVENTS_OLD_MAN',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {
+                0x08: 'MOVEMENT_TYPE_FACE_DOWN',
+                0x0A: 'MOVEMENT_TYPE_FACE_RIGHT',
+            },
+            'layouts': {
+                0x01B9: 'LAYOUT_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_STAIRS_UNBLOCKED',
+            },
+            'fade_modes': {0x01: 'FADE_TO_BLACK'},
+            'maps': {0x0F0E: 'MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F'},
+            'map_script_values': {
+                0x40C0: {0x01: '1', 0x02: '2', 0x03: '3'},
+            },
+            'script_var_values': {
+                0x0820FD6B: {
+                    0x8004: {
+                        0x10: 'FRONTIER_UTIL_FUNC_CHECK_VISIT_TRAINER',
+                    },
+                    0x800D: {0x00: '0'},
+                    0x40C0: {0x00: '0'},
+                },
+                0x0820FDC4: {
+                    0x40C0: {0x00: '0', 0x01: '1', 0x02: '2', 0x03: '3'},
+                },
+                0x0820FE31: {
+                    0x8004: {
+                        0x10: 'FRONTIER_UTIL_FUNC_CHECK_VISIT_TRAINER',
+                    },
+                    0x800D: {0x01: '1'},
+                    0x4001: {0x01: '1'},
+                },
+                0x0820FE65: {
+                    0x800D: {0x00: '0'},
+                    0x800C: {
+                        0x02: 'DIR_NORTH',
+                        0x03: 'DIR_WEST',
+                        0x04: 'DIR_EAST',
+                    },
+                },
+            },
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -8879,6 +8984,20 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     },
 })
 
+# The seven movement streams fill the Mystery Events House 1F physical range
+# between its event scripts and text. Their boundaries and US names are exact.
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'SootopolisCity_MysteryEventsHouse_1F': {
+        0x0820FE2C: 'SootopolisCity_MysteryEventsHouse_1F_Movement_PlayerExitStairs',
+        0x0820FE2E: 'SootopolisCity_MysteryEventsHouse_1F_Movement_OldManWalkBehindPlayer',
+        0x0820FF41: 'SootopolisCity_MysteryEventsHouse_1F_Movement_PlayerEnterBasementNorth',
+        0x0820FF45: 'SootopolisCity_MysteryEventsHouse_1F_Movement_PlayerEnterBasementEast',
+        0x0820FF49: 'SootopolisCity_MysteryEventsHouse_1F_Movement_PlayerEnterBasementWest',
+        0x0820FF4D: 'SootopolisCity_MysteryEventsHouse_1F_Movement_OldManMoveAsideLeft',
+        0x0820FF50: 'SootopolisCity_MysteryEventsHouse_1F_Movement_OldManMoveAsideRight',
+    },
+})
+
 MSGBOX_TYPES = {
     2: 'MSGBOX_NPC',
     3: 'MSGBOX_SIGN',
@@ -9214,6 +9333,11 @@ def name_contextual_result_conditions(lines):
             replace_condition(index + 2, {1: 'FEMALE'})
         elif name == 'specialvar' and argstr == 'VAR_RESULT, ShouldTryRematchBattle':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
+        elif name == 'call' and argstr == 'Common_EventScript_SaveGame':
+            # The shared save routine returns a strict boolean in VAR_RESULT.
+            # Restrict the spelling change to this exact producer rather than
+            # assuming that a nearby numeric result has boolean semantics.
+            replace_condition(index + 1, {0: 'FALSE'})
         elif name == 'special' and argstr == 'SetLilycoveLadyGfx':
             # This special returns whether the selected Lilycove Lady is the
             # Contest Lady; the adjacent branch pair therefore has the same
@@ -9380,6 +9504,12 @@ def collapse_frontier_utility_macros(lines, enabled=False):
             first_name, first_args = lines[index]
             second_name, second_args = lines[index + 1]
             first = [part.strip() for part in first_args.split(',', 1)]
+            if (first_name == 'setvar' and second_name == 'special'
+                    and first == ['VAR_0x8004', 'FRONTIER_UTIL_FUNC_CHECK_VISIT_TRAINER']
+                    and second_args == 'CallFrontierUtilFunc'):
+                out.append(('frontier_checkvisittrainer', ''))
+                index += 2
+                continue
             if (first_name == 'setvar' and second_name == 'special'
                     and first == ['VAR_0x8004', 'FRONTIER_UTIL_FUNC_SAVE_PARTY']
                     and second_args == 'CallFrontierUtilFunc'):

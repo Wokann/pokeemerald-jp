@@ -41,6 +41,12 @@
 	special CallFrontierUtilFunc
 	.endm
 
+	@ Validates the visiting E-Reader trainer. 0 if valid, 1 if not
+	.macro frontier_checkvisittrainer
+	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_CHECK_VISIT_TRAINER
+	special CallFrontierUtilFunc
+	.endm
+
 	@ Perform the Frontier soft reset operation.
 	.macro frontier_reset
 	setvar VAR_0x8004, FRONTIER_UTIL_FUNC_SOFT_RESET
