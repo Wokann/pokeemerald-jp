@@ -103,6 +103,10 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Hall of Fame immediately follows the League lobby and contains two
     # map-script tables plus four local sequence branches.
     'EverGrandeCity_HallOfFame': 6,
+    # The Ever Grande Pokémon Center follows the Hall of Fame directly. Its
+    # transition, Scott branch, two NPCs, nurse, and exit helpers match the
+    # eight local entries in the corresponding US map source.
+    'EverGrandeCity_PokemonCenter_1F': 8,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -168,6 +172,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_ChampionsRoom': 13,
     'EverGrandeCity_PokemonLeague_1F': 3,
     'EverGrandeCity_HallOfFame': 2,
+    'EverGrandeCity_PokemonCenter_1F': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8978,6 +8983,49 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+    # This Pokémon Center is the immediate physical successor of Hall of
+    # Fame. Its map-local texts and movement streams end exactly where the
+    # next map's script table begins; names and controls follow the reviewed
+    # US map source rather than generic JP placeholders.
+    'EverGrandeCity_PokemonCenter_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'field_placeholders': {
+            0x08211531: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'external_labels': {
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x08244178: 'Common_EventScript_NopReturn',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'symbols': {
+            'flags': {
+                0x01CF: 'FLAG_MET_SCOTT_IN_EVERGRANDE',
+                0x0319: 'FLAG_HIDE_EVER_GRANDE_POKEMON_CENTER_1F_SCOTT',
+                0x086C: 'FLAG_BADGE06_GET',
+            },
+            'vars': {
+                0x40D1: 'VAR_SCOTT_STATE',
+                0x800B: 'VAR_0x800B',
+                0x800C: 'VAR_FACING',
+            },
+            'var_values': {
+                0x800C: {
+                    0x02: 'DIR_NORTH',
+                    0x03: 'DIR_WEST',
+                    0x04: 'DIR_EAST',
+                },
+            },
+            'local_ids': {
+                0x01: 'LOCALID_EVER_GRANDE_NURSE',
+                0x04: 'LOCALID_EVER_GRANDE_SCOTT',
+            },
+            'heal_locations': {
+                0x0B: 'HEAL_LOCATION_EVER_GRANDE_CITY',
+            },
+            'sounds': {0x0009: 'SE_EXIT'},
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9408,6 +9456,10 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     'EverGrandeCity_HallOfFame': {
         0x0821135C: 'EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame1',
         0x08211363: 'EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame2',
+    },
+    'EverGrandeCity_PokemonCenter_1F': {
+        0x08211494: 'EverGrandeCity_PokemonCenter_1F_Movement_ScottExitNorth',
+        0x0821149B: 'EverGrandeCity_PokemonCenter_1F_Movement_ScottExit',
     },
 })
 

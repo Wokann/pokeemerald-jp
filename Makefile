@@ -239,6 +239,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Rout
 	EverGrandeCity_ChampionsRoom \
 	EverGrandeCity_PokemonLeague_1F \
 	EverGrandeCity_HallOfFame \
+	EverGrandeCity_PokemonCenter_1F \
 	EverGrandeCity \
 	LittlerootTown
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
