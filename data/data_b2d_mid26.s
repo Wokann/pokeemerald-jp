@@ -2227,17 +2227,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/EverGrandeCity_PokemonLeague_2F/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F
 	.set gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F, EverGrandeCity_PokemonLeague_2F_MapEvents
-	.globl ROUTE104_MR_BRINEYS_HOUSE_EventObjects
-ROUTE104_MR_BRINEYS_HOUSE_EventObjects: @ 0x0850C200
-	object_event 1, 21, 0, 5, 3, 3, 50, 3, 3, 0, 0, Route104_MrBrineysHouse_EventScript_00211629, 0x02E3
-	object_event 2, 211, 0, 6, 3, 3, 8, 3, 3, 0, 0, Route104_MrBrineysHouse_EventScript_0021171F, 0x0371
-	.globl ROUTE104_MR_BRINEYS_HOUSE_EventWarps
-ROUTE104_MR_BRINEYS_HOUSE_EventWarps: @ 0x0850C230
-	warp_def 5, 8, 0, 0, MAP_ROUTE104
-	warp_def 6, 8, 0, 0, MAP_ROUTE104
+	.include "data/maps/Route104_MrBrineysHouse/events.inc"
 	.globl gMapEvents_ROUTE104_MR_BRINEYS_HOUSE
-gMapEvents_ROUTE104_MR_BRINEYS_HOUSE: @ 0x0850C240
-	map_events ROUTE104_MR_BRINEYS_HOUSE_EventObjects, ROUTE104_MR_BRINEYS_HOUSE_EventWarps, 0, 0
+	.set gMapEvents_ROUTE104_MR_BRINEYS_HOUSE, Route104_MrBrineysHouse_MapEvents
 	.globl ROUTE104_PRETTY_PETAL_FLOWER_SHOP_EventObjects
 ROUTE104_PRETTY_PETAL_FLOWER_SHOP_EventObjects: @ 0x0850C254
 	object_event 1, 20, 0, 0, 3, 3, 10, 0, 0, 0, 0, Route104_PrettyPetalFlowerShop_EventScript_002119DB, 0x0000

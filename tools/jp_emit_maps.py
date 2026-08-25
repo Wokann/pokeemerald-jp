@@ -113,6 +113,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The neighboring League Cable Club floor retains the same three
     # explicitly named, but unused, RS-era wrapper entries.
     'EverGrandeCity_PokemonLeague_2F': 3,
+    # Route 104's cottage follows the League 2F range in physical ROM order.
+    # Its transition script and eleven local branches match the US sequence.
+    'Route104_MrBrineysHouse': 12,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -179,6 +182,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_PokemonLeague_1F': 3,
     'EverGrandeCity_HallOfFame': 2,
     'EverGrandeCity_PokemonCenter_1F': 3,
+    # Mr. Briney's nine map-owned messages immediately follow its scripts.
+    'Route104_MrBrineysHouse': 9,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9085,6 +9090,74 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08246BB2: 'CableClub_EventScript_Colosseum',
             0x08246DAD: 'CableClub_EventScript_TradeCenter',
             0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+    },
+    # Route 104 Mr. Briney's House is the next physical EventScript owner.
+    # The US source establishes all twelve script and nine text labels by
+    # exact local order; this map-specific table only supplies reviewed JP
+    # constants, field placeholders, and the JP command-slot alias.
+    'Route104_MrBrineysHouse': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            # JP's opcode slot is named waitdooranim globally, but the matched
+            # local Peeko sequence waits for the Wingull cry as in US source.
+            0x0821171F: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'external_labels': {
+            0x08242F21: 'EventScript_BackupMrBrineyLocation',
+        },
+        'field_placeholders': {
+            # The paired US text proves FD 01/05 are PLAYER/KUN here.
+            0x08211749: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'symbols': {
+            'flags': {
+                0x0093: 'FLAG_MR_BRINEY_SAILING_INTRO',
+                0x0095: 'FLAG_DELIVERED_DEVON_GOODS',
+                0x00BC: 'FLAG_RECEIVED_POKENAV',
+                0x00BD: 'FLAG_DELIVERED_STEVEN_LETTER',
+                0x02CF: 'FLAG_HIDE_ROUTE_104_RIVAL',
+                0x02E2: 'FLAG_HIDE_ROUTE_104_MR_BRINEY',
+                0x02E3: 'FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY',
+                0x032E: 'FLAG_HIDE_RUSTBORO_CITY_RIVAL',
+                0x0371: 'FLAG_HIDE_BRINEYS_HOUSE_PEEKO',
+                0x089D: 'FLAG_LANDMARK_MR_BRINEY_HOUSE',
+            },
+            'vars': {
+                0x405A: 'VAR_RUSTBORO_CITY_STATE',
+                0x4063: 'VAR_ROUTE104_STATE',
+                0x408E: 'VAR_BOARD_BRINEY_BOAT_STATE',
+                0x4090: 'VAR_BRINEY_HOUSE_STATE',
+                0x8000: 'VAR_0x8000',
+                0x800D: 'VAR_RESULT',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'switch_values': {
+                # The three-case Briney destination menu is the exact US
+                # MULTI_BRINEY_OFF_DEWFORD result family.
+                'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'},
+            },
+            'script_var_values': {
+                0x082115F6: {0x4090: {0x01: '1'}},
+                0x082116E9: {
+                    0x408E: {0x01: '1'},
+                    0x405A: {0x08: '8'},
+                    0x4063: {0x02: '2'},
+                },
+            },
+            'maps': {0x0013: 'MAP_ROUTE104'},
+            'local_ids': {
+                0x01: 'LOCALID_BRINEYS_HOUSE_BRINEY',
+                0x02: 'LOCALID_BRINEYS_HOUSE_PEEKO',
+            },
+            'movement_types': {
+                0x32: 'MOVEMENT_TYPE_WALK_SEQUENCE_DOWN_LEFT_UP_RIGHT',
+                0x33: 'MOVEMENT_TYPE_WALK_SEQUENCE_LEFT_UP_RIGHT_DOWN',
+            },
+            'multichoices': {0x0E: 'MULTI_BRINEY_OFF_DEWFORD'},
+            'species': {0x0135: 'SPECIES_WINGULL'},
+            'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
         },
     },
 })
