@@ -2066,18 +2066,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MossdeepCity_House1/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_HOUSE1
 	.set gMapEvents_MOSSDEEP_CITY_HOUSE1, MossdeepCity_House1_MapEvents
-	.globl MOSSDEEP_CITY_HOUSE2_EventObjects
-MOSSDEEP_CITY_HOUSE2_EventObjects: @ 0x0850B0F8
-	object_event 1, 65, 0, 6, 6, 3, 9, 0, 0, 0, 0, 0x0820C3D3, 0x0000
-	object_event 2, 6, 0, 4, 4, 3, 8, 0, 0, 0, 0, 0x0820C3DC, 0x0000
-	object_event 3, 211, 0, 4, 5, 3, 7, 0, 0, 0, 0, 0x0820C3E5, 0x03A6
-	.globl MOSSDEEP_CITY_HOUSE2_EventWarps
-MOSSDEEP_CITY_HOUSE2_EventWarps: @ 0x0850B140
-	warp_def 3, 8, 0, 3, MAP_MOSSDEEP_CITY
-	warp_def 4, 8, 0, 3, MAP_MOSSDEEP_CITY
+	.include "data/maps/MossdeepCity_House2/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_HOUSE2
-gMapEvents_MOSSDEEP_CITY_HOUSE2: @ 0x0850B150
-	map_events MOSSDEEP_CITY_HOUSE2_EventObjects, MOSSDEEP_CITY_HOUSE2_EventWarps, 0, 0
+	.set gMapEvents_MOSSDEEP_CITY_HOUSE2, MossdeepCity_House2_MapEvents
 	.globl MOSSDEEP_CITY_POKEMON_CENTER_1F_EventObjects
 MOSSDEEP_CITY_POKEMON_CENTER_1F_EventObjects: @ 0x0850B164
 	object_event 1, 58, 0, 7, 2, 3, 8, 0, 0, 0, 0, MossdeepCity_PokemonCenter_1F_EventScript_0020C4C1, 0x0000

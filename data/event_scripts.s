@@ -776,7 +776,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_DepartmentStoreElevator/scripts.inc"
 	.include "data/maps/MossdeepCity_Gym/scripts.inc"
 	.include "data/maps/MossdeepCity_House1/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20c3d2, 0xe0
+	.include "data/maps/MossdeepCity_House2/scripts.inc"
 	.include "data/maps/MossdeepCity_PokemonCenter_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20c4e1, 0x69
 	.include "data/maps/MossdeepCity_PokemonCenter_2F/scripts.inc"

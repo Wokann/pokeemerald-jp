@@ -51,6 +51,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStoreRooftop': 23,
     'MossdeepCity_Gym': 45,
     'MossdeepCity_House1': 3,
+    'MossdeepCity_House2': 5,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -72,6 +73,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStoreRooftop': 8,
     'MossdeepCity_Gym': 52,
     'MossdeepCity_House1': 4,
+    'MossdeepCity_House2': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7691,6 +7693,34 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Mossdeep House 2 follows House 1 directly. The cry wait is emitted through
+# the JP byte-exact semantic alias because the JP command-table slots for cry
+# and door waits are swapped while the matching US source is waitmoncry.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_House2': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x0820C3E5: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {
+                0x00E0: 'FLAG_WINGULL_DELIVERED_MAIL',
+                0x03A5: 'FLAG_HIDE_FORTREE_CITY_HOUSE_4_WINGULL',
+            },
+            'vars': {0x800C: 'VAR_FACING'},
+            'script_var_values': {
+                0x0820C3E5: {
+                    0x800C: {0x02: 'DIR_NORTH', 0x03: 'DIR_WEST'},
+                },
+            },
+            'species': {0x0135: 'SPECIES_WINGULL'},
+            'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
+            'local_ids': {0x03: 'LOCALID_MOSSDEEP_HOUSE_WINGULL'},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'LilycoveCity_DepartmentStore_2F': (
         (0x0820A953, 'LilycoveCity_DepartmentStore_2F_Pokemart1', (
@@ -7998,6 +8028,13 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     # scripts. It is referenced only by applymovement in the old switch flow.
     'MossdeepCity_Gym': {
         0x0820B799: 'MossdeepCity_Gym_Movement_WaitAfterSwitchUse',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'MossdeepCity_House2': {
+        0x0820C42E: 'MossdeepCity_House2_Movement_WingullExitNorth',
+        0x0820C435: 'MossdeepCity_House2_Movement_WingullExitEast',
     },
 })
 
