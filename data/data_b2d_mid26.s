@@ -2111,18 +2111,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SootopolisCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_2F, SootopolisCity_PokemonCenter_2F_MapEvents
-	.globl SOOTOPOLIS_CITY_MART_EventObjects
-SOOTOPOLIS_CITY_MART_EventObjects: @ 0x0850B9B8
-	object_event 1, 83, 0, 1, 3, 3, 10, 0, 0, 0, 0, 0x0820F1B8, 0x0000
-	object_event 2, 17, 0, 5, 5, 3, 10, 0, 0, 0, 0, 0x0820F1E6, 0x0000
-	object_event 3, 48, 0, 9, 5, 3, 10, 0, 0, 0, 0, 0x0820F210, 0x0000
-	.globl SOOTOPOLIS_CITY_MART_EventWarps
-SOOTOPOLIS_CITY_MART_EventWarps: @ 0x0850BA00
-	warp_def 3, 7, 0, 1, MAP_SOOTOPOLIS_CITY
-	warp_def 4, 7, 0, 1, MAP_SOOTOPOLIS_CITY
+	.include "data/maps/SootopolisCity_Mart/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_MART
-gMapEvents_SOOTOPOLIS_CITY_MART: @ 0x0850BA10
-	map_events SOOTOPOLIS_CITY_MART_EventObjects, SOOTOPOLIS_CITY_MART_EventWarps, 0, 0
+	.set gMapEvents_SOOTOPOLIS_CITY_MART, SootopolisCity_Mart_MapEvents
 	.globl SOOTOPOLIS_CITY_HOUSE1_EventObjects
 SOOTOPOLIS_CITY_HOUSE1_EventObjects: @ 0x0850BA24
 	object_event 1, 44, 0, 2, 4, 3, 10, 0, 0, 0, 0, 0x0820F301, 0x0000

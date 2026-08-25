@@ -65,6 +65,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_Gym_B1F': 10,
     'SootopolisCity_PokemonCenter_1F': 6,
     'SootopolisCity_PokemonCenter_2F': 3,
+    'SootopolisCity_Mart': 5,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -106,6 +107,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_Gym_1F': 16,
     'SootopolisCity_Gym_B1F': 30,
     'SootopolisCity_PokemonCenter_1F': 4,
+    'SootopolisCity_Mart': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8304,6 +8306,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Sootopolis Mart follows the Pokemon Center floors in physical script order.
+# Its shared clerk text, story-state operands, and shop inventory have been
+# checked against the JP bytes and the matching US source.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_Mart': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'symbols': {
+            'flags': {0x0081: 'FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN'},
+            'vars': {0x40CA: 'VAR_SKY_PILLAR_STATE'},
+            'var_values': {0x40CA: {0x02: '2'}},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'MossdeepCity_Mart': (
         (0x0820C5CA, 'MossdeepCity_Mart_Pokemart', (
@@ -8316,6 +8337,22 @@ MAP_POKEMART_LISTS.update({
             'ITEM_MAX_REPEL',
             'ITEM_X_ATTACK',
             'ITEM_X_DEFEND',
+        )),
+    ),
+})
+
+MAP_POKEMART_LISTS.update({
+    'SootopolisCity_Mart': (
+        (0x0820F1CF, 'SootopolisCity_Mart_Pokemart', (
+            'ITEM_ULTRA_BALL',
+            'ITEM_HYPER_POTION',
+            'ITEM_MAX_POTION',
+            'ITEM_FULL_HEAL',
+            'ITEM_REVIVE',
+            'ITEM_MAX_REPEL',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
+            'ITEM_SHADOW_MAIL',
         )),
     ),
 })

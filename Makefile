@@ -221,6 +221,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Rout
 	SootopolisCity_Gym_B1F \
 	SootopolisCity_PokemonCenter_1F \
 	SootopolisCity_PokemonCenter_2F \
+	SootopolisCity_Mart \
 	EverGrandeCity \
 	LittlerootTown
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
