@@ -5804,6 +5804,94 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Rustboro Gym is a complete, contiguous JP map-script owner.  The entries
+# below are aligned with the matching US map by event position, script flow,
+# and text order before enabling source-level names.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'RustboroCity_Gym': {
+        'scripts': {
+            0x082022C6: 'RustboroCity_Gym_EventScript_Roxanne',
+            0x082022FB: 'RustboroCity_Gym_EventScript_RoxanneDefeated',
+            0x08202339: 'RustboroCity_Gym_EventScript_GiveRockTomb',
+            0x0820235D: 'RustboroCity_Gym_EventScript_RoxanneRematch',
+            0x08202378: 'RustboroCity_Gym_EventScript_Josh',
+            0x0820238F: 'RustboroCity_Gym_EventScript_Tommy',
+            0x082023A6: 'RustboroCity_Gym_EventScript_Marc',
+            0x082023BD: 'RustboroCity_Gym_EventScript_GymGuide',
+            0x082023D2: 'RustboroCity_Gym_EventScript_GymGuidePostVictory',
+            0x082023DC: 'RustboroCity_Gym_EventScript_LeftGymStatue',
+            0x082023EC: 'RustboroCity_Gym_EventScript_RightGymStatue',
+            0x082023FC: 'RustboroCity_Gym_EventScript_GymStatueCertified',
+            0x08202406: 'RustboroCity_Gym_EventScript_GymStatue',
+            0x08202410: 'RustboroCity_Gym_EventScript_RegisterRoxanne',
+        },
+        'texts': {
+            0x08202432: 'RustboroCity_Gym_Text_GymGuideAdvice',
+            0x08202581: 'RustboroCity_Gym_Text_GymGuidePostVictory',
+            0x08202612: 'RustboroCity_Gym_Text_JoshIntro',
+            0x08202636: 'RustboroCity_Gym_Text_JoshDefeat',
+            0x08202647: 'RustboroCity_Gym_Text_JoshPostBattle',
+            0x08202665: 'RustboroCity_Gym_Text_TommyIntro',
+            0x0820268E: 'RustboroCity_Gym_Text_TommyDefeat',
+            0x0820269A: 'RustboroCity_Gym_Text_TommyPostBattle',
+            0x082026C0: 'RustboroCity_Gym_Text_MarcIntro',
+            0x082026DB: 'RustboroCity_Gym_Text_MarcDefeat',
+            0x082026F4: 'RustboroCity_Gym_Text_MarcPostBattle',
+            0x08202722: 'RustboroCity_Gym_Text_RoxanneIntro',
+            0x082027A3: 'RustboroCity_Gym_Text_RoxanneDefeat',
+            0x08202830: 'RustboroCity_Gym_Text_ReceivedStoneBadge',
+            0x08202849: 'RustboroCity_Gym_Text_StoneBadgeInfoTakeThis',
+            0x082028BA: 'RustboroCity_Gym_Text_ExplainRockTomb',
+            0x0820295A: 'RustboroCity_Gym_Text_RoxannePostBattle',
+            0x082029AB: 'RustboroCity_Gym_Text_GymStatue',
+            0x082029BA: 'RustboroCity_Gym_Text_GymStatueCertified',
+            0x082029DC: 'RustboroCity_Gym_Text_RoxanneRegisterCall',
+            0x08202AB0: 'RustboroCity_Gym_Text_RegisteredRoxanne',
+            0x08202ACB: 'RustboroCity_Gym_Text_RoxannePreRematch',
+            0x08202B2A: 'RustboroCity_Gym_Text_RoxanneRematchDefeat',
+            0x08202B41: 'RustboroCity_Gym_Text_RoxannePostRematch',
+            0x08202B8B: 'RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons',
+        },
+        'field_placeholders': {
+            0x08202830: {0x01: 'PLAYER'},
+            0x082029BA: {0x01: 'PLAYER'},
+            0x082029DC: {0x01: 'PLAYER'},
+        },
+        'external_labels': {
+            0x08242F10: 'Common_EventScript_ReadyPetalburgGymForBattle',
+            0x08242FCF: 'Common_EventScript_SetGymTrainers',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
+        },
+        'symbols': {
+            'vars': {
+                0x405A: 'VAR_RUSTBORO_CITY_STATE',
+                0x4085: 'VAR_PETALBURG_GYM_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'flags': {
+                0x0080: 'FLAG_ENABLE_ROXANNE_FIRST_CALL',
+                0x00A5: 'FLAG_RECEIVED_TM_ROCK_TOMB',
+                0x01D3: 'FLAG_ENABLE_ROXANNE_MATCH_CALL',
+                0x04F0: 'FLAG_DEFEATED_RUSTBORO_GYM',
+                0x0867: 'FLAG_BADGE01_GET',
+            },
+            'items': {0x0147: 'ITEM_TM_ROCK_TOMB'},
+            'trainers': {
+                0x0109: 'TRAINER_ROXANNE_1',
+                0x0140: 'TRAINER_JOSH',
+                0x0141: 'TRAINER_TOMMY',
+                0x023B: 'TRAINER_MARC',
+            },
+            'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     # Route101 retains four unreferenced movement records between the Birch
     # rescue scene and its local NPC scripts.  JP ROM bytes and boundaries are
@@ -6046,6 +6134,10 @@ def collapse_trainerbattle_macros(lines):
             out.append(('trainerbattle_single', ', '.join((trainer, parts[3], parts[4]))))
         elif battle_type == 'TRAINER_BATTLE_CONTINUE_SCRIPT' and len(parts) == 6:
             out.append(('trainerbattle_single', ', '.join((trainer, parts[3], parts[4], parts[5]))))
+        elif (battle_type == 'TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC'
+              and len(parts) == 6):
+            out.append(('trainerbattle_single', ', '.join(
+                (trainer, parts[3], parts[4], parts[5], 'NO_MUSIC'))))
         elif battle_type == 'TRAINER_BATTLE_DOUBLE' and len(parts) == 6:
             out.append(('trainerbattle_double', ', '.join((trainer, parts[3], parts[4], parts[5]))))
         elif battle_type == 'TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE' and len(parts) == 7:
@@ -6283,7 +6375,7 @@ def omit_default_macro_arguments(lines):
         args = [part.strip() for part in argstr.split(',')]
         if name == 'givemon' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
             argstr = ', '.join(args[:2])
-        elif name in ('checkitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
+        elif name in ('giveitem', 'checkitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
             argstr = args[0]
         out.append((name, argstr))
     return out
