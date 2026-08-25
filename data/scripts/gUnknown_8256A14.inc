@@ -96,4 +96,8 @@ PetalburgCity_EventScript_ItemEther:: @ 0x08256E18
 	finditem ITEM_ETHER
 	end
 
-	.incbin "baserom_jp.gba", 0x256e25, 0xc64
+MauvilleCity_EventScript_ItemXSpeed:: @ 0x08256E25
+	finditem ITEM_X_SPEED
+	end
+
+	.incbin "baserom_jp.gba", 0x256e32, 0xc57

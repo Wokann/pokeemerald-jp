@@ -109,6 +109,10 @@
 	@ Expose the map-local pokeemerald label for generated object events.
 	.globl MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan
 	.set MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan, 0x08254D6B
+	@ The Rollout tutor remains in the retained shared move-tutor byte block.
+	@ Export its pokeemerald map-event label without relocating the JP bytes.
+	.globl MauvilleCity_EventScript_RolloutTutor
+	.set MauvilleCity_EventScript_RolloutTutor, 0x0827689A
 	@ Shared Battle Tent text remains in its existing JP byte owners; expose
 	@ the matching US semantic labels for Slateport's map scripts.
 	.globl SlateportCity_BattleTentLobby_Text_WelcomeToBattleTent
