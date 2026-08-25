@@ -244,22 +244,16 @@ Route128_EventScript_Carlee::
 	end
 
 Route128_Text_ArchieWhatHappened: @ 0x081EF029
-	.globl gJPText_001EF029
-gJPText_001EF029:
 	.string "アオギリ“なんだ⋯⋯\n"
 	.string "この　ひどい　ありさまは⋯⋯？\p"
 	.string "おれは⋯⋯\n"
 	.string "とんでもない　まちがいを⋯⋯$"
 
 Route128_Text_ArchieIOnlyWanted: @ 0x081EF059
-	.globl gJPText_001EF059
-gJPText_001EF059:
 	.string "おれは⋯⋯\n"
 	.string "ただ⋯⋯$"
 
 Route128_Text_MaxieDoYouUnderstandNow: @ 0x081EF064
-	.globl gJPText_001EF064
-gJPText_001EF064:
 	.string "マツブサ“わかったか　アオギリ！\p"
 	.string "おまえの⋯⋯\n"
 	.string "いや　われわれの　したことが\l"
@@ -269,8 +263,6 @@ gJPText_001EF064:
 	.string "なんとか　しないとな！$"
 
 Route128_Text_MaxieResposibilityFallsToArchieAndMe: @ 0x081EF0C6
-	.globl gJPText_001EF0C6
-gJPText_001EF0C6:
 	.string "マツブサ“{PLAYER}　なにも　いうな\p"
 	.string "わたしに　アオギリを　せめる\n"
 	.string "しかくが　ないことは　わかっている⋯⋯\p"
@@ -283,22 +275,16 @@ gJPText_001EF0C6:
 	.string "わたしと　アオギリの　やくめ⋯⋯　か⋯⋯$"
 
 Route128_Text_MaxieThisDefiesBelief: @ 0x081EF171
-	.globl gJPText_001EF171
-gJPText_001EF171:
 	.string "マツブサ“それにしても⋯⋯\p"
 	.string "ちょう　こだいポケモン⋯⋯\n"
 	.string "なんという　パワーだ\l"
 	.string "すべての　バランスが　くずれたぞ⋯⋯$"
 
 Route128_Text_StevenWhatIsHappening: @ 0x081EF1AB
-	.globl gJPText_001EF1AB
-gJPText_001EF1AB:
 	.string "ダイゴ“{PLAYER}{KUN}！\n"
 	.string "これは　いったい⋯⋯？$"
 
 Route128_Text_StevenWholeWorldWillDrown: @ 0x081EF1C1
-	.globl gJPText_001EF1C1
-gJPText_001EF1C1:
 	.string "⋯⋯ひどいな\p"
 	.string "さっきは　はげしい　ひでり　だったのに\n"
 	.string "また　おおあめが　ふりはじめている\p"
@@ -313,8 +299,6 @@ gJPText_001EF1C1:
 	.string "ルネに　いけば　わかるか⋯⋯$"
 
 Route128_Text_StevenImGoingToSootopolis: @ 0x081EF277
-	.globl gJPText_001EF277
-gJPText_001EF277:
 	.string "{PLAYER}{KUN}⋯⋯\n"
 	.string "きみが　なにを　する　つもりか\l"
 	.string "わからないけど　ムリだけは　するなよ\p"
