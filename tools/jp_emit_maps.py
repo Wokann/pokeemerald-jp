@@ -70,6 +70,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House2': 3,
     'SootopolisCity_House3': 3,
     'SootopolisCity_House4': 3,
+    'SootopolisCity_House5': 2,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -116,6 +117,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House2': 3,
     'SootopolisCity_House3': 4,
     'SootopolisCity_House4': 3,
+    'SootopolisCity_House5': 2,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8399,6 +8401,12 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'species': {0x00B8: 'SPECIES_AZUMARILL'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
         },
+    },
+    # House 5 is the immediately following physical owner. Its two NPC
+    # messages follow the matching US source order without JP-only commands.
+    'SootopolisCity_House5': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 
