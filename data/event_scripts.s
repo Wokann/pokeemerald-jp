@@ -782,7 +782,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MossdeepCity_Mart/scripts.inc"
 	.include "data/maps/MossdeepCity_House3/scripts.inc"
 	.include "data/maps/MossdeepCity_StevensHouse/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20cc5b, 0x102
+	.include "data/maps/MossdeepCity_House4/scripts.inc"
 	.include "data/maps/MossdeepCity_SpaceCenter_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20cff6, 0x68c
 	.include "data/maps/MossdeepCity_SpaceCenter_2F/scripts.inc"

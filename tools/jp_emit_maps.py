@@ -57,6 +57,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_Mart': 4,
     'MossdeepCity_House3': 3,
     'MossdeepCity_StevensHouse': 17,
+    'MossdeepCity_House4': 5,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -84,6 +85,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_Mart': 3,
     'MossdeepCity_House3': 5,
     'MossdeepCity_StevensHouse': 9,
+    'MossdeepCity_House4': 5,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7880,6 +7882,30 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
             'sounds': {0x0015: 'SE_PIN'},
             'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
+        },
+    },
+})
+
+# House 4 starts immediately at the byte following Stevens House. Its five
+# scripts and five messages align one-to-one with the US source; the JP cry
+# wait uses the existing byte-exact command alias documented for House 2.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_House4': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x0820CCA2: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'field_placeholders': {
+            0x0820CD10: {0x02: 'STR_VAR_1'},
+        },
+        'symbols': {
+            'flags': {0x0864: 'FLAG_SYS_GAME_CLEAR'},
+            'vars': {0x800D: 'VAR_RESULT'},
+            'var_values': {0x800D: {0x0: 'FALSE'}},
+            'species': {0x013B: 'SPECIES_SKITTY'},
+            'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
+            'booleans': {0x0: 'FALSE'},
         },
     },
 })

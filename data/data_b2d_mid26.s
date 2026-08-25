@@ -2084,18 +2084,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MossdeepCity_StevensHouse/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_STEVENS_HOUSE
 	.set gMapEvents_MOSSDEEP_CITY_STEVENS_HOUSE, MossdeepCity_StevensHouse_MapEvents
-	.globl MOSSDEEP_CITY_HOUSE4_EventObjects
-MOSSDEEP_CITY_HOUSE4_EventObjects: @ 0x0850B3D8
-	object_event 1, 20, 0, 3, 4, 3, 9, 0, 0, 0, 0, 0x0820CC5C, 0x0000
-	object_event 2, 5, 0, 6, 6, 3, 5, 1, 0, 0, 0, 0x0820CC7B, 0x0000
-	object_event 3, 203, 0, 2, 4, 3, 1, 1, 1, 0, 0, 0x0820CCA2, 0x0000
-	.globl MOSSDEEP_CITY_HOUSE4_EventWarps
-MOSSDEEP_CITY_HOUSE4_EventWarps: @ 0x0850B420
-	warp_def 4, 7, 0, 7, MAP_MOSSDEEP_CITY
-	warp_def 3, 7, 0, 7, MAP_MOSSDEEP_CITY
+	.include "data/maps/MossdeepCity_House4/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_HOUSE4
-gMapEvents_MOSSDEEP_CITY_HOUSE4: @ 0x0850B430
-	map_events MOSSDEEP_CITY_HOUSE4_EventObjects, MOSSDEEP_CITY_HOUSE4_EventWarps, 0, 0
+	.set gMapEvents_MOSSDEEP_CITY_HOUSE4, MossdeepCity_House4_MapEvents
 	.globl MOSSDEEP_CITY_SPACE_CENTER_1F_EventObjects
 MOSSDEEP_CITY_SPACE_CENTER_1F_EventObjects: @ 0x0850B444
 	object_event 1, 46, 0, 7, 2, 3, 7, 0, 0, 0, 0, MossdeepCity_SpaceCenter_1F_EventScript_0020CDF4, 0x0000
