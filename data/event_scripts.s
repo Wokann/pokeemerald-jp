@@ -331,6 +331,12 @@
 	.set MossdeepCity_EventScript_DynamicPunchTutor, 0x08276B0A
 	.globl ProfBirch_EventScript_RatePokedexOrRegister
 	.set ProfBirch_EventScript_RatePokedexOrRegister, 0x082431CD
+	@ Champion-room story code calls this retained standalone Pokédex rating branch.
+	.globl ProfBirch_EventScript_RatePokedex
+	.set ProfBirch_EventScript_RatePokedex, 0x08243207
+	@ The four-step shared player approach remains in the retained movement block.
+	.globl Common_Movement_WalkUp4
+	.set Common_Movement_WalkUp4, 0x08243644
 	.globl Common_EventScript_NameReceivedPartyMon
 	.set Common_EventScript_NameReceivedPartyMon, 0x08243460
 	.globl gText_PokemonTrainerSchoolEmail
@@ -839,7 +845,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/EverGrandeCity_GlaciasRoom/scripts.inc"
 	.include "data/maps/EverGrandeCity_DrakesRoom/scripts.inc"
 	.include "data/maps/EverGrandeCity_ChampionsRoom/scripts.inc"
-	.incbin "baserom_jp.gba", 0x210921, 0x74a
 	.include "data/maps/EverGrandeCity_Hall1/scripts.inc"
 	.include "data/maps/EverGrandeCity_Hall2/scripts.inc"
 	.include "data/maps/EverGrandeCity_Hall3/scripts.inc"

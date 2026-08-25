@@ -94,6 +94,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Drake's retained local OnWarp table plus nine following entries map
     # one-to-one to the reviewed US owner, despite the header reusing Sidney.
     'EverGrandeCity_DrakesRoom': 10,
+    # The Champion's room has sixteen reviewed map and story script entries.
+    'EverGrandeCity_ChampionsRoom': 16,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -106,6 +108,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'EverGrandeCity_PhoebesRoom': ('OnLoad', 'OnWarp'),
     'EverGrandeCity_GlaciasRoom': ('OnLoad', 'OnWarp'),
     'EverGrandeCity_DrakesRoom': ('OnLoad', 'OnWarp'),
+    'EverGrandeCity_ChampionsRoom': ('OnWarp',),
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -154,6 +157,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_PhoebesRoom': 3,
     'EverGrandeCity_GlaciasRoom': 3,
     'EverGrandeCity_DrakesRoom': 3,
+    'EverGrandeCity_ChampionsRoom': 13,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8822,6 +8826,71 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+    # The Champion's room is the next physical owner.  Its complete local
+    # sequence was checked against the US source, including gender-specific
+    # rival text and the shared common movement/script references.
+    'EverGrandeCity_ChampionsRoom': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08242F63: 'Common_EventScript_SetupRivalGfxId',
+            0x08243207: 'ProfBirch_EventScript_RatePokedex',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x08243644: 'Common_Movement_WalkUp4',
+        },
+        'field_placeholders': {
+            0x08210B2D: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x08210C82: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x08210D9B: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x08210DC2: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x08210DED: {0x01: 'PLAYER'},
+            0x08210E1C: {0x01: 'PLAYER'},
+            0x08210E3F: {0x01: 'PLAYER', 0x05: 'KUN', 0x06: 'RIVAL'},
+            0x08210F33: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x08210FD2: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x08211025: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'flags': {
+                0x030D: 'FLAG_HIDE_PETALBURG_GYM_GREETER',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x800D: 'VAR_RESULT',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_CHAMPIONS_ROOM_WALLACE',
+                0x02: 'LOCALID_CHAMPIONS_ROOM_RIVAL',
+                0x03: 'LOCALID_CHAMPIONS_ROOM_BIRCH',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {0x02: 'DIR_NORTH'},
+            'songs': {
+                0x019F: 'MUS_ENCOUNTER_MAY',
+                0x01A5: 'MUS_ENCOUNTER_BRENDAN',
+                0x01C6: 'MUS_ENCOUNTER_CHAMPION',
+            },
+            'sounds': {0x08: 'SE_DOOR', 0x15: 'SE_PIN'},
+            'trainers': {0x014F: 'TRAINER_WALLACE'},
+            'booleans': {0x00: 'FALSE'},
+            'metatiles': {
+                0x0346: 'METATILE_EliteFour_OpenDoorChampion_Frame',
+                0x0347: 'METATILE_EliteFour_OpenDoorChampion_Opening',
+            },
+            'maps': {0x100B: 'MAP_EVER_GRANDE_CITY_HALL_OF_FAME'},
+            'map_script_values': {0x4001: {0x00: '0'}},
+            'script_var_values': {
+                0x082108FF: {0x4001: {0x01: '1'}},
+                0x08210942: {0x800D: {0x00: 'MALE', 0x01: 'FEMALE'}},
+                0x08210A11: {0x800D: {0x00: 'MALE', 0x01: 'FEMALE'}},
+            },
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9217,6 +9286,17 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     'SootopolisCity_MysteryEventsHouse_B1F': {
         0x082101D8: 'SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerEnterBasement',
         0x082101DE: 'SootopolisCity_MysteryEventsHouse_B1F_Movement_PlayerExitBasement',
+    },
+    'EverGrandeCity_ChampionsRoom': {
+        0x08210923: 'EverGrandeCity_ChampionsRoom_Movement_PlayerApproachWallace',
+        0x08210AFE: 'EverGrandeCity_ChampionsRoom_Movement_PlayerExitStart',
+        0x08210B01: 'EverGrandeCity_ChampionsRoom_Movement_PlayerExit',
+        0x08210B07: 'EverGrandeCity_ChampionsRoom_Movement_RivalApproachPlayer',
+        0x08210B10: 'EverGrandeCity_ChampionsRoom_Movement_RivalLookBackAndForth',
+        0x08210B19: 'EverGrandeCity_ChampionsRoom_Movement_RivalFollows',
+        0x08210B1C: 'EverGrandeCity_ChampionsRoom_Movement_WallaceExitStart',
+        0x08210B20: 'EverGrandeCity_ChampionsRoom_Movement_WallaceExit',
+        0x08210B24: 'EverGrandeCity_ChampionsRoom_Movement_BirchArrives',
     },
 })
 
