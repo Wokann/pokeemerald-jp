@@ -197,6 +197,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Rout
 	LilycoveCity_House4 \
 	LilycoveCity_DepartmentStore_1F \
 	LilycoveCity_DepartmentStore_2F \
+	LilycoveCity_DepartmentStore_3F \
 	MossdeepCity \
 	SootopolisCity \
 	EverGrandeCity \

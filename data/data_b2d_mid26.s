@@ -2045,21 +2045,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_DepartmentStore_2F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_2F
 	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_2F, LilycoveCity_DepartmentStore_2F_MapEvents
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_3F_EventObjects
-LILYCOVE_CITY_DEPARTMENT_STORE_3F_EventObjects: @ 0x0850A92C
-	object_event 1, 51, 0, 0, 5, 3, 2, 1, 1, 0, 0, 0x0820AA6E, 0x0000
-	object_event 2, 25, 0, 7, 7, 3, 2, 1, 1, 0, 0, 0x0820AA77, 0x0000
-	object_event 3, 34, 0, 13, 5, 3, 2, 1, 1, 0, 0, 0x0820AA80, 0x0000
-	object_event 4, 24, 0, 8, 2, 3, 8, 0, 0, 0, 0, 0x0820AA1A, 0x0000
-	object_event 5, 24, 0, 10, 2, 3, 8, 1, 1, 0, 0, 0x0820AA44, 0x0000
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_3F_EventWarps
-LILYCOVE_CITY_DEPARTMENT_STORE_3F_EventWarps: @ 0x0850A9A4
-	warp_def 13, 1, 0, 1, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_2F
-	warp_def 16, 1, 0, 0, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_4F
-	warp_def 2, 1, 0, 0, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
+	.include "data/maps/LilycoveCity_DepartmentStore_3F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_3F
-gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_3F: @ 0x0850A9BC
-	map_events LILYCOVE_CITY_DEPARTMENT_STORE_3F_EventObjects, LILYCOVE_CITY_DEPARTMENT_STORE_3F_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_3F, LilycoveCity_DepartmentStore_3F_MapEvents
 	.globl LILYCOVE_CITY_DEPARTMENT_STORE_4F_EventObjects
 LILYCOVE_CITY_DEPARTMENT_STORE_4F_EventObjects: @ 0x0850A9D0
 	object_event 1, 48, 0, 0, 2, 3, 2, 1, 1, 0, 0, 0x0820AB4F, 0x0000

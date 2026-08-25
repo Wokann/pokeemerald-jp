@@ -45,6 +45,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_House2': 2,
     'LilycoveCity_House3': 12,
     'LilycoveCity_DepartmentStore_2F': 5,
+    'LilycoveCity_DepartmentStore_3F': 5,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -60,6 +61,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_House2': 2,
     'LilycoveCity_House3': 8,
     'LilycoveCity_DepartmentStore_2F': 3,
+    'LilycoveCity_DepartmentStore_3F': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7294,6 +7296,32 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Department Store 3F immediately follows 2F in the same raw owner. Its two
+# clerks, three NPCs, two shop lists, and three texts match the US map source
+# in physical order.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_DepartmentStore_3F': {
+        'scripts': {
+            0x0820AA1A: 'LilycoveCity_DepartmentStore_3F_EventScript_ClerkLeft',
+            0x0820AA44: 'LilycoveCity_DepartmentStore_3F_EventScript_ClerkRight',
+            0x0820AA6E: 'LilycoveCity_DepartmentStore_3F_EventScript_TriathleteM',
+            0x0820AA77: 'LilycoveCity_DepartmentStore_3F_EventScript_PokefanM',
+            0x0820AA80: 'LilycoveCity_DepartmentStore_3F_EventScript_Woman',
+        },
+        'texts': {
+            0x0820AA89: 'LilycoveCity_DepartmentStore_3F_Text_ItemsBestForTougheningPokemon',
+            0x0820AADA: 'LilycoveCity_DepartmentStore_3F_Text_WantMoreEndurance',
+            0x0820AB2C: 'LilycoveCity_DepartmentStore_3F_Text_GaveCarbosToSpeedUpMon',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'LilycoveCity_DepartmentStore_2F': (
         (0x0820A953, 'LilycoveCity_DepartmentStore_2F_Pokemart1', (
@@ -7320,6 +7348,28 @@ MAP_POKEMART_LISTS.update({
             'ITEM_MAX_REPEL',
             'ITEM_WAVE_MAIL',
             'ITEM_MECH_MAIL',
+        )),
+    ),
+})
+
+MAP_POKEMART_LISTS.update({
+    'LilycoveCity_DepartmentStore_3F': (
+        (0x0820AA31, 'LilycoveCity_DepartmentStore_3F_Pokemart_Vitamins', (
+            'ITEM_PROTEIN',
+            'ITEM_CALCIUM',
+            'ITEM_IRON',
+            'ITEM_ZINC',
+            'ITEM_CARBOS',
+            'ITEM_HP_UP',
+        )),
+        (0x0820AA5B, 'LilycoveCity_DepartmentStore_3F_Pokemart_StatBoosters', (
+            'ITEM_X_SPEED',
+            'ITEM_X_SPECIAL',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
+            'ITEM_DIRE_HIT',
+            'ITEM_GUARD_SPEC',
+            'ITEM_X_ACCURACY',
         )),
     ),
 })
