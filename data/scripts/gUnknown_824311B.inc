@@ -98,7 +98,11 @@ ProfBirch_EventScript_UpdateLocation:: @ 0x08243139
 	applymovement 0x8004, 0x8243273
 	waitmovement 0x0
 	return
-	.incbin "baserom_jp.gba", 0x243273, 0x3A8
+	.incbin "baserom_jp.gba", 0x243273, 0x8
+
+	.globl EventScript_HideMrBriney
+EventScript_HideMrBriney:: @ 0x0824327B
+	.incbin "baserom_jp.gba", 0x24327b, 0x3a0
 
 Common_Movement_ExclamationMark: @ 0x0824361B
 	emote_exclamation_mark

@@ -1482,7 +1482,7 @@ __attribute__((naked)) void MauvilleGymDeactivatePuzzle(void)
     );
 }
 
-__attribute__((naked)) void PetalburgGymSpecial1(void)
+__attribute__((naked)) void PetalburgGymSlideOpenRoomDoors(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1722,7 +1722,7 @@ __attribute__((naked)) void PetalburgGymFunc(void)
     );
 }
 
-__attribute__((naked)) void PetalburgGymSpecial2(void)
+__attribute__((naked)) void PetalburgGymUnlockRoomDoors(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -1755,17 +1755,19 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/PetalburgCity_WallysHouse/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_WALLYS_HOUSE
 	.set gMapEvents_PETALBURG_CITY_WALLYS_HOUSE, PetalburgCity_WallysHouse_MapEvents
+	@ Petalburg Gym events remain in this legacy owner until their separate
+	@ map.json/events.inc migration; keep every script pointer semantic here.
 	.globl PETALBURG_CITY_GYM_EventObjects
 PETALBURG_CITY_GYM_EventObjects: @ 0x085074F4
-	object_event 1, 129, 0, 4, 2, 0, 8, 0, 0, 0, 0, PetalburgCity_Gym_EventScript_001F8688, 0x0304
-	object_event 2, 34, 0, 4, 94, 3, 8, 0, 0, 1, 0, 0x081F9141, 0x0000
-	object_event 3, 33, 0, 4, 81, 3, 8, 0, 0, 1, 0, 0x081F9051, 0x0000
-	object_event 4, 33, 0, 4, 42, 3, 8, 0, 0, 1, 0, 0x081F908D, 0x0000
-	object_event 5, 34, 0, 4, 55, 3, 8, 0, 0, 1, 0, 0x081F917D, 0x0000
-	object_event 6, 33, 0, 4, 68, 3, 8, 0, 0, 1, 0, 0x081F90C9, 0x0000
-	object_event 7, 34, 0, 4, 16, 3, 8, 0, 0, 1, 0, 0x081F91B9, 0x0000
-	object_event 8, 33, 0, 4, 29, 3, 8, 0, 0, 1, 0, 0x081F9105, 0x0000
-	object_event 9, 23, 0, 3, 109, 3, 8, 0, 0, 0, 0, PetalburgCity_Gym_EventScript_001F93E6, 0x030D
+	object_event 1, 129, 0, 4, 2, 0, 8, 0, 0, 0, 0, PetalburgCity_Gym_EventScript_Norman, 0x0304
+	object_event 2, 34, 0, 4, 94, 3, 8, 0, 0, 1, 0, PetalburgCity_Gym_EventScript_Mary, 0x0000
+	object_event 3, 33, 0, 4, 81, 3, 8, 0, 0, 1, 0, PetalburgCity_Gym_EventScript_Randall, 0x0000
+	object_event 4, 33, 0, 4, 42, 3, 8, 0, 0, 1, 0, PetalburgCity_Gym_EventScript_Parker, 0x0000
+	object_event 5, 34, 0, 4, 55, 3, 8, 0, 0, 1, 0, PetalburgCity_Gym_EventScript_Alexia, 0x0000
+	object_event 6, 33, 0, 4, 68, 3, 8, 0, 0, 1, 0, PetalburgCity_Gym_EventScript_George, 0x0000
+	object_event 7, 34, 0, 4, 16, 3, 8, 0, 0, 1, 0, PetalburgCity_Gym_EventScript_Jody, 0x0000
+	object_event 8, 33, 0, 4, 29, 3, 8, 0, 0, 1, 0, PetalburgCity_Gym_EventScript_Berke, 0x0000
+	object_event 9, 23, 0, 3, 109, 3, 8, 0, 0, 0, 0, PetalburgCity_Gym_EventScript_GymGuide, 0x030D
 	object_event 10, 135, 0, 4, 111, 3, 7, 0, 0, 0, 0, 0x00000000, 0x0362
 	object_event 11, 25, 0, 1, 7, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0338
 	.globl PETALBURG_CITY_GYM_EventWarps
@@ -1810,20 +1812,20 @@ PETALBURG_CITY_GYM_EventWarps: @ 0x085075FC
 	warp_def 6, 7, 3, 33, MAP_PETALBURG_CITY_GYM
 	.globl PETALBURG_CITY_GYM_EventBgEvents
 PETALBURG_CITY_GYM_EventBgEvents: @ 0x0850772C
-	bg_event 1, 105, 3, 0, PetalburgCity_Gym_EventScript_001F8DCE, 0, 0
-	bg_event 7, 105, 3, 0, PetalburgCity_Gym_EventScript_001F8E1E, 0, 0
-	bg_event 1, 79, 3, 0, PetalburgCity_Gym_EventScript_001F8E53, 0, 0
-	bg_event 7, 79, 3, 0, PetalburgCity_Gym_EventScript_001F8E86, 0, 0
-	bg_event 1, 92, 3, 0, PetalburgCity_Gym_EventScript_001F8EB9, 0, 0
-	bg_event 7, 92, 3, 0, PetalburgCity_Gym_EventScript_001F8EEC, 0, 0
-	bg_event 7, 40, 3, 0, PetalburgCity_Gym_EventScript_001F8F1F, 0, 0
-	bg_event 1, 53, 3, 0, PetalburgCity_Gym_EventScript_001F8F52, 0, 0
-	bg_event 7, 53, 3, 0, PetalburgCity_Gym_EventScript_001F8F85, 0, 0
-	bg_event 1, 66, 3, 0, PetalburgCity_Gym_EventScript_001F8FB8, 0, 0
-	bg_event 7, 14, 3, 0, PetalburgCity_Gym_EventScript_001F8FEB, 0, 0
-	bg_event 1, 27, 3, 0, PetalburgCity_Gym_EventScript_001F901E, 0, 0
-	bg_event 1, 110, 3, 1, PetalburgCity_Gym_EventScript_001F9405, 0, 0
-	bg_event 7, 110, 3, 1, PetalburgCity_Gym_EventScript_001F9415, 0, 0
+	bg_event 1, 105, 3, 0, PetalburgCity_Gym_EventScript_SpeedRoomDoor, 0, 0
+	bg_event 7, 105, 3, 0, PetalburgCity_Gym_EventScript_AccuracyRoomDoor, 0, 0
+	bg_event 1, 79, 3, 0, PetalburgCity_Gym_EventScript_ConfusionRoomDoor, 0, 0
+	bg_event 7, 79, 3, 0, PetalburgCity_Gym_EventScript_LeftDefenseRoomDoor, 0, 0
+	bg_event 1, 92, 3, 0, PetalburgCity_Gym_EventScript_RightDefenseRoomDoor, 0, 0
+	bg_event 7, 92, 3, 0, PetalburgCity_Gym_EventScript_RecoveryRoomDoor, 0, 0
+	bg_event 7, 40, 3, 0, PetalburgCity_Gym_EventScript_LeftStrengthRoomDoor, 0, 0
+	bg_event 1, 53, 3, 0, PetalburgCity_Gym_EventScript_RightStrengthRoomDoor, 0, 0
+	bg_event 7, 53, 3, 0, PetalburgCity_Gym_EventScript_LeftOHKORoomDoor, 0, 0
+	bg_event 1, 66, 3, 0, PetalburgCity_Gym_EventScript_RightOHKORoomDoor, 0, 0
+	bg_event 7, 14, 3, 0, PetalburgCity_Gym_EventScript_LeftGymLeadersRoomDoor, 0, 0
+	bg_event 1, 27, 3, 0, PetalburgCity_Gym_EventScript_RightGymLeadersRoomDoor, 0, 0
+	bg_event 1, 110, 3, 1, PetalburgCity_Gym_EventScript_LeftGymStatue, 0, 0
+	bg_event 7, 110, 3, 1, PetalburgCity_Gym_EventScript_RightGymStatue, 0, 0
 	.globl gMapEvents_PETALBURG_CITY_GYM
 gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	map_events PETALBURG_CITY_GYM_EventObjects, PETALBURG_CITY_GYM_EventWarps, 0, PETALBURG_CITY_GYM_EventBgEvents

@@ -1,7 +1,12 @@
 	compare_local_to_value 0x21, 0x1C
 	compare_var_to_value 0x3F00, 0xA2E
 	gotostd 0x13
-	.incbin "baserom_jp.gba", 0x263174, 0x677
+	.incbin "baserom_jp.gba", 0x263174, 0x64e
+PetalburgCity_Gym_Text_GiveEnigmaBerry: @ 0x082637C2
+	.string "パパ“やあ　{PLAYER}！\p"
+	.string "めずらしい　きのみを　てに　いれたから\n"
+	.string "プレゼント　するよ！$"
+
 Route104_Text_PlantBerriesInSoilTakeThis: @ 0x082637EB
 	.string "ふかふかの　つちに　はえている　きのみは\n"
 	.string "じゆうに　とっても　よいのじゃが⋯\p"

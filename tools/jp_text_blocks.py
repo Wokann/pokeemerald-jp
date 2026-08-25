@@ -44,6 +44,7 @@ class TextBlock:
     start: int
     end: int
     labels: dict[int, str]
+    field_placeholders: dict[int, dict[int, str]]
 
 
 def get_block(name: str) -> TextBlock:
@@ -56,6 +57,10 @@ def get_block(name: str) -> TextBlock:
         start = int(config["start"])
         end = int(config["end"])
         labels = dict(config["labels"])
+        field_placeholders = {
+            int(address): dict(names)
+            for address, names in config.get("field_placeholders", {}).items()
+        }
     except (KeyError, TypeError, ValueError) as error:
         raise TextBlockError(f"invalid configuration for {name}: {error}") from error
     if not source.is_file():
@@ -64,7 +69,7 @@ def get_block(name: str) -> TextBlock:
         raise TextBlockError(f"invalid ROM range for {name}: 0x{start:08X}-0x{end:08X}")
     if not labels:
         raise TextBlockError(f"{name} has no text labels")
-    return TextBlock(name, source, start, end, labels)
+    return TextBlock(name, source, start, end, labels, field_placeholders)
 
 
 def split_strings(source: str) -> list[str]:
@@ -89,7 +94,7 @@ def emit_block(block: TextBlock) -> str:
             )
         raw = emitter.ROM[pos - ROM_BASE:block.end - ROM_BASE]
         try:
-            decoded = codec.verify_one(raw)
+            decoded = codec.verify_one(raw, block.field_placeholders.get(pos))
         except (TextDecodeError, TextRoundTripError) as error:
             raise TextBlockError(f"{block.name}: text at 0x{pos:08X} is not lossless: {error}") from error
         next_pos = pos + decoded.consumed

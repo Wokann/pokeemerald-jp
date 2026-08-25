@@ -411,6 +411,20 @@ MAP_POKEMART_LISTS = {
 # the matching US text order have been checked.  jp_text_blocks.py reads this
 # same mapping, so source labels and map references cannot drift apart.
 VERIFIED_SHARED_TEXT_BLOCKS = {
+    # Petalburg Gym's Enigma Berry message lives in the shared berry-text
+    # owner.  Its sole dynamic field is the player name, as in the matching
+    # US Gym source, rather than a generic {STRING 0x01} placeholder.
+    'PetalburgCity_Gym_EnigmaBerry': {
+        'source': 'data/scripts/gUnknown_826316A.inc',
+        'start': 0x082637C2,
+        'end': 0x082637EB,
+        'labels': {
+            0x082637C2: 'PetalburgCity_Gym_Text_GiveEnigmaBerry',
+        },
+        'field_placeholders': {
+            0x082637C2: {0x01: 'PLAYER'},
+        },
+    },
     # Route104's berry-giver text is physically stored in the shared text
     # owner rather than beside its map scripts. The two EOS-terminated strings
     # and their callers were checked against the Route104 US script order.
@@ -5707,11 +5721,14 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081FA550: {0x01: 'PLAYER'},
             0x081FA586: {0x01: 'PLAYER'},
         },
+        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS[
+            'PetalburgCity_Gym_EnigmaBerry']['labels'],
         'external_labels': {
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
             0x082430EA: 'Common_EventScript_BagIsFull',
             0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
             0x08242FCF: 'Common_EventScript_SetGymTrainers',
+            0x0824327B: 'EventScript_HideMrBriney',
             0x0824361B: 'Common_Movement_ExclamationMark',
             0x0824361D: 'Common_Movement_Delay48',
             0x08243621: 'Common_Movement_FacePlayer',
@@ -5723,27 +5740,10 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         'specials': {
             'sub_0813B9D8': 'ResetHealLocationFromDewford',
         },
-        # These names are still referenced by the unmigrated Petalburg Gym
-        # BG-event table.  Keep them as global zero-byte aliases until that
-        # JSON/event-table migration can replace the legacy references.
-        'script_aliases': {
-            0x081F8688: ('PetalburgCity_Gym_EventScript_001F8688',),
-            0x081F8DCE: ('PetalburgCity_Gym_EventScript_001F8DCE',),
-            0x081F8E1E: ('PetalburgCity_Gym_EventScript_001F8E1E',),
-            0x081F8E53: ('PetalburgCity_Gym_EventScript_001F8E53',),
-            0x081F8E86: ('PetalburgCity_Gym_EventScript_001F8E86',),
-            0x081F8EB9: ('PetalburgCity_Gym_EventScript_001F8EB9',),
-            0x081F8EEC: ('PetalburgCity_Gym_EventScript_001F8EEC',),
-            0x081F8F1F: ('PetalburgCity_Gym_EventScript_001F8F1F',),
-            0x081F8F52: ('PetalburgCity_Gym_EventScript_001F8F52',),
-            0x081F8F85: ('PetalburgCity_Gym_EventScript_001F8F85',),
-            0x081F8FB8: ('PetalburgCity_Gym_EventScript_001F8FB8',),
-            0x081F8FEB: ('PetalburgCity_Gym_EventScript_001F8FEB',),
-            0x081F901E: ('PetalburgCity_Gym_EventScript_001F901E',),
-            0x081F93E6: ('PetalburgCity_Gym_EventScript_001F93E6',),
-            0x081F9405: ('PetalburgCity_Gym_EventScript_001F9405',),
-            0x081F9415: ('PetalburgCity_Gym_EventScript_001F9415',),
-        },
+        # data_b2d_mid26.s now uses the canonical map labels directly.
+        # Do not retain address-derived aliases when this source is regenerated.
+        'preserve_region_script_aliases': False,
+        'implicit_waitstate_specials': ('PetalburgGymSlideOpenRoomDoors',),
         'symbols': {
             'vars': {
                 0x402D: 'VAR_ENIGMA_BERRY_AVAILABLE',
@@ -5786,7 +5786,11 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             },
             'items': {
                 0x00AF: 'ITEM_ENIGMA_BERRY',
-                0x014A: 'ITEM_TM42',
+                0x014A: 'ITEM_TM_FACADE',
+            },
+            'metatiles': {
+                0x0210: 'METATILE_PetalburgGym_RoomEntrance_Left',
+                0x0211: 'METATILE_PetalburgGym_RoomEntrance_Right',
             },
             'maps': {
                 0x0000: 'MAP_PETALBURG_CITY',
@@ -5798,7 +5802,20 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
                 0x000B: 'LOCALID_PETALBURG_GYM_WALLYS_DAD',
                 0x00FF: 'LOCALID_PLAYER',
             },
-            'directions': {0x02: 'DIR_NORTH'},
+            'directions': {
+                0x01: 'DIR_SOUTH',
+                0x02: 'DIR_NORTH',
+                0x03: 'DIR_WEST',
+                0x04: 'DIR_EAST',
+            },
+            'switch_values': {
+                'VAR_FACING': {
+                    0x01: 'DIR_SOUTH',
+                    0x02: 'DIR_NORTH',
+                    0x03: 'DIR_WEST',
+                    0x04: 'DIR_EAST',
+                },
+            },
             'songs': {0x01A4: 'MUS_FOLLOW_ME'},
             'sounds': {0x08: 'SE_DOOR', 0x09: 'SE_EXIT', 0x15: 'SE_PIN'},
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
@@ -6783,6 +6800,14 @@ def collapse_condition_macros(lines):
                                 '%s, %s' % (argstr, next_parts[1])))
                     index += 2
                     continue
+            if (name == 'checktrainerflag' and next_name in ('goto_if', 'call_if')
+                    and len(next_parts) == 2):
+                suffix = {0: 'not_defeated', 1: 'defeated'}.get(condition)
+                if suffix is not None:
+                    out.append(('%s_if_%s' % (next_name[:-3], suffix),
+                                '%s, %s' % (argstr, next_parts[1])))
+                    index += 2
+                    continue
             if (name in ('compare_var_to_value', 'compare_var_to_var')
                     and next_name in ('goto_if', 'call_if')
                     and len(parts) == 2 and len(next_parts) == 2):
@@ -6804,13 +6829,14 @@ def collapse_condition_macros(lines):
     return out
 
 
-def collapse_switch_macros(lines):
+def collapse_switch_macros(lines, value_names=None):
     """Restore byte-proven ``switch``/``case`` dispatch tables.
 
     The script macros expand to a copy into VAR_0x8000 followed by one
     goto_if_eq per case. Require at least two consecutive cases so ordinary
     one-off comparisons retain their direct conditional form.
     """
+    value_names = value_names or {}
     out = []
     index = 0
     while index < len(lines):
@@ -6831,8 +6857,10 @@ def collapse_switch_macros(lines):
                     numeric = int(value, 0)
                 except ValueError:
                     numeric = None
-                if numeric is not None and 0 <= numeric <= 9:
-                    value = str(numeric)
+                if numeric is not None:
+                    value = value_names.get(args[1], {}).get(numeric, value)
+                    if value == case_args[1] and 0 <= numeric <= 9:
+                        value = str(numeric)
                 cases.append((value, case_args[2]))
                 cursor += 1
             if len(cases) >= 2:
@@ -6890,7 +6918,9 @@ def name_contextual_result_conditions(lines):
             replace_condition(index + 1, result_names)
             replace_condition(index + 2, result_names)
             replace_condition(index + 3, result_names)
-        elif name == 'checkitem':
+        elif name in ('checkitem', 'checkpcitem'):
+            replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
+        elif name == 'specialvar' and argstr == 'VAR_RESULT, IsEnigmaBerryValid':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
         elif name == 'giveitem':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
@@ -6937,6 +6967,7 @@ LOCAL_ID_ARGUMENTS = {
 }
 MAP_ARGUMENTS = {
     'setdivewarp': {0},
+    'warpdoor': {0},
     'addobject_at': {1},
     'applymovement_at': {2},
     'hideobject_at': {1},
@@ -6952,7 +6983,7 @@ def collapse_coordinate_warp_macros(lines):
     """Use the canonical three-argument form for coordinate-only warps."""
     out = []
     for name, argstr in lines:
-        if name in ('setdivewarp', 'warp'):
+        if name in ('setdivewarp', 'warp', 'warpdoor'):
             args = [arg.strip() for arg in argstr.split(',')]
             if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
                 argstr = ', '.join((args[0], args[2], args[3]))
@@ -7019,7 +7050,7 @@ def omit_default_macro_arguments(lines):
         args = [part.strip() for part in argstr.split(',')]
         if name == 'givemon' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
             argstr = ', '.join(args[:2])
-        elif name in ('giveitem', 'checkitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
+        elif name in ('giveitem', 'checkitem', 'checkpcitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
             argstr = args[0]
         out.append((name, argstr))
     return out
@@ -7028,6 +7059,7 @@ def omit_default_macro_arguments(lines):
 ITEM_ARGUMENTS = {
     'giveitem': {0},
     'checkitem': {0},
+    'checkpcitem': {0},
     'removeitem': {0},
     'bufferitemname': {1},
 }
@@ -7044,6 +7076,10 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('flags', {}).get(value)
         if name == 'trainerbattle' and index == 1:
             return symbols.get('trainers', {}).get(value)
+        if name == 'checktrainerflag' and index == 0:
+            return symbols.get('trainers', {}).get(value)
+        if name == 'warpdoor' and index in (1, 2, 3):
+            return symbols.get('vars', {}).get(value)
         if index in VARIABLE_ARGUMENTS.get(name, ()):
             return symbols.get('vars', {}).get(value)
         # The meaning of a comparison value is defined by the variable it is
@@ -7137,6 +7173,34 @@ def semantic_symbol_formatter(mname, script_addr=None):
         return None
 
     return format_symbol
+
+
+def omit_implicit_special_waitstates(lines, implicit_specials):
+    """Do not re-emit a waitstate already supplied by a reviewed special.
+
+    ``special`` injects its own waitstate when the matching ``def_special``
+    entry says so.  Keeping the decoded explicit byte would assemble exactly,
+    but leaves a warning-only redundant line and diverges from the US source.
+    This map-local allowlist is used only after the special table itself has
+    been checked against the JP byte stream.
+    """
+    implicit_specials = set(implicit_specials)
+    if not implicit_specials:
+        return lines
+    out = []
+    index = 0
+    while index < len(lines):
+        name, argstr = lines[index]
+        if (name in ('special', 'specialvar')
+                and argstr.rsplit(',', 1)[-1].strip() in implicit_specials
+                and index + 1 < len(lines)
+                and lines[index + 1][0] == 'waitstate'):
+            out.append((name, argstr))
+            index += 2
+            continue
+        out.append((name, argstr))
+        index += 1
+    return out
 
 
 def semantic_map_variable(mname, value):
@@ -7348,6 +7412,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     field_placeholders = semantic.get('field_placeholders', {})
     special_aliases = semantic.get('specials', {})
     script_aliases = semantic.get('script_aliases', {})
+    preserve_region_script_aliases = semantic.get('preserve_region_script_aliases', True)
+    implicit_waitstate_specials = semantic.get('implicit_waitstate_specials', ())
     shop_lists = {}
     for raw_start, label, products in MAP_POKEMART_LISTS.get(mname, ()):
         data_start = (raw_start + 3) & ~3
@@ -7591,7 +7657,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             addr = payload
             old = region_labels.get(addr) if addr not in std_addrs else None
             aliases = []
-            if old and old != label_map[addr]:
+            if (preserve_region_script_aliases
+                    and old and old != label_map[addr]):
                 aliases.append(old)
             aliases.extend(script_aliases.get(addr, ()))
             for alias in dict.fromkeys(aliases):
@@ -7610,10 +7677,14 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_trainerbattle_macros(decoded_lines)
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)
             decoded_lines = collapse_condition_macros(decoded_lines)
-            decoded_lines = collapse_switch_macros(decoded_lines)
+            decoded_lines = collapse_switch_macros(
+                decoded_lines,
+                semantic.get('symbols', {}).get('switch_values', {}))
             decoded_lines = collapse_coordinate_warp_macros(decoded_lines)
             decoded_lines = collapse_giveitem_macros(decoded_lines)
             decoded_lines = collapse_givedecoration_macros(decoded_lines)
+            decoded_lines = omit_implicit_special_waitstates(
+                decoded_lines, implicit_waitstate_specials)
             decoded_lines = omit_default_macro_arguments(decoded_lines)
             decoded_lines = name_contextual_result_conditions(decoded_lines)
             for name, argstr in decoded_lines:
