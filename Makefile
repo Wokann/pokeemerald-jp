@@ -69,7 +69,7 @@ C_OBJECTS += $(C_BUILDDIR)/pokenav_conditions_gfx_tail.o
 # Maps already migrated to the canonical map.json event-data structure.
 # The event-only mode keeps this first slice reproducible while the complete
 # JP layouts.json and map header/connection tables are migrated separately.
-JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Route107 Route123 Route124 Route125 Route126 Route127 Route128 Route129 Route130 Route131 Route132 Route133 Route134 \
+JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Route107 Route108 Route123 Route124 Route125 Route126 Route127 Route128 Route129 Route130 Route131 Route132 Route133 Route134 \
 	Underwater_Route105 Underwater_Route124 Underwater_Route125 Underwater_Route126 \
 	Underwater_Route127 Underwater_Route128 Underwater_Route129 Underwater_Route134 \
 	LittlerootTown_BrendansHouse_1F LittlerootTown_BrendansHouse_2F \

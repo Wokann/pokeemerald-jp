@@ -42,7 +42,11 @@ Route106_EventScript_ItemProtein:: @ 0x08256A97
 	finditem ITEM_PROTEIN
 	end
 
-	.incbin "baserom_jp.gba", 0x256aa4, 0x263
+Route108_EventScript_ItemStarPiece:: @ 0x08256AA4
+	finditem ITEM_STAR_PIECE
+	end
+
+	.incbin "baserom_jp.gba", 0x256ab1, 0x256
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM

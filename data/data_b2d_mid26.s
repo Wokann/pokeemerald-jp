@@ -744,24 +744,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route107/events.inc"
 	.globl gMapEvents_ROUTE107
 	.set gMapEvents_ROUTE107, Route107_MapEvents
-	.globl ROUTE108_EventObjects
-ROUTE108_EventObjects: @ 0x08501070
-	object_event 1, 42, 0, 52, 13, 1, 45, 3, 3, 1, 3, Route108_EventScript_Jerome, 0x0000
-	object_event 2, 43, 0, 35, 12, 1, 13, 1, 1, 1, 3, Route108_EventScript_Tara, 0x0000
-	object_event 3, 42, 0, 13, 13, 1, 24, 0, 0, 1, 3, Route108_EventScript_Matthew, 0x0000
-	object_event 4, 43, 0, 8, 7, 1, 20, 6, 0, 1, 3, Route108_EventScript_Missy, 0x0000
-	object_event 5, 34, 0, 41, 5, 3, 10, 1, 1, 1, 1, Route108_EventScript_Carolina, 0x0000
-	object_event 6, 49, 0, 43, 5, 3, 9, 1, 1, 1, 1, Route108_EventScript_Cory, 0x0000
-	object_event 7, 59, 0, 42, 4, 3, 1, 1, 1, 0, 0, 0x08256AA4, 0x0473
-	.globl ROUTE108_EventWarps
-ROUTE108_EventWarps: @ 0x08501118
-	warp_def 29, 6, 3, 0, MAP_ABANDONED_SHIP_DECK
-	.globl ROUTE108_EventBgEvents
-ROUTE108_EventBgEvents: @ 0x08501120
-	bg_event 38, 14, 3, 7, 0x0044, 0x56, 0x00
+	.include "data/maps/Route108/events.inc"
 	.globl gMapEvents_ROUTE108
-gMapEvents_ROUTE108: @ 0x0850112C
-	map_events ROUTE108_EventObjects, ROUTE108_EventWarps, 0, ROUTE108_EventBgEvents
+	.set gMapEvents_ROUTE108, Route108_MapEvents
 	.globl ROUTE109_EventObjects
 ROUTE109_EventObjects: @ 0x08501140
 	object_event 1, 88, 0, 21, 26, 1, 7, 0, 0, 0, 0, 0x00000000, 0x02E8
