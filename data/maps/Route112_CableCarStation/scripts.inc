@@ -1,64 +1,98 @@
 @ Route112_CableCarStation scripts (JP map g19 m0 @ 0x08211F0A)
 
 Route112_CableCarStation_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, Route112_CableCarStation_EventScript_00211F15
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route112_CableCarStation_MapScriptTable_00211F35
+	map_script MAP_SCRIPT_ON_TRANSITION, Route112_CableCarStation_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route112_CableCarStation_OnFrame
 	.byte 0
 
-Route112_CableCarStation_EventScript_00211F15::
-	setescapewarp 0x1B, 0xFF, 0x1C, 0x1C
-	compare_var_to_value 0x40A3, 0x2
-	call_if 0x1, Route112_CableCarStation_EventScript_00211F29
+Route112_CableCarStation_OnTransition:: @ 0x08211F15
+	setescapewarp MAP_ROUTE112, 0x1C, 0x1C
+	call_if_eq VAR_CABLE_CAR_STATION_STATE, 2, Route112_CableCarStation_EventScript_MoveAttendantAside
 	end
 
-Route112_CableCarStation_EventScript_00211F29::
-	setobjectxyperm 0x1, 0x7, 0x4
-	setobjectmovementtype 0x1, 0x9
+Route112_CableCarStation_EventScript_MoveAttendantAside:: @ 0x08211F29
+	setobjectxyperm LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, 0x7, 0x4
+	setobjectmovementtype LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, MOVEMENT_TYPE_FACE_LEFT
 	return
 
-Route112_CableCarStation_MapScriptTable_00211F35::
-	map_script_2 0x40A3, 0x2, Route112_CableCarStation_EventScript_00211F3F
+Route112_CableCarStation_OnFrame:: @ 0x08211F35
+	map_script_2 VAR_CABLE_CAR_STATION_STATE, 2, Route112_CableCarStation_EventScript_ExitCableCar
 	.2byte 0
 
-Route112_CableCarStation_EventScript_00211F3F::
+Route112_CableCarStation_EventScript_ExitCableCar:: @ 0x08211F3F
 	lockall
-	applymovement 0xFF, 0x08211FCC
-	applymovement 0x1, 0x08211FC2
-	waitmovement 0x0
-	setvar 0x40A3, 0x0
-	setobjectxyperm 0x1, 0x6, 0x7
-	setobjectmovementtype 0x1, 0x8
+	applymovement LOCALID_PLAYER, Route112_CableCarStation_Movement_ExitCableCar
+	applymovement LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, Route112_CableCarStation_Movement_FollowPlayerOutFromCableCar
+	waitmovement 0
+	setvar VAR_CABLE_CAR_STATION_STATE, 0
+	setobjectxyperm LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, 0x6, 0x7
+	setobjectmovementtype LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, MOVEMENT_TYPE_FACE_DOWN
 	releaseall
 	end
 
-Route112_CableCarStation_EventScript_00211F63::
+Route112_CableCarStation_EventScript_Attendant:: @ 0x08211F63
 	lock
 	faceplayer
-	loadword 0x0, 0x08211FD1
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, Route112_CableCarStation_EventScript_00211F84
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route112_CableCarStation_EventScript_00211FB3
+	msgbox Route112_CableCarStation_Text_CableCarReadyGetOn, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, Route112_CableCarStation_EventScript_RideCableCar
+	goto_if_eq VAR_RESULT, NO, Route112_CableCarStation_EventScript_DeclineRide
 	end
 
-Route112_CableCarStation_EventScript_00211F84::
-	loadword 0x0, 0x08211FF8
-	callstd 0x4
+Route112_CableCarStation_EventScript_RideCableCar:: @ 0x08211F84
+	msgbox Route112_CableCarStation_Text_StepThisWay, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x1, 0x08211FBD
-	applymovement 0xFF, 0x08211FC7
-	waitmovement 0x0
-	setvar 0x8004, 0x0
-	setvar 0x40A3, 0x1
-	incrementgamestat 0x30
+	applymovement LOCALID_ROUTE112_CABLE_CAR_ATTENDANT, Route112_CableCarStation_Movement_LeadPlayerToCableCar
+	applymovement LOCALID_PLAYER, Route112_CableCarStation_Movement_BoardCableCar
+	waitmovement 0
+	setvar VAR_0x8004, FALSE
+	setvar VAR_CABLE_CAR_STATION_STATE, 1
+	incrementgamestat GAME_STAT_RODE_CABLE_CAR
 	special CableCarWarp
 	special CableCar
 	release
 	end
 
-Route112_CableCarStation_EventScript_00211FB3::
-	loadword 0x0, 0x08212005
-	callstd 0x4
+Route112_CableCarStation_EventScript_DeclineRide:: @ 0x08211FB3
+	msgbox Route112_CableCarStation_Text_RideAnotherTime, MSGBOX_DEFAULT
 	release
 	end
+
+Route112_CableCarStation_Movement_LeadPlayerToCableCar:
+	walk_up
+	walk_up
+	walk_right
+	walk_in_place_faster_left
+	step_end
+
+Route112_CableCarStation_Movement_FollowPlayerOutFromCableCar:
+	delay_16
+	walk_left
+	walk_down
+	walk_down
+	step_end
+
+Route112_CableCarStation_Movement_BoardCableCar:
+	walk_up
+	walk_up
+	walk_up
+	delay_16
+	step_end
+
+Route112_CableCarStation_Movement_ExitCableCar:
+	walk_down
+	walk_down
+	walk_down
+	delay_16
+	step_end
+
+Route112_CableCarStation_Text_CableCarReadyGetOn: @ 0x08211FD1
+	.string "のぼり　ロープウェイ\n"
+	.string "まもなく　しゅっぱつ　です\l"
+	.string "ごりように　なられますか？$"
+
+Route112_CableCarStation_Text_StepThisWay: @ 0x08211FF8
+	.string "では　こちらに　どうぞ！$"
+
+Route112_CableCarStation_Text_RideAnotherTime: @ 0x08212005
+	.string "またの　ごりようを\n"
+	.string "よろしく　おねがい　しまーす！$"

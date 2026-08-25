@@ -125,6 +125,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The immediately following rest stop has a transition hook and three
     # dialogue branches, with its four text records in the adjacent bytes.
     'Route111_OldLadysRestStop': 4,
+    # The Route 112 cable-car station follows with two map hooks, four
+    # branches, and the attendant interaction entry.
+    'Route112_CableCarStation': 7,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -195,6 +198,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'Route104_MrBrineysHouse': 9,
     'Route111_WinstrateFamilysHouse': 6,
     'Route111_OldLadysRestStop': 4,
+    'Route112_CableCarStation': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9277,6 +9281,36 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
+    # This cable-car station owns its four local movement streams and three
+    # texts through 0x0821201F. Names and constants mirror the US source,
+    # while the JP byte stream remains the assembly authority.
+    'Route112_CableCarStation': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {
+                0x40A3: 'VAR_CABLE_CAR_STATION_STATE',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x40A3: {0x00: '0', 0x01: '1', 0x02: '2'},
+                0x8004: {0x00: 'FALSE'},
+            },
+            'map_script_values': {0x40A3: {0x02: '2'}},
+            'maps': {0x001B: 'MAP_ROUTE112'},
+            'local_ids': {
+                0x01: 'LOCALID_ROUTE112_CABLE_CAR_ATTENDANT',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'movement_types': {
+                0x08: 'MOVEMENT_TYPE_FACE_DOWN',
+                0x09: 'MOVEMENT_TYPE_FACE_LEFT',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'game_stats': {0x30: 'GAME_STAT_RODE_CABLE_CAR'},
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9481,6 +9515,15 @@ MAP_POKEMART_LISTS.update({
             'DECOR_RHYDON_DOLL',
         )),
     ),
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'Route112_CableCarStation': {
+        0x08211FBD: 'Route112_CableCarStation_Movement_LeadPlayerToCableCar',
+        0x08211FC2: 'Route112_CableCarStation_Movement_FollowPlayerOutFromCableCar',
+        0x08211FC7: 'Route112_CableCarStation_Movement_BoardCableCar',
+        0x08211FCC: 'Route112_CableCarStation_Movement_ExitCableCar',
+    },
 })
 
 MAP_MOVEMENT_SCRIPT_LABELS.update({

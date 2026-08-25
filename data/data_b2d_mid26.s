@@ -2239,17 +2239,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Route111_OldLadysRestStop/events.inc"
 	.globl gMapEvents_ROUTE111_OLD_LADYS_REST_STOP
 	.set gMapEvents_ROUTE111_OLD_LADYS_REST_STOP, Route111_OldLadysRestStop_MapEvents
-	.globl ROUTE112_CABLE_CAR_STATION_EventObjects
-ROUTE112_CABLE_CAR_STATION_EventObjects: @ 0x0850C380
-	object_event 1, 45, 0, 6, 6, 3, 8, 0, 0, 0, 0, Route112_CableCarStation_EventScript_00211F63, 0x0000
-	object_event 2, 114, 0, 6, 3, 3, 1, 0, 0, 0, 0, 0x00000000, 0x0000
-	.globl ROUTE112_CABLE_CAR_STATION_EventWarps
-ROUTE112_CABLE_CAR_STATION_EventWarps: @ 0x0850C3B0
-	warp_def 6, 11, 0, 0, MAP_ROUTE112
-	warp_def 7, 11, 0, 1, MAP_ROUTE112
+	.include "data/maps/Route112_CableCarStation/events.inc"
 	.globl gMapEvents_ROUTE112_CABLE_CAR_STATION
-gMapEvents_ROUTE112_CABLE_CAR_STATION: @ 0x0850C3C0
-	map_events ROUTE112_CABLE_CAR_STATION_EventObjects, ROUTE112_CABLE_CAR_STATION_EventWarps, 0, 0
+	.set gMapEvents_ROUTE112_CABLE_CAR_STATION, Route112_CableCarStation_MapEvents
 	.globl MT_CHIMNEY_CABLE_CAR_STATION_EventObjects
 MT_CHIMNEY_CABLE_CAR_STATION_EventObjects: @ 0x0850C3D4
 	object_event 1, 45, 0, 6, 6, 3, 8, 0, 0, 0, 0, MtChimney_CableCarStation_EventScript_00212070, 0x0000
