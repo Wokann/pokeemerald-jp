@@ -699,37 +699,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/SootopolisCity/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY
 	.set gMapEvents_SOOTOPOLIS_CITY, SootopolisCity_MapEvents
-	.globl EVER_GRANDE_CITY_EventObjects
-EVER_GRANDE_CITY_EventObjects: @ 0x00000000
-	.globl EVER_GRANDE_CITY_EventWarps
-EVER_GRANDE_CITY_EventWarps: @ 0x084FFC94
-	warp_def 18, 5, 0, 0, MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
-	warp_def 27, 48, 0, 0, MAP_EVER_GRANDE_CITY_POKEMON_CENTER_1F
-	warp_def 18, 41, 0, 0, MAP_VICTORY_ROAD_1F
-	warp_def 18, 27, 0, 1, MAP_VICTORY_ROAD_1F
-	.globl EVER_GRANDE_CITY_EventCoordEvents
-EVER_GRANDE_CITY_EventCoordEvents: @ 0x084FFCB4
-	coord_event 17, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 16, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 18, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 19, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 20, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 21, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 22, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 23, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 24, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 25, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	coord_event 26, 58, 1, 16385, 0, EverGrandeCity_EventScript_SetVisitedEverGrande
-	.globl EVER_GRANDE_CITY_EventBgEvents
-EVER_GRANDE_CITY_EventBgEvents: @ 0x084FFD64
-	bg_event 19, 43, 5, 0, EverGrandeCity_EventScript_VictoryRoadSign, 0, 0
-	bg_event 29, 48, 0, 1, 0x08242EFF, 0, 0
-	bg_event 18, 52, 5, 0, EverGrandeCity_EventScript_CitySign, 0, 0
-	bg_event 23, 15, 0, 0, EverGrandeCity_EventScript_PokemonLeagueSign, 0, 0
-	bg_event 28, 48, 0, 1, 0x08242EFF, 0, 0
+	.include "data/maps/EverGrandeCity/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY
-gMapEvents_EVER_GRANDE_CITY: @ 0x084FFDA0
-	map_events 0, EVER_GRANDE_CITY_EventWarps, EVER_GRANDE_CITY_EventCoordEvents, EVER_GRANDE_CITY_EventBgEvents
+	.set gMapEvents_EVER_GRANDE_CITY, EverGrandeCity_MapEvents
 	.globl LITTLEROOT_TOWN_EventObjects
 LITTLEROOT_TOWN_EventObjects: @ 0x084FFDB4
 	object_event 1, 6, 0, 16, 10, 3, 2, 1, 2, 0, 0, LittlerootTown_EventScript_Twin, 0x0000
