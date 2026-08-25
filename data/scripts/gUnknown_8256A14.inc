@@ -6,7 +6,11 @@ gJPText_00256A1D: @ 0x08256A1D
 	.string "ここには\n"
 	.string "なにも　いないようだ⋯⋯$"
 
-	.incbin "baserom_jp.gba", 0x256a2f, 0x2d8
+Route102_EventScript_ItemPotion:: @ 0x08256A2F
+	finditem ITEM_POTION
+	end
+
+	.incbin "baserom_jp.gba", 0x256a3c, 0x2cb
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM
