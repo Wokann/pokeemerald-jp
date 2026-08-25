@@ -763,7 +763,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_DepartmentStore_3F/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStore_4F/scripts.inc"
 	.include "data/maps/LilycoveCity_DepartmentStore_5F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20ad99, 0xba
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/scripts.inc"
 	.incbin "baserom_jp.gba", 0x20b0af, 0x2ba
 	.include "data/maps/MossdeepCity_Gym/scripts.inc"

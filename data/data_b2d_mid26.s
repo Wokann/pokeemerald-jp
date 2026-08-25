@@ -2051,23 +2051,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_DepartmentStore_4F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_4F
 	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_4F, LilycoveCity_DepartmentStore_4F_MapEvents
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_5F_EventObjects
-LILYCOVE_CITY_DEPARTMENT_STORE_5F_EventObjects: @ 0x0850AA74
-	object_event 1, 12, 0, 1, 6, 3, 2, 1, 1, 0, 0, LilycoveCity_DepartmentStore_5F_EventScript_0020AD90, 0x0000
-	object_event 2, 18, 0, 7, 7, 3, 17, 1, 1, 0, 0, LilycoveCity_DepartmentStore_5F_EventScript_0020AD40, 0x0000
-	object_event 3, 24, 0, 7, 2, 3, 8, 0, 0, 0, 0, LilycoveCity_DepartmentStore_5F_EventScript_0020AC7A, 0x0000
-	object_event 4, 24, 0, 9, 2, 3, 8, 0, 0, 0, 0, LilycoveCity_DepartmentStore_5F_EventScript_0020ACB0, 0x0000
-	object_event 5, 24, 0, 15, 6, 3, 9, 0, 0, 0, 0, LilycoveCity_DepartmentStore_5F_EventScript_0020ACDE, 0x0000
-	object_event 6, 24, 0, 17, 6, 3, 7, 0, 0, 0, 0, LilycoveCity_DepartmentStore_5F_EventScript_0020AD0E, 0x0000
-	object_event 7, 20, 0, 9, 5, 3, 10, 1, 1, 0, 0, LilycoveCity_DepartmentStore_5F_EventScript_0020AD49, 0x0000
-	.globl LILYCOVE_CITY_DEPARTMENT_STORE_5F_EventWarps
-LILYCOVE_CITY_DEPARTMENT_STORE_5F_EventWarps: @ 0x0850AB1C
-	warp_def 13, 1, 0, 1, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_4F
-	warp_def 2, 1, 0, 0, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
-	warp_def 16, 1, 0, 0, MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP
+	.include "data/maps/LilycoveCity_DepartmentStore_5F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_5F
-gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_5F: @ 0x0850AB34
-	map_events LILYCOVE_CITY_DEPARTMENT_STORE_5F_EventObjects, LILYCOVE_CITY_DEPARTMENT_STORE_5F_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_5F, LilycoveCity_DepartmentStore_5F_MapEvents
 	.globl LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP_EventObjects
 LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP_EventObjects: @ 0x0850AB48
 	object_event 1, 23, 0, 4, 4, 3, 7, 0, 0, 0, 0, LilycoveCity_DepartmentStoreRooftop_EventScript_0020AEB4, 0x0000

@@ -47,6 +47,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStore_2F': 5,
     'LilycoveCity_DepartmentStore_3F': 5,
     'LilycoveCity_DepartmentStore_4F': 5,
+    'LilycoveCity_DepartmentStore_5F': 10,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -64,6 +65,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStore_2F': 3,
     'LilycoveCity_DepartmentStore_3F': 3,
     'LilycoveCity_DepartmentStore_4F': 3,
+    'LilycoveCity_DepartmentStore_5F': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7349,6 +7351,48 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Department Store 5F follows 4F in the physical EventScript stream. Its
+# weather gate, four decoration clerks, two NPCs, four decoration lists, and
+# four local texts match the US map source in physical order.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_DepartmentStore_5F': {
+        'scripts': {
+            0x0820AC6E: 'LilycoveCity_DepartmentStore_5F_EventScript_BlockRoofStairs',
+            0x0820AC7A: 'LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarLeft',
+            0x0820ACB0: 'LilycoveCity_DepartmentStore_5F_EventScript_ClerkMidLeft',
+            0x0820ACDE: 'LilycoveCity_DepartmentStore_5F_EventScript_ClerkMidRight',
+            0x0820AD0E: 'LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarRight',
+            0x0820AD40: 'LilycoveCity_DepartmentStore_5F_EventScript_PokefanF',
+            0x0820AD49: 'LilycoveCity_DepartmentStore_5F_EventScript_Woman',
+            0x0820AD70: 'LilycoveCity_DepartmentStore_5F_EventScript_WomanNormal',
+            0x0820AD7B: 'LilycoveCity_DepartmentStore_5F_EventScript_WomanLegendaryWeather',
+            0x0820AD90: 'LilycoveCity_DepartmentStore_5F_EventScript_LittleGirl',
+        },
+        'tables': {
+            0x0820AC54: 'LilycoveCity_DepartmentStore_5F_OnWarp',
+        },
+        'texts': {
+            0x0820AD99: 'LilycoveCity_DepartmentStore_5F_Text_PlaceFullOfCuteDolls',
+            0x0820ADD5: 'LilycoveCity_DepartmentStore_5F_Text_GettingDollInsteadOfPokemon',
+            0x0820ADFE: 'LilycoveCity_DepartmentStore_5F_Text_SellManyCuteMatsHere',
+            0x0820AE30: 'LilycoveCity_DepartmentStore_5F_Text_ClosedRooftopForWeather',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+        },
+        'symbols': {
+            'vars': {0x405E: 'VAR_SOOTOPOLIS_CITY_STATE'},
+            'local_ids': {0x7: 'LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN'},
+            'directions': {0x2: 'DIR_NORTH'},
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'LilycoveCity_DepartmentStore_2F': (
         (0x0820A953, 'LilycoveCity_DepartmentStore_2F_Pokemart1', (
@@ -7414,6 +7458,59 @@ MAP_POKEMART_LISTS.update({
             'ITEM_TM_SAFEGUARD',
             'ITEM_TM_REFLECT',
             'ITEM_TM_LIGHT_SCREEN',
+        )),
+    ),
+})
+
+MAP_POKEMART_LISTS.update({
+    'LilycoveCity_DepartmentStore_5F': (
+        (0x0820AC91, 'LilycoveCity_DepartmentStore_5F_Pokemart_Dolls', (
+            'DECOR_PICHU_DOLL',
+            'DECOR_PIKACHU_DOLL',
+            'DECOR_MARILL_DOLL',
+            'DECOR_JIGGLYPUFF_DOLL',
+            'DECOR_DUSKULL_DOLL',
+            'DECOR_WYNAUT_DOLL',
+            'DECOR_BALTOY_DOLL',
+            'DECOR_KECLEON_DOLL',
+            'DECOR_AZURILL_DOLL',
+            'DECOR_SKITTY_DOLL',
+            'DECOR_SWABLU_DOLL',
+            'DECOR_GULPIN_DOLL',
+        )),
+        (0x0820ACC7, 'LilycoveCity_DepartmentStore_5F_Pokemart_Cushions', (
+            'DECOR_PIKA_CUSHION',
+            'DECOR_ROUND_CUSHION',
+            'DECOR_ZIGZAG_CUSHION',
+            'DECOR_SPIN_CUSHION',
+            'DECOR_DIAMOND_CUSHION',
+            'DECOR_BALL_CUSHION',
+            'DECOR_GRASS_CUSHION',
+            'DECOR_FIRE_CUSHION',
+            'DECOR_WATER_CUSHION',
+        )),
+        (0x0820ACF5, 'LilycoveCity_DepartmentStore_5F_Pokemart_Posters', (
+            'DECOR_BALL_POSTER',
+            'DECOR_GREEN_POSTER',
+            'DECOR_RED_POSTER',
+            'DECOR_BLUE_POSTER',
+            'DECOR_CUTE_POSTER',
+            'DECOR_PIKA_POSTER',
+            'DECOR_LONG_POSTER',
+            'DECOR_SEA_POSTER',
+            'DECOR_SKY_POSTER',
+        )),
+        (0x0820AD25, 'LilycoveCity_DepartmentStore_5F_Pokemart_Mats', (
+            'DECOR_SURF_MAT',
+            'DECOR_THUNDER_MAT',
+            'DECOR_FIRE_BLAST_MAT',
+            'DECOR_POWDER_SNOW_MAT',
+            'DECOR_ATTRACT_MAT',
+            'DECOR_FISSURE_MAT',
+            'DECOR_SPIKES_MAT',
+            'DECOR_GLITTER_MAT',
+            'DECOR_JUMP_MAT',
+            'DECOR_SPIN_MAT',
         )),
     ),
 })
