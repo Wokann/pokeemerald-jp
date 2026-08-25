@@ -43,6 +43,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_MoveDeletersHouse': 7,
     'LilycoveCity_House1': 2,
     'LilycoveCity_House2': 2,
+    'LilycoveCity_House3': 12,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -56,6 +57,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_MoveDeletersHouse': 9,
     'LilycoveCity_House1': 2,
     'LilycoveCity_House2': 2,
+    'LilycoveCity_House3': 8,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7236,6 +7238,30 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x800D: 'VAR_RESULT',
             },
             'items': {0x014C: 'ITEM_TM_REST'},
+        },
+    },
+})
+
+# House3 follows House2 in physical EventScript order. Its transition handler,
+# six object handlers, shared result branches, and eight text records are
+# checked one-to-one against the matching US map source.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_House3': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+        },
+        'symbols': {
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x8000: 'VAR_0x8000',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'switch_values': {
+                'VAR_RESULT': {0x0: 'NO', 0x1: 'YES'},
+            },
         },
     },
 })

@@ -2033,21 +2033,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_House2/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE2
 	.set gMapEvents_LILYCOVE_CITY_HOUSE2, LilycoveCity_House2_MapEvents
-	.globl LILYCOVE_CITY_HOUSE3_EventObjects
-LILYCOVE_CITY_HOUSE3_EventObjects: @ 0x0850A6B0
-	object_event 1, 189, 0, 3, 4, 3, 8, 1, 1, 0, 0, LilycoveCity_House3_EventScript_0020A166, 0x0000
-	object_event 2, 18, 0, 7, 4, 3, 9, 0, 0, 0, 0, LilycoveCity_House3_EventScript_0020A074, 0x0000
-	object_event 3, 189, 0, 1, 4, 3, 8, 1, 1, 0, 0, LilycoveCity_House3_EventScript_0020A0FE, 0x0000
-	object_event 4, 189, 0, 2, 5, 3, 7, 1, 1, 0, 0, LilycoveCity_House3_EventScript_0020A132, 0x0000
-	object_event 5, 189, 0, 2, 3, 3, 8, 1, 1, 0, 0, LilycoveCity_House3_EventScript_0020A0CA, 0x0000
-	object_event 6, 19, 0, 7, 5, 3, 9, 1, 1, 0, 0, LilycoveCity_House3_EventScript_0020A0B3, 0x0000
-	.globl LILYCOVE_CITY_HOUSE3_EventWarps
-LILYCOVE_CITY_HOUSE3_EventWarps: @ 0x0850A740
-	warp_def 3, 7, 0, 10, MAP_LILYCOVE_CITY
-	warp_def 4, 7, 0, 10, MAP_LILYCOVE_CITY
+	.include "data/maps/LilycoveCity_House3/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE3
-gMapEvents_LILYCOVE_CITY_HOUSE3: @ 0x0850A750
-	map_events LILYCOVE_CITY_HOUSE3_EventObjects, LILYCOVE_CITY_HOUSE3_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_HOUSE3, LilycoveCity_House3_MapEvents
 	.include "data/maps/LilycoveCity_House4/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE4
 	.set gMapEvents_LILYCOVE_CITY_HOUSE4, LilycoveCity_House4_MapEvents
