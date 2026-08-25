@@ -6,25 +6,25 @@ Route105_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route105_OnFrame
 	.byte 0
 
-Route105_OnLoad::
+Route105_OnLoad:
 	call_if_unset FLAG_REGI_DOORS_OPENED, Route105_CloseRegiEntrance
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_NORTH, AbnormalWeather_EventScript_PlaceTilesRoute105North
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_SOUTH, AbnormalWeather_EventScript_PlaceTilesRoute105South
 	end
 
 Route105_CloseRegiEntrance::
-	setmetatile 0x9, 0x13, METATILE_General_RockWall_RockBase, TRUE
-	setmetatile 0x9, 0x14, METATILE_General_RockWall_SandBase, TRUE
+	setmetatile 9, 19, METATILE_General_RockWall_RockBase, TRUE
+	setmetatile 9, 20, METATILE_General_RockWall_SandBase, TRUE
 	return
 
-Route105_OnTransition::
-	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_HideMapNamePopup
+Route105_OnTransition:
+	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_NORTH, AbnormalWeather_StartKyogreWeather
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_105_SOUTH, AbnormalWeather_StartKyogreWeather
 	end
 
-Route105_OnFrame::
-	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_EndEventAndCleanup_1
+Route105_OnFrame:
+	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
 Route105_EventScript_Foster::
@@ -67,7 +67,7 @@ Route105_EventScript_Andres::
 
 Route105_EventScript_AndresRegisterMatchCallAfterBattle::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route105_Text_AndresRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_ANDRES_1
 	release

@@ -735,26 +735,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route104/events.inc"
 	.globl gMapEvents_ROUTE104
 	.set gMapEvents_ROUTE104, Route104_MapEvents
-	.globl ROUTE105_EventObjects
-ROUTE105_EventObjects: @ 0x08500DFC
-	object_event 1, 42, 0, 19, 60, 1, 10, 0, 0, 1, 6, Route105_EventScript_Luis, 0x0000
-	object_event 2, 42, 0, 27, 36, 1, 27, 7, 0, 1, 3, Route105_EventScript_Dominik, 0x0000
-	object_event 3, 43, 0, 8, 45, 1, 25, 0, 7, 1, 3, Route105_EventScript_Beverly, 0x0000
-	object_event 4, 43, 0, 19, 9, 1, 24, 0, 5, 1, 3, Route105_EventScript_Imani, 0x0000
-	object_event 5, 59, 0, 8, 73, 3, 1, 0, 0, 0, 0, 0x08256A8A, 0x03EB
-	object_event 6, 55, 0, 17, 48, 3, 26, 0, 7, 1, 3, Route105_EventScript_Foster, 0x0000
-	object_event 7, 66, 0, 4, 54, 3, 8, 0, 2, 1, 2, Route105_EventScript_Josue, 0x0000
-	object_event 8, 55, 0, 4, 58, 3, 7, 0, 2, 1, 4, Route105_EventScript_Andres, 0x0000
-	.globl ROUTE105_EventWarps
-ROUTE105_EventWarps: @ 0x08500EBC
-	warp_def 9, 20, 0, 0, MAP_ISLAND_CAVE
-	.globl ROUTE105_EventBgEvents
-ROUTE105_EventBgEvents: @ 0x08500EC4
-	bg_event 15, 68, 3, 7, 0x006F, 0x59, 0x00
-	bg_event 5, 56, 3, 7, 0x006B, 0x6F, 0x00
+	.include "data/maps/Route105/events.inc"
 	.globl gMapEvents_ROUTE105
-gMapEvents_ROUTE105: @ 0x08500EDC
-	map_events ROUTE105_EventObjects, ROUTE105_EventWarps, 0, ROUTE105_EventBgEvents
+	.set gMapEvents_ROUTE105, Route105_MapEvents
 	.globl ROUTE106_EventObjects
 ROUTE106_EventObjects: @ 0x08500EF0
 	object_event 1, 42, 0, 18, 5, 1, 27, 4, 0, 1, 3, Route106_EventScript_Douglas, 0x0000
