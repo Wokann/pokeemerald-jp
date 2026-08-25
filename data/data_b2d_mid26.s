@@ -2063,17 +2063,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MossdeepCity_Gym/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_GYM
 	.set gMapEvents_MOSSDEEP_CITY_GYM, MossdeepCity_Gym_MapEvents
-	.globl MOSSDEEP_CITY_HOUSE1_EventObjects
-MOSSDEEP_CITY_HOUSE1_EventObjects: @ 0x0850B0A4
-	object_event 1, 44, 0, 3, 3, 3, 3, 1, 1, 0, 0, 0x0820C333, 0x0000
-	object_event 2, 20, 0, 7, 4, 3, 9, 0, 0, 0, 0, 0x0820C363, 0x0000
-	.globl MOSSDEEP_CITY_HOUSE1_EventWarps
-MOSSDEEP_CITY_HOUSE1_EventWarps: @ 0x0850B0D4
-	warp_def 3, 7, 0, 0, MAP_MOSSDEEP_CITY
-	warp_def 4, 7, 0, 0, MAP_MOSSDEEP_CITY
+	.include "data/maps/MossdeepCity_House1/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_HOUSE1
-gMapEvents_MOSSDEEP_CITY_HOUSE1: @ 0x0850B0E4
-	map_events MOSSDEEP_CITY_HOUSE1_EventObjects, MOSSDEEP_CITY_HOUSE1_EventWarps, 0, 0
+	.set gMapEvents_MOSSDEEP_CITY_HOUSE1, MossdeepCity_House1_MapEvents
 	.globl MOSSDEEP_CITY_HOUSE2_EventObjects
 MOSSDEEP_CITY_HOUSE2_EventObjects: @ 0x0850B0F8
 	object_event 1, 65, 0, 6, 6, 3, 9, 0, 0, 0, 0, 0x0820C3D3, 0x0000

@@ -204,6 +204,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route105 Route106 Rout
 	LilycoveCity_DepartmentStoreElevator \
 	MossdeepCity \
 	MossdeepCity_Gym \
+	MossdeepCity_House1 \
 	SootopolisCity \
 	EverGrandeCity \
 	LittlerootTown

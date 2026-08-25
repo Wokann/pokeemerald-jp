@@ -50,6 +50,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStore_5F': 10,
     'LilycoveCity_DepartmentStoreRooftop': 23,
     'MossdeepCity_Gym': 45,
+    'MossdeepCity_House1': 3,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -70,6 +71,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_DepartmentStore_5F': 4,
     'LilycoveCity_DepartmentStoreRooftop': 8,
     'MossdeepCity_Gym': 52,
+    'MossdeepCity_House1': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7666,6 +7668,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x0239: 'METATILE_RSMossdeepGym_Switch_Down',
             },
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
+# Mossdeep House 1 follows the Gym range directly. Its two Pokéblock lines
+# use the same STR_VAR_1 field control that the matching US source names.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_House1': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'field_placeholders': {
+            0x0820C36C: {0x02: 'STR_VAR_1'},
+            0x0820C37B: {0x02: 'STR_VAR_1'},
+        },
+        'symbols': {
+            'vars': {0x800D: 'VAR_RESULT'},
+            'script_var_values': {
+                0x0820C333: {0x800D: {0x0: '0'}},
+            },
         },
     },
 })
