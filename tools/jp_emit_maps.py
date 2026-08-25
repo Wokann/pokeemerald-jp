@@ -55,6 +55,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_PokemonCenter_1F': 4,
     'MossdeepCity_PokemonCenter_2F': 4,
     'MossdeepCity_Mart': 4,
+    'MossdeepCity_House3': 3,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -80,6 +81,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MossdeepCity_PokemonCenter_1F': 2,
     'MossdeepCity_PokemonCenter_2F': 1,
     'MossdeepCity_Mart': 3,
+    'MossdeepCity_House3': 5,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7782,6 +7784,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'external_labels': {
             0x0824390F: 'gText_HowMayIServeYou',
             0x08243920: 'gText_PleaseComeAgain',
+        },
+    },
+})
+
+# Mossdeep House 3 is the Super Rod gift sequence. The result branch follows
+# a local YES/NO message, and the obtaining wrapper is the standard byte-exact
+# giveitem macro used by the matching US map source.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MossdeepCity_House3': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x0098: 'FLAG_RECEIVED_SUPER_ROD'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x0108: 'ITEM_SUPER_ROD'},
         },
     },
 })

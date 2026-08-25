@@ -2078,16 +2078,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MossdeepCity_Mart/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_MART
 	.set gMapEvents_MOSSDEEP_CITY_MART, MossdeepCity_Mart_MapEvents
-	.globl MOSSDEEP_CITY_HOUSE3_EventObjects
-MOSSDEEP_CITY_HOUSE3_EventObjects: @ 0x0850B300
-	object_event 1, 50, 0, 4, 4, 3, 10, 0, 0, 0, 0, 0x0820C6FB, 0x0000
-	.globl MOSSDEEP_CITY_HOUSE3_EventWarps
-MOSSDEEP_CITY_HOUSE3_EventWarps: @ 0x0850B318
-	warp_def 3, 7, 0, 5, MAP_MOSSDEEP_CITY
-	warp_def 4, 7, 0, 5, MAP_MOSSDEEP_CITY
+	.include "data/maps/MossdeepCity_House3/events.inc"
 	.globl gMapEvents_MOSSDEEP_CITY_HOUSE3
-gMapEvents_MOSSDEEP_CITY_HOUSE3: @ 0x0850B328
-	map_events MOSSDEEP_CITY_HOUSE3_EventObjects, MOSSDEEP_CITY_HOUSE3_EventWarps, 0, 0
+	.set gMapEvents_MOSSDEEP_CITY_HOUSE3, MossdeepCity_House3_MapEvents
 	.globl MOSSDEEP_CITY_STEVENS_HOUSE_EventObjects
 MOSSDEEP_CITY_STEVENS_HOUSE_EventObjects: @ 0x0850B33C
 	object_event 1, 134, 0, 9, 6, 3, 10, 0, 0, 0, 0, MossdeepCity_StevensHouse_EventScript_0020C9A4, 0x03C7
