@@ -678,77 +678,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/PetalburgCity/events.inc"
 	.globl gMapEvents_PETALBURG_CITY
 	.set gMapEvents_PETALBURG_CITY, PetalburgCity_MapEvents
-	.globl SLATEPORT_CITY_EventObjects
-SLATEPORT_CITY_EventObjects: @ 0x084FE8D8
-	object_event 1, 17, 0, 21, 11, 3, 2, 1, 1, 0, 0, SlateportCity_EventScript_001DC24D, 0x0000
-	object_event 2, 19, 0, 34, 29, 3, 5, 1, 0, 0, 0, SlateportCity_EventScript_001DC26A, 0x0000
-	object_event 3, 15, 0, 5, 13, 3, 2, 1, 2, 0, 0, SlateportCity_EventScript_001DC22C, 0x0000
-	object_event 4, 26, 0, 26, 29, 3, 1, 0, 0, 0, 0, SlateportCity_EventScript_001DC28B, 0x0000
-	object_event 5, 118, 0, 31, 27, 3, 7, 0, 0, 0, 0, SlateportCity_EventScript_001DC37D, 0x0372
-	object_event 6, 27, 0, 5, 43, 3, 8, 0, 0, 0, 0, SlateportCity_EventScript_001DC1B6, 0x0000
-	object_event 7, 30, 0, 20, 37, 3, 1, 1, 1, 0, 0, SlateportCity_EventScript_001DC1D7, 0x0000
-	object_event 8, 8, 0, 8, 42, 3, 2, 1, 1, 0, 0, SlateportCity_EventScript_001DC1F8, 0x0000
-	object_event 9, 110, 0, 29, 13, 3, 9, 0, 0, 0, 0, SlateportCity_EventScript_001DC6C7, 0x0343
-	object_event 10, 68, 0, 28, 14, 3, 7, 0, 0, 0, 0, SlateportCity_EventScript_001DC6D0, 0x0343
-	object_event 11, 46, 0, 28, 13, 3, 10, 0, 0, 0, 0, SlateportCity_EventScript_001DC56C, 0x0348
-	object_event 12, 49, 0, 37, 41, 3, 10, 0, 0, 0, 0, SlateportCity_EventScript_001DC359, 0x0000
-	object_event 13, 49, 0, 28, 46, 3, 5, 1, 0, 0, 0, SlateportCity_EventScript_001DC362, 0x0000
-	object_event 14, 18, 0, 9, 50, 3, 3, 0, 1, 0, 0, SlateportCity_EventScript_001DC36B, 0x0000
-	object_event 15, 33, 0, 16, 46, 3, 2, 1, 1, 0, 0, SlateportCity_EventScript_001DC374, 0x0000
-	object_event 16, 39, 0, 8, 24, 3, 3, 0, 1, 0, 0, SlateportCity_EventScript_001DC32F, 0x0000
-	object_event 17, 34, 0, 15, 31, 3, 1, 0, 0, 0, 0, SlateportCity_EventScript_001DC350, 0x0000
-	object_event 18, 117, 0, 30, 27, 3, 10, 0, 0, 0, 0, SlateportCity_EventScript_001DC394, 0x0372
-	object_event 19, 117, 0, 29, 27, 3, 10, 0, 0, 0, 0, SlateportCity_EventScript_001DC3AB, 0x0372
-	object_event 20, 83, 0, 6, 38, 3, 10, 0, 0, 0, 0, SlateportCity_EventScript_001DC50C, 0x0000
-	object_event 21, 83, 0, 5, 51, 3, 8, 0, 0, 0, 0, SlateportCity_EventScript_001DC4DE, 0x0000
-	object_event 22, 66, 0, 34, 51, 3, 8, 0, 0, 0, 0, SlateportCity_EventScript_001DC6D9, 0x0000
-	object_event 23, 34, 0, 4, 47, 3, 8, 0, 0, 0, 0, SlateportCity_EventScript_001DC158, 0x0000
-	object_event 24, 83, 0, 11, 47, 3, 8, 1, 1, 0, 0, SlateportCity_EventScript_001DC54C, 0x03B4
-	object_event 25, 25, 0, 5, 47, 3, 8, 1, 1, 0, 0, SlateportCity_EventScript_001DC12F, 0x0000
-	object_event 26, 117, 0, 22, 27, 3, 10, 1, 1, 0, 0, SlateportCity_EventScript_001DC3C2, 0x0372
-	object_event 27, 117, 0, 23, 27, 3, 7, 1, 1, 0, 0, SlateportCity_EventScript_001DC3D9, 0x0372
-	object_event 28, 117, 0, 24, 27, 3, 10, 1, 1, 0, 0, SlateportCity_EventScript_001DC3F0, 0x0372
-	object_event 29, 117, 0, 21, 26, 3, 10, 1, 1, 0, 0, SlateportCity_EventScript_001DC407, 0x0372
-	object_event 30, 117, 0, 20, 26, 3, 10, 1, 1, 0, 0, SlateportCity_EventScript_001DC41E, 0x0372
-	object_event 31, 117, 0, 26, 27, 3, 7, 1, 1, 0, 0, SlateportCity_EventScript_001DC435, 0x0372
-	object_event 32, 117, 0, 28, 27, 3, 7, 1, 1, 0, 0, SlateportCity_EventScript_001DC4BE, 0x0372
-	object_event 33, 117, 0, 25, 27, 3, 7, 1, 1, 0, 0, SlateportCity_EventScript_001DC4C7, 0x0372
-	object_event 34, 18, 0, 11, 37, 3, 9, 1, 2, 0, 0, SlateportCity_EventScript_001DC6E2, 0x0000
-	object_event 35, 219, 0, 10, 12, 0, 8, 1, 2, 0, 0, 0x00000000, 0x02ED
-	.globl SLATEPORT_CITY_EventWarps
-SLATEPORT_CITY_EventWarps: @ 0x084FEC20
-	warp_def 19, 19, 0, 0, MAP_SLATEPORT_CITY_POKEMON_CENTER_1F
-	warp_def 13, 26, 0, 0, MAP_SLATEPORT_CITY_MART
-	warp_def 26, 38, 0, 0, MAP_SLATEPORT_CITY_STERNS_SHIPYARD_1F
-	warp_def 10, 12, 0, 0, MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY
-	warp_def 4, 26, 0, 0, MAP_SLATEPORT_CITY_POKEMON_FAN_CLUB
-	warp_def 30, 26, 0, 0, MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_1F
-	warp_def 5, 19, 0, 0, MAP_SLATEPORT_CITY_NAME_RATERS_HOUSE
-	warp_def 31, 26, 0, 1, MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_1F
-	warp_def 28, 12, 0, 0, MAP_SLATEPORT_CITY_HARBOR
-	warp_def 40, 7, 0, 2, MAP_SLATEPORT_CITY_HARBOR
-	warp_def 21, 44, 0, 0, MAP_SLATEPORT_CITY_HOUSE
-	.globl SLATEPORT_CITY_EventCoordEvents
-SLATEPORT_CITY_EventCoordEvents: @ 0x084FEC78
-	coord_event 10, 13, 3, 16594, 2, SlateportCity_EventScript_001DC950
-	.globl SLATEPORT_CITY_EventBgEvents
-SLATEPORT_CITY_EventBgEvents: @ 0x084FEC88
-	bg_event 8, 19, 0, 0, SlateportCity_EventScript_001DC326, 0, 0
-	bg_event 20, 19, 0, 1, 0x08242EFF, 0, 0
-	bg_event 21, 19, 0, 1, 0x08242EFF, 0, 0
-	bg_event 14, 26, 0, 1, 0x08242EF6, 0, 0
-	bg_event 24, 12, 0, 0, SlateportCity_EventScript_001DC308, 0, 0
-	bg_event 15, 26, 0, 1, 0x08242EF6, 0, 0
-	bg_event 14, 51, 0, 0, SlateportCity_EventScript_001DC2FF, 0, 0
-	bg_event 26, 26, 0, 0, SlateportCity_EventScript_001DC2ED, 0, 0
-	bg_event 16, 22, 0, 0, SlateportCity_EventScript_001DC2F6, 0, 0
-	bg_event 8, 26, 0, 0, SlateportCity_EventScript_001DC2E4, 0, 0
-	bg_event 7, 13, 0, 0, SlateportCity_EventScript_001DC2AA, 0, 0
-	bg_event 23, 38, 0, 0, SlateportCity_EventScript_001DC2B3, 0, 0
-	bg_event 10, 36, 0, 1, SlateportCity_EventScript_001DC9B7, 0, 0
+	.include "data/maps/SlateportCity/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY
-gMapEvents_SLATEPORT_CITY: @ 0x084FED24
-	map_events SLATEPORT_CITY_EventObjects, SLATEPORT_CITY_EventWarps, SLATEPORT_CITY_EventCoordEvents, SLATEPORT_CITY_EventBgEvents
+	.set gMapEvents_SLATEPORT_CITY, SlateportCity_MapEvents
 	.include "data/maps/MauvilleCity/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY
 	.set gMapEvents_MAUVILLE_CITY, MauvilleCity_MapEvents

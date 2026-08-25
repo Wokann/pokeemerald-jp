@@ -119,6 +119,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	PetalburgCity_PokemonCenter_1F \
 	PetalburgCity_PokemonCenter_2F \
 	PetalburgCity_Mart \
+	SlateportCity \
 	SlateportCity_SternsShipyard_1F \
 	SlateportCity_SternsShipyard_2F \
 	SlateportCity_BattleTentLobby \
