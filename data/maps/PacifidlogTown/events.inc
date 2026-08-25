@@ -18,9 +18,9 @@ PacifidlogTown_MapWarps:
 	warp_def 17, 21, 0, 0, MAP_PACIFIDLOG_TOWN_HOUSE5
 
 PacifidlogTown_MapBGEvents:
-	bg_sign_event 9, 15, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 9, 15, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_sign_event 7, 16, 0, BG_EVENT_PLAYER_FACING_ANY, PacifidlogTown_EventScript_TownSign
-	bg_sign_event 10, 15, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 10, 15, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 
 PacifidlogTown_MapEvents::
 	map_events PacifidlogTown_ObjectEvents, PacifidlogTown_MapWarps, NULL, PacifidlogTown_MapBGEvents
