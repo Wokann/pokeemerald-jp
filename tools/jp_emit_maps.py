@@ -67,6 +67,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_PokemonCenter_2F': 3,
     'SootopolisCity_Mart': 5,
     'SootopolisCity_House1': 3,
+    'SootopolisCity_House2': 3,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -110,6 +111,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_PokemonCenter_1F': 4,
     'SootopolisCity_Mart': 4,
     'SootopolisCity_House1': 3,
+    'SootopolisCity_House2': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8351,6 +8353,18 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'items': {0x013F: 'ITEM_TM_BRICK_BREAK'},
             'species': {0x013D: 'SPECIES_KECLEON'},
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
+        },
+    },
+})
+
+# Sootopolis House 2 is the immediately following physical script owner. Its
+# yes/no branch and three text records match the US map source in sequence.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SootopolisCity_House2': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {0x800D: 'VAR_RESULT'},
         },
     },
 })
