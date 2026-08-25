@@ -107,6 +107,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # transition, Scott branch, two NPCs, nurse, and exit helpers match the
     # eight local entries in the corresponding US map source.
     'EverGrandeCity_PokemonCenter_1F': 8,
+    # The adjacent Cable Club floor retains three unused RS-era wrapper
+    # entries after its shared map-script hooks.
+    'EverGrandeCity_PokemonCenter_2F': 3,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -291,6 +294,14 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x0820F1A5,
         0x0820F1AB,
         0x0820F1B1,
+    ),
+    # Ever Grande uses the same three unused RS-era Cable Club wrappers.
+    # They immediately follow its 2F map-script table and remain map-owned
+    # named source entries in the corresponding US map file.
+    'EverGrandeCity_PokemonCenter_2F': (
+        0x082115B7,
+        0x082115BD,
+        0x082115C3,
     ),
     # The RS-era Dive item ball is unused in Emerald but remains an explicit
     # named script in the matching Stevens House source.
@@ -9024,6 +9035,27 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x0B: 'HEAL_LOCATION_EVER_GRANDE_CITY',
             },
             'sounds': {0x0009: 'SE_EXIT'},
+        },
+    },
+    # The next physical owner is the Cable Club floor. Its three RS-era
+    # wrappers are unused but remain explicitly named in the matching US
+    # source, while every map-script hook targets already-defined Cable Club
+    # code outside this local range.
+    'EverGrandeCity_PokemonCenter_2F': {
+        'preserve_region_script_aliases': False,
+        'scripts': {
+            0x082115B7: 'EverGrandeCity_PokemonCenter_2F_EventScript_Colosseum',
+            0x082115BD: 'EverGrandeCity_PokemonCenter_2F_EventScript_TradeCenter',
+            0x082115C3: 'EverGrandeCity_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
         },
     },
 })
