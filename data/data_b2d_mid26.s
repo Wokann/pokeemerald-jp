@@ -2012,20 +2012,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_1F
 	.set gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_1F, LilycoveCity_PokemonCenter_1F_MapEvents
-	.globl LILYCOVE_CITY_POKEMON_CENTER_2F_EventObjects
-LILYCOVE_CITY_POKEMON_CENTER_2F_EventObjects: @ 0x0850A39C
-	object_event 1, 85, 0, 6, 2, 0, 8, 1, 1, 0, 0, 0x08244185, 0x0000
-	object_event 2, 85, 0, 2, 2, 3, 8, 1, 1, 0, 0, 0x0824418B, 0x0000
-	object_event 3, 85, 0, 10, 2, 0, 8, 1, 1, 0, 0, 0x08244191, 0x0000
-	object_event 4, 223, 0, 1, 2, 0, 8, 1, 1, 0, 0, 0x08246801, 0x02BE
-	.globl LILYCOVE_CITY_POKEMON_CENTER_2F_EventWarps
-LILYCOVE_CITY_POKEMON_CENTER_2F_EventWarps: @ 0x0850A3FC
-	warp_def 1, 6, 4, 2, MAP_LILYCOVE_CITY_POKEMON_CENTER_1F
-	warp_def 5, 1, 3, 0, MAP_UNION_ROOM
-	warp_def 9, 1, 3, 0, MAP_TRADE_CENTER
+	.include "data/maps/LilycoveCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F
-gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F: @ 0x0850A414
-	map_events LILYCOVE_CITY_POKEMON_CENTER_2F_EventObjects, LILYCOVE_CITY_POKEMON_CENTER_2F_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F, LilycoveCity_PokemonCenter_2F_MapEvents
 	.globl LILYCOVE_CITY_UNUSED_MART_EventObjects
 LILYCOVE_CITY_UNUSED_MART_EventObjects: @ 0x00000000
 	.globl LILYCOVE_CITY_UNUSED_MART_EventWarps

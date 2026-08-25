@@ -750,7 +750,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.globl LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon
 	.set LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon, 0x082649CF
 	.include "data/maps/LilycoveCity_PokemonCenter_2F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x20838b, 0x12
 	.include "data/maps/LilycoveCity_UnusedMart/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonTrainerFanClub/scripts.inc"
 	.incbin "baserom_jp.gba", 0x208bec, 0x8e8

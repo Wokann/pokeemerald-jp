@@ -37,6 +37,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_ContestLobby': 105,
     'LilycoveCity_ContestHall': 35,
     'LilycoveCity_PokemonCenter_1F': 8,
+    'LilycoveCity_PokemonCenter_2F': 3,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -118,6 +119,14 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x08204DAB,
         0x08204DB1,
         0x08204DB7,
+    ),
+    # Lilycove has the same three unused RS-era Cable Club wrappers directly
+    # after its 2F map-script table. They are source-owned despite having no
+    # event-table pointer.
+    'LilycoveCity_PokemonCenter_2F': (
+        0x0820838B,
+        0x08208391,
+        0x08208397,
     ),
 }
 
@@ -6899,6 +6908,23 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'local_ids': {0x01: 'LOCALID_LILYCOVE_NURSE'},
             'heal_locations': {0x08: 'HEAL_LOCATION_LILYCOVE_CITY'},
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+})
+
+# The following 2F map owner contains four Cable Club hooks and three
+# RS-era wrappers. The wrappers exactly fill the raw 0x0820838B-0x0820839D
+# suffix and use the matching US names guarded by the sequence above.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_PokemonCenter_2F': {
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
         },
     },
 })
