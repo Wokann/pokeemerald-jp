@@ -135,12 +135,12 @@ LittlerootTown_EventScript_GoInsideWithMom::
 	applymovement LOCALID_PLAYER, LittlerootTown_Movement_PlayerStepOffTruck
 	waitmovement 0
 	opendoor VAR_0x8004, VAR_0x8005
-	waitmoncry
+	waitdooranim_jp
 	addobject LOCALID_LITTLEROOT_MOM
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitHouse
 	waitmovement 0
 	closedoor VAR_0x8004, VAR_0x8005
-	waitmoncry
+	waitdooranim_jp
 	delay 10
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomApproachPlayerAtTruck
 	waitmovement 0
@@ -150,7 +150,7 @@ LittlerootTown_EventScript_GoInsideWithMom::
 	applymovement LOCALID_PLAYER, LittlerootTown_Movement_PlayerApproachDoor
 	waitmovement 0
 	opendoor VAR_0x8004, VAR_0x8005
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomEnterHouse
 	applymovement LOCALID_PLAYER, LittlerootTown_Movement_PlayerEnterHouse
 	waitmovement 0
@@ -158,7 +158,7 @@ LittlerootTown_EventScript_GoInsideWithMom::
 	setvar VAR_LITTLEROOT_INTRO_STATE, 3
 	hideplayer
 	closedoor VAR_0x8004, VAR_0x8005
-	waitmoncry
+	waitdooranim_jp
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_FAT_MAN
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
 	return
@@ -624,96 +624,96 @@ LittlerootTown_EventScript_MomReturnHomeMale2::
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomReturnHomeMale2
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	return
 
 LittlerootTown_EventScript_MomReturnHomeMale3::
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomReturnHomeMale3
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	return
 
 LittlerootTown_EventScript_MomReturnHomeMale4::
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomReturnHomeMale4
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	return
 
 LittlerootTown_EventScript_MomReturnHomeMale5::
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomReturnHomeMale5
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	return
 
 LittlerootTown_EventScript_MomReturnHomeFemale2::
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomReturnHomeFemale2
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	return
 
 LittlerootTown_EventScript_MomReturnHomeFemale3::
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomReturnHomeFemale3
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	return
 
 LittlerootTown_EventScript_MomReturnHomeFemale4::
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomReturnHomeFemale4
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	return
 
 LittlerootTown_EventScript_MomReturnHomeFemale5::
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomReturnHomeFemale5
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	return
 
 LittlerootTown_Movement_MomApproachPlayer0:
@@ -876,12 +876,12 @@ LittlerootTown_EventScript_Mom::
 	applymovement LOCALID_LITTLEROOT_MOM, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
 	opendoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_LITTLEROOT_MOM, LittlerootTown_Movement_MomExitThroughDoor
 	waitmovement 0
 	hideobjectat LOCALID_LITTLEROOT_MOM, MAP_LITTLEROOT_TOWN
 	closedoor VAR_0x8009, VAR_0x800A
-	waitmoncry
+	waitdooranim_jp
 	goto LittlerootTown_EventScript_SetReceivedRunningShoes
 	end
 

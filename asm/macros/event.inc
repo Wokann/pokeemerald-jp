@@ -1461,6 +1461,12 @@
 	.byte SCR_OP_WAITDOORANIM
 	.endm
 
+	@ The JP script stream uses SCR_OP_WAITMONCRY at verified door-animation
+	@ wait sites. Keep the source semantic without changing the original bytes.
+	.macro waitdooranim_jp
+	.byte SCR_OP_WAITMONCRY
+	.endm
+
 	@ The JP script stream uses SCR_OP_WAITDOORANIM at verified Pokémon-cry
 	@ wait sites. Keep the source semantic without changing the original bytes.
 	.macro waitmoncry_jp
