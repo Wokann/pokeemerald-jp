@@ -20,12 +20,12 @@ VerdanturfTown_MapWarps:
 	warp_def 17, 15, 0, 0, MAP_VERDANTURF_TOWN_HOUSE
 
 VerdanturfTown_MapBGEvents:
-	bg_sign_event 14, 3, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EF6
+	bg_sign_event 14, 3, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemartSign
 	bg_sign_event 14, 6, 0, BG_EVENT_PLAYER_FACING_ANY, VerdanturfTown_EventScript_TownSign
-	bg_sign_event 17, 3, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 17, 3, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_sign_event 7, 14, 0, BG_EVENT_PLAYER_FACING_ANY, VerdanturfTown_EventScript_WandasHouseSign
-	bg_sign_event 13, 3, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EF6
-	bg_sign_event 18, 3, 0, BG_EVENT_PLAYER_FACING_NORTH, 0x08242EFF
+	bg_sign_event 13, 3, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemartSign
+	bg_sign_event 18, 3, 0, BG_EVENT_PLAYER_FACING_NORTH, Common_EventScript_ShowPokemonCenterSign
 	bg_sign_event 1, 8, 0, BG_EVENT_PLAYER_FACING_ANY, VerdanturfTown_EventScript_BattleTentSign
 	bg_sign_event 7, 3, 0, BG_EVENT_PLAYER_FACING_ANY, VerdanturfTown_EventScript_RusturfTunnelSign
 
