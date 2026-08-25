@@ -18,7 +18,23 @@ Route103_EventScript_ItemPPUp:: @ 0x08256A49
 	finditem ITEM_PP_UP
 	end
 
-	.incbin "baserom_jp.gba", 0x256a56, 0x2b1
+Route104_EventScript_ItemPPUp:: @ 0x08256A56
+	finditem ITEM_PP_UP
+	end
+
+Route104_EventScript_ItemPokeBall:: @ 0x08256A63
+	finditem ITEM_POKE_BALL
+	end
+
+Route104_EventScript_ItemXAccuracy:: @ 0x08256A70
+	finditem ITEM_X_ACCURACY
+	end
+
+Route104_EventScript_ItemPotion:: @ 0x08256A7D
+	finditem ITEM_POTION
+	end
+
+	.incbin "baserom_jp.gba", 0x256a8a, 0x27d
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM

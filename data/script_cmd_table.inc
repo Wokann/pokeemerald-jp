@@ -116,7 +116,7 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_SETTRAINERFLAG ScrCmd_settrainerflag @ 0x61
 	script_cmd_table_entry SCR_OP_CLEARTRAINERFLAG ScrCmd_cleartrainerflag @ 0x62
 	script_cmd_table_entry SCR_OP_SETOBJECTXYPERM ScrCmd_setobjectxyperm @ 0x63
-	script_cmd_table_entry SCR_OP_64 ScrCmd_moveobjectoffscreen @ 0x64
+	script_cmd_table_entry SCR_OP_COPYOBJECTXYTOPERM ScrCmd_moveobjectoffscreen @ 0x64
 	script_cmd_table_entry SCR_OP_SETOBJECTMOVEMENTTYPE ScrCmd_setobjectmovementtype @ 0x65
 	script_cmd_table_entry SCR_OP_WAITMESSAGE ScrCmd_waitmessage @ 0x66
 	script_cmd_table_entry SCR_OP_MESSAGE ScrCmd_message @ 0x67

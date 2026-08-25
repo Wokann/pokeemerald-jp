@@ -2090,7 +2090,7 @@
 	.endm
 
 	.macro moveobjectoffscreen localId:req
-	.byte SCR_OP_64
+	.byte SCR_OP_COPYOBJECTXYTOPERM
 	.2byte \localId
 	.endm
 

@@ -280,6 +280,18 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
 # the matching US text order have been checked.  jp_text_blocks.py reads this
 # same mapping, so source labels and map references cannot drift apart.
 VERIFIED_SHARED_TEXT_BLOCKS = {
+    # Route104's berry-giver text is physically stored in the shared text
+    # owner rather than beside its map scripts. The two EOS-terminated strings
+    # and their callers were checked against the Route104 US script order.
+    'Route104_BerryMaster': {
+        'source': 'data/scripts/gUnknown_826316A.inc',
+        'start': 0x082637EB,
+        'end': 0x0826388C,
+        'labels': {
+            0x082637EB: 'Route104_Text_PlantBerriesInSoilTakeThis',
+            0x08263847: 'Route104_Text_TrainersOftenMakeMonHoldBerries',
+        },
+    },
     'LilycoveCity_BerryGentleman': {
         'source': 'data/scripts/gUnknown_826316A.inc',
         'start': 0x08263A58,

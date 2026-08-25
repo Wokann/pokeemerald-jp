@@ -1,7 +1,20 @@
 	compare_local_to_value 0x21, 0x1C
 	compare_var_to_value 0x3F00, 0xA2E
 	gotostd 0x13
-	.incbin "baserom_jp.gba", 0x263174, 0x8e4
+	.incbin "baserom_jp.gba", 0x263174, 0x677
+Route104_Text_PlantBerriesInSoilTakeThis: @ 0x082637EB
+	.string "ふかふかの　つちに　はえている　きのみは\n"
+	.string "じゆうに　とっても　よいのじゃが⋯\p"
+	.string "1つだけ　きのみを　おなじ　ばしょに　うめる\n"
+	.string "それが　れいぎと　いうものじゃ\p"
+	.string "ほれ　これを　わけてやろう$"
+
+Route104_Text_TrainersOftenMakeMonHoldBerries: @ 0x08263847
+	.string "あんた　みたところ　トレーナーじゃろ？\p"
+	.string "トレーナーは　よく　きのみを　ポケモンに\n"
+	.string "もたせとるわい\p"
+	.string "ふやすも　つかうも　あんた　しだいじゃ$"
+	.incbin "baserom_jp.gba", 0x26388c, 0x1cc
 LilycoveCity_Text_BerrySuitsYou: @ 0x08263A58
 	.string "やっぱり\p"
 	.string "わたしに　スーツが　にあうように\n"

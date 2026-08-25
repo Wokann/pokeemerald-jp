@@ -732,70 +732,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route103/events.inc"
 	.globl gMapEvents_ROUTE103
 	.set gMapEvents_ROUTE103, Route103_MapEvents
-	.globl ROUTE104_EventObjects
-ROUTE104_EventObjects: @ 0x085009F0
-	object_event 1, 36, 0, 15, 60, 3, 9, 0, 0, 0, 0, Route104_EventScript_BugCatcher, 0x0000
-	object_event 2, 10, 0, 25, 49, 3, 2, 1, 1, 0, 0, Route104_EventScript_Girl1, 0x0000
-	object_event 3, 47, 0, 31, 24, 3, 9, 0, 0, 1, 7, Route104_EventScript_Haley, 0x0000
-	object_event 4, 7, 0, 27, 63, 3, 3, 0, 1, 0, 0, Route104_EventScript_Boy1, 0x0000
-	object_event 5, 20, 0, 30, 50, 3, 2, 1, 1, 0, 0, Route104_EventScript_Woman, 0x0000
-	object_event 6, 14, 0, 28, 74, 3, 7, 0, 0, 0, 0, Route104_EventScript_Girl2, 0x0000
-	object_event 7, 88, 0, 12, 54, 1, 7, 0, 0, 0, 0, 0x00000000, 0x02E6
-	object_event 8, 21, 0, 12, 51, 4, 10, 0, 0, 0, 0, 0x00000000, 0x02E2
-	object_event 9, 50, 0, 29, 8, 3, 8, 0, 0, 1, 0, Route104_EventScript_Ivan, 0x0000
-	object_event 10, 60, 0, 34, 6, 3, 12, 0, 0, 0, 8, 0x08244D23, 0x0000
-	object_event 11, 60, 0, 35, 6, 3, 12, 0, 0, 0, 9, 0x08244D23, 0x0000
-	object_event 12, 60, 0, 36, 6, 3, 12, 0, 0, 0, 10, 0x08244D23, 0x0000
-	object_event 13, 60, 0, 22, 41, 3, 12, 0, 0, 0, 11, 0x08244D23, 0x0000
-	object_event 14, 60, 0, 23, 41, 3, 12, 0, 0, 0, 12, 0x08244D23, 0x0000
-	object_event 15, 60, 0, 24, 41, 3, 12, 0, 0, 0, 13, 0x08244D23, 0x0000
-	object_event 16, 22, 0, 37, 8, 3, 9, 1, 1, 0, 0, Route104_EventScript_ExpertF, 0x0000
-	object_event 17, 60, 0, 3, 22, 3, 12, 0, 0, 0, 3, 0x08244D23, 0x0000
-	object_event 18, 60, 0, 3, 23, 3, 12, 0, 0, 0, 4, 0x08244D23, 0x0000
-	object_event 19, 60, 0, 3, 24, 3, 12, 0, 0, 0, 75, 0x08244D23, 0x0000
-	object_event 20, 60, 0, 3, 25, 3, 12, 0, 0, 0, 76, 0x08244D23, 0x0000
-	object_event 21, 59, 0, 39, 15, 3, 1, 0, 0, 0, 0, 0x08256A56, 0x03EA
-	object_event 22, 34, 0, 8, 19, 3, 5, 1, 0, 0, 0, Route104_EventScript_WhiteHerbFlorist, 0x038A
-	object_event 23, 6, 0, 27, 15, 3, 8, 0, 0, 1, 1, Route104_EventScript_Gina, 0x0000
-	object_event 24, 6, 0, 28, 15, 3, 8, 0, 0, 1, 1, Route104_EventScript_Mia, 0x0000
-	object_event 25, 15, 0, 21, 25, 3, 23, 0, 0, 1, 3, Route104_EventScript_Winston, 0x0000
-	object_event 26, 20, 0, 11, 44, 3, 16, 0, 0, 1, 3, Route104_EventScript_Cindy, 0x0000
-	object_event 27, 59, 0, 29, 53, 3, 1, 1, 1, 0, 0, 0x08256A63, 0x0421
-	object_event 28, 35, 0, 18, 67, 3, 46, 5, 6, 1, 2, Route104_EventScript_Billy, 0x0000
-	object_event 29, 59, 0, 37, 22, 3, 1, 1, 1, 0, 0, 0x08256A70, 0x045B
-	object_event 30, 82, 0, 35, 22, 3, 1, 1, 1, 0, 0, 0x082565C8, 0x0011
-	object_event 31, 59, 0, 5, 8, 3, 1, 1, 1, 0, 0, 0x08256A7D, 0x046F
-	object_event 32, 9, 0, 5, 26, 3, 1, 1, 1, 0, 0, Route104_EventScript_Boy2, 0x0000
-	object_event 33, 50, 0, 15, 59, 3, 9, 0, 0, 1, 0, Route104_EventScript_Darian, 0x0000
-	object_event 34, 240, 0, 17, 50, 0, 1, 1, 1, 0, 0, Route104_EventScript_Rival, 0x02CF
-	.globl ROUTE104_EventWarps
-ROUTE104_EventWarps: @ 0x08500D20
-	warp_def 17, 50, 0, 0, MAP_ROUTE104_MR_BRINEYS_HOUSE
-	warp_def 5, 18, 0, 0, MAP_ROUTE104_PRETTY_PETAL_FLOWER_SHOP
-	warp_def 10, 30, 3, 0, MAP_PETALBURG_WOODS
-	warp_def 11, 30, 3, 1, MAP_PETALBURG_WOODS
-	warp_def 10, 38, 3, 2, MAP_PETALBURG_WOODS
-	warp_def 11, 38, 3, 3, MAP_PETALBURG_WOODS
-	warp_def 32, 42, 3, 4, MAP_PETALBURG_WOODS
-	warp_def 33, 42, 3, 5, MAP_PETALBURG_WOODS
-	.globl ROUTE104_EventCoordEvents
-ROUTE104_EventCoordEvents: @ 0x08500D60
-	coord_event 17, 51, 3, 16483, 1, Route104_EventScript_RivalTrigger
-	.globl ROUTE104_EventBgEvents
-ROUTE104_EventBgEvents: @ 0x08500D70
-	bg_event 20, 50, 0, 0, Route104_EventScript_BrineysCottageSign, 0, 0
-	bg_event 27, 66, 0, 0, Route104_EventScript_RouteSignPetalburg, 0, 0
-	bg_event 23, 5, 0, 0, Route104_EventScript_RouteSignRustboro, 0, 0
-	bg_event 7, 20, 0, 0, Route104_EventScript_FlowerShopSign, 0, 0
-	bg_event 17, 23, 3, 0, Route104_EventScript_TrainerTipsDoubleBattles, 0, 0
-	bg_event 7, 6, 3, 7, 0x0016, 0x2C, 0x00
-	bg_event 3, 9, 3, 7, 0x0004, 0x3E, 0x00
-	bg_event 14, 55, 3, 7, 0x000D, 0x25, 0x00
-	bg_event 16, 72, 3, 7, 0x000E, 0x55, 0x00
-	bg_event 16, 64, 3, 7, 0x006F, 0x58, 0x00
+	.include "data/maps/Route104/events.inc"
 	.globl gMapEvents_ROUTE104
-gMapEvents_ROUTE104: @ 0x08500DE8
-	map_events ROUTE104_EventObjects, ROUTE104_EventWarps, ROUTE104_EventCoordEvents, ROUTE104_EventBgEvents
+	.set gMapEvents_ROUTE104, Route104_MapEvents
 	.globl ROUTE105_EventObjects
 ROUTE105_EventObjects: @ 0x08500DFC
 	object_event 1, 42, 0, 19, 60, 1, 10, 0, 0, 1, 6, Route105_EventScript_Luis, 0x0000
