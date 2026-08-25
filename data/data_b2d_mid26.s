@@ -723,31 +723,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/PacifidlogTown/events.inc"
 	.globl gMapEvents_PACIFIDLOG_TOWN
 	.set gMapEvents_PACIFIDLOG_TOWN, PacifidlogTown_MapEvents
-	.globl ROUTE101_EventObjects
-ROUTE101_EventObjects: @ 0x085005A4
-	object_event 1, 35, 0, 16, 8, 3, 1, 0, 0, 0, 0, Route101_EventScript_001E65F7, 0x0000
-	object_event 2, 64, 0, 9, 13, 0, 71, 0, 0, 0, 0, 0x00000000, 0x02D0
-	object_event 3, 97, 0, 7, 14, 3, 1, 0, 0, 0, 0, Route101_EventScript_001E6612, 0x02BC
-	object_event 4, 98, 0, 10, 13, 0, 70, 0, 0, 0, 0, 0x00000000, 0x02EE
-	object_event 5, 64, 0, 5, 11, 3, 1, 0, 0, 0, 0, 0x082431CD, 0x0381
-	object_event 6, 9, 0, 2, 13, 3, 5, 1, 1, 0, 0, Route101_EventScript_001E6600, 0x03DF
-	.globl ROUTE101_EventCoordEvents
-ROUTE101_EventCoordEvents: @ 0x08500634
-	coord_event 10, 19, 3, 16480, 1, Route101_EventScript_001E64DA
-	coord_event 11, 19, 3, 16480, 1, Route101_EventScript_001E64DA
-	coord_event 10, 18, 3, 16480, 2, Route101_EventScript_001E654A
-	coord_event 11, 18, 3, 16480, 2, Route101_EventScript_001E654A
-	coord_event 6, 16, 3, 16480, 2, Route101_EventScript_001E6560
-	coord_event 6, 15, 3, 16480, 2, Route101_EventScript_001E6560
-	coord_event 6, 17, 3, 16480, 2, Route101_EventScript_001E6560
-	coord_event 6, 18, 3, 16480, 2, Route101_EventScript_001E6560
-	coord_event 7, 13, 3, 16480, 2, Route101_EventScript_001E6576
-	.globl ROUTE101_EventBgEvents
-ROUTE101_EventBgEvents: @ 0x085006C4
-	bg_event 5, 9, 0, 0, Route101_EventScript_001E6609, 0, 0
+	.include "data/maps/Route101/events.inc"
 	.globl gMapEvents_ROUTE101
-gMapEvents_ROUTE101: @ 0x085006D0
-	map_events ROUTE101_EventObjects, 0, ROUTE101_EventCoordEvents, ROUTE101_EventBgEvents
+	.set gMapEvents_ROUTE101, Route101_MapEvents
 	.globl ROUTE102_EventObjects
 ROUTE102_EventObjects: @ 0x085006E4
 	object_event 1, 11, 0, 18, 11, 3, 1, 0, 0, 0, 0, 0x081E6825, 0x0000
