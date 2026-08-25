@@ -113,6 +113,16 @@
 	@ The local map source therefore keeps the pokeemerald semantic labels.
 	.globl Common_EventScript_SaveGame
 	.set Common_EventScript_SaveGame, 0x082423E9
+	@ The Elite Four room scripts remain in their retained JP owner block.
+	@ Export their reviewed pokeemerald names for map-local source references.
+	.globl PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
+	.set PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles, 0x0824347B
+	.globl PokemonLeague_EliteFour_EventScript_WalkInCloseDoor
+	.set PokemonLeague_EliteFour_EventScript_WalkInCloseDoor, 0x082434F8
+	.globl PokemonLeague_EliteFour_EventScript_ResetAdvanceToNextRoom
+	.set PokemonLeague_EliteFour_EventScript_ResetAdvanceToNextRoom, 0x0824353F
+	.globl PokemonLeague_EliteFour_EventScript_CloseDoor
+	.set PokemonLeague_EliteFour_EventScript_CloseDoor, 0x082435E2
 	@ Mauville's dynamic old-man interaction remains in its retained JP owner.
 	@ Expose the map-local pokeemerald label for generated object events.
 	.globl MauvilleCity_PokemonCenter_1F_EventScript_MauvilleOldMan
@@ -825,7 +835,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_1F/scripts.inc"
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/scripts.inc"
 	.include "data/maps/EverGrandeCity_SidneysRoom/scripts.inc"
-	.incbin "baserom_jp.gba", 0x210249, 0x128
 	.include "data/maps/EverGrandeCity_PhoebesRoom/scripts.inc"
 	.incbin "baserom_jp.gba", 0x2103c8, 0x15b
 	.include "data/maps/EverGrandeCity_GlaciasRoom/scripts.inc"

@@ -2144,16 +2144,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SootopolisCity_MysteryEventsHouse_B1F/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F
 	.set gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F, SootopolisCity_MysteryEventsHouse_B1F_MapEvents
-	.globl EVER_GRANDE_CITY_SIDNEYS_ROOM_EventObjects
-EVER_GRANDE_CITY_SIDNEYS_ROOM_EventObjects: @ 0x0850BD3C
-	object_event 1, 121, 0, 6, 5, 3, 8, 0, 0, 0, 0, 0x08210249, 0x0000
-	.globl EVER_GRANDE_CITY_SIDNEYS_ROOM_EventWarps
-EVER_GRANDE_CITY_SIDNEYS_ROOM_EventWarps: @ 0x0850BD54
-	warp_def 6, 13, 3, 1, MAP_EVER_GRANDE_CITY_HALL5
-	warp_def 6, 2, 0, 0, MAP_EVER_GRANDE_CITY_HALL1
+	.include "data/maps/EverGrandeCity_SidneysRoom/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM
-gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM: @ 0x0850BD64
-	map_events EVER_GRANDE_CITY_SIDNEYS_ROOM_EventObjects, EVER_GRANDE_CITY_SIDNEYS_ROOM_EventWarps, 0, 0
+	.set gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM, EverGrandeCity_SidneysRoom_MapEvents
 	.globl EVER_GRANDE_CITY_PHOEBES_ROOM_EventObjects
 EVER_GRANDE_CITY_PHOEBES_ROOM_EventObjects: @ 0x0850BD78
 	object_event 1, 122, 0, 6, 5, 3, 8, 0, 0, 0, 0, 0x082103C8, 0x0000

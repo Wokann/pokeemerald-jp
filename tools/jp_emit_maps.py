@@ -83,6 +83,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # B1F is the immediate next owner and has five local scripts plus its
     # on-frame table in the same reviewed US order.
     'SootopolisCity_MysteryEventsHouse_B1F': 6,
+    # Sidney's room follows immediately. Its eight initial records plus the
+    # three object-event branches match the reviewed US source sequence.
+    'EverGrandeCity_SidneysRoom': 11,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -91,6 +94,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
 MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
+    'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -135,6 +139,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Fourteen live texts plus two unused RS-era Potion records; each was
     # checked in ROM order against the matching US owner.
     'SootopolisCity_LotadAndSeedotHouse': 16,
+    'EverGrandeCity_SidneysRoom': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -8642,6 +8647,43 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x082101B4: {0x40C0: {0x03: '3'}},
                 0x082101C2: {0x40C0: {0x01: '1'}},
                 0x082101CD: {0x40C0: {0x02: '2'}},
+            },
+        },
+    },
+    # Sidney's room is the next physical map-script owner. The local scripts
+    # call retained Elite Four helpers; expose their US labels through exact
+    # JP aliases while retaining this map's own text and event boundaries.
+    'EverGrandeCity_SidneysRoom': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824347B: 'PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles',
+            0x082434F8: 'PokemonLeague_EliteFour_EventScript_WalkInCloseDoor',
+            0x0824353F: 'PokemonLeague_EliteFour_EventScript_ResetAdvanceToNextRoom',
+            0x082435E2: 'PokemonLeague_EliteFour_EventScript_CloseDoor',
+        },
+        'symbols': {
+            'flags': {
+                0x01CF: 'FLAG_MET_SCOTT_IN_EVERGRANDE',
+                0x0319: 'FLAG_HIDE_EVER_GRANDE_POKEMON_CENTER_1F_SCOTT',
+                0x04FB: 'FLAG_DEFEATED_ELITE_4_SIDNEY',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x409C: 'VAR_ELITE_4_STATE',
+            },
+            'local_ids': {0xFF: 'LOCALID_PLAYER'},
+            'directions': {0x02: 'DIR_NORTH'},
+            'songs': {0x01C2: 'MUS_ENCOUNTER_ELITE_FOUR'},
+            'trainers': {0x0105: 'TRAINER_SIDNEY'},
+            'booleans': {0x00: 'FALSE'},
+            'map_script_values': {
+                0x4001: {0x00: '0'},
+                0x409C: {0x00: '0'},
+            },
+            'script_var_values': {
+                0x08210202: {0x409C: {0x01: '1'}},
+                0x0821023C: {0x409C: {0x01: '1'}},
             },
         },
     },
