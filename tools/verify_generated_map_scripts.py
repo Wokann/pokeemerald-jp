@@ -110,6 +110,39 @@ def _undefined_symbols(object_path: Path) -> set[str]:
     return names
 
 
+def _tm_hm_item_aliases() -> dict[str, int]:
+    """Return the semantic TM/HM item aliases used by map-script sources."""
+    item_values = {}
+    item_header = ROOT / "include" / "constants" / "items.h"
+    for match in re.finditer(
+        r"^#define\s+(ITEM_(?:TM|HM)\d\d)\s+(\d+)\s*$",
+        item_header.read_text(encoding="utf-8"),
+        re.MULTILINE,
+    ):
+        item_values[match.group(1)] = int(match.group(2))
+
+    aliases = {}
+    names_header = (ROOT / "include" / "constants" / "tms_hms.h").read_text(
+        encoding="utf-8"
+    )
+    for kind, count in (("TM", 50), ("HM", 8)):
+        block = re.search(
+            rf"#define FOREACH_{kind}\(F\) \\\n(?P<body>.*?)(?=\n\n#define|\n\n#endif)",
+            names_header,
+            re.DOTALL,
+        )
+        if block is None:
+            raise VerificationError(f"missing FOREACH_{kind} in tms_hms.h")
+        names = re.findall(r"F\((\w+)\)", block.group("body"))
+        if len(names) != count:
+            raise VerificationError(
+                f"FOREACH_{kind} has {len(names)} entries, expected {count}"
+            )
+        for index, name in enumerate(names, 1):
+            aliases[f"ITEM_{kind}_{name}"] = item_values[f"ITEM_{kind}{index:02d}"]
+    return aliases
+
+
 def _external_label_addresses() -> dict[str, int]:
     # One ROM address may deliberately retain both a legacy gJPText alias and
     # a reviewed semantic label.  The temporary verifier must know every
@@ -131,6 +164,7 @@ def _external_label_addresses() -> dict[str, int]:
         match = re.match(r"\s*#define\s+(TRAINER_BATTLE_\w+)\s+(\d+)\s*$", line)
         if match:
             labels[match.group(1)] = int(match.group(2))
+    labels.update(_tm_hm_item_aliases())
     return labels
 
 
@@ -144,7 +178,7 @@ def _resolve_address(symbol: str, known: dict[str, int]) -> int | None:
     return value if value >= ROM_BASE else ROM_BASE + value
 
 
-def _wrapper(source_path: Path, aliases: dict[str, int]) -> str:
+def _wrapper(source_path: Path, aliases: dict[str, int], prefix: int = 0) -> str:
     event_script_source = ROOT / "data" / "event_scripts.s"
     cpp_headers = []
     for line in event_script_source.read_text(encoding="utf-8").splitlines():
@@ -162,11 +196,10 @@ def _wrapper(source_path: Path, aliases: dict[str, int]) -> str:
     ]
     for name, address in sorted(aliases.items()):
         lines.append(f".set {name}, 0x{address:08X}")
-    lines.extend((
-        '.section script_data, "aw", %progbits',
-        f'.include "{source_path}"',
-        "",
-    ))
+    lines.append('.section script_data, "aw", %progbits')
+    if prefix:
+        lines.append(f'.space {prefix}')
+    lines.extend((f'.include "{source_path}"', ""))
     return "\n".join(lines)
 
 
@@ -178,6 +211,12 @@ def assemble_candidate(source: str, origin: int) -> bytes:
     if shutil.which(CPP) is None:
         raise VerificationError(f"missing host tool: {CPP}")
     known = _external_label_addresses()
+    # Map tables can begin at an unaligned ROM address, while an emitted map
+    # may later contain .align directives. Prefix the temporary section so
+    # its local alignment arithmetic has the same modulo-16 origin as ROM,
+    # then strip that synthetic prefix from the comparison bytes.
+    prefix = origin & 0xF
+    section_origin = origin - prefix
     with tempfile.TemporaryDirectory(prefix="jp-map-script-") as directory:
         tempdir = Path(directory)
         map_source = tempdir / "map_scripts.inc"
@@ -189,7 +228,7 @@ def assemble_candidate(source: str, origin: int) -> bytes:
         linked = tempdir / "map.elf"
         binary = tempdir / "map.bin"
 
-        wrapper.write_text(_wrapper(map_source, {}), encoding="utf-8")
+        wrapper.write_text(_wrapper(map_source, {}, prefix), encoding="utf-8")
         _preprocess(wrapper, preprocessed)
         _assemble(preprocessed, object_path)
         unresolved = _undefined_symbols(object_path)
@@ -206,7 +245,7 @@ def assemble_candidate(source: str, origin: int) -> bytes:
                 "cannot infer ROM address for external symbol(s): " + ", ".join(sorted(unknown))
             )
 
-        wrapper.write_text(_wrapper(map_source, aliases), encoding="utf-8")
+        wrapper.write_text(_wrapper(map_source, aliases, prefix), encoding="utf-8")
         _preprocess(wrapper, preprocessed)
         _assemble(preprocessed, object_path)
         remaining = _undefined_symbols(object_path)
@@ -216,8 +255,7 @@ def assemble_candidate(source: str, origin: int) -> bytes:
             )
         linker_script.write_text(
             "SECTIONS\n{\n"
-            f"  . = 0x{origin:08X};\n"
-            "  script_data : { *(script_data) }\n"
+            f"  script_data 0x{section_origin:08X} : {{ *(script_data) }}\n"
             "}\n",
             encoding="utf-8",
         )
@@ -231,7 +269,10 @@ def assemble_candidate(source: str, origin: int) -> bytes:
             cwd=ROOT,
             description="objcopy",
         )
-        return binary.read_bytes()
+        result = binary.read_bytes()
+        if result[:prefix] != b'\0' * prefix:
+            raise VerificationError("temporary map prefix is not zero-filled")
+        return result[prefix:]
 
 
 @lru_cache(maxsize=1)

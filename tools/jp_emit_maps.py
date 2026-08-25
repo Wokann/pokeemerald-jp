@@ -39,6 +39,21 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
     # A one-byte ``end`` between Timmy and Kaleb is intentionally unused but
     # remains a named Route110 script in the matching US source.
     'Route110': (0x081E91FB,),
+    # The field-control progression code dispatches Wally's registration call
+    # directly, rather than through a Mauville City event-table pointer.
+    'MauvilleCity': (0x081DDDF3,),
+    # These branch-office and Devon employee records are intentionally unused
+    # but remain named, map-owned source blocks in the matching US file.
+    'RustboroCity': (
+        0x081DE937,
+        0x081DEA74,
+        0x081DEA7D,
+        0x081DEA86,
+        0x081DEA91,
+        0x081DEA9C,
+        0x081DEAA7,
+        0x081DEAB2,
+    ),
     # The up/right sandstorm guards have no live JP map-event pointer, but the
     # four adjacent direction variants are retained together in the US owner.
     'Route111': (0x081EA3A4, 0x081EA3C8),
@@ -157,6 +172,39 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x081E48CB: 'OldaleTown_Movement_Unknown1',
         0x081E48F3: 'OldaleTown_Movement_Unknown2',
     },
+    # This four-byte local delay is unused by the final script flow but is
+    # retained as a named movement in the matching US Petalburg City source.
+    'PetalburgCity': {
+        0x081DBB2D: 'PetalburgCity_Movement_Delay48',
+    },
+    'SlateportCity': {
+        0x081DC6A8: 'SlateportCity_Movement_Unused',
+    },
+    'RustboroCity': {
+        0x081DE887: 'RustboroCity_Movement_ScientistWalkInPlaceDown',
+        0x081DE889: 'RustboroCity_Movement_PlayerWalkDown',
+        0x081DE88B: 'RustboroCity_Movement_ScientistApproachPlayer',
+        0x081DE88E: 'RustboroCity_Movement_ScientistWalkAroundPlayer',
+        0x081DE896: 'RustboroCity_Movement_ScientistLeave',
+        0x081DEAC7: 'RustboroCity_Movement_GruntEscapeExtended',
+        0x081DEAD9: 'RustboroCity_Movement_GruntEscape',
+        0x081DEAEA: 'RustboroCity_Movement_EmployeeChaseGrunt1',
+        0x081DEAF2: 'RustboroCity_Movement_EmployeeChaseGrunt2',
+        0x081DEAFA: 'RustboroCity_Movement_EmployeeApproachUp',
+        0x081DEAFE: 'RustboroCity_Movement_EmployeeApproachLeft',
+        0x081DEB03: 'RustboroCity_Movement_EmployeeApproachRight',
+        0x081DEB08: 'RustboroCity_Movement_EmployeeApproachDown',
+        0x081DEB0E: 'RustboroCity_Movement_EmployeeApproachPlayerFar',
+        0x081DEC62: 'RustboroCity_Movement_EmployeeApproachPlayerDown',
+        0x081DF247: 'RustboroCity_Movement_RivalApproachPlayer0',
+        0x081DF24E: 'RustboroCity_Movement_RivalApproachPlayer1',
+        0x081DF254: 'RustboroCity_Movement_RivalApproachPlayer2',
+        0x081DF259: 'RustboroCity_Movement_RivalApproachPlayer3',
+        0x081DF25D: 'RustboroCity_Movement_RivalApproachPlayer4',
+        0x081DF260: 'RustboroCity_Movement_RivalApproachPlayer5',
+        0x081DF264: 'RustboroCity_Movement_RivalApproachPlayer6',
+        0x081DF269: 'RustboroCity_Movement_RivalApproachPlayer7',
+    },
     'Route128': {
         0x081EEEAA: 'Route128_Movement_Unused1',
         0x081EEEAC: 'Route128_Movement_Unused2',
@@ -273,6 +321,49 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x082144AB: 'PetalburgWoods_Movement_AquaEntrance',
         0x082144B0: 'PetalburgWoods_Movement_AquaApproachPlayer',
     },
+}
+
+# Map-owned shop lists require a four-byte boundary before their product data.
+# Each record gives the raw span start (including any alignment padding), the
+# reviewed source label, and the symbolic products in the matching US source.
+# The emitter verifies the padding and pokemartlistend trailer directly against
+# the JP ROM before it renders a list as source.
+MAP_POKEMART_LISTS = {
+    'SlateportCity': (
+        (0x081DC146, 'SlateportCity_Pokemart_EnergyGuru', (
+            'ITEM_PROTEIN',
+            'ITEM_IRON',
+            'ITEM_CARBOS',
+            'ITEM_ZINC',
+            'ITEM_CALCIUM',
+            'ITEM_HP_UP',
+        )),
+        (0x081DC4F5, 'SlateportCity_PokemartDecor_Dolls', (
+            'DECOR_AZURILL_DOLL',
+            'DECOR_MARILL_DOLL',
+            'DECOR_SKITTY_DOLL',
+        )),
+        (0x081DC52C, 'SlateportCity_PokemartDecor', (
+            'DECOR_RED_BRICK',
+            'DECOR_BLUE_BRICK',
+            'DECOR_YELLOW_BRICK',
+            'DECOR_RED_BALLOON',
+            'DECOR_BLUE_BALLOON',
+            'DECOR_YELLOW_BALLOON',
+            'DECOR_C_LOW_NOTE_MAT',
+            'DECOR_D_NOTE_MAT',
+            'DECOR_E_NOTE_MAT',
+            'DECOR_F_NOTE_MAT',
+            'DECOR_G_NOTE_MAT',
+            'DECOR_A_NOTE_MAT',
+            'DECOR_B_NOTE_MAT',
+            'DECOR_C_HIGH_NOTE_MAT',
+        )),
+        (0x081DC563, 'SlateportCity_Pokemart_PowerTMs', (
+            'ITEM_TM_HIDDEN_POWER',
+            'ITEM_TM_SECRET_POWER',
+        )),
+    ),
 }
 
 # Shared text is stored separately from map script-data.  A block enters this
@@ -1683,6 +1774,38 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
 # is intentionally an allowlist: unreviewed addresses keep deterministic
 # address labels instead of receiving a plausible-but-unproven semantic name.
 MAP_VERIFIED_SEMANTIC_LABELS = {
+    # These unreferenced Rustboro entries retain the corresponding US names
+    # instead of being emitted as address-only scripts or text.
+    'RustboroCity': {
+        'scripts': {
+            0x081DE937: 'RustboroCity_EventScript_DevonCorpBranchOfficeSign',
+            0x081DEA74: 'RustboroCity_EventScript_ShadyCharacterTookOff',
+            0x081DEA7D: 'RustboroCity_EventScript_YouGotItThankYou',
+            0x081DEA86: 'RustboroCity_EventScript_EmployeeApproachUp',
+            0x081DEA91: 'RustboroCity_EventScript_EmployeeApproachLeft',
+            0x081DEA9C: 'RustboroCity_EventScript_EmployeeApproachRight',
+            0x081DEAA7: 'RustboroCity_EventScript_EmployeeApproachDown',
+            0x081DEAB2: 'RustboroCity_EventScript_EmployeeApproachPlayerFar',
+        },
+        'texts': {
+            0x081DFB7E: 'RustboroCity_Text_DevonCorpBranchOfficeSign',
+        },
+    },
+    # Wally's Pokenav registration is entered from field_control_avatar.c.
+    # Its two text records are still map-owned and use the same names and
+    # player placeholder convention as the matching US Mauville source.
+    'MauvilleCity': {
+        'scripts': {
+            0x081DDDF3: 'MauvilleCity_EventScript_RegisterWallyCall',
+        },
+        'texts': {
+            0x081DE1A8: 'MauvilleCity_Text_WallyPokenavCall',
+            0x081DE221: 'MauvilleCity_Text_RegisteredWally',
+        },
+        'field_placeholders': {
+            0x081DE1A8: {0x01: 'PLAYER'},
+        },
+    },
     # The two mirrored houses share PlayersHouse/RivalsHouse handlers, but
     # their rival roles are gender-dependent.  These names follow the actual
     # JP control flow and the corresponding US map sources, not address order.
@@ -5925,6 +6048,19 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     external_labels = semantic.get('external_labels', {})
     field_placeholders = semantic.get('field_placeholders', {})
     special_aliases = semantic.get('specials', {})
+    shop_lists = {}
+    for raw_start, label, products in MAP_POKEMART_LISTS.get(mname, ()):
+        data_start = (raw_start + 3) & ~3
+        end = data_start + len(products) * 2 + 4
+        if not (ms <= raw_start <= data_start < end <= region_end):
+            raise RuntimeError(
+                'shop list %s is outside %s script range' % (label, mname))
+        padding = ROM[raw_start - 0x08000000:data_start - 0x08000000]
+        trailer = ROM[end - 4 - 0x08000000:end - 0x08000000]
+        if any(padding) or trailer != b'\0\0\x6c\x02':
+            raise RuntimeError(
+                'shop list %s does not match JP padding or terminator' % label)
+        shop_lists[raw_start] = (label, products, data_start, end)
     extra = [
         a
         for a in (*std_addrs, *MAP_AUXILIARY_SCRIPT_ADDRESSES.get(mname, ()))
@@ -5991,6 +6127,10 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             label_map[addr] = verified_script_labels.get(
                 addr, '%s_EventScript_%08X' % (mname, addr & 0xFFFFFF))
     label_map.update(movement_labels)
+    label_map.update({
+        data_start: label
+        for label, _products, data_start, _end in shop_lists.values()
+    })
     # byte coverage
     covered = collections.defaultdict(str)
     for a in range(ms, region_end):
@@ -6041,6 +6181,11 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         text_ranges.append((a, b))
         for x in range(a, b):
             covered[x] = 'text'
+    for raw_start, (label, _products, _data_start, end) in shop_lists.items():
+        if any(covered[b] != 'raw' for b in range(raw_start, end)):
+            raise RuntimeError('shop list overlaps decoded data: %s' % label)
+        for b in range(raw_start, end):
+            covered[b] = 'shop_list'
     # A pointer found through another map's script graph is not necessarily
     # defined by a checked-in gJPText_* label yet.  Render only labels emitted
     # by this map; leave external text pointers numeric until their owning
@@ -6082,6 +6227,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         segs.append((addr, 'script', addr))
     for addr in movements:
         segs.append((addr, 'movement', addr))
+    for raw_start in shop_lists:
+        segs.append((raw_start, 'shop_list', raw_start))
     for tp, end in text_ranges:
         segs.append((tp, 'text', tp))
     # raw gaps
@@ -6166,6 +6313,14 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             lines.append('%s:' % label)
             for action in actions:
                 lines.append('\t%s' % action)
+            lines.append('')
+        elif kind == 'shop_list':
+            label, products, _data_start, _end = shop_lists[payload]
+            lines.append('\t.align 2')
+            lines.append('%s:' % label)
+            for product in products:
+                lines.append('\t.2byte %s' % product)
+            lines.append('\tpokemartlistend')
             lines.append('')
         elif kind == 'text':
             tp = payload
@@ -6253,6 +6408,9 @@ def event_script_symbol_addresses():
     for movements in MAP_MOVEMENT_SCRIPT_LABELS.values():
         for address, name in movements.items():
             add_reviewed(name, address)
+    for shop_lists in MAP_POKEMART_LISTS.values():
+        for raw_start, name, _products in shop_lists:
+            add_reviewed(name, (raw_start + 3) & ~3)
 
     for p in (ROOT / 'data' / 'scripts').glob('gUnknown_*.inc'):
         add_reviewed(p.stem, int(p.stem[len('gUnknown_'):], 16))
