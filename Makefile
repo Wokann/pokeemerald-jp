@@ -164,6 +164,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	FortreeCity_House4 \
 	FortreeCity_House5 \
 	FortreeCity_DecorationShop \
+	LilycoveCity \
 	LilycoveCity_CoveLilyMotel_1F \
 	LilycoveCity_CoveLilyMotel_2F \
 	LilycoveCity_LilycoveMuseum_1F \
