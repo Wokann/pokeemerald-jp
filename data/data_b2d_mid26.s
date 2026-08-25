@@ -788,41 +788,9 @@ SLATEPORT_CITY_EventBgEvents: @ 0x084FEC88
 	.globl gMapEvents_SLATEPORT_CITY
 gMapEvents_SLATEPORT_CITY: @ 0x084FED24
 	map_events SLATEPORT_CITY_EventObjects, SLATEPORT_CITY_EventWarps, SLATEPORT_CITY_EventCoordEvents, SLATEPORT_CITY_EventBgEvents
-	.globl MAUVILLE_CITY_EventObjects
-MAUVILLE_CITY_EventObjects: @ 0x084FED38
-	object_event 1, 13, 0, 29, 16, 3, 5, 1, 1, 0, 0, MauvilleCity_EventScript_Boy, 0x0000
-	object_event 2, 15, 0, 24, 10, 3, 5, 1, 0, 0, 0, MauvilleCity_EventScript_RichBoy, 0x0000
-	object_event 3, 39, 0, 14, 11, 3, 10, 0, 0, 0, 0, MauvilleCity_EventScript_Maniac, 0x0000
-	object_event 4, 26, 0, 18, 6, 3, 1, 0, 0, 0, 0, MauvilleCity_EventScript_Woman, 0x0000
-	object_event 5, 38, 0, 17, 14, 3, 8, 0, 0, 0, 0, MauvilleCity_EventScript_SchoolKidM, 0x0000
-	object_event 6, 135, 0, 8, 6, 3, 7, 0, 0, 0, 0, MauvilleCity_EventScript_Wally, 0x0324
-	object_event 7, 25, 0, 9, 6, 3, 9, 0, 0, 0, 0, MauvilleCity_EventScript_WallysUncle, 0x0325
-	object_event 8, 127, 0, 29, 9, 3, 1, 0, 0, 0, 0, MauvilleCity_EventScript_Wattson, 0x0390
-	object_event 9, 59, 0, 28, 19, 3, 1, 1, 1, 0, 0, 0x08256E25, 0x045C
-	object_event 10, 17, 0, 13, 7, 3, 9, 0, 0, 0, 0, 0x0827689A, 0x0000
-	object_event 11, 219, 0, 12, 14, 3, 7, 0, 0, 0, 0, 0x00000000, 0x02FD
-	.globl MAUVILLE_CITY_EventWarps
-MAUVILLE_CITY_EventWarps: @ 0x084FEE40
-	warp_def 8, 5, 0, 0, MAP_MAUVILLE_CITY_GYM
-	warp_def 22, 5, 0, 0, MAP_MAUVILLE_CITY_POKEMON_CENTER_1F
-	warp_def 35, 5, 0, 0, MAP_MAUVILLE_CITY_BIKE_SHOP
-	warp_def 23, 14, 0, 0, MAP_MAUVILLE_CITY_MART
-	warp_def 32, 14, 0, 0, MAP_MAUVILLE_CITY_HOUSE1
-	warp_def 8, 13, 0, 0, MAP_MAUVILLE_CITY_GAME_CORNER
-	warp_def 19, 14, 0, 0, MAP_MAUVILLE_CITY_HOUSE2
-	.globl MAUVILLE_CITY_EventBgEvents
-MAUVILLE_CITY_EventBgEvents: @ 0x084FEE78
-	bg_event 23, 5, 0, 1, 0x08242EFF, 0, 0
-	bg_event 11, 6, 3, 0, MauvilleCity_EventScript_GymSign, 0, 0
-	bg_event 24, 14, 0, 1, 0x08242EF6, 0, 0
-	bg_event 25, 14, 0, 1, 0x08242EF6, 0, 0
-	bg_event 24, 5, 0, 1, 0x08242EFF, 0, 0
-	bg_event 19, 7, 0, 0, MauvilleCity_EventScript_CitySign, 0, 0
-	bg_event 33, 6, 0, 0, MauvilleCity_EventScript_BikeShopSign, 0, 0
-	bg_event 11, 15, 0, 0, MauvilleCity_EventScript_GameCornerSign, 0, 0
+	.include "data/maps/MauvilleCity/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY
-gMapEvents_MAUVILLE_CITY: @ 0x084FEED8
-	map_events MAUVILLE_CITY_EventObjects, MAUVILLE_CITY_EventWarps, 0, MAUVILLE_CITY_EventBgEvents
+	.set gMapEvents_MAUVILLE_CITY, MauvilleCity_MapEvents
 	.globl RUSTBORO_CITY_EventObjects
 RUSTBORO_CITY_EventObjects: @ 0x084FEEEC
 	object_event 1, 34, 0, 22, 34, 3, 3, 0, 1, 0, 0, RustboroCity_EventScript_001DE8C3, 0x0000

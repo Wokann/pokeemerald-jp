@@ -132,6 +132,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	SlateportCity_PokemonCenter_1F \
 	SlateportCity_PokemonCenter_2F \
 	SlateportCity_Mart \
+	MauvilleCity \
 	MauvilleCity_Gym \
 	MauvilleCity_BikeShop \
 	MauvilleCity_House1 \
