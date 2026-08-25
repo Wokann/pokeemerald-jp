@@ -675,48 +675,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.4byte 0x082FAF64
 	.hword 0x0800, 0xD756
 
-	.globl PETALBURG_CITY_EventObjects
-PETALBURG_CITY_EventObjects: @ 0x084FE6DC
-	object_event 1, 26, 0, 16, 18, 3, 2, 1, 1, 0, 0, PetalburgCity_EventScript_001DB919, 0x02D8
-	object_event 2, 135, 0, 15, 10, 3, 7, 0, 0, 0, 0, 0x00000000, 0x02D6
-	object_event 3, 7, 0, 8, 22, 3, 8, 0, 0, 0, 0, PetalburgCity_EventScript_001DB902, 0x0000
-	object_event 4, 48, 0, 20, 10, 3, 3, 0, 1, 0, 0, PetalburgCity_EventScript_001DB9A4, 0x0000
-	object_event 5, 25, 0, 15, 10, 3, 7, 0, 0, 0, 0, 0x00000000, 0x033E
-	object_event 6, 59, 0, 19, 2, 3, 1, 0, 0, 0, 0, 0x08256E0B, 0x040F
-	object_event 7, 59, 0, 3, 28, 3, 1, 0, 0, 0, 0, 0x08256E18, 0x0410
-	object_event 8, 9, 0, 12, 15, 3, 1, 0, 0, 0, 0, PetalburgCity_EventScript_001DBD4A, 0x0000
-	object_event 9, 219, 0, 13, 12, 3, 1, 1, 1, 0, 0, 0x00000000, 0x03E3
-	.globl PETALBURG_CITY_EventWarps
-PETALBURG_CITY_EventWarps: @ 0x084FE7B4
-	warp_def 10, 19, 0, 0, MAP_PETALBURG_CITY_HOUSE1
-	warp_def 7, 5, 0, 0, MAP_PETALBURG_CITY_WALLYS_HOUSE
-	warp_def 15, 8, 0, 0, MAP_PETALBURG_CITY_GYM
-	warp_def 20, 16, 0, 0, MAP_PETALBURG_CITY_POKEMON_CENTER_1F
-	warp_def 20, 24, 0, 0, MAP_PETALBURG_CITY_HOUSE2
-	warp_def 25, 12, 0, 0, MAP_PETALBURG_CITY_MART
-	.globl PETALBURG_CITY_EventCoordEvents
-PETALBURG_CITY_EventCoordEvents: @ 0x084FE7E4
-	coord_event 8, 10, 3, 16471, 0, PetalburgCity_EventScript_001DB9B6
-	coord_event 8, 11, 3, 16471, 0, PetalburgCity_EventScript_001DB9C2
-	coord_event 8, 12, 3, 16471, 0, PetalburgCity_EventScript_001DB9CE
-	coord_event 8, 13, 3, 16471, 0, PetalburgCity_EventScript_001DB9DA
-	coord_event 4, 10, 3, 16585, 0, PetalburgCity_EventScript_001DBBAD
-	coord_event 4, 11, 3, 16585, 0, PetalburgCity_EventScript_001DBBC3
-	coord_event 4, 12, 3, 16585, 0, PetalburgCity_EventScript_001DBBD9
-	coord_event 4, 13, 3, 16585, 0, PetalburgCity_EventScript_001DBBEF
-	.globl PETALBURG_CITY_EventBgEvents
-PETALBURG_CITY_EventBgEvents: @ 0x084FE864
-	bg_event 17, 10, 0, 0, PetalburgCity_EventScript_001DB992, 0, 0
-	bg_event 26, 12, 0, 1, 0x08242EF6, 0, 0
-	bg_event 21, 16, 0, 1, 0x08242EFF, 0, 0
-	bg_event 17, 16, 0, 0, PetalburgCity_EventScript_001DB99B, 0, 0
-	bg_event 22, 16, 0, 1, 0x08242EFF, 0, 0
-	bg_event 27, 12, 0, 1, 0x08242EF6, 0, 0
-	bg_event 8, 9, 0, 0, PetalburgCity_EventScript_001DB9AD, 0, 0
-	bg_event 11, 29, 3, 7, 0x0044, 0x5F, 0x00
+	.include "data/maps/PetalburgCity/events.inc"
 	.globl gMapEvents_PETALBURG_CITY
-gMapEvents_PETALBURG_CITY: @ 0x084FE8C4
-	map_events PETALBURG_CITY_EventObjects, PETALBURG_CITY_EventWarps, PETALBURG_CITY_EventCoordEvents, PETALBURG_CITY_EventBgEvents
+	.set gMapEvents_PETALBURG_CITY, PetalburgCity_MapEvents
 	.globl SLATEPORT_CITY_EventObjects
 SLATEPORT_CITY_EventObjects: @ 0x084FE8D8
 	object_event 1, 17, 0, 21, 11, 3, 2, 1, 1, 0, 0, SlateportCity_EventScript_001DC24D, 0x0000

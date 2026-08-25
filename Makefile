@@ -114,6 +114,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	PacifidlogTown_House3 \
 	PacifidlogTown_House4 \
 	PacifidlogTown_House5 \
+	PetalburgCity \
 	PetalburgCity_WallysHouse \
 	PetalburgCity_PokemonCenter_1F \
 	PetalburgCity_PokemonCenter_2F \
