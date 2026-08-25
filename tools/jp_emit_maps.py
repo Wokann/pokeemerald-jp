@@ -46,6 +46,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_House3': 12,
     'LilycoveCity_DepartmentStore_2F': 5,
     'LilycoveCity_DepartmentStore_3F': 5,
+    'LilycoveCity_DepartmentStore_4F': 5,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -62,6 +63,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_House3': 8,
     'LilycoveCity_DepartmentStore_2F': 3,
     'LilycoveCity_DepartmentStore_3F': 3,
+    'LilycoveCity_DepartmentStore_4F': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7322,6 +7324,31 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Department Store 4F immediately follows 3F. Its two clerks, three NPCs,
+# two TM shop lists, and three texts match the US map source in physical order.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_DepartmentStore_4F': {
+        'scripts': {
+            0x0820AB4F: 'LilycoveCity_DepartmentStore_4F_EventScript_Gentleman',
+            0x0820AB58: 'LilycoveCity_DepartmentStore_4F_EventScript_Woman',
+            0x0820AB61: 'LilycoveCity_DepartmentStore_4F_EventScript_Youngster',
+            0x0820AB6A: 'LilycoveCity_DepartmentStore_4F_EventScript_ClerkLeft',
+            0x0820AB90: 'LilycoveCity_DepartmentStore_4F_EventScript_ClerkRight',
+        },
+        'texts': {
+            0x0820ABB4: 'LilycoveCity_DepartmentStore_4F_Text_AttackOrDefenseTM',
+            0x0820ABF1: 'LilycoveCity_DepartmentStore_4F_Text_FiftyDifferentTMs',
+            0x0820AC28: 'LilycoveCity_DepartmentStore_4F_Text_PokemonOnlyHaveFourMoves',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+    },
+})
+
 MAP_POKEMART_LISTS.update({
     'LilycoveCity_DepartmentStore_2F': (
         (0x0820A953, 'LilycoveCity_DepartmentStore_2F_Pokemart1', (
@@ -7370,6 +7397,23 @@ MAP_POKEMART_LISTS.update({
             'ITEM_DIRE_HIT',
             'ITEM_GUARD_SPEC',
             'ITEM_X_ACCURACY',
+        )),
+    ),
+})
+
+MAP_POKEMART_LISTS.update({
+    'LilycoveCity_DepartmentStore_4F': (
+        (0x0820AB84, 'LilycoveCity_DepartmentStore_4F_Pokemart_AttackTMs', (
+            'ITEM_TM_FIRE_BLAST',
+            'ITEM_TM_THUNDER',
+            'ITEM_TM_BLIZZARD',
+            'ITEM_TM_HYPER_BEAM',
+        )),
+        (0x0820ABA8, 'LilycoveCity_DepartmentStore_4F_Pokemart_DefenseTMs', (
+            'ITEM_TM_PROTECT',
+            'ITEM_TM_SAFEGUARD',
+            'ITEM_TM_REFLECT',
+            'ITEM_TM_LIGHT_SCREEN',
         )),
     ),
 })
@@ -8792,9 +8836,21 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         elif kind == 'raw':
             a = start
             b = region_end
+            next_kind = None
             for s2, k2, p2 in segs:
                 if k2 != 'raw' and s2 > a:
-                    b = min(b, s2)
+                    if s2 < b:
+                        b = s2
+                        next_kind = k2
+            # A Pokemart list emits its own four-byte alignment.  Preserve a
+            # zero-only alignment gap by letting that directive generate the
+            # bytes, rather than concealing a trivial padding fragment inside
+            # a map-local scripts.inc incbin.
+            raw = ROM[a - 0x08000000:b - 0x08000000]
+            if (next_kind == 'shop_list'
+                    and b == ((a + 3) & ~3)
+                    and raw == b'\0' * (b - a)):
+                continue
             old = region_labels.get(a)
             if old:
                 lines.append('%s:: @ 0x%08X' % (old, a))
