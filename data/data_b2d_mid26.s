@@ -2021,20 +2021,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_PokemonTrainerFanClub/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB
 	.set gMapEvents_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB, LilycoveCity_PokemonTrainerFanClub_MapEvents
-	.globl LILYCOVE_CITY_HARBOR_EventObjects
-LILYCOVE_CITY_HARBOR_EventObjects: @ 0x0850A548
-	object_event 1, 45, 0, 8, 10, 3, 8, 0, 0, 0, 0, LilycoveCity_Harbor_EventScript_002094E3, 0x038C
-	object_event 2, 140, 0, 8, 9, 1, 10, 0, 0, 0, 0, 0x00000000, 0x035D
-	object_event 3, 49, 0, 3, 13, 3, 2, 1, 1, 0, 0, LilycoveCity_Harbor_EventScript_00209B0B, 0x0000
-	object_event 4, 49, 0, 8, 10, 3, 8, 0, 0, 0, 0, 0x00000000, 0x038D
-	object_event 5, 21, 0, 8, 10, 3, 8, 1, 1, 0, 0, 0x00000000, 0x02EC
-	.globl LILYCOVE_CITY_HARBOR_EventWarps
-LILYCOVE_CITY_HARBOR_EventWarps: @ 0x0850A5C0
-	warp_def 11, 14, 0, 12, MAP_LILYCOVE_CITY
-	warp_def 12, 14, 0, 12, MAP_LILYCOVE_CITY
+	.include "data/maps/LilycoveCity_Harbor/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HARBOR
-gMapEvents_LILYCOVE_CITY_HARBOR: @ 0x0850A5D0
-	map_events LILYCOVE_CITY_HARBOR_EventObjects, LILYCOVE_CITY_HARBOR_EventWarps, 0, 0
+	.set gMapEvents_LILYCOVE_CITY_HARBOR, LilycoveCity_Harbor_MapEvents
 	.globl LILYCOVE_CITY_MOVE_DELETERS_HOUSE_EventObjects
 LILYCOVE_CITY_MOVE_DELETERS_HOUSE_EventObjects: @ 0x0850A5E4
 	object_event 1, 21, 0, 4, 4, 3, 8, 0, 0, 0, 0, 0x08209D71, 0x0000

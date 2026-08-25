@@ -753,7 +753,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_UnusedMart/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonTrainerFanClub/scripts.inc"
 	.include "data/maps/LilycoveCity_Harbor/scripts.inc"
-	.incbin "baserom_jp.gba", 0x209ba7, 0x1c9
 	.include "data/maps/LilycoveCity_MoveDeletersHouse/scripts.inc"
 	.include "data/maps/LilycoveCity_House1/scripts.inc"
 	.include "data/maps/LilycoveCity_House2/scripts.inc"
@@ -1168,6 +1167,27 @@ EventScript_PC: @ 0x8242E1E
 	.set LilycoveCity_PokemonTrainerFanClub_Text_ThankYouIllShareThisInfo, 0x0824DEE0
 	.globl LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial
 	.set LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial, 0x0824DF29
+	@ Harbor's event-ticket strings remain physically owned by the later shared
+	@ Event Ticket text block. Export their reviewed semantic names until that
+	@ owner is structurally split in physical EventScript order.
+	.globl EventTicket_Text_ShowOldSeaMap
+	.set EventTicket_Text_ShowOldSeaMap, 0x08263476
+	.globl EventTicket_Text_ThatPass
+	.set EventTicket_Text_ThatPass, 0x082634B6
+	.globl EventTicket_Text_ShowEonTicket
+	.set EventTicket_Text_ShowEonTicket, 0x082634D5
+	.globl EventTicket_Text_AsYouLike
+	.set EventTicket_Text_AsYouLike, 0x08263578
+	.globl EventTicket_Text_OldSeaMapTooFar
+	.set EventTicket_Text_OldSeaMapTooFar, 0x08275C60
+	.globl EventTicket_Text_BrineyHoldOnASecond
+	.set EventTicket_Text_BrineyHoldOnASecond, 0x08275CB6
+	.globl EventTicket_Text_BrineyLetsSail
+	.set EventTicket_Text_BrineyLetsSail, 0x08275CDA
+	.globl EventTicket_Text_OddTicketGetOnBoard
+	.set EventTicket_Text_OddTicketGetOnBoard, 0x08275D2A
+	.globl EventTicket_Text_OddTicketsWhereTo
+	.set EventTicket_Text_OddTicketsWhereTo, 0x08275DF2
 	.globl Common_EventScript_BufferTrendyPhrase
 	.set Common_EventScript_BufferTrendyPhrase, 0x08242F17
 	.globl EventScript_BackupMrBrineyLocation

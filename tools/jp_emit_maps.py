@@ -39,6 +39,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_PokemonCenter_1F': 8,
     'LilycoveCity_PokemonCenter_2F': 3,
     'LilycoveCity_PokemonTrainerFanClub': 65,
+    'LilycoveCity_Harbor': 56,
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -48,6 +49,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_ContestHall': 36,
     'LilycoveCity_PokemonCenter_1F': 3,
     'LilycoveCity_PokemonTrainerFanClub': 38,
+    'LilycoveCity_Harbor': 11,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -129,6 +131,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x0820838B,
         0x08208391,
         0x08208397,
+    ),
+    # Three complete Ferry-attendant branches sit in the Harbor's physical
+    # script span but are not reached through the local map-event graph.
+    'LilycoveCity_Harbor': (
+        0x08209A3F,
+        0x08209A49,
+        0x08209A71,
     ),
 }
 
@@ -7047,6 +7056,108 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Harbor directly follows the Trainer Fan Club in physical EventScript order.
+# Its local control flow, the three otherwise-unreferenced RS scripts, all ten
+# movement records, and each local/shared text pointer were checked against
+# the matching US Harbor source before these names were allowlisted.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_Harbor': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08243265: 'Common_EventScript_FerryDepart',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x08244178: 'Common_EventScript_NopReturn',
+        },
+        'external_texts': {
+            0x08263476: 'EventTicket_Text_ShowOldSeaMap',
+            0x082634B6: 'EventTicket_Text_ThatPass',
+            0x082634D5: 'EventTicket_Text_ShowEonTicket',
+            0x08263578: 'EventTicket_Text_AsYouLike',
+            0x08275C60: 'EventTicket_Text_OldSeaMapTooFar',
+            0x08275CB6: 'EventTicket_Text_BrineyHoldOnASecond',
+            0x08275CDA: 'EventTicket_Text_BrineyLetsSail',
+            0x08275D2A: 'EventTicket_Text_OddTicketGetOnBoard',
+            0x08275DF2: 'EventTicket_Text_OddTicketsWhereTo',
+        },
+        'specials': {
+            'display_text_and_get_width_internal': 'ScriptMenu_CreateLilycoveSSTidalMultichoice',
+            'sub_080E1D6C': 'GetLilycoveSSTidalSelection',
+        },
+        'implicit_waitstate_specials': (
+            'ScriptMenu_CreateLilycoveSSTidalMultichoice',
+        ),
+        'field_placeholders': {
+            0x08209C16: {0x01: 'PLAYER'},
+            0x08209C52: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'flags': {
+                0x01AE: 'FLAG_SHOWN_EON_TICKET',
+                0x01AF: 'FLAG_SHOWN_AURORA_TICKET',
+                0x01B0: 'FLAG_SHOWN_OLD_SEA_MAP',
+                0x01DB: 'FLAG_SHOWN_MYSTIC_TICKET',
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+                0x08B3: 'FLAG_ENABLE_SHIP_SOUTHERN_ISLAND',
+                0x08D5: 'FLAG_ENABLE_SHIP_BIRTH_ISLAND',
+                0x08D6: 'FLAG_ENABLE_SHIP_FARAWAY_ISLAND',
+                0x08E0: 'FLAG_ENABLE_SHIP_NAVEL_ROCK',
+            },
+            'vars': {
+                0x4009: 'VAR_TEMP_9',
+                0x400A: 'VAR_TEMP_A',
+                0x400B: 'VAR_TEMP_B',
+                0x400C: 'VAR_TEMP_C',
+                0x400D: 'VAR_TEMP_D',
+                0x400E: 'VAR_TEMP_E',
+                0x40B4: 'VAR_SS_TIDAL_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'items': {
+                0x0113: 'ITEM_EON_TICKET',
+                0x0172: 'ITEM_MYSTIC_TICKET',
+                0x0173: 'ITEM_AURORA_TICKET',
+                0x0178: 'ITEM_OLD_SEA_MAP',
+            },
+            'maps': {
+                0x0005: 'MAP_LILYCOVE_CITY',
+                0x0D0A: 'MAP_LILYCOVE_CITY_HARBOR',
+                0x1929: 'MAP_SS_TIDAL_CORRIDOR',
+                0x1A04: 'MAP_BATTLE_FRONTIER_OUTSIDE_WEST',
+                0x1A09: 'MAP_SOUTHERN_ISLAND_EXTERIOR',
+                0x1A38: 'MAP_FARAWAY_ISLAND_ENTRANCE',
+                0x1A3B: 'MAP_BIRTH_ISLAND_HARBOR',
+                0x1A43: 'MAP_NAVEL_ROCK_HARBOR',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_LILYCOVE_HARBOR_ATTENDANT',
+                0x02: 'LOCALID_LILYCOVE_HARBOR_SS_TIDAL',
+                0x04: 'LOCALID_LILYCOVE_HARBOR_FERRY_SAILOR',
+                0x05: 'LOCALID_LILYCOVE_HARBOR_BRINEY',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'sounds': {0x15: 'SE_PIN'},
+            'var_values': {
+                0x40B4: {0x5: 'SS_TIDAL_BOARD_LILYCOVE'},
+                0x8004: {0x2: 'LOCALID_LILYCOVE_HARBOR_SS_TIDAL'},
+                0x800C: {0x2: 'DIR_NORTH', 0x4: 'DIR_EAST'},
+            },
+            'switch_values': {
+                'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'},
+            },
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'LilycoveCity_LilycoveMuseum_2F': {
         0x0820630D: 'LilycoveCity_LilycoveMuseum_2F_Movement_PlayerWalkInPlaceLeft',
@@ -7060,6 +7171,21 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x08208416: 'LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlWatchPlayer',
         0x0820841D: 'LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlMoveCloserToPlayer',
         0x08208420: 'LilycoveCity_PokemonTrainerFanClub_Movement_LittleGirlHideFromPlayer',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'LilycoveCity_Harbor': {
+        0x08209B04: 'LilycoveCity_Harbor_Movement_PlayerBoardFerryEast',
+        0x08209B07: 'LilycoveCity_Harbor_Movement_PlayerBoardFerryNorth',
+        0x08209B09: 'LilycoveCity_Harbor_Movement_UnusedBoardFerry',
+        0x08209B40: 'LilycoveCity_Harbor_Movement_SailorOutOfWayNorth',
+        0x08209B45: 'LilycoveCity_Harbor_Movement_SailorOutOfWayEast',
+        0x08209BA7: 'LilycoveCity_Harbor_Movement_BrineyBoardFerry',
+        0x08209BAB: 'LilycoveCity_Harbor_Movement_PlayerBoardWithBrineyNorth',
+        0x08209BB0: 'LilycoveCity_Harbor_Movement_SailorBoardWithBrineyNorth',
+        0x08209BB8: 'LilycoveCity_Harbor_Movement_PlayerBoardWithBrineyEast',
+        0x08209BBE: 'LilycoveCity_Harbor_Movement_SailorBoardWithBrineyEast',
     },
 })
 
@@ -7454,8 +7580,11 @@ def collapse_switch_macros(lines, value_names=None):
     while index < len(lines):
         name, argstr = lines[index]
         args = [arg.strip() for arg in argstr.split(',')]
-        if (name == 'copyvar' and len(args) == 2
-                and args[0] == 'VAR_0x8000'):
+        copy_args = args
+        if len(args) == 3 and args[2] == 'warn=FALSE':
+            copy_args = args[:2]
+        if (name == 'copyvar' and len(copy_args) == 2
+                and copy_args[0] == 'VAR_0x8000'):
             cases = []
             cursor = index + 1
             while cursor < len(lines):
@@ -7470,13 +7599,13 @@ def collapse_switch_macros(lines, value_names=None):
                 except ValueError:
                     numeric = None
                 if numeric is not None:
-                    value = value_names.get(args[1], {}).get(numeric, value)
+                    value = value_names.get(copy_args[1], {}).get(numeric, value)
                     if value == case_args[1] and 0 <= numeric <= 9:
                         value = str(numeric)
                 cases.append((value, case_args[2]))
                 cursor += 1
             if len(cases) >= 2:
-                out.append(('switch', args[1]))
+                out.append(('switch', copy_args[1]))
                 out.extend(('case', '%s, %s' % case) for case in cases)
                 index = cursor
                 continue
@@ -7602,7 +7731,7 @@ def collapse_coordinate_warp_macros(lines):
     """Use the canonical three-argument form for coordinate-only warps."""
     out = []
     for name, argstr in lines:
-        if name in ('setdivewarp', 'setwarp', 'warp', 'warpdoor'):
+        if name in ('setdivewarp', 'setescapewarp', 'setwarp', 'warp', 'warpdoor'):
             args = [arg.strip() for arg in argstr.split(',')]
             if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
                 argstr = ', '.join((args[0], args[2], args[3]))
@@ -7826,8 +7955,17 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('step_callbacks', {}).get(value)
         if name in ('dofieldeffect', 'waitfieldeffect') and index == 0:
             return symbols.get('field_effects', {}).get(value)
-        if name in ('warp', 'setwarp') and index == 0:
+        if name in ('setescapewarp', 'warp', 'setwarp') and index == 0:
             return symbols.get('maps', {}).get(value)
+        if (name in ('call_if_eq', 'call_if_ne', 'call_if_lt', 'call_if_gt',
+                     'call_if_le', 'call_if_ge', 'goto_if_eq', 'goto_if_ne',
+                     'goto_if_lt', 'goto_if_gt', 'goto_if_le', 'goto_if_ge')
+                and index == 1 and args):
+            reviewed = (symbols.get('script_var_values', {})
+                        .get(script_addr, {}).get(args[0], {}).get(value))
+            if reviewed is not None:
+                return reviewed
+            return symbols.get('var_values', {}).get(args[0], {}).get(value)
         if index in MAP_ARGUMENTS.get(name, ()):
             return symbols.get('maps', {}).get(value)
         if index in LOCAL_ID_ARGUMENTS.get(name, ()):
