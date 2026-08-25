@@ -478,8 +478,6 @@ Route109_EventScript_Elijah::
 	end
 
 DewfordTown_Text_BrineyLandedInSlateportDeliverGoods: @ 0x081E8B34
-	.globl gJPText_001E8B34
-	.set gJPText_001E8B34, DewfordTown_Text_BrineyLandedInSlateportDeliverGoods
 	.string "ハギ“ほい！　カイナに　とうちゃく！\p"
 	.string "たしか　クスノキさんに\n"
 	.string "デボンのにもつを　とどけるんだったな！$"

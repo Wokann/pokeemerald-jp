@@ -94,7 +94,5 @@ Route104_Text_DadPokenavCall: @ 0x081E82F9
 	.string "⋯⋯　⋯⋯　⋯⋯　ツー$"
 
 Route104_Text_RegisteredDadInPokenav: @ 0x081E83B3
-	.globl gJPText_001E83B3
-gJPText_001E83B3:
 	.string "パパ　センリを\n"
 	.string "ポケナビに　とうろく　した！$"

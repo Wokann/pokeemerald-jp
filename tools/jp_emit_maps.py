@@ -2860,8 +2860,7 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
     },
     # Route106-109 are one contiguous JP raw owner.  Their event entry order,
     # trainer IDs, and locally-owned text/movement data have been checked
-    # one-for-one against the corresponding US map sources.  One additional
-    # JP-only arrival text at 0x081E8B34 intentionally stays address-named.
+    # one-for-one against the corresponding US map sources.
     'Route106': {
         'scripts': {
             0x081E83CB: 'Route106_EventScript_TrainerTipsSign',
@@ -2990,6 +2989,7 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081E8B1D: 'Route109_EventScript_Elijah',
         },
         'texts': {
+            0x081E8B34: 'DewfordTown_Text_BrineyLandedInSlateportDeliverGoods',
             0x081E8B67: 'Route109_Text_BrineySailToDewfordQuestion',
             0x081E8B8A: 'Route109_Text_BrineyDewfordItIs',
             0x081E8BA7: 'Route109_Text_BrineyDeliverDevonGoods',
@@ -5223,7 +5223,6 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081E82F9: 'Route104_Text_DadPokenavCall',
             0x081E83B3: 'Route104_Text_RegisteredDadInPokenav',
         },
-        'text_aliases': {0x081E83B3: ('gJPText_001E83B3',)},
         'field_placeholders': {0x081E82F9: {0x01: 'PLAYER'}},
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route105']['labels'],
         'external_labels': {
