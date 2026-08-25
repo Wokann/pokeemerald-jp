@@ -91,6 +91,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_PhoebesRoom': 10,
     # Glacia's room follows with the same reviewed ten-entry layout.
     'EverGrandeCity_GlaciasRoom': 10,
+    # Drake's retained local OnWarp table plus nine following entries map
+    # one-to-one to the reviewed US owner, despite the header reusing Sidney.
+    'EverGrandeCity_DrakesRoom': 10,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -102,6 +105,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
     'EverGrandeCity_PhoebesRoom': ('OnLoad', 'OnWarp'),
     'EverGrandeCity_GlaciasRoom': ('OnLoad', 'OnWarp'),
+    'EverGrandeCity_DrakesRoom': ('OnLoad', 'OnWarp'),
 }
 
 # Text labels use the same reviewed physical ordering rule.  JP generic text
@@ -149,6 +153,7 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'EverGrandeCity_SidneysRoom': 3,
     'EverGrandeCity_PhoebesRoom': 3,
     'EverGrandeCity_GlaciasRoom': 3,
+    'EverGrandeCity_DrakesRoom': 3,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -281,6 +286,16 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x0820DABD,
         0x0820DAC4,
     ),
+}
+
+# A map header can deliberately point at a sibling map's table while retaining
+# an otherwise-unused local map_script_2 table in its own ROM range. Keep
+# those table roots separate from ordinary script roots so their table bytes
+# are decoded, covered, and emitted rather than becoming a local raw incbin.
+MAP_AUXILIARY_MAP_SCRIPT_TABLE_ADDRESSES = {
+    # Drake uses Sidney's OnWarp table, but the byte-identical local table is
+    # still named and retained in the matching US map source.
+    'EverGrandeCity_DrakesRoom': (0x082106CE,),
 }
 
 # Verified map-local text that has no JP script pointer (for example an
@@ -8765,6 +8780,48 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+    # Drake's map header reuses Sidney's OnWarp table, while its own unused
+    # local table is retained through MAP_AUXILIARY_SCRIPT_ADDRESSES.
+    'EverGrandeCity_DrakesRoom': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08210223: 'EverGrandeCity_SidneysRoom_OnWarp',
+            0x0824347B: 'PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles',
+            0x082434F8: 'PokemonLeague_EliteFour_EventScript_WalkInCloseDoor',
+            0x0824353F: 'PokemonLeague_EliteFour_EventScript_ResetAdvanceToNextRoom',
+            0x082435E2: 'PokemonLeague_EliteFour_EventScript_CloseDoor',
+        },
+        'symbols': {
+            'flags': {
+                0x04FE: 'FLAG_DEFEATED_ELITE_4_DRAKE',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x409C: 'VAR_ELITE_4_STATE',
+                0x8004: 'VAR_0x8004',
+            },
+            'local_ids': {0xFF: 'LOCALID_PLAYER'},
+            'directions': {0x02: 'DIR_NORTH'},
+            'songs': {0x01C2: 'MUS_ENCOUNTER_ELITE_FOUR'},
+            'trainers': {0x0108: 'TRAINER_DRAKE'},
+            'booleans': {0x00: 'FALSE'},
+            'specials': {
+                'sub_0813BFA0': 'Script_TryGainNewFanFromCounter',
+            },
+            'map_script_values': {
+                0x4001: {0x00: '0'},
+                0x409C: {0x03: '3'},
+            },
+            'script_var_values': {
+                0x082106E7: {0x409C: {0x04: '4'}},
+                0x082106F4: {0x409C: {0x04: '4'}},
+                0x08210746: {
+                    0x8004: {0x00: 'FANCOUNTER_DEFEATED_DRAKE'},
+                },
+            },
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -10040,10 +10097,12 @@ def parse_frame_table(addr):
     return items
 
 
-def collect_map_scripts(map_addr, map_name, extra_addrs=None, events_addr=None,
+def collect_map_scripts(map_addr, map_name, extra_addrs=None,
+                        extra_table_addrs=None, events_addr=None,
                         region_end=None):
     """Parse all scripts reachable from the map-script table."""
     extra_addrs = extra_addrs or []
+    extra_table_addrs = extra_table_addrs or []
     tables = MAP_TABLES.get(hex(map_addr))
     if tables is None:
         tables = MAP_TABLES.get('%x' % map_addr)
@@ -10065,6 +10124,13 @@ def collect_map_scripts(map_addr, map_name, extra_addrs=None, events_addr=None,
     for a in extra_addrs:
         if a not in scripts and (region_end is None or map_addr <= a < region_end):
             queue.append(a)
+    for a in extra_table_addrs:
+        if region_end is not None and not (map_addr <= a < region_end):
+            continue
+        for _var, _cmp, sptr in parse_frame_table(a):
+            if sptr not in scripts and sptr not in queue and \
+                    (region_end is None or map_addr <= sptr < region_end):
+                queue.append(sptr)
     if events_addr:
         for name, s in map_events_scripts(events_addr):
             if s not in scripts and (region_end is None or map_addr <= s < region_end):
@@ -10194,7 +10260,12 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         for a in (*std_addrs, *MAP_AUXILIARY_SCRIPT_ADDRESSES.get(mname, ()))
         if ms <= a < region_end
     ]
-    scripts, text_ptrs = collect_map_scripts(ms, mname, extra, events_addr, region_end)
+    extra_tables = [
+        a for a in MAP_AUXILIARY_MAP_SCRIPT_TABLE_ADDRESSES.get(mname, ())
+        if ms <= a < region_end
+    ]
+    scripts, text_ptrs = collect_map_scripts(
+        ms, mname, extra, extra_tables, events_addr, region_end)
     missing_scripts = set(verified_script_labels) - set(scripts)
     if missing_scripts:
         raise RuntimeError(
@@ -10283,6 +10354,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         t, p = toi(tag), toi(ptr)
         if t in (2, 4):
             table_addrs[p] = 'frame'
+    for ta in extra_tables:
+        table_addrs[ta] = 'frame'
     for ta, kind in table_addrs.items():
         if kind == 'map':
             for b in map_table_bytes(ms, entries):
@@ -10563,6 +10636,7 @@ def collect_all_text_ptrs(entries):
             ms,
             mname,
             MAP_AUXILIARY_SCRIPT_ADDRESSES.get(mname, ()),
+            MAP_AUXILIARY_MAP_SCRIPT_TABLE_ADDRESSES.get(mname, ()),
             events_addr,
         )
         all_ptrs |= tptrs
@@ -10631,6 +10705,8 @@ def apply_us_label_sequence_metadata():
             for tag, pointer in entries
             if tag in (2, 4)
         }
+        table_addresses.update(
+            MAP_AUXILIARY_MAP_SCRIPT_TABLE_ADDRESSES.get(mname, ()))
         semantic = MAP_VERIFIED_SEMANTIC_LABELS.setdefault(mname, {})
         scripts = semantic.setdefault('scripts', {})
         tables = semantic.setdefault('tables', {})

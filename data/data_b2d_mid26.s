@@ -2153,16 +2153,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/EverGrandeCity_GlaciasRoom/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_GLACIAS_ROOM
 	.set gMapEvents_EVER_GRANDE_CITY_GLACIAS_ROOM, EverGrandeCity_GlaciasRoom_MapEvents
-	.globl EVER_GRANDE_CITY_DRAKES_ROOM_EventObjects
-EVER_GRANDE_CITY_DRAKES_ROOM_EventObjects: @ 0x0850BDF0
-	object_event 1, 124, 0, 6, 5, 3, 8, 0, 0, 0, 0, 0x08210715, 0x0000
-	.globl EVER_GRANDE_CITY_DRAKES_ROOM_EventWarps
-EVER_GRANDE_CITY_DRAKES_ROOM_EventWarps: @ 0x0850BE08
-	warp_def 6, 13, 3, 1, MAP_EVER_GRANDE_CITY_HALL3
-	warp_def 6, 2, 0, 0, MAP_EVER_GRANDE_CITY_HALL4
+	.include "data/maps/EverGrandeCity_DrakesRoom/events.inc"
 	.globl gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM
-gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM: @ 0x0850BE18
-	map_events EVER_GRANDE_CITY_DRAKES_ROOM_EventObjects, EVER_GRANDE_CITY_DRAKES_ROOM_EventWarps, 0, 0
+	.set gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM, EverGrandeCity_DrakesRoom_MapEvents
 	.globl EVER_GRANDE_CITY_CHAMPIONS_ROOM_EventObjects
 EVER_GRANDE_CITY_CHAMPIONS_ROOM_EventObjects: @ 0x0850BE2C
 	object_event 1, 133, 0, 6, 5, 3, 8, 0, 0, 0, 0, 0x00000000, 0x0000

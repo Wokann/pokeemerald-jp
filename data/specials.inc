@@ -195,7 +195,12 @@ gSpecials:
 	.set SPECIAL_WAITSTATE_TryLoseFansFromPlayTime, SPECIAL_WAITSTATE_UpdateMovedLilycoveFanClubMembers
 	def_special sub_0813BF84
 	def_special sub_0813BA98
-	def_special sub_0813BFA0
+	@ JP code remains at sub_0813BFA0; expose the matching US special name.
+	.globl Script_TryGainNewFanFromCounter
+	.set Script_TryGainNewFanFromCounter, sub_0813BFA0
+	def_special Script_TryGainNewFanFromCounter
+	.set SPECIAL_sub_0813BFA0, SPECIAL_Script_TryGainNewFanFromCounter
+	.set SPECIAL_WAITSTATE_sub_0813BFA0, SPECIAL_WAITSTATE_Script_TryGainNewFanFromCounter
 	def_special RockSmashWildEncounter
 	def_special GabbyAndTyGetBattleNum
 	def_special GabbyAndTyAfterInterview

@@ -838,7 +838,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/EverGrandeCity_PhoebesRoom/scripts.inc"
 	.include "data/maps/EverGrandeCity_GlaciasRoom/scripts.inc"
 	.include "data/maps/EverGrandeCity_DrakesRoom/scripts.inc"
-	.incbin "baserom_jp.gba", 0x210715, 0x1bb
 	.include "data/maps/EverGrandeCity_ChampionsRoom/scripts.inc"
 	.incbin "baserom_jp.gba", 0x210921, 0x74a
 	.include "data/maps/EverGrandeCity_Hall1/scripts.inc"
