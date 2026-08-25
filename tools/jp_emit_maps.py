@@ -5277,10 +5277,10 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     # 0x081E65F3 (09 0A 09 FE); expose them so the generator does not hide
     # byte-exact data behind raw spans.
     'Route101': {
-        0x081E65B8: 'Route101_Movement_Unused1',
-        0x081E65EA: 'Route101_Movement_Unused2',
-        0x081E65F0: 'Route101_Movement_Unused3',
-        0x081E65F3: 'Route101_Movement_Unused4',
+        0x081E65B8: 'Route101_Movement_UnusedStepEnd1',
+        0x081E65EA: 'Route101_Movement_UnusedStepEnd2',
+        0x081E65F0: 'Route101_Movement_Unused1',
+        0x081E65F3: 'Route101_Movement_Unused2',
     },
     'SeafloorCavern_Room9': {
         0x08218C5F: 'SeafloorCavern_Room9_Movement_ArchieApproachPlayer',

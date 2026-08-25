@@ -124,8 +124,8 @@ Route101_Movement_ZigzagoonChase1:
 	walk_fast_up
 	step_end
 
-@ Retained unused movement record from the original JP script stream.
-Route101_Movement_Unused1:
+@ JP-only unused one-byte movement record.
+Route101_Movement_UnusedStepEnd1:
 	step_end
 
 Route101_Movement_ZigzagoonFaceBirch:
@@ -185,8 +185,8 @@ Route101_Movement_BirchRunAway1:
 	walk_fast_up
 	step_end
 
-@ Retained unused movement record from the original JP script stream.
-Route101_Movement_Unused2:
+@ JP-only unused one-byte movement record.
+Route101_Movement_UnusedStepEnd2:
 	step_end
 
 Route101_Movement_BirchFaceZigzagoon:
@@ -196,12 +196,12 @@ Route101_Movement_BirchFaceZigzagoon:
 	walk_in_place_fast_right
 	step_end
 
-Route101_Movement_Unused3:
+Route101_Movement_Unused1:
 	walk_up
 	walk_up
 	step_end
 
-Route101_Movement_Unused4:
+Route101_Movement_Unused2:
 	walk_up
 	walk_left
 	walk_up
