@@ -684,76 +684,9 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/MauvilleCity/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY
 	.set gMapEvents_MAUVILLE_CITY, MauvilleCity_MapEvents
-	.globl RUSTBORO_CITY_EventObjects
-RUSTBORO_CITY_EventObjects: @ 0x084FEEEC
-	object_event 1, 34, 0, 22, 34, 3, 3, 0, 1, 0, 0, RustboroCity_EventScript_001DE8C3, 0x0000
-	object_event 2, 17, 0, 19, 13, 3, 1, 1, 1, 0, 0, RustboroCity_EventScript_001DE898, 0x0000
-	object_event 3, 5, 0, 25, 37, 3, 7, 0, 0, 0, 0, RustboroCity_EventScript_001DE913, 0x0000
-	object_event 4, 6, 0, 21, 46, 3, 3, 0, 1, 0, 0, RustboroCity_EventScript_001DE90A, 0x0000
-	object_event 5, 9, 0, 12, 45, 3, 1, 0, 0, 0, 0, RustboroCity_EventScript_001DE8EB, 0x0000
-	object_event 6, 33, 0, 26, 23, 3, 1, 1, 1, 0, 0, RustboroCity_EventScript_001DE8CC, 0x0000
-	object_event 7, 11, 0, 24, 51, 3, 10, 0, 0, 0, 0, RustboroCity_EventScript_001DE95B, 0x0000
-	object_event 8, 12, 0, 25, 51, 3, 9, 0, 0, 0, 0, RustboroCity_EventScript_001DE971, 0x0000
-	object_event 9, 23, 0, 30, 10, 3, 10, 1, 1, 0, 0, RustboroCity_EventScript_001DEB16, 0x02DC
-	object_event 10, 117, 0, 13, 21, 3, 10, 0, 0, 0, 0, 0x00000000, 0x02DB
-	object_event 11, 116, 0, 13, 34, 3, 2, 1, 1, 0, 0, RustboroCity_EventScript_001DE8B7, 0x0000
-	object_event 12, 59, 0, 36, 51, 3, 1, 0, 0, 0, 0, 0x08256E32, 0x0411
-	object_event 13, 65, 0, 19, 27, 3, 8, 0, 1, 0, 0, RustboroCity_EventScript_001DE987, 0x0000
-	object_event 14, 240, 0, 16, 50, 3, 1, 1, 1, 0, 0, RustboroCity_EventScript_001DEDF1, 0x032E
-	object_event 15, 46, 0, 11, 15, 0, 1, 1, 1, 0, 0, 0x00000000, 0x034C
-	object_event 16, 7, 0, 31, 36, 3, 1, 0, 1, 0, 0, RustboroCity_EventScript_Boy1, 0x0000
-	.globl RUSTBORO_CITY_EventWarps
-RUSTBORO_CITY_EventWarps: @ 0x084FF06C
-	warp_def 27, 19, 0, 0, MAP_RUSTBORO_CITY_GYM
-	warp_def 13, 30, 0, 0, MAP_RUSTBORO_CITY_FLAT1_1F
-	warp_def 16, 45, 0, 0, MAP_RUSTBORO_CITY_MART
-	warp_def 16, 38, 0, 0, MAP_RUSTBORO_CITY_POKEMON_CENTER_1F
-	warp_def 27, 34, 0, 0, MAP_RUSTBORO_CITY_POKEMON_SCHOOL
-	warp_def 11, 15, 0, 0, MAP_RUSTBORO_CITY_DEVON_CORP_1F
-	warp_def 12, 15, 0, 1, MAP_RUSTBORO_CITY_DEVON_CORP_1F
-	warp_def 33, 19, 0, 0, MAP_RUSTBORO_CITY_HOUSE1
-	warp_def 9, 38, 0, 0, MAP_RUSTBORO_CITY_CUTTERS_HOUSE
-	warp_def 30, 28, 0, 0, MAP_RUSTBORO_CITY_HOUSE2
-	warp_def 5, 51, 0, 0, MAP_RUSTBORO_CITY_FLAT2_1F
-	warp_def 26, 46, 0, 0, MAP_RUSTBORO_CITY_HOUSE3
-	.globl RUSTBORO_CITY_EventCoordEvents
-RUSTBORO_CITY_EventCoordEvents: @ 0x084FF0CC
-	coord_event 23, 20, 3, 16474, 1, RustboroCity_EventScript_001DE993
-	coord_event 23, 21, 3, 16474, 1, RustboroCity_EventScript_001DE9AA
-	coord_event 23, 22, 3, 16474, 1, RustboroCity_EventScript_001DE9C1
-	coord_event 23, 23, 3, 16474, 1, RustboroCity_EventScript_001DE9D8
-	coord_event 23, 24, 3, 16474, 1, RustboroCity_EventScript_001DE9EF
-	coord_event 30, 9, 3, 16474, 2, RustboroCity_EventScript_001DEB37
-	coord_event 29, 10, 3, 16474, 2, RustboroCity_EventScript_001DEB43
-	coord_event 30, 11, 3, 16474, 2, RustboroCity_EventScript_001DEB4F
-	coord_event 30, 12, 3, 16474, 2, RustboroCity_EventScript_001DEB5B
-	coord_event 30, 9, 3, 16474, 4, RustboroCity_EventScript_001DEC64
-	coord_event 31, 10, 3, 16474, 4, RustboroCity_EventScript_001DEC70
-	coord_event 30, 11, 3, 16474, 4, RustboroCity_EventScript_001DEC7C
-	coord_event 30, 12, 3, 16474, 4, RustboroCity_EventScript_001DEC88
-	coord_event 12, 53, 3, 16474, 7, RustboroCity_EventScript_001DEE2C
-	coord_event 13, 53, 3, 16474, 7, RustboroCity_EventScript_001DEE6C
-	coord_event 14, 53, 3, 16474, 7, RustboroCity_EventScript_001DEEAC
-	coord_event 15, 53, 3, 16474, 7, RustboroCity_EventScript_001DEEEC
-	coord_event 16, 53, 3, 16474, 7, RustboroCity_EventScript_001DEF2C
-	coord_event 17, 53, 3, 16474, 7, RustboroCity_EventScript_001DEF6C
-	coord_event 18, 53, 3, 16474, 7, RustboroCity_EventScript_001DEFAC
-	coord_event 19, 53, 3, 16474, 7, RustboroCity_EventScript_001DEFEC
-	.globl RUSTBORO_CITY_EventBgEvents
-RUSTBORO_CITY_EventBgEvents: @ 0x084FF21C
-	bg_event 23, 19, 0, 0, RustboroCity_EventScript_001DE92E, 0, 0
-	bg_event 25, 35, 0, 0, RustboroCity_EventScript_001DE949, 0, 0
-	bg_event 17, 45, 0, 1, 0x08242EF6, 0, 0
-	bg_event 18, 38, 0, 1, 0x08242EFF, 0, 0
-	bg_event 19, 49, 0, 0, RustboroCity_EventScript_001DE940, 0, 0
-	bg_event 18, 45, 0, 1, 0x08242EF6, 0, 0
-	bg_event 17, 38, 0, 1, 0x08242EFF, 0, 0
-	bg_event 17, 20, 0, 0, RustboroCity_EventScript_001DE925, 0, 0
-	bg_event 30, 8, 0, 0, RustboroCity_EventScript_001DE91C, 0, 0
-	bg_event 12, 38, 3, 0, RustboroCity_EventScript_001DE952, 0, 0
+	.include "data/maps/RustboroCity/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY
-gMapEvents_RUSTBORO_CITY: @ 0x084FF294
-	map_events RUSTBORO_CITY_EventObjects, RUSTBORO_CITY_EventWarps, RUSTBORO_CITY_EventCoordEvents, RUSTBORO_CITY_EventBgEvents
+	.set gMapEvents_RUSTBORO_CITY, RustboroCity_MapEvents
 	.globl FORTREE_CITY_EventObjects
 FORTREE_CITY_EventObjects: @ 0x084FF2A8
 	object_event 1, 23, 0, 31, 3, 4, 1, 0, 0, 0, 0, FortreeCity_EventScript_Man, 0x0000

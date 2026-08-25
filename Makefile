@@ -143,6 +143,7 @@ JP_STRUCTURED_MAPS := Route123 Route124 Route125 Route126 Route127 Route128 Rout
 	MauvilleCity_PokemonCenter_1F \
 	MauvilleCity_PokemonCenter_2F \
 	MauvilleCity_Mart \
+	RustboroCity \
 	RustboroCity_DevonCorp_1F \
 	RustboroCity_PokemonCenter_1F \
 	RustboroCity_PokemonCenter_2F \
