@@ -6471,19 +6471,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'tables': {
             0x082062AA: 'LilycoveCity_LilycoveMuseum_2F_OnFrame',
         },
-        # The legacy event table remains in data_b2d_mid26.s.  Retain only
-        # its address-derived targets until that independent JSON migration.
-        'script_aliases': {
-            0x08206312: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206312',),
-            0x082063D7: ('LilycoveCity_LilycoveMuseum_2F_EventScript_002063D7',),
-            0x082063EA: ('LilycoveCity_LilycoveMuseum_2F_EventScript_002063EA',),
-            0x082063FD: ('LilycoveCity_LilycoveMuseum_2F_EventScript_002063FD',),
-            0x08206410: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206410',),
-            0x08206423: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206423',),
-            0x08206436: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206436',),
-            0x0820643F: ('LilycoveCity_LilycoveMuseum_2F_EventScript_0020643F',),
-            0x08206448: ('LilycoveCity_LilycoveMuseum_2F_EventScript_00206448',),
-        },
         'texts': {
             0x08206497: 'LilycoveCity_LilycoveMuseum_2F_Text_ThisIsExhibitHall',
             0x082064A9: 'LilycoveCity_LilycoveMuseum_2F_Text_ExplainExhibitHall',
