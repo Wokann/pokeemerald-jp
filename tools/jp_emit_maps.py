@@ -73,6 +73,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House5': 2,
     'SootopolisCity_House6': 4,
     'SootopolisCity_House7': 2,
+    # The fourteen local branches are contiguous after House7 and match the
+    # reviewed US source order (Seedot brother through Lotad size record).
+    'SootopolisCity_LotadAndSeedotHouse': 14,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -122,6 +125,9 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SootopolisCity_House5': 2,
     'SootopolisCity_House6': 5,
     'SootopolisCity_House7': 2,
+    # Fourteen live texts plus two unused RS-era Potion records; each was
+    # checked in ROM order against the matching US owner.
+    'SootopolisCity_LotadAndSeedotHouse': 16,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -296,6 +302,13 @@ MAP_AUXILIARY_TEXT_ADDRESSES = {
         0x0820E19F,
         0x0820E1CC,
         0x0820E1F4,
+    ),
+    # Both brothers retain the RS-era unused “received a Potion” strings
+    # between their live size-record messages. They have no live JP script
+    # pointer, but are complete EOS-terminated map-owned text records.
+    'SootopolisCity_LotadAndSeedotHouse': (
+        0x0820FAA3,
+        0x0820FC82,
     ),
 }
 
@@ -8439,6 +8452,52 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     'SootopolisCity_House7': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
+    },
+    # This immediately follows House7 in the physical EventScript range.
+    # The two Potion messages are intentionally unused but source-owned; all
+    # script and text names below follow the verified US order one-to-one.
+    'SootopolisCity_LotadAndSeedotHouse': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'field_placeholders': {
+            0x0820FA50: {0x03: 'STR_VAR_2'},
+            0x0820FAA3: {0x01: 'PLAYER'},
+            0x0820FAC8: {0x03: 'STR_VAR_2'},
+            0x0820FB44: {0x03: 'STR_VAR_2', 0x04: 'STR_VAR_3'},
+            0x0820FC30: {0x03: 'STR_VAR_2'},
+            0x0820FC82: {0x01: 'PLAYER'},
+            0x0820FCA7: {0x03: 'STR_VAR_2'},
+            0x0820FD23: {0x03: 'STR_VAR_2', 0x04: 'STR_VAR_3'},
+        },
+        'symbols': {
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x0024: 'ITEM_ELIXIR'},
+            'script_var_values': {
+                0x0820F862: {
+                    0x800D: {
+                        0xFF: 'PARTY_NOTHING_CHOSEN',
+                        0x01: 'COMPARE_SIZE_INCORRECT_SPECIES',
+                        0x02: 'COMPARE_SIZE_SMALLER',
+                        0x03: 'COMPARE_SIZE_LARGER',
+                    },
+                },
+                0x0820F8C7: {0x800D: {0x00: 'FALSE'}},
+                0x0820F8F3: {
+                    0x800D: {
+                        0xFF: 'PARTY_NOTHING_CHOSEN',
+                        0x01: 'COMPARE_SIZE_INCORRECT_SPECIES',
+                        0x02: 'COMPARE_SIZE_SMALLER',
+                        0x03: 'COMPARE_SIZE_LARGER',
+                    },
+                },
+                0x0820F958: {0x800D: {0x00: 'FALSE'}},
+            },
+        },
     },
 })
 

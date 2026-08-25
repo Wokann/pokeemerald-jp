@@ -2135,21 +2135,9 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SootopolisCity_House7/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE7
 	.set gMapEvents_SOOTOPOLIS_CITY_HOUSE7, SootopolisCity_House7_MapEvents
-	.globl SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventObjects
-SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventObjects: @ 0x0850BC58
-	object_event 1, 50, 0, 2, 4, 3, 10, 0, 0, 0, 0, 0x0820F8F3, 0x0000
-	object_event 2, 55, 0, 5, 4, 3, 9, 0, 0, 0, 0, 0x0820F862, 0x0000
-	.globl SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventWarps
-SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventWarps: @ 0x0850BC88
-	warp_def 3, 6, 0, 11, MAP_SOOTOPOLIS_CITY
-	warp_def 4, 6, 0, 11, MAP_SOOTOPOLIS_CITY
-	.globl SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventBgEvents
-SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventBgEvents: @ 0x0850BC98
-	bg_event 5, 1, 0, 0, 0x0820F984, 0, 0
-	bg_event 2, 1, 0, 0, 0x0820F992, 0, 0
+	.include "data/maps/SootopolisCity_LotadAndSeedotHouse/events.inc"
 	.globl gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE
-gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE: @ 0x0850BCB0
-	map_events SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventObjects, SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventWarps, 0, SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE_EventBgEvents
+	.set gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE, SootopolisCity_LotadAndSeedotHouse_MapEvents
 	.globl SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_EventObjects
 SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_EventObjects: @ 0x0850BCC4
 	object_event 1, 29, 0, 6, 4, 0, 10, 0, 0, 0, 0, SootopolisCity_MysteryEventsHouse_1F_EventScript_0020FE31, 0x0000
