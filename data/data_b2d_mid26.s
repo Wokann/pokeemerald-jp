@@ -2272,15 +2272,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MeteorFalls_B1F_1R/events.inc"
 	.globl gMapEvents_METEOR_FALLS_B1F_1R
 	.set gMapEvents_METEOR_FALLS_B1F_1R, MeteorFalls_B1F_1R_MapEvents
-	.globl METEOR_FALLS_B1F_2R_EventObjects
-METEOR_FALLS_B1F_2R_EventObjects: @ 0x0850C8BC
-	object_event 1, 59, 0, 5, 3, 3, 1, 1, 1, 0, 0, 0x08256F36, 0x0438
-	.globl METEOR_FALLS_B1F_2R_EventWarps
-METEOR_FALLS_B1F_2R_EventWarps: @ 0x0850C8D4
-	warp_def 5, 15, 3, 3, MAP_METEOR_FALLS_B1F_1R
+	.include "data/maps/MeteorFalls_B1F_2R/events.inc"
 	.globl gMapEvents_METEOR_FALLS_B1F_2R
-gMapEvents_METEOR_FALLS_B1F_2R: @ 0x0850C8DC
-	map_events METEOR_FALLS_B1F_2R_EventObjects, METEOR_FALLS_B1F_2R_EventWarps, 0, 0
+	.set gMapEvents_METEOR_FALLS_B1F_2R, MeteorFalls_B1F_2R_MapEvents
 	.globl RUSTURF_TUNNEL_EventObjects
 RUSTURF_TUNNEL_EventObjects: @ 0x0850C8F0
 	object_event 1, 44, 0, 23, 5, 3, 10, 0, 0, 0, 0, RusturfTunnel_EventScript_0021363F, 0x0327

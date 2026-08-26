@@ -1895,6 +1895,8 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set MeteorFalls_1F_1R_EventScript_ItemMoonStone, 0x08256F1C
 	.globl MeteorFalls_1F_1R_EventScript_ItemPPUP
 	.set MeteorFalls_1F_1R_EventScript_ItemPPUP, 0x08256F29
+	.globl MeteorFalls_B1F_2R_EventScript_ItemTMDragonClaw
+	.set MeteorFalls_B1F_2R_EventScript_ItemTMDragonClaw, 0x08256F36
 	@ The Day-Care Woman logic remains inside the later shared raw owner.
 	@ Export its reviewed map-event entry without moving that owner early.
 	.globl Route117_PokemonDayCare_EventScript_DaycareWoman
