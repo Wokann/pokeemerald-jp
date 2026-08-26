@@ -5,20 +5,20 @@ PetalburgCity_WallysHouse_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, PetalburgCity_WallysHouse_OnWarp
 	.byte 0
 
-PetalburgCity_WallysHouse_OnWarp:
+PetalburgCity_WallysHouse_OnWarp:: @ 0x081F8116
 	map_script_2 VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther
 	.2byte 0
 
-PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther::
+PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther:: @ 0x081F8120
 	turnobject LOCALID_PLAYER, DIR_EAST
 	turnobject LOCALID_WALLYS_HOUSE_WALLYS_DAD, DIR_WEST
 	end
 
-PetalburgCity_WallysHouse_OnFrame:
+PetalburgCity_WallysHouse_OnFrame:: @ 0x081F8129
 	map_script_2 VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_WallysHouse_EventScript_GiveHMSurf
 	.2byte 0
 
-PetalburgCity_WallysHouse_EventScript_GiveHMSurf::
+PetalburgCity_WallysHouse_EventScript_GiveHMSurf:: @ 0x081F8133
 	lockall
 	msgbox PetalburgCity_WallysHouse_Text_PleaseExcuseUs, MSGBOX_DEFAULT
 	giveitem ITEM_HM_SURF
@@ -28,7 +28,7 @@ PetalburgCity_WallysHouse_EventScript_GiveHMSurf::
 	releaseall
 	end
 
-PetalburgCity_WallysHouse_EventScript_WallysDad::
+PetalburgCity_WallysHouse_EventScript_WallysDad:: @ 0x081F815A
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_WALLY_VICTORY_ROAD, PetalburgCity_WallysHouse_EventScript_DefeatedWallyInVictoryRoad
@@ -39,22 +39,22 @@ PetalburgCity_WallysHouse_EventScript_WallysDad::
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_ReceievedHMSurf::
+PetalburgCity_WallysHouse_EventScript_ReceievedHMSurf:: @ 0x081F8184
 	msgbox PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_DefeatedWallyInVictoryRoad::
+PetalburgCity_WallysHouse_EventScript_DefeatedWallyInVictoryRoad:: @ 0x081F818E
 	msgbox PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_PlayedWithWally::
+PetalburgCity_WallysHouse_EventScript_PlayedWithWally:: @ 0x081F8198
 	msgbox PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_WallysMom::
+PetalburgCity_WallysHouse_EventScript_WallysMom:: @ 0x081F81A2
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_HM_SURF, PetalburgCity_WallysHouse_EventScript_ReceivedHMSurf
@@ -62,12 +62,12 @@ PetalburgCity_WallysHouse_EventScript_WallysMom::
 	release
 	end
 
-PetalburgCity_WallysHouse_EventScript_ReceivedHMSurf::
+PetalburgCity_WallysHouse_EventScript_ReceivedHMSurf:: @ 0x081F81B7
 	msgbox PetalburgCity_WallysHouse_Text_WallyLeftWithoutTelling, MSGBOX_DEFAULT
 	release
 	end
 
-PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally:
+PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally: @ 0x081F81C1
 	.string "きみは⋯⋯\n"
 	.string "そうか　{PLAYER}{KUN}　だね？\p"
 	.string "さっきは　ミツルの　あいてを　してくれて\n"
@@ -83,10 +83,10 @@ PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally:
 	.string "もう　しゅっぱつ　していったよ\p"
 	.string "いまごろは　どの　あたりかなあ⋯⋯$"
 
-PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing:
+PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing: @ 0x081F829E
 	.string "ミツルは　どうしてるかなあ⋯⋯$"
 
-PetalburgCity_WallysHouse_Text_PleaseExcuseUs:
+PetalburgCity_WallysHouse_Text_PleaseExcuseUs: @ 0x081F82AE
 	.string "{PLAYER}{KUN}！\n"
 	.string "むりに　よびだして　すまなかったね！\p"
 	.string "ミツルは　シダケタウンに　いってから\n"
@@ -104,15 +104,15 @@ PetalburgCity_WallysHouse_Text_PleaseExcuseUs:
 	.string "そのおれい　という　わけでは　ないけど\n"
 	.string "これを　うけとって　くれないか！$"
 
-PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces:
+PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces: @ 0x081F83BA
 	.string "なみのりを　つかえるように　なれば\n"
 	.string "いろんな　ばしょに　いけるように　なるよ！$"
 
-PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon:
+PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon: @ 0x081F83E2
 	.string "もうすぐ　ミツルが　かえってくるぞ！\n"
 	.string "たのしみだなあ⋯⋯！$"
 
-PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity:
+PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity: @ 0x081F8400
 	.string "ええっ！？　サイユウシティで\n"
 	.string "ミツルと　であった　だって⋯⋯？\p"
 	.string "んもう　{PLAYER}{KUN}ってばー\p"
@@ -120,12 +120,12 @@ PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity:
 	.string "そんな　とおくの　まち　まで\l"
 	.string "ひとりで　いけるわけ　ないよねえ⋯⋯$"
 
-PetalburgCity_WallysHouse_Text_WallyWasReallyHappy:
+PetalburgCity_WallysHouse_Text_WallyWasReallyHappy: @ 0x081F8465
 	.string "ミツルが　ポケモンを　つかまえた　って\n"
 	.string "すごく　うれしそうに　はなしていたの\p"
 	.string "あのこの　あんな　えがお　ひさしぶり$"
 
-PetalburgCity_WallysHouse_Text_WallyLeftWithoutTelling:
+PetalburgCity_WallysHouse_Text_WallyLeftWithoutTelling: @ 0x081F849F
 	.string "うちの　しゅじんには　ないしょ　だけど\p"
 	.string "じつは　ミツルったら　シダケタウンを\n"
 	.string "かってに　でて　いっちゃった　らしいの⋯⋯\p"

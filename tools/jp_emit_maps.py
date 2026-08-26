@@ -8610,6 +8610,66 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Wally's House is the next physical owner. Its two map-script tables, HM
+# Surf gift, Wally-family branches, and PLAYER/KUN text controls all match
+# the corresponding pokeemerald map source in JP ROM order.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'PetalburgCity_WallysHouse': {
+        'scripts': {
+            0x081F8120: 'PetalburgCity_WallysHouse_EventScript_PlayerWallysDadFaceEachOther',
+            0x081F8133: 'PetalburgCity_WallysHouse_EventScript_GiveHMSurf',
+            0x081F815A: 'PetalburgCity_WallysHouse_EventScript_WallysDad',
+            0x081F8184: 'PetalburgCity_WallysHouse_EventScript_ReceievedHMSurf',
+            0x081F818E: 'PetalburgCity_WallysHouse_EventScript_DefeatedWallyInVictoryRoad',
+            0x081F8198: 'PetalburgCity_WallysHouse_EventScript_PlayedWithWally',
+            0x081F81A2: 'PetalburgCity_WallysHouse_EventScript_WallysMom',
+            0x081F81B7: 'PetalburgCity_WallysHouse_EventScript_ReceivedHMSurf',
+        },
+        'tables': {
+            0x081F8116: 'PetalburgCity_WallysHouse_OnWarp',
+            0x081F8129: 'PetalburgCity_WallysHouse_OnFrame',
+        },
+        'texts': {
+            0x081F81C1: 'PetalburgCity_WallysHouse_Text_ThanksForPlayingWithWally',
+            0x081F829E: 'PetalburgCity_WallysHouse_Text_WonderHowWallyIsDoing',
+            0x081F82AE: 'PetalburgCity_WallysHouse_Text_PleaseExcuseUs',
+            0x081F83BA: 'PetalburgCity_WallysHouse_Text_SurfGoAllSortsOfPlaces',
+            0x081F83E2: 'PetalburgCity_WallysHouse_Text_WallyIsComingHomeSoon',
+            0x081F8400: 'PetalburgCity_WallysHouse_Text_YouMetWallyInEverGrandeCity',
+            0x081F8465: 'PetalburgCity_WallysHouse_Text_WallyWasReallyHappy',
+            0x081F849F: 'PetalburgCity_WallysHouse_Text_WallyLeftWithoutTelling',
+        },
+        'field_placeholders': {
+            0x081F81C1: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F82AE: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F8400: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x007A: 'FLAG_RECEIVED_HM_SURF',
+                0x007E: 'FLAG_DEFEATED_WALLY_VICTORY_ROAD',
+                0x0087: 'FLAG_THANKED_FOR_PLAYING_WITH_WALLY',
+            },
+            'vars': {
+                0x4057: 'VAR_PETALBURG_CITY_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'map_script_values': {0x4057: {0x04: '4'}},
+            'script_var_values': {0x081F8133: {0x4057: {0x05: '5'}}},
+            'items': {0x0155: 'ITEM_HM_SURF'},
+            'local_ids': {
+                0x01: 'LOCALID_WALLYS_HOUSE_WALLYS_DAD',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {0x03: 'DIR_WEST', 0x04: 'DIR_EAST'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.

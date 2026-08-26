@@ -4718,7 +4718,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_WALLYS_HOUSE (g8 m0)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte gMapEvents_PETALBURG_CITY_WALLYS_HOUSE  @ events
+	.4byte PetalburgCity_WallysHouse_MapEvents  @ events
 	.4byte PetalburgCity_WallysHouse_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016A  @ music
