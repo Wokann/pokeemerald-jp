@@ -2183,7 +2183,7 @@
 	.endm
 
 	.macro mossdeepgym4
-	.byte SCR_OP_DA
+	closebraillemessage
 	.endm
 
 	.macro cmdDB address:req

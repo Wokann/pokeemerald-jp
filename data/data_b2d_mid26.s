@@ -2281,22 +2281,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Underwater_SootopolisCity/events.inc"
 	.globl gMapEvents_UNDERWATER_SOOTOPOLIS_CITY
 	.set gMapEvents_UNDERWATER_SOOTOPOLIS_CITY, Underwater_SootopolisCity_MapEvents
-	.globl DESERT_RUINS_EventObjects
-DESERT_RUINS_EventObjects: @ 0x0850CA80
-	object_event 1, 200, 0, 8, 7, 3, 8, 0, 0, 0, 0, DesertRuins_EventScript_00213E86, 0x03A7
-	.globl DESERT_RUINS_EventWarps
-DESERT_RUINS_EventWarps: @ 0x0850CA98
-	warp_def 8, 29, 3, 1, MAP_ROUTE111
-	warp_def 8, 20, 0, 2, MAP_DESERT_RUINS
-	warp_def 8, 11, 3, 1, MAP_DESERT_RUINS
-	.globl DESERT_RUINS_EventBgEvents
-DESERT_RUINS_EventBgEvents: @ 0x0850CAB0
-	bg_event 8, 20, 0, 0, DesertRuins_EventScript_00213E5F, 0, 0
-	bg_event 7, 20, 0, 0, DesertRuins_EventScript_00213E7C, 0, 0
-	bg_event 9, 20, 0, 0, DesertRuins_EventScript_00213E7C, 0, 0
+	.include "data/maps/DesertRuins/events.inc"
 	.globl gMapEvents_DESERT_RUINS
-gMapEvents_DESERT_RUINS: @ 0x0850CAD4
-	map_events DESERT_RUINS_EventObjects, DESERT_RUINS_EventWarps, 0, DESERT_RUINS_EventBgEvents
+	.set gMapEvents_DESERT_RUINS, DesertRuins_MapEvents
 	.globl GRANITE_CAVE_1F_EventObjects
 GRANITE_CAVE_1F_EventObjects: @ 0x0850CAE8
 	object_event 1, 55, 0, 36, 9, 3, 1, 0, 0, 0, 0, 0x08213EE2, 0x0000

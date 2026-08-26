@@ -161,6 +161,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'RusturfTunnel': 24,
     # The immediate successor has a single reviewed OnResume dive-warp hook.
     'Underwater_SootopolisCity': 1,
+    # Desert Ruins follows with three map hooks and nine local branches.
+    'DesertRuins': 12,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -170,6 +172,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'Route114_FossilManiacsTunnel': ('OnLoad',),
     'MeteorFalls_1F_1R': ('OnLoad',),
     'Underwater_SootopolisCity': ('OnResume',),
+    'DesertRuins': ('OnResume', 'OnLoad'),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -6354,6 +6357,63 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+    # Desert Ruins is the next full EventScript owner. Its three map hooks,
+    # Regirock battle branches, shared messages, and braille prompt match the
+    # corresponding US map in physical source order.
+    'DesertRuins': {
+        'preserve_region_script_aliases': False,
+        'external_texts': {
+            0x08243CDA: 'gText_BigHoleInTheWall',
+            0x08263753: 'DesertRuins_Braille_UseRockSmash',
+        },
+        'external_labels': {
+            0x08244178: 'Common_EventScript_NopReturn',
+            0x08244197: 'Common_EventScript_RemoveStaticPokemon',
+            0x082441A0: 'Common_EventScript_LegendaryFlewAway',
+        },
+        'command_aliases': {
+            # JP stores the legacy door-wait opcode where US waits for the
+            # Regirock cry; this macro preserves the reviewed JP byte.
+            0x08213E86: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {
+                0x01BB: 'FLAG_DEFEATED_REGIROCK',
+                0x03A7: 'FLAG_HIDE_REGIROCK',
+                0x08B0: 'FLAG_SYS_REGIROCK_PUZZLE_COMPLETED',
+                0x08B6: 'FLAG_LANDMARK_DESERT_RUINS',
+                0x08C1: 'FLAG_SYS_CTRL_OBJ_DELETE',
+            },
+            'vars': {
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'var_values': {
+                0x800D: {
+                    0x01: 'B_OUTCOME_WON',
+                    0x04: 'B_OUTCOME_RAN',
+                    0x05: 'B_OUTCOME_PLAYER_TELEPORTED',
+                    0x07: 'B_OUTCOME_CAUGHT',
+                },
+            },
+            'script_var_values': {
+                0x08213ED6: {0x8004: {0x0191: 'SPECIES_REGIROCK'}},
+            },
+            'species': {0x0191: 'SPECIES_REGIROCK'},
+            'cry_modes': {0x02: 'CRY_MODE_ENCOUNTER'},
+            'metatiles': {
+                0x0229: 'METATILE_Cave_EntranceCover',
+                0x0235: 'METATILE_Cave_SealedChamberBraille_Mid',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'setmetatile': (0, 1),
+                'setwildbattle': (1,),
+            },
+        },
+    },
 })
 
 # Rustboro Gym is a complete, contiguous JP map-script owner.  The entries
@@ -10288,6 +10348,7 @@ CANONICAL_SCRIPT_COMMAND_NAMES = {
     'getpricereduction': 'getpokenewsactive',
     'mossdeepgym1': 'moverotatingtileobjects',
     'mossdeepgym3': 'initrotatingtilepuzzle',
+    'mossdeepgym4': 'closebraillemessage',
     'buffercontesttype': 'freerotatingtilepuzzle',
     'showcontestwinner': 'showcontestpainting',
 }
@@ -10378,6 +10439,24 @@ def collapse_msgbox_macros(lines):
                 index += 2
                 continue
         out.append((name, argstr))
+        index += 1
+    return out
+
+
+def collapse_braillemsgbox_macros(lines):
+    """Restore the exact three-op ``braillemsgbox`` expansion."""
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 2 < len(lines):
+            first, second, third = lines[index:index + 3]
+            if (first[0] == 'braillemessage'
+                    and second == ('waitbuttonpress', '')
+                    and third == ('closebraillemessage', '')):
+                out.append(('braillemsgbox', first[1]))
+                index += 3
+                continue
+        out.append(lines[index])
         index += 1
     return out
 
@@ -10871,6 +10950,8 @@ def omit_default_macro_arguments(lines):
     for name, argstr in lines:
         args = [part.strip() for part in argstr.split(',')]
         if name == 'givemon' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
+            argstr = ', '.join(args[:2])
+        elif name == 'setwildbattle' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
             argstr = ', '.join(args[:2])
         elif name in ('giveitem', 'finditem', 'checkitem', 'checkpcitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
             argstr = args[0]
@@ -11592,6 +11673,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 remapped_specials.append((name, argstr))
             decoded_lines = remapped_specials
             decoded_lines = collapse_msgbox_macros(decoded_lines)
+            decoded_lines = collapse_braillemsgbox_macros(decoded_lines)
             decoded_lines = collapse_trainerbattle_macros(decoded_lines)
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)
             decoded_lines = collapse_condition_macros(decoded_lines)

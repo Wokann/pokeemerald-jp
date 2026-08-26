@@ -1,99 +1,86 @@
 @ DesertRuins scripts (JP map g24 m6 @ 0x08213DDF)
 
 DesertRuins_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, DesertRuins_EventScript_00213DEF
-	map_script MAP_SCRIPT_ON_LOAD, DesertRuins_EventScript_00213E0D
-	map_script MAP_SCRIPT_ON_TRANSITION, DesertRuins_EventScript_00213E4E
+	map_script MAP_SCRIPT_ON_RESUME, DesertRuins_OnResume
+	map_script MAP_SCRIPT_ON_LOAD, DesertRuins_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, DesertRuins_OnTransition
 	.byte 0
 
-DesertRuins_EventScript_00213DEF::
-	checkflag 0x8C1
-	call_if 0x1, DesertRuins_EventScript_00213DF9
+DesertRuins_OnResume:: @ 0x08213DEF
+	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, DesertRuins_EventScript_TryRemoveRegirock
 	end
 
-DesertRuins_EventScript_00213DF9::
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x7
-	goto_if 0x5, 0x08244178
-	removeobject 0x800F
+DesertRuins_EventScript_TryRemoveRegirock:: @ 0x08213DF9
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
+	removeobject VAR_LAST_TALKED
 	return
 
-DesertRuins_EventScript_00213E0D::
-	checkflag 0x8B0
-	call_if 0x0, DesertRuins_EventScript_00213E17
+DesertRuins_OnLoad:: @ 0x08213E0D
+	call_if_unset FLAG_SYS_REGIROCK_PUZZLE_COMPLETED, DesertRuins_EventScript_HideRegiEntrance
 	end
 
-DesertRuins_EventScript_00213E17::
-	setmetatile 0x7, 0x13, 0x229, 0x1
-	setmetatile 0x8, 0x13, 0x229, 0x1
-	setmetatile 0x9, 0x13, 0x229, 0x1
-	setmetatile 0x7, 0x14, 0x235, 0x1
-	setmetatile 0x8, 0x14, 0x235, 0x1
-	setmetatile 0x9, 0x14, 0x235, 0x1
+DesertRuins_EventScript_HideRegiEntrance:: @ 0x08213E17
+	setmetatile 7, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 8, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 9, 19, METATILE_Cave_EntranceCover, TRUE
+	setmetatile 7, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 8, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
+	setmetatile 9, 20, METATILE_Cave_SealedChamberBraille_Mid, TRUE
 	return
 
-DesertRuins_EventScript_00213E4E::
-	setflag 0x8B6
-	checkflag 0x1BB
-	call_if 0x0, DesertRuins_EventScript_00213E5B
+DesertRuins_OnTransition:: @ 0x08213E4E
+	setflag FLAG_LANDMARK_DESERT_RUINS
+	call_if_unset FLAG_DEFEATED_REGIROCK, DesertRuins_EventScript_ShowRegirock
 	end
 
-DesertRuins_EventScript_00213E5B::
-	clearflag 0x3A7
+DesertRuins_EventScript_ShowRegirock:: @ 0x08213E5B
+	clearflag FLAG_HIDE_REGIROCK
 	return
 
-DesertRuins_EventScript_00213E5F::
+DesertRuins_EventScript_CaveEntranceMiddle:: @ 0x08213E5F
 	lockall
-	checkflag 0x8B0
-	goto_if 0x1, DesertRuins_EventScript_00213E72
-	braillemessage 0x08263753
-	waitbuttonpress
-	mossdeepgym4
+	goto_if_set FLAG_SYS_REGIROCK_PUZZLE_COMPLETED, DesertRuins_EventScript_BigHoleInWall
+	braillemsgbox DesertRuins_Braille_UseRockSmash
 	releaseall
 	end
 
-DesertRuins_EventScript_00213E72::
-	loadword 0x0, 0x08243CDA
-	callstd 0x4
+DesertRuins_EventScript_BigHoleInWall:: @ 0x08213E72
+	msgbox gText_BigHoleInTheWall, MSGBOX_DEFAULT
 	releaseall
 	end
 
-DesertRuins_EventScript_00213E7C::
+DesertRuins_EventScript_CaveEntranceSide:: @ 0x08213E7C
 	lockall
-	braillemessage 0x08263753
-	waitbuttonpress
-	mossdeepgym4
+	braillemsgbox DesertRuins_Braille_UseRockSmash
 	releaseall
 	end
 
-DesertRuins_EventScript_00213E86::
+DesertRuins_EventScript_Regirock:: @ 0x08213E86
 	lock
 	faceplayer
 	waitse
-	playmoncry 0x191, 0x2
-	delay 0x28
-	waitdooranim
-	setwildbattle 0x191, 0x28, 0x0
-	setflag 0x8C1
+	playmoncry SPECIES_REGIROCK, CRY_MODE_ENCOUNTER
+	delay 40
+	waitmoncry_jp
+	setwildbattle SPECIES_REGIROCK, 40
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special StartRegiBattle
-	clearflag 0x8C1
-	specialvar 0x800D, GetBattleOutcome
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, DesertRuins_EventScript_00213ECD
-	compare_var_to_value 0x800D, 0x4
-	goto_if 0x1, DesertRuins_EventScript_00213ED6
-	compare_var_to_value 0x800D, 0x5
-	goto_if 0x1, DesertRuins_EventScript_00213ED6
-	setflag 0x1BB
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, DesertRuins_EventScript_DefeatedRegirock
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, DesertRuins_EventScript_RanFromRegirock
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, DesertRuins_EventScript_RanFromRegirock
+	setflag FLAG_DEFEATED_REGIROCK
 	release
 	end
 
-DesertRuins_EventScript_00213ECD::
-	setflag 0x1BB
-	goto 0x08244197
+DesertRuins_EventScript_DefeatedRegirock:: @ 0x08213ECD
+	setflag FLAG_DEFEATED_REGIROCK
+	goto Common_EventScript_RemoveStaticPokemon
 	end
 
-DesertRuins_EventScript_00213ED6::
-	setvar 0x8004, 0x191
-	goto 0x082441A0
+DesertRuins_EventScript_RanFromRegirock:: @ 0x08213ED6
+	setvar VAR_0x8004, SPECIES_REGIROCK
+	goto Common_EventScript_LegendaryFlewAway
 	end

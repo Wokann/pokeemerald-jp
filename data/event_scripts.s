@@ -1242,6 +1242,15 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_ShowBagIsFull, 0x082430E0
 	.globl Common_EventScript_NopReturn
 	.set Common_EventScript_NopReturn, 0x08244178
+	@ Desert Ruins references these retained shared event and braille owners.
+	.globl gText_BigHoleInTheWall
+	.set gText_BigHoleInTheWall, 0x08243CDA
+	.globl Common_EventScript_RemoveStaticPokemon
+	.set Common_EventScript_RemoveStaticPokemon, 0x08244197
+	.globl Common_EventScript_LegendaryFlewAway
+	.set Common_EventScript_LegendaryFlewAway, 0x082441A0
+	.globl DesertRuins_Braille_UseRockSmash
+	.set DesertRuins_Braille_UseRockSmash, 0x08263753
 	.globl Common_EventScript_BagIsFull
 	.set Common_EventScript_BagIsFull, 0x082430EA
 	.globl Common_EventScript_ShowNoRoomForDecor
