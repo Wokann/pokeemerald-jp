@@ -10425,11 +10425,16 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
             'script_var_values': {
                 0x08203771: {0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
-                0x0820378E: {0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+                0x0820378E: {
+                    0x8004: {0x1: '1', 0x2: '2'},
+                    0x800D: {0x0: 'FALSE', 0x1: 'TRUE'},
+                },
             },
             'local_ids': {0x06: 'LOCALID_WALDAS_DAD'},
             'directions': {0x04: 'DIR_EAST'},
         },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 

@@ -3,77 +3,77 @@
 RustboroCity_Flat1_2F_MapScripts::
 	.byte 0
 
-RustboroCity_Flat1_2F_EventScript_WaldasDad::
+RustboroCity_Flat1_2F_EventScript_WaldasDad:: @ 0x08203771
 	lock
 	faceplayer
 	specialvar VAR_RESULT, TryBufferWaldaPhrase
 	goto_if_eq VAR_RESULT, FALSE, RustboroCity_Flat1_2F_EventScript_WaldasDadFirstPhrase
 	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Flat1_2F_EventScript_WaldasDadNewPhrase
 
-RustboroCity_Flat1_2F_EventScript_GivePhrase::
+RustboroCity_Flat1_2F_EventScript_GivePhrase:: @ 0x0820378E
 	special DoWaldaNamingScreen
-	goto_if_eq VAR_0x8004, 0x1, RustboroCity_Flat1_2F_EventScript_CancelGivePhrase
-	goto_if_eq VAR_0x8004, 0x2, RustboroCity_Flat1_2F_EventScript_CancelGiveFirstPhrase
+	goto_if_eq VAR_0x8004, 1, RustboroCity_Flat1_2F_EventScript_CancelGivePhrase
+	goto_if_eq VAR_0x8004, 2, RustboroCity_Flat1_2F_EventScript_CancelGiveFirstPhrase
 	specialvar VAR_RESULT, TryGetWallpaperWithWaldaPhrase
 	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Flat1_2F_EventScript_WaldaLikesPhrase
 	goto_if_eq VAR_RESULT, FALSE, RustboroCity_Flat1_2F_EventScript_WaldaDoesntLikePhrase
 	end
 
-RustboroCity_Flat1_2F_EventScript_WaldasDadFirstPhrase::
+RustboroCity_Flat1_2F_EventScript_WaldasDadFirstPhrase:: @ 0x082037C4
 	msgbox RustboroCity_Flat1_2F_Text_HelloDoYouKnowFunnyPhrase, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RustboroCity_Flat1_2F_EventScript_DeclineGivePhrase
 	msgbox RustboroCity_Flat1_2F_Text_WonderfulLetsHearSuggestion, MSGBOX_DEFAULT
 	goto RustboroCity_Flat1_2F_EventScript_GivePhrase
 
-RustboroCity_Flat1_2F_EventScript_WaldasDadNewPhrase::
+RustboroCity_Flat1_2F_EventScript_WaldasDadNewPhrase:: @ 0x082037E4
 	msgbox RustboroCity_Flat1_2F_Text_BeenSayingXDoYouKnowBetterPhrase, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RustboroCity_Flat1_2F_EventScript_DeclineGivePhrase
 	msgbox RustboroCity_Flat1_2F_Text_WonderfulLetsHearSuggestion, MSGBOX_DEFAULT
 	goto RustboroCity_Flat1_2F_EventScript_GivePhrase
 
-RustboroCity_Flat1_2F_EventScript_DeclineGivePhrase::
+RustboroCity_Flat1_2F_EventScript_DeclineGivePhrase:: @ 0x08203804
 	msgbox RustboroCity_Flat1_2F_Text_OhIsThatRight, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_Flat1_2F_EventScript_CancelGivePhrase::
+RustboroCity_Flat1_2F_EventScript_CancelGivePhrase:: @ 0x0820380E
 	msgbox RustboroCity_Flat1_2F_Text_OhYouDontKnowAny, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_Flat1_2F_EventScript_CancelGiveFirstPhrase::
+RustboroCity_Flat1_2F_EventScript_CancelGiveFirstPhrase:: @ 0x08203818
 	msgbox RustboroCity_Flat1_2F_Text_ThinkOfMyOwnPhrase, MSGBOX_DEFAULT
 	call RustboroCity_Flat1_2F_EventScript_WaldasDadFaceWalda
 	msgbox RustboroCity_Flat1_2F_Text_ShesNotSmilingAtAll2, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_Flat1_2F_EventScript_WaldaLikesPhrase::
+RustboroCity_Flat1_2F_EventScript_WaldaLikesPhrase:: @ 0x0820382F
 	msgbox RustboroCity_Flat1_2F_Text_LetsGiveItATry2, MSGBOX_DEFAULT
 	call RustboroCity_Flat1_2F_EventScript_WaldasDadFaceWalda
 	msgbox RustboroCity_Flat1_2F_Text_OhShesLaughing, MSGBOX_DEFAULT
 	applymovement LOCALID_WALDAS_DAD, Common_Movement_FacePlayer
-	waitmovement 0x0
+	waitmovement 0
 	msgbox RustboroCity_Flat1_2F_Text_ThankYouIllGiveYouWallpaper, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_Flat1_2F_EventScript_WaldaDoesntLikePhrase::
+RustboroCity_Flat1_2F_EventScript_WaldaDoesntLikePhrase:: @ 0x08203858
 	msgbox RustboroCity_Flat1_2F_Text_LetsGiveItATry, MSGBOX_DEFAULT
 	call RustboroCity_Flat1_2F_EventScript_WaldasDadFaceWalda
 	msgbox RustboroCity_Flat1_2F_Text_ShesNotSmilingAtAll, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_Flat1_2F_EventScript_WaldasDadFaceWalda::
+RustboroCity_Flat1_2F_EventScript_WaldasDadFaceWalda:: @ 0x0820386F
 	turnobject LOCALID_WALDAS_DAD, DIR_EAST
 	return
 
-RustboroCity_Flat1_2F_EventScript_WaldasMom::
+RustboroCity_Flat1_2F_EventScript_WaldasMom:: @ 0x08203874
 	msgbox RustboroCity_Flat1_2F_Text_ComingUpWithMealsIsHard, MSGBOX_NPC
 	end
 
-RustboroCity_Flat1_2F_EventScript_PokeDoll::
+RustboroCity_Flat1_2F_EventScript_PokeDoll:: @ 0x0820387D
 	msgbox RustboroCity_Flat1_2F_Text_ItsAPokemonPlushDoll, MSGBOX_SIGN
 	end
 
