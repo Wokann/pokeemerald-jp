@@ -154,6 +154,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Meteor Falls 1F 1R follows with an OnLoad hook and four local branches.
     # Its ten adjacent dialogue records are checked separately below.
     'MeteorFalls_1F_1R': 5,
+    # The adjacent Meteor Falls 1F 2R owner has nine trainer-battle branches.
+    'MeteorFalls_1F_2R': 9,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -235,6 +237,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Meteor Falls 1F 1R owns ten dialogue records after its local movement
     # data. Their physical order matches the reviewed US map source.
     'MeteorFalls_1F_1R': 10,
+    # Meteor Falls 1F 2R owns twenty-four contiguous trainer dialogue records.
+    'MeteorFalls_1F_2R': 24,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9629,6 +9633,26 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 'delay': (0,),
                 'setmetatile': (0, 1),
             },
+        },
+    },
+    # Meteor Falls 1F 2R is the immediately following physical owner. Its
+    # nine trainer-battle branches and twenty-four text records match the
+    # contiguous US map source; trainer IDs and the standard Match Call
+    # registration variables are named only after that one-to-one audit.
+    'MeteorFalls_1F_2R': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'trainers': {
+                0x0188: 'TRAINER_NICOLAS_1',
+                0x02A9: 'TRAINER_JOHN_AND_JAY_1',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
 })

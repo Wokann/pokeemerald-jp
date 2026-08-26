@@ -872,7 +872,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/Route117_PokemonDayCare/scripts.inc"
 	.include "data/maps/Route121_SafariZoneEntrance/scripts.inc"
 	.include "data/maps/MeteorFalls_1F_1R/scripts.inc"
-	.incbin "baserom_jp.gba", 0x213079, 0x575
+	.include "data/maps/MeteorFalls_1F_2R/scripts.inc"
 	.include "data/maps/MeteorFalls_B1F_1R/scripts.inc"
 	.include "data/maps/MeteorFalls_B1F_2R/scripts.inc"
 	.include "data/maps/RusturfTunnel/scripts.inc"

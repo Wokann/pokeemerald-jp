@@ -2266,23 +2266,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MeteorFalls_1F_1R/events.inc"
 	.globl gMapEvents_METEOR_FALLS_1F_1R
 	.set gMapEvents_METEOR_FALLS_1F_1R, MeteorFalls_1F_1R_MapEvents
-	.globl METEOR_FALLS_1F_2R_EventObjects
-METEOR_FALLS_1F_2R_EventObjects: @ 0x0850C7F0
-	object_event 1, 33, 0, 13, 2, 3, 8, 0, 0, 1, 1, 0x0821307A, 0x0000
-	object_event 2, 21, 0, 6, 12, 3, 8, 1, 1, 1, 1, 0x082130DC, 0x0000
-	object_event 3, 22, 0, 7, 12, 3, 8, 1, 1, 1, 1, 0x08213140, 0x0000
-	.globl METEOR_FALLS_1F_2R_EventWarps
-METEOR_FALLS_1F_2R_EventWarps: @ 0x0850C838
-	warp_def 10, 29, 3, 2, MAP_METEOR_FALLS_1F_1R
-	warp_def 4, 14, 3, 0, MAP_METEOR_FALLS_B1F_1R
-	warp_def 7, 20, 3, 1, MAP_METEOR_FALLS_B1F_1R
-	warp_def 21, 23, 3, 2, MAP_METEOR_FALLS_B1F_1R
-	.globl METEOR_FALLS_1F_2R_EventBgEvents
-METEOR_FALLS_1F_2R_EventBgEvents: @ 0x0850C858
-	bg_event 9, 58, 0, 0, 0x00000000, 0, 0
+	.include "data/maps/MeteorFalls_1F_2R/events.inc"
 	.globl gMapEvents_METEOR_FALLS_1F_2R
-gMapEvents_METEOR_FALLS_1F_2R: @ 0x0850C864
-	map_events METEOR_FALLS_1F_2R_EventObjects, METEOR_FALLS_1F_2R_EventWarps, 0, METEOR_FALLS_1F_2R_EventBgEvents
+	.set gMapEvents_METEOR_FALLS_1F_2R, MeteorFalls_1F_2R_MapEvents
 	.globl METEOR_FALLS_B1F_1R_EventObjects
 METEOR_FALLS_B1F_1R_EventObjects: @ 0x00000000
 	.globl METEOR_FALLS_B1F_1R_EventWarps
