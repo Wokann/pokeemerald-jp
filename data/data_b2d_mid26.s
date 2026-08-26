@@ -2299,51 +2299,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/PetalburgWoods/events.inc"
 	.globl gMapEvents_PETALBURG_WOODS
 	.set gMapEvents_PETALBURG_WOODS, PetalburgWoods_MapEvents
-	.globl MT_CHIMNEY_EventObjects
-MT_CHIMNEY_EventObjects: @ 0x0850CEF4
-	object_event 1, 195, 0, 24, 19, 3, 9, 0, 0, 0, 0, MtChimney_EventScript_00214BA8, 0x039E
-	object_event 2, 196, 0, 13, 6, 3, 10, 0, 0, 0, 0, 0x08214BDE, 0x039F
-	object_event 3, 119, 0, 12, 11, 3, 9, 0, 0, 1, 2, 0x08214E41, 0x039F
-	object_event 4, 119, 0, 32, 5, 3, 9, 0, 0, 0, 0, MtChimney_EventScript_00214E93, 0x039F
-	object_event 5, 119, 0, 28, 12, 3, 10, 0, 0, 0, 0, MtChimney_EventScript_00214E8A, 0x039F
-	object_event 6, 117, 0, 19, 39, 3, 10, 0, 0, 0, 0, MtChimney_EventScript_00214E2F, 0x039E
-	object_event 7, 117, 0, 29, 5, 3, 10, 0, 0, 0, 0, MtChimney_EventScript_00214E26, 0x039E
-	object_event 8, 117, 0, 31, 12, 3, 9, 0, 0, 0, 0, MtChimney_EventScript_00214E38, 0x039E
-	object_event 9, 30, 0, 19, 39, 3, 10, 0, 0, 0, 0, MtChimney_EventScript_00214CC6, 0x03E2
-	object_event 10, 119, 0, 22, 39, 3, 9, 0, 0, 0, 0, MtChimney_EventScript_00214E9C, 0x039F
-	object_event 11, 220, 0, 23, 19, 3, 74, 0, 0, 0, 0, MtChimney_EventScript_00214EAE, 0x039E
-	object_event 12, 220, 0, 23, 18, 3, 64, 0, 0, 0, 0, MtChimney_EventScript_00214EA5, 0x039F
-	object_event 13, 119, 0, 23, 17, 3, 8, 0, 0, 0, 0, MtChimney_EventScript_00214E78, 0x039F
-	object_event 14, 220, 0, 23, 20, 3, 65, 0, 0, 0, 0, MtChimney_EventScript_00214EA5, 0x039F
-	object_event 15, 220, 0, 22, 19, 3, 67, 0, 0, 0, 0, MtChimney_EventScript_00214EA5, 0x039F
-	object_event 16, 119, 0, 23, 21, 3, 7, 0, 0, 0, 0, MtChimney_EventScript_00214E81, 0x039F
-	object_event 17, 119, 0, 21, 19, 3, 10, 0, 0, 0, 0, MtChimney_EventScript_00214E6F, 0x039F
-	object_event 18, 220, 0, 30, 12, 3, 66, 0, 0, 0, 0, MtChimney_EventScript_00214EAE, 0x039E
-	object_event 19, 220, 0, 29, 12, 3, 67, 0, 0, 0, 0, MtChimney_EventScript_00214EA5, 0x039F
-	object_event 20, 220, 0, 30, 5, 3, 67, 0, 0, 0, 0, MtChimney_EventScript_00214EAE, 0x039E
-	object_event 21, 220, 0, 31, 5, 3, 66, 0, 0, 0, 0, MtChimney_EventScript_00214EA5, 0x039F
-	object_event 22, 119, 0, 9, 16, 3, 10, 0, 0, 1, 3, 0x08214E58, 0x039F
-	object_event 23, 220, 0, 20, 39, 3, 67, 0, 0, 0, 0, MtChimney_EventScript_00214EAE, 0x039E
-	object_event 24, 220, 0, 21, 39, 3, 66, 0, 0, 0, 0, MtChimney_EventScript_00214EA5, 0x039F
-	object_event 25, 22, 0, 16, 18, 3, 13, 0, 0, 1, 3, 0x08214F1D, 0x036D
-	object_event 26, 45, 0, 14, 7, 3, 70, 0, 0, 1, 6, 0x08214F7F, 0x036D
-	object_event 27, 45, 0, 29, 7, 3, 17, 1, 1, 1, 3, 0x08214F96, 0x036D
-	object_event 28, 45, 0, 27, 17, 3, 16, 1, 1, 1, 3, 0x08214FAD, 0x036D
-	object_event 29, 120, 0, 13, 16, 3, 9, 1, 1, 1, 3, 0x08214FC4, 0x039F
-	object_event 30, 55, 0, 7, 7, 3, 10, 1, 1, 1, 6, 0x08214FDB, 0x036D
-	.globl MT_CHIMNEY_EventWarps
-MT_CHIMNEY_EventWarps: @ 0x0850D1C4
-	warp_def 17, 36, 0, 0, MAP_MT_CHIMNEY_CABLE_CAR_STATION
-	warp_def 18, 36, 0, 1, MAP_MT_CHIMNEY_CABLE_CAR_STATION
-	warp_def 20, 41, 3, 2, MAP_JAGGED_PASS
-	warp_def 21, 41, 3, 3, MAP_JAGGED_PASS
-	.globl MT_CHIMNEY_EventBgEvents
-MT_CHIMNEY_EventBgEvents: @ 0x0850D1E4
-	bg_event 14, 6, 0, 0, MtChimney_EventScript_00214EB7, 0, 0
-	bg_event 24, 37, 3, 0, MtChimney_EventScript_00214F14, 0, 0
+	.include "data/maps/MtChimney/events.inc"
 	.globl gMapEvents_MT_CHIMNEY
-gMapEvents_MT_CHIMNEY: @ 0x0850D1FC
-	map_events MT_CHIMNEY_EventObjects, MT_CHIMNEY_EventWarps, 0, MT_CHIMNEY_EventBgEvents
+	.set gMapEvents_MT_CHIMNEY, MtChimney_MapEvents
 	.globl JAGGED_PASS_EventObjects
 JAGGED_PASS_EventObjects: @ 0x0850D210
 	object_event 1, 55, 0, 10, 8, 3, 10, 0, 0, 1, 3, 0x08215C21, 0x0000

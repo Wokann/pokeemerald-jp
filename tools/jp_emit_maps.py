@@ -173,6 +173,10 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Petalburg Woods follows with its seven story branches and thirteen
     # local NPC, sign, and trainer scripts in the same US source order.
     'PetalburgWoods': 20,
+    # Mt. Chimney follows directly. Its two map hooks, forty-one local
+    # story/NPC/trainer branches, and the contiguous unused movement records
+    # were checked against the matching US source in physical JP ROM order.
+    'MtChimney': 43,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -184,6 +188,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'Underwater_SootopolisCity': ('OnResume',),
     'DesertRuins': ('OnResume', 'OnLoad'),
     'GraniteCave_B1F': ('SetHoleWarp',),
+    'MtChimney': ('OnResume',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -269,6 +274,9 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Petalburg Woods owns the twenty-nine contiguous dialogue records after
     # its local scripts and movements.
     'PetalburgWoods': 29,
+    # Mt. Chimney owns the sixty contiguous dialogue records following its
+    # local scripts and movement data.
+    'MtChimney': 60,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6571,6 +6579,99 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
+    # Mt. Chimney is the next complete physical owner. All script/text names,
+    # object IDs, controls, and the player-name placeholders below are derived
+    # from the matching US map source after checking the JP byte sequence.
+    'MtChimney': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+        },
+        'external_texts': {
+            0x08243977: 'gText_TooBadBagIsFull',
+        },
+        'field_placeholders': {
+            0x08215500: {0x01: 'PLAYER'},
+            0x082155D8: {0x01: 'PLAYER'},
+            0x082157A5: {0x01: 'PLAYER'},
+            0x082157BD: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'vars': {
+                0x40BD: 'VAR_JAGGED_PASS_ASH_WEATHER',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+            },
+            'flags': {
+                0x0073: 'FLAG_RECEIVED_METEORITE',
+                0x008B: 'FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY',
+                0x00DB: 'FLAG_EVIL_LEADER_PLEASE_STOP',
+                0x039E: 'FLAG_HIDE_MT_CHIMNEY_TEAM_AQUA',
+                0x039F: 'FLAG_HIDE_MT_CHIMNEY_TEAM_MAGMA',
+                0x03A0: 'FLAG_HIDE_FALLARBOR_HOUSE_PROF_COZMO',
+                0x03AE: 'FLAG_HIDE_METEOR_FALLS_1F_1R_COZMO',
+                0x03E2: 'FLAG_HIDE_MT_CHIMNEY_LAVA_COOKIE_LADY',
+            },
+            'items': {
+                0x0026: 'ITEM_LAVA_COOKIE',
+                0x0118: 'ITEM_METEORITE',
+            },
+            'trainers': {
+                0x0001: 'TRAINER_SAWYER_1',
+                0x007C: 'TRAINER_MELISSA',
+                0x007D: 'TRAINER_SHEILA',
+                0x007E: 'TRAINER_SHIRLEY',
+                0x0092: 'TRAINER_GRUNT_MT_CHIMNEY_1',
+                0x0139: 'TRAINER_SHELBY_1',
+                0x0243: 'TRAINER_GRUNT_MT_CHIMNEY_2',
+                0x0255: 'TRAINER_TABITHA_MT_CHIMNEY',
+                0x025A: 'TRAINER_MAXIE_MT_CHIMNEY',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_MT_CHIMNEY_ARCHIE',
+                0x02: 'LOCALID_MT_CHIMNEY_MAXIE',
+                0x03: 'LOCALID_MT_CHIMNEY_TABITHA',
+                0x16: 'LOCALID_MT_CHIMNEY_MAGMA_GRUNT_2',
+                0x1D: 'LOCALID_MT_CHIMNEY_MAGMA_GRUNT_1',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {
+                0x02: 'DIR_NORTH',
+                0x04: 'DIR_EAST',
+            },
+            'songs': {0x01B9: 'MUS_ENCOUNTER_MAGMA'},
+            'sounds': {0x15: 'SE_PIN'},
+            'fade_modes': {
+                0x00: 'FADE_FROM_BLACK',
+                0x01: 'FADE_TO_BLACK',
+            },
+            'step_callbacks': {0x01: 'STEP_CB_ASH'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'var_values': {
+                0x40BD: {0x01: '1'},
+                0x800C: {
+                    0x02: 'DIR_NORTH',
+                    0x04: 'DIR_EAST',
+                },
+            },
+            'decimal_arguments': {
+                'delay': (0,),
+                'showmoneybox': (0, 1),
+                'checkmoney': (0,),
+                'removemoney': (0,),
+                'setobjectxyperm': (1, 2),
+                'checkitemspace': (1,),
+            },
+        },
+    },
 })
 
 # Rustboro Gym is a complete, contiguous JP map-script owner.  The entries
@@ -10194,6 +10295,34 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     },
 })
 
+# Mt. Chimney owns fifteen RS-era movement records immediately after the
+# Archie movement streams. They are no longer reached by the object scripts,
+# but are contiguous map-local data and must remain explicit rather than be
+# concealed in a map-local incbin.
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'MtChimney': {
+        0x08214D56: 'MtChimney_Movement_ArchieApproachPlayerEast',
+        0x08214D5E: 'MtChimney_Movement_ArchieExitEast',
+        0x08214D67: 'MtChimney_Movement_ArchieApproachPlayerNorth',
+        0x08214D6F: 'MtChimney_Movement_ArchieExitNorth',
+        0x08214D79: 'MtChimney_Movement_Unused1',
+        0x08214D8B: 'MtChimney_Movement_Unused2',
+        0x08214D94: 'MtChimney_Movement_Unused3',
+        0x08214DA3: 'MtChimney_Movement_Unused4',
+        0x08214DBC: 'MtChimney_Movement_Unused5',
+        0x08214DC7: 'MtChimney_Movement_Unused6',
+        0x08214DD7: 'MtChimney_Movement_Unused7',
+        0x08214DE8: 'MtChimney_Movement_Unused8',
+        0x08214DF0: 'MtChimney_Movement_Unused9',
+        0x08214DFE: 'MtChimney_Movement_Unused10',
+        0x08214E00: 'MtChimney_Movement_Unused11',
+        0x08214E08: 'MtChimney_Movement_Unused12',
+        0x08214E12: 'MtChimney_Movement_Unused13',
+        0x08214E1D: 'MtChimney_Movement_Unused14',
+        0x08214E22: 'MtChimney_Movement_Unused15',
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'Route121_SafariZoneEntrance': {
         0x08212A07: 'Route121_SafariZoneEntrance_Movement_ExitSafariZone',
@@ -10849,7 +10978,7 @@ def name_contextual_result_conditions(lines, literal_result_commands=()):
             replace_condition(index + 1, result_names)
             replace_condition(index + 2, result_names)
             replace_condition(index + 3, result_names)
-        elif (name in ('checkitem', 'checkpcitem')
+        elif (name in ('checkitem', 'checkpcitem', 'checkitemspace', 'checkmoney')
               and name not in literal_result_commands):
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
         elif name == 'specialvar' and argstr == 'VAR_RESULT, IsEnigmaBerryValid':
@@ -11148,6 +11277,7 @@ def collapse_moneybox_macros(lines):
 ITEM_ARGUMENTS = {
     'giveitem': {0},
     'finditem': {0},
+    'checkitemspace': {0},
     'checkitem': {0},
     'checkpcitem': {0},
     'removeitem': {0},

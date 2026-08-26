@@ -884,7 +884,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/GraniteCave_StevensRoom/scripts.inc"
 	.include "data/maps/PetalburgWoods/scripts.inc"
 	.include "data/maps/MtChimney/scripts.inc"
-	.incbin "baserom_jp.gba", 0x214f1d, 0xbd5
 	.include "data/maps/JaggedPass/scripts.inc"
 	.incbin "baserom_jp.gba", 0x215bb4, 0x54b
 	.include "data/maps/FieryPath/scripts.inc"
