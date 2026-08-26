@@ -1,7 +1,9 @@
+@ MauvilleCity_House2 scripts (JP map g10 m4 @ 0x08200C5A)
+
 MauvilleCity_House2_MapScripts::
 	.byte 0
 
-MauvilleCity_House2_EventScript_Woman::
+MauvilleCity_House2_EventScript_Woman:: @ 0x08200C5B
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_COIN_CASE, MauvilleCity_House2_EventScript_ReceivedCoinCase
@@ -11,7 +13,7 @@ MauvilleCity_House2_EventScript_Woman::
 	release
 	end
 
-MauvilleCity_House2_EventScript_AskToTradeForHarborMail::
+MauvilleCity_House2_EventScript_AskToTradeForHarborMail:: @ 0x08200C80
 	playse SE_PIN
 	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
 	waitmovement 0
@@ -22,7 +24,7 @@ MauvilleCity_House2_EventScript_AskToTradeForHarborMail::
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_House2_EventScript_DeclineTrade
 	end
 
-MauvilleCity_House2_EventScript_AcceptTrade::
+MauvilleCity_House2_EventScript_AcceptTrade:: @ 0x08200CB6
 	msgbox MauvilleCity_House2_Text_IllTradeYouCoinCase, MSGBOX_DEFAULT
 	removeitem ITEM_HARBOR_MAIL
 	giveitem ITEM_COIN_CASE
@@ -30,12 +32,12 @@ MauvilleCity_House2_EventScript_AcceptTrade::
 	goto MauvilleCity_House2_EventScript_ReceivedCoinCase
 	end
 
-MauvilleCity_House2_EventScript_ReceivedCoinCase::
+MauvilleCity_House2_EventScript_ReceivedCoinCase:: @ 0x08200CD8
 	msgbox MauvilleCity_House2_Text_UseCoinCaseAtGameCorner, MSGBOX_DEFAULT
 	release
 	end
 
-MauvilleCity_House2_EventScript_DeclineTrade::
+MauvilleCity_House2_EventScript_DeclineTrade:: @ 0x08200CE2
 	msgbox MauvilleCity_House2_Text_ThatsDisappointing, MSGBOX_DEFAULT
 	release
 	end

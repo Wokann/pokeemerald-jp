@@ -17643,6 +17643,51 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The Coin Case trade owner follows the Game Corner. Its control flow, event
+# labels, and map JSON are directly parallel to the matching pokeemerald map.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MauvilleCity_House2': {
+        'scripts': {
+            0x08200C5B: 'MauvilleCity_House2_EventScript_Woman',
+            0x08200C80: 'MauvilleCity_House2_EventScript_AskToTradeForHarborMail',
+            0x08200CB6: 'MauvilleCity_House2_EventScript_AcceptTrade',
+            0x08200CD8: 'MauvilleCity_House2_EventScript_ReceivedCoinCase',
+            0x08200CE2: 'MauvilleCity_House2_EventScript_DeclineTrade',
+        },
+        'texts': {
+            0x08200CEC: 'MauvilleCity_House2_Text_BuyHarborMailAtSlateport',
+            0x08200D35: 'MauvilleCity_House2_Text_TradeHarborMailForCoinCase',
+            0x08200D5A: 'MauvilleCity_House2_Text_IllTradeYouCoinCase',
+            0x08200D72: 'MauvilleCity_House2_Text_UseCoinCaseAtGameCorner',
+            0x08200D9C: 'MauvilleCity_House2_Text_ThatsDisappointing',
+        },
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x0102: 'FLAG_RECEIVED_COIN_CASE'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'items': {
+                0x007A: 'ITEM_HARBOR_MAIL',
+                0x0104: 'ITEM_COIN_CASE',
+            },
+            'sounds': {0x0015: 'SE_PIN'},
+            'script_var_values': {
+                0x08200C5B: {0x800D: {0x01: 'TRUE'}},
+                0x08200C80: {0x800D: {0x00: 'NO', 0x01: 'YES'}},
+            },
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
