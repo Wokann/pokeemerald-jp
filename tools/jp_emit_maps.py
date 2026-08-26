@@ -14096,6 +14096,9 @@ TEXT_CODEC = JapaneseScriptTextCodec()
 CANONICAL_SCRIPT_COMMAND_NAMES = {
     'cmdDB': 'messageinstant',
     'getpricereduction': 'getpokenewsactive',
+    # Both JP spellings use the same established Emerald source macros.
+    'hideobject_at': 'hideobjectat',
+    'copyobjectxytoperm': 'moveobjectoffscreen',
     # JP exposes the historical radius name for SCR_OP_SETFLASHLEVEL; the
     # byte-identical Emerald macro name matches the reviewed US sources.
     'setflashradius': 'setflashlevel',
@@ -14562,7 +14565,7 @@ def collapse_coordinate_warp_macros(lines):
                 # formatwarp emits the same WARP_ID_NONE, 0, 0 byte sequence.
                 argstr = args[0]
         elif name in ('setdivewarp', 'setdynamicwarp', 'setescapewarp', 'setwarp', 'warp', 'warpdoor', 'warpmossdeepgym'):
-            if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
+            if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1', '255'):
                 argstr = ', '.join((args[0], args[2], args[3]))
         out.append((name, argstr))
     return out
@@ -15025,6 +15028,18 @@ def collapse_moneybox_macros(lines):
         elif name == 'updatemoneybox' and args in (['0'], ['0x0']):
             argstr = ''
         out.append((name, argstr))
+    return out
+
+
+def collapse_player_visibility_macros(lines):
+    """Restore hideplayer when its exact hideobjectat expansion is present."""
+    out = []
+    for name, argstr in lines:
+        args = [part.strip() for part in argstr.split(',')] if argstr else []
+        if name == 'hideobjectat' and args == ['LOCALID_PLAYER', 'MAP_NONE']:
+            out.append(('hideplayer', ''))
+        else:
+            out.append((name, argstr))
     return out
 
 
@@ -15794,6 +15809,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = omit_implicit_special_waitstates(
                 decoded_lines, implicit_waitstate_specials)
             decoded_lines = collapse_moneybox_macros(decoded_lines)
+            decoded_lines = collapse_player_visibility_macros(decoded_lines)
             decoded_lines = omit_default_macro_arguments(decoded_lines)
             decoded_lines = annotate_literal_copyvars(decoded_lines)
             decoded_lines = name_reviewed_result_conditions(
@@ -16695,6 +16711,218 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x081FD30A: {0x8004: {0x010D: 'ITEM_DEVON_GOODS'}},
             },
             'decimal_arguments': {'delay': (0,)},
+        },
+    },
+})
+
+# Slateport Harbor retains one unreachable ticket handler, one unused movement,
+# and one unreachable ticket text between otherwise live records.  The matching
+# US source names all three, so make them explicit parser roots instead of
+# preserving byte ranges as opaque map-local data.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'SlateportCity_Harbor': (0x081FDE79,),
+})
+
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'SlateportCity_Harbor': (0x081FE162,),
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'SlateportCity_Harbor': {
+        0x081FDDB9: 'SlateportCity_Harbor_Movement_AquaBoardSub',
+        0x081FDDBE: 'SlateportCity_Harbor_Movement_ArchieBoardSub',
+        0x081FDDC3: 'SlateportCity_Harbor_Movement_SubmarineExit',
+        0x081FDDD1: 'SlateportCity_Harbor_Movement_SternApproachPlayer0',
+        0x081FDDD7: 'SlateportCity_Harbor_Movement_SternApproachPlayer1',
+        0x081FDDDC: 'SlateportCity_Harbor_Movement_SternApproachPlayer',
+        0x081FDDE0: 'SlateportCity_Harbor_Movement_PlayerWalkUp',
+        0x081FDF3E: 'SlateportCity_Harbor_Movement_BoardFerryEast',
+        0x081FDF41: 'SlateportCity_Harbor_Movement_BoardFerryNorth',
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SlateportCity_Harbor': {
+        'scripts': {
+            0x081FDC74: 'SlateportCity_Harbor_OnTransition',
+            0x081FDC96: 'SlateportCity_Harbor_EventScript_ShowSSTidal',
+            0x081FDC9A: 'SlateportCity_Harbor_EventScript_ReadyAquaEscapeScene',
+            0x081FDCAC: 'SlateportCity_Harbor_EventScript_AquaEscapeTrigger0',
+            0x081FDCB8: 'SlateportCity_Harbor_EventScript_AquaEscapeTrigger1',
+            0x081FDCC4: 'SlateportCity_Harbor_EventScript_AquaEscapeTrigger2',
+            0x081FDCD0: 'SlateportCity_Harbor_EventScript_AquaEscapeTrigger3',
+            0x081FDCE6: 'SlateportCity_Harbor_EventScript_AquaEscapeScene',
+            0x081FDD7A: 'SlateportCity_Harbor_EventScript_SternApproachPlayer0',
+            0x081FDD8F: 'SlateportCity_Harbor_EventScript_SternApproachPlayer1',
+            0x081FDDA4: 'SlateportCity_Harbor_EventScript_SternApproachPlayer',
+            0x081FDDE2: 'SlateportCity_Harbor_EventScript_FerryAttendant',
+            0x081FDDF7: 'SlateportCity_Harbor_EventScript_AskForTicket',
+            0x081FDE0B: 'SlateportCity_Harbor_EventScript_ChooseDestination',
+            0x081FDE41: 'SlateportCity_Harbor_EventScript_ChooseDestinationWithBattleFrontier',
+            0x081FDE79: 'SlateportCity_Harbor_EventScript_NoTicket',
+            0x081FDE83: 'SlateportCity_Harbor_EventScript_Lilycove',
+            0x081FDEAB: 'SlateportCity_Harbor_EventScript_BattleFrontier',
+            0x081FDECE: 'SlateportCity_Harbor_EventScript_ChooseNewDestination',
+            0x081FDEDA: 'SlateportCity_Harbor_EventScript_BoardFerry',
+            0x081FDF1E: 'SlateportCity_Harbor_EventScript_CancelDestinationSelect',
+            0x081FDF28: 'SlateportCity_Harbor_EventScript_BoardFerryEast',
+            0x081FDF33: 'SlateportCity_Harbor_EventScript_BoardFerryNorth',
+            0x081FDF43: 'SlateportCity_Harbor_EventScript_Sailor',
+            0x081FDF7A: 'SlateportCity_Harbor_EventScript_SailorNoAbnormalWeather',
+            0x081FDF84: 'SlateportCity_Harbor_EventScript_CountDefeatedLegendary',
+            0x081FDF8A: 'SlateportCity_Harbor_EventScript_FatMan',
+            0x081FDF93: 'SlateportCity_Harbor_EventScript_CaptStern',
+            0x081FDFD0: 'SlateportCity_Harbor_EventScript_WhyStealSubmarine',
+            0x081FDFDA: 'SlateportCity_Harbor_EventScript_TeamAquaLeftNeedDive',
+            0x081FDFE7: 'SlateportCity_Harbor_EventScript_NeedDive',
+            0x081FDFF1: 'SlateportCity_Harbor_EventScript_CaptSternFerryOrScannerComment',
+            0x081FE01F: 'SlateportCity_Harbor_EventScript_FerryFinished',
+            0x081FE029: 'SlateportCity_Harbor_EventScript_AskToTradeScanner',
+            0x081FE035: 'SlateportCity_Harbor_EventScript_ChooseScannerTrade',
+            0x081FE06C: 'SlateportCity_Harbor_EventScript_DeepSeaTooth',
+            0x081FE0AC: 'SlateportCity_Harbor_EventScript_DeepSeaScale',
+            0x081FE0EC: 'SlateportCity_Harbor_EventScript_DeclineTrade',
+            0x081FE0F6: 'SlateportCity_Harbor_EventScript_ChooseDifferentTrade',
+            0x081FE102: 'SlateportCity_Harbor_EventScript_TradedScanner',
+        },
+        'texts': {
+            0x081FE111: 'SlateportCity_Harbor_Text_FerryServiceUnavailable',
+            0x081FE13F: 'SlateportCity_Harbor_Text_MayISeeYourTicket',
+            0x081FE162: 'SlateportCity_Harbor_Text_YouMustHaveTicket',
+            0x081FE19E: 'SlateportCity_Harbor_Text_FlashedTicketWhereTo',
+            0x081FE1CD: 'SlateportCity_Harbor_Text_SailAnotherTime',
+            0x081FE1DB: 'SlateportCity_Harbor_Text_LilycoveItIs',
+            0x081FE1E7: 'SlateportCity_Harbor_Text_BattleFrontierItIs',
+            0x081FE1F6: 'SlateportCity_Harbor_Text_PleaseBoardFerry',
+            0x081FE20A: 'SlateportCity_Harbor_Text_WhereWouldYouLikeToGo',
+            0x081FE21A: 'SlateportCity_Harbor_Text_LoveToGoDeepUnderwaterSomeday',
+            0x081FE249: 'SlateportCity_Harbor_Text_AbnormalWeather',
+            0x081FE2D6: 'SlateportCity_Harbor_Text_SubTooSmallForMe',
+            0x081FE335: 'SlateportCity_Harbor_Text_SameThugsTriedToRobAtMuseum',
+            0x081FE364: 'SlateportCity_Harbor_Text_ArchieYouAgainHideoutInLilycove',
+            0x081FE3D4: 'SlateportCity_Harbor_Text_CaptSternWhyStealMySubmarine',
+            0x081FE44D: 'SlateportCity_Harbor_Text_TeamAquaLeftNeedDive',
+            0x081FE518: 'SlateportCity_Harbor_Text_NeedDiveToCatchSub',
+            0x081FE59B: 'SlateportCity_Harbor_Text_WontBeLongBeforeWeFinishFerry',
+            0x081FE5E2: 'SlateportCity_Harbor_Text_FinishedMakingFerry',
+            0x081FE638: 'SlateportCity_Harbor_Text_WouldYouTradeScanner',
+            0x081FE6A7: 'SlateportCity_Harbor_Text_IfYouWantToTradeLetMeKnow',
+            0x081FE6F9: 'SlateportCity_Harbor_Text_TradeForDeepSeaTooth',
+            0x081FE70E: 'SlateportCity_Harbor_Text_TradeForDeepSeaScale',
+            0x081FE724: 'SlateportCity_Harbor_Text_WhichOneDoYouWant',
+            0x081FE735: 'SlateportCity_Harbor_Text_HandedScannerToStern',
+            0x081FE750: 'SlateportCity_Harbor_Text_ThisWillHelpResearch',
+        },
+        'field_placeholders': {
+            0x081FE162: {0x01: 'PLAYER'},
+            0x081FE19E: {0x01: 'PLAYER'},
+            0x081FE44D: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081FE5E2: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081FE638: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081FE6A7: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081FE735: {0x01: 'PLAYER'},
+            0x081FE750: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08243265: 'Common_EventScript_FerryDepart',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'local_scripts': (0x081FDC74,),
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x0061: 'FLAG_MET_TEAM_AQUA_HARBOR',
+                0x0070: 'FLAG_TEAM_AQUA_ESCAPED_IN_SUBMARINE',
+                0x010F: 'FLAG_EVIL_TEAM_ESCAPED_STERN_SPOKE',
+                0x0126: 'FLAG_EXCHANGED_SCANNER',
+                0x01BE: 'FLAG_DEFEATED_KYOGRE',
+                0x01BF: 'FLAG_DEFEATED_GROUDON',
+                0x01D0: 'FLAG_MET_SCOTT_ON_SS_TIDAL',
+                0x0313: 'FLAG_HIDE_LILYCOVE_MOTEL_SCOTT',
+                0x0335: 'FLAG_HIDE_AQUA_HIDEOUT_1F_GRUNT_1_BLOCKING_ENTRANCE',
+                0x0336: 'FLAG_HIDE_AQUA_HIDEOUT_1F_GRUNT_2_BLOCKING_ENTRANCE',
+                0x035C: 'FLAG_HIDE_SLATEPORT_CITY_HARBOR_SS_TIDAL',
+                0x0389: 'FLAG_HIDE_SLATEPORT_CITY_HARBOR_PATRONS',
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+                0x086D: 'FLAG_BADGE07_GET',
+            },
+            'items': {
+                0x00C0: 'ITEM_DEEP_SEA_TOOTH',
+                0x00C1: 'ITEM_DEEP_SEA_SCALE',
+                0x0116: 'ITEM_SCANNER',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x40A0: 'VAR_SLATEPORT_HARBOR_STATE',
+                0x40B4: 'VAR_SS_TIDAL_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x8008: 'VAR_0x8008',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'local_ids': {
+                0x04: 'LOCALID_SLATEPORT_HARBOR_CAPT_STERN',
+                0x05: 'LOCALID_SLATEPORT_HARBOR_SS_TIDAL',
+                0x06: 'LOCALID_SLATEPORT_HARBOR_GRUNT',
+                0x07: 'LOCALID_SLATEPORT_HARBOR_ARCHIE',
+                0x08: 'LOCALID_SLATEPORT_HARBOR_SUBMARINE',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {0x02: 'DIR_NORTH', 0x04: 'DIR_EAST'},
+            'movement_types': {
+                0x09: 'MOVEMENT_TYPE_FACE_LEFT',
+                0x0A: 'MOVEMENT_TYPE_FACE_RIGHT',
+            },
+            'songs': {0x01A3: 'MUS_ENCOUNTER_AQUA'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'fade_modes': {0x00: 'FADE_FROM_BLACK', 0x01: 'FADE_TO_BLACK'},
+            'multichoices': {
+                0x002E: 'MULTI_STERN_DEEPSEA',
+                0x0034: 'MULTI_SSTIDAL_SLATEPORT_WITH_BF',
+                0x0038: 'MULTI_SSTIDAL_SLATEPORT_NO_BF',
+            },
+            'maps': {
+                0x0000: 'MAP_NONE',
+                0x0001: 'MAP_SLATEPORT_CITY',
+                0x0909: 'MAP_SLATEPORT_CITY_HARBOR',
+                0x1929: 'MAP_SS_TIDAL_CORRIDOR',
+                0x1A04: 'MAP_BATTLE_FRONTIER_OUTSIDE_WEST',
+            },
+            'var_values': {
+                0x4001: {0x00: '0', 0x01: '1'},
+                0x40A0: {0x01: '1', 0x02: '2'},
+                0x40B4: {0x01: 'SS_TIDAL_BOARD_SLATEPORT'},
+                0x8004: {0x00: '0', 0x01: '1', 0x02: '2'},
+                0x8008: {0x00: '0', 0x01: '1', 0x02: '2', 0x03: '3'},
+                0x800C: {0x02: 'DIR_NORTH', 0x04: 'DIR_EAST'},
+            },
+            'script_var_values': {
+                0x081FDEDA: {0x8004: {0x05: 'LOCALID_SLATEPORT_HARBOR_SS_TIDAL'}},
+            },
+            'switch_values': {
+                'VAR_RESULT': {
+                    0x00: '0',
+                    0x01: '1',
+                    0x02: '2',
+                    0x7F: 'MULTI_B_PRESSED',
+                },
+            },
+            'decimal_arguments': {
+                'delay': (0,),
+                'multichoice': (0, 1),
+                'multichoicedefault': (0, 1, 3),
+                'setescapewarp': (1, 2, 3),
+                'setobjectxyperm': (1, 2),
+                'warp': (1, 2, 3),
+            },
         },
     },
 })
