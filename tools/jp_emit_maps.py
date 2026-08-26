@@ -15000,7 +15000,7 @@ def omit_default_macro_arguments(lines):
             argstr = ', '.join(args[:2])
         elif name == 'setwildbattle' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
             argstr = ', '.join(args[:2])
-        elif name in ('giveitem', 'finditem', 'checkitem', 'checkpcitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
+        elif name in ('giveitem', 'finditem', 'checkitemspace', 'checkitem', 'checkpcitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
             argstr = args[0]
         out.append((name, argstr))
     return out
@@ -16272,6 +16272,165 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x081FBE53: {
                     0x800D: {0x0001: 'TRUE'},
                 },
+            },
+        },
+    },
+})
+
+# The Fan Club's script owner is byte-complete, but the checked-in semantic
+# source predates generator metadata. Keep its US-aligned labels, item/flag
+# constants, and JP-specific cry wait command reproducible from the ROM.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SlateportCity_PokemonFanClub': {
+        'scripts': {
+            0x081FC028: 'SlateportCity_PokemonFanClub_EventScript_Chairman',
+            0x081FC064: 'SlateportCity_PokemonFanClub_EventScript_ChairmanFirstAssessment',
+            0x081FC077: 'SlateportCity_PokemonFanClub_EventScript_ChairmanTryAssessPokemon',
+            0x081FC0CD: 'SlateportCity_PokemonFanClub_EventScript_NoMoreScarves',
+            0x081FC0D7: 'SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon',
+            0x081FC15C: 'SlateportCity_PokemonFanClub_EventScript_ReceivedAllScarves',
+            0x081FC162: 'SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf',
+            0x081FC168: 'SlateportCity_PokemonFanClub_EventScript_NoHighConditions',
+            0x081FC172: 'SlateportCity_PokemonFanClub_EventScript_GiveRedScarf',
+            0x081FC1A3: 'SlateportCity_PokemonFanClub_EventScript_GiveBlueScarf',
+            0x081FC1D4: 'SlateportCity_PokemonFanClub_EventScript_GivePinkScarf',
+            0x081FC205: 'SlateportCity_PokemonFanClub_EventScript_GiveGreenScarf',
+            0x081FC236: 'SlateportCity_PokemonFanClub_EventScript_GiveYellowScarf',
+            0x081FC267: 'SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf',
+            0x081FC271: 'SlateportCity_PokemonFanClub_EventScript_CheckMonCool',
+            0x081FC282: 'SlateportCity_PokemonFanClub_EventScript_SetMonCool',
+            0x081FC288: 'SlateportCity_PokemonFanClub_EventScript_CheckMonBeauty',
+            0x081FC299: 'SlateportCity_PokemonFanClub_EventScript_SetMonBeauty',
+            0x081FC29F: 'SlateportCity_PokemonFanClub_EventScript_CheckMonCute',
+            0x081FC2B0: 'SlateportCity_PokemonFanClub_EventScript_SetMonCute',
+            0x081FC2B6: 'SlateportCity_PokemonFanClub_EventScript_CheckMonSmart',
+            0x081FC2C7: 'SlateportCity_PokemonFanClub_EventScript_SetMonSmart',
+            0x081FC2CD: 'SlateportCity_PokemonFanClub_EventScript_CheckMonTough',
+            0x081FC2DE: 'SlateportCity_PokemonFanClub_EventScript_SetMonTough',
+            0x081FC2E4: 'SlateportCity_PokemonFanClub_EventScript_ChairmanNotEnteredContest',
+            0x081FC2FA: 'SlateportCity_PokemonFanClub_EventScript_ChairmanEnterContest',
+            0x081FC304: 'SlateportCity_PokemonFanClub_EventScript_MeetChairman',
+            0x081FC310: 'SlateportCity_PokemonFanClub_EventScript_SootheBellWoman',
+            0x081FC335: 'SlateportCity_PokemonFanClub_EventScript_GiveSootheBell',
+            0x081FC370: 'SlateportCity_PokemonFanClub_EventScript_ReceivedSootheBell',
+            0x081FC37A: 'SlateportCity_PokemonFanClub_EventScript_Man',
+            0x081FC383: 'SlateportCity_PokemonFanClub_EventScript_Twin',
+            0x081FC38C: 'SlateportCity_PokemonFanClub_EventScript_Skitty',
+            0x081FC39F: 'SlateportCity_PokemonFanClub_EventScript_Zigzagoon',
+            0x081FC3B2: 'SlateportCity_PokemonFanClub_EventScript_Azumarill',
+        },
+        'texts': {
+            0x081FC3C5: 'SlateportCity_PokemonFanClub_Text_MeetChairman',
+            0x081FC4B3: 'SlateportCity_PokemonFanClub_Text_LikeToSeeEnteredContestPokemon',
+            0x081FC4E7: 'SlateportCity_PokemonFanClub_Text_AllowMeToExamineYourPokemon',
+            0x081FC5F9: 'SlateportCity_PokemonFanClub_Text_HowIsYourPokemonGrowing',
+            0x081FC623: 'SlateportCity_PokemonFanClub_Text_HmHmISee',
+            0x081FC631: 'SlateportCity_PokemonFanClub_Text_GiveMonMorePokeblocks',
+            0x081FC68D: 'SlateportCity_PokemonFanClub_Text_NoSpaceForReward',
+            0x081FC6CB: 'SlateportCity_PokemonFanClub_Text_MonMostImpressiveGiveItThis',
+            0x081FC728: 'SlateportCity_PokemonFanClub_Text_ExplainRedScarf',
+            0x081FC75D: 'SlateportCity_PokemonFanClub_Text_ExplainBlueScarf',
+            0x081FC792: 'SlateportCity_PokemonFanClub_Text_ExplainPinkScarf',
+            0x081FC7C4: 'SlateportCity_PokemonFanClub_Text_ExplainGreenScarf',
+            0x081FC7F5: 'SlateportCity_PokemonFanClub_Text_ExplainYellowScarf',
+            0x081FC826: 'SlateportCity_PokemonFanClub_Text_NothingElseToGiveYou',
+            0x081FC873: 'SlateportCity_PokemonFanClub_Text_ShowMePokemonThatLoveYou',
+            0x081FC8FE: 'SlateportCity_PokemonFanClub_Text_PokemonAdoresYou',
+            0x081FC93D: 'SlateportCity_PokemonFanClub_Text_TreatPokemonWithLove',
+            0x081FC989: 'SlateportCity_PokemonFanClub_Text_PokemonDontLikeFainting',
+            0x081FC9DB: 'SlateportCity_PokemonFanClub_Text_MonEnjoyedProtein',
+            0x081FCA19: 'SlateportCity_PokemonFanClub_Text_Skitty',
+            0x081FCA24: 'SlateportCity_PokemonFanClub_Text_Zigzagoon',
+            0x081FCA31: 'SlateportCity_PokemonFanClub_Text_Azumarill',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+        },
+        'field_placeholders': {
+            0x081FC6CB: {0x02: 'STR_VAR_1'},
+        },
+        'command_aliases': {
+            0x081FC38C: {'waitdooranim': 'waitmoncry_jp'},
+            0x081FC39F: {'waitdooranim': 'waitmoncry_jp'},
+            0x081FC3B2: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'result_condition_values': {
+            0x081FC172: {
+                'SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf': {0x00: 'FALSE'},
+            },
+            0x081FC1A3: {
+                'SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf': {0x00: 'FALSE'},
+            },
+            0x081FC1D4: {
+                'SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf': {0x00: 'FALSE'},
+            },
+            0x081FC205: {
+                'SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf': {0x00: 'FALSE'},
+            },
+            0x081FC236: {
+                'SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf': {0x00: 'FALSE'},
+            },
+            0x081FC271: {
+                'SlateportCity_PokemonFanClub_EventScript_SetMonCool': {0x01: 'TRUE'},
+            },
+            0x081FC288: {
+                'SlateportCity_PokemonFanClub_EventScript_SetMonBeauty': {0x01: 'TRUE'},
+            },
+            0x081FC29F: {
+                'SlateportCity_PokemonFanClub_EventScript_SetMonCute': {0x01: 'TRUE'},
+            },
+            0x081FC2B6: {
+                'SlateportCity_PokemonFanClub_EventScript_SetMonSmart': {0x01: 'TRUE'},
+            },
+            0x081FC2CD: {
+                'SlateportCity_PokemonFanClub_EventScript_SetMonTough': {0x01: 'TRUE'},
+            },
+            0x081FC335: {
+                'Common_EventScript_ShowBagIsFull': {0x00: 'FALSE'},
+            },
+        },
+        'symbols': {
+            'flags': {
+                0x00C8: 'FLAG_RECEIVED_RED_SCARF',
+                0x00C9: 'FLAG_RECEIVED_BLUE_SCARF',
+                0x00CA: 'FLAG_RECEIVED_PINK_SCARF',
+                0x00CB: 'FLAG_RECEIVED_GREEN_SCARF',
+                0x00CC: 'FLAG_RECEIVED_YELLOW_SCARF',
+                0x0116: 'FLAG_RECEIVED_SOOTHE_BELL',
+                0x0155: 'FLAG_ENTERED_CONTEST',
+                0x0156: 'FLAG_MET_SLATEPORT_FANCLUB_CHAIRMAN',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x4002: 'VAR_TEMP_2',
+                0x40B7: 'VAR_SLATEPORT_FAN_CLUB_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'items': {
+                0x00B8: 'ITEM_SOOTHE_BELL',
+                0x00FE: 'ITEM_RED_SCARF',
+                0x00FF: 'ITEM_BLUE_SCARF',
+                0x0100: 'ITEM_PINK_SCARF',
+                0x0101: 'ITEM_GREEN_SCARF',
+                0x0102: 'ITEM_YELLOW_SCARF',
+            },
+            'species': {
+                0x00B8: 'SPECIES_AZUMARILL',
+                0x0120: 'SPECIES_ZIGZAGOON',
+                0x013B: 'SPECIES_SKITTY',
+            },
+            'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
+            'sounds': {0x15: 'SE_PIN'},
+            'script_var_values': {
+                0x081FC077: {0x4002: {0x05: 'CONTEST_CATEGORIES_COUNT'}},
+                0x081FC310: {0x800D: {0x04: 'FRIENDSHIP_150_TO_199'}},
             },
         },
     },

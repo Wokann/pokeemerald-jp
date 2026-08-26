@@ -1,7 +1,9 @@
+@ SlateportCity_PokemonFanClub scripts (JP map g9 m6 @ 0x081FC027)
+
 SlateportCity_PokemonFanClub_MapScripts::
 	.byte 0
 
-SlateportCity_PokemonFanClub_EventScript_Chairman::
+SlateportCity_PokemonFanClub_EventScript_Chairman:: @ 0x081FC028
 	lock
 	faceplayer
 	goto_if_unset FLAG_ENTERED_CONTEST, SlateportCity_PokemonFanClub_EventScript_ChairmanNotEnteredContest
@@ -13,33 +15,33 @@ SlateportCity_PokemonFanClub_EventScript_Chairman::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_ChairmanFirstAssessment::
-	setvar VAR_SLATEPORT_FAN_CLUB_STATE, 1
+SlateportCity_PokemonFanClub_EventScript_ChairmanFirstAssessment:: @ 0x081FC064
+	setvar VAR_SLATEPORT_FAN_CLUB_STATE, 0x1
 	msgbox SlateportCity_PokemonFanClub_Text_AllowMeToExamineYourPokemon, MSGBOX_DEFAULT
 	goto SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon
 	end
 
-SlateportCity_PokemonFanClub_EventScript_ChairmanTryAssessPokemon::
-	setvar VAR_TEMP_2, 0
+SlateportCity_PokemonFanClub_EventScript_ChairmanTryAssessPokemon:: @ 0x081FC077
+	setvar VAR_TEMP_2, 0x0
 	call_if_set FLAG_RECEIVED_YELLOW_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_set FLAG_RECEIVED_GREEN_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_set FLAG_RECEIVED_PINK_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_set FLAG_RECEIVED_BLUE_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_set FLAG_RECEIVED_RED_SCARF, SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf
 	call_if_eq VAR_TEMP_2, CONTEST_CATEGORIES_COUNT, SlateportCity_PokemonFanClub_EventScript_ReceivedAllScarves
-	goto_if_eq VAR_SLATEPORT_FAN_CLUB_STATE, 2, SlateportCity_PokemonFanClub_EventScript_NoMoreScarves
+	goto_if_eq VAR_SLATEPORT_FAN_CLUB_STATE, 0x2, SlateportCity_PokemonFanClub_EventScript_NoMoreScarves
 	msgbox SlateportCity_PokemonFanClub_Text_HowIsYourPokemonGrowing, MSGBOX_DEFAULT
 	goto SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon
 	end
 
-SlateportCity_PokemonFanClub_EventScript_NoMoreScarves::
+SlateportCity_PokemonFanClub_EventScript_NoMoreScarves:: @ 0x081FC0CD
 	msgbox SlateportCity_PokemonFanClub_Text_NothingElseToGiveYou, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon::
+SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon:: @ 0x081FC0D7
 	msgbox SlateportCity_PokemonFanClub_Text_HmHmISee, MSGBOX_DEFAULT
-	setvar VAR_TEMP_1, 0
+	setvar VAR_TEMP_1, 0x0
 	call_if_unset FLAG_RECEIVED_YELLOW_SCARF, SlateportCity_PokemonFanClub_EventScript_CheckMonTough
 	call_if_unset FLAG_RECEIVED_GREEN_SCARF, SlateportCity_PokemonFanClub_EventScript_CheckMonSmart
 	call_if_unset FLAG_RECEIVED_PINK_SCARF, SlateportCity_PokemonFanClub_EventScript_CheckMonCute
@@ -56,20 +58,20 @@ SlateportCity_PokemonFanClub_EventScript_ChairmanAssessLeadMon::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_ReceivedAllScarves::
-	setvar VAR_SLATEPORT_FAN_CLUB_STATE, 2
+SlateportCity_PokemonFanClub_EventScript_ReceivedAllScarves:: @ 0x081FC15C
+	setvar VAR_SLATEPORT_FAN_CLUB_STATE, 0x2
 	return
 
-SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf::
-	addvar VAR_TEMP_2, 1
+SlateportCity_PokemonFanClub_EventScript_CountReceivedScarf:: @ 0x081FC162
+	addvar VAR_TEMP_2, 0x1
 	return
 
-SlateportCity_PokemonFanClub_EventScript_NoHighConditions::
+SlateportCity_PokemonFanClub_EventScript_NoHighConditions:: @ 0x081FC168
 	msgbox SlateportCity_PokemonFanClub_Text_GiveMonMorePokeblocks, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_GiveRedScarf::
+SlateportCity_PokemonFanClub_EventScript_GiveRedScarf:: @ 0x081FC172
 	checkitemspace ITEM_RED_SCARF
 	goto_if_eq VAR_RESULT, FALSE, SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf
 	msgbox SlateportCity_PokemonFanClub_Text_MonMostImpressiveGiveItThis, MSGBOX_DEFAULT
@@ -79,7 +81,7 @@ SlateportCity_PokemonFanClub_EventScript_GiveRedScarf::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_GiveBlueScarf::
+SlateportCity_PokemonFanClub_EventScript_GiveBlueScarf:: @ 0x081FC1A3
 	checkitemspace ITEM_BLUE_SCARF
 	goto_if_eq VAR_RESULT, FALSE, SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf
 	msgbox SlateportCity_PokemonFanClub_Text_MonMostImpressiveGiveItThis, MSGBOX_DEFAULT
@@ -89,7 +91,7 @@ SlateportCity_PokemonFanClub_EventScript_GiveBlueScarf::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_GivePinkScarf::
+SlateportCity_PokemonFanClub_EventScript_GivePinkScarf:: @ 0x081FC1D4
 	checkitemspace ITEM_PINK_SCARF
 	goto_if_eq VAR_RESULT, FALSE, SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf
 	msgbox SlateportCity_PokemonFanClub_Text_MonMostImpressiveGiveItThis, MSGBOX_DEFAULT
@@ -99,7 +101,7 @@ SlateportCity_PokemonFanClub_EventScript_GivePinkScarf::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_GiveGreenScarf::
+SlateportCity_PokemonFanClub_EventScript_GiveGreenScarf:: @ 0x081FC205
 	checkitemspace ITEM_GREEN_SCARF
 	goto_if_eq VAR_RESULT, FALSE, SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf
 	msgbox SlateportCity_PokemonFanClub_Text_MonMostImpressiveGiveItThis, MSGBOX_DEFAULT
@@ -109,7 +111,7 @@ SlateportCity_PokemonFanClub_EventScript_GiveGreenScarf::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_GiveYellowScarf::
+SlateportCity_PokemonFanClub_EventScript_GiveYellowScarf:: @ 0x081FC236
 	checkitemspace ITEM_YELLOW_SCARF
 	goto_if_eq VAR_RESULT, FALSE, SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf
 	msgbox SlateportCity_PokemonFanClub_Text_MonMostImpressiveGiveItThis, MSGBOX_DEFAULT
@@ -119,74 +121,74 @@ SlateportCity_PokemonFanClub_EventScript_GiveYellowScarf::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf::
+SlateportCity_PokemonFanClub_EventScript_NoRoomForScarf:: @ 0x081FC267
 	msgbox SlateportCity_PokemonFanClub_Text_NoSpaceForReward, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_CheckMonCool::
+SlateportCity_PokemonFanClub_EventScript_CheckMonCool:: @ 0x081FC271
 	specialvar VAR_RESULT, CheckLeadMonCool
 	call_if_eq VAR_RESULT, TRUE, SlateportCity_PokemonFanClub_EventScript_SetMonCool
 	return
 
-SlateportCity_PokemonFanClub_EventScript_SetMonCool::
-	setvar VAR_TEMP_1, 1
+SlateportCity_PokemonFanClub_EventScript_SetMonCool:: @ 0x081FC282
+	setvar VAR_TEMP_1, 0x1
 	return
 
-SlateportCity_PokemonFanClub_EventScript_CheckMonBeauty::
+SlateportCity_PokemonFanClub_EventScript_CheckMonBeauty:: @ 0x081FC288
 	specialvar VAR_RESULT, CheckLeadMonBeauty
 	call_if_eq VAR_RESULT, TRUE, SlateportCity_PokemonFanClub_EventScript_SetMonBeauty
 	return
 
-SlateportCity_PokemonFanClub_EventScript_SetMonBeauty::
-	setvar VAR_TEMP_1, 2
+SlateportCity_PokemonFanClub_EventScript_SetMonBeauty:: @ 0x081FC299
+	setvar VAR_TEMP_1, 0x2
 	return
 
-SlateportCity_PokemonFanClub_EventScript_CheckMonCute::
+SlateportCity_PokemonFanClub_EventScript_CheckMonCute:: @ 0x081FC29F
 	specialvar VAR_RESULT, CheckLeadMonCute
 	call_if_eq VAR_RESULT, TRUE, SlateportCity_PokemonFanClub_EventScript_SetMonCute
 	return
 
-SlateportCity_PokemonFanClub_EventScript_SetMonCute::
-	setvar VAR_TEMP_1, 3
+SlateportCity_PokemonFanClub_EventScript_SetMonCute:: @ 0x081FC2B0
+	setvar VAR_TEMP_1, 0x3
 	return
 
-SlateportCity_PokemonFanClub_EventScript_CheckMonSmart::
+SlateportCity_PokemonFanClub_EventScript_CheckMonSmart:: @ 0x081FC2B6
 	specialvar VAR_RESULT, CheckLeadMonSmart
 	call_if_eq VAR_RESULT, TRUE, SlateportCity_PokemonFanClub_EventScript_SetMonSmart
 	return
 
-SlateportCity_PokemonFanClub_EventScript_SetMonSmart::
-	setvar VAR_TEMP_1, 4
+SlateportCity_PokemonFanClub_EventScript_SetMonSmart:: @ 0x081FC2C7
+	setvar VAR_TEMP_1, 0x4
 	return
 
-SlateportCity_PokemonFanClub_EventScript_CheckMonTough::
+SlateportCity_PokemonFanClub_EventScript_CheckMonTough:: @ 0x081FC2CD
 	specialvar VAR_RESULT, CheckLeadMonTough
 	call_if_eq VAR_RESULT, TRUE, SlateportCity_PokemonFanClub_EventScript_SetMonTough
 	return
 
-SlateportCity_PokemonFanClub_EventScript_SetMonTough::
-	setvar VAR_TEMP_1, 5
+SlateportCity_PokemonFanClub_EventScript_SetMonTough:: @ 0x081FC2DE
+	setvar VAR_TEMP_1, 0x5
 	return
 
-SlateportCity_PokemonFanClub_EventScript_ChairmanNotEnteredContest::
+SlateportCity_PokemonFanClub_EventScript_ChairmanNotEnteredContest:: @ 0x081FC2E4
 	goto_if_set FLAG_MET_SLATEPORT_FANCLUB_CHAIRMAN, SlateportCity_PokemonFanClub_EventScript_ChairmanEnterContest
 	msgbox SlateportCity_PokemonFanClub_Text_MeetChairman, MSGBOX_DEFAULT
 	setflag FLAG_MET_SLATEPORT_FANCLUB_CHAIRMAN
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_ChairmanEnterContest::
+SlateportCity_PokemonFanClub_EventScript_ChairmanEnterContest:: @ 0x081FC2FA
 	msgbox SlateportCity_PokemonFanClub_Text_LikeToSeeEnteredContestPokemon, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_MeetChairman::
+SlateportCity_PokemonFanClub_EventScript_MeetChairman:: @ 0x081FC304
 	msgbox SlateportCity_PokemonFanClub_Text_MeetChairman, MSGBOX_DEFAULT
 	setflag FLAG_MET_SLATEPORT_FANCLUB_CHAIRMAN
 	return
 
-SlateportCity_PokemonFanClub_EventScript_SootheBellWoman::
+SlateportCity_PokemonFanClub_EventScript_SootheBellWoman:: @ 0x081FC310
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_SOOTHE_BELL, SlateportCity_PokemonFanClub_EventScript_ReceivedSootheBell
@@ -196,7 +198,7 @@ SlateportCity_PokemonFanClub_EventScript_SootheBellWoman::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_GiveSootheBell::
+SlateportCity_PokemonFanClub_EventScript_GiveSootheBell:: @ 0x081FC335
 	playse SE_PIN
 	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
 	waitmovement 0
@@ -209,20 +211,20 @@ SlateportCity_PokemonFanClub_EventScript_GiveSootheBell::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_ReceivedSootheBell::
+SlateportCity_PokemonFanClub_EventScript_ReceivedSootheBell:: @ 0x081FC370
 	msgbox SlateportCity_PokemonFanClub_Text_TreatPokemonWithLove, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_Man::
+SlateportCity_PokemonFanClub_EventScript_Man:: @ 0x081FC37A
 	msgbox SlateportCity_PokemonFanClub_Text_PokemonDontLikeFainting, MSGBOX_NPC
 	end
 
-SlateportCity_PokemonFanClub_EventScript_Twin::
+SlateportCity_PokemonFanClub_EventScript_Twin:: @ 0x081FC383
 	msgbox SlateportCity_PokemonFanClub_Text_MonEnjoyedProtein, MSGBOX_NPC
 	end
 
-SlateportCity_PokemonFanClub_EventScript_Skitty::
+SlateportCity_PokemonFanClub_EventScript_Skitty:: @ 0x081FC38C
 	lock
 	faceplayer
 	waitse
@@ -232,7 +234,7 @@ SlateportCity_PokemonFanClub_EventScript_Skitty::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_Zigzagoon::
+SlateportCity_PokemonFanClub_EventScript_Zigzagoon:: @ 0x081FC39F
 	lock
 	faceplayer
 	waitse
@@ -242,7 +244,7 @@ SlateportCity_PokemonFanClub_EventScript_Zigzagoon::
 	release
 	end
 
-SlateportCity_PokemonFanClub_EventScript_Azumarill::
+SlateportCity_PokemonFanClub_EventScript_Azumarill:: @ 0x081FC3B2
 	lock
 	faceplayer
 	waitse
@@ -252,7 +254,7 @@ SlateportCity_PokemonFanClub_EventScript_Azumarill::
 	release
 	end
 
-SlateportCity_PokemonFanClub_Text_MeetChairman:
+SlateportCity_PokemonFanClub_Text_MeetChairman: @ 0x081FC3C5
 	.string "ウォッホン！！\p"
 	.string "わしが　ポケモン　だいすきクラブで\n"
 	.string "いちばーん　えらい　かいちょう　ですぞ！\p"
@@ -269,12 +271,12 @@ SlateportCity_PokemonFanClub_Text_MeetChairman:
 	.string "みなさんの　ポケモンを\l"
 	.string "みせて　いただくだけに　しておるのです$"
 
-SlateportCity_PokemonFanClub_Text_LikeToSeeEnteredContestPokemon:
+SlateportCity_PokemonFanClub_Text_LikeToSeeEnteredContestPokemon: @ 0x081FC4B3
 	.string "ポケモンコンテストに　でた　ことが\n"
 	.string "ある　トレーナーの　ポケモン⋯\l"
 	.string "ぜひとも　みて　みたい　ものですな$"
 
-SlateportCity_PokemonFanClub_Text_AllowMeToExamineYourPokemon:
+SlateportCity_PokemonFanClub_Text_AllowMeToExamineYourPokemon: @ 0x081FC4E7
 	.string "ウォッホン！！\n"
 	.string "おっ　コンテストに　でられましたな！\p"
 	.string "どれ　あなたは　ポケモンを\n"
@@ -293,15 +295,15 @@ SlateportCity_PokemonFanClub_Text_AllowMeToExamineYourPokemon:
 	.string "どれほど　そだっているのか\l"
 	.string "はいけん　させて　もらいますかな！$"
 
-SlateportCity_PokemonFanClub_Text_HowIsYourPokemonGrowing:
+SlateportCity_PokemonFanClub_Text_HowIsYourPokemonGrowing: @ 0x081FC5F9
 	.string "きみの　ポケモン　そだって　ますかな？\n"
 	.string "ちょっと　はいけん　させて　もらいますぞ！$"
 
-SlateportCity_PokemonFanClub_Text_HmHmISee:
+SlateportCity_PokemonFanClub_Text_HmHmISee: @ 0x081FC623
 	.string "ふむふむ⋯⋯\n"
 	.string "なるほど⋯⋯$"
 
-SlateportCity_PokemonFanClub_Text_GiveMonMorePokeblocks:
+SlateportCity_PokemonFanClub_Text_GiveMonMorePokeblocks: @ 0x081FC631
 	.string "ふむう⋯⋯\n"
 	.string "わるくは　ないんだが　よくもない⋯⋯\p"
 	.string "おやの　トレーナーである　きみの\n"
@@ -309,52 +311,52 @@ SlateportCity_PokemonFanClub_Text_GiveMonMorePokeblocks:
 	.string "たとえば　もっと　たくさん\n"
 	.string "ポロックを　あげるのは　どうですかな？$"
 
-SlateportCity_PokemonFanClub_Text_NoSpaceForReward:
+SlateportCity_PokemonFanClub_Text_NoSpaceForReward: @ 0x081FC68D
 	.string "あらら⋯⋯\p"
 	.string "けっこう　ポケモンが　そだっているので\n"
 	.string "いいものを　あげようと　おもったのですが\l"
 	.string "もちものが　いっぱい　ですな$"
 
-SlateportCity_PokemonFanClub_Text_MonMostImpressiveGiveItThis:
+SlateportCity_PokemonFanClub_Text_MonMostImpressiveGiveItThis: @ 0x081FC6CB
 	.string "きみの　{STR_VAR_1}　ですが\n"
 	.string "なかなか　みごとに　そだって　おりますな！\l"
 	.string "いやー　たいした　ものです！\p"
 	.string "だが　この　どうぐを　つかって　あげたなら\n"
 	.string "もっと　そだつこと　まちがいなし！　ですぞ！$"
 
-SlateportCity_PokemonFanClub_Text_ExplainRedScarf:
+SlateportCity_PokemonFanClub_Text_ExplainRedScarf: @ 0x081FC728
 	.string "その　あかいバンダナを　もたせると\n"
 	.string "ポケモンの　かっこよさを\l"
 	.string "みんなに　みとめさせることが　できますぞ！$"
 
-SlateportCity_PokemonFanClub_Text_ExplainBlueScarf:
+SlateportCity_PokemonFanClub_Text_ExplainBlueScarf: @ 0x081FC75D
 	.string "その　あおいバンダナを　もたせると\n"
 	.string "ポケモンの　うつくしさを\l"
 	.string "いまより　きわだたせることが　できますぞ！$"
 
-SlateportCity_PokemonFanClub_Text_ExplainPinkScarf:
+SlateportCity_PokemonFanClub_Text_ExplainPinkScarf: @ 0x081FC792
 	.string "その　ピンクのバンダナを　もたせると\n"
 	.string "ポケモンの　かわいさを\l"
 	.string "もっと　ひきだすことが　できますぞ！$"
 
-SlateportCity_PokemonFanClub_Text_ExplainGreenScarf:
+SlateportCity_PokemonFanClub_Text_ExplainGreenScarf: @ 0x081FC7C4
 	.string "その　みどりのバンダナを　もたせると\n"
 	.string "ポケモンの　かしこさを\l"
 	.string "さらに　みがくことが　できますぞ！$"
 
-SlateportCity_PokemonFanClub_Text_ExplainYellowScarf:
+SlateportCity_PokemonFanClub_Text_ExplainYellowScarf: @ 0x081FC7F5
 	.string "その　きいろのバンダナを　もたせると\n"
 	.string "ポケモンの　たくましさを\l"
 	.string "いっそう　アピール　できますぞ！$"
 
-SlateportCity_PokemonFanClub_Text_NothingElseToGiveYou:
+SlateportCity_PokemonFanClub_Text_NothingElseToGiveYou: @ 0x081FC826
 	.string "きみに　あげる　どうぐは\n"
 	.string "もう　なにも　ないですぞ！\p"
 	.string "なにしろ　どうぐに　たよらんでも\n"
 	.string "きみの　ポケモンを　そだてる\l"
 	.string "さいのうは　バツグン　ですからな！$"
 
-SlateportCity_PokemonFanClub_Text_ShowMePokemonThatLoveYou:
+SlateportCity_PokemonFanClub_Text_ShowMePokemonThatLoveYou: @ 0x081FC873
 	.string "わたし　ポケモンが　なついている\n"
 	.string "すがたを　みるのが　すき\p"
 	.string "ポケモンって　いっしょに　いる\n"
@@ -364,36 +366,36 @@ SlateportCity_PokemonFanClub_Text_ShowMePokemonThatLoveYou:
 	.string "あなたの　ポケモンが　あなたに　なついたら\n"
 	.string "わたしにも　みせてね$"
 
-SlateportCity_PokemonFanClub_Text_PokemonAdoresYou:
+SlateportCity_PokemonFanClub_Text_PokemonAdoresYou: @ 0x081FC8FE
 	.string "あなたの　ポケモン\n"
 	.string "あなたに　なついているのね\p"
 	.string "ポケモンに　やさしい　トレーナーさんに\n"
 	.string "だいすきクラブからの　おくりもの　よ$"
 
-SlateportCity_PokemonFanClub_Text_TreatPokemonWithLove:
+SlateportCity_PokemonFanClub_Text_TreatPokemonWithLove: @ 0x081FC93D
 	.string "ポケモンって　いっしょに　いる\n"
 	.string "ひとの　きもちに　すごく　びんかん！\p"
 	.string "あなたが　ポケモンを　だいじに　すれば\n"
 	.string "ポケモンも　あなたに　なついてくれるわ！$"
 
-SlateportCity_PokemonFanClub_Text_PokemonDontLikeFainting:
+SlateportCity_PokemonFanClub_Text_PokemonDontLikeFainting: @ 0x081FC989
 	.string "ポケモンしょうぶに　まけて\n"
 	.string "ひんしに　させて　ばかりだと\l"
 	.string "ポケモンが　どんどん　すさんで\l"
 	.string "トレーナーのこと　うたがう　ようになる\p"
 	.string "つまり　なついて　くれなくなるよ$"
 
-SlateportCity_PokemonFanClub_Text_MonEnjoyedProtein:
+SlateportCity_PokemonFanClub_Text_MonEnjoyedProtein: @ 0x081FC9DB
 	.string "ポケモンって　どうぐ\n"
 	.string "つかってもらうのが　すきなのかな？\p"
 	.string "だって　タウリンとか　あげると\n"
 	.string "すごく　うれしそうに　するのよ！$"
 
-SlateportCity_PokemonFanClub_Text_Skitty:
+SlateportCity_PokemonFanClub_Text_Skitty: @ 0x081FCA19
 	.string "エネコ“ふにゃあーあ$"
 
-SlateportCity_PokemonFanClub_Text_Zigzagoon:
+SlateportCity_PokemonFanClub_Text_Zigzagoon: @ 0x081FCA24
 	.string "ジグザグマ“キュウウ⋯⋯$"
 
-SlateportCity_PokemonFanClub_Text_Azumarill:
+SlateportCity_PokemonFanClub_Text_Azumarill: @ 0x081FCA31
 	.string "マリルリ“マリ　マリ！？$"

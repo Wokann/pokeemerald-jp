@@ -4822,7 +4822,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_POKEMON_FAN_CLUB (g9 m6)
 	.4byte gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB  @ mapLayout
-	.4byte gMapEvents_SLATEPORT_CITY_POKEMON_FAN_CLUB  @ events
+	.4byte SlateportCity_PokemonFanClub_MapEvents  @ events
 	.4byte 0x081FC027  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
