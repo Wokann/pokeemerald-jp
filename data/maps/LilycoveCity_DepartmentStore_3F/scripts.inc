@@ -14,7 +14,7 @@ LilycoveCity_DepartmentStore_3F_EventScript_ClerkLeft:: @ 0x0820AA1A
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_3F_Pokemart_Vitamins:
+LilycoveCity_DepartmentStore_3F_Pokemart_Vitamins: @ 0x0820AA34
 	.2byte ITEM_PROTEIN
 	.2byte ITEM_CALCIUM
 	.2byte ITEM_IRON
@@ -34,7 +34,7 @@ LilycoveCity_DepartmentStore_3F_EventScript_ClerkRight:: @ 0x0820AA44
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_3F_Pokemart_StatBoosters:
+LilycoveCity_DepartmentStore_3F_Pokemart_StatBoosters: @ 0x0820AA5C
 	.2byte ITEM_X_SPEED
 	.2byte ITEM_X_SPECIAL
 	.2byte ITEM_X_ATTACK
