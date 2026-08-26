@@ -7161,6 +7161,31 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Lavaridge House follows the Gym basement. Its two local interactions and
+# two contiguous texts match the US source; JP's cry-wait opcode is emitted
+# through the dedicated byte-exact waitmoncry_jp macro.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LavaridgeTown_House': {
+        'scripts': {
+            0x081F4E4E: 'LavaridgeTown_House_EventScript_OldMan',
+            0x081F4E57: 'LavaridgeTown_House_EventScript_Zigzagoon',
+        },
+        'texts': {
+            0x081F4E6A: 'LavaridgeTown_House_Text_WifeWarmingEggInHotSprings',
+            0x081F4EC0: 'LavaridgeTown_House_Text_Zigzagoon',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x081F4E57: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'species': {0x0120: 'SPECIES_ZIGZAGOON'},
+            'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
