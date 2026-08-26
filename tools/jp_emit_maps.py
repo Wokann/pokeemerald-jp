@@ -12468,6 +12468,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'tables': {
             0x0820AC54: 'LilycoveCity_DepartmentStore_5F_OnWarp',
         },
+        'local_tables': (0x0820AC54,),
         'texts': {
             0x0820AD99: 'LilycoveCity_DepartmentStore_5F_Text_PlaceFullOfCuteDolls',
             0x0820ADD5: 'LilycoveCity_DepartmentStore_5F_Text_GettingDollInsteadOfPokemon',
@@ -12484,8 +12485,15 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'symbols': {
             'vars': {0x405E: 'VAR_SOOTOPOLIS_CITY_STATE'},
+            'map_script_values': {
+                0x405E: {0x1: '1', 0x2: '2', 0x3: '3'},
+            },
             'local_ids': {0x7: 'LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN'},
             'directions': {0x2: 'DIR_NORTH'},
+            'decimal_arguments': {
+                'compare_var_to_value': (1,),
+                'setobjectxy': (1, 2),
+            },
         },
     },
 })

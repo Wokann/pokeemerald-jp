@@ -5326,7 +5326,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_5F (g13 m20)
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F  @ mapLayout
-	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_5F  @ events
+	.4byte LilycoveCity_DepartmentStore_5F_MapEvents  @ events
 	.4byte LilycoveCity_DepartmentStore_5F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music

@@ -4,14 +4,14 @@ LilycoveCity_DepartmentStore_5F_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, LilycoveCity_DepartmentStore_5F_OnWarp
 	.byte 0
 
-LilycoveCity_DepartmentStore_5F_OnWarp:: @ 0x0820AC54
-	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 0x1, LilycoveCity_DepartmentStore_5F_EventScript_BlockRoofStairs
-	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 0x2, LilycoveCity_DepartmentStore_5F_EventScript_BlockRoofStairs
-	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 0x3, LilycoveCity_DepartmentStore_5F_EventScript_BlockRoofStairs
+LilycoveCity_DepartmentStore_5F_OnWarp: @ 0x0820AC54
+	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 1, LilycoveCity_DepartmentStore_5F_EventScript_BlockRoofStairs
+	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 2, LilycoveCity_DepartmentStore_5F_EventScript_BlockRoofStairs
+	map_script_2 VAR_SOOTOPOLIS_CITY_STATE, 3, LilycoveCity_DepartmentStore_5F_EventScript_BlockRoofStairs
 	.2byte 0
 
 LilycoveCity_DepartmentStore_5F_EventScript_BlockRoofStairs:: @ 0x0820AC6E
-	setobjectxy LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN, 0x10, 0x2
+	setobjectxy LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN, 16, 2
 	turnobject LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN, DIR_NORTH
 	end
 
@@ -26,7 +26,7 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarLeft:: @ 0x0820AC7A
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_5F_Pokemart_Dolls:
+LilycoveCity_DepartmentStore_5F_Pokemart_Dolls: @ 0x0820AC94
 	.2byte DECOR_PICHU_DOLL
 	.2byte DECOR_PIKACHU_DOLL
 	.2byte DECOR_MARILL_DOLL
@@ -52,7 +52,7 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkMidLeft:: @ 0x0820ACB0
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_5F_Pokemart_Cushions:
+LilycoveCity_DepartmentStore_5F_Pokemart_Cushions: @ 0x0820ACC8
 	.2byte DECOR_PIKA_CUSHION
 	.2byte DECOR_ROUND_CUSHION
 	.2byte DECOR_ZIGZAG_CUSHION
@@ -75,7 +75,7 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkMidRight:: @ 0x0820ACDE
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_5F_Pokemart_Posters:
+LilycoveCity_DepartmentStore_5F_Pokemart_Posters: @ 0x0820ACF8
 	.2byte DECOR_BALL_POSTER
 	.2byte DECOR_GREEN_POSTER
 	.2byte DECOR_RED_POSTER
@@ -98,7 +98,7 @@ LilycoveCity_DepartmentStore_5F_EventScript_ClerkFarRight:: @ 0x0820AD0E
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_5F_Pokemart_Mats:
+LilycoveCity_DepartmentStore_5F_Pokemart_Mats: @ 0x0820AD28
 	.2byte DECOR_SURF_MAT
 	.2byte DECOR_THUNDER_MAT
 	.2byte DECOR_FIRE_BLAST_MAT
@@ -119,8 +119,8 @@ LilycoveCity_DepartmentStore_5F_EventScript_Woman:: @ 0x0820AD49
 	lockall
 	applymovement LOCALID_DEPARTMENT_STORE_STAIRS_WOMAN, Common_Movement_FacePlayer
 	waitmovement 0
-	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0x0, LilycoveCity_DepartmentStore_5F_EventScript_WomanNormal
-	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 0x4, LilycoveCity_DepartmentStore_5F_EventScript_WomanNormal
+	goto_if_eq VAR_SOOTOPOLIS_CITY_STATE, 0, LilycoveCity_DepartmentStore_5F_EventScript_WomanNormal
+	goto_if_ge VAR_SOOTOPOLIS_CITY_STATE, 4, LilycoveCity_DepartmentStore_5F_EventScript_WomanNormal
 	goto LilycoveCity_DepartmentStore_5F_EventScript_WomanLegendaryWeather
 	end
 
