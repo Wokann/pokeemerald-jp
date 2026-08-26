@@ -2305,23 +2305,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/JaggedPass/events.inc"
 	.globl gMapEvents_JAGGED_PASS
 	.set gMapEvents_JAGGED_PASS, JaggedPass_MapEvents
-	.globl FIERY_PATH_EventObjects
-FIERY_PATH_EventObjects: @ 0x0850D3AC
-	object_event 1, 59, 0, 8, 3, 3, 1, 1, 1, 0, 0, 0x08256EF5, 0x0443
-	object_event 2, 87, 0, 10, 15, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0011
-	object_event 3, 87, 0, 17, 15, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0012
-	object_event 4, 87, 0, 8, 11, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0013
-	object_event 5, 87, 0, 3, 12, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0014
-	object_event 6, 87, 0, 6, 23, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0015
-	object_event 7, 87, 0, 5, 24, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0016
-	object_event 8, 59, 0, 7, 32, 3, 1, 1, 1, 0, 0, 0x08256EE8, 0x0457
-	.globl FIERY_PATH_EventWarps
-FIERY_PATH_EventWarps: @ 0x0850D46C
-	warp_def 26, 36, 3, 4, MAP_ROUTE112
-	warp_def 26, 4, 3, 5, MAP_ROUTE112
+	.include "data/maps/FieryPath/events.inc"
 	.globl gMapEvents_FIERY_PATH
-gMapEvents_FIERY_PATH: @ 0x0850D47C
-	map_events FIERY_PATH_EventObjects, FIERY_PATH_EventWarps, 0, 0
+	.set gMapEvents_FIERY_PATH, FieryPath_MapEvents
 	.globl MT_PYRE_1F_EventObjects
 MT_PYRE_1F_EventObjects: @ 0x0850D490
 	object_event 1, 30, 0, 21, 2, 3, 8, 1, 1, 0, 0, 0x0821611A, 0x0000

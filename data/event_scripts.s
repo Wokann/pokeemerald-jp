@@ -1939,6 +1939,14 @@ EventScript_FailSweetScent: @ 0x8256A14
 	@ owner; export the reviewed map-event name without moving that range.
 	.globl JaggedPass_EventScript_ItemBurnHeal
 	.set JaggedPass_EventScript_ItemBurnHeal, 0x08256EDB
+	@ Fiery Path's boulder and item entries remain in shared field/item owners.
+	@ Export the reviewed map-event names without moving those ranges early.
+	.globl EventScript_StrengthBoulder
+	.set EventScript_StrengthBoulder, 0x08256754
+	.globl FieryPath_EventScript_ItemFireStone
+	.set FieryPath_EventScript_ItemFireStone, 0x08256EE8
+	.globl FieryPath_EventScript_ItemTMToxic
+	.set FieryPath_EventScript_ItemTMToxic, 0x08256EF5
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F

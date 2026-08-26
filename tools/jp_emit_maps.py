@@ -180,6 +180,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Jagged Pass follows Mt. Chimney. Its three map hooks and sixteen local
     # hideout, guard, and trainer branches match the US source in ROM order.
     'JaggedPass': 19,
+    # Fiery Path is the immediate next owner: its transition hook and Scott
+    # relocation branch exactly match the two local US script entries.
+    'FieryPath': 2,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -6740,6 +6743,20 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 'delay': (0,),
                 'setvar': (1,),
                 'setmetatile': (0, 1),
+            },
+        },
+    },
+    # Fiery Path has a compact contiguous script owner. Its two local
+    # branches and the event-table references were checked against the US map
+    # before enabling semantic labels.
+    'FieryPath': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x02FE: 'FLAG_HIDE_VERDANTURF_TOWN_SCOTT',
+                0x02FF: 'FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT',
+                0x08AA: 'FLAG_LANDMARK_FIERY_PATH',
             },
         },
     },
