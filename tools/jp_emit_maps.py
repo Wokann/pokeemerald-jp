@@ -10443,6 +10443,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 # were aligned with the US map before the two remaining raw spans were opened.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'FortreeCity_Gym': {
+        'preamble': (
+            '@ NOTE: This rotating gate puzzle makes use of VAR_TEMP_0 - VAR_TEMP_3.',
+        ),
         'scripts': {
             0x082043A9: 'FortreeCity_Gym_OnTransition',
             0x082043B7: 'FortreeCity_Gym_EventScript_InitRotatingGates',
@@ -10539,7 +10542,13 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'items': {0x0148: 'ITEM_TM_AERIAL_ACE'},
             'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'setvar': (1,),
+            },
         },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 

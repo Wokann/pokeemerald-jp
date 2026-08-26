@@ -5,19 +5,21 @@ FortreeCity_Gym_MapScripts::
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, FortreeCity_Gym_OnWarp
 	.byte 0
 
-FortreeCity_Gym_OnTransition::
+@ NOTE: This rotating gate puzzle makes use of VAR_TEMP_0 - VAR_TEMP_3.
+
+FortreeCity_Gym_OnTransition:: @ 0x082043A9
 	special RotatingGate_InitPuzzle
 	end
 
-FortreeCity_Gym_OnWarp::
+FortreeCity_Gym_OnWarp:: @ 0x082043AD
 	map_script_2 VAR_TEMP_0, VAR_TEMP_0, FortreeCity_Gym_EventScript_InitRotatingGates
 	.2byte 0
 
-FortreeCity_Gym_EventScript_InitRotatingGates::
+FortreeCity_Gym_EventScript_InitRotatingGates:: @ 0x082043B7
 	special RotatingGate_InitPuzzleAndGraphics
 	end
 
-FortreeCity_Gym_EventScript_Winona::
+FortreeCity_Gym_EventScript_Winona:: @ 0x082043BB
 	trainerbattle_single TRAINER_WINONA_1, FortreeCity_Gym_Text_WinonaIntro, FortreeCity_Gym_Text_WinonaDefeat, FortreeCity_Gym_EventScript_WinonaDefeated, NO_MUSIC
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, FortreeCity_Gym_EventScript_WinonaRematch
@@ -26,30 +28,30 @@ FortreeCity_Gym_EventScript_Winona::
 	release
 	end
 
-FortreeCity_Gym_EventScript_WinonaDefeated::
+FortreeCity_Gym_EventScript_WinonaDefeated:: @ 0x082043F0
 	message FortreeCity_Gym_Text_ReceivedFeatherBadge
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
 	msgbox FortreeCity_Gym_Text_ExplainFeatherBadgeTakeThis, MSGBOX_DEFAULT
 	setflag FLAG_DEFEATED_FORTREE_GYM
 	setflag FLAG_BADGE06_GET
-	setvar VAR_0x8008, 0x6
+	setvar VAR_0x8008, 6
 	call Common_EventScript_SetGymTrainers
 	call FortreeCity_Gym_EventScript_GiveAerialAce
 	closemessage
-	delay 0x1E
+	delay 30
 	playfanfare MUS_REGISTER_MATCH_CALL
 	msgbox FortreeCity_Gym_Text_RegisteredWinona, MSGBOX_DEFAULT
 	waitfanfare
 	closemessage
-	delay 0x1E
+	delay 30
 	setflag FLAG_ENABLE_WINONA_MATCH_CALL
-	setvar VAR_SCOTT_FORTREE_CALL_STEP_COUNTER, 0x0
+	setvar VAR_SCOTT_FORTREE_CALL_STEP_COUNTER, 0
 	setflag FLAG_SCOTT_CALL_FORTREE_GYM
 	release
 	end
 
-FortreeCity_Gym_EventScript_GiveAerialAce2::
+FortreeCity_Gym_EventScript_GiveAerialAce2:: @ 0x08204439
 	giveitem ITEM_TM_AERIAL_ACE
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	msgbox FortreeCity_Gym_Text_ExplainAerialAce, MSGBOX_DEFAULT
@@ -57,49 +59,49 @@ FortreeCity_Gym_EventScript_GiveAerialAce2::
 	release
 	end
 
-FortreeCity_Gym_EventScript_GiveAerialAce::
+FortreeCity_Gym_EventScript_GiveAerialAce:: @ 0x0820445D
 	giveitem ITEM_TM_AERIAL_ACE
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_BagIsFull
 	msgbox FortreeCity_Gym_Text_ExplainAerialAce, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_TM_AERIAL_ACE
 	return
 
-FortreeCity_Gym_EventScript_WinonaRematch::
+FortreeCity_Gym_EventScript_WinonaRematch:: @ 0x08204480
 	trainerbattle_rematch_double TRAINER_WINONA_1, FortreeCity_Gym_Text_WinonaPreRematch, FortreeCity_Gym_Text_WinonaRematchDefeat, FortreeCity_Gym_Text_WinonaRematchNeedTwoMons
 	msgbox FortreeCity_Gym_Text_WinonaPostRematch, MSGBOX_AUTOCLOSE
 	end
 
-FortreeCity_Gym_EventScript_Jared::
+FortreeCity_Gym_EventScript_Jared:: @ 0x0820449B
 	trainerbattle_single TRAINER_JARED, FortreeCity_Gym_Text_JaredIntro, FortreeCity_Gym_Text_JaredDefeat
 	msgbox FortreeCity_Gym_Text_JaredPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-FortreeCity_Gym_EventScript_Edwardo::
+FortreeCity_Gym_EventScript_Edwardo:: @ 0x082044B2
 	trainerbattle_single TRAINER_EDWARDO, FortreeCity_Gym_Text_EdwardoIntro, FortreeCity_Gym_Text_EdwardoDefeat
 	msgbox FortreeCity_Gym_Text_EdwardoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-FortreeCity_Gym_EventScript_Flint::
+FortreeCity_Gym_EventScript_Flint:: @ 0x082044C9
 	trainerbattle_single TRAINER_FLINT, FortreeCity_Gym_Text_FlintIntro, FortreeCity_Gym_Text_FlintDefeat
 	msgbox FortreeCity_Gym_Text_FlintPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-FortreeCity_Gym_EventScript_Ashley::
+FortreeCity_Gym_EventScript_Ashley:: @ 0x082044E0
 	trainerbattle_single TRAINER_ASHLEY, FortreeCity_Gym_Text_AshleyIntro, FortreeCity_Gym_Text_AshleyDefeat
 	msgbox FortreeCity_Gym_Text_AshleyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-FortreeCity_Gym_EventScript_Humberto::
+FortreeCity_Gym_EventScript_Humberto:: @ 0x082044F7
 	trainerbattle_single TRAINER_HUMBERTO, FortreeCity_Gym_Text_HumbertoIntro, FortreeCity_Gym_Text_HumbertoDefeat
 	msgbox FortreeCity_Gym_Text_HumbertoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-FortreeCity_Gym_EventScript_Darius::
+FortreeCity_Gym_EventScript_Darius:: @ 0x0820450E
 	trainerbattle_single TRAINER_DARIUS, FortreeCity_Gym_Text_DariusIntro, FortreeCity_Gym_Text_DariusDefeat
 	msgbox FortreeCity_Gym_Text_DariusPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-FortreeCity_Gym_EventScript_GymGuide::
+FortreeCity_Gym_EventScript_GymGuide:: @ 0x08204525
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_FORTREE_GYM, FortreeCity_Gym_EventScript_GymGuidePostVictory
@@ -107,29 +109,29 @@ FortreeCity_Gym_EventScript_GymGuide::
 	release
 	end
 
-FortreeCity_Gym_EventScript_GymGuidePostVictory::
+FortreeCity_Gym_EventScript_GymGuidePostVictory:: @ 0x0820453A
 	msgbox FortreeCity_Gym_Text_GymGuidePostVictory, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_Gym_EventScript_LeftGymStatue::
+FortreeCity_Gym_EventScript_LeftGymStatue:: @ 0x08204544
 	lockall
 	goto_if_set FLAG_BADGE06_GET, FortreeCity_Gym_EventScript_GymStatueCertified
 	goto FortreeCity_Gym_EventScript_GymStatue
 	end
 
-FortreeCity_Gym_EventScript_RightGymStatue::
+FortreeCity_Gym_EventScript_RightGymStatue:: @ 0x08204554
 	lockall
 	goto_if_set FLAG_BADGE06_GET, FortreeCity_Gym_EventScript_GymStatueCertified
 	goto FortreeCity_Gym_EventScript_GymStatue
 	end
 
-FortreeCity_Gym_EventScript_GymStatueCertified::
+FortreeCity_Gym_EventScript_GymStatueCertified:: @ 0x08204564
 	msgbox FortreeCity_Gym_Text_GymStatueCertified, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FortreeCity_Gym_EventScript_GymStatue::
+FortreeCity_Gym_EventScript_GymStatue:: @ 0x0820456E
 	msgbox FortreeCity_Gym_Text_GymStatue, MSGBOX_DEFAULT
 	releaseall
 	end
