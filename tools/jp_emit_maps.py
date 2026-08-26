@@ -17903,6 +17903,39 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Rustboro's Pokémon Center 1F follows the School owner. Its transition hook,
+# nurse wrapper, Cable Club resume entry, and three local text records match
+# the corresponding pokeemerald map source and are all within this JP span.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'RustboroCity_PokemonCenter_1F': {
+        'scripts': {
+            0x082034BE: 'RustboroCity_PokemonCenter_1F_OnTransition',
+            0x082034C7: 'RustboroCity_PokemonCenter_1F_EventScript_Nurse',
+            0x082034D5: 'RustboroCity_PokemonCenter_1F_EventScript_Man',
+            0x082034DE: 'RustboroCity_PokemonCenter_1F_EventScript_Boy',
+            0x082034E7: 'RustboroCity_PokemonCenter_1F_EventScript_Girl',
+        },
+        'texts': {
+            0x082034F0: 'RustboroCity_PokemonCenter_1F_Text_PokemonHavePersonalities',
+            0x0820353E: 'RustboroCity_PokemonCenter_1F_Text_MaleAndFemalePokemon',
+            0x08203580: 'RustboroCity_PokemonCenter_1F_Text_HMCutNextDoor',
+        },
+        'local_scripts': (0x082034BE,),
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_RUSTBORO_NURSE'},
+            'heal_locations': {0x06: 'HEAL_LOCATION_RUSTBORO_CITY'},
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv

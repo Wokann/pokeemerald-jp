@@ -5,12 +5,12 @@ RustboroCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-RustboroCity_PokemonCenter_1F_OnTransition:
+RustboroCity_PokemonCenter_1F_OnTransition: @ 0x082034BE
 	setrespawn HEAL_LOCATION_RUSTBORO_CITY
 	call Common_EventScript_UpdateBrineyLocation
 	end
 
-RustboroCity_PokemonCenter_1F_EventScript_Nurse::
+RustboroCity_PokemonCenter_1F_EventScript_Nurse:: @ 0x082034C7
 	setvar VAR_0x800B, LOCALID_RUSTBORO_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
@@ -18,15 +18,15 @@ RustboroCity_PokemonCenter_1F_EventScript_Nurse::
 	release
 	end
 
-RustboroCity_PokemonCenter_1F_EventScript_Man::
+RustboroCity_PokemonCenter_1F_EventScript_Man:: @ 0x082034D5
 	msgbox RustboroCity_PokemonCenter_1F_Text_PokemonHavePersonalities, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonCenter_1F_EventScript_Boy::
+RustboroCity_PokemonCenter_1F_EventScript_Boy:: @ 0x082034DE
 	msgbox RustboroCity_PokemonCenter_1F_Text_MaleAndFemalePokemon, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonCenter_1F_EventScript_Girl::
+RustboroCity_PokemonCenter_1F_EventScript_Girl:: @ 0x082034E7
 	msgbox RustboroCity_PokemonCenter_1F_Text_HMCutNextDoor, MSGBOX_NPC
 	end
 
