@@ -7260,6 +7260,40 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# These unused RS-era Cable Club wrappers are map-owned named entries directly
+# after the Lavaridge 2F table, but no local event pointer reaches them.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'LavaridgeTown_PokemonCenter_2F': (
+        0x081F5086,
+        0x081F508C,
+        0x081F5092,
+    ),
+})
+
+# Lavaridge Pokémon Center 2F follows with four shared Cable Club hooks and
+# three unused RS-era wrappers. They remain explicit source-owned bytes rather
+# than a raw tail when regenerating the map.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LavaridgeTown_PokemonCenter_2F': {
+        'scripts': {
+            0x081F5086: 'LavaridgeTown_PokemonCenter_2F_EventScript_Colosseum',
+            0x081F508C: 'LavaridgeTown_PokemonCenter_2F_EventScript_TradeCenter',
+            0x081F5092: 'LavaridgeTown_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
