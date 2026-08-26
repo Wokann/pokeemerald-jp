@@ -29,9 +29,12 @@ class MysteryEventCommandTableTests(unittest.TestCase):
         text = generator.OUT.read_text(encoding="utf-8")
         self.assertTrue(text.startswith('\t.section script_data, "aw", %progbits\n'))
         self.assertNotIn(".include", text)
+        self.assertNotIn(".globl gMysteryEventScriptCmdTable", text)
         self.assertEqual(text.count("\t.4byte "), 17)
-        self.assertIn("gMysteryEventScriptCmdTable:", text)
-        self.assertIn("gMysteryEventScriptCmdTableEnd:", text)
+        self.assertIn("gMysteryEventScriptCmdTable::", text)
+        self.assertIn("gMysteryEventScriptCmdTableEnd::", text)
+        self.assertIn("@ 0x0a", text)
+        self.assertNotIn("@ 0x0A", text)
 
 
 if __name__ == "__main__":

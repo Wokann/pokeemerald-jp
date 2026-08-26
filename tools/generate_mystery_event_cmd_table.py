@@ -79,8 +79,7 @@ def main():
         '\t.section script_data, "aw", %progbits',
         "",
         "\t.align 2",
-        "\t.globl gMysteryEventScriptCmdTable",
-        "gMysteryEventScriptCmdTable:",
+        "gMysteryEventScriptCmdTable::",
     ]
     matches = 0
     unresolved = []
@@ -91,9 +90,8 @@ def main():
             continue
         if i < len(reference) and reference[i] == handler:
             matches += 1
-        lines.append(f"\t.4byte {handler:<28} @ 0x{i:02X}")
-    lines.append("\t.globl gMysteryEventScriptCmdTableEnd")
-    lines.append("gMysteryEventScriptCmdTableEnd:")
+        lines.append(f"\t.4byte {handler:<28} @ 0x{i:02x}")
+    lines.append("gMysteryEventScriptCmdTableEnd::")
 
     if unresolved:
         sys.exit("unresolved JP mystery event handlers: " + ", ".join(unresolved))
