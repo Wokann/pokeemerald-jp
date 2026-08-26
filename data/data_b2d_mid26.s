@@ -925,8 +925,6 @@ PETALBURG_CITY_GYM_EventBgEvents: @ 0x0850772C
 gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	map_events PETALBURG_CITY_GYM_EventObjects, PETALBURG_CITY_GYM_EventWarps, 0, PETALBURG_CITY_GYM_EventBgEvents
 	.include "data/maps/PetalburgCity_House1/events.inc"
-	.globl gMapEvents_PETALBURG_CITY_HOUSE1
-	.set gMapEvents_PETALBURG_CITY_HOUSE1, PetalburgCity_House1_MapEvents
 	.include "data/maps/PetalburgCity_House2/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_HOUSE2
 	.set gMapEvents_PETALBURG_CITY_HOUSE2, PetalburgCity_House2_MapEvents

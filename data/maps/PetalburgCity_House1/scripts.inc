@@ -3,11 +3,11 @@
 PetalburgCity_House1_MapScripts::
 	.byte 0
 
-PetalburgCity_House1_EventScript_Man::
+PetalburgCity_House1_EventScript_Man:: @ 0x081FA63E
 	msgbox PetalburgCity_House1_Text_TravelingIsWonderful, MSGBOX_NPC
 	end
 
-PetalburgCity_House1_EventScript_Woman::
+PetalburgCity_House1_EventScript_Woman:: @ 0x081FA647
 	msgbox PetalburgCity_House1_Text_GoOnAdventure, MSGBOX_NPC
 	end
 
