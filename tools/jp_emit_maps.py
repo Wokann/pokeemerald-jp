@@ -16572,6 +16572,133 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Oceanic Museum 2F immediately follows the 1F owner.  Its story sequence,
+# display scripts, movements, and all local text records are complete; record
+# the US-aligned labels and the JP byte-proven operands for deterministic
+# regeneration rather than leaving an already structured source manual.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SlateportCity_OceanicMuseum_2F': {
+        'scripts': {
+            0x081FD30A: 'SlateportCity_OceanicMuseum_2F_EventScript_CaptStern',
+            0x081FD496: 'SlateportCity_OceanicMuseum_2F_EventScript_ReadyRegisterBirch',
+            0x081FD49C: 'SlateportCity_OceanicMuseum_2F_EventScript_PlayerFaceGrunts',
+            0x081FD4A7: 'SlateportCity_OceanicMuseum_2F_EventScript_SternFaceGrunts',
+            0x081FD4B2: 'SlateportCity_OceanicMuseum_2F_EventScript_PlayerApproachGruntSouth',
+            0x081FD4BD: 'SlateportCity_OceanicMuseum_2F_EventScript_PlayerApproachGruntWest',
+            0x081FD514: 'SlateportCity_OceanicMuseum_2F_EventScript_WaterQualitySample1',
+            0x081FD51D: 'SlateportCity_OceanicMuseum_2F_EventScript_WaterQualitySample2',
+            0x081FD526: 'SlateportCity_OceanicMuseum_2F_EventScript_PressureExperiment',
+            0x081FD52F: 'SlateportCity_OceanicMuseum_2F_EventScript_HoennModel',
+            0x081FD538: 'SlateportCity_OceanicMuseum_2F_EventScript_DeepSeawaterDisplay',
+            0x081FD541: 'SlateportCity_OceanicMuseum_2F_EventScript_SurfaceSeawaterDisplay',
+            0x081FD54A: 'SlateportCity_OceanicMuseum_2F_EventScript_SSTidalReplica',
+            0x081FD553: 'SlateportCity_OceanicMuseum_2F_EventScript_SubmarineReplica',
+            0x081FD55C: 'SlateportCity_OceanicMuseum_2F_EventScript_SubmersibleReplica',
+            0x081FD565: 'SlateportCity_OceanicMuseum_2F_EventScript_SSAnneReplica',
+            0x081FD56E: 'SlateportCity_OceanicMuseum_2F_EventScript_MuseumPatron1',
+            0x081FD577: 'SlateportCity_OceanicMuseum_2F_EventScript_MuseumPatron2',
+            0x081FD580: 'SlateportCity_OceanicMuseum_2F_EventScript_MuseumPatron3',
+        },
+        'texts': {
+            0x081FD597: 'SlateportCity_OceanicMuseum_2F_Text_ThankYouForTheParts',
+            0x081FD5F3: 'SlateportCity_OceanicMuseum_2F_Text_WellTakeThoseParts',
+            0x081FD60B: 'SlateportCity_OceanicMuseum_2F_Text_SternWhoAreYou',
+            0x081FD61D: 'SlateportCity_OceanicMuseum_2F_Text_WereTeamAqua',
+            0x081FD64E: 'SlateportCity_OceanicMuseum_2F_Text_Grunt1Defeat',
+            0x081FD661: 'SlateportCity_OceanicMuseum_2F_Text_BossGoingToBeFurious',
+            0x081FD678: 'SlateportCity_OceanicMuseum_2F_Text_LetMeTakeCareOfThis',
+            0x081FD699: 'SlateportCity_OceanicMuseum_2F_Text_Grunt2Defeat',
+            0x081FD6AC: 'SlateportCity_OceanicMuseum_2F_Text_MeddlingKid',
+            0x081FD6F5: 'SlateportCity_OceanicMuseum_2F_Text_CameToSeeWhatsTakingSoLong',
+            0x081FD72A: 'SlateportCity_OceanicMuseum_2F_Text_ArchieWarning',
+            0x081FD871: 'SlateportCity_OceanicMuseum_2F_Text_SternThankYouForSavingUs',
+            0x081FD8E0: 'SlateportCity_OceanicMuseum_2F_Text_SternIveGotToGo',
+            0x081FD94A: 'SlateportCity_OceanicMuseum_2F_Text_RemindsMeOfAbandonedShip',
+            0x081FD977: 'SlateportCity_OceanicMuseum_2F_Text_DontRunInMuseum',
+            0x081FD997: 'SlateportCity_OceanicMuseum_2F_Text_WantToRideSubmarine',
+            0x081FD9B0: 'SlateportCity_OceanicMuseum_2F_Text_WaterQualitySample1',
+            0x081FD9F8: 'SlateportCity_OceanicMuseum_2F_Text_WaterQualitySample2',
+            0x081FDA3F: 'SlateportCity_OceanicMuseum_2F_Text_PressureExperiment',
+            0x081FDAC0: 'SlateportCity_OceanicMuseum_2F_Text_HoennModel',
+            0x081FDAF8: 'SlateportCity_OceanicMuseum_2F_Text_DeepSeawaterDisplay',
+            0x081FDB4B: 'SlateportCity_OceanicMuseum_2F_Text_SurfaceSeawaterDisplay',
+            0x081FDB95: 'SlateportCity_OceanicMuseum_2F_Text_SSTidalReplica',
+            0x081FDBD1: 'SlateportCity_OceanicMuseum_2F_Text_SubmarineReplica',
+            0x081FDC0D: 'SlateportCity_OceanicMuseum_2F_Text_SubmersibleReplica',
+            0x081FDC3E: 'SlateportCity_OceanicMuseum_2F_Text_SSAnneReplica',
+        },
+        # The paired US message identifies both JP dynamic fields precisely.
+        'field_placeholders': {
+            0x081FD871: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'external_labels': {
+            0x08243467: 'Common_EventScript_PlayerHandedOverTheItem',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x0095: 'FLAG_DELIVERED_DEVON_GOODS',
+                0x0373: 'FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_AQUA_GRUNTS',
+                0x0384: 'FLAG_HIDE_ROUTE_110_TEAM_AQUA',
+                0x03B3: 'FLAG_HIDE_ROUTE_116_DEVON_EMPLOYEE',
+                0x03B5: 'FLAG_HIDE_RUSTBORO_CITY_DEVON_CORP_3F_EMPLOYEE',
+            },
+            'trainers': {
+                0x0014: 'TRAINER_GRUNT_MUSEUM_1',
+                0x0015: 'TRAINER_GRUNT_MUSEUM_2',
+            },
+            'items': {0x010D: 'ITEM_DEVON_GOODS'},
+            'vars': {
+                0x40D2: 'VAR_SLATEPORT_OUTSIDE_MUSEUM_STATE',
+                0x40DA: 'VAR_REGISTER_BIRCH_STATE',
+                0x8004: 'VAR_0x8004',
+                0x800C: 'VAR_FACING',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_OCEANIC_MUSEUM_2F_CAPT_STERN',
+                0x02: 'LOCALID_OCEANIC_MUSEUM_2F_ARCHIE',
+                0x03: 'LOCALID_OCEANIC_MUSEUM_2F_GRUNT_1',
+                0x04: 'LOCALID_OCEANIC_MUSEUM_2F_GRUNT_2',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {
+                0x01: 'DIR_SOUTH',
+                0x02: 'DIR_NORTH',
+                0x03: 'DIR_WEST',
+                0x04: 'DIR_EAST',
+            },
+            'songs': {
+                0x0000: 'MUS_DUMMY',
+                0x0170: 'MUS_HEAL',
+                0x01A3: 'MUS_ENCOUNTER_AQUA',
+            },
+            'fade_modes': {0x00: 'FADE_FROM_BLACK', 0x01: 'FADE_TO_BLACK'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'var_values': {
+                0x40D2: {0x01: '1'},
+                0x40DA: {0x00: '0', 0x01: '1'},
+                0x800C: {
+                    0x01: 'DIR_SOUTH',
+                    0x02: 'DIR_NORTH',
+                    0x03: 'DIR_WEST',
+                    0x04: 'DIR_EAST',
+                },
+            },
+            'script_var_values': {
+                0x081FD30A: {0x8004: {0x010D: 'ITEM_DEVON_GOODS'}},
+            },
+            'decimal_arguments': {'delay': (0,)},
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv

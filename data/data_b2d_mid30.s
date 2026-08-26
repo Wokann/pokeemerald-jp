@@ -4838,7 +4838,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_2F (g9 m8)
 	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F  @ mapLayout
-	.4byte gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F  @ events
+	.4byte SlateportCity_OceanicMuseum_2F_MapEvents  @ events
 	.4byte 0x081FD309  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0177  @ music

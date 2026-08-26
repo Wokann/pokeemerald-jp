@@ -938,8 +938,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SlateportCity_PokemonFanClub/events.inc"
 	.include "data/maps/SlateportCity_OceanicMuseum_1F/events.inc"
 	.include "data/maps/SlateportCity_OceanicMuseum_2F/events.inc"
-	.globl gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F
-	.set gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F, SlateportCity_OceanicMuseum_2F_MapEvents
 	.include "data/maps/SlateportCity_Harbor/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_HARBOR
 	.set gMapEvents_SLATEPORT_CITY_HARBOR, SlateportCity_Harbor_MapEvents
