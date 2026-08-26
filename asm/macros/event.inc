@@ -2039,40 +2039,40 @@
 @ handlers (ScriptRead* + direct ctx byte reads).
 @ ==================================================================
 	.macro killscript
-	.byte SCR_OP_0D
+	.byte SCR_OP_ENDRAM
 	.endm
 
 	.macro writebytetoaddr value:req, address:req
-	.byte SCR_OP_11
+	.byte SCR_OP_SETPTR
 	.byte \value
 	.4byte \address
 	.endm
 
 	.macro loadbytefromaddr address:req
-	.byte SCR_OP_12
+	.byte SCR_OP_LOADBYTEFROMPTR
 	.4byte \address
 	.endm
 
 	.macro compare_local_to_addr local:req, address:req
-	.byte SCR_OP_1D
+	.byte SCR_OP_COMPARE_LOCAL_TO_PTR
 	.byte \local
 	.4byte \address
 	.endm
 
 	.macro compare_addr_to_local address:req, local:req
-	.byte SCR_OP_1E
+	.byte SCR_OP_COMPARE_PTR_TO_LOCAL
 	.4byte \address
 	.byte \local
 	.endm
 
 	.macro compare_addr_to_value address:req, value:req
-	.byte SCR_OP_1F
+	.byte SCR_OP_COMPARE_PTR_TO_VALUE
 	.4byte \address
 	.byte \value
 	.endm
 
 	.macro compare_addr_to_addr address1:req, address2:req
-	.byte SCR_OP_20
+	.byte SCR_OP_COMPARE_PTR_TO_PTR
 	.4byte \address1
 	.4byte \address2
 	.endm
@@ -2179,7 +2179,7 @@
 	.endm
 
 	.macro cmdD9
-	.byte SCR_OP_D9
+	.byte SCR_OP_LOCKFORTRAINER
 	.endm
 
 	.macro mossdeepgym4

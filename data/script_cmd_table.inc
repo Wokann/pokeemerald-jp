@@ -13,8 +13,7 @@
 	enum_start
 	.if ALLOCATE_SCRIPT_CMD_TABLE
 	.align 2
-	.globl gScriptCmdTable
-gScriptCmdTable:
+gScriptCmdTable::
 	.endif
 	script_cmd_table_entry SCR_OP_NOP ScrCmd_nop @ 0x00
 	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0x01
@@ -29,12 +28,12 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_GOTO_STD_IF ScrCmd_gotostd_if @ 0x0A
 	script_cmd_table_entry SCR_OP_CALL_STD_IF ScrCmd_callstd_if @ 0x0B
 	script_cmd_table_entry SCR_OP_RETURNRAM ScrCmd_returnram @ 0x0C
-	script_cmd_table_entry SCR_OP_0D ScrCmd_endram @ 0x0D
+	script_cmd_table_entry SCR_OP_ENDRAM ScrCmd_endram @ 0x0D
 	script_cmd_table_entry SCR_OP_SETMYSTERYEVENTSTATUS ScrCmd_setmysteryeventstatus @ 0x0E
 	script_cmd_table_entry SCR_OP_LOAD_WORD ScrCmd_loadword @ 0x0F
 	script_cmd_table_entry SCR_OP_LOAD_BYTE ScrCmd_loadbyte @ 0x10
-	script_cmd_table_entry SCR_OP_11 ScrCmd_setptr @ 0x11
-	script_cmd_table_entry SCR_OP_12 ScrCmd_loadbytefromptr @ 0x12
+	script_cmd_table_entry SCR_OP_SETPTR ScrCmd_setptr @ 0x11
+	script_cmd_table_entry SCR_OP_LOADBYTEFROMPTR ScrCmd_loadbytefromptr @ 0x12
 	script_cmd_table_entry SCR_OP_SETPTRBYTE ScrCmd_setptrbyte @ 0x13
 	script_cmd_table_entry SCR_OP_COPYLOCAL ScrCmd_copylocal @ 0x14
 	script_cmd_table_entry SCR_OP_COPYBYTE ScrCmd_copybyte @ 0x15
@@ -45,10 +44,10 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_SETORCOPYVAR ScrCmd_setorcopyvar @ 0x1A
 	script_cmd_table_entry SCR_OP_COMPARE_LOCAL_TO_LOCAL ScrCmd_compare_local_to_local @ 0x1B
 	script_cmd_table_entry SCR_OP_COMPARE_LOCAL_TO_VALUE ScrCmd_compare_local_to_value @ 0x1C
-	script_cmd_table_entry SCR_OP_1D ScrCmd_compare_local_to_ptr @ 0x1D
-	script_cmd_table_entry SCR_OP_1E ScrCmd_compare_ptr_to_local @ 0x1E
-	script_cmd_table_entry SCR_OP_1F ScrCmd_compare_ptr_to_value @ 0x1F
-	script_cmd_table_entry SCR_OP_20 ScrCmd_compare_ptr_to_ptr @ 0x20
+	script_cmd_table_entry SCR_OP_COMPARE_LOCAL_TO_PTR ScrCmd_compare_local_to_ptr @ 0x1D
+	script_cmd_table_entry SCR_OP_COMPARE_PTR_TO_LOCAL ScrCmd_compare_ptr_to_local @ 0x1E
+	script_cmd_table_entry SCR_OP_COMPARE_PTR_TO_VALUE ScrCmd_compare_ptr_to_value @ 0x1F
+	script_cmd_table_entry SCR_OP_COMPARE_PTR_TO_PTR ScrCmd_compare_ptr_to_ptr @ 0x20
 	script_cmd_table_entry SCR_OP_COMPARE_VAR_TO_VALUE ScrCmd_compare_var_to_value @ 0x21
 	script_cmd_table_entry SCR_OP_COMPARE_VAR_TO_VAR ScrCmd_compare_var_to_var @ 0x22
 	script_cmd_table_entry SCR_OP_CALLNATIVE ScrCmd_callnative @ 0x23
@@ -235,7 +234,7 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_FREEROTATINGTILEPUZZLE ScrCmd_buffercontesttype @ 0xD6
 	script_cmd_table_entry SCR_OP_WARPMOSSDEEPGYM ScrCmd_warpD7 @ 0xD7
 	script_cmd_table_entry SCR_OP_D8 ScrCmd_cmdD8 @ 0xD8
-	script_cmd_table_entry SCR_OP_D9 ScrCmd_lockfortrainer @ 0xD9
+	script_cmd_table_entry SCR_OP_LOCKFORTRAINER ScrCmd_lockfortrainer @ 0xD9
 	script_cmd_table_entry SCR_OP_CLOSEBRAILLEMESSAGE ScrCmd_mossdeepgym4 @ 0xDA
 	script_cmd_table_entry SCR_OP_DB ScrCmd_cmdDB @ 0xDB
 	script_cmd_table_entry SCR_OP_FADESCREENSWAPBUFFERS ScrCmd_fadescreenswapbuffers @ 0xDC
@@ -245,9 +244,6 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_E0 ScrCmd_warpE0 @ 0xE0
 
 	.if ALLOCATE_SCRIPT_CMD_TABLE
-	.globl gScriptCmdTableEnd
-gScriptCmdTableEnd:
-	.globl gUnknown_81DAF30
-gUnknown_81DAF30:
+gScriptCmdTableEnd::
 	.4byte ScrCmd_nop
 	.endif

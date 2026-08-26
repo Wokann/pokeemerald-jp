@@ -14,8 +14,7 @@
 .set __special__, 0
 .if ALLOCATE_SPECIAL_TABLE
 		.align 2
-	.globl gSpecials
-gSpecials:
+gSpecials::
 .endif
 	def_special HealPlayerParty
 	def_special SetCableClubWarp

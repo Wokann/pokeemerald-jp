@@ -473,14 +473,9 @@
 	.set MatchCall_Text_RegisteredBirch, 0x0826C23E
 
 	.set ALLOCATE_SCRIPT_CMD_TABLE, 1
-	.align 2
-	.globl gUnknown_81DABAC
-gUnknown_81DABAC:
 	.include "data/script_cmd_table.inc"
 
-	.globl gSpecialVars
-gSpecialVars: @ 0x81DAF34
-gSpecialVars: @ 0x81DAF34
+gSpecialVars:: @ 0x81DAF34
 	.4byte 0x02037278, 0x0203727A, 0x0203727C, 0x0203727E
 	.4byte 0x02037280, 0x02037282, 0x02037284, 0x02037286
 	.4byte 0x02037288, 0x0203728A, 0x0203728C, 0x0203728E
@@ -489,27 +484,21 @@ gSpecialVars: @ 0x81DAF34
 	.4byte 0x0203729A, 0x0203886A
 
 	.set ALLOCATE_SPECIAL_TABLE, 1
-	.align 2
-	.globl gUnknown_81DAF8C
-gUnknown_81DAF8C:
 	.include "data/specials.inc"
 
-	.globl gStdScripts
-gStdScripts: @ 0x81DB7BC
-	.4byte gUnknown_8242B6D                  @ 000
-	.4byte gUnknown_8242C95                  @ 001
-	.4byte gUnknown_82423AF                  @ 002
-	.4byte gUnknown_82423BA                  @ 003
-	.4byte gUnknown_82423C4                  @ 004
-	.4byte gUnknown_82423CC                  @ 005
-	.4byte gUnknown_824252E                  @ 006
-	.4byte gUnknown_8242C4F                  @ 007
-	.4byte gUnknown_8244CF3                  @ 008
-	.4byte gUnknown_82423D6                  @ 009
-	.4byte gUnknown_82423E1                  @ 010
-
-	.globl gStdScripts_End
-gStdScripts_End: @ 0x81DB7E8
+gStdScripts:: @ 0x81DB7BC
+	.4byte Std_ObtainItem              @ STD_OBTAIN_ITEM
+	.4byte Std_FindItem                @ STD_FIND_ITEM
+	.4byte Std_MsgboxNPC               @ MSGBOX_NPC
+	.4byte Std_MsgboxSign              @ MSGBOX_SIGN
+	.4byte Std_MsgboxDefault           @ MSGBOX_DEFAULT
+	.4byte Std_MsgboxYesNo             @ MSGBOX_YESNO
+	.4byte Std_MsgboxAutoclose         @ MSGBOX_AUTOCLOSE
+	.4byte Std_ObtainDecoration        @ STD_OBTAIN_DECORATION
+	.4byte Std_RegisteredInMatchCall   @ STD_REGISTER_MATCH_CALL
+	.4byte Std_MsgboxGetPoints         @ MSGBOX_GETPOINTS
+	.4byte Std_MsgboxPokenav           @ MSGBOX_POKENAV
+gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/PetalburgCity/scripts.inc"
 	.include "data/maps/SlateportCity/scripts.inc"
 	.include "data/maps/MauvilleCity/scripts.inc"
@@ -1007,17 +996,17 @@ LilycoveCity_ContestLobby_EventScript_SetPlayerGfx: @ 0x0821DD5F
 	.incbin "baserom_jp.gba", 0x241763, 0x4ec
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/scripts.inc"
 	.incbin "baserom_jp.gba", 0x242193, 0x21c
-gUnknown_82423AF: @ 0x82423AF
+Std_MsgboxNPC: @ 0x82423AF
 	.include "data/scripts/gUnknown_82423AF.inc"
-gUnknown_82423BA: @ 0x82423BA
+Std_MsgboxSign: @ 0x82423BA
 	.include "data/scripts/gUnknown_82423BA.inc"
-gUnknown_82423C4: @ 0x82423C4
+Std_MsgboxDefault: @ 0x82423C4
 	.include "data/scripts/gUnknown_82423C4.inc"
-gUnknown_82423CC: @ 0x82423CC
+Std_MsgboxYesNo: @ 0x82423CC
 	.include "data/scripts/gUnknown_82423CC.inc"
-gUnknown_82423D6: @ 0x82423D6
+Std_MsgboxGetPoints: @ 0x82423D6
 	.include "data/scripts/gUnknown_82423D6.inc"
-gUnknown_82423E1: @ 0x82423E1
+Std_MsgboxPokenav: @ 0x82423E1
 	.include "data/scripts/gUnknown_82423E1.inc"
 
 	.globl EventScript_StartTrainerApproach
@@ -1027,7 +1016,7 @@ gUnknown_82423E1: @ 0x82423E1
 	.globl EventScript_TryDoRematchBattle
 	.globl EventScript_TryDoDoubleRematchBattle
 	.include "data/scripts/trainer_battle.inc"
-gUnknown_824252E: @ 0x824252E
+Std_MsgboxAutoclose:: @ 0x824252E
 	.include "data/scripts/gUnknown_824252E.inc"
 
 	.globl EventScript_ResetAllMapFlags
@@ -1043,11 +1032,11 @@ gUnknown_82428F1: @ 0x82428F1
 	.globl Common_EventScript_PkmnCenterNurse
 Common_EventScript_PkmnCenterNurse: @ 0x82428FC
 	.include "data/scripts/Common_EventScript_PkmnCenterNurse.inc"
-gUnknown_8242B6D: @ 0x8242B6D
+Std_ObtainItem:: @ 0x8242B6D
 	.include "data/scripts/gUnknown_8242B6D.inc"
-gUnknown_8242C4F: @ 0x8242C4F
+Std_ObtainDecoration:: @ 0x8242C4F
 	.include "data/scripts/gUnknown_8242C4F.inc"
-gUnknown_8242C95: @ 0x8242C95
+Std_FindItem:: @ 0x8242C95
 	.include "data/scripts/gUnknown_8242C95.inc"
 
 	.globl EventScript_HiddenItemScript
@@ -1214,7 +1203,7 @@ AbnormalWeather_EventScript_EndEventAndCleanup_1: @ 0x8244749
 	.globl AbnormalWeather_Underwater_SetupEscapeWarp
 	.set AbnormalWeather_Underwater_SetupEscapeWarp, 0x08244C4D
 	.include "data/scripts/gUnknown_8244749.inc"
-gUnknown_8244CF3: @ 0x8244CF3
+Std_RegisteredInMatchCall:: @ 0x8244CF3
 	.include "data/scripts/gUnknown_8244CF3.inc"
 
 	.globl EventScript_TryGetTrainerScript
