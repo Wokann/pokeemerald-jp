@@ -14384,12 +14384,13 @@ def collapse_switch_macros(lines, value_names=None, minimum_cases=2):
 
 
 def name_reviewed_result_conditions(lines, target_value_names):
-    """Name an otherwise ambiguous VAR_RESULT=0 branch by reviewed target.
+    """Name an otherwise ambiguous VAR_RESULT branch by reviewed target.
 
-    A caller can receive VAR_RESULT from a subscript whose local producer is
-    not adjacent in the decoded instruction stream.  Restrict this fallback
-    to an explicitly reviewed target label and the literal zero value so it
-    cannot assign a plausible type to an unrelated result branch.
+    Legacy callers map a target label directly to a spelling for literal zero.
+    A reviewed mapping may instead provide ``{literal: spelling}`` for a
+    branch whose producer is not adjacent in the decoded stream. This keeps
+    same-script result families such as TRUE and YES distinct without making
+    a broad assumption about every ``VAR_RESULT`` comparison.
     """
     if not target_value_names:
         return lines
@@ -14404,8 +14405,15 @@ def name_reviewed_result_conditions(lines, target_value_names):
                 value = int(parts[1], 0)
             except ValueError:
                 value = None
-            if value == 0:
-                parts[1] = target_value_names[parts[2]]
+            target_values = target_value_names[parts[2]]
+            if isinstance(target_values, dict):
+                replacement = target_values.get(value)
+            elif value == 0:
+                replacement = target_values
+            else:
+                replacement = None
+            if replacement is not None:
+                parts[1] = replacement
                 argstr = ', '.join(parts)
         out.append((name, argstr))
     return out
@@ -16189,6 +16197,81 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x02: 'LOCALID_SLATEPORT_TENT_BATTLE_OPPONENT',
                 0x03: 'LOCALID_SLATEPORT_TENT_BATTLE_PLAYER',
                 0xFF: 'LOCALID_PLAYER',
+            },
+        },
+    },
+})
+
+# The immediately following Name Rater owner was already byte-complete, but
+# its generated form lacked the US-aligned labels, special aliases, and the
+# reviewed STR_VAR_1 control code used by its nickname messages.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SlateportCity_NameRatersHouse': {
+        'scripts': {
+            0x081FBD9E: 'SlateportCity_NameRatersHouse_EventScript_NameRater',
+            0x081FBDBF: 'SlateportCity_NameRatersHouse_EventScript_ChooseMonToRate',
+            0x081FBDE2: 'SlateportCity_NameRatersHouse_EventScript_DeclineNameRate',
+            0x081FBDEC: 'SlateportCity_NameRatersHouse_EventScript_RateMonNickname',
+            0x081FBE3F: 'SlateportCity_NameRatersHouse_EventScript_CantRateEgg',
+            0x081FBE49: 'SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT',
+            0x081FBE53: 'SlateportCity_NameRatersHouse_EventScript_ChangeNickname',
+            0x081FBE7D: 'SlateportCity_NameRatersHouse_EventScript_NewNameDifferent',
+        },
+        'texts': {
+            0x081FBE87: 'SlateportCity_NameRatersHouse_Text_PleasedToRateMonNickname',
+            0x081FBED1: 'SlateportCity_NameRatersHouse_Text_CritiqueWhichMonNickname',
+            0x081FBEEA: 'SlateportCity_NameRatersHouse_Text_FineNameSuggestBetterOne',
+            0x081FBF35: 'SlateportCity_NameRatersHouse_Text_WhatShallNewNameBe',
+            0x081FBF4E: 'SlateportCity_NameRatersHouse_Text_MonShallBeKnownAsName',
+            0x081FBF7D: 'SlateportCity_NameRatersHouse_Text_DoVisitAgain',
+            0x081FBF8F: 'SlateportCity_NameRatersHouse_Text_NameNoDifferentYetSuperior',
+            0x081FBFCF: 'SlateportCity_NameRatersHouse_Text_MagnificentName',
+            0x081FC011: 'SlateportCity_NameRatersHouse_Text_ThatIsMerelyAnEgg',
+        },
+        'external_labels': {
+            0x08243460: 'Common_EventScript_NameReceivedPartyMon',
+        },
+        'specials': {
+            'TV_CopyNicknameToStringVar1AndEnsureTerminated': 'BufferMonNickname',
+            'TV_CheckMonOTIDEqualsPlayerID': 'IsMonOTIDNotPlayers',
+            'MonOTNameMatchesPlayer': 'MonOTNameNotPlayer',
+            'TV_PutNameRaterShowOnTheAirIfNicknameChanged': 'TryPutNameRaterShowOnTheAir',
+        },
+        'field_placeholders': {
+            0x081FBEEA: {0x02: 'STR_VAR_1'},
+            0x081FBF4E: {0x02: 'STR_VAR_1'},
+            0x081FBF8F: {0x02: 'STR_VAR_1'},
+            0x081FBFCF: {0x02: 'STR_VAR_1'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'result_condition_values': {
+            0x081FBDEC: {
+                'SlateportCity_NameRatersHouse_EventScript_PlayerNotMonsOT': {0x01: 'TRUE'},
+                'SlateportCity_NameRatersHouse_EventScript_ChangeNickname': {0x01: 'YES'},
+                'SlateportCity_NameRatersHouse_EventScript_DeclineNameRate': {0x00: 'NO'},
+            },
+        },
+        'symbols': {
+            'vars': {
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081FBD9E: {
+                    0x800D: {0x00: 'NO', 0x01: 'YES'},
+                },
+                0x081FBDBF: {
+                    0x8004: {0xFF: 'PARTY_NOTHING_CHOSEN'},
+                },
+                0x081FBDEC: {
+                    0x800D: {
+                        0x019C: 'SPECIES_EGG',
+                    },
+                },
+                0x081FBE53: {
+                    0x800D: {0x0001: 'TRUE'},
+                },
             },
         },
     },
