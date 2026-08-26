@@ -830,8 +830,6 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/FallarborTown_BattleTentCorridor/events.inc"
 	.include "data/maps/FallarborTown_BattleTentBattleRoom/events.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_1F
-	.set gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_1F, FallarborTown_PokemonCenter_1F_MapEvents
 	.include "data/maps/FallarborTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_2F, FallarborTown_PokemonCenter_2F_MapEvents

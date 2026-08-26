@@ -7436,6 +7436,78 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Fallarbor Pokémon Center 1F follows the Battle Room. Its transition hook,
+# nurse flow, Cable Club resume hook, Lanette exit branches, movements, and
+# three local texts match the US map source in physical JP ROM order. The
+# greeting's two dynamic fields are explicitly identified from that paired
+# source rather than emitted as generic STRING control codes.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FallarborTown_PokemonCenter_1F': {
+        'scripts': {
+            0x081F5C59: 'FallarborTown_PokemonCenter_1F_OnTransition',
+            0x081F5C62: 'FallarborTown_PokemonCenter_1F_EventScript_Nurse',
+            0x081F5C70: 'FallarborTown_PokemonCenter_1F_EventScript_Girl',
+            0x081F5C79: 'FallarborTown_PokemonCenter_1F_EventScript_ExpertM',
+            0x081F5C82: 'FallarborTown_PokemonCenter_1F_EventScript_Lanette',
+            0x081F5CA9: 'FallarborTown_PokemonCenter_1F_EventScript_LanetteExitNorth',
+            0x081F5CB9: 'FallarborTown_PokemonCenter_1F_EventScript_LanetteExitWest',
+            0x081F5CC9: 'FallarborTown_PokemonCenter_1F_EventScript_LanetteExited',
+        },
+        'texts': {
+            0x081F5CEC: 'FallarborTown_PokemonCenter_1F_Text_LanetteGreeting',
+            0x081F5DD8: 'FallarborTown_PokemonCenter_1F_Text_FossilManiacEdgeOfTown',
+            0x081F5E18: 'FallarborTown_PokemonCenter_1F_Text_PlantHardyTrees',
+        },
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'field_placeholders': {
+            0x081F5CEC: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x0366: 'FLAG_HIDE_LANETTES_HOUSE_LANETTE'},
+            'heal_locations': {0x11: 'HEAL_LOCATION_FALLARBOR_TOWN'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x800B: 'VAR_0x800B',
+                0x800C: 'VAR_FACING',
+            },
+            'var_values': {
+                0x800C: {
+                    0x01: 'DIR_SOUTH',
+                    0x02: 'DIR_NORTH',
+                    0x03: 'DIR_WEST',
+                    0x04: 'DIR_EAST',
+                },
+            },
+            'script_var_values': {
+                0x081F5C82: {
+                    0x8000: {
+                        0x02: 'DIR_NORTH',
+                        0x03: 'DIR_WEST',
+                    },
+                },
+            },
+            'sounds': {0x0012: 'SE_SLIDING_DOOR'},
+            'local_ids': {
+                0x01: 'LOCALID_FALLARBOR_NURSE',
+                0x04: 'LOCALID_FALLARBOR_LANETTE',
+            },
+        },
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'FallarborTown_PokemonCenter_1F': {
+        0x081F5CD4: 'FallarborTown_PokemonCenter_1F_Movement_LanetteExitNorth',
+        0x081F5CE1: 'FallarborTown_PokemonCenter_1F_Movement_LanetteExitWest',
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
