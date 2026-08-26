@@ -426,6 +426,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
     # rather than a local map event, but is owned by Birch's lab in the US
     # source and sits inside the lab's exact JP script range.
     'LittlerootTown_ProfessorBirchsLab': (0x081F1A71,),
+    # Oldale's unused RS-era Cable Club wrappers immediately follow the 2F
+    # table. They are map-owned named scripts in the matching US source.
+    'OldaleTown_PokemonCenter_2F': (
+        0x081F2AF9,
+        0x081F2AFF,
+        0x081F2B05,
+    ),
     # These unused RS-era Cable Club entry points remain named in the matching
     # Dewford Pokemon Center 2F US source, but have no local event pointer.
     'DewfordTown_PokemonCenter_2F': (
@@ -6438,6 +6445,26 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'local_ids': {0x01: 'LOCALID_OLDALE_NURSE'},
             'heal_locations': {0x0E: 'HEAL_LOCATION_OLDALE_TOWN'},
         },
+    },
+    # The 2F Cable Club map retains three unused RS-era entry scripts after
+    # its map-script table. They are explicit source-owned bytes, not raw.
+    'OldaleTown_PokemonCenter_2F': {
+        'scripts': {
+            0x081F2AF9: 'OldaleTown_PokemonCenter_2F_EventScript_Colosseum',
+            0x081F2AFF: 'OldaleTown_PokemonCenter_2F_EventScript_TradeCenter',
+            0x081F2B05: 'OldaleTown_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 

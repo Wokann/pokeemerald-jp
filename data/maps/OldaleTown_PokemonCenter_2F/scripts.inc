@@ -7,15 +7,14 @@ OldaleTown_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-@ The below 3 are unused and leftover from RS.
-OldaleTown_PokemonCenter_2F_EventScript_Colosseum::
+OldaleTown_PokemonCenter_2F_EventScript_Colosseum:: @ 0x081F2AF9
 	call CableClub_EventScript_Colosseum
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_TradeCenter::
+OldaleTown_PokemonCenter_2F_EventScript_TradeCenter:: @ 0x081F2AFF
 	call CableClub_EventScript_TradeCenter
 	end
 
-OldaleTown_PokemonCenter_2F_EventScript_RecordCorner::
+OldaleTown_PokemonCenter_2F_EventScript_RecordCorner:: @ 0x081F2B05
 	call CableClub_EventScript_RecordCorner
 	end
