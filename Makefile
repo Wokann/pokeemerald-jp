@@ -268,7 +268,8 @@ $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tool
 # generator directly references its existing gMapLayout_* labels while keeping
 # the canonical map sources beside each map.json.
 JP_STRUCTURED_MAP_METADATA_MAPS := Underwater_Route124 Underwater_Route126 \
-	Underwater_Route127 Underwater_Route128 Underwater_Route129
+	Underwater_Route127 Underwater_Route128 Underwater_Route129 \
+	Underwater_Route105 Underwater_Route125
 JP_STRUCTURED_MAP_HEADERS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/header.inc)
 JP_STRUCTURED_MAP_CONNECTIONS := $(JP_STRUCTURED_MAP_METADATA_MAPS:%=data/maps/%/connections.inc)
 JP_STRUCTURED_MAP_METADATA := $(JP_STRUCTURED_MAP_HEADERS) $(JP_STRUCTURED_MAP_CONNECTIONS)

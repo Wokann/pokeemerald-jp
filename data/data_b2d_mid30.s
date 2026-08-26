@@ -4337,21 +4337,9 @@ gMapHeaders: @ 0x0845A8D8
 	@ MAP_UNDERWATER_ROUTE129 (g0 m54)
 	.include "data/maps/Underwater_Route129/header.inc"
 	@ MAP_UNDERWATER_ROUTE105 (g0 m55)
-	.4byte gMapLayout_UNDERWATER_ROUTE105  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_ROUTE105  @ events
-	.4byte Underwater_Route105_MapScripts  @ mapScripts
-	.4byte gMapConnections_UNDERWATER_ROUTE105  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x019A  @ mapLayoutId
-	.byte 0xCE, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_Route105/header.inc"
 	@ MAP_UNDERWATER_ROUTE125 (g0 m56)
-	.4byte gMapLayout_UNDERWATER_ROUTE125  @ mapLayout
-	.4byte gMapEvents_UNDERWATER_ROUTE125  @ events
-	.4byte Underwater_Route125_MapScripts  @ mapScripts
-	.4byte gMapConnections_UNDERWATER_ROUTE125  @ connections
-	.2byte 0x019B  @ music
-	.2byte 0x019B  @ mapLayoutId
-	.byte 0xCF, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.include "data/maps/Underwater_Route125/header.inc"
 	@ MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F (g1 m0)
 	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F  @ mapLayout
 	.4byte gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F  @ events
@@ -6719,26 +6707,12 @@ ROUTE134_MapConnections: @ 0x0845F124
 gMapConnections_ROUTE134: @ 0x0845F13C
 	.4byte 2  @ count
 	.4byte ROUTE134_MapConnections  @ connections
-	.globl UNDERWATER_ROUTE105_MapConnections
-UNDERWATER_ROUTE105_MapConnections: @ 0x0845F144
-	.byte 0x06, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 20, 0x00, 0x00  @ mapGroup, mapNum (0x0014)
-	.globl gMapConnections_UNDERWATER_ROUTE105
-gMapConnections_UNDERWATER_ROUTE105: @ 0x0845F150
-	.4byte 1  @ count
-	.4byte UNDERWATER_ROUTE105_MapConnections  @ connections
+	@ 0x0845F144: Underwater_Route105 connection list and header.
+	.include "data/maps/Underwater_Route105/connections.inc"
 	@ 0x0845F158: Underwater_Route124 connection list and header.
 	.include "data/maps/Underwater_Route124/connections.inc"
-	.globl UNDERWATER_ROUTE125_MapConnections
-UNDERWATER_ROUTE125_MapConnections: @ 0x0845F178
-	.byte 0x06, 0x00, 0x00, 0x00  @ direction
-	.4byte 0  @ offset
-	.byte 0, 40, 0x00, 0x00  @ mapGroup, mapNum (0x0028)
-	.globl gMapConnections_UNDERWATER_ROUTE125
-gMapConnections_UNDERWATER_ROUTE125: @ 0x0845F184
-	.4byte 1  @ count
-	.4byte UNDERWATER_ROUTE125_MapConnections  @ connections
+	@ 0x0845F178: Underwater_Route125 connection list and header.
+	.include "data/maps/Underwater_Route125/connections.inc"
 	@ 0x0845F18C: Underwater_Route126 connection list and header.
 	.include "data/maps/Underwater_Route126/connections.inc"
 	@ 0x0845F1B8: Underwater_Route127 connection list and header.
