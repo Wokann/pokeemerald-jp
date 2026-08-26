@@ -212,6 +212,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Underwater Seafloor Cavern follows with its three map hooks, submarine
     # state branch, and sign interaction in the same reviewed US order.
     'Underwater_SeafloorCavern': 6,
+    # The entrance follows with its resume hook and five Aqua grunt branches
+    # in the same reviewed US source order.
+    'SeafloorCavern_Entrance': 6,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -230,6 +233,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'MtPyre_Summit': ('OnTransition',),
     'AquaHideout_B1F': ('OnResume',),
     'Underwater_SeafloorCavern': ('OnLoad', 'OnResume'),
+    'SeafloorCavern_Entrance': ('OnResume',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -341,6 +345,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'AquaHideout_B2F': 13,
     # The Seafloor Cavern underwater entry owns the submarine sign message.
     'Underwater_SeafloorCavern': 1,
+    # The adjacent entrance owns the long and repeat Aqua grunt messages.
+    'SeafloorCavern_Entrance': 2,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7129,6 +7135,42 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
             'decimal_arguments': {'setdivewarp': (2, 3)},
+        },
+    },
+    # The adjacent cavern entrance owns the Aqua guard encounter and its two
+    # messages. Direction values and shared movements are reviewed against the
+    # JP bytes and matching US source before source generation.
+    'SeafloorCavern_Entrance': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'symbols': {
+            'vars': {
+                0x40D9: 'VAR_HAS_TALKED_TO_SEAFLOOR_CAVERN_ENTRANCE_GRUNT',
+                0x800C: 'VAR_FACING',
+            },
+            'var_values': {
+                0x800C: {
+                    0x2: 'DIR_NORTH',
+                    0x3: 'DIR_WEST',
+                    0x4: 'DIR_EAST',
+                },
+            },
+            'local_ids': {0x01: 'LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT'},
+            'maps': {0x181A: 'MAP_UNDERWATER_SEAFLOOR_CAVERN'},
+            'sounds': {0x15: 'SE_PIN'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'setdivewarp': (2, 3),
+                'setescapewarp': (2, 3),
+            },
         },
     },
 })

@@ -1,68 +1,83 @@
 @ SeafloorCavern_Entrance scripts (JP map g24 m27 @ 0x0821844E)
 
 SeafloorCavern_Entrance_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, SeafloorCavern_Entrance_EventScript_00218454
+	map_script MAP_SCRIPT_ON_RESUME, SeafloorCavern_Entrance_OnResume
 	.byte 0
 
-SeafloorCavern_Entrance_EventScript_00218454::
-	setdivewarp 0x181A, 0xFF, 0x6, 0x5
-	setescapewarp 0x181A, 0xFF, 0x6, 0x5
+SeafloorCavern_Entrance_OnResume:: @ 0x08218454
+	setdivewarp MAP_UNDERWATER_SEAFLOOR_CAVERN, 6, 5
+	setescapewarp MAP_UNDERWATER_SEAFLOOR_CAVERN, 6, 5
 	end
 
-SeafloorCavern_Entrance_EventScript_00218465::
+SeafloorCavern_Entrance_EventScript_Grunt:: @ 0x08218465
 	lockall
-	compare_var_to_value 0x40D9, 0x1
-	goto_if 0x1, SeafloorCavern_Entrance_EventScript_002184CD
+	goto_if_eq VAR_HAS_TALKED_TO_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, 0x1, SeafloorCavern_Entrance_EventScript_GruntSpeechShort
 	waitse
-	playse 0x15
-	applymovement 0x1, 0x0824361B
-	waitmovement 0x0
-	applymovement 0x1, 0x0824361D
-	waitmovement 0x0
-	delay 0x14
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, SeafloorCavern_Entrance_EventScript_0021850E
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, SeafloorCavern_Entrance_EventScript_00218503
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, SeafloorCavern_Entrance_EventScript_00218519
-	delay 0x1E
-	setvar 0x40D9, 0x1
-	moveobjectoffscreen 0x1
-	loadword 0x0, 0x08218524
-	callstd 0x4
+	playse SE_PIN
+	applymovement LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, Common_Movement_Delay48
+	waitmovement 0
+	delay 20
+	call_if_eq VAR_FACING, DIR_WEST, SeafloorCavern_Entrance_EventScript_GruntFacePlayerWest
+	call_if_eq VAR_FACING, DIR_EAST, SeafloorCavern_Entrance_EventScript_GruntFacePlayerEast
+	call_if_eq VAR_FACING, DIR_NORTH, SeafloorCavern_Entrance_EventScript_GruntFacePlayerNorth
+	delay 30
+	setvar VAR_HAS_TALKED_TO_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, 0x1
+	copyobjectxytoperm LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT
+	msgbox SeafloorCavern_Entrance_Text_HearMagmaNearMossdeep, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x1, 0x08243629
-	waitmovement 0x0
+	applymovement LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
 	releaseall
 	end
 
-SeafloorCavern_Entrance_EventScript_002184CD::
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, SeafloorCavern_Entrance_EventScript_0021850E
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, SeafloorCavern_Entrance_EventScript_00218503
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, SeafloorCavern_Entrance_EventScript_00218519
-	loadword 0x0, 0x082185E0
-	callstd 0x4
+SeafloorCavern_Entrance_EventScript_GruntSpeechShort:: @ 0x082184CD
+	call_if_eq VAR_FACING, DIR_WEST, SeafloorCavern_Entrance_EventScript_GruntFacePlayerWest
+	call_if_eq VAR_FACING, DIR_EAST, SeafloorCavern_Entrance_EventScript_GruntFacePlayerEast
+	call_if_eq VAR_FACING, DIR_NORTH, SeafloorCavern_Entrance_EventScript_GruntFacePlayerNorth
+	msgbox SeafloorCavern_Entrance_Text_HearMagmaNearMossdeepShort, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x1, 0x08243629
-	waitmovement 0x0
+	applymovement LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
 	releaseall
 	end
 
-SeafloorCavern_Entrance_EventScript_00218503::
-	applymovement 0x1, 0x08243627
-	waitmovement 0x0
+SeafloorCavern_Entrance_EventScript_GruntFacePlayerEast:: @ 0x08218503
+	applymovement LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
 	return
 
-SeafloorCavern_Entrance_EventScript_0021850E::
-	applymovement 0x1, 0x0824362B
-	waitmovement 0x0
+SeafloorCavern_Entrance_EventScript_GruntFacePlayerWest:: @ 0x0821850E
+	applymovement LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
 	return
 
-SeafloorCavern_Entrance_EventScript_00218519::
-	applymovement 0x1, 0x0824362D
-	waitmovement 0x0
+SeafloorCavern_Entrance_EventScript_GruntFacePlayerNorth:: @ 0x08218519
+	applymovement LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
 	return
+
+SeafloorCavern_Entrance_Text_HearMagmaNearMossdeep: @ 0x08218524
+	.string "あーーーーーっ！\n"
+	.string "みおぼえの　ある　そのかおは！\p"
+	.string "こんな　ところまで　きたって　ことは\n"
+	.string "また　オレたちの　ジャマをしに！？\p"
+	.string "おまえ　ごときが　アクアだんに\n"
+	.string "はむかおう　だなんて\l"
+	.string "100おくまんねん　はえーんだよ！\p"
+	.string "おまえにゃ　マグマだんが　おにあいさ！\p"
+	.string "⋯⋯そういえば　トクサネの　ちかくで\n"
+	.string "マグマだんを　みかけたっけな\p"
+	.string "あいつら⋯⋯\n"
+	.string "ほんっとーーに　うみが　にあわねえぜ！$"
+
+SeafloorCavern_Entrance_Text_HearMagmaNearMossdeepShort: @ 0x082185E0
+	.string "おまえ　ごときが　アクアだんに\n"
+	.string "はむかおう　だなんて\l"
+	.string "100おくまんねん　はえーんだよ！\p"
+	.string "おまえにゃ　マグマだんが　おにあいさ！\p"
+	.string "⋯⋯そういえば　トクサネの　ちかくで\n"
+	.string "マグマだんを　みかけたっけな\p"
+	.string "あいつら⋯⋯\n"
+	.string "ほんっとーーに　うみが　にあわねえぜ！$"

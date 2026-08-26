@@ -2344,16 +2344,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Underwater_SeafloorCavern/events.inc"
 	.globl gMapEvents_UNDERWATER_SEAFLOOR_CAVERN
 	.set gMapEvents_UNDERWATER_SEAFLOOR_CAVERN, Underwater_SeafloorCavern_MapEvents
-	.globl SEAFLOOR_CAVERN_ENTRANCE_EventObjects
-SEAFLOOR_CAVERN_ENTRANCE_EventObjects: @ 0x0850DDE8
-	object_event 1, 117, 0, 10, 2, 3, 7, 1, 1, 0, 0, SeafloorCavern_Entrance_EventScript_00218465, 0x03AD
-	.globl SEAFLOOR_CAVERN_ENTRANCE_EventWarps
-SEAFLOOR_CAVERN_ENTRANCE_EventWarps: @ 0x0850DE00
-	warp_def 10, 18, 3, 0, MAP_UNDERWATER_ROUTE128
-	warp_def 10, 1, 3, 0, MAP_SEAFLOOR_CAVERN_ROOM1
+	.include "data/maps/SeafloorCavern_Entrance/events.inc"
 	.globl gMapEvents_SEAFLOOR_CAVERN_ENTRANCE
-gMapEvents_SEAFLOOR_CAVERN_ENTRANCE: @ 0x0850DE10
-	map_events SEAFLOOR_CAVERN_ENTRANCE_EventObjects, SEAFLOOR_CAVERN_ENTRANCE_EventWarps, 0, 0
+	.set gMapEvents_SEAFLOOR_CAVERN_ENTRANCE, SeafloorCavern_Entrance_MapEvents
 	.globl SEAFLOOR_CAVERN_ROOM1_EventObjects
 SEAFLOOR_CAVERN_ROOM1_EventObjects: @ 0x0850DE24
 	object_event 1, 87, 0, 5, 11, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0011

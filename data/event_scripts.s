@@ -800,7 +800,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/AquaHideout_B2F/scripts.inc"
 	.include "data/maps/Underwater_SeafloorCavern/scripts.inc"
 	.include "data/maps/SeafloorCavern_Entrance/scripts.inc"
-	.incbin "baserom_jp.gba", 0x218524, 0x13a
 	.include "data/maps/SeafloorCavern_Room1/scripts.inc"
 	.include "data/maps/SeafloorCavern_Room2/scripts.inc"
 	.include "data/maps/SeafloorCavern_Room3/scripts.inc"
