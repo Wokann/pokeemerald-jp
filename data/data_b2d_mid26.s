@@ -788,8 +788,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Underwater_Route125/events.inc"
 	.include "data/maps/LittlerootTown_BrendansHouse_1F/events.inc"
 	.include "data/maps/LittlerootTown_BrendansHouse_2F/events.inc"
-	.globl gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
-	.set gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F, LittlerootTown_BrendansHouse_2F_MapEvents
 	.include "data/maps/LittlerootTown_MaysHouse_1F/events.inc"
 	.globl gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_1F
 	.set gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_1F, LittlerootTown_MaysHouse_1F_MapEvents
