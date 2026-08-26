@@ -189,4 +189,41 @@ Common_Movement_WalkInPlaceDown:: @ 0x08243637
 	walk_in_place_down
 	step_end
 
-	.incbin "baserom_jp.gba", 0x243639, 0x18
+Common_Movement_WalkInPlaceLeft:: @ 0x08243639
+	walk_in_place_left
+	step_end
+
+Common_Movement_WalkInPlaceRight:: @ 0x0824363B
+	walk_in_place_right
+	step_end
+
+Common_Movement_WalkUp6:: @ 0x0824363D
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+Common_Movement_WalkUp4:: @ 0x08243644
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+Common_Movement_Delay32:: @ 0x08243649
+	delay_16
+	delay_16
+	step_end
+
+Common_Movement_WalkUp:: @ 0x0824364C
+	walk_up
+	step_end
+
+@ Unused
+Common_Movement_WalkUp2:: @ 0x0824364E
+	walk_up
+	walk_up
+	step_end

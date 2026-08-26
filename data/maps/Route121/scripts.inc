@@ -18,19 +18,19 @@ Route121_EventScript_SafariZoneSign::
 Route121_EventScript_AquaGruntsMoveOut::
 	lockall
 	playbgm MUS_ENCOUNTER_AQUA, FALSE
-	applymovement LOCALID_ROUTE121_GRUNT_2, 0x0824363B
-	waitmovement 0x0
+	applymovement LOCALID_ROUTE121_GRUNT_2, Common_Movement_WalkInPlaceRight
+	waitmovement 0
 	msgbox Route121_Text_OkayMoveOutToMtPyre, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE121_GRUNT_1, Route121_Movement_Grunt1Exit
 	applymovement LOCALID_ROUTE121_GRUNT_2, Route121_Movement_Grunt2Exit
 	applymovement LOCALID_ROUTE121_GRUNT_3, Route121_Movement_Grunt3Exit
-	waitmovement 0x0
+	waitmovement 0
 	fadedefaultbgm
 	removeobject LOCALID_ROUTE121_GRUNT_1
 	removeobject LOCALID_ROUTE121_GRUNT_2
 	removeobject LOCALID_ROUTE121_GRUNT_3
-	setvar VAR_ROUTE121_STATE, 0x1
+	setvar VAR_ROUTE121_STATE, 1
 	releaseall
 	end
 
@@ -82,7 +82,7 @@ Route121_EventScript_Walter::
 
 Route121_EventScript_RegisterWalter::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route121_Text_WalterRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_WALTER_1
 	release
@@ -118,7 +118,7 @@ Route121_EventScript_Jessica::
 
 Route121_EventScript_RegisterJessica::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route121_Text_JessicaRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_JESSICA_1
 	release
@@ -159,7 +159,7 @@ Route121_EventScript_Cristin::
 
 Route121_EventScript_RegisterCristin::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route121_Text_CristinRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_CRISTIN_1
 	release

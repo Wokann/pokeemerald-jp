@@ -218,7 +218,17 @@ Route120_EventScript_ItemRevive:: @ 0x08256CD3
 	finditem ITEM_REVIVE
 	end
 
-	.incbin "baserom_jp.gba", 0x256ce0, 0x27
+Route121_EventScript_ItemCarbos:: @ 0x08256CE0
+	finditem ITEM_CARBOS
+	end
+
+Route121_EventScript_ItemRevive:: @ 0x08256CED
+	finditem ITEM_REVIVE
+	end
+
+Route121_EventScript_ItemZinc:: @ 0x08256CFA
+	finditem ITEM_ZINC
+	end
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM

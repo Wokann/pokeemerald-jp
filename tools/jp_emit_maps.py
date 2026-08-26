@@ -4977,6 +4977,9 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081EE3BA: 'Route121_Text_SafariZoneSign',
         },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route121']['labels'],
+        'external_labels': {
+            0x0824363B: 'Common_Movement_WalkInPlaceRight',
+        },
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
         'symbols': {
             'vars': {
