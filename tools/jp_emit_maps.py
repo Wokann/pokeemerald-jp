@@ -7228,6 +7228,38 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Lavaridge Pokémon Center 1F follows the Mart. Its transition hook, nurse
+# branch, Cable Club resume hook, and three local NPC records match the US
+# owner in physical JP ROM order.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LavaridgeTown_PokemonCenter_1F': {
+        'scripts': {
+            0x081F4F90: 'LavaridgeTown_PokemonCenter_1F_OnTransition',
+            0x081F4F99: 'LavaridgeTown_PokemonCenter_1F_EventScript_Nurse',
+            0x081F4FA7: 'LavaridgeTown_PokemonCenter_1F_EventScript_Youngster',
+            0x081F4FB0: 'LavaridgeTown_PokemonCenter_1F_EventScript_Woman',
+            0x081F4FB9: 'LavaridgeTown_PokemonCenter_1F_EventScript_Gentleman',
+        },
+        'texts': {
+            0x081F4FC2: 'LavaridgeTown_PokemonCenter_1F_Text_TrainersPokemonSpendTimeTogether',
+            0x081F4FF9: 'LavaridgeTown_PokemonCenter_1F_Text_HotSpringCanInvigorate',
+            0x081F502B: 'LavaridgeTown_PokemonCenter_1F_Text_TrainersShouldRestToo',
+        },
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'heal_locations': {0x10: 'HEAL_LOCATION_LAVARIDGE_TOWN'},
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_LAVARIDGE_NURSE'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.

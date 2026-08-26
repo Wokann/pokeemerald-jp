@@ -808,8 +808,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LavaridgeTown_House/events.inc"
 	.include "data/maps/LavaridgeTown_Mart/events.inc"
 	.include "data/maps/LavaridgeTown_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_1F
-	.set gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_1F, LavaridgeTown_PokemonCenter_1F_MapEvents
 	.include "data/maps/LavaridgeTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F, LavaridgeTown_PokemonCenter_2F_MapEvents

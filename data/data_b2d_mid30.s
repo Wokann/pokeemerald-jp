@@ -4510,7 +4510,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F (g4 m5)
 	.4byte gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_1F  @ events
+	.4byte LavaridgeTown_PokemonCenter_1F_MapEvents  @ events
 	.4byte LavaridgeTown_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
