@@ -17002,6 +17002,46 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_POKEMART_LISTS.update({
+    # The Mart follows the Cable Club owner. The raw span includes three
+    # zero padding bytes before its reviewed 16-bit product table.
+    'SlateportCity_Mart': (
+        (0x081FE911, 'SlateportCity_Mart_Pokemart', (
+            'ITEM_POKE_BALL',
+            'ITEM_GREAT_BALL',
+            'ITEM_POTION',
+            'ITEM_SUPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_ESCAPE_ROPE',
+            'ITEM_REPEL',
+            'ITEM_HARBOR_MAIL',
+        )),
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    # Slateport Mart's clerk, product list, NPC scripts, and texts match the
+    # corresponding US source owner in physical ROM order.
+    'SlateportCity_Mart': {
+        'scripts': {
+            0x081FE8FA: 'SlateportCity_Mart_EventScript_Clerk',
+            0x081FE92A: 'SlateportCity_Mart_EventScript_BlackBelt',
+            0x081FE933: 'SlateportCity_Mart_EventScript_Man',
+        },
+        'texts': {
+            0x081FE93C: 'SlateportCity_Mart_Text_SomeItemsOnlyAtMart',
+            0x081FE97B: 'SlateportCity_Mart_Text_GreatBallIsBetter',
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
