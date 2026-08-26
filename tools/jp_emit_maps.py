@@ -165,6 +165,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'DesertRuins': 12,
     # Granite Cave 1F follows with the Hiker's two local Flash branches.
     'GraniteCave_1F': 2,
+    # Granite Cave B1F follows with its map-local cracked-floor setup hook.
+    'GraniteCave_B1F': 1,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -175,6 +177,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'MeteorFalls_1F_1R': ('OnLoad',),
     'Underwater_SootopolisCity': ('OnResume',),
     'DesertRuins': ('OnResume', 'OnLoad'),
+    'GraniteCave_B1F': ('SetHoleWarp',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -6435,6 +6438,20 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'items': {0x0157: 'ITEM_HM_FLASH'},
         },
     },
+    # Granite Cave B1F immediately follows. Its two shared cave-hole hooks
+    # and one local resume script match the US cracked-floor setup exactly.
+    'GraniteCave_B1F': {
+        'preserve_region_script_aliases': False,
+        'external_labels': {
+            0x0826432F: 'CaveHole_CheckFallDownHole',
+            0x08264339: 'CaveHole_FixCrackedGround',
+            0x08256EB4: 'GraniteCave_B1F_EventScript_ItemPokeBall',
+        },
+        'symbols': {
+            'maps': {0x1809: 'MAP_GRANITE_CAVE_B2F'},
+            'step_callbacks': {0x07: 'STEP_CB_CRACKED_FLOOR'},
+        },
+    },
 })
 
 # Rustboro Gym is a complete, contiguous JP map-script owner.  The entries
@@ -10767,6 +10784,7 @@ LOCAL_ID_ARGUMENTS = {
 MAP_ARGUMENTS = {
     'setdynamicwarp': {0},
     'setdivewarp': {0},
+    'setholewarp': {0},
     'warpdoor': {0},
     'warphole': {0},
     'warpmossdeepgym': {0},
@@ -10782,11 +10800,17 @@ MAP_ARGUMENTS = {
 
 
 def collapse_coordinate_warp_macros(lines):
-    """Use the canonical three-argument form for coordinate-only warps."""
+    """Use the canonical short forms for reviewed coordinate-only warps."""
     out = []
     for name, argstr in lines:
-        if name in ('setdivewarp', 'setdynamicwarp', 'setescapewarp', 'setwarp', 'warp', 'warpdoor', 'warpmossdeepgym'):
-            args = [arg.strip() for arg in argstr.split(',')]
+        args = [arg.strip() for arg in argstr.split(',')]
+        if name == 'setholewarp':
+            if (len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1')
+                    and args[2] in ('0', '0x0') and args[3] in ('0', '0x0')):
+                # setholewarp MAP uses its documented default 0, 0 values;
+                # formatwarp emits the same WARP_ID_NONE, 0, 0 byte sequence.
+                argstr = args[0]
+        elif name in ('setdivewarp', 'setdynamicwarp', 'setescapewarp', 'setwarp', 'warp', 'warpdoor', 'warpmossdeepgym'):
             if len(args) == 4 and args[1].lower() in ('0xff', '0xffff', '-1'):
                 argstr = ', '.join((args[0], args[2], args[3]))
         out.append((name, argstr))

@@ -1919,6 +1919,13 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set RusturfTunnel_EventScript_ItemMaxEther, 0x08256E9A
 	.globl GraniteCave_1F_EventScript_ItemEscapeRope
 	.set GraniteCave_1F_EventScript_ItemEscapeRope, 0x08256EA7
+	.globl GraniteCave_B1F_EventScript_ItemPokeBall
+	.set GraniteCave_B1F_EventScript_ItemPokeBall, 0x08256EB4
+	@ The cracked-floor hooks remain in their later shared physical owner.
+	.globl CaveHole_CheckFallDownHole
+	.set CaveHole_CheckFallDownHole, 0x0826432F
+	.globl CaveHole_FixCrackedGround
+	.set CaveHole_FixCrackedGround, 0x08264339
 	@ The Day-Care Woman logic remains inside the later shared raw owner.
 	@ Export its reviewed map-event entry without moving that owner early.
 	.globl Route117_PokemonDayCare_EventScript_DaycareWoman
