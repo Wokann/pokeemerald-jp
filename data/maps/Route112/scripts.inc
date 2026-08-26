@@ -6,43 +6,43 @@ Route112_MapScripts::
 
 Route112_OnTransition::
 	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
-	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0x0
+	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
 	end
 
 Route112_EventScript_MagmaGrunts::
 	lockall
-	delay 0x28
-	applymovement LOCALID_ROUTE112_GRUNT_1, 0x0824362B
-	waitmovement 0x0
-	delay 0x14
+	delay 40
+	applymovement LOCALID_ROUTE112_GRUNT_1, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	delay 20
 	msgbox Route112_Text_LeaderGoingToAwakenThing, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE112_GRUNT_1, 0x08243625
-	waitmovement 0x0
-	delay 0x28
-	applymovement LOCALID_ROUTE112_GRUNT_2, 0x08243627
-	waitmovement 0x0
-	delay 0x14
+	applymovement LOCALID_ROUTE112_GRUNT_1, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	delay 40
+	applymovement LOCALID_ROUTE112_GRUNT_2, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	delay 20
 	msgbox Route112_Text_YeahWeNeedMeteorite, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE112_GRUNT_2, 0x08243625
-	waitmovement 0x0
-	delay 0x28
-	applymovement LOCALID_ROUTE112_GRUNT_1, 0x0824362B
-	waitmovement 0x0
-	delay 0x14
+	applymovement LOCALID_ROUTE112_GRUNT_2, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	delay 40
+	applymovement LOCALID_ROUTE112_GRUNT_1, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
+	delay 20
 	msgbox Route112_Text_OhThatsWhyCrewWentToFallarbor, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE112_GRUNT_1, 0x08243625
-	waitmovement 0x0
-	delay 0x28
-	applymovement LOCALID_ROUTE112_GRUNT_2, 0x08243627
-	waitmovement 0x0
-	delay 0x14
+	applymovement LOCALID_ROUTE112_GRUNT_1, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	delay 40
+	applymovement LOCALID_ROUTE112_GRUNT_2, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	delay 20
 	msgbox Route112_Text_CantLetAnyonePassUntilTheyreBack, MSGBOX_DEFAULT
 	closemessage
-	applymovement LOCALID_ROUTE112_GRUNT_2, 0x08243625
-	waitmovement 0x0
+	applymovement LOCALID_ROUTE112_GRUNT_2, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	releaseall
 	end
 
@@ -77,7 +77,7 @@ Route112_EventScript_Trent::
 
 Route112_EventScript_RegisterTrent::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route112_Text_TrentRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_TRENT_1
 	release

@@ -752,38 +752,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.set gMapEvents_ROUTE109, Route109_MapEvents
 	.include "data/maps/Route110/events.inc"
 	.include "data/maps/Route111/events.inc"
-	.globl ROUTE112_EventObjects
-ROUTE112_EventObjects: @ 0x08502080
-	object_event 1, 119, 0, 26, 30, 3, 7, 1, 1, 0, 0, Route112_EventScript_MagmaGrunts, 0x0333
-	object_event 2, 55, 0, 24, 34, 3, 14, 0, 0, 1, 2, Route112_EventScript_Brice, 0x0000
-	object_event 3, 31, 0, 29, 49, 3, 8, 0, 0, 1, 3, Route112_EventScript_Larry, 0x0000
-	object_event 4, 32, 0, 22, 46, 3, 23, 0, 0, 1, 3, Route112_EventScript_Carol, 0x0000
-	object_event 5, 55, 0, 15, 40, 3, 16, 0, 0, 1, 3, Route112_EventScript_Trent, 0x0000
-	object_event 6, 119, 0, 27, 30, 3, 7, 0, 0, 0, 0, Route112_EventScript_MagmaGrunts, 0x0333
-	object_event 7, 60, 0, 27, 6, 0, 12, 0, 0, 0, 24, 0x08244D23, 0x0000
-	object_event 8, 60, 0, 28, 6, 0, 12, 0, 0, 0, 23, 0x08244D23, 0x0000
-	object_event 9, 60, 0, 29, 6, 0, 12, 0, 0, 0, 22, 0x08244D23, 0x0000
-	object_event 10, 60, 0, 30, 6, 3, 12, 0, 0, 0, 21, 0x08244D23, 0x0000
-	object_event 11, 55, 0, 8, 50, 3, 26, 0, 3, 0, 0, Route112_EventScript_Hiker, 0x0000
-	object_event 12, 59, 0, 14, 43, 3, 1, 0, 0, 0, 0, 0x08256B26, 0x03F3
-	object_event 13, 66, 0, 31, 7, 3, 18, 1, 1, 1, 3, Route112_EventScript_Bryant, 0x0000
-	object_event 14, 20, 0, 31, 11, 3, 15, 1, 1, 1, 3, Route112_EventScript_Shayla, 0x0000
-	.globl ROUTE112_EventWarps
-ROUTE112_EventWarps: @ 0x085021D0
-	warp_def 28, 27, 0, 0, MAP_ROUTE112_CABLE_CAR_STATION
-	warp_def 29, 27, 0, 1, MAP_ROUTE112_CABLE_CAR_STATION
-	warp_def 6, 46, 3, 0, MAP_JAGGED_PASS
-	warp_def 7, 46, 3, 1, MAP_JAGGED_PASS
-	warp_def 11, 36, 0, 0, MAP_FIERY_PATH
-	warp_def 22, 10, 0, 1, MAP_FIERY_PATH
-	.globl ROUTE112_EventBgEvents
-ROUTE112_EventBgEvents: @ 0x08502200
-	bg_event 19, 44, 3, 0, Route112_EventScript_MtChimneySign, 0, 0
-	bg_event 22, 37, 0, 0, Route112_EventScript_MtChimneyCableCarSign, 0, 0
-	bg_event 4, 49, 0, 0, Route112_EventScript_RouteSignLavaridge, 0, 0
-	.globl gMapEvents_ROUTE112
-gMapEvents_ROUTE112: @ 0x08502224
-	map_events ROUTE112_EventObjects, ROUTE112_EventWarps, 0, ROUTE112_EventBgEvents
+	.include "data/maps/Route112/events.inc"
 	.globl ROUTE113_EventObjects
 ROUTE113_EventObjects: @ 0x08502238
 	object_event 1, 5, 0, 66, 12, 3, 5, 1, 0, 0, 0, Route113_EventScript_NinjaBoy, 0x0000

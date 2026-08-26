@@ -247,6 +247,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route104_MrBrineysHous
 	LittlerootTown
 JP_STRUCTURED_MAPS += Route110
 JP_STRUCTURED_MAPS += Route111
+JP_STRUCTURED_MAPS += Route112
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools

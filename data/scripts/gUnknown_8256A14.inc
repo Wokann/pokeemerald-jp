@@ -82,7 +82,11 @@ Route111_EventScript_ItemElixir:: @ 0x08256B19
 	finditem ITEM_ELIXIR
 	end
 
-	.incbin "baserom_jp.gba", 0x256b26, 0x1e1
+Route112_EventScript_ItemNugget:: @ 0x08256B26
+	finditem ITEM_NUGGET
+	end
+
+	.incbin "baserom_jp.gba", 0x256b33, 0x1d4
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM
