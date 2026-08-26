@@ -3,7 +3,7 @@
 VerdanturfTown_WandasHouse_MapScripts::
 	.byte 0
 
-VerdanturfTown_WandasHouse_EventScript_Wally::
+VerdanturfTown_WandasHouse_EventScript_Wally:: @ 0x081F7106
 	lock
 	faceplayer
 	goto_if_set FLAG_WALLY_SPEECH, VerdanturfTown_WandasHouse_EventScript_WallyShortSpeech
@@ -12,12 +12,12 @@ VerdanturfTown_WandasHouse_EventScript_Wally::
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WallyShortSpeech::
+VerdanturfTown_WandasHouse_EventScript_WallyShortSpeech:: @ 0x081F711E
 	msgbox VerdanturfTown_WandasHouse_Text_StrongerSpeechShort, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WallysUncle::
+VerdanturfTown_WandasHouse_EventScript_WallysUncle:: @ 0x081F7128
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_WALLY_VICTORY_ROAD, VerdanturfTown_WandasHouse_EventScript_WallysUncleEverGrande
@@ -26,21 +26,21 @@ VerdanturfTown_WandasHouse_EventScript_WallysUncle::
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WallysUncleSlippedOff::
+VerdanturfTown_WandasHouse_EventScript_WallysUncleSlippedOff:: @ 0x081F7146
 	msgbox VerdanturfTown_WandasHouse_Text_WallySlippedOff, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WallysUncleEverGrande::
+VerdanturfTown_WandasHouse_EventScript_WallysUncleEverGrande:: @ 0x081F7150
 	msgbox VerdanturfTown_WandasHouse_Text_WallyGoneThatFar, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WandasBoyfriend::
+VerdanturfTown_WandasHouse_EventScript_WandasBoyfriend:: @ 0x081F715A
 	msgbox VerdanturfTown_WandasHouse_Text_CanSeeGirlfriendEveryDay, MSGBOX_NPC
 	end
 
-VerdanturfTown_WandasHouse_EventScript_Wanda::
+VerdanturfTown_WandasHouse_EventScript_Wanda:: @ 0x081F7163
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, VerdanturfTown_WandasHouse_EventScript_WandaDontWorry
@@ -49,17 +49,17 @@ VerdanturfTown_WandasHouse_EventScript_Wanda::
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_MeetWanda::
+VerdanturfTown_WandasHouse_EventScript_MeetWanda:: @ 0x081F7181
 	msgbox VerdanturfTown_WandasHouse_Text_MeetWanda, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WandaDontWorry::
+VerdanturfTown_WandasHouse_EventScript_WandaDontWorry:: @ 0x081F718B
 	msgbox VerdanturfTown_WandasHouse_Text_DontWorryAboutWally, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WallysAunt::
+VerdanturfTown_WandasHouse_EventScript_WallysAunt:: @ 0x081F7195
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_WALLY_VICTORY_ROAD, VerdanturfTown_WandasHouse_EventScript_WallysAuntEverGrande
@@ -69,22 +69,22 @@ VerdanturfTown_WandasHouse_EventScript_WallysAunt::
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WallysAuntTunnelOpen::
+VerdanturfTown_WandasHouse_EventScript_WallysAuntTunnelOpen:: @ 0x081F71BC
 	msgbox VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendWasDigging, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WallysAuntAnythingHappened::
+VerdanturfTown_WandasHouse_EventScript_WallysAuntAnythingHappened:: @ 0x081F71C6
 	msgbox VerdanturfTown_WandasHouse_Text_IfAnythingHappenedToWally, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_WandasHouse_EventScript_WallysAuntEverGrande::
+VerdanturfTown_WandasHouse_EventScript_WallysAuntEverGrande:: @ 0x081F71D0
 	msgbox VerdanturfTown_WandasHouse_Text_WallyWasInEverGrande, MSGBOX_DEFAULT
 	release
 	end
 
-VerdanturfTown_WandasHouse_Text_StrongerSpeech:
+VerdanturfTown_WandasHouse_Text_StrongerSpeech: @ 0x081F71DA
 	.string "ミツル“{PLAYER}さんに　まけたけど\n"
 	.string "もう　おちこんでないよ\p"
 	.string "だって　ラルトスと　いっしょに\n"
@@ -95,12 +95,12 @@ VerdanturfTown_WandasHouse_Text_StrongerSpeech:
 	.string "つよくなって　もういちど\l"
 	.string "ポケモンしょうぶを　おねがい　するからね！$"
 
-VerdanturfTown_WandasHouse_Text_StrongerSpeechShort:
+VerdanturfTown_WandasHouse_Text_StrongerSpeechShort: @ 0x081F7267
 	.string "ミツル“いつか　{PLAYER}さん　よりも\n"
 	.string "つよくなって　もういちど\l"
 	.string "ポケモンしょうぶを　おねがい　するからね！$"
 
-VerdanturfTown_WandasHouse_Text_WallysNextDoor:
+VerdanturfTown_WandasHouse_Text_WallysNextDoor: @ 0x081F729B
 	.string "おじさん“おお！　{PLAYER}{KUN}\n"
 	.string "ミツルくんは　となりに　いるよ！\p"
 	.string "しかし　たいした　もんだね！\p"
@@ -110,17 +110,17 @@ VerdanturfTown_WandasHouse_Text_WallysNextDoor:
 	.string "あのこに　きぼうを　あたえて　いるのは\p"
 	.string "ポケモンなのかも　しれないな⋯⋯$"
 
-VerdanturfTown_WandasHouse_Text_WallySlippedOff:
+VerdanturfTown_WandasHouse_Text_WallySlippedOff: @ 0x081F731F
 	.string "ミツルくん⋯⋯\n"
 	.string "いつのまにか　いなくなっちゃった⋯⋯$"
 
-VerdanturfTown_WandasHouse_Text_WallyGoneThatFar:
+VerdanturfTown_WandasHouse_Text_WallyGoneThatFar: @ 0x081F733A
 	.string "おじさん“そうですか⋯⋯\n"
 	.string "あの　ミツルくんが\l"
 	.string "ひとりで　そんな　とおくまで⋯⋯\p"
 	.string "さすがは　わたしの　おとうとの　むすこだ！$"
 
-VerdanturfTown_WandasHouse_Text_MeetWanda:
+VerdanturfTown_WandasHouse_Text_MeetWanda: @ 0x081F7378
 	.string "ミチル“あなたは⋯⋯？\n"
 	.string "⋯⋯あ　そうか！\p"
 	.string "ミツルくんが　いってた\n"
@@ -129,18 +129,18 @@ VerdanturfTown_WandasHouse_Text_MeetWanda:
 	.string "どう？　あのこ　こっちに　きてから\n"
 	.string "ずいぶん　げんきに　なったでしょう？$"
 
-VerdanturfTown_WandasHouse_Text_DontWorryAboutWally:
+VerdanturfTown_WandasHouse_Text_DontWorryAboutWally: @ 0x081F73E3
 	.string "ミチル“ミツルくんの　ことなら\n"
 	.string "だいじょうぶ！　しんぱい　ないわよ！\p"
 	.string "だって　わたしの　いとこ　だし\n"
 	.string "なにより　ポケモンが　いっしょ　ですもの！$"
 
-VerdanturfTown_WandasHouse_Text_CanSeeGirlfriendEveryDay:
+VerdanturfTown_WandasHouse_Text_CanSeeGirlfriendEveryDay: @ 0x081F742C
 	.string "きみの　おかげで\n"
 	.string "まいにち　かのじょに　あえて\l"
 	.string "おれは　ハッピーだよ！$"
 
-VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendDriven:
+VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendDriven: @ 0x081F7450
 	.string "うちの　むすめの　こいびとは\n"
 	.string "ずいぶん　じょうねつてきな　ひとでね\p"
 	.string "むすめに　あうため　だけに\n"
@@ -148,17 +148,17 @@ VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendDriven:
 	.string "むすめも　しんぱい　なのか\n"
 	.string "いつも　トンネルに　あしを　はこんでるよ$"
 
-VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendWasDigging:
+VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendWasDigging: @ 0x081F74B7
 	.string "なんと！　むすめの　こいびと　ときたら\n"
 	.string "すでで　トンネルを　ほっていたって！\p"
 	.string "そりゃあ　たまげた　もんだ！$"
 
-VerdanturfTown_WandasHouse_Text_IfAnythingHappenedToWally:
+VerdanturfTown_WandasHouse_Text_IfAnythingHappenedToWally: @ 0x081F74ED
 	.string "ミツルくんに　もしものことが　あったら\n"
 	.string "あたしゃ　トウカにいる　ごりょうしんに\l"
 	.string "あわせる　かおが　ないよ⋯⋯$"
 
-VerdanturfTown_WandasHouse_Text_WallyWasInEverGrande:
+VerdanturfTown_WandasHouse_Text_WallyWasInEverGrande: @ 0x081F7524
 	.string "ミツルくんが　サイユウに　いたって！？\p"
 	.string "そりゃ　トウカの　ごりょうしんも\n"
 	.string "びっくり　するだろうねぇ$"

@@ -8224,6 +8224,60 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Wanda's House is already decoded, but it predates generator-backed semantic
+# labels. Reconcile every local branch and text record with the matching US
+# map source so regeneration retains the real names, flags, and field codes.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_WandasHouse': {
+        'scripts': {
+            0x081F7106: 'VerdanturfTown_WandasHouse_EventScript_Wally',
+            0x081F711E: 'VerdanturfTown_WandasHouse_EventScript_WallyShortSpeech',
+            0x081F7128: 'VerdanturfTown_WandasHouse_EventScript_WallysUncle',
+            0x081F7146: 'VerdanturfTown_WandasHouse_EventScript_WallysUncleSlippedOff',
+            0x081F7150: 'VerdanturfTown_WandasHouse_EventScript_WallysUncleEverGrande',
+            0x081F715A: 'VerdanturfTown_WandasHouse_EventScript_WandasBoyfriend',
+            0x081F7163: 'VerdanturfTown_WandasHouse_EventScript_Wanda',
+            0x081F7181: 'VerdanturfTown_WandasHouse_EventScript_MeetWanda',
+            0x081F718B: 'VerdanturfTown_WandasHouse_EventScript_WandaDontWorry',
+            0x081F7195: 'VerdanturfTown_WandasHouse_EventScript_WallysAunt',
+            0x081F71BC: 'VerdanturfTown_WandasHouse_EventScript_WallysAuntTunnelOpen',
+            0x081F71C6: 'VerdanturfTown_WandasHouse_EventScript_WallysAuntAnythingHappened',
+            0x081F71D0: 'VerdanturfTown_WandasHouse_EventScript_WallysAuntEverGrande',
+        },
+        'texts': {
+            0x081F71DA: 'VerdanturfTown_WandasHouse_Text_StrongerSpeech',
+            0x081F7267: 'VerdanturfTown_WandasHouse_Text_StrongerSpeechShort',
+            0x081F729B: 'VerdanturfTown_WandasHouse_Text_WallysNextDoor',
+            0x081F731F: 'VerdanturfTown_WandasHouse_Text_WallySlippedOff',
+            0x081F733A: 'VerdanturfTown_WandasHouse_Text_WallyGoneThatFar',
+            0x081F7378: 'VerdanturfTown_WandasHouse_Text_MeetWanda',
+            0x081F73E3: 'VerdanturfTown_WandasHouse_Text_DontWorryAboutWally',
+            0x081F742C: 'VerdanturfTown_WandasHouse_Text_CanSeeGirlfriendEveryDay',
+            0x081F7450: 'VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendDriven',
+            0x081F74B7: 'VerdanturfTown_WandasHouse_Text_DaughtersBoyfriendWasDigging',
+            0x081F74ED: 'VerdanturfTown_WandasHouse_Text_IfAnythingHappenedToWally',
+            0x081F7524: 'VerdanturfTown_WandasHouse_Text_WallyWasInEverGrande',
+        },
+        'field_placeholders': {
+            0x081F71DA: {0x01: 'PLAYER'},
+            0x081F7267: {0x01: 'PLAYER'},
+            0x081F729B: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x081F7378: {0x01: 'PLAYER'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x007E: 'FLAG_DEFEATED_WALLY_VICTORY_ROAD',
+                0x00BE: 'FLAG_DEFEATED_WALLY_MAUVILLE',
+                0x00C1: 'FLAG_WALLY_SPEECH',
+                0x00C7: 'FLAG_RUSTURF_TUNNEL_OPENED',
+                0x04F3: 'FLAG_DEFEATED_LAVARIDGE_GYM',
+            },
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
