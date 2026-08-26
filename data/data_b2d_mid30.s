@@ -4446,7 +4446,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN_GYM (g3 m3)
 	.4byte gMapLayout_DEWFORD_TOWN_GYM  @ mapLayout
-	.4byte gMapEvents_DEWFORD_TOWN_GYM  @ events
+	.4byte DewfordTown_Gym_MapEvents  @ events
 	.4byte DewfordTown_Gym_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music

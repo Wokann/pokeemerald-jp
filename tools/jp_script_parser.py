@@ -299,6 +299,15 @@ TRAINERBATTLE_SCRIPT_ARG_INDEX = {
     8: 6,
 }
 
+# The JP stream at this reviewed Dewford Gym address intentionally uses the
+# one-byte ``nop1`` alias for opcode 0x01.  That opcode normally decodes as
+# the two-byte-operand ``setworldmapflag`` command, so a global format change
+# would corrupt genuine uses elsewhere.  Keep the ambiguity explicit and
+# local to the byte-verified script site.
+INSTRUCTION_OVERRIDES = {
+    0x081F2E12: (1, 'nop1', [], []),
+}
+
 
 def trainerbattle_text_arg_indexes(args):
     """Return argument indexes that carry text pointers in trainerbattle."""
@@ -336,6 +345,8 @@ def _decode_trainerbattle(addr):
 
 def decode_instruction(addr):
     """Return (size, name, args, refs) or None if undecodable."""
+    if addr in INSTRUCTION_OVERRIDES:
+        return INSTRUCTION_OVERRIDES[addr]
     op = rd8(addr)
     if op == TRAINERBATTLE_OPCODE:
         return _decode_trainerbattle(addr)

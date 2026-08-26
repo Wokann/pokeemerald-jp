@@ -6562,6 +6562,157 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    # Dewford Gym is the next full owner. The JP and US label sequences match
+    # one-to-one across its flash-state helpers, trainers, statues, and all
+    # thirty-three text records. The parser's lone nop1 ambiguity is handled
+    # separately at its byte-verified address in jp_script_parser.py.
+    'DewfordTown_Gym': {
+        'scripts': {
+            0x081F2D8D: 'DewfordTown_Gym_OnTransition',
+            0x081F2D93: 'DewfordTown_Gym_EventScript_SetFlashLevel',
+            0x081F2DED: 'DewfordTown_Gym_EventScript_SetLightsOn',
+            0x081F2DF1: 'DewfordTown_Gym_EventScript_SetFlashLevel1',
+            0x081F2DF5: 'DewfordTown_Gym_EventScript_SetFlashLevel2',
+            0x081F2DF9: 'DewfordTown_Gym_EventScript_SetFlashLevel3',
+            0x081F2DFD: 'DewfordTown_Gym_EventScript_SetFlashLevel4',
+            0x081F2E01: 'DewfordTown_Gym_EventScript_SetFlashLevel5',
+            0x081F2E05: 'DewfordTown_Gym_EventScript_SetFlashLevel6',
+            0x081F2E09: 'DewfordTown_Gym_EventScript_SetFlashLevel7',
+            0x081F2E0D: 'DewfordTown_Gym_EventScript_BrightenRoom',
+            0x081F2E65: 'DewfordTown_Gym_EventScript_NoLightChange',
+            0x081F2E66: 'DewfordTown_Gym_EventScript_AnimateFlash1Trainer',
+            0x081F2E71: 'DewfordTown_Gym_EventScript_AnimateFlash2Trainers',
+            0x081F2E7C: 'DewfordTown_Gym_EventScript_AnimateFlash3Trainers',
+            0x081F2E87: 'DewfordTown_Gym_EventScript_AnimateFlash4Trainers',
+            0x081F2E92: 'DewfordTown_Gym_EventScript_AnimateFlash5Trainers',
+            0x081F2E9D: 'DewfordTown_Gym_EventScript_AnimateFlash6Trainers',
+            0x081F2EA8: 'DewfordTown_Gym_EventScript_AnimateFlashFullBrightness',
+            0x081F2EB3: 'DewfordTown_Gym_EventScript_CountTrainersDefeated',
+            0x081F2EC6: 'DewfordTown_Gym_EventScript_CheckJocelyn',
+            0x081F2ED4: 'DewfordTown_Gym_EventScript_CheckLaura',
+            0x081F2EE2: 'DewfordTown_Gym_EventScript_CheckBrenden',
+            0x081F2EF0: 'DewfordTown_Gym_EventScript_CheckCristian',
+            0x081F2EFE: 'DewfordTown_Gym_EventScript_CheckLilith',
+            0x081F2F0C: 'DewfordTown_Gym_EventScript_StopCountingTrainers',
+            0x081F2F0D: 'DewfordTown_Gym_EventScript_Brawly',
+            0x081F2F42: 'DewfordTown_Gym_EventScript_BrawlyDefeated',
+            0x081F2FA0: 'DewfordTown_Gym_EventScript_GiveBulkUp',
+            0x081F2FC3: 'DewfordTown_Gym_EventScript_GiveBulkUp2',
+            0x081F2FE7: 'DewfordTown_Gym_EventScript_BrawlyRematch',
+            0x081F3002: 'DewfordTown_Gym_EventScript_Takao',
+            0x081F301D: 'DewfordTown_Gym_EventScript_TakaoBrightenRoom',
+            0x081F3024: 'DewfordTown_Gym_EventScript_Jocelyn',
+            0x081F303F: 'DewfordTown_Gym_EventScript_JocelynBrightenRoom',
+            0x081F3046: 'DewfordTown_Gym_EventScript_Laura',
+            0x081F3061: 'DewfordTown_Gym_EventScript_LauraBrightenRoom',
+            0x081F3068: 'DewfordTown_Gym_EventScript_Brenden',
+            0x081F3083: 'DewfordTown_Gym_EventScript_BrendenBrightenRoom',
+            0x081F308A: 'DewfordTown_Gym_EventScript_Cristian',
+            0x081F30A5: 'DewfordTown_Gym_EventScript_CristianBrightenRoom',
+            0x081F30AC: 'DewfordTown_Gym_EventScript_Lilith',
+            0x081F30C7: 'DewfordTown_Gym_EventScript_LilithBrightenRoom',
+            0x081F30CE: 'DewfordTown_Gym_EventScript_GymGuide',
+            0x081F30E3: 'DewfordTown_Gym_EventScript_GymGuidePostVictory',
+            0x081F30ED: 'DewfordTown_Gym_EventScript_LeftGymStatue',
+            0x081F30FD: 'DewfordTown_Gym_EventScript_RightGymStatue',
+            0x081F310D: 'DewfordTown_Gym_EventScript_GymStatueCertified',
+            0x081F3117: 'DewfordTown_Gym_EventScript_GymStatue',
+        },
+        'texts': {
+            0x081F3121: 'DewfordTown_Gym_Text_GymGuideAdvice',
+            0x081F31ED: 'DewfordTown_Gym_Text_GymGuidePostVictory',
+            0x081F3212: 'DewfordTown_Gym_Text_TakaoIntro',
+            0x081F3227: 'DewfordTown_Gym_Text_TakaoDefeat',
+            0x081F3235: 'DewfordTown_Gym_Text_TakaoPostBattle',
+            0x081F3256: 'DewfordTown_Gym_Text_JocelynIntro',
+            0x081F3279: 'DewfordTown_Gym_Text_JocelynDefeat',
+            0x081F3292: 'DewfordTown_Gym_Text_JocelynPostBattle',
+            0x081F32DD: 'DewfordTown_Gym_Text_LauraIntro',
+            0x081F32FC: 'DewfordTown_Gym_Text_LauraDefeat',
+            0x081F330D: 'DewfordTown_Gym_Text_LauraPostBattle',
+            0x081F334A: 'DewfordTown_Gym_Text_LilithIntro',
+            0x081F3362: 'DewfordTown_Gym_Text_LilithDefeat',
+            0x081F336F: 'DewfordTown_Gym_Text_LilithPostBattle',
+            0x081F3395: 'DewfordTown_Gym_Text_BrendenIntro',
+            0x081F33AE: 'DewfordTown_Gym_Text_BrendenDefeat',
+            0x081F33C2: 'DewfordTown_Gym_Text_BrendenPostBattle',
+            0x081F33E2: 'DewfordTown_Gym_Text_CristianIntro',
+            0x081F33FF: 'DewfordTown_Gym_Text_CristianDefeat',
+            0x081F3410: 'DewfordTown_Gym_Text_CristianPostBattle',
+            0x081F342C: 'DewfordTown_Gym_Text_BrawlyIntro',
+            0x081F34A7: 'DewfordTown_Gym_Text_BrawlyDefeat',
+            0x081F34DA: 'DewfordTown_Gym_Text_ReceivedKnuckleBadge',
+            0x081F34F3: 'DewfordTown_Gym_Text_KnuckleBadgeInfoTakeThis',
+            0x081F3568: 'DewfordTown_Gym_Text_ExplainBulkUp',
+            0x081F35AD: 'DewfordTown_Gym_Text_RegisteredBrawly',
+            0x081F35C8: 'DewfordTown_Gym_Text_BrawlyPostBattle',
+            0x081F360D: 'DewfordTown_Gym_Text_GymStatue',
+            0x081F361A: 'DewfordTown_Gym_Text_GymStatueCertified',
+            0x081F363A: 'DewfordTown_Gym_Text_BrawlyPreRematch',
+            0x081F36A5: 'DewfordTown_Gym_Text_BrawlyRematchDefeat',
+            0x081F36B9: 'DewfordTown_Gym_Text_BrawlyPostRematch',
+            0x081F36F5: 'DewfordTown_Gym_Text_BrawlyRematchNeedTwoMons',
+        },
+        'external_labels': {
+            0x08242F10: 'Common_EventScript_ReadyPetalburgGymForBattle',
+            0x08242FCF: 'Common_EventScript_SetGymTrainers',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x082430EA: 'Common_EventScript_BagIsFull',
+            0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
+        },
+        'field_placeholders': {
+            0x081F3121: {0x01: 'PLAYER'},
+            0x081F34DA: {0x01: 'PLAYER'},
+            0x081F361A: {0x01: 'PLAYER'},
+        },
+        'local_scripts': (0x081F2D8D, 0x081F2FC3),
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        # The matching US source keeps the two giveitem failure branches as
+        # literal 0, while the adjacent rematch special is a true boolean.
+        'literal_result_commands': ('giveitem',),
+        'symbols': {
+            'flags': {
+                0x0080: 'FLAG_ENABLE_ROXANNE_FIRST_CALL',
+                0x00A6: 'FLAG_RECEIVED_TM_BULK_UP',
+                0x01D4: 'FLAG_ENABLE_BRAWLY_MATCH_CALL',
+                0x04F1: 'FLAG_DEFEATED_DEWFORD_GYM',
+                0x0868: 'FLAG_BADGE02_GET',
+            },
+            'vars': {
+                0x4085: 'VAR_PETALBURG_GYM_STATE',
+                0x40F4: 'VAR_ROXANNE_CALL_STEP_COUNTER',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'trainers': {
+                0x00B3: 'TRAINER_TAKAO',
+                0x010A: 'TRAINER_BRAWLY_1',
+                0x01A9: 'TRAINER_JOCELYN',
+                0x01AA: 'TRAINER_LAURA',
+                0x023C: 'TRAINER_BRENDEN',
+                0x023D: 'TRAINER_LILITH',
+                0x023E: 'TRAINER_CRISTIAN',
+            },
+            'items': {0x0128: 'ITEM_TM_BULK_UP'},
+            'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
+            'sounds': {0x0023: 'SE_SWITCH'},
+            'script_var_values': {
+                0x081F2F0D: {0x800D: {0x01: 'TRUE'}},
+            },
+            'decimal_arguments': {
+                'addvar': (1,),
+                'animateflash': (0,),
+                'call_if_eq': (1,),
+                'delay': (0,),
+                'goto_if_eq': (1,),
+                'setflashradius': (0,),
+                'setvar': (1,),
+            },
+        },
+    },
 })
 
 # Oldale Mart's two adjacent product records were checked against both the
@@ -11432,6 +11583,9 @@ TEXT_CODEC = JapaneseScriptTextCodec()
 CANONICAL_SCRIPT_COMMAND_NAMES = {
     'cmdDB': 'messageinstant',
     'getpricereduction': 'getpokenewsactive',
+    # JP exposes the historical radius name for SCR_OP_SETFLASHLEVEL; the
+    # byte-identical Emerald macro name matches the reviewed US sources.
+    'setflashradius': 'setflashlevel',
     'mossdeepgym1': 'moverotatingtileobjects',
     'mossdeepgym3': 'initrotatingtilepuzzle',
     'mossdeepgym4': 'closebraillemessage',
@@ -12112,7 +12266,12 @@ def semantic_symbol_formatter(mname, script_addr=None):
                         .get(script_addr, {}).get(args[0], {}).get(value))
             if reviewed is not None:
                 return reviewed
-            return symbols.get('var_values', {}).get(args[0], {}).get(value)
+            reviewed = symbols.get('var_values', {}).get(args[0], {}).get(value)
+            if reviewed is not None:
+                return reviewed
+            if index in symbols.get('decimal_arguments', {}).get(name, ()):
+                return str(value)
+            return None
         if name in ('setvar', 'addvar') and index == 1 and args:
             reviewed = (symbols.get('script_var_values', {})
                         .get(script_addr, {}).get(args[0], {}).get(value))
@@ -12209,7 +12368,12 @@ def semantic_symbol_formatter(mname, script_addr=None):
                         .get(script_addr, {}).get(args[0], {}).get(value))
             if reviewed is not None:
                 return reviewed
-            return symbols.get('var_values', {}).get(args[0], {}).get(value)
+            reviewed = symbols.get('var_values', {}).get(args[0], {}).get(value)
+            if reviewed is not None:
+                return reviewed
+            if index in symbols.get('decimal_arguments', {}).get(name, ()):
+                return str(value)
+            return None
         if index in MAP_ARGUMENTS.get(name, ()):
             return symbols.get('maps', {}).get(value)
         if index in LOCAL_ID_ARGUMENTS.get(name, ()):

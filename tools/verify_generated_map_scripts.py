@@ -148,6 +148,11 @@ def _external_label_addresses() -> dict[str, int]:
     # a reviewed semantic label.  The temporary verifier must know every
     # alias, not merely the primary display name used by map emission.
     labels = emitter.event_script_symbol_addresses()
+    # These two JP semantic opcode aliases are defined in data/event_scripts.s
+    # rather than in the preprocessor headers included by this isolated map
+    # wrapper. Keep their byte values available so a generated map using the
+    # reviewed nop1/setflashlevel macros can be assembled independently.
+    labels.update({"SCR_OP_NOP1": 0x01, "SCR_OP_SETFLASHLEVEL": 0x99})
     # These names are macro-only string-buffer selectors. They do not survive
     # as ROM symbols, but GAS must know their identities while expanding
     # stringvar inside generated map scripts.
