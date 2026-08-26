@@ -17301,6 +17301,35 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    # The Rock Smash Dude owner follows the Bike Shop in physical ROM order.
+    # ITEM_HM06 is Rock Smash in the JP item table.
+    'MauvilleCity_House1': {
+        'scripts': {
+            0x081FFD78: 'MauvilleCity_House1_EventScript_RockSmashDude',
+            0x081FFDA7: 'MauvilleCity_House1_EventScript_ReceivedRockSmash',
+        },
+        'texts': {
+            0x081FFDB1: 'MauvilleCity_House1_Text_ImRockSmashDudeTakeThis',
+            0x081FFE53: 'MauvilleCity_House1_Text_ExplainRockSmash',
+            0x081FFEB7: 'MauvilleCity_House1_Text_MonCanFlyOutOfSmashedRock',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x006B: 'FLAG_RECEIVED_HM_ROCK_SMASH',
+                0x034B: 'FLAG_HIDE_ROUTE_111_ROCK_SMASH_TIP_GUY',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+            },
+            'items': {0x0158: 'ITEM_HM06'},
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
