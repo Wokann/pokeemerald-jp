@@ -224,6 +224,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Room4 follows with its two Aqua grunt trainer scripts in the same
     # reviewed US source order.
     'SeafloorCavern_Room4': 2,
+    # Room9 follows the empty Room5-8 map-script records with Archie’s
+    # Kyogre-awakening sequence.
+    'SeafloorCavern_Room9': 1,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -362,6 +365,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SeafloorCavern_Room3': 6,
     # Room4 owns its two Aqua grunt dialogue triplets.
     'SeafloorCavern_Room4': 6,
+    # Room9 owns Archie and Maxie's fifteen contiguous story text records.
+    'SeafloorCavern_Room9': 15,
 }
 
 MAP_SCRIPT_NAMES = {
