@@ -7,14 +7,16 @@ FortreeCity_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-FortreeCity_PokemonCenter_2F_EventScript_Colosseum::
+@ The below 3 are unused and leftover from RS
+
+FortreeCity_PokemonCenter_2F_EventScript_Colosseum:: @ 0x08204DAB
 	call CableClub_EventScript_Colosseum
 	end
 
-FortreeCity_PokemonCenter_2F_EventScript_TradeCenter::
+FortreeCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 0x08204DB1
 	call CableClub_EventScript_TradeCenter
 	end
 
-FortreeCity_PokemonCenter_2F_EventScript_RecordCorner::
+FortreeCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 0x08204DB7
 	call CableClub_EventScript_RecordCorner
 	end

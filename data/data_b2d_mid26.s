@@ -972,8 +972,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/FortreeCity_Gym/events.inc"
 	.include "data/maps/FortreeCity_PokemonCenter_1F/events.inc"
 	.include "data/maps/FortreeCity_PokemonCenter_2F/events.inc"
-	.globl gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F
-	.set gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F, FortreeCity_PokemonCenter_2F_MapEvents
 	.include "data/maps/FortreeCity_Mart/events.inc"
 	.globl gMapEvents_FORTREE_CITY_MART
 	.set gMapEvents_FORTREE_CITY_MART, FortreeCity_Mart_MapEvents
