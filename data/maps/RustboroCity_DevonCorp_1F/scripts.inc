@@ -4,16 +4,16 @@ RustboroCity_DevonCorp_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_DevonCorp_1F_OnTransition
 	.byte 0
 
-RustboroCity_DevonCorp_1F_OnTransition:
+RustboroCity_DevonCorp_1F_OnTransition: @ 0x08201036
 	call_if_unset FLAG_RETURNED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_BlockStairs
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_BlockStairs::
+RustboroCity_DevonCorp_1F_EventScript_BlockStairs:: @ 0x08201040
 	setobjectxyperm LOCALID_DEVON_CORP_STAIR_GUARD, 14, 2
 	setobjectmovementtype LOCALID_DEVON_CORP_STAIR_GUARD, MOVEMENT_TYPE_FACE_DOWN
 	return
 
-RustboroCity_DevonCorp_1F_EventScript_Employee::
+RustboroCity_DevonCorp_1F_EventScript_Employee:: @ 0x0820104C
 	lock
 	faceplayer
 	goto_if_set FLAG_RETURNED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_GoodsRecovered
@@ -22,17 +22,17 @@ RustboroCity_DevonCorp_1F_EventScript_Employee::
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_RobberWasntBright::
+RustboroCity_DevonCorp_1F_EventScript_RobberWasntBright:: @ 0x0820106A
 	msgbox RustboroCity_DevonCorp_1F_Text_RobberWasntVeryBright, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_GoodsRecovered::
+RustboroCity_DevonCorp_1F_EventScript_GoodsRecovered:: @ 0x08201074
 	msgbox RustboroCity_DevonCorp_1F_Text_SoundsLikeStolenGoodsRecovered, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_StairGuard::
+RustboroCity_DevonCorp_1F_EventScript_StairGuard:: @ 0x0820107E
 	lock
 	faceplayer
 	goto_if_set FLAG_RETURNED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_AlwaysWelcome
@@ -42,17 +42,17 @@ RustboroCity_DevonCorp_1F_EventScript_StairGuard::
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_AlwaysWelcome::
+RustboroCity_DevonCorp_1F_EventScript_AlwaysWelcome:: @ 0x082010A5
 	msgbox RustboroCity_DevonCorp_1F_Text_YoureAlwaysWelcomeHere, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_GotRobbed::
+RustboroCity_DevonCorp_1F_EventScript_GotRobbed:: @ 0x082010AF
 	msgbox RustboroCity_DevonCorp_1F_Text_HowCouldWeGetRobbed, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_Greeter::
+RustboroCity_DevonCorp_1F_EventScript_Greeter:: @ 0x082010B9
 	lock
 	faceplayer
 	goto_if_set FLAG_RETURNED_DEVON_GOODS, RustboroCity_DevonCorp_1F_EventScript_WelcomeToDevonCorp
@@ -62,21 +62,21 @@ RustboroCity_DevonCorp_1F_EventScript_Greeter::
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_WelcomeToDevonCorp::
+RustboroCity_DevonCorp_1F_EventScript_WelcomeToDevonCorp:: @ 0x082010E0
 	msgbox RustboroCity_DevonCorp_1F_Text_WelcomeToDevonCorp, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_StaffGotRobbed::
+RustboroCity_DevonCorp_1F_EventScript_StaffGotRobbed:: @ 0x082010EA
 	msgbox RustboroCity_DevonCorp_1F_Text_StaffGotRobbed, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_RocksMetalDisplay::
+RustboroCity_DevonCorp_1F_EventScript_RocksMetalDisplay:: @ 0x082010F4
 	msgbox RustboroCity_DevonCorp_1F_Text_RocksMetalDisplay, MSGBOX_SIGN
 	end
 
-RustboroCity_DevonCorp_1F_EventScript_ProductsDisplay::
+RustboroCity_DevonCorp_1F_EventScript_ProductsDisplay:: @ 0x082010FD
 	msgbox RustboroCity_DevonCorp_1F_Text_ProductDisplay, MSGBOX_SIGN
 	end
 

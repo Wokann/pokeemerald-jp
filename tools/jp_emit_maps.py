@@ -17800,6 +17800,56 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Rustboro Devon Corp 1F is the next physical owner. Its transition stair
+# guard, three employee states, two display signs, and all ten text records
+# parallel the corresponding pokeemerald map source.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'RustboroCity_DevonCorp_1F': {
+        'scripts': {
+            0x08201036: 'RustboroCity_DevonCorp_1F_OnTransition',
+            0x08201040: 'RustboroCity_DevonCorp_1F_EventScript_BlockStairs',
+            0x0820104C: 'RustboroCity_DevonCorp_1F_EventScript_Employee',
+            0x0820106A: 'RustboroCity_DevonCorp_1F_EventScript_RobberWasntBright',
+            0x08201074: 'RustboroCity_DevonCorp_1F_EventScript_GoodsRecovered',
+            0x0820107E: 'RustboroCity_DevonCorp_1F_EventScript_StairGuard',
+            0x082010A5: 'RustboroCity_DevonCorp_1F_EventScript_AlwaysWelcome',
+            0x082010AF: 'RustboroCity_DevonCorp_1F_EventScript_GotRobbed',
+            0x082010B9: 'RustboroCity_DevonCorp_1F_EventScript_Greeter',
+            0x082010E0: 'RustboroCity_DevonCorp_1F_EventScript_WelcomeToDevonCorp',
+            0x082010EA: 'RustboroCity_DevonCorp_1F_EventScript_StaffGotRobbed',
+            0x082010F4: 'RustboroCity_DevonCorp_1F_EventScript_RocksMetalDisplay',
+            0x082010FD: 'RustboroCity_DevonCorp_1F_EventScript_ProductsDisplay',
+        },
+        'texts': {
+            0x08201106: 'RustboroCity_DevonCorp_1F_Text_WelcomeToDevonCorp',
+            0x08201146: 'RustboroCity_DevonCorp_1F_Text_StaffGotRobbed',
+            0x08201162: 'RustboroCity_DevonCorp_1F_Text_ThoseShoesAreOurProduct',
+            0x082011A8: 'RustboroCity_DevonCorp_1F_Text_RobberWasntVeryBright',
+            0x08201208: 'RustboroCity_DevonCorp_1F_Text_SoundsLikeStolenGoodsRecovered',
+            0x08201222: 'RustboroCity_DevonCorp_1F_Text_OnlyAuthorizedPeopleEnter',
+            0x08201249: 'RustboroCity_DevonCorp_1F_Text_HowCouldWeGetRobbed',
+            0x0820126B: 'RustboroCity_DevonCorp_1F_Text_YoureAlwaysWelcomeHere',
+            0x08201284: 'RustboroCity_DevonCorp_1F_Text_RocksMetalDisplay',
+            0x08201357: 'RustboroCity_DevonCorp_1F_Text_ProductDisplay',
+        },
+        'local_scripts': (0x08201036,),
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x008E: 'FLAG_DEVON_GOODS_STOLEN',
+                0x008F: 'FLAG_RECOVERED_DEVON_GOODS',
+                0x0090: 'FLAG_RETURNED_DEVON_GOODS',
+            },
+            'local_ids': {0x02: 'LOCALID_DEVON_CORP_STAIR_GUARD'},
+            'movement_types': {0x08: 'MOVEMENT_TYPE_FACE_DOWN'},
+            'decimal_arguments': {
+                'setobjectxyperm': (1, 2),
+            },
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
