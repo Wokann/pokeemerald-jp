@@ -3,11 +3,11 @@
 RustboroCity_House2_MapScripts::
 	.byte 0
 
-RustboroCity_House2_EventScript_PokefanF::
+RustboroCity_House2_EventScript_PokefanF:: @ 0x08203F16
 	msgbox RustboroCity_House2_Text_TrainerSchoolExcellent, MSGBOX_NPC
 	end
 
-RustboroCity_House2_EventScript_LittleGirl::
+RustboroCity_House2_EventScript_LittleGirl:: @ 0x08203F1F
 	msgbox RustboroCity_House2_Text_RoxanneKnowsALot, MSGBOX_NPC
 	end
 
