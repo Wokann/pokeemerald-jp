@@ -4,8 +4,8 @@ LilycoveCity_House3_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, LilycoveCity_House3_OnTransition
 	.byte 0
 
-LilycoveCity_House3_OnTransition:: @ 0x0820A06B
-	random 0x4
+LilycoveCity_House3_OnTransition: @ 0x0820A06B
+	random 4
 	copyvar VAR_TEMP_1, VAR_RESULT
 	end
 

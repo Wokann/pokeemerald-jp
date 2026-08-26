@@ -12205,6 +12205,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LilycoveCity_House3': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
+        'local_scripts': (0x0820A06B,),
         'external_labels': {
             0x08243625: 'Common_Movement_FaceOriginalDirection',
         },
@@ -12217,6 +12218,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
             'switch_values': {
                 'VAR_RESULT': {0x0: 'NO', 0x1: 'YES'},
+            },
+            'decimal_arguments': {
+                'random': (0,),
             },
         },
     },
