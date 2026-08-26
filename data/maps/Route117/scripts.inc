@@ -10,7 +10,7 @@ Route117_OnTransition::
 
 Route117_EventScript_TryMoveDayCareMan::
 	goto_if_unset FLAG_PENDING_DAYCARE_EGG, Route117_EventScript_StopMoveDayCareMan
-	setobjectxyperm LOCALID_DAYCARE_MAN, 0x2F, 0x6
+	setobjectxyperm LOCALID_DAYCARE_MAN, 47, 6
 
 Route117_EventScript_StopMoveDayCareMan::
 	return
@@ -49,7 +49,7 @@ Route117_EventScript_Isaac::
 
 Route117_EventScript_RegisterIsaac::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route117_Text_IsaacRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_ISAAC_1
 	release
@@ -70,7 +70,7 @@ Route117_EventScript_Lydia::
 
 Route117_EventScript_RegisterLydia::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route117_Text_LydiaRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_LYDIA_1
 	release
@@ -91,7 +91,7 @@ Route117_EventScript_Dylan::
 
 Route117_EventScript_RegisterDylan::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route117_Text_DylanRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_DYLAN_1
 	release
@@ -112,7 +112,7 @@ Route117_EventScript_Maria::
 
 Route117_EventScript_RegisterMaria::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route117_Text_MariaRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_MARIA_1
 	release

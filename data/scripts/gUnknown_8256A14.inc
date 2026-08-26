@@ -154,7 +154,15 @@ Route116_EventScript_ItemPotion:: @ 0x08256C03
 	finditem ITEM_POTION
 	end
 
-	.incbin "baserom_jp.gba", 0x256c10, 0xf7
+Route117_EventScript_ItemGreatBall:: @ 0x08256C10
+	finditem ITEM_GREAT_BALL
+	end
+
+Route117_EventScript_ItemRevive:: @ 0x08256C1D
+	finditem ITEM_REVIVE
+	end
+
+	.incbin "baserom_jp.gba", 0x256c2a, 0xdd
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM
@@ -266,4 +274,9 @@ SeafloorCavern_Room9_EventScript_ItemTMEarthquake:: @ 0x08257158
 	finditem ITEM_TM_EARTHQUAKE
 	end
 
-	.incbin "baserom_jp.gba", 0x257165, 0x924
+	.incbin "baserom_jp.gba", 0x257165, 0x57c
+
+@ This is Route117's Day Care Man entry at the start of the still-raw
+@ shared day-care script owner. Use the physical label, not a .set alias.
+Route117_EventScript_DaycareMan:: @ 0x082576E1
+	.incbin "baserom_jp.gba", 0x2576e1, 0x3a8
