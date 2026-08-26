@@ -802,8 +802,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/DewfordTown_Gym/events.inc"
 	.include "data/maps/DewfordTown_Hall/events.inc"
 	.include "data/maps/DewfordTown_House2/events.inc"
-	.globl gMapEvents_DEWFORD_TOWN_HOUSE2
-	.set gMapEvents_DEWFORD_TOWN_HOUSE2, DewfordTown_House2_MapEvents
 	.include "data/maps/LavaridgeTown_HerbShop/events.inc"
 	.globl gMapEvents_LAVARIDGE_TOWN_HERB_SHOP
 	.set gMapEvents_LAVARIDGE_TOWN_HERB_SHOP, LavaridgeTown_HerbShop_MapEvents

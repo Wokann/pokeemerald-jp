@@ -6860,6 +6860,36 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Dewford House 2 immediately follows the Hall. Its Silk Scarf gift branch,
+# repeat branch, NPC script, and four texts match the US source in ROM order.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'DewfordTown_House2': {
+        'scripts': {
+            0x081F4009: 'DewfordTown_House2_EventScript_Man',
+            0x081F4038: 'DewfordTown_House2_EventScript_NoRoomForScarf',
+            0x081F4042: 'DewfordTown_House2_EventScript_ExplainSilkScarf',
+            0x081F404C: 'DewfordTown_House2_EventScript_Boy',
+        },
+        'texts': {
+            0x081F4055: 'DewfordTown_House2_Text_WantYouToHaveSilkScarf',
+            0x081F40B4: 'DewfordTown_House2_Text_NoRoom',
+            0x081F40E1: 'DewfordTown_House2_Text_ExplainSilkScarf',
+            0x081F4128: 'DewfordTown_House2_Text_BrawlySoCool',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x0121: 'FLAG_RECEIVED_SILK_SCARF'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x00D9: 'ITEM_SILK_SCARF'},
+        },
+    },
+})
+
 MAP_MOVEMENT_SCRIPT_LABELS.update({
     'DewfordTown_Hall': {
         0x081F3A8F: 'DewfordTown_Hall_Movement_PsychicWalkInPlaceLeft',
