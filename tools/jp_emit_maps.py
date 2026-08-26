@@ -8586,6 +8586,30 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Pacifidlog House 5 follows with the Mirage Island watcher and one adjacent
+# NPC message. Its only result branch is the reviewed IsMirageIslandPresent
+# boolean used by the matching US source.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'PacifidlogTown_House5': {
+        'scripts': {
+            0x081F8056: 'PacifidlogTown_House5_EventScript_MirageIslandWatcher',
+            0x081F8072: 'PacifidlogTown_House5_EventScript_MirageIslandPresent',
+            0x081F807C: 'PacifidlogTown_House5_EventScript_Gentleman',
+        },
+        'texts': {
+            0x081F8085: 'PacifidlogTown_House5_Text_CantSeeMirageIslandToday',
+            0x081F8099: 'PacifidlogTown_House5_Text_CanSeeMirageIslandToday',
+            0x081F80B5: 'PacifidlogTown_House5_Text_MirageIslandAppearDependingOnWeather',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {0x800D: 'VAR_RESULT'},
+            'var_values': {0x800D: {0x01: 'TRUE'}},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.

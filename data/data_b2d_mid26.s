@@ -849,8 +849,6 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/PacifidlogTown_House3/events.inc"
 	.include "data/maps/PacifidlogTown_House4/events.inc"
 	.include "data/maps/PacifidlogTown_House5/events.inc"
-	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE5
-	.set gMapEvents_PACIFIDLOG_TOWN_HOUSE5, PacifidlogTown_House5_MapEvents
 	.include "data/maps/PetalburgCity_WallysHouse/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_WALLYS_HOUSE
 	.set gMapEvents_PETALBURG_CITY_WALLYS_HOUSE, PetalburgCity_WallysHouse_MapEvents
