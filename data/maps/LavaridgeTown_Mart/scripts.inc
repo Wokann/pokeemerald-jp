@@ -1,7 +1,9 @@
+@ LavaridgeTown_Mart scripts (JP map g4 m4 @ 0x081F4ECC)
+
 LavaridgeTown_Mart_MapScripts::
 	.byte 0
 
-LavaridgeTown_Mart_EventScript_Clerk::
+LavaridgeTown_Mart_EventScript_Clerk:: @ 0x081F4ECD
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -24,21 +26,21 @@ LavaridgeTown_Mart_Pokemart:
 	.2byte ITEM_X_SPEED
 	pokemartlistend
 
-LavaridgeTown_Mart_EventScript_ExpertM::
+LavaridgeTown_Mart_EventScript_ExpertM:: @ 0x081F4EFA
 	msgbox LavaridgeTown_Mart_Text_XSpeedFirstStrike, MSGBOX_NPC
 	end
 
-LavaridgeTown_Mart_EventScript_OldWoman::
+LavaridgeTown_Mart_EventScript_OldWoman:: @ 0x081F4F03
 	msgbox LavaridgeTown_Mart_Text_LocalSpecialtyOnMtChimney, MSGBOX_NPC
 	end
 
-LavaridgeTown_Mart_Text_XSpeedFirstStrike:
+LavaridgeTown_Mart_Text_XSpeedFirstStrike: @ 0x081F4F0C
 	.string "スピーダー　つかって\n"
 	.string "ポケモンの　すばやさ　あげるんじゃ！\p"
 	.string "そうすりゃ　せんせいこうげき　できて\n"
 	.string "たたかいが　ゆうりに　なるからのう！$"
 
-LavaridgeTown_Mart_Text_LocalSpecialtyOnMtChimney:
+LavaridgeTown_Mart_Text_LocalSpecialtyOnMtChimney: @ 0x081F4F50
 	.string "えんとつやまの　ちょうじょう　だけで\n"
 	.string "かうことが　できる　おみやげは\l"
 	.string "ポケモンに　あげると　よろこぶよ！$"

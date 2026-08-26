@@ -7186,6 +7186,48 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Lavaridge Mart follows the house. Its nine-item stock list starts at the
+# map-local four-byte product boundary and is fully determined by the matching
+# US Pokemart source.
+MAP_POKEMART_LISTS.update({
+    'LavaridgeTown_Mart': (
+        (0x081F4EE4, 'LavaridgeTown_Mart_Pokemart', (
+            'ITEM_GREAT_BALL',
+            'ITEM_SUPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_AWAKENING',
+            'ITEM_BURN_HEAL',
+            'ITEM_REVIVE',
+            'ITEM_SUPER_REPEL',
+            'ITEM_X_SPEED',
+        )),
+    ),
+})
+
+# The clerk and two local NPC records have a one-to-one source-order match
+# with the US map. The structured product list above removes the final raw
+# fragment from this physical owner.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LavaridgeTown_Mart': {
+        'scripts': {
+            0x081F4ECD: 'LavaridgeTown_Mart_EventScript_Clerk',
+            0x081F4EFA: 'LavaridgeTown_Mart_EventScript_ExpertM',
+            0x081F4F03: 'LavaridgeTown_Mart_EventScript_OldWoman',
+        },
+        'texts': {
+            0x081F4F0C: 'LavaridgeTown_Mart_Text_XSpeedFirstStrike',
+            0x081F4F50: 'LavaridgeTown_Mart_Text_LocalSpecialtyOnMtChimney',
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
