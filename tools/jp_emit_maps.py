@@ -8431,6 +8431,84 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Pacifidlog House 2 owns the Fan Club younger brother's friendship checks,
+# both weekly TM branches, and the adjacent Azurill interactions. The matching
+# US source fixes the local labels and contextual command meanings while the
+# JP ROM supplies the exact text and control bytes.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'PacifidlogTown_House2': {
+        'scripts': {
+            0x081F7A00: 'PacifidlogTown_House2_EventScript_FanClubYoungerBrother',
+            0x081F7A4C: 'PacifidlogTown_House2_EventScript_UpdateFanClubTMFlag',
+            0x081F7A66: 'PacifidlogTown_House2_EventScript_MonAssessment',
+            0x081F7A6F: 'PacifidlogTown_House2_EventScript_FirstMonAssessment',
+            0x081F7A80: 'PacifidlogTown_House2_EventScript_ClearReceivedFanClubTM',
+            0x081F7A84: 'PacifidlogTown_House2_EventScript_GiveReturn',
+            0x081F7AB3: 'PacifidlogTown_House2_EventScript_PutInEffort',
+            0x081F7ABD: 'PacifidlogTown_House2_EventScript_GiveFrustration',
+            0x081F7AEC: 'PacifidlogTown_House2_EventScript_ComeBackInXDays',
+            0x081F7AFF: 'PacifidlogTown_House2_EventScript_HappyAzurill',
+            0x081F7B1A: 'PacifidlogTown_House2_EventScript_UnhappyAzurill',
+        },
+        'texts': {
+            0x081F7B35: 'PacifidlogTown_House2_Text_ChairmansYoungerBrotherOnVacation',
+            0x081F7B93: 'PacifidlogTown_House2_Text_AhYourPokemon',
+            0x081F7BA2: 'PacifidlogTown_House2_Text_AdoringPokemonTakeThis',
+            0x081F7BD5: 'PacifidlogTown_House2_Text_PutInSomeMoreEffort',
+            0x081F7C0F: 'PacifidlogTown_House2_Text_ViciousPokemonTakeThis',
+            0x081F7C43: 'PacifidlogTown_House2_Text_ExplainReturnFrustration',
+            0x081F7C8C: 'PacifidlogTown_House2_Text_GetGoodTMInXDays',
+            0x081F7CE4: 'PacifidlogTown_House2_Text_Rurii',
+            0x081F7CEC: 'PacifidlogTown_House2_Text_VeryFriendlyWithTrainer',
+            0x081F7CFC: 'PacifidlogTown_House2_Text_Rururi',
+            0x081F7D07: 'PacifidlogTown_House2_Text_DoesntLikeTrainerVeryMuch',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08244178: 'Common_EventScript_NopReturn',
+        },
+        'field_placeholders': {
+            0x081F7C8C: {0x02: 'STR_VAR_1'},
+        },
+        'command_aliases': {
+            0x081F7AFF: {'waitdooranim': 'waitmoncry_jp'},
+            0x081F7B1A: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x012B: 'FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK',
+                0x012C: 'FLAG_MET_FANCLUB_YOUNGER_BROTHER',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081F7A00: {
+                    0x800D: {
+                        0x02: 'FRIENDSHIP_50_TO_99',
+                        0x04: 'FRIENDSHIP_150_TO_199',
+                    },
+                },
+                0x081F7A84: {0x800D: {0x00: 'FALSE'}},
+                0x081F7ABD: {0x800D: {0x00: 'FALSE'}},
+            },
+            'items': {
+                0x0135: 'ITEM_TM_FRUSTRATION',
+                0x013B: 'ITEM_TM_RETURN',
+            },
+            'species': {0x015E: 'SPECIES_AZURILL'},
+            'cry_modes': {
+                0x00: 'CRY_MODE_NORMAL',
+                0x02: 'CRY_MODE_ENCOUNTER',
+            },
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.

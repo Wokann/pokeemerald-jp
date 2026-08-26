@@ -846,8 +846,6 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/PacifidlogTown_PokemonCenter_2F/events.inc"
 	.include "data/maps/PacifidlogTown_House1/events.inc"
 	.include "data/maps/PacifidlogTown_House2/events.inc"
-	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE2
-	.set gMapEvents_PACIFIDLOG_TOWN_HOUSE2, PacifidlogTown_House2_MapEvents
 	.include "data/maps/PacifidlogTown_House3/events.inc"
 	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE3
 	.set gMapEvents_PACIFIDLOG_TOWN_HOUSE3, PacifidlogTown_House3_MapEvents
