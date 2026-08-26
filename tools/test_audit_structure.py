@@ -233,6 +233,86 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(result, [{"path": "map_groups.json"}, True])
         self.assertEqual(FakeEmitter.US_JSON, Path("hard-coded.json"))
 
+    def test_script_data_parsers_preserve_owner_order_and_linked_ranges(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            linker = root / "ld_script_jp.txt"
+            linker.write_text(
+                "script_data :\nALIGN(4)\n{\n"
+                "    data/event_scripts.o(script_data);\n"
+                "    data/mystery_event_script_cmd_table.o(script_data);\n"
+                "} =0\n",
+                encoding="utf-8",
+            )
+            link_map = root / "pokeemerald_jp.map"
+            link_map.write_text(
+                "script_data     0x08100000    0x44\n"
+                " data/event_scripts.o(script_data)\n"
+                " script_data    0x08100000    0x20 data/event_scripts.o\n"
+                " data/mystery_event_script_cmd_table.o(script_data)\n"
+                " script_data    0x08100020    0x24 data/mystery_event_script_cmd_table.o\n"
+                "lib_text        0x08100044    0x4\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(audit.parse_script_data_linker_objects(linker), [
+                "data/event_scripts.o", "data/mystery_event_script_cmd_table.o",
+            ])
+            parsed = audit.parse_script_data_map(link_map)
+        self.assertEqual(parsed["section"], {
+            "start": "0x08100000", "size": "0x44", "end": "0x08100044",
+        })
+        self.assertEqual(parsed["objects"], [
+            {"owner": "data/event_scripts.o", "start": "0x08100000", "size": "0x20",
+             "end": "0x08100020"},
+            {"owner": "data/mystery_event_script_cmd_table.o", "start": "0x08100020",
+             "size": "0x24", "end": "0x08100044"},
+        ])
+
+    def test_script_data_progress_requires_jp_terminal_evidence_for_split(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "jp"
+            us_root = Path(temporary) / "us"
+            (root / "data").mkdir(parents=True)
+            us_root.mkdir()
+            (root / "ld_script_jp.txt").write_text(
+                "script_data :\n{\n    data/event_scripts.o(script_data);\n} =0\n",
+                encoding="utf-8",
+            )
+            (us_root / "ld_script.ld").write_text(
+                "script_data :\n{\n"
+                "    data/event_scripts.o(script_data);\n"
+                "    data/mystery_event_script_cmd_table.o(script_data);\n"
+                "} > ROM =0\n",
+                encoding="utf-8",
+            )
+            (root / "pokeemerald_jp.map").write_text(
+                "script_data     0x08100000    0x44\n"
+                " data/event_scripts.o(script_data)\n"
+                " script_data    0x08100000    0x44 data/event_scripts.o\n"
+                "                0x08100000                gMysteryEventScriptCmdTable\n"
+                "                0x08100044                gMysteryEventScriptCmdTableEnd\n",
+                encoding="utf-8",
+            )
+            (us_root / "pokeemerald.map").write_text(
+                "script_data     0x08200000    0x44\n"
+                " data/event_scripts.o(script_data)\n"
+                " script_data    0x08200000    0x20 data/event_scripts.o\n"
+                " data/mystery_event_script_cmd_table.o(script_data)\n"
+                " script_data    0x08200020    0x24 data/mystery_event_script_cmd_table.o\n",
+                encoding="utf-8",
+            )
+            (root / "data/event_scripts.s").write_text(
+                '.incbin "baserom_jp.gba", 0x100000, 0x44\n', encoding="utf-8")
+            progress = audit.script_data_progress(root, us_root)
+        candidate = progress["candidate_splits"][0]
+        self.assertEqual(progress["linker"]["missing_jp_owners"],
+                         ["data/mystery_event_script_cmd_table.o"])
+        self.assertEqual(candidate["status"], "ready_for_zero_displacement_owner_split")
+        self.assertTrue(candidate["terminal_section_range"])
+        self.assertEqual(candidate["size"], "0x44")
+        self.assertEqual(progress["event_scripts_raw_baserom_ranges"][0]["rom_start"], "0x08100000")
+        self.assertEqual(progress["method"]["us_role"], "owner_order_and_source_structure_only")
+
     def test_markdown_report_contains_snapshot_definitions_and_reproduction(self):
         report = audit.build_report(audit.ROOT, audit.DEFAULT_US_ROOT)
         rendered = audit.render_markdown_report(report)
@@ -244,6 +324,7 @@ class StructureAuditTests(unittest.TestCase):
         self.assertIn("同名 static 按 source owner 和地址保留", rendered)
         self.assertIn("地图语义复核：not_recorded", rendered)
         self.assertIn("transition-manifest", rendered)
+        self.assertIn("script-data-manifest", rendered)
 
     def test_json_output_rejects_markdown_destination_without_writing(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -282,6 +363,16 @@ class StructureAuditTests(unittest.TestCase):
                 audit.main()
             rendered = destination.read_text(encoding="utf-8")
         self.assertIn('"categories"', rendered)
+
+    def test_script_data_manifest_cli_output_is_json(self):
+        report = {"script_data": {"candidate_splits": []}}
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary) / "script-data.json"
+            with mock.patch.object(sys, "argv", ["audit_structure.py", "--json", "--script-data-manifest", str(destination)]), \
+                 mock.patch.object(audit, "build_report", return_value=report):
+                audit.main()
+            rendered = destination.read_text(encoding="utf-8")
+        self.assertIn('"candidate_splits"', rendered)
 
     def test_current_report_has_consistent_address_metrics(self):
         report = audit.build_report(audit.ROOT, audit.DEFAULT_US_ROOT)

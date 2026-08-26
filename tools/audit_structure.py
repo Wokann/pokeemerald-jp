@@ -49,9 +49,44 @@ NUMERIC_VARIANT_RE = re.compile(r"^(.*)_([2-9]\d*)$")
 INCBIN_RE = re.compile(r'(?:^|\s)(?:\.incbin\b|INCBIN_[A-Z0-9_]+\b)[^\n]*?"([^"]+)"')
 MAP_NAME_RE = re.compile(r'^\s*\.include\s+"data/maps/([^/]+)/scripts\.inc"\s*$')
 MAP_EVENTS_RE = re.compile(r'^\s*\.include\s+"data/maps/([^/]+)/events\.inc"\s*$')
+MAP_HEADER_RE = re.compile(r'^\s*@ (MAP_[A-Z0-9_]+) \(g(\d+) m(\d+)\)\s*$')
+MAP_HEADER_FIELD_RE = re.compile(
+    r'^\s*\.4byte\s+([^,\s]+).*@\s+(mapLayout|events|mapScripts|connections)\s*$')
+MAP_EVENT_ALIAS_RE = re.compile(
+    r'^\s*\.set\s+(gMapEvents_[A-Z0-9_]+)\s*,\s*([A-Za-z_]\w*_MapEvents)\s*$')
+ASM_LABEL_RE = re.compile(r'^\s*([A-Za-z_]\w*)::?\s*(?:@.*)?$')
+POINTER_COMMENT_RE = re.compile(r'^\s*\.4byte\s+([^,\s]+).*@\s+([A-Za-z]+)\s*$', re.MULTILINE)
+BASEROM_INCBIN_RE = re.compile(r'^\s*\.incbin\s+"baserom_jp\.gba"[^\n]*$', re.MULTILINE)
+SCRIPT_DATA_LINKER_RE = re.compile(
+    r'^\s*([A-Za-z0-9_./-]+\.o)\(script_data\);\s*$')
+SCRIPT_DATA_SECTION_RE = re.compile(r'^\s*script_data\s*:\s*$')
+SCRIPT_DATA_MAP_HEADER_RE = re.compile(
+    r'^script_data\s+0x([0-9A-Fa-f]+)\s+0x([0-9A-Fa-f]+)\s*$')
+SCRIPT_DATA_MAP_OBJECT_RE = re.compile(
+    r'^\s*script_data\s+0x([0-9A-Fa-f]+)\s+0x([0-9A-Fa-f]+)\s+([^\s]+\.o)\s*$')
+MAP_SYMBOL_RE = re.compile(r'^\s*0x([0-9A-Fa-f]+)\s+([A-Za-z_]\w*)\s*$')
+BASEROM_INCBIN_RANGE_RE = re.compile(
+    r'^\s*\.incbin\s+"baserom_jp\.gba"\s*,\s*(0x[0-9A-Fa-f]+|\d+)\s*,\s*'
+    r'(0x[0-9A-Fa-f]+|\d+)\s*(?:@.*)?$')
 US_SYMBOL_RE = re.compile(r"^[0-9A-Fa-f]{8}\s+[A-Za-z]\s+[0-9A-Fa-f]+\s+(\w+)\s*$")
 NAKED_MACRO_RE = re.compile(r"^\s*NAKED\s*$")
 MARKDOWN_SUFFIXES = {".md", ".markdown", ".mdown"}
+
+# The US linker defines source ownership and link order.  JP address ranges
+# remain evidence-driven: each partition must be anchored in the JP link map
+# and matching ROM, not inferred from US numeric offsets.
+SCRIPT_DATA_OWNER_ANCHORS = (
+    ("data/event_scripts.o", "gScriptCmdTable"),
+    ("data/event_scripts.o", "gStdScripts_End"),
+    ("data/battle_anim_scripts.o", "gBattleAnims_StatusConditions"),
+    ("data/battle_scripts_1.o", "gBattleScriptsForMoveEffects"),
+    ("data/field_effect_scripts.o", "gFieldEffectScriptPointers"),
+    ("data/battle_scripts_2.o", "gBattlescriptsForBallThrow"),
+    ("data/battle_ai_scripts.o", "gBattleAI_ScriptsTable"),
+    ("data/contest_ai_scripts.o", "gContestAI_ScriptsTable"),
+    ("data/mystery_event_script_cmd_table.o", "gMysteryEventScriptCmdTable"),
+    ("data/mystery_event_script_cmd_table.o", "gMysteryEventScriptCmdTableEnd"),
+)
 
 
 @dataclass(frozen=True)
@@ -477,6 +512,446 @@ def map_artifact_progress(root: Path) -> dict[str, object]:
     }
 
 
+def map_includes(path: Path, pattern: re.Pattern[str]) -> list[str]:
+    """Return map include names in source order, or an empty list if absent."""
+    if not path.is_file():
+        return []
+    return [match.group(1) for line in path.read_text(encoding="utf-8", errors="replace").splitlines()
+            if (match := pattern.match(line))]
+
+
+def map_headers(text: str) -> dict[str, dict[str, object]]:
+    """Read the annotated map-header pointer chain from data_b2d_mid30.s."""
+    records: dict[str, dict[str, object]] = {}
+    current: dict[str, object] | None = None
+    for line in text.splitlines():
+        if match := MAP_HEADER_RE.match(line):
+            current = {
+                "id": match.group(1),
+                "group": int(match.group(2)),
+                "number": int(match.group(3)),
+            }
+            records[match.group(1)] = current
+            continue
+        if current and (match := MAP_HEADER_FIELD_RE.match(line)):
+            current[match.group(2)] = match.group(1)
+    return records
+
+
+def map_event_aliases(text: str) -> dict[str, str]:
+    """Return retained gMapEvents aliases and their real generated targets."""
+    return {match.group(1): match.group(2)
+            for line in text.splitlines()
+            if (match := MAP_EVENT_ALIAS_RE.match(line))}
+
+
+def asm_label_blocks(text: str) -> dict[str, str]:
+    """Index top-level assembly labels into small source blocks.
+
+    This is intentionally a structural parser: it only follows labels and
+    annotated pointers, never interprets opaque ROM bytes as source data.
+    """
+    lines = text.splitlines()
+    starts = [(match.group(1), index) for index, line in enumerate(lines)
+              if (match := ASM_LABEL_RE.match(line))]
+    blocks: dict[str, str] = {}
+    for position, (label, start) in enumerate(starts):
+        end = starts[position + 1][1] if position + 1 < len(starts) else len(lines)
+        blocks.setdefault(label, "\n".join(lines[start:end]))
+    return blocks
+
+
+def annotated_pointer(block: str, field: str) -> str | None:
+    """Return one .4byte target carrying the requested assembly field comment."""
+    for match in POINTER_COMMENT_RE.finditer(block):
+        if match.group(2) == field:
+            return match.group(1)
+    return None
+
+
+def named_asset_progress(blocks: dict[str, str], symbol: str | None) -> dict[str, object]:
+    """Classify one tileset/layout source label without claiming semantic review."""
+    if not symbol:
+        return {"symbol": None, "defined": False, "source_count": 0,
+                "raw_baserom_source_count": 0, "status": "missing_pointer"}
+    block = blocks.get(symbol)
+    if block is None:
+        return {"symbol": symbol, "defined": False, "source_count": 0,
+                "raw_baserom_source_count": 0, "status": "missing_label"}
+    sources = INCBIN_RE.findall(block)
+    raw_sources = [source for source in sources if Path(source).name == "baserom_jp.gba"]
+    return {
+        "symbol": symbol,
+        "defined": True,
+        "source_count": len(sources),
+        "raw_baserom_source_count": len(raw_sources),
+        "status": "contains_raw_baserom" if raw_sources else "named_source_or_no_incbin",
+    }
+
+
+def tileset_resource_chain(blocks: dict[str, str], symbol: str | None) -> dict[str, object]:
+    """Follow one tileset's named tiles/palette/metatile input labels."""
+    if not symbol:
+        return {"symbol": None, "defined": False, "fields": {}, "raw_baserom_source_count": 0}
+    block = blocks.get(symbol)
+    if block is None:
+        return {"symbol": symbol, "defined": False, "fields": {}, "raw_baserom_source_count": 0}
+    fields = {}
+    for field in ("tiles", "palettes", "metatiles", "metatileAttributes"):
+        fields[field] = named_asset_progress(blocks, annotated_pointer(block, field))
+    return {
+        "symbol": symbol,
+        "defined": True,
+        "fields": fields,
+        "raw_baserom_source_count": sum(item["raw_baserom_source_count"]
+                                          for item in fields.values()),
+    }
+
+
+def raw_baserom_directives(text: str) -> list[str]:
+    return [match.group(0).strip() for match in BASEROM_INCBIN_RE.finditer(text)]
+
+
+def parse_script_data_linker_objects(path: Path) -> list[str]:
+    """Return explicit ``script_data`` objects in linker order.
+
+    This follows only the braced linker block.  Object order is the upstream
+    structural contract; it says nothing by itself about JP address equality.
+    """
+    if not path.is_file():
+        return []
+    in_section = False
+    opened = False
+    objects = []
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        if not in_section:
+            if SCRIPT_DATA_SECTION_RE.match(line):
+                in_section = True
+            continue
+        if "{" in line:
+            opened = True
+        if match := SCRIPT_DATA_LINKER_RE.match(line):
+            objects.append(match.group(1))
+        if opened and "}" in line:
+            break
+    return objects
+
+
+def parse_script_data_map(path: Path) -> dict[str, object]:
+    """Read one linker-map section and its explicit object contributions."""
+    result: dict[str, object] = {"section": None, "objects": []}
+    if not path.is_file():
+        return result
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        if match := SCRIPT_DATA_MAP_HEADER_RE.match(line):
+            start, size = int(match.group(1), 16), int(match.group(2), 16)
+            if result["section"] is None:
+                result["section"] = {
+                    "start": "0x%08X" % start,
+                    "size": "0x%X" % size,
+                    "end": "0x%08X" % (start + size),
+                }
+            continue
+        if match := SCRIPT_DATA_MAP_OBJECT_RE.match(line):
+            start, size = int(match.group(1), 16), int(match.group(2), 16)
+            result["objects"].append({
+                "owner": match.group(3),
+                "start": "0x%08X" % start,
+                "size": "0x%X" % size,
+                "end": "0x%08X" % (start + size),
+            })
+    return result
+
+
+def map_symbol_addresses(path: Path, names: set[str]) -> dict[str, str]:
+    """Return exact addresses for selected bare symbol rows in a linker map."""
+    if not path.is_file():
+        return {}
+    addresses = {}
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        if match := MAP_SYMBOL_RE.match(line):
+            address, name = int(match.group(1), 16), match.group(2)
+            if name in names:
+                addresses.setdefault(name, "0x%08X" % address)
+    return addresses
+
+
+def parse_baserom_incbin_ranges(text: str) -> list[dict[str, object]]:
+    """Record visible JP ROM ranges without interpreting their byte payloads."""
+    ranges = []
+    for line_number, line in enumerate(text.splitlines(), 1):
+        if not (match := BASEROM_INCBIN_RANGE_RE.match(line)):
+            continue
+        offset, size = int(match.group(1), 0), int(match.group(2), 0)
+        ranges.append({
+            "line": line_number,
+            "file_offset": "0x%X" % offset,
+            "size": "0x%X" % size,
+            "rom_start": "0x%08X" % (0x08000000 + offset),
+            "rom_end": "0x%08X" % (0x08000000 + offset + size),
+            "directive": line.strip(),
+        })
+    return ranges
+
+
+def script_data_progress(root: Path, us_root: Path) -> dict[str, object]:
+    """Join US owner order with JP's actual linked ``script_data`` evidence.
+
+    The report is deliberately conservative.  It exposes owner gaps, named
+    JP anchors, and raw ranges, but marks every non-terminal partition as
+    requiring a separate semantic/byte-boundary review.
+    """
+    jp_linker = root / "ld_script_jp.txt"
+    us_linker = us_root / "ld_script.ld"
+    jp_map = root / "pokeemerald_jp.map"
+    us_map = us_root / "pokeemerald.map"
+    event_scripts = root / "data/event_scripts.s"
+    event_scripts_text = event_scripts.read_text(encoding="utf-8", errors="replace") \
+        if event_scripts.is_file() else ""
+    jp_linker_objects = parse_script_data_linker_objects(jp_linker)
+    us_linker_objects = parse_script_data_linker_objects(us_linker)
+    jp_map_data = parse_script_data_map(jp_map)
+    us_map_data = parse_script_data_map(us_map)
+    anchor_owners = {symbol: owner for owner, symbol in SCRIPT_DATA_OWNER_ANCHORS}
+    jp_anchors = map_symbol_addresses(jp_map, set(anchor_owners))
+    us_anchors = map_symbol_addresses(us_map, set(anchor_owners))
+    anchors = [{
+        "symbol": symbol,
+        "us_owner": owner,
+        "jp_address": jp_anchors.get(symbol),
+        "us_address": us_anchors.get(symbol),
+        "jp_status": "present" if symbol in jp_anchors else "missing",
+    } for owner, symbol in SCRIPT_DATA_OWNER_ANCHORS]
+
+    jp_section = jp_map_data["section"]
+    mystery_start = jp_anchors.get("gMysteryEventScriptCmdTable")
+    mystery_end = jp_anchors.get("gMysteryEventScriptCmdTableEnd")
+    candidate_splits = []
+    if mystery_start and mystery_end and jp_section:
+        start, end = int(mystery_start, 16), int(mystery_end, 16)
+        if start < end:
+            candidate_splits.append({
+                "owner": "data/mystery_event_script_cmd_table.o",
+                "source": "data/mystery_event_script_cmd_table.inc",
+                "start": mystery_start,
+                "end": mystery_end,
+                "size": "0x%X" % (end - start),
+                "terminal_section_range": end == int(jp_section["end"], 16),
+                "status": ("ready_for_zero_displacement_owner_split"
+                           if end == int(jp_section["end"], 16)
+                           else "requires_boundary_review"),
+                "evidence": [
+                    "JP linker-map labels define the table interval.",
+                    "The interval reaches the current JP script_data end.",
+                    "US linker order places the named table last.",
+                ],
+            })
+
+    jp_only_owners = [owner for owner in jp_linker_objects if owner not in us_linker_objects]
+    missing_jp_owners = [owner for owner in us_linker_objects if owner not in jp_linker_objects]
+    return {
+        "method": {
+            "us_role": "owner_order_and_source_structure_only",
+            "jp_role": "actual_addresses_and_partition_evidence",
+            "rule": "US numeric addresses are never used as JP partition boundaries.",
+        },
+        "linker": {
+            "jp_objects": jp_linker_objects,
+            "us_objects": us_linker_objects,
+            "missing_jp_owners": missing_jp_owners,
+            "jp_only_owners": jp_only_owners,
+            "jp_matches_us_owner_order": jp_linker_objects == us_linker_objects,
+        },
+        "linked_sections": {
+            "jp": jp_map_data,
+            "us": us_map_data,
+        },
+        "anchors": anchors,
+        "event_scripts_raw_baserom_ranges": parse_baserom_incbin_ranges(event_scripts_text),
+        "candidate_splits": candidate_splits,
+        "semantic_review": {
+            "status": "not_recorded",
+            "note": "Only explicitly verified terminal ranges are candidates; all other owner partitions require JP byte-boundary review.",
+        },
+    }
+
+
+def map_convergence_progress(root: Path) -> dict[str, object]:
+    """Audit map records across the three JP source streams.
+
+    The check starts with the first map in data/event_scripts.s and joins it
+    to data/data_b2d_mid26.s (events) and data/data_b2d_mid30.s (headers,
+    layouts, and tilesets).  It records aliases and raw ranges as work items;
+    a present include or generated file is deliberately never a semantic pass.
+    """
+    event_scripts_path = root / "data/event_scripts.s"
+    events_path = root / "data/data_b2d_mid26.s"
+    map_data_path = root / "data/data_b2d_mid30.s"
+    event_scripts_text = event_scripts_path.read_text(encoding="utf-8", errors="replace") \
+        if event_scripts_path.is_file() else ""
+    events_text = events_path.read_text(encoding="utf-8", errors="replace") if events_path.is_file() else ""
+    map_data_text = map_data_path.read_text(encoding="utf-8", errors="replace") \
+        if map_data_path.is_file() else ""
+    script_order = map_includes(event_scripts_path, MAP_NAME_RE)
+    event_order = map_includes(events_path, MAP_EVENTS_RE)
+    headers = map_headers(map_data_text)
+    aliases = map_event_aliases(events_text)
+    blocks = asm_label_blocks(map_data_text)
+
+    map_root = root / "data/maps"
+    metadata: dict[str, dict[str, object]] = {}
+    if map_root.is_dir():
+        for path in sorted(map_root.glob("*/map.json")):
+            try:
+                payload = json.loads(path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                payload = {}
+            metadata[path.parent.name] = {
+                "id": payload.get("id"),
+                "layout": payload.get("layout"),
+            }
+
+    ordered_names = list(dict.fromkeys(script_order + event_order + sorted(metadata)))
+    records = []
+    for name in ordered_names:
+        meta = metadata.get(name, {})
+        map_id = meta.get("id")
+        layout = meta.get("layout")
+        header = headers.get(map_id, {}) if isinstance(map_id, str) else {}
+        expected_events = f"{name}_MapEvents"
+        expected_scripts = f"{name}_MapScripts"
+        expected_layout = ("gMapLayout_" + layout.removeprefix("LAYOUT_")) \
+            if isinstance(layout, str) else None
+        event_alias = ("gMapEvents_" + map_id.removeprefix("MAP_")) \
+            if isinstance(map_id, str) else None
+        actual_events = header.get("events")
+        if actual_events == expected_events:
+            event_pointer_status = "direct"
+        elif event_alias and actual_events == event_alias and aliases.get(event_alias) == expected_events:
+            event_pointer_status = "legacy_alias"
+        elif actual_events is None:
+            event_pointer_status = "missing_header"
+        else:
+            event_pointer_status = "other"
+        actual_scripts = header.get("mapScripts")
+        script_pointer_status = ("direct" if actual_scripts == expected_scripts else
+                                 "missing_header" if actual_scripts is None else "shared_or_other")
+        actual_layout = header.get("mapLayout")
+        layout_pointer_status = ("direct" if expected_layout and actual_layout == expected_layout else
+                                 "missing_header" if actual_layout is None else "other")
+
+        layout_block = blocks.get(expected_layout, "") if expected_layout else ""
+        primary_tileset = annotated_pointer(layout_block, "primaryTileset") if layout_block else None
+        secondary_tileset = annotated_pointer(layout_block, "secondaryTileset") if layout_block else None
+        resource_chain = {
+            "layout_symbol": expected_layout,
+            "layout_defined": bool(layout_block),
+            "primary_tileset": tileset_resource_chain(blocks, primary_tileset),
+            "secondary_tileset": tileset_resource_chain(blocks, secondary_tileset),
+        }
+        resource_chain["raw_baserom_source_count"] = (
+            resource_chain["primary_tileset"]["raw_baserom_source_count"]
+            + resource_chain["secondary_tileset"]["raw_baserom_source_count"])
+
+        scripts_file = map_root / name / "scripts.inc"
+        events_file = map_root / name / "events.inc"
+        scripts_text = scripts_file.read_text(encoding="utf-8", errors="replace") \
+            if scripts_file.is_file() else ""
+        events_file_text = events_file.read_text(encoding="utf-8", errors="replace") \
+            if events_file.is_file() else ""
+        actions = ["semantic_review_required"]
+        if not scripts_file.is_file():
+            actions.append("create_or_recover_scripts_inc")
+        if not events_file.is_file():
+            actions.append("generate_or_recover_events_inc_from_map_json")
+        if name not in script_order:
+            actions.append("restore_upper_scripts_include")
+        if name not in event_order:
+            actions.append("restore_upper_events_include")
+        if event_pointer_status == "legacy_alias":
+            actions.append("replace_event_header_alias_with_real_label")
+        if event_pointer_status == "other":
+            actions.append("audit_event_header_target")
+        if script_pointer_status == "shared_or_other":
+            actions.append("audit_map_script_header_target")
+        if layout_pointer_status == "other":
+            actions.append("audit_map_layout_header_target")
+        script_raw = raw_baserom_directives(scripts_text)
+        event_raw = raw_baserom_directives(events_file_text)
+        if script_raw:
+            actions.append("split_map_owned_script_baserom_range")
+        if event_raw:
+            actions.append("split_map_owned_event_baserom_range")
+        if resource_chain["raw_baserom_source_count"]:
+            actions.append("split_map_resource_baserom_range")
+        records.append({
+            "name": name,
+            "map_id": map_id,
+            "script_stream_index": script_order.index(name) + 1 if name in script_order else None,
+            "event_stream_index": event_order.index(name) + 1 if name in event_order else None,
+            "artifacts": {
+                "map_json": name in metadata,
+                "scripts_inc": scripts_file.is_file(),
+                "events_inc": events_file.is_file(),
+                "upper_scripts_include": name in script_order,
+                "upper_events_include": name in event_order,
+            },
+            "header": header,
+            "events": {
+                "expected": expected_events,
+                "legacy_alias": event_alias,
+                "actual": actual_events,
+                "status": event_pointer_status,
+            },
+            "scripts": {
+                "expected": expected_scripts,
+                "actual": actual_scripts,
+                "status": script_pointer_status,
+                "raw_baserom_directives": script_raw,
+            },
+            "layout": {
+                "expected": expected_layout,
+                "actual": actual_layout,
+                "status": layout_pointer_status,
+                "resource_chain": resource_chain,
+            },
+            "events_raw_baserom_directives": event_raw,
+            "semantic_review": "not_recorded",
+            "required_actions": actions,
+        })
+
+    event_statuses = Counter(record["events"]["status"] for record in records)
+    resource_raw_maps = sum(bool(record["layout"]["resource_chain"]["raw_baserom_source_count"])
+                            for record in records)
+    return {
+        "stream_files": {
+            "scripts": "data/event_scripts.s",
+            "events": "data/data_b2d_mid26.s",
+            "map_data": "data/data_b2d_mid30.s",
+        },
+        "script_stream_maps": len(script_order),
+        "event_stream_maps": len(event_order),
+        "maps_in_both_streams": len(set(script_order) & set(event_order)),
+        "header_records": len(headers),
+        "event_pointer_statuses": dict(sorted(event_statuses.items())),
+        "maps_with_raw_script_ranges": sum(bool(record["scripts"]["raw_baserom_directives"])
+                                           for record in records),
+        "maps_with_raw_event_ranges": sum(bool(record["events_raw_baserom_directives"])
+                                          for record in records),
+        "maps_with_raw_resource_ranges": resource_raw_maps,
+        "top_level_raw_baserom_directives": {
+            "data/event_scripts.s": raw_baserom_directives(event_scripts_text),
+            "data/data_b2d_mid26.s": raw_baserom_directives(events_text),
+            "data/data_b2d_mid30.s": raw_baserom_directives(map_data_text),
+        },
+        "semantic_review": {
+            "status": "not_recorded",
+            "note": "Map files and direct pointers are structural evidence only; every record still requires semantic review.",
+        },
+        "records": records,
+    }
+
+
 def incbin_progress(root: Path) -> dict[str, object]:
     references = []
     raw_suffixes = {".bin", ".gba", ".lz", ".rl", ".huff"}
@@ -681,9 +1156,11 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
     manifest = module_manifest(jp_defs, us_owners, us_symbols, resolved, naked_addresses)
     transitions = transition_files(jp_files)
     incbin = incbin_progress(root)
+    convergence = map_convergence_progress(root)
+    script_data = script_data_progress(root, us_root)
 
     return {
-        "schema": 1,
+        "schema": 3,
         "roots": {"jp": str(root), "us": str(us_root)},
         "files": {
             "jp": {"directories": directory_counts(jp_files), "suffixes": extension_counts(jp_files)},
@@ -719,6 +1196,8 @@ def build_report(root: Path, us_root: Path) -> dict[str, object]:
         "incbin": incbin,
         "asset_naming": asset_naming_progress(incbin, us_root),
         "maps": map_progress(root, us_root),
+        "map_convergence": convergence,
+        "script_data": script_data,
         "jp_only_c_manifest": manifest,
     }
 
@@ -728,6 +1207,8 @@ def print_report(report: dict[str, object]) -> None:
     modules = report["c_modules"]
     functions = report["functions"]
     maps = report["maps"]
+    convergence = report["map_convergence"]
+    script_data = report["script_data"]
     incbin = report["incbin"]
     assets = report["asset_naming"]
     print("Structural audit (source inventory; no build artefacts)")
@@ -763,6 +1244,28 @@ def print_report(report: dict[str, object]) -> None:
         maps["event_script_included_owners"], maps["jp_map_json"], maps["jp_events_inc"],
         maps["upper_event_includes"], maps["structure_complete_maps"],
         maps["structure_complete_owner_maps"], maps["semantic_review"]["status"]))
+    raw_streams = convergence["top_level_raw_baserom_directives"]
+    print("map convergence: script-stream=%d event-stream=%d shared=%d headers=%d; "
+          "event-pointers=%s; map raw scripts/events/resources=%d/%d/%d; "
+          "top-level raw scripts/mid26/mid30=%d/%d/%d; semantic-review=%s" % (
+              convergence["script_stream_maps"], convergence["event_stream_maps"],
+              convergence["maps_in_both_streams"], convergence["header_records"],
+              ",".join("%s=%d" % item for item in convergence["event_pointer_statuses"].items()),
+              convergence["maps_with_raw_script_ranges"], convergence["maps_with_raw_event_ranges"],
+              convergence["maps_with_raw_resource_ranges"],
+              len(raw_streams["data/event_scripts.s"]),
+              len(raw_streams["data/data_b2d_mid26.s"]),
+              len(raw_streams["data/data_b2d_mid30.s"]),
+              convergence["semantic_review"]["status"]))
+    jp_section = script_data["linked_sections"]["jp"]["section"]
+    print("script_data: JP owners=%d/%d US; JP section=%s; missing owners=%d; "
+          "visible event-script raw ranges=%d; safe terminal candidates=%d" % (
+              len(script_data["linker"]["jp_objects"]), len(script_data["linker"]["us_objects"]),
+              ("%s..%s" % (jp_section["start"], jp_section["end"])) if jp_section else "unavailable",
+              len(script_data["linker"]["missing_jp_owners"]),
+              len(script_data["event_scripts_raw_baserom_ranges"]),
+              sum(candidate["status"] == "ready_for_zero_displacement_owner_split"
+                  for candidate in script_data["candidate_splits"])))
 
 
 def render_markdown_report(report: dict[str, object]) -> str:
@@ -771,6 +1274,8 @@ def render_markdown_report(report: dict[str, object]) -> str:
     incbin = report["incbin"]
     assets = report["asset_naming"]
     maps = report["maps"]
+    convergence = report["map_convergence"]
+    script_data = report["script_data"]
     transitions = report["transition_files"]
     return "\n".join([
         "# 可复现结构审计进度",
@@ -805,6 +1310,17 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"其中首 owner {maps['structure_complete_owner_maps']}）；map.json 总数：{maps['jp_map_json']}。",
         f"- 地图语义复核：{maps['semantic_review']['status']}。没有版本化复核清单前，"
         "任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。",
+        f"- 三流地图会合：scripts 流 {convergence['script_stream_maps']}、events 流 "
+        f"{convergence['event_stream_maps']}、共有 {convergence['maps_in_both_streams']}、"
+        f"地图头 {convergence['header_records']}；事件指针状态 "
+        + "、".join(f"{name}={count}" for name, count in convergence['event_pointer_statuses'].items())
+        + f"；地图内裸 baserom 范围（脚本/事件/资源）={convergence['maps_with_raw_script_ranges']}/"
+        f"{convergence['maps_with_raw_event_ranges']}/{convergence['maps_with_raw_resource_ranges']}。",
+        f"- script_data 顶层边界：JP linker 明确 owner {len(script_data['linker']['jp_objects'])}/"
+        f"US {len(script_data['linker']['us_objects'])}；待补 JP owner "
+        f"{len(script_data['linker']['missing_jp_owners'])}；可见 event_scripts 原始 baserom 范围 "
+        f"{len(script_data['event_scripts_raw_baserom_ranges'])}。US 只定义 owner 顺序，JP 范围必须由"
+        " JP map/ROM 锚点确认。",
         "",
         "## 指标定义",
         "",
@@ -819,6 +1335,8 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
         "| 地图结构完整 | 同一地图同时有 `map.json`、`scripts.inc`、`events.inc`，且后者被上层 `data/*.s` include；只说明结构已拆分。 |",
         "| 地图语义复核 | 仅接受未来版本化复核清单的显式记录；当前为 `not_recorded`，绝不从目录或 include 推断。 |",
+        "| 三流地图会合 | 以 `data/event_scripts.s`、`data/data_b2d_mid26.s`、`data/data_b2d_mid30.s` 的同图记录连接 scripts、events、地图头/布局/tileset。别名和 baserom 范围均为待办，不构成完成。 |",
+        "| script_data 顶层分区 | US linker 提供 8 个对象的目标 owner 顺序；JP linker map 提供实际范围和锚点。只在 JP 起止标签、末尾位置与 ROM 比对均成立时，才允许拆出一个 owner。 |",
         "| JP 独有 C 迁移清单 | 已映射、非裸汇编、但无 US 标准 C owner 的函数模块；动态分类，不沿用失效的固定“38 个”计数。 |",
         "",
         "## 复现与输入",
@@ -828,6 +1346,8 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "python3 tools/audit_structure.py --json --output build/audit-structure.json \\",
         "    --manifest build/jp-only-c-manifest.json",
         "python3 tools/audit_structure.py --transition-manifest build/transition-file-manifest.json",
+        "python3 tools/audit_structure.py --map-convergence-manifest build/map-convergence-manifest.json",
+        "python3 tools/audit_structure.py --script-data-manifest build/script-data-manifest.json",
         "python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md",
         "# 比较另一份 US 工程时显式指定其根目录",
         "python3 tools/audit_structure.py --us-root /path/to/pokeemerald --markdown-output DECOMP_PROGRESS.md",
@@ -878,6 +1398,10 @@ def main() -> None:
     parser.add_argument("--manifest", type=Path, help="write only the JP-only C manifest JSON")
     parser.add_argument("--transition-manifest", type=Path,
                         help="write only the transition-file manifest JSON")
+    parser.add_argument("--map-convergence-manifest", type=Path,
+                        help="write only the three-stream map convergence manifest JSON")
+    parser.add_argument("--script-data-manifest", type=Path,
+                        help="write only the script_data owner and boundary manifest JSON")
     parser.add_argument("--markdown-output", type=Path,
                         help="atomically write the human-readable Markdown progress report")
     args = parser.parse_args()
@@ -887,6 +1411,10 @@ def main() -> None:
         require_destination_kind(args.manifest, "json")
     if args.transition_manifest:
         require_destination_kind(args.transition_manifest, "json")
+    if args.map_convergence_manifest:
+        require_destination_kind(args.map_convergence_manifest, "json")
+    if args.script_data_manifest:
+        require_destination_kind(args.script_data_manifest, "json")
     if args.markdown_output:
         require_destination_kind(args.markdown_output, "markdown")
     if not (args.us_root / "src").is_dir():
@@ -901,6 +1429,12 @@ def main() -> None:
     if args.transition_manifest:
         write_output(args.transition_manifest, json.dumps(report["transition_manifest"], ensure_ascii=False,
                                                            indent=2, sort_keys=True) + "\n")
+    if args.map_convergence_manifest:
+        write_output(args.map_convergence_manifest, json.dumps(report["map_convergence"], ensure_ascii=False,
+                                                                indent=2, sort_keys=True) + "\n")
+    if args.script_data_manifest:
+        write_output(args.script_data_manifest, json.dumps(report["script_data"], ensure_ascii=False,
+                                                            indent=2, sort_keys=True) + "\n")
     if args.markdown_output:
         write_output(args.markdown_output, render_markdown_report(report))
     if args.json:
