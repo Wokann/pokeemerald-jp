@@ -885,7 +885,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/PetalburgWoods/scripts.inc"
 	.include "data/maps/MtChimney/scripts.inc"
 	.include "data/maps/JaggedPass/scripts.inc"
-	.incbin "baserom_jp.gba", 0x215bb4, 0x54b
 	.include "data/maps/FieryPath/scripts.inc"
 	.incbin "baserom_jp.gba", 0x216119, 0x117
 	.include "data/maps/MtPyre_2F/scripts.inc"
@@ -1936,6 +1935,10 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set PetalburgWoods_EventScript_ItemEther, 0x08256E73
 	.globl PetalburgWoods_EventScript_ItemParalyzeHeal
 	.set PetalburgWoods_EventScript_ItemParalyzeHeal, 0x08256E80
+	@ Jagged Pass's Burn Heal entry remains in the later shared item-script
+	@ owner; export the reviewed map-event name without moving that range.
+	.globl JaggedPass_EventScript_ItemBurnHeal
+	.set JaggedPass_EventScript_ItemBurnHeal, 0x08256EDB
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F

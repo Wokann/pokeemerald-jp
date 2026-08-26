@@ -2302,41 +2302,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MtChimney/events.inc"
 	.globl gMapEvents_MT_CHIMNEY
 	.set gMapEvents_MT_CHIMNEY, MtChimney_MapEvents
-	.globl JAGGED_PASS_EventObjects
-JAGGED_PASS_EventObjects: @ 0x0850D210
-	object_event 1, 55, 0, 10, 8, 3, 10, 0, 0, 1, 3, 0x08215C21, 0x0000
-	object_event 2, 31, 0, 16, 35, 3, 14, 0, 0, 1, 4, 0x08215C97, 0x0000
-	object_event 3, 59, 0, 23, 24, 3, 1, 0, 0, 0, 0, 0x08256EDB, 0x042E
-	object_event 4, 32, 0, 9, 21, 3, 16, 1, 1, 1, 3, 0x08215C38, 0x0000
-	object_event 5, 119, 0, 16, 19, 3, 7, 1, 1, 0, 0, 0x08215BB4, 0x034F
-	object_event 6, 32, 0, 14, 25, 3, 10, 1, 1, 1, 3, 0x08215D0D, 0x0000
-	object_event 7, 56, 0, 18, 25, 3, 9, 1, 1, 1, 3, 0x08215CF6, 0x0000
-	.globl JAGGED_PASS_EventWarps
-JAGGED_PASS_EventWarps: @ 0x0850D2B8
-	warp_def 14, 40, 3, 2, MAP_ROUTE112
-	warp_def 15, 40, 3, 3, MAP_ROUTE112
-	warp_def 13, 5, 3, 2, MAP_MT_CHIMNEY
-	warp_def 14, 5, 3, 3, MAP_MT_CHIMNEY
-	warp_def 16, 18, 0, 0, MAP_MAGMA_HIDEOUT_1F
-	.globl JAGGED_PASS_EventCoordEvents
-JAGGED_PASS_EventCoordEvents: @ 0x0850D2E0
-	coord_event 13, 15, 3, 2, 0, 0x00000000
-	coord_event 21, 12, 3, 8, 0, 0x00000000
-	coord_event 14, 15, 3, 2, 0, 0x00000000
-	coord_event 18, 17, 3, 2, 0, 0x00000000
-	coord_event 22, 19, 3, 2, 0, 0x00000000
-	coord_event 21, 15, 3, 16584, 1, JaggedPass_EventScript_00215B57
-	coord_event 22, 20, 3, 16584, 1, JaggedPass_EventScript_00215B57
-	coord_event 21, 20, 3, 16584, 1, JaggedPass_EventScript_00215B57
-	coord_event 14, 15, 3, 16584, 1, JaggedPass_EventScript_00215B57
-	coord_event 13, 15, 3, 16584, 1, JaggedPass_EventScript_00215B57
-	.globl JAGGED_PASS_EventBgEvents
-JAGGED_PASS_EventBgEvents: @ 0x0850D380
-	bg_event 8, 10, 3, 7, 0x0017, 0x4D, 0x00
-	bg_event 7, 29, 3, 7, 0x0003, 0x4C, 0x00
+	.include "data/maps/JaggedPass/events.inc"
 	.globl gMapEvents_JAGGED_PASS
-gMapEvents_JAGGED_PASS: @ 0x0850D398
-	map_events JAGGED_PASS_EventObjects, JAGGED_PASS_EventWarps, JAGGED_PASS_EventCoordEvents, JAGGED_PASS_EventBgEvents
+	.set gMapEvents_JAGGED_PASS, JaggedPass_MapEvents
 	.globl FIERY_PATH_EventObjects
 FIERY_PATH_EventObjects: @ 0x0850D3AC
 	object_event 1, 59, 0, 8, 3, 3, 1, 1, 1, 0, 0, 0x08256EF5, 0x0443

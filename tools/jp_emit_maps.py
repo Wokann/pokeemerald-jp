@@ -177,6 +177,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # story/NPC/trainer branches, and the contiguous unused movement records
     # were checked against the matching US source in physical JP ROM order.
     'MtChimney': 43,
+    # Jagged Pass follows Mt. Chimney. Its three map hooks and sixteen local
+    # hideout, guard, and trainer branches match the US source in ROM order.
+    'JaggedPass': 19,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -189,6 +192,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'DesertRuins': ('OnResume', 'OnLoad'),
     'GraniteCave_B1F': ('SetHoleWarp',),
     'MtChimney': ('OnResume',),
+    'JaggedPass': ('OnResume', 'OnLoad'),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -277,6 +281,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Mt. Chimney owns the sixty contiguous dialogue records following its
     # local scripts and movement data.
     'MtChimney': 60,
+    # Jagged Pass owns its twenty-seven trainer, guard, and hideout texts.
+    'JaggedPass': 27,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6669,6 +6675,71 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 'removemoney': (0,),
                 'setobjectxyperm': (1, 2),
                 'checkitemspace': (1,),
+            },
+        },
+    },
+    # Jagged Pass is the immediate physical successor of Mt. Chimney. Its
+    # hideout state, guard sequence, trainer flows, and all local texts were
+    # checked against the US map source before enabling semantic regeneration.
+    'JaggedPass': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x08256EDB: 'JaggedPass_EventScript_ItemBurnHeal',
+        },
+        'symbols': {
+            'vars': {
+                0x40BD: 'VAR_JAGGED_PASS_ASH_WEATHER',
+                0x40C8: 'VAR_JAGGED_PASS_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x8007: 'VAR_0x8007',
+                0x800D: 'VAR_RESULT',
+            },
+            'flags': {
+                0x0139: 'FLAG_BEAT_MAGMA_GRUNT_JAGGED_PASS',
+            },
+            'items': {0x0177: 'ITEM_MAGMA_EMBLEM'},
+            'trainers': {
+                0x00D8: 'TRAINER_ETHAN_1',
+                0x00D9: 'TRAINER_AUTUMN',
+                0x01DA: 'TRAINER_DIANA_1',
+                0x0236: 'TRAINER_JULIO',
+                0x023A: 'TRAINER_GRUNT_JAGGED_PASS',
+                0x0278: 'TRAINER_ERIC',
+            },
+            'local_ids': {0x05: 'LOCALID_MAGMA_HIDEOUT_GUARD'},
+            'metatiles': {
+                0x0256: 'METATILE_Lavaridge_CaveEntrance_Top',
+                0x025E: 'METATILE_Lavaridge_CaveEntrance_Bottom',
+                0x0274: 'METATILE_Lavaridge_RockWall',
+            },
+            'weather': {0x07: 'WEATHER_VOLCANIC_ASH'},
+            'step_callbacks': {0x01: 'STEP_CB_ASH'},
+            'sounds': {
+                0x0D: 'SE_EFFECTIVE',
+                0x15: 'SE_PIN',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'var_values': {
+                0x40BD: {0x01: '1'},
+                0x40C8: {0x00: '0', 0x01: '1', 0x02: '2'},
+            },
+            # VAR_0x8004 normally carries a trainer for match-call wrappers,
+            # but this reviewed camera sequence uses literal pan strength.
+            'script_var_values': {
+                0x08215B57: {0x8004: {0x01: '1'}},
+            },
+            'decimal_arguments': {
+                'delay': (0,),
+                'setvar': (1,),
+                'setmetatile': (0, 1),
             },
         },
     },
