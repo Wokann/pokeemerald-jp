@@ -3928,7 +3928,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ struct MapHeader { mapLayout, events, mapScripts, connections, music, mapLayoutId, regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType }
 	@ MAP_PETALBURG_CITY (g0 m0)
 	.4byte gMapLayout_PETALBURG_CITY  @ mapLayout
-	.4byte gMapEvents_PETALBURG_CITY  @ events
+	.4byte PetalburgCity_MapEvents  @ events
 	.4byte PetalburgCity_MapScripts  @ mapScripts
 	.4byte gMapConnections_PETALBURG_CITY  @ connections
 	.2byte 0x016A  @ music
@@ -3936,7 +3936,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY (g0 m1)
 	.4byte gMapLayout_SLATEPORT_CITY  @ mapLayout
-	.4byte gMapEvents_SLATEPORT_CITY  @ events
+	.4byte SlateportCity_MapEvents  @ events
 	.4byte SlateportCity_MapScripts  @ mapScripts
 	.4byte gMapConnections_SLATEPORT_CITY  @ connections
 	.2byte 0x01B1  @ music
@@ -3944,7 +3944,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY (g0 m2)
 	.4byte gMapLayout_MAUVILLE_CITY  @ mapLayout
-	.4byte gMapEvents_MAUVILLE_CITY  @ events
+	.4byte MauvilleCity_MapEvents  @ events
 	.4byte MauvilleCity_MapScripts  @ mapScripts
 	.4byte gMapConnections_MAUVILLE_CITY  @ connections
 	.2byte 0x018F  @ music
@@ -3952,7 +3952,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY (g0 m3)
 	.4byte gMapLayout_RUSTBORO_CITY  @ mapLayout
-	.4byte gMapEvents_RUSTBORO_CITY  @ events
+	.4byte RustboroCity_MapEvents  @ events
 	.4byte RustboroCity_MapScripts  @ mapScripts
 	.4byte gMapConnections_RUSTBORO_CITY  @ connections
 	.2byte 0x018F  @ music
@@ -3960,7 +3960,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY (g0 m4)
 	.4byte gMapLayout_FORTREE_CITY  @ mapLayout
-	.4byte gMapEvents_FORTREE_CITY  @ events
+	.4byte FortreeCity_MapEvents  @ events
 	.4byte FortreeCity_MapScripts  @ mapScripts
 	.4byte gMapConnections_FORTREE_CITY  @ connections
 	.2byte 0x017E  @ music
@@ -3968,7 +3968,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY (g0 m5)
 	.4byte gMapLayout_LILYCOVE_CITY  @ mapLayout
-	.4byte gMapEvents_LILYCOVE_CITY  @ events
+	.4byte LilycoveCity_MapEvents  @ events
 	.4byte LilycoveCity_MapScripts  @ mapScripts
 	.4byte gMapConnections_LILYCOVE_CITY  @ connections
 	.2byte 0x0198  @ music
@@ -3976,7 +3976,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY (g0 m6)
 	.4byte gMapLayout_MOSSDEEP_CITY  @ mapLayout
-	.4byte gMapEvents_MOSSDEEP_CITY  @ events
+	.4byte MossdeepCity_MapEvents  @ events
 	.4byte MossdeepCity_MapScripts  @ mapScripts
 	.4byte gMapConnections_MOSSDEEP_CITY  @ connections
 	.2byte 0x018F  @ music
@@ -3984,7 +3984,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY (g0 m7)
 	.4byte gMapLayout_SOOTOPOLIS_CITY  @ mapLayout
-	.4byte gMapEvents_SOOTOPOLIS_CITY  @ events
+	.4byte SootopolisCity_MapEvents  @ events
 	.4byte SootopolisCity_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -3992,7 +3992,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY (g0 m8)
 	.4byte gMapLayout_EVER_GRANDE_CITY  @ mapLayout
-	.4byte gMapEvents_EVER_GRANDE_CITY  @ events
+	.4byte EverGrandeCity_MapEvents  @ events
 	.4byte EverGrandeCity_MapScripts  @ mapScripts
 	.4byte gMapConnections_EVER_GRANDE_CITY  @ connections
 	.2byte 0x01A6  @ music
@@ -4000,7 +4000,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LITTLEROOT_TOWN (g0 m9)
 	.4byte gMapLayout_LITTLEROOT_TOWN  @ mapLayout
-	.4byte gMapEvents_LITTLEROOT_TOWN  @ events
+	.4byte LittlerootTown_MapEvents  @ events
 	.4byte LittlerootTown_MapScripts  @ mapScripts
 	.4byte gMapConnections_LITTLEROOT_TOWN  @ connections
 	.2byte 0x0195  @ music
@@ -4008,7 +4008,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x00, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN (g0 m10)
 	.4byte gMapLayout_OLDALE_TOWN  @ mapLayout
-	.4byte gMapEvents_OLDALE_TOWN  @ events
+	.4byte OldaleTown_MapEvents  @ events
 	.4byte OldaleTown_MapScripts  @ mapScripts
 	.4byte gMapConnections_OLDALE_TOWN  @ connections
 	.2byte 0x016B  @ music
@@ -4016,7 +4016,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN (g0 m11)
 	.4byte gMapLayout_DEWFORD_TOWN  @ mapLayout
-	.4byte gMapEvents_DEWFORD_TOWN  @ events
+	.4byte DewfordTown_MapEvents  @ events
 	.4byte DewfordTown_MapScripts  @ mapScripts
 	.4byte gMapConnections_DEWFORD_TOWN  @ connections
 	.2byte 0x01AB  @ music
@@ -4024,7 +4024,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN (g0 m12)
 	.4byte gMapLayout_LAVARIDGE_TOWN  @ mapLayout
-	.4byte gMapEvents_LAVARIDGE_TOWN  @ events
+	.4byte LavaridgeTown_MapEvents  @ events
 	.4byte LavaridgeTown_MapScripts  @ mapScripts
 	.4byte gMapConnections_LAVARIDGE_TOWN  @ connections
 	.2byte 0x016B  @ music
@@ -4032,7 +4032,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN (g0 m13)
 	.4byte gMapLayout_FALLARBOR_TOWN  @ mapLayout
-	.4byte gMapEvents_FALLARBOR_TOWN  @ events
+	.4byte FallarborTown_MapEvents  @ events
 	.4byte FallarborTown_MapScripts  @ mapScripts
 	.4byte gMapConnections_FALLARBOR_TOWN  @ connections
 	.2byte 0x01B5  @ music
@@ -4040,7 +4040,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN (g0 m14)
 	.4byte gMapLayout_VERDANTURF_TOWN  @ mapLayout
-	.4byte gMapEvents_VERDANTURF_TOWN  @ events
+	.4byte VerdanturfTown_MapEvents  @ events
 	.4byte VerdanturfTown_MapScripts  @ mapScripts
 	.4byte gMapConnections_VERDANTURF_TOWN  @ connections
 	.2byte 0x018E  @ music
@@ -4048,7 +4048,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN (g0 m15)
 	.4byte gMapLayout_PACIFIDLOG_TOWN  @ mapLayout
-	.4byte gMapEvents_PACIFIDLOG_TOWN  @ events
+	.4byte PacifidlogTown_MapEvents  @ events
 	.4byte PacifidlogTown_MapScripts  @ mapScripts
 	.4byte gMapConnections_PACIFIDLOG_TOWN  @ connections
 	.2byte 0x0198  @ music

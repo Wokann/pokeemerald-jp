@@ -679,53 +679,21 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.hword 0x0800, 0xD756
 
 	.include "data/maps/PetalburgCity/events.inc"
-	.globl gMapEvents_PETALBURG_CITY
-	.set gMapEvents_PETALBURG_CITY, PetalburgCity_MapEvents
 	.include "data/maps/SlateportCity/events.inc"
-	.globl gMapEvents_SLATEPORT_CITY
-	.set gMapEvents_SLATEPORT_CITY, SlateportCity_MapEvents
 	.include "data/maps/MauvilleCity/events.inc"
-	.globl gMapEvents_MAUVILLE_CITY
-	.set gMapEvents_MAUVILLE_CITY, MauvilleCity_MapEvents
 	.include "data/maps/RustboroCity/events.inc"
-	.globl gMapEvents_RUSTBORO_CITY
-	.set gMapEvents_RUSTBORO_CITY, RustboroCity_MapEvents
 	.include "data/maps/FortreeCity/events.inc"
-	.globl gMapEvents_FORTREE_CITY
-	.set gMapEvents_FORTREE_CITY, FortreeCity_MapEvents
 	.include "data/maps/LilycoveCity/events.inc"
-	.globl gMapEvents_LILYCOVE_CITY
-	.set gMapEvents_LILYCOVE_CITY, LilycoveCity_MapEvents
 	.include "data/maps/MossdeepCity/events.inc"
-	.globl gMapEvents_MOSSDEEP_CITY
-	.set gMapEvents_MOSSDEEP_CITY, MossdeepCity_MapEvents
 	.include "data/maps/SootopolisCity/events.inc"
-	.globl gMapEvents_SOOTOPOLIS_CITY
-	.set gMapEvents_SOOTOPOLIS_CITY, SootopolisCity_MapEvents
 	.include "data/maps/EverGrandeCity/events.inc"
-	.globl gMapEvents_EVER_GRANDE_CITY
-	.set gMapEvents_EVER_GRANDE_CITY, EverGrandeCity_MapEvents
 	.include "data/maps/LittlerootTown/events.inc"
-	.globl gMapEvents_LITTLEROOT_TOWN
-	.set gMapEvents_LITTLEROOT_TOWN, LittlerootTown_MapEvents
 	.include "data/maps/OldaleTown/events.inc"
-	.globl gMapEvents_OLDALE_TOWN
-	.set gMapEvents_OLDALE_TOWN, OldaleTown_MapEvents
 	.include "data/maps/DewfordTown/events.inc"
-	.globl gMapEvents_DEWFORD_TOWN
-	.set gMapEvents_DEWFORD_TOWN, DewfordTown_MapEvents
 	.include "data/maps/LavaridgeTown/events.inc"
-	.globl gMapEvents_LAVARIDGE_TOWN
-	.set gMapEvents_LAVARIDGE_TOWN, LavaridgeTown_MapEvents
 	.include "data/maps/FallarborTown/events.inc"
-	.globl gMapEvents_FALLARBOR_TOWN
-	.set gMapEvents_FALLARBOR_TOWN, FallarborTown_MapEvents
 	.include "data/maps/VerdanturfTown/events.inc"
-	.globl gMapEvents_VERDANTURF_TOWN
-	.set gMapEvents_VERDANTURF_TOWN, VerdanturfTown_MapEvents
 	.include "data/maps/PacifidlogTown/events.inc"
-	.globl gMapEvents_PACIFIDLOG_TOWN
-	.set gMapEvents_PACIFIDLOG_TOWN, PacifidlogTown_MapEvents
 	.include "data/maps/Route101/events.inc"
 	.globl gMapEvents_ROUTE101
 	.set gMapEvents_ROUTE101, Route101_MapEvents
