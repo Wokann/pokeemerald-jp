@@ -765,14 +765,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route119/events.inc"
 	.include "data/maps/Route120/events.inc"
 	.include "data/maps/Route121/events.inc"
-	.globl ROUTE122_EventObjects
-ROUTE122_EventObjects: @ 0x00000000
-	.globl ROUTE122_EventWarps
-ROUTE122_EventWarps: @ 0x085044CC
-	warp_def 22, 29, 0, 0, MAP_MT_PYRE_1F
-	.globl gMapEvents_ROUTE122
-gMapEvents_ROUTE122: @ 0x085044D4
-	map_events 0, ROUTE122_EventWarps, 0, 0
+	.include "data/maps/Route122/events.inc"
 	.include "data/maps/Route123/events.inc"
 	.globl gMapEvents_ROUTE123
 	.set gMapEvents_ROUTE123, Route123_MapEvents

@@ -257,6 +257,7 @@ JP_STRUCTURED_MAPS += Route118
 JP_STRUCTURED_MAPS += Route119
 JP_STRUCTURED_MAPS += Route120
 JP_STRUCTURED_MAPS += Route121
+JP_STRUCTURED_MAPS += Route122
 JP_STRUCTURED_MAP_EVENTS := $(JP_STRUCTURED_MAPS:%=data/maps/%/events.inc)
 
 $(JP_STRUCTURED_MAP_EVENTS): data/maps/%/events.inc: data/maps/%/map.json | tools
