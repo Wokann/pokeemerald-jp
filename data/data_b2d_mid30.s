@@ -5286,8 +5286,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_HOUSE4 (g13 m15)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte gMapEvents_LILYCOVE_CITY_HOUSE4  @ events
-	.4byte 0x0820A51A  @ mapScripts
+	.4byte LilycoveCity_House4_MapEvents  @ events
+	.4byte LilycoveCity_House4_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
 	.2byte 0x003B  @ mapLayoutId

@@ -12226,6 +12226,23 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# House4 follows House3 in physical EventScript order. Its two object scripts
+# and two local texts match the corresponding US map source one-to-one.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_House4': {
+        'scripts': {
+            0x0820A51B: 'LilycoveCity_House4_EventScript_Man1',
+            0x0820A524: 'LilycoveCity_House4_EventScript_Man2',
+        },
+        'texts': {
+            0x0820A52D: 'LilycoveCity_House4_Text_MysteriesAtBottomOfSea',
+            0x0820A56C: 'LilycoveCity_House4_Text_UnderwaterTrenchMossdeepSootopolis',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Department Store 2F is the first owner in the still-visible 0x20A920 raw
 # range. Its five entry scripts, two shop lists, and three local texts match
 # the US map source in physical order.

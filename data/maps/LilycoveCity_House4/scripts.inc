@@ -3,11 +3,11 @@
 LilycoveCity_House4_MapScripts::
 	.byte 0
 
-LilycoveCity_House4_EventScript_Man1::
+LilycoveCity_House4_EventScript_Man1:: @ 0x0820A51B
 	msgbox LilycoveCity_House4_Text_MysteriesAtBottomOfSea, MSGBOX_NPC
 	end
 
-LilycoveCity_House4_EventScript_Man2::
+LilycoveCity_House4_EventScript_Man2:: @ 0x0820A524
 	msgbox LilycoveCity_House4_Text_UnderwaterTrenchMossdeepSootopolis, MSGBOX_NPC
 	end
 
