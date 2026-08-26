@@ -1921,6 +1921,10 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set GraniteCave_1F_EventScript_ItemEscapeRope, 0x08256EA7
 	.globl GraniteCave_B1F_EventScript_ItemPokeBall
 	.set GraniteCave_B1F_EventScript_ItemPokeBall, 0x08256EB4
+	.globl GraniteCave_B2F_EventScript_ItemRepel
+	.set GraniteCave_B2F_EventScript_ItemRepel, 0x08256EC1
+	.globl GraniteCave_B2F_EventScript_ItemRareCandy
+	.set GraniteCave_B2F_EventScript_ItemRareCandy, 0x08256ECE
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F

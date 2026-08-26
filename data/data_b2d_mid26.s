@@ -2290,31 +2290,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/GraniteCave_B1F/events.inc"
 	.globl gMapEvents_GRANITE_CAVE_B1F
 	.set gMapEvents_GRANITE_CAVE_B1F, GraniteCave_B1F_MapEvents
-	.globl GRANITE_CAVE_B2F_EventObjects
-GRANITE_CAVE_B2F_EventObjects: @ 0x0850CBB0
-	object_event 1, 59, 0, 4, 4, 3, 1, 0, 0, 0, 0, 0x08256EC1, 0x041D
-	object_event 2, 59, 0, 29, 4, 3, 1, 0, 0, 0, 0, 0x08256ECE, 0x041E
-	object_event 3, 86, 0, 5, 14, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0011
-	object_event 4, 86, 0, 3, 14, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0012
-	object_event 5, 86, 0, 2, 16, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0013
-	object_event 6, 86, 0, 7, 12, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0014
-	object_event 7, 86, 0, 4, 22, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0015
-	object_event 8, 86, 0, 6, 22, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0016
-	object_event 9, 86, 0, 3, 21, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0017
-	.globl GRANITE_CAVE_B2F_EventWarps
-GRANITE_CAVE_B2F_EventWarps: @ 0x0850CC88
-	warp_def 29, 13, 3, 2, MAP_GRANITE_CAVE_B1F
-	warp_def 28, 21, 3, 3, MAP_GRANITE_CAVE_B1F
-	warp_def 8, 5, 3, 4, MAP_GRANITE_CAVE_B1F
-	warp_def 12, 3, 3, 5, MAP_GRANITE_CAVE_B1F
-	warp_def 29, 2, 3, 6, MAP_GRANITE_CAVE_B1F
-	.globl GRANITE_CAVE_B2F_EventBgEvents
-GRANITE_CAVE_B2F_EventBgEvents: @ 0x0850CCB0
-	bg_event 28, 6, 3, 7, 0x00C3, 0x30, 0x00
-	bg_event 15, 11, 3, 7, 0x00C3, 0x31, 0x00
+	.include "data/maps/GraniteCave_B2F/events.inc"
 	.globl gMapEvents_GRANITE_CAVE_B2F
-gMapEvents_GRANITE_CAVE_B2F: @ 0x0850CCC8
-	map_events GRANITE_CAVE_B2F_EventObjects, GRANITE_CAVE_B2F_EventWarps, 0, GRANITE_CAVE_B2F_EventBgEvents
+	.set gMapEvents_GRANITE_CAVE_B2F, GraniteCave_B2F_MapEvents
 	.globl GRANITE_CAVE_STEVENS_ROOM_EventObjects
 GRANITE_CAVE_STEVENS_ROOM_EventObjects: @ 0x0850CCDC
 	object_event 1, 134, 0, 7, 8, 3, 1, 0, 0, 0, 0, 0x08214028, 0x0341
