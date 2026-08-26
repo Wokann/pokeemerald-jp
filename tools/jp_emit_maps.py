@@ -945,6 +945,19 @@ VERIFIED_SHARED_TEXT_BLOCKS = {
             0x08263847: 'Route104_Text_TrainersOftenMakeMonHoldBerries',
         },
     },
+    # Route114's daily berry giver shares the same physical berry-text owner.
+    # The three EOS records are contiguous and precede Route120's still-raw
+    # text range, so only this proven prefix is extracted here.
+    'Route114_BerryMan': {
+        'source': 'data/scripts/gUnknown_826316A.inc',
+        'start': 0x08263908,
+        'end': 0x0826398A,
+        'labels': {
+            0x08263908: 'Route114_Text_LoveUsingBerryCrushShareBerry',
+            0x0826393D: 'Route114_Text_TryBerryCrushWithFriends',
+            0x08263958: 'Route114_Text_FunToThinkAboutBerries',
+        },
+    },
     'LilycoveCity_BerryGentleman': {
         'source': 'data/scripts/gUnknown_826316A.inc',
         'start': 0x08263A58,
@@ -4181,9 +4194,16 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081EB7DD: 'Route114_Text_FossilManiacsHouseSign',
             0x081EB7FA: 'Route114_Text_LanettesHouse',
         },
-        'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route114']['labels'],
+        'external_texts': {
+            **VERIFIED_SHARED_TEXT_BLOCKS['Route114']['labels'],
+            **VERIFIED_SHARED_TEXT_BLOCKS['Route114_BerryMan']['labels'],
+        },
         'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x0824433D: 'AbnormalWeather_EventScript_PlaceTilesRoute114North',
+            0x08244350: 'AbnormalWeather_EventScript_PlaceTilesRoute114South',
             0x0824473D: 'AbnormalWeather_EventScript_HideMapNamePopup',
+            0x08244745: 'AbnormalWeather_StartGroudonWeather',
             0x08244749: 'AbnormalWeather_EventScript_EndEventAndCleanup_1',
         },
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
@@ -4206,9 +4226,9 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
                     0x2: 'ABNORMAL_WEATHER_ROUTE_114_SOUTH',
                 },
             },
-            # JP constants retain numeric TM names; ITEM_TM05 is Roar.
-            'items': {0x0125: 'ITEM_TM05'},
+            'items': {0x0125: 'ITEM_TM_ROAR'},
             'species': {0x011E: 'SPECIES_POOCHYENA'},
+            'cry_modes': {0x2: 'CRY_MODE_ENCOUNTER'},
             'trainers': {
                 0x0274: 'TRAINER_LENNY',
                 0x0275: 'TRAINER_LUCAS_1',

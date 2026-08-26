@@ -7,18 +7,18 @@ Route114_MapScripts::
 	.byte 0
 
 Route114_OnTransition::
-	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_HideMapNamePopup
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_114_NORTH, 0x08244745
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_114_SOUTH, 0x08244745
+	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_114_NORTH, AbnormalWeather_StartGroudonWeather
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_114_SOUTH, AbnormalWeather_StartGroudonWeather
 	end
 
 Route114_OnLoad::
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_114_NORTH, 0x0824433D
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_114_SOUTH, 0x08244350
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_114_NORTH, AbnormalWeather_EventScript_PlaceTilesRoute114North
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_114_SOUTH, AbnormalWeather_EventScript_PlaceTilesRoute114South
 	end
 
 Route114_OnFrame::
-	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_EndEventAndCleanup_1
+	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
 Route114_EventScript_Man::
@@ -26,21 +26,19 @@ Route114_EventScript_Man::
 	faceplayer
 	dotimebasedevents
 	goto_if_set FLAG_DAILY_ROUTE_114_RECEIVED_BERRY, Route114_EventScript_ReceivedBerry
-	msgbox 0x08263908, MSGBOX_DEFAULT
-	random 0x5
-	addvar VAR_RESULT, 0xF
-	addvar VAR_RESULT, 0x85
-	setorcopyvar VAR_0x8000, 0x800D
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
-	goto_if_eq VAR_RESULT, 0x0, 0x082430E0
+	msgbox Route114_Text_LoveUsingBerryCrushShareBerry, MSGBOX_DEFAULT
+	random NUM_ROUTE_114_MAN_BERRIES
+	addvar VAR_RESULT, NUM_ROUTE_114_MAN_BERRIES_SKIPPED
+	addvar VAR_RESULT, FIRST_BERRY_INDEX
+	giveitem VAR_RESULT
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_DAILY_ROUTE_114_RECEIVED_BERRY
-	msgbox 0x0826393D, MSGBOX_DEFAULT
+	msgbox Route114_Text_TryBerryCrushWithFriends, MSGBOX_DEFAULT
 	release
 	end
 
 Route114_EventScript_ReceivedBerry::
-	msgbox 0x08263958, MSGBOX_DEFAULT
+	msgbox Route114_Text_FunToThinkAboutBerries, MSGBOX_DEFAULT
 	release
 	end
 
@@ -49,10 +47,8 @@ Route114_EventScript_RoarGentleman::
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_ROAR, Route114_EventScript_ReceivedRoar
 	msgbox Route114_Text_AllMyMonDoesIsRoarTakeThis, MSGBOX_DEFAULT
-	setorcopyvar VAR_0x8000, ITEM_TM05
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
-	goto_if_eq VAR_RESULT, 0x0, 0x082430E0
+	giveitem ITEM_TM_ROAR
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_ROAR
 	msgbox Route114_Text_ExplainRoar, MSGBOX_DEFAULT
 	release
@@ -67,8 +63,9 @@ Route114_EventScript_Poochyena::
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_POOCHYENA, 0x2
+	playmoncry SPECIES_POOCHYENA, CRY_MODE_ENCOUNTER
 	msgbox Route114_Text_Poochyena, MSGBOX_DEFAULT
+	@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.
 	waitdooranim
 	release
 	end
@@ -115,7 +112,7 @@ Route114_EventScript_Steve::
 
 Route114_EventScript_RegisterSteve::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route114_Text_SteveRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_STEVE_1
 	release
@@ -136,7 +133,7 @@ Route114_EventScript_Bernie::
 
 Route114_EventScript_RegisterBernie::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route114_Text_BernieRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_BERNIE_1
 	release

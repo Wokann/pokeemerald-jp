@@ -98,7 +98,19 @@ Route113_EventScript_ItemHyperPotion:: @ 0x08256B4D
 	finditem ITEM_HYPER_POTION
 	end
 
-	.incbin "baserom_jp.gba", 0x256b5a, 0x1ad
+Route114_EventScript_ItemRareCandy:: @ 0x08256B5A
+	finditem ITEM_RARE_CANDY
+	end
+
+Route114_EventScript_ItemProtein:: @ 0x08256B67
+	finditem ITEM_PROTEIN
+	end
+
+Route114_EventScript_ItemEnergyPowder:: @ 0x08256B74
+	finditem ITEM_ENERGY_POWDER
+	end
+
+	.incbin "baserom_jp.gba", 0x256b81, 0x186
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM

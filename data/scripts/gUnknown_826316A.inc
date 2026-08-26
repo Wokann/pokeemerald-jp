@@ -36,7 +36,8 @@ Route111_Text_WhatColorBerriesToLookForToday:: @ 0x082638F0
 	.string "きょうは　なにいろの　きのみを\n"
 	.string "さがそっかなー$"
 
-	.incbin "baserom_jp.gba", 0x263908, 0x150
+	.include "data/text/berries.inc"
+	.incbin "baserom_jp.gba", 0x26398a, 0xce
 LilycoveCity_Text_BerrySuitsYou: @ 0x08263A58
 	.string "やっぱり\p"
 	.string "わたしに　スーツが　にあうように\n"

@@ -61,12 +61,15 @@
 	callstd 0x4
 	releaseall 
 	end 
-	setmetatile 0x7, 0x3, 0x347, 0x1
-	setmetatile 0x7, 0x4, 0x34F, 0x0
-	return 
-	setmetatile 0x6, 0x2D, 0x259, 0x1
-	setmetatile 0x6, 0x2E, 0x261, 0x0
-	return 
+AbnormalWeather_EventScript_PlaceTilesRoute114North:: @ 0x0824433D
+	setmetatile 7, 3, METATILE_Fallarbor_RedCaveEntrance_Top, TRUE
+	setmetatile 7, 4, METATILE_Fallarbor_RedCaveEntrance_Bottom, FALSE
+	return
+
+AbnormalWeather_EventScript_PlaceTilesRoute114South:: @ 0x08244350
+	setmetatile 6, 45, METATILE_Fallarbor_BrownCaveEntrance_Top, TRUE
+	setmetatile 6, 46, METATILE_Fallarbor_BrownCaveEntrance_Bottom, FALSE
+	return
 	setmetatile 0x15, 0x5, 0x259, 0x1
 	setmetatile 0x15, 0x6, 0x261, 0x0
 	return 
@@ -203,5 +206,6 @@ AbnormalWeather_EventScript_HideMapNamePopup:: @ 0x0824473D
 AbnormalWeather_StartKyogreWeather:: @ 0x08244741
 	setweather 0xD
 	return 
-	setweather 0xC
-	return 
+AbnormalWeather_StartGroudonWeather:: @ 0x08244745
+	setweather WEATHER_DROUGHT
+	return

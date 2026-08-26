@@ -757,59 +757,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route111/events.inc"
 	.include "data/maps/Route112/events.inc"
 	.include "data/maps/Route113/events.inc"
-	.globl ROUTE114_EventObjects
-ROUTE114_EventObjects: @ 0x08502574
-	object_event 1, 60, 0, 31, 43, 3, 12, 0, 0, 0, 77, 0x08244D23, 0x0000
-	object_event 2, 60, 0, 31, 44, 3, 12, 0, 0, 0, 78, 0x08244D23, 0x0000
-	object_event 3, 55, 0, 15, 65, 7, 10, 0, 0, 1, 6, Route114_EventScript_Lenny, 0x0000
-	object_event 4, 55, 0, 30, 72, 5, 9, 0, 0, 1, 4, Route114_EventScript_Lucas, 0x0000
-	object_event 5, 31, 0, 22, 50, 3, 10, 0, 0, 1, 3, Route114_EventScript_Shane, 0x0000
-	object_event 6, 32, 0, 19, 35, 3, 1, 0, 0, 1, 3, Route114_EventScript_Nancy, 0x0000
-	object_event 7, 39, 0, 20, 56, 3, 7, 0, 0, 1, 3, Route114_EventScript_Steve, 0x0000
-	object_event 8, 60, 0, 31, 45, 3, 12, 0, 0, 0, 68, 0x08244D23, 0x0000
-	object_event 9, 59, 0, 7, 6, 3, 1, 0, 0, 0, 0, 0x08256B5A, 0x03F6
-	object_event 10, 59, 0, 11, 37, 4, 1, 0, 0, 0, 0, 0x08256B67, 0x03F7
-	object_event 11, 86, 0, 12, 43, 4, 1, 0, 0, 0, 0, 0x0825667C, 0x0011
-	object_event 12, 48, 0, 19, 11, 3, 10, 0, 0, 0, 0, Route114_EventScript_RoarGentleman, 0x0000
-	object_event 13, 220, 0, 19, 12, 3, 10, 0, 0, 0, 0, Route114_EventScript_Poochyena, 0x0000
-	object_event 14, 65, 0, 27, 42, 3, 3, 0, 1, 0, 0, Route114_EventScript_Man, 0x0000
-	object_event 15, 50, 0, 25, 6, 3, 8, 0, 0, 1, 0, Route114_EventScript_Nolan, 0x0000
-	object_event 16, 50, 0, 19, 26, 3, 9, 0, 0, 1, 0, Route114_EventScript_Claude, 0x0000
-	object_event 17, 66, 0, 30, 58, 5, 23, 0, 0, 1, 3, Route114_EventScript_Bernie, 0x0000
-	object_event 18, 86, 0, 29, 53, 5, 1, 1, 1, 0, 0, 0x0825667C, 0x0012
-	object_event 19, 86, 0, 30, 54, 5, 1, 1, 1, 0, 0, 0x0825667C, 0x0013
-	object_event 20, 86, 0, 22, 69, 7, 1, 1, 1, 0, 0, 0x0825667C, 0x0014
-	object_event 21, 86, 0, 11, 64, 5, 1, 1, 1, 0, 0, 0x0825667C, 0x0015
-	object_event 22, 47, 0, 24, 44, 3, 8, 1, 1, 1, 1, Route114_EventScript_Ivy, 0x0000
-	object_event 23, 47, 0, 23, 44, 3, 8, 1, 1, 1, 1, Route114_EventScript_Tyra, 0x0000
-	object_event 24, 32, 0, 28, 20, 3, 7, 1, 1, 1, 3, Route114_EventScript_Charlotte, 0x0000
-	object_event 25, 32, 0, 26, 72, 5, 18, 1, 1, 1, 4, Route114_EventScript_Angelina, 0x0000
-	object_event 26, 59, 0, 31, 19, 3, 1, 1, 1, 0, 0, 0x08256B74, 0x0488
-	object_event 27, 50, 0, 28, 16, 3, 17, 1, 1, 1, 3, Route114_EventScript_Kai, 0x0000
-	.globl ROUTE114_EventWarps
-ROUTE114_EventWarps: @ 0x085027FC
-	warp_def 8, 63, 0, 0, MAP_METEOR_FALLS_1F_1R
-	warp_def 29, 5, 0, 0, MAP_ROUTE114_FOSSIL_MANIACS_HOUSE
-	warp_def 27, 36, 0, 0, MAP_ROUTE114_LANETTES_HOUSE
-	warp_def 6, 46, 0, 0, MAP_TERRA_CAVE_ENTRANCE
-	warp_def 7, 4, 0, 0, MAP_TERRA_CAVE_ENTRANCE
-	.globl ROUTE114_EventBgEvents
-ROUTE114_EventBgEvents: @ 0x08502824
-	bg_event 7, 64, 0, 0, Route114_EventScript_MeteorFallsSign, 0, 0
-	bg_event 31, 7, 0, 0, Route114_EventScript_FossilManiacsHouseSign, 0, 0
-	bg_event 9, 47, 0, 8, 0x0029, 0x00, 0x00
-	bg_event 30, 51, 0, 8, 0x0033, 0x00, 0x00
-	bg_event 11, 62, 0, 8, 0x003D, 0x00, 0x00
-	bg_event 19, 70, 0, 8, 0x0047, 0x00, 0x00
-	bg_event 11, 27, 0, 8, 0x00B6, 0x00, 0x00
-	bg_event 12, 27, 0, 8, 0x00C0, 0x00, 0x00
-	bg_event 25, 38, 3, 0, Route114_EventScript_LanettesHouseSign, 0, 0
-	bg_event 20, 57, 3, 7, 0x0042, 0x04, 0x00
-	bg_event 32, 57, 0, 8, 0x0049, 0x00, 0x00
-	bg_event 7, 30, 3, 7, 0x0018, 0x2A, 0x00
-	.globl gMapEvents_ROUTE114
-gMapEvents_ROUTE114: @ 0x085028B4
-	map_events ROUTE114_EventObjects, ROUTE114_EventWarps, 0, ROUTE114_EventBgEvents
+	.include "data/maps/Route114/events.inc"
 	.globl ROUTE115_EventObjects
 ROUTE115_EventObjects: @ 0x085028C8
 	object_event 1, 20, 0, 18, 68, 3, 2, 1, 1, 0, 0, Route115_EventScript_Woman, 0x0000
