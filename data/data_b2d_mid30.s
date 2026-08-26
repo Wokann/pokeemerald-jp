@@ -4478,7 +4478,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_GYM_1F (g4 m1)
 	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_1F  @ mapLayout
-	.4byte gMapEvents_LAVARIDGE_TOWN_GYM_1F  @ events
+	.4byte LavaridgeTown_Gym_1F_MapEvents  @ events
 	.4byte LavaridgeTown_Gym_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music

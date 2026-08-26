@@ -6946,6 +6946,174 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Lavaridge Gym 1F physically contains the four B1F trainer branches between
+# its own trainer records. They remain distinct source labels, but are added
+# as explicit roots so this owner has no opaque script fragments.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'LavaridgeTown_Gym_1F': (
+        0x081F449D,
+        0x081F44EE,
+        0x081F4509,
+        0x081F4524,
+    ),
+})
+
+# The Lavaridge Gym's 1F script owner spans its own badge sequence, the
+# physically interleaved B1F trainer records, and all thirty-nine contiguous
+# messages. Each address and dynamic PLAYER field was checked against the
+# matching US map sources before enabling semantic output.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LavaridgeTown_Gym_1F': {
+        'scripts': {
+            0x081F42CD: 'LavaridgeTown_Gym_1F_OnTransition',
+            0x081F42D8: 'LavaridgeTown_Gym_1F_EventScript_SetTrainerTempVars',
+            0x081F42FF: 'LavaridgeTown_Gym_1F_EventScript_SetGeraldTempVar',
+            0x081F430D: 'LavaridgeTown_Gym_1F_EventScript_SetAxleTempVar',
+            0x081F431B: 'LavaridgeTown_Gym_1F_EventScript_SetDanielleTempVar',
+            0x081F4329: 'LavaridgeTown_Gym_1F_EventScript_EndSetTrainerTempVars',
+            0x081F432A: 'LavaridgeTown_Gym_1F_EventScript_CheckBuryTrainers',
+            0x081F4337: 'LavaridgeTown_Gym_1F_EventScript_CheckBuryGerald',
+            0x081F4344: 'LavaridgeTown_Gym_1F_EventScript_CheckBuryAxle',
+            0x081F4351: 'LavaridgeTown_Gym_1F_EventScript_CheckBuryDanielle',
+            0x081F435E: 'LavaridgeTown_Gym_1F_EventScript_EndCheckBuryTrainers',
+            0x081F435F: 'LavaridgeTown_Gym_1F_EventScript_Flannery',
+            0x081F4394: 'LavaridgeTown_Gym_1F_EventScript_FlanneryDefeated',
+            0x081F43F0: 'LavaridgeTown_Gym_1F_EventScript_GiveOverheat2',
+            0x081F4414: 'LavaridgeTown_Gym_1F_EventScript_GiveOverheat',
+            0x081F4437: 'LavaridgeTown_Gym_1F_EventScript_FlanneryRematch',
+            0x081F4452: 'LavaridgeTown_Gym_1F_EventScript_Cole',
+            0x081F446D: 'LavaridgeTown_Gym_EventScript_CheckTrainerScript',
+            0x081F4482: 'LavaridgeTown_Gym_1F_EventScript_Axle',
+            0x081F449D: 'LavaridgeTown_Gym_B1F_EventScript_Keegan',
+            0x081F44B8: 'LavaridgeTown_Gym_1F_EventScript_Danielle',
+            0x081F44D3: 'LavaridgeTown_Gym_1F_EventScript_Gerald',
+            0x081F44EE: 'LavaridgeTown_Gym_B1F_EventScript_Jace',
+            0x081F4509: 'LavaridgeTown_Gym_B1F_EventScript_Jeff',
+            0x081F4524: 'LavaridgeTown_Gym_B1F_EventScript_Eli',
+            0x081F453F: 'LavaridgeTown_Gym_1F_EventScript_GymGuide',
+            0x081F4554: 'LavaridgeTown_Gym_1F_EventScript_GymGuidePostVictory',
+            0x081F455E: 'LavaridgeTown_Gym_1F_EventScript_LeftGymStatue',
+            0x081F456E: 'LavaridgeTown_Gym_1F_EventScript_RightGymStatue',
+            0x081F457E: 'LavaridgeTown_Gym_1F_EventScript_GymStatueCertified',
+            0x081F4588: 'LavaridgeTown_Gym_1F_EventScript_GymStatue',
+        },
+        'texts': {
+            0x081F4592: 'LavaridgeTown_Gym_1F_Text_GymGuideAdvice',
+            0x081F4625: 'LavaridgeTown_Gym_1F_Text_GymGuidePostVictory',
+            0x081F4638: 'LavaridgeTown_Gym_1F_Text_ColeIntro',
+            0x081F4650: 'LavaridgeTown_Gym_1F_Text_ColeDefeat',
+            0x081F465E: 'LavaridgeTown_Gym_1F_Text_ColePostBattle',
+            0x081F4685: 'LavaridgeTown_Gym_1F_Text_AxleIntro',
+            0x081F46A9: 'LavaridgeTown_Gym_1F_Text_AxleDefeat',
+            0x081F46BA: 'LavaridgeTown_Gym_1F_Text_AxlePostBattle',
+            0x081F46E7: 'LavaridgeTown_Gym_B1F_Text_KeeganIntro',
+            0x081F4732: 'LavaridgeTown_Gym_B1F_Text_KeeganDefeat',
+            0x081F4745: 'LavaridgeTown_Gym_B1F_Text_KeeganPostBattle',
+            0x081F4780: 'LavaridgeTown_Gym_1F_Text_GeraldIntro',
+            0x081F479F: 'LavaridgeTown_Gym_1F_Text_GeraldDefeat',
+            0x081F47AF: 'LavaridgeTown_Gym_1F_Text_GeraldPostBattle',
+            0x081F47F4: 'LavaridgeTown_Gym_1F_Text_DanielleIntro',
+            0x081F480E: 'LavaridgeTown_Gym_1F_Text_DanielleDefeat',
+            0x081F4819: 'LavaridgeTown_Gym_1F_Text_DaniellePostBattle',
+            0x081F4841: 'LavaridgeTown_Gym_B1F_Text_JaceIntro',
+            0x081F485D: 'LavaridgeTown_Gym_B1F_Text_JaceDefeat',
+            0x081F4877: 'LavaridgeTown_Gym_B1F_Text_JacePostBattle',
+            0x081F48A0: 'LavaridgeTown_Gym_B1F_Text_JeffIntro',
+            0x081F48C8: 'LavaridgeTown_Gym_B1F_Text_JeffDefeat',
+            0x081F48CF: 'LavaridgeTown_Gym_B1F_Text_JeffPostBattle',
+            0x081F4901: 'LavaridgeTown_Gym_B1F_Text_EliIntro',
+            0x081F491E: 'LavaridgeTown_Gym_B1F_Text_EliDefeat',
+            0x081F4939: 'LavaridgeTown_Gym_B1F_Text_EliPostBattle',
+            0x081F4961: 'LavaridgeTown_Gym_1F_Text_FlanneryIntro',
+            0x081F4A13: 'LavaridgeTown_Gym_1F_Text_FlanneryDefeat',
+            0x081F4A9D: 'LavaridgeTown_Gym_1F_Text_ReceivedHeatBadge',
+            0x081F4AB5: 'LavaridgeTown_Gym_1F_Text_ExplainHeatBadgeTakeThis',
+            0x081F4B2B: 'LavaridgeTown_Gym_1F_Text_ExplainOverheat',
+            0x081F4B9A: 'LavaridgeTown_Gym_1F_Text_RegisteredFlannery',
+            0x081F4BB5: 'LavaridgeTown_Gym_1F_Text_FlanneryPostBattle',
+            0x081F4BF4: 'LavaridgeTown_Gym_1F_Text_GymStatue',
+            0x081F4C02: 'LavaridgeTown_Gym_1F_Text_GymStatueCertified',
+            0x081F4C23: 'LavaridgeTown_Gym_1F_Text_FlanneryPreRematch',
+            0x081F4CA0: 'LavaridgeTown_Gym_1F_Text_FlanneryRematchDefeat',
+            0x081F4CAF: 'LavaridgeTown_Gym_1F_Text_FlanneryPostRematch',
+            0x081F4CF6: 'LavaridgeTown_Gym_1F_Text_FlanneryRematchNeedTwoMons',
+        },
+        'external_labels': {
+            0x08242F10: 'Common_EventScript_ReadyPetalburgGymForBattle',
+            0x08242FCF: 'Common_EventScript_SetGymTrainers',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x082430EA: 'Common_EventScript_BagIsFull',
+            0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
+            0x08244D20: 'EventScript_GotoTrainerScript',
+        },
+        'field_placeholders': {
+            0x081F4592: {0x01: 'PLAYER'},
+            0x081F4A9D: {0x01: 'PLAYER'},
+            0x081F4C02: {0x01: 'PLAYER'},
+        },
+        'local_scripts': (0x081F42CD,),
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x006C: 'FLAG_WHITEOUT_TO_LAVARIDGE',
+                0x00A8: 'FLAG_RECEIVED_TM_OVERHEAT',
+                0x01D6: 'FLAG_ENABLE_FLANNERY_MATCH_CALL',
+                0x0326: 'FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WALLY',
+                0x04F3: 'FLAG_DEFEATED_LAVARIDGE_GYM',
+                0x086A: 'FLAG_BADGE04_GET',
+            },
+            'vars': {
+                0x400B: 'VAR_TEMP_B',
+                0x400C: 'VAR_TEMP_C',
+                0x400D: 'VAR_TEMP_D',
+                0x400E: 'VAR_TEMP_E',
+                0x400F: 'VAR_TEMP_F',
+                0x4053: 'VAR_LAVARIDGE_TOWN_STATE',
+                0x4085: 'VAR_PETALBURG_GYM_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'trainers': {
+                0x00C9: 'TRAINER_COLE',
+                0x00CA: 'TRAINER_JEFF',
+                0x00CB: 'TRAINER_AXLE',
+                0x00CC: 'TRAINER_JACE',
+                0x00CD: 'TRAINER_KEEGAN',
+                0x010C: 'TRAINER_FLANNERY_1',
+                0x01F5: 'TRAINER_ELI',
+                0x0288: 'TRAINER_GERALD',
+                0x028A: 'TRAINER_DANIELLE',
+            },
+            'items': {0x0152: 'ITEM_TM_OVERHEAT'},
+            'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
+            'local_ids': {
+                0x02: 'LOCALID_COLE',
+                0x03: 'LOCALID_GERALD',
+                0x04: 'LOCALID_AXLE',
+                0x05: 'LOCALID_DANIELLE',
+            },
+            'script_local_ids': {
+                0x081F449D: {0x02: 'LOCALID_KEEGAN'},
+                0x081F44EE: {0x01: 'LOCALID_JACE'},
+                0x081F4509: {0x03: 'LOCALID_JEFF'},
+                0x081F4524: {0x04: 'LOCALID_ELI'},
+            },
+            'movement_types': {0x3F: 'MOVEMENT_TYPE_BURIED'},
+            'decimal_arguments': {
+                'addvar': (1,),
+                'call_if_eq': (1,),
+                'compare_var_to_value': (1,),
+                'delay': (0,),
+                'goto_if_eq': (1,),
+                'setvar': (1,),
+            },
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
@@ -12481,8 +12649,17 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('flags', {}).get(value)
         if name == 'trainerbattle' and index == 1:
             return symbols.get('trainers', {}).get(value)
-        if name == 'trainerbattle' and index == 2 and value == 0:
-            return 'LOCALID_NONE'
+        if name == 'trainerbattle' and index == 2:
+            # A physical script owner can contain a sibling map's trainer
+            # branches. Prefer that script's reviewed local-ID namespace
+            # before falling back to the owner's ordinary event table.
+            local = (symbols.get('script_local_ids', {})
+                     .get(script_addr, {}).get(value))
+            if local is not None:
+                return local
+            if value == 0:
+                return 'LOCALID_NONE'
+            return symbols.get('local_ids', {}).get(value)
         if name == 'checktrainerflag' and index == 0:
             return symbols.get('trainers', {}).get(value)
         if name == 'warpdoor' and index in (1, 2, 3):
