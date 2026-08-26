@@ -1128,8 +1128,6 @@ EventScript_PC: @ 0x8242E1E
 	.set Common_EventScript_ReadyPetalburgGymForBattle, 0x08242F10
 	.globl Common_EventScript_SetGymTrainers
 	.set Common_EventScript_SetGymTrainers, 0x08242FCF
-	.globl Common_EventScript_ShowBagIsFull
-	.set Common_EventScript_ShowBagIsFull, 0x082430E0
 	.globl Common_EventScript_NopReturn
 	.set Common_EventScript_NopReturn, 0x08244178
 	@ Desert Ruins references these retained shared event and braille owners.

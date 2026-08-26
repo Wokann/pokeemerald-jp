@@ -393,4 +393,7 @@
 	return
 	special CopyCurSecretBaseOwnerName_StrVar1
 	return
-	.incbin "baserom_jp.gba", 0x246378, 0x23D
+	.incbin "baserom_jp.gba", 0x246378, 0x19a
+
+Route111_EventScript_SecretPowerMan:: @ 0x08246512
+	.incbin "baserom_jp.gba", 0x246512, 0xa3

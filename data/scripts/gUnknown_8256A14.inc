@@ -66,7 +66,23 @@ Route110_EventScript_ItemElixir:: @ 0x08256AE5
 	finditem ITEM_ELIXIR
 	end
 
-	.incbin "baserom_jp.gba", 0x256af2, 0x215
+Route111_EventScript_ItemTMSandstorm:: @ 0x08256AF2
+	finditem ITEM_TM37
+	end
+
+Route111_EventScript_ItemStardust:: @ 0x08256AFF
+	finditem ITEM_STARDUST
+	end
+
+Route111_EventScript_ItemHPUp:: @ 0x08256B0C
+	finditem ITEM_HP_UP
+	end
+
+Route111_EventScript_ItemElixir:: @ 0x08256B19
+	finditem ITEM_ELIXIR
+	end
+
+	.incbin "baserom_jp.gba", 0x256b26, 0x1e1
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM

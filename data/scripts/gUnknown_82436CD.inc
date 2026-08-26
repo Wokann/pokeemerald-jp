@@ -34,7 +34,12 @@ gJPText_00243977: @ 0x08243977
 	.incbin "baserom_jp.gba", 0x24398a, 0x1e
 	.globl gText_NoRoomLeftForAnother
 gText_NoRoomLeftForAnother: @ 0x082439A8
-	.incbin "baserom_jp.gba", 0x2439a8, 0xd8
+	.incbin "baserom_jp.gba", 0x2439a8, 0xbc
+
+gText_SandstormIsVicious:: @ 0x08243A64
+	.string "さばくの　すなあらしが　ひどくて\n"
+	.string "さきに　すすめない！$"
+
 	.globl gJPText_00243A80
 gJPText_00243A80: @ 0x08243A80
 	.string "バッグに　いれてある　どうぐを\n"

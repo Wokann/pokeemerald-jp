@@ -79,4 +79,45 @@
 LilycoveCity_ContestLobby_EventScript_Reporter: @ 0x08253E71
 	.incbin "baserom_jp.gba", 0x253e71, 0xd2
 LilycoveCity_ContestLobby_EventScript_TryShowContestReporter: @ 0x08253F43
-	.incbin "baserom_jp.gba", 0x253f43, 0x26cf
+	.incbin "baserom_jp.gba", 0x253f43, 0x19c
+
+GabbyAndTy_EventScript_UpdateLocation:: @ 0x082540DF
+	.incbin "baserom_jp.gba", 0x2540df, 0x10f
+
+GabbyAndTy_EventScript_GabbyBattle1:: @ 0x082541EE
+	.incbin "baserom_jp.gba", 0x2541ee, 0x20
+
+GabbyAndTy_EventScript_TyBattle1:: @ 0x0825420E
+	.incbin "baserom_jp.gba", 0x25420e, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle2:: @ 0x0825422E
+	.incbin "baserom_jp.gba", 0x25422e, 0x20
+
+GabbyAndTy_EventScript_TyBattle2:: @ 0x0825424E
+	.incbin "baserom_jp.gba", 0x25424e, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle3:: @ 0x0825426E
+	.incbin "baserom_jp.gba", 0x25426e, 0x20
+
+GabbyAndTy_EventScript_TyBattle3:: @ 0x0825428E
+	.incbin "baserom_jp.gba", 0x25428e, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle4:: @ 0x082542AE
+	.incbin "baserom_jp.gba", 0x2542ae, 0x20
+
+GabbyAndTy_EventScript_TyBattle4:: @ 0x082542CE
+	.incbin "baserom_jp.gba", 0x2542ce, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle5:: @ 0x082542EE
+	.incbin "baserom_jp.gba", 0x2542ee, 0x20
+
+GabbyAndTy_EventScript_TyBattle5:: @ 0x0825430E
+	.incbin "baserom_jp.gba", 0x25430e, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle6:: @ 0x0825432E
+	.incbin "baserom_jp.gba", 0x25432e, 0x20
+
+GabbyAndTy_EventScript_TyBattle6:: @ 0x0825434E
+	.incbin "baserom_jp.gba", 0x25434e, 0x20
+
+	.incbin "baserom_jp.gba", 0x25436e, 0x22a4

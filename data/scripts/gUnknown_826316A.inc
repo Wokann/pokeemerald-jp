@@ -19,7 +19,24 @@ Route104_Text_TrainersOftenMakeMonHoldBerries: @ 0x08263847
 	.string "トレーナーは　よく　きのみを　ポケモンに\n"
 	.string "もたせとるわい\p"
 	.string "ふやすも　つかうも　あんた　しだいじゃ$"
-	.incbin "baserom_jp.gba", 0x26388c, 0x1cc
+
+Route111_Text_WateredPlantsEveryDayTakeBerry:: @ 0x0826388C
+	.string "いつも　みずを　あげてたら\n"
+	.string "たくさん　はなが　さいたんだ\p"
+	.string "そしたら　きのみも　たくさん　できた！\p"
+	.string "はい！\n"
+	.string "これ　あげる$"
+
+Route111_Text_GoingToTryToMakeDifferentColorBerries:: @ 0x082638C8
+	.string "がんばって　いろんな　いろの\n"
+	.string "きのみを　そだてるんだ！\l"
+	.string "{STRING 0x02}も　がんばってね！$"
+
+Route111_Text_WhatColorBerriesToLookForToday:: @ 0x082638F0
+	.string "きょうは　なにいろの　きのみを\n"
+	.string "さがそっかなー$"
+
+	.incbin "baserom_jp.gba", 0x263908, 0x150
 LilycoveCity_Text_BerrySuitsYou: @ 0x08263A58
 	.string "やっぱり\p"
 	.string "わたしに　スーツが　にあうように\n"
