@@ -1,128 +1,132 @@
 @ Route121_SafariZoneEntrance scripts (JP map g23 m0 @ 0x082129E5)
 
 Route121_SafariZoneEntrance_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route121_SafariZoneEntrance_MapScriptTable_002129EB
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route121_SafariZoneEntrance_OnFrame
 	.byte 0
 
-Route121_SafariZoneEntrance_MapScriptTable_002129EB::
-	map_script_2 0x40A4, 0x1, Route121_SafariZoneEntrance_EventScript_002129F5
+Route121_SafariZoneEntrance_OnFrame:: @ 0x082129EB
+	map_script_2 VAR_SAFARI_ZONE_STATE, 1, Route121_SafariZoneEntrance_EventScript_ExitSafariZone
 	.2byte 0
 
-Route121_SafariZoneEntrance_EventScript_002129F5::
+Route121_SafariZoneEntrance_EventScript_ExitSafariZone:: @ 0x082129F5
 	lockall
-	applymovement 0xFF, 0x08212A07
-	waitmovement 0x0
-	setvar 0x40A4, 0x0
+	applymovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_ExitSafariZone
+	waitmovement 0
+	setvar VAR_SAFARI_ZONE_STATE, 0
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x212a07, 0x9
-Route121_SafariZoneEntrance_EventScript_00212A10::
-	loadword 0x0, 0x082624E7
-	callstd 0x2
+Route121_SafariZoneEntrance_Movement_ExitSafariZone:
+	walk_up
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+Route121_SafariZoneEntrance_EventScript_WelcomeAttendant:: @ 0x08212A10
+	msgbox Route121_SafariZoneEntrance_Text_WelcomeToSafariZone, MSGBOX_NPC
 	end
 
-Route121_SafariZoneEntrance_EventScript_00212A19::
+Route121_SafariZoneEntrance_EventScript_InfoAttendant:: @ 0x08212A19
 	lock
 	faceplayer
-	loadword 0x0, 0x0826257A
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, Route121_SafariZoneEntrance_EventScript_00212A38
-	loadword 0x0, 0x0826259C
-	callstd 0x4
+	msgbox Route121_SafariZoneEntrance_Text_WelcomeFirstTime, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, Route121_SafariZoneEntrance_EventScript_FirstTimeInfo
+	msgbox Route121_SafariZoneEntrance_Text_ComeInAndEnjoy, MSGBOX_DEFAULT
 	release
 	end
 
-Route121_SafariZoneEntrance_EventScript_00212A38::
-	loadword 0x0, 0x082625B1
-	callstd 0x4
+Route121_SafariZoneEntrance_EventScript_FirstTimeInfo:: @ 0x08212A38
+	msgbox Route121_SafariZoneEntrance_Text_FirstTimeInfo, MSGBOX_DEFAULT
 	release
 	end
 
-Route121_SafariZoneEntrance_EventScript_00212A42::
+Route121_SafariZoneEntrance_EventScript_EntranceCounterTrigger:: @ 0x08212A42
 	lockall
-	applymovement 0xFF, 0x08243629
-	waitmovement 0x0
-	showmoneybox 0x0, 0x0, 0x0
-	loadword 0x0, 0x08262621
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, Route121_SafariZoneEntrance_EventScript_00212A72
-	loadword 0x0, 0x08262659
-	callstd 0x4
-	goto Route121_SafariZoneEntrance_EventScript_00212B30
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	showmoneybox 0, 0
+	msgbox Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone
+	msgbox Route121_SafariZoneEntrance_Text_PlayAnotherTime, MSGBOX_DEFAULT
+	goto Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter
 	end
 
-Route121_SafariZoneEntrance_EventScript_00212A72::
-	checkitem 0x111, 0x1
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route121_SafariZoneEntrance_EventScript_00212B14
-	call Route121_SafariZoneEntrance_EventScript_00212AE9
-	checkmoney 0x1F4, 0x0
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, Route121_SafariZoneEntrance_EventScript_00212B22
-	playse 0x5F
-	loadword 0x0, 0x0826267F
-	callstd 0x4
-	takemoney 0x1F4, 0x0
-	updatemoneybox 0x0
-	loadword 0x0, 0x08262691
-	callstd 0x4
-	playfanfare 0x172
-	message 0x082626A2
+Route121_SafariZoneEntrance_EventScript_TryEnterSafariZone:: @ 0x08212A72
+	checkitem ITEM_POKEBLOCK_CASE
+	goto_if_eq VAR_RESULT, 0, Route121_SafariZoneEntrance_EventScript_NoPokeblockCase
+	call Route121_SafariZoneEntrance_EventScript_CheckHasRoomForPokemon
+	checkmoney 500
+	goto_if_eq VAR_RESULT, 0, Route121_SafariZoneEntrance_EventScript_NotEnoughMoney
+	playse SE_SHOP
+	msgbox Route121_SafariZoneEntrance_Text_ThatWillBe500Please, MSGBOX_DEFAULT
+	removemoney 500
+	updatemoneybox
+	msgbox Route121_SafariZoneEntrance_Text_HereAreYourSafariBalls, MSGBOX_DEFAULT
+	playfanfare MUS_OBTAIN_ITEM
+	message Route121_SafariZoneEntrance_Text_Received30SafariBalls
 	waitfanfare
-	loadword 0x0, 0x082626BA
-	callstd 0x4
+	msgbox Route121_SafariZoneEntrance_Text_PleaseEnjoyYourself, MSGBOX_DEFAULT
 	closemessage
 	hidemoneybox
-	applymovement 0xFF, 0x08212B42
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_EnterSafariZone
+	waitmovement 0
 	special EnterSafariMode
-	setvar 0x40A4, 0x2
-	clearflag 0x5D
-	warp 0x1A03, 0xFF, 0x20, 0x21
+	setvar VAR_SAFARI_ZONE_STATE, 2
+	clearflag FLAG_GOOD_LUCK_SAFARI_ZONE
+	warp MAP_SAFARI_ZONE_SOUTH, 32, 33
 	waitstate
 	end
 
-Route121_SafariZoneEntrance_EventScript_00212AE9::
+Route121_SafariZoneEntrance_EventScript_CheckHasRoomForPokemon:: @ 0x08212AE9
 	getpartysize
-	compare_var_to_value 0x800D, 0x6
-	goto_if 0x5, Route121_SafariZoneEntrance_EventScript_00212B13
-	specialvar 0x800D, ScriptCheckFreePokemonStorageSpace
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, Route121_SafariZoneEntrance_EventScript_00212B13
-	loadword 0x0, 0x082626F6
-	callstd 0x4
-	goto Route121_SafariZoneEntrance_EventScript_00212B30
+	goto_if_ne VAR_RESULT, PARTY_SIZE, Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
+	specialvar VAR_RESULT, ScriptCheckFreePokemonStorageSpace
+	goto_if_eq VAR_RESULT, 1, Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon
+	msgbox Route121_SafariZoneEntrance_Text_PCIsFull, MSGBOX_DEFAULT
+	goto Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter
 	end
 
-Route121_SafariZoneEntrance_EventScript_00212B13::
+Route121_SafariZoneEntrance_EventScript_HasRoomForPokemon:: @ 0x08212B13
 	return
 
-Route121_SafariZoneEntrance_EventScript_00212B14::
-	loadword 0x0, 0x0826270E
-	callstd 0x4
-	goto Route121_SafariZoneEntrance_EventScript_00212B30
+Route121_SafariZoneEntrance_EventScript_NoPokeblockCase:: @ 0x08212B14
+	msgbox Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase, MSGBOX_DEFAULT
+	goto Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter
 	end
 
-Route121_SafariZoneEntrance_EventScript_00212B22::
-	loadword 0x0, 0x08262672
-	callstd 0x4
-	goto Route121_SafariZoneEntrance_EventScript_00212B30
+Route121_SafariZoneEntrance_EventScript_NotEnoughMoney:: @ 0x08212B22
+	msgbox Route121_SafariZoneEntrance_Text_NotEnoughMoney, MSGBOX_DEFAULT
+	goto Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter
 	end
 
-Route121_SafariZoneEntrance_EventScript_00212B30::
+Route121_SafariZoneEntrance_EventScript_MovePlayerBackFromCounter:: @ 0x08212B30
 	closemessage
 	hidemoneybox
-	applymovement 0xFF, 0x08212B40
-	waitmovement 0x0
+	applymovement LOCALID_PLAYER, Route121_SafariZoneEntrance_Movement_BackAwayFromCounter
+	waitmovement 0
 	releaseall
 	end
 
-	.incbin "baserom_jp.gba", 0x212b40, 0xb
-Route121_SafariZoneEntrance_EventScript_00212B4B::
-	loadword 0x0, 0x082629C5
-	callstd 0x3
-	end
+Route121_SafariZoneEntrance_Movement_BackAwayFromCounter:
+	walk_right
+	step_end
 
+Route121_SafariZoneEntrance_Movement_EnterSafariZone:
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_down
+	delay_16
+	step_end
+
+Route121_SafariZoneEntrance_EventScript_TrainerTipSign:: @ 0x08212B4B
+	msgbox Route121_SafariZoneEntrance_Text_TrainerTip, MSGBOX_SIGN
+	end

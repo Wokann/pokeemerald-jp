@@ -145,6 +145,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The following Day-Care map owns only its landmark transition; its woman
     # interaction remains in the later shared day-care script owner.
     'Route117_PokemonDayCare': 1,
+    # Safari Zone Entrance follows with a frame table and twelve local script
+    # entries; local movements are audited separately below.
+    'Route121_SafariZoneEntrance': 13,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -9505,6 +9508,62 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'flags': {0x08A6: 'FLAG_LANDMARK_POKEMON_DAYCARE'},
         },
     },
+    # The complete 0x082129E5-0x08212B54 owner is map-local code and three
+    # movement streams. Its messages remain in the later shared Safari Zone
+    # text owner, so each pointer is named but its physical owner is not moved.
+    'Route121_SafariZoneEntrance': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        # The matching US source uses the literal absence value after its
+        # Pokeblock Case check, rather than a generic boolean spelling.
+        'literal_result_commands': ('checkitem',),
+        'external_texts': {
+            0x082624E7: 'Route121_SafariZoneEntrance_Text_WelcomeToSafariZone',
+            0x0826257A: 'Route121_SafariZoneEntrance_Text_WelcomeFirstTime',
+            0x0826259C: 'Route121_SafariZoneEntrance_Text_ComeInAndEnjoy',
+            0x082625B1: 'Route121_SafariZoneEntrance_Text_FirstTimeInfo',
+            0x08262621: 'Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay',
+            0x08262659: 'Route121_SafariZoneEntrance_Text_PlayAnotherTime',
+            0x08262672: 'Route121_SafariZoneEntrance_Text_NotEnoughMoney',
+            0x0826267F: 'Route121_SafariZoneEntrance_Text_ThatWillBe500Please',
+            0x08262691: 'Route121_SafariZoneEntrance_Text_HereAreYourSafariBalls',
+            0x082626A2: 'Route121_SafariZoneEntrance_Text_Received30SafariBalls',
+            0x082626BA: 'Route121_SafariZoneEntrance_Text_PleaseEnjoyYourself',
+            0x082626F6: 'Route121_SafariZoneEntrance_Text_PCIsFull',
+            0x0826270E: 'Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase',
+            0x082629C5: 'Route121_SafariZoneEntrance_Text_TrainerTip',
+        },
+        'external_labels': {
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+        },
+        'symbols': {
+            'flags': {0x005D: 'FLAG_GOOD_LUCK_SAFARI_ZONE'},
+            'vars': {
+                0x40A4: 'VAR_SAFARI_ZONE_STATE',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x40A4: {0x00: '0', 0x01: '1', 0x02: '2'},
+            },
+            'map_script_values': {0x40A4: {0x01: '1'}},
+            'script_var_values': {
+                0x08212A72: {0x800D: {0x00: '0'}},
+                0x08212AE9: {0x800D: {0x01: '1', 0x06: 'PARTY_SIZE'}},
+            },
+            'items': {0x0111: 'ITEM_POKEBLOCK_CASE'},
+            'maps': {0x1A03: 'MAP_SAFARI_ZONE_SOUTH'},
+            'local_ids': {0xFF: 'LOCALID_PLAYER'},
+            'sounds': {0x005F: 'SE_SHOP'},
+            'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
+            'decimal_arguments': {
+                'showmoneybox': (0, 1, 2),
+                'checkmoney': (0, 1),
+                'removemoney': (0, 1),
+                'updatemoneybox': (0,),
+                'warp': (2, 3),
+            },
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9726,6 +9785,14 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x082120CF: 'MtChimney_CableCarStation_Movement_FollowPlayerOutFromCableCar',
         0x082120D4: 'MtChimney_CableCarStation_Movement_BoardCableCar',
         0x082120D9: 'MtChimney_CableCarStation_Movement_ExitCableCar',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'Route121_SafariZoneEntrance': {
+        0x08212A07: 'Route121_SafariZoneEntrance_Movement_ExitSafariZone',
+        0x08212B40: 'Route121_SafariZoneEntrance_Movement_BackAwayFromCounter',
+        0x08212B42: 'Route121_SafariZoneEntrance_Movement_EnterSafariZone',
     },
 })
 
@@ -10339,7 +10406,8 @@ def name_contextual_result_conditions(lines, literal_result_commands=()):
             replace_condition(index + 1, result_names)
             replace_condition(index + 2, result_names)
             replace_condition(index + 3, result_names)
-        elif name in ('checkitem', 'checkpcitem'):
+        elif (name in ('checkitem', 'checkpcitem')
+              and name not in literal_result_commands):
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
         elif name == 'specialvar' and argstr == 'VAR_RESULT, IsEnigmaBerryValid':
             replace_condition(index + 1, {0: 'FALSE', 1: 'TRUE'})
@@ -10602,6 +10670,28 @@ def omit_default_macro_arguments(lines):
     return out
 
 
+def collapse_moneybox_macros(lines):
+    """Restore the US-style default forms of the money-box helpers.
+
+    The JP byte stream carries the default zero argument explicitly. These
+    macros expand back to that same form, so a reviewed map can expose the
+    canonical source spelling without weakening byte-for-byte validation.
+    """
+    out = []
+    for name, argstr in lines:
+        args = [part.strip() for part in argstr.split(',')] if argstr else []
+        if (name == 'showmoneybox' and len(args) == 3
+                and args[2] in ('0', '0x0')):
+            argstr = ', '.join(args[:2])
+        elif (name in ('checkmoney', 'removemoney') and len(args) == 2
+                and args[1] in ('0', '0x0')):
+            argstr = args[0]
+        elif name == 'updatemoneybox' and args in (['0'], ['0x0']):
+            argstr = ''
+        out.append((name, argstr))
+    return out
+
+
 ITEM_ARGUMENTS = {
     'giveitem': {0},
     'finditem': {0},
@@ -10750,6 +10840,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
             return symbols.get('directions', {}).get(value)
         if name == 'setobjectmovementtype' and index == 1:
             return symbols.get('movement_types', {}).get(value)
+        if index in symbols.get('decimal_arguments', {}).get(name, ()):
+            return str(value)
         return None
 
     return format_symbol
@@ -11310,6 +11402,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_givedecoration_macros(decoded_lines)
             decoded_lines = omit_implicit_special_waitstates(
                 decoded_lines, implicit_waitstate_specials)
+            decoded_lines = collapse_moneybox_macros(decoded_lines)
             decoded_lines = omit_default_macro_arguments(decoded_lines)
             decoded_lines = annotate_literal_copyvars(decoded_lines)
             decoded_lines = name_contextual_result_conditions(

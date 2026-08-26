@@ -2260,26 +2260,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Route117_PokemonDayCare/events.inc"
 	.globl gMapEvents_ROUTE117_POKEMON_DAY_CARE
 	.set gMapEvents_ROUTE117_POKEMON_DAY_CARE, Route117_PokemonDayCare_MapEvents
-	.globl ROUTE121_SAFARI_ZONE_ENTRANCE_EventObjects
-ROUTE121_SAFARI_ZONE_ENTRANCE_EventObjects: @ 0x0850C608
-	object_event 1, 32, 0, 17, 9, 3, 9, 0, 0, 0, 0, Route121_SafariZoneEntrance_EventScript_00212A10, 0x0000
-	object_event 2, 31, 0, 10, 2, 3, 8, 0, 0, 0, 0, Route121_SafariZoneEntrance_EventScript_00212A19, 0x0000
-	object_event 3, 31, 0, 8, 2, 3, 8, 0, 0, 0, 0, 0x00000000, 0x0000
-	.globl ROUTE121_SAFARI_ZONE_ENTRANCE_EventWarps
-ROUTE121_SAFARI_ZONE_ENTRANCE_EventWarps: @ 0x0850C650
-	warp_def 2, 5, 0, 0, MAP_SAFARI_ZONE_SOUTH
-	warp_def 3, 5, 0, 0, MAP_SAFARI_ZONE_SOUTH
-	warp_def 14, 13, 0, 0, MAP_ROUTE121
-	warp_def 15, 13, 0, 0, MAP_ROUTE121
-	.globl ROUTE121_SAFARI_ZONE_ENTRANCE_EventCoordEvents
-ROUTE121_SAFARI_ZONE_ENTRANCE_EventCoordEvents: @ 0x0850C670
-	coord_event 8, 4, 3, 16385, 0, Route121_SafariZoneEntrance_EventScript_00212A42
-	.globl ROUTE121_SAFARI_ZONE_ENTRANCE_EventBgEvents
-ROUTE121_SAFARI_ZONE_ENTRANCE_EventBgEvents: @ 0x0850C680
-	bg_event 15, 1, 0, 0, Route121_SafariZoneEntrance_EventScript_00212B4B, 0, 0
+	.include "data/maps/Route121_SafariZoneEntrance/events.inc"
 	.globl gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE
-gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE: @ 0x0850C68C
-	map_events ROUTE121_SAFARI_ZONE_ENTRANCE_EventObjects, ROUTE121_SAFARI_ZONE_ENTRANCE_EventWarps, ROUTE121_SAFARI_ZONE_ENTRANCE_EventCoordEvents, ROUTE121_SAFARI_ZONE_ENTRANCE_EventBgEvents
+	.set gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE, Route121_SafariZoneEntrance_MapEvents
 	.globl METEOR_FALLS_1F_1R_EventObjects
 METEOR_FALLS_1F_1R_EventObjects: @ 0x0850C6A0
 	object_event 1, 59, 0, 2, 4, 3, 1, 0, 0, 0, 0, 0x08256F02, 0x0414
