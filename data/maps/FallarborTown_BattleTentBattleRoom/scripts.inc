@@ -127,6 +127,8 @@ FallarborTown_BattleTentBattleRoom_EventScript_ContinueChallenge::
 	applymovement LOCALID_FALLARBOR_TENT_BATTLE_PLAYER, FallarborTown_BattleTentBattleRoom_Movement_PlayerFaceBattle
 	waitmovement 0
 	goto FallarborTown_BattleTentBattleRoom_EventScript_NextOpponentEnter
+
+FallarborTown_BattleTentBattleRoom_EventScript_UnreachableWaitstate:: @ 0x081F5B73
 	waitstate
 
 FallarborTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon::
@@ -195,7 +197,7 @@ FallarborTown_BattleTentBattleRoom_Movement_OpponentEnter:
 	step_end
 
 @ Unused
-FallarborTown_BattleTentBattleRoom_Movement_OpponentStepForward:
+FallarborTown_BattleTentBattleRoom_Movement_OpponentStepForward: @ 0x081F5C1D
 	walk_left
 	step_end
 

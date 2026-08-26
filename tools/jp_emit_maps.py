@@ -7413,6 +7413,29 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The Battle Room's live flow deliberately jumps past one standalone
+# waitstate, while its unused opponent step remains a complete two-byte
+# movement record. Keep both JP-owned boundaries named rather than raw.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'FallarborTown_BattleTentBattleRoom': (0x081F5B73,),
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'FallarborTown_BattleTentBattleRoom': {
+        0x081F5C1D: 'FallarborTown_BattleTentBattleRoom_Movement_OpponentStepForward',
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FallarborTown_BattleTentBattleRoom': {
+        'scripts': {
+            0x081F5B73: 'FallarborTown_BattleTentBattleRoom_EventScript_UnreachableWaitstate',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
