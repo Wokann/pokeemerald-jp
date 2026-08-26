@@ -7508,6 +7508,39 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     },
 })
 
+# The immediately following Fallarbor Pokémon Center 2F table has the four
+# shared Cable Club hooks followed by three unused RS-era wrappers. The US
+# source retains the same named wrappers, so make every byte a reviewed root
+# instead of leaving the complete records as a local raw tail.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'FallarborTown_PokemonCenter_2F': (
+        0x081F5E66,
+        0x081F5E6C,
+        0x081F5E72,
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FallarborTown_PokemonCenter_2F': {
+        'scripts': {
+            0x081F5E66: 'FallarborTown_PokemonCenter_2F_EventScript_Colosseum',
+            0x081F5E6C: 'FallarborTown_PokemonCenter_2F_EventScript_TradeCenter',
+            0x081F5E72: 'FallarborTown_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
