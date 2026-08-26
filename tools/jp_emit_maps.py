@@ -7114,6 +7114,53 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Lavaridge Gym B1F immediately follows the 1F physical owner. Its transition
+# helpers set and consume the four buried-trainer temp variables exactly as
+# the matching US source; the trainer interaction branches themselves are
+# retained in the preceding 1F physical range.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LavaridgeTown_Gym_B1F': {
+        'scripts': {
+            0x081F4DC0: 'LavaridgeTown_Gym_B1F_OnTransition',
+            0x081F4DCB: 'LavaridgeTown_Gym_B1F_EventScript_SetTrainerTempVars',
+            0x081F4DED: 'LavaridgeTown_Gym_B1F_EventScript_SetJaceTempVar',
+            0x081F4DFB: 'LavaridgeTown_Gym_B1F_EventScript_SetJeffTempVar',
+            0x081F4E09: 'LavaridgeTown_Gym_B1F_EventScript_SetEliTempVar',
+            0x081F4E17: 'LavaridgeTown_Gym_B1F_EventScript_EndSetTrainerTempVars',
+            0x081F4E18: 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryTrainers',
+            0x081F4E25: 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJace',
+            0x081F4E32: 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryJeff',
+            0x081F4E3F: 'LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli',
+            0x081F4E4C: 'LavaridgeTown_Gym_B1F_EventScript_EndCheckBuryTrainers',
+        },
+        'local_scripts': (0x081F4DC0,),
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {
+                0x4007: 'VAR_TEMP_7',
+                0x4008: 'VAR_TEMP_8',
+                0x4009: 'VAR_TEMP_9',
+                0x400A: 'VAR_TEMP_A',
+            },
+            'trainers': {
+                0x00CA: 'TRAINER_JEFF',
+                0x00CC: 'TRAINER_JACE',
+                0x00CD: 'TRAINER_KEEGAN',
+                0x01F5: 'TRAINER_ELI',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_JACE',
+                0x02: 'LOCALID_KEEGAN',
+                0x03: 'LOCALID_JEFF',
+                0x04: 'LOCALID_ELI',
+            },
+            'movement_types': {0x3F: 'MOVEMENT_TYPE_BURIED'},
+            'decimal_arguments': {'setvar': (1,)},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
