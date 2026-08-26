@@ -2478,6 +2478,11 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         'specials': {
             0x080F9D20: 'ChoosePartyForBattleFrontier',
         },
+        # In this JP script range, SCR_OP_WAITMONCRY is used at the two
+        # matching US door-animation wait sites.
+        'command_aliases': {
+            0x081F54EE: {'waitmoncry': 'waitdooranim_jp'},
+        },
         'symbols': {
             'vars': {
                 0x4000: 'VAR_TEMP_CHALLENGE_STATUS',

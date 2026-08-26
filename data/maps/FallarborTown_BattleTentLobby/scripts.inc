@@ -194,12 +194,12 @@ FallarborTown_BattleTentLobby_EventScript_WalkToDoor::
 	applymovement LOCALID_PLAYER, FallarborTown_BattleTentLobby_Movement_PlayerWalkToDoor
 	waitmovement 0
 	opendoor 6, 1
-	waitmoncry
+	waitdooranim_jp
 	applymovement LOCALID_FALLARBOR_TENT_ATTENDANT, FallarborTown_BattleTentLobby_Movement_AttendantEnterDoor
 	applymovement LOCALID_PLAYER, FallarborTown_BattleTentLobby_Movement_PlayerEnterDoor
 	waitmovement 0
 	closedoor 6, 1
-	waitmoncry
+	waitdooranim_jp
 	return
 
 FallarborTown_BattleTentLobby_Movement_AttendantWalkToDoor:
@@ -300,21 +300,6 @@ FallarborTown_BattleTentLobby_EventScript_RulesBody::
 FallarborTown_BattleTentLobby_EventScript_ExitRules::
 	releaseall
 	end
-
-@ The legacy map event table has not yet been migrated to map.json. Keep its
-@ address-derived targets as compatibility aliases until that separate step.
-	.globl FallarborTown_BattleTentLobby_EventScript_001F5320
-	.set FallarborTown_BattleTentLobby_EventScript_001F5320, FallarborTown_BattleTentLobby_EventScript_Attendant
-	.globl FallarborTown_BattleTentLobby_EventScript_001F552C
-	.set FallarborTown_BattleTentLobby_EventScript_001F552C, FallarborTown_BattleTentLobby_EventScript_Hiker
-	.globl FallarborTown_BattleTentLobby_EventScript_001F5535
-	.set FallarborTown_BattleTentLobby_EventScript_001F5535, FallarborTown_BattleTentLobby_EventScript_LittleBoy
-	.globl FallarborTown_BattleTentLobby_EventScript_001F553E
-	.set FallarborTown_BattleTentLobby_EventScript_001F553E, FallarborTown_BattleTentLobby_EventScript_Lass
-	.globl FallarborTown_BattleTentLobby_EventScript_001F5547
-	.set FallarborTown_BattleTentLobby_EventScript_001F5547, FallarborTown_BattleTentLobby_EventScript_Scott
-	.globl FallarborTown_BattleTentLobby_EventScript_001F556E
-	.set FallarborTown_BattleTentLobby_EventScript_001F556E, FallarborTown_BattleTentLobby_EventScript_RulesBoard
 
 FallarborTown_BattleTentLobby_Text_MakeThinkImJustKid: @ 0x081F5623
 	.string "ふふふふふふ\p"
