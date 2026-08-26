@@ -4774,8 +4774,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_STERNS_SHIPYARD_1F (g9 m0)
 	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F  @ mapLayout
-	.4byte gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_1F  @ events
-	.4byte 0x081FAB28  @ mapScripts
+	.4byte SlateportCity_SternsShipyard_1F_MapEvents  @ events
+	.4byte SlateportCity_SternsShipyard_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
 	.2byte 0x0051  @ mapLayoutId

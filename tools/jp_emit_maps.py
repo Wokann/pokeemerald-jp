@@ -8848,6 +8848,51 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'flags': {0x0128: 'FLAG_PETALBURG_MART_EXPANDED_ITEMS'},
         },
     },
+    # Stern's Shipyard follows Petalburg Mart. The Dock progression branches,
+    # three NPC interactions, nine local texts, and shared facing movements
+    # were aligned with the matching US owner in physical JP ROM order.
+    'SlateportCity_SternsShipyard_1F': {
+        'scripts': {
+            0x081FAB29: 'SlateportCity_SternsShipyard_1F_EventScript_Dock',
+            0x081FAB7B: 'SlateportCity_SternsShipyard_1F_EventScript_FerryReady',
+            0x081FAB8F: 'SlateportCity_SternsShipyard_1F_EventScript_BrineyJoined',
+            0x081FABA3: 'SlateportCity_SternsShipyard_1F_EventScript_GoFindStern',
+            0x081FABC2: 'SlateportCity_SternsShipyard_1F_EventScript_NeedVeteran',
+            0x081FABD6: 'SlateportCity_SternsShipyard_1F_EventScript_Scientist1',
+            0x081FABDF: 'SlateportCity_SternsShipyard_1F_EventScript_Scientist2',
+            0x081FABE8: 'SlateportCity_SternsShipyard_1F_EventScript_Briney',
+        },
+        'texts': {
+            0x081FABF1: 'SlateportCity_SternsShipyard_1F_Text_CantMakeHeadsOrTails',
+            0x081FAC36: 'SlateportCity_SternsShipyard_1F_Text_MeetDockDeliverToStern',
+            0x081FACDE: 'SlateportCity_SternsShipyard_1F_Text_CouldYouFindStern',
+            0x081FAD21: 'SlateportCity_SternsShipyard_1F_Text_CouldUseAdviceFromVeteran',
+            0x081FAD7D: 'SlateportCity_SternsShipyard_1F_Text_BrineyJoinedUs',
+            0x081FADD8: 'SlateportCity_SternsShipyard_1F_Text_FerryIsReady',
+            0x081FAE4A: 'SlateportCity_SternsShipyard_1F_Text_DecidedToHelpDock',
+            0x081FAF20: 'SlateportCity_SternsShipyard_1F_Text_SeaIsLikeLivingThing',
+            0x081FAF7A: 'SlateportCity_SternsShipyard_1F_Text_GetSeasickEasily',
+        },
+        'external_labels': {
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+        },
+        'field_placeholders': {
+            0x081FAE4A: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x0094: 'FLAG_DOCK_REJECTED_DEVON_GOODS',
+                0x0095: 'FLAG_DELIVERED_DEVON_GOODS',
+                0x0372: 'FLAG_HIDE_SLATEPORT_CITY_TEAM_AQUA',
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+                0x086D: 'FLAG_BADGE07_GET',
+            },
+            'local_ids': {0x01: 'LOCALID_DOCK'},
+        },
+    },
 })
 
 # Rustboro Devon Corp 2F is a complete, contiguous JP map-script owner.
