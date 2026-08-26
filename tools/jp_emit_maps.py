@@ -167,6 +167,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'GraniteCave_1F': 2,
     # Granite Cave B1F follows with its map-local cracked-floor setup hook.
     'GraniteCave_B1F': 1,
+    # Steven's room follows the empty B2F map-script owner. Its five local
+    # interaction branches match the US source in physical ROM order.
+    'GraniteCave_StevensRoom': 5,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -258,6 +261,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'RusturfTunnel': 16,
     # Granite Cave 1F owns the Hiker's paired Flash messages.
     'GraniteCave_1F': 2,
+    # Steven's room owns the six dialogue records following its local moves.
+    'GraniteCave_StevensRoom': 6,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6450,6 +6455,67 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'symbols': {
             'maps': {0x1809: 'MAP_GRANITE_CAVE_B2F'},
             'step_callbacks': {0x07: 'STEP_CB_CRACKED_FLOOR'},
+        },
+    },
+    # Steven's letter handoff follows the two Granite Cave floors. The local
+    # branches, messages, movements, and field constants were checked against
+    # the matching US map before enabling semantic source names.
+    'GraniteCave_StevensRoom': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x08214028: 'GraniteCave_StevensRoom_EventScript_Steven',
+            0x082140BA: 'GraniteCave_StevensRoom_EventScript_StevenExitNorth',
+            0x082140C5: 'GraniteCave_StevensRoom_EventScript_StevenExitWestEast',
+            0x082140D7: 'GraniteCave_StevensRoom_EventScript_StevenExitSouth',
+            0x082140E9: 'GraniteCave_StevensRoom_EventScript_BagFull',
+        },
+        'texts': {
+            0x08214107: 'GraniteCave_StevensRoom_Text_ImStevenLetterForMe',
+            0x08214146: 'GraniteCave_StevensRoom_Text_ThankYouTakeThis',
+            0x082141A7: 'GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister',
+            0x08214235: 'GraniteCave_StevensRoom_Text_RegisteredSteven',
+            0x08214249: 'GraniteCave_StevensRoom_Text_IveGotToHurryAlong',
+            0x0821425D: 'GraniteCave_StevensRoom_Text_OhBagIsFull',
+        },
+        'external_labels': {
+            0x08243467: 'Common_EventScript_PlayerHandedOverTheItem',
+        },
+        'symbols': {
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x08214028: {
+                    0x8004: {0x0112: 'ITEM_LETTER'},
+                    0x800C: {
+                        0x01: 'DIR_SOUTH',
+                        0x02: 'DIR_NORTH',
+                        0x03: 'DIR_WEST',
+                        0x04: 'DIR_EAST',
+                    },
+                },
+            },
+            'flags': {
+                0x00BD: 'FLAG_DELIVERED_STEVEN_LETTER',
+                0x0131: 'FLAG_REGISTERED_STEVEN_POKENAV',
+            },
+            'items': {
+                0x0112: 'ITEM_LETTER',
+                0x014F: 'ITEM_TM_STEEL_WING',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_GRANITE_CAVE_STEVEN',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
+            'sounds': {0x09: 'SE_EXIT'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {'delay': (0,)},
         },
     },
 })

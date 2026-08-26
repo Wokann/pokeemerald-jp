@@ -2293,15 +2293,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/GraniteCave_B2F/events.inc"
 	.globl gMapEvents_GRANITE_CAVE_B2F
 	.set gMapEvents_GRANITE_CAVE_B2F, GraniteCave_B2F_MapEvents
-	.globl GRANITE_CAVE_STEVENS_ROOM_EventObjects
-GRANITE_CAVE_STEVENS_ROOM_EventObjects: @ 0x0850CCDC
-	object_event 1, 134, 0, 7, 8, 3, 1, 0, 0, 0, 0, 0x08214028, 0x0341
-	.globl GRANITE_CAVE_STEVENS_ROOM_EventWarps
-GRANITE_CAVE_STEVENS_ROOM_EventWarps: @ 0x0850CCF4
-	warp_def 7, 3, 3, 3, MAP_GRANITE_CAVE_1F
+	.include "data/maps/GraniteCave_StevensRoom/events.inc"
 	.globl gMapEvents_GRANITE_CAVE_STEVENS_ROOM
-gMapEvents_GRANITE_CAVE_STEVENS_ROOM: @ 0x0850CCFC
-	map_events GRANITE_CAVE_STEVENS_ROOM_EventObjects, GRANITE_CAVE_STEVENS_ROOM_EventWarps, 0, 0
+	.set gMapEvents_GRANITE_CAVE_STEVENS_ROOM, GraniteCave_StevensRoom_MapEvents
 	.globl PETALBURG_WOODS_EventObjects
 PETALBURG_WOODS_EventObjects: @ 0x0850CD10
 	object_event 1, 82, 0, 19, 10, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0011

@@ -3,68 +3,55 @@
 GraniteCave_StevensRoom_MapScripts::
 	.byte 0
 
-GraniteCave_StevensRoom_EventScript_00214028::
+GraniteCave_StevensRoom_EventScript_Steven:: @ 0x08214028
 	lock
 	faceplayer
-	loadword 0x0, gJPText_00214107
-	callstd 0x4
-	setvar 0x8004, 0x112
-	call 0x08243467
-	setflag 0xBD
-	loadword 0x0, gJPText_00214146
-	callstd 0x4
-	setorcopyvar 0x8000, 0x14F
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, GraniteCave_StevensRoom_EventScript_002140E9
-	loadword 0x0, gJPText_002141A7
-	callstd 0x4
+	msgbox GraniteCave_StevensRoom_Text_ImStevenLetterForMe, MSGBOX_DEFAULT
+	setvar VAR_0x8004, ITEM_LETTER
+	call Common_EventScript_PlayerHandedOverTheItem
+	setflag FLAG_DELIVERED_STEVEN_LETTER
+	msgbox GraniteCave_StevensRoom_Text_ThankYouTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_TM_STEEL_WING
+	call_if_eq VAR_RESULT, FALSE, GraniteCave_StevensRoom_EventScript_BagFull
+	msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister, MSGBOX_DEFAULT
 	closemessage
-	delay 0x1E
-	playfanfare 0x1CC
-	loadword 0x0, gJPText_00214235
-	callstd 0x4
+	delay 30
+	playfanfare MUS_REGISTER_MATCH_CALL
+	msgbox GraniteCave_StevensRoom_Text_RegisteredSteven, MSGBOX_DEFAULT
 	waitfanfare
 	closemessage
-	delay 0x1E
-	setflag 0x131
-	loadword 0x0, gJPText_00214249
-	callstd 0x4
+	delay 30
+	setflag FLAG_REGISTERED_STEVEN_POKENAV
+	msgbox GraniteCave_StevensRoom_Text_IveGotToHurryAlong, MSGBOX_DEFAULT
 	closemessage
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, GraniteCave_StevensRoom_EventScript_002140BA
-	compare_var_to_value 0x800C, 0x1
-	call_if 0x1, GraniteCave_StevensRoom_EventScript_002140D7
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, GraniteCave_StevensRoom_EventScript_002140C5
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, GraniteCave_StevensRoom_EventScript_002140C5
-	playse 0x9
-	removeobject 0x1
+	call_if_eq VAR_FACING, DIR_NORTH, GraniteCave_StevensRoom_EventScript_StevenExitNorth
+	call_if_eq VAR_FACING, DIR_SOUTH, GraniteCave_StevensRoom_EventScript_StevenExitSouth
+	call_if_eq VAR_FACING, DIR_WEST, GraniteCave_StevensRoom_EventScript_StevenExitWestEast
+	call_if_eq VAR_FACING, DIR_EAST, GraniteCave_StevensRoom_EventScript_StevenExitWestEast
+	playse SE_EXIT
+	removeobject LOCALID_GRANITE_CAVE_STEVEN
 	release
 	end
 
-GraniteCave_StevensRoom_EventScript_002140BA::
-	applymovement 0x1, GraniteCave_StevensRoom_Movement_StevenExit
-	waitmovement 0x0
+GraniteCave_StevensRoom_EventScript_StevenExitNorth:: @ 0x082140BA
+	applymovement LOCALID_GRANITE_CAVE_STEVEN, GraniteCave_StevensRoom_Movement_StevenExit
+	waitmovement 0
 	return
 
-GraniteCave_StevensRoom_EventScript_002140C5::
-	applymovement 0xFF, GraniteCave_StevensRoom_Movement_PlayerTurnTowardExit
-	applymovement 0x1, GraniteCave_StevensRoom_Movement_StevenExit
-	waitmovement 0x0
+GraniteCave_StevensRoom_EventScript_StevenExitWestEast:: @ 0x082140C5
+	applymovement LOCALID_PLAYER, GraniteCave_StevensRoom_Movement_PlayerTurnTowardExit
+	applymovement LOCALID_GRANITE_CAVE_STEVEN, GraniteCave_StevensRoom_Movement_StevenExit
+	waitmovement 0
 	return
 
-GraniteCave_StevensRoom_EventScript_002140D7::
-	applymovement 0xFF, GraniteCave_StevensRoom_Movement_PlayerTurnTowardExit
-	applymovement 0x1, GraniteCave_StevensRoom_Movement_StevenExitSouth
-	waitmovement 0x0
+GraniteCave_StevensRoom_EventScript_StevenExitSouth:: @ 0x082140D7
+	applymovement LOCALID_PLAYER, GraniteCave_StevensRoom_Movement_PlayerTurnTowardExit
+	applymovement LOCALID_GRANITE_CAVE_STEVEN, GraniteCave_StevensRoom_Movement_StevenExitSouth
+	waitmovement 0
 	return
 
-GraniteCave_StevensRoom_EventScript_002140E9::
-	loadword 0x0, gJPText_0021425D
-	callstd 0x4
+GraniteCave_StevensRoom_EventScript_BagFull:: @ 0x082140E9
+	msgbox GraniteCave_StevensRoom_Text_OhBagIsFull, MSGBOX_DEFAULT
 	return
 
 GraniteCave_StevensRoom_Movement_StevenExit:
@@ -94,16 +81,14 @@ GraniteCave_StevensRoom_Movement_StevenExitSouth:
 	delay_8
 	step_end
 
-	.globl gJPText_00214107
-gJPText_00214107: @ 0x08214107
+GraniteCave_StevensRoom_Text_ImStevenLetterForMe: @ 0x08214107
 	.string "ボクの　なまえは　ダイゴ\p"
 	.string "めずらしい　いしに　きょうみが　あって\n"
 	.string "あちこち　たび　してるんだよ\p"
 	.string "えっ？\n"
 	.string "ボクに　てがみ⋯⋯？$"
 
-	.globl gJPText_00214146
-gJPText_00214146: @ 0x08214146
+GraniteCave_StevensRoom_Text_ThankYouTakeThis: @ 0x08214146
 	.string "ダイゴ“うん　ありがとう\p"
 	.string "わざわざ　とどけて　くれたんだ\n"
 	.string "なにか　おれいを　させてもらうよ\p"
@@ -112,8 +97,7 @@ gJPText_00214146: @ 0x08214146
 	.string "はがねのつばさ　といって\n"
 	.string "ボクの　おきにいりの　わざ　だから$"
 
-	.globl gJPText_002141A7
-gJPText_002141A7: @ 0x082141A7
+GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister: @ 0x082141A7
 	.string "ダイゴ“きみの　ポケモン\n"
 	.string "なかなか　いい　かんじ　だね\p"
 	.string "しゅぎょうを　つづければ\n"
@@ -126,17 +110,14 @@ gJPText_002141A7: @ 0x082141A7
 	.string "なまえを　とうろく　しておこう！\p"
 	.string "⋯⋯　⋯⋯　⋯⋯$"
 
-	.globl gJPText_00214235
-gJPText_00214235: @ 0x08214235
+GraniteCave_StevensRoom_Text_RegisteredSteven: @ 0x08214235
 	.string "ダイゴを\n"
 	.string "ポケナビに　とうろく　した！$"
 
-	.globl gJPText_00214249
-gJPText_00214249: @ 0x08214249
+GraniteCave_StevensRoom_Text_IveGotToHurryAlong: @ 0x08214249
 	.string "⋯⋯じゃあ\n"
 	.string "ボクは　さきを　いそぐから$"
 
-	.globl gJPText_0021425D
-gJPText_0021425D: @ 0x0821425D
+GraniteCave_StevensRoom_Text_OhBagIsFull: @ 0x0821425D
 	.string "バッグが　いっぱい　なのか⋯⋯\n"
 	.string "じゃあ　しかたないね$"
