@@ -11781,6 +11781,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 # movement references need explicit metadata here.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LilycoveCity_ContestHall': {
+        'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
         'external_labels': {
             0x08243621: 'Common_Movement_FacePlayer',
@@ -11816,6 +11817,10 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x1E: 'LOCALID_CUTE_AUDIENCE_3',
                 0x1F: 'LOCALID_CUTE_AUDIENCE_2',
             },
+            # The only numeric script operand in this owner is the pause
+            # before the Cute Contest audience member's follow-up message.
+            # Its matching US source writes the same byte as decimal 25.
+            'decimal_arguments': {'delay': (0,)},
         },
     },
 })

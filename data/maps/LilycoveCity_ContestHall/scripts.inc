@@ -271,7 +271,7 @@ LilycoveCity_ContestHall_EventScript_CuteContestAudience1:: @ 0x08207A0F
 	closemessage
 	applymovement LOCALID_CUTE_AUDIENCE_1, Common_Movement_FaceOriginalDirection
 	waitmovement 0
-	delay 0x19
+	delay 25
 	msgbox LilycoveCity_ContestHall_Text_ComeOnDear, MSGBOX_DEFAULT
 	releaseall
 	end
