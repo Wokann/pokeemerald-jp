@@ -10341,6 +10341,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
             0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
         },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
         'symbols': {
             'vars': {
                 0x40D1: 'VAR_SCOTT_STATE',
@@ -10351,6 +10353,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x800F: 'VAR_LAST_TALKED',
             },
             'var_values': {
+                0x40D1: {0x01: '1'},
                 0x8000: {0x7F: 'MULTI_B_PRESSED'},
                 0x800C: {0x03: 'DIR_WEST', 0x04: 'DIR_EAST'},
             },
@@ -10363,6 +10366,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'items': {0x00B7: 'ITEM_QUICK_CLAW'},
             'multichoices': {0x0D: 'MULTI_STATUS_INFO'},
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'decimal_arguments': {
+                'multichoicegrid': (0, 1, 3),
+            },
         },
     },
 })

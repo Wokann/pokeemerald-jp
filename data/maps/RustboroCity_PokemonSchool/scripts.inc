@@ -3,16 +3,16 @@
 RustboroCity_PokemonSchool_MapScripts::
 	.byte 0
 
-RustboroCity_PokemonSchool_EventScript_Blackboard::
+RustboroCity_PokemonSchool_EventScript_Blackboard:: @ 0x08202C1B
 	lockall
 	msgbox RustboroCity_PokemonSchool_Text_BlackboardListsStatusChanges, MSGBOX_DEFAULT
 	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic::
+RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic:: @ 0x08202C2A
 	message RustboroCity_PokemonSchool_Text_ReadWhichTopic
 	waitmessage
-	multichoicegrid 0x8, 0x1, MULTI_STATUS_INFO, 0x3, FALSE
+	multichoicegrid 8, 1, MULTI_STATUS_INFO, 3, FALSE
 	switch VAR_RESULT
 	case 0, RustboroCity_PokemonSchool_EventScript_Poison
 	case 1, RustboroCity_PokemonSchool_EventScript_Paralysis
@@ -23,60 +23,60 @@ RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic::
 	case MULTI_B_PRESSED, RustboroCity_PokemonSchool_EventScript_ExitTopicSelect
 	end
 
-RustboroCity_PokemonSchool_EventScript_Poison::
+RustboroCity_PokemonSchool_EventScript_Poison:: @ 0x08202C89
 	msgbox RustboroCity_PokemonSchool_Text_ExplainPoison, MSGBOX_DEFAULT
 	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_Paralysis::
+RustboroCity_PokemonSchool_EventScript_Paralysis:: @ 0x08202C97
 	msgbox RustboroCity_PokemonSchool_Text_ExplainParalysis, MSGBOX_DEFAULT
 	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_Sleep::
+RustboroCity_PokemonSchool_EventScript_Sleep:: @ 0x08202CA5
 	msgbox RustboroCity_PokemonSchool_Text_ExplainSleep, MSGBOX_DEFAULT
 	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_Burn::
+RustboroCity_PokemonSchool_EventScript_Burn:: @ 0x08202CB3
 	msgbox RustboroCity_PokemonSchool_Text_ExplainBurn, MSGBOX_DEFAULT
 	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_Freeze::
+RustboroCity_PokemonSchool_EventScript_Freeze:: @ 0x08202CC1
 	msgbox RustboroCity_PokemonSchool_Text_ExplainFreeze, MSGBOX_DEFAULT
 	goto RustboroCity_PokemonSchool_EventScript_ChooseBlackboardTopic
 	end
 
-RustboroCity_PokemonSchool_EventScript_ExitTopicSelect::
+RustboroCity_PokemonSchool_EventScript_ExitTopicSelect:: @ 0x08202CCF
 	releaseall
 	end
 
-RustboroCity_PokemonSchool_EventScript_GameboyKid1::
+RustboroCity_PokemonSchool_EventScript_GameboyKid1:: @ 0x08202CD1
 	msgbox RustboroCity_PokemonSchool_Text_TradingRightNow, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_GameboyKid2::
+RustboroCity_PokemonSchool_EventScript_GameboyKid2:: @ 0x08202CDA
 	msgbox RustboroCity_PokemonSchool_Text_AlwaysWantedSeedot, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_RichBoy::
+RustboroCity_PokemonSchool_EventScript_RichBoy:: @ 0x08202CE3
 	msgbox RustboroCity_PokemonSchool_Text_PokemontCantUseManMadeItems, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_Lass::
+RustboroCity_PokemonSchool_EventScript_Lass:: @ 0x08202CEC
 	msgbox RustboroCity_PokemonSchool_Text_ConfusedPokemonAttacksItself, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_SchoolKidM::
+RustboroCity_PokemonSchool_EventScript_SchoolKidM:: @ 0x08202CF5
 	msgbox RustboroCity_PokemonSchool_Text_PokemonHealItselfWithBerry, MSGBOX_NPC
 	end
 
-RustboroCity_PokemonSchool_EventScript_StudentNotebook::
+RustboroCity_PokemonSchool_EventScript_StudentNotebook:: @ 0x08202CFE
 	msgbox RustboroCity_PokemonSchool_Text_StudentsNotes, MSGBOX_SIGN
 	end
 
-RustboroCity_PokemonSchool_EventScript_Teacher::
+RustboroCity_PokemonSchool_EventScript_Teacher:: @ 0x08202D07
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_QUICK_CLAW, RustboroCity_PokemonSchool_EventScript_GaveQuickClaw
@@ -87,26 +87,26 @@ RustboroCity_PokemonSchool_EventScript_Teacher::
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0x0
+	waitmovement 0
 	setflag FLAG_RECEIVED_QUICK_CLAW
 	release
 	end
 
-RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsEast::
+RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsEast:: @ 0x08202D57
 	applymovement VAR_LAST_TALKED, RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsWest::
+RustboroCity_PokemonSchool_EventScript_TeacherCheckOnStudentsWest:: @ 0x08202D62
 	applymovement VAR_LAST_TALKED, RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsWest
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-RustboroCity_PokemonSchool_EventScript_GaveQuickClaw::
+RustboroCity_PokemonSchool_EventScript_GaveQuickClaw:: @ 0x08202D6D
 	msgbox RustboroCity_PokemonSchool_Text_ExplainQuickClaw, MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0x0
+	waitmovement 0
 	release
 	end
 
@@ -162,41 +162,41 @@ RustboroCity_PokemonSchool_Movement_TeacherCheckOnStudentsEast:
 	walk_left
 	step_end
 
-RustboroCity_PokemonSchool_EventScript_Scott::
+RustboroCity_PokemonSchool_EventScript_Scott:: @ 0x08202DB2
 	lock
 	faceplayer
 	goto_if_set FLAG_MET_SCOTT_AFTER_OBTAINING_STONE_BADGE, RustboroCity_PokemonSchool_EventScript_ScottWatchStudents
 	goto_if_set FLAG_MET_SCOTT_RUSTBORO, RustboroCity_PokemonSchool_EventScript_ScottSpokeAlready
 	goto_if_set FLAG_BADGE01_GET, RustboroCity_PokemonSchool_EventScript_ScottGreetHasBadge
 	msgbox RustboroCity_PokemonSchool_Text_ScottMetAlreadyCut, MSGBOX_DEFAULT
-	addvar VAR_SCOTT_STATE, 0x1
+	addvar VAR_SCOTT_STATE, 1
 	setflag FLAG_MET_SCOTT_RUSTBORO
 	release
 	end
 
-RustboroCity_PokemonSchool_EventScript_ScottSpokeAlready::
+RustboroCity_PokemonSchool_EventScript_ScottSpokeAlready:: @ 0x08202DE1
 	goto_if_set FLAG_BADGE01_GET, RustboroCity_PokemonSchool_EventScript_ScottNoticeBadge
 	msgbox RustboroCity_PokemonSchool_Text_StudentTalentLevelUnknown, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_PokemonSchool_EventScript_ScottGreetHasBadge::
+RustboroCity_PokemonSchool_EventScript_ScottGreetHasBadge:: @ 0x08202DF4
 	msgbox RustboroCity_PokemonSchool_Text_ScottMetAlreadyStoneBadge, MSGBOX_DEFAULT
 	goto RustboroCity_PokemonSchool_EventScript_MetScottAfterBadge
 	end
 
-RustboroCity_PokemonSchool_EventScript_ScottNoticeBadge::
+RustboroCity_PokemonSchool_EventScript_ScottNoticeBadge:: @ 0x08202E02
 	msgbox RustboroCity_PokemonSchool_Text_ScottStoneBadge, MSGBOX_DEFAULT
 	goto RustboroCity_PokemonSchool_EventScript_MetScottAfterBadge
 	end
 
-RustboroCity_PokemonSchool_EventScript_MetScottAfterBadge::
-	addvar VAR_SCOTT_STATE, 0x1
+RustboroCity_PokemonSchool_EventScript_MetScottAfterBadge:: @ 0x08202E10
+	addvar VAR_SCOTT_STATE, 1
 	setflag FLAG_MET_SCOTT_AFTER_OBTAINING_STONE_BADGE
 	release
 	end
 
-RustboroCity_PokemonSchool_EventScript_ScottWatchStudents::
+RustboroCity_PokemonSchool_EventScript_ScottWatchStudents:: @ 0x08202E1A
 	msgbox RustboroCity_PokemonSchool_Text_StudentTalentLevelUnknown, MSGBOX_DEFAULT
 	release
 	end
