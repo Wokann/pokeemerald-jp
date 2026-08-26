@@ -4390,7 +4390,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN_HOUSE2 (g2 m1)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte gMapEvents_OLDALE_TOWN_HOUSE2  @ events
+	.4byte OldaleTown_House2_MapEvents  @ events
 	.4byte 0x081F2949  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016B  @ music

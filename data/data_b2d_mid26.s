@@ -793,8 +793,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LittlerootTown_ProfessorBirchsLab/events.inc"
 	.include "data/maps/OldaleTown_House1/events.inc"
 	.include "data/maps/OldaleTown_House2/events.inc"
-	.globl gMapEvents_OLDALE_TOWN_HOUSE2
-	.set gMapEvents_OLDALE_TOWN_HOUSE2, OldaleTown_House2_MapEvents
 	.include "data/maps/OldaleTown_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F
 	.set gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F, OldaleTown_PokemonCenter_1F_MapEvents

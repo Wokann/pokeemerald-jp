@@ -6394,6 +6394,20 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    # House 2 immediately follows House 1. Its two NPC scripts and two text
+    # blocks have the same order and control-flow shape as the US map source.
+    'OldaleTown_House2': {
+        'scripts': {
+            0x081F294A: 'OldaleTown_House2_EventScript_Woman',
+            0x081F2953: 'OldaleTown_House2_EventScript_Man',
+        },
+        'texts': {
+            0x081F295C: 'OldaleTown_House2_Text_PokemonLevelUp',
+            0x081F297B: 'OldaleTown_House2_Text_YoullGoFurtherWithStrongPokemon',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
 })
 
 # Petalburg's two residential houses immediately follow the Gym in the
