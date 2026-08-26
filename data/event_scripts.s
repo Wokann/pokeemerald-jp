@@ -741,7 +741,7 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap1/scripts.inc"
 	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap2/scripts.inc"
 	.include "data/maps/CaveOfOrigin_UnusedRubySapphireMap3/scripts.inc"
-	.incbin "baserom_jp.gba", 0x2190fe, 0x39e
+	.include "data/maps/CaveOfOrigin_B1F/scripts.inc"
 	.include "data/maps/VictoryRoad_1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x219557, 0x92e
 	.include "data/maps/ShoalCave_LowTideEntranceRoom/scripts.inc"

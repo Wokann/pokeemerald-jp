@@ -18909,6 +18909,84 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 })
 
 
+# Cave of Origin B1F is the first unstructured map owner after the reviewed
+# Cave of Origin entry maps. Its object table, six local text records, and
+# Wallace's control flow match the US source one-for-one in the JP ROM.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'CaveOfOrigin_B1F': {
+        'scripts': {
+            0x082190FF: 'CaveOfOrigin_B1F_EventScript_Wallace',
+            0x08219146: 'CaveOfOrigin_B1F_EventScript_WheresRayquaza',
+            0x08219182: 'CaveOfOrigin_B1F_EventScript_AtCaveOfOrigin',
+            0x0821918D: 'CaveOfOrigin_B1F_EventScript_AtMtPyre',
+            0x08219198: 'CaveOfOrigin_B1F_EventScript_DontRemember',
+            0x082191A3: 'CaveOfOrigin_B1F_EventScript_AtSkyPillar',
+        },
+        'texts': {
+            0x082191C4: 'CaveOfOrigin_B1F_Text_WallaceStory',
+            0x0821931C: 'CaveOfOrigin_B1F_Text_WhereIsRayquaza',
+            0x0821935C: 'CaveOfOrigin_B1F_Text_ButWereInCaveOfOrigin',
+            0x082193B0: 'CaveOfOrigin_B1F_Text_OldLadyDidntMentionThat',
+            0x0821941A: 'CaveOfOrigin_B1F_Text_CantYouRememberSomehow',
+            0x08219456: 'CaveOfOrigin_B1F_Text_WellHeadToSkyPillar',
+        },
+        'field_placeholders': {
+            0x082191C4: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x0821931C: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x082193B0: {0x01: 'PLAYER', 0x05: 'KUN'},
+            0x08219456: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x800D: 'VAR_RESULT',
+                0x405E: 'VAR_SOOTOPOLIS_CITY_STATE',
+            },
+            'flags': {
+                0x0137: 'FLAG_WALLACE_GOES_TO_SKY_PILLAR',
+                0x0357: 'FLAG_HIDE_SKY_PILLAR_WALLACE',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_CAVE_OF_ORIGIN_WALLACE',
+            },
+            'script_literal_values': {
+                0x082190FF: {
+                    'delay': {
+                        0: {0x3C: '60', 0x1E: '30'},
+                    },
+                    'playse': {0: {0x15: 'SE_PIN'}},
+                },
+                0x08219146: {
+                    'multichoice': {
+                        0: {0x00: '0'},
+                        1: {0x00: '0'},
+                        2: {0x6E: 'MULTI_WHERES_RAYQUAZA'},
+                        3: {0x00: 'FALSE'},
+                    },
+                },
+                0x082191A3: {
+                    'playse': {0: {0x09: 'SE_EXIT'}},
+                    'fadescreenspeed': {
+                        0: {0x01: 'FADE_TO_BLACK'},
+                        1: {0x04: '4'},
+                    },
+                    'fadescreen': {0: {0x00: 'FADE_FROM_BLACK'}},
+                    'setvar': {1: {0x03: '3'}},
+                },
+            },
+        },
+    },
+})
+
+
 def main():
     do_write = '--write' in sys.argv
     include_empty = '--include-empty' in sys.argv

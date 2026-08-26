@@ -3374,7 +3374,11 @@ gMapLayout_SEAFLOOR_CAVERN_ROOM4: @ 0x0840F798
 	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM4_Blockdata  @ map
 	.4byte gTileset_PETALBURG_CITY_PRIMARY  @ primaryTileset
 	.4byte gTileset_DESERT_RUINS_SECONDARY  @ secondaryTileset
-	.incbin "baserom_jp.gba", 0x40f7b0, 0x1184c
+	.incbin "baserom_jp.gba", 0x40f7b0, 0x2dac
+	.globl gMapLayout_CAVE_OF_ORIGIN_B1F
+gMapLayout_CAVE_OF_ORIGIN_B1F: @ 0x0841255C
+	.incbin "baserom_jp.gba", 0x41255c, 0x18
+	.incbin "baserom_jp.gba", 0x412574, 0xea88
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Border:
 	.incbin "data/layouts/FortreeCity_DecorationShop/border.bin"
 gMapLayout_FORTREE_CITY_DECORATION_SHOP_Blockdata:
@@ -6046,7 +6050,10 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	.globl gUnknown_845C660
 gUnknown_845C660: @ 0x0845C660
-	.incbin "baserom_jp.gba", 0x45c660, 0x2338
+	.incbin "baserom_jp.gba", 0x45c660, 0x118
+	@ MAP_CAVE_OF_ORIGIN_B1F (g24 m42)
+	.include "data/maps/CaveOfOrigin_B1F/header.inc"
+	.incbin "baserom_jp.gba", 0x45c794, 0x2204
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998

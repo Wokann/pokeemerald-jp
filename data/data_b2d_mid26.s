@@ -1258,7 +1258,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/SeafloorCavern_Room8/events.inc"
 	.include "data/maps/SeafloorCavern_Room9/events.inc"
 	.include "data/maps/CaveOfOrigin_Entrance/events.inc"
-	.incbin "baserom_jp.gba", 0x50E46C, 0x1004
+	.incbin "baserom_jp.gba", 0x50E46C, 0x90
+	.include "data/maps/CaveOfOrigin_B1F/events.inc"
+	.incbin "baserom_jp.gba", 0x50E530, 0xF40
 	.include "data/maps/Underwater_Route134/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE134
 	.set gMapEvents_UNDERWATER_ROUTE134, Underwater_Route134_MapEvents

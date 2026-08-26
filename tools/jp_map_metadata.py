@@ -51,6 +51,8 @@ def render_header(data: dict[str, Any]) -> str:
     name = require_string(data, "name")
     layout_id = require_string(data, "layout")
     connections = data.get("connections", [])
+    if connections is None:
+        connections = []
     if not isinstance(connections, list):
         raise ValueError("connections must be an array")
 
@@ -87,6 +89,8 @@ def render_header(data: dict[str, Any]) -> str:
 def render_connections(data: dict[str, Any]) -> str:
     name = require_string(data, "name")
     connections = data.get("connections", [])
+    if connections is None:
+        connections = []
     if not isinstance(connections, list):
         raise ValueError("connections must be an array")
     if not connections:

@@ -31,21 +31,28 @@ class MapMetadataTests(unittest.TestCase):
                 jp_map_metadata.render_connections(data),
             )
 
-    def test_headers_keep_us_style_names_with_jp_layout_aliases(self):
+    def test_headers_use_real_map_and_layout_labels(self):
         for map_name in MAPS:
             text = (ROOT / "data" / "maps" / map_name / "header.inc").read_text(encoding="utf-8")
             self.assertIn(f"{map_name}:", text)
-            self.assertIn(f"{map_name}_Layout", text)
             self.assertIn("gMapLayout_", text)
             self.assertIn("map_header_flags allow_cycling=", text)
+            self.assertNotIn(".set ", text)
 
-    def test_connections_preserve_legacy_exports(self):
+    def test_connections_use_real_map_labels(self):
         for map_name in MAPS:
-            data = jp_map_metadata.load_map(ROOT / "data" / "maps" / map_name / "map.json")
-            legacy_stem = data["id"].removeprefix("MAP_")
             text = (ROOT / "data" / "maps" / map_name / "connections.inc").read_text(encoding="utf-8")
-            self.assertIn(f".set {legacy_stem}_MapConnections,", text)
-            self.assertIn(f".set gMapConnections_{legacy_stem},", text)
+            self.assertIn(f"{map_name}_MapConnections:", text)
+            self.assertNotIn(".set ", text)
+
+    def test_null_connections_match_us_map_json_style(self):
+        data = jp_map_metadata.load_map(ROOT / "data" / "maps" / "CaveOfOrigin_B1F" / "map.json")
+        self.assertIsNone(data["connections"])
+        self.assertIn("\t.4byte NULL\n", jp_map_metadata.render_header(data))
+        self.assertEqual(
+            jp_map_metadata.render_connections(data),
+            jp_map_metadata.warning("CaveOfOrigin_B1F"),
+        )
 
 
 if __name__ == "__main__":
