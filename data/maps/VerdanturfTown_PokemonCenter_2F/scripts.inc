@@ -7,15 +7,14 @@ VerdanturfTown_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-@ The below 3 are unused and leftover from RS.
-VerdanturfTown_PokemonCenter_2F_EventScript_Colosseum::
+VerdanturfTown_PokemonCenter_2F_EventScript_Colosseum:: @ 0x081F70F3
 	call CableClub_EventScript_Colosseum
 	end
 
-VerdanturfTown_PokemonCenter_2F_EventScript_TradeCenter::
+VerdanturfTown_PokemonCenter_2F_EventScript_TradeCenter:: @ 0x081F70F9
 	call CableClub_EventScript_TradeCenter
 	end
 
-VerdanturfTown_PokemonCenter_2F_EventScript_RecordCorner::
+VerdanturfTown_PokemonCenter_2F_EventScript_RecordCorner:: @ 0x081F70FF
 	call CableClub_EventScript_RecordCorner
 	end

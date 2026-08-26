@@ -8191,6 +8191,39 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The adjacent Pokémon Center 2F table consists of four shared Cable Club
+# lifecycle hooks followed by three complete, unused RS-era room wrappers.
+# Make the wrappers explicit roots so the generator owns the full physical
+# map range instead of retaining their six-byte records as a raw tail.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'VerdanturfTown_PokemonCenter_2F': (
+        0x081F70F3,
+        0x081F70F9,
+        0x081F70FF,
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_PokemonCenter_2F': {
+        'scripts': {
+            0x081F70F3: 'VerdanturfTown_PokemonCenter_2F_EventScript_Colosseum',
+            0x081F70F9: 'VerdanturfTown_PokemonCenter_2F_EventScript_TradeCenter',
+            0x081F70FF: 'VerdanturfTown_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
