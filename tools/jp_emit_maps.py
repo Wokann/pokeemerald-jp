@@ -11500,6 +11500,11 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         # All old gJPText_* labels are local-only address placeholders.  The
         # semantic names above replace them rather than retaining aliases.
+        # The two map-script entry points are private to this map, matching
+        # the US source's local-label convention.
+        'local_scripts': (0x082068DC,),
+        'local_tables': (0x08206903,),
+        'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
         'field_placeholders': {
             # The paired US ribbon messages prove FD 01 is the player and FD
@@ -11677,9 +11682,30 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                     0x5: 'CONTEST_CATEGORIES_COUNT',
                     0x7F: 'MULTI_B_PRESSED',
                 },
+                'VAR_CONTEST_RANK': {
+                    0x0: 'CONTEST_RANK_NORMAL',
+                    0x1: 'CONTEST_RANK_SUPER',
+                    0x2: 'CONTEST_RANK_HYPER',
+                    0x3: 'CONTEST_RANK_MASTER',
+                },
+                'VAR_CONTEST_CATEGORY': {
+                    0x0: 'CONTEST_CATEGORY_COOL',
+                    0x1: 'CONTEST_CATEGORY_BEAUTY',
+                    0x2: 'CONTEST_CATEGORY_CUTE',
+                    0x3: 'CONTEST_CATEGORY_SMART',
+                    0x4: 'CONTEST_CATEGORY_TOUGH',
+                },
             },
             'script_var_values': {
+                # These calls return boolean success values in the matching
+                # US script. Keep the mapping script-local: VAR_RESULT also
+                # carries several non-boolean link and contest outcomes.
+                0x082068E7: {0x800D: {0x1: 'TRUE'}},
+                0x0820696A: {0x800D: {0x1: 'TRUE'}},
+                0x08206B3A: {0x800D: {0x1: 'TRUE'}},
+                0x08206C14: {0x800D: {0x1: 'TRUE'}},
                 0x0820704C: {
+                    0x8004: {0xFF: 'PARTY_NOTHING_CHOSEN'},
                     0x800D: {
                         0x0: 'CANT_ENTER_CONTEST',
                         0x1: 'CAN_ENTER_CONTEST_EQUAL_RANK',
@@ -11687,6 +11713,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                         0x3: 'CANT_ENTER_CONTEST_EGG',
                         0x4: 'CANT_ENTER_CONTEST_FAINTED',
                     },
+                    # The JP opcode's input is the literal normal-rank value;
+                    # use US source spelling without changing that opcode.
+                    0x8010: {0x0: '0'},
                 },
                 0x082070D5: {
                     0x800D: {
@@ -11711,6 +11740,36 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                         0x8: 'LINKUP_RETRY_ROLE_ASSIGN',
                     },
                 },
+                # The link-group ID shares VAR_0x8004 with unrelated values,
+                # so these names must remain tied to their owning scripts.
+                0x08207248: {0x8004: {0x0F: 'LINK_GROUP_COOL_CONTEST'}},
+                0x0820724E: {0x8004: {0x10: 'LINK_GROUP_BEAUTY_CONTEST'}},
+                0x08207254: {0x8004: {0x11: 'LINK_GROUP_CUTE_CONTEST'}},
+                0x0820725A: {0x8004: {0x12: 'LINK_GROUP_SMART_CONTEST'}},
+                0x08207260: {0x8004: {0x13: 'LINK_GROUP_TOUGH_CONTEST'}},
+                # VAR_0x800B normally receives a local object ID. This debug
+                # path instead stores an ordinary literal, as in the US map.
+                0x08206C8F: {0x800B: {0x8: '8'}},
+            },
+            'script_literal_values': {
+                # JP deliberately retains the byte-exact copyvar form here.
+                # It nevertheless represents the US source's literal state 1.
+                0x08206C8F: {'copyvar': {1: {0x1: '1'}}},
+            },
+            'map_script_values': {
+                0x4099: {0x1: '1', 0x2: '2'},
+            },
+            'decimal_arguments': {
+                'addvar': (1,),
+                'compare_var_to_value': (1,),
+                'delay': (0,),
+                'multichoice': (0, 1),
+                'setmetatile': (0, 1),
+                'setvar': (1,),
+                # The source macro merges the raw map group/number pair, so
+                # its displayed X/Y operands are raw positions two and three.
+                'setwarp': (2, 3),
+                'subvar': (1,),
             },
         },
     },

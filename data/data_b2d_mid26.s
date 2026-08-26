@@ -983,8 +983,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_LilycoveMuseum_1F/events.inc"
 	.include "data/maps/LilycoveCity_LilycoveMuseum_2F/events.inc"
 	.include "data/maps/LilycoveCity_ContestLobby/events.inc"
-	.globl gMapEvents_LILYCOVE_CITY_CONTEST_LOBBY
-	.set gMapEvents_LILYCOVE_CITY_CONTEST_LOBBY, LilycoveCity_ContestLobby_MapEvents
 	.include "data/maps/LilycoveCity_ContestHall/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_CONTEST_HALL
 	.set gMapEvents_LILYCOVE_CITY_CONTEST_HALL, LilycoveCity_ContestHall_MapEvents
