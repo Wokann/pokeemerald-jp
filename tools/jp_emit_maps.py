@@ -218,6 +218,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Room1 follows with its two ordinary Aqua grunt trainer scripts in the
     # same reviewed US source order.
     'SeafloorCavern_Room1': 2,
+    # Room3 follows the empty Room2 map-script record with Shelly and an Aqua
+    # grunt trainer script in the same reviewed US source order.
+    'SeafloorCavern_Room3': 2,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -352,6 +355,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'SeafloorCavern_Entrance': 2,
     # Room1 owns its two Aqua grunt dialogue triplets.
     'SeafloorCavern_Room1': 6,
+    # Room3 owns Shelly and the adjacent Aqua grunt dialogue triplets.
+    'SeafloorCavern_Room3': 6,
 }
 
 MAP_SCRIPT_NAMES = {

@@ -2353,25 +2353,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/SeafloorCavern_Room2/events.inc"
 	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM2
 	.set gMapEvents_SEAFLOOR_CAVERN_ROOM2, SeafloorCavern_Room2_MapEvents
-	.globl SEAFLOOR_CAVERN_ROOM3_EventObjects
-SEAFLOOR_CAVERN_ROOM3_EventObjects: @ 0x0850DFBC
-	object_event 1, 87, 0, 13, 10, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0012
-	object_event 2, 87, 0, 11, 10, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0014
-	object_event 3, 87, 0, 12, 9, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0015
-	object_event 4, 87, 0, 12, 7, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0016
-	object_event 5, 87, 0, 11, 8, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0017
-	object_event 6, 87, 0, 12, 11, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0018
-	object_event 7, 87, 0, 13, 8, 3, 1, 0, 0, 0, 0, 0x08256754, 0x0019
-	object_event 8, 118, 0, 9, 5, 3, 9, 1, 1, 1, 6, 0x0821873F, 0x03B2
-	object_event 9, 117, 0, 5, 5, 3, 10, 1, 1, 1, 4, 0x08218756, 0x03B2
-	.globl SEAFLOOR_CAVERN_ROOM3_EventWarps
-SEAFLOOR_CAVERN_ROOM3_EventWarps: @ 0x0850E094
-	warp_def 8, 1, 3, 1, MAP_SEAFLOOR_CAVERN_ROOM8
-	warp_def 9, 13, 3, 1, MAP_SEAFLOOR_CAVERN_ROOM7
-	warp_def 4, 15, 3, 1, MAP_SEAFLOOR_CAVERN_ROOM6
+	.include "data/maps/SeafloorCavern_Room3/events.inc"
 	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM3
-gMapEvents_SEAFLOOR_CAVERN_ROOM3: @ 0x0850E0AC
-	map_events SEAFLOOR_CAVERN_ROOM3_EventObjects, SEAFLOOR_CAVERN_ROOM3_EventWarps, 0, 0
+	.set gMapEvents_SEAFLOOR_CAVERN_ROOM3, SeafloorCavern_Room3_MapEvents
 	.globl SEAFLOOR_CAVERN_ROOM4_EventObjects
 SEAFLOOR_CAVERN_ROOM4_EventObjects: @ 0x0850E0C0
 	object_event 1, 117, 0, 5, 8, 3, 17, 1, 1, 1, 3, 0x0821892F, 0x03B2
