@@ -3365,6 +3365,13 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x08201F3E: {0x01: 'PLAYER'},
             0x08202015: {0x01: 'PLAYER', 0x05: 'KUN'},
         },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x0824310F: 'Common_EventScript_OutOfCenterPartyHeal',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
         # These constants are emitted only in argument positions whose US
         # counterpart proves the type (flag, variable, item, song, etc.).
         'symbols': {
@@ -3405,6 +3412,20 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             },
             'directions': {0x04: 'DIR_EAST'},
             'movement_types': {0x09: 'MOVEMENT_TYPE_FACE_LEFT'},
+            # Keep the state comparisons and numeric timing coordinates in
+            # the same form as the reviewed pokeemerald script while retaining
+            # the JP map's byte-exact control flow.
+            'var_values': {
+                0x405A: {0x06: '6'},
+                0x408F: {0x00: '0', 0x01: '1'},
+                0x4096: {0x01: '1'},
+            },
+            'map_script_values': {0x408F: {0x00: '0'}},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'setobjectxyperm': (1, 2),
+            },
         },
     },
     # Seafloor Cavern Room1-4 and Room9 are a contiguous, fully reviewed

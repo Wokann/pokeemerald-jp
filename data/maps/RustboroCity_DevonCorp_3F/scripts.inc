@@ -6,52 +6,50 @@ RustboroCity_DevonCorp_3F_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, RustboroCity_DevonCorp_3F_OnFrame
 	.byte 0
 
-RustboroCity_DevonCorp_3F_OnTransition::
-	call_if_eq VAR_DEVON_CORP_3F_STATE, 0x0, RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos
+RustboroCity_DevonCorp_3F_OnTransition:: @ 0x08201C39
+	call_if_eq VAR_DEVON_CORP_3F_STATE, 0, RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos::
-	setobjectxyperm LOCALID_DEVON_CORP_3F_EMPLOYEE, 0x3, 0x2
+RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos:: @ 0x08201C45
+	setobjectxyperm LOCALID_DEVON_CORP_3F_EMPLOYEE, 3, 2
 	setobjectmovementtype LOCALID_DEVON_CORP_3F_EMPLOYEE, MOVEMENT_TYPE_FACE_LEFT
 	return
 
-RustboroCity_DevonCorp_3F_OnWarp::
-	map_script_2 VAR_DEVON_CORP_3F_STATE, 0x0, RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast
+RustboroCity_DevonCorp_3F_OnWarp:: @ 0x08201C51
+	map_script_2 VAR_DEVON_CORP_3F_STATE, 0, RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast
 	.2byte 0
 
-RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast::
+RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast:: @ 0x08201C5B
 	turnobject LOCALID_PLAYER, DIR_EAST
 	end
 
-RustboroCity_DevonCorp_3F_OnFrame::
-	map_script_2 VAR_DEVON_CORP_3F_STATE, 0x0, RustboroCity_DevonCorp_3F_EventScript_MeetPresident
+RustboroCity_DevonCorp_3F_OnFrame:: @ 0x08201C60
+	map_script_2 VAR_DEVON_CORP_3F_STATE, 0, RustboroCity_DevonCorp_3F_EventScript_MeetPresident
 	.2byte 0
 
-RustboroCity_DevonCorp_3F_EventScript_MeetPresident::
+RustboroCity_DevonCorp_3F_EventScript_MeetPresident:: @ 0x08201C6A
 	lockall
 	msgbox RustboroCity_DevonCorp_3F_Text_ThisIs3rdFloorWaitHere, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_DEVON_CORP_3F_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen
-	waitmovement 0x0
-	delay 0x50
+	waitmovement 0
+	delay 80
 	applymovement LOCALID_DEVON_CORP_3F_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeReturnToPlayer
-	waitmovement 0x0
+	waitmovement 0
 	msgbox RustboroCity_DevonCorp_3F_Text_WordWithPresidentComeWithMe, MSGBOX_DEFAULT
 	closemessage
-	playbgm MUS_FOLLOW_ME, 0x0
+	playbgm MUS_FOLLOW_ME, FALSE
 	applymovement LOCALID_DEVON_CORP_3F_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident
 	applymovement LOCALID_PLAYER, RustboroCity_DevonCorp_3F_Movement_PlayerFollowToPresident
-	waitmovement 0x0
+	waitmovement 0
 	msgbox RustboroCity_DevonCorp_3F_Text_PleaseGoAhead, MSGBOX_DEFAULT
 	closemessage
 	fadedefaultbgm
 	applymovement LOCALID_DEVON_CORP_3F_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk
 	applymovement LOCALID_PLAYER, RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk
-	waitmovement 0x0
+	waitmovement 0
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneIHaveFavor, MSGBOX_DEFAULT
-	setorcopyvar VAR_0x8000, ITEM_LETTER
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
+	giveitem ITEM_LETTER
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis, MSGBOX_DEFAULT
 	playfanfare MUS_OBTAIN_ITEM
 	message RustboroCity_DevonCorp_3F_Text_ReceivedPokenav
@@ -61,17 +59,17 @@ RustboroCity_DevonCorp_3F_EventScript_MeetPresident::
 	setflag FLAG_HIDE_RUSTBORO_CITY_POKEMON_SCHOOL_SCOTT
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneExplainPokenavRestUp, MSGBOX_DEFAULT
 	closemessage
-	call 0x0824310F
+	call Common_EventScript_OutOfCenterPartyHeal
 	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneGoWithCautionAndCare, MSGBOX_DEFAULT
 	setflag FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND
 	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND
 	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDA
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
 	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
-	setvar VAR_BRINEY_LOCATION, 0x1
+	setvar VAR_BRINEY_LOCATION, 1
 	clearflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
-	setvar VAR_DEVON_CORP_3F_STATE, 0x1
-	setvar VAR_RUSTBORO_CITY_STATE, 0x6
+	setvar VAR_DEVON_CORP_3F_STATE, 1
+	setvar VAR_RUSTBORO_CITY_STATE, 6
 	releaseall
 	end
 
@@ -150,41 +148,39 @@ RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk:
 	walk_in_place_faster_right
 	step_end
 
-RustboroCity_DevonCorp_3F_EventScript_MrStone::
+RustboroCity_DevonCorp_3F_EventScript_MrStone:: @ 0x08201D68
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_EXP_SHARE, RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor
 	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, RustboroCity_DevonCorp_3F_EventScript_GiveExpShare
 	msgbox RustboroCity_DevonCorp_3F_Text_CountingOnYou, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_GiveExpShare::
+RustboroCity_DevonCorp_3F_EventScript_GiveExpShare:: @ 0x08201D91
 	msgbox RustboroCity_DevonCorp_3F_Text_ThankYouForDeliveringLetter, MSGBOX_DEFAULT
-	setorcopyvar VAR_0x8000, ITEM_EXP_SHARE
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
-	goto_if_eq VAR_RESULT, 0x0, 0x082430E0
+	giveitem ITEM_EXP_SHARE
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_EXP_SHARE
 	msgbox RustboroCity_DevonCorp_3F_Text_ExplainExpShare, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor::
+RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor:: @ 0x08201DC8
 	msgbox RustboroCity_DevonCorp_3F_Text_NotFamiliarWithTrends, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_Employee::
+RustboroCity_DevonCorp_3F_EventScript_Employee:: @ 0x08201DDD
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_REPEAT_BALL, RustboroCity_DevonCorp_3F_EventScript_EmployeeBalls
@@ -192,12 +188,12 @@ RustboroCity_DevonCorp_3F_EventScript_Employee::
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_EmployeeBalls::
+RustboroCity_DevonCorp_3F_EventScript_EmployeeBalls:: @ 0x08201DF2
 	msgbox RustboroCity_DevonCorp_3F_Text_RepeatAndTimerHugelyPopular, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay::
+RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay:: @ 0x08201DFC
 	msgbox RustboroCity_DevonCorp_3F_Text_RareRocksDisplay, MSGBOX_SIGN
 	end
 
