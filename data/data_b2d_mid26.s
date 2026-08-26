@@ -2314,23 +2314,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MtPyre_2F/events.inc"
 	.globl gMapEvents_MT_PYRE_2F
 	.set gMapEvents_MT_PYRE_2F, MtPyre_2F_MapEvents
-	.globl MT_PYRE_3F_EventObjects
-MT_PYRE_3F_EventObjects: @ 0x0850D618
-	object_event 1, 37, 0, 1, 4, 3, 18, 1, 1, 1, 4, 0x082165F2, 0x0000
-	object_event 2, 47, 0, 11, 4, 3, 17, 1, 1, 1, 4, 0x08216609, 0x0000
-	object_event 3, 59, 0, 0, 7, 3, 1, 1, 1, 0, 0, 0x08257061, 0x0460
-	object_event 4, 20, 0, 6, 4, 3, 14, 1, 1, 1, 4, 0x08216620, 0x0000
-	.globl MT_PYRE_3F_EventWarps
-MT_PYRE_3F_EventWarps: @ 0x0850D678
-	warp_def 10, 1, 3, 1, MAP_MT_PYRE_2F
-	warp_def 2, 1, 3, 1, MAP_MT_PYRE_4F
-	warp_def 9, 10, 3, 4, MAP_MT_PYRE_4F
-	warp_def 1, 12, 3, 5, MAP_MT_PYRE_4F
-	warp_def 10, 12, 3, 2, MAP_MT_PYRE_2F
-	warp_def 6, 12, 3, 3, MAP_MT_PYRE_2F
+	.include "data/maps/MtPyre_3F/events.inc"
 	.globl gMapEvents_MT_PYRE_3F
-gMapEvents_MT_PYRE_3F: @ 0x0850D6A8
-	map_events MT_PYRE_3F_EventObjects, MT_PYRE_3F_EventWarps, 0, 0
+	.set gMapEvents_MT_PYRE_3F, MtPyre_3F_MapEvents
 	.globl MT_PYRE_4F_EventObjects
 MT_PYRE_4F_EventObjects: @ 0x0850D6BC
 	object_event 1, 40, 0, 11, 7, 3, 24, 1, 1, 1, 2, 0x082168FB, 0x0000

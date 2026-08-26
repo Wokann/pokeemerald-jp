@@ -189,6 +189,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Mt. Pyre 2F owns its cracked-floor hook and seven local NPC/trainer
     # branches through the next map-script table at 0x082165F1.
     'MtPyre_2F': 8,
+    # Mt. Pyre 3F immediately follows with William, Kayla, and Gabrielle's
+    # rematch sequence (including its two local continuation branches).
+    'MtPyre_3F': 5,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -297,6 +300,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MtPyre_1F': 4,
     # Mt. Pyre 2F owns its nineteen contiguous NPC and trainer text records.
     'MtPyre_2F': 19,
+    # Mt. Pyre 3F owns William, Kayla, and Gabrielle's thirteen messages.
+    'MtPyre_3F': 13,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6811,6 +6816,30 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x0091: 'TRAINER_MARK',
                 0x0280: 'TRAINER_DEZ_AND_LUKE',
             },
+        },
+    },
+    # Mt. Pyre 3F is the next contiguous owner. Its three NPC entries and
+    # Gabrielle's local registration/rematch continuations align one-to-one
+    # with the matching US map source; the Super Repel remains a later shared
+    # item-script owner.
+    'MtPyre_3F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08257061: 'MtPyre_3F_EventScript_ItemSuperRepel',
+        },
+        'symbols': {
+            'trainers': {
+                0x0009: 'TRAINER_GABRIELLE_1',
+                0x00EC: 'TRAINER_WILLIAM',
+                0x00F7: 'TRAINER_KAYLA',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
 })
