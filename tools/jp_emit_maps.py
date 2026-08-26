@@ -46,6 +46,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'LilycoveCity_House1': 2,
     'LilycoveCity_House2': 2,
     'LilycoveCity_House3': 12,
+    'LilycoveCity_DepartmentStore_1F': 20,
     'LilycoveCity_DepartmentStore_2F': 5,
     'LilycoveCity_DepartmentStore_3F': 5,
     'LilycoveCity_DepartmentStore_4F': 5,
@@ -12240,6 +12241,133 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
+    },
+})
+
+# Department Store 1F follows the four houses in the physical EventScript
+# stream. Its 20 local scripts, six live texts, and two unused local texts
+# are checked one-to-one against the matching US map source. Lottery messages
+# are physically owned by the later shared text block and are named there.
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'LilycoveCity_DepartmentStore_1F': (
+        0x0820A891,
+        0x0820A8FE,
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_DepartmentStore_1F': {
+        'scripts': {
+            0x0820A5B0: 'LilycoveCity_DepartmentStore_1F_EventScript_Greeter',
+            0x0820A5B9: 'LilycoveCity_DepartmentStore_1F_EventScript_LotteryClerk',
+            0x0820A698: 'LilycoveCity_DepartmentStore_1F_EventScript_TicketMatchPartyMon',
+            0x0820A6A1: 'LilycoveCity_DepartmentStore_1F_EventScript_TicketMatchPCMon',
+            0x0820A6AA: 'LilycoveCity_DepartmentStore_1F_EventScript_ComeBackTomorrow',
+            0x0820A6B4: 'LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain',
+            0x0820A6BE: 'LilycoveCity_DepartmentStore_1F_EventScript_NoMatch',
+            0x0820A6CC: 'LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain2',
+            0x0820A6D6: 'LilycoveCity_DepartmentStore_1F_EventScript_TwoDigitMatch',
+            0x0820A6DF: 'LilycoveCity_DepartmentStore_1F_EventScript_ThreeDigitMatch',
+            0x0820A6E8: 'LilycoveCity_DepartmentStore_1F_EventScript_FourDigitMatch',
+            0x0820A6F1: 'LilycoveCity_DepartmentStore_1F_EventScript_FullMatch',
+            0x0820A6FA: 'LilycoveCity_DepartmentStore_1F_EventScript_RecordPrizeNoRoom',
+            0x0820A70A: 'LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize',
+            0x0820A714: 'LilycoveCity_DepartmentStore_1F_EventScript_GivePrizeFromEarlier',
+            0x0820A74C: 'LilycoveCity_DepartmentStore_1F_EventScript_PokefanF',
+            0x0820A755: 'LilycoveCity_DepartmentStore_1F_EventScript_LittleGirl',
+            0x0820A75E: 'LilycoveCity_DepartmentStore_1F_EventScript_PokefanM',
+            0x0820A767: 'LilycoveCity_DepartmentStore_1F_EventScript_Azumarill',
+            0x0820A77A: 'LilycoveCity_DepartmentStore_1F_EventScript_FloorNamesSign',
+        },
+        'texts': {
+            0x0820A783: 'LilycoveCity_DepartmentStore_1F_Text_WelcomeToDeptStore',
+            0x0820A799: 'LilycoveCity_DepartmentStore_1F_Text_IBuyAllSortsOfThings',
+            0x0820A7BC: 'LilycoveCity_DepartmentStore_1F_Text_MomBuyingMeFurniture',
+            0x0820A7DA: 'LilycoveCity_DepartmentStore_1F_Text_BuyingSomethingForAzumarill',
+            0x0820A805: 'LilycoveCity_DepartmentStore_1F_Text_Azumarill',
+            0x0820A812: 'LilycoveCity_DepartmentStore_1F_Text_FloorNamesSign',
+            0x0820A891: 'LilycoveCity_DepartmentStore_1F_Text_WirelessCommIsFun',
+            0x0820A8FE: 'LilycoveCity_DepartmentStore_1F_Text_SpreadWordAboutWirelessComm',
+        },
+        'external_texts': {
+            0x08263199: 'LilycoveCity_DepartmentStore_1F_Text_LotteryCornerDrawTicket',
+            0x08263236: 'LilycoveCity_DepartmentStore_1F_Text_ComeBackTomorrow',
+            0x0826324A: 'LilycoveCity_DepartmentStore_1F_Text_PleaseVisitAgain',
+            0x0826325B: 'LilycoveCity_DepartmentStore_1F_Text_PleasePickTicket',
+            0x08263293: 'LilycoveCity_DepartmentStore_1F_Text_TicketNumberIsXPleaseWait',
+            0x082632DD: 'LilycoveCity_DepartmentStore_1F_Text_TicketMatchesPartyMon',
+            0x08263319: 'LilycoveCity_DepartmentStore_1F_Text_TicketMatchesPCMon',
+            0x08263357: 'LilycoveCity_DepartmentStore_1F_Text_NoNumbersMatched',
+            0x0826336D: 'LilycoveCity_DepartmentStore_1F_Text_TwoDigitsMatched',
+            0x08263391: 'LilycoveCity_DepartmentStore_1F_Text_ThreeDigitsMatched',
+            0x082633B5: 'LilycoveCity_DepartmentStore_1F_Text_FourDigitsMatched',
+            0x082633D9: 'LilycoveCity_DepartmentStore_1F_Text_AllFiveDigitsMatched',
+            0x08263406: 'LilycoveCity_DepartmentStore_1F_Text_NoRoomForThis',
+            0x0826343A: 'LilycoveCity_DepartmentStore_1F_Text_PrizeWeveBeenHolding',
+            0x08263465: 'LilycoveCity_DepartmentStore_1F_Text_PleaseVisitAgain2',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+        },
+        'command_aliases': {
+            0x0820A767: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'specials': {
+            'sub_080EEDEC': 'TryPutLotteryWinnerReportOnAir',
+        },
+        'symbols': {
+            'flags': {
+                0x092A: 'FLAG_DAILY_PICKED_LOTO_TICKET',
+            },
+            'vars': {
+                0x4045: 'VAR_POKELOT_PRIZE_ITEM',
+                0x404D: 'VAR_POKELOT_PRIZE_PLACE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x4045: {0x0: 'ITEM_NONE'},
+                0x8004: {
+                    0x0: '0',
+                    0x1: '1',
+                    0x2: '2',
+                    0x3: '3',
+                    0x4: '4',
+                },
+                0x8006: {0x0: '0', 0x1: '1'},
+            },
+            'local_ids': {
+                0x2: 'LOCALID_LOTTERY_CLERK',
+            },
+            'game_stats': {
+                0x2E: 'GAME_STAT_WON_POKEMON_LOTTERY',
+            },
+            'sounds': {
+                0x4: 'SE_PC_ON',
+            },
+            'species': {
+                0x00B8: 'SPECIES_AZUMARILL',
+            },
+            'cry_modes': {
+                0x0: 'CRY_MODE_NORMAL',
+            },
+            'decimal_arguments': {
+                'call_if_eq': (1,),
+                'delay': (0,),
+                'goto_if_eq': (1,),
+                'goto_if_ne': (1,),
+                'setorcopyvar': (1,),
+                'setvar': (1,),
+            },
+        },
     },
 })
 

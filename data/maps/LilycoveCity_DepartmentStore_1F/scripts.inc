@@ -1,31 +1,13 @@
 @ LilycoveCity_DepartmentStore_1F scripts (JP map g13 m16 @ 0x0820A5AF)
 
-@ These lottery messages remain owned by the verified shared JP text block.
-@ The aliases provide the canonical US semantic names without moving bytes.
-	.set LilycoveCity_DepartmentStore_1F_Text_LotteryCornerDrawTicket, 0x08263199
-	.set LilycoveCity_DepartmentStore_1F_Text_ComeBackTomorrow, 0x08263236
-	.set LilycoveCity_DepartmentStore_1F_Text_PleaseVisitAgain, 0x0826324A
-	.set LilycoveCity_DepartmentStore_1F_Text_PleasePickTicket, 0x0826325B
-	.set LilycoveCity_DepartmentStore_1F_Text_TicketNumberIsXPleaseWait, 0x08263293
-	.set LilycoveCity_DepartmentStore_1F_Text_TicketMatchesPartyMon, 0x082632DD
-	.set LilycoveCity_DepartmentStore_1F_Text_TicketMatchesPCMon, 0x08263319
-	.set LilycoveCity_DepartmentStore_1F_Text_NoNumbersMatched, 0x08263357
-	.set LilycoveCity_DepartmentStore_1F_Text_TwoDigitsMatched, 0x0826336D
-	.set LilycoveCity_DepartmentStore_1F_Text_ThreeDigitsMatched, 0x08263391
-	.set LilycoveCity_DepartmentStore_1F_Text_FourDigitsMatched, 0x082633B5
-	.set LilycoveCity_DepartmentStore_1F_Text_AllFiveDigitsMatched, 0x082633D9
-	.set LilycoveCity_DepartmentStore_1F_Text_NoRoomForThis, 0x08263406
-	.set LilycoveCity_DepartmentStore_1F_Text_PrizeWeveBeenHolding, 0x0826343A
-	.set LilycoveCity_DepartmentStore_1F_Text_PleaseVisitAgain2, 0x08263465
-
 LilycoveCity_DepartmentStore_1F_MapScripts::
 	.byte 0
 
-LilycoveCity_DepartmentStore_1F_EventScript_Greeter::
+LilycoveCity_DepartmentStore_1F_EventScript_Greeter:: @ 0x0820A5B0
 	msgbox LilycoveCity_DepartmentStore_1F_Text_WelcomeToDeptStore, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_LotteryClerk::
+LilycoveCity_DepartmentStore_1F_EventScript_LotteryClerk:: @ 0x0820A5B9
 	lock
 	faceplayer
 	dotimebasedevents
@@ -65,62 +47,62 @@ LilycoveCity_DepartmentStore_1F_EventScript_LotteryClerk::
 	goto LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain2
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_TicketMatchPartyMon::
+LilycoveCity_DepartmentStore_1F_EventScript_TicketMatchPartyMon:: @ 0x0820A698
 	msgbox LilycoveCity_DepartmentStore_1F_Text_TicketMatchesPartyMon, MSGBOX_DEFAULT
 	return
 
-LilycoveCity_DepartmentStore_1F_EventScript_TicketMatchPCMon::
+LilycoveCity_DepartmentStore_1F_EventScript_TicketMatchPCMon:: @ 0x0820A6A1
 	msgbox LilycoveCity_DepartmentStore_1F_Text_TicketMatchesPCMon, MSGBOX_DEFAULT
 	return
 
-LilycoveCity_DepartmentStore_1F_EventScript_ComeBackTomorrow::
+LilycoveCity_DepartmentStore_1F_EventScript_ComeBackTomorrow:: @ 0x0820A6AA
 	msgbox LilycoveCity_DepartmentStore_1F_Text_ComeBackTomorrow, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain::
+LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain:: @ 0x0820A6B4
 	msgbox LilycoveCity_DepartmentStore_1F_Text_PleaseVisitAgain, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_NoMatch::
+LilycoveCity_DepartmentStore_1F_EventScript_NoMatch:: @ 0x0820A6BE
 	msgbox LilycoveCity_DepartmentStore_1F_Text_NoNumbersMatched, MSGBOX_DEFAULT
 	goto LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain2
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain2::
+LilycoveCity_DepartmentStore_1F_EventScript_PleaseVisitAgain2:: @ 0x0820A6CC
 	msgbox LilycoveCity_DepartmentStore_1F_Text_PleaseVisitAgain2, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_TwoDigitMatch::
+LilycoveCity_DepartmentStore_1F_EventScript_TwoDigitMatch:: @ 0x0820A6D6
 	msgbox LilycoveCity_DepartmentStore_1F_Text_TwoDigitsMatched, MSGBOX_DEFAULT
 	return
 
-LilycoveCity_DepartmentStore_1F_EventScript_ThreeDigitMatch::
+LilycoveCity_DepartmentStore_1F_EventScript_ThreeDigitMatch:: @ 0x0820A6DF
 	msgbox LilycoveCity_DepartmentStore_1F_Text_ThreeDigitsMatched, MSGBOX_DEFAULT
 	return
 
-LilycoveCity_DepartmentStore_1F_EventScript_FourDigitMatch::
+LilycoveCity_DepartmentStore_1F_EventScript_FourDigitMatch:: @ 0x0820A6E8
 	msgbox LilycoveCity_DepartmentStore_1F_Text_FourDigitsMatched, MSGBOX_DEFAULT
 	return
 
-LilycoveCity_DepartmentStore_1F_EventScript_FullMatch::
+LilycoveCity_DepartmentStore_1F_EventScript_FullMatch:: @ 0x0820A6F1
 	msgbox LilycoveCity_DepartmentStore_1F_Text_AllFiveDigitsMatched, MSGBOX_DEFAULT
 	return
 
-LilycoveCity_DepartmentStore_1F_EventScript_RecordPrizeNoRoom::
+LilycoveCity_DepartmentStore_1F_EventScript_RecordPrizeNoRoom:: @ 0x0820A6FA
 	copyvar VAR_POKELOT_PRIZE_PLACE, VAR_0x8004
 	copyvar VAR_POKELOT_PRIZE_ITEM, VAR_0x8005
 	goto LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize::
+LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize:: @ 0x0820A70A
 	msgbox LilycoveCity_DepartmentStore_1F_Text_NoRoomForThis, MSGBOX_DEFAULT
 	release
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_GivePrizeFromEarlier::
+LilycoveCity_DepartmentStore_1F_EventScript_GivePrizeFromEarlier:: @ 0x0820A714
 	msgbox LilycoveCity_DepartmentStore_1F_Text_PrizeWeveBeenHolding, MSGBOX_DEFAULT
 	giveitem VAR_POKELOT_PRIZE_ITEM
 	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_DepartmentStore_1F_EventScript_NoRoomForPrize
@@ -132,30 +114,29 @@ LilycoveCity_DepartmentStore_1F_EventScript_GivePrizeFromEarlier::
 	release
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_PokefanF::
+LilycoveCity_DepartmentStore_1F_EventScript_PokefanF:: @ 0x0820A74C
 	msgbox LilycoveCity_DepartmentStore_1F_Text_IBuyAllSortsOfThings, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_LittleGirl::
+LilycoveCity_DepartmentStore_1F_EventScript_LittleGirl:: @ 0x0820A755
 	msgbox LilycoveCity_DepartmentStore_1F_Text_MomBuyingMeFurniture, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_PokefanM::
+LilycoveCity_DepartmentStore_1F_EventScript_PokefanM:: @ 0x0820A75E
 	msgbox LilycoveCity_DepartmentStore_1F_Text_BuyingSomethingForAzumarill, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_Azumarill::
+LilycoveCity_DepartmentStore_1F_EventScript_Azumarill:: @ 0x0820A767
 	lock
 	faceplayer
 	waitse
 	playmoncry SPECIES_AZUMARILL, CRY_MODE_NORMAL
 	msgbox LilycoveCity_DepartmentStore_1F_Text_Azumarill, MSGBOX_DEFAULT
-	@ JP opcode 0xC5 is waitdooranim; US uses waitmoncry at this point.
 	waitmoncry_jp
 	release
 	end
 
-LilycoveCity_DepartmentStore_1F_EventScript_FloorNamesSign::
+LilycoveCity_DepartmentStore_1F_EventScript_FloorNamesSign:: @ 0x0820A77A
 	msgbox LilycoveCity_DepartmentStore_1F_Text_FloorNamesSign, MSGBOX_SIGN
 	end
 
@@ -187,7 +168,6 @@ LilycoveCity_DepartmentStore_1F_Text_FloorNamesSign: @ 0x0820A812
 	.string "5かい　⋯⋯　ぬいぐるみ　フロアー\p"
 	.string "おくじょう　⋯⋯　いこいの　ひろば$"
 
-@ Unused
 LilycoveCity_DepartmentStore_1F_Text_WirelessCommIsFun: @ 0x0820A891
 	.string "むせん　つうしん　って\n"
 	.string "たのしい　よね！\p"
@@ -198,7 +178,6 @@ LilycoveCity_DepartmentStore_1F_Text_WirelessCommIsFun: @ 0x0820A891
 	.string "なんだか　とっても\n"
 	.string "わくわく　しちゃう！$"
 
-@ Unused
 LilycoveCity_DepartmentStore_1F_Text_SpreadWordAboutWirelessComm: @ 0x0820A8FE
 	.string "むせん　つうしんの　たのしさを\n"
 	.string "たくさんの　ひとに　つたえたいなー$"
