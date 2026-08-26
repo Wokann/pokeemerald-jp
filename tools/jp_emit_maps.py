@@ -16942,6 +16942,36 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    # The Pokémon Center owner follows Slateport City House. Its transition
+    # hook, nurse script, Cable Club resume hook, NPC scripts, and local text
+    # blocks are one-to-one with the matching US map source.
+    'SlateportCity_PokemonCenter_1F': {
+        'scripts': {
+            0x081FE814: 'SlateportCity_PokemonCenter_1F_OnTransition',
+            0x081FE81D: 'SlateportCity_PokemonCenter_1F_EventScript_Nurse',
+            0x081FE82B: 'SlateportCity_PokemonCenter_1F_EventScript_Sailor',
+            0x081FE834: 'SlateportCity_PokemonCenter_1F_EventScript_Woman',
+        },
+        'texts': {
+            0x081FE83D: 'SlateportCity_PokemonCenter_1F_Text_RaiseDifferentTypesOfPokemon',
+            0x081FE89A: 'SlateportCity_PokemonCenter_1F_Text_TradedMonWithFriend',
+        },
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_SLATEPORT_NURSE'},
+            'heal_locations': {0x04: 'HEAL_LOCATION_SLATEPORT_CITY'},
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
