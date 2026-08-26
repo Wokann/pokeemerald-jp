@@ -3,15 +3,15 @@
 FortreeCity_DecorationShop_MapScripts::
 	.byte 0
 
-FortreeCity_DecorationShop_EventScript_PokefanM::
+FortreeCity_DecorationShop_EventScript_PokefanM:: @ 0x082053F1
 	msgbox FortreeCity_DecorationShop_Text_MerchandiseSentToPC, MSGBOX_NPC
 	end
 
-FortreeCity_DecorationShop_EventScript_Girl::
+FortreeCity_DecorationShop_EventScript_Girl:: @ 0x082053FA
 	msgbox FortreeCity_DecorationShop_Text_BuyingDeskForDolls, MSGBOX_NPC
 	end
 
-FortreeCity_DecorationShop_EventScript_ClerkDesks::
+FortreeCity_DecorationShop_EventScript_ClerkDesks:: @ 0x08205403
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -33,7 +33,7 @@ FortreeCity_DecorationShop_PokemartDecor_Desks: @ 0x0820541C
 	.2byte DECOR_HARD_DESK
 	pokemartlistend
 
-FortreeCity_DecorationShop_EventScript_ClerkChairs::
+FortreeCity_DecorationShop_EventScript_ClerkChairs:: @ 0x08205430
 	lock
 	faceplayer
 	message gText_HowMayIServeYou

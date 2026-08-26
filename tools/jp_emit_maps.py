@@ -11072,6 +11072,52 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_POKEMART_LISTS.update({
+    'FortreeCity_DecorationShop': (
+        (0x0820541A, 'FortreeCity_DecorationShop_PokemartDecor_Desks', (
+            'DECOR_SMALL_DESK',
+            'DECOR_POKEMON_DESK',
+            'DECOR_HEAVY_DESK',
+            'DECOR_RAGGED_DESK',
+            'DECOR_COMFORT_DESK',
+            'DECOR_BRICK_DESK',
+            'DECOR_CAMP_DESK',
+            'DECOR_HARD_DESK',
+        )),
+        (0x08205447, 'FortreeCity_DecorationShop_PokemartDecor_Chairs', (
+            'DECOR_SMALL_CHAIR',
+            'DECOR_POKEMON_CHAIR',
+            'DECOR_HEAVY_CHAIR',
+            'DECOR_RAGGED_CHAIR',
+            'DECOR_COMFORT_CHAIR',
+            'DECOR_BRICK_CHAIR',
+            'DECOR_CAMP_CHAIR',
+            'DECOR_HARD_CHAIR',
+        )),
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_DecorationShop': {
+        'scripts': {
+            0x082053F1: 'FortreeCity_DecorationShop_EventScript_PokefanM',
+            0x082053FA: 'FortreeCity_DecorationShop_EventScript_Girl',
+            0x08205403: 'FortreeCity_DecorationShop_EventScript_ClerkDesks',
+            0x08205430: 'FortreeCity_DecorationShop_EventScript_ClerkChairs',
+        },
+        'texts': {
+            0x0820545C: 'FortreeCity_DecorationShop_Text_MerchandiseSentToPC',
+            0x0820549C: 'FortreeCity_DecorationShop_Text_BuyingDeskForDolls',
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.
