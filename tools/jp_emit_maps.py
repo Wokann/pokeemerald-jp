@@ -10608,6 +10608,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08246DAD: 'CableClub_EventScript_TradeCenter',
             0x08246ED6: 'CableClub_EventScript_RecordCorner',
         },
+        'preamble': ('@ The below 3 are unused and leftover from RS',),
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
     'RustboroCity_Mart': {
         'scripts': {
