@@ -4056,7 +4056,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE101 (g0 m16)
 	.4byte gMapLayout_ROUTE101  @ mapLayout
-	.4byte gMapEvents_ROUTE101  @ events
+	.4byte Route101_MapEvents  @ events
 	.4byte Route101_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE101  @ connections
 	.2byte 0x0167  @ music
@@ -4064,15 +4064,15 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x10, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE102 (g0 m17)
 	.4byte gMapLayout_ROUTE102  @ mapLayout
-	.4byte gMapEvents_ROUTE102  @ events
-	.4byte 0x081E6824  @ mapScripts
+	.4byte Route102_MapEvents  @ events
+	.4byte Route102_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE102  @ connections
 	.2byte 0x0167  @ music
 	.2byte 0x0012  @ mapLayoutId
 	.byte 0x11, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE103 (g0 m18)
 	.4byte gMapLayout_ROUTE103  @ mapLayout
-	.4byte gMapEvents_ROUTE103  @ events
+	.4byte Route103_MapEvents  @ events
 	.4byte Route103_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE103  @ connections
 	.2byte 0x0167  @ music
@@ -4080,7 +4080,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x12, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE104 (g0 m19)
 	.4byte gMapLayout_ROUTE104  @ mapLayout
-	.4byte gMapEvents_ROUTE104  @ events
+	.4byte Route104_MapEvents  @ events
 	.4byte Route104_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE104  @ connections
 	.2byte 0x0191  @ music
@@ -4088,7 +4088,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x13, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE105 (g0 m20)
 	.4byte gMapLayout_ROUTE105  @ mapLayout
-	.4byte gMapEvents_ROUTE105  @ events
+	.4byte Route105_MapEvents  @ events
 	.4byte Route105_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE105  @ connections
 	.2byte 0x0191  @ music
@@ -4096,32 +4096,32 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x14, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE106 (g0 m21)
 	.4byte gMapLayout_ROUTE106  @ mapLayout
-	.4byte gMapEvents_ROUTE106  @ events
-	.4byte 0x081E83CA  @ mapScripts
+	.4byte Route106_MapEvents  @ events
+	.4byte Route106_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE106  @ connections
 	.2byte 0x0191  @ music
 	.2byte 0x0016  @ mapLayoutId
 	.byte 0x15, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE107 (g0 m22)
 	.4byte gMapLayout_ROUTE107  @ mapLayout
-	.4byte gMapEvents_ROUTE107  @ events
-	.4byte 0x081E84AB  @ mapScripts
+	.4byte Route107_MapEvents  @ events
+	.4byte Route107_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE107  @ connections
 	.2byte 0x0191  @ music
 	.2byte 0x0017  @ mapLayoutId
 	.byte 0x16, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE108 (g0 m23)
 	.4byte gMapLayout_ROUTE108  @ mapLayout
-	.4byte gMapEvents_ROUTE108  @ events
-	.4byte 0x081E85A0  @ mapScripts
+	.4byte Route108_MapEvents  @ events
+	.4byte Route108_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE108  @ connections
 	.2byte 0x0191  @ music
 	.2byte 0x0018  @ mapLayoutId
 	.byte 0x17, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE109 (g0 m24)
 	.4byte gMapLayout_ROUTE109  @ mapLayout
-	.4byte gMapEvents_ROUTE109  @ events
-	.4byte 0x081E8676  @ mapScripts
+	.4byte Route109_MapEvents  @ events
+	.4byte Route109_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE109  @ connections
 	.2byte 0x0191  @ music
 	.2byte 0x0019  @ mapLayoutId

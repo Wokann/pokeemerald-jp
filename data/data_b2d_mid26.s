@@ -695,32 +695,14 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/VerdanturfTown/events.inc"
 	.include "data/maps/PacifidlogTown/events.inc"
 	.include "data/maps/Route101/events.inc"
-	.globl gMapEvents_ROUTE101
-	.set gMapEvents_ROUTE101, Route101_MapEvents
 	.include "data/maps/Route102/events.inc"
-	.globl gMapEvents_ROUTE102
-	.set gMapEvents_ROUTE102, Route102_MapEvents
 	.include "data/maps/Route103/events.inc"
-	.globl gMapEvents_ROUTE103
-	.set gMapEvents_ROUTE103, Route103_MapEvents
 	.include "data/maps/Route104/events.inc"
-	.globl gMapEvents_ROUTE104
-	.set gMapEvents_ROUTE104, Route104_MapEvents
 	.include "data/maps/Route105/events.inc"
-	.globl gMapEvents_ROUTE105
-	.set gMapEvents_ROUTE105, Route105_MapEvents
 	.include "data/maps/Route106/events.inc"
-	.globl gMapEvents_ROUTE106
-	.set gMapEvents_ROUTE106, Route106_MapEvents
 	.include "data/maps/Route107/events.inc"
-	.globl gMapEvents_ROUTE107
-	.set gMapEvents_ROUTE107, Route107_MapEvents
 	.include "data/maps/Route108/events.inc"
-	.globl gMapEvents_ROUTE108
-	.set gMapEvents_ROUTE108, Route108_MapEvents
 	.include "data/maps/Route109/events.inc"
-	.globl gMapEvents_ROUTE109
-	.set gMapEvents_ROUTE109, Route109_MapEvents
 	.include "data/maps/Route110/events.inc"
 	.include "data/maps/Route111/events.inc"
 	.include "data/maps/Route112/events.inc"
