@@ -2356,19 +2356,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/SeafloorCavern_Room3/events.inc"
 	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM3
 	.set gMapEvents_SEAFLOOR_CAVERN_ROOM3, SeafloorCavern_Room3_MapEvents
-	.globl SEAFLOOR_CAVERN_ROOM4_EventObjects
-SEAFLOOR_CAVERN_ROOM4_EventObjects: @ 0x0850E0C0
-	object_event 1, 117, 0, 5, 8, 3, 17, 1, 1, 1, 3, 0x0821892F, 0x03B2
-	object_event 2, 118, 0, 5, 12, 3, 7, 1, 1, 1, 3, 0x08218946, 0x03B2
-	.globl SEAFLOOR_CAVERN_ROOM4_EventWarps
-SEAFLOOR_CAVERN_ROOM4_EventWarps: @ 0x0850E0F0
-	warp_def 13, 1, 3, 1, MAP_SEAFLOOR_CAVERN_ROOM2
-	warp_def 4, 1, 3, 1, MAP_SEAFLOOR_CAVERN_ROOM5
-	warp_def 9, 10, 3, 2, MAP_SEAFLOOR_CAVERN_ROOM5
-	warp_def 10, 15, 3, 1, MAP_SEAFLOOR_CAVERN_ENTRANCE
+	.include "data/maps/SeafloorCavern_Room4/events.inc"
 	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM4
-gMapEvents_SEAFLOOR_CAVERN_ROOM4: @ 0x0850E110
-	map_events SEAFLOOR_CAVERN_ROOM4_EventObjects, SEAFLOOR_CAVERN_ROOM4_EventWarps, 0, 0
+	.set gMapEvents_SEAFLOOR_CAVERN_ROOM4, SeafloorCavern_Room4_MapEvents
 	.incbin "baserom_jp.gba", 0x50E124, 0x134C
 	.include "data/maps/Underwater_Route134/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE134
