@@ -4386,7 +4386,12 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route116']['labels'],
         'external_labels': {
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x08244389: 'AbnormalWeather_EventScript_PlaceTilesRoute116North',
+            0x0824439C: 'AbnormalWeather_EventScript_PlaceTilesRoute116South',
             0x0824473D: 'AbnormalWeather_EventScript_HideMapNamePopup',
+            0x08244745: 'AbnormalWeather_StartGroudonWeather',
             0x08244749: 'AbnormalWeather_EventScript_EndEventAndCleanup_1',
         },
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},

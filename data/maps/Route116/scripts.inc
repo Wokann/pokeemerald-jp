@@ -8,22 +8,22 @@ Route116_MapScripts::
 
 Route116_OnTransition::
 	call_if_set FLAG_RECOVERED_DEVON_GOODS, Route116_EventScript_SetWandasBoyfriendPos
-	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_HideMapNamePopup
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_NORTH, 0x08244745
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_SOUTH, 0x08244745
+	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_NORTH, AbnormalWeather_StartGroudonWeather
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_SOUTH, AbnormalWeather_StartGroudonWeather
 	end
 
 Route116_EventScript_SetWandasBoyfriendPos::
-	setobjectxyperm LOCALID_ROUTE116_WANDAS_BF, 0x26, 0xA
+	setobjectxyperm LOCALID_ROUTE116_WANDAS_BF, 38, 10
 	return
 
 Route116_OnLoad::
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_NORTH, 0x08244389
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_SOUTH, 0x0824439C
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_NORTH, AbnormalWeather_EventScript_PlaceTilesRoute116North
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_116_SOUTH, AbnormalWeather_EventScript_PlaceTilesRoute116South
 	end
 
 Route116_OnFrame::
-	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_EndEventAndCleanup_1
+	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
 Route116_EventScript_WandasBoyfriend::
@@ -55,16 +55,14 @@ Route116_EventScript_DevonEmployee::
 
 Route116_EventScript_GiveRepeatBall::
 	setflag FLAG_MET_DEVON_EMPLOYEE
-	setorcopyvar VAR_0x8000, ITEM_REPEAT_BALL
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
-	goto_if_eq VAR_RESULT, 0x0, Route116_EventScript_NoRoomForRepeatBall
+	giveitem ITEM_REPEAT_BALL
+	goto_if_eq VAR_RESULT, FALSE, Route116_EventScript_NoRoomForRepeatBall
 	msgbox Route116_Text_NewBallAvailableAtMart, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_FACING, 0x2, Route116_EventScript_DevonEmployeeExit
-	call_if_eq VAR_FACING, 0x1, Route116_EventScript_DevonEmployeeExit
-	call_if_eq VAR_FACING, 0x3, Route116_EventScript_DevonEmployeeExit
-	call_if_eq VAR_FACING, 0x4, Route116_EventScript_DevonEmployeeExitEast
+	call_if_eq VAR_FACING, DIR_NORTH, Route116_EventScript_DevonEmployeeExit
+	call_if_eq VAR_FACING, DIR_SOUTH, Route116_EventScript_DevonEmployeeExit
+	call_if_eq VAR_FACING, DIR_WEST, Route116_EventScript_DevonEmployeeExit
+	call_if_eq VAR_FACING, DIR_EAST, Route116_EventScript_DevonEmployeeExitEast
 	removeobject VAR_LAST_TALKED
 	clearflag FLAG_HIDE_RUSTBORO_CITY_DEVON_CORP_3F_EMPLOYEE
 	setflag FLAG_RECEIVED_REPEAT_BALL
@@ -73,12 +71,12 @@ Route116_EventScript_GiveRepeatBall::
 
 Route116_EventScript_DevonEmployeeExit::
 	applymovement VAR_LAST_TALKED, Route116_Movement_DevonEmployeeExit
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route116_EventScript_DevonEmployeeExitEast::
 	applymovement VAR_LAST_TALKED, Route116_Movement_DevonEmployeeExitEast
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route116_EventScript_TryGiveRepeatBallAgain::
@@ -139,27 +137,27 @@ Route116_EventScript_Briney::
 	lock
 	faceplayer
 	msgbox Route116_Text_ScoundrelMadeOffWithPeeko, MSGBOX_DEFAULT
-	setvar VAR_ROUTE116_STATE, 0x2
+	setvar VAR_ROUTE116_STATE, 2
 	release
 	end
 
 Route116_EventScript_BrineyTrigger::
 	lockall
-	applymovement LOCALID_ROUTE116_BRINEY, 0x0824362B
-	applymovement LOCALID_PLAYER, 0x08243627
-	waitmovement 0x0
+	applymovement LOCALID_ROUTE116_BRINEY, Common_Movement_WalkInPlaceFasterRight
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
 	msgbox Route116_Text_ScoundrelMadeOffWithPeeko, MSGBOX_DEFAULT
-	setvar VAR_ROUTE116_STATE, 0x2
+	setvar VAR_ROUTE116_STATE, 2
 	releaseall
 	end
 
 Route116_EventScript_GlassesMan::
 	lock
 	faceplayer
-	checkitem 0xCE, 0x1
-	goto_if_eq VAR_RESULT, 0x1, Route116_EventScript_PlayerHasGlasses
+	checkitem ITEM_BLACK_GLASSES
+	goto_if_eq VAR_RESULT, TRUE, Route116_EventScript_PlayerHasGlasses
 	specialvar VAR_RESULT, FoundBlackGlasses
-	goto_if_eq VAR_RESULT, 0x1, Route116_EventScript_FoundGlassesNotOnPlayer
+	goto_if_eq VAR_RESULT, TRUE, Route116_EventScript_FoundGlassesNotOnPlayer
 	msgbox Route116_Text_CanYouHelpMeFindGlasses, MSGBOX_DEFAULT
 	release
 	end
@@ -174,7 +172,7 @@ Route116_EventScript_PlayerHasGlasses::
 	msgbox Route116_Text_CanYouHelpMeFindGlasses, MSGBOX_DEFAULT
 	msgbox Route116_Text_MayISeeThoseGlasses, MSGBOX_DEFAULT
 	specialvar VAR_RESULT, FoundBlackGlasses
-	goto_if_eq VAR_RESULT, 0x1, Route116_EventScript_FoundGlassesOnPlayer
+	goto_if_eq VAR_RESULT, TRUE, Route116_EventScript_FoundGlassesOnPlayer
 	msgbox Route116_Text_NotWhatImLookingFor, MSGBOX_DEFAULT
 	release
 	end
@@ -186,23 +184,23 @@ Route116_EventScript_FoundGlassesOnPlayer::
 	end
 
 Route116_EventScript_GlassesManExit::
-	delay 0x14
-	call_if_eq VAR_FACING, 0x2, Route116_EventScript_GlassesManExitNormal
-	call_if_eq VAR_FACING, 0x1, Route116_EventScript_GlassesManExitNormal
-	call_if_eq VAR_FACING, 0x3, Route116_EventScript_GlassesManExitNormal
-	call_if_eq VAR_FACING, 0x4, Route116_EventScript_GlassesManExitEast
+	delay 20
+	call_if_eq VAR_FACING, DIR_NORTH, Route116_EventScript_GlassesManExitNormal
+	call_if_eq VAR_FACING, DIR_SOUTH, Route116_EventScript_GlassesManExitNormal
+	call_if_eq VAR_FACING, DIR_WEST, Route116_EventScript_GlassesManExitNormal
+	call_if_eq VAR_FACING, DIR_EAST, Route116_EventScript_GlassesManExitEast
 	removeobject VAR_LAST_TALKED
 	release
 	end
 
 Route116_EventScript_GlassesManExitNormal::
 	applymovement VAR_LAST_TALKED, Route116_Movement_GlassesManExit
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route116_EventScript_GlassesManExitEast::
 	applymovement VAR_LAST_TALKED, Route116_Movement_GlassesManExitEast
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route116_Movement_GlassesManExit:
@@ -246,7 +244,7 @@ Route116_EventScript_Jerry::
 	goto_if_eq VAR_RESULT, TRUE, Route116_EventScript_RematchJerry
 	setvar VAR_0x8004, TRAINER_JERRY_1
 	specialvar VAR_RESULT, IsTrainerRegistered
-	goto_if_eq VAR_RESULT, 0x0, Route116_EventScript_TryRegisterJerry
+	goto_if_eq VAR_RESULT, FALSE, Route116_EventScript_TryRegisterJerry
 	msgbox Route116_Text_JerryPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -258,7 +256,7 @@ Route116_EventScript_TryRegisterJerryAfterBattle::
 
 Route116_EventScript_RegisterJerryAfterBattle::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route116_Text_JerryRegister2, MSGBOX_DEFAULT
 	register_matchcall TRAINER_JERRY_1
 	release
@@ -297,7 +295,7 @@ Route116_EventScript_Karen::
 	goto_if_eq VAR_RESULT, TRUE, Route116_EventScript_RematchKaren
 	setvar VAR_0x8004, TRAINER_KAREN_1
 	specialvar VAR_RESULT, IsTrainerRegistered
-	goto_if_eq VAR_RESULT, 0x0, Route116_EventScript_TryRegisterKaren
+	goto_if_eq VAR_RESULT, FALSE, Route116_EventScript_TryRegisterKaren
 	msgbox Route116_Text_KarenPostBattle, MSGBOX_DEFAULT
 	release
 	end
@@ -309,7 +307,7 @@ Route116_EventScript_TryRegisterKarenAfterBattle::
 
 Route116_EventScript_RegisterKarenAfterBattle::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route116_Text_KarenRegister2, MSGBOX_DEFAULT
 	register_matchcall TRAINER_KAREN_1
 	release
