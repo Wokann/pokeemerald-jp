@@ -791,8 +791,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LittlerootTown_MaysHouse_1F/events.inc"
 	.include "data/maps/LittlerootTown_MaysHouse_2F/events.inc"
 	.include "data/maps/LittlerootTown_ProfessorBirchsLab/events.inc"
-	.globl gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB
-	.set gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, LittlerootTown_ProfessorBirchsLab_MapEvents
 	.include "data/maps/OldaleTown_House1/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_HOUSE1
 	.set gMapEvents_OLDALE_TOWN_HOUSE1, OldaleTown_House1_MapEvents

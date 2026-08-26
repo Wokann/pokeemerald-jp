@@ -4374,7 +4374,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB (g1 m4)
 	.4byte gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB  @ mapLayout
-	.4byte gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB  @ events
+	.4byte LittlerootTown_ProfessorBirchsLab_MapEvents  @ events
 	.4byte LittlerootTown_ProfessorBirchsLab_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017F  @ music
