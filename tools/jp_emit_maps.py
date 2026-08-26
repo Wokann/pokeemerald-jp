@@ -6897,6 +6897,55 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
     },
 })
 
+# The Lavaridge Herb Shop follows the Dewford owner group. Its product list
+# begins after three bytes of alignment padding at 0x081F419D and is fully
+# determined by the four matching US inventory entries.
+MAP_POKEMART_LISTS.update({
+    'LavaridgeTown_HerbShop': (
+        (0x081F419D, 'LavaridgeTown_HerbShop_Pokemart', (
+            'ITEM_ENERGY_POWDER',
+            'ITEM_ENERGY_ROOT',
+            'ITEM_HEAL_POWDER',
+            'ITEM_REVIVAL_HERB',
+        )),
+    ),
+})
+
+# The Herb Shop's clerk, Charcoal gift, and four messages align one-to-one
+# with the US source. The structured shop list above removes its final raw
+# map-local data range.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LavaridgeTown_HerbShop': {
+        'scripts': {
+            0x081F4186: 'LavaridgeTown_HerbShop_EventScript_Clerk',
+            0x081F41AC: 'LavaridgeTown_HerbShop_EventScript_ExpertM',
+            0x081F41B5: 'LavaridgeTown_HerbShop_EventScript_OldMan',
+            0x081F41E4: 'LavaridgeTown_HerbShop_EventScript_ExplainCharcoal',
+        },
+        'texts': {
+            0x081F41EE: 'LavaridgeTown_HerbShop_Text_WelcomeToHerbShop',
+            0x081F4207: 'LavaridgeTown_HerbShop_Text_YouveComeToLookAtHerbalMedicine',
+            0x081F4237: 'LavaridgeTown_HerbShop_Text_ExplainCharcoal',
+            0x081F428D: 'LavaridgeTown_HerbShop_Text_HerbalMedicineWorksButMonWillDislike',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x00FE: 'FLAG_RECEIVED_CHARCOAL'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x00D7: 'ITEM_CHARCOAL'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.

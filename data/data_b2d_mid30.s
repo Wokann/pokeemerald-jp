@@ -4470,8 +4470,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_HERB_SHOP (g4 m0)
 	.4byte gMapLayout_LAVARIDGE_TOWN_HERB_SHOP  @ mapLayout
-	.4byte gMapEvents_LAVARIDGE_TOWN_HERB_SHOP  @ events
-	.4byte 0x081F4185  @ mapScripts
+	.4byte LavaridgeTown_HerbShop_MapEvents  @ events
+	.4byte LavaridgeTown_HerbShop_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016B  @ music
 	.2byte 0x0044  @ mapLayoutId
