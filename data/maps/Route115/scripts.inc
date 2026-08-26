@@ -7,18 +7,18 @@ Route115_MapScripts::
 	.byte 0
 
 Route115_OnLoad::
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_WEST, 0x08244363
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_EAST, 0x08244376
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_WEST, AbnormalWeather_EventScript_PlaceTilesRoute115West
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_EAST, AbnormalWeather_EventScript_PlaceTilesRoute115East
 	end
 
 Route115_OnTransition::
-	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_HideMapNamePopup
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_WEST, 0x08244745
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_EAST, 0x08244745
+	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_WEST, AbnormalWeather_StartGroudonWeather
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_EAST, AbnormalWeather_StartGroudonWeather
 	end
 
 Route115_OnFrame::
-	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_EndEventAndCleanup_1
+	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
 Route115_EventScript_Woman::
@@ -43,7 +43,7 @@ Route115_EventScript_Timothy::
 
 Route115_EventScript_RegisterTimothy::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route115_Text_TimothyRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_TIMOTHY_1
 	release
@@ -69,7 +69,7 @@ Route115_EventScript_Nob::
 
 Route115_EventScript_RegisterNob::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route115_Text_NobRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_NOB_1
 	release
@@ -90,7 +90,7 @@ Route115_EventScript_Cyndy::
 
 Route115_EventScript_RegisterCyndy::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route115_Text_CyndyRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_CYNDY_1
 	release

@@ -758,55 +758,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route112/events.inc"
 	.include "data/maps/Route113/events.inc"
 	.include "data/maps/Route114/events.inc"
-	.globl ROUTE115_EventObjects
-ROUTE115_EventObjects: @ 0x085028C8
-	object_event 1, 20, 0, 18, 68, 3, 2, 1, 1, 0, 0, Route115_EventScript_Woman, 0x0000
-	object_event 2, 21, 0, 5, 15, 3, 10, 0, 0, 1, 6, Route115_EventScript_Timothy, 0x0000
-	object_event 3, 44, 0, 27, 53, 3, 15, 1, 1, 1, 4, Route115_EventScript_Nob, 0x0000
-	object_event 4, 60, 0, 12, 5, 3, 12, 0, 0, 0, 69, 0x08244D23, 0x0000
-	object_event 5, 60, 0, 13, 5, 3, 12, 0, 0, 0, 70, 0x08244D23, 0x0000
-	object_event 6, 60, 0, 14, 5, 3, 12, 0, 0, 0, 71, 0x08244D23, 0x0000
-	object_event 7, 14, 0, 15, 50, 3, 64, 0, 0, 1, 3, Route115_EventScript_Cyndy, 0x0000
-	object_event 8, 44, 0, 19, 15, 3, 27, 5, 0, 1, 2, Route115_EventScript_Koichi, 0x0000
-	object_event 9, 39, 0, 24, 62, 3, 18, 0, 0, 1, 4, Route115_EventScript_Hector, 0x0000
-	object_event 10, 59, 0, 20, 60, 3, 1, 0, 0, 0, 0, 0x08256B81, 0x03F8
-	object_event 11, 59, 0, 18, 7, 3, 1, 0, 0, 0, 0, 0x08256B8E, 0x03F9
-	object_event 12, 59, 0, 23, 29, 3, 1, 0, 0, 0, 0, 0x08256B9B, 0x03FA
-	object_event 13, 60, 0, 31, 64, 3, 12, 0, 0, 0, 55, 0x08244D23, 0x0000
-	object_event 14, 60, 0, 31, 65, 3, 12, 0, 0, 0, 56, 0x08244D23, 0x0000
-	object_event 15, 86, 0, 29, 50, 3, 1, 1, 1, 0, 0, 0x0825667C, 0x0011
-	object_event 16, 59, 0, 31, 56, 3, 1, 1, 1, 0, 0, 0x08256BA8, 0x045E
-	object_event 17, 52, 0, 10, 15, 3, 46, 3, 3, 1, 2, Route115_EventScript_Kyra, 0x0000
-	object_event 18, 5, 0, 11, 12, 3, 57, 1, 1, 1, 3, Route115_EventScript_Jaiden, 0x0000
-	object_event 19, 14, 0, 15, 7, 3, 9, 1, 1, 1, 4, Route115_EventScript_Helene, 0x0000
-	object_event 20, 47, 0, 10, 7, 3, 10, 1, 1, 1, 4, Route115_EventScript_Alix, 0x0000
-	object_event 21, 47, 0, 28, 62, 3, 9, 1, 1, 1, 4, Route115_EventScript_Marlene, 0x0000
-	object_event 22, 59, 0, 26, 67, 3, 1, 1, 1, 0, 0, 0x08256BC2, 0x0489
-	object_event 23, 59, 0, 12, 14, 3, 1, 1, 1, 0, 0, 0x08256BB5, 0x0478
-	.globl ROUTE115_EventWarps
-ROUTE115_EventWarps: @ 0x08502AF0
-	warp_def 27, 37, 0, 1, MAP_METEOR_FALLS_1F_1R
-	warp_def 21, 6, 0, 0, MAP_TERRA_CAVE_ENTRANCE
-	warp_def 36, 10, 0, 0, MAP_TERRA_CAVE_ENTRANCE
-	.globl ROUTE115_EventBgEvents
-ROUTE115_EventBgEvents: @ 0x08502B08
-	bg_event 32, 6, 0, 8, 0x0048, 0x00, 0x00
-	bg_event 21, 18, 0, 8, 0x003E, 0x00, 0x00
-	bg_event 16, 64, 0, 0, Route115_EventScript_RouteSignRustboro, 0, 0
-	bg_event 25, 38, 3, 0, Route115_EventScript_MeteorFallsSign, 0, 0
-	bg_event 8, 30, 0, 8, 0x0085, 0x00, 0x00
-	bg_event 32, 39, 0, 8, 0x002A, 0x00, 0x00
-	bg_event 26, 15, 0, 8, 0x0034, 0x00, 0x00
-	bg_event 23, 8, 0, 8, 0x002B, 0x00, 0x00
-	bg_event 32, 46, 0, 8, 0x0035, 0x00, 0x00
-	bg_event 7, 20, 0, 8, 0x00AE, 0x00, 0x00
-	bg_event 8, 20, 0, 8, 0x00B7, 0x00, 0x00
-	bg_event 25, 24, 0, 8, 0x003F, 0x00, 0x00
-	bg_event 20, 53, 0, 8, 0x0015, 0x00, 0x00
-	bg_event 15, 49, 3, 7, 0x006F, 0x61, 0x00
-	.globl gMapEvents_ROUTE115
-gMapEvents_ROUTE115: @ 0x08502BB0
-	map_events ROUTE115_EventObjects, ROUTE115_EventWarps, 0, ROUTE115_EventBgEvents
+	.include "data/maps/Route115/events.inc"
 	.globl ROUTE116_EventObjects
 ROUTE116_EventObjects: @ 0x08502BC4
 	object_event 1, 60, 0, 18, 2, 3, 12, 0, 0, 0, 25, 0x08244D23, 0x0000

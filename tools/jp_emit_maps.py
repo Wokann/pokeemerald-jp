@@ -4278,7 +4278,10 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route115']['labels'],
         'external_labels': {
+            0x08244363: 'AbnormalWeather_EventScript_PlaceTilesRoute115West',
+            0x08244376: 'AbnormalWeather_EventScript_PlaceTilesRoute115East',
             0x0824473D: 'AbnormalWeather_EventScript_HideMapNamePopup',
+            0x08244745: 'AbnormalWeather_StartGroudonWeather',
             0x08244749: 'AbnormalWeather_EventScript_EndEventAndCleanup_1',
         },
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},

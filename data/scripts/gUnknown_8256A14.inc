@@ -110,7 +110,31 @@ Route114_EventScript_ItemEnergyPowder:: @ 0x08256B74
 	finditem ITEM_ENERGY_POWDER
 	end
 
-	.incbin "baserom_jp.gba", 0x256b81, 0x186
+Route115_EventScript_ItemSuperPotion:: @ 0x08256B81
+	finditem ITEM_SUPER_POTION
+	end
+
+Route115_EventScript_ItemTMFocusPunch:: @ 0x08256B8E
+	finditem ITEM_TM_FOCUS_PUNCH
+	end
+
+Route115_EventScript_ItemIron:: @ 0x08256B9B
+	finditem ITEM_IRON
+	end
+
+Route115_EventScript_ItemGreatBall:: @ 0x08256BA8
+	finditem ITEM_GREAT_BALL
+	end
+
+Route115_EventScript_ItemHealPowder:: @ 0x08256BB5
+	finditem ITEM_HEAL_POWDER
+	end
+
+Route115_EventScript_ItemPPUp:: @ 0x08256BC2
+	finditem ITEM_PP_UP
+	end
+
+	.incbin "baserom_jp.gba", 0x256bcf, 0x138
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM
