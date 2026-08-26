@@ -45,6 +45,6 @@
 	nop 
 	nop 
 	gotostd 0x0
-	setworldmapflag 0x1C00
+	jp_raw_01_u16 0x1C00
 	setdoorclosed 0x3F00, 0x304
 	.byte 0x08

@@ -17,6 +17,6 @@
 	goto 0x2BF0000
 	returnram
 	nop
-	setworldmapflag 0x200
+	jp_raw_01_u16 0x200
 	nop
 	.incbin "baserom_jp.gba", 0x27C84A, 0x4D

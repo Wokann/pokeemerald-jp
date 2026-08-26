@@ -8,7 +8,7 @@
 	goto 0x37B0000
 	returnram
 	nop
-	setworldmapflag 0x100
+	jp_raw_01_u16 0x100
 	nop
 	return
 	setobjectmovementtype 0x1106, 0x8

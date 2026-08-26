@@ -8,14 +8,14 @@
 	nop 
 	nop 
 	callstd 0x0
-	setworldmapflag 0x300
+	jp_raw_01_u16 0x300
 	addobject 0xD4B
 	gotostd 0x2
 	goto 0x10003
 	nop 
 	nop 
 	callstd 0x0
-	setworldmapflag 0x500
+	jp_raw_01_u16 0x500
 	return 
 	takecoins 0x158F
 	gotostd 0x5

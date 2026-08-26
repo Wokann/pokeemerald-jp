@@ -2,7 +2,7 @@
 	dotimebasedevents
 	waitstate
 	gotostd_if 0x3, 0x2A
-	setworldmapflag 0x6802
+	jp_raw_01_u16 0x6802
 	writebytetoaddr 0x57, 0x40308
 	nop
 	nop

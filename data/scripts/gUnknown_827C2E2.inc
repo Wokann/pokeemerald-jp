@@ -5,7 +5,7 @@
 	faceplayer
 	gotostd 0x82
 	return
-	setworldmapflag 0x0
+	jp_raw_01_u16 0x0
 	nop
 	end
 	nop
@@ -15,7 +15,7 @@
 	faceplayer
 	gotostd 0x82
 	return
-	setworldmapflag 0x100
+	jp_raw_01_u16 0x100
 	nop
 	end
 	nop

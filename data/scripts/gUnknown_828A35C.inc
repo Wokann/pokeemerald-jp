@@ -3,7 +3,7 @@
 	bufferitemname 0x0, 0x0
 	playslotmachine 0x28A3
 	gotostd 0x29
-	setworldmapflag 0x9D18
+	jp_raw_01_u16 0x9D18
 	return 
 	end 
 	nop 

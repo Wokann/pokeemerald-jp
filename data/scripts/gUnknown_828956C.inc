@@ -12,8 +12,8 @@
 	.byte 0xE0
 	.byte 0x95
 	delay 0x6108
-	setworldmapflag 0x2908
-	setworldmapflag 0x3FDB
+	jp_raw_01_u16 0x2908
+	jp_raw_01_u16 0x3FDB
 	end 
 	end 
 	nop 
@@ -21,7 +21,7 @@
 	loadbytefromaddr 0x0
 	delay 0x95AF
 	delay 0x4508
-	setworldmapflag 0x13
+	jp_raw_01_u16 0x13
 	nop 
 	nop 
 	nop 

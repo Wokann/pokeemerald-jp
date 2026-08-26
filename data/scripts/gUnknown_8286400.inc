@@ -12,5 +12,5 @@
 	nop 
 	nop 
 	setmysteryeventstatus 0x0
-	setworldmapflag 0x500
+	jp_raw_01_u16 0x500
 	callstd_if 0x3, 0x8

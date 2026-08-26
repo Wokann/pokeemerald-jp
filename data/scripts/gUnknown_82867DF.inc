@@ -10,11 +10,11 @@
 	gotostd 0x5
 	call_if 0x1E, 0x8000
 	nop 
-	setworldmapflag 0x200
+	jp_raw_01_u16 0x200
 	nop 
 	nop 
 	nop 
-	setworldmapflag 0x500
+	jp_raw_01_u16 0x500
 	end 
 	showobject_at 0x572E, 0x800
 	goto 0x40002

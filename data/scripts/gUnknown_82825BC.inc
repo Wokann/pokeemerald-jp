@@ -30,7 +30,7 @@
 	gotostd 0x83
 	end 
 	checkplayergender 
-	setworldmapflag 0xFFDA
+	jp_raw_01_u16 0xFFDA
 	end 
 	setweather 0x56F6
 	gotostd 0x83

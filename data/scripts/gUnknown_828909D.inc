@@ -1,5 +1,5 @@
 	mossdeepgym2
-	setworldmapflag 0x210
+	jp_raw_01_u16 0x210
 	nop
 	gettime
 	specialvar 0x241, sub_080F9424

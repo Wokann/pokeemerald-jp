@@ -11,7 +11,7 @@
 	end
 	.byte 0x94
 	setorcopyvar 0x857, 0x383
-	setworldmapflag 0xA00
+	jp_raw_01_u16 0xA00
 	nop
 	nop
 	nop

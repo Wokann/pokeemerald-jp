@@ -1,11 +1,11 @@
 	fadedefaultbgm 
 	gotonative 0x2023F
-	setworldmapflag 0x10
+	jp_raw_01_u16 0x10
 	callstd_if 0x1, 0xC
-	setworldmapflag 0x8641
+	jp_raw_01_u16 0x8641
 	.byte 0x94
 	delay 0x1908
-	setworldmapflag 0x0
+	jp_raw_01_u16 0x0
 	nop 
 	nop 
 	nop 

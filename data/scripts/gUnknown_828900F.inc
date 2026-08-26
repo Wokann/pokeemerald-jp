@@ -12,7 +12,7 @@
 	delay 0x9036
 	delay 0x1008
 	releaseall 
-	setworldmapflag 0x153
+	jp_raw_01_u16 0x153
 	warpsilent 0x100C, 0x0, 0x52B, 0x2C90
 	end 
 	end 

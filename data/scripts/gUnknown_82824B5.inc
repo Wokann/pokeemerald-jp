@@ -1,5 +1,5 @@
 	copyvar 0xE5, 0x300
-	setworldmapflag 0x1067
+	jp_raw_01_u16 0x1067
 	gotostd 0x5
 	nop
 	.incbin "baserom_jp.gba", 0x2824C0, 0x30

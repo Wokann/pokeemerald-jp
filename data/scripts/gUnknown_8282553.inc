@@ -38,7 +38,7 @@
 	gotostd 0x83
 	end 
 	checkplayergender 
-	setworldmapflag 0xFFDA
+	jp_raw_01_u16 0xFFDA
 	end 
 	dofieldeffect 0x56F5
 	gotostd 0x83

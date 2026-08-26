@@ -5,7 +5,7 @@
 	loadbyte 0xE9, 0x56
 	gotostd 0x82
 	return
-	setworldmapflag 0xF800
+	jp_raw_01_u16 0xF800
 	.byte 0xFF
 	nop
 	nop

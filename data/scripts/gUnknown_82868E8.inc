@@ -7,6 +7,6 @@
 	setmysteryeventstatus 0x2A
 	releaseall
 	delay 0x408
-	setworldmapflag 0x3D03
+	jp_raw_01_u16 0x3D03
 	setobjectxy 0x80D, 0x502, 0x0
 	.incbin "baserom_jp.gba", 0x286902, 0x44

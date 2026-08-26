@@ -135,14 +135,6 @@ def parse_macro_paths(body):
     return paths
 
 
-JP_CONST_ALIASES = {
-    'SCR_OP_APPLYMOVEMENTAT': ('SCR_OP_50', 'applymovement_at'),
-    'SCR_OP_WAITMOVEMENTAT': ('SCR_OP_52', 'waitmovement_at'),
-    'SCR_OP_REMOVEOBJECTAT': ('SCR_OP_54', 'removeobject_at'),
-    'SCR_OP_ADDOBJECTAT': ('SCR_OP_56', 'addobject_at'),
-}
-
-
 def build_macro_formats(opcode_by_name):
     formats = {}
     lines = EVENT_INC.read_text(encoding='utf-8').splitlines()
@@ -173,12 +165,10 @@ def build_macro_formats(opcode_by_name):
         for path in paths:
             if not path or path[0][0] != 'op':
                 continue
-            alias = JP_CONST_ALIASES.get(path[0][1])
-            const = alias[0] if alias else path[0][1]
-            opcode = opcode_by_name.get(const)
+            opcode = opcode_by_name.get(path[0][1])
             if opcode is None:
                 continue
-            format_name = alias[1] if alias else name
+            format_name = name
             argfmt = []
             ok = True
             for em in path[1:]:

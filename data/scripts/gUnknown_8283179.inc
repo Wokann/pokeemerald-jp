@@ -1,5 +1,5 @@
 	nop
-	setworldmapflag 0x28
+	jp_raw_01_u16 0x28
 	playse 0x327
 	hidecoinsbox 0xBA, 0x15
 	gotostd 0x5

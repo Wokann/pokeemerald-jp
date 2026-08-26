@@ -2,7 +2,7 @@
 	dotimebasedevents 
 	waitstate 
 	gotostd_if 0x3, 0x28
-	setworldmapflag 0x901C
+	jp_raw_01_u16 0x901C
 	nop 
 	showcoinsbox 0x7, 0x7
 	end 

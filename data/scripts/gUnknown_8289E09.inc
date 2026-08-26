@@ -1,10 +1,10 @@
 	gettime 
 	.byte 0xD7
 	setdynamicwarp 0x202, 0x0, 0x176, 0x2908
-	setworldmapflag 0x3FD6
+	jp_raw_01_u16 0x3FD6
 	end 
 	end 
-	setworldmapflag 0x9E25
+	jp_raw_01_u16 0x9E25
 	delay 0x1308
 	givecoins 0x5ABE
 	gotostd 0x12

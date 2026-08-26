@@ -6,9 +6,9 @@
 	gotostd 0x2
 	.byte 0x94
 	setorcopyvar 0x857, 0x303
-	setworldmapflag 0x1400
+	jp_raw_01_u16 0x1400
 	nop
-	setworldmapflag 0x300
+	jp_raw_01_u16 0x300
 	playfanfare 0xD4A
 	gotostd 0x5
 	.incbin "baserom_jp.gba", 0x280806, 0x14

@@ -13,6 +13,6 @@
 	nop 
 	copylocal 0x0, 0x1
 	nop 
-	setworldmapflag 0x400
+	jp_raw_01_u16 0x400
 	.byte 0x04
 	.byte 0x0F

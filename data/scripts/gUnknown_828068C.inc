@@ -21,7 +21,7 @@
 	nop 
 	nop 
 	nop 
-	setworldmapflag 0x400
+	jp_raw_01_u16 0x400
 	delay 0x8819
 	nop 
 	setdynamicwarp 0x270, 0x2E, 0x857, 0x702
@@ -33,7 +33,7 @@
 	givecoins 0x572F
 	gotostd 0x3
 	call 0x0
-	setworldmapflag 0x1400
+	jp_raw_01_u16 0x1400
 	nop 
 	return 
 	playfanfare 0xD4A
@@ -42,6 +42,6 @@
 	nop 
 	nop 
 	callstd 0x0
-	setworldmapflag 0x500
+	jp_raw_01_u16 0x500
 	callstd_if 0x3, 0xD
 	.byte 0x08

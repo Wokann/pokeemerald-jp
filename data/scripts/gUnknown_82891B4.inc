@@ -3,7 +3,7 @@
 	end 
 	checkmonobedience 0x2891
 	gotostd 0x45
-	setworldmapflag 0xA
+	jp_raw_01_u16 0xA
 	nop 
 	nop 
 	nop 

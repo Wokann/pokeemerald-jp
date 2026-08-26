@@ -39,7 +39,7 @@
 	.byte 0xFF
 	.byte 0xF1
 	.byte 0xFF
-	setworldmapflag 0x0
+	jp_raw_01_u16 0x0
 	nop 
 	copyvar 0xB1, 0x43F
 	return 
@@ -50,7 +50,7 @@
 	nop 
 	.byte 0xFB
 	.byte 0xFF
-	setworldmapflag 0x0
+	jp_raw_01_u16 0x0
 	nop 
 	copyvar 0xB1, 0x43F
 	return 

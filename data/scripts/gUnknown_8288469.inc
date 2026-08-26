@@ -1,7 +1,7 @@
 	callstd 0xA
 	fadedefaultbgm 
 	gotonative 0x2023F
-	setworldmapflag 0x0
+	jp_raw_01_u16 0x0
 	callstd_if 0x0, 0xC
 	nop 
 	loadbyte 0x4B, 0x0

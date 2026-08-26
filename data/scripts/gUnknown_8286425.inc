@@ -16,4 +16,4 @@
 	gotostd 0x3
 	.byte 0x95
 	vcall 0x1020815
-	setworldmapflag 0x800
+	jp_raw_01_u16 0x800

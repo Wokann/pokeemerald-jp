@@ -1,7 +1,7 @@
 	nop
 	fadescreen 0x27
 	gotostd_if 0x1, 0x14
-	setworldmapflag 0x417
+	jp_raw_01_u16 0x417
 	nop
 	returnram
 	returnram

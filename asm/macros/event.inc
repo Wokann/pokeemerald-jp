@@ -16,6 +16,13 @@
 	.byte SCR_OP_NOP1
 	.endm
 
+	@ Retains the byte pattern found in JP's not-yet-structured 0x08277FF2-
+	@ 0x0828A43F data. This is raw data, not the FRLG setworldmapflag command.
+	.macro jp_raw_01_u16 value:req
+	.byte SCR_OP_NOP1
+	.2byte \value
+	.endm
+
 	@ Terminates script execution.
 	.macro end
 	.byte SCR_OP_END
@@ -648,29 +655,28 @@
 		.endif
 	.endm
 
-	@ JP engine names the *_at opcodes with raw hex consts
-	@ (SCR_OP_50/52/54/56), so give them dedicated JP macros.
+	@ JP retains these dedicated cross-map movement macros.
 	.macro applymovement_at localId:req, movements:req, map:req
-	.byte SCR_OP_50
+	.byte SCR_OP_APPLYMOVEMENTAT
 	.2byte \localId
 	.4byte \movements
 	map \map
 	.endm
 
 	.macro waitmovement_at localId:req, map:req
-	.byte SCR_OP_52
+	.byte SCR_OP_WAITMOVEMENTAT
 	.2byte \localId
 	map \map
 	.endm
 
 	.macro removeobject_at localId:req, map:req
-	.byte SCR_OP_54
+	.byte SCR_OP_REMOVEOBJECTAT
 	.2byte \localId
 	map \map
 	.endm
 
 	.macro addobject_at localId:req, map:req
-	.byte SCR_OP_56
+	.byte SCR_OP_ADDOBJECTAT
 	.2byte \localId
 	map \map
 	.endm
@@ -2078,13 +2084,13 @@
 	.endm
 
 	.macro showobject_at localId:req, map:req
-	.byte SCR_OP_58
+	.byte SCR_OP_SHOWOBJECTAT
 	.2byte \localId
 	map \map
 	.endm
 
 	.macro hideobject_at localId:req, map:req
-	.byte SCR_OP_59
+	.byte SCR_OP_HIDEOBJECTAT
 	.2byte \localId
 	map \map
 	.endm
@@ -2099,7 +2105,7 @@
 	.endm
 
 	.macro showcontestwinner mode:req
-	.byte SCR_OP_77
+	.byte SCR_OP_SHOWCONTESTPAINTING
 	.byte \mode
 	.endm
 
@@ -2116,12 +2122,12 @@
 	.endm
 
 	.macro getpricereduction item:req
-	.byte SCR_OP_96
+	.byte SCR_OP_GETPOKENEWSACTIVE
 	.2byte \item
 	.endm
 
 	.macro setflashradius radius:req
-	.byte SCR_OP_99
+	.byte SCR_OP_SETFLASHLEVEL
 	.2byte \radius
 	.endm
 
@@ -2132,12 +2138,12 @@
 	.endm
 
 	.macro givecoins coins:req
-	.byte SCR_OP_B4
+	.byte SCR_OP_ADDCOINS
 	.2byte \coins
 	.endm
 
 	.macro takecoins coins:req
-	.byte SCR_OP_B5
+	.byte SCR_OP_REMOVECOINS
 	.2byte \coins
 	.endm
 
@@ -2187,6 +2193,6 @@
 	.endm
 
 	.macro cmdDB address:req
-	.byte SCR_OP_DB
+	.byte SCR_OP_MESSAGEINSTANT
 	.4byte \address
 	.endm

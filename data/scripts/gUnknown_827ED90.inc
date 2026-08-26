@@ -6,7 +6,7 @@
 	return
 	.byte 0x79
 	bufferspeciesname 0x10, 0xA08
-	setworldmapflag 0x82
+	jp_raw_01_u16 0x82
 	setmysteryeventstatus 0x17
 	.byte 0xEE
 	waitstate

@@ -152,20 +152,6 @@ def _compile_time_aliases() -> dict[str, int]:
     conditionals before unresolved-symbol recovery can run.
     """
     aliases = {
-        "SCR_OP_NOP1": 0x01,
-        "SCR_OP_SETFLASHLEVEL": 0x99,
-        "SCR_OP_SHOWOBJECTAT": 0x58,
-        "SCR_OP_HIDEOBJECTAT": 0x59,
-        "SCR_OP_APPLYMOVEMENTAT": 0x50,
-        "SCR_OP_WAITMOVEMENTAT": 0x52,
-        "SCR_OP_REMOVEOBJECTAT": 0x54,
-        "SCR_OP_ADDOBJECTAT": 0x56,
-        "SCR_OP_ADDCOINS": 0xB4,
-        "SCR_OP_REMOVECOINS": 0xB5,
-        "SCR_OP_WARPWHITEFADE": 0xE0,
-        "SCR_OP_SHOWCONTESTPAINTING": 0x77,
-        "SCR_OP_GETPOKENEWSACTIVE": 0x96,
-        "SCR_OP_MESSAGEINSTANT": 0xDB,
         "STR_VAR_1": 0,
         "STR_VAR_2": 1,
         "STR_VAR_3": 2,

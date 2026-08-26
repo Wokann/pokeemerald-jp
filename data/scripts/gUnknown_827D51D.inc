@@ -17,7 +17,7 @@
 	buffernumberstring 0x4, 0x0
 	nop
 	nop
-	setworldmapflag 0x100
+	jp_raw_01_u16 0x100
 	nop
 	end
 	checkpartymove 0x571A

@@ -1,5 +1,5 @@
 	gotostd_if 0x1, 0x28
-	setworldmapflag 0xC0C
+	jp_raw_01_u16 0xC0C
 	gotostd 0x0
 	setfieldeffectarg 0x27, 0x5802
 	gettime

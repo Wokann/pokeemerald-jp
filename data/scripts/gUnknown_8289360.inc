@@ -7,7 +7,7 @@
 	nop 
 	.byte 0x79
 	showmoneybox 0x28, 0x8, 0x76
-	setworldmapflag 0xF619
+	jp_raw_01_u16 0xF619
 	removedecoration 0x4D00
 	nop 
 	checkdecorspace 0x0

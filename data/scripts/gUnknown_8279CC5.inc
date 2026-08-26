@@ -19,7 +19,7 @@
 	.byte 0xFF
 	buffercontesttype
 	.byte 0xFF
-	setworldmapflag 0x400
+	jp_raw_01_u16 0x400
 	gotostd_if 0x19, 0xC2
 	nop
 	nop

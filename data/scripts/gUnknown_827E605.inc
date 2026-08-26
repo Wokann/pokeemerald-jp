@@ -14,4 +14,4 @@
 	waitstate 
 	gotostd 0x5
 	.byte 0x04
-	setworldmapflag 0x80D
+	jp_raw_01_u16 0x80D

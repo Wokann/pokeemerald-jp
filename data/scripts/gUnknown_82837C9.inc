@@ -2,7 +2,7 @@
 	copyvar 0x89, 0x1700
 	nop 
 	setorcopyvar 0xA27, 0x2803
-	setworldmapflag 0xC0C
+	jp_raw_01_u16 0xC0C
 	gotostd 0x3
 	vmessage 0x2080A97
 	nop 

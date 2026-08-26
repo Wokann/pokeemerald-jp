@@ -5,7 +5,7 @@
 	waitstate
 	nop
 	checkpcitem 0xA27, 0x2803
-	setworldmapflag 0xC0C
+	jp_raw_01_u16 0xC0C
 	gotostd 0x3
 	waitdooranim
 	addvar 0x811, 0x2

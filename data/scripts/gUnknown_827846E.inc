@@ -1,6 +1,6 @@
 	nop
 	addelevmenuitem 0x27, 0x9700, 0xA27, 0x2801
-	setworldmapflag 0xC0C
+	jp_raw_01_u16 0xC0C
 	gotostd 0x1C
 	checkplayergender
 	nop
