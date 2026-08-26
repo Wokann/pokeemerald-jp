@@ -886,7 +886,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MtChimney/scripts.inc"
 	.include "data/maps/JaggedPass/scripts.inc"
 	.include "data/maps/FieryPath/scripts.inc"
-	.incbin "baserom_jp.gba", 0x216119, 0x117
+	.include "data/maps/MtPyre_1F/scripts.inc"
 	.include "data/maps/MtPyre_2F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21625d, 0x8ec
 	.include "data/maps/MtPyre_Exterior/scripts.inc"

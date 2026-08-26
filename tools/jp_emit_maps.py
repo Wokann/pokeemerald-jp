@@ -183,6 +183,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Fiery Path is the immediate next owner: its transition hook and Scott
     # relocation branch exactly match the two local US script entries.
     'FieryPath': 2,
+    # Mt. Pyre 1F follows Fiery Path. Its four NPC/item branches match the
+    # local US source order through the adjacent four text records.
+    'MtPyre_1F': 4,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -286,6 +289,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MtChimney': 60,
     # Jagged Pass owns its twenty-seven trainer, guard, and hideout texts.
     'JaggedPass': 27,
+    # Mt. Pyre 1F owns the four contiguous Cleanse Tag and NPC texts.
+    'MtPyre_1F': 4,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6758,6 +6763,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x02FF: 'FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT',
                 0x08AA: 'FLAG_LANDMARK_FIERY_PATH',
             },
+        },
+    },
+    # Mt. Pyre 1F is a complete physical owner. Its gift sequence, four
+    # local scripts, and four text records are aligned with the US map.
+    'MtPyre_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'symbols': {
+            'flags': {0x011A: 'FLAG_RECEIVED_CLEANSE_TAG'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x00BE: 'ITEM_CLEANSE_TAG'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
 })
