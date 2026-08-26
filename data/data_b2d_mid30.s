@@ -5078,8 +5078,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_HOUSE3 (g11 m16)
 	.4byte gMapLayout_RUSTBORO_CITY_HOUSE2  @ mapLayout
-	.4byte gMapEvents_RUSTBORO_CITY_HOUSE3  @ events
-	.4byte 0x08204117  @ mapScripts
+	.4byte RustboroCity_House3_MapEvents  @ events
+	.4byte RustboroCity_House3_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
 	.2byte 0x0060  @ mapLayoutId

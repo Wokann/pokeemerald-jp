@@ -3,22 +3,20 @@
 RustboroCity_House3_MapScripts::
 	.byte 0
 
-RustboroCity_House3_EventScript_OldMan::
+RustboroCity_House3_EventScript_OldMan:: @ 0x08204118
 	msgbox RustboroCity_House3_Text_IGivePerfectlySuitedNicknames, MSGBOX_NPC
 	end
 
-RustboroCity_House3_EventScript_OldWoman::
+RustboroCity_House3_EventScript_OldWoman:: @ 0x08204121
 	msgbox RustboroCity_House3_Text_NamingPikachuPekachu, MSGBOX_NPC
 	end
 
-@ Misspelling on purpose, see nickname.
-RustboroCity_House3_EventScript_Pekachu::
+RustboroCity_House3_EventScript_Pekachu:: @ 0x0820412A
 	lock
 	faceplayer
 	waitse
 	playmoncry SPECIES_PIKACHU, CRY_MODE_NORMAL
 	msgbox RustboroCity_House3_Text_Pekachu, MSGBOX_DEFAULT
-	@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.
 	waitmoncry_jp
 	release
 	end
