@@ -10882,6 +10882,45 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_POKEMART_LISTS.update({
+    'FortreeCity_Mart': (
+        (0x08204DD8, 'FortreeCity_Mart_Pokemart', (
+            'ITEM_GREAT_BALL',
+            'ITEM_ULTRA_BALL',
+            'ITEM_SUPER_POTION',
+            'ITEM_HYPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_AWAKENING',
+            'ITEM_REVIVE',
+            'ITEM_SUPER_REPEL',
+            'ITEM_WOOD_MAIL',
+        )),
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_Mart': {
+        'scripts': {
+            0x08204DBE: 'FortreeCity_Mart_EventScript_Clerk',
+            0x08204DF0: 'FortreeCity_Mart_EventScript_Woman',
+            0x08204DF9: 'FortreeCity_Mart_EventScript_Girl',
+            0x08204E02: 'FortreeCity_Mart_EventScript_Boy',
+        },
+        'texts': {
+            0x08204E0B: 'FortreeCity_Mart_Text_SuperRepelBetter',
+            0x08204E45: 'FortreeCity_Mart_Text_StockUpOnItems',
+            0x08204E70: 'FortreeCity_Mart_Text_RareCandyMakesMonGrow',
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.

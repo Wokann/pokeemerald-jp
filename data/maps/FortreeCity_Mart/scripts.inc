@@ -3,7 +3,7 @@
 FortreeCity_Mart_MapScripts::
 	.byte 0
 
-FortreeCity_Mart_EventScript_Clerk::
+FortreeCity_Mart_EventScript_Clerk:: @ 0x08204DBE
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -27,15 +27,15 @@ FortreeCity_Mart_Pokemart: @ 0x08204DD8
 	.2byte ITEM_WOOD_MAIL
 	pokemartlistend
 
-FortreeCity_Mart_EventScript_Woman::
+FortreeCity_Mart_EventScript_Woman:: @ 0x08204DF0
 	msgbox FortreeCity_Mart_Text_SuperRepelBetter, MSGBOX_NPC
 	end
 
-FortreeCity_Mart_EventScript_Girl::
+FortreeCity_Mart_EventScript_Girl:: @ 0x08204DF9
 	msgbox FortreeCity_Mart_Text_StockUpOnItems, MSGBOX_NPC
 	end
 
-FortreeCity_Mart_EventScript_Boy::
+FortreeCity_Mart_EventScript_Boy:: @ 0x08204E02
 	msgbox FortreeCity_Mart_Text_RareCandyMakesMonGrow, MSGBOX_NPC
 	end
 
