@@ -3,11 +3,11 @@
 FortreeCity_House3_MapScripts::
 	.byte 0
 
-FortreeCity_House3_EventScript_Maniac::
+FortreeCity_House3_EventScript_Maniac:: @ 0x082050D1
 	msgbox FortreeCity_House3_Text_MetStevenHadAmazingPokemon, MSGBOX_NPC
 	end
 
-FortreeCity_House3_EventScript_SchoolKidM::
+FortreeCity_House3_EventScript_SchoolKidM:: @ 0x082050DA
 	msgbox FortreeCity_House3_Text_OhYouHavePokedex, MSGBOX_NPC
 	end
 

@@ -10971,6 +10971,21 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_House3': {
+        'scripts': {
+            0x082050D1: 'FortreeCity_House3_EventScript_Maniac',
+            0x082050DA: 'FortreeCity_House3_EventScript_SchoolKidM',
+        },
+        'texts': {
+            0x082050E3: 'FortreeCity_House3_Text_MetStevenHadAmazingPokemon',
+            0x0820516E: 'FortreeCity_House3_Text_OhYouHavePokedex',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.
