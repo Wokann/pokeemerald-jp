@@ -8717,6 +8717,50 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
     },
+    # The Pokémon Center immediately follows the two houses. Its transition,
+    # Cable Club resume hook, nurse helper, and six local dialogue records
+    # match the corresponding US owner in physical JP ROM order.
+    'PetalburgCity_PokemonCenter_1F': {
+        'scripts': {
+            0x081FA7D8: 'PetalburgCity_PokemonCenter_1F_OnTransition',
+            0x081FA7E1: 'PetalburgCity_PokemonCenter_1F_EventScript_Nurse',
+            0x081FA7EF: 'PetalburgCity_PokemonCenter_1F_EventScript_FatMan',
+            0x081FA7F8: 'PetalburgCity_PokemonCenter_1F_EventScript_Youngster',
+            0x081FA801: 'PetalburgCity_PokemonCenter_1F_EventScript_Woman',
+            0x081FA81D: 'PetalburgCity_PokemonCenter_1F_EventScript_SayStarterTypeInfo',
+            0x081FA840: 'PetalburgCity_PokemonCenter_1F_EventScript_SayTreeckoType',
+            0x081FA849: 'PetalburgCity_PokemonCenter_1F_EventScript_SayTorchicType',
+            0x081FA852: 'PetalburgCity_PokemonCenter_1F_EventScript_SayMudkipType',
+        },
+        'texts': {
+            0x081FA85B: 'PetalburgCity_PokemonCenter_1F_Text_PCStorageSystem',
+            0x081FA894: 'PetalburgCity_PokemonCenter_1F_Text_OranBerryRegainedHP',
+            0x081FA8BC: 'PetalburgCity_PokemonCenter_1F_Text_ManyTypesOfPokemon',
+            0x081FA907: 'PetalburgCity_PokemonCenter_1F_Text_TreeckoIsGrassType',
+            0x081FA946: 'PetalburgCity_PokemonCenter_1F_Text_TorchicIsFireType',
+            0x081FA984: 'PetalburgCity_PokemonCenter_1F_Text_MudkipIsWaterType',
+        },
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {
+                0x4023: 'VAR_STARTER_MON',
+                0x800B: 'VAR_0x800B',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x4023: {0x0: '0', 0x1: '1', 0x2: '2'},
+                0x800D: {0x1: 'TRUE'},
+            },
+            'local_ids': {0x01: 'LOCALID_PETALBURG_NURSE'},
+            'heal_locations': {0x03: 'HEAL_LOCATION_PETALBURG_CITY'},
+        },
+    },
 })
 
 # Rustboro Devon Corp 2F is a complete, contiguous JP map-script owner.

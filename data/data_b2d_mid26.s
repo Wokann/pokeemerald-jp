@@ -927,8 +927,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/PetalburgCity_House1/events.inc"
 	.include "data/maps/PetalburgCity_House2/events.inc"
 	.include "data/maps/PetalburgCity_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F
-	.set gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F, PetalburgCity_PokemonCenter_1F_MapEvents
 	.include "data/maps/PetalburgCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_PETALBURG_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_PETALBURG_CITY_POKEMON_CENTER_2F, PetalburgCity_PokemonCenter_2F_MapEvents
