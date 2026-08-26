@@ -6,7 +6,13 @@
 	delay 0x3C
 	special DoFallWarp
 	end
-	.incbin "baserom_jp.gba", 0x264371, 0x10394
+	.incbin "baserom_jp.gba", 0x264371, 0x2
+
+LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady:: @ 0x08264373
+	.incbin "baserom_jp.gba", 0x264373, 0x65c
+
+LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon:: @ 0x082649CF
+	.incbin "baserom_jp.gba", 0x2649cf, 0xfd36
 BerryBlender_Text_BlendWithTheBlendMaster: @ 0x08274705
 	.incbin "baserom_jp.gba", 0x274705, 0x256
 BerryBlender_Text_WhoaAwesome: @ 0x0827495B

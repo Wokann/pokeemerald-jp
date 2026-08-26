@@ -695,12 +695,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_ContestLobby/scripts.inc"
 	.include "data/maps/LilycoveCity_ContestHall/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonCenter_1F/scripts.inc"
-	@ These two object scripts remain in the later shared Lilycove Lady raw
-	@ owner. Export semantic aliases for this map's generated event table.
-	.globl LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady
-	.set LilycoveCity_PokemonCenter_1F_EventScript_LilycoveLady, 0x08264373
-	.globl LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon
-	.set LilycoveCity_PokemonCenter_1F_EventScript_ContestLadyMon, 0x082649CF
 	.include "data/maps/LilycoveCity_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/LilycoveCity_UnusedMart/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonTrainerFanClub/scripts.inc"
