@@ -6542,6 +6542,26 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'heal_locations': {0x0F: 'HEAL_LOCATION_DEWFORD_TOWN'},
         },
     },
+    # The 2F Cable Club map retains three unused RS-era wrappers after its
+    # map-script table. They remain map-owned scripts in the matching US map.
+    'DewfordTown_PokemonCenter_2F': {
+        'scripts': {
+            0x081F2D75: 'DewfordTown_PokemonCenter_2F_EventScript_Colosseum',
+            0x081F2D7B: 'DewfordTown_PokemonCenter_2F_EventScript_TradeCenter',
+            0x081F2D81: 'DewfordTown_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
 })
 
 # Oldale Mart's two adjacent product records were checked against both the
