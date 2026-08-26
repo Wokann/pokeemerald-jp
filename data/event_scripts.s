@@ -891,7 +891,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MtPyre_3F/scripts.inc"
 	.include "data/maps/MtPyre_4F/scripts.inc"
 	.include "data/maps/MtPyre_5F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x216986, 0x1c3
+	.include "data/maps/MtPyre_6F/scripts.inc"
 	.include "data/maps/MtPyre_Exterior/scripts.inc"
 	.include "data/maps/MtPyre_Summit/scripts.inc"
 	.incbin "baserom_jp.gba", 0x216f2b, 0xd85
@@ -1961,6 +1961,9 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set MtPyre_4F_EventScript_ItemSeaIncense, 0x0825706E
 	.globl MtPyre_5F_EventScript_ItemLaxIncense
 	.set MtPyre_5F_EventScript_ItemLaxIncense, 0x0825707B
+	@ Mt. Pyre 6F's Shadow Ball entry remains in the later shared item owner.
+	.globl MtPyre_6F_EventScript_ItemTMShadowBall
+	.set MtPyre_6F_EventScript_ItemTMShadowBall, 0x08257088
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F

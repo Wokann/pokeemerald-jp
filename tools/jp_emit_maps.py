@@ -192,6 +192,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Mt. Pyre 3F immediately follows with William, Kayla, and Gabrielle's
     # rematch sequence (including its two local continuation branches).
     'MtPyre_3F': 5,
+    # Mt. Pyre 6F follows the paired 4F/5F exception with Valerie's rematch
+    # branches and Cedric's direct trainer interaction.
+    'MtPyre_6F': 4,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -302,6 +305,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MtPyre_2F': 19,
     # Mt. Pyre 3F owns William, Kayla, and Gabrielle's thirteen messages.
     'MtPyre_3F': 13,
+    # Mt. Pyre 6F owns Valerie and Cedric's ten contiguous messages.
+    'MtPyre_6F': 10,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6880,6 +6885,26 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'symbols': {
             'trainers': {0x006D: 'TRAINER_TASHA'},
+        },
+    },
+    # Mt. Pyre 6F resumes the ordinary one-map-per-physical-owner layout.
+    'MtPyre_6F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08257088: 'MtPyre_6F_EventScript_ItemTMShadowBall',
+        },
+        'symbols': {
+            'trainers': {
+                0x006C: 'TRAINER_VALERIE_1',
+                0x01DB: 'TRAINER_CEDRIC',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
 })
