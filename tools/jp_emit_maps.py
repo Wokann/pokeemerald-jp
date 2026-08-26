@@ -6466,6 +6466,53 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    # The Oldale Mart follows the unused 2F Cable Club wrappers. Its two
+    # shop lists, three NPC scripts, and three local texts have the same
+    # source order and control flow as the matching US map source.
+    'OldaleTown_Mart': {
+        'scripts': {
+            0x081F2B0C: 'OldaleTown_Mart_EventScript_Clerk',
+            0x081F2B38: 'OldaleTown_Mart_ExpandedItems',
+            0x081F2B56: 'OldaleTown_Mart_EventScript_Woman',
+            0x081F2B6B: 'OldaleTown_Mart_EventScript_PokeBallsInStock',
+            0x081F2B75: 'OldaleTown_Mart_EventScript_Boy',
+        },
+        'texts': {
+            0x081F2B7E: 'OldaleTown_Mart_Text_PokeBallsAreSoldOut',
+            0x081F2B9E: 'OldaleTown_Mart_Text_ImGoingToBuyPokeBalls',
+            0x081F2BC5: 'OldaleTown_Mart_Text_RestoreHPWithPotion',
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x0074: 'FLAG_ADVENTURE_STARTED'},
+        },
+    },
+})
+
+# Oldale Mart's two adjacent product records were checked against both the
+# matching US list names and the JP item IDs. The second record starts with a
+# single alignment byte before its four-byte product boundary.
+MAP_POKEMART_LISTS.update({
+    'OldaleTown_Mart': (
+        (0x081F2B2C, 'OldaleTown_Mart_Pokemart_Basic', (
+            'ITEM_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_AWAKENING',
+        )),
+        (0x081F2B47, 'OldaleTown_Mart_Pokemart_Expanded', (
+            'ITEM_POKE_BALL',
+            'ITEM_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_AWAKENING',
+        )),
+    ),
 })
 
 # Petalburg's two residential houses immediately follow the Gym in the

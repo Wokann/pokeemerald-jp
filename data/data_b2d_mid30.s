@@ -4414,8 +4414,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN_MART (g2 m4)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte gMapEvents_OLDALE_TOWN_MART  @ events
-	.4byte 0x081F2B0B  @ mapScripts
+	.4byte OldaleTown_Mart_MapEvents  @ events
+	.4byte OldaleTown_Mart_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
 	.2byte 0x003F  @ mapLayoutId
