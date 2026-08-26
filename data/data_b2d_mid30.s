@@ -4670,7 +4670,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_2F (g7 m1)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_2F  @ events
+	.4byte PacifidlogTown_PokemonCenter_2F_MapEvents  @ events
 	.4byte PacifidlogTown_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music

@@ -7,15 +7,14 @@ PacifidlogTown_PokemonCenter_2F_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CableClub_OnTransition
 	.byte 0
 
-@ The below 3 are unused and leftover from RS.
-PacifidlogTown_PokemonCenter_2F_EventScript_Colosseum::
+PacifidlogTown_PokemonCenter_2F_EventScript_Colosseum:: @ 0x081F792C
 	call CableClub_EventScript_Colosseum
 	end
 
-PacifidlogTown_PokemonCenter_2F_EventScript_TradeCenter::
+PacifidlogTown_PokemonCenter_2F_EventScript_TradeCenter:: @ 0x081F7932
 	call CableClub_EventScript_TradeCenter
 	end
 
-PacifidlogTown_PokemonCenter_2F_EventScript_RecordCorner::
+PacifidlogTown_PokemonCenter_2F_EventScript_RecordCorner:: @ 0x081F7938
 	call CableClub_EventScript_RecordCorner
 	end
