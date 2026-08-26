@@ -3,7 +3,7 @@
 LilycoveCity_CoveLilyMotel_1F_MapScripts::
 	.byte 0
 
-LilycoveCity_CoveLilyMotel_1F_EventScript_MotelOwner::
+LilycoveCity_CoveLilyMotel_1F_EventScript_MotelOwner:: @ 0x082054FD
 	lockall
 	goto_if_set FLAG_SYS_GAME_CLEAR, LilycoveCity_CoveLilyMotel_1F_EventScript_GameClear
 	goto_if_set FLAG_BADGE07_GET, LilycoveCity_CoveLilyMotel_1F_EventScript_AquaHideoutBusted
@@ -17,7 +17,7 @@ LilycoveCity_CoveLilyMotel_1F_EventScript_MotelOwner::
 	releaseall
 	end
 
-LilycoveCity_CoveLilyMotel_1F_EventScript_AquaHideoutBusted:
+LilycoveCity_CoveLilyMotel_1F_EventScript_AquaHideoutBusted:: @ 0x08205537
 	msgbox LilycoveCity_CoveLilyMotel_1F_Text_MonFoundLostItem, MSGBOX_DEFAULT
 	applymovement LOCALID_MOTEL_OWNER, Common_Movement_FacePlayer
 	waitmovement 0
@@ -28,7 +28,7 @@ LilycoveCity_CoveLilyMotel_1F_EventScript_AquaHideoutBusted:
 	releaseall
 	end
 
-LilycoveCity_CoveLilyMotel_1F_EventScript_GameClear:
+LilycoveCity_CoveLilyMotel_1F_EventScript_GameClear:: @ 0x0820555E
 	msgbox LilycoveCity_CoveLilyMotel_1F_Text_HouseSittingMonCaughtBurglar, MSGBOX_DEFAULT
 	applymovement LOCALID_MOTEL_OWNER, Common_Movement_FacePlayer
 	waitmovement 0
@@ -39,7 +39,7 @@ LilycoveCity_CoveLilyMotel_1F_EventScript_GameClear:
 	releaseall
 	end
 
-LilycoveCity_CoveLilyMotel_1F_EventScript_BlockingTV::
+LilycoveCity_CoveLilyMotel_1F_EventScript_BlockingTV:: @ 0x08205585
 	lockall
 	playse SE_PIN
 	applymovement LOCALID_MOTEL_OWNER, Common_Movement_ExclamationMark

@@ -979,8 +979,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/FortreeCity_House5/events.inc"
 	.include "data/maps/FortreeCity_DecorationShop/events.inc"
 	.include "data/maps/LilycoveCity_CoveLilyMotel_1F/events.inc"
-	.globl gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_1F
-	.set gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_1F, LilycoveCity_CoveLilyMotel_1F_MapEvents
 	.include "data/maps/LilycoveCity_CoveLilyMotel_2F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F
 	.set gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F, LilycoveCity_CoveLilyMotel_2F_MapEvents

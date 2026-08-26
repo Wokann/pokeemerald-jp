@@ -11118,6 +11118,55 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'LilycoveCity_CoveLilyMotel_1F': {
+        0x082055CD: 'LilycoveCity_CoveLilyMotel_1F_Movement_PlayerPushFromTV',
+        0x082055D2: 'LilycoveCity_CoveLilyMotel_1F_Movement_OwnerPushPlayer',
+        0x082055D4: 'LilycoveCity_CoveLilyMotel_1F_Movement_OwnerReturn',
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_CoveLilyMotel_1F': {
+        'scripts': {
+            0x082054FD: 'LilycoveCity_CoveLilyMotel_1F_EventScript_MotelOwner',
+            0x08205537: 'LilycoveCity_CoveLilyMotel_1F_EventScript_AquaHideoutBusted',
+            0x0820555E: 'LilycoveCity_CoveLilyMotel_1F_EventScript_GameClear',
+            0x08205585: 'LilycoveCity_CoveLilyMotel_1F_EventScript_BlockingTV',
+        },
+        'texts': {
+            0x082055D8: 'LilycoveCity_CoveLilyMotel_1F_Text_GuestsDoubledByMascot',
+            0x08205647: 'LilycoveCity_CoveLilyMotel_1F_Text_NoGuestsWithTeamAqua',
+            0x08205699: 'LilycoveCity_CoveLilyMotel_1F_Text_CantSeeTheTV',
+            0x082056BC: 'LilycoveCity_CoveLilyMotel_1F_Text_MonFoundLostItem',
+            0x0820571C: 'LilycoveCity_CoveLilyMotel_1F_Text_HeardAquaHideoutBusted',
+            0x082057A5: 'LilycoveCity_CoveLilyMotel_1F_Text_HouseSittingMonCaughtBurglar',
+            0x08205812: 'LilycoveCity_CoveLilyMotel_1F_Text_BetterGetWorkingOnGuestsDinner',
+        },
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'symbols': {
+            'flags': {
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+                0x086D: 'FLAG_BADGE07_GET',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_MOTEL_OWNER',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'sounds': {0x0015: 'SE_PIN'},
+            'decimal_arguments': {'waitmovement': (0,)},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.
