@@ -547,9 +547,12 @@ ELF := $(NAME).elf
 TITLE := POKEMON EMER
 GAMECODE := BPEJ
 
-.PHONY: all compare clean
+.PHONY: all compare clean check-map-script-owners
 
 all: $(ROM)
+
+check-map-script-owners:
+	python3 tools/audit_map_script_owners.py --strict
 
 compare: $(ROM)
 	$(SHA1SUM) rom_jp.sha1
