@@ -960,8 +960,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/RustboroCity_PokemonCenter_2F/events.inc"
 	.include "data/maps/RustboroCity_Mart/events.inc"
 	.include "data/maps/RustboroCity_Flat1_1F/events.inc"
-	.globl gMapEvents_RUSTBORO_CITY_FLAT1_1F
-	.set gMapEvents_RUSTBORO_CITY_FLAT1_1F, RustboroCity_Flat1_1F_MapEvents
 	.include "data/maps/RustboroCity_Flat1_2F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_FLAT1_2F
 	.set gMapEvents_RUSTBORO_CITY_FLAT1_2F, RustboroCity_Flat1_2F_MapEvents

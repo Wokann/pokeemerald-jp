@@ -3,11 +3,11 @@
 RustboroCity_Flat1_1F_MapScripts::
 	.byte 0
 
-RustboroCity_Flat1_1F_EventScript_Man::
+RustboroCity_Flat1_1F_EventScript_Man:: @ 0x08203715
 	msgbox RustboroCity_Flat1_1F_Text_EveryPokemonHasAbility, MSGBOX_NPC
 	end
 
-RustboroCity_Flat1_1F_EventScript_Woman::
+RustboroCity_Flat1_1F_EventScript_Woman:: @ 0x0820371E
 	msgbox RustboroCity_Flat1_1F_Text_PokemonStrange, MSGBOX_NPC
 	end
 
@@ -19,5 +19,3 @@ RustboroCity_Flat1_1F_Text_EveryPokemonHasAbility: @ 0x08203727
 RustboroCity_Flat1_1F_Text_PokemonStrange: @ 0x08203755
 	.string "ほんとうに　ポケモンって\n"
 	.string "ふしぎな　いきもの　なのね$"
-
-	@ Rustboro City Flat1 2F and later unstructured script owners precede House1.
