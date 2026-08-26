@@ -1,6 +1,4 @@
-@ The player automatically walks into this room while the camera stays still.
-@ The visible player is a fake object using VAR_OBJ_GFX_ID_1; the opponent
-@ object uses VAR_OBJ_GFX_ID_0, set by factory_setopponentgfx.
+@ SlateportCity_BattleTentBattleRoom scripts (JP map g9 m4 @ 0x081FBC59)
 
 SlateportCity_BattleTentBattleRoom_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, SlateportCity_BattleTentBattleRoom_OnTransition
@@ -8,43 +6,43 @@ SlateportCity_BattleTentBattleRoom_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, SlateportCity_BattleTentBattleRoom_OnFrame
 	.byte 0
 
-SlateportCity_BattleTentBattleRoom_OnTransition:
+SlateportCity_BattleTentBattleRoom_OnTransition:: @ 0x081FBC69
 	call SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfx
 	end
 
-SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfx::
+SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfx:: @ 0x081FBC6F
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfxMale
 	goto_if_eq VAR_RESULT, FEMALE, SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale
 	return
 
-SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfxMale::
+SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfxMale:: @ 0x081FBC87
 	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL
 	return
 
-SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale::
+SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale:: @ 0x081FBC8D
 	setvar VAR_OBJ_GFX_ID_1, OBJ_EVENT_GFX_RIVAL_MAY_NORMAL
 	return
 
-SlateportCity_BattleTentBattleRoom_OnWarp:
-	map_script_2 VAR_TEMP_1, 0, SlateportCity_BattleTentBattleRoom_EventScript_SetUpObjects
+SlateportCity_BattleTentBattleRoom_OnWarp:: @ 0x081FBC93
+	map_script_2 VAR_TEMP_1, 0x0, SlateportCity_BattleTentBattleRoom_EventScript_SetUpObjects
 	.2byte 0
 
-SlateportCity_BattleTentBattleRoom_EventScript_SetUpObjects::
-	setvar VAR_TEMP_1, 1
+SlateportCity_BattleTentBattleRoom_EventScript_SetUpObjects:: @ 0x081FBC9D
+	setvar VAR_TEMP_1, 0x1
 	hideobjectat LOCALID_PLAYER, MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
 	hideobjectat LOCALID_SLATEPORT_TENT_BATTLE_OPPONENT, MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM
 	end
 
-SlateportCity_BattleTentBattleRoom_OnFrame:
-	map_script_2 VAR_TEMP_0, 0, SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom
+SlateportCity_BattleTentBattleRoom_OnFrame:: @ 0x081FBCAD
+	map_script_2 VAR_TEMP_0, 0x0, SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom
 	.2byte 0
 
-SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom::
+SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom:: @ 0x081FBCB7
 	applymovement LOCALID_SLATEPORT_TENT_BATTLE_PLAYER, SlateportCity_BattleTentBattleRoom_Movement_PlayerEnter
 	waitmovement 0
 	factory_setopponentgfx
-	setobjectxyperm LOCALID_SLATEPORT_TENT_BATTLE_OPPONENT, 5, 1
+	setobjectxyperm LOCALID_SLATEPORT_TENT_BATTLE_OPPONENT, 0x5, 0x1
 	removeobject LOCALID_SLATEPORT_TENT_BATTLE_OPPONENT
 	addobject LOCALID_SLATEPORT_TENT_BATTLE_OPPONENT
 	applymovement LOCALID_SLATEPORT_TENT_BATTLE_OPPONENT, SlateportCity_BattleTentBattleRoom_Movement_OpponentEnter
@@ -56,34 +54,32 @@ SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom::
 	closemessage
 	special HealPlayerParty
 	setvar VAR_0x8004, SPECIAL_BATTLE_FACTORY
-	setvar VAR_0x8005, 0
+	setvar VAR_0x8005, 0x0
 	special DoSpecialTrainerBattle
 	switch VAR_RESULT
 	case 1, SlateportCity_BattleTentBattleRoom_EventScript_DefeatedOpponent
-SlateportCity_BattleTent_EventScript_WarpToLobbyLost::
+
+SlateportCity_BattleTent_EventScript_WarpToLobbyLost:: @ 0x081FBD14
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST
 	special LoadPlayerParty
-	warp MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY, 6, 6
+	warp MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY, 0x6, 0x6
 	waitstate
-@ forced stop
 
-SlateportCity_BattleTentBattleRoom_EventScript_DefeatedOpponent::
+SlateportCity_BattleTentBattleRoom_EventScript_DefeatedOpponent:: @ 0x081FBD32
 	frontier_get FRONTIER_DATA_BATTLE_NUM
-	addvar VAR_RESULT, 1
+	addvar VAR_RESULT, 0x1
 	frontier_set FRONTIER_DATA_BATTLE_NUM, VAR_RESULT
 	switch VAR_RESULT
 	case 3, SlateportCity_BattleTentBattleRoom_EventScript_WarpToLobbyWon
-	setvar VAR_0x8006, 1
-	warp MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR, 2, 3
+	setvar VAR_0x8006, 0x1
+	warp MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR, 0x2, 0x3
 	waitstate
-@ forced stop
 
-SlateportCity_BattleTentBattleRoom_EventScript_WarpToLobbyWon::
+SlateportCity_BattleTentBattleRoom_EventScript_WarpToLobbyWon:: @ 0x081FBD74
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_WON
 	special LoadPlayerParty
-	warp MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY, 6, 6
+	warp MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY, 0x6, 0x6
 	waitstate
-@ forced stop
 
 SlateportCity_BattleTentBattleRoom_Movement_PlayerEnter:
 	walk_up

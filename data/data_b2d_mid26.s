@@ -934,8 +934,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SlateportCity_BattleTentLobby/events.inc"
 	.include "data/maps/SlateportCity_BattleTentCorridor/events.inc"
 	.include "data/maps/SlateportCity_BattleTentBattleRoom/events.inc"
-	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM
-	.set gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM, SlateportCity_BattleTentBattleRoom_MapEvents
 	.include "data/maps/SlateportCity_NameRatersHouse/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE
 	.set gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE, SlateportCity_NameRatersHouse_MapEvents

@@ -16089,6 +16089,112 @@ def event_script_labels():
     return labels
 
 
+# Slateport's Battle Tent battle room follows the lobby and corridor in ROM
+# order.  The three outcome tails use waitstate as an explicit source boundary
+# before the next independently-named script or movement stream.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'SlateportCity_BattleTentBattleRoom': (
+        0x081FBD14,
+        0x081FBD32,
+        0x081FBD74,
+    ),
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'SlateportCity_BattleTentBattleRoom': {
+        0x081FBD92: 'SlateportCity_BattleTentBattleRoom_Movement_PlayerEnter',
+        0x081FBD97: 'SlateportCity_BattleTentBattleRoom_Movement_OpponentEnter',
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SlateportCity_BattleTentBattleRoom': {
+        'scripts': {
+            0x081FBC69: 'SlateportCity_BattleTentBattleRoom_OnTransition',
+            0x081FBC6F: 'SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfx',
+            0x081FBC87: 'SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfxMale',
+            0x081FBC8D: 'SlateportCity_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale',
+            0x081FBC9D: 'SlateportCity_BattleTentBattleRoom_EventScript_SetUpObjects',
+            0x081FBCB7: 'SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom',
+            0x081FBD14: 'SlateportCity_BattleTent_EventScript_WarpToLobbyLost',
+            0x081FBD32: 'SlateportCity_BattleTentBattleRoom_EventScript_DefeatedOpponent',
+            0x081FBD74: 'SlateportCity_BattleTentBattleRoom_EventScript_WarpToLobbyWon',
+        },
+        'tables': {
+            0x081FBC93: 'SlateportCity_BattleTentBattleRoom_OnWarp',
+            0x081FBCAD: 'SlateportCity_BattleTentBattleRoom_OnFrame',
+        },
+        'external_texts': {
+            0x02021C7C: 'gStringVar4',
+        },
+        'command_aliases': {
+            0x081FBC9D: {'hideobject_at': 'hideobjectat'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'allow_single_case_switch': True,
+        'frontier_macros': True,
+        'battle_tent_macros': True,
+        'battle_factory_macros': True,
+        'symbols': {
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x4001: 'VAR_TEMP_1',
+                0x4011: 'VAR_OBJ_GFX_ID_1',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081FBC87: {
+                    0x4011: {0x64: 'OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL'},
+                },
+                0x081FBC8D: {
+                    0x4011: {0x69: 'OBJ_EVENT_GFX_RIVAL_MAY_NORMAL'},
+                },
+                0x081FBCB7: {
+                    0x8004: {
+                        0x04: 'VERDANTURF_TENT_FUNC_GET_OPPONENT_INTRO',
+                        0x06: 'SPECIAL_BATTLE_FACTORY',
+                        0x0B: 'BATTLE_FACTORY_FUNC_SET_OPPONENT_GFX',
+                    },
+                },
+                0x081FBD14: {
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {0x00: 'FRONTIER_DATA_CHALLENGE_STATUS'},
+                    0x8006: {0x04: 'CHALLENGE_STATUS_LOST'},
+                },
+                0x081FBD32: {
+                    0x8004: {
+                        0x01: 'FRONTIER_UTIL_FUNC_GET_DATA',
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                    },
+                    0x8005: {0x02: 'FRONTIER_DATA_BATTLE_NUM'},
+                },
+                0x081FBD74: {
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {0x00: 'FRONTIER_DATA_CHALLENGE_STATUS'},
+                    0x8006: {0x03: 'CHALLENGE_STATUS_WON'},
+                },
+            },
+            'maps': {
+                0x0503: 'MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM',
+                0x0902: 'MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY',
+                0x0903: 'MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR',
+                0x0904: 'MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM',
+            },
+            'local_ids': {
+                0x02: 'LOCALID_SLATEPORT_TENT_BATTLE_OPPONENT',
+                0x03: 'LOCALID_SLATEPORT_TENT_BATTLE_PLAYER',
+                0xFF: 'LOCALID_PLAYER',
+            },
+        },
+    },
+})
+
+
 def main():
     do_write = '--write' in sys.argv
     include_empty = '--include-empty' in sys.argv

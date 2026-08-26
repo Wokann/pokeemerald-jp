@@ -253,6 +253,16 @@ def in_region(addr):
 
 
 TERMINATORS = {0x02, 0x03, 0x0C, 0x0D}
+# These Slateport Battle Tent room tails deliberately stop at waitstate.  Each
+# is followed immediately by an independently-addressable script or movement
+# sequence, and the matching pokeemerald source keeps the boundaries explicit.
+# Keep the addresses at the final waitstate opcode so linear decoding includes
+# the command but never consumes the next owner as part of the current script.
+FORCED_SCRIPT_TERMINATOR_ADDRESSES = {
+    0x081FBD31,
+    0x081FBD73,
+    0x081FBD91,
+}
 # opcodes whose 4-byte arg is a script pointer (call/goto)
 PTR_OPS = {0x04, 0x05, 0x06, 0x07}  # call, goto, goto_if, call_if
 
@@ -406,6 +416,8 @@ def parse_script(addr, maxlen=0x4000):
         out.append((pos - addr, name, args, refs))
         op = rd8(pos)
         pos += size
+        if pos - size in FORCED_SCRIPT_TERMINATOR_ADDRESSES:
+            break
         if op in TERMINATORS:
             break
         if op in (0x05, 0x08):  # goto / gotostd: unconditional jump
