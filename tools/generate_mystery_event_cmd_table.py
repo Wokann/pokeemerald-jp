@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Generate data/mystery_event_script_cmd_table.inc from the Japanese
-ROM, in pokeemerald's data/mystery_event_script_cmd_table.s format.
+"""Generate data/mystery_event_script_cmd_table.s from the Japanese ROM.
 
 The JP table (17 entries at 0x828D2B4) mirrors pokeemerald's
-gMysteryEventScriptCmdTable; handler names are taken from the asm labels
-and cross-checked against pokeemerald's version.
+gMysteryEventScriptCmdTable; handler names come from the JP function map
+and are cross-checked against pokeemerald's version.
 
 Usage:
     python3 tools/generate_mystery_event_cmd_table.py [baserom.gba] [pokeemerald_table]
@@ -19,7 +18,7 @@ BASEROM_DEFAULT = ROOT / "baserom_jp.gba"
 POKEEMERALD_TABLE = (
     ROOT.parent / "pokeemerald" / "data" / "mystery_event_script_cmd_table.s"
 )
-OUT = ROOT / "data" / "mystery_event_script_cmd_table.inc"
+OUT = ROOT / "data" / "mystery_event_script_cmd_table.s"
 
 TABLE_OFFSET = 0x28D2B4  # file offset of 0x0828D2B4
 TABLE_SIZE = 0x44  # 17 entries x 4 bytes
@@ -35,6 +34,18 @@ def build_label_map():
             m = LABEL_RE.match(line)
             if m:
                 labels.setdefault(int(m.group(2), 16), m.group(1))
+    for line in (ROOT / "funcmap_jp.txt").read_text(encoding="utf-8").splitlines():
+        fields = line.split()
+        if not fields or not re.fullmatch(r"[0-9A-Fa-f]{8}", fields[0]):
+            continue
+        if len(fields) >= 3 and fields[1].endswith((".s", ".c")):
+            symbol = fields[2]
+        elif len(fields) >= 2:
+            symbol = fields[1]
+        else:
+            continue
+        if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", symbol):
+            labels.setdefault(int(fields[0], 16), symbol)
     return labels
 
 
@@ -65,20 +76,27 @@ def main():
     reference = read_reference_entries(ref_path)
 
     lines = [
+        '\t.section script_data, "aw", %progbits',
+        "",
         "\t.align 2",
         "\t.globl gMysteryEventScriptCmdTable",
         "gMysteryEventScriptCmdTable:",
     ]
     matches = 0
+    unresolved = []
     for i, word in enumerate(words):
         handler = labels.get(word & ~1)
         if handler is None:
-            handler = f"0x{word:08X}"
+            unresolved.append(f"0x{word:08X}")
+            continue
         if i < len(reference) and reference[i] == handler:
             matches += 1
         lines.append(f"\t.4byte {handler:<28} @ 0x{i:02X}")
     lines.append("\t.globl gMysteryEventScriptCmdTableEnd")
     lines.append("gMysteryEventScriptCmdTableEnd:")
+
+    if unresolved:
+        sys.exit("unresolved JP mystery event handlers: " + ", ".join(unresolved))
 
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"wrote {OUT} ({len(words)} entries, {matches}/{len(words)} match pokeemerald)")

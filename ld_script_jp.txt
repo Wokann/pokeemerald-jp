@@ -9081,6 +9081,7 @@ SECTIONS {
     ALIGN(4)
     {
         data/event_scripts.o(script_data);
+        data/mystery_event_script_cmd_table.o(script_data);
     } =0
     libtext :
     ALIGN(4)

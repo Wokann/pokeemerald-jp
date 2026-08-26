@@ -4274,11 +4274,3 @@ gUnknown_828A480: @ 0x828A480
 	.globl gUnknown_828C8D8
 gUnknown_828C8D8: @ 0x828C8D8
 	.include "data/scripts/gUnknown_828C8D8.inc"
-
-	.align 2
-	.globl gUnknown_828D2B4
-gUnknown_828D2B4:
-	.include "data/mystery_event_script_cmd_table.inc"
-
-	.globl gUnknown_828D2F8
-gUnknown_828D2F8: @ 0x828D2F8

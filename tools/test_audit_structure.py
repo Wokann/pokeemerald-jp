@@ -304,6 +304,24 @@ class StructureAuditTests(unittest.TestCase):
             (root / "data/event_scripts.s").write_text(
                 '.incbin "baserom_jp.gba", 0x100000, 0x44\n', encoding="utf-8")
             progress = audit.script_data_progress(root, us_root)
+            (root / "ld_script_jp.txt").write_text(
+                "script_data :\n{\n"
+                "    data/event_scripts.o(script_data);\n"
+                "    data/mystery_event_script_cmd_table.o(script_data);\n"
+                "} =0\n",
+                encoding="utf-8",
+            )
+            (root / "pokeemerald_jp.map").write_text(
+                "script_data     0x08100000    0x44\n"
+                " data/event_scripts.o(script_data)\n"
+                " script_data    0x08100000    0x0 data/event_scripts.o\n"
+                " data/mystery_event_script_cmd_table.o(script_data)\n"
+                " script_data    0x08100000    0x44 data/mystery_event_script_cmd_table.o\n"
+                "                0x08100000                gMysteryEventScriptCmdTable\n"
+                "                0x08100044                gMysteryEventScriptCmdTableEnd\n",
+                encoding="utf-8",
+            )
+            linked_progress = audit.script_data_progress(root, us_root)
         candidate = progress["candidate_splits"][0]
         self.assertEqual(progress["linker"]["missing_jp_owners"],
                          ["data/mystery_event_script_cmd_table.o"])
@@ -312,6 +330,7 @@ class StructureAuditTests(unittest.TestCase):
         self.assertEqual(candidate["size"], "0x44")
         self.assertEqual(progress["event_scripts_raw_baserom_ranges"][0]["rom_start"], "0x08100000")
         self.assertEqual(progress["method"]["us_role"], "owner_order_and_source_structure_only")
+        self.assertEqual(linked_progress["candidate_splits"][0]["status"], "linked_as_named_owner")
 
     def test_markdown_report_contains_snapshot_definitions_and_reproduction(self):
         report = audit.build_report(audit.ROOT, audit.DEFAULT_US_ROOT)

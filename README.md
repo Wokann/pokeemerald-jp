@@ -39,7 +39,7 @@ The script-data region (0x1DABAC-0x28D2F8) is being converted from raw
 * `data/script_cmd_table.inc` - `gScriptCmdTable` (225 script commands
   plus the `gScriptCmdTableEnd` sentinel)
 * `data/specials.inc` - `gSpecials` (524 special commands)
-* `data/mystery_event_script_cmd_table.inc` - `gMysteryEventScriptCmdTable`
+* `data/mystery_event_script_cmd_table.s` - `gMysteryEventScriptCmdTable`
   (17 commands)
 * `data/event_scripts.s` - remaining data.  Pointer tables are symbolic
   `.4byte` lists; raw chunks are split at every address referenced by a

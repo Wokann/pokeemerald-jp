@@ -730,14 +730,21 @@ def script_data_progress(root: Path, us_root: Path) -> dict[str, object]:
     if mystery_start and mystery_end and jp_section:
         start, end = int(mystery_start, 16), int(mystery_end, 16)
         if start < end:
+            mystery_owner = "data/mystery_event_script_cmd_table.o"
+            linked_object = next((item for item in jp_map_data["objects"]
+                                  if item["owner"] == mystery_owner), None)
+            linked_exactly = bool(linked_object and linked_object["start"] == mystery_start
+                                  and linked_object["end"] == mystery_end)
             candidate_splits.append({
-                "owner": "data/mystery_event_script_cmd_table.o",
-                "source": "data/mystery_event_script_cmd_table.inc",
+                "owner": mystery_owner,
+                "source": "data/mystery_event_script_cmd_table.s",
                 "start": mystery_start,
                 "end": mystery_end,
                 "size": "0x%X" % (end - start),
                 "terminal_section_range": end == int(jp_section["end"], 16),
-                "status": ("ready_for_zero_displacement_owner_split"
+                "linked_object": linked_object,
+                "status": ("linked_as_named_owner" if linked_exactly else
+                           "ready_for_zero_displacement_owner_split"
                            if end == int(jp_section["end"], 16)
                            else "requires_boundary_review"),
                 "evidence": [
