@@ -10751,6 +10751,35 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    'RustboroCity_Flat2_2F': {
+        'scripts': {
+            0x08203FE9: 'RustboroCity_Flat2_2F_EventScript_OldMan',
+            0x08203FF2: 'RustboroCity_Flat2_2F_EventScript_NinjaBoy',
+            0x08204021: 'RustboroCity_Flat2_2F_EventScript_GavePremierBall',
+        },
+        'texts': {
+            0x0820402B: 'RustboroCity_Flat2_2F_Text_DevonWasTinyInOldDays',
+            0x0820404B: 'RustboroCity_Flat2_2F_Text_MyDaddyMadeThisYouCanHaveIt',
+            0x08204087: 'RustboroCity_Flat2_2F_Text_GoingToWorkAtDevonToo',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'symbols': {
+            'flags': {0x00D5: 'FLAG_RECEIVED_PREMIER_BALL_RUSTBORO'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x08203FF2: {0x800D: {0x00: 'FALSE'}},
+            },
+            'items': {0x000C: 'ITEM_PREMIER_BALL'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
 })
 
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,

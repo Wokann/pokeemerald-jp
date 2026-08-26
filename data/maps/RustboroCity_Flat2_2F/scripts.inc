@@ -3,11 +3,11 @@
 RustboroCity_Flat2_2F_MapScripts::
 	.byte 0
 
-RustboroCity_Flat2_2F_EventScript_OldMan::
+RustboroCity_Flat2_2F_EventScript_OldMan:: @ 0x08203FE9
 	msgbox RustboroCity_Flat2_2F_Text_DevonWasTinyInOldDays, MSGBOX_NPC
 	end
 
-RustboroCity_Flat2_2F_EventScript_NinjaBoy::
+RustboroCity_Flat2_2F_EventScript_NinjaBoy:: @ 0x08203FF2
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_PREMIER_BALL_RUSTBORO, RustboroCity_Flat2_2F_EventScript_GavePremierBall
@@ -18,7 +18,7 @@ RustboroCity_Flat2_2F_EventScript_NinjaBoy::
 	release
 	end
 
-RustboroCity_Flat2_2F_EventScript_GavePremierBall::
+RustboroCity_Flat2_2F_EventScript_GavePremierBall:: @ 0x08204021
 	msgbox RustboroCity_Flat2_2F_Text_GoingToWorkAtDevonToo, MSGBOX_DEFAULT
 	release
 	end
