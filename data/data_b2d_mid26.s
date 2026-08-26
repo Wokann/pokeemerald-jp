@@ -775,8 +775,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route128/events.inc"
 	.include "data/maps/Route129/events.inc"
 	.include "data/maps/Route130/events.inc"
-	.globl gMapEvents_ROUTE130
-	.set gMapEvents_ROUTE130, Route130_MapEvents
 	.include "data/maps/Route131/events.inc"
 	.globl gMapEvents_ROUTE131
 	.set gMapEvents_ROUTE131, Route131_MapEvents
