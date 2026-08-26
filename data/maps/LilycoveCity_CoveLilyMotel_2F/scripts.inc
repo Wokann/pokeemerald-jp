@@ -3,7 +3,7 @@
 LilycoveCity_CoveLilyMotel_2F_MapScripts::
 	.byte 0
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_GameDesigner::
+LilycoveCity_CoveLilyMotel_2F_EventScript_GameDesigner:: @ 0x08205888
 	lock
 	faceplayer
 	call_if_unset FLAG_TEMP_2, LilycoveCity_CoveLilyMotel_2F_EventScript_ShowMeCompletedDex
@@ -13,18 +13,18 @@ LilycoveCity_CoveLilyMotel_2F_EventScript_GameDesigner::
 	release
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_ShowMeCompletedDex:
+LilycoveCity_CoveLilyMotel_2F_EventScript_ShowMeCompletedDex:: @ 0x082058AE
 	msgbox LilycoveCity_CoveLilyMotel_2F_Text_ShowMeCompletedDex, MSGBOX_DEFAULT
 	return
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_AllHoennMonsFanfare:
+LilycoveCity_CoveLilyMotel_2F_EventScript_AllHoennMonsFanfare:: @ 0x082058B7
 	setflag FLAG_TEMP_2
 	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
 	goto LilycoveCity_CoveLilyMotel_2F_EventScript_ShowDiploma
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_ShowDiploma:
+LilycoveCity_CoveLilyMotel_2F_EventScript_ShowDiploma:: @ 0x082058C4
 	message LilycoveCity_CoveLilyMotel_2F_Text_FilledPokedexGiveYouThis
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
@@ -32,27 +32,27 @@ LilycoveCity_CoveLilyMotel_2F_EventScript_ShowDiploma:
 	release
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_Programmer::
+LilycoveCity_CoveLilyMotel_2F_EventScript_Programmer:: @ 0x082058D5
 	msgbox LilycoveCity_CoveLilyMotel_2F_Text_ImTheProgrammer, MSGBOX_NPC
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_GraphicArtist::
+LilycoveCity_CoveLilyMotel_2F_EventScript_GraphicArtist:: @ 0x082058DE
 	msgbox LilycoveCity_CoveLilyMotel_2F_Text_ImTheGraphicArtist, MSGBOX_NPC
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_FatMan::
+LilycoveCity_CoveLilyMotel_2F_EventScript_FatMan:: @ 0x082058E7
 	msgbox LilycoveCity_CoveLilyMotel_2F_Text_GirlsAreCute, MSGBOX_NPC
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_Woman::
+LilycoveCity_CoveLilyMotel_2F_EventScript_Woman:: @ 0x082058F0
 	msgbox LilycoveCity_CoveLilyMotel_2F_Text_SeaBreezeTicklesHeart, MSGBOX_NPC
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_GameBoyKid::
+LilycoveCity_CoveLilyMotel_2F_EventScript_GameBoyKid:: @ 0x082058F9
 	msgbox LilycoveCity_CoveLilyMotel_2F_Text_NeverLeaveWithoutGameBoy, MSGBOX_NPC
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_Scott::
+LilycoveCity_CoveLilyMotel_2F_EventScript_Scott:: @ 0x08205902
 	lock
 	faceplayer
 	goto_if_set FLAG_MET_SCOTT_IN_LILYCOVE, LilycoveCity_CoveLilyMotel_2F_EventScript_MetScott
@@ -62,7 +62,7 @@ LilycoveCity_CoveLilyMotel_2F_EventScript_Scott::
 	release
 	end
 
-LilycoveCity_CoveLilyMotel_2F_EventScript_MetScott:
+LilycoveCity_CoveLilyMotel_2F_EventScript_MetScott:: @ 0x0820591F
 	msgbox LilycoveCity_CoveLilyMotel_2F_Text_ContestsDoTakeStrategy, MSGBOX_DEFAULT
 	release
 	end

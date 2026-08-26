@@ -5174,8 +5174,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_2F (g13 m1)
 	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F  @ mapLayout
-	.4byte gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F  @ events
-	.4byte 0x08205887  @ mapScripts
+	.4byte LilycoveCity_CoveLilyMotel_2F_MapEvents  @ events
+	.4byte LilycoveCity_CoveLilyMotel_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
 	.2byte 0x012C  @ mapLayoutId

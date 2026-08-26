@@ -11167,6 +11167,59 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_CoveLilyMotel_2F': {
+        'scripts': {
+            0x08205888: 'LilycoveCity_CoveLilyMotel_2F_EventScript_GameDesigner',
+            0x082058AE: 'LilycoveCity_CoveLilyMotel_2F_EventScript_ShowMeCompletedDex',
+            0x082058B7: 'LilycoveCity_CoveLilyMotel_2F_EventScript_AllHoennMonsFanfare',
+            0x082058C4: 'LilycoveCity_CoveLilyMotel_2F_EventScript_ShowDiploma',
+            0x082058D5: 'LilycoveCity_CoveLilyMotel_2F_EventScript_Programmer',
+            0x082058DE: 'LilycoveCity_CoveLilyMotel_2F_EventScript_GraphicArtist',
+            0x082058E7: 'LilycoveCity_CoveLilyMotel_2F_EventScript_FatMan',
+            0x082058F0: 'LilycoveCity_CoveLilyMotel_2F_EventScript_Woman',
+            0x082058F9: 'LilycoveCity_CoveLilyMotel_2F_EventScript_GameBoyKid',
+            0x08205902: 'LilycoveCity_CoveLilyMotel_2F_EventScript_Scott',
+            0x0820591F: 'LilycoveCity_CoveLilyMotel_2F_EventScript_MetScott',
+        },
+        'texts': {
+            0x08205929: 'LilycoveCity_CoveLilyMotel_2F_Text_ShowMeCompletedDex',
+            0x08205978: 'LilycoveCity_CoveLilyMotel_2F_Text_FilledPokedexGiveYouThis',
+            0x082059DF: 'LilycoveCity_CoveLilyMotel_2F_Text_ImTheProgrammer',
+            0x08205A08: 'LilycoveCity_CoveLilyMotel_2F_Text_ImTheGraphicArtist',
+            0x08205A27: 'LilycoveCity_CoveLilyMotel_2F_Text_GirlsAreCute',
+            0x08205A85: 'LilycoveCity_CoveLilyMotel_2F_Text_SeaBreezeTicklesHeart',
+            0x08205AA6: 'LilycoveCity_CoveLilyMotel_2F_Text_NeverLeaveWithoutGameBoy',
+            0x08205AE0: 'LilycoveCity_CoveLilyMotel_2F_Text_SnoozingPreferBattles',
+            0x08205BA3: 'LilycoveCity_CoveLilyMotel_2F_Text_ContestsDoTakeStrategy',
+        },
+        'external_labels': {
+            0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
+        },
+        'field_placeholders': {
+            0x08205AE0: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'symbols': {
+            'flags': {
+                0x0002: 'FLAG_TEMP_2',
+                0x01CE: 'FLAG_MET_SCOTT_IN_LILYCOVE',
+            },
+            'vars': {
+                0x40D1: 'VAR_SCOTT_STATE',
+                0x800D: 'VAR_RESULT',
+            },
+            'var_values': {
+                0x800D: {0x01: 'TRUE'},
+            },
+            'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {'addvar': (1,)},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.
