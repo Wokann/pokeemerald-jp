@@ -10633,6 +10633,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x0824390F: 'gText_HowMayIServeYou',
             0x08243920: 'gText_PleaseComeAgain',
         },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 

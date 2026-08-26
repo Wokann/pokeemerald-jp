@@ -3,7 +3,7 @@
 RustboroCity_Mart_MapScripts::
 	.byte 0
 
-RustboroCity_Mart_EventScript_Clerk::
+RustboroCity_Mart_EventScript_Clerk:: @ 0x082035E1
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -12,14 +12,14 @@ RustboroCity_Mart_EventScript_Clerk::
 	goto_if_set FLAG_MET_DEVON_EMPLOYEE, RustboroCity_Mart_EventScript_PokemartExpanded
 	end
 
-RustboroCity_Mart_EventScript_PokemartBasic::
+RustboroCity_Mart_EventScript_PokemartBasic:: @ 0x082035FC
 	pokemart RustboroCity_Mart_Pokemart_Basic
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-RustboroCity_Mart_Pokemart_Basic:
+RustboroCity_Mart_Pokemart_Basic: @ 0x0820360C
 	.2byte ITEM_POKE_BALL
 	.2byte ITEM_POTION
 	.2byte ITEM_SUPER_POTION
@@ -32,14 +32,14 @@ RustboroCity_Mart_Pokemart_Basic:
 	.2byte ITEM_X_DEFEND
 	pokemartlistend
 
-RustboroCity_Mart_EventScript_PokemartExpanded::
+RustboroCity_Mart_EventScript_PokemartExpanded:: @ 0x08203624
 	pokemart RustboroCity_Mart_Pokemart_Expanded
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-RustboroCity_Mart_Pokemart_Expanded:
+RustboroCity_Mart_Pokemart_Expanded: @ 0x08203634
 	.2byte ITEM_POKE_BALL
 	.2byte ITEM_TIMER_BALL
 	.2byte ITEM_REPEAT_BALL
@@ -54,15 +54,15 @@ RustboroCity_Mart_Pokemart_Expanded:
 	.2byte ITEM_X_DEFEND
 	pokemartlistend
 
-RustboroCity_Mart_EventScript_PokefanF::
+RustboroCity_Mart_EventScript_PokefanF:: @ 0x08203650
 	msgbox RustboroCity_Mart_Text_BuyingHealsInCaseOfShroomish, MSGBOX_NPC
 	end
 
-RustboroCity_Mart_EventScript_Boy::
+RustboroCity_Mart_EventScript_Boy:: @ 0x08203659
 	msgbox RustboroCity_Mart_Text_ShouldBuySuperPotionsInstead, MSGBOX_NPC
 	end
 
-RustboroCity_Mart_EventScript_BugCatcher::
+RustboroCity_Mart_EventScript_BugCatcher:: @ 0x08203662
 	msgbox RustboroCity_Mart_Text_GettingEscapeRopeJustInCase, MSGBOX_NPC
 	end
 
