@@ -159,6 +159,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Rusturf Tunnel is the next non-empty physical owner. Its transition and
     # frame hooks plus twenty-two local branches match the reviewed US order.
     'RusturfTunnel': 24,
+    # The immediate successor has a single reviewed OnResume dive-warp hook.
+    'Underwater_SootopolisCity': 1,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -167,6 +169,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
 MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'Route114_FossilManiacsTunnel': ('OnLoad',),
     'MeteorFalls_1F_1R': ('OnLoad',),
+    'Underwater_SootopolisCity': ('OnResume',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -6338,6 +6341,17 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'},
             },
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+        },
+    },
+    # Underwater Sootopolis City immediately follows Rusturf Tunnel. Its only
+    # local script has the same OnResume destination and coordinates as US.
+    'Underwater_SootopolisCity': {
+        'preserve_region_script_aliases': False,
+        'symbols': {
+            'maps': {0x07: 'MAP_SOOTOPOLIS_CITY'},
+            'decimal_arguments': {
+                'setdivewarp': (2, 3),
+            },
         },
     },
 })

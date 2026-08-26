@@ -2278,15 +2278,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/RusturfTunnel/events.inc"
 	.globl gMapEvents_RUSTURF_TUNNEL
 	.set gMapEvents_RUSTURF_TUNNEL, RusturfTunnel_MapEvents
-	.globl UNDERWATER_SOOTOPOLIS_CITY_EventObjects
-UNDERWATER_SOOTOPOLIS_CITY_EventObjects: @ 0x00000000
-	.globl UNDERWATER_SOOTOPOLIS_CITY_EventWarps
-UNDERWATER_SOOTOPOLIS_CITY_EventWarps: @ 0x0850CA5C
-	warp_def 9, 8, 0, 0, MAP_UNDERWATER_ROUTE126
-	warp_def 10, 8, 0, 0, MAP_UNDERWATER_ROUTE126
+	.include "data/maps/Underwater_SootopolisCity/events.inc"
 	.globl gMapEvents_UNDERWATER_SOOTOPOLIS_CITY
-gMapEvents_UNDERWATER_SOOTOPOLIS_CITY: @ 0x0850CA6C
-	map_events 0, UNDERWATER_SOOTOPOLIS_CITY_EventWarps, 0, 0
+	.set gMapEvents_UNDERWATER_SOOTOPOLIS_CITY, Underwater_SootopolisCity_MapEvents
 	.globl DESERT_RUINS_EventObjects
 DESERT_RUINS_EventObjects: @ 0x0850CA80
 	object_event 1, 200, 0, 8, 7, 3, 8, 0, 0, 0, 0, DesertRuins_EventScript_00213E86, 0x03A7
