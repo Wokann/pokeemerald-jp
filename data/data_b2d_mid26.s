@@ -761,52 +761,7 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/Route115/events.inc"
 	.include "data/maps/Route116/events.inc"
 	.include "data/maps/Route117/events.inc"
-	.globl ROUTE118_EventObjects
-ROUTE118_EventObjects: @ 0x085031C0
-	object_event 1, 60, 0, 35, 5, 3, 12, 0, 0, 0, 31, 0x08244D23, 0x0000
-	object_event 2, 60, 0, 36, 5, 3, 12, 0, 0, 0, 32, 0x08244D23, 0x0000
-	object_event 3, 60, 0, 37, 5, 3, 12, 0, 0, 0, 33, 0x08244D23, 0x0000
-	object_event 4, 66, 0, 64, 10, 3, 8, 0, 0, 1, 3, Route118_EventScript_Perry, 0x0000
-	object_event 5, 68, 0, 33, 8, 3, 8, 0, 0, 0, 0, 0x0825422E, 0x031D
-	object_event 6, 110, 0, 34, 8, 3, 8, 0, 0, 0, 0, 0x0825424E, 0x031D
-	object_event 7, 10, 0, 12, 10, 3, 2, 1, 1, 0, 0, Route118_EventScript_Girl, 0x0000
-	object_event 8, 68, 0, 33, 8, 3, 8, 0, 0, 0, 0, 0x082542EE, 0x0385
-	object_event 9, 110, 0, 34, 8, 3, 8, 0, 0, 0, 0, 0x0825430E, 0x0385
-	object_event 10, 68, 0, 33, 8, 3, 8, 0, 0, 0, 0, 0x0825432E, 0x0388
-	object_event 11, 110, 0, 34, 8, 3, 8, 0, 0, 0, 0, 0x0825434E, 0x0388
-	object_event 12, 82, 0, 38, 8, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0011
-	object_event 13, 50, 0, 28, 8, 3, 9, 0, 0, 0, 0, Route118_EventScript_GoodRodFisherman, 0x0000
-	object_event 14, 20, 0, 7, 12, 3, 7, 0, 0, 1, 4, Route118_EventScript_Rose, 0x0000
-	object_event 15, 50, 0, 14, 14, 3, 8, 0, 0, 1, 0, Route118_EventScript_Wade, 0x0000
-	object_event 16, 66, 0, 56, 7, 3, 16, 0, 0, 1, 3, Route118_EventScript_Chester, 0x0000
-	object_event 17, 50, 0, 39, 15, 3, 1, 0, 0, 1, 2, Route118_EventScript_Barny, 0x0000
-	object_event 18, 66, 0, 17, 11, 3, 15, 1, 1, 1, 3, Route118_EventScript_Dalton, 0x0000
-	object_event 19, 134, 0, 44, 7, 3, 8, 1, 1, 0, 0, 0x00000000, 0x03C6
-	object_event 20, 59, 0, 69, 7, 3, 1, 1, 1, 0, 0, 0x08256C2A, 0x0461
-	object_event 21, 35, 0, 7, 7, 3, 8, 1, 1, 1, 4, Route118_EventScript_Deandre, 0x0000
-	.globl ROUTE118_EventWarps
-ROUTE118_EventWarps: @ 0x085033B8
-	warp_def 42, 6, 0, 0, MAP_TERRA_CAVE_ENTRANCE
-	warp_def 9, 6, 0, 0, MAP_TERRA_CAVE_ENTRANCE
-	.globl ROUTE118_EventCoordEvents
-ROUTE118_EventCoordEvents: @ 0x085033C8
-	coord_event 43, 11, 3, 16497, 0, Route118_EventScript_StevenTrigger0
-	coord_event 44, 11, 3, 16497, 0, Route118_EventScript_StevenTrigger1
-	coord_event 45, 11, 3, 16497, 0, Route118_EventScript_StevenTrigger2
-	.globl ROUTE118_EventBgEvents
-ROUTE118_EventBgEvents: @ 0x085033F8
-	bg_event 47, 14, 0, 8, 0x0001, 0x00, 0x00
-	bg_event 13, 6, 0, 0, Route118_EventScript_RouteSignMauville, 0, 0
-	bg_event 56, 8, 0, 0, Route118_EventScript_RouteSign119, 0, 0
-	bg_event 67, 6, 0, 8, 0x000B, 0x00, 0x00
-	bg_event 29, 5, 0, 8, 0x007A, 0x00, 0x00
-	bg_event 47, 5, 0, 8, 0x00A3, 0x00, 0x00
-	bg_event 46, 5, 0, 8, 0x00AB, 0x00, 0x00
-	bg_event 31, 13, 3, 7, 0x0041, 0x43, 0x00
-	bg_event 12, 14, 3, 7, 0x006F, 0x42, 0x00
-	.globl gMapEvents_ROUTE118
-gMapEvents_ROUTE118: @ 0x08503464
-	map_events ROUTE118_EventObjects, ROUTE118_EventWarps, ROUTE118_EventCoordEvents, ROUTE118_EventBgEvents
+	.include "data/maps/Route118/events.inc"
 	.globl ROUTE119_EventObjects
 ROUTE119_EventObjects: @ 0x08503478
 	object_event 1, 60, 0, 24, 5, 3, 12, 0, 0, 0, 34, 0x08244D23, 0x0000

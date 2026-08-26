@@ -4565,6 +4565,11 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route118']['labels'],
         'external_labels': {
+            0x08243635: 'Common_Movement_FaceUp',
+            0x082443AF: 'AbnormalWeather_EventScript_PlaceTilesRoute118East',
+            0x082443C2: 'AbnormalWeather_EventScript_PlaceTilesRoute118West',
+            0x08244745: 'AbnormalWeather_StartGroudonWeather',
+            0x082540DF: 'GabbyAndTy_EventScript_UpdateLocation',
             0x0824473D: 'AbnormalWeather_EventScript_HideMapNamePopup',
             0x08244749: 'AbnormalWeather_EventScript_EndEventAndCleanup_1',
         },

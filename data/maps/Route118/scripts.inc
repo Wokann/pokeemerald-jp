@@ -7,19 +7,19 @@ Route118_MapScripts::
 	.byte 0
 
 Route118_OnTransition::
-	call 0x082540DF
-	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_HideMapNamePopup
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_EAST, 0x08244745
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_WEST, 0x08244745
+	call GabbyAndTy_EventScript_UpdateLocation
+	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_EAST, AbnormalWeather_StartGroudonWeather
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_WEST, AbnormalWeather_StartGroudonWeather
 	end
 
 Route118_OnLoad::
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_EAST, 0x082443AF
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_WEST, 0x082443C2
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_EAST, AbnormalWeather_EventScript_PlaceTilesRoute118East
+	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_118_WEST, AbnormalWeather_EventScript_PlaceTilesRoute118West
 	end
 
 Route118_OnFrame::
-	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 0x1, AbnormalWeather_EventScript_EndEventAndCleanup_1
+	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
 Route118_EventScript_GoodRodFisherman::
@@ -27,15 +27,13 @@ Route118_EventScript_GoodRodFisherman::
 	faceplayer
 	goto_if_set FLAG_RECEIVED_GOOD_ROD, Route118_EventScript_ReceivedGoodRod
 	msgbox Route118_Text_YouAgreeGoodRodIsGood, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, 0x1, Route118_EventScript_ReceiveGoodRod
-	goto_if_eq VAR_RESULT, 0x0, Route118_EventScript_DeclineGoodRod
+	goto_if_eq VAR_RESULT, YES, Route118_EventScript_ReceiveGoodRod
+	goto_if_eq VAR_RESULT, NO, Route118_EventScript_DeclineGoodRod
 	end
 
 Route118_EventScript_ReceiveGoodRod::
 	msgbox Route118_Text_IdenticalMindsTakeThis, MSGBOX_DEFAULT
-	setorcopyvar VAR_0x8000, ITEM_GOOD_ROD
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
+	giveitem ITEM_GOOD_ROD
 	setflag FLAG_RECEIVED_GOOD_ROD
 	msgbox Route118_Text_TryYourLuckFishing, MSGBOX_DEFAULT
 	release
@@ -65,43 +63,43 @@ Route118_EventScript_RouteSign119::
 
 Route118_EventScript_StevenTrigger0::
 	lockall
-	setvar VAR_0x8008, 0x0
-	applymovement LOCALID_PLAYER, 0x08243635
-	waitmovement 0x0
+	setvar VAR_0x8008, 0
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
 	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenApproachLedge0
-	waitmovement 0x0
+	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
 	end
 
 Route118_EventScript_StevenTrigger1::
 	lockall
-	setvar VAR_0x8008, 0x1
-	applymovement LOCALID_PLAYER, 0x08243635
-	waitmovement 0x0
+	setvar VAR_0x8008, 1
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
 	end
 
 Route118_EventScript_StevenTrigger2::
 	lockall
-	setvar VAR_0x8008, 0x2
-	applymovement LOCALID_PLAYER, 0x08243635
-	waitmovement 0x0
+	setvar VAR_0x8008, 2
+	applymovement LOCALID_PLAYER, Common_Movement_FaceUp
+	waitmovement 0
 	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenApproachLedge2
-	waitmovement 0x0
+	waitmovement 0
 	goto Route118_EventScript_StevenTrigger
 	end
 
 Route118_EventScript_StevenTrigger::
 	playse SE_LEDGE
 	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenJumpLedge
-	waitmovement 0x0
-	delay 0x1E
+	waitmovement 0
+	delay 30
 	msgbox Route118_Text_StevenQuestions, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_0x8008, 0x0, Route118_EventScript_StevenExit0
-	call_if_eq VAR_0x8008, 0x1, Route118_EventScript_StevenExit1
-	call_if_eq VAR_0x8008, 0x2, Route118_EventScript_StevenExit2
-	setvar VAR_ROUTE118_STATE, 0x1
+	call_if_eq VAR_0x8008, 0, Route118_EventScript_StevenExit0
+	call_if_eq VAR_0x8008, 1, Route118_EventScript_StevenExit1
+	call_if_eq VAR_0x8008, 2, Route118_EventScript_StevenExit2
+	setvar VAR_ROUTE118_STATE, 1
 	removeobject LOCALID_ROUTE118_STEVEN
 	releaseall
 	end
@@ -109,19 +107,19 @@ Route118_EventScript_StevenTrigger::
 Route118_EventScript_StevenExit0::
 	applymovement LOCALID_PLAYER, Route118_Movement_PlayerWatchStevenExit
 	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenExit0
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route118_EventScript_StevenExit1::
 	applymovement LOCALID_PLAYER, Route118_Movement_PlayerWatchStevenExit
 	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenExit1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route118_EventScript_StevenExit2::
 	applymovement LOCALID_PLAYER, Route118_Movement_PlayerWatchStevenExit
 	applymovement LOCALID_ROUTE118_STEVEN, Route118_Movement_StevenExit2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route118_Movement_PlayerWatchStevenExit:
@@ -189,7 +187,7 @@ Route118_EventScript_Rose::
 
 Route118_EventScript_RegisterRose::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route118_Text_RoseRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_ROSE_1
 	release
@@ -220,7 +218,7 @@ Route118_EventScript_Dalton::
 
 Route118_EventScript_RegisterDalton::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route118_Text_DaltonRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_DALTON_1
 	release

@@ -364,24 +364,11 @@
 	.set MatchCall_Text_MayRayquazaCall, 0x0826AB1B
 	.globl MatchCall_Text_BrendanRayquazaCall
 	.set MatchCall_Text_BrendanRayquazaCall, 0x0826ABC8
-	@ Rustboro uses these retained shared movement streams under the upstream
-	@ names; their JP byte addresses match the map-scene behavior exactly.
-	.globl Common_Movement_FaceRight
-	.set Common_Movement_FaceRight, 0x0824362F
-	.globl Common_Movement_FaceLeft
-	.set Common_Movement_FaceLeft, 0x08243631
-	.globl Common_Movement_FaceDown
-	.set Common_Movement_FaceDown, 0x08243633
-	.globl Common_Movement_WalkInPlaceDown
-	.set Common_Movement_WalkInPlaceDown, 0x08243637
 	.globl Common_Movement_WalkInPlaceFasterDown
 	.set Common_Movement_WalkInPlaceFasterDown, 0x0824362D
-	@ These two shared movement streams remain in the retained JP movement
-	@ block; the map source uses the matching pokeemerald semantic names.
+	@ This shared movement stream remains in the retained JP movement block.
 	.globl Common_Movement_QuestionMark
 	.set Common_Movement_QuestionMark, 0x08243619
-	.globl Common_Movement_FaceUp
-	.set Common_Movement_FaceUp, 0x08243635
 	.globl gText_NicknameThisPokemon
 	.set gText_NicknameThisPokemon, 0x08243EDB
 	.globl Common_EventScript_UpdateBrineyLocation

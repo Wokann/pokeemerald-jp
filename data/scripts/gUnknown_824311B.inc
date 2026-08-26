@@ -142,4 +142,24 @@ Common_Movement_WalkInPlaceFasterDown: @ 0x0824362D
 	walk_in_place_faster_down
 	step_end
 
-	.incbin "baserom_jp.gba", 0x24362f, 0x22
+Common_Movement_FaceRight:: @ 0x0824362F
+	face_right
+	step_end
+
+Common_Movement_FaceLeft:: @ 0x08243631
+	face_left
+	step_end
+
+Common_Movement_FaceDown:: @ 0x08243633
+	face_down
+	step_end
+
+Common_Movement_FaceUp:: @ 0x08243635
+	face_up
+	step_end
+
+Common_Movement_WalkInPlaceDown:: @ 0x08243637
+	walk_in_place_down
+	step_end
+
+	.incbin "baserom_jp.gba", 0x243639, 0x18
