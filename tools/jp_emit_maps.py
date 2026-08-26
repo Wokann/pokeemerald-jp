@@ -11397,6 +11397,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082430FD: 'Common_EventScript_NoRoomForDecor',
             0x08243621: 'Common_Movement_FacePlayer',
         },
+        'specials': {
+            'CountPlayerContestPaintings': 'CountPlayerMuseumPaintings',
+        },
         # The paired US curator messages prove that FD 01 is the player name
         # in these three JP text records; do not expose raw control indices.
         'field_placeholders': {
@@ -11424,6 +11427,15 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 # this VAR_0x8000 value is a decoration rather than an item.
                 0x08206396: {0x8000: {0x002C: 'DECOR_GLASS_ORNAMENT'}},
             },
+            'script_literal_values': {
+                # Emerald encodes this state update as copyvar with literal
+                # one; the US source exposes the byte-exact compatibility
+                # wrapper as a decimal literal.
+                0x082062B4: {'copyvar': {1: {0x01: '1'}}},
+            },
+            'map_script_values': {
+                0x4094: {0x00: '0'},
+            },
             'local_ids': {
                 0x01: 'LOCALID_MUSEUM_2F_CURATOR',
                 0xFF: 'LOCALID_PLAYER',
@@ -11450,7 +11462,15 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x0D: 'CONTEST_WINNER_MUSEUM_TOUGH',
             },
             'fade_modes': {0x1: 'FADE_TO_BLACK'},
+            'decimal_arguments': {
+                'setmetatile': (0, 1),
+                'waitmovement': (0,),
+            },
         },
+        'local_scripts': (0x082061F1,),
+        'local_tables': (0x082062AA,),
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 
@@ -16241,6 +16261,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
     script_aliases = semantic.get('script_aliases', {})
     preserve_region_script_aliases = semantic.get('preserve_region_script_aliases', True)
     preserve_region_text_aliases = semantic.get('preserve_region_text_aliases', True)
+    local_tables = set(semantic.get('local_tables', ()))
     implicit_waitstate_specials = semantic.get('implicit_waitstate_specials', ())
     shop_lists = {}
     for raw_start, label, products in MAP_POKEMART_LISTS.get(mname, ()):
@@ -16508,7 +16529,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         elif kind == 'frame_table':
             table_label = verified_table_labels.get(
                 start, '%s_MapScriptTable_%08X' % (mname, start & 0xFFFFFF))
-            lines.append('%s:: @ 0x%08X' % (table_label, start))
+            table_terminator = ':' if start in local_tables else '::'
+            lines.append('%s%s @ 0x%08X' % (table_label, table_terminator, start))
             for var, cmp, sptr in parse_frame_table(start):
                 rendered_var = semantic_map_variable(mname, var) or '0x%X' % var
                 rendered_cmp = (
