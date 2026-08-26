@@ -2,9 +2,9 @@
 """Generate JP-local map header and connection sources from canonical map.json.
 
 The JP project has not yet migrated its complete layouts.json table.  This
-small companion to mapjson therefore emits the normal US-style map source and
-adds only zero-byte aliases from the temporary gMapLayout_* names and legacy
-connection labels.  It never derives data from the US checkout.
+small companion to mapjson therefore emits direct references to the existing
+gMapLayout_* labels until that table is split by map.  It never derives data
+from the US checkout.
 """
 
 from __future__ import annotations
@@ -41,21 +41,14 @@ def warning(map_name: str) -> str:
     )
 
 
-def legacy_layout_symbol(layout_id: str) -> str:
+def layout_symbol(layout_id: str) -> str:
     if not layout_id.startswith("LAYOUT_"):
         raise ValueError(f"layout must begin with LAYOUT_: {layout_id}")
     return "gMapLayout_" + layout_id.removeprefix("LAYOUT_")
 
 
-def legacy_connection_stem(map_id: str) -> str:
-    if not map_id.startswith("MAP_"):
-        raise ValueError(f"id must begin with MAP_: {map_id}")
-    return map_id.removeprefix("MAP_")
-
-
 def render_header(data: dict[str, Any]) -> str:
     name = require_string(data, "name")
-    map_id = require_string(data, "id")
     layout_id = require_string(data, "layout")
     connections = data.get("connections", [])
     if not isinstance(connections, list):
@@ -66,16 +59,12 @@ def render_header(data: dict[str, Any]) -> str:
         if connections and data.get("connections_no_include") is not True
         else "NULL"
     )
-    layout_symbol = legacy_layout_symbol(layout_id)
+    map_layout_symbol = layout_symbol(layout_id)
 
     return (
         f"{warning(name)}\n"
-        "@ The JP layout table still exports the legacy gMapLayout_* name.\n"
-        "@ Keep this zero-byte alias until that table is split by map.\n"
-        f"\t.globl {name}_Layout\n"
-        f"\t.set {name}_Layout, {layout_symbol}\n\n"
         f"{name}:\n"
-        f"\t.4byte {name}_Layout\n"
+        f"\t.4byte {map_layout_symbol}\n"
         f"\t.4byte {name}_MapEvents\n"
         f"\t.4byte {name}_MapScripts\n"
         f"\t.4byte {connection_label}\n"
@@ -97,14 +86,12 @@ def render_header(data: dict[str, Any]) -> str:
 
 def render_connections(data: dict[str, Any]) -> str:
     name = require_string(data, "name")
-    map_id = require_string(data, "id")
     connections = data.get("connections", [])
     if not isinstance(connections, list):
         raise ValueError("connections must be an array")
     if not connections:
         return warning(name)
 
-    legacy_stem = legacy_connection_stem(map_id)
     lines = [warning(name).rstrip(), "", f"{name}_MapConnectionsList:"]
     for connection in connections:
         if not isinstance(connection, dict):
@@ -121,14 +108,9 @@ def render_connections(data: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            f"\t.globl {legacy_stem}_MapConnections",
-            f"\t.set {legacy_stem}_MapConnections, {name}_MapConnectionsList",
-            "",
             f"{name}_MapConnections:",
             f"\t.4byte {len(connections)}",
             f"\t.4byte {name}_MapConnectionsList",
-            f"\t.globl gMapConnections_{legacy_stem}",
-            f"\t.set gMapConnections_{legacy_stem}, {name}_MapConnections",
             "",
         ]
     )

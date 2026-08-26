@@ -6,11 +6,6 @@ Underwater_Route128_MapConnectionsList:
 	connection up, 0, MAP_UNDERWATER_ROUTE127
 	connection emerge, 0, MAP_ROUTE128
 
-	.globl UNDERWATER_ROUTE128_MapConnections
-	.set UNDERWATER_ROUTE128_MapConnections, Underwater_Route128_MapConnectionsList
-
 Underwater_Route128_MapConnections:
 	.4byte 2
 	.4byte Underwater_Route128_MapConnectionsList
-	.globl gMapConnections_UNDERWATER_ROUTE128
-	.set gMapConnections_UNDERWATER_ROUTE128, Underwater_Route128_MapConnections

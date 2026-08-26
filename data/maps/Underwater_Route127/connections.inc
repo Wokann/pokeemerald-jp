@@ -7,11 +7,6 @@ Underwater_Route127_MapConnectionsList:
 	connection left, 0, MAP_UNDERWATER_ROUTE126
 	connection down, 0, MAP_UNDERWATER_ROUTE128
 
-	.globl UNDERWATER_ROUTE127_MapConnections
-	.set UNDERWATER_ROUTE127_MapConnections, Underwater_Route127_MapConnectionsList
-
 Underwater_Route127_MapConnections:
 	.4byte 3
 	.4byte Underwater_Route127_MapConnectionsList
-	.globl gMapConnections_UNDERWATER_ROUTE127
-	.set gMapConnections_UNDERWATER_ROUTE127, Underwater_Route127_MapConnections

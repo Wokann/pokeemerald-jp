@@ -1293,20 +1293,10 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.globl gMapEvents_ROUTE134
 	.set gMapEvents_ROUTE134, Route134_MapEvents
 	.include "data/maps/Underwater_Route124/events.inc"
-	.globl gMapEvents_UNDERWATER_ROUTE124
-	.set gMapEvents_UNDERWATER_ROUTE124, Underwater_Route124_MapEvents
 	.include "data/maps/Underwater_Route126/events.inc"
-	.globl gMapEvents_UNDERWATER_ROUTE126
-	.set gMapEvents_UNDERWATER_ROUTE126, Underwater_Route126_MapEvents
 	.include "data/maps/Underwater_Route127/events.inc"
-	.globl gMapEvents_UNDERWATER_ROUTE127
-	.set gMapEvents_UNDERWATER_ROUTE127, Underwater_Route127_MapEvents
 	.include "data/maps/Underwater_Route128/events.inc"
-	.globl gMapEvents_UNDERWATER_ROUTE128
-	.set gMapEvents_UNDERWATER_ROUTE128, Underwater_Route128_MapEvents
 	.include "data/maps/Underwater_Route129/events.inc"
-	.globl gMapEvents_UNDERWATER_ROUTE129
-	.set gMapEvents_UNDERWATER_ROUTE129, Underwater_Route129_MapEvents
 	.include "data/maps/Underwater_Route105/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE105
 	.set gMapEvents_UNDERWATER_ROUTE105, Underwater_Route105_MapEvents

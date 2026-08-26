@@ -2,13 +2,8 @@
 @ DO NOT MODIFY THIS FILE! It is auto-generated from data/maps/Underwater_Route126/map.json
 @
 
-@ The JP layout table still exports the legacy gMapLayout_* name.
-@ Keep this zero-byte alias until that table is split by map.
-	.globl Underwater_Route126_Layout
-	.set Underwater_Route126_Layout, gMapLayout_UNDERWATER_ROUTE126
-
 Underwater_Route126:
-	.4byte Underwater_Route126_Layout
+	.4byte gMapLayout_UNDERWATER_ROUTE126
 	.4byte Underwater_Route126_MapEvents
 	.4byte Underwater_Route126_MapScripts
 	.4byte Underwater_Route126_MapConnections
