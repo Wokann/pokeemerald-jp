@@ -6,47 +6,47 @@ LittlerootTown_MaysHouse_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, LittlerootTown_MaysHouse_1F_OnFrame
 	.byte 0
 
-LittlerootTown_MaysHouse_1F_OnLoad::
+LittlerootTown_MaysHouse_1F_OnLoad:: @ 0x081F0368
 	call_if_lt VAR_LITTLEROOT_INTRO_STATE, 0x6, LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes
 	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_MaysHouse_1F_EventScript_CheckShowShoesManual
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes::
+LittlerootTown_MaysHouse_1F_EventScript_SetMovingBoxes:: @ 0x081F037D
 	setmetatile 0x5, 0x4, METATILE_BrendansMaysHouse_MovingBox_Open, TRUE
 	setmetatile 0x5, 0x2, METATILE_BrendansMaysHouse_MovingBox_Closed, TRUE
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_CheckShowShoesManual::
+LittlerootTown_MaysHouse_1F_EventScript_CheckShowShoesManual:: @ 0x081F0390
 	checkplayergender
 	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual::
+LittlerootTown_MaysHouse_1F_EventScript_ShowRunningShoesManual:: @ 0x081F039D
 	setmetatile 0x6, 0x7, METATILE_BrendansMaysHouse_BookOnTable, TRUE
 	return
 
-LittlerootTown_MaysHouse_1F_OnTransition::
+LittlerootTown_MaysHouse_1F_OnTransition:: @ 0x081F03A7
 	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 0x3, LittlerootTown_MaysHouse_1F_EventScript_MoveMomToDoor
 	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 0x5, LittlerootTown_MaysHouse_1F_EventScript_MoveMomToStairs
 	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 0x6, LittlerootTown_MaysHouse_1F_EventScript_MoveMomToTV
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_MoveMomToStairs::
+LittlerootTown_MaysHouse_1F_EventScript_MoveMomToStairs:: @ 0x081F03C9
 	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 0x2, 0x4
 	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_MoveMomToTV::
+LittlerootTown_MaysHouse_1F_EventScript_MoveMomToTV:: @ 0x081F03D5
 	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 0x6, 0x5
 	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_MoveMomToDoor::
+LittlerootTown_MaysHouse_1F_EventScript_MoveMomToDoor:: @ 0x081F03E1
 	setobjectxyperm LOCALID_PLAYERS_HOUSE_1F_MOM, 0x1, 0x8
 	setobjectmovementtype LOCALID_PLAYERS_HOUSE_1F_MOM, MOVEMENT_TYPE_FACE_UP
 	return
 
-LittlerootTown_MaysHouse_1F_OnFrame::
+LittlerootTown_MaysHouse_1F_OnFrame:: @ 0x081F03ED
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 0x3, LittlerootTown_MaysHouse_1F_EventScript_EnterHouseMovingIn
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 0x5, LittlerootTown_MaysHouse_1F_EventScript_GoUpstairsToSetClock
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 0x6, LittlerootTown_MaysHouse_1F_EventScript_PetalburgGymReport
@@ -54,13 +54,13 @@ LittlerootTown_MaysHouse_1F_OnFrame::
 	map_script_2 VAR_LITTLEROOT_HOUSES_STATE_MAY, 0x3, PlayersHouse_1F_EventScript_GetSSTicketAndSeeLatiTV
 	.2byte 0
 
-LittlerootTown_MaysHouse_1F_EventScript_GoUpstairsToSetClock::
+LittlerootTown_MaysHouse_1F_EventScript_GoUpstairsToSetClock:: @ 0x081F0417
 	lockall
 	msgbox PlayersHouse_1F_Text_GoSetTheClock, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_1F_Movement_PushTowardStairs
 	applymovement LOCALID_PLAYERS_HOUSE_1F_MOM, LittlerootTown_MaysHouse_1F_Movement_PushTowardStairs
-	waitmovement 0x0
+	waitmovement 0
 	warp MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F, 0x1, 0x1
 	waitstate
 	releaseall
@@ -70,30 +70,30 @@ LittlerootTown_MaysHouse_1F_Movement_PushTowardStairs:
 	walk_up
 	step_end
 
-LittlerootTown_MaysHouse_1F_EventScript_EnterHouseMovingIn::
+LittlerootTown_MaysHouse_1F_EventScript_EnterHouseMovingIn:: @ 0x081F043F
 	lockall
 	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
 	setvar VAR_0x8005, FEMALE
 	goto PlayersHouse_1F_EventScript_EnterHouseMovingIn
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_PetalburgGymReport::
+LittlerootTown_MaysHouse_1F_EventScript_PetalburgGymReport:: @ 0x081F0450
 	lockall
 	setvar VAR_0x8004, FEMALE
 	setvar VAR_0x8005, LOCALID_PLAYERS_HOUSE_1F_MOM
 	goto PlayersHouse_1F_EventScript_PetalburgGymReportFemale
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_YoureNewNeighbor::
+LittlerootTown_MaysHouse_1F_EventScript_YoureNewNeighbor:: @ 0x081F0461
 	lockall
 	playse SE_PIN
 	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_ExclamationMark
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_Delay48
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
 	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, LittlerootTown_MaysHouse_1F_Movement_RivalMomApproach
-	waitmovement 0x0
+	waitmovement 0
 	special GetRivalSonDaughterString
 	msgbox RivalsHouse_1F_Text_OhYoureTheNewNeighbor, MSGBOX_DEFAULT
 	setflag FLAG_MET_RIVAL_MOM
@@ -110,7 +110,7 @@ LittlerootTown_MaysHouse_1F_Movement_RivalMomApproach:
 	walk_left
 	step_end
 
-RivalsHouse_1F_EventScript_RivalMom::
+RivalsHouse_1F_EventScript_RivalMom:: @ 0x081F04A6
 	lock
 	faceplayer
 	goto_if_set FLAG_DEFEATED_RIVAL_ROUTE103, RivalsHouse_1F_EventScript_GoHomeEverySoOften
@@ -121,22 +121,22 @@ RivalsHouse_1F_EventScript_RivalMom::
 	release
 	end
 
-RivalsHouse_1F_EventScript_RivalTooBusy::
+RivalsHouse_1F_EventScript_RivalTooBusy:: @ 0x081F04D2
 	msgbox RivalsHouse_1F_Text_TooBusyToNoticeVisit, MSGBOX_DEFAULT
 	release
 	end
 
-RivalsHouse_1F_EventScript_RivalIsOnRoute103::
+RivalsHouse_1F_EventScript_RivalIsOnRoute103:: @ 0x081F04DC
 	msgbox RivalsHouse_1F_Text_WentOutToRoute103, MSGBOX_DEFAULT
 	release
 	end
 
-RivalsHouse_1F_EventScript_GoHomeEverySoOften::
+RivalsHouse_1F_EventScript_GoHomeEverySoOften:: @ 0x081F04E6
 	msgbox RivalsHouse_1F_Text_ShouldGoHomeEverySoOften, MSGBOX_DEFAULT
 	release
 	end
 
-RivalsHouse_1F_EventScript_RivalSibling::
+RivalsHouse_1F_EventScript_RivalSibling:: @ 0x081F04F0
 	lock
 	faceplayer
 	special GetPlayerBigGuyGirlString
@@ -144,43 +144,43 @@ RivalsHouse_1F_EventScript_RivalSibling::
 	release
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_GoSeeRoom::
+LittlerootTown_MaysHouse_1F_EventScript_GoSeeRoom:: @ 0x081F04FF
 	lockall
 	setvar VAR_0x8004, LOCALID_PLAYERS_HOUSE_1F_MOM
 	setvar VAR_0x8005, FEMALE
 	applymovement VAR_0x8004, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0x0
+	waitmovement 0
 	goto PlayersHouse_1F_EventScript_MomGoSeeRoom
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_MeetRival0::
+LittlerootTown_MaysHouse_1F_EventScript_MeetRival0:: @ 0x081F051A
 	lockall
 	setvar VAR_0x8008, 0x0
 	goto LittlerootTown_MaysHouse_1F_EventScript_MeetRival
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_MeetRival1::
+LittlerootTown_MaysHouse_1F_EventScript_MeetRival1:: @ 0x081F0526
 	lockall
 	setvar VAR_0x8008, 0x1
 	goto LittlerootTown_MaysHouse_1F_EventScript_MeetRival
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_MeetRival2::
+LittlerootTown_MaysHouse_1F_EventScript_MeetRival2:: @ 0x081F0532
 	lockall
 	setvar VAR_0x8008, 0x2
 	goto LittlerootTown_MaysHouse_1F_EventScript_MeetRival
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_MeetRival::
+LittlerootTown_MaysHouse_1F_EventScript_MeetRival:: @ 0x081F053E
 	playse SE_EXIT
 	delay 0xA
 	addobject LOCALID_RIVALS_HOUSE_1F_RIVAL
 	delay 0x1E
 	playse SE_PIN
 	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, Common_Movement_ExclamationMark
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, Common_Movement_Delay48
-	waitmovement 0x0
+	waitmovement 0
 	call_if_ne VAR_0x8008, 0x1, LittlerootTown_MaysHouse_1F_EventScript_PlayerFaceMay
 	playbgm MUS_ENCOUNTER_MAY, TRUE
 	call_if_eq VAR_0x8008, 0x0, LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer0
@@ -204,24 +204,24 @@ LittlerootTown_MaysHouse_1F_EventScript_MeetRival::
 	releaseall
 	end
 
-LittlerootTown_MaysHouse_1F_EventScript_PlayerFaceMay::
+LittlerootTown_MaysHouse_1F_EventScript_PlayerFaceMay:: @ 0x081F05DD
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer0::
+LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer0:: @ 0x081F05E8
 	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayApproachPlayer0
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer1::
+LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer1:: @ 0x081F05F3
 	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayApproachPlayer1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer2::
+LittlerootTown_MaysHouse_1F_EventScript_MayApproachPlayer2:: @ 0x081F05FE
 	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayApproachPlayer2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 LittlerootTown_MaysHouse_1F_Movement_MayApproachPlayer0:
@@ -250,22 +250,22 @@ LittlerootTown_MaysHouse_1F_Movement_MayApproachPlayer2:
 	walk_up
 	step_end
 
-LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs0::
+LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs0:: @ 0x081F061D
 	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit0
 	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayGoUpstairs0
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs1::
+LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs1:: @ 0x081F062F
 	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit1
 	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayGoUpstairs1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs2::
+LittlerootTown_MaysHouse_1F_EventScript_MayGoUpstairs2:: @ 0x081F0641
 	applymovement LOCALID_PLAYER, LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit2
 	applymovement LOCALID_RIVALS_HOUSE_1F_RIVAL, LittlerootTown_MaysHouse_1F_Movement_MayGoUpstairs2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 LittlerootTown_MaysHouse_1F_Movement_PlayerWatchMayExit0:
