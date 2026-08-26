@@ -12018,6 +12018,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LilycoveCity_Harbor': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
+        'local_scripts': (0x082094DA,),
         'external_labels': {
             0x08243265: 'Common_EventScript_FerryDepart',
             0x0824361B: 'Common_Movement_ExclamationMark',
@@ -12043,9 +12044,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'display_text_and_get_width_internal': 'ScriptMenu_CreateLilycoveSSTidalMultichoice',
             'sub_080E1D6C': 'GetLilycoveSSTidalSelection',
         },
-        'implicit_waitstate_specials': (
-            'ScriptMenu_CreateLilycoveSSTidalMultichoice',
-        ),
         'field_placeholders': {
             0x08209C16: {0x01: 'PLAYER'},
             0x08209C52: {0x01: 'PLAYER'},
@@ -12083,6 +12081,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x0178: 'ITEM_OLD_SEA_MAP',
             },
             'maps': {
+                0x0000: 'MAP_NONE',
                 0x0005: 'MAP_LILYCOVE_CITY',
                 0x0D0A: 'MAP_LILYCOVE_CITY_HARBOR',
                 0x1929: 'MAP_SS_TIDAL_CORRIDOR',
@@ -12107,6 +12106,14 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
             'switch_values': {
                 'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'},
+            },
+            'decimal_arguments': {
+                'addvar': (1,),
+                'compare_var_to_value': (1,),
+                'delay': (0,),
+                'setescapewarp': (2, 3),
+                'setvar': (1,),
+                'warp': (2, 3),
             },
         },
     },
@@ -14961,6 +14968,7 @@ CANONICAL_SCRIPT_COMMAND_NAMES = {
     'getpricereduction': 'getpokenewsactive',
     # Both JP spellings use the same established Emerald source macros.
     'hideobject_at': 'hideobjectat',
+    'showobject_at': 'showobjectat',
     'copyobjectxytoperm': 'moveobjectoffscreen',
     # JP exposes the historical radius name for SCR_OP_SETFLASHLEVEL; the
     # byte-identical Emerald macro name matches the reviewed US sources.
