@@ -37,7 +37,20 @@ Route111_Text_WhatColorBerriesToLookForToday:: @ 0x082638F0
 	.string "さがそっかなー$"
 
 	.include "data/text/berries.inc"
-	.incbin "baserom_jp.gba", 0x26398a, 0xce
+Route120_Text_BerriesExpressionOfLoveIsntIt: @ 0x0826398A
+	.incbin "baserom_jp.gba", 0x26398a, 0x50
+
+Route120_Text_YesYouUnderstand: @ 0x082639DA
+	.incbin "baserom_jp.gba", 0x2639da, 0x20
+
+Route120_Text_MakeYourOwnImpressions: @ 0x082639FA
+	.incbin "baserom_jp.gba", 0x2639fa, 0x24
+
+Route120_Text_BerryIsRareRaiseItWithCare: @ 0x08263A1E
+	.incbin "baserom_jp.gba", 0x263a1e, 0x23
+
+Route120_Text_IllGetMoreBerriesFromBerryMaster: @ 0x08263A41
+	.incbin "baserom_jp.gba", 0x263a41, 0x17
 LilycoveCity_Text_BerrySuitsYou: @ 0x08263A58
 	.string "やっぱり\p"
 	.string "わたしに　スーツが　にあうように\n"

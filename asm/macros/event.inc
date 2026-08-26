@@ -1338,7 +1338,7 @@
 
 	@ Sets the field effect argument at index 'argNum' to 'value.'
 	.macro setfieldeffectargument argNum:req, value:req
-	.byte SCR_OP_SETFIELDEFFECTARGUMENT
+	.byte SCR_OP_9D
 	.byte \argNum
 	.2byte \value
 	.endm

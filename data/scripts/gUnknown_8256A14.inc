@@ -198,7 +198,27 @@ Route119_EventScript_ItemElixir2:: @ 0x08256C92
 	finditem ITEM_ELIXIR
 	end
 
-	.incbin "baserom_jp.gba", 0x256c9f, 0x68
+Route120_EventScript_ItemNugget:: @ 0x08256C9F
+	finditem ITEM_NUGGET
+	end
+
+Route120_EventScript_ItemFullHeal:: @ 0x08256CAC
+	finditem ITEM_FULL_HEAL
+	end
+
+Route120_EventScript_ItemHyperPotion:: @ 0x08256CB9
+	finditem ITEM_HYPER_POTION
+	end
+
+Route120_EventScript_ItemNestBall:: @ 0x08256CC6
+	finditem ITEM_NEST_BALL
+	end
+
+Route120_EventScript_ItemRevive:: @ 0x08256CD3
+	finditem ITEM_REVIVE
+	end
+
+	.incbin "baserom_jp.gba", 0x256ce0, 0x27
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM

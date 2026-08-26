@@ -102,14 +102,34 @@ ProfBirch_EventScript_UpdateLocation:: @ 0x08243139
 
 	.globl EventScript_HideMrBriney
 EventScript_HideMrBriney:: @ 0x0824327B
-	.incbin "baserom_jp.gba", 0x24327b, 0x124
+	.incbin "baserom_jp.gba", 0x24327b, 0xe3
+
+Route120_EventScript_Kecleon1:: @ 0x0824335E
+	.incbin "baserom_jp.gba", 0x24335e, 0xd
+
+Route120_EventScript_Kecleon2:: @ 0x0824336B
+	.incbin "baserom_jp.gba", 0x24336b, 0xd
+
+Route120_EventScript_Kecleon3:: @ 0x08243378
+	.incbin "baserom_jp.gba", 0x243378, 0xd
+
+Route120_EventScript_Kecleon4:: @ 0x08243385
+	.incbin "baserom_jp.gba", 0x243385, 0xd
+
+Route120_EventScript_Kecleon5:: @ 0x08243392
+	.incbin "baserom_jp.gba", 0x243392, 0xd
 
 Route119_EventScript_Kecleon1:: @ 0x0824339F
 	.incbin "baserom_jp.gba", 0x24339f, 0xd
 
-@ Route119's second Kecleon entry begins the later shared raw script owner.
 Route119_EventScript_Kecleon2:: @ 0x082433AC
-	.incbin "baserom_jp.gba", 0x2433ac, 0x26f
+	.incbin "baserom_jp.gba", 0x2433ac, 0xd
+
+EventScript_Kecleon:: @ 0x082433B9
+	.incbin "baserom_jp.gba", 0x2433b9, 0x91
+
+Movement_KecleonAppears: @ 0x0824344A
+	.incbin "baserom_jp.gba", 0x24344a, 0x1d1
 
 Common_Movement_ExclamationMark: @ 0x0824361B
 	emote_exclamation_mark

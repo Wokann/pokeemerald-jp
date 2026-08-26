@@ -1799,9 +1799,7 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.globl GraniteCave_B2F_EventScript_ItemRareCandy
 	.set GraniteCave_B2F_EventScript_ItemRareCandy, 0x08256ECE
 	@ Petalburg Woods event entries point into later shared field/item owners.
-	@ Export their reviewed US names without moving those physical ranges early.
-	.globl EventScript_CutTree
-	.set EventScript_CutTree, 0x082565C8
+	@ Its cut-tree target now has a physical label in gUnknown_824C47B.inc.
 	.globl PetalburgWoods_EventScript_ItemXAttack
 	.set PetalburgWoods_EventScript_ItemXAttack, 0x08256E59
 	.globl PetalburgWoods_EventScript_ItemGreatBall

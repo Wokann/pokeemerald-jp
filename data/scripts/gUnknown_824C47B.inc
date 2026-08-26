@@ -120,4 +120,7 @@ GabbyAndTy_EventScript_GabbyBattle6:: @ 0x0825432E
 GabbyAndTy_EventScript_TyBattle6:: @ 0x0825434E
 	.incbin "baserom_jp.gba", 0x25434e, 0x20
 
-	.incbin "baserom_jp.gba", 0x25436e, 0x22a4
+	.incbin "baserom_jp.gba", 0x25436e, 0x225a
+
+EventScript_CutTree:: @ 0x082565C8
+	.incbin "baserom_jp.gba", 0x2565c8, 0x4a

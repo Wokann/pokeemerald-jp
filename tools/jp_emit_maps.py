@@ -4859,6 +4859,13 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route120']['labels'],
         'external_labels': {
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x0824344A: 'Movement_KecleonAppears',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x08244178: 'Common_EventScript_NopReturn',
+            0x082540DF: 'GabbyAndTy_EventScript_UpdateLocation',
         },
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
         'symbols': {
