@@ -4654,7 +4654,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_HOUSE (g6 m8)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte gMapEvents_VERDANTURF_TOWN_HOUSE  @ events
+	.4byte VerdanturfTown_House_MapEvents  @ events
 	.4byte 0x081F777F  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018E  @ music

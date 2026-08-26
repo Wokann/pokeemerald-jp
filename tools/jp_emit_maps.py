@@ -8333,6 +8333,24 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The adjacent Verdanturf house contains two direct NPC messages. Its source
+# already matched the US names, so register the exact local ROM labels to make
+# that semantic form reproducible on a clean emission.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_House': {
+        'scripts': {
+            0x081F7780: 'VerdanturfTown_House_EventScript_Woman1',
+            0x081F7789: 'VerdanturfTown_House_EventScript_Woman2',
+        },
+        'texts': {
+            0x081F7792: 'VerdanturfTown_House_Text_TrainersGatherAtPokemonLeague',
+            0x081F77D7: 'VerdanturfTown_House_Text_DefeatEliteFourInARow',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
