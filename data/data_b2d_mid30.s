@@ -4256,7 +4256,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x28, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE126 (g0 m41)
 	.4byte gMapLayout_ROUTE126  @ mapLayout
-	.4byte gMapEvents_ROUTE126  @ events
+	.4byte Route126_MapEvents  @ events
 	.4byte Route126_MapScripts  @ mapScripts
 	.4byte gMapConnections_ROUTE126  @ connections
 	.2byte 0x0169  @ music

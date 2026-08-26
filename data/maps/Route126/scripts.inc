@@ -4,7 +4,7 @@ Route126_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route126_OnTransition
 	.byte 0
 
-Route126_OnTransition::
+Route126_OnTransition:
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	end
 
@@ -53,7 +53,7 @@ Route126_EventScript_Pablo::
 
 Route126_EventScript_RegisterPablo::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route126_Text_PabloRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_PABLO_1
 	release
