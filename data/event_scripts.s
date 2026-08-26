@@ -872,29 +872,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/Route117_PokemonDayCare/scripts.inc"
 	.include "data/maps/Route121_SafariZoneEntrance/scripts.inc"
 	.include "data/maps/MeteorFalls_1F_1R/scripts.inc"
-	.incbin "baserom_jp.gba", 0x212d71, 0x87d
-	@ Meteor Falls 1F 1R dialogue starts in this later shared raw owner.
-	@ Keep the physical incbin visible while exporting reviewed map references.
-	.globl MeteorFalls_1F_1R_Text_WithThisMeteorite
-	.set MeteorFalls_1F_1R_Text_WithThisMeteorite, 0x08212D71
-	.globl MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma
-	.set MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma, 0x08212D96
-	.globl MeteorFalls_1F_1R_Text_HoldItRightThereMagma
-	.set MeteorFalls_1F_1R_Text_HoldItRightThereMagma, 0x08212DC3
-	.globl MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua
-	.set MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua, 0x08212DF2
-	.globl MeteorFalls_1F_1R_Text_ArchieSeenYouBefore
-	.set MeteorFalls_1F_1R_Text_ArchieSeenYouBefore, 0x08212E68
-	.globl MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma
-	.set MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma, 0x08212F20
-	.globl MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo
-	.set MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo, 0x08212F38
-	.globl MeteorFalls_1F_1R_Text_ArchieFarewell
-	.set MeteorFalls_1F_1R_Text_ArchieFarewell, 0x08212F67
-	.globl MeteorFalls_1F_1R_Text_MeetProfCozmo
-	.set MeteorFalls_1F_1R_Text_MeetProfCozmo, 0x08212F92
-	.globl MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney
-	.set MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney, 0x0821303C
+	.incbin "baserom_jp.gba", 0x213079, 0x575
 	.include "data/maps/MeteorFalls_B1F_1R/scripts.inc"
 	.include "data/maps/MeteorFalls_B1F_2R/scripts.inc"
 	.include "data/maps/RusturfTunnel/scripts.inc"

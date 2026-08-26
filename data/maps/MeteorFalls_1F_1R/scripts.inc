@@ -232,3 +232,79 @@ MeteorFalls_1F_1R_EventScript_MetCozmo:: @ 0x08212D67
 	msgbox MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney, MSGBOX_DEFAULT
 	release
 	end
+
+MeteorFalls_1F_1R_Text_WithThisMeteorite: @ 0x08212D71
+	.string "ウヒョヒョ⋯⋯！\p"
+	.string "この　いんせきが　あれば\n"
+	.string "えんとつやまの　アイツが⋯⋯$"
+
+MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma: @ 0x08212D96
+	.string "ウヒョ？\p"
+	.string "だれだか　しらないが\n"
+	.string "マグマだんの　ジャマを　するきなら\l"
+	.string "ようしゃ　しないぜ！$"
+
+MeteorFalls_1F_1R_Text_HoldItRightThereMagma: @ 0x08212DC3
+	.string "まてっ！　マグマだん！\p"
+	.string "せかいを　おまえらの　おもいどおりに\n"
+	.string "できるなんて　おおまちがいだ！$"
+
+MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua: @ 0x08212DF2
+	.string "ウヒョヒョ⋯⋯！\n"
+	.string "アクアだん　まで　やってきたのかよ！\p"
+	.string "いちいち　あいてを　してやるのも\n"
+	.string "めんどうだな⋯⋯\p"
+	.string "まあ　いいや！\n"
+	.string "いんせきは　てに　いれたし\l"
+	.string "さっさと　えんとつやまに　いくか！\p"
+	.string "ウヒョヒョ！\n"
+	.string "あばよ！　まぬけな　アクアだん！$"
+
+MeteorFalls_1F_1R_Text_ArchieSeenYouBefore: @ 0x08212E68
+	.string "アオギリ“おまえとは　たしか⋯⋯\n"
+	.string "カイナの　はくぶつかんでも　あったが\p"
+	.string "そうか　{PLAYER}と　いうのか\p"
+	.string "あのときは　マグマだんの　したっぱだと\n"
+	.string "おもったんだが\l"
+	.string "ふん⋯⋯\l"
+	.string "おかしな　やつだな⋯⋯\p"
+	.string "マグマだん　というのは\n"
+	.string "りくちをふやす　などと　いっては\l"
+	.string "はかいかつどうを　くりかえす\l"
+	.string "きけんな　しゅうだんだ！\p"
+	.string "うみを　あいする　われわれ　アクアだんの\n"
+	.string "しゅくてき　なのだよ！$"
+
+MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma: @ 0x08212F20
+	.string "アオギリさま\n"
+	.string "マグマだんを　おいかけないと⋯⋯$"
+
+MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo: @ 0x08212F38
+	.string "アオギリ“そうだな！\p"
+	.string "マグマだんの　やつら　えんとつやまで\n"
+	.string "なにを　しでかすか　わからない！$"
+
+MeteorFalls_1F_1R_Text_ArchieFarewell: @ 0x08212F67
+	.string "アオギリ“{PLAYER}⋯⋯　おまえも\n"
+	.string "マグマだんには　ようじん　するんだな\p"
+	.string "では　さらばだ！$"
+
+MeteorFalls_1F_1R_Text_MeetProfCozmo: @ 0x08212F92
+	.string "ぼく　ソライシ⋯⋯\p"
+	.string "マグマだんに　たのまれて\n"
+	.string "ここまで　あんない　してきたんだけど\l"
+	.string "だまされて\l"
+	.string "いんせき　とられちゃったよ⋯⋯\p"
+	.string "おまけに　アクアだん　っていう\n"
+	.string "にたような　れんちゅうまで　あらわれて\l"
+	.string "もう　なにが　なんだか⋯⋯\p"
+	.string "それにしても　マグマだんは\n"
+	.string "いんせき　なんか　もっていって\l"
+	.string "えんとつやまで\l"
+	.string "なにする　つもり　なんだろう⋯⋯？$"
+
+MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney: @ 0x0821303C
+	.string "ソライシ“それにしても　マグマだんは\n"
+	.string "いんせき　なんか　もっていって\l"
+	.string "えんとつやまで\l"
+	.string "なにする　つもり　なんだろう⋯⋯？$"

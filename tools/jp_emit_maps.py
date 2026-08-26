@@ -26,9 +26,9 @@ US_MAPS = US_JSON.parent
 # source boundaries explicit so ``--write`` never absorbs the next raw owner.
 MAP_SOURCE_REGION_ENDS = {
     'LilycoveCity_ContestLobby': 0x08207640,
-    # Meteor Falls 1F 1R owns its scripts and movements only. Its adjacent
-    # text block starts at 0x08212D71 and remains a later top-level owner.
-    'MeteorFalls_1F_1R': 0x08212D71,
+    # Meteor Falls 1F 1R owns its scripts, movements, and ten adjacent text
+    # records. The next owner is Meteor Falls 1F 2R at 0x08213079.
+    'MeteorFalls_1F_1R': 0x08213079,
 }
 
 # These maps have had their JP and US map-local script entry sequences checked
@@ -152,7 +152,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # entries; local movements are audited separately below.
     'Route121_SafariZoneEntrance': 13,
     # Meteor Falls 1F 1R follows with an OnLoad hook and four local branches.
-    # Its dialogue begins at the separate physical owner after 0x08212D71.
+    # Its ten adjacent dialogue records are checked separately below.
     'MeteorFalls_1F_1R': 5,
 }
 
@@ -232,6 +232,9 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'Route114_FossilManiacsTunnel': 4,
     'Route114_LanettesHouse': 7,
     'Route116_TunnelersRestHouse': 4,
+    # Meteor Falls 1F 1R owns ten dialogue records after its local movement
+    # data. Their physical order matches the reviewed US map source.
+    'MeteorFalls_1F_1R': 10,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9571,23 +9574,17 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
-    # Meteor Falls 1F 1R is the next physical map owner. Its ten dialogue
-    # records begin in the later top-level raw owner at 0x08212D71, while the
-    # map itself owns the OnLoad hook, four scripts, and thirteen movements.
+    # Meteor Falls 1F 1R owns its OnLoad hook, four scripts, thirteen
+    # movements, and ten adjacent dialogue records through 0x08213079.
     'MeteorFalls_1F_1R': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
-        'external_texts': {
-            0x08212D71: 'MeteorFalls_1F_1R_Text_WithThisMeteorite',
-            0x08212D96: 'MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma',
-            0x08212DC3: 'MeteorFalls_1F_1R_Text_HoldItRightThereMagma',
-            0x08212DF2: 'MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua',
-            0x08212E68: 'MeteorFalls_1F_1R_Text_ArchieSeenYouBefore',
-            0x08212F20: 'MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma',
-            0x08212F38: 'MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo',
-            0x08212F67: 'MeteorFalls_1F_1R_Text_ArchieFarewell',
-            0x08212F92: 'MeteorFalls_1F_1R_Text_MeetProfCozmo',
-            0x0821303C: 'MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney',
+        # Both occurrences of {STRING 0x01} are the player-name buffer: the
+        # matching US text spells them {PLAYER}, and no generic conversion is
+        # applied outside these two byte-verified text records.
+        'field_placeholders': {
+            0x08212E68: {0x01: 'PLAYER'},
+            0x08212F67: {0x01: 'PLAYER'},
         },
         'external_labels': {
             0x0824361B: 'Common_Movement_ExclamationMark',
