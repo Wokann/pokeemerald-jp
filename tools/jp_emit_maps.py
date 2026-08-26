@@ -11864,6 +11864,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 # suffix and use the matching US names guarded by the sequence above.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LilycoveCity_PokemonCenter_2F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
         'external_labels': {
             0x082467CD: 'CableClub_OnTransition',
             0x0824686A: 'CableClub_OnWarp',
