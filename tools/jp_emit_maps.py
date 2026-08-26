@@ -16927,6 +16927,21 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SlateportCity_House': {
+        'scripts': {
+            0x081FE773: 'SlateportCity_House_EventScript_PokefanM',
+            0x081FE77C: 'SlateportCity_House_EventScript_Girl',
+        },
+        'texts': {
+            0x081FE785: 'SlateportCity_House_Text_NatureToDoWithStatGains',
+            0x081FE7D4: 'SlateportCity_House_Text_MustBeGoingToBattleTent',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
