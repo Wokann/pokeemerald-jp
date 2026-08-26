@@ -3,7 +3,7 @@
 RustboroCity_CuttersHouse_MapScripts::
 	.byte 0
 
-RustboroCity_CuttersHouse_EventScript_Cutter::
+RustboroCity_CuttersHouse_EventScript_Cutter:: @ 0x08203D7D
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_HM_CUT, RustboroCity_CuttersHouse_EventScript_ExplainCut
@@ -14,12 +14,12 @@ RustboroCity_CuttersHouse_EventScript_Cutter::
 	release
 	end
 
-RustboroCity_CuttersHouse_EventScript_ExplainCut::
+RustboroCity_CuttersHouse_EventScript_ExplainCut:: @ 0x08203DA9
 	msgbox RustboroCity_CuttersHouse_Text_ExplainCut, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_CuttersHouse_EventScript_Lass::
+RustboroCity_CuttersHouse_EventScript_Lass:: @ 0x08203DB3
 	msgbox RustboroCity_CuttersHouse_Text_DadHelpedClearLandOfTrees, MSGBOX_NPC
 	end
 

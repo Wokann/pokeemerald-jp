@@ -10698,6 +10698,28 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    'RustboroCity_CuttersHouse': {
+        'scripts': {
+            0x08203D7D: 'RustboroCity_CuttersHouse_EventScript_Cutter',
+            0x08203DA9: 'RustboroCity_CuttersHouse_EventScript_ExplainCut',
+            0x08203DB3: 'RustboroCity_CuttersHouse_EventScript_Lass',
+        },
+        'texts': {
+            0x08203DBC: 'RustboroCity_CuttersHouse_Text_YouCanPutThisHMToGoodUse',
+            0x08203E46: 'RustboroCity_CuttersHouse_Text_ExplainCut',
+            0x08203ED7: 'RustboroCity_CuttersHouse_Text_DadHelpedClearLandOfTrees',
+        },
+        'symbols': {
+            'flags': {0x0089: 'FLAG_RECEIVED_HM_CUT'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+            },
+            'items': {0x0153: 'ITEM_HM_CUT'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
 })
 
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
