@@ -10813,6 +10813,59 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    'FortreeCity_House1': {
+        'scripts': {
+            0x082041CB: 'FortreeCity_House1_EventScript_Trader',
+            0x0820424D: 'FortreeCity_House1_EventScript_DeclineTrade',
+            0x08204257: 'FortreeCity_House1_EventScript_NotRequestedMon',
+            0x08204265: 'FortreeCity_House1_EventScript_TradeCompleted',
+            0x0820426F: 'FortreeCity_House1_EventScript_ExpertF',
+            0x08204278: 'FortreeCity_House1_EventScript_Zigzagoon',
+        },
+        'texts': {
+            0x0820428B: 'FortreeCity_House1_Text_YouWillTradeWontYou',
+            0x082042E3: 'FortreeCity_House1_Text_MonYouTakeCare',
+            0x08204305: 'FortreeCity_House1_Text_ThisIsntAMon',
+            0x08204314: 'FortreeCity_House1_Text_YouWontTradeMe',
+            0x08204334: 'FortreeCity_House1_Text_GoingToMakeVolbeatStrong',
+            0x0820435F: 'FortreeCity_House1_Text_TradingMemoriesWithOthers',
+            0x08204392: 'FortreeCity_House1_Text_Zigzagoon',
+        },
+        'field_placeholders': {
+            0x0820428B: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x082042E3: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x08204305: {0x02: 'STR_VAR_1'},
+        },
+        'preamble': (
+            '@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.',
+        ),
+        'command_aliases': {
+            0x08204278: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {0x009B: 'FLAG_FORTREE_NPC_TRADE_COMPLETED'},
+            'vars': {
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8008: 'VAR_0x8008',
+                0x8009: 'VAR_0x8009',
+                0x800A: 'VAR_0x800A',
+                0x800B: 'VAR_0x800B',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x082041CB: {
+                    0x8004: {0xFF: 'PARTY_NOTHING_CHOSEN'},
+                    0x8008: {0x01: 'INGAME_TRADE_PLUSLE'},
+                    0x800D: {0x00: 'NO'},
+                },
+            },
+            'species': {0x0120: 'SPECIES_ZIGZAGOON'},
+            'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
 })
 
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,

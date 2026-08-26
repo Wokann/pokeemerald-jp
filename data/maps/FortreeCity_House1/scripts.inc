@@ -3,7 +3,9 @@
 FortreeCity_House1_MapScripts::
 	.byte 0
 
-FortreeCity_House1_EventScript_Trader::
+@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.
+
+FortreeCity_House1_EventScript_Trader:: @ 0x082041CB
 	lock
 	faceplayer
 	goto_if_set FLAG_FORTREE_NPC_TRADE_COMPLETED, FortreeCity_House1_EventScript_TradeCompleted
@@ -14,7 +16,6 @@ FortreeCity_House1_EventScript_Trader::
 	msgbox FortreeCity_House1_Text_YouWillTradeWontYou, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, FortreeCity_House1_EventScript_DeclineTrade
 	special ChoosePartyMon
-	@ The JP special table does not mark ChoosePartyMon as waitstate=1.
 	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, FortreeCity_House1_EventScript_DeclineTrade
@@ -32,33 +33,32 @@ FortreeCity_House1_EventScript_Trader::
 	release
 	end
 
-FortreeCity_House1_EventScript_DeclineTrade::
+FortreeCity_House1_EventScript_DeclineTrade:: @ 0x0820424D
 	msgbox FortreeCity_House1_Text_YouWontTradeMe, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_House1_EventScript_NotRequestedMon::
+FortreeCity_House1_EventScript_NotRequestedMon:: @ 0x08204257
 	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox FortreeCity_House1_Text_ThisIsntAMon, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_House1_EventScript_TradeCompleted::
+FortreeCity_House1_EventScript_TradeCompleted:: @ 0x08204265
 	msgbox FortreeCity_House1_Text_GoingToMakeVolbeatStrong, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_House1_EventScript_ExpertF::
+FortreeCity_House1_EventScript_ExpertF:: @ 0x0820426F
 	msgbox FortreeCity_House1_Text_TradingMemoriesWithOthers, MSGBOX_NPC
 	end
 
-FortreeCity_House1_EventScript_Zigzagoon::
+FortreeCity_House1_EventScript_Zigzagoon:: @ 0x08204278
 	lock
 	faceplayer
 	waitse
 	playmoncry SPECIES_ZIGZAGOON, CRY_MODE_NORMAL
 	msgbox FortreeCity_House1_Text_Zigzagoon, MSGBOX_DEFAULT
-	@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.
 	waitmoncry_jp
 	release
 	end
