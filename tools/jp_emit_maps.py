@@ -198,6 +198,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The exterior's transition hook and four local weather branches follow
     # directly, matching the US map source sequence.
     'MtPyre_Exterior': 5,
+    # Summit owns its transition hook, story branches, and the four Team Aqua
+    # trainer scripts through the next physical owner at 0x08217935.
+    'MtPyre_Summit': 38,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -213,6 +216,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'JaggedPass': ('OnResume', 'OnLoad'),
     'MtPyre_2F': ('SetHoleWarp',),
     'MtPyre_Exterior': ('OnTransition',),
+    'MtPyre_Summit': ('OnTransition',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -311,6 +315,9 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MtPyre_3F': 13,
     # Mt. Pyre 6F owns Valerie and Cedric's ten contiguous messages.
     'MtPyre_6F': 10,
+    # Summit owns all twenty-four local dialogue records after its movement
+    # streams, including the Maxie silence with the player-name control code.
+    'MtPyre_Summit': 24,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6929,6 +6936,82 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x06: 'WEATHER_FOG_HORIZONTAL',
             },
         },
+    },
+    # The Summit owner is structurally complete through 0x08217935, including
+    # its four Team Aqua trainer handlers and all locally reachable texts.
+    'MtPyre_Summit': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x08243635: 'Common_Movement_FaceUp',
+        },
+        'field_placeholders': {
+            0x08217786: {0x01: 'PLAYER'},
+        },
+        'symbols': {
+            'flags': {
+                0x0081: 'FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN',
+                0x009E: 'FLAG_SOOTOPOLIS_ARCHIE_MAXIE_LEAVE',
+                0x00D4: 'FLAG_RECEIVED_RED_OR_BLUE_ORB',
+                0x0103: 'FLAG_RETURNED_RED_OR_BLUE_ORB',
+                0x034F: 'FLAG_HIDE_JAGGED_PASS_MAGMA_GUARD',
+                0x0394: 'FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE',
+                0x0395: 'FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_AQUA',
+            },
+            'items': {0x0177: 'ITEM_MAGMA_EMBLEM'},
+            'local_ids': {
+                0x02: 'LOCALID_MT_PYRE_SUMMIT_ARCHIE',
+                0x03: 'LOCALID_MT_PYRE_SUMMIT_OLD_LADY',
+                0x04: 'LOCALID_MT_PYRE_SUMMIT_GRUNT_1',
+                0x05: 'LOCALID_MT_PYRE_SUMMIT_GRUNT_2',
+                0x06: 'LOCALID_MT_PYRE_SUMMIT_GRUNT_3',
+                0x07: 'LOCALID_MT_PYRE_SUMMIT_GRUNT_4',
+                0x08: 'LOCALID_MT_PYRE_SUMMIT_MAXIE',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'vars': {
+                0x40B9: 'VAR_MT_PYRE_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8008: 'VAR_0x8008',
+                0x800D: 'VAR_RESULT',
+            },
+            'songs': {0x01A3: 'MUS_ENCOUNTER_AQUA'},
+            'sounds': {0x15: 'SE_PIN'},
+            'fade_modes': {0x00: 'FADE_FROM_BLACK', 0x01: 'FADE_TO_BLACK'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'MtPyre_Summit': {
+        0x08216CA9: 'MtPyre_Summit_Movement_OldLadyApproachPlayer0',
+        0x08216CAD: 'MtPyre_Summit_Movement_OldLadyApproachPlayer1',
+        0x08216CAF: 'MtPyre_Summit_Movement_OldLadyApproachPlayer2',
+        0x08216CB3: 'MtPyre_Summit_Movement_ArchieFacePlayer0',
+        0x08216CB6: 'MtPyre_Summit_Movement_ArchieFacePlayer2',
+        0x08216F2B: 'MtPyre_Summit_Movement_PlayerFaceMaxie0',
+        0x08216F2F: 'MtPyre_Summit_Movement_PlayerFaceMaxie',
+        0x08216F33: 'MtPyre_Summit_Movement_ArchieExit',
+        0x08216F3A: 'MtPyre_Summit_Movement_MaxieExit',
+        0x08216F41: 'MtPyre_Summit_Movement_PlayerWatchArchieMaxieExit0',
+        0x08216F48: 'MtPyre_Summit_Movement_PlayerWatchArchieMaxieExit1',
+        0x08216F4F: 'MtPyre_Summit_Movement_PlayerWatchArchieMaxieExit2',
+        0x08216F55: 'MtPyre_Summit_Movement_MaxieApproachPlayer0',
+        0x08216F5A: 'MtPyre_Summit_Movement_MaxieApproachPlayer1',
+        0x08216F5F: 'MtPyre_Summit_Movement_MaxieApproachPlayer2',
+        0x08216F64: 'MtPyre_Summit_Movement_ArchieWatchMaxie',
+        0x08216F67: 'MtPyre_Summit_Movement_PlayerWatchMaxie',
+        0x08216F6A: 'MtPyre_Summit_Movement_MaxieApproachArchie0',
+        0x08216F70: 'MtPyre_Summit_Movement_MaxieApproachArchie1',
+        0x08216F75: 'MtPyre_Summit_Movement_MaxieApproachArchie2',
     },
 })
 

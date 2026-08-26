@@ -2329,36 +2329,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MtPyre_Exterior/events.inc"
 	.globl gMapEvents_MT_PYRE_EXTERIOR
 	.set gMapEvents_MT_PYRE_EXTERIOR, MtPyre_Exterior_MapEvents
-	.globl MT_PYRE_SUMMIT_EventObjects
-MT_PYRE_SUMMIT_EventObjects: @ 0x0850D8CC
-	object_event 1, 29, 0, 22, 5, 3, 8, 0, 0, 0, 0, MtPyre_Summit_EventScript_00216CB9, 0x0000
-	object_event 2, 195, 0, 23, 6, 3, 7, 0, 0, 0, 0, 0x00000000, 0x0394
-	object_event 3, 22, 0, 23, 5, 3, 8, 0, 0, 0, 0, MtPyre_Summit_EventScript_00216D1F, 0x0000
-	object_event 4, 117, 0, 21, 15, 3, 10, 0, 0, 1, 3, 0x08216F7A, 0x0395
-	object_event 5, 117, 0, 25, 18, 3, 9, 0, 0, 1, 3, 0x08216F91, 0x0395
-	object_event 6, 117, 0, 21, 11, 3, 10, 0, 0, 1, 3, 0x08216FA8, 0x0395
-	object_event 7, 118, 0, 25, 11, 3, 9, 1, 1, 1, 3, 0x08216FBF, 0x0395
-	object_event 8, 196, 0, 23, 6, 3, 7, 1, 1, 0, 0, 0x00000000, 0x0358
-	.globl MT_PYRE_SUMMIT_EventWarps
-MT_PYRE_SUMMIT_EventWarps: @ 0x0850D98C
-	warp_def 22, 31, 3, 1, MAP_MT_PYRE_EXTERIOR
-	warp_def 23, 31, 3, 1, MAP_MT_PYRE_EXTERIOR
-	warp_def 24, 31, 3, 1, MAP_MT_PYRE_EXTERIOR
-	.globl MT_PYRE_SUMMIT_EventCoordEvents
-MT_PYRE_SUMMIT_EventCoordEvents: @ 0x0850D9A4
-	coord_event 22, 7, 3, 16569, 0, MtPyre_Summit_EventScript_00216B95
-	coord_event 23, 7, 3, 16569, 0, MtPyre_Summit_EventScript_00216BA1
-	coord_event 24, 7, 3, 16569, 0, MtPyre_Summit_EventScript_00216BAD
-	coord_event 22, 9, 3, 16569, 2, MtPyre_Summit_EventScript_00216D69
-	coord_event 23, 9, 3, 16569, 2, MtPyre_Summit_EventScript_00216D75
-	coord_event 24, 9, 3, 16569, 2, MtPyre_Summit_EventScript_00216D81
-	.globl MT_PYRE_SUMMIT_EventBgEvents
-MT_PYRE_SUMMIT_EventBgEvents: @ 0x0850DA04
-	bg_event 9, 25, 0, 7, 0x0046, 0x4F, 0x00
-	bg_event 37, 7, 3, 7, 0x0044, 0x50, 0x00
+	.include "data/maps/MtPyre_Summit/events.inc"
 	.globl gMapEvents_MT_PYRE_SUMMIT
-gMapEvents_MT_PYRE_SUMMIT: @ 0x0850DA1C
-	map_events MT_PYRE_SUMMIT_EventObjects, MT_PYRE_SUMMIT_EventWarps, MT_PYRE_SUMMIT_EventCoordEvents, MT_PYRE_SUMMIT_EventBgEvents
+	.set gMapEvents_MT_PYRE_SUMMIT, MtPyre_Summit_MapEvents
 	.globl AQUA_HIDEOUT_1F_EventObjects
 AQUA_HIDEOUT_1F_EventObjects: @ 0x0850DA30
 	object_event 1, 117, 0, 13, 11, 3, 8, 0, 0, 0, 0, 0x08217936, 0x0335
