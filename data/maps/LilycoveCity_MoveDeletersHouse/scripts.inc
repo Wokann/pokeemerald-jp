@@ -22,7 +22,7 @@ LilycoveCity_MoveDeletersHouse_EventScript_ChooseMonAndMoveToForget:: @ 0x08209D
 	special IsSelectedMonEgg
 	goto_if_eq VAR_RESULT, TRUE, LilycoveCity_MoveDeletersHouse_EventScript_EggCantForgetMoves
 	special GetNumMovesSelectedMonHas
-	goto_if_eq VAR_RESULT, 0x1, LilycoveCity_MoveDeletersHouse_EventScript_MonOnlyKnowsOneMove
+	goto_if_eq VAR_RESULT, 1, LilycoveCity_MoveDeletersHouse_EventScript_MonOnlyKnowsOneMove
 	msgbox LilycoveCity_MoveDeletersHouse_Text_WhichMoveShouldBeForgotten, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	special MoveDeleterChooseMoveToForget

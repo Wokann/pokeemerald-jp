@@ -12152,6 +12152,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'switch_values': {
                 'VAR_RESULT': {0x0: 'NO', 0x1: 'YES'},
             },
+            'decimal_arguments': {
+                'compare_var_to_value': (1,),
+            },
         },
     },
 })
