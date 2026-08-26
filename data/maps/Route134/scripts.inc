@@ -4,8 +4,8 @@ Route134_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route134_OnResume
 	.byte 0
 
-Route134_OnResume::
-	setdivewarp MAP_UNDERWATER_ROUTE134, 0x8, 0x6
+Route134_OnResume:
+	setdivewarp MAP_UNDERWATER_ROUTE134, 8, 6
 	end
 
 Route134_EventScript_Jack::
