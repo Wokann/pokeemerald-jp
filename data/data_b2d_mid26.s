@@ -810,8 +810,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/LavaridgeTown_PokemonCenter_1F/events.inc"
 	.include "data/maps/LavaridgeTown_PokemonCenter_2F/events.inc"
 	.include "data/maps/FallarborTown_Mart/events.inc"
-	.globl gMapEvents_FALLARBOR_TOWN_MART
-	.set gMapEvents_FALLARBOR_TOWN_MART, FallarborTown_Mart_MapEvents
 	.globl FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventObjects
 FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventObjects: @ 0x08506A9C
 	object_event 1, 44, 0, 6, 5, 3, 8, 1, 1, 0, 0, FallarborTown_BattleTentLobby_EventScript_001F5320, 0x0000

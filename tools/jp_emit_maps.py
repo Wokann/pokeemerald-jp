@@ -7294,6 +7294,58 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Fallarbor Mart follows the Lavaridge Cable Club floor. Its twelve-item
+# stock list, four local interactions, and three text records match the US
+# owner in physical JP ROM order. The Skitty cry wait uses the JP command
+# slot alias while retaining the matching US waitmoncry semantics.
+MAP_POKEMART_LISTS.update({
+    'FallarborTown_Mart': (
+        (0x081F50B0, 'FallarborTown_Mart_Pokemart', (
+            'ITEM_GREAT_BALL',
+            'ITEM_SUPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_ESCAPE_ROPE',
+            'ITEM_SUPER_REPEL',
+            'ITEM_X_SPECIAL',
+            'ITEM_X_SPEED',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
+            'ITEM_DIRE_HIT',
+            'ITEM_GUARD_SPEC',
+        )),
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FallarborTown_Mart': {
+        'scripts': {
+            0x081F5099: 'FallarborTown_Mart_EventScript_Clerk',
+            0x081F50CC: 'FallarborTown_Mart_EventScript_Woman',
+            0x081F50D5: 'FallarborTown_Mart_EventScript_PokefanM',
+            0x081F50DE: 'FallarborTown_Mart_EventScript_Skitty',
+        },
+        'texts': {
+            0x081F50F1: 'FallarborTown_Mart_Text_DecidingSkittyEvolve',
+            0x081F5148: 'FallarborTown_Mart_Text_Skitty',
+            0x081F5152: 'FallarborTown_Mart_Text_SellNuggetIFound',
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x081F50DE: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'species': {0x013B: 'SPECIES_SKITTY'},
+            'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.

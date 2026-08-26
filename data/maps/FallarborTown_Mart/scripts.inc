@@ -1,7 +1,9 @@
+@ FallarborTown_Mart scripts (JP map g5 m0 @ 0x081F5098)
+
 FallarborTown_Mart_MapScripts::
 	.byte 0
 
-FallarborTown_Mart_EventScript_Clerk::
+FallarborTown_Mart_EventScript_Clerk:: @ 0x081F5099
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -27,26 +29,25 @@ FallarborTown_Mart_Pokemart:
 	.2byte ITEM_GUARD_SPEC
 	pokemartlistend
 
-FallarborTown_Mart_EventScript_Woman::
+FallarborTown_Mart_EventScript_Woman:: @ 0x081F50CC
 	msgbox FallarborTown_Mart_Text_DecidingSkittyEvolve, MSGBOX_NPC
 	end
 
-FallarborTown_Mart_EventScript_PokefanM::
+FallarborTown_Mart_EventScript_PokefanM:: @ 0x081F50D5
 	msgbox FallarborTown_Mart_Text_SellNuggetIFound, MSGBOX_NPC
 	end
 
-FallarborTown_Mart_EventScript_Skitty::
+FallarborTown_Mart_EventScript_Skitty:: @ 0x081F50DE
 	lock
 	faceplayer
 	waitse
 	playmoncry SPECIES_SKITTY, CRY_MODE_NORMAL
 	msgbox FallarborTown_Mart_Text_Skitty, MSGBOX_DEFAULT
-	@ JP's cry-wait byte is emitted through the historical waitdooranim macro slot.
-	waitdooranim
+	waitmoncry_jp
 	release
 	end
 
-FallarborTown_Mart_Text_DecidingSkittyEvolve:
+FallarborTown_Mart_Text_DecidingSkittyEvolve: @ 0x081F50F1
 	.string "あたしの　エネコにね\n"
 	.string "つきのいしを　つかってね⋯⋯\p"
 	.string "しんか　させるか　どうか\n"
@@ -54,10 +55,10 @@ FallarborTown_Mart_Text_DecidingSkittyEvolve:
 	.string "しんか　させると　つよくなるけど\n"
 	.string "すがたかたち　かわっちゃうし⋯⋯$"
 
-FallarborTown_Mart_Text_Skitty:
+FallarborTown_Mart_Text_Skitty: @ 0x081F5148
 	.string "エネコ“みゃおう？$"
 
-FallarborTown_Mart_Text_SellNuggetIFound:
+FallarborTown_Mart_Text_SellNuggetIFound: @ 0x081F5152
 	.string "ひろった　きんのたま⋯⋯\n"
 	.string "やっぱり　うるしか　ないのかなあ？\l"
 	.string "ほかに　つかいみちも　ないからなあ⋯⋯$"
