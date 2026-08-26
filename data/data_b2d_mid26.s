@@ -944,8 +944,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/SlateportCity_PokemonCenter_2F/events.inc"
 	.include "data/maps/SlateportCity_Mart/events.inc"
 	.include "data/maps/MauvilleCity_Gym/events.inc"
-	.globl gMapEvents_MAUVILLE_CITY_GYM
-	.set gMapEvents_MAUVILLE_CITY_GYM, MauvilleCity_Gym_MapEvents
 	.include "data/maps/MauvilleCity_BikeShop/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_BIKE_SHOP
 	.set gMapEvents_MAUVILLE_CITY_BIKE_SHOP, MauvilleCity_BikeShop_MapEvents
