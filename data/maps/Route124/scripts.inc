@@ -4,7 +4,7 @@ Route124_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route124_OnTransition
 	.byte 0
 
-Route124_OnTransition::
+Route124_OnTransition:
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	end
 
@@ -32,7 +32,7 @@ Route124_EventScript_Jenny::
 
 Route124_EventScript_RegisterJenny::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route124_Text_JennyRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_JENNY_1
 	release
