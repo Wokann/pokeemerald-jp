@@ -798,8 +798,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/OldaleTown_Mart/events.inc"
 	.include "data/maps/DewfordTown_House1/events.inc"
 	.include "data/maps/DewfordTown_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_1F
-	.set gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_1F, DewfordTown_PokemonCenter_1F_MapEvents
 	.include "data/maps/DewfordTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_2F, DewfordTown_PokemonCenter_2F_MapEvents

@@ -6516,6 +6516,32 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
         },
     },
+    # Dewford's Pokémon Center follows House 1. Its transition hook, nurse,
+    # two NPC branches, and two local texts match the US map in source order.
+    'DewfordTown_PokemonCenter_1F': {
+        'scripts': {
+            0x081F2CDA: 'DewfordTown_PokemonCenter_1F_OnTransition',
+            0x081F2CE3: 'DewfordTown_PokemonCenter_1F_EventScript_Nurse',
+            0x081F2CF1: 'DewfordTown_PokemonCenter_1F_EventScript_PokefanF',
+            0x081F2CFA: 'DewfordTown_PokemonCenter_1F_EventScript_Man',
+        },
+        'texts': {
+            0x081F2D03: 'DewfordTown_PokemonCenter_1F_Text_StoneCavern',
+            0x081F2D2B: 'DewfordTown_PokemonCenter_1F_Text_FaintedMonCanUseHM',
+        },
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_DEWFORD_NURSE'},
+            'heal_locations': {0x0F: 'HEAL_LOCATION_DEWFORD_TOWN'},
+        },
+    },
 })
 
 # Oldale Mart's two adjacent product records were checked against both the
