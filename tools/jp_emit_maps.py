@@ -156,6 +156,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'MeteorFalls_1F_1R': 5,
     # The adjacent Meteor Falls 1F 2R owner has nine trainer-battle branches.
     'MeteorFalls_1F_2R': 9,
+    # Rusturf Tunnel is the next non-empty physical owner. Its transition and
+    # frame hooks plus twenty-two local branches match the reviewed US order.
+    'RusturfTunnel': 24,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -239,6 +242,9 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'MeteorFalls_1F_1R': 10,
     # Meteor Falls 1F 2R owns twenty-four contiguous trainer dialogue records.
     'MeteorFalls_1F_2R': 24,
+    # Rusturf Tunnel owns sixteen contiguous dialogue records after its
+    # map-local movement and trainer scripts.
+    'RusturfTunnel': 16,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -9653,6 +9659,84 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x800D: 'VAR_RESULT',
             },
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # Rusturf Tunnel is the next physical EventScript owner after the Meteor
+    # Falls map terminators. Its source sequence, text order, shared movement
+    # targets, and item-ball references were checked against the US map.
+    'RusturfTunnel': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'field_placeholders': {
+            # The paired US message identifies these buffers as PLAYER/KUN.
+            0x08213A9E: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'external_labels': {
+            0x08243299: 'RusturfTunnel_EventScript_SetRusturfTunnelOpen',
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x0825667C: 'EventScript_RockSmash',
+            0x08256E8D: 'RusturfTunnel_EventScript_ItemPokeBall',
+            0x08256E9A: 'RusturfTunnel_EventScript_ItemMaxEther',
+        },
+        'command_aliases': {
+            # JP uses the door-wait opcode at these Wingull cry waits.
+            0x08213878: {'waitdooranim': 'waitmoncry_jp'},
+            0x0821388B: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {
+                0x0001: 'FLAG_TEMP_1',
+                0x006A: 'FLAG_RECEIVED_HM_STRENGTH',
+                0x008E: 'FLAG_DEVON_GOODS_STOLEN',
+                0x008F: 'FLAG_RECOVERED_DEVON_GOODS',
+                0x037B: 'FLAG_HIDE_ROUTE_116_MR_BRINEY',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x405A: 'VAR_RUSTBORO_CITY_STATE',
+                0x4090: 'VAR_BRINEY_HOUSE_STATE',
+                0x409A: 'VAR_RUSTURF_TUNNEL_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'var_values': {
+                0x4001: {0x01: '1', 0x02: '2', 0x03: '3'},
+                0x405A: {0x04: '4'},
+                0x4090: {0x01: '1'},
+                0x409A: {0x02: '2', 0x03: '3', 0x04: '4', 0x05: '5'},
+            },
+            'map_script_values': {0x409A: {0x04: '4', 0x05: '5'}},
+            'items': {
+                0x010D: 'ITEM_DEVON_GOODS',
+                0x0156: 'ITEM_HM_STRENGTH',
+            },
+            'trainers': {
+                0x0010: 'TRAINER_GRUNT_RUSTURF_TUNNEL',
+                0x027B: 'TRAINER_MIKE_2',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_RUSTURF_TUNNEL_WANDAS_BF',
+                0x05: 'LOCALID_RUSTURF_TUNNEL_BRINEY',
+                0x06: 'LOCALID_RUSTURF_TUNNEL_GRUNT',
+                0x07: 'LOCALID_RUSTURF_TUNNEL_PEEKO',
+                0x0A: 'LOCALID_RUSTURF_TUNNEL_WANDA',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'species': {0x0135: 'SPECIES_WINGULL'},
+            'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
+            'songs': {0x01A3: 'MUS_ENCOUNTER_AQUA'},
+            'sounds': {0x0015: 'SE_PIN'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'setobjectxyperm': (1, 2),
+            },
         },
     },
 })

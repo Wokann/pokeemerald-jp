@@ -2275,33 +2275,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MeteorFalls_B1F_2R/events.inc"
 	.globl gMapEvents_METEOR_FALLS_B1F_2R
 	.set gMapEvents_METEOR_FALLS_B1F_2R, MeteorFalls_B1F_2R_MapEvents
-	.globl RUSTURF_TUNNEL_EventObjects
-RUSTURF_TUNNEL_EventObjects: @ 0x0850C8F0
-	object_event 1, 44, 0, 23, 5, 3, 10, 0, 0, 0, 0, RusturfTunnel_EventScript_0021363F, 0x0327
-	object_event 2, 86, 0, 24, 5, 3, 1, 0, 0, 0, 0, 0x0825667C, 0x03A3
-	object_event 3, 59, 0, 3, 1, 3, 1, 0, 0, 0, 0, 0x08256E8D, 0x0418
-	object_event 4, 59, 0, 30, 2, 3, 1, 0, 0, 0, 0, 0x08256E9A, 0x0419
-	object_event 5, 21, 0, 5, 4, 3, 10, 0, 0, 0, 0, 0x00000000, 0x036F
-	object_event 6, 117, 0, 14, 5, 3, 9, 0, 0, 0, 0, 0x0821388B, 0x036E
-	object_event 7, 211, 0, 14, 4, 3, 9, 0, 0, 0, 0, RusturfTunnel_EventScript_00213878, 0x0370
-	object_event 8, 86, 0, 24, 4, 3, 8, 0, 0, 0, 0, 0x0825667C, 0x03A4
-	object_event 9, 55, 0, 32, 13, 3, 9, 1, 1, 1, 3, 0x0821397A, 0x0000
-	object_event 10, 20, 0, 25, 4, 3, 9, 1, 1, 0, 0, RusturfTunnel_EventScript_00213628, 0x03D7
-	.globl RUSTURF_TUNNEL_EventWarps
-RUSTURF_TUNNEL_EventWarps: @ 0x0850C9E0
-	warp_def 4, 10, 3, 0, MAP_ROUTE116
-	warp_def 29, 16, 3, 4, MAP_VERDANTURF_TOWN
-	warp_def 18, 20, 3, 2, MAP_ROUTE116
-	.globl RUSTURF_TUNNEL_EventCoordEvents
-RUSTURF_TUNNEL_EventCoordEvents: @ 0x0850C9F8
-	coord_event 23, 4, 3, 0, 0, RusturfTunnel_EventScript_0021383A
-	coord_event 9, 4, 3, 16538, 2, RusturfTunnel_EventScript_0021384C
-	coord_event 9, 5, 3, 16538, 2, RusturfTunnel_EventScript_0021384C
-	coord_event 25, 4, 3, 0, 0, RusturfTunnel_EventScript_00213840
-	coord_event 25, 5, 3, 0, 0, RusturfTunnel_EventScript_00213846
+	.include "data/maps/RusturfTunnel/events.inc"
 	.globl gMapEvents_RUSTURF_TUNNEL
-gMapEvents_RUSTURF_TUNNEL: @ 0x0850CA48
-	map_events RUSTURF_TUNNEL_EventObjects, RUSTURF_TUNNEL_EventWarps, RUSTURF_TUNNEL_EventCoordEvents, 0
+	.set gMapEvents_RUSTURF_TUNNEL, RusturfTunnel_MapEvents
 	.globl UNDERWATER_SOOTOPOLIS_CITY_EventObjects
 UNDERWATER_SOOTOPOLIS_CITY_EventObjects: @ 0x00000000
 	.globl UNDERWATER_SOOTOPOLIS_CITY_EventWarps

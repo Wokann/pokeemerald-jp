@@ -1,162 +1,141 @@
 @ RusturfTunnel scripts (JP map g24 m4 @ 0x082135F0)
 
 RusturfTunnel_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, RusturfTunnel_EventScript_0021360D
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, RusturfTunnel_MapScriptTable_002135FB
+	map_script MAP_SCRIPT_ON_TRANSITION, RusturfTunnel_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, RusturfTunnel_OnFrame
 	.byte 0
 
-RusturfTunnel_MapScriptTable_002135FB::
-	map_script_2 0x409A, 0x4, RusturfTunnel_EventScript_00213677
-	map_script_2 0x409A, 0x5, RusturfTunnel_EventScript_00213677
+RusturfTunnel_OnFrame:: @ 0x082135FB
+	map_script_2 VAR_RUSTURF_TUNNEL_STATE, 4, RusturfTunnel_EventScript_ClearTunnelScene
+	map_script_2 VAR_RUSTURF_TUNNEL_STATE, 5, RusturfTunnel_EventScript_ClearTunnelScene
 	.2byte 0
 
-RusturfTunnel_EventScript_0021360D::
-	compare_var_to_value 0x409A, 0x2
-	call_if 0x1, RusturfTunnel_EventScript_00213619
+RusturfTunnel_OnTransition:: @ 0x0821360D
+	call_if_eq VAR_RUSTURF_TUNNEL_STATE, 2, RusturfTunnel_EventScript_SetAquaGruntAndPeekoPos
 	end
 
-RusturfTunnel_EventScript_00213619::
-	setobjectxyperm 0x7, 0xD, 0x4
-	setobjectxyperm 0x6, 0xD, 0x5
+RusturfTunnel_EventScript_SetAquaGruntAndPeekoPos:: @ 0x08213619
+	setobjectxyperm LOCALID_RUSTURF_TUNNEL_PEEKO, 13, 4
+	setobjectxyperm LOCALID_RUSTURF_TUNNEL_GRUNT, 13, 5
 	return
 
-RusturfTunnel_EventScript_00213628::
+RusturfTunnel_EventScript_Wanda:: @ 0x08213628
 	lock
 	faceplayer
-	loadword 0x0, gJPText_00213CF3
-	callstd 0x4
+	msgbox RusturfTunnel_Text_BoyfriendOnOtherSideOfRock, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-RusturfTunnel_EventScript_0021363F::
+RusturfTunnel_EventScript_WandasBoyfriend:: @ 0x0821363F
 	lock
 	faceplayer
-	checkflag 0x1
-	goto_if 0x1, RusturfTunnel_EventScript_00213662
-	setflag 0x1
-	loadword 0x0, gJPText_00213B76
-	callstd 0x4
+	goto_if_set FLAG_TEMP_1, RusturfTunnel_EventScript_AlreadySpokenTo
+	setflag FLAG_TEMP_1
+	msgbox RusturfTunnel_Text_WhyCantTheyKeepDigging, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-RusturfTunnel_EventScript_00213662::
-	loadword 0x0, gJPText_00213C05
-	callstd 0x4
+RusturfTunnel_EventScript_AlreadySpokenTo:: @ 0x08213662
+	msgbox RusturfTunnel_Text_ToGetToVerdanturf, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x800F, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-RusturfTunnel_EventScript_00213677::
+RusturfTunnel_EventScript_ClearTunnelScene:: @ 0x08213677
 	lockall
-	compare_var_to_value 0x4001, 0x1
-	call_if 0x1, RusturfTunnel_EventScript_00213770
-	compare_var_to_value 0x4001, 0x2
-	call_if 0x1, RusturfTunnel_EventScript_00213785
-	compare_var_to_value 0x4001, 0x3
-	call_if 0x1, RusturfTunnel_EventScript_00213790
-	call RusturfTunnel_EventScript_002137C8
-	loadword 0x0, gJPText_00213C3E
-	callstd 0x4
-	compare_var_to_value 0x4001, 0x2
-	call_if 0x1, RusturfTunnel_EventScript_00213791
-	compare_var_to_value 0x4001, 0x3
-	call_if 0x1, RusturfTunnel_EventScript_00213791
-	setorcopyvar 0x8000, 0x156
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	setflag 0x6A
-	loadword 0x0, gJPText_00213C7B
-	callstd 0x4
+	call_if_eq VAR_TEMP_1, 1, RusturfTunnel_EventScript_FaceWandasBoyfriend1
+	call_if_eq VAR_TEMP_1, 2, RusturfTunnel_EventScript_FaceWandasBoyfriend2
+	call_if_eq VAR_TEMP_1, 3, RusturfTunnel_EventScript_FaceWandasBoyfriend3
+	call RusturfTunnel_EventScript_WandasBoyfriendNotice
+	msgbox RusturfTunnel_Text_YouShatteredBoulderTakeHM, MSGBOX_DEFAULT
+	call_if_eq VAR_TEMP_1, 2, RusturfTunnel_EventScript_WandasBoyfriendApproachPlayer
+	call_if_eq VAR_TEMP_1, 3, RusturfTunnel_EventScript_WandasBoyfriendApproachPlayer
+	giveitem ITEM_HM_STRENGTH
+	setflag FLAG_RECEIVED_HM_STRENGTH
+	msgbox RusturfTunnel_Text_ExplainStrength, MSGBOX_DEFAULT
 	closemessage
-	compare_var_to_value 0x4001, 0x1
-	call_if 0x1, RusturfTunnel_EventScript_00213726
-	compare_var_to_value 0x4001, 0x2
-	call_if 0x1, RusturfTunnel_EventScript_00213738
-	compare_var_to_value 0x4001, 0x3
-	call_if 0x1, RusturfTunnel_EventScript_00213754
-	loadword 0x0, gJPText_00213CB3
-	callstd 0x4
+	call_if_eq VAR_TEMP_1, 1, RusturfTunnel_EventScript_BoyfriendApproachWanda1
+	call_if_eq VAR_TEMP_1, 2, RusturfTunnel_EventScript_BoyfriendApproachWanda2
+	call_if_eq VAR_TEMP_1, 3, RusturfTunnel_EventScript_BoyfriendApproachWanda3
+	msgbox RusturfTunnel_Text_WandaReunion, MSGBOX_DEFAULT
 	closemessage
-	compare_var_to_value 0x4001, 0x1
-	call_if 0x1, RusturfTunnel_EventScript_0021379D
-	compare_var_to_value 0x4001, 0x2
-	call_if 0x1, RusturfTunnel_EventScript_002137AF
-	compare_var_to_value 0x4001, 0x3
-	call_if 0x1, RusturfTunnel_EventScript_002137AF
-	call 0x08243299
+	call_if_eq VAR_TEMP_1, 1, RusturfTunnel_EventScript_WandaAndBoyfriendExit1
+	call_if_eq VAR_TEMP_1, 2, RusturfTunnel_EventScript_WandaAndBoyfriendExit
+	call_if_eq VAR_TEMP_1, 3, RusturfTunnel_EventScript_WandaAndBoyfriendExit
+	call RusturfTunnel_EventScript_SetRusturfTunnelOpen
 	releaseall
 	end
 
-RusturfTunnel_EventScript_00213726::
-	applymovement 0xFF, RusturfTunnel_Movement_PlayerWatchBoyfriend1
-	applymovement 0x1, RusturfTunnel_Movement_BoyfriendApproachWanda1
-	waitmovement 0x0
+RusturfTunnel_EventScript_BoyfriendApproachWanda1:: @ 0x08213726
+	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerWatchBoyfriend1
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_BoyfriendApproachWanda1
+	waitmovement 0
 	return
 
-RusturfTunnel_EventScript_00213738::
-	applymovement 0xFF, RusturfTunnel_Movement_PlayerWatchBoyfriend
-	applymovement 0x1, RusturfTunnel_Movement_BoyfriendApproachWanda
-	waitmovement 0x0
-	applymovement 0xA, 0x0824362D
-	waitmovement 0x0
+RusturfTunnel_EventScript_BoyfriendApproachWanda2:: @ 0x08213738
+	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerWatchBoyfriend
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_BoyfriendApproachWanda
+	waitmovement 0
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDA, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
 	return
 
-RusturfTunnel_EventScript_00213754::
-	applymovement 0xFF, RusturfTunnel_Movement_PlayerWatchBoyfriend
-	applymovement 0x1, RusturfTunnel_Movement_BoyfriendApproachWanda
-	waitmovement 0x0
-	applymovement 0xA, 0x0824362D
-	waitmovement 0x0
+RusturfTunnel_EventScript_BoyfriendApproachWanda3:: @ 0x08213754
+	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerWatchBoyfriend
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_BoyfriendApproachWanda
+	waitmovement 0
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDA, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
 	return
 
-RusturfTunnel_EventScript_00213770::
-	applymovement 0x1, 0x08243629
-	waitmovement 0x0
-	applymovement 0xFF, 0x0824362D
-	waitmovement 0x0
+RusturfTunnel_EventScript_FaceWandasBoyfriend1:: @ 0x08213770
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
 	return
 
-RusturfTunnel_EventScript_00213785::
-	applymovement 0x1, RusturfTunnel_Movement_BoyfriendFaceRight
-	waitmovement 0x0
+RusturfTunnel_EventScript_FaceWandasBoyfriend2:: @ 0x08213785
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_BoyfriendFaceRight
+	waitmovement 0
 	return
 
-RusturfTunnel_EventScript_00213790::
+RusturfTunnel_EventScript_FaceWandasBoyfriend3:: @ 0x08213790
 	return
 
-RusturfTunnel_EventScript_00213791::
+RusturfTunnel_EventScript_WandasBoyfriendApproachPlayer:: @ 0x08213791
 	closemessage
-	applymovement 0x1, RusturfTunnel_Movement_WandasBoyfriendApproachPlayer
-	waitmovement 0x0
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_WandasBoyfriendApproachPlayer
+	waitmovement 0
 	return
 
-RusturfTunnel_EventScript_0021379D::
-	applymovement 0xA, RusturfTunnel_Movement_WandaExit1
-	applymovement 0x1, RusturfTunnel_Movement_WandasBoyfriendExit1
-	waitmovement 0x0
+RusturfTunnel_EventScript_WandaAndBoyfriendExit1:: @ 0x0821379D
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDA, RusturfTunnel_Movement_WandaExit1
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_WandasBoyfriendExit1
+	waitmovement 0
 	return
 
-RusturfTunnel_EventScript_002137AF::
-	applymovement 0xFF, RusturfTunnel_Movement_PlayerWatchWandaExit
-	applymovement 0xA, RusturfTunnel_Movement_WandaExit
-	applymovement 0x1, RusturfTunnel_Movement_WandasBoyfriendExit
-	waitmovement 0x0
+RusturfTunnel_EventScript_WandaAndBoyfriendExit:: @ 0x082137AF
+	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerWatchWandaExit
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDA, RusturfTunnel_Movement_WandaExit
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, RusturfTunnel_Movement_WandasBoyfriendExit
+	waitmovement 0
 	return
 
-RusturfTunnel_EventScript_002137C8::
-	playse 0x15
-	applymovement 0x1, 0x0824361B
-	waitmovement 0x0
-	applymovement 0x1, 0x0824361D
-	waitmovement 0x0
+RusturfTunnel_EventScript_WandasBoyfriendNotice:: @ 0x082137C8
+	playse SE_PIN
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_RUSTURF_TUNNEL_WANDAS_BF, Common_Movement_Delay48
+	waitmovement 0
 	return
 
 RusturfTunnel_Movement_WandaExit1:
@@ -277,29 +256,28 @@ RusturfTunnel_Movement_BoyfriendApproachWanda:
 	walk_in_place_faster_up
 	step_end
 
-RusturfTunnel_EventScript_0021383A::
-	setvar 0x4001, 0x1
+RusturfTunnel_EventScript_TunnelBlockagePos1:: @ 0x0821383A
+	setvar VAR_TEMP_1, 1
 	end
 
-RusturfTunnel_EventScript_00213840::
-	setvar 0x4001, 0x2
+RusturfTunnel_EventScript_TunnelBlockagePos2:: @ 0x08213840
+	setvar VAR_TEMP_1, 2
 	end
 
-RusturfTunnel_EventScript_00213846::
-	setvar 0x4001, 0x3
+RusturfTunnel_EventScript_TunnelBlockagePos3:: @ 0x08213846
+	setvar VAR_TEMP_1, 3
 	end
 
-RusturfTunnel_EventScript_0021384C::
+RusturfTunnel_EventScript_AquaGruntBackUp:: @ 0x0821384C
 	lockall
-	loadword 0x0, gJPText_00213991
-	callstd 0x4
+	msgbox RusturfTunnel_Text_ComeAndGetSome, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x6, RusturfTunnel_Movement_GruntAndPeekoBackUp
-	applymovement 0x7, RusturfTunnel_Movement_GruntAndPeekoBackUp
-	waitmovement 0x0
-	moveobjectoffscreen 0x6
-	moveobjectoffscreen 0x7
-	setvar 0x409A, 0x3
+	applymovement LOCALID_RUSTURF_TUNNEL_GRUNT, RusturfTunnel_Movement_GruntAndPeekoBackUp
+	applymovement LOCALID_RUSTURF_TUNNEL_PEEKO, RusturfTunnel_Movement_GruntAndPeekoBackUp
+	waitmovement 0
+	copyobjectxytoperm LOCALID_RUSTURF_TUNNEL_GRUNT
+	copyobjectxytoperm LOCALID_RUSTURF_TUNNEL_PEEKO
+	setvar VAR_RUSTURF_TUNNEL_STATE, 3
 	releaseall
 	end
 
@@ -309,63 +287,57 @@ RusturfTunnel_Movement_GruntAndPeekoBackUp:
 	unlock_facing_direction
 	step_end
 
-RusturfTunnel_EventScript_00213878::
+RusturfTunnel_EventScript_Peeko:: @ 0x08213878
 	lock
 	faceplayer
 	waitse
-	playmoncry 0x135, 0x0
-	loadword 0x0, gJPText_002139A1
-	callstd 0x4
-	waitdooranim
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
+	msgbox RusturfTunnel_Text_Peeko, MSGBOX_DEFAULT
+	waitmoncry_jp
 	release
 	end
 
-RusturfTunnel_EventScript_0021388B::
+RusturfTunnel_EventScript_Grunt:: @ 0x0821388B
 	lock
 	faceplayer
-	playbgm 0x1A3, 0x0
-	loadword 0x0, gJPText_002139B0
-	callstd 0x4
-	trainerbattle TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT, 0x10, 0x0, gJPText_00213A18
-	loadword 0x0, gJPText_00213A32
-	callstd 0x4
-	setorcopyvar 0x8000, 0x10D
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
+	playbgm MUS_ENCOUNTER_AQUA, FALSE
+	msgbox RusturfTunnel_Text_GruntIntro, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_GRUNT_RUSTURF_TUNNEL, RusturfTunnel_Text_GruntDefeat
+	msgbox RusturfTunnel_Text_GruntTakePackage, MSGBOX_DEFAULT
+	giveitem ITEM_DEVON_GOODS
 	closemessage
-	applymovement 0xFF, RusturfTunnel_Movement_PushPlayerAsideForGrunt
-	applymovement 0x6, RusturfTunnel_Movement_GruntEscape
-	waitmovement 0x0
-	removeobject 0x6
-	delay 0x32
-	addobject 0x5
-	applymovement 0x5, RusturfTunnel_Movement_BrineyApproachPeeko1
-	waitmovement 0x0
-	applymovement 0xFF, RusturfTunnel_Movement_PlayerMoveAsideForBriney
-	applymovement 0x5, RusturfTunnel_Movement_BrineyApproachPeeko2
-	waitmovement 0x0
-	loadword 0x0, gJPText_00213A8C
-	callstd 0x4
-	applymovement 0x5, 0x08243621
-	waitmovement 0x0
-	message gJPText_00213A9E
+	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PushPlayerAsideForGrunt
+	applymovement LOCALID_RUSTURF_TUNNEL_GRUNT, RusturfTunnel_Movement_GruntEscape
+	waitmovement 0
+	removeobject LOCALID_RUSTURF_TUNNEL_GRUNT
+	delay 50
+	addobject LOCALID_RUSTURF_TUNNEL_BRINEY
+	applymovement LOCALID_RUSTURF_TUNNEL_BRINEY, RusturfTunnel_Movement_BrineyApproachPeeko1
+	waitmovement 0
+	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerMoveAsideForBriney
+	applymovement LOCALID_RUSTURF_TUNNEL_BRINEY, RusturfTunnel_Movement_BrineyApproachPeeko2
+	waitmovement 0
+	msgbox RusturfTunnel_Text_PeekoGladToSeeYouSafe, MSGBOX_DEFAULT
+	applymovement LOCALID_RUSTURF_TUNNEL_BRINEY, Common_Movement_FacePlayer
+	waitmovement 0
+	message RusturfTunnel_Text_ThankYouLetsGoHomePeeko
 	waitmessage
 	waitse
-	playmoncry 0x135, 0x0
+	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	waitbuttonpress
-	waitdooranim
+	waitmoncry_jp
 	closemessage
-	applymovement 0xFF, RusturfTunnel_Movement_PlayerWatchBrineyExit
-	applymovement 0x5, RusturfTunnel_Movement_BrineyExit
-	applymovement 0x7, RusturfTunnel_Movement_PeekoExit
-	waitmovement 0x0
-	removeobject 0x5
-	removeobject 0x7
-	clearflag 0x8E
-	setflag 0x8F
-	setvar 0x405A, 0x4
-	setvar 0x4090, 0x1
-	setflag 0x37B
+	applymovement LOCALID_PLAYER, RusturfTunnel_Movement_PlayerWatchBrineyExit
+	applymovement LOCALID_RUSTURF_TUNNEL_BRINEY, RusturfTunnel_Movement_BrineyExit
+	applymovement LOCALID_RUSTURF_TUNNEL_PEEKO, RusturfTunnel_Movement_PeekoExit
+	waitmovement 0
+	removeobject LOCALID_RUSTURF_TUNNEL_BRINEY
+	removeobject LOCALID_RUSTURF_TUNNEL_PEEKO
+	clearflag FLAG_DEVON_GOODS_STOLEN
+	setflag FLAG_RECOVERED_DEVON_GOODS
+	setvar VAR_RUSTBORO_CITY_STATE, 4
+	setvar VAR_BRINEY_HOUSE_STATE, 1
+	setflag FLAG_HIDE_ROUTE_116_MR_BRINEY
 	release
 	end
 
@@ -442,23 +414,19 @@ RusturfTunnel_Movement_PeekoExit:
 	walk_left
 	step_end
 
-RusturfTunnel_EventScript_0021397A::
-	trainerbattle TRAINER_BATTLE_SINGLE, 0x27B, 0x0, gJPText_00213D51, gJPText_00213D8C
-	loadword 0x0, gJPText_00213D9D
-	callstd 0x6
+RusturfTunnel_EventScript_Mike:: @ 0x0821397A
+	trainerbattle_single TRAINER_MIKE_2, RusturfTunnel_Text_MikeIntro, RusturfTunnel_Text_MikeDefeat
+	msgbox RusturfTunnel_Text_MikePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-	.globl gJPText_00213991
-gJPText_00213991: @ 0x08213991
+RusturfTunnel_Text_ComeAndGetSome: @ 0x08213991
 	.string "くるのか？\n"
 	.string "くるなら　こいよ！$"
 
-	.globl gJPText_002139A1
-gJPText_002139A1: @ 0x082139A1
+RusturfTunnel_Text_Peeko: @ 0x082139A1
 	.string "ピーコちゃん“ピ　ピひょー！$"
 
-	.globl gJPText_002139B0
-gJPText_002139B0: @ 0x082139B0
+RusturfTunnel_Text_GruntIntro: @ 0x082139B0
 	.string "えーい　くっそー！\p"
 	.string "うばった　ポケモンは\n"
 	.string "なんの　やくにも　たたないし\p"
@@ -467,13 +435,11 @@ gJPText_002139B0: @ 0x082139B0
 	.string "やい！　おまえ！\n"
 	.string "おれと　しょうぶ　するんだな！？$"
 
-	.globl gJPText_00213A18
-gJPText_00213A18: @ 0x08213A18
+RusturfTunnel_Text_GruntDefeat: @ 0x08213A18
 	.string "む　むぐぐー！\n"
 	.string "おれの　あくじも　いきどまりかっ！$"
 
-	.globl gJPText_00213A32
-gJPText_00213A32: @ 0x08213A32
+RusturfTunnel_Text_GruntTakePackage: @ 0x08213A32
 	.string "おかしいなあ⋯⋯\p"
 	.string "リーダーの　はなしでは　なにかの　にもつを\n"
 	.string "デボンから　ぬすんでくる　っていう\l"
@@ -481,19 +447,17 @@ gJPText_00213A32: @ 0x08213A32
 	.string "ちぇっ！\n"
 	.string "こんなもん　かえして　やらあ！$"
 
-	.globl gJPText_00213A8C
-gJPText_00213A8C: @ 0x08213A8C
+RusturfTunnel_Text_PeekoGladToSeeYouSafe: @ 0x08213A8C
 	.string "ピーコちゃん！　ぶじで　よかった！$"
 
-	.globl gJPText_00213A9E
-gJPText_00213A9E: @ 0x08213A9E
+RusturfTunnel_Text_ThankYouLetsGoHomePeeko: @ 0x08213A9E
 	.string "あんたは　ピーコちゃんの\n"
 	.string "いのちの　おんじん　じゃよ！\p"
 	.string "わしは　ハギと　いうのじゃが\n"
 	.string "きみは⋯⋯？\p"
 	.string "⋯⋯　⋯⋯　⋯⋯\n"
 	.string "⋯⋯　⋯⋯　⋯⋯\p"
-	.string "そうか　{STRING 0x01}{STRING 0x05}と　いうのか！\n"
+	.string "そうか　{PLAYER}{KUN}と　いうのか！\n"
 	.string "ほんとうに　ありがとうよ！\p"
 	.string "これからさき　こまった　ことが　あったら\n"
 	.string "えんりょなく　わしに　いっとくれ！\p"
@@ -503,8 +467,7 @@ gJPText_00213A9E: @ 0x08213A9E
 	.string "わしらの　おうちに　かえろうな！\p"
 	.string "ピーコちゃん“ピひょーっ！！$"
 
-	.globl gJPText_00213B76
-gJPText_00213B76: @ 0x08213B76
+RusturfTunnel_Text_WhyCantTheyKeepDigging: @ 0x08213B76
 	.string "⋯⋯\p"
 	.string "どうして　これいじょう　ほれない⋯⋯\n"
 	.string "この　いわが　かたすぎるのか？\p"
@@ -515,35 +478,30 @@ gJPText_00213B76: @ 0x08213B76
 	.string "それなのに⋯⋯\n"
 	.string "おれは　どうすれば　いいんだ⋯⋯$"
 
-	.globl gJPText_00213C05
-gJPText_00213C05: @ 0x08213C05
+RusturfTunnel_Text_ToGetToVerdanturf: @ 0x08213C05
 	.string "カナズミから　シダケに　いこうと　すると\n"
 	.string "ムロから　カイナと　キンセツを　とおって\l"
 	.string "いかなきゃ　ならないんだ⋯⋯$"
 
-	.globl gJPText_00213C3E
-gJPText_00213C3E: @ 0x08213C3E
+RusturfTunnel_Text_YouShatteredBoulderTakeHM: @ 0x08213C3E
 	.string "なんと！　きみが　この　いわを\n"
 	.string "くだいて　くれたんだね\p"
 	.string "かんしゃの　しるし　として\n"
 	.string "この　ひでんマシンを　うけとってくれ$"
 
-	.globl gJPText_00213C7B
-gJPText_00213C7B: @ 0x08213C7B
+RusturfTunnel_Text_ExplainStrength: @ 0x08213C7B
 	.string "そいつには　かいりきが　はいっている\n"
 	.string "ちからもちの　ポケモンに　おぼえさせれば\l"
 	.string "おおきな　いわを　うごかせるよ$"
 
-	.globl gJPText_00213CB3
-gJPText_00213CB3: @ 0x08213CB3
+RusturfTunnel_Text_WandaReunion: @ 0x08213CB3
 	.string "ミチルさん！\n"
 	.string "これから　いつでも　あえます！\p"
 	.string "ミチル“よかった⋯⋯　です\p"
 	.string "さあ　わたしの　いえで\n"
 	.string "ゆっくり　やすんで　ください$"
 
-	.globl gJPText_00213CF3
-gJPText_00213CF3: @ 0x08213CF3
+RusturfTunnel_Text_BoyfriendOnOtherSideOfRock: @ 0x08213CF3
 	.string "この　いわの　むこうに⋯⋯\n"
 	.string "わたしの　かれが　いるの\p"
 	.string "かれ⋯⋯　わたしに　あうため　だけに\n"
@@ -551,19 +509,16 @@ gJPText_00213CF3: @ 0x08213CF3
 	.string "みんなの　ために\n"
 	.string "てを　きずつけながらも　がんばってるの$"
 
-	.globl gJPText_00213D51
-gJPText_00213D51: @ 0x08213D51
+RusturfTunnel_Text_MikeIntro: @ 0x08213D51
 	.string "おとこが　やまに　いるから　やまおとこ！\p"
 	.string "なのに　ポケモンが　やまに　いても\n"
 	.string "やまポケモンと　いわないのは　なぜだ？$"
 
-	.globl gJPText_00213D8C
-gJPText_00213D8C: @ 0x08213D8C
+RusturfTunnel_Text_MikeDefeat: @ 0x08213D8C
 	.string "ポケモン⋯⋯\n"
 	.string "ちから　つきた⋯⋯$"
 
-	.globl gJPText_00213D9D
-gJPText_00213D9D: @ 0x08213D9D
+RusturfTunnel_Text_MikePostBattle: @ 0x08213D9D
 	.string "ここって　ポケモンを　まもるため\n"
 	.string "かいはつ　こうじを　やめたんだろ？\l"
 	.string "それって　いい　はなし　だよな$"

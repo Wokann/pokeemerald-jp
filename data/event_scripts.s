@@ -1278,6 +1278,10 @@ EventScript_UseSurf: @ 0x8242F2C
 	.globl EventScript_RegionMap
 EventScript_RegionMap: @ 0x824311B
 	.include "data/scripts/gUnknown_824311B.inc"
+	@ Rusturf Tunnel's open-state helper remains in this later shared owner.
+	@ Export the reviewed map-local call target without moving its byte range.
+	.globl RusturfTunnel_EventScript_SetRusturfTunnelOpen
+	.set RusturfTunnel_EventScript_SetRusturfTunnelOpen, 0x08243299
 
 	.globl EventScript_PictureBookShelf
 EventScript_PictureBookShelf: @ 0x8243651
@@ -1857,6 +1861,9 @@ EventScript_TV: @ 0x824C47B
 	.globl EventScript_UseCut
 EventScript_UseCut: @ 0x8256612
 	.include "data/scripts/gUnknown_8256612.inc"
+	@ Smashable-rock map events share this retained field-move script.
+	.globl EventScript_RockSmash
+	.set EventScript_RockSmash, 0x0825667C
 
 	.globl EventScript_UseRockSmash
 EventScript_UseRockSmash: @ 0x82566C6
@@ -1897,6 +1904,10 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set MeteorFalls_1F_1R_EventScript_ItemPPUP, 0x08256F29
 	.globl MeteorFalls_B1F_2R_EventScript_ItemTMDragonClaw
 	.set MeteorFalls_B1F_2R_EventScript_ItemTMDragonClaw, 0x08256F36
+	.globl RusturfTunnel_EventScript_ItemPokeBall
+	.set RusturfTunnel_EventScript_ItemPokeBall, 0x08256E8D
+	.globl RusturfTunnel_EventScript_ItemMaxEther
+	.set RusturfTunnel_EventScript_ItemMaxEther, 0x08256E9A
 	@ The Day-Care Woman logic remains inside the later shared raw owner.
 	@ Export its reviewed map-event entry without moving that owner early.
 	.globl Route117_PokemonDayCare_EventScript_DaycareWoman
