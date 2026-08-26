@@ -5150,8 +5150,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_HOUSE5 (g12 m8)
 	.4byte gMapLayout_FORTREE_CITY_HOUSE1  @ mapLayout
-	.4byte gMapEvents_FORTREE_CITY_HOUSE5  @ events
-	.4byte 0x08205343  @ mapScripts
+	.4byte FortreeCity_House5_MapEvents  @ events
+	.4byte FortreeCity_House5_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017E  @ music
 	.2byte 0x0063  @ mapLayoutId

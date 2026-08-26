@@ -977,8 +977,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/FortreeCity_House3/events.inc"
 	.include "data/maps/FortreeCity_House4/events.inc"
 	.include "data/maps/FortreeCity_House5/events.inc"
-	.globl gMapEvents_FORTREE_CITY_HOUSE5
-	.set gMapEvents_FORTREE_CITY_HOUSE5, FortreeCity_House5_MapEvents
 	.include "data/maps/FortreeCity_DecorationShop/events.inc"
 	.globl gMapEvents_FORTREE_CITY_DECORATION_SHOP
 	.set gMapEvents_FORTREE_CITY_DECORATION_SHOP, FortreeCity_DecorationShop_MapEvents

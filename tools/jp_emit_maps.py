@@ -11045,6 +11045,33 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_House5': {
+        'scripts': {
+            0x08205344: 'FortreeCity_House5_EventScript_PokefanF',
+            0x0820534D: 'FortreeCity_House5_EventScript_Man',
+            0x08205356: 'FortreeCity_House5_EventScript_Zigzagoon',
+        },
+        'texts': {
+            0x08205369: 'FortreeCity_House5_Text_TreeHousesAreGreat',
+            0x082053A4: 'FortreeCity_House5_Text_AdaptedToNature',
+            0x082053E4: 'FortreeCity_House5_Text_Zigzagoon',
+        },
+        'preamble': (
+            '@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.',
+        ),
+        'command_aliases': {
+            0x08205356: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'species': {0x0120: 'SPECIES_ZIGZAGOON'},
+            'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.
