@@ -967,8 +967,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/RustboroCity_Flat2_1F/events.inc"
 	.include "data/maps/RustboroCity_Flat2_2F/events.inc"
 	.include "data/maps/RustboroCity_Flat2_3F/events.inc"
-	.globl gMapEvents_RUSTBORO_CITY_FLAT2_3F
-	.set gMapEvents_RUSTBORO_CITY_FLAT2_3F, RustboroCity_Flat2_3F_MapEvents
 	.include "data/maps/RustboroCity_House3/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_HOUSE3
 	.set gMapEvents_RUSTBORO_CITY_HOUSE3, RustboroCity_House3_MapEvents
