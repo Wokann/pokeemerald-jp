@@ -2296,44 +2296,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/GraniteCave_StevensRoom/events.inc"
 	.globl gMapEvents_GRANITE_CAVE_STEVENS_ROOM
 	.set gMapEvents_GRANITE_CAVE_STEVENS_ROOM, GraniteCave_StevensRoom_MapEvents
-	.globl PETALBURG_WOODS_EventObjects
-PETALBURG_WOODS_EventObjects: @ 0x0850CD10
-	object_event 1, 82, 0, 19, 10, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0011
-	object_event 2, 82, 0, 19, 11, 3, 1, 0, 0, 0, 0, 0x082565C8, 0x0012
-	object_event 3, 117, 0, 26, 17, 3, 10, 0, 0, 0, 0, 0x00000000, 0x02D5
-	object_event 4, 23, 0, 26, 20, 3, 1, 0, 0, 0, 0, 0x00000000, 0x02D4
-	object_event 5, 59, 0, 45, 7, 3, 8, 0, 0, 0, 0, 0x08256E66, 0x0420
-	object_event 6, 59, 0, 35, 20, 3, 8, 0, 0, 0, 0, 0x08256E59, 0x041F
-	object_event 7, 59, 0, 4, 8, 3, 1, 0, 0, 0, 0, 0x08256E73, 0x0422
-	object_event 8, 9, 0, 15, 19, 3, 3, 1, 2, 0, 0, 0x082144B2, 0x0000
-	object_event 9, 36, 0, 7, 32, 3, 22, 0, 0, 1, 3, 0x0821450F, 0x0000
-	object_event 10, 36, 0, 4, 14, 3, 20, 0, 0, 1, 3, 0x08214526, 0x0000
-	object_event 11, 13, 0, 30, 34, 3, 2, 2, 1, 0, 0, 0x082144BB, 0x0000
-	object_event 12, 59, 0, 4, 26, 3, 1, 1, 1, 0, 0, 0x08256E80, 0x045D
-	object_event 13, 10, 0, 33, 5, 3, 1, 1, 1, 0, 0, 0x082144C4, 0x0000
-	.globl PETALBURG_WOODS_EventWarps
-PETALBURG_WOODS_EventWarps: @ 0x0850CE48
-	warp_def 14, 5, 0, 2, MAP_ROUTE104
-	warp_def 15, 5, 0, 3, MAP_ROUTE104
-	warp_def 16, 38, 0, 4, MAP_ROUTE104
-	warp_def 17, 38, 0, 5, MAP_ROUTE104
-	warp_def 36, 38, 0, 6, MAP_ROUTE104
-	warp_def 37, 38, 0, 7, MAP_ROUTE104
-	.globl PETALBURG_WOODS_EventCoordEvents
-PETALBURG_WOODS_EventCoordEvents: @ 0x0850CE78
-	coord_event 26, 23, 3, 16536, 0, 0x08214279
-	coord_event 27, 23, 3, 16536, 0, 0x0821431B
-	.globl PETALBURG_WOODS_EventBgEvents
-PETALBURG_WOODS_EventBgEvents: @ 0x0850CE98
-	bg_event 14, 32, 3, 0, 0x082144FD, 0, 0
-	bg_event 39, 35, 3, 7, 0x000D, 0x3A, 0x00
-	bg_event 26, 6, 3, 7, 0x0067, 0x3B, 0x00
-	bg_event 40, 29, 3, 7, 0x0067, 0x3C, 0x00
-	bg_event 4, 19, 3, 7, 0x0004, 0x3D, 0x00
-	bg_event 11, 8, 3, 0, 0x08214506, 0, 0
+	.include "data/maps/PetalburgWoods/events.inc"
 	.globl gMapEvents_PETALBURG_WOODS
-gMapEvents_PETALBURG_WOODS: @ 0x0850CEE0
-	map_events PETALBURG_WOODS_EventObjects, PETALBURG_WOODS_EventWarps, PETALBURG_WOODS_EventCoordEvents, PETALBURG_WOODS_EventBgEvents
+	.set gMapEvents_PETALBURG_WOODS, PetalburgWoods_MapEvents
 	.globl MT_CHIMNEY_EventObjects
 MT_CHIMNEY_EventObjects: @ 0x0850CEF4
 	object_event 1, 195, 0, 24, 19, 3, 9, 0, 0, 0, 0, MtChimney_EventScript_00214BA8, 0x039E

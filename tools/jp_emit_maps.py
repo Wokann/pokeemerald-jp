@@ -170,6 +170,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Steven's room follows the empty B2F map-script owner. Its five local
     # interaction branches match the US source in physical ROM order.
     'GraniteCave_StevensRoom': 5,
+    # Petalburg Woods follows with its seven story branches and thirteen
+    # local NPC, sign, and trainer scripts in the same US source order.
+    'PetalburgWoods': 20,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -263,6 +266,9 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'GraniteCave_1F': 2,
     # Steven's room owns the six dialogue records following its local moves.
     'GraniteCave_StevensRoom': 6,
+    # Petalburg Woods owns the twenty-nine contiguous dialogue records after
+    # its local scripts and movements.
+    'PetalburgWoods': 29,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6516,6 +6522,53 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'sounds': {0x09: 'SE_EXIT'},
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
             'decimal_arguments': {'delay': (0,)},
+        },
+    },
+    # Petalburg Woods follows Steven's room. Its Aqua encounter, item gift,
+    # rematch flow, and every local text record were aligned with the US map
+    # source by event-table position, control flow, and physical ROM order.
+    'PetalburgWoods': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x082565C8: 'EventScript_CutTree',
+            0x08256E59: 'PetalburgWoods_EventScript_ItemXAttack',
+            0x08256E66: 'PetalburgWoods_EventScript_ItemGreatBall',
+            0x08256E73: 'PetalburgWoods_EventScript_ItemEther',
+            0x08256E80: 'PetalburgWoods_EventScript_ItemParalyzeHeal',
+        },
+        'symbols': {
+            'vars': {
+                0x4098: 'VAR_PETALBURG_WOODS_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'flags': {
+                0x0129: 'FLAG_RECEIVED_MIRACLE_SEED',
+                0x012F: 'FLAG_HAS_MATCH_CALL',
+            },
+            'items': {
+                0x0003: 'ITEM_GREAT_BALL',
+                0x00CD: 'ITEM_MIRACLE_SEED',
+            },
+            'trainers': {
+                0x000A: 'TRAINER_GRUNT_PETALBURG_WOODS',
+                0x0268: 'TRAINER_LYLE',
+                0x026D: 'TRAINER_JAMES_1',
+            },
+            'songs': {0x01A3: 'MUS_ENCOUNTER_AQUA'},
+            'local_ids': {
+                0x03: 'LOCALID_PETALBURG_WOODS_GRUNT',
+                0x04: 'LOCALID_PETALBURG_WOODS_DEVON_EMPLOYEE',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
 })

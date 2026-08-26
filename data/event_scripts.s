@@ -1925,6 +1925,18 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set GraniteCave_B2F_EventScript_ItemRepel, 0x08256EC1
 	.globl GraniteCave_B2F_EventScript_ItemRareCandy
 	.set GraniteCave_B2F_EventScript_ItemRareCandy, 0x08256ECE
+	@ Petalburg Woods event entries point into later shared field/item owners.
+	@ Export their reviewed US names without moving those physical ranges early.
+	.globl EventScript_CutTree
+	.set EventScript_CutTree, 0x082565C8
+	.globl PetalburgWoods_EventScript_ItemXAttack
+	.set PetalburgWoods_EventScript_ItemXAttack, 0x08256E59
+	.globl PetalburgWoods_EventScript_ItemGreatBall
+	.set PetalburgWoods_EventScript_ItemGreatBall, 0x08256E66
+	.globl PetalburgWoods_EventScript_ItemEther
+	.set PetalburgWoods_EventScript_ItemEther, 0x08256E73
+	.globl PetalburgWoods_EventScript_ItemParalyzeHeal
+	.set PetalburgWoods_EventScript_ItemParalyzeHeal, 0x08256E80
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F
