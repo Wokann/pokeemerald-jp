@@ -931,8 +931,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/PetalburgCity_Mart/events.inc"
 	.include "data/maps/SlateportCity_SternsShipyard_1F/events.inc"
 	.include "data/maps/SlateportCity_SternsShipyard_2F/events.inc"
-	.globl gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_2F
-	.set gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_2F, SlateportCity_SternsShipyard_2F_MapEvents
 	.include "data/maps/SlateportCity_BattleTentLobby/events.inc"
 	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY
 	.set gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY, SlateportCity_BattleTentLobby_MapEvents

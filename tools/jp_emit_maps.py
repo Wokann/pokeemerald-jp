@@ -8893,6 +8893,20 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'local_ids': {0x01: 'LOCALID_DOCK'},
         },
     },
+    # The adjoining Shipyard floor contains the two local scientist messages
+    # immediately before the next physical map-script owner.
+    'SlateportCity_SternsShipyard_2F': {
+        'scripts': {
+            0x081FAFA3: 'SlateportCity_SternsShipyard_2F_EventScript_Scientist1',
+            0x081FAFAC: 'SlateportCity_SternsShipyard_2F_EventScript_Scientist2',
+        },
+        'texts': {
+            0x081FAFB5: 'SlateportCity_SternsShipyard_2F_Text_ShipDesignMoreLikeBuilding',
+            0x081FAFED: 'SlateportCity_SternsShipyard_2F_Text_FloatsBecauseBuoyancy',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
 })
 
 # Rustboro Devon Corp 2F is a complete, contiguous JP map-script owner.
