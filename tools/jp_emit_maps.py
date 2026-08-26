@@ -8414,6 +8414,23 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Pacifidlog House 1 is two direct NPC messages. Its US counterpart provides
+# the semantic local names needed to reproduce this fully decoded owner.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'PacifidlogTown_House1': {
+        'scripts': {
+            0x081F793F: 'PacifidlogTown_House1_EventScript_Man',
+            0x081F7948: 'PacifidlogTown_House1_EventScript_Woman',
+        },
+        'texts': {
+            0x081F7951: 'PacifidlogTown_House1_Text_RegiStory',
+            0x081F79BE: 'PacifidlogTown_House1_Text_SixDotsOpenThreeDoors',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
