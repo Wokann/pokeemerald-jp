@@ -24,13 +24,6 @@ extern const struct WindowTemplate sTraderWindowTemplate;
 // windowId, fontId, x, y, extra, itemCount, initialCursorPos).
 u8 sub_081984B0(u8 windowId, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7);
 
-// JP-only script special with no pokeemerald counterpart: it pops one
-// entry off a save-scoped decoration offer list (0x0202414C -> +0x1C
-// array, index at +0x20) and stores it at 0x0203A804.  Kept in
-// asm/trader_jp_only.s because agbcc cannot reproduce its literal-pool
-// layout from C.
-bool8 ScrSpecial_TraderMenuGiveDecoration(void);
-
 void TraderSetup(void)
 {
     u8 i;
@@ -191,5 +184,4 @@ void TraderMenuGetDecoration(void)
     u8 taskId = CreateTask(Task_HandleGetDecorationMenuInput, 0);
     CreateAvailableDecorationsMenu(taskId);
 }
-
 

@@ -10424,7 +10424,7 @@ battle_ai_script_commands.s
 081339a0 sub_081339A0 AIStackPushVar
 081339c4 AIStackPushVar_cursor AIStackPushVar_cursor
 trader.s
-081339ec ScrSpecial_TraderMenuGiveDecoration ScrSpecial_TraderMenuGiveDecoration
+081339ec BattleAIStackPop AIStackPop
 08133a2c trader.s TraderSetup
 08133a94 Trader_ResetFlag Trader_ResetFlag
 08133aac trader.s CreateAvailableDecorationsMenu

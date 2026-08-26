@@ -6641,7 +6641,7 @@ __attribute__((naked)) void BattleAICmd_end(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl ScrSpecial_TraderMenuGiveDecoration\n\t"
+        "	bl BattleAIStackPop\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _0813377E\n\t"
@@ -7017,4 +7017,3 @@ __attribute__((naked)) void AIStackPushVar_cursor(void)
         ".syntax divided\n\t"
     );
 }
-
