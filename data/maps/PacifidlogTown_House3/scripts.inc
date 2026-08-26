@@ -3,7 +3,7 @@
 PacifidlogTown_House3_MapScripts::
 	.byte 0
 
-PacifidlogTown_House3_EventScript_Trader::
+PacifidlogTown_House3_EventScript_Trader:: @ 0x081F7D1B
 	lock
 	faceplayer
 	goto_if_set FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED, PacifidlogTown_House3_EventScript_TradeCompleted
@@ -14,7 +14,6 @@ PacifidlogTown_House3_EventScript_Trader::
 	msgbox PacifidlogTown_House3_Text_WillingToTradeIt, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, PacifidlogTown_House3_EventScript_DeclineTrade
 	special ChoosePartyMon
-	@ JP script explicitly waits for party selection; US omits this waitstate.
 	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, PacifidlogTown_House3_EventScript_DeclineTrade
@@ -32,27 +31,27 @@ PacifidlogTown_House3_EventScript_Trader::
 	release
 	end
 
-PacifidlogTown_House3_EventScript_DeclineTrade::
+PacifidlogTown_House3_EventScript_DeclineTrade:: @ 0x081F7D9D
 	msgbox PacifidlogTown_House3_Text_NotDesperateOrAnything, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House3_EventScript_NotRequestedMon::
+PacifidlogTown_House3_EventScript_NotRequestedMon:: @ 0x081F7DA7
 	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox PacifidlogTown_House3_Text_WontAcceptAnyLessThanRealMon, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House3_EventScript_TradeCompleted::
+PacifidlogTown_House3_EventScript_TradeCompleted:: @ 0x081F7DB5
 	msgbox PacifidlogTown_House3_Text_ReallyWantedToGetBagon, MSGBOX_DEFAULT
 	release
 	end
 
-PacifidlogTown_House3_EventScript_Girl::
+PacifidlogTown_House3_EventScript_Girl:: @ 0x081F7DBF
 	msgbox PacifidlogTown_House3_Text_IsThatAPokedex, MSGBOX_NPC
 	end
 
-PacifidlogTown_House3_Text_WillingToTradeIt:
+PacifidlogTown_House3_Text_WillingToTradeIt: @ 0x081F7DC8
 	.string "みてくれよ　この　{STR_VAR_2}！\n"
 	.string "おれが　きのう　じぶんの　たんじょうびに\l"
 	.string "きねんに　つかまえた　{STR_VAR_2}だ！\p"
@@ -61,29 +60,29 @@ PacifidlogTown_House3_Text_WillingToTradeIt:
 	.string "よし！　{STR_VAR_1}と　だったら\n"
 	.string "こうかん　して　やっても　いいぞ！$"
 
-PacifidlogTown_House3_Text_ItsSubtlyDifferentThankYou:
+PacifidlogTown_House3_Text_ItsSubtlyDifferentThankYou: @ 0x081F7E3D
 	.string "おっ　これが　{STR_VAR_1}　かあー！\n"
 	.string "やっぱ　{STR_VAR_2}　とは\l"
 	.string "いろいろ　にている　ようで\l"
 	.string "びみょうに　ちがうなあ！\p"
 	.string "サンキュ！$"
 
-PacifidlogTown_House3_Text_WontAcceptAnyLessThanRealMon:
+PacifidlogTown_House3_Text_WontAcceptAnyLessThanRealMon: @ 0x081F7E77
 	.string "だめだめ！　{STR_VAR_1}　じゃないと　\n"
 	.string "ひきうけられないね！$"
 
-PacifidlogTown_House3_Text_NotDesperateOrAnything:
+PacifidlogTown_House3_Text_NotDesperateOrAnything: @ 0x081F7E92
 	.string "ふーん　やめるのか⋯⋯\p"
 	.string "まっ　おれのほうも\n"
 	.string "どうしても　って　わけじゃ　ないしね$"
 
-PacifidlogTown_House3_Text_ReallyWantedToGetBagon:
+PacifidlogTown_House3_Text_ReallyWantedToGetBagon: @ 0x081F7EBB
 	.string "じぶんで　さがしても　いいんだけど⋯⋯\p"
 	.string "ほかの　トレーナーが　つかまえた\n"
 	.string "タツベイ　って　いうのが\l"
 	.string "どうしても　ほしかったんだよね$"
 
-PacifidlogTown_House3_Text_IsThatAPokedex:
+PacifidlogTown_House3_Text_IsThatAPokedex: @ 0x081F7EFD
 	.string "それって　ポケモンずかん？\p"
 	.string "それって　あなた　たくさんの\n"
 	.string "ポケモンと　であった　ってこと？\p"

@@ -8509,6 +8509,55 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Pacifidlog House 3 follows with the Horsea-for-Bagon in-game trade. The JP
+# path retains its explicit party-selection waitstate, while labels, temporary
+# variables, and text controls follow the matching US map context.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'PacifidlogTown_House3': {
+        'scripts': {
+            0x081F7D1B: 'PacifidlogTown_House3_EventScript_Trader',
+            0x081F7D9D: 'PacifidlogTown_House3_EventScript_DeclineTrade',
+            0x081F7DA7: 'PacifidlogTown_House3_EventScript_NotRequestedMon',
+            0x081F7DB5: 'PacifidlogTown_House3_EventScript_TradeCompleted',
+            0x081F7DBF: 'PacifidlogTown_House3_EventScript_Girl',
+        },
+        'texts': {
+            0x081F7DC8: 'PacifidlogTown_House3_Text_WillingToTradeIt',
+            0x081F7E3D: 'PacifidlogTown_House3_Text_ItsSubtlyDifferentThankYou',
+            0x081F7E77: 'PacifidlogTown_House3_Text_WontAcceptAnyLessThanRealMon',
+            0x081F7E92: 'PacifidlogTown_House3_Text_NotDesperateOrAnything',
+            0x081F7EBB: 'PacifidlogTown_House3_Text_ReallyWantedToGetBagon',
+            0x081F7EFD: 'PacifidlogTown_House3_Text_IsThatAPokedex',
+        },
+        'field_placeholders': {
+            0x081F7DC8: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x081F7E3D: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x081F7E77: {0x02: 'STR_VAR_1'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x009A: 'FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED'},
+            'vars': {
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8008: 'VAR_0x8008',
+                0x8009: 'VAR_0x8009',
+                0x800A: 'VAR_0x800A',
+                0x800B: 'VAR_0x800B',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081F7D1B: {
+                    0x8004: {0xFF: 'PARTY_NOTHING_CHOSEN'},
+                    0x8008: {0x02: 'INGAME_TRADE_HORSEA'},
+                    0x800D: {0x00: 'NO'},
+                },
+            },
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
@@ -14326,7 +14375,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
             if name == 'playmoncry' and index == 1:
                 return symbols.get('cry_modes', {}).get(value)
         if name in ('bufferspeciesname', 'givemon') and index in ({1} if name == 'bufferspeciesname' else {0}):
-            return symbols.get('species', {}).get(value)
+            return (symbols.get('species', {}).get(value)
+                    or symbols.get('vars', {}).get(value))
         if name in ('multichoice', 'multichoicedefault', 'multichoicegrid') and index == 2:
             return symbols.get('multichoices', {}).get(value)
         if name == 'multichoice' and index == 3:
