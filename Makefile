@@ -83,6 +83,7 @@ JP_STRUCTURED_MAPS := Route101 Route102 Route103 Route104 Route104_MrBrineysHous
 	DewfordTown_PokemonCenter_2F \
 	DewfordTown_Gym \
 	DewfordTown_Hall \
+	DewfordTown_House1 \
 	DewfordTown_House2 \
 	LavaridgeTown \
 	LavaridgeTown_HerbShop \

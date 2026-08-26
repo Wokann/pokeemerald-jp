@@ -1618,18 +1618,9 @@ gMapEvents_ROUTE122: @ 0x085044D4
 	.include "data/maps/OldaleTown_Mart/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_MART
 	.set gMapEvents_OLDALE_TOWN_MART, OldaleTown_Mart_MapEvents
-	.globl DEWFORD_TOWN_HOUSE1_EventObjects
-DEWFORD_TOWN_HOUSE1_EventObjects: @ 0x085060F4
-	object_event 1, 24, 0, 6, 3, 3, 9, 0, 0, 0, 0, 0x081F2C1A, 0x0000
-	object_event 2, 19, 0, 3, 3, 3, 10, 0, 0, 0, 0, 0x081F2C11, 0x0000
-	object_event 3, 208, 0, 4, 2, 3, 8, 3, 1, 0, 0, 0x081F2C23, 0x0000
-	.globl DEWFORD_TOWN_HOUSE1_EventWarps
-DEWFORD_TOWN_HOUSE1_EventWarps: @ 0x0850613C
-	warp_def 3, 7, 0, 3, MAP_DEWFORD_TOWN
-	warp_def 4, 7, 0, 3, MAP_DEWFORD_TOWN
+	.include "data/maps/DewfordTown_House1/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_HOUSE1
-gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
-	map_events DEWFORD_TOWN_HOUSE1_EventObjects, DEWFORD_TOWN_HOUSE1_EventWarps, 0, 0
+	.set gMapEvents_DEWFORD_TOWN_HOUSE1, DewfordTown_House1_MapEvents
 	.include "data/maps/DewfordTown_PokemonCenter_1F/events.inc"
 	.globl gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_1F
 	.set gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_1F, DewfordTown_PokemonCenter_1F_MapEvents

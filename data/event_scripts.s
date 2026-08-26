@@ -592,10 +592,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/OldaleTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/OldaleTown_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/OldaleTown_Mart/scripts.inc"
-
-@ DewfordTown_House1 scripts (JP map g3 m0 @ 0x081F2C10), retained pending conversion.
-	.incbin "baserom_jp.gba", 0x1f2c10, 0xbf
-
+	.include "data/maps/DewfordTown_House1/scripts.inc"
 	.include "data/maps/DewfordTown_PokemonCenter_1F/scripts.inc"
 	.include "data/maps/DewfordTown_PokemonCenter_2F/scripts.inc"
 	.include "data/maps/DewfordTown_Gym/scripts.inc"
