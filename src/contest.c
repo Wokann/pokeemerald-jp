@@ -15501,7 +15501,7 @@ __attribute__((naked)) void SanitizeSpecies(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080DDFC4: .4byte SPECIAL_sub_08139938\n\t"
+        "_080DDFC4: .4byte SPECIAL_BufferTMHMMoveName\n\t"
         ".syntax divided\n\t"
     );
 }

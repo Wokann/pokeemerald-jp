@@ -183,7 +183,7 @@ __attribute__((naked)) void SetMauvilleOldMan()
         "_081206DC:\n\t"
         "	bl SetupGiddy\n\t"
         "_081206E0:\n\t"
-        "	bl ScrSpecial_SetMauvilleOldManEventObjGfx\n\t"
+        "	bl SetMauvilleOldManObjEventGfx\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         ".syntax divided\n\t"
@@ -870,7 +870,7 @@ __attribute__((naked)) void ResetMauvilleOldManFlag()
         "_08120B92:\n\t"
         "	bl SetupStoryteller\n\t"
         "_08120B96:\n\t"
-        "	bl ScrSpecial_SetMauvilleOldManEventObjGfx\n\t"
+        "	bl SetMauvilleOldManObjEventGfx\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
@@ -1228,7 +1228,7 @@ __attribute__((naked)) void Task_BardSong(void)
     );
 }
 
-__attribute__((naked)) void ScrSpecial_SetMauvilleOldManEventObjGfx(void)
+__attribute__((naked)) void SetMauvilleOldManObjEventGfx(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

@@ -120,7 +120,7 @@ gSpecials::
 	def_special ScrSpecial_SetHipsterSpokenFlag
 	def_special ScrSpecial_HipsterTeachWord
 	def_special ScrSpecial_PlayBardSong
-	def_special ScrSpecial_SetMauvilleOldManEventObjGfx
+	def_special SetMauvilleOldManObjEventGfx
 	def_special ScrSpecial_GenerateGiddyLine
 	def_special ScrSpecial_GiddyShouldTellAnotherTale
 	def_special ScrSpecial_StorytellerInitializeRandomStat
@@ -179,27 +179,14 @@ gSpecials::
 	def_special sub_08136F64
 	def_special DoBerryBlending, waitstate=1
 	def_special PlayRoulette, waitstate=1
-	def_special ShouldMoveLilycoveFanClubMember
-	def_special GetNumMovedLilycoveFanClubMembers
-	def_special BufferStreakTrainerText
-	def_special sub_0813BA68
-	def_special UpdateMovedLilycoveFanClubMembers
-	.set SPECIAL_IsFanClubMemberFanOfPlayer, SPECIAL_ShouldMoveLilycoveFanClubMember
-	.set SPECIAL_WAITSTATE_IsFanClubMemberFanOfPlayer, SPECIAL_WAITSTATE_ShouldMoveLilycoveFanClubMember
-	.set SPECIAL_GetNumFansOfPlayerInTrainerFanClub, SPECIAL_GetNumMovedLilycoveFanClubMembers
-	.set SPECIAL_WAITSTATE_GetNumFansOfPlayerInTrainerFanClub, SPECIAL_WAITSTATE_GetNumMovedLilycoveFanClubMembers
-	.set SPECIAL_BufferFanClubTrainerName, SPECIAL_BufferStreakTrainerText
-	.set SPECIAL_WAITSTATE_BufferFanClubTrainerName, SPECIAL_WAITSTATE_BufferStreakTrainerText
-	.set SPECIAL_TryLoseFansFromPlayTime, SPECIAL_UpdateMovedLilycoveFanClubMembers
-	.set SPECIAL_WAITSTATE_TryLoseFansFromPlayTime, SPECIAL_WAITSTATE_UpdateMovedLilycoveFanClubMembers
+	def_special IsFanClubMemberFanOfPlayer
+	def_special GetNumFansOfPlayerInTrainerFanClub
+	def_special BufferFanClubTrainerName
+	def_special TryLoseFansFromPlayTimeAfterLinkBattle
+	def_special TryLoseFansFromPlayTime
 	def_special sub_0813BF84
 	def_special sub_0813BA98
-	@ JP code remains at sub_0813BFA0; expose the matching US special name.
-	.globl Script_TryGainNewFanFromCounter
-	.set Script_TryGainNewFanFromCounter, sub_0813BFA0
 	def_special Script_TryGainNewFanFromCounter
-	.set SPECIAL_sub_0813BFA0, SPECIAL_Script_TryGainNewFanFromCounter
-	.set SPECIAL_WAITSTATE_sub_0813BFA0, SPECIAL_WAITSTATE_Script_TryGainNewFanFromCounter
 	def_special RockSmashWildEncounter
 	def_special GabbyAndTyGetBattleNum
 	def_special GabbyAndTyAfterInterview
@@ -454,7 +441,7 @@ gSpecials::
 	def_special DoMirageTowerCeilingCrumble, waitstate=1
 	def_special SetMirageTowerVisibility
 	def_special StartPlayerDescendMirageTower, waitstate=1
-	def_special sub_08139938
+	def_special BufferTMHMMoveName
 	def_special IsWirelessAdapterConnected
 	def_special BerryBlenderLinkBecomeLeader
 	def_special BerryBlenderLinkJoinGroup
@@ -513,9 +500,9 @@ gSpecials::
 	def_special PrintPlayerBerryPowderAmount
 	def_special sub_0813A828
 	def_special sub_0813A85C
-	def_special sub_0813B810
+	def_special Script_DoRayquazaScene, waitstate=1
 	def_special OpenPokenavForTutorial
-	def_special convert_pixel_width_to_tile_width
+	def_special ScriptMenu_CreateStartMenuForPokenavTutorial, waitstate=1
 	def_special CountPlayerTrainerStars
 	def_special sub_0813ACC8
 	def_special sub_0813ADF0
@@ -557,7 +544,7 @@ gSpecials::
 	def_special sub_0813B5A0
 	def_special sub_0813B56C
 	def_special CallTrainerHillFunction
-	def_special sub_0813B810
+	def_special Script_DoRayquazaScene, waitstate=1
 	def_special sub_0813B844
 	def_special DestroyMewEmergingGrassSprite
 	def_special sub_08022230

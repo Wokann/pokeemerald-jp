@@ -3017,7 +3017,7 @@ __attribute__((naked)) void sub_081398CC(void)
     );
 }
 
-__attribute__((naked)) void sub_08139938(void)
+__attribute__((naked)) void BufferTMHMMoveName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7149,7 +7149,7 @@ __attribute__((naked)) void sub_0813B5B4(void)
     );
 }
 
-__attribute__((naked)) void sub_0813B810(void)
+__attribute__((naked)) void Script_DoRayquazaScene(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7487,7 +7487,7 @@ void ResetFanClub(void)
     gSaveBlock1Ptr->vars[VAR_FANCLUB_LOSE_FAN_TIMER - VARS_START] = 0;
 }
 
-__attribute__((naked)) void sub_0813BA68(void)
+__attribute__((naked)) void TryLoseFansFromPlayTimeAfterLinkBattle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7496,7 +7496,7 @@ __attribute__((naked)) void sub_0813BA68(void)
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0813BA8A\n\t"
-        "	bl UpdateMovedLilycoveFanClubMembers\n\t"
+        "	bl TryLoseFansFromPlayTime\n\t"
         "	ldr r0, _0813BA90\n\t"
         "	ldr r1, [r0]\n\t"
         "	ldr r0, _0813BA94\n\t"
@@ -7598,7 +7598,7 @@ __attribute__((naked)) void sub_0813BB14(void)
         "	adds r1, r1, r0\n\t"
         "	cmp r1, #0x13\n\t"
         "	ble _0813BB8C\n\t"
-        "	bl GetNumMovedLilycoveFanClubMembers\n\t"
+        "	bl GetNumFansOfPlayerInTrainerFanClub\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	cmp r0, #2\n\t"
@@ -7737,7 +7737,7 @@ __attribute__((naked)) void sub_0813BC38(void)
         "	push {r5, r6, r7}\n\t"
         "	movs r0, #0\n\t"
         "	mov sl, r0\n\t"
-        "	bl GetNumMovedLilycoveFanClubMembers\n\t"
+        "	bl GetNumFansOfPlayerInTrainerFanClub\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	cmp r0, #1\n\t"
@@ -7820,7 +7820,7 @@ __attribute__((naked)) void sub_0813BC38(void)
     );
 }
 
-__attribute__((naked)) void GetNumMovedLilycoveFanClubMembers(void)
+__attribute__((naked)) void GetNumFansOfPlayerInTrainerFanClub(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7861,7 +7861,7 @@ __attribute__((naked)) void GetNumMovedLilycoveFanClubMembers(void)
     );
 }
 
-__attribute__((naked)) void UpdateMovedLilycoveFanClubMembers(void)
+__attribute__((naked)) void TryLoseFansFromPlayTime(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7902,7 +7902,7 @@ __attribute__((naked)) void UpdateMovedLilycoveFanClubMembers(void)
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r5, r0, #0x18\n\t"
         "_0813BD6A:\n\t"
-        "	bl GetNumMovedLilycoveFanClubMembers\n\t"
+        "	bl GetNumFansOfPlayerInTrainerFanClub\n\t"
         "	lsls r0, r0, #0x10\n\t"
         "	lsrs r0, r0, #0x10\n\t"
         "	cmp r0, #4\n\t"
@@ -7930,7 +7930,7 @@ __attribute__((naked)) void UpdateMovedLilycoveFanClubMembers(void)
     );
 }
 
-__attribute__((naked)) void ShouldMoveLilycoveFanClubMember(void)
+__attribute__((naked)) void IsFanClubMemberFanOfPlayer(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -7983,7 +7983,7 @@ __attribute__((naked)) void sub_0813BDBC(void)
     );
 }
 
-__attribute__((naked)) void BufferStreakTrainerText(void)
+__attribute__((naked)) void BufferFanClubTrainerName(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8152,7 +8152,7 @@ __attribute__((naked)) void sub_0813BF34(void)
         "	lsrs r0, r0, #0x10\n\t"
         "	cmp r0, #2\n\t"
         "	bne _0813BF64\n\t"
-        "	bl sub_0813BA68\n\t"
+        "	bl TryLoseFansFromPlayTimeAfterLinkBattle\n\t"
         "	ldr r0, _0813BF5C\n\t"
         "	ldrb r0, [r0]\n\t"
         "	cmp r0, #1\n\t"
@@ -8211,7 +8211,7 @@ __attribute__((naked)) void sub_0813BF84(void)
     );
 }
 
-__attribute__((naked)) void sub_0813BFA0(void)
+__attribute__((naked)) void Script_TryGainNewFanFromCounter(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

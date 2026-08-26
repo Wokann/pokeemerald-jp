@@ -12,7 +12,7 @@
 	end 
 	copyvar 0x8008, 0x8004
 	copyvar 0x8004, 0x8005
-	specialvar 0x800D, sub_08139938
+	specialvar 0x800D, BufferTMHMMoveName
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x8242D9E
 	compare_var_to_value 0x800D, 0x0

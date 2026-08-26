@@ -127,7 +127,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226734::
 	setvar 0x8005, 0x3
 	special sub_08161E88
 	setvar 0x8004, 0x3
-	special sub_0813BFA0
+	special Script_TryGainNewFanFromCounter
 	goto 0x082222AC
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226760::
@@ -265,7 +265,7 @@ BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226965::
 	setvar 0x8005, 0x3
 	special sub_08161E88
 	setvar 0x8004, 0x3
-	special sub_0813BFA0
+	special Script_TryGainNewFanFromCounter
 	goto 0x082222AC
 
 BattleFrontier_BattleTowerMultiBattleRoom_EventScript_00226991::

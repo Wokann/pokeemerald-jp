@@ -923,7 +923,7 @@ __attribute__((naked)) void GetEggSpecies(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806FAD8: .4byte SPECIAL_sub_08139938\n\t"
+        "_0806FAD8: .4byte SPECIAL_BufferTMHMMoveName\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3505,4 +3505,3 @@ __attribute__((naked)) void ChooseSendDaycareMon()
         ".syntax divided\n\t"
     );
 }
-

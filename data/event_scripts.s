@@ -66,22 +66,6 @@
 	.include "asm/macros/event.inc"
 	.include "constants/gba_constants.inc"
 	.include "constants/global.inc"
-	@ The underlying JP special is still named sub_08139938 in C.  Expose the
-	@ matching pokeemerald script name without changing its table index.
-	.set SPECIAL_BufferTMHMMoveName, 411
-	.set SPECIAL_WAITSTATE_BufferTMHMMoveName, 0
-	@ The JP source retains the older C spelling. Keep map EventScripts aligned
-	@ with pokeemerald without changing the special-table entry.
-	.set SPECIAL_SetMauvilleOldManObjEventGfx, 104
-	.set SPECIAL_WAITSTATE_SetMauvilleOldManObjEventGfx, 0
-	@ Rustboro's tutorial special uses the retained JP table slot, while the
-	@ original bytecode includes the waitstate expressed by pokeemerald's name.
-	.set SPECIAL_ScriptMenu_CreateStartMenuForPokenavTutorial, 469
-	.set SPECIAL_WAITSTATE_ScriptMenu_CreateStartMenuForPokenavTutorial, 1
-	@ The JP special table retains the address-style C name. Its verified
-	@ index and implicit waitstate match pokeemerald's Rayquaza scene entry.
-	.set SPECIAL_Script_DoRayquazaScene, 505
-	.set SPECIAL_WAITSTATE_Script_DoRayquazaScene, 1
 	@ These JP command-table entries retain older names but use the same opcodes
 	@ as the US semantic spellings used by Dewford Gym.
 	.set SCR_OP_NOP1, SCR_OP_SETWORLDMAPFLAG

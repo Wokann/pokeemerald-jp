@@ -64,7 +64,7 @@ BattleFrontier_BattleTowerBattleRoom_EventScript_00221CFC::
 	setvar 0x8005, 0x3
 	special sub_08161E88
 	setvar 0x8004, 0x3
-	special sub_0813BFA0
+	special Script_TryGainNewFanFromCounter
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_002222AC
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_00221D28::
@@ -185,7 +185,7 @@ BattleFrontier_BattleTowerBattleRoom_EventScript_00221EEF::
 	setvar 0x8005, 0x3
 	special sub_08161E88
 	setvar 0x8004, 0x3
-	special sub_0813BFA0
+	special Script_TryGainNewFanFromCounter
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_002222AC
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_00221F1B::
@@ -616,4 +616,3 @@ gJPText_00222729: @ 0x08222729
 	.string "こんなに　ポケモンバトルが\n"
 	.string "たのしい　なんて　はじめて⋯⋯\p"
 	.string "また　あなたと　たたかえると　いいな⋯⋯$"
-

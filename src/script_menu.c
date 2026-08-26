@@ -1851,7 +1851,7 @@ __attribute__((naked)) void sub_080E1F88(void)
     );
 }
 
-__attribute__((naked)) void convert_pixel_width_to_tile_width(void)
+__attribute__((naked)) void ScriptMenu_CreateStartMenuForPokenavTutorial(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -1865,7 +1865,7 @@ __attribute__((naked)) void convert_pixel_width_to_tile_width(void)
         "	ldr r1, _080E2094\n\t"
         "	movs r0, #0xff\n\t"
         "	strh r0, [r1]\n\t"
-        "	bl CreateStartMenu\n\t"
+        "	bl CreateStartMenuForPokenavTutorial\n\t"
         "	movs r0, #1\n\t"
         "	b _080E209A\n\t"
         "	.align 2, 0\n\t"
@@ -1881,7 +1881,7 @@ __attribute__((naked)) void convert_pixel_width_to_tile_width(void)
     );
 }
 
-__attribute__((naked)) void CreateStartMenu(void)
+__attribute__((naked)) void CreateStartMenuForPokenavTutorial(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

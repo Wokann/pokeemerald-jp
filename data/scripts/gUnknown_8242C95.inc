@@ -16,7 +16,7 @@
 	return 
 	removeobject 0x800F
 	additem 0x8004, 0x8005
-	specialvar 0x800D, sub_08139938
+	specialvar 0x800D, BufferTMHMMoveName
 	copyvar 0x8008, 0x800D
 	compare_var_to_value 0x8008, 0x1
 	call_if 0x1, 0x8242D23

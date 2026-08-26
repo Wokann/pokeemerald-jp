@@ -11907,10 +11907,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x0824DF29: 'LilycoveCity_PokemonTrainerFanClub_HopeYouCatchTVSpecial',
         },
         'specials': {
-            'ShouldMoveLilycoveFanClubMember': 'IsFanClubMemberFanOfPlayer',
-            'GetNumMovedLilycoveFanClubMembers': 'GetNumFansOfPlayerInTrainerFanClub',
-            'BufferStreakTrainerText': 'BufferFanClubTrainerName',
-            'UpdateMovedLilycoveFanClubMembers': 'TryLoseFansFromPlayTime',
             'sub_080EF244': 'TryPutTrainerFanClubOnAir',
             'sub_080EF2D8': 'ShouldHideFanClubInterviewer',
             'sub_0813A164': 'ShowScrollableMultichoice',
@@ -13753,9 +13749,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'songs': {0x01C2: 'MUS_ENCOUNTER_ELITE_FOUR'},
             'trainers': {0x0108: 'TRAINER_DRAKE'},
             'booleans': {0x00: 'FALSE'},
-            'specials': {
-                'sub_0813BFA0': 'Script_TryGainNewFanFromCounter',
-            },
             'map_script_values': {
                 0x4001: {0x00: '0'},
                 0x409C: {0x03: '3'},
@@ -18516,12 +18509,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08200BA3: 'MauvilleCity_GameCorner_Text_HeresSomeSlotsInfo',
             0x08200C41: 'MauvilleCity_GameCorner_Text_CantPlayWithNoCoinCase',
         },
-        'specials': {
-            # The shared JP table retains its address-style entry until its
-            # remaining callers are converted; this owner uses the matching
-            # pokeemerald semantic spelling.
-            'sub_08139938': 'BufferTMHMMoveName',
-        },
         'field_placeholders': {
             # Paired US prize text establishes the local string-variable
             # roles; they are not opaque STRING controls.
@@ -18751,9 +18738,6 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08242978: 'Common_EventScript_UpdateBrineyLocation',
             0x082429B8: 'Common_EventScript_PkmnCenterNurse',
             0x0824790F: 'CableClub_OnResume',
-        },
-        'specials': {
-            'ScrSpecial_SetMauvilleOldManEventObjGfx': 'SetMauvilleOldManObjEventGfx',
         },
         'local_scripts': (0x08200DDF,),
         'preserve_region_script_aliases': False,
