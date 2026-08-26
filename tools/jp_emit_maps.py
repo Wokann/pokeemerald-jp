@@ -709,6 +709,13 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x081F6709: 'VerdanturfTown_BattleTentLobby_Movement_AttendantEnterDoor',
         0x081F670C: 'VerdanturfTown_BattleTentLobby_Movement_PlayerEnterDoor',
     },
+    'SlateportCity_BattleTentLobby': {
+        0x081FB2FB: 'SlateportCity_BattleTentLobby_Movement_AttendantWalkToDoor',
+        0x081FB2FF: 'SlateportCity_BattleTentLobby_Movement_AttendantEnterDoor',
+        0x081FB302: 'SlateportCity_BattleTentLobby_Movement_PlayerWalkToDoor',
+        0x081FB306: 'SlateportCity_BattleTentLobby_Movement_PlayerEnterDoor',
+        0x081FB33B: 'SlateportCity_BattleTentLobby_Movement_UnusedEnterDoor',
+    },
     'OldaleTown': {
         0x081E48CB: 'OldaleTown_Movement_Unknown1',
         0x081E48F3: 'OldaleTown_Movement_Unknown2',
@@ -8907,6 +8914,199 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    # Slateport's Battle Tent lobby is the next physical map-script owner.
+    # Its two map hooks, full rental challenge flow, door movements, local
+    # text, and shared Battle Frontier text pointers were matched against the
+    # corresponding US source before enabling semantic regeneration.
+    'SlateportCity_BattleTentLobby': {
+        'scripts': {
+            0x081FB048: 'SlateportCity_BattleTentLobby_EventScript_TurnPlayerNorth',
+            0x081FB07C: 'SlateportCity_BattleTentLobby_EventScript_GetChallengeStatus',
+            0x081FB085: 'SlateportCity_BattleTentLobby_EventScript_QuitWithoutSaving',
+            0x081FB0BA: 'SlateportCity_BattleTentLobby_EventScript_WonChallenge',
+            0x081FB0EC: 'SlateportCity_BattleTentLobby_EventScript_GivePrize',
+            0x081FB12D: 'SlateportCity_BattleTentLobby_EventScript_NoRoomForPrize',
+            0x081FB13A: 'SlateportCity_BattleTentLobby_EventScript_LostChallenge',
+            0x081FB164: 'SlateportCity_BattleTentLobby_EventScript_EndGivePrize',
+            0x081FB174: 'SlateportCity_BattleTentLobby_EventScript_ResumeChallenge',
+            0x081FB1AD: 'SlateportCity_BattleTentLobby_EventScript_Attendant',
+            0x081FB1CD: 'SlateportCity_BattleTentLobby_EventScript_AskEnterChallenge',
+            0x081FB209: 'SlateportCity_BattleTentLobby_EventScript_TryEnterChallenge',
+            0x081FB253: 'SlateportCity_BattleTentLobby_EventScript_SaveBeforeChallenge',
+            0x081FB2AF: 'SlateportCity_BattleTentLobby_EventScript_EnterChallenge',
+            0x081FB2CC: 'SlateportCity_BattleTentLobby_EventScript_WalkToDoor',
+            0x081FB30A: 'SlateportCity_BattleTentLobby_EventScript_ExplainChallenge',
+            0x081FB317: 'SlateportCity_BattleTentLobby_EventScript_CancelChallengeSaveFailed',
+            0x081FB32E: 'SlateportCity_BattleTentLobby_EventScript_LoadPartyCancelChallenge',
+            0x081FB331: 'SlateportCity_BattleTentLobby_EventScript_CancelChallenge',
+            0x081FB340: 'SlateportCity_BattleTentLobby_EventScript_TormentGiver',
+            0x081FB377: 'SlateportCity_BattleTentLobby_EventScript_ReceivedTorment',
+            0x081FB381: 'SlateportCity_BattleTentLobby_EventScript_Man',
+            0x081FB38A: 'SlateportCity_BattleTentLobby_EventScript_Girl',
+            0x081FB393: 'SlateportCity_BattleTentLobby_EventScript_Woman',
+            0x081FB39C: 'SlateportCity_BattleTentLobby_EventScript_RulesBoard',
+            0x081FB3AB: 'SlateportCity_BattleTentLobby_EventScript_ReadRulesBoard',
+            0x081FB409: 'SlateportCity_BattleTentLobby_EventScript_RulesBasics',
+            0x081FB417: 'SlateportCity_BattleTentLobby_EventScript_RulesSwapPartner',
+            0x081FB425: 'SlateportCity_BattleTentLobby_EventScript_RulesSwapNumber',
+            0x081FB433: 'SlateportCity_BattleTentLobby_EventScript_RulesSwapNotes',
+            0x081FB441: 'SlateportCity_BattleTentLobby_EventScript_RulesMons',
+            0x081FB44F: 'SlateportCity_BattleTentLobby_EventScript_ExitRules',
+        },
+        'tables': {
+            0x081FB03E: 'SlateportCity_BattleTentLobby_OnWarp',
+            0x081FB052: 'SlateportCity_BattleTentLobby_OnFrame',
+        },
+        'texts': {
+            0x081FB451: 'SlateportCity_BattleTentLobby_Text_CouldntFindMonForMe',
+            0x081FB4C1: 'SlateportCity_BattleTentLobby_Text_ExplainTorment',
+            0x081FB516: 'SlateportCity_BattleTentLobby_Text_IllTryUsingBugMons',
+            0x081FB54A: 'SlateportCity_BattleTentLobby_Text_BattleEvenWithoutToughMons',
+            0x081FB570: 'SlateportCity_BattleTentLobby_Text_NiceIfMoreSelection',
+        },
+        'external_texts': {
+            0x0822064B: 'BattleFrontier_BattleTowerLobby_Text_ReceivedPrize',
+            0x08231A91: 'BattleFrontier_BattleFactoryLobby_Text_RulesAreListed',
+            0x08231AA7: 'BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading',
+            0x08275307: 'SlateportCity_BattleTentLobby_Text_WelcomeToBattleTent',
+            0x08275335: 'SlateportCity_BattleTentLobby_Text_TakeChallenge',
+            0x0827534A: 'SlateportCity_BattleTentLobby_Text_ExplainSlateportTent',
+            0x0827549D: 'SlateportCity_BattleTentLobby_Text_LookForwardToNextVisit',
+            0x082754D7: 'SlateportCity_BattleTentLobby_Text_SaveBeforeChallenge',
+            0x08275515: 'SlateportCity_BattleTentLobby_Text_StepThisWay',
+            0x08275524: 'SlateportCity_BattleTentLobby_Text_ReturnRentalMonsSaveResults',
+            0x08275596: 'SlateportCity_BattleTentLobby_Text_WonThreeMatchesReturnMons',
+            0x082755EC: 'SlateportCity_BattleTentLobby_Text_AwardYouThisPrize',
+            0x08275607: 'SlateportCity_BattleTentLobby_Text_NoRoomInBagMakeRoom',
+            0x08275634: 'SlateportCity_BattleTentLobby_Text_BeenWaitingForYou',
+            0x08275660: 'SlateportCity_BattleTentLobby_Text_DidntSaveBeforeQuitting',
+            0x082756F3: 'SlateportCity_BattleTentLobby_Text_ExplainBasicRules',
+            0x08275757: 'SlateportCity_BattleTentLobby_Text_ExplainSwapPartnerRules',
+            0x082757A8: 'SlateportCity_BattleTentLobby_Text_ExplainSwapNumberRules',
+            0x08275803: 'SlateportCity_BattleTentLobby_Text_ExplainSwapNotes',
+            0x0827589C: 'SlateportCity_BattleTentLobby_Text_ExplainMonRules',
+        },
+        'external_labels': {
+            0x082423E9: 'Common_EventScript_SaveGame',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        # The JP ROM uses SCR_OP_WAITMONCRY where US uses waitdooranim for
+        # the matching two door animation waits.
+        'command_aliases': {
+            0x081FB2CC: {'waitmoncry': 'waitdooranim_jp'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'allow_single_case_switch': True,
+        'frontier_macros': True,
+        'battle_tent_macros': True,
+        'symbols': {
+            'flags': {0x0109: 'FLAG_RECEIVED_TM_TORMENT'},
+            'vars': {
+                0x4000: 'VAR_TEMP_CHALLENGE_STATUS',
+                0x4001: 'VAR_TEMP_1',
+                0x40CE: 'VAR_FRONTIER_BATTLE_MODE',
+                0x40CF: 'VAR_FRONTIER_FACILITY',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081FB07C: {0x8004: {0x00: 'FRONTIER_UTIL_FUNC_GET_STATUS'}},
+                0x081FB085: {
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {
+                        0x00: 'FRONTIER_DATA_CHALLENGE_STATUS',
+                        0x01: 'FRONTIER_DATA_LVL_MODE',
+                    },
+                },
+                0x081FB0BA: {
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x03: 'SLATEPORT_TENT_FUNC_SAVE',
+                        0x04: 'SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE',
+                    },
+                    0x8005: {0x01: 'FRONTIER_DATA_LVL_MODE'},
+                },
+                0x081FB0EC: {
+                    0x8000: {0x00: 'FALSE'},
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x05: 'SLATEPORT_TENT_FUNC_GIVE_PRIZE',
+                    },
+                    0x8005: {0x00: 'FRONTIER_DATA_CHALLENGE_STATUS'},
+                },
+                0x081FB13A: {
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x03: 'SLATEPORT_TENT_FUNC_SAVE',
+                    },
+                    0x8005: {0x01: 'FRONTIER_DATA_LVL_MODE'},
+                },
+                0x081FB174: {
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x03: 'SLATEPORT_TENT_FUNC_SAVE',
+                    },
+                    0x8005: {0x03: 'FRONTIER_DATA_PAUSED'},
+                },
+                0x081FB1AD: {
+                    0x8004: {0x01: 'SLATEPORT_TENT_FUNC_GET_PRIZE'},
+                    0x800D: {0x00: 'ITEM_NONE'},
+                },
+                0x081FB209: {
+                    0x40CE: {0x00: 'FRONTIER_MODE_SINGLES'},
+                    0x40CF: {0x04: 'FRONTIER_FACILITY_FACTORY'},
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {0x01: 'FRONTIER_DATA_LVL_MODE'},
+                },
+                0x081FB253: {
+                    0x8004: {
+                        0x00: 'SLATEPORT_TENT_FUNC_INIT',
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                    },
+                    0x8005: {
+                        0x00: 'FRONTIER_DATA_CHALLENGE_STATUS',
+                        0x03: 'FRONTIER_DATA_PAUSED',
+                        0x04: 'FRONTIER_DATA_SELECTED_MON_ORDER',
+                    },
+                },
+                0x081FB317: {
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {0x00: 'FRONTIER_DATA_CHALLENGE_STATUS'},
+                },
+            },
+            'script_switch_values': {
+                0x081FB0EC: {'VAR_RESULT': {0x00: 'FALSE'}},
+                0x081FB1CD: {'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'}},
+                0x081FB209: {
+                    'VAR_RESULT': {
+                        0x00: 'NO',
+                        0x01: 'YES',
+                        0x7F: 'MULTI_B_PRESSED',
+                    },
+                },
+                0x081FB3AB: {'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'}},
+            },
+            'items': {0x0149: 'ITEM_TM_TORMENT'},
+            'maps': {0x0903: 'MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR'},
+            'local_ids': {
+                0x01: 'LOCALID_SLATEPORT_TENT_ATTENDANT',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {0x02: 'DIR_NORTH'},
+            'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
+            'sounds': {0x37: 'SE_SAVE'},
+            'multichoices': {
+                0x17: 'MULTI_CHALLENGEINFO',
+                0x6F: 'MULTI_SLATEPORT_TENT_RULES',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
 })
 
 # Rustboro Devon Corp 2F is a complete, contiguous JP map-script owner.
@@ -14379,10 +14579,17 @@ def collapse_battle_tent_macros(lines, enabled=False):
             'FALLARBOR_TENT_FUNC_GIVE_PRIZE': 'fallarbortent_giveprize',
             'FALLARBOR_TENT_FUNC_GET_OPPONENT_NAME': 'fallarbortent_getopponentname',
         },
+        'CallSlateportTentFunction': {
+            'SLATEPORT_TENT_FUNC_INIT': 'slateporttent_init',
+            'SLATEPORT_TENT_FUNC_GET_PRIZE': 'slateporttent_getprize',
+            'SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE': 'slateporttent_setrandomprize',
+            'SLATEPORT_TENT_FUNC_GIVE_PRIZE': 'slateporttent_giveprize',
+        },
     }
     save_macros = {
         'CallVerdanturfTentFunction': ('VERDANTURF_TENT_FUNC_SAVE', 'verdanturftent_save'),
         'CallFallarborTentFunction': ('FALLARBOR_TENT_FUNC_SAVE', 'fallarbortent_save'),
+        'CallSlateportTentFunction': ('SLATEPORT_TENT_FUNC_SAVE', 'slateporttent_save'),
     }
 
     out = []
