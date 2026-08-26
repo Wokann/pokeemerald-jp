@@ -191,6 +191,26 @@ class StructureAuditTests(unittest.TestCase):
         ]
         self.assertEqual(audit.first_map_owner_names(entries), {"First", "Second"})
 
+    def test_map_structure_is_not_semantic_review(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            complete = root / "data/maps/Complete"
+            partial = root / "data/maps/Partial"
+            complete.mkdir(parents=True)
+            partial.mkdir(parents=True)
+            for name in ("map.json", "scripts.inc", "events.inc"):
+                (complete / name).write_text("", encoding="utf-8")
+            for name in ("map.json", "scripts.inc"):
+                (partial / name).write_text("", encoding="utf-8")
+            (root / "data").mkdir(exist_ok=True)
+            (root / "data/maps.s").write_text(
+                '.include "data/maps/Complete/events.inc"\n', encoding="utf-8")
+            progress = audit.map_artifact_progress(root)
+        self.assertEqual(progress["structure_complete_maps"], 1)
+        self.assertEqual(progress["structure_complete_map_names"], ["Complete"])
+        self.assertEqual(progress["semantic_review"]["status"], "not_recorded")
+        self.assertEqual(progress["semantic_review"]["reviewed_map_names"], [])
+
     def test_map_entries_uses_requested_us_root_not_emitter_default(self):
         class FakeEmitter:
             US_JSON = Path("hard-coded.json")
@@ -222,6 +242,8 @@ class StructureAuditTests(unittest.TestCase):
         self.assertIn("--markdown-output DECOMP_PROGRESS.md", rendered)
         self.assertIn("--output` 只写 JSON", rendered)
         self.assertIn("同名 static 按 source owner 和地址保留", rendered)
+        self.assertIn("地图语义复核：not_recorded", rendered)
+        self.assertIn("transition-manifest", rendered)
 
     def test_json_output_rejects_markdown_destination_without_writing(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -250,6 +272,16 @@ class StructureAuditTests(unittest.TestCase):
         manifest = audit.transition_manifest({"src/module_mid2_tail.c", "data/gUnknown_8123456.inc"})
         self.assertEqual(manifest[0]["categories"], ["address"])
         self.assertEqual(manifest[1]["categories"], ["tail", "mid"])
+
+    def test_transition_manifest_cli_output_is_json(self):
+        report = audit.build_report(audit.ROOT, audit.DEFAULT_US_ROOT)
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary) / "transition.json"
+            with mock.patch.object(sys, "argv", ["audit_structure.py", "--transition-manifest", str(destination)]), \
+                 mock.patch.object(audit, "build_report", return_value=report):
+                audit.main()
+            rendered = destination.read_text(encoding="utf-8")
+        self.assertIn('"categories"', rendered)
 
     def test_current_report_has_consistent_address_metrics(self):
         report = audit.build_report(audit.ROOT, audit.DEFAULT_US_ROOT)

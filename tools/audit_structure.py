@@ -48,6 +48,7 @@ PLACEHOLDER_RE = re.compile(r"(?:^nullsub_|Dummy|dummy|Nop|CallbackDummy)")
 NUMERIC_VARIANT_RE = re.compile(r"^(.*)_([2-9]\d*)$")
 INCBIN_RE = re.compile(r'(?:^|\s)(?:\.incbin\b|INCBIN_[A-Z0-9_]+\b)[^\n]*?"([^"]+)"')
 MAP_NAME_RE = re.compile(r'^\s*\.include\s+"data/maps/([^/]+)/scripts\.inc"\s*$')
+MAP_EVENTS_RE = re.compile(r'^\s*\.include\s+"data/maps/([^/]+)/events\.inc"\s*$')
 US_SYMBOL_RE = re.compile(r"^[0-9A-Fa-f]{8}\s+[A-Za-z]\s+[0-9A-Fa-f]+\s+(\w+)\s*$")
 NAKED_MACRO_RE = re.compile(r"^\s*NAKED\s*$")
 MARKDOWN_SUFFIXES = {".md", ".markdown", ".mdown"}
@@ -442,6 +443,40 @@ def transition_manifest(files: set[str]) -> list[dict[str, object]]:
     return records
 
 
+def map_artifact_progress(root: Path) -> dict[str, object]:
+    """Count map artifacts without treating their presence as semantic review.
+
+    ``map.json`` and the two generated includes demonstrate that the map has
+    been structurally split.  They do not demonstrate that its scripts,
+    text, constants, or shared ROM boundaries have received a semantic audit.
+    No versioned semantic-review manifest exists yet, so this function keeps
+    that status explicitly unrecorded instead of deriving it from file names.
+    """
+    map_root = root / "data/maps"
+    jp_json = {path.parent.name for path in map_root.glob("*/map.json")}
+    jp_scripts = {path.parent.name for path in map_root.glob("*/scripts.inc")}
+    jp_events = {path.parent.name for path in map_root.glob("*/events.inc")}
+    upper_event_includes = set()
+    for path in sorted((root / "data").glob("*.s")):
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            if match := MAP_EVENTS_RE.match(line):
+                upper_event_includes.add(match.group(1))
+    structure_complete = jp_json & jp_scripts & jp_events & upper_event_includes
+    return {
+        "jp_map_json": len(jp_json),
+        "jp_scripts_inc": len(jp_scripts),
+        "jp_events_inc": len(jp_events),
+        "upper_event_includes": len(upper_event_includes),
+        "structure_complete_maps": len(structure_complete),
+        "structure_complete_map_names": sorted(structure_complete),
+        "semantic_review": {
+            "status": "not_recorded",
+            "reviewed_map_names": [],
+            "note": "No versioned semantic-review manifest exists; structural artifacts are not semantic-review evidence.",
+        },
+    }
+
+
 def incbin_progress(root: Path) -> dict[str, object]:
     references = []
     raw_suffixes = {".bin", ".gba", ".lz", ".rl", ".huff"}
@@ -563,7 +598,7 @@ def map_progress(root: Path, us_root: Path) -> dict[str, object]:
             if match:
                 names.add(match.group(1))
     map_root = root / "data/maps"
-    jp_json = {path.parent.name for path in map_root.glob("*/map.json")}
+    artifacts = map_artifact_progress(root)
     jp_scripts = {path.parent.name for path in map_root.glob("*/scripts.inc")}
     owner_scripts = jp_scripts & owner_names
     non_owner_scripts = jp_scripts - owner_names
@@ -579,8 +614,8 @@ def map_progress(root: Path, us_root: Path) -> dict[str, object]:
         "non_owner_scripts_inc": len(non_owner_scripts),
         "non_owner_script_names": sorted(non_owner_scripts),
         "jp_scripts_owner_rate": len(owner_scripts) / max(len(owner_names), 1),
-        "jp_map_json": len(jp_json),
-        "jp_map_json_with_scripts": len(jp_json & jp_scripts),
+        **artifacts,
+        "structure_complete_owner_maps": len(set(artifacts["structure_complete_map_names"]) & owner_names),
         "us_map_json": len(us_json),
     }
 
@@ -708,7 +743,8 @@ def print_report(report: dict[str, object]) -> None:
         functions["standard_owned_addresses"], functions["module_home_rate"] * 100,
         functions["module_aligned_addresses"], functions["path_alignment_rate"] * 100,
         functions["us_binary_only_addresses"]))
-    print("JP-only C migration records: %d" % len(report["jp_only_c_manifest"]))
+    print("JP-only C migration records (dynamic, not legacy fixed count): %d" %
+          len(report["jp_only_c_manifest"]))
     print("transition files: " + ", ".join(
         "%s=%d" % (name, value["count"])
         for name, value in report["transition_files"].items()))
@@ -719,10 +755,14 @@ def print_report(report: dict[str, object]) -> None:
         assets["referenced_graphics_or_sound_paths"], assets["exact_us_paths"],
         assets["unique_us_basename_candidates"], assets["ambiguous_us_basename_candidates"],
         assets["no_us_basename_match"]))
-    print("map structure: owners=%d owner-scripts=%d (%.2f%%) non-owner=%d included=%d map.json=%d (with scripts=%d)" % (
+    print("map structure: owners=%d owner-scripts=%d (%.2f%%) non-owner=%d included=%d; "
+          "map.json=%d events.inc=%d upper-events=%d structure-complete=%d "
+          "(owner=%d); semantic-review=%s" % (
         maps["map_table_owners"], maps["first_owner_scripts_inc"], maps["jp_scripts_owner_rate"] * 100,
         maps["non_owner_scripts_inc"],
-        maps["event_script_included_owners"], maps["jp_map_json"], maps["jp_map_json_with_scripts"]))
+        maps["event_script_included_owners"], maps["jp_map_json"], maps["jp_events_inc"],
+        maps["upper_event_includes"], maps["structure_complete_maps"],
+        maps["structure_complete_owner_maps"], maps["semantic_review"]["status"]))
 
 
 def render_markdown_report(report: dict[str, object]) -> str:
@@ -746,7 +786,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"- 模块归位：{functions['standard_owned_addresses']}/{functions['strict_c_addresses']} "
         f"({functions['module_home_rate'] * 100:.2f}%)；路径对齐：{functions['module_aligned_addresses']}/"
         f"{functions['strict_c_addresses']} ({functions['path_alignment_rate'] * 100:.2f}%)。",
-        f"- JP 独有 C 迁移记录：{len(report['jp_only_c_manifest'])}；同名多地址 C 定义："
+        f"- JP 独有 C 迁移记录：{len(report['jp_only_c_manifest'])}（动态清单，不沿用旧固定数）；同名多地址 C 定义："
         f"{len(functions['multi_address_c_definitions'])}。",
         f"- 过渡文件：tail={transitions['tail']['count']}、rest={transitions['rest']['count']}、"
         f"mid={transitions['mid']['count']}、stub={transitions['stub']['count']}、"
@@ -760,8 +800,11 @@ def render_markdown_report(report: dict[str, object]) -> str:
         f"{assets['ambiguous_us_basename_candidates']}。",
         f"- 地图脚本：{maps['first_owner_scripts_inc']}/{maps['map_table_owners']} "
         f"({maps['jp_scripts_owner_rate'] * 100:.2f}%) 个首 owner 有 scripts.inc；"
-        f"非 owner scripts.inc：{maps['non_owner_scripts_inc']}；map.json："
-        f"{maps['jp_map_json']}（含 scripts：{maps['jp_map_json_with_scripts']}）。",
+        f"非 owner scripts.inc：{maps['non_owner_scripts_inc']}；结构完整地图："
+        f"{maps['structure_complete_maps']}（要求 map.json、scripts.inc、events.inc 和上层 events include；"
+        f"其中首 owner {maps['structure_complete_owner_maps']}）；map.json 总数：{maps['jp_map_json']}。",
+        f"- 地图语义复核：{maps['semantic_review']['status']}。没有版本化复核清单前，"
+        "任何 scripts.inc、map.json 或 events.inc 都不计入语义已审计。",
         "",
         "## 指标定义",
         "",
@@ -774,6 +817,9 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "| incbin | `.incbin` 与 `INCBIN_*` 的引用数，按原始二进制和结构化/编码后缀分组；不是字节转换率。 |",
         "| 资产命名 | 被引用的 `graphics/`、`sound/` 路径与 US 同名文件比较；仅生成候选，不自动改名。 |",
         "| 地图脚本 owner | `scripts.inc` 与 map-table 实际首 owner 名的交集 / 去重首 owner；共享表只属于首次出现地图。 |",
+        "| 地图结构完整 | 同一地图同时有 `map.json`、`scripts.inc`、`events.inc`，且后者被上层 `data/*.s` include；只说明结构已拆分。 |",
+        "| 地图语义复核 | 仅接受未来版本化复核清单的显式记录；当前为 `not_recorded`，绝不从目录或 include 推断。 |",
+        "| JP 独有 C 迁移清单 | 已映射、非裸汇编、但无 US 标准 C owner 的函数模块；动态分类，不沿用失效的固定“38 个”计数。 |",
         "",
         "## 复现与输入",
         "",
@@ -781,6 +827,7 @@ def render_markdown_report(report: dict[str, object]) -> str:
         "python3 tools/audit_structure.py",
         "python3 tools/audit_structure.py --json --output build/audit-structure.json \\",
         "    --manifest build/jp-only-c-manifest.json",
+        "python3 tools/audit_structure.py --transition-manifest build/transition-file-manifest.json",
         "python3 tools/audit_structure.py --markdown-output DECOMP_PROGRESS.md",
         "# 比较另一份 US 工程时显式指定其根目录",
         "python3 tools/audit_structure.py --us-root /path/to/pokeemerald --markdown-output DECOMP_PROGRESS.md",
@@ -829,6 +876,8 @@ def main() -> None:
     parser.add_argument("--json", action="store_true", help="print stable JSON")
     parser.add_argument("--output", type=Path, help="write the full JSON report (never Markdown)")
     parser.add_argument("--manifest", type=Path, help="write only the JP-only C manifest JSON")
+    parser.add_argument("--transition-manifest", type=Path,
+                        help="write only the transition-file manifest JSON")
     parser.add_argument("--markdown-output", type=Path,
                         help="atomically write the human-readable Markdown progress report")
     args = parser.parse_args()
@@ -836,6 +885,8 @@ def main() -> None:
         require_destination_kind(args.output, "json")
     if args.manifest:
         require_destination_kind(args.manifest, "json")
+    if args.transition_manifest:
+        require_destination_kind(args.transition_manifest, "json")
     if args.markdown_output:
         require_destination_kind(args.markdown_output, "markdown")
     if not (args.us_root / "src").is_dir():
@@ -847,6 +898,9 @@ def main() -> None:
     if args.manifest:
         write_output(args.manifest, json.dumps(report["jp_only_c_manifest"], ensure_ascii=False,
                                                 indent=2, sort_keys=True) + "\n")
+    if args.transition_manifest:
+        write_output(args.transition_manifest, json.dumps(report["transition_manifest"], ensure_ascii=False,
+                                                           indent=2, sort_keys=True) + "\n")
     if args.markdown_output:
         write_output(args.markdown_output, render_markdown_report(report))
     if args.json:
