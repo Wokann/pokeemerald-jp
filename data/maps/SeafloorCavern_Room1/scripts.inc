@@ -3,13 +3,13 @@
 SeafloorCavern_Room1_MapScripts::
 	.byte 0
 
-SeafloorCavern_Room1_EventScript_Grunt1::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_GRUNT_SEAFLOOR_CAVERN_1, 0x0, SeafloorCavern_Room1_Text_Grunt1Intro, SeafloorCavern_Room1_Text_Grunt1Defeat
+SeafloorCavern_Room1_EventScript_Grunt1:: @ 0x0821865F
+	trainerbattle_single TRAINER_GRUNT_SEAFLOOR_CAVERN_1, SeafloorCavern_Room1_Text_Grunt1Intro, SeafloorCavern_Room1_Text_Grunt1Defeat
 	msgbox SeafloorCavern_Room1_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
 	end
 
-SeafloorCavern_Room1_EventScript_Grunt2::
-	trainerbattle TRAINER_BATTLE_SINGLE, TRAINER_GRUNT_SEAFLOOR_CAVERN_2, 0x0, SeafloorCavern_Room1_Text_Grunt2Intro, SeafloorCavern_Room1_Text_Grunt2Defeat
+SeafloorCavern_Room1_EventScript_Grunt2:: @ 0x08218676
+	trainerbattle_single TRAINER_GRUNT_SEAFLOOR_CAVERN_2, SeafloorCavern_Room1_Text_Grunt2Intro, SeafloorCavern_Room1_Text_Grunt2Defeat
 	msgbox SeafloorCavern_Room1_Text_Grunt2PostBattle, MSGBOX_AUTOCLOSE
 	end
 

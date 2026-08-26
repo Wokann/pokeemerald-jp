@@ -215,6 +215,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # The entrance follows with its resume hook and five Aqua grunt branches
     # in the same reviewed US source order.
     'SeafloorCavern_Entrance': 6,
+    # Room1 follows with its two ordinary Aqua grunt trainer scripts in the
+    # same reviewed US source order.
+    'SeafloorCavern_Room1': 2,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -347,6 +350,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'Underwater_SeafloorCavern': 1,
     # The adjacent entrance owns the long and repeat Aqua grunt messages.
     'SeafloorCavern_Entrance': 2,
+    # Room1 owns its two Aqua grunt dialogue triplets.
+    'SeafloorCavern_Room1': 6,
 }
 
 MAP_SCRIPT_NAMES = {
