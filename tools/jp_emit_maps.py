@@ -447,6 +447,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x081FA9DD,
         0x081FA9E3,
     ),
+    # Slateport's 2F table is followed by the same three unused RS-era Cable
+    # Club wrappers. They are map-owned named entries in the US source.
+    'SlateportCity_PokemonCenter_2F': (
+        0x081FE8E7,
+        0x081FE8ED,
+        0x081FE8F3,
+    ),
     # These unused RS-era Cable Club entry points are likewise map-owned in
     # the matching Fortree Pokemon Center 2F source but have no event-table
     # pointer in the JP ROM.
@@ -16969,6 +16976,29 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'local_ids': {0x01: 'LOCALID_SLATEPORT_NURSE'},
             'heal_locations': {0x04: 'HEAL_LOCATION_SLATEPORT_CITY'},
         },
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    # The 2F Cable Club owner follows the 1F Pokémon Center. Its three
+    # unused RS-era wrappers and map-script hooks are identical to US.
+    'SlateportCity_PokemonCenter_2F': {
+        'scripts': {
+            0x081FE8E7: 'SlateportCity_PokemonCenter_2F_EventScript_Colosseum',
+            0x081FE8ED: 'SlateportCity_PokemonCenter_2F_EventScript_TradeCenter',
+            0x081FE8F3: 'SlateportCity_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 
