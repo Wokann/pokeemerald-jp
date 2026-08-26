@@ -1964,6 +1964,11 @@ EventScript_FailSweetScent: @ 0x8256A14
 	@ Mt. Pyre 6F's Shadow Ball entry remains in the later shared item owner.
 	.globl MtPyre_6F_EventScript_ItemTMShadowBall
 	.set MtPyre_6F_EventScript_ItemTMShadowBall, 0x08257088
+	@ Mt. Pyre Exterior item entries remain in the later shared item owner.
+	.globl MtPyre_Exterior_EventScript_ItemMaxPotion
+	.set MtPyre_Exterior_EventScript_ItemMaxPotion, 0x08257095
+	.globl MtPyre_Exterior_EventScript_ItemTMSkillSwap
+	.set MtPyre_Exterior_EventScript_ItemTMSkillSwap, 0x082570A2
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F

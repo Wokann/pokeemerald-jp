@@ -195,6 +195,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Mt. Pyre 6F follows the paired 4F/5F exception with Valerie's rematch
     # branches and Cedric's direct trainer interaction.
     'MtPyre_6F': 4,
+    # The exterior's transition hook and four local weather branches follow
+    # directly, matching the US map source sequence.
+    'MtPyre_Exterior': 5,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -209,6 +212,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'MtChimney': ('OnResume',),
     'JaggedPass': ('OnResume', 'OnLoad'),
     'MtPyre_2F': ('SetHoleWarp',),
+    'MtPyre_Exterior': ('OnTransition',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -6905,6 +6909,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x800D: 'VAR_RESULT',
             },
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # Mt. Pyre Exterior is a complete small owner. Keep JP resetweather where
+    # the ROM uses it, while applying US-aligned names to its weather flow.
+    'MtPyre_Exterior': {
+        'preserve_region_script_aliases': False,
+        'external_labels': {
+            0x08257095: 'MtPyre_Exterior_EventScript_ItemMaxPotion',
+            0x082570A2: 'MtPyre_Exterior_EventScript_ItemTMSkillSwap',
+        },
+        'symbols': {
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x4001: 'VAR_TEMP_1',
+            },
+            'weather': {
+                0x02: 'WEATHER_SUNNY',
+                0x06: 'WEATHER_FOG_HORIZONTAL',
+            },
         },
     },
 })

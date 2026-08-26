@@ -2326,29 +2326,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MtPyre_6F/events.inc"
 	.globl gMapEvents_MT_PYRE_6F
 	.set gMapEvents_MT_PYRE_6F, MtPyre_6F_MapEvents
-	.globl MT_PYRE_EXTERIOR_EventObjects
-MT_PYRE_EXTERIOR_EventObjects: @ 0x0850D808
-	object_event 1, 59, 0, 27, 15, 3, 1, 0, 0, 0, 0, 0x08257095, 0x0431
-	object_event 2, 59, 0, 19, 40, 3, 1, 0, 0, 0, 0, 0x082570A2, 0x0432
-	.globl MT_PYRE_EXTERIOR_EventWarps
-MT_PYRE_EXTERIOR_EventWarps: @ 0x0850D838
-	warp_def 10, 42, 3, 1, MAP_MT_PYRE_1F
-	warp_def 19, 10, 3, 1, MAP_MT_PYRE_SUMMIT
-	warp_def 20, 10, 3, 1, MAP_MT_PYRE_SUMMIT
-	.globl MT_PYRE_EXTERIOR_EventCoordEvents
-MT_PYRE_EXTERIOR_EventCoordEvents: @ 0x0850D850
-	coord_event 24, 21, 3, 0, 0, MtPyre_Exterior_EventScript_00216B6A
-	coord_event 25, 21, 3, 0, 0, MtPyre_Exterior_EventScript_00216B6A
-	coord_event 22, 27, 3, 0, 0, MtPyre_Exterior_EventScript_00216B6F
-	coord_event 23, 28, 3, 0, 0, MtPyre_Exterior_EventScript_00216B6F
-	coord_event 26, 21, 3, 0, 0, MtPyre_Exterior_EventScript_00216B6A
-	.globl MT_PYRE_EXTERIOR_EventBgEvents
-MT_PYRE_EXTERIOR_EventBgEvents: @ 0x0850D8A0
-	bg_event 9, 8, 0, 7, 0x0002, 0x1D, 0x00
-	bg_event 16, 22, 0, 7, 0x0023, 0x4E, 0x00
+	.include "data/maps/MtPyre_Exterior/events.inc"
 	.globl gMapEvents_MT_PYRE_EXTERIOR
-gMapEvents_MT_PYRE_EXTERIOR: @ 0x0850D8B8
-	map_events MT_PYRE_EXTERIOR_EventObjects, MT_PYRE_EXTERIOR_EventWarps, MT_PYRE_EXTERIOR_EventCoordEvents, MT_PYRE_EXTERIOR_EventBgEvents
+	.set gMapEvents_MT_PYRE_EXTERIOR, MtPyre_Exterior_MapEvents
 	.globl MT_PYRE_SUMMIT_EventObjects
 MT_PYRE_SUMMIT_EventObjects: @ 0x0850D8CC
 	object_event 1, 29, 0, 22, 5, 3, 8, 0, 0, 0, 0, MtPyre_Summit_EventScript_00216CB9, 0x0000
