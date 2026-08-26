@@ -3,7 +3,7 @@
 MauvilleCity_Mart_MapScripts::
 	.byte 0
 
-MauvilleCity_Mart_EventScript_Clerk::
+MauvilleCity_Mart_EventScript_Clerk:: @ 0x08200F50
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -29,11 +29,11 @@ MauvilleCity_Mart_Pokemart: @ 0x08200F68
 	.2byte ITEM_X_ACCURACY
 	pokemartlistend
 
-MauvilleCity_Mart_EventScript_ExpertM::
+MauvilleCity_Mart_EventScript_ExpertM:: @ 0x08200F84
 	msgbox MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats, MSGBOX_NPC
 	end
 
-MauvilleCity_Mart_EventScript_Man::
+MauvilleCity_Mart_EventScript_Man:: @ 0x08200F8D
 	msgbox MauvilleCity_Mart_Text_DecisionsDetermineBattle, MSGBOX_NPC
 	end
 

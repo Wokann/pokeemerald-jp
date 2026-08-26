@@ -951,8 +951,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MauvilleCity_PokemonCenter_1F/events.inc"
 	.include "data/maps/MauvilleCity_PokemonCenter_2F/events.inc"
 	.include "data/maps/MauvilleCity_Mart/events.inc"
-	.globl gMapEvents_MAUVILLE_CITY_MART
-	.set gMapEvents_MAUVILLE_CITY_MART, MauvilleCity_Mart_MapEvents
 	.include "data/maps/RustboroCity_DevonCorp_1F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F
 	.set gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F, RustboroCity_DevonCorp_1F_MapEvents

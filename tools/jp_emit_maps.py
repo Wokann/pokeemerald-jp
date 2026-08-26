@@ -15865,9 +15865,9 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 pos += 1
             lines.append('')
         elif kind == 'shop_list':
-            label, products, _data_start, _end = shop_lists[payload]
+            label, products, data_start, _end = shop_lists[payload]
             lines.append('\t.align 2')
-            lines.append('%s:' % label)
+            lines.append('%s: @ 0x%08X' % (label, data_start))
             for product in products:
                 lines.append('\t.2byte %s' % product)
             lines.append('\tpokemartlistend')
@@ -17753,6 +17753,47 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08246BB2: 'CableClub_EventScript_Colosseum',
             0x08246DAD: 'CableClub_EventScript_TradeCenter',
             0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
+# The Mart's one-byte alignment gap and 12-item product list are a single
+# map-owned ROM record between the clerk script and the two local NPC scripts.
+MAP_POKEMART_LISTS.update({
+    'MauvilleCity_Mart': (
+        (0x08200F67, 'MauvilleCity_Mart_Pokemart', (
+            'ITEM_POKE_BALL',
+            'ITEM_GREAT_BALL',
+            'ITEM_SUPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_AWAKENING',
+            'ITEM_X_SPEED',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
+            'ITEM_GUARD_SPEC',
+            'ITEM_DIRE_HIT',
+            'ITEM_X_ACCURACY',
+        )),
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MauvilleCity_Mart': {
+        'scripts': {
+            0x08200F50: 'MauvilleCity_Mart_EventScript_Clerk',
+            0x08200F84: 'MauvilleCity_Mart_EventScript_ExpertM',
+            0x08200F8D: 'MauvilleCity_Mart_EventScript_Man',
+        },
+        'texts': {
+            0x08200F96: 'MauvilleCity_Mart_Text_ItemsToTemporarilyElevateStats',
+            0x08200FF2: 'MauvilleCity_Mart_Text_DecisionsDetermineBattle',
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
