@@ -6408,6 +6408,37 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    # The Oldale Pokémon Center follows the two houses. Its transition hook,
+    # nurse call, Cable Club resume hook, NPC scripts, and text all match US.
+    'OldaleTown_PokemonCenter_1F': {
+        'scripts': {
+            0x081F29AD: 'OldaleTown_PokemonCenter_1F_OnTransition',
+            0x081F29B6: 'OldaleTown_PokemonCenter_1F_EventScript_Nurse',
+            0x081F29C4: 'OldaleTown_PokemonCenter_1F_EventScript_Gentleman',
+            0x081F29CD: 'OldaleTown_PokemonCenter_1F_EventScript_Boy',
+            0x081F29D6: 'OldaleTown_PokemonCenter_1F_EventScript_Girl',
+            0x081F29EB: 'OldaleTown_PokemonCenter_1F_EventScript_WirelessClubAvailable',
+        },
+        'texts': {
+            0x081F29F5: 'OldaleTown_PokemonCenter_1F_Text_TrainersCanUsePC',
+            0x081F2A31: 'OldaleTown_PokemonCenter_1F_Text_PokemonCentersAreGreat',
+            0x081F2A73: 'OldaleTown_PokemonCenter_1F_Text_WirelessClubNotAvailable',
+            0x081F2AA9: 'OldaleTown_PokemonCenter_1F_Text_TradedInWirelessClub',
+        },
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x0861: 'FLAG_SYS_POKEDEX_GET'},
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_OLDALE_NURSE'},
+            'heal_locations': {0x0E: 'HEAL_LOCATION_OLDALE_TOWN'},
+        },
+    },
 })
 
 # Petalburg's two residential houses immediately follow the Gym in the

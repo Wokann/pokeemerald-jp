@@ -794,8 +794,6 @@ sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.include "data/maps/OldaleTown_House1/events.inc"
 	.include "data/maps/OldaleTown_House2/events.inc"
 	.include "data/maps/OldaleTown_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F
-	.set gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F, OldaleTown_PokemonCenter_1F_MapEvents
 	.include "data/maps/OldaleTown_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F
 	.set gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F, OldaleTown_PokemonCenter_2F_MapEvents
