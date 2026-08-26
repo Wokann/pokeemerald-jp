@@ -949,8 +949,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MauvilleCity_GameCorner/events.inc"
 	.include "data/maps/MauvilleCity_House2/events.inc"
 	.include "data/maps/MauvilleCity_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_1F
-	.set gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_1F, MauvilleCity_PokemonCenter_1F_MapEvents
 	.include "data/maps/MauvilleCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F, MauvilleCity_PokemonCenter_2F_MapEvents

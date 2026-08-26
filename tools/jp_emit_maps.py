@@ -17688,6 +17688,43 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The Pokémon Center 1F owner follows House 2. The Mauville Old Man's dialogue
+# remains in its later shared owner; this range contains the transition hook,
+# nurse setup, and three local NPC scripts.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MauvilleCity_PokemonCenter_1F': {
+        'scripts': {
+            0x08200DDF: 'MauvilleCity_PokemonCenter_1F_OnTransition',
+            0x08200DED: 'MauvilleCity_PokemonCenter_1F_EventScript_SetMauvilleOldManGfx',
+            0x08200DF1: 'MauvilleCity_PokemonCenter_1F_EventScript_Nurse',
+            0x08200DFF: 'MauvilleCity_PokemonCenter_1F_EventScript_Woman1',
+            0x08200E08: 'MauvilleCity_PokemonCenter_1F_EventScript_Woman2',
+            0x08200E11: 'MauvilleCity_PokemonCenter_1F_EventScript_Youngster',
+        },
+        'texts': {
+            0x08200E1A: 'MauvilleCity_PokemonCenter_1F_Text_ManOverThereSaysWeirdThings',
+            0x08200E54: 'MauvilleCity_PokemonCenter_1F_Text_MyDataUpdatedFromRecordCorner',
+            0x08200E8A: 'MauvilleCity_PokemonCenter_1F_Text_RecordCornerSoundsFun',
+        },
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'specials': {
+            'ScrSpecial_SetMauvilleOldManEventObjGfx': 'SetMauvilleOldManObjEventGfx',
+        },
+        'local_scripts': (0x08200DDF,),
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_MAUVILLE_NURSE'},
+            'heal_locations': {0x05: 'HEAL_LOCATION_MAUVILLE_CITY'},
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
