@@ -17199,6 +17199,108 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    # The Bike Shop follows Mauville Gym. Its Rydel dialogue, bike exchange,
+    # and both handbook loops are one-to-one with the matching US owner.
+    'MauvilleCity_BikeShop': {
+        'scripts': {
+            0x081FF3EC: 'MauvilleCity_BikeShop_EventScript_Rydel',
+            0x081FF427: 'MauvilleCity_BikeShop_EventScript_SkipGreeting',
+            0x081FF446: 'MauvilleCity_BikeShop_EventScript_ChooseBike',
+            0x081FF46D: 'MauvilleCity_BikeShop_EventScript_NotFar',
+            0x081FF47A: 'MauvilleCity_BikeShop_EventScript_YesFar',
+            0x081FF483: 'MauvilleCity_BikeShop_EventScript_GetMachBike',
+            0x081FF49D: 'MauvilleCity_BikeShop_EventScript_GetAcroBike',
+            0x081FF4B7: 'MauvilleCity_BikeShop_EventScript_ComeBackToSwitchBikes',
+            0x081FF4C4: 'MauvilleCity_BikeShop_EventScript_AskSwitchBikes',
+            0x081FF4E3: 'MauvilleCity_BikeShop_EventScript_SwitchBikes',
+            0x081FF515: 'MauvilleCity_BikeShop_EventScript_KeepBike',
+            0x081FF51F: 'MauvilleCity_BikeShop_EventScript_SwitchAcroForMach',
+            0x081FF540: 'MauvilleCity_BikeShop_EventScript_SwitchMachForAcro',
+            0x081FF561: 'MauvilleCity_BikeShop_EventScript_Assistant',
+            0x081FF56A: 'MauvilleCity_BikeShop_EventScript_MachBikeHandbook',
+            0x081FF576: 'MauvilleCity_BikeShop_EventScript_ChooseMachHandbookPage',
+            0x081FF5B8: 'MauvilleCity_BikeShop_EventScript_HowToRide',
+            0x081FF5C4: 'MauvilleCity_BikeShop_EventScript_HowToTurn',
+            0x081FF5D0: 'MauvilleCity_BikeShop_EventScript_SandySlopes',
+            0x081FF5DC: 'MauvilleCity_BikeShop_EventScript_ExitMachHandbook',
+            0x081FF5DE: 'MauvilleCity_BikeShop_EventScript_AcroBikeHandbook',
+            0x081FF5EA: 'MauvilleCity_BikeShop_EventScript_ChooseAcroHandbookPage',
+            0x081FF62C: 'MauvilleCity_BikeShop_EventScript_Wheelies',
+            0x081FF638: 'MauvilleCity_BikeShop_EventScript_BunnyHops',
+            0x081FF644: 'MauvilleCity_BikeShop_EventScript_Jumps',
+            0x081FF650: 'MauvilleCity_BikeShop_EventScript_ExitAcroHandbook',
+        },
+        'texts': {
+            0x081FF652: 'MauvilleCity_BikeShop_Text_RydelGreeting',
+            0x081FF69F: 'MauvilleCity_BikeShop_Text_DidYouComeFromFarAway',
+            0x081FF6D5: 'MauvilleCity_BikeShop_Text_GuessYouDontNeedBike',
+            0x081FF6FB: 'MauvilleCity_BikeShop_Text_ExplainBikesChooseWhichOne',
+            0x081FF82C: 'MauvilleCity_BikeShop_Text_ChoseMachBike',
+            0x081FF840: 'MauvilleCity_BikeShop_Text_ChoseAcroBike',
+            0x081FF854: 'MauvilleCity_BikeShop_Text_ComeBackToSwitchBikes',
+            0x081FF88B: 'MauvilleCity_BikeShop_Text_WantToSwitchBikes',
+            0x081FF8B2: 'MauvilleCity_BikeShop_Text_IllSwitchBikes',
+            0x081FF8DB: 'MauvilleCity_BikeShop_Text_ExchangedMachForAcro',
+            0x081FF8FC: 'MauvilleCity_BikeShop_Text_ExchangedAcroForMach',
+            0x081FF91D: 'MauvilleCity_BikeShop_Text_HappyYouLikeIt',
+            0x081FF93A: 'MauvilleCity_BikeShop_Text_OhYourBikeIsInPC',
+            0x081FF9AB: 'MauvilleCity_BikeShop_Text_HandbooksAreInBack',
+            0x081FFA13: 'MauvilleCity_BikeShop_Text_MachHandbookWhichPage',
+            0x081FFA3B: 'MauvilleCity_BikeShop_Text_HowToRideMachBike',
+            0x081FFAD0: 'MauvilleCity_BikeShop_Text_HowToTurnMachBike',
+            0x081FFB65: 'MauvilleCity_BikeShop_Text_SandySlopes',
+            0x081FFBE1: 'MauvilleCity_BikeShop_Text_AcroHandbookWhichPage',
+            0x081FFC09: 'MauvilleCity_BikeShop_Text_Wheelies',
+            0x081FFC8A: 'MauvilleCity_BikeShop_Text_BunnyHops',
+            0x081FFCFB: 'MauvilleCity_BikeShop_Text_Jumps',
+        },
+        'field_placeholders': {
+            0x081FF82C: {0x01: 'PLAYER'},
+            0x081FF840: {0x01: 'PLAYER'},
+            0x081FF8DB: {0x01: 'PLAYER'},
+            0x081FF8FC: {0x01: 'PLAYER'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x0059: 'FLAG_DECLINED_BIKE',
+                0x005A: 'FLAG_RECEIVED_BIKE',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {
+                0x0103: 'ITEM_MACH_BIKE',
+                0x0110: 'ITEM_ACRO_BIKE',
+            },
+            'multichoices': {
+                0x000C: 'MULTI_BIKE',
+                0x002B: 'MULTI_MACH_BIKE_INFO',
+                0x002C: 'MULTI_ACRO_BIKE_INFO',
+            },
+            'game_stats': {0x0004: 'GAME_STAT_TRADED_BIKES'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'script_var_values': {
+                0x081FF3EC: {0x800D: {0x00: 'NO', 0x01: 'YES'}},
+                0x081FF427: {0x800D: {0x00: 'NO', 0x01: 'YES'}},
+                0x081FF4C4: {0x800D: {0x00: 'NO', 0x01: 'YES'}},
+                0x081FF4E3: {0x800D: {0x01: 'TRUE'}},
+            },
+            'switch_values': {
+                'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'},
+            },
+            'decimal_arguments': {
+                'compare_var_to_value': (1,),
+                'multichoice': (0, 1),
+            },
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
