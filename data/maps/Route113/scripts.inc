@@ -15,9 +15,9 @@ Route113_OnTransition::
 	end
 
 Route113_EventScript_CheckSetAshWeather::
-	getplayerxy 0x4000, 0x4001
-	goto_if_lt VAR_TEMP_0, 0x13, Route113_EventScript_DontSetAshWeather
-	goto_if_gt VAR_TEMP_0, 0x54, Route113_EventScript_DontSetAshWeather
+	getplayerxy VAR_TEMP_0, VAR_TEMP_1
+	goto_if_lt VAR_TEMP_0, 19, Route113_EventScript_DontSetAshWeather
+	goto_if_gt VAR_TEMP_0, 84, Route113_EventScript_DontSetAshWeather
 	setweather WEATHER_VOLCANIC_ASH
 	return
 
@@ -68,7 +68,7 @@ Route113_EventScript_Madeline::
 
 Route113_EventScript_RegisterMadeline::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route113_Text_MadelineRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_MADELINE_1
 	release
@@ -89,7 +89,7 @@ Route113_EventScript_Lao::
 
 Route113_EventScript_RegisterLao::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route113_Text_LaoRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_LAO_1
 	release

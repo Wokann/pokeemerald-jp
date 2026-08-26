@@ -86,7 +86,19 @@ Route112_EventScript_ItemNugget:: @ 0x08256B26
 	finditem ITEM_NUGGET
 	end
 
-	.incbin "baserom_jp.gba", 0x256b33, 0x1d4
+Route113_EventScript_ItemMaxEther:: @ 0x08256B33
+	finditem ITEM_MAX_ETHER
+	end
+
+Route113_EventScript_ItemSuperRepel:: @ 0x08256B40
+	finditem ITEM_SUPER_REPEL
+	end
+
+Route113_EventScript_ItemHyperPotion:: @ 0x08256B4D
+	finditem ITEM_HYPER_POTION
+	end
+
+	.incbin "baserom_jp.gba", 0x256b5a, 0x1ad
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM
