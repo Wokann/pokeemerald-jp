@@ -4598,7 +4598,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR (g6 m1)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR  @ mapLayout
-	.4byte gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR  @ events
+	.4byte VerdanturfTown_BattleTentCorridor_MapEvents  @ events
 	.4byte VerdanturfTown_BattleTentCorridor_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music

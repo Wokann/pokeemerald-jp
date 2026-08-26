@@ -7908,6 +7908,66 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Verdanturf's corridor is the next physical owner. Its live escort flow is
+# followed by four complete, unused RS Contest Hall texts that remain named in
+# the matching US source despite having no Emerald script reference.
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'VerdanturfTown_BattleTentCorridor': (
+        0x081F6B6F,
+        0x081F6BDE,
+        0x081F6C2B,
+        0x081F6C8C,
+    ),
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'VerdanturfTown_BattleTentCorridor': {
+        0x081F6B66: 'VerdanturfTown_BattleTentCorridor_Movement_WalkToDoor',
+        0x081F6B6B: 'VerdanturfTown_BattleTentCorridor_Movement_PlayerEnterDoor',
+    },
+})
+
+MAP_MOVEMENT_INTERIOR_LABELS.update({
+    'VerdanturfTown_BattleTentCorridor': {
+        0x081F6B6B: {
+            0x081F6B6C: 'VerdanturfTown_BattleTentCorridor_Movement_AttendantEnterDoor',
+        },
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_BattleTentCorridor': {
+        'scripts': {
+            0x081F6B22: 'VerdanturfTown_BattleTentCorridor_EventScript_EnterCorridor',
+        },
+        'tables': {
+            0x081F6B18: 'VerdanturfTown_BattleTentCorridor_OnFrame',
+        },
+        'texts': {
+            0x081F6B6F: 'VerdanturfTown_ContestHall_Text_WhichContestYouEntering',
+            0x081F6BDE: 'VerdanturfTown_ContestHall_Text_RaisedMonToBeCute',
+            0x081F6C2B: 'VerdanturfTown_ContestHall_Text_MyMonRules',
+            0x081F6C8C: 'VerdanturfTown_ContestHall_Text_NormalRankStage',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x081F6B22: {'waitmoncry': 'waitdooranim_jp'},
+        },
+        'symbols': {
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x8006: 'VAR_0x8006',
+            },
+            'maps': {0x0602: 'MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM'},
+            'local_ids': {
+                0x01: 'LOCALID_VERDANTURF_TENT_CORRIDOR_ATTENDANT',
+                0xFF: 'LOCALID_PLAYER',
+            },
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
