@@ -602,6 +602,8 @@ MAP_AUXILIARY_TEXT_ADDRESSES = {
 # Map-owned movement scripts confirmed by their JP addresses and the matching
 # US map source.  They are referenced by ``applymovement`` rather than being
 # event scripts, so the event-script parser deliberately does not follow them.
+MAP_MOVEMENT_INTERIOR_LABELS = {}
+
 MAP_MOVEMENT_SCRIPT_LABELS = {
     'PetalburgCity_Gym': {
         0x081F8683: 'PetalburgCity_Gym_Movement_WallyExitGym',
@@ -7351,6 +7353,66 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The Battle Tent Corridor owns four complete, unused RS Contest Hall strings
+# after its live corridor movement data. They have no Emerald script pointer,
+# but remain named source records in the matching US map file.
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'FallarborTown_BattleTentCorridor': (
+        0x081F5835,
+        0x081F587B,
+        0x081F58C5,
+        0x081F5901,
+    ),
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'FallarborTown_BattleTentCorridor': {
+        0x081F582C: 'FallarborTown_BattleTentCorridor_Movement_WalkToDoor',
+        0x081F5831: 'FallarborTown_BattleTentCorridor_Movement_PlayerEnterDoor',
+    },
+})
+
+MAP_MOVEMENT_INTERIOR_LABELS.update({
+    'FallarborTown_BattleTentCorridor': {
+        0x081F5831: {
+            0x081F5832: 'FallarborTown_BattleTentCorridor_Movement_AttendantEnterDoor',
+        },
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FallarborTown_BattleTentCorridor': {
+        'scripts': {
+            0x081F57E8: 'FallarborTown_BattleTentCorridor_EventScript_EnterCorridor',
+        },
+        'tables': {
+            0x081F57DE: 'FallarborTown_BattleTentCorridor_OnFrame',
+        },
+        'texts': {
+            0x081F5835: 'FallarborTown_ContestHall_Text_DoAllRightInPreliminary',
+            0x081F587B: 'FallarborTown_ContestHall_Text_MonAllTheseRibbons',
+            0x081F58C5: 'FallarborTown_ContestHall_Text_CantWinEverywhere',
+            0x081F5901: 'FallarborTown_ContestHall_Text_SuperRankStage',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x081F57E8: {'waitmoncry': 'waitdooranim_jp'},
+        },
+        'symbols': {
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x8006: 'VAR_0x8006',
+            },
+            'maps': {0x0503: 'MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM'},
+            'local_ids': {
+                0x01: 'LOCALID_FALLARBOR_TENT_CORRIDOR_ATTENDANT',
+                0xFF: 'LOCALID_PLAYER',
+            },
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
@@ -13325,9 +13387,16 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         for addr, label in MAP_MOVEMENT_SCRIPT_LABELS.get(mname, {}).items()
         if ms <= addr < region_end
     }
+    configured_interior_movement_addresses = {
+        addr
+        for labels in MAP_MOVEMENT_INTERIOR_LABELS.get(mname, {}).values()
+        for addr in labels
+        if ms <= addr < region_end
+    }
     auto_movement_targets = (
         referenced_movement_addresses(scripts, ms, region_end)
         - set(reviewed_movement_labels)
+        - configured_interior_movement_addresses
     )
     # Some maps intentionally point at suffixes inside another movement
     # stream.  Emitting both as independent objects would duplicate bytes;
@@ -13363,6 +13432,23 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 'cannot prove movement script %s at 0x%08X' % (label, addr))
         actions, end = decoded
         movements[addr] = (label, actions, end)
+    interior_movement_labels = {}
+    for base, labels in MAP_MOVEMENT_INTERIOR_LABELS.get(mname, {}).items():
+        if base not in movements:
+            raise RuntimeError(
+                'interior movement labels require a decoded base in %s: 0x%08X'
+                % (mname, base))
+        _label, _actions, end = movements[base]
+        for addr, label in labels.items():
+            if not (base < addr < end):
+                raise RuntimeError(
+                    'interior movement label is outside its base in %s: 0x%08X'
+                    % (mname, addr))
+            if addr in movement_labels or addr in interior_movement_labels:
+                raise RuntimeError(
+                    'duplicate movement label address in %s: 0x%08X'
+                    % (mname, addr))
+            interior_movement_labels[addr] = label
     region_labels = region_labels or {}
     label_map = {}
     for addr in sorted(scripts):
@@ -13372,6 +13458,7 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             label_map[addr] = verified_script_labels.get(
                 addr, '%s_EventScript_%08X' % (mname, addr & 0xFFFFFF))
     label_map.update(movement_labels)
+    label_map.update(interior_movement_labels)
     label_map.update({
         data_start: label
         for label, _products, data_start, _end in shop_lists.values()
@@ -13609,8 +13696,13 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
         elif kind == 'movement':
             label, actions, _end = movements[payload]
             lines.append('%s:' % label)
+            pos = payload
             for action in actions:
+                interior_label = interior_movement_labels.get(pos)
+                if interior_label is not None:
+                    lines.append('%s:' % interior_label)
                 lines.append('\t%s' % action)
+                pos += 1
             lines.append('')
         elif kind == 'shop_list':
             label, products, _data_start, _end = shop_lists[payload]

@@ -828,8 +828,6 @@ FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventBgEvents: @ 0x08506B24
 gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	map_events FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventObjects, FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventWarps, 0, FALLARBOR_TOWN_BATTLE_TENT_LOBBY_EventBgEvents
 	.include "data/maps/FallarborTown_BattleTentCorridor/events.inc"
-	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR
-	.set gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR, FallarborTown_BattleTentCorridor_MapEvents
 	.include "data/maps/FallarborTown_BattleTentBattleRoom/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
 	.set gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM, FallarborTown_BattleTentBattleRoom_MapEvents
