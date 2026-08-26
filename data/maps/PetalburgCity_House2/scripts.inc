@@ -3,11 +3,11 @@
 PetalburgCity_House2_MapScripts::
 	.byte 0
 
-PetalburgCity_House2_EventScript_Woman::
+PetalburgCity_House2_EventScript_Woman:: @ 0x081FA721
 	msgbox PetalburgCity_House2_Text_NormanBecameGymLeader, MSGBOX_NPC
 	end
 
-PetalburgCity_House2_EventScript_SchoolKid::
+PetalburgCity_House2_EventScript_SchoolKid:: @ 0x081FA72A
 	msgbox PetalburgCity_House2_Text_BattledNormanOnce, MSGBOX_NPC
 	end
 

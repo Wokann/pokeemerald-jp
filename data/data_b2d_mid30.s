@@ -4742,7 +4742,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_HOUSE2 (g8 m3)
 	.4byte gMapLayout_PETALBURG_CITY_HOUSE2  @ mapLayout
-	.4byte gMapEvents_PETALBURG_CITY_HOUSE2  @ events
+	.4byte PetalburgCity_House2_MapEvents  @ events
 	.4byte 0x081FA720  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016A  @ music
