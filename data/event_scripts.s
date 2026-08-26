@@ -370,6 +370,10 @@
 	.set Common_Movement_FaceRight, 0x0824362F
 	.globl Common_Movement_FaceLeft
 	.set Common_Movement_FaceLeft, 0x08243631
+	.globl Common_Movement_FaceDown
+	.set Common_Movement_FaceDown, 0x08243633
+	.globl Common_Movement_WalkInPlaceDown
+	.set Common_Movement_WalkInPlaceDown, 0x08243637
 	.globl Common_Movement_WalkInPlaceFasterDown
 	.set Common_Movement_WalkInPlaceFasterDown, 0x0824362D
 	@ These two shared movement streams remain in the retained JP movement
@@ -869,6 +873,28 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/Route121_SafariZoneEntrance/scripts.inc"
 	.include "data/maps/MeteorFalls_1F_1R/scripts.inc"
 	.incbin "baserom_jp.gba", 0x212d71, 0x87d
+	@ Meteor Falls 1F 1R dialogue starts in this later shared raw owner.
+	@ Keep the physical incbin visible while exporting reviewed map references.
+	.globl MeteorFalls_1F_1R_Text_WithThisMeteorite
+	.set MeteorFalls_1F_1R_Text_WithThisMeteorite, 0x08212D71
+	.globl MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma
+	.set MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma, 0x08212D96
+	.globl MeteorFalls_1F_1R_Text_HoldItRightThereMagma
+	.set MeteorFalls_1F_1R_Text_HoldItRightThereMagma, 0x08212DC3
+	.globl MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua
+	.set MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua, 0x08212DF2
+	.globl MeteorFalls_1F_1R_Text_ArchieSeenYouBefore
+	.set MeteorFalls_1F_1R_Text_ArchieSeenYouBefore, 0x08212E68
+	.globl MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma
+	.set MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma, 0x08212F20
+	.globl MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo
+	.set MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo, 0x08212F38
+	.globl MeteorFalls_1F_1R_Text_ArchieFarewell
+	.set MeteorFalls_1F_1R_Text_ArchieFarewell, 0x08212F67
+	.globl MeteorFalls_1F_1R_Text_MeetProfCozmo
+	.set MeteorFalls_1F_1R_Text_MeetProfCozmo, 0x08212F92
+	.globl MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney
+	.set MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney, 0x0821303C
 	.include "data/maps/MeteorFalls_B1F_1R/scripts.inc"
 	.include "data/maps/MeteorFalls_B1F_2R/scripts.inc"
 	.include "data/maps/RusturfTunnel/scripts.inc"
@@ -1881,6 +1907,16 @@ EventScript_UseDiveUnderwater: @ 0x8256935
 	.globl EventScript_FailSweetScent
 EventScript_FailSweetScent: @ 0x8256A14
 	.include "data/scripts/gUnknown_8256A14.inc"
+	@ These item-ball entries remain inside the later shared raw owner.
+	@ Export the matching US map-event names without moving that owner early.
+	.globl MeteorFalls_1F_1R_EventScript_ItemTMIronTail
+	.set MeteorFalls_1F_1R_EventScript_ItemTMIronTail, 0x08256F02
+	.globl MeteorFalls_1F_1R_EventScript_ItemFullHeal
+	.set MeteorFalls_1F_1R_EventScript_ItemFullHeal, 0x08256F0F
+	.globl MeteorFalls_1F_1R_EventScript_ItemMoonStone
+	.set MeteorFalls_1F_1R_EventScript_ItemMoonStone, 0x08256F1C
+	.globl MeteorFalls_1F_1R_EventScript_ItemPPUP
+	.set MeteorFalls_1F_1R_EventScript_ItemPPUP, 0x08256F29
 	@ The Day-Care Woman logic remains inside the later shared raw owner.
 	@ Export its reviewed map-event entry without moving that owner early.
 	.globl Route117_PokemonDayCare_EventScript_DaycareWoman

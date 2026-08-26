@@ -26,6 +26,9 @@ US_MAPS = US_JSON.parent
 # source boundaries explicit so ``--write`` never absorbs the next raw owner.
 MAP_SOURCE_REGION_ENDS = {
     'LilycoveCity_ContestLobby': 0x08207640,
+    # Meteor Falls 1F 1R owns its scripts and movements only. Its adjacent
+    # text block starts at 0x08212D71 and remains a later top-level owner.
+    'MeteorFalls_1F_1R': 0x08212D71,
 }
 
 # These maps have had their JP and US map-local script entry sequences checked
@@ -148,6 +151,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Safari Zone Entrance follows with a frame table and twelve local script
     # entries; local movements are audited separately below.
     'Route121_SafariZoneEntrance': 13,
+    # Meteor Falls 1F 1R follows with an OnLoad hook and four local branches.
+    # Its dialogue begins at the separate physical owner after 0x08212D71.
+    'MeteorFalls_1F_1R': 5,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -155,6 +161,7 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
 # whose JP entries were checked one-to-one against the US source sequence.
 MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'Route114_FossilManiacsTunnel': ('OnLoad',),
+    'MeteorFalls_1F_1R': ('OnLoad',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -9564,6 +9571,69 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
         },
     },
+    # Meteor Falls 1F 1R is the next physical map owner. Its ten dialogue
+    # records begin in the later top-level raw owner at 0x08212D71, while the
+    # map itself owns the OnLoad hook, four scripts, and thirteen movements.
+    'MeteorFalls_1F_1R': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_texts': {
+            0x08212D71: 'MeteorFalls_1F_1R_Text_WithThisMeteorite',
+            0x08212D96: 'MeteorFalls_1F_1R_Text_DontExpectMercyFromMagma',
+            0x08212DC3: 'MeteorFalls_1F_1R_Text_HoldItRightThereMagma',
+            0x08212DF2: 'MeteorFalls_1F_1R_Text_BeSeeingYouTeamAqua',
+            0x08212E68: 'MeteorFalls_1F_1R_Text_ArchieSeenYouBefore',
+            0x08212F20: 'MeteorFalls_1F_1R_Text_BossWeShouldChaseMagma',
+            0x08212F38: 'MeteorFalls_1F_1R_Text_ArchieYesNoTellingWhatMagmaWillDo',
+            0x08212F67: 'MeteorFalls_1F_1R_Text_ArchieFarewell',
+            0x08212F92: 'MeteorFalls_1F_1R_Text_MeetProfCozmo',
+            0x0821303C: 'MeteorFalls_1F_1R_Text_WhatsTeamMagmaDoingAtMtChimney',
+        },
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x08243633: 'Common_Movement_FaceDown',
+            0x08243637: 'Common_Movement_WalkInPlaceDown',
+        },
+        'symbols': {
+            'flags': {
+                0x00CF: 'FLAG_MET_ARCHIE_METEOR_FALLS',
+                0x00F4: 'FLAG_MET_PROF_COZMO',
+                0x02FF: 'FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT',
+                0x0333: 'FLAG_HIDE_ROUTE_112_TEAM_MAGMA',
+                0x0864: 'FLAG_SYS_GAME_CLEAR',
+            },
+            'vars': {0x40BF: 'VAR_METEOR_FALLS_STATE'},
+            'var_values': {0x40BF: {0x01: '1'}},
+            'local_ids': {
+                0x05: 'LOCALID_METEOR_FALLS_MAGMA_GRUNT_1',
+                0x06: 'LOCALID_METEOR_FALLS_MAGMA_GRUNT_2',
+                0x07: 'LOCALID_METEOR_FALLS_ARCHIE',
+                0x08: 'LOCALID_METEOR_FALLS_AQUA_GRUNT_1',
+                0x09: 'LOCALID_METEOR_FALLS_AQUA_GRUNT_2',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'songs': {
+                0x01A3: 'MUS_ENCOUNTER_AQUA',
+                0x01B9: 'MUS_ENCOUNTER_MAGMA',
+            },
+            'sounds': {0x0015: 'SE_PIN'},
+            'metatiles': {
+                0x0246: 'METATILE_MeteorFalls_CaveEntrance_Top',
+                0x024D: 'METATILE_MeteorFalls_CaveEntrance_Left',
+                0x024E: 'METATILE_MeteorFalls_CaveEntrance_Bottom',
+                0x024F: 'METATILE_MeteorFalls_CaveEntrance_Right',
+            },
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'delay': (0,),
+                'setmetatile': (0, 1),
+            },
+        },
+    },
 })
 
 MAP_POKEMART_LISTS.update({
@@ -9793,6 +9863,24 @@ MAP_MOVEMENT_SCRIPT_LABELS.update({
         0x08212A07: 'Route121_SafariZoneEntrance_Movement_ExitSafariZone',
         0x08212B40: 'Route121_SafariZoneEntrance_Movement_BackAwayFromCounter',
         0x08212B42: 'Route121_SafariZoneEntrance_Movement_EnterSafariZone',
+    },
+})
+
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'MeteorFalls_1F_1R': {
+        0x08212CEA: 'MeteorFalls_1F_1R_Movement_MagmaGruntApproachPlayer',
+        0x08212CEE: 'MeteorFalls_1F_1R_Movement_MagmaGrunt1Exit',
+        0x08212CF8: 'MeteorFalls_1F_1R_Movement_MagmaGrunt2Exit',
+        0x08212D03: 'MeteorFalls_1F_1R_Movement_ArchieArrive',
+        0x08212D0A: 'MeteorFalls_1F_1R_Movement_AquaGrunt1Arrive',
+        0x08212D12: 'MeteorFalls_1F_1R_Movement_AquaGrunt2Arrive',
+        0x08212D1A: 'MeteorFalls_1F_1R_Movement_ArchieExit',
+        0x08212D22: 'MeteorFalls_1F_1R_Movement_ArchieApproachPlayer',
+        0x08212D28: 'MeteorFalls_1F_1R_Movement_AquaGrunt1Exit',
+        0x08212D32: 'MeteorFalls_1F_1R_Movement_AquaGrunt1ApproachArchie',
+        0x08212D37: 'MeteorFalls_1F_1R_Movement_AquaGrunt2Exit',
+        0x08212D42: 'MeteorFalls_1F_1R_Movement_AquaGrunt2ApproachArchie',
+        0x08212D47: 'MeteorFalls_1F_1R_Movement_PushPlayerOutOfWay',
     },
 })
 
@@ -10435,6 +10523,7 @@ VARIABLE_ARGUMENTS = {
 }
 FLAG_ARGUMENTS = {
     'setflag', 'clearflag', 'checkflag', 'goto_if_set', 'goto_if_unset',
+    'call_if_set', 'call_if_unset',
 }
 LOCAL_ID_ARGUMENTS = {
     'applymovement': {0},

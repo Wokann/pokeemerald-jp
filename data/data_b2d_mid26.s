@@ -2263,35 +2263,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/Route121_SafariZoneEntrance/events.inc"
 	.globl gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE
 	.set gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE, Route121_SafariZoneEntrance_MapEvents
-	.globl METEOR_FALLS_1F_1R_EventObjects
-METEOR_FALLS_1F_1R_EventObjects: @ 0x0850C6A0
-	object_event 1, 59, 0, 2, 4, 3, 1, 0, 0, 0, 0, 0x08256F02, 0x0414
-	object_event 2, 59, 0, 2, 14, 3, 1, 0, 0, 0, 0, 0x08256F1C, 0x0416
-	object_event 3, 59, 0, 27, 5, 3, 1, 0, 0, 0, 0, 0x08256F0F, 0x0415
-	object_event 4, 59, 0, 26, 32, 3, 1, 0, 0, 0, 0, 0x08256F29, 0x0417
-	object_event 5, 119, 0, 12, 20, 3, 8, 0, 0, 0, 0, 0x00000000, 0x03AB
-	object_event 6, 119, 0, 14, 21, 3, 9, 0, 0, 0, 0, 0x00000000, 0x03AB
-	object_event 7, 195, 0, 6, 20, 3, 10, 0, 0, 0, 0, 0x00000000, 0x03AA
-	object_event 8, 117, 0, 6, 20, 3, 10, 0, 0, 0, 0, 0x00000000, 0x03AA
-	object_event 9, 117, 0, 6, 21, 3, 1, 0, 0, 0, 0, 0x00000000, 0x03AA
-	object_event 10, 46, 0, 13, 23, 3, 21, 0, 0, 0, 0, MeteorFalls_1F_1R_EventScript_00212D4F, 0x03AE
-	.globl METEOR_FALLS_1F_1R_EventWarps
-METEOR_FALLS_1F_1R_EventWarps: @ 0x0850C790
-	warp_def 27, 18, 4, 0, MAP_ROUTE114
-	warp_def 6, 39, 3, 0, MAP_ROUTE115
-	warp_def 10, 3, 3, 0, MAP_METEOR_FALLS_1F_2R
-	warp_def 5, 4, 3, 4, MAP_METEOR_FALLS_B1F_1R
-	warp_def 26, 28, 3, 5, MAP_METEOR_FALLS_B1F_1R
-	warp_def 4, 2, 0, 0, MAP_METEOR_FALLS_STEVENS_CAVE
-	.globl METEOR_FALLS_1F_1R_EventCoordEvents
-METEOR_FALLS_1F_1R_EventCoordEvents: @ 0x0850C7C0
-	coord_event 14, 18, 4, 16575, 0, MeteorFalls_1F_1R_EventScript_00212B89
-	.globl METEOR_FALLS_1F_1R_EventBgEvents
-METEOR_FALLS_1F_1R_EventBgEvents: @ 0x0850C7D0
-	bg_event 9, 58, 0, 0, 0x00000000, 0, 0
+	.include "data/maps/MeteorFalls_1F_1R/events.inc"
 	.globl gMapEvents_METEOR_FALLS_1F_1R
-gMapEvents_METEOR_FALLS_1F_1R: @ 0x0850C7DC
-	map_events METEOR_FALLS_1F_1R_EventObjects, METEOR_FALLS_1F_1R_EventWarps, METEOR_FALLS_1F_1R_EventCoordEvents, METEOR_FALLS_1F_1R_EventBgEvents
+	.set gMapEvents_METEOR_FALLS_1F_1R, MeteorFalls_1F_1R_MapEvents
 	.globl METEOR_FALLS_1F_2R_EventObjects
 METEOR_FALLS_1F_2R_EventObjects: @ 0x0850C7F0
 	object_event 1, 33, 0, 13, 2, 3, 8, 0, 0, 1, 1, 0x0821307A, 0x0000
