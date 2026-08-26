@@ -6,130 +6,130 @@ Route110_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route110_OnFrame
 	.byte 0
 
-Route110_OnResume::
+Route110_OnResume:: @ 0x081E8E59
 	special UpdateCyclingRoadState
 	end
 
-Route110_OnTransition::
+Route110_OnTransition:: @ 0x081E8E5D
 	call Common_EventScript_SetupRivalGfxId
-	call 0x08242F87
+	call Common_EventScript_SetupRivalOnBikeGfxId
 	call_if_eq VAR_CYCLING_CHALLENGE_STATE, 0x1, Route110_EventScript_SaveCyclingMusic
 	end
 
-Route110_EventScript_SaveCyclingMusic::
+Route110_EventScript_SaveCyclingMusic:: @ 0x081E8E73
 	savebgm MUS_CYCLING
 	return
 
-Route110_OnFrame::
+Route110_OnFrame:: @ 0x081E8E77
 	map_script_2 VAR_CYCLING_CHALLENGE_STATE, 0x1, Route110_EventScript_BeginCylcingRoadChallenge
 	.2byte 0
 
-Route110_EventScript_BeginCylcingRoadChallenge::
+Route110_EventScript_BeginCylcingRoadChallenge:: @ 0x081E8E81
 	special Special_BeginCyclingRoadChallenge
 	setvar VAR_CYCLING_CHALLENGE_STATE, 0x2
 	return
 
-Route110_EventScript_AquaGrunt1::
+Route110_EventScript_AquaGrunt1:: @ 0x081E8E8A
 	lock
 	faceplayer
 	msgbox Route110_Text_WeCantTalkAboutAquaActivities, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-Route110_EventScript_AquaGrunt2::
+Route110_EventScript_AquaGrunt2:: @ 0x081E8EA0
 	lock
 	faceplayer
 	msgbox Route110_Text_KickUpARuckus, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-Route110_EventScript_AquaGrunt3::
+Route110_EventScript_AquaGrunt3:: @ 0x081E8EB6
 	lock
 	faceplayer
 	msgbox Route110_Text_MyFirstJobInAqua, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-Route110_EventScript_AquaGrunt4::
+Route110_EventScript_AquaGrunt4:: @ 0x081E8ECC
 	lock
 	faceplayer
 	msgbox Route110_Text_AquaActionsBringSmiles, MSGBOX_DEFAULT
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
-Route110_EventScript_Boy1::
+Route110_EventScript_Boy1:: @ 0x081E8EE2
 	msgbox Route110_Text_RideBikeAtFullSpeed, MSGBOX_NPC
 	end
 
-Route110_EventScript_CyclingGirl1::
+Route110_EventScript_CyclingGirl1:: @ 0x081E8EEB
 	msgbox Route110_Text_HairStreamsBehindMe, MSGBOX_NPC
 	end
 
-Route110_EventScript_CyclingGuy1::
+Route110_EventScript_CyclingGuy1:: @ 0x081E8EF4
 	msgbox Route110_Text_YouGotBikeFromRydel, MSGBOX_NPC
 	end
 
-Route110_EventScript_OldMan::
+Route110_EventScript_OldMan:: @ 0x081E8EFD
 	msgbox Route110_Text_TwoRoads, MSGBOX_NPC
 	end
 
-Route110_EventScript_OldWoman::
+Route110_EventScript_OldWoman:: @ 0x081E8F06
 	msgbox Route110_Text_WalkOnTheLowRoad, MSGBOX_NPC
 	end
 
-Route110_EventScript_CyclingGuy2::
+Route110_EventScript_CyclingGuy2:: @ 0x081E8F0F
 	msgbox Route110_Text_BikeTechniques, MSGBOX_NPC
 	end
 
-Route110_EventScript_Boy2::
+Route110_EventScript_Boy2:: @ 0x081E8F18
 	msgbox Route110_Text_WhichShouldIChoose, MSGBOX_NPC
 	end
 
-Route110_EventScript_SlateportCitySign::
+Route110_EventScript_SlateportCitySign:: @ 0x081E8F21
 	msgbox Route110_Text_SlateportCitySign, MSGBOX_SIGN
 	end
 
-Route110_EventScript_CyclingRoadSign::
+Route110_EventScript_CyclingRoadSign:: @ 0x081E8F2A
 	msgbox Route110_Text_CyclingRoadSign, MSGBOX_SIGN
 	end
 
-Route110_EventScript_VandalizedSign::
+Route110_EventScript_VandalizedSign:: @ 0x081E8F33
 	msgbox Route110_Text_AquaWasHere, MSGBOX_SIGN
 	end
 
-Route110_EventScript_Route103Sign::
+Route110_EventScript_Route103Sign:: @ 0x081E8F3C
 	msgbox Route110_Text_Route103Sign, MSGBOX_SIGN
 	end
 
-Route110_EventScript_SeasideParkingSign::
+Route110_EventScript_SeasideParkingSign:: @ 0x081E8F45
 	msgbox Route110_Text_SeasideParkingSign, MSGBOX_SIGN
 	end
 
-Route110_EventScript_MauvilleCitySign::
+Route110_EventScript_MauvilleCitySign:: @ 0x081E8F4E
 	msgbox Route110_Text_MauvilleCitySign, MSGBOX_SIGN
 	end
 
-Route110_EventScript_TrainerTipsPrlzSleep::
+Route110_EventScript_TrainerTipsPrlzSleep:: @ 0x081E8F57
 	msgbox Route110_Text_TrainerTipsPrlzSleep, MSGBOX_SIGN
 	end
 
-Route110_EventScript_TrainerTipsRegisterItems::
+Route110_EventScript_TrainerTipsRegisterItems:: @ 0x081E8F60
 	msgbox Route110_Text_TrainerTipsRegisterItems, MSGBOX_SIGN
 	end
 
-Route110_EventScript_TrickHouseSign::
+Route110_EventScript_TrickHouseSign:: @ 0x081E8F69
 	msgbox Route110_Text_TrickHouseSign, MSGBOX_SIGN
 	end
 
-Route110_EventScript_CyclingRoadResultsSign::
+Route110_EventScript_CyclingRoadResultsSign:: @ 0x081E8F72
 	lockall
 	specialvar VAR_RESULT, GetRecordedCyclingRoadResults
 	goto_if_eq VAR_RESULT, 0x0, Route110_EventScript_NoRecordSet
@@ -137,12 +137,12 @@ Route110_EventScript_CyclingRoadResultsSign::
 	releaseall
 	end
 
-Route110_EventScript_NoRecordSet::
+Route110_EventScript_NoRecordSet:: @ 0x081E8F8D
 	msgbox Route110_Text_ThereIsNoRecord, MSGBOX_DEFAULT
 	releaseall
 	end
 
-Route110_EventScript_ChallengeGuy::
+Route110_EventScript_ChallengeGuy:: @ 0x081E8F97
 	lock
 	faceplayer
 	specialvar VAR_RESULT, GetPlayerAvatarBike
@@ -152,27 +152,27 @@ Route110_EventScript_ChallengeGuy::
 	release
 	end
 
-Route110_EventScript_PlayerNotRidingBike::
+Route110_EventScript_PlayerNotRidingBike:: @ 0x081E8FBE
 	msgbox Route110_Text_RatedForNumberOfCollisions, MSGBOX_DEFAULT
 	release
 	end
 
-Route110_EventScript_PlayerRidingAcroBike::
+Route110_EventScript_PlayerRidingAcroBike:: @ 0x081E8FC8
 	msgbox Route110_Text_AcroBikesDoNotQualify, MSGBOX_DEFAULT
 	release
 	end
 
-Route110_EventScript_Edward::
+Route110_EventScript_Edward:: @ 0x081E8FD2
 	trainerbattle_single TRAINER_EDWARD, Route110_Text_EdwardIntro, Route110_Text_EdwardDefeated
 	msgbox Route110_Text_EdwardPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Jaclyn::
+Route110_EventScript_Jaclyn:: @ 0x081E8FE9
 	trainerbattle_single TRAINER_JACLYN, Route110_Text_JaclynIntro, Route110_Text_JaclynDefeated
 	msgbox Route110_Text_JaclynPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Edwin::
+Route110_EventScript_Edwin:: @ 0x081E9000
 	trainerbattle_single TRAINER_EDWIN_1, Route110_Text_EdwinIntro, Route110_Text_EdwinDefeated, Route110_EventScript_EdwinRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route110_EventScript_EdwinRematch
@@ -180,35 +180,35 @@ Route110_EventScript_Edwin::
 	release
 	end
 
-Route110_EventScript_EdwinRegisterMatchCallAfterBattle::
+Route110_EventScript_EdwinRegisterMatchCallAfterBattle:: @ 0x081E902C
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route110_Text_EdwinRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_EDWIN_1
 	release
 	end
 
-Route110_EventScript_EdwinRematch::
+Route110_EventScript_EdwinRematch:: @ 0x081E904B
 	trainerbattle_rematch TRAINER_EDWIN_1, Route110_Text_EdwinRematchIntro, Route110_Text_EdwinRematchDefeated
 	msgbox Route110_Text_EdwinRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Dale::
+Route110_EventScript_Dale:: @ 0x081E9062
 	trainerbattle_single TRAINER_DALE, Route110_Text_DaleIntro, Route110_Text_DaleDefeated
 	msgbox Route110_Text_DalePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Jacob::
+Route110_EventScript_Jacob:: @ 0x081E9079
 	trainerbattle_single TRAINER_JACOB, Route110_Text_JacobIntro, Route110_Text_JacobDefeated
 	msgbox Route110_Text_JacobPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Anthony::
+Route110_EventScript_Anthony:: @ 0x081E9090
 	trainerbattle_single TRAINER_ANTHONY, Route110_Text_AnthonyIntro, Route110_Text_AnthonyDefeated
 	msgbox Route110_Text_AnthonyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Benjamin::
+Route110_EventScript_Benjamin:: @ 0x081E90A7
 	trainerbattle_single TRAINER_BENJAMIN_1, Route110_Text_BenjaminIntro, Route110_Text_BenjaminDefeated, Route110_EventScript_BenjaminRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route110_EventScript_BenjaminRematch
@@ -216,25 +216,25 @@ Route110_EventScript_Benjamin::
 	release
 	end
 
-Route110_EventScript_BenjaminRegisterMatchCallAfterBattle::
+Route110_EventScript_BenjaminRegisterMatchCallAfterBattle:: @ 0x081E90D3
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route110_Text_BenjaminRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_BENJAMIN_1
 	release
 	end
 
-Route110_EventScript_BenjaminRematch::
+Route110_EventScript_BenjaminRematch:: @ 0x081E90F2
 	trainerbattle_rematch TRAINER_BENJAMIN_1, Route110_Text_BenjaminRematchIntro, Route110_Text_BenjaminRematchDefeated
 	msgbox Route110_Text_BenjaminRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Jasmine::
+Route110_EventScript_Jasmine:: @ 0x081E9109
 	trainerbattle_single TRAINER_JASMINE, Route110_Text_JasmineIntro, Route110_Text_JasmineDefeated
 	msgbox Route110_Text_JasminePostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Abigail::
+Route110_EventScript_Abigail:: @ 0x081E9120
 	trainerbattle_single TRAINER_ABIGAIL_1, Route110_Text_AbigailIntro, Route110_Text_AbigailDefeated, Route110_EventScript_AbigailRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route110_EventScript_AbigailRematch
@@ -242,20 +242,20 @@ Route110_EventScript_Abigail::
 	release
 	end
 
-Route110_EventScript_AbigailRegisterMatchCallAfterBattle::
+Route110_EventScript_AbigailRegisterMatchCallAfterBattle:: @ 0x081E914C
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route110_Text_AbigailRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_ABIGAIL_1
 	release
 	end
 
-Route110_EventScript_AbigailRematch::
+Route110_EventScript_AbigailRematch:: @ 0x081E916B
 	trainerbattle_rematch TRAINER_ABIGAIL_1, Route110_Text_AbigailRematchIntro, Route110_Text_AbigailRematchDefeated
 	msgbox Route110_Text_AbigailRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Isabel::
+Route110_EventScript_Isabel:: @ 0x081E9182
 	trainerbattle_single TRAINER_ISABEL_1, Route110_Text_IsabelIntro, Route110_Text_IsabelDefeated, Route110_EventScript_IsabelRegisterMatchCallAfterBattle
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, Route110_EventScript_IsabelRematch
@@ -263,124 +263,124 @@ Route110_EventScript_Isabel::
 	release
 	end
 
-Route110_EventScript_IsabelRegisterMatchCallAfterBattle::
+Route110_EventScript_IsabelRegisterMatchCallAfterBattle:: @ 0x081E91AE
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route110_Text_IsabelRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_ISABEL_1
 	release
 	end
 
-Route110_EventScript_IsabelRematch::
+Route110_EventScript_IsabelRematch:: @ 0x081E91CD
 	trainerbattle_rematch TRAINER_ISABEL_1, Route110_Text_IsabelRematchIntro, Route110_Text_IsabelRematchDefeated
 	msgbox Route110_Text_IsabelRematchPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Timmy::
+Route110_EventScript_Timmy:: @ 0x081E91E4
 	trainerbattle_single TRAINER_TIMMY, Route110_Text_TimmyIntro, Route110_Text_TimmyDefeated
 	msgbox Route110_Text_TimmyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Unused::
+Route110_EventScript_Unused:: @ 0x081E91FB
 	end
 
-Route110_EventScript_Kaleb::
+Route110_EventScript_Kaleb:: @ 0x081E91FC
 	trainerbattle_single TRAINER_KALEB, Route110_Text_KalebIntro, Route110_Text_KalebDefeated
 	msgbox Route110_Text_KalebPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Joseph::
+Route110_EventScript_Joseph:: @ 0x081E9213
 	trainerbattle_single TRAINER_JOSEPH, Route110_Text_JosephIntro, Route110_Text_JosephDefeated
 	msgbox Route110_Text_JosephPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_Alyssa::
+Route110_EventScript_Alyssa:: @ 0x081E922A
 	trainerbattle_single TRAINER_ALYSSA, Route110_Text_AlyssaIntro, Route110_Text_AlyssaDefeated
 	msgbox Route110_Text_AlyssaPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-Route110_EventScript_CyclingChallengeEnd::
+Route110_EventScript_CyclingChallengeEnd:: @ 0x081E9241
 	lockall
-	applymovement LOCALID_CHALLENGE_BIKER, 0x0824362B
-	waitmovement 0x0
+	applymovement LOCALID_CHALLENGE_BIKER, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
 	call Route110_EventScript_CyclingChallengeResults
 	releaseall
 	end
 
-Route110_EventScript_CyclingChallengeResults::
+Route110_EventScript_CyclingChallengeResults:: @ 0x081E9253
 	special FinishCyclingRoadChallenge
 	msgbox Route110_Text_CyclingChallengeResultSummary, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_RESULT
-	goto_if_eq VAR_0x8000, 0xA, Route110_EventScript_ChallengeReactionBest
-	goto_if_eq VAR_0x8000, 0x9, Route110_EventScript_ChallengeReactionGood
-	goto_if_eq VAR_0x8000, 0x8, Route110_EventScript_ChallengeReactionGood
-	goto_if_eq VAR_0x8000, 0x7, Route110_EventScript_ChallengeReactionGood
-	goto_if_eq VAR_0x8000, 0x6, Route110_EventScript_ChallengeReactionOk
-	goto_if_eq VAR_0x8000, 0x5, Route110_EventScript_ChallengeReactionOk
-	goto_if_eq VAR_0x8000, 0x4, Route110_EventScript_ChallengeReactionOk
-	goto_if_eq VAR_0x8000, 0x3, Route110_EventScript_ChallengeReactionBad
-	goto_if_eq VAR_0x8000, 0x2, Route110_EventScript_ChallengeReactionBad
-	goto_if_eq VAR_0x8000, 0x1, Route110_EventScript_ChallengeReactionBad
-	goto_if_eq VAR_0x8000, 0x0, Route110_EventScript_ChallengeReactionWorst
+	switch VAR_RESULT
+	case 0xA, Route110_EventScript_ChallengeReactionBest
+	case 9, Route110_EventScript_ChallengeReactionGood
+	case 8, Route110_EventScript_ChallengeReactionGood
+	case 7, Route110_EventScript_ChallengeReactionGood
+	case 6, Route110_EventScript_ChallengeReactionOk
+	case 5, Route110_EventScript_ChallengeReactionOk
+	case 4, Route110_EventScript_ChallengeReactionOk
+	case 3, Route110_EventScript_ChallengeReactionBad
+	case 2, Route110_EventScript_ChallengeReactionBad
+	case 1, Route110_EventScript_ChallengeReactionBad
+	case 0, Route110_EventScript_ChallengeReactionWorst
 	end
 
-Route110_EventScript_ChallengeReactionBest::
+Route110_EventScript_ChallengeReactionBest:: @ 0x081E92DD
 	msgbox Route110_Text_ChallengeReactionBest, MSGBOX_DEFAULT
 	goto Route110_EventScript_EndChallenge
 	end
 
-Route110_EventScript_ChallengeReactionGood::
+Route110_EventScript_ChallengeReactionGood:: @ 0x081E92EB
 	msgbox Route110_Text_ChallengeReactionGood, MSGBOX_DEFAULT
 	goto Route110_EventScript_EndChallenge
 	end
 
-Route110_EventScript_ChallengeReactionOk::
+Route110_EventScript_ChallengeReactionOk:: @ 0x081E92F9
 	msgbox Route110_Text_ChallengeReactionOk, MSGBOX_DEFAULT
 	goto Route110_EventScript_EndChallenge
 	end
 
-Route110_EventScript_ChallengeReactionBad::
+Route110_EventScript_ChallengeReactionBad:: @ 0x081E9307
 	msgbox Route110_Text_ChallengeReactionBad, MSGBOX_DEFAULT
 	goto Route110_EventScript_EndChallenge
 	end
 
-Route110_EventScript_ChallengeReactionWorst::
+Route110_EventScript_ChallengeReactionWorst:: @ 0x081E9315
 	msgbox Route110_Text_ChallengeReactionWorst, MSGBOX_DEFAULT
 	goto Route110_EventScript_EndChallenge
 	end
 
-Route110_EventScript_EndChallenge::
+Route110_EventScript_EndChallenge:: @ 0x081E9323
 	setvar VAR_CYCLING_CHALLENGE_STATE, 0x3
 	savebgm MUS_DUMMY
 	fadedefaultbgm
 	return
 
-Route110_EventScript_RivalTrigger1::
+Route110_EventScript_RivalTrigger1:: @ 0x081E932D
 	setvar VAR_0x8008, 0x1
 	goto Route110_EventScript_RivalScene
 	end
 
-Route110_EventScript_RivalTrigger2::
+Route110_EventScript_RivalTrigger2:: @ 0x081E9338
 	setvar VAR_0x8008, 0x2
 	goto Route110_EventScript_RivalScene
 	end
 
-Route110_EventScript_RivalTrigger3::
+Route110_EventScript_RivalTrigger3:: @ 0x081E9343
 	setvar VAR_0x8008, 0x3
 	goto Route110_EventScript_RivalScene
 	end
 
-Route110_EventScript_RivalScene::
+Route110_EventScript_RivalScene:: @ 0x081E934E
 	lockall
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, Route110_EventScript_PlayMayMusic
 	call_if_eq VAR_RESULT, FEMALE, Route110_EventScript_PlayBrendanMusic
-	applymovement LOCALID_ROUTE110_RIVAL, 0x0824362D
-	waitmovement 0x0
+	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
 	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_ExclamationMark
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_ROUTE110_RIVAL, Common_Movement_Delay48
-	waitmovement 0x0
+	waitmovement 0
 	delay 0x1E
 	call_if_eq VAR_0x8008, 0x1, Route110_EventScript_RivalApproachPlayer1
 	call_if_eq VAR_0x8008, 0x2, Route110_EventScript_RivalApproachPlayer2
@@ -391,81 +391,79 @@ Route110_EventScript_RivalScene::
 	releaseall
 	end
 
-Route110_EventScript_PlayMayMusic::
+Route110_EventScript_PlayMayMusic:: @ 0x081E93C1
 	playbgm MUS_ENCOUNTER_MAY, TRUE
 	return
 
-Route110_EventScript_PlayBrendanMusic::
+Route110_EventScript_PlayBrendanMusic:: @ 0x081E93C6
 	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
 	return
 
-Route110_EventScript_MayBattle::
+Route110_EventScript_MayBattle:: @ 0x081E93CB
 	msgbox Route110_Text_MayLetsBattle, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_STARTER_MON
-	goto_if_eq VAR_0x8000, 0x0, Route110_EventScript_MayBattleTreecko
-	goto_if_eq VAR_0x8000, 0x1, Route110_EventScript_MayBattleTorchic
-	goto_if_eq VAR_0x8000, 0x2, Route110_EventScript_MayBattleMudkip
+	switch VAR_STARTER_MON
+	case 0, Route110_EventScript_MayBattleTreecko
+	case 1, Route110_EventScript_MayBattleTorchic
+	case 2, Route110_EventScript_MayBattleMudkip
 	end
 
-Route110_EventScript_MayBattleTreecko::
+Route110_EventScript_MayBattleTreecko:: @ 0x081E93FA
 	trainerbattle_no_intro TRAINER_MAY_ROUTE_110_TREECKO, Route110_Text_MayDefeated
 	goto Route110_EventScript_MayDefeated
 	end
 
-Route110_EventScript_MayBattleTorchic::
+Route110_EventScript_MayBattleTorchic:: @ 0x081E940A
 	trainerbattle_no_intro TRAINER_MAY_ROUTE_110_TORCHIC, Route110_Text_MayDefeated
 	goto Route110_EventScript_MayDefeated
 	end
 
-Route110_EventScript_MayBattleMudkip::
+Route110_EventScript_MayBattleMudkip:: @ 0x081E941A
 	trainerbattle_no_intro TRAINER_MAY_ROUTE_110_MUDKIP, Route110_Text_MayDefeated
 	goto Route110_EventScript_MayDefeated
 	end
 
-Route110_EventScript_MayDefeated::
+Route110_EventScript_MayDefeated:: @ 0x081E942A
 	msgbox Route110_Text_MayTakeThis, MSGBOX_DEFAULT
 	call Route110_EventScript_GiveItemfinder
 	msgbox Route110_Text_MayExplainItemfinder, MSGBOX_DEFAULT
 	goto Route110_EventScript_RivalExit
 	end
 
-Route110_EventScript_BrendanBattle::
+Route110_EventScript_BrendanBattle:: @ 0x081E9445
 	msgbox Route110_Text_BrendanLetsBattle, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_STARTER_MON
-	goto_if_eq VAR_0x8000, 0x0, Route110_EventScript_BrendanBattleTreecko
-	goto_if_eq VAR_0x8000, 0x1, Route110_EventScript_BrendanBattleTorchic
-	goto_if_eq VAR_0x8000, 0x2, Route110_EventScript_BrendanBattleMudkip
+	switch VAR_STARTER_MON
+	case 0, Route110_EventScript_BrendanBattleTreecko
+	case 1, Route110_EventScript_BrendanBattleTorchic
+	case 2, Route110_EventScript_BrendanBattleMudkip
 	end
 
-Route110_EventScript_BrendanBattleTreecko::
+Route110_EventScript_BrendanBattleTreecko:: @ 0x081E9474
 	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_110_TREECKO, Route110_Text_BrendanDefeated
 	goto Route110_EventScript_BrendanDefeated
 	end
 
-Route110_EventScript_BrendanBattleTorchic::
+Route110_EventScript_BrendanBattleTorchic:: @ 0x081E9484
 	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_110_TORCHIC, Route110_Text_BrendanDefeated
 	goto Route110_EventScript_BrendanDefeated
 	end
 
-Route110_EventScript_BrendanBattleMudkip::
+Route110_EventScript_BrendanBattleMudkip:: @ 0x081E9494
 	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_110_MUDKIP, Route110_Text_BrendanDefeated
 	goto Route110_EventScript_BrendanDefeated
 	end
 
-Route110_EventScript_BrendanDefeated::
+Route110_EventScript_BrendanDefeated:: @ 0x081E94A4
 	msgbox Route110_Text_BrendanTakeThis, MSGBOX_DEFAULT
 	call Route110_EventScript_GiveItemfinder
 	msgbox Route110_Text_BrendanExplainItemfinder, MSGBOX_DEFAULT
 	goto Route110_EventScript_RivalExit
 	end
 
-Route110_EventScript_GiveItemfinder::
-	setorcopyvar VAR_0x8000, ITEM_ITEMFINDER
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
+Route110_EventScript_GiveItemfinder:: @ 0x081E94BF
+	giveitem ITEM_ITEMFINDER
 	return
 
-Route110_EventScript_RivalExit::
+Route110_EventScript_RivalExit:: @ 0x081E94CC
 	closemessage
 	call_if_eq VAR_0x8008, 0x1, Route110_EventScript_MoveRival1
 	call_if_eq VAR_0x8008, 0x2, Route110_EventScript_MoveRival2
@@ -485,45 +483,45 @@ Route110_EventScript_RivalExit::
 	releaseall
 	end
 
-Route110_EventScript_RivalApproachPlayer1::
+Route110_EventScript_RivalApproachPlayer1:: @ 0x081E952E
 	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_RivalApproachPlayer2::
+Route110_EventScript_RivalApproachPlayer2:: @ 0x081E9539
 	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_RivalApproachPlayer3::
+Route110_EventScript_RivalApproachPlayer3:: @ 0x081E9544
 	applymovement LOCALID_ROUTE110_RIVAL, Route110_Movement_RivalApproachPlayer3
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_RivalExit1::
+Route110_EventScript_RivalExit1:: @ 0x081E954F
 	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_RivalExit2::
+Route110_EventScript_RivalExit2:: @ 0x081E955A
 	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_RivalExit3::
+Route110_EventScript_RivalExit3:: @ 0x081E9565
 	applymovement LOCALID_ROUTE110_RIVAL_ON_BIKE, Route110_Movement_RivalExit3
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_MoveRival1::
+Route110_EventScript_MoveRival1:: @ 0x081E9570
 	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 0x21, 0x37
 	return
 
-Route110_EventScript_MoveRival2::
+Route110_EventScript_MoveRival2:: @ 0x081E9578
 	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 0x22, 0x37
 	return
 
-Route110_EventScript_MoveRival3::
+Route110_EventScript_MoveRival3:: @ 0x081E9580
 	setobjectxyperm LOCALID_ROUTE110_RIVAL_ON_BIKE, 0x23, 0x37
 	return
 
@@ -574,35 +572,35 @@ Route110_Movement_RivalExit3:
 	walk_fast_up
 	step_end
 
-Route110_EventScript_BirchScene1::
+Route110_EventScript_BirchScene1:: @ 0x081E95AB
 	lockall
 	setvar VAR_0x8008, 0x1
 	goto Route110_EventScript_BirchScene
 
-Route110_EventScript_BirchScene2::
+Route110_EventScript_BirchScene2:: @ 0x081E95B6
 	lockall
 	setvar VAR_0x8008, 0x2
 	goto Route110_EventScript_BirchScene
 
-Route110_EventScript_BirchScene3::
+Route110_EventScript_BirchScene3:: @ 0x081E95C1
 	lockall
 	setvar VAR_0x8008, 0x3
 	goto Route110_EventScript_BirchScene
 
-Route110_EventScript_BirchScene4::
+Route110_EventScript_BirchScene4:: @ 0x081E95CC
 	lockall
 	setvar VAR_0x8008, 0x4
 	goto Route110_EventScript_BirchScene
 
-Route110_EventScript_BirchScene::
+Route110_EventScript_BirchScene:: @ 0x081E95D7
 	addobject LOCALID_ROUTE110_BIRCH
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchEntrance
-	waitmovement 0x0
+	waitmovement 0
 	playse SE_PIN
 	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_ExclamationMark
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_Delay48
-	waitmovement 0x0
+	waitmovement 0
 	call_if_eq VAR_0x8008, 0x1, Route110_EventScript_BirchApproachPlayer1
 	call_if_eq VAR_0x8008, 0x2, Route110_EventScript_BirchApproachPlayer2
 	call_if_eq VAR_0x8008, 0x3, Route110_EventScript_BirchApproachPlayer3
@@ -610,14 +608,14 @@ Route110_EventScript_BirchScene::
 	msgbox Route110_Text_ImagineSeeingYouHere, MSGBOX_DEFAULT
 	closemessage
 	delay 0x14
-	applymovement LOCALID_ROUTE110_BIRCH, 0x08243627
-	waitmovement 0x0
+	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
 	delay 0xA
-	applymovement LOCALID_ROUTE110_BIRCH, 0x0824362B
-	waitmovement 0x0
+	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
 	delay 0x14
-	applymovement LOCALID_ROUTE110_BIRCH, 0x0824362D
-	waitmovement 0x0
+	applymovement LOCALID_ROUTE110_BIRCH, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
 	delay 0x1E
 	msgbox Route110_Text_HeardYouInstallMatchCall, MSGBOX_DEFAULT
 	closemessage
@@ -639,44 +637,44 @@ Route110_EventScript_BirchScene::
 	releaseall
 	end
 
-Route110_EventScript_BirchApproachPlayer1::
+Route110_EventScript_BirchApproachPlayer1:: @ 0x081E96B8
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_BirchApproachPlayer2::
+Route110_EventScript_BirchApproachPlayer2:: @ 0x081E96C3
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_BirchApproachPlayer3::
+Route110_EventScript_BirchApproachPlayer3:: @ 0x081E96CE
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer3
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_BirchApproachPlayer4::
+Route110_EventScript_BirchApproachPlayer4:: @ 0x081E96D9
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchApproachPlayer4
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_BirchExit1::
+Route110_EventScript_BirchExit1:: @ 0x081E96E4
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_BirchExit2::
+Route110_EventScript_BirchExit2:: @ 0x081E96EF
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_BirchExit3::
+Route110_EventScript_BirchExit3:: @ 0x081E96FA
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit3
-	waitmovement 0x0
+	waitmovement 0
 	return
 
-Route110_EventScript_BirchExit4::
+Route110_EventScript_BirchExit4:: @ 0x081E9705
 	applymovement LOCALID_ROUTE110_BIRCH, Route110_Movement_BirchExit4
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route110_Movement_BirchEntrance:

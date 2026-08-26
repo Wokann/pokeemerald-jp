@@ -54,7 +54,19 @@ Route109_EventScript_ItemPotion:: @ 0x08256ABE
 	finditem ITEM_POTION
 	end
 
-	.incbin "baserom_jp.gba", 0x256acb, 0x23c
+Route110_EventScript_ItemRareCandy:: @ 0x08256ACB
+	finditem ITEM_RARE_CANDY
+	end
+
+Route110_EventScript_ItemDireHit:: @ 0x08256AD8
+	finditem ITEM_DIRE_HIT
+	end
+
+Route110_EventScript_ItemElixir:: @ 0x08256AE5
+	finditem ITEM_ELIXIR
+	end
+
+	.incbin "baserom_jp.gba", 0x256af2, 0x215
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM
