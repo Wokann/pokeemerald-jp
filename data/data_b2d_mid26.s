@@ -2341,18 +2341,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/AquaHideout_B2F/events.inc"
 	.globl gMapEvents_AQUA_HIDEOUT_B2F
 	.set gMapEvents_AQUA_HIDEOUT_B2F, AquaHideout_B2F_MapEvents
-	.globl UNDERWATER_SEAFLOOR_CAVERN_EventObjects
-UNDERWATER_SEAFLOOR_CAVERN_EventObjects: @ 0x0850DD6C
-	object_event 1, 100, 0, 5, 4, 3, 76, 1, 1, 0, 0, Underwater_SeafloorCavern_EventScript_002183EF, 0x03D4
-	object_event 2, 100, 0, 6, 4, 3, 76, 1, 1, 0, 0, Underwater_SeafloorCavern_EventScript_002183EF, 0x03D4
-	object_event 3, 100, 0, 7, 4, 3, 76, 1, 1, 0, 0, Underwater_SeafloorCavern_EventScript_002183EF, 0x03D4
-	object_event 4, 100, 0, 8, 4, 3, 76, 1, 1, 0, 0, Underwater_SeafloorCavern_EventScript_002183EF, 0x03D4
-	.globl UNDERWATER_SEAFLOOR_CAVERN_EventWarps
-UNDERWATER_SEAFLOOR_CAVERN_EventWarps: @ 0x0850DDCC
-	warp_def 6, 7, 0, 0, MAP_UNDERWATER_ROUTE128
+	.include "data/maps/Underwater_SeafloorCavern/events.inc"
 	.globl gMapEvents_UNDERWATER_SEAFLOOR_CAVERN
-gMapEvents_UNDERWATER_SEAFLOOR_CAVERN: @ 0x0850DDD4
-	map_events UNDERWATER_SEAFLOOR_CAVERN_EventObjects, UNDERWATER_SEAFLOOR_CAVERN_EventWarps, 0, 0
+	.set gMapEvents_UNDERWATER_SEAFLOOR_CAVERN, Underwater_SeafloorCavern_MapEvents
 	.globl SEAFLOOR_CAVERN_ENTRANCE_EventObjects
 SEAFLOOR_CAVERN_ENTRANCE_EventObjects: @ 0x0850DDE8
 	object_event 1, 117, 0, 10, 2, 3, 7, 1, 1, 0, 0, SeafloorCavern_Entrance_EventScript_00218465, 0x03AD

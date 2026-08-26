@@ -209,6 +209,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # B2F follows directly with its transition hook, Matt encounter sequence,
     # and three local grunt branches in the same physical US source order.
     'AquaHideout_B2F': 9,
+    # Underwater Seafloor Cavern follows with its three map hooks, submarine
+    # state branch, and sign interaction in the same reviewed US order.
+    'Underwater_SeafloorCavern': 6,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -226,6 +229,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'MtPyre_Exterior': ('OnTransition',),
     'MtPyre_Summit': ('OnTransition',),
     'AquaHideout_B1F': ('OnResume',),
+    'Underwater_SeafloorCavern': ('OnLoad', 'OnResume'),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -335,6 +339,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'AquaHideout_B1F': 12,
     # B2F owns Matt's four messages and the nine adjacent grunt messages.
     'AquaHideout_B2F': 13,
+    # The Seafloor Cavern underwater entry owns the submarine sign message.
+    'Underwater_SeafloorCavern': 1,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7102,6 +7108,27 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
             'sounds': {0x15: 'SE_PIN'},
             'decimal_arguments': {'delay': (0,)},
+        },
+    },
+    # The next physical source owner contains the Seafloor Cavern underwater
+    # entrance hooks and its one submarine sign message. Constants below are
+    # checked against the JP bytes and the matching US map source.
+    'Underwater_SeafloorCavern': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x0081: 'FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN',
+                0x03D4: 'FLAG_HIDE_UNDERWATER_SEA_FLOOR_CAVERN_STOLEN_SUBMARINE',
+                0x08A7: 'FLAG_LANDMARK_SEAFLOOR_CAVERN',
+            },
+            'maps': {0x181B: 'MAP_SEAFLOOR_CAVERN_ENTRANCE'},
+            'metatiles': {
+                0x021E: 'METATILE_Underwater_RockWall',
+                0x0228: 'METATILE_Underwater_FloorShadow',
+            },
+            'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'decimal_arguments': {'setdivewarp': (2, 3)},
         },
     },
 })

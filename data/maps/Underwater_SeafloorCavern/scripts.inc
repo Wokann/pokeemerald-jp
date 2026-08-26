@@ -1,46 +1,51 @@
 @ Underwater_SeafloorCavern scripts (JP map g24 m26 @ 0x0821834E)
 
 Underwater_SeafloorCavern_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, Underwater_SeafloorCavern_EventScript_002183E6
-	map_script MAP_SCRIPT_ON_TRANSITION, Underwater_SeafloorCavern_EventScript_0021835E
-	map_script MAP_SCRIPT_ON_LOAD, Underwater_SeafloorCavern_EventScript_0021836F
+	map_script MAP_SCRIPT_ON_RESUME, Underwater_SeafloorCavern_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, Underwater_SeafloorCavern_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, Underwater_SeafloorCavern_OnLoad
 	.byte 0
 
-Underwater_SeafloorCavern_EventScript_0021835E::
-	setflag 0x8A7
-	checkflag 0x81
-	goto_if 0x1, Underwater_SeafloorCavern_EventScript_0021836B
+Underwater_SeafloorCavern_OnTransition:: @ 0x0821835E
+	setflag FLAG_LANDMARK_SEAFLOOR_CAVERN
+	goto_if_set FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN, Underwater_SeafloorCavern_EventScript_HideSubmarine
 	end
 
-Underwater_SeafloorCavern_EventScript_0021836B::
-	setflag 0x3D4
+Underwater_SeafloorCavern_EventScript_HideSubmarine:: @ 0x0821836B
+	setflag FLAG_HIDE_UNDERWATER_SEA_FLOOR_CAVERN_STOLEN_SUBMARINE
 	end
 
-Underwater_SeafloorCavern_EventScript_0021836F::
-	checkflag 0x81
-	call_if 0x1, Underwater_SeafloorCavern_EventScript_00218379
+Underwater_SeafloorCavern_OnLoad:: @ 0x0821836F
+	call_if_set FLAG_KYOGRE_ESCAPED_SEAFLOOR_CAVERN, Underwater_SeafloorCavern_EventScript_SetSubmarineGoneMetatiles
 	end
 
-Underwater_SeafloorCavern_EventScript_00218379::
-	setmetatile 0x5, 0x3, 0x21E, 0x1
-	setmetatile 0x6, 0x3, 0x21E, 0x1
-	setmetatile 0x7, 0x3, 0x21E, 0x1
-	setmetatile 0x8, 0x3, 0x21E, 0x1
-	setmetatile 0x5, 0x4, 0x228, 0x0
-	setmetatile 0x6, 0x4, 0x228, 0x0
-	setmetatile 0x7, 0x4, 0x228, 0x0
-	setmetatile 0x8, 0x4, 0x228, 0x0
-	setmetatile 0x5, 0x5, 0x228, 0x0
-	setmetatile 0x6, 0x5, 0x228, 0x0
-	setmetatile 0x7, 0x5, 0x228, 0x0
-	setmetatile 0x8, 0x5, 0x228, 0x0
+Underwater_SeafloorCavern_EventScript_SetSubmarineGoneMetatiles:: @ 0x08218379
+	setmetatile 0x5, 0x3, METATILE_Underwater_RockWall, TRUE
+	setmetatile 0x6, 0x3, METATILE_Underwater_RockWall, TRUE
+	setmetatile 0x7, 0x3, METATILE_Underwater_RockWall, TRUE
+	setmetatile 0x8, 0x3, METATILE_Underwater_RockWall, TRUE
+	setmetatile 0x5, 0x4, METATILE_Underwater_FloorShadow, FALSE
+	setmetatile 0x6, 0x4, METATILE_Underwater_FloorShadow, FALSE
+	setmetatile 0x7, 0x4, METATILE_Underwater_FloorShadow, FALSE
+	setmetatile 0x8, 0x4, METATILE_Underwater_FloorShadow, FALSE
+	setmetatile 0x5, 0x5, METATILE_Underwater_FloorShadow, FALSE
+	setmetatile 0x6, 0x5, METATILE_Underwater_FloorShadow, FALSE
+	setmetatile 0x7, 0x5, METATILE_Underwater_FloorShadow, FALSE
+	setmetatile 0x8, 0x5, METATILE_Underwater_FloorShadow, FALSE
 	return
 
-Underwater_SeafloorCavern_EventScript_002183E6::
-	setdivewarp 0x181B, 0xFF, 0xA, 0x11
+Underwater_SeafloorCavern_OnResume:: @ 0x082183E6
+	setdivewarp MAP_SEAFLOOR_CAVERN_ENTRANCE, 10, 17
 	end
 
-Underwater_SeafloorCavern_EventScript_002183EF::
-	loadword 0x0, 0x082183F8
-	callstd 0x3
+Underwater_SeafloorCavern_EventScript_CheckStolenSub:: @ 0x082183EF
+	msgbox Underwater_SeafloorCavern_Text_SubExplorer1, MSGBOX_SIGN
 	end
+
+Underwater_SeafloorCavern_Text_SubExplorer1: @ 0x082183F8
+	.string "せんすいてい　には\n"
+	.string "‘かいえん　1ごう’と　かかれている\p"
+	.string "アクアだんが　カイナから\n"
+	.string "うばって　いった　せんすいてい　だ！\p"
+	.string "アクアだんは\n"
+	.string "ここから　うえに　あがったみたいだ$"
