@@ -8558,6 +8558,34 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Pacifidlog House 4 is the adjacent five-message sky-Pokémon conversation.
+# Its two choice branches use the standard YES/NO result values from the US
+# source and have no JP-only data beyond the localized text bytes.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'PacifidlogTown_House4': {
+        'scripts': {
+            0x081F7F3E: 'PacifidlogTown_House4_EventScript_LittleGirl',
+            0x081F7F47: 'PacifidlogTown_House4_EventScript_Woman',
+            0x081F7F50: 'PacifidlogTown_House4_EventScript_Boy',
+            0x081F7F71: 'PacifidlogTown_House4_EventScript_Yes',
+            0x081F7F7B: 'PacifidlogTown_House4_EventScript_No',
+        },
+        'texts': {
+            0x081F7F85: 'PacifidlogTown_House4_Text_PeopleSawHighFlyingPokemon',
+            0x081F7FD3: 'PacifidlogTown_House4_Text_SkyPokemon',
+            0x081F7FE9: 'PacifidlogTown_House4_Text_WhereDidYouComeFrom',
+            0x081F7FF6: 'PacifidlogTown_House4_Text_YesTown',
+            0x081F8015: 'PacifidlogTown_House4_Text_YouHaveToComeFromSomewhere',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'vars': {0x800D: 'VAR_RESULT'},
+            'var_values': {0x800D: {0x00: 'NO', 0x01: 'YES'}},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
