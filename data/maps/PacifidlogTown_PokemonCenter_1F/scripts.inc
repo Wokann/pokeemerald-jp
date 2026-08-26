@@ -5,11 +5,11 @@ PacifidlogTown_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-PacifidlogTown_PokemonCenter_1F_OnTransition:
+PacifidlogTown_PokemonCenter_1F_OnTransition:: @ 0x081F7835
 	setrespawn HEAL_LOCATION_PACIFIDLOG_TOWN
 	end
 
-PacifidlogTown_PokemonCenter_1F_EventScript_Nurse::
+PacifidlogTown_PokemonCenter_1F_EventScript_Nurse:: @ 0x081F7839
 	setvar VAR_0x800B, LOCALID_PACIFIDLOG_NURSE
 	call Common_EventScript_PkmnCenterNurse
 	waitmessage
@@ -17,29 +17,29 @@ PacifidlogTown_PokemonCenter_1F_EventScript_Nurse::
 	release
 	end
 
-PacifidlogTown_PokemonCenter_1F_EventScript_Girl::
+PacifidlogTown_PokemonCenter_1F_EventScript_Girl:: @ 0x081F7847
 	msgbox PacifidlogTown_PokemonCenter_1F_Text_WhatColorTrainerCard, MSGBOX_NPC
 	end
 
-PacifidlogTown_PokemonCenter_1F_EventScript_Woman::
+PacifidlogTown_PokemonCenter_1F_EventScript_Woman:: @ 0x081F7850
 	msgbox PacifidlogTown_PokemonCenter_1F_Text_OnColonyOfCorsola, MSGBOX_NPC
 	end
 
-PacifidlogTown_PokemonCenter_1F_EventScript_OldMan::
+PacifidlogTown_PokemonCenter_1F_EventScript_OldMan:: @ 0x081F7859
 	msgbox PacifidlogTown_PokemonCenter_1F_Text_AncestorsLivedOnBoats, MSGBOX_NPC
 	end
 
-PacifidlogTown_PokemonCenter_1F_Text_WhatColorTrainerCard:
+PacifidlogTown_PokemonCenter_1F_Text_WhatColorTrainerCard: @ 0x081F7862
 	.string "きみの　トレーナーカードは　なにいろ？\n"
 	.string "あたしのは　カッパー　なんだよ！$"
 
-PacifidlogTown_PokemonCenter_1F_Text_OnColonyOfCorsola:
+PacifidlogTown_PokemonCenter_1F_Text_OnColonyOfCorsola: @ 0x081F7887
 	.string "キナギタウンって　サニーゴたちの\n"
 	.string "あつまりの　うえに　うかんでいるの\p"
 	.string "⋯⋯なんて　いったら\n"
 	.string "あなたは　しんじるかしら？$"
 
-PacifidlogTown_PokemonCenter_1F_Text_AncestorsLivedOnBoats:
+PacifidlogTown_PokemonCenter_1F_Text_AncestorsLivedOnBoats: @ 0x081F78C3
 	.string "キナギで　くらす　ひとびとの　せんぞは\n"
 	.string "ふねの　うえで　うまれて\l"
 	.string "そして　ふねの　うえで　しんだ　という\p"

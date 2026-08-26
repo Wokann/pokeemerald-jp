@@ -8351,6 +8351,37 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Pacifidlog's Pokémon Center 1F owns its respawn hook, nurse wrapper, and
+# three local messages. The matching US source fixes their names while the
+# two Cable Club/Pokémon Center targets remain shared external scripts.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'PacifidlogTown_PokemonCenter_1F': {
+        'scripts': {
+            0x081F7835: 'PacifidlogTown_PokemonCenter_1F_OnTransition',
+            0x081F7839: 'PacifidlogTown_PokemonCenter_1F_EventScript_Nurse',
+            0x081F7847: 'PacifidlogTown_PokemonCenter_1F_EventScript_Girl',
+            0x081F7850: 'PacifidlogTown_PokemonCenter_1F_EventScript_Woman',
+            0x081F7859: 'PacifidlogTown_PokemonCenter_1F_EventScript_OldMan',
+        },
+        'texts': {
+            0x081F7862: 'PacifidlogTown_PokemonCenter_1F_Text_WhatColorTrainerCard',
+            0x081F7887: 'PacifidlogTown_PokemonCenter_1F_Text_OnColonyOfCorsola',
+            0x081F78C3: 'PacifidlogTown_PokemonCenter_1F_Text_AncestorsLivedOnBoats',
+        },
+        'external_labels': {
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'heal_locations': {0x13: 'HEAL_LOCATION_PACIFIDLOG_TOWN'},
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_PACIFIDLOG_NURSE'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
