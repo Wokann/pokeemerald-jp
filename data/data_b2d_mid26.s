@@ -947,8 +947,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MauvilleCity_BikeShop/events.inc"
 	.include "data/maps/MauvilleCity_House1/events.inc"
 	.include "data/maps/MauvilleCity_GameCorner/events.inc"
-	.globl gMapEvents_MAUVILLE_CITY_GAME_CORNER
-	.set gMapEvents_MAUVILLE_CITY_GAME_CORNER, MauvilleCity_GameCorner_MapEvents
 	.include "data/maps/MauvilleCity_House2/events.inc"
 	.globl gMapEvents_MAUVILLE_CITY_HOUSE2
 	.set gMapEvents_MAUVILLE_CITY_HOUSE2, MauvilleCity_House2_MapEvents

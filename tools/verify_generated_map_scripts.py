@@ -143,16 +143,15 @@ def _tm_hm_item_aliases() -> dict[str, int]:
     return aliases
 
 
-def _external_label_addresses() -> dict[str, int]:
-    # One ROM address may deliberately retain both a legacy gJPText alias and
-    # a reviewed semantic label.  The temporary verifier must know every
-    # alias, not merely the primary display name used by map emission.
-    labels = emitter.event_script_symbol_addresses()
-    # These semantic opcode aliases are defined in data/event_scripts.s rather
-    # than in the preprocessor headers included by this isolated map wrapper.
-    # Keep the complete reviewed set available so a generated map can use the
-    # same upstream macro spelling as the production event-script object.
-    labels.update({
+def _compile_time_aliases() -> dict[str, int]:
+    """Return non-ROM symbols needed before an isolated map can assemble.
+
+    The production event-script object defines these through its shared
+    preamble.  An isolated candidate has to know them on the first assembly
+    pass too: macros such as ``setvar`` evaluate their operands in GAS
+    conditionals before unresolved-symbol recovery can run.
+    """
+    aliases = {
         "SCR_OP_NOP1": 0x01,
         "SCR_OP_SETFLASHLEVEL": 0x99,
         "SCR_OP_SHOWOBJECTAT": 0x58,
@@ -167,24 +166,40 @@ def _external_label_addresses() -> dict[str, int]:
         "SCR_OP_SHOWCONTESTPAINTING": 0x77,
         "SCR_OP_GETPOKENEWSACTIVE": 0x96,
         "SCR_OP_MESSAGEINSTANT": 0xDB,
-    })
-    # These names are macro-only string-buffer selectors. They do not survive
-    # as ROM symbols, but GAS must know their identities while expanding
-    # stringvar inside generated map scripts.
-    labels.update({"STR_VAR_1": 0, "STR_VAR_2": 1, "STR_VAR_3": 2})
+        "STR_VAR_1": 0,
+        "STR_VAR_2": 1,
+        "STR_VAR_3": 2,
+    }
+    special_indices = {}
     for index, (name, waitstate) in emitter.sp.SPECIALS.items():
-        labels[f"SPECIAL_{name}"] = index
-        labels[f"SPECIAL_WAITSTATE_{name}"] = waitstate
-    # trainerbattle's assembly macro selects a variable pointer layout using
-    # these C constants.  They are compile-time values rather than ROM
-    # symbols, so provide their numeric definitions to the temporary GAS
-    # wrapper used for byte verification.
-    battle_setup = ROOT / "include" / "constants" / "battle_setup.h"
-    for line in battle_setup.read_text(encoding="utf-8").splitlines():
-        match = re.match(r"\s*#define\s+(TRAINER_BATTLE_\w+)\s+(\d+)\s*$", line)
-        if match:
-            labels[match.group(1)] = int(match.group(2))
-    labels.update(_tm_hm_item_aliases())
+        special_indices[name] = (index, waitstate)
+        aliases[f"SPECIAL_{name}"] = index
+        aliases[f"SPECIAL_WAITSTATE_{name}"] = waitstate
+    # Map owners may use a reviewed upstream spelling while the shared JP
+    # special table deliberately retains an address-style name for legacy
+    # callers. Mirror those production aliases in isolated verification.
+    for semantic in emitter.MAP_VERIFIED_SEMANTIC_LABELS.values():
+        for raw_name, alias_name in semantic.get("specials", {}).items():
+            entry = special_indices.get(raw_name)
+            if entry is None:
+                continue
+            index, waitstate = entry
+            aliases.setdefault(f"SPECIAL_{alias_name}", index)
+            aliases.setdefault(f"SPECIAL_WAITSTATE_{alias_name}", waitstate)
+    aliases.update(_tm_hm_item_aliases())
+    return aliases
+
+
+def _external_label_addresses() -> dict[str, int]:
+    # One ROM address may deliberately retain both a legacy gJPText alias and
+    # a reviewed semantic label.  The temporary verifier must know every
+    # alias, not merely the primary display name used by map emission.
+    labels = emitter.event_script_symbol_addresses()
+    # These semantic opcode aliases are defined in data/event_scripts.s rather
+    # than in the preprocessor headers included by this isolated map wrapper.
+    # Keep the complete reviewed set available so a generated map can use the
+    # same upstream macro spelling as the production event-script object.
+    labels.update(_compile_time_aliases())
     return labels
 
 
@@ -248,11 +263,11 @@ def assemble_candidate(source: str, origin: int) -> bytes:
         linked = tempdir / "map.elf"
         binary = tempdir / "map.bin"
 
-        wrapper.write_text(_wrapper(map_source, {}, prefix), encoding="utf-8")
+        aliases = _compile_time_aliases()
+        wrapper.write_text(_wrapper(map_source, aliases, prefix), encoding="utf-8")
         _preprocess(wrapper, preprocessed)
         _assemble(preprocessed, object_path)
         unresolved = _undefined_symbols(object_path)
-        aliases: dict[str, int] = {}
         unknown: list[str] = []
         for symbol in unresolved:
             address = _resolve_address(symbol, known)

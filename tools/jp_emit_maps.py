@@ -14114,6 +14114,10 @@ CANONICAL_SCRIPT_COMMAND_NAMES = {
     'mossdeepgym4': 'closebraillemessage',
     'buffercontesttype': 'freerotatingtilepuzzle',
     'showcontestwinner': 'showcontestpainting',
+    # The JP command-table handler names retain the original B4/B5 spellings,
+    # but the byte-identical Emerald macros describe the coin operations.
+    'givecoins': 'addcoins',
+    'takecoins': 'removecoins',
 }
 
 
@@ -14516,6 +14520,8 @@ VARIABLE_ARGUMENTS = {
     'copyvar': {0, 1},
     'setorcopyvar': {0},
     'specialvar': {0},
+    'checkcoins': {0},
+    'playslotmachine': {0},
     'getplayerxy': {0, 1},
 }
 FLAG_ARGUMENTS = {
@@ -15010,7 +15016,7 @@ def omit_default_macro_arguments(lines):
             argstr = ', '.join(args[:2])
         elif name == 'setwildbattle' and len(args) == 3 and args[2] in ('0x0', 'ITEM_NONE'):
             argstr = ', '.join(args[:2])
-        elif name in ('giveitem', 'finditem', 'checkitemspace', 'checkitem', 'checkpcitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
+        elif name in ('additem', 'giveitem', 'finditem', 'checkitemspace', 'checkitem', 'checkpcitem', 'removeitem') and len(args) == 2 and args[1] in ('1', '0x1'):
             argstr = args[0]
         out.append((name, argstr))
     return out
@@ -15051,6 +15057,7 @@ def collapse_player_visibility_macros(lines):
 
 
 ITEM_ARGUMENTS = {
+    'additem': {0},
     'giveitem': {0},
     'finditem': {0},
     'checkitemspace': {0},
@@ -15068,6 +15075,11 @@ def semantic_symbol_formatter(mname, script_addr=None):
         return None
 
     def format_symbol(name, index, value, args):
+        reviewed = (symbols.get('script_literal_values', {})
+                    .get(script_addr, {}).get(name, {})
+                    .get(index, {}).get(value))
+        if reviewed is not None:
+            return reviewed
         if name in FLAG_ARGUMENTS and index == 0:
             return symbols.get('flags', {}).get(value)
         if name == 'trainerbattle' and index == 1:
@@ -15112,7 +15124,9 @@ def semantic_symbol_formatter(mname, script_addr=None):
                 return reviewed
         if (name == 'setvar' and index == 1 and args
                 and args[0] == 0x8004):
-            return symbols.get('trainers', {}).get(value)
+            reviewed = symbols.get('trainers', {}).get(value)
+            if reviewed is not None:
+                return reviewed
         # VAR_0x800B is the map-local recipient used by the Pokémon Center
         # nurse helper.  Render a local ID only where the map's reviewed
         # semantic table explicitly supplies one.
@@ -15127,7 +15141,8 @@ def semantic_symbol_formatter(mname, script_addr=None):
                     or symbols.get('trainers', {}).get(value)
                     or symbols.get('decorations', {}).get(value)
                     or symbols.get('vars', {}).get(value))
-        if name == 'givedecoration' and index == 0:
+        if name in ('givedecoration', 'adddecoration', 'removedecoration',
+                    'checkdecorspace') and index == 0:
             return symbols.get('decorations', {}).get(value)
         if name == 'bufferdecorationname' and index == 1:
             return symbols.get('decorations', {}).get(value)
@@ -15729,6 +15744,14 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 else:
                     lines.append('\tmap_script %s, 0x%08X' % (MAP_SCRIPT_NAMES.get(t, str(t)), p))
             lines.append('\t.byte 0')
+            # A reviewed owner may define map-local symbolic literals (for
+            # example a mart price list) immediately after its table. Keep
+            # those source-only directives in declarative metadata so an
+            # emitted scripts.inc remains independently reproducible.
+            preamble = semantic.get('preamble', ())
+            if preamble:
+                lines.append('')
+                lines.extend(preamble)
             lines.append('')
         elif kind == 'frame_table':
             table_label = verified_table_labels.get(
@@ -17326,6 +17349,296 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x8001: 'VAR_0x8001',
             },
             'items': {0x0158: 'ITEM_HM06'},
+        },
+    },
+})
+
+# The unused 500-coin default and two unused texts remain complete map-owned
+# records in the matching US source, so retain them as explicit generator roots.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'MauvilleCity_GameCorner': (0x081FFF3B,),
+})
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'MauvilleCity_GameCorner': (0x082008DF, 0x08200922,),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    # The Game Corner's coin clerk, prize exchanges, NPC dialogue, and twelve
+    # slot machines are physically one map-owned range after House 1.
+    'MauvilleCity_GameCorner': {
+        'scripts': {
+            0x081FFEE8: 'MauvilleCity_GameCorner_EventScript_CoinsClerk',
+            0x081FFF14: 'MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault50',
+            0x081FFF3B: 'MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault500',
+            0x081FFF62: 'MauvilleCity_GameCorner_EventScript_Buy50Coins',
+            0x081FFFA4: 'MauvilleCity_GameCorner_EventScript_Buy500Coins',
+            0x081FFFE6: 'MauvilleCity_GameCorner_EventScript_NeedCoinCase',
+            0x081FFFF0: 'MauvilleCity_GameCorner_EventScript_NotEnoughMoney',
+            0x08200000: 'MauvilleCity_GameCorner_EventScript_CancelBuyCoins',
+            0x08200010: 'MauvilleCity_GameCorner_EventScript_NoRoomForCoins',
+            0x08200020: 'MauvilleCity_GameCorner_EventScript_PrizeCornerDolls',
+            0x0820003C: 'MauvilleCity_GameCorner_EventScript_ChooseDollPrizeMessage',
+            0x0820004F: 'MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize',
+            0x0820005A: 'MauvilleCity_GameCorner_EventScript_ChooseDollPrize',
+            0x08200096: 'MauvilleCity_GameCorner_EventScript_TreeckoDoll',
+            0x082000A4: 'MauvilleCity_GameCorner_EventScript_TorchicDoll',
+            0x082000B2: 'MauvilleCity_GameCorner_EventScript_MudkipDoll',
+            0x082000C0: 'MauvilleCity_GameCorner_EventScript_ConfirmDollPrize',
+            0x082000FA: 'MauvilleCity_GameCorner_EventScript_BuyTreeckoDoll',
+            0x08200134: 'MauvilleCity_GameCorner_EventScript_BuyTorchicDoll',
+            0x0820016E: 'MauvilleCity_GameCorner_EventScript_BuyMudkipDoll',
+            0x082001A8: 'MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForDoll',
+            0x082001B6: 'MauvilleCity_GameCorner_EventScript_NoRoomForDoll',
+            0x082001C1: 'MauvilleCity_GameCorner_EventScript_CancelDollSelect',
+            0x082001CE: 'MauvilleCity_GameCorner_EventScript_PrizeCornerTMs',
+            0x082001EA: 'MauvilleCity_GameCorner_EventScript_ChooseTMPrizeMessage',
+            0x082001FD: 'MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize',
+            0x08200208: 'MauvilleCity_GameCorner_EventScript_ChooseTMPrize',
+            0x0820025A: 'MauvilleCity_GameCorner_EventScript_TMDoubleTeam',
+            0x0820026D: 'MauvilleCity_GameCorner_EventScript_TMPsychic',
+            0x08200280: 'MauvilleCity_GameCorner_EventScript_TMFlamethrower',
+            0x08200293: 'MauvilleCity_GameCorner_EventScript_TMThunderbolt',
+            0x082002A6: 'MauvilleCity_GameCorner_EventScript_TMIceBeam',
+            0x082002B9: 'MauvilleCity_GameCorner_EventScript_ConfirmTMPrize',
+            0x0820030C: 'MauvilleCity_GameCorner_EventScript_BuyTMDoubleTeam',
+            0x08200346: 'MauvilleCity_GameCorner_EventScript_BuyTMPsychic',
+            0x08200380: 'MauvilleCity_GameCorner_EventScript_BuyTMFlamethrower',
+            0x082003BA: 'MauvilleCity_GameCorner_EventScript_BuyTMThunderbolt',
+            0x082003F4: 'MauvilleCity_GameCorner_EventScript_BuyTMIceBeam',
+            0x0820042E: 'MauvilleCity_GameCorner_EventScript_NotEnoughCoinsForTM',
+            0x0820043C: 'MauvilleCity_GameCorner_EventScript_NoRoomForTM',
+            0x08200447: 'MauvilleCity_GameCorner_EventScript_CancelTMSelect',
+            0x08200454: 'MauvilleCity_GameCorner_EventScript_Woman2',
+            0x0820045D: 'MauvilleCity_GameCorner_EventScript_Gentleman',
+            0x08200466: 'MauvilleCity_GameCorner_EventScript_Girl',
+            0x082004AB: 'MauvilleCity_GameCorner_EventScript_GiveTreeckoDoll',
+            0x082004D5: 'MauvilleCity_GameCorner_EventScript_GiveTorchicDoll',
+            0x082004FF: 'MauvilleCity_GameCorner_EventScript_GiveMudkipDoll',
+            0x08200529: 'MauvilleCity_GameCorner_EventScript_NoRoomForStarterDoll',
+            0x08200538: 'MauvilleCity_GameCorner_EventScript_DeclineStarterDoll',
+            0x08200542: 'MauvilleCity_GameCorner_EventScript_ReceivedStarterDoll',
+            0x0820054C: 'MauvilleCity_GameCorner_EventScript_PokefanM',
+            0x0820056C: 'MauvilleCity_GameCorner_EventScript_TryGive20Coins',
+            0x0820059A: 'MauvilleCity_GameCorner_EventScript_PokefanMNormal',
+            0x082005A8: 'MauvilleCity_GameCorner_EventScript_OldMan',
+            0x082005B8: 'MauvilleCity_GameCorner_EventScript_Cook',
+            0x082005C8: 'MauvilleCity_GameCorner_EventScript_Man',
+            0x082005D8: 'MauvilleCity_GameCorner_EventScript_NPCReturnToSlots',
+            0x082005E5: 'MauvilleCity_GameCorner_EventScript_Maniac',
+            0x082005F5: 'MauvilleCity_GameCorner_EventScript_Woman',
+            0x08200605: 'MauvilleCity_GameCorner_EventScript_SlotMachine0',
+            0x08200625: 'MauvilleCity_GameCorner_EventScript_SlotMachine1',
+            0x08200645: 'MauvilleCity_GameCorner_EventScript_SlotMachine2',
+            0x08200665: 'MauvilleCity_GameCorner_EventScript_SlotMachine3',
+            0x08200685: 'MauvilleCity_GameCorner_EventScript_SlotMachine4',
+            0x082006A5: 'MauvilleCity_GameCorner_EventScript_SlotMachine5',
+            0x082006C5: 'MauvilleCity_GameCorner_EventScript_SlotMachine6',
+            0x082006E5: 'MauvilleCity_GameCorner_EventScript_SlotMachine7',
+            0x08200705: 'MauvilleCity_GameCorner_EventScript_SlotMachine8',
+            0x08200725: 'MauvilleCity_GameCorner_EventScript_SlotMachine9',
+            0x08200745: 'MauvilleCity_GameCorner_EventScript_SlotMachine10',
+            0x08200765: 'MauvilleCity_GameCorner_EventScript_SlotMachine11',
+            0x08200785: 'MauvilleCity_GameCorner_EventScript_NoCoinCase',
+        },
+        'texts': {
+            0x0820078F: 'MauvilleCity_GameCorner_Text_ThisIsMauvilleGameCorner',
+            0x082007AA: 'MauvilleCity_GameCorner_Text_NeedCoinCaseForCoins',
+            0x082007D5: 'MauvilleCity_GameCorner_Text_WereYouLookingForCoins',
+            0x08200803: 'MauvilleCity_GameCorner_Text_ThankYouHereAreYourCoins',
+            0x08200820: 'MauvilleCity_GameCorner_Text_DontHaveEnoughMoney',
+            0x08200833: 'MauvilleCity_GameCorner_Text_CoinCaseIsFull',
+            0x08200848: 'MauvilleCity_GameCorner_Text_DontNeedCoinsThen',
+            0x08200864: 'MauvilleCity_GameCorner_Text_ExchangeCoinsForPrizes',
+            0x08200897: 'MauvilleCity_GameCorner_Text_WhichPrize',
+            0x082008A2: 'MauvilleCity_GameCorner_Text_SoYourChoiceIsTheTMX',
+            0x082008B1: 'MauvilleCity_GameCorner_Text_SendToYourHomePC',
+            0x082008D3: 'MauvilleCity_GameCorner_Text_NotEnoughCoins',
+            0x082008DF: 'MauvilleCity_GameCorner_Text_NoRoomForPlacingDecor',
+            0x082008F5: 'MauvilleCity_GameCorner_Text_OhIsThatSo',
+            0x0820090F: 'MauvilleCity_GameCorner_Text_SoYourChoiceIsX',
+            0x0820091A: 'MauvilleCity_GameCorner_Text_HereYouGo',
+            0x08200922: 'MauvilleCity_GameCorner_Text_CantCarryAnyMore',
+            0x08200932: 'MauvilleCity_GameCorner_Text_GotTwoOfSameDollWantOne',
+            0x0820095F: 'MauvilleCity_GameCorner_Text_HereYouGo2',
+            0x08200967: 'MauvilleCity_GameCorner_Text_YouWantItButNotNow',
+            0x0820097B: 'MauvilleCity_GameCorner_Text_DontBeNegative',
+            0x0820098D: 'MauvilleCity_GameCorner_Text_CantWinJackpot',
+            0x082009AB: 'MauvilleCity_GameCorner_Text_NeedCoinCaseGoNextDoor',
+            0x082009E9: 'MauvilleCity_GameCorner_Text_LuckOnlyLastSoLongTakeCoins',
+            0x08200A10: 'MauvilleCity_GameCorner_Text_MauvilleSomethingForEveryone',
+            0x08200A52: 'MauvilleCity_GameCorner_Text_RouletteTablesDifferentRates',
+            0x08200A93: 'MauvilleCity_GameCorner_Text_EasyToLoseTrackOfTime',
+            0x08200AAF: 'MauvilleCity_GameCorner_Text_CoinsAreNeededToPlay',
+            0x08200ACC: 'MauvilleCity_GameCorner_Text_RouletteOnlyLuck',
+            0x08200B0F: 'MauvilleCity_GameCorner_Text_UpTo3CoinsCanBeUsed',
+            0x08200B52: 'MauvilleCity_GameCorner_Text_DifficultToStopOn7',
+            0x08200BA3: 'MauvilleCity_GameCorner_Text_HeresSomeSlotsInfo',
+            0x08200C41: 'MauvilleCity_GameCorner_Text_CantPlayWithNoCoinCase',
+        },
+        'specials': {
+            # The shared JP table retains its address-style entry until its
+            # remaining callers are converted; this owner uses the matching
+            # pokeemerald semantic spelling.
+            'sub_08139938': 'BufferTMHMMoveName',
+        },
+        'field_placeholders': {
+            # Paired US prize text establishes the local string-variable
+            # roles; they are not opaque STRING controls.
+            0x082008A2: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x082008DF: {0x02: 'STR_VAR_1'},
+            0x0820090F: {0x02: 'STR_VAR_1'},
+        },
+        'preamble': (
+            '\t@ Game Corner prices',
+            '\t.set TM_DOUBLE_TEAM_COINS, 1500',
+            '\t.set TM_PSYCHIC_COINS, 3500',
+            '\t.set TM_FLAMETHROWER_COINS, 4000',
+            '\t.set TM_THUNDERBOLT_COINS, 4000',
+            '\t.set TM_ICE_BEAM_COINS, 4000',
+            '\t.set DOLL_COINS, 1000',
+            '',
+            '\t.set COINS_PRICE_50, 1000',
+            '\t.set COINS_PRICE_500, 10000',
+        ),
+        'external_labels': {
+            0x082430EA: 'Common_EventScript_BagIsFull',
+            0x082430FD: 'Common_EventScript_NoRoomForDecor',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x00E1: 'FLAG_RECEIVED_20_COINS',
+                0x00E2: 'FLAG_RECEIVED_STARTER_DOLL',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x4002: 'VAR_TEMP_2',
+                0x4023: 'VAR_STARTER_MON',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'items': {
+                0x0104: 'ITEM_COIN_CASE',
+                0x012D: 'ITEM_TM_ICE_BEAM',
+                0x0138: 'ITEM_TM_THUNDERBOLT',
+                0x013D: 'ITEM_TM_PSYCHIC',
+                0x0140: 'ITEM_TM_DOUBLE_TEAM',
+                0x0143: 'ITEM_TM_FLAMETHROWER',
+            },
+            'decorations': {
+                0x0058: 'DECOR_TREECKO_DOLL',
+                0x0059: 'DECOR_TORCHIC_DOLL',
+                0x005A: 'DECOR_MUDKIP_DOLL',
+            },
+            'multichoices': {
+                0x0030: 'MULTI_GAME_CORNER_DOLLS',
+                0x0031: 'MULTI_GAME_CORNER_COINS',
+                0x0037: 'MULTI_GAME_CORNER_TMS',
+            },
+            'sounds': {0x005F: 'SE_SHOP'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'script_var_values': {
+                0x081FFEE8: {0x800D: {0x00: 'FALSE'}},
+                0x081FFF62: {0x800D: {0x00: 'FALSE'}},
+                0x081FFFA4: {0x800D: {0x00: 'FALSE'}},
+                0x08200020: {0x800D: {0x01: 'TRUE'}},
+                0x082000C0: {0x800D: {0x00: 'NO'}},
+                0x082000FA: {0x800D: {0x00: 'FALSE'}},
+                0x08200134: {0x800D: {0x00: 'FALSE'}},
+                0x0820016E: {0x800D: {0x00: 'FALSE'}},
+                0x082001CE: {0x800D: {0x01: 'TRUE'}},
+                0x0820025A: {0x8004: {0x0140: 'ITEM_TM_DOUBLE_TEAM'}},
+                0x0820026D: {0x8004: {0x013D: 'ITEM_TM_PSYCHIC'}},
+                0x08200280: {0x8004: {0x0143: 'ITEM_TM_FLAMETHROWER'}},
+                0x08200293: {0x8004: {0x0138: 'ITEM_TM_THUNDERBOLT'}},
+                0x082002A6: {0x8004: {0x012D: 'ITEM_TM_ICE_BEAM'}},
+                0x082002B9: {0x800D: {0x00: 'NO'}},
+                0x0820030C: {0x800D: {0x00: 'FALSE'}},
+                0x08200346: {0x800D: {0x00: 'FALSE'}},
+                0x08200380: {0x800D: {0x00: 'FALSE'}},
+                0x082003BA: {0x800D: {0x00: 'FALSE'}},
+                0x082003F4: {0x800D: {0x00: 'FALSE'}},
+                0x08200466: {0x800D: {0x00: 'NO'}},
+                0x082004AB: {0x800D: {0x00: 'FALSE'}},
+                0x082004D5: {0x800D: {0x00: 'FALSE'}},
+                0x082004FF: {0x800D: {0x00: 'FALSE'}},
+                0x0820054C: {0x800D: {0x01: 'TRUE'}},
+                0x08200605: {0x800D: {0x00: 'FALSE'}},
+                0x08200625: {0x800D: {0x00: 'FALSE'}},
+                0x08200645: {0x800D: {0x00: 'FALSE'}},
+                0x08200665: {0x800D: {0x00: 'FALSE'}},
+                0x08200685: {0x800D: {0x00: 'FALSE'}},
+                0x082006A5: {0x800D: {0x00: 'FALSE'}},
+                0x082006C5: {0x800D: {0x00: 'FALSE'}},
+                0x082006E5: {0x800D: {0x00: 'FALSE'}},
+                0x08200705: {0x800D: {0x00: 'FALSE'}},
+                0x08200725: {0x800D: {0x00: 'FALSE'}},
+                0x08200745: {0x800D: {0x00: 'FALSE'}},
+                0x08200765: {0x800D: {0x00: 'FALSE'}},
+            },
+            'script_literal_values': {
+                0x081FFF62: {
+                    'compare_var_to_value': {1: {0x26DE: '(MAX_COINS + 1 - 50)'}},
+                    'checkmoney': {0: {0x03E8: 'COINS_PRICE_50'}},
+                    'removemoney': {0: {0x03E8: 'COINS_PRICE_50'}},
+                },
+                0x081FFFA4: {
+                    'compare_var_to_value': {1: {0x251C: '(MAX_COINS + 1 - 500)'}},
+                    'checkmoney': {0: {0x2710: 'COINS_PRICE_500'}},
+                    'removemoney': {0: {0x2710: 'COINS_PRICE_500'}},
+                },
+                0x082000FA: {
+                    'compare_var_to_value': {1: {0x03E8: 'DOLL_COINS'}},
+                    'takecoins': {0: {0x03E8: 'DOLL_COINS'}},
+                },
+                0x08200134: {
+                    'compare_var_to_value': {1: {0x03E8: 'DOLL_COINS'}},
+                    'takecoins': {0: {0x03E8: 'DOLL_COINS'}},
+                },
+                0x0820016E: {
+                    'compare_var_to_value': {1: {0x03E8: 'DOLL_COINS'}},
+                    'takecoins': {0: {0x03E8: 'DOLL_COINS'}},
+                },
+                0x0820030C: {
+                    'compare_var_to_value': {1: {0x05DC: 'TM_DOUBLE_TEAM_COINS'}},
+                    'takecoins': {0: {0x05DC: 'TM_DOUBLE_TEAM_COINS'}},
+                },
+                0x08200346: {
+                    'compare_var_to_value': {1: {0x0DAC: 'TM_PSYCHIC_COINS'}},
+                    'takecoins': {0: {0x0DAC: 'TM_PSYCHIC_COINS'}},
+                },
+                0x08200380: {
+                    'compare_var_to_value': {1: {0x0FA0: 'TM_FLAMETHROWER_COINS'}},
+                    'takecoins': {0: {0x0FA0: 'TM_FLAMETHROWER_COINS'}},
+                },
+                0x082003BA: {
+                    'compare_var_to_value': {1: {0x0FA0: 'TM_THUNDERBOLT_COINS'}},
+                    'takecoins': {0: {0x0FA0: 'TM_THUNDERBOLT_COINS'}},
+                },
+                0x082003F4: {
+                    'compare_var_to_value': {1: {0x0FA0: 'TM_ICE_BEAM_COINS'}},
+                    'takecoins': {0: {0x0FA0: 'TM_ICE_BEAM_COINS'}},
+                },
+            },
+            'decimal_arguments': {
+                'checkcoins': (0,),
+                'givecoins': (0,),
+                'takecoins': (0,),
+                'checkmoney': (0,),
+                'removemoney': (0,),
+                'showmoneybox': (0, 1),
+                'showcoinsbox': (0, 1),
+                'hidecoinsbox': (0, 1),
+                'updatecoinsbox': (0, 1),
+                'multichoice': (0, 1),
+                'multichoicedefault': (0, 1, 3),
+                'compare_var_to_value': (1,),
+                'setvar': (1,),
+            },
         },
     },
 })
