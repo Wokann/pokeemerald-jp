@@ -9393,6 +9393,24 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'},
             },
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            # The matching pokeemerald map exposes the fossil state machine
+            # as ordinary decimal state values, while the temporary received
+            # species variable carries the corresponding species constants.
+            # Keep that distinction map-local and generated from the reviewed
+            # JP bytes rather than hand-editing the emitted scripts.inc.
+            'var_values': {
+                0x4001: {
+                    0x0184: 'SPECIES_LILEEP',
+                    0x0186: 'SPECIES_ANORITH',
+                },
+                0x405A: {0x06: '6'},
+                0x40C4: {0x00: '0', 0x01: '1', 0x02: '2'},
+                0x40C5: {0x01: '1', 0x02: '2'},
+            },
+            'decimal_arguments': {
+                'givemon': (1,),
+                'multichoice': (0, 1),
+            },
         },
     },
     # Underwater Sootopolis City immediately follows Rusturf Tunnel. Its only

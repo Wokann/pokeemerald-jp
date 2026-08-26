@@ -953,8 +953,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/MauvilleCity_Mart/events.inc"
 	.include "data/maps/RustboroCity_DevonCorp_1F/events.inc"
 	.include "data/maps/RustboroCity_DevonCorp_2F/events.inc"
-	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F
-	.set gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F, RustboroCity_DevonCorp_2F_MapEvents
 	.include "data/maps/RustboroCity_DevonCorp_3F/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F
 	.set gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F, RustboroCity_DevonCorp_3F_MapEvents
