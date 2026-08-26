@@ -440,6 +440,13 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
         0x081F2D7B,
         0x081F2D81,
     ),
+    # Petalburg retains the same three unused RS-era Cable Club wrappers
+    # directly after its 2F map-script table.
+    'PetalburgCity_PokemonCenter_2F': (
+        0x081FA9D7,
+        0x081FA9DD,
+        0x081FA9E3,
+    ),
     # These unused RS-era Cable Club entry points are likewise map-owned in
     # the matching Fortree Pokemon Center 2F source but have no event-table
     # pointer in the JP ROM.
@@ -8760,6 +8767,26 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'local_ids': {0x01: 'LOCALID_PETALBURG_NURSE'},
             'heal_locations': {0x03: 'HEAL_LOCATION_PETALBURG_CITY'},
         },
+    },
+    # The adjoining Cable Club floor retains its four shared hooks and three
+    # unused RS-era wrappers in the same physical order as the US map source.
+    'PetalburgCity_PokemonCenter_2F': {
+        'scripts': {
+            0x081FA9D7: 'PetalburgCity_PokemonCenter_2F_EventScript_Colosseum',
+            0x081FA9DD: 'PetalburgCity_PokemonCenter_2F_EventScript_TradeCenter',
+            0x081FA9E3: 'PetalburgCity_PokemonCenter_2F_EventScript_RecordCorner',
+        },
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 
