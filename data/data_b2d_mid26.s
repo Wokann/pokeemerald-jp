@@ -2338,33 +2338,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/AquaHideout_B1F/events.inc"
 	.globl gMapEvents_AQUA_HIDEOUT_B1F
 	.set gMapEvents_AQUA_HIDEOUT_B1F, AquaHideout_B1F_MapEvents
-	.globl AQUA_HIDEOUT_B2F_EventObjects
-AQUA_HIDEOUT_B2F_EventObjects: @ 0x0850DC58
-	object_event 1, 117, 0, 23, 19, 3, 9, 0, 0, 0, 0, 0x08217FD9, 0x039C
-	object_event 2, 117, 0, 23, 10, 3, 45, 4, 3, 1, 3, 0x0821805A, 0x039C
-	object_event 3, 59, 0, 3, 13, 3, 1, 0, 0, 0, 0, 0x082570D6, 0x0430
-	object_event 4, 141, 0, 19, 20, 1, 9, 0, 0, 0, 0, 0x00000000, 0x03AF
-	object_event 5, 118, 0, 7, 5, 3, 10, 1, 1, 1, 5, 0x0821807F, 0x039C
-	object_event 6, 117, 0, 13, 5, 3, 9, 1, 1, 1, 5, 0x08218096, 0x039C
-	.globl AQUA_HIDEOUT_B2F_EventWarps
-AQUA_HIDEOUT_B2F_EventWarps: @ 0x0850DCE8
-	warp_def 18, 1, 3, 1, MAP_AQUA_HIDEOUT_B1F
-	warp_def 12, 1, 3, 2, MAP_AQUA_HIDEOUT_B1F
-	warp_def 3, 3, 3, 3, MAP_AQUA_HIDEOUT_B1F
-	warp_def 31, 8, 3, 5, MAP_AQUA_HIDEOUT_B2F
-	warp_def 8, 8, 3, 8, MAP_AQUA_HIDEOUT_B2F
-	warp_def 5, 8, 3, 3, MAP_AQUA_HIDEOUT_B2F
-	warp_def 18, 13, 3, 7, MAP_AQUA_HIDEOUT_B2F
-	warp_def 12, 13, 3, 6, MAP_AQUA_HIDEOUT_B2F
-	warp_def 31, 17, 3, 4, MAP_AQUA_HIDEOUT_B2F
-	warp_def 32, 20, 3, 4, MAP_AQUA_HIDEOUT_B1F
-	.globl AQUA_HIDEOUT_B2F_EventCoordEvents
-AQUA_HIDEOUT_B2F_EventCoordEvents: @ 0x0850DD38
-	coord_event 28, 17, 3, 16385, 0, AquaHideout_B2F_EventScript_00217FB5
-	coord_event 28, 16, 3, 16385, 0, AquaHideout_B2F_EventScript_00217FB5
+	.include "data/maps/AquaHideout_B2F/events.inc"
 	.globl gMapEvents_AQUA_HIDEOUT_B2F
-gMapEvents_AQUA_HIDEOUT_B2F: @ 0x0850DD58
-	map_events AQUA_HIDEOUT_B2F_EventObjects, AQUA_HIDEOUT_B2F_EventWarps, AQUA_HIDEOUT_B2F_EventCoordEvents, 0
+	.set gMapEvents_AQUA_HIDEOUT_B2F, AquaHideout_B2F_MapEvents
 	.globl UNDERWATER_SEAFLOOR_CAVERN_EventObjects
 UNDERWATER_SEAFLOOR_CAVERN_EventObjects: @ 0x0850DD6C
 	object_event 1, 100, 0, 5, 4, 3, 76, 1, 1, 0, 0, Underwater_SeafloorCavern_EventScript_002183EF, 0x03D4

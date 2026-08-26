@@ -207,6 +207,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Aqua Hideout B1F follows with two map hooks, the paired Electrode
     # handlers, and four trainer branches in the same reviewed US order.
     'AquaHideout_B1F': 15,
+    # B2F follows directly with its transition hook, Matt encounter sequence,
+    # and three local grunt branches in the same physical US source order.
+    'AquaHideout_B2F': 9,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -331,6 +334,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Aqua Hideout B1F owns twelve contiguous trainer dialogue records after
     # its Electrode and trainer scripts, matching the US map source order.
     'AquaHideout_B1F': 12,
+    # B2F owns Matt's four messages and the nine adjacent grunt messages.
+    'AquaHideout_B2F': 13,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7064,9 +7069,49 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'cry_modes': {0x02: 'CRY_MODE_ENCOUNTER'},
         },
     },
+    # Aqua Hideout B2F owns Matt's encounter, submarine departure, the
+    # adjacent unused departure movement, and the three local grunt scripts.
+    # The Nest Ball handler remains in the later shared item-script owner.
+    'AquaHideout_B2F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x082570D6: 'AquaHideout_B2F_EventScript_ItemNestBall',
+        },
+        'symbols': {
+            'flags': {
+                0x0070: 'FLAG_TEAM_AQUA_ESCAPED_IN_SUBMARINE',
+                0x0354: 'FLAG_HIDE_LILYCOVE_CITY_AQUA_GRUNTS',
+            },
+            'trainers': {
+                0x0005: 'TRAINER_GRUNT_AQUA_HIDEOUT_4',
+                0x001C: 'TRAINER_GRUNT_AQUA_HIDEOUT_6',
+                0x001E: 'TRAINER_MATT',
+                0x00C1: 'TRAINER_GRUNT_AQUA_HIDEOUT_8',
+            },
+            'vars': {
+                0x4001: 'VAR_TEMP_1',
+                0x8008: 'VAR_0x8008',
+                0x8009: 'VAR_0x8009',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_AQUA_HIDEOUT_MATT',
+                0x04: 'LOCALID_AQUA_HIDEOUT_SUBMARINE',
+            },
+            'sounds': {0x15: 'SE_PIN'},
+            'decimal_arguments': {'delay': (0,)},
+        },
+    },
 })
 
 MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'AquaHideout_B2F': {
+        0x08218050: 'AquaHideout_B2F_Movement_SumbarineDepartLeft',
+        0x08218055: 'AquaHideout_B2F_Movement_SumbarineDepartRight',
+    },
     'MtPyre_Summit': {
         0x08216CA9: 'MtPyre_Summit_Movement_OldLadyApproachPlayer0',
         0x08216CAD: 'MtPyre_Summit_Movement_OldLadyApproachPlayer1',

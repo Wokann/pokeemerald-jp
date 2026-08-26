@@ -897,7 +897,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/AquaHideout_1F/scripts.inc"
 	.include "data/maps/AquaHideout_B1F/scripts.inc"
 	.include "data/maps/AquaHideout_B2F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x217fd9, 0x375
 	.include "data/maps/Underwater_SeafloorCavern/scripts.inc"
 	.incbin "baserom_jp.gba", 0x2183f8, 0x56
 	.include "data/maps/SeafloorCavern_Entrance/scripts.inc"
@@ -1975,6 +1974,9 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set AquaHideout_B1F_EventScript_ItemNugget, 0x082570BC
 	.globl AquaHideout_B1F_EventScript_ItemMaxElixir
 	.set AquaHideout_B1F_EventScript_ItemMaxElixir, 0x082570C9
+	@ Aqua Hideout B2F's Nest Ball entry remains in the later shared item owner.
+	.globl AquaHideout_B2F_EventScript_ItemNestBall
+	.set AquaHideout_B2F_EventScript_ItemNestBall, 0x082570D6
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F
