@@ -148,11 +148,26 @@ def _external_label_addresses() -> dict[str, int]:
     # a reviewed semantic label.  The temporary verifier must know every
     # alias, not merely the primary display name used by map emission.
     labels = emitter.event_script_symbol_addresses()
-    # These two JP semantic opcode aliases are defined in data/event_scripts.s
-    # rather than in the preprocessor headers included by this isolated map
-    # wrapper. Keep their byte values available so a generated map using the
-    # reviewed nop1/setflashlevel macros can be assembled independently.
-    labels.update({"SCR_OP_NOP1": 0x01, "SCR_OP_SETFLASHLEVEL": 0x99})
+    # These semantic opcode aliases are defined in data/event_scripts.s rather
+    # than in the preprocessor headers included by this isolated map wrapper.
+    # Keep the complete reviewed set available so a generated map can use the
+    # same upstream macro spelling as the production event-script object.
+    labels.update({
+        "SCR_OP_NOP1": 0x01,
+        "SCR_OP_SETFLASHLEVEL": 0x99,
+        "SCR_OP_SHOWOBJECTAT": 0x58,
+        "SCR_OP_HIDEOBJECTAT": 0x59,
+        "SCR_OP_APPLYMOVEMENTAT": 0x50,
+        "SCR_OP_WAITMOVEMENTAT": 0x52,
+        "SCR_OP_REMOVEOBJECTAT": 0x54,
+        "SCR_OP_ADDOBJECTAT": 0x56,
+        "SCR_OP_ADDCOINS": 0xB4,
+        "SCR_OP_REMOVECOINS": 0xB5,
+        "SCR_OP_WARPWHITEFADE": 0xE0,
+        "SCR_OP_SHOWCONTESTPAINTING": 0x77,
+        "SCR_OP_GETPOKENEWSACTIVE": 0x96,
+        "SCR_OP_MESSAGEINSTANT": 0xDB,
+    })
     # These names are macro-only string-buffer selectors. They do not survive
     # as ROM symbols, but GAS must know their identities while expanding
     # stringvar inside generated map scripts.

@@ -7968,6 +7968,156 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The Battle Room follows the Corridor in the same physical script owner. Its
+# transition, frame, and warp hooks plus every local branch use the matching
+# US labels; only the documented JP omission of VAR_OBJ_GFX_ID_0 remains.
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'VerdanturfTown_BattleTentBattleRoom': {
+        0x081F6F14: 'VerdanturfTown_BattleTentBattleRoom_Movement_SetInvisible',
+        0x081F6F16: 'VerdanturfTown_BattleTentBattleRoom_Movement_PlayerEnter',
+        0x081F6F1C: 'VerdanturfTown_BattleTentBattleRoom_Movement_OpponentEnter',
+        0x081F6F22: 'VerdanturfTown_BattleTentBattleRoom_Movement_OpponentExit',
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_BattleTentBattleRoom': {
+        'scripts': {
+            0x081F6CB5: 'VerdanturfTown_BattleTentBattleRoom_OnTransition',
+            0x081F6CBB: 'VerdanturfTown_BattleTentBattleRoom_EventScript_SetPlayerGfx',
+            0x081F6CD3: 'VerdanturfTown_BattleTentBattleRoom_EventScript_SetPlayerGfxMale',
+            0x081F6CD9: 'VerdanturfTown_BattleTentBattleRoom_EventScript_SetPlayerGfxFemale',
+            0x081F6CE9: 'VerdanturfTown_BattleTentBattleRoom_EventScript_EnterRoom',
+            0x081F6D10: 'VerdanturfTown_BattleTentBattleRoom_EventScript_NextOpponentEnter',
+            0x081F6D4B: 'VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyLost',
+            0x081F6D69: 'VerdanturfTown_BattleTentBattleRoom_EventScript_DefeatedOpponent',
+            0x081F6DDD: 'VerdanturfTown_BattleTentBattleRoom_EventScript_AskContinueChallenge',
+            0x081F6E2B: 'VerdanturfTown_BattleTentBattleRoom_EventScript_AskPauseChallenge',
+            0x081F6E59: 'VerdanturfTown_BattleTentBattleRoom_EventScript_AskRetireChallenge',
+            0x081F6E8B: 'VerdanturfTown_BattleTentBattleRoom_EventScript_ContinueChallenge',
+            0x081F6EA2: 'VerdanturfTown_BattleTentBattleRoom_EventScript_WarpToLobbyWon',
+            0x081F6EC0: 'VerdanturfTown_BattleTentBattleRoom_EventScript_PauseChallenge',
+            0x081F6EEC: 'VerdanturfTown_BattleTentBattleRoom_EventScript_SetUpObjects',
+            0x081F6F06: 'VerdanturfTown_BattleTentBattleRoom_EventScript_ReadyFor2ndOpponent',
+            0x081F6F0D: 'VerdanturfTown_BattleTentBattleRoom_EventScript_ReadyFor3rdOpponent',
+        },
+        'tables': {
+            0x081F6CDF: 'VerdanturfTown_BattleTentBattleRoom_OnFrame',
+            0x081F6EE2: 'VerdanturfTown_BattleTentBattleRoom_OnWarp',
+        },
+        'external_labels': {
+            0x0822B737: 'BattleFrontier_BattlePalaceBattleRoom_EventScript_DoPalaceBattle',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+        },
+        'external_texts': {
+            0x02021C7C: 'gStringVar4',
+            0x0822B83B: 'BattleFrontier_BattlePalaceBattleRoom_Text_LetMeRestoreYourMons',
+            0x0822B855: 'BattleFrontier_BattlePalaceBattleRoom_Text_PreparedFor2ndOpponent',
+            0x0822B873: 'BattleFrontier_BattlePalaceBattleRoom_Text_PreparedFor3rdOpponent',
+            0x0822B909: 'BattleFrontier_BattlePalaceBattleRoom_Text_SaveAndQuitGame',
+            0x0822B91F: 'BattleFrontier_BattlePalaceBattleRoom_Text_WishToQuitChallenge',
+            0x0822B931: 'BattleFrontier_BattlePalaceBattleRoom_Text_SavingData',
+        },
+        'command_aliases': {
+            0x081F6CE9: {'showobject_at': 'showobjectat'},
+            0x081F6EEC: {'hideobject_at': 'hideobjectat'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'allow_single_case_switch': True,
+        'frontier_macros': True,
+        'battle_tent_macros': True,
+        'symbols': {
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x4001: 'VAR_TEMP_1',
+                0x4011: 'VAR_OBJ_GFX_ID_1',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081F6CD3: {0x4011: {0x64: 'OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL'}},
+                0x081F6CD9: {0x4011: {0x69: 'OBJ_EVENT_GFX_RIVAL_MAY_NORMAL'}},
+                0x081F6CE9: {
+                    0x8004: {0x01: 'FRONTIER_UTIL_FUNC_GET_DATA'},
+                    0x8005: {0x02: 'FRONTIER_DATA_BATTLE_NUM'},
+                },
+                0x081F6D10: {
+                    0x8004: {
+                        0x03: 'BATTLE_TOWER_FUNC_SET_OPPONENT',
+                        0x04: 'VERDANTURF_TENT_FUNC_GET_OPPONENT_INTRO',
+                    },
+                },
+                0x081F6D4B: {
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {0x00: 'FRONTIER_DATA_CHALLENGE_STATUS'},
+                    0x8006: {0x04: 'CHALLENGE_STATUS_LOST'},
+                },
+                0x081F6D69: {
+                    0x8004: {
+                        0x01: 'FRONTIER_UTIL_FUNC_GET_DATA',
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x03: 'FRONTIER_UTIL_FUNC_SET_PARTY_ORDER',
+                    },
+                    0x8005: {
+                        0x02: 'FRONTIER_DATA_BATTLE_NUM',
+                        0x03: 'FRONTIER_PARTY_SIZE',
+                    },
+                },
+                0x081F6DDD: {
+                    0x8004: {0x01: 'FRONTIER_UTIL_FUNC_GET_DATA'},
+                    0x8005: {0x02: 'FRONTIER_DATA_BATTLE_NUM'},
+                },
+                0x081F6EA2: {
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {0x00: 'FRONTIER_DATA_CHALLENGE_STATUS'},
+                    0x8006: {0x03: 'CHALLENGE_STATUS_WON'},
+                },
+                0x081F6EC0: {
+                    0x8004: {
+                        0x04: 'FRONTIER_UTIL_FUNC_SOFT_RESET',
+                        0x05: 'VERDANTURF_TENT_FUNC_SAVE',
+                    },
+                    0x8005: {0x02: 'CHALLENGE_STATUS_PAUSED'},
+                },
+            },
+            'script_switch_values': {
+                0x081F6E2B: {
+                    'VAR_RESULT': {
+                        0x00: 'NO',
+                        0x01: 'YES',
+                        0x7F: 'MULTI_B_PRESSED',
+                    },
+                },
+                0x081F6E59: {'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'}},
+            },
+            'maps': {
+                0x0600: 'MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY',
+                0x0602: 'MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM',
+            },
+            'local_ids': {
+                0x01: 'LOCALID_VERDANTURF_TENT_BATTLE_PLAYER',
+                0x02: 'LOCALID_VERDANTURF_TENT_BATTLE_OPPONENT',
+                0x03: 'LOCALID_VERDANTURF_TENT_BATTLE_ATTENDANT',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'songs': {0x0170: 'MUS_HEAL'},
+            'sounds': {0x0037: 'SE_SAVE'},
+            'multichoices': {
+                0x005E: 'MULTI_YESNO',
+                0x0068: 'MULTI_GO_ON_REST_RETIRE',
+            },
+            'fade_modes': {0x01: 'FADE_TO_BLACK'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
@@ -13506,6 +13656,11 @@ def collapse_battle_tent_macros(lines, enabled=False):
                     continue
         if index + 1 < len(lines):
             first, second = lines[index:index + 2]
+            if (is_set(first, 'VAR_0x8004', 'BATTLE_TOWER_FUNC_SET_OPPONENT')
+                    and second == ('special', 'sub_08161E88')):
+                out.append(('tower_setopponent', ''))
+                index += 2
+                continue
             if is_set(first, 'VAR_0x8004') and second[0] == 'special':
                 macro = single_macros.get(second[1], {}).get(split(first)[1])
                 if macro is not None:
@@ -14399,9 +14554,12 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_trainerbattle_macros(decoded_lines)
             decoded_lines = collapse_register_matchcall_macros(decoded_lines)
             decoded_lines = collapse_condition_macros(decoded_lines)
+            switch_values = dict(semantic.get('symbols', {}).get('switch_values', {}))
+            switch_values.update(
+                semantic.get('symbols', {}).get('script_switch_values', {}).get(addr, {}))
             decoded_lines = collapse_switch_macros(
                 decoded_lines,
-                semantic.get('symbols', {}).get('switch_values', {}),
+                switch_values,
                 1 if semantic.get('allow_single_case_switch') else 2)
             decoded_lines = collapse_coordinate_warp_macros(decoded_lines)
             decoded_lines = collapse_frontier_utility_macros(
