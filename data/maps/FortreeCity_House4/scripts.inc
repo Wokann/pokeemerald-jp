@@ -3,11 +3,13 @@
 FortreeCity_House4_MapScripts::
 	.byte 0
 
-FortreeCity_House4_EventScript_Woman::
+@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.
+
+FortreeCity_House4_EventScript_Woman:: @ 0x082051A3
 	msgbox FortreeCity_House4_Text_BringsWorldCloserTogether, MSGBOX_NPC
 	end
 
-FortreeCity_House4_EventScript_Boy::
+FortreeCity_House4_EventScript_Boy:: @ 0x082051AC
 	lockall
 	goto_if_set FLAG_RECEIVED_MENTAL_HERB, FortreeCity_House4_EventScript_ReceivedMentalHerb
 	goto_if_set FLAG_WINGULL_DELIVERED_MAIL, FortreeCity_House4_EventScript_WingullReturned
@@ -22,14 +24,14 @@ FortreeCity_House4_EventScript_Boy::
 	releaseall
 	end
 
-FortreeCity_House4_EventScript_WingullOnErrand:
+FortreeCity_House4_EventScript_WingullOnErrand:: @ 0x082051E6
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox FortreeCity_House4_Text_AskedWingullToRunErrand, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FortreeCity_House4_EventScript_WingullReturned:
+FortreeCity_House4_EventScript_WingullReturned:: @ 0x082051FA
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox FortreeCity_House4_Text_WelcomeWingullTakeMentalHerb, MSGBOX_DEFAULT
@@ -39,7 +41,7 @@ FortreeCity_House4_EventScript_WingullReturned:
 	releaseall
 	end
 
-FortreeCity_House4_EventScript_ReceivedMentalHerb:
+FortreeCity_House4_EventScript_ReceivedMentalHerb:: @ 0x08205228
 	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox FortreeCity_House4_Text_FriendsFarAwayThanksToWingull, MSGBOX_DEFAULT
@@ -54,13 +56,12 @@ FortreeCity_House4_Movement_WingullExit:
 	delay_8
 	step_end
 
-FortreeCity_House4_EventScript_Wingull::
+FortreeCity_House4_EventScript_Wingull:: @ 0x08205242
 	lock
 	faceplayer
 	waitse
 	playmoncry SPECIES_WINGULL, CRY_MODE_NORMAL
 	msgbox FortreeCity_House4_Text_Wingull, MSGBOX_DEFAULT
-	@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.
 	waitmoncry_jp
 	release
 	end

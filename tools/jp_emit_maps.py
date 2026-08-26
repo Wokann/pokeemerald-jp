@@ -10986,6 +10986,65 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'FortreeCity_House4': {
+        0x0820523C: 'FortreeCity_House4_Movement_WingullExit',
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_House4': {
+        'scripts': {
+            0x082051A3: 'FortreeCity_House4_EventScript_Woman',
+            0x082051AC: 'FortreeCity_House4_EventScript_Boy',
+            0x082051E6: 'FortreeCity_House4_EventScript_WingullOnErrand',
+            0x082051FA: 'FortreeCity_House4_EventScript_WingullReturned',
+            0x08205228: 'FortreeCity_House4_EventScript_ReceivedMentalHerb',
+            0x08205242: 'FortreeCity_House4_EventScript_Wingull',
+        },
+        'texts': {
+            0x08205255: 'FortreeCity_House4_Text_BringsWorldCloserTogether',
+            0x08205293: 'FortreeCity_House4_Text_GoBirdPokemon',
+            0x082052A3: 'FortreeCity_House4_Text_AskedWingullToRunErrand',
+            0x082052BF: 'FortreeCity_House4_Text_WelcomeWingullTakeMentalHerb',
+            0x08205317: 'FortreeCity_House4_Text_FriendsFarAwayThanksToWingull',
+            0x08205338: 'FortreeCity_House4_Text_Wingull',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08243621: 'Common_Movement_FacePlayer',
+        },
+        'preamble': (
+            '@ JP uses the waitdooranim opcode (0xC5) where US uses waitmoncry.',
+        ),
+        'command_aliases': {
+            0x08205242: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {
+                0x00DE: 'FLAG_WINGULL_SENT_ON_ERRAND',
+                0x00DF: 'FLAG_RECEIVED_MENTAL_HERB',
+                0x00E0: 'FLAG_WINGULL_DELIVERED_MAIL',
+                0x03A6: 'FLAG_HIDE_MOSSDEEP_CITY_HOUSE_2_WINGULL',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'items': {0x00B9: 'ITEM_MENTAL_HERB'},
+            'local_ids': {0x03: 'LOCALID_FORTREE_HOUSE_WINGULL'},
+            'species': {0x0135: 'SPECIES_WINGULL'},
+            'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {'waitmovement': (0,)},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.
