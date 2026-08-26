@@ -74,4 +74,9 @@
 	goto_if 0x1, 0x824C56F
 	goto 0x824C540
 	end
-	.incbin "baserom_jp.gba", 0x24C585, 0xA08D
+	.incbin "baserom_jp.gba", 0x24c585, 0x78ec
+	.globl LilycoveCity_ContestLobby_EventScript_Reporter
+LilycoveCity_ContestLobby_EventScript_Reporter: @ 0x08253E71
+	.incbin "baserom_jp.gba", 0x253e71, 0xd2
+LilycoveCity_ContestLobby_EventScript_TryShowContestReporter: @ 0x08253F43
+	.incbin "baserom_jp.gba", 0x253f43, 0x26cf

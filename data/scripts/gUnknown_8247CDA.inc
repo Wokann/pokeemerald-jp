@@ -1,4 +1,6 @@
-	.incbin "baserom_jp.gba", 0x247cda, 0x171
+	.incbin "baserom_jp.gba", 0x247cda, 0x8d
+Text_LinkErrorPleaseReset: @ 0x08247D67
+	.incbin "baserom_jp.gba", 0x247d67, 0xe4
 	.globl gJPText_00247E4B
 gJPText_00247E4B: @ 0x08247E4B
 	.string "へやからでると　つうしんが\n"
@@ -73,7 +75,15 @@ gJPText_002487F6: @ 0x082487F6
 	.string "ワイヤレス　つうしんを\n"
 	.string "たのしんで　くださいね！$"
 
-	.incbin "baserom_jp.gba", 0x248916, 0x1869
+	.incbin "baserom_jp.gba", 0x248916, 0x1de
+LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist: @ 0x08248AF4
+	.incbin "baserom_jp.gba", 0x248af4, 0x10cd
+LilycoveCity_ContestLobby_EventScript_DelayIfContestWithRSPlayer: @ 0x08249BC1
+	.incbin "baserom_jp.gba", 0x249bc1, 0x41c
+LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank: @ 0x08249FDD
+	.incbin "baserom_jp.gba", 0x249fdd, 0x12d
+LilycoveCity_ContestLobby_Text_ComeThroughHere: @ 0x0824A10A
+	.incbin "baserom_jp.gba", 0x24a10a, 0x75
 	.globl gJPText_0024A17F
 gJPText_0024A17F: @ 0x0824A17F
 	.string "しかい“はい！　これより\n"
@@ -172,4 +182,50 @@ gJPText_0024A483: @ 0x0824A483
 	.string "うけつけで　おうけとり　ください！\l"
 	.string "またの　さんかを　おまち　してます！$"
 
-	.incbin "baserom_jp.gba", 0x24a4b8, 0xe5f
+	.incbin "baserom_jp.gba", 0x24a4b8, 0x57
+LilycoveCity_ContestLobby_Text_ProgressWillBeSaved: @ 0x0824A50F
+	.incbin "baserom_jp.gba", 0x24a50f, 0x1e
+LilycoveCity_ContestLobby_Text_ParticipateAnotherTime: @ 0x0824A52D
+	.incbin "baserom_jp.gba", 0x24a52d, 0xdf
+LilycoveCity_ContestLobby_Text_Transmitting: @ 0x0824A60C
+	.incbin "baserom_jp.gba", 0x24a60c, 0xd
+LilycoveCity_ContestLobby_Text_TransmissionError: @ 0x0824A619
+	.incbin "baserom_jp.gba", 0x24a619, 0x10
+LilycoveCity_ContestLobby_Text_PlayersChoseDifferentContest: @ 0x0824A629
+	.incbin "baserom_jp.gba", 0x24a629, 0x1d
+LilycoveCity_ContestLobby_Text_PlayersMadeDifferentChoice: @ 0x0824A646
+	.incbin "baserom_jp.gba", 0x24a646, 0x17
+LilycoveCity_ContestLobby_Text_PleaseWaitBButtonCancel: @ 0x0824A65D
+	.incbin "baserom_jp.gba", 0x24a65d, 0x4d
+LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX: @ 0x0824A6AA
+	.incbin "baserom_jp.gba", 0x24a6aa, 0x3e
+LilycoveCity_ContestLobby_Text_ContestBeginShortly: @ 0x0824A6E8
+	.incbin "baserom_jp.gba", 0x24a6e8, 0x13
+LilycoveCity_ContestLobby_Text_LinkContestReception: @ 0x0824A6FB
+	.incbin "baserom_jp.gba", 0x24a6fb, 0x39
+LilycoveCity_ContestLobby_Text_WhichTopic2: @ 0x0824A734
+	.incbin "baserom_jp.gba", 0x24a734, 0x10
+LilycoveCity_ContestLobby_Text_EnterContest3: @ 0x0824A744
+	.incbin "baserom_jp.gba", 0x24a744, 0x11
+LilycoveCity_ContestLobby_Text_EnterWhichContest3: @ 0x0824A755
+	.incbin "baserom_jp.gba", 0x24a755, 0x14
+LilycoveCity_ContestLobby_Text_MonInNoCondition2: @ 0x0824A769
+	.incbin "baserom_jp.gba", 0x24a769, 0x27
+LilycoveCity_ContestLobby_Text_EggCannotTakePart2: @ 0x0824A790
+	.incbin "baserom_jp.gba", 0x24a790, 0x1e
+LilycoveCity_ContestLobby_Text_EnterWhichPokemon3: @ 0x0824A7AE
+	.incbin "baserom_jp.gba", 0x24a7ae, 0x14
+LilycoveCity_ContestLobby_Text_PleaseDecideLinkLeader: @ 0x0824A7C2
+	.incbin "baserom_jp.gba", 0x24a7c2, 0x3f
+LilycoveCity_ContestLobby_Text_PlayerAt4PCounterUseGMode: @ 0x0824A801
+	.incbin "baserom_jp.gba", 0x24a801, 0x6b
+LilycoveCity_ContestLobby_Text_ExplainLinkContest: @ 0x0824A86C
+	.incbin "baserom_jp.gba", 0x24a86c, 0x149
+LilycoveCity_ContestLobby_Text_ExplainEMode: @ 0x0824A9B5
+	.incbin "baserom_jp.gba", 0x24a9b5, 0xd5
+LilycoveCity_ContestLobby_Text_ExplainGMode: @ 0x0824AA8A
+	.incbin "baserom_jp.gba", 0x24aa8a, 0x87
+LilycoveCity_ContestLobby_Text_NoWirelessAdapterInGMode: @ 0x0824AB11
+	.incbin "baserom_jp.gba", 0x24ab11, 0x57
+LilycoveCity_ContestLobby_Text_WhichContestMode: @ 0x0824AB68
+	.incbin "baserom_jp.gba", 0x24ab68, 0x7af

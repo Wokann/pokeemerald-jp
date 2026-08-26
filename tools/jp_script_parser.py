@@ -31,8 +31,11 @@ GDATA_START = 0x08290000
 # same classification for graph collection and source rendering.
 TEXT_POINTER_ARGUMENTS = {
     'braillemessage': (0,),
+    'cmdDB': (0,),
     'loadword': (1,),
     'message': (0,),
+    'messageautoscroll': (0,),
+    'messageinstant': (0,),
     'pokenavcall': (0,),
 }
 

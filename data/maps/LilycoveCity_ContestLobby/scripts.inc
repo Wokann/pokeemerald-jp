@@ -97,7 +97,7 @@ LilycoveCity_ContestLobby_EventScript_ReceivedArtistRibbon:: @ 0x082069D4
 	return
 
 LilycoveCity_ContestLobby_EventScript_UpdateMuseumPatrons:: @ 0x08206A20
-	specialvar VAR_0x8004, CountPlayerContestPaintings
+	specialvar VAR_0x8004, CountPlayerMuseumPaintings
 	switch VAR_0x8004
 	case 1, LilycoveCity_ContestLobby_EventScript_ShowPatron1
 	case 2, LilycoveCity_ContestLobby_EventScript_ShowPatron2
@@ -310,7 +310,7 @@ LilycoveCity_ContestLobby_Movement_LinkArtistReturnToPlayer:
 
 LilycoveCity_ContestLobby_EventScript_ContestReceptionist:: @ 0x08206C14
 	special ClearLinkContestFlags
-	specialvar VAR_RESULT, sub_080F95B4
+	specialvar VAR_RESULT, IsContestDebugActive
 	goto_if_eq VAR_RESULT, 0x1, LilycoveCity_ContestLobby_EventScript_SetDebug
 	call LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist
 	call LilycoveCity_ContestLobby_EventScript_LeadToContestHall
@@ -632,7 +632,7 @@ LilycoveCity_ContestLobby_EventScript_TryEnterLinkContest:: @ 0x08206F16
 	msgbox LilycoveCity_ContestLobby_Text_ProgressWillBeSaved, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_ContestLobby_EventScript_CancelLinkContest
 	call Common_EventScript_SaveGame
-	goto_if_eq VAR_RESULT, 0x0, LilycoveCity_ContestLobby_EventScript_CancelLinkContest
+	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_ContestLobby_EventScript_CancelLinkContest
 	message LilycoveCity_ContestLobby_Text_WhichContestMode
 	waitmessage
 	specialvar VAR_TEMP_D, IsWirelessAdapterConnected
@@ -746,7 +746,7 @@ LilycoveCity_ContestLobby_EventScript_TrySetUpLinkContest:: @ 0x082070D5
 	goto_if_eq VAR_RESULT, LINKUP_FAILED, LilycoveCity_ContestLobby_EventScript_CancelLinkContest
 	goto_if_eq VAR_RESULT, LINKUP_CONNECTION_ERROR, LilycoveCity_ContestLobby_EventScript_CancelLinkError
 	goto_if_eq VAR_RESULT, LINKUP_FAILED_CONTEST_GMODE, LilycoveCity_ContestLobby_EventScript_CancelLinkModeDifference
-	messageinstant 0x0824A60C
+	messageinstant LilycoveCity_ContestLobby_Text_Transmitting
 	contestlinktransfer
 	switch VAR_0x8004
 	case 0, LilycoveCity_ContestLobby_EventScript_StartLinkContest
@@ -799,8 +799,8 @@ LilycoveCity_ContestLobby_EventScript_CancelLinkTransmissionError:: @ 0x082071C9
 LilycoveCity_ContestLobby_EventScript_StartLinkContest:: @ 0x082071D7
 	special GetContestPlayerId
 	addvar VAR_0x8004, 0x1
-	buffernumberstring STR_VAR_2, 0x8004
-	messageautoscroll 0x0824A6AA
+	buffernumberstring STR_VAR_2, VAR_0x8004
+	messageautoscroll LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX
 	waitmessage
 	subvar VAR_0x8004, 0x1
 	call LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall
@@ -878,13 +878,13 @@ LilycoveCity_ContestLobby_EventScript_TryJoinLinkGroup:: @ 0x082072F8
 	return
 
 LilycoveCity_ContestLobby_EventScript_LinkLeaderDecided:: @ 0x082072FD
-	messageinstant 0x0824A60C
+	messageinstant LilycoveCity_ContestLobby_Text_Transmitting
 	contestlinktransfer
 	goto LilycoveCity_ContestLobby_EventScript_StartLinkContest
 	end
 
 LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall:: @ 0x08207309
-	messageautoscroll 0x0824A6E8
+	messageautoscroll LilycoveCity_ContestLobby_Text_ContestBeginShortly
 	waitmessage
 	delay 0x14
 	closemessage
@@ -905,7 +905,7 @@ LilycoveCity_ContestLobby_EventScript_LeadToLinkContestHall:: @ 0x08207309
 	waitmovement 0
 	applymovement LOCALID_PLAYER, LilycoveCity_ContestLobby_Movement_PlayerApproachLinkReceptionist
 	waitmovement 0
-	messageautoscroll 0x0824A10A
+	messageautoscroll LilycoveCity_ContestLobby_Text_ComeThroughHere
 	waitmessage
 	delay 0x14
 	closemessage
@@ -1041,3 +1041,41 @@ LilycoveCity_ContestLobby_Text_FineThatsTheWayItIs: @ 0x0820760A
 	.string "いえに　かざります\p"
 	.string "つぎ　がんばると　するか⋯⋯\n"
 	.string "じゃあな$"
+
+LilycoveCity_ContestLobby_Text_MasterRankHereICome: @ 0x08207640
+	.string "いっ　いよいよ\n"
+	.string "マスターランクに　でるぞ⋯⋯\p"
+	.string "おれの　ポケモンちゃんが\n"
+	.string "このよで　いちばん\l"
+	.string "かわいいって　ことを\l"
+	.string "しょうめいする　ときが　きたんだ⋯⋯\l"
+	.string "うへへへへ$"
+
+LilycoveCity_ContestLobby_Text_WholeVarietyOfPokemonHere: @ 0x08207692
+	.string "ここに　くれば\n"
+	.string "ポケモンを　たくさん　みられるから\l"
+	.string "さんぽコースに　してるの！$"
+
+LilycoveCity_ContestLobby_Text_ContestFeastForEyes: @ 0x082076BA
+	.string "いやあ　コンテストかいじょうに　くると\n"
+	.string "かきがいの　ある　ポケモンが\l"
+	.string "いっぱい　だね！$"
+
+LilycoveCity_ContestLobby_Text_ToughContestIsExtreme: @ 0x082076E6
+	.string "たくましさコンテストって\n"
+	.string "さいこう　だよな！\p"
+	.string "ちからづよい　アピール⋯⋯\n"
+	.string "ほとばしる　あせ⋯⋯　たまらん！$"
+
+LilycoveCity_ContestLobby_Text_LavishedCareOnMon: @ 0x0820771C
+	.string "まいにち　だいじに　だいじに\n"
+	.string "そだてあげた　わしの　ポケモン\l"
+	.string "コンディションは　カンペキ！\l"
+	.string "きょうは　かつぞおおおおおうう！$"
+
+LilycoveCity_ContestLobby_Text_MadePokeblocksWithFamily: @ 0x0820775B
+	.string "ママと　パパと　おねえちゃんと\n"
+	.string "4にんで　ポロックを　つくったら\l"
+	.string "すごく　いいやつが　できたんだ！\p"
+	.string "きっと　おおぜいで　つくれば　つくるほど\n"
+	.string "なめらかで　いい　ポロックが　できるんだよ！$"

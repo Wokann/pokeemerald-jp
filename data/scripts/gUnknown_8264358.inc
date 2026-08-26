@@ -6,7 +6,21 @@
 	delay 0x3C
 	special DoFallWarp
 	end
-	.incbin "baserom_jp.gba", 0x264371, 0x10A32
+	.incbin "baserom_jp.gba", 0x264371, 0x10394
+BerryBlender_Text_BlendWithTheBlendMaster: @ 0x08274705
+	.incbin "baserom_jp.gba", 0x274705, 0x256
+BerryBlender_Text_WhoaAwesome: @ 0x0827495B
+	.incbin "baserom_jp.gba", 0x27495b, 0x6
+BerryBlender_Text_WickedlyFast: @ 0x08274961
+	.incbin "baserom_jp.gba", 0x274961, 0x5
+BerryBlender_Text_WhatAnExpert: @ 0x08274966
+	.incbin "baserom_jp.gba", 0x274966, 0x6
+BerryBlender_Text_MadeAmazingPokeblocksWithMaster: @ 0x0827496C
+	.incbin "baserom_jp.gba", 0x27496c, 0x24
+BerryBlender_Text_QualitiesOfBlendMaster: @ 0x08274990
+	.incbin "baserom_jp.gba", 0x274990, 0x51
+BerryBlender_Text_MasterWorksOnSkillsInMountains: @ 0x082749E1
+	.incbin "baserom_jp.gba", 0x2749e1, 0x3c2
 	.globl gJPText_00274DA3
 gJPText_00274DA3: @ 0x08274DA3
 	.string "では　バトルテントへ\n"

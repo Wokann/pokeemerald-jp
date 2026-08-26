@@ -25,7 +25,6 @@ US_MAPS = US_JSON.parent
 # packs shared contest/link data between the two owners.  Keep these physical
 # source boundaries explicit so ``--write`` never absorbs the next raw owner.
 MAP_SOURCE_REGION_ENDS = {
-    'LilycoveCity_ContestLobby': 0x08207640,
     # Meteor Falls 1F 1R owns its scripts, movements, and ten adjacent text
     # records. The next owner is Meteor Falls 1F 2R at 0x08213079.
     'MeteorFalls_1F_1R': 0x08213079,
@@ -7690,9 +7689,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 })
 
 # Contest Lobby's 105 script/table entry points are populated from its
-# reviewed US sequence above.  These local text and movement address maps are
-# intentionally explicit because the JP source ends at 0x08207640, before the
-# following raw owner contains the remaining NPC text records.
+# reviewed US sequence above.  Its scripts, movements, and all adjacent NPC
+# text records remain one physical map owner through 0x082077B9.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LilycoveCity_ContestLobby': {
         'texts': {
@@ -7707,6 +7705,12 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082075CA: 'LilycoveCity_ContestLobby_Text_OkaySeeYou',
             0x082075D1: 'LilycoveCity_ContestLobby_Text_TakeHomeButIdLikeToTakeToMuseum',
             0x0820760A: 'LilycoveCity_ContestLobby_Text_FineThatsTheWayItIs',
+            0x08207640: 'LilycoveCity_ContestLobby_Text_MasterRankHereICome',
+            0x08207692: 'LilycoveCity_ContestLobby_Text_WholeVarietyOfPokemonHere',
+            0x082076BA: 'LilycoveCity_ContestLobby_Text_ContestFeastForEyes',
+            0x082076E6: 'LilycoveCity_ContestLobby_Text_ToughContestIsExtreme',
+            0x0820771C: 'LilycoveCity_ContestLobby_Text_LavishedCareOnMon',
+            0x0820775B: 'LilycoveCity_ContestLobby_Text_MadePokeblocksWithFamily',
         },
         # All old gJPText_* labels are local-only address placeholders.  The
         # semantic names above replace them rather than retaining aliases.
@@ -7726,17 +7730,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x08249BC1: 'LilycoveCity_ContestLobby_EventScript_DelayIfContestWithRSPlayer',
             0x08253F43: 'LilycoveCity_ContestLobby_EventScript_TryShowContestReporter',
         },
-        # These map-owned NPC strings and shared contest/blender strings live
-        # outside the physical Contest Lobby owner.  Their semantic aliases
-        # are exported by the following top-level raw owner until it is
-        # structured in its own address-order pass.
+        # Shared contest/blender strings live outside this physical map owner.
         'external_texts': {
-            0x08207640: 'LilycoveCity_ContestLobby_Text_MasterRankHereICome',
-            0x08207692: 'LilycoveCity_ContestLobby_Text_WholeVarietyOfPokemonHere',
-            0x082076BA: 'LilycoveCity_ContestLobby_Text_ContestFeastForEyes',
-            0x082076E6: 'LilycoveCity_ContestLobby_Text_ToughContestIsExtreme',
-            0x0820771C: 'LilycoveCity_ContestLobby_Text_LavishedCareOnMon',
-            0x0820775B: 'LilycoveCity_ContestLobby_Text_MadePokeblocksWithFamily',
             0x08247D67: 'Text_LinkErrorPleaseReset',
             0x08249FDD: 'LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank',
             0x0824A10A: 'LilycoveCity_ContestLobby_Text_ComeThroughHere',

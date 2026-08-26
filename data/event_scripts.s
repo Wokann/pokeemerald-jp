@@ -693,105 +693,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/LilycoveCity_LilycoveMuseum_1F/scripts.inc"
 	.include "data/maps/LilycoveCity_LilycoveMuseum_2F/scripts.inc"
 	.include "data/maps/LilycoveCity_ContestLobby/scripts.inc"
-	@ Semantic aliases for retained shared Contest and Berry Blender blocks
-	@ referenced by the structured Contest Lobby source. They emit no bytes.
-	.globl LilycoveCity_ContestLobby_EventScript_SetPlayerGfx
-	.set LilycoveCity_ContestLobby_EventScript_SetPlayerGfx, 0x0821DD5F
-	.globl LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist
-	.set LilycoveCity_ContestLobby_EventScript_SpeakToContestReceptionist, 0x08248AF4
-	.globl LilycoveCity_ContestLobby_EventScript_DelayIfContestWithRSPlayer
-	.set LilycoveCity_ContestLobby_EventScript_DelayIfContestWithRSPlayer, 0x08249BC1
-	.globl LilycoveCity_ContestLobby_EventScript_TryShowContestReporter
-	.set LilycoveCity_ContestLobby_EventScript_TryShowContestReporter, 0x08253F43
-	.globl LilycoveCity_ContestLobby_EventScript_Reporter
-	.set LilycoveCity_ContestLobby_EventScript_Reporter, 0x08253E71
-	.globl BerryBlender_EventScript_Blender2Man
-	.set BerryBlender_EventScript_Blender2Man, 0x082590D2
-	.globl BerryBlender_EventScript_Blender2Twin
-	.set BerryBlender_EventScript_Blender2Twin, 0x082590E4
-	.globl BerryBlender_EventScript_Blender3PokefanF
-	.set BerryBlender_EventScript_Blender3PokefanF, 0x082590DB
-	.globl BerryBlender_EventScript_Blender1ExpertM
-	.set BerryBlender_EventScript_Blender1ExpertM, 0x082590ED
-	.globl BerryBlender_EventScript_BerryBlenderLink
-	.set BerryBlender_EventScript_BerryBlenderLink, 0x08259185
-	.globl BerryBlender_EventScript_BerryBlender3
-	.set BerryBlender_EventScript_BerryBlender3, 0x08258F4E
-	.globl BerryBlender_EventScript_BerryBlender1
-	.set BerryBlender_EventScript_BerryBlender1, 0x08258D6E
-	.globl BerryBlender_EventScript_BerryBlender2
-	.set BerryBlender_EventScript_BerryBlender2, 0x08258E7D
-	.globl Text_LinkErrorPleaseReset
-	.set Text_LinkErrorPleaseReset, 0x08247D67
-	.globl LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank
-	.set LilycoveCity_ContestLobby_Text_MonNotQualifiedForRank, 0x08249FDD
-	.globl LilycoveCity_ContestLobby_Text_ComeThroughHere
-	.set LilycoveCity_ContestLobby_Text_ComeThroughHere, 0x0824A10A
-	.globl LilycoveCity_ContestLobby_Text_ProgressWillBeSaved
-	.set LilycoveCity_ContestLobby_Text_ProgressWillBeSaved, 0x0824A50F
-	.globl LilycoveCity_ContestLobby_Text_ParticipateAnotherTime
-	.set LilycoveCity_ContestLobby_Text_ParticipateAnotherTime, 0x0824A52D
-	.globl LilycoveCity_ContestLobby_Text_Transmitting
-	.set LilycoveCity_ContestLobby_Text_Transmitting, 0x0824A60C
-	.globl LilycoveCity_ContestLobby_Text_TransmissionError
-	.set LilycoveCity_ContestLobby_Text_TransmissionError, 0x0824A619
-	.globl LilycoveCity_ContestLobby_Text_PlayersChoseDifferentContest
-	.set LilycoveCity_ContestLobby_Text_PlayersChoseDifferentContest, 0x0824A629
-	.globl LilycoveCity_ContestLobby_Text_PlayersMadeDifferentChoice
-	.set LilycoveCity_ContestLobby_Text_PlayersMadeDifferentChoice, 0x0824A646
-	.globl LilycoveCity_ContestLobby_Text_PleaseWaitBButtonCancel
-	.set LilycoveCity_ContestLobby_Text_PleaseWaitBButtonCancel, 0x0824A65D
-	.globl LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX
-	.set LilycoveCity_ContestLobby_Text_YourMonIsEntryNumX, 0x0824A6AA
-	.globl LilycoveCity_ContestLobby_Text_ContestBeginShortly
-	.set LilycoveCity_ContestLobby_Text_ContestBeginShortly, 0x0824A6E8
-	.globl LilycoveCity_ContestLobby_Text_LinkContestReception
-	.set LilycoveCity_ContestLobby_Text_LinkContestReception, 0x0824A6FB
-	.globl LilycoveCity_ContestLobby_Text_WhichTopic2
-	.set LilycoveCity_ContestLobby_Text_WhichTopic2, 0x0824A734
-	.globl LilycoveCity_ContestLobby_Text_EnterContest3
-	.set LilycoveCity_ContestLobby_Text_EnterContest3, 0x0824A744
-	.globl LilycoveCity_ContestLobby_Text_EnterWhichContest3
-	.set LilycoveCity_ContestLobby_Text_EnterWhichContest3, 0x0824A755
-	.globl LilycoveCity_ContestLobby_Text_MonInNoCondition2
-	.set LilycoveCity_ContestLobby_Text_MonInNoCondition2, 0x0824A769
-	.globl LilycoveCity_ContestLobby_Text_EggCannotTakePart2
-	.set LilycoveCity_ContestLobby_Text_EggCannotTakePart2, 0x0824A790
-	.globl LilycoveCity_ContestLobby_Text_EnterWhichPokemon3
-	.set LilycoveCity_ContestLobby_Text_EnterWhichPokemon3, 0x0824A7AE
-	.globl LilycoveCity_ContestLobby_Text_PleaseDecideLinkLeader
-	.set LilycoveCity_ContestLobby_Text_PleaseDecideLinkLeader, 0x0824A7C2
-	.globl LilycoveCity_ContestLobby_Text_PlayerAt4PCounterUseGMode
-	.set LilycoveCity_ContestLobby_Text_PlayerAt4PCounterUseGMode, 0x0824A801
-	.globl LilycoveCity_ContestLobby_Text_ExplainLinkContest
-	.set LilycoveCity_ContestLobby_Text_ExplainLinkContest, 0x0824A86C
-	.globl LilycoveCity_ContestLobby_Text_ExplainEMode
-	.set LilycoveCity_ContestLobby_Text_ExplainEMode, 0x0824A9B5
-	.globl LilycoveCity_ContestLobby_Text_ExplainGMode
-	.set LilycoveCity_ContestLobby_Text_ExplainGMode, 0x0824AA8A
-	.globl LilycoveCity_ContestLobby_Text_NoWirelessAdapterInGMode
-	.set LilycoveCity_ContestLobby_Text_NoWirelessAdapterInGMode, 0x0824AB11
-	.globl LilycoveCity_ContestLobby_Text_WhichContestMode
-	.set LilycoveCity_ContestLobby_Text_WhichContestMode, 0x0824AB68
-	.globl BerryBlender_Text_LetsGetBlendingAlready
-	.set BerryBlender_Text_LetsGetBlendingAlready, 0x082587AE
-	.globl BerryBlender_Text_WhatKindOfPokeblockWillIGet
-	.set BerryBlender_Text_WhatKindOfPokeblockWillIGet, 0x082587BA
-	.globl BerryBlender_Text_BlendWithTheBlendMaster
-	.set BerryBlender_Text_BlendWithTheBlendMaster, 0x08274705
-	.globl BerryBlender_Text_WhoaAwesome
-	.set BerryBlender_Text_WhoaAwesome, 0x0827495B
-	.globl BerryBlender_Text_WickedlyFast
-	.set BerryBlender_Text_WickedlyFast, 0x08274961
-	.globl BerryBlender_Text_WhatAnExpert
-	.set BerryBlender_Text_WhatAnExpert, 0x08274966
-	.globl BerryBlender_Text_MadeAmazingPokeblocksWithMaster
-	.set BerryBlender_Text_MadeAmazingPokeblocksWithMaster, 0x0827496C
-	.globl BerryBlender_Text_QualitiesOfBlendMaster
-	.set BerryBlender_Text_QualitiesOfBlendMaster, 0x08274990
-	.globl BerryBlender_Text_MasterWorksOnSkillsInMountains
-	.set BerryBlender_Text_MasterWorksOnSkillsInMountains, 0x082749E1
-	.include "data/text/lilycove_contest_lobby.inc"
 	.include "data/maps/LilycoveCity_ContestHall/scripts.inc"
 	.include "data/maps/LilycoveCity_PokemonCenter_1F/scripts.inc"
 	@ These two object scripts remain in the later shared Lilycove Lady raw
@@ -989,6 +890,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/RecordCorner/scripts.inc"
 	.include "data/maps/BattleColosseum_4P/scripts.inc"
 	.include "data/maps/ContestHall/scripts.inc"
+LilycoveCity_ContestLobby_EventScript_SetPlayerGfx: @ 0x0821DD5F
 	.incbin "baserom_jp.gba", 0x21dd5f, 0x24
 	.include "data/maps/InsideOfTruck/scripts.inc"
 	.incbin "baserom_jp.gba", 0x21de1e, 0x28
