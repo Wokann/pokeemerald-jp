@@ -3,7 +3,7 @@
 FallarborTown_MoveRelearnersHouse_MapScripts::
 	.byte 0
 
-FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner::
+FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner:: @ 0x081F6156
 	lockall
 	applymovement LOCALID_MOVE_RELEARNER, Common_Movement_FacePlayer
 	waitmovement 0
@@ -13,7 +13,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner::
 	goto FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove::
+FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove:: @ 0x081F617B
 	checkitem ITEM_HEART_SCALE
 	goto_if_eq VAR_RESULT, FALSE, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	msgbox FallarborTown_MoveRelearnersHouse_Text_ThatsAHeartScaleWantMeToTeachMove, MSGBOX_YESNO
@@ -22,10 +22,9 @@ FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove::
 	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon::
+FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon:: @ 0x081F61A9
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon, MSGBOX_DEFAULT
 	special ChooseMonForMoveRelearner
-	@ JP's picker waits asynchronously here; the corresponding US special owns this wait internally.
 	waitstate
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	special IsSelectedMonEgg
@@ -34,7 +33,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon::
 	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove::
+FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove:: @ 0x081F61DF
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove, MSGBOX_DEFAULT
 	special TeachMoveRelearnerMove
 	goto_if_eq VAR_0x8004, 0, FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
@@ -43,22 +42,22 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove::
 	goto FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon::
+FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon:: @ 0x081F6209
 	msgbox FallarborTown_MoveRelearnersHouse_Text_DontHaveMoveToTeachPokemon, MSGBOX_DEFAULT
 	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg::
+FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg:: @ 0x081F6217
 	msgbox FallarborTown_MoveRelearnersHouse_Text_CantTeachEgg, MSGBOX_DEFAULT
 	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon
 	end
 
-FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale::
+FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale:: @ 0x081F6225
 	msgbox FallarborTown_MoveRelearnersHouse_Text_ComeBackWithHeartScale, MSGBOX_DEFAULT
 	releaseall
 	end
 
-FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor:
+FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor: @ 0x081F622F
 	.string "ぼく　ポケモン　わざマニア\p"
 	.string "ポケモンが　せいちょうして　おぼえていく\n"
 	.string "わざを　すべて　しっていて\l"
@@ -67,30 +66,30 @@ FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor:
 	.string "ハートのウロコを　くれたら\l"
 	.string "しってる　わざを　おしえてあげるよ！$"
 
-FallarborTown_MoveRelearnersHouse_Text_ThatsAHeartScaleWantMeToTeachMove:
+FallarborTown_MoveRelearnersHouse_Text_ThatsAHeartScaleWantMeToTeachMove: @ 0x081F62A4
 	.string "おおっ！\n"
 	.string "それは　まさしく　ハートのウロコ！\p"
 	.string "わざを　おぼえさせたいんだね？$"
 
-FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon:
+FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon: @ 0x081F62CB
 	.string "どの　ポケモンに　するんだい？$"
 
-FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove:
+FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove: @ 0x081F62DB
 	.string "どの　わざに　するんだい？$"
 
-FallarborTown_MoveRelearnersHouse_Text_DontHaveMoveToTeachPokemon:
+FallarborTown_MoveRelearnersHouse_Text_DontHaveMoveToTeachPokemon: @ 0x081F62E9
 	.string "ごめんね⋯⋯\p"
 	.string "ぼくが　その　ポケモンに\n"
 	.string "おしえられる　わざは　ないみたいだよ$"
 
-FallarborTown_MoveRelearnersHouse_Text_HandedOverHeartScale:
+FallarborTown_MoveRelearnersHouse_Text_HandedOverHeartScale: @ 0x081F6310
 	.string "{PLAYER}は　おれいに\n"
 	.string "ハートのウロコを　1まい　あげた！$"
 
-FallarborTown_MoveRelearnersHouse_Text_ComeBackWithHeartScale:
+FallarborTown_MoveRelearnersHouse_Text_ComeBackWithHeartScale: @ 0x081F632B
 	.string "おぼえさせたい　わざが　あったら\n"
 	.string "ハートのウロコを　もってきてね！$"
 
-FallarborTown_MoveRelearnersHouse_Text_CantTeachEgg:
+FallarborTown_MoveRelearnersHouse_Text_CantTeachEgg: @ 0x081F634D
 	.string "えっ？\n"
 	.string "タマゴに　おしえられる　わざは　ないよ$"

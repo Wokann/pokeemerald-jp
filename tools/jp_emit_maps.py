@@ -7604,6 +7604,67 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The Move Relearner's House is the next physical owner. Its full tutorial
+# flow, including JP's explicit asynchronous picker wait, is matched to the
+# US labels and the eight local messages. The player buffer in the payment
+# message is independently identified from that paired text context.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FallarborTown_MoveRelearnersHouse': {
+        'scripts': {
+            0x081F6156: 'FallarborTown_MoveRelearnersHouse_EventScript_MoveRelearner',
+            0x081F617B: 'FallarborTown_MoveRelearnersHouse_EventScript_AskTeachMove',
+            0x081F61A9: 'FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon',
+            0x081F61DF: 'FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove',
+            0x081F6209: 'FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon',
+            0x081F6217: 'FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg',
+            0x081F6225: 'FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale',
+        },
+        'texts': {
+            0x081F622F: 'FallarborTown_MoveRelearnersHouse_Text_ImTheMoveTutor',
+            0x081F62A4: 'FallarborTown_MoveRelearnersHouse_Text_ThatsAHeartScaleWantMeToTeachMove',
+            0x081F62CB: 'FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon',
+            0x081F62DB: 'FallarborTown_MoveRelearnersHouse_Text_TeachWhichMove',
+            0x081F62E9: 'FallarborTown_MoveRelearnersHouse_Text_DontHaveMoveToTeachPokemon',
+            0x081F6310: 'FallarborTown_MoveRelearnersHouse_Text_HandedOverHeartScale',
+            0x081F632B: 'FallarborTown_MoveRelearnersHouse_Text_ComeBackWithHeartScale',
+            0x081F634D: 'FallarborTown_MoveRelearnersHouse_Text_CantTeachEgg',
+        },
+        'external_labels': {
+            0x08243621: 'Common_Movement_FacePlayer',
+        },
+        'field_placeholders': {
+            0x081F6310: {0x01: 'PLAYER'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        # The checked US source expresses the one explicit NO route from this
+        # choice as a switch/case macro. Permit that byte-exact one-case form
+        # only for this reviewed map.
+        'allow_single_case_switch': True,
+        'symbols': {
+            'flags': {0x0001: 'FLAG_TEMP_1'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x800D: 'VAR_RESULT',
+            },
+            'switch_values': {
+                'VAR_RESULT': {0x00: 'NO'},
+            },
+            'script_var_values': {
+                0x081F61A9: {
+                    0x8004: {0x00FF: 'PARTY_NOTHING_CHOSEN'},
+                    0x8005: {0x0000: '0'},
+                },
+                0x081F61DF: {0x8004: {0x0000: '0'}},
+            },
+            'items': {0x006F: 'ITEM_HEART_SCALE'},
+            'local_ids': {0x01: 'LOCALID_MOVE_RELEARNER'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
