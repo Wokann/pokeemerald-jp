@@ -11886,6 +11886,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LilycoveCity_PokemonTrainerFanClub': {
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
+        'local_tables': (0x082083A9,),
+        'local_scripts': (0x08208426,),
         'external_labels': {
             0x08242F08: 'Common_ShowEasyChatScreen',
             0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
@@ -11911,6 +11913,11 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'sub_080EF244': 'TryPutTrainerFanClubOnAir',
             'sub_080EF2D8': 'ShouldHideFanClubInterviewer',
             'sub_0813A164': 'ShowScrollableMultichoice',
+        },
+        'result_condition_values': {
+            0x082089A9: {
+                'LilycoveCity_PokemonTrainerFanClub_EventScript_AlreadyInterviewed2': {0x1: 'TRUE'},
+            },
         },
         'field_placeholders': {
             0x08208B19: {0x01: 'PLAYER'},
@@ -11959,6 +11966,9 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x08: 'LOCALID_TRAINER_FAN_CLUB_EXPERT_F',
                 0xFF: 'LOCALID_PLAYER',
             },
+            'map_script_values': {
+                0x4095: {0x1: '1'},
+            },
             'script_var_values': {
                 0x08208442: {
                     0x8004: {0x8: 'FANCLUB_MEMBER1', 0x9: 'FANCLUB_MEMBER2', 0xA: 'FANCLUB_MEMBER3', 0xB: 'FANCLUB_MEMBER4', 0xC: 'FANCLUB_MEMBER5', 0xD: 'FANCLUB_MEMBER6', 0xE: 'FANCLUB_MEMBER7', 0xF: 'FANCLUB_MEMBER8'},
@@ -11978,17 +11988,23 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x0820886E: {0x8004: {0xC: 'FANCLUB_MEMBER5'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
                 0x082088D0: {0x8004: {0xE: 'FANCLUB_MEMBER7'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
                 0x08208932: {0x8004: {0xF: 'FANCLUB_MEMBER8'}, 0x800D: {0x1: 'TRUE', 0x7: '(NUM_TRAINER_FAN_CLUB_MEMBERS - 1)'}},
-                0x082089A9: {0x8005: {0xB: 'TVSHOW_FAN_CLUB_SPECIAL'}, 0x8004: {0x8: 'FANCLUB_MEMBER1', 0xE: 'EASY_CHAT_TYPE_FAN_QUESTION'}, 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
-                0x08208A07: {0x8004: {0x8: 'FANCLUB_MEMBER1'}, 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
-                0x08208A2E: {0x8004: {0x8: 'FANCLUB_MEMBER1', 0xE: 'EASY_CHAT_TYPE_FAN_QUESTION'}, 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+                0x082089A9: {0x8005: {0xB: 'TVSHOW_FAN_CLUB_SPECIAL'}, 0x8004: {0x8: 'FANCLUB_MEMBER1', 0xE: 'EASY_CHAT_TYPE_FAN_QUESTION'}, 0x800D: {0x0: '0', 0x1: '1'}},
+                0x08208A07: {0x8004: {0x8: 'FANCLUB_MEMBER1'}, 0x800D: {0x0: 'NO', 0x1: 'YES'}},
+                0x08208A2E: {0x8004: {0x8: 'FANCLUB_MEMBER1', 0xE: 'EASY_CHAT_TYPE_FAN_QUESTION'}, 0x800D: {0x0: '0', 0x1: '1'}},
                 0x08208A66: {0x8004: {0x2: 'SCROLL_MULTI_POKEMON_FAN_CLUB_RATER', 0x8: 'FANCLUB_MEMBER1'}},
-                0x08208AB8: {0x8004: {0x8: 'FANCLUB_MEMBER1'}, 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'}},
+                0x08208AB8: {0x8004: {0x8: 'FANCLUB_MEMBER1'}, 0x800D: {0x0: 'NO', 0x1: 'YES'}},
                 0x08208ADF: {0x8004: {0x8: 'FANCLUB_MEMBER1'}},
                 0x08208AF1: {0x8004: {0x8: 'FANCLUB_MEMBER1'}},
                 0x08208B06: {0x8004: {0x8: 'FANCLUB_MEMBER1'}},
             },
             'switch_values': {
                 'VAR_RESULT': {0xB: '11', 0x7F: 'MULTI_B_PRESSED'},
+            },
+            'decimal_arguments': {
+                'compare_var_to_value': (1,),
+                'setobjectxyperm': (1, 2),
+                'setvar': (1,),
+                'subvar': (1,),
             },
         },
     },
