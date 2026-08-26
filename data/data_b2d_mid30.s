@@ -4342,7 +4342,7 @@ gMapHeaders: @ 0x0845A8D8
 	.include "data/maps/Underwater_Route125/header.inc"
 	@ MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F (g1 m0)
 	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F  @ mapLayout
-	.4byte gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F  @ events
+	.4byte LittlerootTown_BrendansHouse_1F_MapEvents  @ events
 	.4byte LittlerootTown_BrendansHouse_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0195  @ music
