@@ -8278,6 +8278,61 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Friendship Rater's House also predates reproducible semantic metadata. The
+# matching US map fixes the local script/text names and the seven friendship
+# score meanings; the final JP opcode slot semantically waits for Pikachu's
+# cry, despite the globally named door-animation command in this ROM.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_FriendshipRatersHouse': {
+        'scripts': {
+            0x081F7557: 'VerdanturfTown_FriendshipRatersHouse_EventScript_FriendshipRater',
+            0x081F75BA: 'VerdanturfTown_FriendshipRatersHouse_EventScript_DetestsYou',
+            0x081F75C4: 'VerdanturfTown_FriendshipRatersHouse_EventScript_VeryWary',
+            0x081F75CE: 'VerdanturfTown_FriendshipRatersHouse_EventScript_NotUsedToYou',
+            0x081F75D8: 'VerdanturfTown_FriendshipRatersHouse_EventScript_GettingUsedToYou',
+            0x081F75E2: 'VerdanturfTown_FriendshipRatersHouse_EventScript_LikesYouQuiteALot',
+            0x081F75EC: 'VerdanturfTown_FriendshipRatersHouse_EventScript_VeryHappy',
+            0x081F75F6: 'VerdanturfTown_FriendshipRatersHouse_EventScript_AdoresYou',
+            0x081F7600: 'VerdanturfTown_FriendshipRatersHouse_EventScript_Pikachu',
+        },
+        'texts': {
+            0x081F7613: 'VerdanturfTown_FriendshipRatersHouse_Text_SeeHowMuchPokemonLikesYou',
+            0x081F7641: 'VerdanturfTown_FriendshipRatersHouse_Text_AdoresYou',
+            0x081F7675: 'VerdanturfTown_FriendshipRatersHouse_Text_VeryHappy',
+            0x081F7693: 'VerdanturfTown_FriendshipRatersHouse_Text_LikesYouQuiteALot',
+            0x081F76B4: 'VerdanturfTown_FriendshipRatersHouse_Text_GettingUsedToYou',
+            0x081F76DC: 'VerdanturfTown_FriendshipRatersHouse_Text_NotUsedToYou',
+            0x081F7705: 'VerdanturfTown_FriendshipRatersHouse_Text_VeryWary',
+            0x081F773C: 'VerdanturfTown_FriendshipRatersHouse_Text_DetestsYou',
+            0x081F7772: 'VerdanturfTown_FriendshipRatersHouse_Text_Pikachu',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x081F7600: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x800D: 'VAR_RESULT',
+            },
+            'species': {0x0019: 'SPECIES_PIKACHU'},
+            'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
+            'switch_values': {
+                'VAR_RESULT': {
+                    0x00: 'FRIENDSHIP_NONE',
+                    0x01: 'FRIENDSHIP_1_TO_49',
+                    0x02: 'FRIENDSHIP_50_TO_99',
+                    0x03: 'FRIENDSHIP_100_TO_149',
+                    0x04: 'FRIENDSHIP_150_TO_199',
+                    0x05: 'FRIENDSHIP_200_TO_254',
+                    0x06: 'FRIENDSHIP_MAX',
+                },
+            },
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.

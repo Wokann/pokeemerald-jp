@@ -841,8 +841,6 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/VerdanturfTown_PokemonCenter_2F/events.inc"
 	.include "data/maps/VerdanturfTown_WandasHouse/events.inc"
 	.include "data/maps/VerdanturfTown_FriendshipRatersHouse/events.inc"
-	.globl gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE
-	.set gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE, VerdanturfTown_FriendshipRatersHouse_MapEvents
 	.include "data/maps/VerdanturfTown_House/events.inc"
 	.globl gMapEvents_VERDANTURF_TOWN_HOUSE
 	.set gMapEvents_VERDANTURF_TOWN_HOUSE, VerdanturfTown_House_MapEvents
