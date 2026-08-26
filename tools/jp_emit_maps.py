@@ -10732,6 +10732,25 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    'RustboroCity_Flat2_1F': {
+        'scripts': {
+            0x08203F9A: 'RustboroCity_Flat2_1F_EventScript_OldWoman',
+            0x08203FA3: 'RustboroCity_Flat2_1F_EventScript_Skitty',
+        },
+        'texts': {
+            0x08203FB6: 'RustboroCity_Flat2_1F_Text_DevonWorkersLiveHere',
+            0x08203FDE: 'RustboroCity_Flat2_1F_Text_Skitty',
+        },
+        'command_aliases': {
+            0x08203FA3: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'species': {0x013B: 'SPECIES_SKITTY'},
+            'cry_modes': {0x00: 'CRY_MODE_NORMAL'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
 })
 
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
