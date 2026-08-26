@@ -8,19 +8,20 @@ MauvilleCity_PokemonCenter_2F_MapScripts::
 	.byte 0
 
 @ The below 3 are unused and leftover from RS.
-MauvilleCity_PokemonCenter_2F_EventScript_Colosseum::
+
+MauvilleCity_PokemonCenter_2F_EventScript_Colosseum:: @ 0x08200EE4
 	call CableClub_EventScript_Colosseum
 	end
 
-MauvilleCity_PokemonCenter_2F_EventScript_TradeCenter::
+MauvilleCity_PokemonCenter_2F_EventScript_TradeCenter:: @ 0x08200EEA
 	call CableClub_EventScript_TradeCenter
 	end
 
-MauvilleCity_PokemonCenter_2F_EventScript_RecordCorner::
+MauvilleCity_PokemonCenter_2F_EventScript_RecordCorner:: @ 0x08200EF0
 	call CableClub_EventScript_RecordCorner
 	end
 
-MauvilleCity_PokemonCenter_2F_EventScript_Youngster::
+MauvilleCity_PokemonCenter_2F_EventScript_Youngster:: @ 0x08200EF6
 	msgbox MauvilleCity_PokemonCenter_2F_Text_Youngster, MSGBOX_NPC
 	end
 

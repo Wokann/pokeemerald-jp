@@ -17725,6 +17725,40 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# The three RS-era Cable Club wrappers are not referenced by the map table,
+# but remain explicit map-owned scripts in both JP and pokeemerald sources.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'MauvilleCity_PokemonCenter_2F': (0x08200EE4, 0x08200EEA, 0x08200EF0),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'MauvilleCity_PokemonCenter_2F': {
+        'scripts': {
+            0x08200EE4: 'MauvilleCity_PokemonCenter_2F_EventScript_Colosseum',
+            0x08200EEA: 'MauvilleCity_PokemonCenter_2F_EventScript_TradeCenter',
+            0x08200EF0: 'MauvilleCity_PokemonCenter_2F_EventScript_RecordCorner',
+            0x08200EF6: 'MauvilleCity_PokemonCenter_2F_EventScript_Youngster',
+        },
+        'texts': {
+            0x08200EFF: 'MauvilleCity_PokemonCenter_2F_Text_Youngster',
+        },
+        'preamble': (
+            '@ The below 3 are unused and leftover from RS.',
+        ),
+        'external_labels': {
+            0x082467CD: 'CableClub_OnTransition',
+            0x0824686A: 'CableClub_OnWarp',
+            0x082468BC: 'CableClub_OnLoad',
+            0x08246939: 'CableClub_OnFrame',
+            0x08246BB2: 'CableClub_EventScript_Colosseum',
+            0x08246DAD: 'CableClub_EventScript_TradeCenter',
+            0x08246ED6: 'CableClub_EventScript_RecordCorner',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
