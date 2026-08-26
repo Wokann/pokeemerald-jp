@@ -3,7 +3,9 @@
 RustboroCity_House1_MapScripts::
 	.byte 0
 
-RustboroCity_House1_EventScript_Trader::
+@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.
+
+RustboroCity_House1_EventScript_Trader:: @ 0x08203BC9
 	lock
 	faceplayer
 	goto_if_set FLAG_RUSTBORO_NPC_TRADE_COMPLETED, RustboroCity_House1_EventScript_TradeCompleted
@@ -14,7 +16,6 @@ RustboroCity_House1_EventScript_Trader::
 	msgbox RustboroCity_House1_Text_IllTradeIfYouWant, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, RustboroCity_House1_EventScript_DeclineTrade
 	special ChoosePartyMon
-	@ The JP special table does not mark ChoosePartyMon as waitstate=1.
 	waitstate
 	copyvar VAR_0x800A, VAR_0x8004
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, RustboroCity_House1_EventScript_DeclineTrade
@@ -31,23 +32,23 @@ RustboroCity_House1_EventScript_Trader::
 	release
 	end
 
-RustboroCity_House1_EventScript_DeclineTrade::
+RustboroCity_House1_EventScript_DeclineTrade:: @ 0x08203C47
 	msgbox RustboroCity_House1_Text_YouDontWantToThatsOkay, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_House1_EventScript_NotRequestedMon::
+RustboroCity_House1_EventScript_NotRequestedMon:: @ 0x08203C51
 	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox RustboroCity_House1_Text_DoesntLookLikeMonToMe, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_House1_EventScript_TradeCompleted::
+RustboroCity_House1_EventScript_TradeCompleted:: @ 0x08203C5F
 	msgbox RustboroCity_House1_Text_AnyPokemonCanBeCute, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_House1_EventScript_Hiker::
+RustboroCity_House1_EventScript_Hiker:: @ 0x08203C69
 	msgbox RustboroCity_House1_Text_AllSortsOfPlaces, MSGBOX_NPC
 	end
 

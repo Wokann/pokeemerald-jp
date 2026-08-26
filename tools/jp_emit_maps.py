@@ -10653,6 +10653,51 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
     },
+    'RustboroCity_House1': {
+        'scripts': {
+            0x08203BC9: 'RustboroCity_House1_EventScript_Trader',
+            0x08203C47: 'RustboroCity_House1_EventScript_DeclineTrade',
+            0x08203C51: 'RustboroCity_House1_EventScript_NotRequestedMon',
+            0x08203C5F: 'RustboroCity_House1_EventScript_TradeCompleted',
+            0x08203C69: 'RustboroCity_House1_EventScript_Hiker',
+        },
+        'texts': {
+            0x08203C72: 'RustboroCity_House1_Text_IllTradeIfYouWant',
+            0x08203CCC: 'RustboroCity_House1_Text_PleaseBeGoodToMyPokemon',
+            0x08203CDF: 'RustboroCity_House1_Text_DoesntLookLikeMonToMe',
+            0x08203CF7: 'RustboroCity_House1_Text_YouDontWantToThatsOkay',
+            0x08203D17: 'RustboroCity_House1_Text_AnyPokemonCanBeCute',
+            0x08203D38: 'RustboroCity_House1_Text_AllSortsOfPlaces',
+        },
+        'field_placeholders': {
+            0x08203C72: {0x02: 'STR_VAR_1', 0x03: 'STR_VAR_2'},
+            0x08203CDF: {0x02: 'STR_VAR_1'},
+        },
+        'preamble': (
+            '@ JP only: ChoosePartyMon requires explicit waitstate; the special table differs from US.',
+        ),
+        'symbols': {
+            'flags': {0x0099: 'FLAG_RUSTBORO_NPC_TRADE_COMPLETED'},
+            'vars': {
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8008: 'VAR_0x8008',
+                0x8009: 'VAR_0x8009',
+                0x800A: 'VAR_0x800A',
+                0x800B: 'VAR_0x800B',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x08203BC9: {
+                    0x8004: {0xFF: 'PARTY_NOTHING_CHOSEN'},
+                    0x8008: {0x00: 'INGAME_TRADE_SEEDOT'},
+                    0x800D: {0x00: 'NO'},
+                },
+            },
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
 })
 
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
