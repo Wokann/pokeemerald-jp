@@ -6492,6 +6492,30 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'flags': {0x0074: 'FLAG_ADVENTURE_STARTED'},
         },
     },
+    # Dewford House 1 is the next physical owner. Its three NPC scripts and
+    # three local texts match the US map in source order; only the JP cry-wait
+    # opcode occupies the legacy door-wait slot.
+    'DewfordTown_House1': {
+        'scripts': {
+            0x081F2C11: 'DewfordTown_House1_EventScript_Man',
+            0x081F2C1A: 'DewfordTown_House1_EventScript_Woman',
+            0x081F2C23: 'DewfordTown_House1_EventScript_Zigzagoon',
+        },
+        'texts': {
+            0x081F2C36: 'DewfordTown_House1_Text_LotToBeSaidForLivingOnIsland',
+            0x081F2C67: 'DewfordTown_House1_Text_LifeGoesSlowlyOnIsland',
+            0x081F2CC4: 'DewfordTown_House1_Text_Zigzagoon',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'command_aliases': {
+            0x081F2C23: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'species': {0x0120: 'SPECIES_ZIGZAGOON'},
+            'cry_modes': {0x0: 'CRY_MODE_NORMAL'},
+        },
+    },
 })
 
 # Oldale Mart's two adjacent product records were checked against both the
