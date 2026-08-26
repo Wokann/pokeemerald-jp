@@ -16436,6 +16436,142 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Oceanic Museum 1F follows the Fan Club directly in ROM order. Its existing
+# source is complete, so record every reviewed label and map-local constant to
+# make the JP scripts, movements, and text deterministic rather than manual.
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'SlateportCity_OceanicMuseum_1F': {
+        0x081FCAF4: 'SlateportCity_OceanicMuseum_1F_Movement_PushPlayerBackFromCounter',
+        0x081FCC68: 'SlateportCity_OceanicMuseum_1F_Movement_PlayerWatchGruntExitNorth',
+        0x081FCC6D: 'SlateportCity_OceanicMuseum_1F_Movement_PlayerWatchGruntExitWestEast',
+        0x081FCC70: 'SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExit',
+        0x081FCC77: 'SlateportCity_OceanicMuseum_1F_Movement_FamiliarGruntExitNorth',
+    },
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'SlateportCity_OceanicMuseum_1F': {
+        'scripts': {
+            0x081FCA3F: 'SlateportCity_OceanicMuseum_1F_EventScript_EntranceAttendant',
+            0x081FCA48: 'SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFeeLeft',
+            0x081FCA59: 'SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFeeRight',
+            0x081FCA6A: 'SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee',
+            0x081FCA91: 'SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee',
+            0x081FCAC1: 'SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney',
+            0x081FCAE2: 'SlateportCity_OceanicMuseum_1F_EventScript_AllowEntranceAnyway',
+            0x081FCAF6: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt1',
+            0x081FCAFF: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt2',
+            0x081FCB08: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt3',
+            0x081FCB11: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt4',
+            0x081FCB1A: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt5',
+            0x081FCB23: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumGrunt6',
+            0x081FCB2C: 'SlateportCity_OceanicMuseum_1F_EventScript_WhirlpoolExperiment',
+            0x081FCB35: 'SlateportCity_OceanicMuseum_1F_EventScript_WaterfallExperiment',
+            0x081FCB3E: 'SlateportCity_OceanicMuseum_1F_EventScript_OceanSoilDisplay',
+            0x081FCB47: 'SlateportCity_OceanicMuseum_1F_EventScript_BeachSandDisplay',
+            0x081FCB50: 'SlateportCity_OceanicMuseum_1F_EventScript_OceanicMinifact1',
+            0x081FCB59: 'SlateportCity_OceanicMuseum_1F_EventScript_OceanicMinifact2',
+            0x081FCB62: 'SlateportCity_OceanicMuseum_1F_EventScript_OceanicMinifact3',
+            0x081FCB6B: 'SlateportCity_OceanicMuseum_1F_EventScript_FossilDisplay',
+            0x081FCB74: 'SlateportCity_OceanicMuseum_1F_EventScript_DepthMeasuringMachine',
+            0x081FCB7D: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron1',
+            0x081FCB86: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron2',
+            0x081FCB8F: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron3',
+            0x081FCB98: 'SlateportCity_OceanicMuseum_1F_EventScript_MuseumPatron4',
+            0x081FCBA1: 'SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGrunt',
+            0x081FCC15: 'SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitNorth',
+            0x081FCC2C: 'SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitSouth',
+            0x081FCC3C: 'SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExitWestEast',
+            0x081FCC53: 'SlateportCity_OceanicMuseum_1F_EventScript_FamiliarGruntExited',
+            0x081FCC5E: 'SlateportCity_OceanicMuseum_1F_EventScript_NoRoomForThief',
+        },
+        'texts': {
+            0x081FCC7E: 'SlateportCity_OceanicMuseum_1F_Text_WouldYouLikeToEnter',
+            0x081FCCC1: 'SlateportCity_OceanicMuseum_1F_Text_PleaseEnjoyYourself',
+            0x081FCCCC: 'SlateportCity_OceanicMuseum_1F_Text_NotEnoughMoney',
+            0x081FCCDD: 'SlateportCity_OceanicMuseum_1F_Text_CatchUpWithYourGroup',
+            0x081FCD12: 'SlateportCity_OceanicMuseum_1F_Text_AquaExistForGoodOfAll',
+            0x081FCD2D: 'SlateportCity_OceanicMuseum_1F_Text_OurBossIsntHere',
+            0x081FCD60: 'SlateportCity_OceanicMuseum_1F_Text_WouldStuffHereMakeMeRich',
+            0x081FCD7C: 'SlateportCity_OceanicMuseum_1F_Text_CanLearnForNefariousDeeds',
+            0x081FCD97: 'SlateportCity_OceanicMuseum_1F_Text_RustboroBungled',
+            0x081FCDBB: 'SlateportCity_OceanicMuseum_1F_Text_DidntHaveMoney',
+            0x081FCDDF: 'SlateportCity_OceanicMuseum_1F_Text_LearnAboutSeaForBattling',
+            0x081FCE00: 'SlateportCity_OceanicMuseum_1F_Text_SternIsRoleModel',
+            0x081FCE4A: 'SlateportCity_OceanicMuseum_1F_Text_MustBePokemonWeDontKnow',
+            0x081FCE86: 'SlateportCity_OceanicMuseum_1F_Text_WantSeaPokemon',
+            0x081FCEBA: 'SlateportCity_OceanicMuseum_1F_Text_RememberMeTakeThis',
+            0x081FCF12: 'SlateportCity_OceanicMuseum_1F_Text_HopeINeverSeeYouAgain',
+            0x081FCF3A: 'SlateportCity_OceanicMuseum_1F_Text_YouHaveToTakeThis',
+            0x081FCF51: 'SlateportCity_OceanicMuseum_1F_Text_WhirlpoolExperiment',
+            0x081FCF9B: 'SlateportCity_OceanicMuseum_1F_Text_WaterfallExperiment',
+            0x081FCFEB: 'SlateportCity_OceanicMuseum_1F_Text_OceanSoilDisplay',
+            0x081FD062: 'SlateportCity_OceanicMuseum_1F_Text_BeachSandDisplay',
+            0x081FD0D7: 'SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact1',
+            0x081FD16B: 'SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact2',
+            0x081FD1EA: 'SlateportCity_OceanicMuseum_1F_Text_OceanicMinifact3',
+            0x081FD258: 'SlateportCity_OceanicMuseum_1F_Text_FossilDisplay',
+            0x081FD2CF: 'SlateportCity_OceanicMuseum_1F_Text_DepthMeasuringMachine',
+        },
+        'external_labels': {
+            0x0824361B: 'Common_Movement_ExclamationMark',
+            0x0824361D: 'Common_Movement_Delay48',
+            0x08243627: 'Common_Movement_WalkInPlaceFasterLeft',
+            0x0824362B: 'Common_Movement_WalkInPlaceFasterRight',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        # The matching US source deliberately keeps the giveitem failure
+        # value literal; do not infer a generic boolean spelling here.
+        'literal_result_commands': ('giveitem',),
+        'result_condition_values': {
+            0x081FCA91: {
+                'SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney': {0x00: 'FALSE'},
+            },
+        },
+        'symbols': {
+            'flags': {
+                0x0095: 'FLAG_DELIVERED_DEVON_GOODS',
+                0x010D: 'FLAG_RECEIVED_TM_THIEF',
+                0x03C5: 'FLAG_HIDE_SLATEPORT_CITY_OCEANIC_MUSEUM_FAMILIAR_AQUA_GRUNT',
+            },
+            'vars': {
+                0x40AA: 'VAR_SLATEPORT_MUSEUM_1F_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x014E: 'ITEM_TM46'},
+            'local_ids': {
+                0x0D: 'LOCALID_OCEANIC_MUSEUM_FAMILIAR_GRUNT',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {
+                0x01: 'DIR_SOUTH',
+                0x02: 'DIR_NORTH',
+                0x03: 'DIR_WEST',
+                0x04: 'DIR_EAST',
+            },
+            'sounds': {
+                0x09: 'SE_EXIT',
+                0x15: 'SE_PIN',
+                0x5F: 'SE_SHOP',
+            },
+            'script_var_values': {
+                0x081FCBA1: {
+                    0x800C: {
+                        0x01: 'DIR_SOUTH',
+                        0x02: 'DIR_NORTH',
+                        0x03: 'DIR_WEST',
+                        0x04: 'DIR_EAST',
+                    },
+                },
+            },
+        },
+    },
+})
+
 
 def main():
     do_write = '--write' in sys.argv
