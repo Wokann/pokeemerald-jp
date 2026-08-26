@@ -5,78 +5,78 @@ Route128_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route128_OnFrame
 	.byte 0
 
-Route128_OnTransition::
+Route128_OnTransition:
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
 	end
 
-Route128_OnFrame::
-	map_script_2 VAR_ROUTE128_STATE, 0x1, Route128_EventScript_KyogreAwakenedScene
+Route128_OnFrame:
+	map_script_2 VAR_ROUTE128_STATE, 1, Route128_EventScript_KyogreAwakenedScene
 	.2byte 0
 
 Route128_EventScript_KyogreAwakenedScene::
 	lockall
-	delay 0x14
+	delay 20
 	applymovement LOCALID_ROUTE128_ARCHIE, Route128_Movement_ArchieLookAround
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_ArchieWhatHappened, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_ARCHIE, Route128_Movement_ArchieBackUp
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_ArchieIOnlyWanted, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_MAXIE, Route128_Movement_MaxieApproachArchie
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_ROUTE128_ARCHIE, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_MaxieDoYouUnderstandNow, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_MAXIE, Route128_Movement_MaxieApproachPlayer
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_MaxieResposibilityFallsToArchieAndMe, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_ARCHIE, Route128_Movement_ArchieRunLeft
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
 	applymovement LOCALID_ROUTE128_MAXIE, Route128_Movement_MaxieWalkLeft
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_MaxieThisDefiesBelief, MSGBOX_DEFAULT
 	closemessage
-	delay 0x28
+	delay 40
 	applymovement LOCALID_ROUTE128_MAXIE, Route128_Movement_MaxieExit
 	applymovement LOCALID_ROUTE128_ARCHIE, Route128_Movement_ArchieExit
-	waitmovement 0x0
+	waitmovement 0
 	removeobject LOCALID_ROUTE128_MAXIE
 	removeobject LOCALID_ROUTE128_ARCHIE
-	delay 0x64
-	setfieldeffectarg 0x0, 0x1
+	delay 100
+	setfieldeffectargument 0, 1
 	dofieldeffect FLDEFF_NPCFLY_OUT
 	waitfieldeffect FLDEFF_NPCFLY_OUT
 	addobject LOCALID_ROUTE128_STEVEN
 	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenApproachPlayer
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_StevenWhatIsHappening, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_STEVEN, Route128_Movement_StevenWalkUp
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_StevenWholeWorldWillDrown, MSGBOX_DEFAULT
 	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_StevenImGoingToSootopolis, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_ROUTE128_STEVEN, Common_Movement_WalkInPlaceFasterDown
-	waitmovement 0x0
-	delay 0x32
-	setfieldeffectarg 0x0, 0x1
+	waitmovement 0
+	delay 50
+	setfieldeffectargument 0, 1
 	dofieldeffect FLDEFF_NPCFLY_OUT
-	delay 0xF
+	delay 15
 	removeobject LOCALID_ROUTE128_STEVEN
 	waitfieldeffect FLDEFF_NPCFLY_OUT
 	clearflag FLAG_HIDE_MAP_NAME_POPUP
-	setvar VAR_ROUTE128_STATE, 0x2
+	setvar VAR_ROUTE128_STATE, 2
 	releaseall
 	end
 
@@ -186,7 +186,7 @@ Route128_EventScript_Isaiah::
 
 Route128_EventScript_RegisterIsaiah::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_IsaiahRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_ISAIAH_1
 	release
@@ -207,7 +207,7 @@ Route128_EventScript_Katelyn::
 
 Route128_EventScript_RegisterKatelyn::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route128_Text_KatelynRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_KATELYN_1
 	release
