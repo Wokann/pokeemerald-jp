@@ -1,91 +1,93 @@
+@ SlateportCity_BattleTentCorridor scripts (JP map g9 m3 @ 0x081FB594)
+
 SlateportCity_BattleTentCorridor_MapScripts::
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, SlateportCity_BattleTentCorridor_OnFrame
 	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, SlateportCity_BattleTentCorridor_OnWarp
 	.byte 0
 
-	@ This is Slateport Tent's version of the Battle Factory Pre-Battle Room.
-
-SlateportCity_BattleTentCorridor_OnWarp:
-	map_script_2 VAR_TEMP_1, 0, SlateportCity_BattleTentCorridor_EventScript_SetUpObjects
+SlateportCity_BattleTentCorridor_OnWarp:: @ 0x081FB59F
+	map_script_2 VAR_TEMP_1, 0x0, SlateportCity_BattleTentCorridor_EventScript_SetUpObjects
 	.2byte 0
 
-SlateportCity_BattleTentCorridor_EventScript_SetUpObjects::
-	setvar VAR_TEMP_1, 1
-	goto_if_ne VAR_0x8006, 1, SlateportCity_BattleTentCorridor_EventScript_TurnPlayerNorth
-	setobjectxy LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT, 2, 2
+SlateportCity_BattleTentCorridor_EventScript_SetUpObjects:: @ 0x081FB5A9
+	setvar VAR_TEMP_1, 0x1
+	goto_if_ne VAR_0x8006, 0x1, SlateportCity_BattleTentCorridor_EventScript_TurnPlayerNorth
+	setobjectxy LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT, 0x2, 0x2
 	turnobject LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT, DIR_SOUTH
-SlateportCity_BattleTentCorridor_EventScript_TurnPlayerNorth::
+
+SlateportCity_BattleTentCorridor_EventScript_TurnPlayerNorth:: @ 0x081FB5C4
 	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
-SlateportCity_BattleTentCorridor_OnFrame:
-	map_script_2 VAR_TEMP_0, 0, SlateportCity_BattleTentCorridor_EventScript_EnterCorridor
+SlateportCity_BattleTentCorridor_OnFrame:: @ 0x081FB5C9
+	map_script_2 VAR_TEMP_0, 0x0, SlateportCity_BattleTentCorridor_EventScript_EnterCorridor
 	.2byte 0
 
-SlateportCity_BattleTentCorridor_EventScript_EnterCorridor::
-	goto_if_eq VAR_0x8006, 1, SlateportCity_BattleTentCorridor_EventScript_ReturnToRoomFromBattle
-	setvar VAR_TEMP_0, 1
+SlateportCity_BattleTentCorridor_EventScript_EnterCorridor:: @ 0x081FB5D3
+	goto_if_eq VAR_0x8006, 0x1, SlateportCity_BattleTentCorridor_EventScript_ReturnToRoomFromBattle
+	setvar VAR_TEMP_0, 0x1
 	applymovement LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT, SlateportCity_BattleTentCorridor_Movement_AttendantEnter
 	applymovement LOCALID_PLAYER, SlateportCity_BattleTentCorridor_Movement_PlayerEnter
 	waitmovement 0
-	goto_if_eq VAR_0x8006, 2, SlateportCity_BattleTentCorridor_EventScript_ResumeChallenge
+	goto_if_eq VAR_0x8006, 0x2, SlateportCity_BattleTentCorridor_EventScript_ResumeChallenge
 	slateporttent_generaterentalmons
 	slateporttent_generateopponentmons
 	msgbox BattleFrontier_BattleFactoryPreBattleRoom_Text_HoldMonsChooseFromSelection, MSGBOX_DEFAULT
 	fadescreen FADE_TO_BLACK
 	slateporttent_rentmons
 	waitstate
-SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom::
+
+SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom:: @ 0x081FB622
 	msgbox BattleFrontier_BattleFactoryPreBattleRoom_Text_RightThisWay, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT, Common_Movement_WalkInPlaceFasterUp
 	waitmovement 0
-	opendoor 2, 1
-	@ The JP ROM uses waitmoncry here; US uses waitdooranim for this door sequence.
-	waitmoncry
+	opendoor 0x2, 0x1
+	waitdooranim_jp
 	applymovement LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT, SlateportCity_BattleTentCorridor_Movement_AttendantExit
 	applymovement LOCALID_PLAYER, SlateportCity_BattleTentCorridor_Movement_PlayerExit
 	waitmovement 0
-	closedoor 2, 1
-	waitmoncry
-	warp MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM, 4, 4
+	closedoor 0x2, 0x1
+	waitdooranim_jp
+	warp MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM, 0x4, 0x4
 	waitstate
 	end
 
-SlateportCity_BattleTentCorridor_EventScript_ReturnToRoomFromBattle::
+SlateportCity_BattleTentCorridor_EventScript_ReturnToRoomFromBattle:: @ 0x081FB65C
 	factory_setopponentmons
 	factory_resethelditems
 	msgbox BattleFrontier_BattleFactoryPreBattleRoom_Text_LetUsRestoreMons, MSGBOX_DEFAULT
 	playfanfare MUS_HEAL
 	waitfanfare
 	special HealPlayerParty
-SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent::
+
+SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent:: @ 0x081FB67B
 	frontier_get FRONTIER_DATA_BATTLE_NUM
-	call_if_eq VAR_RESULT, 1, SlateportCity_BattleTentCorridor_EventScript_ReadyFor2ndOpponent
-	call_if_eq VAR_RESULT, 2, SlateportCity_BattleTentCorridor_EventScript_ReadyFor3rdOpponent
-	multichoice 20, 6, MULTI_GO_ON_REST_RETIRE, TRUE
+	call_if_eq VAR_RESULT, 0x1, SlateportCity_BattleTentCorridor_EventScript_ReadyFor2ndOpponent
+	call_if_eq VAR_RESULT, 0x2, SlateportCity_BattleTentCorridor_EventScript_ReadyFor3rdOpponent
+	multichoice 0x14, 0x6, MULTI_GO_ON_REST_RETIRE, TRUE
 	switch VAR_RESULT
 	case 0, SlateportCity_BattleTentCorridor_EventScript_AskSwapMon
 	case 1, SlateportCity_BattleTentCorridor_EventScript_AskPauseChallenge
 	case 2, SlateportCity_BattleTentCorridor_EventScript_AskRetireChallenge
 
-SlateportCity_BattleTentCorridor_EventScript_AskPauseChallenge::
+SlateportCity_BattleTentCorridor_EventScript_AskPauseChallenge:: @ 0x081FB6C9
 	msgbox BattleFrontier_BattleFactoryPreBattleRoom_Text_SaveAndQuitGame, MSGBOX_YESNO
 	switch VAR_RESULT
 	case NO, SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent
 	case YES, SlateportCity_BattleTentCorridor_EventScript_PauseChallenge
 	case MULTI_B_PRESSED, SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent
 
-SlateportCity_BattleTentCorridor_EventScript_AskRetireChallenge::
+SlateportCity_BattleTentCorridor_EventScript_AskRetireChallenge:: @ 0x081FB6F7
 	message BattleFrontier_BattleFactoryPreBattleRoom_Text_RetireFromChallenge
 	waitmessage
-	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+	multichoicedefault 0x14, 0x8, MULTI_YESNO, 0x1, FALSE
 	switch VAR_RESULT
 	case 1, SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent
 	case 0, SlateportCity_BattleTent_EventScript_WarpToLobbyLost
 	case MULTI_B_PRESSED, SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent
 
-SlateportCity_BattleTentCorridor_EventScript_AskSwapMon::
+SlateportCity_BattleTentCorridor_EventScript_AskSwapMon:: @ 0x081FB729
 	slateporttent_generateopponentmons
 	msgbox BattleFrontier_BattleFactoryPreBattleRoom_Text_LikeToSwapMon, MSGBOX_YESNO
 	switch VAR_RESULT
@@ -93,25 +95,25 @@ SlateportCity_BattleTentCorridor_EventScript_AskSwapMon::
 	case YES, SlateportCity_BattleTentCorridor_EventScript_SwapMons
 	case MULTI_B_PRESSED, SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom
 
-SlateportCity_BattleTentCorridor_EventScript_SwapMons::
+SlateportCity_BattleTentCorridor_EventScript_SwapMons:: @ 0x081FB75F
 	fadescreen FADE_TO_BLACK
 	slateporttent_swapmons
 	waitstate
-	goto_if_eq VAR_RESULT, 1, SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom
+	goto_if_eq VAR_RESULT, 0x1, SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom
 	msgbox BattleFrontier_BattleFactoryPreBattleRoom_Text_YourSwapIsComplete, MSGBOX_DEFAULT
 	goto SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom
 
-SlateportCity_BattleTentCorridor_EventScript_ReadyFor2ndOpponent::
+SlateportCity_BattleTentCorridor_EventScript_ReadyFor2ndOpponent:: @ 0x081FB782
 	message BattleFrontier_BattleFactoryPreBattleRoom_Text_ReadyFor2ndOpponent
 	waitmessage
 	return
 
-SlateportCity_BattleTentCorridor_EventScript_ReadyFor3rdOpponent::
+SlateportCity_BattleTentCorridor_EventScript_ReadyFor3rdOpponent:: @ 0x081FB789
 	message BattleFrontier_BattleFactoryPreBattleRoom_Text_ReadyFor3rdOpponent
 	waitmessage
 	return
 
-SlateportCity_BattleTentCorridor_EventScript_PauseChallenge::
+SlateportCity_BattleTentCorridor_EventScript_PauseChallenge:: @ 0x081FB790
 	message BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait
 	waitmessage
 	slateporttent_save CHALLENGE_STATUS_PAUSED
@@ -121,9 +123,9 @@ SlateportCity_BattleTentCorridor_EventScript_PauseChallenge::
 	frontier_reset
 	end
 
-SlateportCity_BattleTentCorridor_EventScript_ResumeChallenge::
+SlateportCity_BattleTentCorridor_EventScript_ResumeChallenge:: @ 0x081FB7B2
 	special SavePlayerParty
-	factory_setparties 0
+	factory_setparties 0x0
 	goto SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent
 
 SlateportCity_BattleTentCorridor_Movement_PlayerEnter:
@@ -152,9 +154,7 @@ SlateportCity_BattleTentCorridor_Movement_AttendantExit:
 	set_invisible
 	step_end
 
-@ Leftover text from when this was a Contest Hall in R/S.
-@ Unused
-SlateportCity_ContestHall_Text_AdviceForContests:
+SlateportCity_ContestHall_Text_AdviceForContests: @ 0x081FB7D9
 	.string "コンテストの　ナイスな　じょうほう\n"
 	.string "おしえて　やるよ！\p"
 	.string "ある　わざの　つぎに\n"
@@ -164,16 +164,14 @@ SlateportCity_ContestHall_Text_AdviceForContests:
 	.string "ゆうりな　アピールが　できるよ！\p"
 	.string "ただ　じゃまされちゃう　ときも　あるけどね$"
 
-@ Unused
-SlateportCity_ContestHall_Text_MyPapaIsContestJudge:
+SlateportCity_ContestHall_Text_MyPapaIsContestJudge: @ 0x081FB856
 	.string "ぼくの　おとうさん　コンテストの\n"
 	.string "しんさいんを　やって　いるんだ！\p"
 	.string "ぼくは　おおきく　なったら\n"
 	.string "コンテストの　しんさいん　と\l"
 	.string "ジムリーダーと　どっちに　なろうかな？$"
 
-@ Unused
-SlateportCity_ContestHall_Text_ImLikeMajorlyCheesed:
+SlateportCity_ContestHall_Text_ImLikeMajorlyCheesed: @ 0x081FB8A9
 	.string "どうして　おれの　ポケモンが\n"
 	.string "ゆうしょう　できなかったのか\l"
 	.string "ちぃっとも　わからねえ　からよぉ\l"
@@ -183,16 +181,14 @@ SlateportCity_ContestHall_Text_ImLikeMajorlyCheesed:
 	.string "おい　おまえ！\n"
 	.string "だまって　これを　うけとれよぉ！$"
 
-@ Unused
-SlateportCity_ContestHall_Text_ExplainTorment:
+SlateportCity_ContestHall_Text_ExplainTorment: @ 0x081FB929
 	.string "わざマシン41は　いちゃもん！\p"
 	.string "あいてによぉ　おなじ　わざを　つづけて\n"
 	.string "ださせねえように　する　わざ　なんだよぉ！\p"
 	.string "いっとくけどなぁ\n"
 	.string "おれは　いちゃもん　つけてねぇぞ！$"
 
-@ Unused
-SlateportCity_ContestHall_Text_MCStepUpTakePartInContest:
+SlateportCity_ContestHall_Text_MCStepUpTakePartInContest: @ 0x081FB97E
 	.string "しかい“あら！　なかなか　すてきな\n"
 	.string "ポケモンを　つれて　いますね！\p"
 	.string "ぜひ！　コンテストに\n"
@@ -200,8 +196,7 @@ SlateportCity_ContestHall_Text_MCStepUpTakePartInContest:
 	.string "きっと　いいセン　いきますよ！\n"
 	.string "わたしの　みる　めは　たしかですよ！$"
 
-@ Unused
-SlateportCity_ContestHall_Text_JudgeWouldntDoToMissContest:
+SlateportCity_ContestHall_Text_JudgeWouldntDoToMissContest: @ 0x081FB9DB
 	.string "しんさいん“やあ　こんにちは！\n"
 	.string "きみも　トレーナーの　ようだね！\p"
 	.string "だったら　ポケモンコンテストに\n"
@@ -209,20 +204,17 @@ SlateportCity_ContestHall_Text_JudgeWouldntDoToMissContest:
 	.string "コンテストパスを　シダケタウンで　もらって\n"
 	.string "いますぐ　エントリーだ！$"
 
-@ Unused
-SlateportCity_ContestHall_Text_ItsAppealTime:
+SlateportCity_ContestHall_Text_ItsAppealTime: @ 0x081FBA3B
 	.string "これから　いよいよ　アピールタイム！\n"
 	.string "どの　わざから　みせようかな？$"
 
-@ Unused
-SlateportCity_ContestHall_Text_DidntPayAttentionToAppeal:
+SlateportCity_ContestHall_Text_DidntPayAttentionToAppeal: @ 0x081FBA5E
 	.string "オレの　ポケモンの　アピール\n"
 	.string "あんまり　みて　もらえなかった⋯⋯\p"
 	.string "フッ⋯⋯　あの　しんさいん\n"
 	.string "みる　めが　ないな！$"
 
-@ Unused
-SlateportCity_ContestHall_Text_RewardWithSageAdvice:
+SlateportCity_ContestHall_Text_RewardWithSageAdvice: @ 0x081FBA98
 	.string "おっ！　こんな　ところまで　あがってきて\n"
 	.string "キミ　けんきゅう　ねっしんだね！\l"
 	.string "じゃあ　いいこと　おしえて　あげるよ\p"
@@ -232,39 +224,33 @@ SlateportCity_ContestHall_Text_RewardWithSageAdvice:
 	.string "アピールしてた　ポケモンには⋯⋯\p"
 	.string "いいことが　あるかもな！$"
 
-@ Unused
-SlateportCity_ContestHall_Text_MoreFreakedOutThanMon:
+SlateportCity_ContestHall_Text_MoreFreakedOutThanMon: @ 0x081FBB24
 	.string "だ　だめだぁ！　ポケモンより\n"
 	.string "じぶんの　ほうが　きんちょう　してる！\l"
 	.string "ブルブル⋯⋯　ドキドキ⋯$"
 
-@ Unused
-SlateportCity_ContestHall_Text_BattleAndContestAlike:
+SlateportCity_ContestHall_Text_BattleAndContestAlike: @ 0x081FBB54
 	.string "ポケモンしょうぶも　コンテストも\n"
 	.string "ちがう　ようで　にて　いるよね！\p"
 	.string "だいじに　そだてた　ポケモンを\n"
 	.string "しんらいして　がんばる　ところがさ！$"
 
-@ Unused
-SlateportCity_ContestHall_Text_MonLooksOnTopOfGame:
+SlateportCity_ContestHall_Text_MonLooksOnTopOfGame: @ 0x081FBB99
 	.string "あの　ポケモン　ちょうし　よさそうだろ！\p"
 	.string "2じしんさで　ちょうしが　よくなった\n"
 	.string "ポケモンは　あまり　きんちょうしないで\l"
 	.string "アピール　できる　ように　なるみたいだな$"
 
-@ Unused
-SlateportCity_ContestHall_Text_MyMonBetterThanThatLot:
+SlateportCity_ContestHall_Text_MyMonBetterThanThatLot: @ 0x081FBBEA
 	.string "なんだあー　このぐらい　なら\n"
 	.string "おれの　ポケモンの　ほうが\l"
 	.string "だんぜん　うえ　だね！$"
 
-@ Unused
-SlateportCity_ContestHall_Text_GetUrgeToMoveWithMon:
+SlateportCity_ContestHall_Text_GetUrgeToMoveWithMon: @ 0x081FBC13
 	.string "げんきな　アピールを　みていると\n"
 	.string "いっしょに　からだを\l"
 	.string "うごかしたく　なって　こないか？$"
 
-@ Unused
-SlateportCity_ContestHall_Text_HyperRankStage:
+SlateportCity_ContestHall_Text_HyperRankStage: @ 0x081FBC40
 	.string "ポケモン　コンテスト\n"
 	.string "ハイパーランク　ステージ！$"

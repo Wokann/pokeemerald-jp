@@ -716,6 +716,12 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x081FB306: 'SlateportCity_BattleTentLobby_Movement_PlayerEnterDoor',
         0x081FB33B: 'SlateportCity_BattleTentLobby_Movement_UnusedEnterDoor',
     },
+    'SlateportCity_BattleTentCorridor': {
+        0x081FB7C7: 'SlateportCity_BattleTentCorridor_Movement_PlayerEnter',
+        0x081FB7CC: 'SlateportCity_BattleTentCorridor_Movement_PlayerExit',
+        0x081FB7D0: 'SlateportCity_BattleTentCorridor_Movement_AttendantEnter',
+        0x081FB7D6: 'SlateportCity_BattleTentCorridor_Movement_AttendantExit',
+    },
     'OldaleTown': {
         0x081E48CB: 'OldaleTown_Movement_Unknown1',
         0x081E48F3: 'OldaleTown_Movement_Unknown2',
@@ -9107,6 +9113,168 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
         },
     },
+    # The adjoining corridor contains the rental and swap flow. Its trailing
+    # complete RS Contest Hall text records are unused by Emerald but remain
+    # a contiguous part of this physical JP map-script owner.
+    'SlateportCity_BattleTentCorridor': {
+        'scripts': {
+            0x081FB5A9: 'SlateportCity_BattleTentCorridor_EventScript_SetUpObjects',
+            0x081FB5C4: 'SlateportCity_BattleTentCorridor_EventScript_TurnPlayerNorth',
+            0x081FB5D3: 'SlateportCity_BattleTentCorridor_EventScript_EnterCorridor',
+            0x081FB622: 'SlateportCity_BattleTentCorridor_EventScript_EnterBattleRoom',
+            0x081FB65C: 'SlateportCity_BattleTentCorridor_EventScript_ReturnToRoomFromBattle',
+            0x081FB67B: 'SlateportCity_BattleTentCorridor_EventScript_AskReadyForOpponent',
+            0x081FB6C9: 'SlateportCity_BattleTentCorridor_EventScript_AskPauseChallenge',
+            0x081FB6F7: 'SlateportCity_BattleTentCorridor_EventScript_AskRetireChallenge',
+            0x081FB729: 'SlateportCity_BattleTentCorridor_EventScript_AskSwapMon',
+            0x081FB75F: 'SlateportCity_BattleTentCorridor_EventScript_SwapMons',
+            0x081FB782: 'SlateportCity_BattleTentCorridor_EventScript_ReadyFor2ndOpponent',
+            0x081FB789: 'SlateportCity_BattleTentCorridor_EventScript_ReadyFor3rdOpponent',
+            0x081FB790: 'SlateportCity_BattleTentCorridor_EventScript_PauseChallenge',
+            0x081FB7B2: 'SlateportCity_BattleTentCorridor_EventScript_ResumeChallenge',
+        },
+        'tables': {
+            0x081FB59F: 'SlateportCity_BattleTentCorridor_OnWarp',
+            0x081FB5C9: 'SlateportCity_BattleTentCorridor_OnFrame',
+        },
+        'texts': {
+            0x081FB7D9: 'SlateportCity_ContestHall_Text_AdviceForContests',
+            0x081FB856: 'SlateportCity_ContestHall_Text_MyPapaIsContestJudge',
+            0x081FB8A9: 'SlateportCity_ContestHall_Text_ImLikeMajorlyCheesed',
+            0x081FB929: 'SlateportCity_ContestHall_Text_ExplainTorment',
+            0x081FB97E: 'SlateportCity_ContestHall_Text_MCStepUpTakePartInContest',
+            0x081FB9DB: 'SlateportCity_ContestHall_Text_JudgeWouldntDoToMissContest',
+            0x081FBA3B: 'SlateportCity_ContestHall_Text_ItsAppealTime',
+            0x081FBA5E: 'SlateportCity_ContestHall_Text_DidntPayAttentionToAppeal',
+            0x081FBA98: 'SlateportCity_ContestHall_Text_RewardWithSageAdvice',
+            0x081FBB24: 'SlateportCity_ContestHall_Text_MoreFreakedOutThanMon',
+            0x081FBB54: 'SlateportCity_ContestHall_Text_BattleAndContestAlike',
+            0x081FBB99: 'SlateportCity_ContestHall_Text_MonLooksOnTopOfGame',
+            0x081FBBEA: 'SlateportCity_ContestHall_Text_MyMonBetterThanThatLot',
+            0x081FBC13: 'SlateportCity_ContestHall_Text_GetUrgeToMoveWithMon',
+            0x081FBC40: 'SlateportCity_ContestHall_Text_HyperRankStage',
+        },
+        'external_texts': {
+            0x082323B3: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_HoldMonsChooseFromSelection',
+            0x082323F8: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_LetUsRestoreMons',
+            0x08232415: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_ReadyFor2ndOpponent',
+            0x08232433: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_ReadyFor3rdOpponent',
+            0x082324CA: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_SaveAndQuitGame',
+            0x082324E3: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_RetireFromChallenge',
+            0x08232839: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_LikeToSwapMon',
+            0x0823285F: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_YourSwapIsComplete',
+            0x0823287D: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_RightThisWay',
+            0x0823288B: 'BattleFrontier_BattleFactoryPreBattleRoom_Text_SavingDataPleaseWait',
+        },
+        'external_labels': {
+            0x081FBD14: 'SlateportCity_BattleTent_EventScript_WarpToLobbyLost',
+            0x08243629: 'Common_Movement_WalkInPlaceFasterUp',
+        },
+        'command_aliases': {
+            0x081FB622: {'waitmoncry': 'waitdooranim_jp'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'frontier_macros': True,
+        'battle_tent_macros': True,
+        'battle_factory_macros': True,
+        'symbols': {
+            'vars': {
+                0x4000: 'VAR_TEMP_0',
+                0x4001: 'VAR_TEMP_1',
+                0x8000: 'VAR_0x8000',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081FB5D3: {
+                    0x8004: {
+                        0x06: 'SLATEPORT_TENT_FUNC_SELECT_RENT_MONS',
+                        0x08: 'SLATEPORT_TENT_FUNC_GENERATE_OPPONENT_MONS',
+                        0x09: 'SLATEPORT_TENT_FUNC_GENERATE_RENTAL_MONS',
+                    },
+                },
+                0x081FB65C: {
+                    0x8004: {
+                        0x09: 'BATTLE_FACTORY_FUNC_SET_OPPONENT_MONS',
+                        0x10: 'BATTLE_FACTORY_FUNC_RESET_HELD_ITEMS',
+                    },
+                },
+                0x081FB67B: {
+                    0x8004: {0x01: 'FRONTIER_UTIL_FUNC_GET_DATA'},
+                    0x8005: {0x02: 'FRONTIER_DATA_BATTLE_NUM'},
+                },
+                0x081FB729: {
+                    0x8004: {0x08: 'SLATEPORT_TENT_FUNC_GENERATE_OPPONENT_MONS'},
+                },
+                0x081FB75F: {
+                    0x8004: {0x07: 'SLATEPORT_TENT_FUNC_SWAP_RENT_MONS'},
+                },
+                0x081FB790: {
+                    0x8004: {
+                        0x03: 'SLATEPORT_TENT_FUNC_SAVE',
+                        0x04: 'FRONTIER_UTIL_FUNC_SOFT_RESET',
+                    },
+                },
+                0x081FB7B2: {
+                    0x8004: {0x0A: 'BATTLE_FACTORY_FUNC_SET_PARTIES'},
+                },
+            },
+            'script_switch_values': {
+                0x081FB6C9: {
+                    'VAR_RESULT': {
+                        0x00: 'NO',
+                        0x01: 'YES',
+                        0x7F: 'MULTI_B_PRESSED',
+                    },
+                },
+                0x081FB6F7: {'VAR_RESULT': {0x7F: 'MULTI_B_PRESSED'}},
+                0x081FB729: {
+                    'VAR_RESULT': {
+                        0x00: 'NO',
+                        0x01: 'YES',
+                        0x7F: 'MULTI_B_PRESSED',
+                    },
+                },
+            },
+            'maps': {0x0904: 'MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM'},
+            'local_ids': {
+                0x01: 'LOCALID_SLATEPORT_TENT_CORRIDOR_ATTENDANT',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'directions': {0x01: 'DIR_SOUTH', 0x02: 'DIR_NORTH'},
+            'songs': {0x0170: 'MUS_HEAL'},
+            'sounds': {0x37: 'SE_SAVE'},
+            'multichoices': {
+                0x005E: 'MULTI_YESNO',
+                0x0068: 'MULTI_GO_ON_REST_RETIRE',
+            },
+            'fade_modes': {0x01: 'FADE_TO_BLACK'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+})
+
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'SlateportCity_BattleTentCorridor': (
+        0x081FB7D9,
+        0x081FB856,
+        0x081FB8A9,
+        0x081FB929,
+        0x081FB97E,
+        0x081FB9DB,
+        0x081FBA3B,
+        0x081FBA5E,
+        0x081FBA98,
+        0x081FBB24,
+        0x081FBB54,
+        0x081FBB99,
+        0x081FBBEA,
+        0x081FBC13,
+        0x081FBC40,
+    ),
 })
 
 # Rustboro Devon Corp 2F is a complete, contiguous JP map-script owner.
@@ -14584,6 +14752,10 @@ def collapse_battle_tent_macros(lines, enabled=False):
             'SLATEPORT_TENT_FUNC_GET_PRIZE': 'slateporttent_getprize',
             'SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE': 'slateporttent_setrandomprize',
             'SLATEPORT_TENT_FUNC_GIVE_PRIZE': 'slateporttent_giveprize',
+            'SLATEPORT_TENT_FUNC_SELECT_RENT_MONS': 'slateporttent_rentmons',
+            'SLATEPORT_TENT_FUNC_SWAP_RENT_MONS': 'slateporttent_swapmons',
+            'SLATEPORT_TENT_FUNC_GENERATE_OPPONENT_MONS': 'slateporttent_generateopponentmons',
+            'SLATEPORT_TENT_FUNC_GENERATE_RENTAL_MONS': 'slateporttent_generaterentalmons',
         },
     }
     save_macros = {
@@ -14612,6 +14784,92 @@ def collapse_battle_tent_macros(lines, enabled=False):
                 continue
             if is_set(first, 'VAR_0x8004') and second[0] == 'special':
                 macro = single_macros.get(second[1], {}).get(split(first)[1])
+                if macro is not None:
+                    out.append((macro, ''))
+                    index += 2
+                    continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
+def collapse_battle_factory_macros(lines, enabled=False):
+    """Restore byte-exact Battle Factory helper macros for reviewed owners."""
+    if not enabled:
+        return lines
+
+    def split(line):
+        return [part.strip() for part in line[1].split(',')] if line[1] else []
+
+    def is_set(line, variable, value=None):
+        args = split(line)
+        return (line[0] == 'setvar' and len(args) == 2 and args[0] == variable
+                and (value is None or args[1] == value))
+
+    def is_copy(line, variable):
+        args = split(line)
+        return line[0] == 'copyvar' and len(args) == 2 and args[0] == variable
+
+    def is_factory_special(line):
+        return line == ('special', 'CallBattleFactoryFunction')
+
+    single_macros = {
+        'BATTLE_FACTORY_FUNC_INIT': 'factory_init',
+        'BATTLE_FACTORY_FUNC_SELECT_RENT_MONS': 'factory_rentmons',
+        'BATTLE_FACTORY_FUNC_SWAP_RENT_MONS': 'factory_swapmons',
+        'BATTLE_FACTORY_FUNC_SET_SWAPPED': 'factory_setswapped',
+        'BATTLE_FACTORY_FUNC_SET_OPPONENT_MONS': 'factory_setopponentmons',
+        'BATTLE_FACTORY_FUNC_SET_OPPONENT_GFX': 'factory_setopponentgfx',
+        'BATTLE_FACTORY_FUNC_GENERATE_OPPONENT_MONS': 'factory_generateopponentmons',
+        'BATTLE_FACTORY_FUNC_GENERATE_RENTAL_MONS': 'factory_generaterentalmons',
+        'BATTLE_FACTORY_FUNC_GET_OPPONENT_MON_TYPE': 'factory_getopponentmontype',
+        'BATTLE_FACTORY_FUNC_GET_OPPONENT_STYLE': 'factory_getopponentstyle',
+        'BATTLE_FACTORY_FUNC_RESET_HELD_ITEMS': 'factory_resethelditems',
+    }
+
+    out = []
+    index = 0
+    while index < len(lines):
+        if index + 3 < len(lines):
+            first, second, third, fourth = lines[index:index + 4]
+            if (is_set(first, 'VAR_0x8004', 'BATTLE_FACTORY_FUNC_SET_DATA')
+                    and is_set(second, 'VAR_0x8005')
+                    and (is_set(third, 'VAR_0x8006') or is_copy(third, 'VAR_0x8006'))
+                    and is_factory_special(fourth)):
+                out.append(('factory_set', '%s, %s' % (
+                    split(second)[1], split(third)[1])))
+                index += 4
+                continue
+        if index + 2 < len(lines):
+            first, second, third = lines[index:index + 3]
+            if (is_set(first, 'VAR_0x8004', 'BATTLE_FACTORY_FUNC_GET_DATA')
+                    and is_set(second, 'VAR_0x8005')
+                    and is_factory_special(third)):
+                out.append(('factory_get', split(second)[1]))
+                index += 3
+                continue
+            if (is_set(first, 'VAR_0x8004', 'BATTLE_FACTORY_FUNC_SET_DATA')
+                    and is_set(second, 'VAR_0x8005')
+                    and is_factory_special(third)):
+                out.append(('factory_set', split(second)[1]))
+                index += 3
+                continue
+            if (is_set(first, 'VAR_0x8004', 'BATTLE_FACTORY_FUNC_SAVE')
+                    and is_set(second, 'VAR_0x8005')
+                    and is_factory_special(third)):
+                out.append(('factory_save', _canonical_challenge_status(split(second)[1])))
+                index += 3
+                continue
+            if (is_set(first, 'VAR_0x8004', 'BATTLE_FACTORY_FUNC_SET_PARTIES')
+                    and is_set(second, 'VAR_0x8005')
+                    and is_factory_special(third)):
+                out.append(('factory_setparties', split(second)[1]))
+                index += 3
+                continue
+        if index + 1 < len(lines):
+            first, second = lines[index:index + 2]
+            if is_set(first, 'VAR_0x8004') and is_factory_special(second):
+                macro = single_macros.get(split(first)[1])
                 if macro is not None:
                     out.append((macro, ''))
                     index += 2
@@ -15519,6 +15777,8 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
                 semantic.get('symbols', {}).get('frontier_results', {}))
             decoded_lines = collapse_battle_tent_macros(
                 decoded_lines, semantic.get('battle_tent_macros', False))
+            decoded_lines = collapse_battle_factory_macros(
+                decoded_lines, semantic.get('battle_factory_macros', False))
             decoded_lines = name_frontier_macro_conditions(decoded_lines)
             decoded_lines = collapse_giveitem_macros(decoded_lines)
             decoded_lines = collapse_finditem_macros(decoded_lines)
