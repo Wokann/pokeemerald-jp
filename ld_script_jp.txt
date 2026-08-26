@@ -5141,7 +5141,7 @@ SECTIONS {
         src/battle_setup.o(.text.ShouldTryGetTrainerScript);
         src/battle_setup.o(.text.CountBattledRematchTeams);
         src/cable_club.o(.text.CreateLinkupTask);
-        src/cable_club.o(.text.sub_080B1C9C);
+        src/cable_club.o(.text.PrintNumPlayersInLink);
         src/cable_club.o(.text.ClearLinkPlayerCountWindow);
         src/cable_club.o(.text.UpdateLinkPlayerCountDisplay);
         src/cable_club.o(.text.ExchangeDataAndGetLinkupStatus);

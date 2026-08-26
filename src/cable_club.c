@@ -35,8 +35,9 @@
 #define tWindowId   data[5]
 
 extern s16 gUnknown_3005B68[];
+extern const u16 sBadgeFlagsJp[];
 
-void sub_080B1C9C(u16 windowId, u32 numPlayers);
+static void PrintNumPlayersInLink(u16 windowId, u32 numPlayers);
 static void Task_LinkupStart(u8 taskId);
 static void Task_LinkupAwaitConnection(u8 taskId);
 static void Task_LinkupConfirmWhenReady(u8 taskId);
@@ -78,51 +79,13 @@ static void CreateLinkupTask(u8 minPlayers, u8 maxPlayers)
     }
 }
 
-__attribute__((naked)) void sub_080B1C9C(u16 windowId, u32 numPlayers)
+static void PrintNumPlayersInLink(u16 windowId, u32 numPlayers)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	ldr r0, _080B1CEC\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	bl ConvertIntToDecimalStringN\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetStandardWindowBorderStyle\n\t"
-        "	ldr r5, _080B1CF0\n\t"
-        "	ldr r1, _080B1CF4\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl StringExpandPlaceholders\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r0, #0xff\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r1, [sp, #8]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080B1CEC: .4byte gStringVar1\n\t"
-        "_080B1CF0: .4byte gStringVar4\n\t"
-        "_080B1CF4: .4byte sBadgeFlagsJp + 0x10\n\t"
-        ".syntax divided\n\t"
-    );
+    ConvertIntToDecimalStringN(gStringVar1, numPlayers, STR_CONV_MODE_LEFT_ALIGN, 1);
+    SetStandardWindowBorderStyle(windowId, FALSE);
+    StringExpandPlaceholders(gStringVar4, (const u8 *)(sBadgeFlagsJp + 8));
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar4, 0, 0, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
 }
 
 static void ClearLinkPlayerCountWindow(u16 windowId)
@@ -140,7 +103,7 @@ static void UpdateLinkPlayerCountDisplay(u8 taskId, u8 numPlayers)
         if (numPlayers <= 1)
             ClearLinkPlayerCountWindow(tWindowId);
         else
-            sub_080B1C9C(tWindowId, numPlayers);
+            PrintNumPlayersInLink(tWindowId, numPlayers);
         tNumPlayers = numPlayers;
     }
 }

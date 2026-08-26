@@ -6121,7 +6121,7 @@ battle_setup.s
 080b1c04 CountBattledRematchTeams CountBattledRematchTeams
 cable_club.s
 080b1c58 CreateLinkupTask CreateLinkupTask
-080b1c9c cable_club.s sub_080B1C9C_jp
+080b1c9c PrintNumPlayersInLink PrintNumPlayersInLink
 080b1cf8 sub_080B1CF8_jp ClearLinkPlayerCountWindow
 080b1d18 UpdateLinkPlayerCountDisplay UpdateLinkPlayerCountDisplay
 080b1d54 ExchangeDataAndGetLinkupStatus ExchangeDataAndGetLinkupStatus
