@@ -451,6 +451,14 @@ MAP_AUXILIARY_SCRIPT_ADDRESSES = {
     ),
 }
 
+# The JP ROM stores the Mt. Pyre 4F and 5F trainer scripts in the sibling
+# map-script owner's physical range. The matching US sources retain that
+# same layout, so expose both roots explicitly rather than leaving them raw.
+MAP_AUXILIARY_SCRIPT_ADDRESSES.update({
+    'MtPyre_4F': (0x08216881,),
+    'MtPyre_5F': (0x082168FB,),
+})
+
 # A map header can deliberately point at a sibling map's table while retaining
 # an otherwise-unused local map_script_2 table in its own ROM range. Keep
 # those table roots separate from ordinary script roots so their table bytes
@@ -6840,6 +6848,38 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x800D: 'VAR_RESULT',
             },
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # The adjacent 4F/5F map-script owners deliberately retain the sibling
+    # floor's trainer and text labels, as in the matching US source layout.
+    'MtPyre_4F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x08216881: 'MtPyre_5F_EventScript_Atsushi',
+        },
+        'texts': {
+            0x08216898: 'MtPyre_5F_Text_AtsushiIntro',
+            0x082168BC: 'MtPyre_5F_Text_AtsushiDefeat',
+            0x082168CE: 'MtPyre_5F_Text_AtsushiPostBattle',
+        },
+        'symbols': {
+            'trainers': {0x00BE: 'TRAINER_ATSUSHI'},
+        },
+    },
+    'MtPyre_5F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'scripts': {
+            0x082168FB: 'MtPyre_4F_EventScript_Tasha',
+        },
+        'texts': {
+            0x08216912: 'MtPyre_4F_Text_TashaIntro',
+            0x08216948: 'MtPyre_4F_Text_TashaDefeat',
+            0x08216954: 'MtPyre_4F_Text_TashaPostBattle',
+        },
+        'symbols': {
+            'trainers': {0x006D: 'TRAINER_TASHA'},
         },
     },
 })
