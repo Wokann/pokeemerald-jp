@@ -955,8 +955,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/RustboroCity_DevonCorp_2F/events.inc"
 	.include "data/maps/RustboroCity_DevonCorp_3F/events.inc"
 	.include "data/maps/RustboroCity_Gym/events.inc"
-	.globl gMapEvents_RUSTBORO_CITY_GYM
-	.set gMapEvents_RUSTBORO_CITY_GYM, RustboroCity_Gym_MapEvents
 	.include "data/maps/RustboroCity_PokemonSchool/events.inc"
 	.globl gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL
 	.set gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL, RustboroCity_PokemonSchool_MapEvents

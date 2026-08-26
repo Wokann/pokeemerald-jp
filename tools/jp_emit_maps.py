@@ -10247,6 +10247,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x082430E0: 'Common_EventScript_ShowBagIsFull',
             0x0824310A: 'Common_EventScript_PlayGymBadgeFanfare',
         },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
         'symbols': {
             'vars': {
                 0x405A: 'VAR_RUSTBORO_CITY_STATE',
@@ -10272,6 +10274,12 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
             'songs': {0x01CC: 'MUS_REGISTER_MATCH_CALL'},
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
+            'var_values': {
+                0x405A: {0x01: '1'},
+                0x4085: {0x01: '1', 0x06: '6'},
+                0x8008: {0x01: '1'},
+            },
+            'decimal_arguments': {'delay': (0,)},
         },
     },
 })
