@@ -8698,6 +8698,41 @@ MAP_POKEMART_LISTS.update({
     ),
 })
 
+# Petalburg Mart follows the Cable Club floor. Both product records have the
+# expected JP alignment padding and the matching US product sequence.
+MAP_POKEMART_LISTS.update({
+    'PetalburgCity_Mart': (
+        (0x081FAA0A, 'PetalburgCity_Mart_Pokemart_Basic', (
+            'ITEM_POKE_BALL',
+            'ITEM_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_AWAKENING',
+            'ITEM_ESCAPE_ROPE',
+            'ITEM_REPEL',
+            'ITEM_X_SPEED',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
+            'ITEM_ORANGE_MAIL',
+        )),
+        (0x081FAA35, 'PetalburgCity_Mart_Pokemart_Expanded', (
+            'ITEM_POKE_BALL',
+            'ITEM_GREAT_BALL',
+            'ITEM_POTION',
+            'ITEM_SUPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_AWAKENING',
+            'ITEM_ESCAPE_ROPE',
+            'ITEM_REPEL',
+            'ITEM_X_SPEED',
+            'ITEM_X_ATTACK',
+            'ITEM_X_DEFEND',
+            'ITEM_ORANGE_MAIL',
+        )),
+    ),
+})
+
 # Petalburg's two residential houses immediately follow the Gym in the
 # physical event-script owner. Their four NPC scripts and four text objects
 # were aligned with the matching US map sources before directory migration.
@@ -8787,6 +8822,31 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
         },
         'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
+    },
+    # Petalburg Mart follows with the clerk, expanded-stock branch, three
+    # NPC messages, and both reviewed product records in US source order.
+    'PetalburgCity_Mart': {
+        'scripts': {
+            0x081FA9EA: 'PetalburgCity_Mart_EventScript_Clerk',
+            0x081FAA26: 'PetalburgCity_Mart_EventScript_ExpandedItems',
+            0x081FAA56: 'PetalburgCity_Mart_EventScript_Woman',
+            0x081FAA5F: 'PetalburgCity_Mart_EventScript_Boy',
+            0x081FAA68: 'PetalburgCity_Mart_EventScript_Man',
+        },
+        'texts': {
+            0x081FAA71: 'PetalburgCity_Mart_Text_WeakWillGrowStronger',
+            0x081FAAAB: 'PetalburgCity_Mart_Text_RepelIsUseful',
+            0x081FAADF: 'PetalburgCity_Mart_Text_TakeSomeAntidotesWithYou',
+        },
+        'external_labels': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {0x0128: 'FLAG_PETALBURG_MART_EXPANDED_ITEMS'},
+        },
     },
 })
 

@@ -3,7 +3,7 @@
 PetalburgCity_Mart_MapScripts::
 	.byte 0
 
-PetalburgCity_Mart_EventScript_Clerk::
+PetalburgCity_Mart_EventScript_Clerk:: @ 0x081FA9EA
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -29,7 +29,7 @@ PetalburgCity_Mart_Pokemart_Basic:
 	.2byte ITEM_ORANGE_MAIL
 	pokemartlistend
 
-PetalburgCity_Mart_EventScript_ExpandedItems::
+PetalburgCity_Mart_EventScript_ExpandedItems:: @ 0x081FAA26
 	pokemart PetalburgCity_Mart_Pokemart_Expanded
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
@@ -52,30 +52,30 @@ PetalburgCity_Mart_Pokemart_Expanded:
 	.2byte ITEM_ORANGE_MAIL
 	pokemartlistend
 
-PetalburgCity_Mart_EventScript_Woman::
+PetalburgCity_Mart_EventScript_Woman:: @ 0x081FAA56
 	msgbox PetalburgCity_Mart_Text_WeakWillGrowStronger, MSGBOX_NPC
 	end
 
-PetalburgCity_Mart_EventScript_Boy::
+PetalburgCity_Mart_EventScript_Boy:: @ 0x081FAA5F
 	msgbox PetalburgCity_Mart_Text_RepelIsUseful, MSGBOX_NPC
 	end
 
-PetalburgCity_Mart_EventScript_Man::
+PetalburgCity_Mart_EventScript_Man:: @ 0x081FAA68
 	msgbox PetalburgCity_Mart_Text_TakeSomeAntidotesWithYou, MSGBOX_NPC
 	end
 
-PetalburgCity_Mart_Text_WeakWillGrowStronger:
+PetalburgCity_Mart_Text_WeakWillGrowStronger: @ 0x081FAA71
 	.string "いまは　よわい　ポケモンでも\n"
 	.string "そだててあげれば　きっと　つよくなる！\p"
 	.string "だいじ　なのは\n"
 	.string "ポケモンへの　あいじょうよ！$"
 
-PetalburgCity_Mart_Text_RepelIsUseful:
+PetalburgCity_Mart_Text_RepelIsUseful: @ 0x081FAAAB
 	.string "むしよけスプレー　つかってる？\n"
 	.string "つかうと　ポケモンが　よってこないから\l"
 	.string "いそぐとき　べんり　なんだぜ！$"
 
-PetalburgCity_Mart_Text_TakeSomeAntidotesWithYou:
+PetalburgCity_Mart_Text_TakeSomeAntidotesWithYou: @ 0x081FAADF
 	.string "きみ　どくけし　もってるかい？\p"
 	.string "ポケモン　どくを　くらったまま\n"
 	.string "あるいていると　たいりょく　なくなって\l"
