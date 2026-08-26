@@ -894,7 +894,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MtPyre_6F/scripts.inc"
 	.include "data/maps/MtPyre_Exterior/scripts.inc"
 	.include "data/maps/MtPyre_Summit/scripts.inc"
-	.incbin "baserom_jp.gba", 0x217935, 0x37b
+	.include "data/maps/AquaHideout_1F/scripts.inc"
 	.include "data/maps/AquaHideout_B1F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x217d8e, 0x211
 	.include "data/maps/AquaHideout_B2F/scripts.inc"

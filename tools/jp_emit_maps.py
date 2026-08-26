@@ -201,6 +201,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Summit owns its transition hook, story branches, and the four Team Aqua
     # trainer scripts through the next physical owner at 0x08217935.
     'MtPyre_Summit': 38,
+    # Aqua Hideout 1F is the immediate next physical owner. Its two entrance
+    # guards and one trainer sequence match the eight local US script entries.
+    'AquaHideout_1F': 8,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -318,6 +321,9 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Summit owns all twenty-four local dialogue records after its movement
     # streams, including the Maxie silence with the player-name control code.
     'MtPyre_Summit': 24,
+    # Aqua Hideout 1F owns the nine dialogue records following its local
+    # guard and trainer branches, in the same physical order as the US map.
+    'AquaHideout_1F': 9,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6986,6 +6992,22 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'sounds': {0x15: 'SE_PIN'},
             'fade_modes': {0x00: 'FADE_FROM_BLACK', 0x01: 'FADE_TO_BLACK'},
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # Aqua Hideout 1F is structurally complete through the next physical owner
+    # at 0x08217CB0. The local operands were checked against the matching US
+    # source and the JP event records.
+    'AquaHideout_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x006F: 'FLAG_GROUDON_AWAKENED_MAGMA_HIDEOUT',
+                0x00D4: 'FLAG_RECEIVED_RED_OR_BLUE_ORB',
+            },
+            'trainers': {
+                0x0002: 'TRAINER_GRUNT_AQUA_HIDEOUT_1',
+            },
         },
     },
 })

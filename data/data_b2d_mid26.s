@@ -2332,19 +2332,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/MtPyre_Summit/events.inc"
 	.globl gMapEvents_MT_PYRE_SUMMIT
 	.set gMapEvents_MT_PYRE_SUMMIT, MtPyre_Summit_MapEvents
-	.globl AQUA_HIDEOUT_1F_EventObjects
-AQUA_HIDEOUT_1F_EventObjects: @ 0x0850DA30
-	object_event 1, 117, 0, 13, 11, 3, 8, 0, 0, 0, 0, 0x08217936, 0x0335
-	object_event 2, 117, 0, 14, 11, 3, 8, 0, 0, 0, 0, 0x08217968, 0x0336
-	object_event 3, 117, 0, 20, 4, 3, 50, 13, 5, 1, 3, 0x0821799A, 0x039C
-	.globl AQUA_HIDEOUT_1F_EventWarps
-AQUA_HIDEOUT_1F_EventWarps: @ 0x0850DA78
-	warp_def 13, 27, 1, 6, MAP_LILYCOVE_CITY
-	warp_def 14, 27, 1, 6, MAP_LILYCOVE_CITY
-	warp_def 22, 1, 3, 0, MAP_AQUA_HIDEOUT_B1F
+	.include "data/maps/AquaHideout_1F/events.inc"
 	.globl gMapEvents_AQUA_HIDEOUT_1F
-gMapEvents_AQUA_HIDEOUT_1F: @ 0x0850DA90
-	map_events AQUA_HIDEOUT_1F_EventObjects, AQUA_HIDEOUT_1F_EventWarps, 0, 0
+	.set gMapEvents_AQUA_HIDEOUT_1F, AquaHideout_1F_MapEvents
 	.globl AQUA_HIDEOUT_B1F_EventObjects
 AQUA_HIDEOUT_B1F_EventObjects: @ 0x0850DAA4
 	object_event 1, 117, 0, 28, 16, 3, 8, 0, 0, 1, 4, 0x08217D8E, 0x039C
