@@ -1000,8 +1000,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_DepartmentStore_4F/events.inc"
 	.include "data/maps/LilycoveCity_DepartmentStore_5F/events.inc"
 	.include "data/maps/LilycoveCity_DepartmentStoreRooftop/events.inc"
-	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP
-	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP, LilycoveCity_DepartmentStoreRooftop_MapEvents
 	.include "data/maps/LilycoveCity_DepartmentStoreElevator/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
 	.set gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR, LilycoveCity_DepartmentStoreElevator_MapEvents

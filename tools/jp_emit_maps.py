@@ -12529,6 +12529,7 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             0x0820B09C: 'LilycoveCity_DepartmentStoreRooftop_EventScript_NoRoomForDrink',
             0x0820B0AA: 'LilycoveCity_DepartmentStoreRooftop_EventScript_ExitVendingMachine',
         },
+        'local_scripts': (0x0820AE59,),
         'texts': {
             0x0820B0AF: 'LilycoveCity_DepartmentStoreRooftop_Text_SetDatesForClearOutSales',
             0x0820B0EA: 'LilycoveCity_DepartmentStoreRooftop_Text_BeenWaitingForClearOutSale',
@@ -12564,6 +12565,12 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 0x4001: 'VAR_TEMP_1',
                 0x800D: 'VAR_RESULT',
             },
+            'script_var_values': {
+                0x0820AF30: {0x4000: {0x001A: 'ITEM_FRESH_WATER'}},
+                0x0820AF3B: {0x4000: {0x001B: 'ITEM_SODA_POP'}},
+                0x0820AF46: {0x4000: {0x001C: 'ITEM_LEMONADE'}},
+                0x0820AF7B: {0x800D: {0x0: '0'}},
+            },
             'var_values': {
                 0x800D: {0x0: 'FALSE', 0x1: 'TRUE'},
             },
@@ -12577,6 +12584,14 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'booleans': {0x0: 'FALSE', 0x1: 'TRUE'},
             'sounds': {0x006A: 'SE_VEND'},
             'stdstrings': {0xE: 'STDSTRING_ITEMS'},
+            'decimal_arguments': {
+                'checkmoney': (0,),
+                'compare_var_to_value': (1,),
+                'multichoice': (0, 1),
+                'random': (0,),
+                'removemoney': (0,),
+                'showmoneybox': (0, 1, 2),
+            },
         },
     },
 })
