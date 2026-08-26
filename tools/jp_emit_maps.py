@@ -8161,6 +8161,36 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Verdanturf Pokémon Center 1F follows the Mart. Its transition, nurse, and
+# two local dialogue scripts match the US map names and reference only shared
+# Cable Club and Pokémon Center helper blocks outside this physical range.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_PokemonCenter_1F': {
+        'scripts': {
+            0x081F702C: 'VerdanturfTown_PokemonCenter_1F_OnTransition',
+            0x081F7035: 'VerdanturfTown_PokemonCenter_1F_EventScript_Nurse',
+            0x081F7043: 'VerdanturfTown_PokemonCenter_1F_EventScript_Gentleman',
+            0x081F704C: 'VerdanturfTown_PokemonCenter_1F_EventScript_ExpertM',
+        },
+        'texts': {
+            0x081F7055: 'VerdanturfTown_PokemonCenter_1F_Text_FaithInYourPokemon',
+            0x081F70A5: 'VerdanturfTown_PokemonCenter_1F_Text_VisitForBattleTent',
+        },
+        'external_labels': {
+            0x08242978: 'Common_EventScript_UpdateBrineyLocation',
+            0x082429B8: 'Common_EventScript_PkmnCenterNurse',
+            0x0824790F: 'CableClub_OnResume',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'heal_locations': {0x12: 'HEAL_LOCATION_VERDANTURF_TOWN'},
+            'vars': {0x800B: 'VAR_0x800B'},
+            'local_ids': {0x01: 'LOCALID_VERDANTURF_NURSE'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
