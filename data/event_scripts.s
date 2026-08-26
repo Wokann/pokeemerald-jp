@@ -888,7 +888,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/FieryPath/scripts.inc"
 	.include "data/maps/MtPyre_1F/scripts.inc"
 	.include "data/maps/MtPyre_2F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21625d, 0x8ec
+	.incbin "baserom_jp.gba", 0x2165f1, 0x558
 	.include "data/maps/MtPyre_Exterior/scripts.inc"
 	.include "data/maps/MtPyre_Summit/scripts.inc"
 	.incbin "baserom_jp.gba", 0x216f2b, 0xd85
@@ -1947,6 +1947,9 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set FieryPath_EventScript_ItemFireStone, 0x08256EE8
 	.globl FieryPath_EventScript_ItemTMToxic
 	.set FieryPath_EventScript_ItemTMToxic, 0x08256EF5
+	@ Mt. Pyre 2F's Ultra Ball entry remains in a later shared item owner.
+	.globl MtPyre_2F_EventScript_ItemUltraBall
+	.set MtPyre_2F_EventScript_ItemUltraBall, 0x08257054
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F

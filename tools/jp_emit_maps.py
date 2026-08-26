@@ -186,6 +186,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Mt. Pyre 1F follows Fiery Path. Its four NPC/item branches match the
     # local US source order through the adjacent four text records.
     'MtPyre_1F': 4,
+    # Mt. Pyre 2F owns its cracked-floor hook and seven local NPC/trainer
+    # branches through the next map-script table at 0x082165F1.
+    'MtPyre_2F': 8,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -199,6 +202,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'GraniteCave_B1F': ('SetHoleWarp',),
     'MtChimney': ('OnResume',),
     'JaggedPass': ('OnResume', 'OnLoad'),
+    'MtPyre_2F': ('SetHoleWarp',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -291,6 +295,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     'JaggedPass': 27,
     # Mt. Pyre 1F owns the four contiguous Cleanse Tag and NPC texts.
     'MtPyre_1F': 4,
+    # Mt. Pyre 2F owns its nineteen contiguous NPC and trainer text records.
+    'MtPyre_2F': 19,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6782,6 +6788,29 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             },
             'items': {0x00BE: 'ITEM_CLEANSE_TAG'},
             'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+    # Mt. Pyre 2F is the immediate next full script owner. Its cracked-floor
+    # hooks, seven NPC/trainer branches, and nineteen texts follow the US
+    # source order; the Ultra Ball remains in the later shared item owner.
+    'MtPyre_2F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08256F54: 'MtPyre_2F_EventScript_ItemUltraBall',
+            0x0826432F: 'CaveHole_CheckFallDownHole',
+            0x08264339: 'CaveHole_FixCrackedGround',
+        },
+        'symbols': {
+            'maps': {0x180F: 'MAP_MT_PYRE_1F'},
+            'step_callbacks': {0x07: 'STEP_CB_CRACKED_FLOOR'},
+            'trainers': {
+                0x001F: 'TRAINER_ZANDER',
+                0x0023: 'TRAINER_LEAH',
+                0x0091: 'TRAINER_MARK',
+                0x0280: 'TRAINER_DEZ_AND_LUKE',
+            },
         },
     },
 })
