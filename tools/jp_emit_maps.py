@@ -8118,6 +8118,49 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Verdanturf Mart follows the Battle Room. Its one-byte alignment prefix and
+# eleven-product Poké Mart list are part of the map's physical script range,
+# so keep that data named rather than leaving an otherwise semantic source raw.
+MAP_POKEMART_LISTS.update({
+    'VerdanturfTown_Mart': (
+        (0x081F6F3F, 'VerdanturfTown_Mart_Pokemart', (
+            'ITEM_GREAT_BALL',
+            'ITEM_NEST_BALL',
+            'ITEM_SUPER_POTION',
+            'ITEM_ANTIDOTE',
+            'ITEM_PARALYZE_HEAL',
+            'ITEM_AWAKENING',
+            'ITEM_BURN_HEAL',
+            'ITEM_ICE_HEAL',
+            'ITEM_REPEL',
+            'ITEM_X_SPECIAL',
+            'ITEM_FLUFFY_TAIL',
+        )),
+    ),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_Mart': {
+        'scripts': {
+            0x081F6F28: 'VerdanturfTown_Mart_EventScript_Clerk',
+            0x081F6F5A: 'VerdanturfTown_Mart_EventScript_Boy',
+            0x081F6F63: 'VerdanturfTown_Mart_EventScript_ExpertF',
+            0x081F6F6C: 'VerdanturfTown_Mart_EventScript_Lass',
+        },
+        'texts': {
+            0x081F6F75: 'VerdanturfTown_Mart_Text_XSpecialIsCrucial',
+            0x081F6FB5: 'VerdanturfTown_Mart_Text_NoStrategyGuidesForBattleTent',
+            0x081F6FF7: 'VerdanturfTown_Mart_Text_NestBallOnWeakenedPokemon',
+        },
+        'external_texts': {
+            0x0824390F: 'gText_HowMayIServeYou',
+            0x08243920: 'gText_PleaseComeAgain',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
