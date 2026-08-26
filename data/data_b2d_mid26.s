@@ -2284,19 +2284,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/DesertRuins/events.inc"
 	.globl gMapEvents_DESERT_RUINS
 	.set gMapEvents_DESERT_RUINS, DesertRuins_MapEvents
-	.globl GRANITE_CAVE_1F_EventObjects
-GRANITE_CAVE_1F_EventObjects: @ 0x0850CAE8
-	object_event 1, 55, 0, 36, 9, 3, 1, 0, 0, 0, 0, 0x08213EE2, 0x0000
-	object_event 2, 59, 0, 17, 7, 3, 8, 0, 0, 0, 0, 0x08256EA7, 0x041A
-	.globl GRANITE_CAVE_1F_EventWarps
-GRANITE_CAVE_1F_EventWarps: @ 0x0850CB18
-	warp_def 37, 12, 3, 0, MAP_ROUTE106
-	warp_def 35, 3, 3, 0, MAP_GRANITE_CAVE_B1F
-	warp_def 17, 11, 3, 1, MAP_GRANITE_CAVE_B1F
-	warp_def 5, 10, 3, 0, MAP_GRANITE_CAVE_STEVENS_ROOM
+	.include "data/maps/GraniteCave_1F/events.inc"
 	.globl gMapEvents_GRANITE_CAVE_1F
-gMapEvents_GRANITE_CAVE_1F: @ 0x0850CB38
-	map_events GRANITE_CAVE_1F_EventObjects, GRANITE_CAVE_1F_EventWarps, 0, 0
+	.set gMapEvents_GRANITE_CAVE_1F, GraniteCave_1F_MapEvents
 	.globl GRANITE_CAVE_B1F_EventObjects
 GRANITE_CAVE_B1F_EventObjects: @ 0x0850CB4C
 	object_event 1, 59, 0, 15, 21, 3, 1, 0, 0, 0, 0, 0x08256EB4, 0x041B

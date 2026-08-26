@@ -163,6 +163,8 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     'Underwater_SootopolisCity': 1,
     # Desert Ruins follows with three map hooks and nine local branches.
     'DesertRuins': 12,
+    # Granite Cave 1F follows with the Hiker's two local Flash branches.
+    'GraniteCave_1F': 2,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -251,6 +253,8 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Rusturf Tunnel owns sixteen contiguous dialogue records after its
     # map-local movement and trainer scripts.
     'RusturfTunnel': 16,
+    # Granite Cave 1F owns the Hiker's paired Flash messages.
+    'GraniteCave_1F': 2,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -6412,6 +6416,23 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
                 'setmetatile': (0, 1),
                 'setwildbattle': (1,),
             },
+        },
+    },
+    # Granite Cave 1F is the next physical owner. Its Hiker branch and two
+    # adjacent messages match the US Flash gift flow and item-ball reference.
+    'GraniteCave_1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08256EA7: 'GraniteCave_1F_EventScript_ItemEscapeRope',
+        },
+        'symbols': {
+            'flags': {0x006D: 'FLAG_RECEIVED_HM_FLASH'},
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+            },
+            'items': {0x0157: 'ITEM_HM_FLASH'},
         },
     },
 })

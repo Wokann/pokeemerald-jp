@@ -878,7 +878,7 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/RusturfTunnel/scripts.inc"
 	.include "data/maps/Underwater_SootopolisCity/scripts.inc"
 	.include "data/maps/DesertRuins/scripts.inc"
-	.incbin "baserom_jp.gba", 0x213ee1, 0x12a
+	.include "data/maps/GraniteCave_1F/scripts.inc"
 	.include "data/maps/GraniteCave_B1F/scripts.inc"
 	.include "data/maps/GraniteCave_B2F/scripts.inc"
 	.include "data/maps/GraniteCave_StevensRoom/scripts.inc"
@@ -1917,6 +1917,8 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set RusturfTunnel_EventScript_ItemPokeBall, 0x08256E8D
 	.globl RusturfTunnel_EventScript_ItemMaxEther
 	.set RusturfTunnel_EventScript_ItemMaxEther, 0x08256E9A
+	.globl GraniteCave_1F_EventScript_ItemEscapeRope
+	.set GraniteCave_1F_EventScript_ItemEscapeRope, 0x08256EA7
 	@ The Day-Care Woman logic remains inside the later shared raw owner.
 	@ Export its reviewed map-event entry without moving that owner early.
 	.globl Route117_PokemonDayCare_EventScript_DaycareWoman
