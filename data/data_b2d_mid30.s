@@ -4574,8 +4574,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_COZMOS_HOUSE (g5 m6)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte gMapEvents_FALLARBOR_TOWN_COZMOS_HOUSE  @ events
-	.4byte 0x081F5E78  @ mapScripts
+	.4byte FallarborTown_CozmosHouse_MapEvents  @ events
+	.4byte FallarborTown_CozmosHouse_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B5  @ music
 	.2byte 0x003B  @ mapLayoutId

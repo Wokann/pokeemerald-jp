@@ -7541,6 +7541,69 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Cozmo's House immediately follows the Cable Club floor. Its Meteorite
+# exchange and wife dialogue are fully local, and the nine JP text records
+# retain the exact semantic order of the matching US source. The explicit
+# result-target name below is limited to the post-call YES/NO branch; the
+# later giveitem result is independently proven as a boolean by its macro.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FallarborTown_CozmosHouse': {
+        'scripts': {
+            0x081F5E79: 'FallarborTown_CozmosHouse_EventScript_ProfCozmo',
+            0x081F5E9E: 'FallarborTown_CozmosHouse_EventScript_PlayerHasMeteorite',
+            0x081F5EF1: 'FallarborTown_CozmosHouse_EventScript_NoticeMeteorite',
+            0x081F5F02: 'FallarborTown_CozmosHouse_EventScript_AskForMeteorite',
+            0x081F5F0B: 'FallarborTown_CozmosHouse_EventScript_DeclineGiveMeteorite',
+            0x081F5F18: 'FallarborTown_CozmosHouse_EventScript_GaveMeteorite',
+            0x081F5F22: 'FallarborTown_CozmosHouse_EventScript_CozmosWife',
+            0x081F5F40: 'FallarborTown_CozmosHouse_EventScript_CozmoIsSad',
+            0x081F5F4A: 'FallarborTown_CozmosHouse_EventScript_CozmoIsHappy',
+        },
+        'texts': {
+            0x081F5F54: 'FallarborTown_CozmosHouse_Text_MeteoriteWillNeverBeMineNow',
+            0x081F5FBC: 'FallarborTown_CozmosHouse_Text_IsThatMeteoriteMayIHaveIt',
+            0x081F6035: 'FallarborTown_CozmosHouse_Text_PleaseUseThisTM',
+            0x081F605B: 'FallarborTown_CozmosHouse_Text_ReallyGoingToHelpMyResearch',
+            0x081F6085: 'FallarborTown_CozmosHouse_Text_CrushedWithDisappointment',
+            0x081F609F: 'FallarborTown_CozmosHouse_Text_MayIHaveMeteorite',
+            0x081F60E3: 'FallarborTown_CozmosHouse_Text_CozmoWentToMeteorFalls',
+            0x081F611C: 'FallarborTown_CozmosHouse_Text_FeelSorryForCozmo',
+            0x081F6138: 'FallarborTown_CozmosHouse_Text_CozmoIsSoHappy',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08243467: 'Common_EventScript_PlayerHandedOverTheItem',
+        },
+        'result_condition_values': {
+            0x081F5E9E: {
+                'FallarborTown_CozmosHouse_EventScript_DeclineGiveMeteorite': 'NO',
+            },
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'symbols': {
+            'flags': {
+                0x0002: 'FLAG_TEMP_2',
+                0x008B: 'FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY',
+                0x00E5: 'FLAG_RECEIVED_TM_RETURN',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081F5E9E: {0x8004: {0x0118: 'ITEM_METEORITE'}},
+            },
+            'items': {
+                0x0118: 'ITEM_METEORITE',
+                0x013B: 'ITEM_TM_RETURN',
+            },
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
@@ -12696,6 +12759,34 @@ def collapse_switch_macros(lines, value_names=None, minimum_cases=2):
     return out
 
 
+def name_reviewed_result_conditions(lines, target_value_names):
+    """Name an otherwise ambiguous VAR_RESULT=0 branch by reviewed target.
+
+    A caller can receive VAR_RESULT from a subscript whose local producer is
+    not adjacent in the decoded instruction stream.  Restrict this fallback
+    to an explicitly reviewed target label and the literal zero value so it
+    cannot assign a plausible type to an unrelated result branch.
+    """
+    if not target_value_names:
+        return lines
+
+    out = []
+    for name, argstr in lines:
+        parts = [part.strip() for part in argstr.split(',')]
+        if (name in ('goto_if_eq', 'goto_if_ne', 'call_if_eq', 'call_if_ne')
+                and len(parts) == 3 and parts[0] == 'VAR_RESULT'
+                and parts[2] in target_value_names):
+            try:
+                value = int(parts[1], 0)
+            except ValueError:
+                value = None
+            if value == 0:
+                parts[1] = target_value_names[parts[2]]
+                argstr = ', '.join(parts)
+        out.append((name, argstr))
+    return out
+
+
 def name_contextual_result_conditions(lines, literal_result_commands=()):
     """Name result values only when their producing command proves the type.
 
@@ -13813,6 +13904,9 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_moneybox_macros(decoded_lines)
             decoded_lines = omit_default_macro_arguments(decoded_lines)
             decoded_lines = annotate_literal_copyvars(decoded_lines)
+            decoded_lines = name_reviewed_result_conditions(
+                decoded_lines,
+                semantic.get('result_condition_values', {}).get(addr, {}))
             decoded_lines = name_contextual_result_conditions(
                 decoded_lines, semantic.get('literal_result_commands', ()))
             for name, argstr in decoded_lines:

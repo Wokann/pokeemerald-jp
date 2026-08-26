@@ -832,8 +832,6 @@ gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
 	.include "data/maps/FallarborTown_PokemonCenter_1F/events.inc"
 	.include "data/maps/FallarborTown_PokemonCenter_2F/events.inc"
 	.include "data/maps/FallarborTown_CozmosHouse/events.inc"
-	.globl gMapEvents_FALLARBOR_TOWN_COZMOS_HOUSE
-	.set gMapEvents_FALLARBOR_TOWN_COZMOS_HOUSE, FallarborTown_CozmosHouse_MapEvents
 	.include "data/maps/FallarborTown_MoveRelearnersHouse/events.inc"
 	.globl gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE
 	.set gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE, FallarborTown_MoveRelearnersHouse_MapEvents
