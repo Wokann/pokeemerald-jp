@@ -3,11 +3,11 @@
 LilycoveCity_LilycoveMuseum_1F_MapScripts::
 	.byte 0
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_Greeter::
+LilycoveCity_LilycoveMuseum_1F_EventScript_Greeter:: @ 0x08205BE3
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_WelcomeToLilycoveMuseum, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_Curator::
+LilycoveCity_LilycoveMuseum_1F_EventScript_Curator:: @ 0x08205BEC
 	lockall
 	applymovement LOCALID_MUSEUM_1F_CURATOR, Common_Movement_FacePlayer
 	message LilycoveCity_LilycoveMuseum_1F_Text_ImCuratorHaveYouViewedOurPaintings
@@ -17,22 +17,22 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_Curator::
 	goto_if_eq VAR_RESULT, 1, LilycoveCity_LilycoveMuseum_1F_EventScript_NotYet
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_NotYet::
+LilycoveCity_LilycoveMuseum_1F_EventScript_NotYet:: @ 0x08205C16
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_NotDisturbYouTakeYourTime, MSGBOX_NPC
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_SawPaintings::
+LilycoveCity_LilycoveMuseum_1F_EventScript_SawPaintings:: @ 0x08205C1F
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_HaveYouAnInterestInPaintings, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested
 	goto_if_eq VAR_RESULT, YES, LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested::
+LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested:: @ 0x08205C3E
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_HonoredYoudVisitInSpiteOfThat, MSGBOX_SIGN
 	releaseall
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings::
+LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings:: @ 0x08205C48
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_ExcellentCanYouComeWithMe, MSGBOX_SIGN
 	applymovement LOCALID_MUSEUM_1F_CURATOR, LilycoveCity_LilycoveMuseum_1F_Movement_CuratorEnterStairs
 	waitmovement 0
@@ -43,7 +43,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings::
 	case DIR_EAST, LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorEast
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorNorth::
+LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorNorth:: @ 0x08205C84
 	lockall
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorNorth
 	waitmovement 0
@@ -51,7 +51,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorNorth::
 	waitstate
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorWest::
+LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorWest:: @ 0x08205C99
 	lockall
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorWest
 	waitmovement 0
@@ -59,7 +59,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorWest::
 	waitstate
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorEast::
+LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorEast:: @ 0x08205CAE
 	lockall
 	applymovement LOCALID_PLAYER, LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorEast
 	waitmovement 0
@@ -86,67 +86,67 @@ LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorNorth:
 	walk_up
 	step_end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_OldPainting::
+LilycoveCity_LilycoveMuseum_1F_EventScript_OldPainting:: @ 0x08205CCE
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_VeryOldPainting, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_FantasyPainting::
+LilycoveCity_LilycoveMuseum_1F_EventScript_FantasyPainting:: @ 0x08205CD7
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_OddLandscapeFantasticScenery, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_WomanPainting::
+LilycoveCity_LilycoveMuseum_1F_EventScript_WomanPainting:: @ 0x08205CE0
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_PaintingOfBeautifulWoman, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_LegendaryPokemonPainting::
+LilycoveCity_LilycoveMuseum_1F_EventScript_LegendaryPokemonPainting:: @ 0x08205CE9
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_PaintingOfLegendaryPokemon, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_GrassPokemonPainting::
+LilycoveCity_LilycoveMuseum_1F_EventScript_GrassPokemonPainting:: @ 0x08205CF2
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_PaintingOfGrassPokemon, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_BerryPainting::
+LilycoveCity_LilycoveMuseum_1F_EventScript_BerryPainting:: @ 0x08205CFB
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_PaintingOfBerries, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_EventScript_BirdSculpture::
+LilycoveCity_LilycoveMuseum_EventScript_BirdSculpture:: @ 0x08205D04
 	msgbox LilycoveCity_LilycoveMuseum_Text_BirdPokemonSculptureReplica, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_PokeBallSculpture::
+LilycoveCity_LilycoveMuseum_1F_EventScript_PokeBallSculpture:: @ 0x08205D0D
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_BigPokeBallCarvedFromStone, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_StoneTablet::
+LilycoveCity_LilycoveMuseum_1F_EventScript_StoneTablet:: @ 0x08205D16
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_StoneTabletWithAncientText, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_SchoolKidM::
+LilycoveCity_LilycoveMuseum_1F_EventScript_SchoolKidM:: @ 0x08205D1F
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_MustntForgetLoveForFineArts, MSGBOX_NPC
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_Artist1::
+LilycoveCity_LilycoveMuseum_1F_EventScript_Artist1:: @ 0x08205D28
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_ThisMuseumIsInspiration, MSGBOX_NPC
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_NinjaBoy::
+LilycoveCity_LilycoveMuseum_1F_EventScript_NinjaBoy:: @ 0x08205D31
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_ThisLadyIsPretty, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_Woman1::
+LilycoveCity_LilycoveMuseum_1F_EventScript_Woman1:: @ 0x08205D3A
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_ThisPokemonIsAdorable, MSGBOX_SIGN
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_Woman2::
+LilycoveCity_LilycoveMuseum_1F_EventScript_Woman2:: @ 0x08205D43
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_HeardMuseumGotNewPaintings, MSGBOX_NPC
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_PsychicM::
+LilycoveCity_LilycoveMuseum_1F_EventScript_PsychicM:: @ 0x08205D4C
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_CuratorHasBeenCheerful, MSGBOX_NPC
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_Artist2::
+LilycoveCity_LilycoveMuseum_1F_EventScript_Artist2:: @ 0x08205D55
 	lock
 	faceplayer
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_AimToSeeGreatPaintings, MSGBOX_DEFAULT
@@ -156,7 +156,7 @@ LilycoveCity_LilycoveMuseum_1F_EventScript_Artist2::
 	release
 	end
 
-LilycoveCity_LilycoveMuseum_1F_EventScript_FatMan::
+LilycoveCity_LilycoveMuseum_1F_EventScript_FatMan:: @ 0x08205D6C
 	msgbox LilycoveCity_LilycoveMuseum_1F_Text_MuseumTouristDestination, MSGBOX_NPC
 	end
 

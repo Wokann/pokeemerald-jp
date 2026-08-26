@@ -11220,6 +11220,118 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+MAP_MOVEMENT_SCRIPT_LABELS.update({
+    'LilycoveCity_LilycoveMuseum_1F': {
+        0x08205CC3: 'LilycoveCity_LilycoveMuseum_1F_Movement_CuratorEnterStairs',
+        0x08205CC5: 'LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorWest',
+        0x08205CC8: 'LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorEast',
+        0x08205CCB: 'LilycoveCity_LilycoveMuseum_1F_Movement_FollowCuratorNorth',
+    },
+})
+
+# This unused curator-review text is physically owned by Museum 1F and lies
+# between the local sign/NPC messages. Keep it decoded instead of treating it
+# as an opaque raw gap merely because no event pointer reaches it.
+MAP_AUXILIARY_TEXT_ADDRESSES.update({
+    'LilycoveCity_LilycoveMuseum_1F': (0x0820600F,),
+})
+
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'LilycoveCity_LilycoveMuseum_1F': {
+        'scripts': {
+            0x08205BE3: 'LilycoveCity_LilycoveMuseum_1F_EventScript_Greeter',
+            0x08205BEC: 'LilycoveCity_LilycoveMuseum_1F_EventScript_Curator',
+            0x08205C16: 'LilycoveCity_LilycoveMuseum_1F_EventScript_NotYet',
+            0x08205C1F: 'LilycoveCity_LilycoveMuseum_1F_EventScript_SawPaintings',
+            0x08205C3E: 'LilycoveCity_LilycoveMuseum_1F_EventScript_NotInterested',
+            0x08205C48: 'LilycoveCity_LilycoveMuseum_1F_EventScript_InterestedInPaintings',
+            0x08205C84: 'LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorNorth',
+            0x08205C99: 'LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorWest',
+            0x08205CAE: 'LilycoveCity_LilycoveMuseum_1F_EventScript_FollowCuratorEast',
+            0x08205CCE: 'LilycoveCity_LilycoveMuseum_1F_EventScript_OldPainting',
+            0x08205CD7: 'LilycoveCity_LilycoveMuseum_1F_EventScript_FantasyPainting',
+            0x08205CE0: 'LilycoveCity_LilycoveMuseum_1F_EventScript_WomanPainting',
+            0x08205CE9: 'LilycoveCity_LilycoveMuseum_1F_EventScript_LegendaryPokemonPainting',
+            0x08205CF2: 'LilycoveCity_LilycoveMuseum_1F_EventScript_GrassPokemonPainting',
+            0x08205CFB: 'LilycoveCity_LilycoveMuseum_1F_EventScript_BerryPainting',
+            0x08205D04: 'LilycoveCity_LilycoveMuseum_EventScript_BirdSculpture',
+            0x08205D0D: 'LilycoveCity_LilycoveMuseum_1F_EventScript_PokeBallSculpture',
+            0x08205D16: 'LilycoveCity_LilycoveMuseum_1F_EventScript_StoneTablet',
+            0x08205D1F: 'LilycoveCity_LilycoveMuseum_1F_EventScript_SchoolKidM',
+            0x08205D28: 'LilycoveCity_LilycoveMuseum_1F_EventScript_Artist1',
+            0x08205D31: 'LilycoveCity_LilycoveMuseum_1F_EventScript_NinjaBoy',
+            0x08205D3A: 'LilycoveCity_LilycoveMuseum_1F_EventScript_Woman1',
+            0x08205D43: 'LilycoveCity_LilycoveMuseum_1F_EventScript_Woman2',
+            0x08205D4C: 'LilycoveCity_LilycoveMuseum_1F_EventScript_PsychicM',
+            0x08205D55: 'LilycoveCity_LilycoveMuseum_1F_EventScript_Artist2',
+            0x08205D6C: 'LilycoveCity_LilycoveMuseum_1F_EventScript_FatMan',
+        },
+        'texts': {
+            0x08205D75: 'LilycoveCity_LilycoveMuseum_1F_Text_WelcomeToLilycoveMuseum',
+            0x08205DBB: 'LilycoveCity_LilycoveMuseum_1F_Text_ImCuratorHaveYouViewedOurPaintings',
+            0x08205E10: 'LilycoveCity_LilycoveMuseum_1F_Text_NotDisturbYouTakeYourTime',
+            0x08205E33: 'LilycoveCity_LilycoveMuseum_1F_Text_HaveYouAnInterestInPaintings',
+            0x08205E63: 'LilycoveCity_LilycoveMuseum_1F_Text_HonoredYoudVisitInSpiteOfThat',
+            0x08205E89: 'LilycoveCity_LilycoveMuseum_1F_Text_ExcellentCanYouComeWithMe',
+            0x08205EBA: 'LilycoveCity_LilycoveMuseum_1F_Text_VeryOldPainting',
+            0x08205EDD: 'LilycoveCity_LilycoveMuseum_1F_Text_OddLandscapeFantasticScenery',
+            0x08205EFB: 'LilycoveCity_LilycoveMuseum_1F_Text_PaintingOfBeautifulWoman',
+            0x08205F22: 'LilycoveCity_LilycoveMuseum_1F_Text_PaintingOfLegendaryPokemon',
+            0x08205F45: 'LilycoveCity_LilycoveMuseum_1F_Text_PaintingOfGrassPokemon',
+            0x08205F6E: 'LilycoveCity_LilycoveMuseum_1F_Text_PaintingOfBerries',
+            0x08205F90: 'LilycoveCity_LilycoveMuseum_Text_BirdPokemonSculptureReplica',
+            0x08205FB5: 'LilycoveCity_LilycoveMuseum_1F_Text_BigPokeBallCarvedFromStone',
+            0x08205FE8: 'LilycoveCity_LilycoveMuseum_1F_Text_StoneTabletWithAncientText',
+            0x0820600F: 'LilycoveCity_LilycoveMuseum_1F_Text_WorksOfMagnificence',
+            0x08206021: 'LilycoveCity_LilycoveMuseum_1F_Text_MustntForgetLoveForFineArts',
+            0x0820604F: 'LilycoveCity_LilycoveMuseum_1F_Text_ThisMuseumIsInspiration',
+            0x0820609D: 'LilycoveCity_LilycoveMuseum_1F_Text_ThisLadyIsPretty',
+            0x082060B6: 'LilycoveCity_LilycoveMuseum_1F_Text_ThisPokemonIsAdorable',
+            0x082060D2: 'LilycoveCity_LilycoveMuseum_1F_Text_HeardMuseumGotNewPaintings',
+            0x08206113: 'LilycoveCity_LilycoveMuseum_1F_Text_CuratorHasBeenCheerful',
+            0x0820613F: 'LilycoveCity_LilycoveMuseum_1F_Text_AimToSeeGreatPaintings',
+            0x08206184: 'LilycoveCity_LilycoveMuseum_1F_Text_MuseumTouristDestination',
+        },
+        'external_labels': {
+            0x08243621: 'Common_Movement_FacePlayer',
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+        },
+        'symbols': {
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x800C: 'VAR_FACING',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x08205C1F: {0x800D: {0x00: 'NO', 0x01: 'YES'}},
+            },
+            'local_ids': {
+                0x02: 'LOCALID_MUSEUM_1F_CURATOR',
+                0x08: 'LOCALID_MUSEUM_1F_ARTIST_2',
+                0xFF: 'LOCALID_PLAYER',
+            },
+            'maps': {0x0D03: 'MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F'},
+            'multichoices': {0x10: 'MULTI_VIEWED_PAINTINGS'},
+            'switch_values': {
+                'VAR_FACING': {
+                    0x02: 'DIR_NORTH',
+                    0x03: 'DIR_WEST',
+                    0x04: 'DIR_EAST',
+                },
+            },
+            'booleans': {0x01: 'TRUE'},
+            'decimal_arguments': {
+                'compare_var_to_value': (1,),
+                'multichoice': (0, 1),
+                'waitmovement': (0,),
+                'warp': (1, 2, 3),
+            },
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.
