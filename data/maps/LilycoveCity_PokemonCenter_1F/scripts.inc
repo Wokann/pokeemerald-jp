@@ -5,7 +5,7 @@ LilycoveCity_PokemonCenter_1F_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-LilycoveCity_PokemonCenter_1F_OnTransition:: @ 0x08208255
+LilycoveCity_PokemonCenter_1F_OnTransition: @ 0x08208255
 	setrespawn HEAL_LOCATION_LILYCOVE_CITY
 	goto LilycoveCity_PokemonCenter_1F_EventScript_SetLilycoveLadyGfx
 	end

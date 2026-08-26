@@ -985,8 +985,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_ContestLobby/events.inc"
 	.include "data/maps/LilycoveCity_ContestHall/events.inc"
 	.include "data/maps/LilycoveCity_PokemonCenter_1F/events.inc"
-	.globl gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_1F
-	.set gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_1F, LilycoveCity_PokemonCenter_1F_MapEvents
 	.include "data/maps/LilycoveCity_PokemonCenter_2F/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F
 	.set gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F, LilycoveCity_PokemonCenter_2F_MapEvents

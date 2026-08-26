@@ -11831,6 +11831,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
 # external calls and numeric operands needed to render that source faithfully.
 MAP_VERIFIED_SEMANTIC_LABELS.update({
     'LilycoveCity_PokemonCenter_1F': {
+        'local_scripts': (0x08208255,),
+        'preserve_region_script_aliases': False,
         'preserve_region_text_aliases': False,
         'external_labels': {
             0x082429B8: 'Common_EventScript_PkmnCenterNurse',
