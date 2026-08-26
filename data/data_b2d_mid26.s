@@ -992,8 +992,6 @@ gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
 	.include "data/maps/LilycoveCity_MoveDeletersHouse/events.inc"
 	.include "data/maps/LilycoveCity_House1/events.inc"
 	.include "data/maps/LilycoveCity_House2/events.inc"
-	.globl gMapEvents_LILYCOVE_CITY_HOUSE2
-	.set gMapEvents_LILYCOVE_CITY_HOUSE2, LilycoveCity_House2_MapEvents
 	.include "data/maps/LilycoveCity_House3/events.inc"
 	.globl gMapEvents_LILYCOVE_CITY_HOUSE3
 	.set gMapEvents_LILYCOVE_CITY_HOUSE3, LilycoveCity_House3_MapEvents
