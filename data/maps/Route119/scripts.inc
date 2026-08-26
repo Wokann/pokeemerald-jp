@@ -5,36 +5,36 @@ Route119_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route119_OnTransition
 	.byte 0
 
-Route119_OnResume::
+Route119_OnResume:
 	call_if_set FLAG_SYS_CTRL_OBJ_DELETE, Route119_EventScript_TryRemoveKecleon
 	end
 
 Route119_EventScript_TryRemoveKecleon::
 	specialvar VAR_RESULT, GetBattleOutcome
-	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, 0x08244178
+	goto_if_ne VAR_RESULT, B_OUTCOME_CAUGHT, Common_EventScript_NopReturn
 	removeobject VAR_LAST_TALKED
 	return
 
-Route119_OnTransition::
-	call 0x08242F63
-	call 0x08242F87
-	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 0x1, Route119_EventScript_MoveInstituteWorkersDownstairs
+Route119_OnTransition:
+	call Common_EventScript_SetupRivalGfxId
+	call Common_EventScript_SetupRivalOnBikeGfxId
+	call_if_eq VAR_WEATHER_INSTITUTE_STATE, 1, Route119_EventScript_MoveInstituteWorkersDownstairs
 	special SetRoute119Weather
 	end
 
 Route119_EventScript_MoveInstituteWorkersDownstairs::
 	setflag FLAG_HIDE_WEATHER_INSTITUTE_2F_WORKERS
 	clearflag FLAG_HIDE_WEATHER_INSTITUTE_1F_WORKERS
-	setvar VAR_WEATHER_INSTITUTE_STATE, 0x2
+	setvar VAR_WEATHER_INSTITUTE_STATE, 2
 	return
 
 Route119_EventScript_RivalTrigger1::
-	setvar VAR_TEMP_1, 0x1
+	setvar VAR_TEMP_1, 1
 	goto Route119_EventScript_RivalEncounter
 	end
 
 Route119_EventScript_RivalTrigger2::
-	setvar VAR_TEMP_1, 0x2
+	setvar VAR_TEMP_1, 2
 	goto Route119_EventScript_RivalEncounter
 	end
 
@@ -44,17 +44,17 @@ Route119_EventScript_RivalEncounter::
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, Route119_EventScript_PlayMayMusic
 	call_if_eq VAR_RESULT, FEMALE, Route119_EventScript_PlayBrendanMusic
-	delay 0x41
-	call_if_eq VAR_TEMP_1, 0x1, Route119_EventScript_RivalEnter1
-	call_if_eq VAR_TEMP_1, 0x2, Route119_EventScript_RivalEnter2
-	applymovement LOCALID_PLAYER, 0x0824362D
-	waitmovement 0x0
-	delay 0x1E
-	call_if_eq VAR_TEMP_1, 0x1, Route119_EventScript_SetRivalPos1
-	call_if_eq VAR_TEMP_1, 0x2, Route119_EventScript_SetRivalPos2
+	delay 65
+	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_RivalEnter1
+	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_RivalEnter2
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	delay 30
+	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_SetRivalPos1
+	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_SetRivalPos2
 	removeobject LOCALID_ROUTE119_RIVAL_ON_BIKE
 	addobject LOCALID_ROUTE119_RIVAL
-	delay 0x1E
+	delay 30
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, Route119_EventScript_BattleMay
 	goto_if_eq VAR_RESULT, FEMALE, Route119_EventScript_BattleBrendan
@@ -71,10 +71,10 @@ Route119_EventScript_PlayBrendanMusic::
 
 Route119_EventScript_BattleMay::
 	msgbox Route119_Text_MayIntro, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_STARTER_MON
-	goto_if_eq VAR_0x8000, 0x0, Route119_EventScript_BattleMayTreecko
-	goto_if_eq VAR_0x8000, 0x1, Route119_EventScript_BattleMayTorchic
-	goto_if_eq VAR_0x8000, 0x2, Route119_EventScript_BattleMayMudkip
+	switch VAR_STARTER_MON
+	case 0, Route119_EventScript_BattleMayTreecko
+	case 1, Route119_EventScript_BattleMayTorchic
+	case 2, Route119_EventScript_BattleMayMudkip
 	end
 
 Route119_EventScript_BattleMayTreecko::
@@ -101,10 +101,10 @@ Route119_EventScript_DefeatedMay::
 
 Route119_EventScript_BattleBrendan::
 	msgbox Route119_Text_BrendanIntro, MSGBOX_DEFAULT
-	copyvar VAR_0x8000, VAR_STARTER_MON
-	goto_if_eq VAR_0x8000, 0x0, Route119_EventScript_BattleBrendanTreecko
-	goto_if_eq VAR_0x8000, 0x1, Route119_EventScript_BattleBrendanTorchic
-	goto_if_eq VAR_0x8000, 0x2, Route119_EventScript_BattleBrendanMudkip
+	switch VAR_STARTER_MON
+	case 0, Route119_EventScript_BattleBrendanTreecko
+	case 1, Route119_EventScript_BattleBrendanTorchic
+	case 2, Route119_EventScript_BattleBrendanMudkip
 	end
 
 Route119_EventScript_BattleBrendanTreecko::
@@ -130,88 +130,86 @@ Route119_EventScript_DefeatedBrendan::
 	end
 
 Route119_EventScript_GiveFlyHM::
-	setorcopyvar VAR_0x8000, ITEM_HM02
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
+	giveitem ITEM_HM02
 	setflag FLAG_RECEIVED_HM_FLY
 	return
 
 Route119_EventScript_RivalExitScottArrive::
 	closemessage
-	call_if_eq VAR_TEMP_1, 0x1, Route119_EventScript_SetRivalPos1
-	call_if_eq VAR_TEMP_1, 0x2, Route119_EventScript_SetRivalPos2
+	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_SetRivalPos1
+	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_SetRivalPos2
 	removeobject LOCALID_ROUTE119_RIVAL
 	addobject LOCALID_ROUTE119_RIVAL_ON_BIKE
-	delay 0x1E
-	call_if_eq VAR_TEMP_1, 0x1, Route119_EventScript_RivalExit1
-	call_if_eq VAR_TEMP_1, 0x2, Route119_EventScript_RivalExit2
+	delay 30
+	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_RivalExit1
+	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_RivalExit2
 	removeobject LOCALID_ROUTE119_RIVAL_ON_BIKE
-	setvar VAR_ROUTE119_STATE, 0x1
+	setvar VAR_ROUTE119_STATE, 1
 	savebgm MUS_DUMMY
 	fadedefaultbgm
-	delay 0x3C
-	call_if_eq VAR_TEMP_1, 0x1, Route119_EventScript_SetScottPos1
-	call_if_eq VAR_TEMP_1, 0x2, Route119_EventScript_SetScottPos2
+	delay 60
+	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_SetScottPos1
+	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_SetScottPos2
 	addobject LOCALID_ROUTE119_SCOTT
 	applymovement LOCALID_ROUTE119_SCOTT, Route119_Movement_ScottEnter
-	waitmovement 0x0
-	addvar VAR_SCOTT_STATE, 0x1
+	waitmovement 0
+	addvar VAR_SCOTT_STATE, 1
 	msgbox Route119_Text_ScottWayToGoBeSeeingYou, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_TEMP_1, 0x1, Route119_EventScript_ScottExit1
-	call_if_eq VAR_TEMP_1, 0x2, Route119_EventScript_ScottExit2
+	call_if_eq VAR_TEMP_1, 1, Route119_EventScript_ScottExit1
+	call_if_eq VAR_TEMP_1, 2, Route119_EventScript_ScottExit2
 	removeobject LOCALID_ROUTE119_SCOTT
 	releaseall
 	end
 
 Route119_EventScript_SetScottPos1::
-	setobjectxyperm LOCALID_ROUTE119_SCOTT, 0x1B, 0x19
+	setobjectxyperm LOCALID_ROUTE119_SCOTT, 27, 25
 	return
 
 Route119_EventScript_SetScottPos2::
-	setobjectxyperm LOCALID_ROUTE119_SCOTT, 0x1C, 0x19
+	setobjectxyperm LOCALID_ROUTE119_SCOTT, 28, 25
 	return
 
 Route119_EventScript_ScottExit1::
 	applymovement LOCALID_ROUTE119_SCOTT, Route119_Movement_ScottExit1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route119_EventScript_ScottExit2::
 	applymovement LOCALID_ROUTE119_SCOTT, Route119_Movement_ScottExit2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route119_EventScript_RivalEnter1::
 	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalEnter1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route119_EventScript_RivalEnter2::
 	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalEnter2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route119_EventScript_RivalExit1::
 	applymovement LOCALID_PLAYER, Route119_Movement_PlayerWatchRivalExit1
 	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalExit1
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route119_EventScript_RivalExit2::
 	applymovement LOCALID_PLAYER, Route119_Movement_PlayerWatchRivalExit2
 	applymovement LOCALID_ROUTE119_RIVAL_ON_BIKE, Route119_Movement_RivalExit2
-	waitmovement 0x0
+	waitmovement 0
 	return
 
 Route119_EventScript_SetRivalPos1::
-	setobjectxyperm LOCALID_ROUTE119_RIVAL, 0x19, 0x20
-	setobjectxyperm LOCALID_ROUTE119_RIVAL_ON_BIKE, 0x19, 0x20
+	setobjectxyperm LOCALID_ROUTE119_RIVAL, 25, 32
+	setobjectxyperm LOCALID_ROUTE119_RIVAL_ON_BIKE, 25, 32
 	return
 
 Route119_EventScript_SetRivalPos2::
-	setobjectxyperm LOCALID_ROUTE119_RIVAL, 0x1A, 0x20
-	setobjectxyperm LOCALID_ROUTE119_RIVAL_ON_BIKE, 0x1A, 0x20
+	setobjectxyperm LOCALID_ROUTE119_RIVAL, 26, 32
+	setobjectxyperm LOCALID_ROUTE119_RIVAL_ON_BIKE, 26, 32
 	return
 
 Route119_Movement_PlayerWatchRivalExit1:
@@ -361,7 +359,7 @@ Route119_EventScript_Jackson::
 
 Route119_EventScript_RegisterJackson::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route119_Text_JacksonRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_JACKSON_1
 	release
@@ -382,7 +380,7 @@ Route119_EventScript_Catherine::
 
 Route119_EventScript_RegisterCatherine::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route119_Text_CatherineRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_CATHERINE_1
 	release
@@ -443,8 +441,8 @@ Route119_EventScript_BridgeAquaGrunt1::
 	faceplayer
 	msgbox Route119_Text_StayAwayFromWeatherInstitute, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
@@ -453,8 +451,8 @@ Route119_EventScript_BridgeAquaGrunt2::
 	faceplayer
 	msgbox Route119_Text_DontGoNearWeatherInstitute, MSGBOX_DEFAULT
 	closemessage
-	applymovement VAR_LAST_TALKED, 0x08243625
-	waitmovement 0x0
+	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
+	waitmovement 0
 	release
 	end
 
@@ -475,7 +473,7 @@ Route119_EventScript_ScottWonAtFortreeGymCall::
 	pokenavcall Route119_Text_ScottYouWonAtFortreeGym
 	waitmessage
 	clearflag FLAG_SCOTT_CALL_FORTREE_GYM
-	addvar VAR_SCOTT_STATE, 0x1
+	addvar VAR_SCOTT_STATE, 1
 	releaseall
 	end
 

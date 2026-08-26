@@ -166,7 +166,39 @@ Route118_EventScript_ItemHyperPotion:: @ 0x08256C2A
 	finditem ITEM_HYPER_POTION
 	end
 
-	.incbin "baserom_jp.gba", 0x256c37, 0xd0
+Route119_EventScript_ItemSuperRepel:: @ 0x08256C37
+	finditem ITEM_SUPER_REPEL
+	end
+
+Route119_EventScript_ItemZinc:: @ 0x08256C44
+	finditem ITEM_ZINC
+	end
+
+Route119_EventScript_ItemElixir:: @ 0x08256C51
+	finditem ITEM_ELIXIR
+	end
+
+Route119_EventScript_ItemLeafStone:: @ 0x08256C5E
+	finditem ITEM_LEAF_STONE
+	end
+
+Route119_EventScript_ItemRareCandy:: @ 0x08256C6B
+	finditem ITEM_RARE_CANDY
+	end
+
+Route119_EventScript_ItemHyperPotion:: @ 0x08256C78
+	finditem ITEM_HYPER_POTION
+	end
+
+Route119_EventScript_ItemHyperPotion2:: @ 0x08256C85
+	finditem ITEM_HYPER_POTION
+	end
+
+Route119_EventScript_ItemElixir2:: @ 0x08256C92
+	finditem ITEM_ELIXIR
+	end
+
+	.incbin "baserom_jp.gba", 0x256c9f, 0x68
 
 Route123_EventScript_ItemCalcium:: @ 0x08256D07
 	finditem ITEM_CALCIUM
@@ -272,7 +304,13 @@ MossdeepCity_EventScript_ItemNetBall:: @ 0x08256E4C
 	finditem ITEM_NET_BALL
 	end
 
-	.incbin "baserom_jp.gba", 0x256e59, 0x2ff
+	.incbin "baserom_jp.gba", 0x256e59, 0x297
+
+Route119_EventScript_ItemNugget:: @ 0x082570F0
+	finditem ITEM_NUGGET
+	end
+
+	.incbin "baserom_jp.gba", 0x2570fd, 0x5b
 
 SeafloorCavern_Room9_EventScript_ItemTMEarthquake:: @ 0x08257158
 	finditem ITEM_TM_EARTHQUAKE

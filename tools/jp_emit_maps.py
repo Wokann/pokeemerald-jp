@@ -4705,6 +4705,13 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
             0x081ED5EB: {0x01: 'PLAYER', 0x05: 'KUN'},
         },
         'external_texts': VERIFIED_SHARED_TEXT_BLOCKS['Route119']['labels'],
+        'external_labels': {
+            0x08243625: 'Common_Movement_FaceOriginalDirection',
+            0x0824362D: 'Common_Movement_WalkInPlaceFasterDown',
+            0x08244178: 'Common_EventScript_NopReturn',
+            0x08242F63: 'Common_EventScript_SetupRivalGfxId',
+            0x08242F87: 'Common_EventScript_SetupRivalOnBikeGfxId',
+        },
         'specials': {'sub_080B3F60': 'PlayerFaceTrainerAfterBattle'},
         'symbols': {
             'flags': {

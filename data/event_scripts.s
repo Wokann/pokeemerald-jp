@@ -364,8 +364,6 @@
 	.set MatchCall_Text_MayRayquazaCall, 0x0826AB1B
 	.globl MatchCall_Text_BrendanRayquazaCall
 	.set MatchCall_Text_BrendanRayquazaCall, 0x0826ABC8
-	.globl Common_Movement_WalkInPlaceFasterDown
-	.set Common_Movement_WalkInPlaceFasterDown, 0x0824362D
 	@ This shared movement stream remains in the retained JP movement block.
 	.globl Common_Movement_QuestionMark
 	.set Common_Movement_QuestionMark, 0x08243619
