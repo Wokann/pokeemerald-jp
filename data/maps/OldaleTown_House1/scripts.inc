@@ -3,11 +3,11 @@
 OldaleTown_House1_MapScripts::
 	.byte 0
 
-OldaleTown_House1_EventScript_Woman::
+OldaleTown_House1_EventScript_Woman:: @ 0x081F28D4
 	msgbox OldaleTown_House1_Text_LeftPokemonGoesOutFirst, MSGBOX_NPC
 	end
 
-OldaleTown_House1_Text_LeftPokemonGoesOutFirst:
+OldaleTown_House1_Text_LeftPokemonGoesOutFirst: @ 0x081F28DD
 	.string "ポケモンしょうぶの　とき\n"
 	.string "ポケモンの　リストの　ひだりに　いる\l"
 	.string "ポケモンが　とびだして　たたかうの\p"

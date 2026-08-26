@@ -6381,6 +6381,21 @@ MAP_VERIFIED_SEMANTIC_LABELS = {
     },
 }
 
+# Oldale House 1 is the first physical owner after Littleroot's lab. Its
+# single NPC script and text are a direct one-to-one match with the US map.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'OldaleTown_House1': {
+        'scripts': {
+            0x081F28D4: 'OldaleTown_House1_EventScript_Woman',
+        },
+        'texts': {
+            0x081F28DD: 'OldaleTown_House1_Text_LeftPokemonGoesOutFirst',
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Petalburg's two residential houses immediately follow the Gym in the
 # physical event-script owner. Their four NPC scripts and four text objects
 # were aligned with the matching US map sources before directory migration.
