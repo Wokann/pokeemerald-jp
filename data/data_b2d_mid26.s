@@ -2335,47 +2335,9 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/AquaHideout_1F/events.inc"
 	.globl gMapEvents_AQUA_HIDEOUT_1F
 	.set gMapEvents_AQUA_HIDEOUT_1F, AquaHideout_1F_MapEvents
-	.globl AQUA_HIDEOUT_B1F_EventObjects
-AQUA_HIDEOUT_B1F_EventObjects: @ 0x0850DAA4
-	object_event 1, 117, 0, 28, 16, 3, 8, 0, 0, 1, 4, 0x08217D8E, 0x039C
-	object_event 2, 117, 0, 6, 6, 3, 9, 0, 0, 1, 5, 0x08217DB9, 0x039C
-	object_event 3, 59, 0, 29, 12, 3, 1, 0, 0, 0, 0, 0x082570C9, 0x042F
-	object_event 4, 118, 0, 20, 18, 3, 23, 4, 0, 1, 4, 0x08217DDE, 0x039C
-	object_event 5, 59, 0, 15, 9, 3, 1, 1, 1, 0, 0, 0x082570AF, 0x0464
-	object_event 6, 59, 0, 16, 9, 3, 1, 1, 1, 0, 0, AquaHideout_B1F_EventScript_00217CF4, 0x03D1
-	object_event 7, 59, 0, 15, 10, 3, 1, 1, 1, 0, 0, 0x082570BC, 0x046C
-	object_event 8, 59, 0, 16, 10, 3, 1, 1, 1, 0, 0, AquaHideout_B1F_EventScript_00217D41, 0x03D2
-	object_event 9, 118, 0, 28, 21, 3, 7, 1, 1, 1, 4, 0x08217DF5, 0x039C
-	.globl AQUA_HIDEOUT_B1F_EventWarps
-AQUA_HIDEOUT_B1F_EventWarps: @ 0x0850DB7C
-	warp_def 29, 1, 3, 2, MAP_AQUA_HIDEOUT_1F
-	warp_def 18, 1, 3, 0, MAP_AQUA_HIDEOUT_B2F
-	warp_def 12, 1, 3, 1, MAP_AQUA_HIDEOUT_B2F
-	warp_def 3, 3, 3, 2, MAP_AQUA_HIDEOUT_B2F
-	warp_def 31, 4, 3, 7, MAP_AQUA_HIDEOUT_B1F
-	warp_def 27, 4, 3, 8, MAP_AQUA_HIDEOUT_B1F
-	warp_def 20, 4, 3, 10, MAP_AQUA_HIDEOUT_B1F
-	warp_def 27, 12, 3, 4, MAP_AQUA_HIDEOUT_B1F
-	warp_def 3, 15, 3, 5, MAP_AQUA_HIDEOUT_B1F
-	warp_def 3, 20, 3, 12, MAP_AQUA_HIDEOUT_B1F
-	warp_def 32, 19, 3, 6, MAP_AQUA_HIDEOUT_B1F
-	warp_def 23, 10, 3, 22, MAP_AQUA_HIDEOUT_B1F
-	warp_def 45, 3, 3, 9, MAP_AQUA_HIDEOUT_B1F
-	warp_def 42, 5, 3, 18, MAP_AQUA_HIDEOUT_B1F
-	warp_def 45, 5, 3, 12, MAP_AQUA_HIDEOUT_B1F
-	warp_def 48, 5, 3, 16, MAP_AQUA_HIDEOUT_B1F
-	warp_def 42, 9, 3, 15, MAP_AQUA_HIDEOUT_B1F
-	warp_def 45, 9, 3, 20, MAP_AQUA_HIDEOUT_B1F
-	warp_def 48, 9, 3, 13, MAP_AQUA_HIDEOUT_B1F
-	warp_def 42, 13, 3, 24, MAP_AQUA_HIDEOUT_B1F
-	warp_def 45, 13, 3, 17, MAP_AQUA_HIDEOUT_B1F
-	warp_def 48, 13, 3, 12, MAP_AQUA_HIDEOUT_B1F
-	warp_def 42, 17, 3, 11, MAP_AQUA_HIDEOUT_B1F
-	warp_def 45, 17, 3, 17, MAP_AQUA_HIDEOUT_B1F
-	warp_def 48, 17, 3, 19, MAP_AQUA_HIDEOUT_B1F
+	.include "data/maps/AquaHideout_B1F/events.inc"
 	.globl gMapEvents_AQUA_HIDEOUT_B1F
-gMapEvents_AQUA_HIDEOUT_B1F: @ 0x0850DC44
-	map_events AQUA_HIDEOUT_B1F_EventObjects, AQUA_HIDEOUT_B1F_EventWarps, 0, 0
+	.set gMapEvents_AQUA_HIDEOUT_B1F, AquaHideout_B1F_MapEvents
 	.globl AQUA_HIDEOUT_B2F_EventObjects
 AQUA_HIDEOUT_B2F_EventObjects: @ 0x0850DC58
 	object_event 1, 117, 0, 23, 19, 3, 9, 0, 0, 0, 0, 0x08217FD9, 0x039C

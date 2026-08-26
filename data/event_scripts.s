@@ -896,7 +896,6 @@ gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/MtPyre_Summit/scripts.inc"
 	.include "data/maps/AquaHideout_1F/scripts.inc"
 	.include "data/maps/AquaHideout_B1F/scripts.inc"
-	.incbin "baserom_jp.gba", 0x217d8e, 0x211
 	.include "data/maps/AquaHideout_B2F/scripts.inc"
 	.incbin "baserom_jp.gba", 0x217fd9, 0x375
 	.include "data/maps/Underwater_SeafloorCavern/scripts.inc"
@@ -1969,6 +1968,13 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.set MtPyre_Exterior_EventScript_ItemMaxPotion, 0x08257095
 	.globl MtPyre_Exterior_EventScript_ItemTMSkillSwap
 	.set MtPyre_Exterior_EventScript_ItemTMSkillSwap, 0x082570A2
+	@ Aqua Hideout B1F item entries remain in the later shared item owner.
+	.globl AquaHideout_B1F_EventScript_ItemMasterBall
+	.set AquaHideout_B1F_EventScript_ItemMasterBall, 0x082570AF
+	.globl AquaHideout_B1F_EventScript_ItemNugget
+	.set AquaHideout_B1F_EventScript_ItemNugget, 0x082570BC
+	.globl AquaHideout_B1F_EventScript_ItemMaxElixir
+	.set AquaHideout_B1F_EventScript_ItemMaxElixir, 0x082570C9
 	@ The cracked-floor hooks remain in their later shared physical owner.
 	.globl CaveHole_CheckFallDownHole
 	.set CaveHole_CheckFallDownHole, 0x0826432F

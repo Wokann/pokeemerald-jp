@@ -204,6 +204,9 @@ MAP_US_LABEL_SEQUENCE_COUNTS = {
     # Aqua Hideout 1F is the immediate next physical owner. Its two entrance
     # guards and one trainer sequence match the eight local US script entries.
     'AquaHideout_1F': 8,
+    # Aqua Hideout B1F follows with two map hooks, the paired Electrode
+    # handlers, and four trainer branches in the same reviewed US order.
+    'AquaHideout_B1F': 15,
 }
 
 # Most older reviewed ranges predate semantic map-script hook labels. Keep
@@ -220,6 +223,7 @@ MAP_US_LABEL_SEQUENCE_EXTRA_HOOKS = {
     'MtPyre_2F': ('SetHoleWarp',),
     'MtPyre_Exterior': ('OnTransition',),
     'MtPyre_Summit': ('OnTransition',),
+    'AquaHideout_B1F': ('OnResume',),
     'MossdeepCity_SpaceCenter_1F': ('OnLoad',),
     'SootopolisCity_Gym_1F': ('OnLoad', 'OnResume'),
     'EverGrandeCity_SidneysRoom': ('OnLoad', 'OnWarp'),
@@ -324,6 +328,9 @@ MAP_US_TEXT_LABEL_SEQUENCE_COUNTS = {
     # Aqua Hideout 1F owns the nine dialogue records following its local
     # guard and trainer branches, in the same physical order as the US map.
     'AquaHideout_1F': 9,
+    # Aqua Hideout B1F owns twelve contiguous trainer dialogue records after
+    # its Electrode and trainer scripts, matching the US map source order.
+    'AquaHideout_B1F': 12,
 }
 
 MAP_SCRIPT_NAMES = {
@@ -7008,6 +7015,53 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'trainers': {
                 0x0002: 'TRAINER_GRUNT_AQUA_HIDEOUT_1',
             },
+        },
+    },
+    # Aqua Hideout B1F owns the full Electrode and grunt range through the
+    # following B2F map-script table. Shared item handlers remain external.
+    'AquaHideout_B1F': {
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'external_labels': {
+            0x08244178: 'Common_EventScript_NopReturn',
+            0x08244197: 'Common_EventScript_RemoveStaticPokemon',
+            0x082570AF: 'AquaHideout_B1F_EventScript_ItemMasterBall',
+            0x082570BC: 'AquaHideout_B1F_EventScript_ItemNugget',
+            0x082570C9: 'AquaHideout_B1F_EventScript_ItemMaxElixir',
+        },
+        'command_aliases': {
+            # JP opcode 0xC5 is a cry wait at both Electrode encounters.
+            0x08217CF4: {'waitdooranim': 'waitmoncry_jp'},
+            0x08217D41: {'waitdooranim': 'waitmoncry_jp'},
+        },
+        'symbols': {
+            'flags': {
+                0x01C4: 'FLAG_DEFEATED_ELECTRODE_1_AQUA_HIDEOUT',
+                0x01C5: 'FLAG_DEFEATED_ELECTRODE_2_AQUA_HIDEOUT',
+                0x03D1: 'FLAG_HIDE_AQUA_HIDEOUT_B1F_ELECTRODE_1',
+                0x03D2: 'FLAG_HIDE_AQUA_HIDEOUT_B1F_ELECTRODE_2',
+                0x08C1: 'FLAG_SYS_CTRL_OBJ_DELETE',
+            },
+            'species': {0x0065: 'SPECIES_ELECTRODE'},
+            'trainers': {
+                0x0003: 'TRAINER_GRUNT_AQUA_HIDEOUT_2',
+                0x0004: 'TRAINER_GRUNT_AQUA_HIDEOUT_3',
+                0x001B: 'TRAINER_GRUNT_AQUA_HIDEOUT_5',
+                0x00C0: 'TRAINER_GRUNT_AQUA_HIDEOUT_7',
+            },
+            'vars': {
+                0x800D: 'VAR_RESULT',
+                0x800F: 'VAR_LAST_TALKED',
+            },
+            'var_values': {
+                0x800D: {
+                    0x01: 'B_OUTCOME_WON',
+                    0x04: 'B_OUTCOME_RAN',
+                    0x05: 'B_OUTCOME_PLAYER_TELEPORTED',
+                    0x07: 'B_OUTCOME_CAUGHT',
+                },
+            },
+            'cry_modes': {0x02: 'CRY_MODE_ENCOUNTER'},
         },
     },
 })
