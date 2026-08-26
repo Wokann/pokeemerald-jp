@@ -4,7 +4,7 @@ Route123_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route123_OnTransition
 	.byte 0
 
-Route123_OnTransition::
+Route123_OnTransition:
 	special SetRoute123Weather
 	end
 
@@ -14,12 +14,10 @@ Route123_EventScript_GigaDrainGirl::
 	goto_if_set FLAG_RECEIVED_TM_GIGA_DRAIN, Route123_EventScript_ReceivedGigaDrain
 	msgbox Route123_Text_LoveGrassMonsHaveAny, MSGBOX_DEFAULT
 	special IsGrassTypeInParty
-	goto_if_eq VAR_RESULT, 0x0, Route123_EventScript_NoGrassMons
+	goto_if_eq VAR_RESULT, FALSE, Route123_EventScript_NoGrassMons
 	msgbox Route123_Text_YouLikeGrassMonsTooHaveThis, MSGBOX_DEFAULT
-	setorcopyvar VAR_0x8000, ITEM_TM19
-	setorcopyvar VAR_0x8001, 0x1
-	callstd 0x0
-	goto_if_eq VAR_RESULT, 0x0, Common_EventScript_ShowBagIsFull
+	giveitem ITEM_TM_GIGA_DRAIN
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_TM_GIGA_DRAIN
 	msgbox Route123_Text_CheckTreesWithMyGrassMon, MSGBOX_DEFAULT
 	release
@@ -71,7 +69,7 @@ Route123_EventScript_Cameron::
 
 Route123_EventScript_RegisterCameron::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route123_Text_CameronRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_CAMERON_1
 	release
@@ -92,7 +90,7 @@ Route123_EventScript_Jacki::
 
 Route123_EventScript_RegisterJacki::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route123_Text_JackiRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_JACKI_1
 	release
@@ -163,7 +161,7 @@ Route123_EventScript_Fernando::
 
 Route123_EventScript_RegisterFernando::
 	special PlayerFaceTrainerAfterBattle
-	waitmovement 0x0
+	waitmovement 0
 	msgbox Route123_Text_FernandoRegister, MSGBOX_DEFAULT
 	register_matchcall TRAINER_FERNANDO_1
 	release
