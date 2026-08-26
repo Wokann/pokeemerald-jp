@@ -1,12 +1,9 @@
 @ FortreeCity_House2 scripts (JP map g12 m5 @ 0x08204E9B)
 
-	.globl FortreeCity_House2_EventScript_SleepTalkTutor
-	.set FortreeCity_House2_EventScript_SleepTalkTutor, 0x08276A3A
-
 FortreeCity_House2_MapScripts::
 	.byte 0
 
-FortreeCity_House2_EventScript_HiddenPowerGiver::
+FortreeCity_House2_EventScript_HiddenPowerGiver:: @ 0x08204E9C
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_TM_HIDDEN_POWER, FortreeCity_House2_EventScript_ExplainHiddenPower
@@ -31,17 +28,17 @@ FortreeCity_House2_EventScript_HiddenPowerGiver::
 	release
 	end
 
-FortreeCity_House2_EventScript_Greeting:
+FortreeCity_House2_EventScript_Greeting:: @ 0x08204F33
 	msgbox FortreeCity_House2_Text_HiddenPowersArousedByNature, MSGBOX_DEFAULT
 	setflag FLAG_MET_HIDDEN_POWER_GIVER
 	return
 
-FortreeCity_House2_EventScript_ExplainHiddenPower:
+FortreeCity_House2_EventScript_ExplainHiddenPower:: @ 0x08204F3F
 	msgbox FortreeCity_House2_Text_ExplainHiddenPower, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_House2_EventScript_WrongGuess:
+FortreeCity_House2_EventScript_WrongGuess:: @ 0x08204F49
 	msgbox FortreeCity_House2_Text_YouGuessedWrong, MSGBOX_DEFAULT
 	release
 	end

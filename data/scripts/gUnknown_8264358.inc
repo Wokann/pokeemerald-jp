@@ -175,4 +175,8 @@ gJPText_00275660: @ 0x08275660
 	.string "ざんねんですが\n"
 	.string "ちょうせんは　むこうと　なります！$"
 
-	.incbin "baserom_jp.gba", 0x2756a9, 0x1606
+	.incbin "baserom_jp.gba", 0x2756a9, 0x1391
+
+	.globl FortreeCity_House2_EventScript_SleepTalkTutor
+FortreeCity_House2_EventScript_SleepTalkTutor: @ 0x08276A3A
+	.incbin "baserom_jp.gba", 0x276a3a, 0x275

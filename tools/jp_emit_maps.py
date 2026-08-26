@@ -10921,6 +10921,56 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Fortree House2 immediately follows the Mart owner.  The Hidden Power quiz
+# and its seven local text records are fully map-owned; the Sleep Talk tutor
+# remains at its later shared physical script owner.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'FortreeCity_House2': {
+        'scripts': {
+            0x08204E9C: 'FortreeCity_House2_EventScript_HiddenPowerGiver',
+            0x08204F33: 'FortreeCity_House2_EventScript_Greeting',
+            0x08204F3F: 'FortreeCity_House2_EventScript_ExplainHiddenPower',
+            0x08204F49: 'FortreeCity_House2_EventScript_WrongGuess',
+        },
+        'texts': {
+            0x08204F53: 'FortreeCity_House2_Text_HiddenPowersArousedByNature',
+            0x08204F7F: 'FortreeCity_House2_Text_CoinInWhichHand',
+            0x08204FD5: 'FortreeCity_House2_Text_CorrectTryAgainWhichHand',
+            0x08205013: 'FortreeCity_House2_Text_CorrectTryAgainWhichHand2',
+            0x08205051: 'FortreeCity_House2_Text_YourHiddenPowerHasAwoken',
+            0x0820509A: 'FortreeCity_House2_Text_ExplainHiddenPower',
+            0x082050C0: 'FortreeCity_House2_Text_YouGuessedWrong',
+        },
+        'external_labels': {
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+            0x08276A3A: 'FortreeCity_House2_EventScript_SleepTalkTutor',
+        },
+        'symbols': {
+            'flags': {
+                0x0076: 'FLAG_MET_HIDDEN_POWER_GIVER',
+                0x0108: 'FLAG_RECEIVED_TM_HIDDEN_POWER',
+            },
+            'vars': {
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x800D: 'VAR_RESULT',
+            },
+            'items': {0x012A: 'ITEM_TM_HIDDEN_POWER'},
+            'multichoices': {0x36: 'MULTI_RIGHTLEFT'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+            'decimal_arguments': {
+                'multichoice': (0, 1),
+                'case': (0,),
+            },
+        },
+        # The matching pokeemerald source uses three byte-exact one-case
+        # switch/case pairs for the coin guesses.
+        'allow_single_case_switch': True,
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+    },
+})
+
 # Lilycove Museum 2F is one contiguous JP map-owned range.  The flags,
 # painting metatiles, movement records, and all display text were checked
 # against the matching US map source before replacing its remaining raw tail.
