@@ -1146,81 +1146,12 @@ static void Task_SpinPokenavIcon(u8 taskId)
 // JP byte-exact: JP party layout stores species names as 6-byte JP entries
 // (gSpeciesNames); partyFlags selection differs from US pokeemerald
 // (JP: flags 1/2 use 8-byte entries, 0/3 use 16-byte entries).
-#ifndef NONMATCHING
-__attribute__((naked)) void PopulateSpeciesFromTrainerParty(int matchCallId, u8 *destStr)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {r4, r5, r6, r7, lr}\n\t"
-        "adds r7, r1, #0\n\t"
-        "ldr r2, _081968BC\n\t"
-        "lsls r1, r0, #2\n\t"
-        "adds r1, r1, r0\n\t"
-        "lsls r1, r1, #2\n\t"
-        "adds r1, r1, r2\n\t"
-        "ldrh r0, [r1]\n\t"
-        "bl GetLastBeatenRematchTrainerId\n\t"
-        "adds r4, r0, #0\n\t"
-        "lsls r4, r4, #0x10\n\t"
-        "ldr r5, _081968C0\n\t"
-        "lsrs r4, r4, #0xb\n\t"
-        "adds r0, r5, #0\n\t"
-        "adds r0, #0x1c\n\t"
-        "adds r0, r4, r0\n\t"
-        "ldr r6, [r0]\n\t"
-        "bl Random\n\t"
-        "lsls r0, r0, #0x10\n\t"
-        "lsrs r0, r0, #0x10\n\t"
-        "adds r4, r4, r5\n\t"
-        "ldrb r1, [r4, #0x18]\n\t"
-        "bl __modsi3\n\t"
-        "lsls r0, r0, #0x18\n\t"
-        "lsrs r0, r0, #0x18\n\t"
-        "ldrb r1, [r4]\n\t"
-        "cmp r1, #1\n\t"
-        "beq _081968C8\n\t"
-        "cmp r1, #1\n\t"
-        "ble _081968B6\n\t"
-        "cmp r1, #2\n\t"
-        "beq _081968C4\n\t"
-        "cmp r1, #3\n\t"
-        "beq _081968C8\n\t"
-        "_081968B6:\n\t"
-        "lsls r0, r0, #3\n\t"
-        "b _081968CA\n\t"
-        ".align 2, 0\n\t"
-        "_081968BC: .4byte gUnknown_85D6934\n\t"
-        "_081968C0: .4byte gTrainers\n\t"
-        "_081968C4:\n\t"
-        "lsls r0, r0, #3\n\t"
-        "b _081968CA\n\t"
-        "_081968C8:\n\t"
-        "lsls r0, r0, #4\n\t"
-        "_081968CA:\n\t"
-        "adds r0, r0, r6\n\t"
-        "ldrh r0, [r0, #4]\n\t"
-        "lsls r1, r0, #1\n\t"
-        "adds r1, r1, r0\n\t"
-        "lsls r1, r1, #1\n\t"
-        "ldr r0, _081968E4\n\t"
-        "adds r1, r1, r0\n\t"
-        "adds r0, r7, #0\n\t"
-        "bl StringCopy\n\t"
-        "pop {r4, r5, r6, r7}\n\t"
-        "pop {r0}\n\t"
-        "bx r0\n\t"
-        ".align 2, 0\n\t"
-        "_081968E4: .4byte gSpeciesNames\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
 void PopulateSpeciesFromTrainerParty(int matchCallId, u8 *destStr)
 {
     u16 trainerId;
     union TrainerMonPtr party;
     u8 monId;
-    const u8 *speciesName;
+    u16 species;
 
     trainerId = GetLastBeatenRematchTrainerId(sMatchCallTrainers[matchCallId].trainerId);
     party = gTrainers[trainerId].party;
@@ -1230,20 +1161,18 @@ void PopulateSpeciesFromTrainerParty(int matchCallId, u8 *destStr)
     {
     case 0:
     default:
-        speciesName = gSpeciesNames[party.NoItemDefaultMoves[monId].species];
+        species = party.NoItemDefaultMoves[monId].species;
         break;
     case F_TRAINER_PARTY_CUSTOM_MOVESET:
-        speciesName = gSpeciesNames[party.NoItemCustomMoves[monId].species];
+        species = party.NoItemCustomMoves[monId].species;
         break;
     case F_TRAINER_PARTY_HELD_ITEM:
-        speciesName = gSpeciesNames[party.ItemDefaultMoves[monId].species];
+        species = party.ItemDefaultMoves[monId].species;
         break;
     case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
-        speciesName = gSpeciesNames[party.ItemCustomMoves[monId].species];
+        species = party.ItemCustomMoves[monId].species;
         break;
     }
 
-    StringCopy(destStr, speciesName);
+    StringCopy(destStr, gSpeciesNames[species]);
 }
-#endif
-
