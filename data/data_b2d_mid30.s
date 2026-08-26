@@ -4454,8 +4454,8 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN_HALL (g3 m4)
 	.4byte gMapLayout_DEWFORD_TOWN_HALL  @ mapLayout
-	.4byte gMapEvents_DEWFORD_TOWN_HALL  @ events
-	.4byte 0x081F3788  @ mapScripts
+	.4byte DewfordTown_Hall_MapEvents  @ events
+	.4byte DewfordTown_Hall_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AB  @ music
 	.2byte 0x0042  @ mapLayoutId
