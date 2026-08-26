@@ -697,6 +697,11 @@ MAP_MOVEMENT_SCRIPT_LABELS = {
         0x081F5524: 'FallarborTown_BattleTentLobby_Movement_PlayerWalkToDoor',
         0x081F5528: 'FallarborTown_BattleTentLobby_Movement_PlayerEnterDoor',
     },
+    'VerdanturfTown_BattleTentLobby': {
+        0x081F6705: 'VerdanturfTown_BattleTentLobby_Movement_WalkToDoor',
+        0x081F6709: 'VerdanturfTown_BattleTentLobby_Movement_AttendantEnterDoor',
+        0x081F670C: 'VerdanturfTown_BattleTentLobby_Movement_PlayerEnterDoor',
+    },
     'OldaleTown': {
         0x081E48CB: 'OldaleTown_Movement_Unknown1',
         0x081E48F3: 'OldaleTown_Movement_Unknown2',
@@ -7665,6 +7670,244 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
     },
 })
 
+# Verdanturf's Battle Tent lobby is the next physical map-script owner. Its
+# map hooks, complete challenge flow, local NPC branches, seven local texts,
+# and shared Battle Frontier text references were checked against the matching
+# US source in physical JP ROM order. The two door waits use the JP command
+# slot and therefore retain the byte-exact semantic alias.
+MAP_VERIFIED_SEMANTIC_LABELS.update({
+    'VerdanturfTown_BattleTentLobby': {
+        'scripts': {
+            0x081F637A: 'VerdanturfTown_BattleTentLobby_EventScript_TurnPlayerNorth',
+            0x081F63AE: 'VerdanturfTown_BattleTentLobby_EventScript_GetChallengeStatus',
+            0x081F63B7: 'VerdanturfTown_BattleTentLobby_EventScript_QuitWithoutSaving',
+            0x081F63EC: 'VerdanturfTown_BattleTentLobby_EventScript_WonChallenge',
+            0x081F6426: 'VerdanturfTown_BattleTentLobby_EventScript_GivePrize',
+            0x081F6472: 'VerdanturfTown_BattleTentLobby_EventScript_NoRoomForPrize',
+            0x081F6483: 'VerdanturfTown_BattleTentLobby_EventScript_PrizeWaiting',
+            0x081F6492: 'VerdanturfTown_BattleTentLobby_EventScript_LostChallenge',
+            0x081F64CC: 'VerdanturfTown_BattleTentLobby_EventScript_ResumeChallenge',
+            0x081F6508: 'VerdanturfTown_BattleTentLobby_EventScript_Attendant',
+            0x081F6528: 'VerdanturfTown_BattleTentLobby_EventScript_AskEnterChallenge',
+            0x081F6564: 'VerdanturfTown_BattleTentLobby_EventScript_TryEnterChallenge',
+            0x081F65E9: 'VerdanturfTown_BattleTentLobby_EventScript_SaveBeforeChallenge',
+            0x081F6643: 'VerdanturfTown_BattleTentLobby_EventScript_EnterChallenge',
+            0x081F6670: 'VerdanturfTown_BattleTentLobby_EventScript_ExplainChallenge',
+            0x081F667D: 'VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMons',
+            0x081F6698: 'VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMonsLv50',
+            0x081F66A5: 'VerdanturfTown_BattleTentLobby_EventScript_NotEnoughValidMonsLvOpen',
+            0x081F66B2: 'VerdanturfTown_BattleTentLobby_EventScript_CancelChallengeSaveFailed',
+            0x081F66C9: 'VerdanturfTown_BattleTentLobby_EventScript_LoadPartyCancelChallenge',
+            0x081F66CC: 'VerdanturfTown_BattleTentLobby_EventScript_CancelChallenge',
+            0x081F66D4: 'VerdanturfTown_BattleTentLobby_EventScript_EndCancelChallenge',
+            0x081F66D6: 'VerdanturfTown_BattleTentLobby_EventScript_WalkToDoor',
+            0x081F6710: 'VerdanturfTown_BattleTentLobby_EventScript_AttractGiver',
+            0x081F6747: 'VerdanturfTown_BattleTentLobby_EventScript_ReceivedAttract',
+            0x081F6751: 'VerdanturfTown_BattleTentLobby_EventScript_Boy1',
+            0x081F675A: 'VerdanturfTown_BattleTentLobby_EventScript_Boy2',
+            0x081F6765: 'VerdanturfTown_BattleTentLobby_EventScript_Scott',
+            0x081F6782: 'VerdanturfTown_BattleTentLobby_EventScript_ScottAlreadySpokenTo',
+            0x081F678C: 'VerdanturfTown_BattleTentLobby_EventScript_LittleBoy',
+            0x081F6797: 'VerdanturfTown_BattleTentLobby_EventScript_RulesBoard',
+            0x081F67A6: 'VerdanturfTown_BattleTentLobby_EventScript_ReadRulesBoard',
+            0x081F6813: 'VerdanturfTown_BattleTentLobby_EventScript_RulesLevel',
+            0x081F6821: 'VerdanturfTown_BattleTentLobby_EventScript_RulesBasics',
+            0x081F682F: 'VerdanturfTown_BattleTentLobby_EventScript_RulesNature',
+            0x081F683D: 'VerdanturfTown_BattleTentLobby_EventScript_RulesMoves',
+            0x081F684B: 'VerdanturfTown_BattleTentLobby_EventScript_RulesUnderpowered',
+            0x081F6859: 'VerdanturfTown_BattleTentLobby_EventScript_RulesWhenInDanger',
+            0x081F6867: 'VerdanturfTown_BattleTentLobby_EventScript_ExitRules',
+        },
+        'tables': {
+            0x081F6370: 'VerdanturfTown_BattleTentLobby_OnWarp',
+            0x081F6384: 'VerdanturfTown_BattleTentLobby_OnFrame',
+        },
+        'texts': {
+            0x081F6869: 'VerdanturfTown_BattleTentLobby_Text_MonsReluctantToUseDislikedMoves',
+            0x081F6909: 'VerdanturfTown_BattleTentLobby_Text_GentleMonsScaryIfAngry',
+            0x081F696C: 'VerdanturfTown_BattleTentLobby_Text_AttractionRunsDeep',
+            0x081F69C3: 'VerdanturfTown_BattleTentLobby_Text_AttractionMutual',
+            0x081F6A08: 'VerdanturfTown_BattleTentLobby_Text_TaughtWhatKindsOfMoves',
+            0x081F6A5B: 'VerdanturfTown_BattleTentLobby_Text_ScottCanMeetToughTrainers',
+            0x081F6ADD: 'VerdanturfTown_BattleTentLobby_Text_ScottVisitRegularly',
+        },
+        'external_texts': {
+            0x0822A7B5: 'BattleFrontier_BattlePalaceLobby_Text_FailedToSaveBeforeEndingChallenge',
+            0x082752A6: 'VerdanturfTown_BattleTentLobby_Text_AchievedThreeWinStreak',
+            0x082752D8: 'VerdanturfTown_BattleTentLobby_Text_FeatWillBeRecorded',
+            0x082752ED: 'VerdanturfTown_BattleTentLobby_Text_PresentYouWithPrize',
+            0x08227865: 'BattleFrontier_BattleDomeLobby_Text_ReceivedPrize',
+            0x082750A3: 'VerdanturfTown_BattleTentLobby_Text_ReturnFortified',
+            0x0822A766: 'BattleFrontier_BattlePalaceLobby_Text_NoSpaceForPrize',
+            0x0827527B: 'VerdanturfTown_BattleTentLobby_Text_ResultsWillBeRecorded',
+            0x0822A790: 'BattleFrontier_BattlePalaceLobby_Text_WeHaveBeenWaiting',
+            0x0822A79A: 'BattleFrontier_BattlePalaceLobby_Text_MustSaveBeforeChallenge',
+            0x08274F21: 'VerdanturfTown_BattleTentLobby_Text_WelcomeToBattleTent',
+            0x08274F55: 'VerdanturfTown_BattleTentLobby_Text_TakeChallenge',
+            0x0827522E: 'VerdanturfTown_BattleTentLobby_Text_SelectThreeMons',
+            0x0827524A: 'VerdanturfTown_BattleTentLobby_Text_SaveBeforeChallenge',
+            0x0827526A: 'VerdanturfTown_BattleTentLobby_Text_NowFollowMe',
+            0x08274F71: 'VerdanturfTown_BattleTentLobby_Text_ExplainVerdanturfTent',
+            0x082750F0: 'VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLv50',
+            0x0827518F: 'VerdanturfTown_BattleTentLobby_Text_NotEnoughValidMonsLvOpen',
+            0x08275C42: 'VerdanturfTown_BattleTentLobby_Text_RulesAreListed',
+            0x0822AC54: 'BattleFrontier_BattlePalaceLobby_Text_ReadWhichHeading',
+            0x08275BCD: 'BattleTentLobby_Text_ExplainLevelRules',
+            0x0822AC64: 'BattleFrontier_BattlePalaceLobby_Text_ExplainRulesBasics',
+            0x0822ACC9: 'BattleFrontier_BattlePalaceLobby_Text_ExplainRulesNature',
+            0x0822AD4C: 'BattleFrontier_BattlePalaceLobby_Text_ExplainRulesMoves',
+            0x0822AE0B: 'BattleFrontier_BattlePalaceLobby_Text_ExplainRulesUnderpowered',
+            0x0822AEA7: 'BattleFrontier_BattlePalaceLobby_Text_ExplainRulesWhenInDanger',
+        },
+        'external_labels': {
+            0x082423E9: 'Common_EventScript_SaveGame',
+            0x082430E0: 'Common_EventScript_ShowBagIsFull',
+        },
+        'specials': {
+            'sub_080F9D20': 'ChoosePartyForBattleFrontier',
+            'sub_0813A164': 'ShowScrollableMultichoice',
+        },
+        'field_placeholders': {
+            0x081F6A5B: {0x01: 'PLAYER', 0x05: 'KUN'},
+        },
+        'command_aliases': {
+            0x081F66D6: {'waitmoncry': 'waitdooranim_jp'},
+        },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
+        'allow_single_case_switch': True,
+        'frontier_macros': True,
+        'battle_tent_macros': True,
+        'implicit_waitstate_specials': (
+            'ChoosePartyForBattleFrontier',
+            'ShowScrollableMultichoice',
+        ),
+        'literal_result_commands': ('giveitem',),
+        'symbols': {
+            'flags': {
+                0x00EB: 'FLAG_RECEIVED_TM_ATTRACT',
+                0x01CC: 'FLAG_MET_SCOTT_IN_VERDANTURF',
+            },
+            'vars': {
+                0x4000: 'VAR_TEMP_CHALLENGE_STATUS',
+                0x4001: 'VAR_TEMP_1',
+                0x40CE: 'VAR_FRONTIER_BATTLE_MODE',
+                0x40CF: 'VAR_FRONTIER_FACILITY',
+                0x40D1: 'VAR_SCOTT_STATE',
+                0x8000: 'VAR_0x8000',
+                0x8001: 'VAR_0x8001',
+                0x8004: 'VAR_0x8004',
+                0x8005: 'VAR_0x8005',
+                0x8006: 'VAR_0x8006',
+                0x800D: 'VAR_RESULT',
+            },
+            'script_var_values': {
+                0x081F63AE: {0x8004: {0x00: 'FRONTIER_UTIL_FUNC_GET_STATUS'}},
+                0x081F63B7: {
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {
+                        0x00: 'FRONTIER_DATA_CHALLENGE_STATUS',
+                        0x01: 'FRONTIER_DATA_LVL_MODE',
+                    },
+                },
+                0x081F63EC: {
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x05: 'VERDANTURF_TENT_FUNC_SAVE',
+                        0x06: 'VERDANTURF_TENT_FUNC_SET_RANDOM_PRIZE',
+                    },
+                    0x8005: {0x01: 'FRONTIER_DATA_LVL_MODE'},
+                },
+                0x081F6426: {
+                    0x8000: {0x00: 'FALSE'},
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x07: 'VERDANTURF_TENT_FUNC_GIVE_PRIZE',
+                    },
+                    0x8005: {0x00: 'FRONTIER_DATA_CHALLENGE_STATUS'},
+                },
+                0x081F6492: {
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x05: 'VERDANTURF_TENT_FUNC_SAVE',
+                    },
+                    0x8005: {0x01: 'FRONTIER_DATA_LVL_MODE'},
+                },
+                0x081F64CC: {
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x05: 'VERDANTURF_TENT_FUNC_SAVE',
+                    },
+                    0x8005: {0x03: 'FRONTIER_DATA_PAUSED'},
+                },
+                0x081F6508: {
+                    0x8004: {0x01: 'VERDANTURF_TENT_FUNC_GET_PRIZE'},
+                    0x800D: {0x00: 'ITEM_NONE'},
+                },
+                0x081F6528: {0x8000: {0x7F: 'MULTI_B_PRESSED'}},
+                0x081F6564: {
+                    0x40CE: {0x00: 'FRONTIER_MODE_SINGLES'},
+                    0x40CF: {0x02: 'FRONTIER_FACILITY_PALACE'},
+                    0x8000: {
+                        0x00: 'NO',
+                        0x01: 'YES',
+                        0x7F: 'MULTI_B_PRESSED',
+                    },
+                    0x8004: {
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                        0x0F: 'FRONTIER_UTIL_FUNC_CHECK_INELIGIBLE',
+                    },
+                    0x8005: {
+                        0x01: 'FRONTIER_DATA_LVL_MODE',
+                        0x03: 'FRONTIER_PARTY_SIZE',
+                    },
+                },
+                0x081F65E9: {
+                    0x8004: {
+                        0x00: 'VERDANTURF_TENT_FUNC_INIT',
+                        0x02: 'FRONTIER_UTIL_FUNC_SET_DATA',
+                    },
+                    0x8005: {
+                        0x00: 'FRONTIER_DATA_CHALLENGE_STATUS',
+                        0x03: 'FRONTIER_DATA_PAUSED',
+                        0x04: 'FRONTIER_DATA_SELECTED_MON_ORDER',
+                    },
+                },
+                0x081F6643: {
+                    0x8004: {0x03: 'FRONTIER_UTIL_FUNC_SET_PARTY_ORDER'},
+                    0x8005: {0x03: 'FRONTIER_PARTY_SIZE'},
+                },
+                0x081F667D: {
+                    0x8000: {
+                        0x00: 'FRONTIER_LVL_50',
+                        0x01: 'FRONTIER_LVL_OPEN',
+                    },
+                },
+                0x081F66B2: {
+                    0x8004: {0x02: 'FRONTIER_UTIL_FUNC_SET_DATA'},
+                    0x8005: {0x00: 'FRONTIER_DATA_CHALLENGE_STATUS'},
+                },
+                0x081F67A6: {
+                    0x8000: {0x7F: 'MULTI_B_PRESSED'},
+                    0x8004: {0x0C: 'SCROLL_MULTI_BATTLE_TENT_RULES'},
+                },
+            },
+            'items': {0x014D: 'ITEM_TM_ATTRACT'},
+            'maps': {0x0601: 'MAP_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR'},
+            'local_ids': {
+                0x0001: 'LOCALID_VERDANTURF_TENT_ATTENDANT',
+                0x00FF: 'LOCALID_PLAYER',
+            },
+            'directions': {0x02: 'DIR_NORTH'},
+            'songs': {0x0172: 'MUS_OBTAIN_ITEM'},
+            'sounds': {0x37: 'SE_SAVE'},
+            'multichoices': {0x17: 'MULTI_CHALLENGEINFO'},
+            'fade_modes': {0x01: 'FADE_TO_BLACK'},
+            'booleans': {0x00: 'FALSE', 0x01: 'TRUE'},
+        },
+    },
+})
+
 # Oldale Mart's two adjacent product records were checked against both the
 # matching US list names and the JP item IDs. The second record starts with a
 # single alignment byte before its four-byte product boundary.
@@ -13031,51 +13274,200 @@ def collapse_frontier_results_macros(lines, facilities):
     return out
 
 
+def _numeric_literal(value):
+    """Return a numeric script literal, or ``None`` for a named operand."""
+    try:
+        return int(value, 0)
+    except ValueError:
+        return None
+
+
+def _canonical_frontier_value(data, value):
+    """Name only the data values whose meaning is fixed by their selector."""
+    numeric = _numeric_literal(value)
+    if numeric is None:
+        return value
+    if data == 'FRONTIER_DATA_LVL_MODE':
+        return {
+            0: 'FRONTIER_LVL_50',
+            1: 'FRONTIER_LVL_OPEN',
+            2: 'FRONTIER_LVL_TENT',
+        }.get(numeric, str(numeric))
+    if data == 'FRONTIER_DATA_PAUSED':
+        return {0: 'FALSE', 1: 'TRUE'}.get(numeric, str(numeric))
+    if data == 'FRONTIER_DATA_CHALLENGE_STATUS':
+        return {
+            1: 'CHALLENGE_STATUS_SAVING',
+            2: 'CHALLENGE_STATUS_PAUSED',
+            3: 'CHALLENGE_STATUS_WON',
+            4: 'CHALLENGE_STATUS_LOST',
+        }.get(numeric, str(numeric))
+    return str(numeric)
+
+
+def _canonical_challenge_status(value):
+    """Render an explicit Battle Tent save status without naming plain zero."""
+    numeric = _numeric_literal(value)
+    if numeric is None:
+        return value
+    return {
+        1: 'CHALLENGE_STATUS_SAVING',
+        2: 'CHALLENGE_STATUS_PAUSED',
+        3: 'CHALLENGE_STATUS_WON',
+        4: 'CHALLENGE_STATUS_LOST',
+    }.get(numeric, str(numeric))
+
+
 def collapse_frontier_utility_macros(lines, enabled=False):
     """Restore reviewed Frontier utility wrappers for an opted-in map.
 
     These macros are only presentation wrappers around byte-exact command
-    sequences.  Keep the transformation opt-in because FRONTIER_UTIL values
-    have context-dependent meanings outside a reviewed map script.
+    sequences.  They are intentionally enabled per reviewed map because the
+    ``FRONTIER_UTIL`` operands are context dependent outside these scripts.
     """
     if not enabled:
         return lines
+
+    def split(line):
+        return [part.strip() for part in line[1].split(',')] if line[1] else []
+
+    def is_set(line, variable, value=None):
+        args = split(line)
+        return (line[0] == 'setvar' and len(args) == 2 and args[0] == variable
+                and (value is None or args[1] == value))
+
+    def is_copy(line, variable):
+        args = split(line)
+        return line[0] == 'copyvar' and len(args) == 2 and args[0] == variable
+
+    def is_frontier_special(line):
+        return line == ('special', 'CallFrontierUtilFunc')
+
+    out = []
+    index = 0
+    while index < len(lines):
+        # frontier_set with an explicit literal or copied value.
+        if index + 3 < len(lines):
+            first, second, third, fourth = lines[index:index + 4]
+            if (is_set(first, 'VAR_0x8004', 'FRONTIER_UTIL_FUNC_SET_DATA')
+                    and is_set(second, 'VAR_0x8005')
+                    and (is_set(third, 'VAR_0x8006') or is_copy(third, 'VAR_0x8006'))
+                    and is_frontier_special(fourth)):
+                data = split(second)[1]
+                value = split(third)[1]
+                out.append(('frontier_set', '%s, %s' % (
+                    data, _canonical_frontier_value(data, value))))
+                index += 4
+                continue
+        # frontier_get and the value-less frontier_set form.
+        if index + 2 < len(lines):
+            first, second, third = lines[index:index + 3]
+            if (is_set(first, 'VAR_0x8004', 'FRONTIER_UTIL_FUNC_GET_DATA')
+                    and is_set(second, 'VAR_0x8005')
+                    and is_frontier_special(third)):
+                out.append(('frontier_get', split(second)[1]))
+                index += 3
+                continue
+            if (is_set(first, 'VAR_0x8004', 'FRONTIER_UTIL_FUNC_SET_DATA')
+                    and is_set(second, 'VAR_0x8005')
+                    and is_frontier_special(third)):
+                out.append(('frontier_set', split(second)[1]))
+                index += 3
+                continue
+            if (is_set(first, 'VAR_0x8004', 'FRONTIER_UTIL_FUNC_SET_PARTY_ORDER')
+                    and is_set(second, 'VAR_0x8005')
+                    and is_frontier_special(third)):
+                out.append(('frontier_setpartyorder', split(second)[1]))
+                index += 3
+                continue
+        if index + 1 < len(lines):
+            first, second = lines[index:index + 2]
+            if is_frontier_special(second):
+                macro = {
+                    'FRONTIER_UTIL_FUNC_GET_STATUS': 'frontier_getstatus',
+                    'FRONTIER_UTIL_FUNC_CHECK_INELIGIBLE': 'frontier_checkineligible',
+                    'FRONTIER_UTIL_FUNC_CHECK_VISIT_TRAINER': 'frontier_checkvisittrainer',
+                    'FRONTIER_UTIL_FUNC_SOFT_RESET': 'frontier_reset',
+                    'FRONTIER_UTIL_FUNC_SAVE_PARTY': 'frontier_saveparty',
+                }.get(split(first)[1] if is_set(first, 'VAR_0x8004') else None)
+                if macro is not None:
+                    out.append((macro, ''))
+                    index += 2
+                    continue
+        out.append(lines[index])
+        index += 1
+    return out
+
+
+def collapse_battle_tent_macros(lines, enabled=False):
+    """Restore byte-exact Battle Tent helper macros for reviewed owners."""
+    if not enabled:
+        return lines
+
+    def split(line):
+        return [part.strip() for part in line[1].split(',')] if line[1] else []
+
+    def is_set(line, variable, value=None):
+        args = split(line)
+        return (line[0] == 'setvar' and len(args) == 2 and args[0] == variable
+                and (value is None or args[1] == value))
+
+    single_macros = {
+        'CallVerdanturfTentFunction': {
+            'VERDANTURF_TENT_FUNC_INIT': 'verdanturftent_init',
+            'VERDANTURF_TENT_FUNC_GET_PRIZE': 'verdanturftent_getprize',
+            'VERDANTURF_TENT_FUNC_SET_RANDOM_PRIZE': 'verdanturftent_setrandomprize',
+            'VERDANTURF_TENT_FUNC_GIVE_PRIZE': 'verdanturftent_giveprize',
+            'VERDANTURF_TENT_FUNC_GET_OPPONENT_INTRO': 'battletent_getopponentintro',
+        },
+        'CallFallarborTentFunction': {
+            'FALLARBOR_TENT_FUNC_INIT': 'fallarbortent_init',
+            'FALLARBOR_TENT_FUNC_GET_PRIZE': 'fallarbortent_getprize',
+            'FALLARBOR_TENT_FUNC_SET_RANDOM_PRIZE': 'fallarbortent_setrandomprize',
+            'FALLARBOR_TENT_FUNC_GIVE_PRIZE': 'fallarbortent_giveprize',
+            'FALLARBOR_TENT_FUNC_GET_OPPONENT_NAME': 'fallarbortent_getopponentname',
+        },
+    }
+    save_macros = {
+        'CallVerdanturfTentFunction': ('VERDANTURF_TENT_FUNC_SAVE', 'verdanturftent_save'),
+        'CallFallarborTentFunction': ('FALLARBOR_TENT_FUNC_SAVE', 'fallarbortent_save'),
+    }
 
     out = []
     index = 0
     while index < len(lines):
         if index + 2 < len(lines):
-            first_name, first_args = lines[index]
-            second_name, second_args = lines[index + 1]
-            third_name, third_args = lines[index + 2]
-            first = [part.strip() for part in first_args.split(',', 1)]
-            second = [part.strip() for part in second_args.split(',', 1)]
-            if (first_name == 'setvar' and second_name == 'setvar'
-                    and third_name == 'special'
-                    and first == ['VAR_0x8004', 'FRONTIER_UTIL_FUNC_SET_DATA']
-                    and second == ['VAR_0x8005', 'FRONTIER_DATA_SELECTED_MON_ORDER']
-                    and third_args == 'CallFrontierUtilFunc'):
-                out.append(('frontier_set', 'FRONTIER_DATA_SELECTED_MON_ORDER'))
-                index += 3
-                continue
+            first, second, third = lines[index:index + 3]
+            if is_set(first, 'VAR_0x8004') and is_set(second, 'VAR_0x8005') and third[0] == 'special':
+                save = save_macros.get(third[1])
+                if save is not None and split(first)[1] == save[0]:
+                    out.append((save[1], _canonical_challenge_status(split(second)[1])))
+                    index += 3
+                    continue
         if index + 1 < len(lines):
-            first_name, first_args = lines[index]
-            second_name, second_args = lines[index + 1]
-            first = [part.strip() for part in first_args.split(',', 1)]
-            if (first_name == 'setvar' and second_name == 'special'
-                    and first == ['VAR_0x8004', 'FRONTIER_UTIL_FUNC_CHECK_VISIT_TRAINER']
-                    and second_args == 'CallFrontierUtilFunc'):
-                out.append(('frontier_checkvisittrainer', ''))
-                index += 2
-                continue
-            if (first_name == 'setvar' and second_name == 'special'
-                    and first == ['VAR_0x8004', 'FRONTIER_UTIL_FUNC_SAVE_PARTY']
-                    and second_args == 'CallFrontierUtilFunc'):
-                out.append(('frontier_saveparty', ''))
-                index += 2
-                continue
+            first, second = lines[index:index + 2]
+            if is_set(first, 'VAR_0x8004') and second[0] == 'special':
+                macro = single_macros.get(second[1], {}).get(split(first)[1])
+                if macro is not None:
+                    out.append((macro, ''))
+                    index += 2
+                    continue
         out.append(lines[index])
         index += 1
+    return out
+
+
+def name_frontier_macro_conditions(lines):
+    """Name the fixed TRUE result produced by frontier_checkineligible."""
+    out = list(lines)
+    for index, (name, _argstr) in enumerate(out[:-1]):
+        if name != 'frontier_checkineligible':
+            continue
+        condition_name, condition_argstr = out[index + 1]
+        parts = [part.strip() for part in condition_argstr.split(',')]
+        if (condition_name in ('goto_if_eq', 'goto_if_ne') and len(parts) == 3
+                and parts[0] == 'VAR_0x8004' and _numeric_literal(parts[1]) == 1):
+            out[index + 1] = (condition_name, ', '.join((parts[0], 'TRUE', parts[2])))
     return out
 
 
@@ -13957,6 +14349,9 @@ def emit_map(ms, mname, gi, mi, entries, region_end, global_text_ptrs,
             decoded_lines = collapse_frontier_results_macros(
                 decoded_lines,
                 semantic.get('symbols', {}).get('frontier_results', {}))
+            decoded_lines = collapse_battle_tent_macros(
+                decoded_lines, semantic.get('battle_tent_macros', False))
+            decoded_lines = name_frontier_macro_conditions(decoded_lines)
             decoded_lines = collapse_giveitem_macros(decoded_lines)
             decoded_lines = collapse_finditem_macros(decoded_lines)
             decoded_lines = collapse_givedecoration_macros(decoded_lines)
