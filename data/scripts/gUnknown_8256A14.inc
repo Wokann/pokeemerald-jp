@@ -160,4 +160,10 @@ MossdeepCity_EventScript_ItemNetBall:: @ 0x08256E4C
 	finditem ITEM_NET_BALL
 	end
 
-	.incbin "baserom_jp.gba", 0x256e59, 0xc30
+	.incbin "baserom_jp.gba", 0x256e59, 0x2ff
+
+SeafloorCavern_Room9_EventScript_ItemTMEarthquake:: @ 0x08257158
+	finditem ITEM_TM_EARTHQUAKE
+	end
+
+	.incbin "baserom_jp.gba", 0x257165, 0x924

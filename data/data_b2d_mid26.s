@@ -2363,7 +2363,8 @@ gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
 	.include "data/maps/SeafloorCavern_Room6/events.inc"
 	.include "data/maps/SeafloorCavern_Room7/events.inc"
 	.include "data/maps/SeafloorCavern_Room8/events.inc"
-	.incbin "baserom_jp.gba", 0x50E374, 0x10FC
+	.include "data/maps/SeafloorCavern_Room9/events.inc"
+	.incbin "baserom_jp.gba", 0x50E448, 0x1028
 	.include "data/maps/Underwater_Route134/events.inc"
 	.globl gMapEvents_UNDERWATER_ROUTE134
 	.set gMapEvents_UNDERWATER_ROUTE134, Underwater_Route134_MapEvents
