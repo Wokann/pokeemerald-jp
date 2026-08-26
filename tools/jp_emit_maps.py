@@ -10578,6 +10578,8 @@ MAP_VERIFIED_SEMANTIC_LABELS.update({
             'local_ids': {0x01: 'LOCALID_FORTREE_NURSE'},
             'heal_locations': {0x07: 'HEAL_LOCATION_FORTREE_CITY'},
         },
+        'preserve_region_script_aliases': False,
+        'preserve_region_text_aliases': False,
     },
 })
 
