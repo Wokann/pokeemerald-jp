@@ -1,5 +1,11 @@
 	@ Battle Tower/Battle Tent EventScript helpers.
 
+	@ Initialize the Battle Tower challenge.
+	.macro tower_init
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_INIT
+	special sub_08161E88
+	.endm
+
 	@ Get the value of a TOWER_DATA_* entry into VAR_RESULT.
 	.macro tower_get data:req
 	setvar VAR_0x8004, BATTLE_TOWER_FUNC_GET_DATA
