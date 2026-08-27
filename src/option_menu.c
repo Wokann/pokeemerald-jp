@@ -1846,7 +1846,7 @@ __attribute__((naked)) void sub_080BA890(void)
         "_080BA9FC: .4byte SPECIAL_WonderNews_GetRewardInfo\n\t"
         "_080BAA00: .4byte SPECIAL_Script_ResetUnionRoomTrade\n\t"
         "_080BAA04: .4byte SPECIAL_ValidateSavedWonderCard\n\t"
-        "_080BAA08: .4byte SPECIAL_sub_0802C614\n\t"
+        "_080BAA08: .4byte SPECIAL_IsPokemonJumpSpeciesInParty\n\t"
         ".syntax divided\n\t"
     );
 }

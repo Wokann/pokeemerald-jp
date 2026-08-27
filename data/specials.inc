@@ -438,7 +438,7 @@ gSpecials::
 	def_special TryBecomeLinkLeader
 	def_special TryJoinLinkGroup
 	def_special RunUnionRoom
-	def_special sub_08019EE4
+	def_special ShowWirelessCommunicationScreen
 	def_special InitUnionRoom
 	def_special BufferUnionRoomPlayerName
 	def_special WonderNews_GetRewardInfo
@@ -447,10 +447,10 @@ gSpecials::
 	def_special IsBadEggInParty
 	def_special ValidateSavedWonderCard
 	def_special HasAtLeastOneBerry
-	def_special sub_0802C614
-	def_special sub_0802E0BC
-	def_special sub_0802781C
-	def_special sub_0802786C
+	def_special IsPokemonJumpSpeciesInParty
+	def_special ShowPokemonJumpRecords
+	def_special IsDodrioInParty
+	def_special ShowDodrioBerryPickingRecords
 	def_special OffsetCameraForBattle
 	def_special sub_08139A68
 	def_special BufferVarsForIVRater

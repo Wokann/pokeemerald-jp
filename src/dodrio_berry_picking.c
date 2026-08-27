@@ -423,7 +423,7 @@ u32 IncrementWithLimit(u32 num, u32 max);
 u32 Min(u32 a, u32 b);
 u32 RecvPacket_ReadyToStart(u32 playerId);
 void SpriteCB_Dodrio(struct Sprite *sprite);
-void Task_ShowDodrioRecords(u8 taskId);
+static void Task_ShowDodrioBerryPickingRecords(u8 taskId);
 
 // Prototypes for functions converted from asm (definitions later in this file)
 void InitDodrioGame(struct DodrioGame *game);
@@ -495,9 +495,8 @@ u32 DoDodrioMissedAnim(struct Sprite *sprite);
 u32 DoDodrioIntroAnim(struct Sprite *sprite);
 void SendPacket_GameState(struct DodrioGame_Player *player, struct DodrioGame_PlayerCommData *player1, struct DodrioGame_PlayerCommData *player2, struct DodrioGame_PlayerCommData *player3, struct DodrioGame_PlayerCommData *player4, struct DodrioGame_PlayerCommData *player5, u8 numGraySquares, bool32 berriesFalling, bool32 allReadyToEnd);
 bool32 RecvPacket_GameState(u32 playerId, struct DodrioGame_Player *player, struct DodrioGame_PlayerCommData *player1, struct DodrioGame_PlayerCommData *player2, struct DodrioGame_PlayerCommData *player3, struct DodrioGame_PlayerCommData *player4, struct DodrioGame_PlayerCommData *player5, u8 *numGraySquares, bool32 *berriesFalling, bool32 *allReadyToEnd);
-void CheckDodrioInParty(void);
-void ShowDodrioRecords(void);
-void Task_ShowDodrioRecords(u8 taskId);
+void IsDodrioInParty(void);
+void ShowDodrioBerryPickingRecords(void);
 void InitResults_Leader(void);
 void InitResults_Member(void);
 void DoResults(void);
@@ -2729,7 +2728,7 @@ bool32 RecvPacket_GameState(u32 playerId,
     return FALSE;
 }
 
-void CheckDodrioInParty(void)
+void IsDodrioInParty(void)
 {
     int i;
     for (i = 0; i < PARTY_SIZE; i++)
@@ -2744,13 +2743,13 @@ void CheckDodrioInParty(void)
     gSpecialVar_Result = 0;
 }
 
-void ShowDodrioRecords(void)
+void ShowDodrioBerryPickingRecords(void)
 {
-    u8 taskId = CreateTask(Task_ShowDodrioRecords, 0);
-    Task_ShowDodrioRecords(taskId);
+    u8 taskId = CreateTask(Task_ShowDodrioBerryPickingRecords, 0);
+    Task_ShowDodrioBerryPickingRecords(taskId);
 }
 
-void Task_ShowDodrioRecords(u8 taskId)
+static void Task_ShowDodrioBerryPickingRecords(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     switch (data[0])

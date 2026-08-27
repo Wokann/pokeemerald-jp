@@ -273,18 +273,6 @@
 	.set Common_EventScript_PkmnCenterNurse, 0x082429B8
 	.globl ProfileMan_EventScript_Man
 	.set ProfileMan_EventScript_Man, 0x08257290
-	@ The Mossdeep Game Corner retains these RS house continuations in the
-	@ shared Cable Club script block.
-	.globl MossdeepCity_GameCorner_1F_EventScript_InfoMan2
-	.set MossdeepCity_GameCorner_1F_EventScript_InfoMan2, 0x08247913
-	.globl MossdeepCity_GameCorner_1F_EventScript_OldMan2
-	.set MossdeepCity_GameCorner_1F_EventScript_OldMan2, 0x08247970
-	.globl MossdeepCity_GameCorner_1F_EventScript_DodrioBerryPickingRecords
-	.set MossdeepCity_GameCorner_1F_EventScript_DodrioBerryPickingRecords, 0x08247B79
-	.globl MossdeepCity_GameCorner_1F_EventScript_PokemonJumpRecords
-	.set MossdeepCity_GameCorner_1F_EventScript_PokemonJumpRecords, 0x08247B72
-	.globl CableClub_OnResume
-	.set CableClub_OnResume, 0x0824790F
 	.globl PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
 	.set PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet, 0x08257EE8
 	.globl PlayersHouse_1F_EventScript_EnterHouseMovingIn
@@ -1261,9 +1249,10 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x082467CD
 	.include "data/scripts/cable_club.inc"
 
-	.globl EventScript_WirelessBoxResults
-EventScript_WirelessBoxResults: @ 0x8247869
-	.include "data/scripts/gUnknown_8247869.inc"
+	@ 0x08247869-0x08247B80 is structured in data/scripts/cable_club.inc.
+ScriptData_Raw_08247B80: @ 0x08247B80
+	@ 0x08247B80-0x08247C79 remains unstructured script_data.
+	.incbin "baserom_jp.gba", 0x247B80, 0xF9
 
 	.globl gUnknown_8247C79
 gUnknown_8247C79: @ 0x8247C79
