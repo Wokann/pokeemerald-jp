@@ -1,70 +1,84 @@
-@ BattleFrontier_BattleTowerElevator scripts (JP map g26 m6 @ 0x08221AD4)
-
 BattleFrontier_BattleTowerElevator_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleTowerElevator_MapScriptTable_00221ADF
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleTowerElevator_MapScriptTable_00221B8F
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleTowerElevator_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, BattleFrontier_BattleTowerElevator_OnWarp
 	.byte 0
 
-BattleFrontier_BattleTowerElevator_MapScriptTable_00221ADF::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleTowerElevator_EventScript_00221AE9
+BattleFrontier_BattleTowerElevator_OnFrame:
+	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleTowerElevator_EventScript_EnterElevator
 	.2byte 0
 
-BattleFrontier_BattleTowerElevator_EventScript_00221AE9::
-	setvar 0x4000, 0x1
-	applymovement 0x1, 0x08221B7F
-	applymovement 0xFF, 0x08221B83
-	waitmovement 0x0
-	special sub_0813A0BC
+BattleFrontier_BattleTowerElevator_EventScript_EnterElevator::
+	setvar VAR_TEMP_0, 1
+	applymovement LOCALID_TOWER_ELEVATOR_ATTENDANT, BattleFrontier_BattleTowerElevator_Movement_AttendantEnter
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerElevator_Movement_PlayerEnter
+	waitmovement 0
+	special BufferBattleTowerElevatorFloors
 	waitse
-	special ShakeScreenInElevator
-	waitstate
-	delay 0x30
-	applymovement 0x1, 0x08221B87
-	applymovement 0xFF, 0x08221B8B
-	waitmovement 0x0
-	call BattleFrontier_BattleTowerElevator_EventScript_00221B21
+	special MoveElevator
+	delay 48
+	applymovement LOCALID_TOWER_ELEVATOR_ATTENDANT, BattleFrontier_BattleTowerElevator_Movement_AttendantExit
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerElevator_Movement_PlayerExit
+	waitmovement 0
+	call BattleFrontier_BattleTowerElevator_EventScript_WarpToNextRoom
 	end
 
-BattleFrontier_BattleTowerElevator_EventScript_00221B21::
-	compare_var_to_value 0x40CE, 0x0
-	call_if 0x1, BattleFrontier_BattleTowerElevator_EventScript_00221B4E
-	compare_var_to_value 0x40CE, 0x1
-	call_if 0x1, BattleFrontier_BattleTowerElevator_EventScript_00221B4E
-	compare_var_to_value 0x40CE, 0x2
-	call_if 0x1, BattleFrontier_BattleTowerElevator_EventScript_00221B58
-	compare_var_to_value 0x40CE, 0x3
-	call_if 0x1, BattleFrontier_BattleTowerElevator_EventScript_00221B6B
+BattleFrontier_BattleTowerElevator_EventScript_WarpToNextRoom::
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_SINGLES, BattleFrontier_BattleTowerElevator_EventScript_WarpToCorridor
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_DOUBLES, BattleFrontier_BattleTowerElevator_EventScript_WarpToCorridor
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_MULTIS, BattleFrontier_BattleTowerElevator_EventScript_WarpToNextRoomMulti
+	call_if_eq VAR_FRONTIER_BATTLE_MODE, FRONTIER_MODE_LINK_MULTIS, BattleFrontier_BattleTowerElevator_EventScript_WarpToCorridorMulti
 	return
 
-BattleFrontier_BattleTowerElevator_EventScript_00221B4E::
-	warp 0x1A07, 0xFF, 0x8, 0x1
+BattleFrontier_BattleTowerElevator_EventScript_WarpToCorridor::
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_CORRIDOR, 8, 1
 	waitstate
 	return
 
-BattleFrontier_BattleTowerElevator_EventScript_00221B58::
-	checkflag 0x152
-	goto_if 0x0, BattleFrontier_BattleTowerElevator_EventScript_00221B75
-	warp 0x1A10, 0xFF, 0x7, 0x2
+BattleFrontier_BattleTowerElevator_EventScript_WarpToNextRoomMulti::
+	goto_if_unset FLAG_CHOSEN_MULTI_BATTLE_NPC_PARTNER, BattleFrontier_BattleTowerElevator_EventScript_WarpToPartnerRoom
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR, 7, 2
 	waitstate
 	return
 
-BattleFrontier_BattleTowerElevator_EventScript_00221B6B::
-	warp 0x1A10, 0xFF, 0x7, 0x2
+BattleFrontier_BattleTowerElevator_EventScript_WarpToCorridorMulti::
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_CORRIDOR, 7, 2
 	waitstate
 	return
 
-BattleFrontier_BattleTowerElevator_EventScript_00221B75::
-	warp 0x1A0F, 0xFF, 0xA, 0x1
+BattleFrontier_BattleTowerElevator_EventScript_WarpToPartnerRoom::
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_MULTI_PARTNER_ROOM, 10, 1
 	waitstate
 	return
 
-	.incbin "baserom_jp.gba", 0x221b7f, 0x10
-BattleFrontier_BattleTowerElevator_MapScriptTable_00221B8F::
-	map_script_2 0x4001, 0x0, BattleFrontier_BattleTowerElevator_EventScript_00221B99
+BattleFrontier_BattleTowerElevator_Movement_AttendantEnter:
+	walk_up
+	walk_right
+	face_down
+	step_end
+
+BattleFrontier_BattleTowerElevator_Movement_PlayerEnter:
+	walk_up
+	walk_up
+	face_down
+	step_end
+
+BattleFrontier_BattleTowerElevator_Movement_AttendantExit:
+	walk_down
+	walk_down
+	set_invisible
+	step_end
+
+BattleFrontier_BattleTowerElevator_Movement_PlayerExit:
+	walk_right
+	walk_down
+	walk_down
+	step_end
+
+BattleFrontier_BattleTowerElevator_OnWarp:
+	map_script_2 VAR_TEMP_1, 0, BattleFrontier_BattleTowerElevator_EventScript_TurnPlayerNorth
 	.2byte 0
 
-BattleFrontier_BattleTowerElevator_EventScript_00221B99::
-	setvar 0x4001, 0x1
-	turnobject 0xFF, 0x2
+BattleFrontier_BattleTowerElevator_EventScript_TurnPlayerNorth::
+	setvar VAR_TEMP_1, 1
+	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
-

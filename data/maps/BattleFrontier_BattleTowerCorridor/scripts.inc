@@ -1,42 +1,53 @@
-@ BattleFrontier_BattleTowerCorridor scripts (JP map g26 m7 @ 0x08221BA3)
-
 BattleFrontier_BattleTowerCorridor_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, BattleFrontier_BattleTowerCorridor_EventScript_00221BAE
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleTowerCorridor_MapScriptTable_00221BDF
+	map_script MAP_SCRIPT_ON_LOAD, BattleFrontier_BattleTowerCorridor_OnLoad
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattleTowerCorridor_OnFrame
 	.byte 0
 
-BattleFrontier_BattleTowerCorridor_EventScript_00221BAE::
-	compare_var_to_value 0x8006, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerCorridor_EventScript_00221BCC
-	setmetatile 0xC, 0x0, 0x207, 0x0
-	setmetatile 0xC, 0x1, 0x20F, 0x0
+BattleFrontier_BattleTowerCorridor_OnLoad:
+	goto_if_eq VAR_0x8006, 1, BattleFrontier_BattleTowerCorridor_EventScript_OpenFarDoor
+	setmetatile 12, 0, METATILE_BattleFrontier_CorridorOpenDoor_Top, FALSE
+	setmetatile 12, 1, METATILE_BattleFrontier_CorridorOpenDoor_Bottom, FALSE
 	end
 
-BattleFrontier_BattleTowerCorridor_EventScript_00221BCC::
-	setmetatile 0xF, 0x0, 0x207, 0x0
-	setmetatile 0xF, 0x1, 0x20F, 0x0
+BattleFrontier_BattleTowerCorridor_EventScript_OpenFarDoor::
+	setmetatile 15, 0, METATILE_BattleFrontier_CorridorOpenDoor_Top, FALSE
+	setmetatile 15, 1, METATILE_BattleFrontier_CorridorOpenDoor_Bottom, FALSE
 	end
 
-BattleFrontier_BattleTowerCorridor_MapScriptTable_00221BDF::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattleTowerCorridor_EventScript_00221BE9
+BattleFrontier_BattleTowerCorridor_OnFrame:
+	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleTowerCorridor_EventScript_EnterCorridor
 	.2byte 0
 
-BattleFrontier_BattleTowerCorridor_EventScript_00221BE9::
-	setvar 0x4000, 0x1
-	compare_var_to_value 0x8006, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerCorridor_EventScript_00221C0F
-	applymovement 0x1, 0x08221C33
-	applymovement 0xFF, 0x08221C32
-	waitmovement 0x0
-	goto BattleFrontier_BattleTowerCorridor_EventScript_00221C20
+BattleFrontier_BattleTowerCorridor_EventScript_EnterCorridor::
+	setvar VAR_TEMP_0, 1
+	goto_if_eq VAR_0x8006, 1, BattleFrontier_BattleTowerCorridor_EventScript_WalkToFarDoor
+	applymovement LOCALID_TOWER_CORRIDOR_ATTENDANT, BattleFrontier_BattleTowerCorridor_Movement_AttendantWalkToDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerCorridor_Movement_PlayerWalkToDoor
+	waitmovement 0
+	goto BattleFrontier_BattleTowerCorridor_EventScript_WarpToBattleRoom
 
-BattleFrontier_BattleTowerCorridor_EventScript_00221C0F::
-	applymovement 0x1, 0x08221C30
-	applymovement 0xFF, 0x08221C2F
-	waitmovement 0x0
+BattleFrontier_BattleTowerCorridor_EventScript_WalkToFarDoor::
+	applymovement LOCALID_TOWER_CORRIDOR_ATTENDANT, BattleFrontier_BattleTowerCorridor_Movement_AttendantWalkToFarDoor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerCorridor_Movement_PlayerWalkToFarDoor
+	waitmovement 0
 
-BattleFrontier_BattleTowerCorridor_EventScript_00221C20::
-	setvar 0x4000, 0x0
-	warp 0x1A08, 0xFF, 0x4, 0x8
+BattleFrontier_BattleTowerCorridor_EventScript_WarpToBattleRoom::
+	setvar VAR_TEMP_0, 0
+	warp MAP_BATTLE_FRONTIER_BATTLE_TOWER_BATTLE_ROOM, 4, 8
 	waitstate
 	end
+
+BattleFrontier_BattleTowerCorridor_Movement_PlayerWalkToFarDoor:
+	walk_right
+BattleFrontier_BattleTowerCorridor_Movement_AttendantWalkToFarDoor:
+	walk_right
+	walk_right
+BattleFrontier_BattleTowerCorridor_Movement_PlayerWalkToDoor:
+	walk_right
+BattleFrontier_BattleTowerCorridor_Movement_AttendantWalkToDoor:
+	walk_right
+	walk_right
+	walk_right
+	walk_up
+	set_invisible
+	step_end

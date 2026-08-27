@@ -827,7 +827,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/BattleFrontier_BattleTowerLobby/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleTowerElevator/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleTowerCorridor/scripts.inc"
-	.incbin "baserom_jp.gba", 0x221c2f, 0xa
 	.include "data/maps/BattleFrontier_BattleTowerBattleRoom/scripts.inc"
 	.include "data/maps/SouthernIsland_Exterior/scripts.inc"
 	.include "data/maps/SouthernIsland_Interior/scripts.inc"
