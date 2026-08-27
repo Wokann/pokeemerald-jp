@@ -582,7 +582,7 @@ __attribute__((naked)) void CheckPartyMonHasHeldItem(void)
     );
 }
 
-__attribute__((naked)) void sub_080F9C00(void)
+__attribute__((naked)) void DoesPartyHaveEnigmaBerry(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

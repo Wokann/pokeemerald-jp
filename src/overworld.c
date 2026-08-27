@@ -6115,7 +6115,7 @@ __attribute__((naked)) void RunTerminateLinkScript(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086EF8: .4byte CableClub_EventScript_ExitLinkRoom\n\t"
+        "_08086EF8: .4byte EventScript_TerminateLink\n\t"
         ".syntax divided\n\t"
     );
 }

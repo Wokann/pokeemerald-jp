@@ -354,7 +354,7 @@ gSpecials::
 	def_special MonOTNameMatchesPlayer
 	def_special BufferLottoTicketNumber
 	def_special sub_08165248
-	def_special sub_080F9C00
+	def_special DoesPartyHaveEnigmaBerry
 	def_special GenerateContestRand
 	def_special SetChampionSaveWarp
 	def_special TryPutTreasureInvestigatorsOnAir
@@ -535,7 +535,7 @@ gSpecials::
 	.set SPECIAL_WAITSTATE_GetLilycoveSSTidalSelection, SPECIAL_WAITSTATE_sub_080E1D6C
 	def_special TurnOnTVScreen
 	def_special SetMewAboveGrass
-	def_special sub_0813B54C
+	def_special ShouldDistributeEonTicket
 	def_special sub_0813B5A0
 	def_special sub_0813B56C
 	def_special CallTrainerHillFunction

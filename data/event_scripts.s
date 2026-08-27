@@ -273,16 +273,6 @@
 	.set Common_EventScript_PkmnCenterNurse, 0x082429B8
 	.globl ProfileMan_EventScript_Man
 	.set ProfileMan_EventScript_Man, 0x08257290
-	.globl CableClub_OnTransition
-	.set CableClub_OnTransition, 0x082467CD
-	.globl CableClub_OnWarp
-	.set CableClub_OnWarp, 0x0824686A
-	.globl CableClub_OnLoad
-	.set CableClub_OnLoad, 0x082468BC
-	.globl CableClub_EventScript_CheckTurnAttendant
-	.set CableClub_EventScript_CheckTurnAttendant, 0x082468AC
-	.globl CableClub_EventScript_ExitMinigameRoom
-	.set CableClub_EventScript_ExitMinigameRoom, 0x0824699B
 	@ The Mossdeep Game Corner retains these RS house continuations in the
 	@ shared Cable Club script block.
 	.globl MossdeepCity_GameCorner_1F_EventScript_InfoMan2
@@ -293,16 +283,6 @@
 	.set MossdeepCity_GameCorner_1F_EventScript_DodrioBerryPickingRecords, 0x08247B79
 	.globl MossdeepCity_GameCorner_1F_EventScript_PokemonJumpRecords
 	.set MossdeepCity_GameCorner_1F_EventScript_PokemonJumpRecords, 0x08247B72
-	.globl CableClub_OnFrame
-	.set CableClub_OnFrame, 0x08246939
-	.globl CableClub_EventScript_MysteryGiftMan
-	.set CableClub_EventScript_MysteryGiftMan, 0x08246801
-	.globl CableClub_EventScript_Colosseum
-	.set CableClub_EventScript_Colosseum, 0x08246BB2
-	.globl CableClub_EventScript_TradeCenter
-	.set CableClub_EventScript_TradeCenter, 0x08246DAD
-	.globl CableClub_EventScript_RecordCorner
-	.set CableClub_EventScript_RecordCorner, 0x08246ED6
 	.globl CableClub_OnResume
 	.set CableClub_OnResume, 0x0824790F
 	.globl PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
@@ -1165,8 +1145,15 @@ gText_DoorOpenedFarAway:: @ 0x08243CBE
 gText_BigHoleInTheWall:: @ 0x08243CDA
 	.incbin "baserom_jp.gba", 0x243cda, 0x14
 
-	@ 0x08243CEE-0x08243DC6 remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x243cee, 0xd8
+	@ 0x08243CEE-0x08243D90 remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x243cee, 0xa2
+
+gText_ThankYouForAccessingMysteryGift:: @ 0x08243D90
+	.string "ふしぎな　おくりものを　ごりよう\n"
+	.string "いただき　ありがとう　ございます！$"
+
+	@ 0x08243DB3-0x08243DC6 remains unstructured shared text data.
+	.incbin "baserom_jp.gba", 0x243db3, 0x13
 
 gText_Sudowoodo_Attacked:: @ 0x08243DC6
 	.string "おかしな　きは\n"
@@ -1183,8 +1170,19 @@ gText_LegendaryFlewAway:: @ 0x08243DF4
 	@ 0x08243EEE
 	.include "data/text/questionnaire.inc"
 
-	@ 0x08244040-0x082440BC remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x244040, 0x7c
+MysteryGift_Text_TheresATicketForYou:: @ 0x08244040
+	.string "ふしぎなできごと　を　ごりよう\n"
+	.string "いただき　ありがとう　ございます！\l"
+	.string "{PLAYER}さま　ですね\p"
+	.string "あなたさま　あてに\n"
+	.string "この　チケットが\l"
+	.string "おくられて　きました$"
+
+MysteryGift_Text_TryUsingItAtLilycovePort:: @ 0x08244089
+	.string "ミナモシティの　ふなつきば　で\n"
+	.string "つかえる　ようですね\p"
+	.string "ぜひ　ごりよう　してみては\n"
+	.string "いかがでしょうか？$"
 
 	@ 0x082440BC
 	.include "data/text/abnormal_weather.inc"
@@ -1263,8 +1261,8 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x082465BD
 	.include "data/text/shared_secret_base.inc"
 
-	@ 0x082467CD-0x08247044 remains unstructured script data.
-	.incbin "baserom_jp.gba", 0x2467CD, 0x877
+	@ 0x082467CD
+	.include "data/scripts/cable_club.inc"
 
 	.globl EventScript_CableBoxResults
 EventScript_CableBoxResults: @ 0x8247044
@@ -1306,9 +1304,8 @@ gUnknown_824717B: @ 0x824717B
 gUnknown_82471CE: @ 0x82471CE
 	.include "data/scripts/gUnknown_82471CE.inc"
 
-	.globl CableClub_EventScript_ExitLinkRoom
-CableClub_EventScript_ExitLinkRoom: @ 0x82471E8
-	.include "data/scripts/CableClub_EventScript_ExitLinkRoom.inc"
+EventScript_TerminateLink:: @ 0x82471E8
+	.include "data/scripts/EventScript_TerminateLink.inc"
 
 	.globl gUnknown_82471F2
 gUnknown_82471F2: @ 0x82471F2

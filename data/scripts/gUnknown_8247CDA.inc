@@ -23,13 +23,13 @@ gJPText_00247EAC: @ 0x08247EAC
 	.string "⋯{B_COPY_VAR_2}カードだ！$"
 
 	.incbin "baserom_jp.gba", 0x247ecc, 0x4e
-	.globl gJPText_00247F1A
-gJPText_00247F1A: @ 0x08247F1A
+	.globl CableClub_Text_TrainerCardDataOverwritten
+CableClub_Text_TrainerCardDataOverwritten: @ 0x08247F1A
 	.string "トレーナーカードの\n"
 	.string "きろくを　かきかえます！$"
 
-	.globl gJPText_00247F31
-gJPText_00247F31: @ 0x08247F31
+	.globl CableClub_Text_HopeToSeeYouAgain
+CableClub_Text_HopeToSeeYouAgain: @ 0x08247F31
 	.string "では　また　どうぞ！$"
 
 	.incbin "baserom_jp.gba", 0x247f3c, 0xa7
@@ -39,8 +39,8 @@ gJPText_00247FE3: @ 0x08247FE3
 	.string "カウンターに　おこしください$"
 
 	.incbin "baserom_jp.gba", 0x247ffe, 0x799
-	.globl gJPText_00248797
-gJPText_00248797: @ 0x08248797
+	.globl CableClub_Text_FirstTimeRightThisWay
+CableClub_Text_FirstTimeRightThisWay: @ 0x08248797
 	.string "こんにちは！\p"
 	.string "ワイヤレス　つうしんが\n"
 	.string "はじめての　かたですね？\p"
@@ -50,8 +50,8 @@ gJPText_00248797: @ 0x08248797
 	.string "ごあんないを　いたしますので\l"
 	.string "こちらへ　どうぞ！$"
 
-	.globl gJPText_002487F6
-gJPText_002487F6: @ 0x082487F6
+	.globl CableClub_Text_ExplainWirelessClubFirstTime
+CableClub_Text_ExplainWirelessClubFirstTime: @ 0x082487F6
 	.string "こちら　2かいには\n"
 	.string "ふたつの　おへやが　ございます\p"
 	.string "ひとつめは　ひだりがわの　おへや\n"

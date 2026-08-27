@@ -2264,7 +2264,7 @@ __attribute__((naked)) void SetTrickHouseNuggetFlag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08139054: .4byte gSpecialVar_0x8004\n\t"
-        "_08139058: .4byte SPECIAL_sub_0813B54C\n\t"
+        "_08139058: .4byte SPECIAL_ShouldDistributeEonTicket\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2282,7 +2282,7 @@ __attribute__((naked)) void ResetTrickHouseNuggetFlag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0813906C: .4byte gSpecialVar_0x8004\n\t"
-        "_08139070: .4byte SPECIAL_sub_0813B54C\n\t"
+        "_08139070: .4byte SPECIAL_ShouldDistributeEonTicket\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6795,7 +6795,7 @@ __attribute__((naked)) bool32 IsTrainerRegistered(void)
     );
 }
 
-__attribute__((naked)) void sub_0813B54C(void)
+__attribute__((naked)) void ShouldDistributeEonTicket(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
