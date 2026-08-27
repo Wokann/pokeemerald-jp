@@ -206,4 +206,28 @@ FarawayIsland_Interior_Text_Mew: @ 0x08275F57
 
 	.globl FortreeCity_House2_EventScript_SleepTalkTutor
 FortreeCity_House2_EventScript_SleepTalkTutor: @ 0x08276A3A
-	.incbin "baserom_jp.gba", 0x276a3a, 0x275
+	.incbin "baserom_jp.gba", 0x276a3a, 0x218
+
+TrainerHill_OnResume:
+	setvar VAR_TEMP_2, 0
+	trainerhill_resumetimer
+	frontier_get FRONTIER_DATA_BATTLE_OUTCOME
+	goto_if_eq VAR_RESULT, B_OUTCOME_LOST, TrainerHill_1F_EventScript_Lost
+	goto_if_eq VAR_RESULT, B_OUTCOME_DREW, TrainerHill_1F_EventScript_Lost
+	goto_if_eq VAR_RESULT, B_OUTCOME_FORFEITED, TrainerHill_1F_EventScript_Lost
+	end
+
+TrainerHill_OnWarp:
+	map_script_2 VAR_TEMP_3, 0, TrainerHill_1F_EventScript_DummyOnWarp
+	.2byte 0
+
+TrainerHill_1F_EventScript_DummyOnWarp::
+	setvar VAR_TEMP_3, 1
+#ifdef BUGFIX
+	end  @ Missing end. By chance, the next byte (0x02 of VAR_TEMP_2) is also the id for the end cmd
+#endif
+
+TrainerHill_OnFrame:
+	map_script_2 VAR_TEMP_2, 0, TrainerHill_1F_EventScript_DummyWarpToEntranceCounter
+	map_script_2 VAR_TEMP_1, 1, TrainerHill_EventScript_WarpToEntranceCounter
+	.2byte 0

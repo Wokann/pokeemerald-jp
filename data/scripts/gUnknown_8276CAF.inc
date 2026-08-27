@@ -1,28 +1,34 @@
-	lockall 
-	setvar 0x8004, 0x7
-	special CallTrainerHillFunction
-	loadword 0x0, 0x823BEEC
-	callstd 0x4
-	releaseall 
-	end 
-	setvar 0x4002, 0x1
-	setvar 0x8004, 0x9
-	special CallTrainerHillFunction
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, 0x8276CDB
-	end 
-	warpsilent 0x1A3C, 0xFF, 0x9, 0x6
-	waitstate 
-	end 
-	setvar 0x8004, 0xC
-	special CallTrainerHillFunction
-	setvar 0x8004, 0x5
-	special CallTrainerHillFunction
-	setvar 0x4001, 0x1
-	end 
-	setvar 0x4001, 0x0
-	warp 0x1A3C, 0xFF, 0x9, 0x6
-	waitstate 
-	end 
-	.byte 0x54
-	.byte 0xFE
+	lockall
+	trainerhill_gettime
+	msgbox TrainerHill_Entrance_Text_ChallengeTime, MSGBOX_DEFAULT
+	releaseall
+	end
+
+TrainerHill_1F_EventScript_DummyWarpToEntranceCounter::
+	setvar VAR_TEMP_2, 1
+	trainerhill_getusingereader
+	goto_if_eq VAR_RESULT, TRUE, TrainerHill_1F_EventScript_WarpSilentToEntranceCounter  @ VAR_RESULT always FALSE here
+	end
+
+@ Never reached
+TrainerHill_1F_EventScript_WarpSilentToEntranceCounter::
+	warpsilent MAP_TRAINER_HILL_ENTRANCE, 9, 6
+	waitstate
+	end
+
+TrainerHill_1F_EventScript_Lost::
+	trainerhill_settrainerflags
+	trainerhill_lost
+	setvar VAR_TEMP_1, 1
+	end
+
+TrainerHill_EventScript_WarpToEntranceCounter::
+	setvar VAR_TEMP_1, 0
+	warp MAP_TRAINER_HILL_ENTRANCE, 9, 6
+	waitstate
+	end
+
+@ Unused
+TrainerHill_1F_Movement_SetInvisible:
+	set_invisible
+	step_end
