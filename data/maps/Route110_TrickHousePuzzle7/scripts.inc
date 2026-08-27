@@ -1,89 +1,392 @@
-@ Route110_TrickHousePuzzle7 scripts (JP map g29 m9 @ 0x0823FEBC)
-
 Route110_TrickHousePuzzle7_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHousePuzzle7_EventScript_0023FED1
-	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHousePuzzle7_EventScript_0023FFC3
-	map_script MAP_SCRIPT_ON_LOAD, Route110_TrickHousePuzzle7_EventScript_0023FFDF
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route110_TrickHousePuzzle7_MapScriptTable_0023FFEB
+	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHousePuzzle7_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHousePuzzle7_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, Route110_TrickHousePuzzle7_OnLoad
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route110_TrickHousePuzzle7_OnFrame
 	.byte 0
 
-Route110_TrickHousePuzzle7_EventScript_0023FED1::
-	call Route110_TrickHousePuzzle7_EventScript_0023FED7
+@ Puzzle Room 7 in RSE uses whatever puzzle Mossdeep Gym uses
+@ Because Mossdeep Gym was redesigned for Emerald, theres a good deal of leftover script from the old R/S puzzle
+
+Route110_TrickHousePuzzle7_OnResume:
+	call Route110_TrickHousePuzzle7_EventScript_UpdateSwitchMetatiles
 	end
 
-Route110_TrickHousePuzzle7_EventScript_0023FED7::
-	checkflag 0xC2
-	call_if 0x1, Route110_TrickHousePuzzle7_EventScript_0023FF05
-	checkflag 0xC3
-	call_if 0x1, Route110_TrickHousePuzzle7_EventScript_0023FF18
-	checkflag 0xC4
-	call_if 0x1, Route110_TrickHousePuzzle7_EventScript_0023FF2B
-	checkflag 0xC5
-	call_if 0x1, Route110_TrickHousePuzzle7_EventScript_0023FF3E
-	checkflag 0xC6
-	call_if 0x1, Route110_TrickHousePuzzle7_EventScript_0023FF51
+Route110_TrickHousePuzzle7_EventScript_UpdateSwitchMetatiles::
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1, Route110_TrickHousePuzzle7_EventScript_SetSwitch1MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2, Route110_TrickHousePuzzle7_EventScript_SetSwitch2MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3, Route110_TrickHousePuzzle7_EventScript_SetSwitch3MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4, Route110_TrickHousePuzzle7_EventScript_SetSwitch4MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5, Route110_TrickHousePuzzle7_EventScript_SetSwitch5MetatilesOn
 	return
 
-Route110_TrickHousePuzzle7_EventScript_0023FF05::
-	setmetatile 0xD, 0x11, 0x262, 0x0
-	setmetatile 0xC, 0x10, 0x23F, 0x1
+@ Leftover from R/S, none of the below metatile scripts are ever called
+Route110_TrickHousePuzzle7_EventScript_SetSwitch1MetatilesOn::
+	setmetatile 13, 17, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Up, FALSE
+	setmetatile 12, 16, METATILE_TrickHousePuzzle_Lever_On, TRUE
 	return
 
-Route110_TrickHousePuzzle7_EventScript_0023FF18::
-	setmetatile 0xC, 0xD, 0x262, 0x0
-	setmetatile 0xC, 0xB, 0x23F, 0x1
+Route110_TrickHousePuzzle7_EventScript_SetSwitch2MetatilesOn::
+	setmetatile 12, 13, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Up, FALSE
+	setmetatile 12, 11, METATILE_TrickHousePuzzle_Lever_On, TRUE
 	return
 
-Route110_TrickHousePuzzle7_EventScript_0023FF2B::
-	setmetatile 0x7, 0xC, 0x262, 0x0
-	setmetatile 0x5, 0xA, 0x23F, 0x1
+Route110_TrickHousePuzzle7_EventScript_SetSwitch3MetatilesOn::
+	setmetatile 7, 12, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Up, FALSE
+	setmetatile 5, 10, METATILE_TrickHousePuzzle_Lever_On, TRUE
 	return
 
-Route110_TrickHousePuzzle7_EventScript_0023FF3E::
-	setmetatile 0x6, 0x6, 0x27C, 0x0
-	setmetatile 0x4, 0x4, 0x23F, 0x1
+Route110_TrickHousePuzzle7_EventScript_SetSwitch4MetatilesOn::
+	setmetatile 6, 6, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Right_Alt, FALSE
+	setmetatile 4, 4, METATILE_TrickHousePuzzle_Lever_On, TRUE
 	return
 
-Route110_TrickHousePuzzle7_EventScript_0023FF51::
-	setmetatile 0x8, 0x4, 0x261, 0x0
-	setmetatile 0x7, 0x5, 0x23F, 0x1
+Route110_TrickHousePuzzle7_EventScript_SetSwitch5MetatilesOn::
+	setmetatile 8, 4, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Left, FALSE
+	setmetatile 7, 5, METATILE_TrickHousePuzzle_Lever_On, TRUE
 	return
 
-	.incbin "baserom_jp.gba", 0x23ff64, 0x5f
-Route110_TrickHousePuzzle7_EventScript_0023FFC3::
-	compare_var_to_value 0x40B6, 0x1
-	goto_if 0x1, Route110_TrickHousePuzzle7_EventScript_0023FFDE
-	clearflag 0xC2
-	clearflag 0xC3
-	clearflag 0xC4
-	clearflag 0xC5
-	clearflag 0xC6
+Route110_TrickHousePuzzle7_EventScript_SetSwitch1MetatilesOff::
+	setmetatile 13, 17, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Down, FALSE
+	setmetatile 12, 16, METATILE_TrickHousePuzzle_Lever_Off, TRUE
+	return
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch2MetatilesOff::
+	setmetatile 12, 13, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Left, FALSE
+	setmetatile 12, 11, METATILE_TrickHousePuzzle_Lever_Off, TRUE
+	return
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch3MetatilesOff::
+	setmetatile 7, 12, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Down, FALSE
+	setmetatile 5, 10, METATILE_TrickHousePuzzle_Lever_Off, TRUE
+	return
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch4MetatilesOff::
+	setmetatile 6, 6, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Left_Alt, FALSE
+	setmetatile 4, 4, METATILE_TrickHousePuzzle_Lever_Off, TRUE
+	return
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch5MetatilesOff::
+	setmetatile 8, 4, METATILE_TrickHousePuzzle_Arrow_RedOnBlack_Right, FALSE
+	setmetatile 7, 5, METATILE_TrickHousePuzzle_Lever_Off, TRUE
+	return
+
+Route110_TrickHousePuzzle7_OnTransition:
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1, Route110_TrickHousePuzzle7_EventScript_TeleportedTransition
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5
 	end
 
-Route110_TrickHousePuzzle7_EventScript_0023FFDE::
+Route110_TrickHousePuzzle7_EventScript_TeleportedTransition::
 	end
 
-Route110_TrickHousePuzzle7_EventScript_0023FFDF::
-	compare_var_to_value 0x40B6, 0x1
-	call_if 0x1, Route110_TrickHousePuzzle7_EventScript_0023FED7
+Route110_TrickHousePuzzle7_OnLoad:
+	call_if_eq VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1, Route110_TrickHousePuzzle7_EventScript_UpdateSwitchMetatiles
 	end
 
-Route110_TrickHousePuzzle7_MapScriptTable_0023FFEB::
-	map_script_2 0x40B6, 0x1, Route110_TrickHousePuzzle7_EventScript_0023FFF5
+Route110_TrickHousePuzzle7_OnFrame:
+	map_script_2 VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1, Route110_TrickHousePuzzle7_EventScript_ClearState2
 	.2byte 0
 
-Route110_TrickHousePuzzle7_EventScript_0023FFF5::
-	setvar 0x40B6, 0x0
+Route110_TrickHousePuzzle7_EventScript_ClearState2::
+	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 0
 	end
 
-Route110_TrickHousePuzzle7_EventScript_0023FFFB::
+Route110_TrickHousePuzzle7_EventScript_Scroll::
 	lockall
-	compare_var_to_value 0x40B1, 0x0
-	goto_if 0x1, Route110_TrickHousePuzzle7_EventScript_0024000D
-	goto 0x0823D1AC
+	goto_if_eq VAR_TRICK_HOUSE_PUZZLE_7_STATE, 0, Route110_TrickHousePuzzle7_EventScript_FoundScroll
+	goto Route110_TrickHousePuzzle_EventScript_ReadScrollAgain
 	end
 
-Route110_TrickHousePuzzle7_EventScript_0024000D::
-	setvar 0x40B1, 0x1
-	goto 0x0823D1B6
+Route110_TrickHousePuzzle7_EventScript_FoundScroll::
+	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE, 1
+	goto Route110_TrickHousePuzzle_EventScript_FoundScroll
 	end
+
+@ Unused, leftover from R/S
+Route110_TrickHousePuzzle7_EventScript_TeleportPad::
+	lockall
+	setvar VAR_TRICK_HOUSE_PUZZLE_7_STATE_2, 1
+	warpteleport MAP_ROUTE110_TRICK_HOUSE_PUZZLE7, 3, 19
+	waitstate
+	releaseall
+	end
+
+@ All the below switch scripts are unused leftover from R/S
+Route110_TrickHousePuzzle7_EventScript_Switch1::
+	lockall
+	delay 32
+	call_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1, Route110_TrickHousePuzzle7_EventScript_SetSwitch1MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1, Route110_TrickHousePuzzle7_EventScript_SetSwitch1MetatilesOff
+	special DrawWholeMapView
+	playse SE_CLICK
+	goto_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1, Route110_TrickHousePuzzle7_EventScript_SetSwitch1On
+	goto_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1, Route110_TrickHousePuzzle7_EventScript_SetSwitch1Off
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Switch2::
+	lockall
+	delay 32
+	call_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2, Route110_TrickHousePuzzle7_EventScript_SetSwitch2MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2, Route110_TrickHousePuzzle7_EventScript_SetSwitch2MetatilesOff
+	special DrawWholeMapView
+	playse SE_CLICK
+	goto_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2, Route110_TrickHousePuzzle7_EventScript_SetSwitch2On
+	goto_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2, Route110_TrickHousePuzzle7_EventScript_SetSwitch2Off
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Switch3::
+	lockall
+	delay 32
+	call_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3, Route110_TrickHousePuzzle7_EventScript_SetSwitch3MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3, Route110_TrickHousePuzzle7_EventScript_SetSwitch3MetatilesOff
+	special DrawWholeMapView
+	playse SE_CLICK
+	goto_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3, Route110_TrickHousePuzzle7_EventScript_SetSwitch3On
+	goto_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3, Route110_TrickHousePuzzle7_EventScript_SetSwitch3Off
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Switch4::
+	lockall
+	delay 32
+	call_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4, Route110_TrickHousePuzzle7_EventScript_SetSwitch4MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4, Route110_TrickHousePuzzle7_EventScript_SetSwitch4MetatilesOff
+	special DrawWholeMapView
+	playse SE_CLICK
+	goto_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4, Route110_TrickHousePuzzle7_EventScript_SetSwitch4On
+	goto_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4, Route110_TrickHousePuzzle7_EventScript_SetSwitch4Off
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Switch5::
+	lockall
+	delay 32
+	call_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5, Route110_TrickHousePuzzle7_EventScript_SetSwitch5MetatilesOn
+	call_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5, Route110_TrickHousePuzzle7_EventScript_SetSwitch5MetatilesOff
+	special DrawWholeMapView
+	playse SE_CLICK
+	goto_if_unset FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5, Route110_TrickHousePuzzle7_EventScript_SetSwitch5On
+	goto_if_set FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5, Route110_TrickHousePuzzle7_EventScript_SetSwitch5Off
+	end
+
+@ All the below switch scripts are unused leftover from R/S
+Route110_TrickHousePuzzle7_EventScript_SetSwitch1On::
+	setflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch1Off::
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_1
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch2On::
+	setflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch2Off::
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_2
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch3On::
+	setflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch3Off::
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_3
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch4On::
+	setflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch4Off::
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_4
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch5On::
+	setflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5
+	releaseall
+	end
+
+Route110_TrickHousePuzzle7_EventScript_SetSwitch5Off::
+	clearflag FLAG_TRICK_HOUSE_PUZZLE_7_SWITCH_5
+	releaseall
+	end
+
+@ From here is where the new, actually used puzzle scripts begin
+Route110_TrickHousePuzzle7_EventScript_YellowButton::
+	playse SE_SWITCH
+	waitse
+	playse SE_REPEL
+	initrotatingtilepuzzle TRUE
+	moverotatingtileobjects 0
+	waitmovement 0
+	turnrotatingtileobjects
+	waitmovement 0
+	freerotatingtilepuzzle
+	end
+
+Route110_TrickHousePuzzle7_EventScript_BlueButton::
+	playse SE_SWITCH
+	waitse
+	playse SE_REPEL
+	initrotatingtilepuzzle TRUE
+	moverotatingtileobjects 1
+	waitmovement 0
+	turnrotatingtileobjects
+	waitmovement 0
+	freerotatingtilepuzzle
+	end
+
+Route110_TrickHousePuzzle7_EventScript_GreenButton::
+	playse SE_SWITCH
+	waitse
+	playse SE_REPEL
+	initrotatingtilepuzzle TRUE
+	moverotatingtileobjects 2
+	waitmovement 0
+	turnrotatingtileobjects
+	waitmovement 0
+	freerotatingtilepuzzle
+	end
+
+Route110_TrickHousePuzzle7_EventScript_PurpleButton::
+	playse SE_SWITCH
+	waitse
+	playse SE_REPEL
+	initrotatingtilepuzzle TRUE
+	moverotatingtileobjects 3
+	waitmovement 0
+	turnrotatingtileobjects
+	waitmovement 0
+	freerotatingtilepuzzle
+	end
+
+@ Unused
+Route110_TrickHousePuzzle7_EventScript_RedButton::
+	playse SE_SWITCH
+	waitse
+	playse SE_REPEL
+	initrotatingtilepuzzle TRUE
+	moverotatingtileobjects 4
+	waitmovement 0
+	turnrotatingtileobjects
+	waitmovement 0
+	freerotatingtilepuzzle
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Joshua::
+	trainerbattle_single TRAINER_JOSHUA, Route110_TrickHousePuzzle7_Text_JoshuaIntro, Route110_TrickHousePuzzle7_Text_JoshuaDefeat
+	msgbox Route110_TrickHousePuzzle7_Text_JoshuaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Patricia::
+	trainerbattle_single TRAINER_PATRICIA, Route110_TrickHousePuzzle7_Text_PatriciaIntro, Route110_TrickHousePuzzle7_Text_PatriciaDefeat
+	msgbox Route110_TrickHousePuzzle7_Text_PatriciaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Alexis::
+	trainerbattle_single TRAINER_ALEXIS, Route110_TrickHousePuzzle7_Text_AlexisIntro, Route110_TrickHousePuzzle7_Text_AlexisDefeat
+	msgbox Route110_TrickHousePuzzle7_Text_AlexisPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Mariela::
+	trainerbattle_single TRAINER_MARIELA, Route110_TrickHousePuzzle7_Text_MarielaIntro, Route110_TrickHousePuzzle7_Text_MarielaDefeat
+	msgbox Route110_TrickHousePuzzle7_Text_MarielaPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Alvaro::
+	trainerbattle_single TRAINER_ALVARO, Route110_TrickHousePuzzle7_Text_AlvaroIntro, Route110_TrickHousePuzzle7_Text_AlvaroDefeat
+	msgbox Route110_TrickHousePuzzle7_Text_AlvaroPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle7_EventScript_Everett::
+	trainerbattle_single TRAINER_EVERETT, Route110_TrickHousePuzzle7_Text_EverettIntro, Route110_TrickHousePuzzle7_Text_EverettDefeat
+	msgbox Route110_TrickHousePuzzle7_Text_EverettPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Route110_TrickHousePuzzle7_Text_WroteSecretCodeLockOpened::
+	.string "{PLAYER}は　あいことばを\n"
+	.string "とびらに　かきつけた！\p"
+	.string "‘カラクリだいおう　さま　だきしめたい’\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "かぎの　はずれる　おとがした！$"
+
+Route110_TrickHousePuzzle7_Text_JoshuaIntro:
+	.string "いつも　カラクリだいおうは　パッと\n"
+	.string "きえちゃうけど　どう　やってるんだろ？$"
+
+Route110_TrickHousePuzzle7_Text_JoshuaDefeat:
+	.string "ひえー\n"
+	.string "なんで　そんなに　つよいの？$"
+
+Route110_TrickHousePuzzle7_Text_JoshuaPostBattle:
+	.string "ぼくも　じゆう　じざいに\n"
+	.string "きえたり　あらわれたり　してみたいな$"
+
+Route110_TrickHousePuzzle7_Text_PatriciaIntro:
+	.string "おなじところを　つづけて\n"
+	.string "なんども　まわると　ふきつなのよ⋯⋯$"
+
+Route110_TrickHousePuzzle7_Text_PatriciaDefeat:
+	.string "まけた⋯⋯！\n"
+	.string "えんぎが　わるいわ⋯⋯！$"
+
+Route110_TrickHousePuzzle7_Text_PatriciaPostBattle:
+	.string "わたしは　もう　10かい　いじょう\n"
+	.string "まわってしまった⋯⋯　ふきつだわ⋯⋯$"
+
+Route110_TrickHousePuzzle7_Text_AlexisIntro:
+	.string "かった　ほうが　さきに　このしかけを\n"
+	.string "ぬけられる　よかんが　するわ！$"
+
+Route110_TrickHousePuzzle7_Text_AlexisDefeat:
+	.string "あら！\n"
+	.string "じゃあ　おさきに　どうぞ！$"
+
+Route110_TrickHousePuzzle7_Text_AlexisPostBattle:
+	.string "あなたは　カラクリやしきの　しかけを\n"
+	.string "すべて　とく　って　よかんが　するわ！$"
+
+Route110_TrickHousePuzzle7_Text_MarielaIntro:
+	.string "んっふっふっふ　きたわねっ\n"
+	.string "さあ　しょうぶよ！$"
+
+Route110_TrickHousePuzzle7_Text_MarielaDefeat:
+	.string "あっさり　かってくれちゃって！$"
+
+Route110_TrickHousePuzzle7_Text_MarielaPostBattle:
+	.string "ふん　べつに　くやしく　ないから！\n"
+	.string "わたし！$"
+
+Route110_TrickHousePuzzle7_Text_AlvaroIntro:
+	.string "きみが　どんどん\n"
+	.string "ちかづいて　くるのを　みていたぜ！$"
+
+Route110_TrickHousePuzzle7_Text_AlvaroDefeat:
+	.string "こんな　けっかは\n"
+	.string "みえなかった$"
+
+Route110_TrickHousePuzzle7_Text_AlvaroPostBattle:
+	.string "ま　こんな　ところで　あったんだ\n"
+	.string "ものずき　どうし　おたがい　がんばろうぜ！$"
+
+Route110_TrickHousePuzzle7_Text_EverettIntro:
+	.string "せ　せまいな⋯⋯\n"
+	.string "ここは⋯⋯$"
+
+Route110_TrickHousePuzzle7_Text_EverettDefeat:
+	.string "おお　つよいつよい$"
+
+Route110_TrickHousePuzzle7_Text_EverettPostBattle:
+	.string "もし　かったら　いれかわって　やれと\n"
+	.string "おもって　いたんだけどね$"
