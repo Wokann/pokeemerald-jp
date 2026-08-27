@@ -1097,7 +1097,12 @@ gUnknown_82436CD:: @ 0x082436CD
 	.incbin "baserom_jp.gba", 0x24398a, 0x1e
 
 gText_NoRoomLeftForAnother:: @ 0x082439A8
-	.incbin "baserom_jp.gba", 0x2439a8, 0x9f
+	.incbin "baserom_jp.gba", 0x2439a8, 0x6a
+
+gText_MomOrDadMightLikeThisProgram:: @ 0x08243A12
+	.string "{B_COPY_VAR_1}が　すきそうな　ばんぐみをやってる！\n"
+	.string "⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯\p"
+	.string "さきを　いそがなきゃ！$"
 
 gText_WhichFloorWouldYouLike:: @ 0x08243A47
 	.string "ミナモ　デパートへ　ようこそ！\p"
@@ -1265,8 +1270,61 @@ Common_EventScript_LegendaryFlewAway::
 
 @ 0x0824C395
 	.include "data/text/trick_house_mechadolls.inc"
-EventScript_TV:: @ 0x824C47B
-	.include "data/scripts/gUnknown_824C47B.inc"
+@ 0x0824C47B
+	.include "data/scripts/tv.inc"
+
+@ 0x0824C585
+	.incbin "baserom_jp.gba", 0x24c585, 0x78ec
+	.globl LilycoveCity_ContestLobby_EventScript_Reporter
+LilycoveCity_ContestLobby_EventScript_Reporter: @ 0x08253E71
+	.incbin "baserom_jp.gba", 0x253e71, 0xd2
+LilycoveCity_ContestLobby_EventScript_TryShowContestReporter: @ 0x08253F43
+	.incbin "baserom_jp.gba", 0x253f43, 0x19c
+
+GabbyAndTy_EventScript_UpdateLocation:: @ 0x082540DF
+	.incbin "baserom_jp.gba", 0x2540df, 0x10f
+
+GabbyAndTy_EventScript_GabbyBattle1:: @ 0x082541EE
+	.incbin "baserom_jp.gba", 0x2541ee, 0x20
+
+GabbyAndTy_EventScript_TyBattle1:: @ 0x0825420E
+	.incbin "baserom_jp.gba", 0x25420e, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle2:: @ 0x0825422E
+	.incbin "baserom_jp.gba", 0x25422e, 0x20
+
+GabbyAndTy_EventScript_TyBattle2:: @ 0x0825424E
+	.incbin "baserom_jp.gba", 0x25424e, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle3:: @ 0x0825426E
+	.incbin "baserom_jp.gba", 0x25426e, 0x20
+
+GabbyAndTy_EventScript_TyBattle3:: @ 0x0825428E
+	.incbin "baserom_jp.gba", 0x25428e, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle4:: @ 0x082542AE
+	.incbin "baserom_jp.gba", 0x2542ae, 0x20
+
+GabbyAndTy_EventScript_TyBattle4:: @ 0x082542CE
+	.incbin "baserom_jp.gba", 0x2542ce, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle5:: @ 0x082542EE
+	.incbin "baserom_jp.gba", 0x2542ee, 0x20
+
+GabbyAndTy_EventScript_TyBattle5:: @ 0x0825430E
+	.incbin "baserom_jp.gba", 0x25430e, 0x20
+
+GabbyAndTy_EventScript_GabbyBattle6:: @ 0x0825432E
+	.incbin "baserom_jp.gba", 0x25432e, 0x20
+
+GabbyAndTy_EventScript_TyBattle6:: @ 0x0825434E
+	.incbin "baserom_jp.gba", 0x25434e, 0x20
+
+	.incbin "baserom_jp.gba", 0x25436e, 0x225a
+
+EventScript_CutTree:: @ 0x082565C8
+	.incbin "baserom_jp.gba", 0x2565c8, 0x4a
+
 
 	.globl EventScript_UseCut
 EventScript_UseCut: @ 0x8256612
@@ -1327,7 +1385,7 @@ EventScript_FailSweetScent: @ 0x8256A14
 	.globl GraniteCave_B2F_EventScript_ItemRareCandy
 	.set GraniteCave_B2F_EventScript_ItemRareCandy, 0x08256ECE
 	@ Petalburg Woods event entries point into later shared field/item owners.
-	@ Its cut-tree target now has a physical label in gUnknown_824C47B.inc.
+	@ Its Cut Tree target now has the physical EventScript_CutTree label.
 	.globl PetalburgWoods_EventScript_ItemXAttack
 	.set PetalburgWoods_EventScript_ItemXAttack, 0x08256E59
 	.globl PetalburgWoods_EventScript_ItemGreatBall

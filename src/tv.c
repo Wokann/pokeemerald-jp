@@ -75,7 +75,7 @@ __attribute__((naked)) void ClearTVShowData(void)
     );
 }
 
-__attribute__((naked)) void special_0x44(void)
+__attribute__((naked)) u8 GetRandomActiveShowIdx(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -183,7 +183,7 @@ __attribute__((naked)) void FindAnyTVShowOnTheAir(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl special_0x44\n\t"
+        "	bl GetRandomActiveShowIdx\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r1, r0, #0x18\n\t"
         "	cmp r1, #0xff\n\t"
@@ -234,7 +234,7 @@ __attribute__((naked)) void UpdateTVScreensOnMap(int width, int height)
         "	adds r5, r1, #0\n\t"
         "	ldr r0, _080ECC18\n\t"
         "	bl FlagSet\n\t"
-        "	bl CheckForBigMovieOrEmergencyNewsOnTV\n\t"
+        "	bl CheckForPlayersHouseNews\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
@@ -271,7 +271,7 @@ __attribute__((naked)) void UpdateTVScreensOnMap(int width, int height)
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #0xff\n\t"
         "	bne _080ECC4E\n\t"
-        "	bl IsTVShowInSearchOfTrainersAiring\n\t"
+        "	bl IsGabbyAndTyShowOnTheAir\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080ECC5E\n\t"
@@ -394,7 +394,7 @@ __attribute__((naked)) void TurnOnTVScreen(void)
     );
 }
 
-__attribute__((naked)) void special_0x45(void)
+__attribute__((naked)) u8 GetSelectedTVShow(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -464,7 +464,7 @@ __attribute__((naked)) void FindFirstActiveTVShowThatIsNotAMassOutbreak(void)
     );
 }
 
-__attribute__((naked)) void special_0x4a(void)
+__attribute__((naked)) u8 GetNextActiveShowIfMassOutbreak(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -925,7 +925,7 @@ __attribute__((naked)) void GabbyAndTyGetBattleNum(void)
     );
 }
 
-__attribute__((naked)) void IsTVShowInSearchOfTrainersAiring(void)
+__attribute__((naked)) bool8 IsGabbyAndTyShowOnTheAir(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8690,7 +8690,7 @@ u32 GetPlayerIDAsU32(void)
     return (gSaveBlock2Ptr->playerTrainerId[3] << 24) | (gSaveBlock2Ptr->playerTrainerId[2] << 16) | (gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0];
 }
 
-__attribute__((naked)) void CheckForBigMovieOrEmergencyNewsOnTV(void)
+__attribute__((naked)) u8 CheckForPlayersHouseNews(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

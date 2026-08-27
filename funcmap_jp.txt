@@ -8035,7 +8035,7 @@ secret_base.s
 080eca1c CheckInteractedWithFriendsSandOrnament CheckInteractedWithFriendsSandOrnament
 tv.s
 080eca80 ClearTVShowData ClearTVShowData
-080ecadc special_0x44 GetRandomActiveShowIdx
+080ecadc GetRandomActiveShowIdx GetRandomActiveShowIdx
 080ecb94 FindAnyTVShowOnTheAir FindAnyTVShowOnTheAir
 080ecbe4 UpdateTVScreensOnMap UpdateTVScreensOnMap
 080ecc6c SetTVMetatilesOnMap SetTVMetatilesOnMap
@@ -8043,7 +8043,7 @@ tv.s
 080eccec TurnOnTVScreen TurnOnTVScreen
 080ecd08 GetSelectedTVShow GetSelectedTVShow
 080ecd2c tv.s FindFirstActiveTVShowThatIsNotAMassOutbreak
-080ecd74 tv.s special_0x4a
+080ecd74 GetNextActiveShowIfMassOutbreak GetNextActiveShowIfMassOutbreak
 080ecdbc ResetGabbyAndTy ResetGabbyAndTy
 080ecebc GabbyAndTyBeforeInterview GabbyAndTyBeforeInterview
 080ecfe8 GabbyAndTyAfterInterview GabbyAndTyAfterInterview
@@ -8174,7 +8174,7 @@ tv.s
 080f0a68 IsMonOTIDNotPlayers IsMonOTIDNotPlayers
 080f0aac GetTVGroupByShowId GetTVGroupByShowId
 080f0aec GetPlayerIDAsU32 GetPlayerIDAsU32
-080f0b0c CheckForBigMovieOrEmergencyNewsOnTV CheckForPlayersHouseNews
+080f0b0c CheckForPlayersHouseNews CheckForPlayersHouseNews
 080f0b70 GetMomOrDadStringForTVMessage GetMomOrDadStringForTVMessage
 080f0c84 HideBattleTowerReporter HideBattleTowerReporter
 080f0cb4 tv.s ReceiveTvShowsData
