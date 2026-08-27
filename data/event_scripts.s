@@ -1261,10 +1261,6 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x082467CD
 	.include "data/scripts/cable_club.inc"
 
-CableClub_EventScript_DirectCornerAttendant:: @ 0x08247383
-	@ 0x08247383-0x08247869 remains unstructured Cable Club script data.
-	.incbin "baserom_jp.gba", 0x247383, 0x4E6
-
 	.globl EventScript_WirelessBoxResults
 EventScript_WirelessBoxResults: @ 0x8247869
 	.include "data/scripts/gUnknown_8247869.inc"

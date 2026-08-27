@@ -927,3 +927,261 @@ CableClub_EventScript_DontAskAboutLinking::
 	msgbox 0x08248AD9, MSGBOX_DEFAULT @ CableClub_Text_HopeYouEnjoyWirelessSystem
 	release
 	return
+
+CableClub_EventScript_DirectCornerAttendant::
+	lock
+	faceplayer
+	setvar VAR_FRONTIER_FACILITY, FACILITY_MULTI_OR_EREADER
+	goto_if_unset FLAG_SYS_POKEDEX_GET, CableClub_EventScript_WirelessClubAdjustements
+	specialvar VAR_RESULT, IsBadEggInParty
+	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_AbortLinkPlayerHasBadEgg
+	specialvar VAR_RESULT, IsWirelessAdapterConnected
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_WelcomeToCableClub
+	message 0x082484A8 @ CableClub_Text_WelcomeWhichDirectCornerRoom
+	waitmessage
+	delay 28
+	goto CableClub_EventScript_DirectCornerSelectService
+	end
+
+CableClub_EventScript_DirectCornerSelectService::
+	checkitem ITEM_POWDER_JAR
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_DirectCornerNoBerry
+	goto_if_set FLAG_VISITED_MAUVILLE_CITY, CableClub_EventScript_DirectCornerSelectAllServices
+	multichoice 0, 0, MULTI_WIRELESS_NO_RECORD, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_WirelessTrade
+	case 1, CableClub_EventScript_WirelessBattleSelect
+	case 2, CableClub_EventScript_WirelessBerryCrush
+	case 3, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_DirectCornerSelectAllServices::
+	multichoice 0, 0, MULTI_WIRELESS_ALL_SERVICES, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_WirelessTrade
+	case 1, CableClub_EventScript_WirelessBattleSelect
+	case 2, CableClub_EventScript_WirelessRecordMix
+	case 3, CableClub_EventScript_WirelessBerryCrush
+	case 4, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_DirectCornerNoBerry::
+	goto_if_set FLAG_VISITED_MAUVILLE_CITY, CableClub_EventScript_DirectCornerHasRecordMix
+	multichoice 0, 0, MULTI_WIRELESS_NO_RECORD_BERRY, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_WirelessTrade
+	case 1, CableClub_EventScript_WirelessBattleSelect
+	case 2, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_DirectCornerHasRecordMix::
+	multichoice 0, 0, MULTI_WIRELESS_NO_BERRY, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_WirelessTrade
+	case 1, CableClub_EventScript_WirelessBattleSelect
+	case 2, CableClub_EventScript_WirelessRecordMix
+	case 3, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_WirelessTrade::
+	msgbox 0x082484F4, MSGBOX_YESNO @ CableClub_Text_TradePokemon
+	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_AbortLink
+	call CableClub_EventScript_CheckPartyTradeRequirements
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_AbortLink
+	setvar VAR_0x8004, LINK_GROUP_TRADE
+	goto CableClub_EventScript_SaveAndChooseLinkLeader
+	end
+
+CableClub_EventScript_WirelessBattleSelect::
+	message 0x08248500 @ CableClub_Text_PlayWhichBattleMode
+	waitmessage
+	multichoice 0, 0, MULTI_BATTLE_MODE, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_WirelessSingleBattle
+	case 1, CableClub_EventScript_WirelessDoubleBattle
+	case 2, CableClub_EventScript_WirelessMultiBattle
+	case 3, CableClub_EventScript_WirelessBattleInfo
+	case 4, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_WirelessSingleBattle::
+	setvar VAR_0x8004, LINK_GROUP_SINGLE_BATTLE
+	goto CableClub_EventScript_SaveAndChooseLinkLeader
+	end
+
+CableClub_EventScript_WirelessDoubleBattle::
+	special HasEnoughMonsForDoubleBattle
+	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, CableClub_EventScript_TwoMonsNeededForWirelessDoubleBattle
+	setvar VAR_0x8004, LINK_GROUP_DOUBLE_BATTLE
+	goto CableClub_EventScript_SaveAndChooseLinkLeader
+	end
+
+CableClub_EventScript_TwoMonsNeededForWirelessDoubleBattle::
+	msgbox 0x08247C1E, MSGBOX_DEFAULT @ CableClub_Text_NeedTwoMonsForDoubleBattle
+	goto CableClub_EventScript_WirelessBattleSelect
+	end
+
+CableClub_EventScript_WirelessMultiBattle::
+	setvar VAR_0x8004, LINK_GROUP_MULTI_BATTLE
+	goto CableClub_EventScript_SaveAndChooseLinkLeader
+	end
+
+CableClub_EventScript_WirelessBattleInfo::
+	msgbox 0x08248531, MSGBOX_DEFAULT @ CableClub_Text_ExplainBattleModes
+	goto CableClub_EventScript_WirelessBattleSelect
+	end
+
+CableClub_EventScript_WirelessRecordMix::
+	msgbox 0x08248511, MSGBOX_YESNO @ CableClub_Text_AccessRecordCorner
+	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_AbortLink
+	setvar VAR_0x8004, LINK_GROUP_RECORD_CORNER
+	goto CableClub_EventScript_SaveAndChooseLinkLeader
+	end
+
+CableClub_EventScript_WirelessBerryCrush::
+	msgbox 0x08248521, MSGBOX_YESNO @ CableClub_Text_UseBerryCrush
+	goto_if_eq VAR_RESULT, NO, CableClub_EventScript_AbortLink
+	special HasAtLeastOneBerry
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_NeedBerryForBerryCrush
+	setvar VAR_0x8004, LINK_GROUP_BERRY_CRUSH
+	goto CableClub_EventScript_SaveAndChooseLinkLeader
+	end
+
+CableClub_EventScript_NeedBerryForBerryCrush::
+	msgbox 0x082480C1, MSGBOX_DEFAULT @ CableClub_Text_NeedBerryForBerryCrush
+	goto CableClub_EventScript_DirectCornerSelectService
+	end
+
+CableClub_EventScript_SaveAndChooseLinkLeader::
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, CableClub_EventScript_AbortLink
+	switch VAR_0x8004
+	case LINK_GROUP_TRADE, CableClub_EventScript_ChooseLinkLeaderFrom2
+	case LINK_GROUP_SINGLE_BATTLE, CableClub_EventScript_ChooseLinkLeaderFrom2
+	case LINK_GROUP_DOUBLE_BATTLE, CableClub_EventScript_ChooseLinkLeaderFrom2
+	case LINK_GROUP_MULTI_BATTLE, CableClub_EventScript_ChooseLinkLeaderFrom4
+	case LINK_GROUP_BERRY_CRUSH, CableClub_EventScript_ChooseLinkLeader
+	case LINK_GROUP_RECORD_CORNER, CableClub_EventScript_ChooseLinkLeader
+	end
+
+CableClub_EventScript_ChooseLinkLeaderFrom2::
+	message 0x082485D7 @ CableClub_Text_ChooseGroupLeaderOfTwo
+	waitmessage
+	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_TryJoinGroup2Players
+	case 1, CableClub_EventScript_TryLeadGroup2Players
+	case 2, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_TryLeadGroup2Players::
+	call CableClub_EventScript_TryBecomeLinkLeader
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, CableClub_EventScript_EnterWirelessLinkRoom
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, CableClub_EventScript_ChooseLinkLeaderFrom2
+	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, CableClub_EventScript_TryLeadGroup2Players
+	release
+	return
+
+CableClub_EventScript_TryJoinGroup2Players::
+	call CableClub_EventScript_TryJoinLinkGroup
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, CableClub_EventScript_EnterWirelessLinkRoom
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, CableClub_EventScript_ChooseLinkLeaderFrom2
+	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, CableClub_EventScript_TryJoinGroup2Players
+	release
+	return
+
+CableClub_EventScript_ChooseLinkLeaderFrom4::
+	message 0x08248611 @ CableClub_Text_ChooseGroupLeaderOfFour
+	waitmessage
+	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_TryJoinGroup4Players
+	case 1, CableClub_EventScript_TryLeadGroup4Players
+	case 2, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_TryLeadGroup4Players::
+	call CableClub_EventScript_TryBecomeLinkLeader
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, CableClub_EventScript_EnterWirelessLinkRoom
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, CableClub_EventScript_ChooseLinkLeaderFrom4
+	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, CableClub_EventScript_TryLeadGroup4Players
+	release
+	return
+
+CableClub_EventScript_TryJoinGroup4Players::
+	call CableClub_EventScript_TryJoinLinkGroup
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, CableClub_EventScript_EnterWirelessLinkRoom
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, CableClub_EventScript_ChooseLinkLeaderFrom4
+	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, CableClub_EventScript_TryJoinGroup4Players
+	release
+	return
+
+CableClub_EventScript_ChooseLinkLeader::
+	message 0x08248651 @ CableClub_Text_ChooseGroupLeader
+	waitmessage
+	multichoice 16, 6, MULTI_LINK_LEADER, FALSE
+	switch VAR_RESULT
+	case 0, CableClub_EventScript_TryJoinGroupXPlayers
+	case 1, CableClub_EventScript_TryLeadGroupXPlayers
+	case 2, CableClub_EventScript_AbortLink
+	case MULTI_B_PRESSED, CableClub_EventScript_AbortLink
+	end
+
+CableClub_EventScript_TryLeadGroupXPlayers::
+	call CableClub_EventScript_TryBecomeLinkLeader
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, CableClub_EventScript_EnterWirelessLinkRoom
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, CableClub_EventScript_ChooseLinkLeader
+	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, CableClub_EventScript_TryLeadGroupXPlayers
+	release
+	return
+
+CableClub_EventScript_TryJoinGroupXPlayers::
+	call CableClub_EventScript_TryJoinLinkGroup
+	goto_if_eq VAR_RESULT, LINKUP_SUCCESS, CableClub_EventScript_EnterWirelessLinkRoom
+	goto_if_eq VAR_RESULT, LINKUP_FAILED, CableClub_EventScript_ChooseLinkLeader
+	goto_if_eq VAR_RESULT, LINKUP_RETRY_ROLE_ASSIGN, CableClub_EventScript_TryJoinGroupXPlayers
+	release
+	return
+
+CableClub_EventScript_TryBecomeLinkLeader::
+	special TryBecomeLinkLeader
+	waitstate
+	return
+
+CableClub_EventScript_TryJoinLinkGroup::
+	special TryJoinLinkGroup
+	waitstate
+	return
+
+CableClub_EventScript_EnterWirelessLinkRoom::
+	messageautoscroll 0x08247D23 @ CableClub_Text_DirectYouToYourRoom
+	waitmessage
+	delay 60
+	closemessage
+	copyvar VAR_0x8007, VAR_LAST_TALKED
+	call 0x082478C3 @ CableClub_EventScript_OpenDirectCornerBarrier
+	special DrawWholeMapView
+	playse SE_CLICK
+	delay 60
+	applymovement VAR_LAST_TALKED, Movement_AttendantFaceLeft
+	waitmovement 0
+	closemessage
+	applymovement LOCALID_PLAYER, Movement_PlayerApproachLinkRoomLeft
+	waitmovement 0
+	opendoor 9, 1
+	waitdooranim_jp
+	applymovement LOCALID_PLAYER, Movement_PlayerEnterLinkRoom
+	waitmovement 0
+	hideplayer
+	closedoor 9, 1
+	waitdooranim_jp
+	release
+	waitstate
+	end

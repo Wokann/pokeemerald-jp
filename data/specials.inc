@@ -435,8 +435,8 @@ gSpecials::
 	def_special StartPlayerDescendMirageTower, waitstate=1
 	def_special BufferTMHMMoveName
 	def_special IsWirelessAdapterConnected
-	def_special BerryBlenderLinkBecomeLeader
-	def_special BerryBlenderLinkJoinGroup
+	def_special TryBecomeLinkLeader
+	def_special TryJoinLinkGroup
 	def_special RunUnionRoom
 	def_special sub_08019EE4
 	def_special InitUnionRoom
@@ -608,7 +608,3 @@ gSpecials::
 	.set SPECIAL_WAITSTATE_SaveMuseumContestPainting, SPECIAL_WAITSTATE_sub_080F916C
 	.set SPECIAL_CountPlayerMuseumPaintings, SPECIAL_CountPlayerContestPaintings
 	.set SPECIAL_WAITSTATE_CountPlayerMuseumPaintings, SPECIAL_WAITSTATE_CountPlayerContestPaintings
-	.set SPECIAL_TryBecomeLinkLeader, SPECIAL_BerryBlenderLinkBecomeLeader
-	.set SPECIAL_WAITSTATE_TryBecomeLinkLeader, SPECIAL_WAITSTATE_BerryBlenderLinkBecomeLeader
-	.set SPECIAL_TryJoinLinkGroup, SPECIAL_BerryBlenderLinkJoinGroup
-	.set SPECIAL_WAITSTATE_TryJoinLinkGroup, SPECIAL_WAITSTATE_BerryBlenderLinkJoinGroup
