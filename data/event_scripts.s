@@ -1124,34 +1124,15 @@ Common_EventScript_PlayerHandedOverTheItem::
 
 	.include "data/scripts/elite_four.inc"
 	.include "data/scripts/movement.inc"
+	.include "data/scripts/check_furniture.inc"
 
-	.globl EventScript_PictureBookShelf
-EventScript_PictureBookShelf: @ 0x8243651
-	.include "data/scripts/gUnknown_8243651.inc"
+	@ 0x08243690-0x082436B8 is still unstructured shared script data.
+	.incbin "baserom_jp.gba", 0x243690, 0x28
 
-	.globl EventScript_BookShelf
-EventScript_BookShelf: @ 0x824365A
-	.include "data/scripts/gUnknown_824365A.inc"
-
-	.globl EventScript_PokemonCenterBookShelf
-EventScript_PokemonCenterBookShelf: @ 0x8243663
-	.include "data/scripts/gUnknown_8243663.inc"
-
-	.globl EventScript_Vase
-EventScript_Vase: @ 0x824366C
-	.include "data/scripts/gUnknown_824366C.inc"
-
-	.globl EventScript_EmptyTrashCan
-EventScript_EmptyTrashCan: @ 0x8243675
-	.include "data/scripts/gUnknown_8243675.inc"
-
-	.globl EventScript_ShopShelf
-EventScript_ShopShelf: @ 0x824367E
-	.include "data/scripts/gUnknown_824367E.inc"
-
-	.globl EventScript_Blueprint
-EventScript_Blueprint: @ 0x8243687
-	.include "data/scripts/gUnknown_8243687.inc"
+	.globl gJPText_002436B8
+gJPText_002436B8: @ 0x082436B8
+	.string "{MUS_RG_VS_TRAINER}は\n"
+	.string "パソコンの　スイッチを　いれた！$"
 
 	.globl gUnknown_82436CD
 gUnknown_82436CD: @ 0x82436CD
