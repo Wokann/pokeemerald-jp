@@ -1,309 +1,351 @@
-@ Route110_TrickHouseEnd scripts (JP map g29 m1 @ 0x0823D6C0)
-
 Route110_TrickHouseEnd_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHouseEnd_EventScript_0023D6D5
-	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHouseEnd_EventScript_0023D6E1
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route110_TrickHouseEnd_MapScriptTable_0023D706
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, Route110_TrickHouseEnd_MapScriptTable_0023D6EF
+	map_script MAP_SCRIPT_ON_RESUME, Route110_TrickHouseEnd_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, Route110_TrickHouseEnd_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route110_TrickHouseEnd_OnFrame
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, Route110_TrickHouseEnd_OnWarp
 	.byte 0
 
-Route110_TrickHouseEnd_EventScript_0023D6D5::
-	compare_var_to_value 0x4001, 0x1
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023D71E
+Route110_TrickHouseEnd_OnResume:
+	call_if_eq VAR_TEMP_1, 1, Route110_TrickHouseEnd_EventScript_SetDoorClosedMetatile
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D6E1::
-	setvar 0x4001, 0x0
-	setvar 0x4002, 0x0
-	special ResetTrickHouseEndRoomFlag
+Route110_TrickHouseEnd_OnTransition:
+	setvar VAR_TEMP_1, 0
+	setvar VAR_TEMP_2, 0
+	special SetTrickHouseNuggetFlag
 	end
 
-Route110_TrickHouseEnd_MapScriptTable_0023D6EF::
-	map_script_2 0x4002, 0x0, Route110_TrickHouseEnd_EventScript_0023D6F9
+Route110_TrickHouseEnd_OnWarp:
+	map_script_2 VAR_TEMP_2, 0, Route110_TrickHouseEnd_EventScript_SetTrickMasterPos
 	.2byte 0
 
-Route110_TrickHouseEnd_EventScript_0023D6F9::
-	addobject 0x1
-	showobject_at 0x1, 0x1D01
-	turnobject 0x1, 0x4
+Route110_TrickHouseEnd_EventScript_SetTrickMasterPos::
+	addobject LOCALID_TRICK_MASTER_END
+	showobjectat LOCALID_TRICK_MASTER_END, MAP_ROUTE110_TRICK_HOUSE_END
+	turnobject LOCALID_TRICK_MASTER_END, DIR_EAST
 	end
 
-Route110_TrickHouseEnd_MapScriptTable_0023D706::
-	map_script_2 0x4001, 0x0, Route110_TrickHouseEnd_EventScript_0023D710
+Route110_TrickHouseEnd_OnFrame:
+	map_script_2 VAR_TEMP_1, 0, Route110_TrickHouseEnd_EventScript_CloseDoor
 	.2byte 0
 
-Route110_TrickHouseEnd_EventScript_0023D710::
-	setvar 0x4001, 0x1
-	call Route110_TrickHouseEnd_EventScript_0023D71E
+Route110_TrickHouseEnd_EventScript_CloseDoor::
+	setvar VAR_TEMP_1, 1
+	call Route110_TrickHouseEnd_EventScript_SetDoorClosedMetatile
 	special DrawWholeMapView
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D71E::
-	setmetatile 0xA, 0x1, 0x21B, 0x1
+Route110_TrickHouseEnd_EventScript_SetDoorClosedMetatile::
+	setmetatile 10, 1, METATILE_GenericBuilding_TrickHouse_Door_Closed, TRUE
 	return
 
-Route110_TrickHouseEnd_EventScript_0023D728::
+Route110_TrickHouseEnd_EventScript_TrickMaster::
 	lock
 	faceplayer
-	loadword 0x0, 0x0823DA9E
-	callstd 0x4
-	setvar 0x4002, 0x1
-	copyvar 0x8000, 0x4044
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D795
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D7D1
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D80D
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D849
-	compare_var_to_value 0x8000, 0x4
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D885
-	compare_var_to_value 0x8000, 0x5
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D8C1
-	compare_var_to_value 0x8000, 0x6
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D8FD
-	compare_var_to_value 0x8000, 0x7
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D939
+	msgbox Route110_TrickHouseEnd_Text_YouveMadeItToMe, MSGBOX_DEFAULT
+	setvar VAR_TEMP_2, 1
+	switch VAR_TRICK_HOUSE_LEVEL
+	case 0, Route110_TrickHouseEnd_EventScript_CompletedPuzzle1
+	case 1, Route110_TrickHouseEnd_EventScript_CompletedPuzzle2
+	case 2, Route110_TrickHouseEnd_EventScript_CompletedPuzzle3
+	case 3, Route110_TrickHouseEnd_EventScript_CompletedPuzzle4
+	case 4, Route110_TrickHouseEnd_EventScript_CompletedPuzzle5
+	case 5, Route110_TrickHouseEnd_EventScript_CompletedPuzzle6
+	case 6, Route110_TrickHouseEnd_EventScript_CompletedPuzzle7
+	case 7, Route110_TrickHouseEnd_EventScript_CompletedPuzzle8
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D795::
-	loadword 0x0, 0x0823DABE
-	callstd 0x4
-	loadword 0x0, 0x0823DDE3
-	callstd 0x4
-	setvar 0x40C1, 0x0
-	setorcopyvar 0x8000, 0x44
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA00
-	loadword 0x0, 0x0823DE39
-	callstd 0x4
+Route110_TrickHouseEnd_EventScript_CompletedPuzzle1::
+	msgbox Route110_TrickHouseEnd_Text_AllNightToPlantTrees, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
+	giveitem ITEM_RARE_CANDY
+	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
+	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
-	call Route110_TrickHouseEnd_EventScript_0023D9E0
+	call Route110_TrickHouseEnd_EventScript_TrickMasterExit
 	release
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D7D1::
-	loadword 0x0, 0x0823DAF5
-	callstd 0x4
-	loadword 0x0, 0x0823DDE3
-	callstd 0x4
-	setvar 0x40C1, 0x0
-	setorcopyvar 0x8000, 0xA
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA00
-	loadword 0x0, 0x0823DE39
-	callstd 0x4
+Route110_TrickHouseEnd_EventScript_CompletedPuzzle2::
+	msgbox Route110_TrickHouseEnd_Text_AllNightToMakeMaze, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
+	giveitem ITEM_TIMER_BALL
+	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
+	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
-	call Route110_TrickHouseEnd_EventScript_0023D9E0
+	call Route110_TrickHouseEnd_EventScript_TrickMasterExit
 	release
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D80D::
-	loadword 0x0, 0x0823DB2B
-	callstd 0x4
-	loadword 0x0, 0x0823DDE3
-	callstd 0x4
-	setvar 0x40C1, 0x0
-	setorcopyvar 0x8000, 0xCC
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA00
-	loadword 0x0, 0x0823DE39
-	callstd 0x4
+Route110_TrickHouseEnd_EventScript_CompletedPuzzle3::
+	msgbox Route110_TrickHouseEnd_Text_AllNightToPreparePanels, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
+	giveitem ITEM_HARD_STONE
+	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
+	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
-	call Route110_TrickHouseEnd_EventScript_0023D9E0
+	call Route110_TrickHouseEnd_EventScript_TrickMasterExit
 	release
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D849::
-	loadword 0x0, 0x0823DB5E
-	callstd 0x4
-	loadword 0x0, 0x0823DDE3
-	callstd 0x4
-	setvar 0x40C1, 0x0
-	setorcopyvar 0x8000, 0xC2
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA00
-	loadword 0x0, 0x0823DE39
-	callstd 0x4
+Route110_TrickHouseEnd_EventScript_CompletedPuzzle4::
+	msgbox Route110_TrickHouseEnd_Text_AllNightToShoveBoulders, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
+	giveitem ITEM_SMOKE_BALL
+	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
+	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
-	call Route110_TrickHouseEnd_EventScript_0023D9E0
+	call Route110_TrickHouseEnd_EventScript_TrickMasterExit
 	release
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D885::
-	loadword 0x0, 0x0823DB8D
-	callstd 0x4
-	loadword 0x0, 0x0823DDE3
-	callstd 0x4
-	setvar 0x40C1, 0x0
-	setorcopyvar 0x8000, 0x12C
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA00
-	loadword 0x0, 0x0823DE39
-	callstd 0x4
+Route110_TrickHouseEnd_EventScript_CompletedPuzzle5::
+	msgbox Route110_TrickHouseEnd_Text_AllNightToMakeMechadolls, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
+	giveitem ITEM_TM_TAUNT
+	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
+	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
-	call Route110_TrickHouseEnd_EventScript_0023D9E0
+	call Route110_TrickHouseEnd_EventScript_TrickMasterExit
 	release
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D8C1::
-	loadword 0x0, 0x0823DBC8
-	callstd 0x4
-	loadword 0x0, 0x0823DDE3
-	callstd 0x4
-	setvar 0x40C1, 0x0
-	setorcopyvar 0x8000, 0xD0
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA00
-	loadword 0x0, 0x0823DE39
-	callstd 0x4
+Route110_TrickHouseEnd_EventScript_CompletedPuzzle6::
+	msgbox Route110_TrickHouseEnd_Text_AllNightToInstallDoors, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
+	giveitem ITEM_MAGNET
+	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
+	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
-	call Route110_TrickHouseEnd_EventScript_0023D9E0
+	call Route110_TrickHouseEnd_EventScript_TrickMasterExit
 	release
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D8FD::
-	loadword 0x0, 0x0823DBEF
-	callstd 0x4
-	loadword 0x0, 0x0823DDE3
-	callstd 0x4
-	setvar 0x40C1, 0x0
-	setorcopyvar 0x8000, 0x47
-	setorcopyvar 0x8001, 0x1
-	callstd 0x0
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA00
-	loadword 0x0, 0x0823DE39
-	callstd 0x4
+Route110_TrickHouseEnd_EventScript_CompletedPuzzle7::
+	msgbox Route110_TrickHouseEnd_Text_AllNightSettingUpArrows, MSGBOX_DEFAULT
+	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
+	giveitem ITEM_PP_MAX
+	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
+	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
-	call Route110_TrickHouseEnd_EventScript_0023D9E0
+	call Route110_TrickHouseEnd_EventScript_TrickMasterExit
 	release
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D939::
-	loadword 0x0, 0x0823DC16
-	callstd 0x4
+Route110_TrickHouseEnd_EventScript_CompletedPuzzle8::
+	msgbox Route110_TrickHouseEnd_Text_AllNightPolishingFloors, MSGBOX_DEFAULT
 	closemessage
-	compare_var_to_value 0x800C, 0x1
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA26
-	compare_var_to_value 0x800C, 0x2
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA31
-	compare_var_to_value 0x800C, 0x3
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA3C
-	compare_var_to_value 0x800C, 0x4
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA47
-	delay 0x1E
-	loadword 0x0, 0x0823DC3B
-	callstd 0x4
+	call_if_eq VAR_FACING, DIR_SOUTH, Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwaySouth
+	call_if_eq VAR_FACING, DIR_NORTH, Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayNorth
+	call_if_eq VAR_FACING, DIR_WEST, Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayWest
+	call_if_eq VAR_FACING, DIR_EAST, Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayEast
+	delay 30
+	msgbox Route110_TrickHouseEnd_Text_FountainOfIdeasRunDry, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0x1, 0x08243621
-	waitmovement 0x0
-	delay 0x1E
-	loadword 0x0, 0x0823DC85
-	callstd 0x4
-	setvar 0x40C1, 0x0
-	call Route110_TrickHouseEnd_EventScript_0023D9B6
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, Route110_TrickHouseEnd_EventScript_0023DA13
-	loadword 0x0, 0x0823DD87
-	callstd 0x4
-	call Route110_TrickHouseEnd_EventScript_0023D9E0
-	special SetTrickHouseEndRoomFlag
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_FacePlayer
+	waitmovement 0
+	delay 30
+	msgbox Route110_TrickHouseEnd_Text_DefeatedMePreferWhichTent, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
+	call Route110_TrickHouseEnd_EventScript_ChooseTent
+	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_NoRoomForTent
+	msgbox Route110_TrickHouseEnd_Text_LeavingOnJourney, MSGBOX_DEFAULT
+	call Route110_TrickHouseEnd_EventScript_TrickMasterExit
+	special ResetTrickHouseNuggetFlag
 	release
 	end
 
-Route110_TrickHouseEnd_EventScript_0023D9B6::
-	multichoice 0x0, 0x0, 0x58, 0x1
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, Route110_TrickHouseEnd_EventScript_0023D9D0
-	goto Route110_TrickHouseEnd_EventScript_0023D9D8
+Route110_TrickHouseEnd_EventScript_ChooseTent::
+	multichoice 0, 0, MULTI_TENT, TRUE
+	switch VAR_RESULT
+	case 0, Route110_TrickHouseEnd_EventScript_GiveRedTent
+	goto Route110_TrickHouseEnd_EventScript_GiveBlueTent
 
-Route110_TrickHouseEnd_EventScript_0023D9D0::
-	setorcopyvar 0x8000, 0x1F
-	callstd 0x7
+Route110_TrickHouseEnd_EventScript_GiveRedTent::
+	givedecoration DECOR_RED_TENT
 	return
 
-Route110_TrickHouseEnd_EventScript_0023D9D8::
-	setorcopyvar 0x8000, 0x20
-	callstd 0x7
+Route110_TrickHouseEnd_EventScript_GiveBlueTent::
+	givedecoration DECOR_BLUE_TENT
 	return
 
-Route110_TrickHouseEnd_EventScript_0023D9E0::
-	applymovement 0x1, 0x0823CC07
-	waitmovement 0x0
-	playse 0xB2
-	applymovement 0x1, 0x0823CC10
-	waitmovement 0x0
-	removeobject 0x1
-	addvar 0x4044, 0x1
+Route110_TrickHouseEnd_EventScript_TrickMasterExit::
+	applymovement LOCALID_TRICK_MASTER_END, Route110_TrickHouse_Movement_TrickMasterSpin
+	waitmovement 0
+	playse SE_M_EXPLOSION
+	applymovement LOCALID_TRICK_MASTER_END, Route110_TrickHouse_Movement_TrickMasterJumpAway
+	waitmovement 0
+	removeobject LOCALID_TRICK_MASTER_END
+	addvar VAR_TRICK_HOUSE_LEVEL, 1
 	return
 
-Route110_TrickHouseEnd_EventScript_0023DA00::
-	call 0x082430EA
-	loadword 0x0, 0x0823DDF6
-	callstd 0x4
-	setvar 0x40C1, 0x1
+Route110_TrickHouseEnd_EventScript_BagFull::
+	call Common_EventScript_BagIsFull
+	msgbox Route110_TrickHouseEnd_Text_NoRoomForThis, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 1
 	return
 
-Route110_TrickHouseEnd_EventScript_0023DA13::
-	call 0x082430FD
-	loadword 0x0, 0x0823DD3F
-	callstd 0x4
-	setvar 0x40C1, 0x1
+Route110_TrickHouseEnd_EventScript_NoRoomForTent::
+	call Common_EventScript_NoRoomForDecor
+	msgbox Route110_TrickHouseEnd_Text_NoRoomInPC, MSGBOX_DEFAULT
+	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 1
 	return
 
-Route110_TrickHouseEnd_EventScript_0023DA26::
-	applymovement 0x1, 0x0824362D
-	waitmovement 0x0
+Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwaySouth::
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
 	return
 
-Route110_TrickHouseEnd_EventScript_0023DA31::
-	applymovement 0x1, 0x08243629
-	waitmovement 0x0
+Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayNorth::
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
 	return
 
-Route110_TrickHouseEnd_EventScript_0023DA3C::
-	applymovement 0x1, 0x08243627
-	waitmovement 0x0
+Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayWest::
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
 	return
 
-Route110_TrickHouseEnd_EventScript_0023DA47::
-	applymovement 0x1, 0x0824362B
-	waitmovement 0x0
+Route110_TrickHouseEnd_EventScript_TrickMasterFaceAwayEast::
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_WalkInPlaceFasterRight
+	waitmovement 0
 	return
 
-Route110_TrickHouseEnd_EventScript_0023DA52::
+Route110_TrickHouseEnd_EventScript_TrickMasterExitTrigger::
 	lockall
-	turnobject 0x1, 0x3
-	playse 0x15
-	applymovement 0x1, 0x0824361B
-	waitmovement 0x0
-	delay 0x14
-	applymovement 0x1, 0x0823DA9C
-	waitmovement 0x0
-	playse 0xB2
-	applymovement 0xFF, 0x0824362D
-	waitmovement 0x0
-	loadword 0x0, 0x0823DEA4
-	callstd 0x4
+	turnobject LOCALID_TRICK_MASTER_END, DIR_WEST
+	playse SE_PIN
+	applymovement LOCALID_TRICK_MASTER_END, Common_Movement_ExclamationMark
+	waitmovement 0
+	delay 20
+	applymovement LOCALID_TRICK_MASTER_END, Route110_TrickHouseEnd_Movement_TrickMasterSurprise
+	waitmovement 0
+	playse SE_M_EXPLOSION
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox Route110_TrickHouseEnd_Text_YoureIgnoringMe, MSGBOX_DEFAULT
 	closemessage
-	applymovement 0xFF, 0x0823DA9A
-	waitmovement 0x0
-	delay 0x4
-	turnobject 0x1, 0x4
+	applymovement LOCALID_PLAYER, Route110_TrickHouseEnd_Movement_KeepPlayerInRoom
+	waitmovement 0
+	delay 4
+	turnobject LOCALID_TRICK_MASTER_END, DIR_EAST
 	releaseall
 	end
+
+Route110_TrickHouseEnd_Movement_KeepPlayerInRoom:
+	walk_down
+	step_end
+
+Route110_TrickHouseEnd_Movement_TrickMasterSurprise:
+	jump_in_place_left
+	step_end
+
+Route110_TrickHouseEnd_Text_YouveMadeItToMe:
+	.string "あっ！\n"
+	.string "あんた　ここまで　こられたのか！\l"
+	.string "うーむ⋯⋯　できる！$"
+
+Route110_TrickHouseEnd_Text_AllNightToPlantTrees:
+	.string "てつやで　きを　うえたのに⋯⋯\p"
+	.string "わがはいの　つぎの　つぎの　つぎの　つぎの\n"
+	.string "つぎの　つぎ　くらいに　すごい！$"
+
+Route110_TrickHouseEnd_Text_AllNightToMakeMaze:
+	.string "てつやで　めいろを　つくったのに⋯⋯\p"
+	.string "わがはいの　つぎの　つぎの　つぎの　つぎの\n"
+	.string "つぎ　くらいに　すごい！$"
+
+Route110_TrickHouseEnd_Text_AllNightToPreparePanels:
+	.string "てつやで　ふすまを　はりかえたのに⋯⋯\p"
+	.string "わがはいの　つぎの　つぎの　つぎの　つぎ\n"
+	.string "くらいに　すごい！$"
+
+Route110_TrickHouseEnd_Text_AllNightToShoveBoulders:
+	.string "てつやで　いわを　おして　きたのに⋯⋯\p"
+	.string "わがはいの　つぎの　つぎの　つぎ\n"
+	.string "くらいに　すごい！$"
+
+Route110_TrickHouseEnd_Text_AllNightToMakeMechadolls:
+	.string "てつやで　にんぎょう　つくって\n"
+	.string "てつやで　クイズも　かんがえたのに⋯⋯\p"
+	.string "わがはいの　つぎの　つぎ\n"
+	.string "くらいに　すごい！$"
+
+Route110_TrickHouseEnd_Text_AllNightToInstallDoors:
+	.string "てつやで　とびらを　とりつけたのに⋯⋯\p"
+	.string "わがはいの　つぎ\n"
+	.string "くらいに　すごい！$"
+
+Route110_TrickHouseEnd_Text_AllNightSettingUpArrows:
+	.string "てつやで　やじるしを　ならべたのに⋯⋯\p"
+	.string "わがはいと　おなじ　くらい　すごい！$"
+
+Route110_TrickHouseEnd_Text_AllNightPolishingFloors:
+	.string "てつやで　ゆかを　みがいたのに⋯⋯\p"
+	.string "わがはい　より　すごい！　のかも⋯⋯$"
+
+Route110_TrickHouseEnd_Text_FountainOfIdeasRunDry:
+	.string "ど　どうしよう⋯⋯\n"
+	.string "もう　カラクリの　ネタが\l"
+	.string "つきて　しまった⋯⋯\l"
+	.string "また　ぜんこく　かくちを　まわって\l"
+	.string "しかけを　いろいろ　かんがえて　くるか⋯⋯$"
+
+Route110_TrickHouseEnd_Text_DefeatedMePreferWhichTent:
+	.string "みとめたくは　ないんだが\n"
+	.string "あんたには　まけた⋯⋯！\p"
+	.string "まあ　なんども　きてくれた　あたり\n"
+	.string "よっぽど　わがはいに\l"
+	.string "みりょくを　かんじたの　だろうけどな\p"
+	.string "そのことと　わがはいが　まけたこととは\n"
+	.string "かんけいなし！\p"
+	.string "そうだ！　あんたと　わがはいの\n"
+	.string "ゆうじょうを　きねんして\l"
+	.string "いいものを　プレゼント　しよう！\p"
+	.string "‘あかいテント’と‘あおいテント’\n"
+	.string "ふたつ　あるんだが　どっちが　ほしい？$"
+
+Route110_TrickHouseEnd_Text_NoRoomInPC:
+	.string "なに　パソコンに　はいりきらない？\n"
+	.string "そんなの　わがはいが　しるか！\p"
+	.string "⋯⋯と　いいたい　ところだけど\n"
+	.string "わがはいは　やさしいので　あとで　やろう！$"
+
+Route110_TrickHouseEnd_Text_LeavingOnJourney:
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "わがはいは　これから\n"
+	.string "あらたな　しかけを　もとめて\l"
+	.string "たびに　でる　ことに　する⋯⋯\l"
+	.string "あんたも　いつか　ここにきて\l"
+	.string "また　あそんで　いってくれ！\p"
+	.string "それでは　さらば⋯！$"
+
+Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward:
+	.string "よしっ　あんたに\n"
+	.string "ほうびを　やろう！$"
+
+Route110_TrickHouseEnd_Text_NoRoomForThis:
+	.string "なにっ　もちきれない？\n"
+	.string "そんなに　なにを　もちあるいてるんだ？\l"
+	.string "まあ　せっかく　ここまで　こられたんだし\l"
+	.string "ほうびは　あとで　やろう！$"
+
+Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou:
+	.string "なんだ　とくいそうな　かお　してからに\n"
+	.string "わがはいに　かった　きに　なるのは\l"
+	.string "まだ　はやいわ！\l"
+	.string "このあとも　また　しかけを　つくるから\l"
+	.string "それが　おわってから　わがはいを　わらえ！\p"
+	.string "それでは　じかいを　おたのしみに！$"
+
+Route110_TrickHouseEnd_Text_YoureIgnoringMe:
+	.string "おいおい\n"
+	.string "わがはいの　ことは　むし　か！\l"
+	.string "ずいぶん　さみしい　じゃないか$"

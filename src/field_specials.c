@@ -2251,7 +2251,7 @@ void EndLotteryCornerComputerEffect(void)
     DrawWholeMapView();
 }
 
-__attribute__((naked)) void ResetTrickHouseEndRoomFlag(void)
+__attribute__((naked)) void SetTrickHouseNuggetFlag(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2269,7 +2269,7 @@ __attribute__((naked)) void ResetTrickHouseEndRoomFlag(void)
     );
 }
 
-__attribute__((naked)) void SetTrickHouseEndRoomFlag(void)
+__attribute__((naked)) void ResetTrickHouseNuggetFlag(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
