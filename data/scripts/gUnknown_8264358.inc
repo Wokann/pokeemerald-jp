@@ -186,7 +186,13 @@ BirthIsland_Harbor_Text_SailorReturn: @ 0x08275DD4
 	.string "ふしぎな　かたちの　しまだなあ\n"
 	.string "もう　ミナモへ　かえるか？$"
 
-	.incbin "baserom_jp.gba", 0x275df2, 0xe7
+	.incbin "baserom_jp.gba", 0x275df2, 0xa3
+
+NavelRock_Harbor_Text_SailorReturn: @ 0x08275E95
+	.string "な⋯⋯　なんか　おくふかくから\n"
+	.string "ひくい　うなりが　きこえたような⋯⋯\p"
+	.string "だ　だいじょうぶか？\n"
+	.string "もう　かえった　ほうが　いいんじゃないか？$"
 
 FarawayIsland_Entrance_Text_Sign: @ 0x08275ED9
 	.string "なんねんも　まえに　かかれたような\n"
