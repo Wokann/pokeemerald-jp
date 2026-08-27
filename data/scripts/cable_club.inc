@@ -585,12 +585,12 @@ CableClub_EventScript_AbortLinkPlayerHasBadEgg::
 	end
 
 CableClub_EventScript_WirelessClubAdjustements::
-	msgbox 0x08243CEE, MSGBOX_DEFAULT @ gText_SorryWirelessClubAdjustments
+	msgbox gText_SorryWirelessClubAdjustments, MSGBOX_DEFAULT
 	release
 	end
 
 CableClub_EventScript_NotReadyYet::
-	msgbox 0x08243D1C, MSGBOX_DEFAULT @ gText_UndergoingAdjustments
+	msgbox gText_UndergoingAdjustments, MSGBOX_DEFAULT
 	releaseall
 	end
 

@@ -84,9 +84,9 @@ EventScript_ObtainDecorationMessage::
 
 EventScript_ObtainedDecor::
 	playfanfare MUS_OBTAIN_ITEM
-	message 0x0824399D
+	message gText_ObtainedTheDecor
 	waitfanfare
-	msgbox 0x082439C3, MSGBOX_DEFAULT
+	msgbox gText_TheDecorWasTransferredToThePC, MSGBOX_DEFAULT
 	setvar VAR_RESULT, TRUE
 	return
 
@@ -126,21 +126,21 @@ EventScript_PickUpItem::
 	return
 
 EventScript_PutBattlePyramidItemInBag::
-	msgbox 0x0824398A, MSGBOX_DEFAULT
+	msgbox gText_PlayerPutItemInBag, MSGBOX_DEFAULT
 	return
 
 EventScript_FoundTMHM::
 	bufferitemname STR_VAR_1, VAR_0x8004
-	message 0x08243DB3
+	message gText_PlayerFoundOneTMHM
 	return
 
 EventScript_FoundItem::
-	message 0x08243969
+	message gText_PlayerFoundOneItem
 	return
 
 EventScript_NoRoomToPickUpItem::
 	msgbox gText_ObtainedTheItem, MSGBOX_DEFAULT
-	msgbox 0x08243977, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	setvar VAR_RESULT, FALSE
 	return
 
@@ -166,12 +166,12 @@ EventScript_PickUpHiddenItem::
 
 EventScript_FoundHiddenTMHM::
 	bufferitemname STR_VAR_1, VAR_0x8004
-	message 0x08243DB3
+	message gText_PlayerFoundOneTMHM
 	goto EventScript_PutHiddenItemInPocket
 	end
 
 EventScript_FoundHiddenItem::
-	message 0x08243969
+	message gText_PlayerFoundOneItem
 	goto EventScript_PutHiddenItemInPocket
 	end
 
@@ -187,8 +187,8 @@ EventScript_PutHiddenItemInPocket::
 	end
 
 EventScript_NoRoomForHiddenItem::
-	msgbox 0x08243969, MSGBOX_DEFAULT
-	msgbox 0x08243977, MSGBOX_DEFAULT
+	msgbox gText_PlayerFoundOneItem, MSGBOX_DEFAULT
+	msgbox gText_TooBadBagIsFull, MSGBOX_DEFAULT
 	setvar VAR_RESULT, 0
 	releaseall
 	end

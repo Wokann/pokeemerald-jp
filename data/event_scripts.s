@@ -247,18 +247,12 @@
 	@ The four-step shared player approach remains in the retained movement block.
 	.globl Common_Movement_WalkUp4
 	.set Common_Movement_WalkUp4, 0x08243644
-	.globl gText_PokemonTrainerSchoolEmail
-	.set gText_PokemonTrainerSchoolEmail, 0x08243AA2
-	.globl gText_PlayerHouseBootPC
-	.set gText_PlayerHouseBootPC, 0x08243B10
 	@ The Rooftop event table points to the retained Substitute tutor script.
 	.globl LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor
 	.set LilycoveCity_DepartmentStoreRooftop_EventScript_SubstituteTutor, 0x08276AA2
 	@ The Sootopolis Center event table points to the retained Double-Edge tutor script.
 	.globl SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor
 	.set SootopolisCity_PokemonCenter_1F_EventScript_DoubleEdgeTutor, 0x08276B72
-	.globl gText_ComeBackWithSecretPower
-	.set gText_ComeBackWithSecretPower, 0x08243B96
 	@ Space Center 2F's post-battle calls target retained Match Call text.
 	.globl MatchCall_Text_MayRayquazaCall
 	.set MatchCall_Text_MayRayquazaCall, 0x0826AB1B
@@ -860,12 +854,11 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/scripts/pc.inc"
 
 Common_EventScript_ShowPokemartSign::
-	@ The JP text data remains in its later physical owner at 0x082439D6.
-	msgbox 0x082439D6, MSGBOX_SIGN
+	msgbox gText_PokemartSign, MSGBOX_SIGN
 	end
 
 Common_EventScript_ShowPokemonCenterSign::
-	msgbox 0x082439F5, MSGBOX_SIGN
+	msgbox gText_PokemonCenterSign, MSGBOX_SIGN
 	end
 
 Common_ShowEasyChatScreen::
@@ -1065,8 +1058,7 @@ Common_EventScript_NameReceivedPartyMon::
 Common_EventScript_PlayerHandedOverTheItem::
 	bufferitemname STR_VAR_1, VAR_0x8004
 	playfanfare MUS_OBTAIN_TMHM
-	@ The JP text data remains in its later physical owner at 0x08243D82.
-	message 0x08243D82
+	message gText_PlayerHandedOverTheItem
 	waitmessage
 	waitfanfare
 	removeitem VAR_0x8004
@@ -1088,14 +1080,16 @@ Common_EventScript_PlayerHandedOverTheItem::
 	@ 0x0824393C
 	.include "data/text/obtain_item.inc"
 
-	@ 0x0824398A-0x082439A8 remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x24398a, 0x1e
+gText_PokemartSign:: @ 0x082439D6
+	.string "べんりなどうぐ　いろいろ　あります\n"
+	.string "‘フレンドリィショップ'$"
 
-gText_NoRoomLeftForAnother:: @ 0x082439A8
-	.incbin "baserom_jp.gba", 0x2439a8, 0x6a
+gText_PokemonCenterSign:: @ 0x082439F5
+	.string "つかれた　ポケモンも　ひとやすみ！\n"
+	.string "‘ポケモンセンター'$"
 
 gText_MomOrDadMightLikeThisProgram:: @ 0x08243A12
-	.string "{B_COPY_VAR_1}が　すきそうな　ばんぐみをやってる！\n"
+	.string "{STR_VAR_1}が　すきそうな　ばんぐみをやってる！\n"
 	.string "⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯⋯\p"
 	.string "さきを　いそがなきゃ！$"
 
@@ -1111,37 +1105,97 @@ gText_SelectWithoutRegisteredItem:: @ 0x08243A80
 	.string "バッグに　いれてある　どうぐを\n"
 	.string "べんりボタンに　とうろく　できます$"
 
-	@ 0x08243AA2-0x08243B4E remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x243aa2, 0xac
+gText_PokemonTrainerSchoolEmail:: @ 0x08243AA2
+	.string "パソコンに\n"
+	.string "ポケモン　トレーナー　こうざの\l"
+	.string "メールが　きている！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯\p"
+	.string "ポケモンが　おぼえられる　わざは　4つ！\p"
+	.string "どんな　わざを　おぼえさせるかで\n"
+	.string "トレーナーの　じつりょくが　とわれます！\p"
+	.string "⋯⋯　⋯⋯　⋯⋯$"
+
+gText_PlayerHouseBootPC:: @ 0x08243B10
+	.string "{PLAYER}は　パソコンの\n"
+	.string "スイッチを　いれた！$"
+
+gText_PokeblockLinkCanceled:: @ 0x08243B25
+	.string "つうしんは　キャンセルされました$"
+
+gText_UnusedNicknameReceivedPokemon:: @ 0x08243B36
+	.string "もらった　{STR_VAR_2}に\n"
+	.string "ニックネームを　つけますか？$"
 
 gText_PlayerWhitedOut:: @ 0x08243B4E
-	.incbin "baserom_jp.gba", 0x243b4e, 0x31
+	.string "{PLAYER}の　てもとには\n"
+	.string "たたかえるポケモンが　もういない！\p"
+	.string "{PLAYER}は\n"
+	.string "めのまえが　まっくらに　なった！$"
 
 gText_RegisteredTrainerinPokeNav:: @ 0x08243B7F
-	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_2}を\n"
+	.string "{STR_VAR_1}の　{STR_VAR_2}を\n"
 	.string "ポケナビに　とうろく　した！$"
 
-	@ 0x08243B96-0x08243C8B remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x243b96, 0xf5
+gText_ComeBackWithSecretPower:: @ 0x08243B96
+	.string "‘ひみつのちから'って\n"
+	.string "わざマシン　しってる？\p"
+	.string "おれら　わざマシン　‘ひみつのちから'が\n"
+	.string "だいすき　なんだ\p"
+	.string "おれらの　メンバーが　どこかで　くれるから\n"
+	.string "それを　もらったら　また　おいで！\p"
+	.string "きみも　メンバーとして\n"
+	.string "ひみつで　いいものを　うってあげるよ$"
+
+gText_PokerusExplanation:: @ 0x08243C13
+	.string "おあずかりした　ポケモンに\n"
+	.string "ポケルスが　ついて　いるようです\p"
+	.string "くわしいことは　わかって　いないのですが\n"
+	.string "ポケルスと　いうのは　ポケモンに　くっつく\l"
+	.string "ちいさな　せいめいたいで\l"
+	.string "これが　ついている　あいだ\l"
+	.string "ポケモンが　よく　そだつ　みたいです$"
 
 	@ 0x08243C8B
 	.include "data/text/surf.inc"
 
 gText_DoorOpenedFarAway:: @ 0x08243CBE
-	.incbin "baserom_jp.gba", 0x243cbe, 0x1c
+	.string "どこか　とおくの　とびらが\n"
+	.string "ひらいたような　おとだ⋯⋯$"
 
 gText_BigHoleInTheWall:: @ 0x08243CDA
-	.incbin "baserom_jp.gba", 0x243cda, 0x14
+	.string "かべに　おおきな　あなが　あいている！$"
 
-	@ 0x08243CEE-0x08243D90 remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x243cee, 0xa2
+gText_SorryWirelessClubAdjustments:: @ 0x08243CEE
+	.string "もうしわけ　ございません\n"
+	.string "ポケモン　ワイヤレス　クラブは\l"
+	.string "ただいま　ちょうせいちゅう　です$"
+
+gText_UndergoingAdjustments:: @ 0x08243D1C
+	.string "ちょうせいちゅうの　ようだ$"
+
+@ Unused
+gText_SorryTradeCenterInspections:: @ 0x08243D2A
+	.string "もうしわけ　ございません\n"
+	.string "ただいま　こちらの　トレードセンターは\l"
+	.string "てんけんちゅう　です$"
+
+@ Unused
+gText_SorryRecordCornerPreparation:: @ 0x08243D56
+	.string "もうしわけ　ございません\n"
+	.string "ただいま　こちらの　レコードコーナーは\l"
+	.string "じゅんびちゅう　です$"
+
+gText_PlayerHandedOverTheItem:: @ 0x08243D82
+	.string "{PLAYER}は\n"
+	.string "{STR_VAR_1}を　わたした！$"
 
 gText_ThankYouForAccessingMysteryGift:: @ 0x08243D90
 	.string "ふしぎな　おくりものを　ごりよう\n"
 	.string "いただき　ありがとう　ございます！$"
 
-	@ 0x08243DB3-0x08243DC6 remains unstructured shared text data.
-	.incbin "baserom_jp.gba", 0x243db3, 0x13
+gText_PlayerFoundOneTMHM:: @ 0x08243DB3
+	.string "{PLAYER}は　{STR_VAR_1}\n"
+	.string "‘{STR_VAR_2}'を　みつけた！$"
 
 gText_Sudowoodo_Attacked:: @ 0x08243DC6
 	.string "おかしな　きは\n"
@@ -1149,7 +1203,7 @@ gText_Sudowoodo_Attacked:: @ 0x08243DC6
 	.string "おかしな　きが　おそいかかってきた！$"
 
 gText_LegendaryFlewAway:: @ 0x08243DF4
-	.string "{B_COPY_VAR_1}は\n"
+	.string "{STR_VAR_1}は\n"
 	.string "どこかへ　とびさって　いった！$"
 
 	@ 0x08243E08

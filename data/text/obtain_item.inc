@@ -15,3 +15,18 @@ gText_PlayerFoundOneItem::
 gText_TooBadBagIsFull::
 	.string "ざんねん！\n"
 	.string "バッグが　いっぱいだ⋯⋯$"
+
+gText_PlayerPutItemInBag::
+	.string "{PLAYER}は　{STR_VAR_2}を\n"
+	.string "バッグに　しまった！$"
+
+gText_ObtainedTheDecor::
+	.string "{STR_VAR_2}を　てにいれた！$"
+
+gText_NoRoomLeftForAnother::
+	.string "ざんねん！　{STR_VAR_2}を\n"
+	.string "いれる　ばしょが　いっぱいだ⋯⋯$"
+
+gText_TheDecorWasTransferredToThePC::
+	.string "{STR_VAR_2}は\n"
+	.string "パソコンに　てんそうされた！$"

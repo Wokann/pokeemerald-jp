@@ -88,7 +88,7 @@ EventScript_PkmnCenterNurse_CheckPokerus::
 	end
 
 EventScript_PkmnCenterNurse_ExplainPokerus::
-	message 0x08243C13
+	message gText_PokerusExplanation
 	setflag FLAG_POKERUS_EXPLAINED
 	return
 
