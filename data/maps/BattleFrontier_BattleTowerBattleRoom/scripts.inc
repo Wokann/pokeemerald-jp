@@ -208,42 +208,30 @@ BattleFrontier_BattleTowerBattleRoom_EventScript_SecondAttendantEnter::
 	return
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_MaidenUpNext::
-	compare_var_to_value 0x4002, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaiden
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_SalonMaidenOnHerWay
-	callstd 0x4
-	setvar 0x4002, 0x1
+	goto_if_eq VAR_TEMP_2, 1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaiden
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_SalonMaidenOnHerWay, MSGBOX_DEFAULT
+	setvar VAR_TEMP_2, 1
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaiden::
 	message BattleFrontier_BattleTowerBattleRoom_Text_ReadyForSalonMaiden
 	waitmessage
-	call 0x0821F921
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaidenNoRecord
-	multichoice 0x13, 0x4, 0x67, 0x1
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabel
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRecordBattle
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaiden
+	call BattleFrontier_EventScript_GetCantRecordBattle
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaidenNoRecord
+	multichoice 19, 4, MULTI_GO_ON_RECORD_REST_RETIRE, TRUE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabel
+	case 1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRecordBattle
+	case 2, BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge
+	case 3, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaiden
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaidenNoRecord::
-	multichoice 0x14, 0x6, 0x68, 0x1
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabel
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaiden
+	multichoice 20, 6, MULTI_GO_ON_REST_RETIRE, TRUE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabel
+	case 1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge
+	case 2, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForMaiden
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_BattleAnabel::
 	call BattleFrontier_EventScript_SetBrainObjectGfx
