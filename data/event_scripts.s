@@ -1040,9 +1040,26 @@ Common_EventScript_OutOfCenterPartyHeal::
 	.globl FallarborTown_Mart_EventScript_MetronomeTutor
 	.set FallarborTown_Mart_EventScript_MetronomeTutor, 0x082769D2
 
-	.globl EventScript_RegionMap
-EventScript_RegionMap: @ 0x824311B
-	.include "data/scripts/gUnknown_824311B.inc"
+EventScript_RegionMap::
+	lockall
+	msgbox Common_Text_LookCloserAtMap, MSGBOX_DEFAULT
+	fadescreen FADE_TO_BLACK
+	special FieldShowRegionMap
+	releaseall
+	end
+
+Common_EventScript_PlayBrineysBoatMusic::
+	setflag FLAG_DONT_TRANSITION_MUSIC
+	playbgm MUS_SAILING, FALSE
+	return
+
+Common_EventScript_StopBrineysBoatMusic::
+	clearflag FLAG_DONT_TRANSITION_MUSIC
+	fadedefaultbgm
+	return
+
+	.include "data/scripts/prof_birch.inc"
+	.include "data/scripts/gUnknown_8243265.inc"
 	@ Rusturf Tunnel's open-state helper remains in this later shared owner.
 	@ Export the reviewed map-local call target without moving its byte range.
 	.globl RusturfTunnel_EventScript_SetRusturfTunnelOpen
