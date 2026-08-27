@@ -1059,11 +1059,70 @@ Common_EventScript_StopBrineysBoatMusic::
 	return
 
 	.include "data/scripts/prof_birch.inc"
-	.include "data/scripts/gUnknown_8243265.inc"
-	@ Rusturf Tunnel's open-state helper remains in this later shared owner.
-	@ Export the reviewed map-local call target without moving its byte range.
-	.globl RusturfTunnel_EventScript_SetRusturfTunnelOpen
-	.set RusturfTunnel_EventScript_SetRusturfTunnelOpen, 0x08243299
+
+Common_EventScript_FerryDepart::
+	delay 60
+	applymovement VAR_0x8004, Movement_FerryDepart
+	waitmovement 0
+	return
+
+Movement_FerryDepart:
+	walk_slow_right
+	walk_slow_right
+	walk_slow_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+EventScript_HideMrBriney::
+	setflag FLAG_HIDE_MR_BRINEY_DEWFORD_TOWN
+	setflag FLAG_HIDE_MR_BRINEY_BOAT_DEWFORD_TOWN
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY
+	setflag FLAG_HIDE_ROUTE_109_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY
+	setflag FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT
+	setflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
+	setflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
+	setvar VAR_BRINEY_LOCATION, 0
+	return
+
+RusturfTunnel_EventScript_SetRusturfTunnelOpen::
+	removeobject LOCALID_RUSTURF_TUNNEL_WANDAS_BF
+	removeobject LOCALID_RUSTURF_TUNNEL_WANDA
+	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDAS_BOYFRIEND
+	clearflag FLAG_HIDE_VERDANTURF_TOWN_WANDAS_HOUSE_WANDA
+	setvar VAR_RUSTURF_TUNNEL_STATE, 6
+	setflag FLAG_RUSTURF_TUNNEL_OPENED
+	return
+
+EventScript_UnusedBoardFerry::
+	delay 30
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	showplayer
+	delay 30
+	applymovement LOCALID_PLAYER, Movement_UnusedBoardFerry
+	waitmovement 0
+	delay 30
+	return
+
+Movement_UnusedBoardFerry:
+	walk_up
+	step_end
+
+Common_EventScript_FerryDepartIsland::
+	call_if_eq VAR_FACING, DIR_SOUTH, Ferry_EventScript_DepartIslandSouth
+	call_if_eq VAR_FACING, DIR_WEST, Ferry_EventScript_DepartIslandWest
+	delay 30
+	hideplayer
+	call Common_EventScript_FerryDepart
+	return
+
+	@ Unstructured shared scripts at 0x082432F7-0x0824335E.
+	.incbin "baserom_jp.gba", 0x2432F7, 0x67
+	.include "data/scripts/gUnknown_824335E.inc"
 
 	.globl EventScript_PictureBookShelf
 EventScript_PictureBookShelf: @ 0x8243651

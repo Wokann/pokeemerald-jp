@@ -1,32 +1,3 @@
-Common_EventScript_FerryDepart:: @ 0x08243265
-	delay 60
-	applymovement VAR_0x8004, Movement_FerryDepart
-	waitmovement 0
-	return
-
-Movement_FerryDepart:
-	walk_slow_right
-	walk_slow_right
-	walk_slow_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	step_end
-
-EventScript_HideMrBriney:: @ 0x0824327B
-	.incbin "baserom_jp.gba", 0x24327b, 0x58
-
-Common_EventScript_FerryDepartIsland:: @ 0x082432D3
-	call_if_eq VAR_FACING, DIR_SOUTH, Ferry_EventScript_DepartIslandSouth
-	call_if_eq VAR_FACING, DIR_WEST, Ferry_EventScript_DepartIslandWest
-	delay 30
-	hideplayer
-	call Common_EventScript_FerryDepart
-	return
-
-	.incbin "baserom_jp.gba", 0x2432f7, 0x67
-
 Route120_EventScript_Kecleon1:: @ 0x0824335E
 	.incbin "baserom_jp.gba", 0x24335e, 0xd
 
