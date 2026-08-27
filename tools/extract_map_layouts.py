@@ -2,8 +2,8 @@
 """Extract JP map layout border/blockdata resources from baserom_jp.gba.
 
 In the JP ROM each layout's border (8 bytes) + blockdata (width*height*2
-bytes) sits immediately before its layout struct. In data/data_b2d_mid30.s
-that data was mis-attributed to the *previous* entry's incbin:
+bytes) sits immediately before its layout struct. In data/layouts/layouts.inc
+that data was originally mis-attributed to the *previous* entry's incbin:
   - PetalburgCity's border/blockdata is inside the tail incbin of
     gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY
     (0x3B821C, 0x728 -> 0x18 lead + 8 border + 0x708 blockdata)
@@ -30,7 +30,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ROM_PATH = ROOT / "baserom_jp.gba"
-S_PATH = ROOT / "data" / "data_b2d_mid30.s"
+S_PATH = ROOT / "data" / "layouts" / "layouts.inc"
 OUT_BASE = ROOT / "data" / "layouts"
 US_LAYOUTS_JSON = Path("/home/kenny/pokeemerald/data/layouts/layouts.json")
 
@@ -39,6 +39,10 @@ PAT_INC = re.compile(
     r'\s*\.incbin\s+"baserom_jp\.gba",\s*0x([0-9A-Fa-f]+),\s*0x([0-9A-Fa-f]+)'
 )
 PAT_PTR = re.compile(r'(\s*\.4byte\s+)0x([0-9A-Fa-f]+)(\s+@\s+(?:border|map))')
+PAT_LABEL = re.compile(r"^(\w+)::?$")
+PAT_LAYOUT_RESOURCE = re.compile(
+    r'\s*\.incbin\s+"(data/layouts/[^"/]+/(?:border|map)\.bin)"\s*$'
+)
 
 
 def to_camel(name):
@@ -57,8 +61,20 @@ def load_us_area_names():
     return names
 
 
+def parse_layout_resource_labels(lines):
+    """Return resource incbins immediately owned by their source labels."""
+    resources = {}
+    for i, line in enumerate(lines[:-1]):
+        label = PAT_LABEL.match(line)
+        incbin = PAT_LAYOUT_RESOURCE.match(lines[i + 1])
+        if label and incbin:
+            resources[label.group(1)] = incbin.group(1)
+    return resources
+
+
 def parse_layouts(lines):
     entries = []
+    raw_layouts = []
     for i, line in enumerate(lines):
         m = PAT_LAYOUT.match(line)
         if not m:
@@ -70,9 +86,32 @@ def parse_layouts(lines):
             mm = re.match(r"\s*\.4byte\s+(\S+)\s+@\s+(\w+)", lines[i + j])
             if mm:
                 defs[mm.group(2)] = mm.group(1)
+        required = {"width", "height", "border", "map"}
+        if not required.issubset(defs):
+            # This label still owns a raw 0x18-byte MapLayout struct rather than
+            # a decomposed layout definition. It is deliberately not treated as
+            # an extracted resource pair.
+            raw_layouts.append({"name": name, "addr": addr, "idx": i})
+            continue
+
         inc = PAT_INC.match(lines[i + 7] if i + 7 < len(lines) else "")
-        border = int(defs["border"], 16) - 0x08000000
-        map_ = int(defs["map"], 16) - 0x08000000
+        border_value = defs["border"]
+        map_value = defs["map"]
+        expected_border = f"gMapLayout_{name}_Border"
+        expected_map = f"gMapLayout_{name}_Blockdata"
+        if border_value == expected_border and map_value == expected_map:
+            pointer_mode = "named"
+            map_size = int(defs["width"]) * int(defs["height"]) * 2
+            gap = (-map_size) % 4
+            map_ = addr - 0x08000000 - gap - map_size
+            border = map_ - 8
+        elif border_value.startswith("0x") and map_value.startswith("0x"):
+            pointer_mode = "raw"
+            border = int(border_value, 16) - 0x08000000
+            map_ = int(map_value, 16) - 0x08000000
+        else:
+            pointer_mode = "invalid"
+            border = map_ = None
         entries.append(
             {
                 "name": name,
@@ -84,9 +123,12 @@ def parse_layouts(lines):
                 "inc_off": int(inc.group(1), 16) if inc else None,
                 "inc_size": int(inc.group(2), 16) if inc else None,
                 "idx": i,
+                "pointer_mode": pointer_mode,
+                "expected_border": expected_border,
+                "expected_map": expected_map,
             }
         )
-    return entries
+    return entries, raw_layouts
 
 
 def main():
@@ -101,11 +143,21 @@ def main():
     lines = text.split("\r\n") if crlf else text.split("\n")
 
     area_names = load_us_area_names()
-    entries = parse_layouts(lines)
-    print(f"layouts: {len(entries)}")
+    entries, raw_layouts = parse_layouts(lines)
+    resources = parse_layout_resource_labels(lines)
+    print(
+        f"layouts: {len(entries) + len(raw_layouts)} "
+        f"({len(entries)} structured, {len(raw_layouts)} raw structs)"
+    )
 
     problems = []
     for e in entries:
+        if e["pointer_mode"] == "invalid":
+            problems.append(
+                f"{e['name']}: expected {e['expected_border']} / "
+                f"{e['expected_map']} or two raw ROM pointers"
+            )
+            continue
         if e["map_off"] != e["border_off"] + 8:
             problems.append(f"{e['name']}: border/map gap {e['map_off'] - e['border_off']}")
         exp = e["w"] * e["h"] * 2
@@ -121,6 +173,30 @@ def main():
         if e["inc_off"] is not None and e["inc_off"] + e["inc_size"] != e["addr"] + 0x18:
             # The layout's own incbin ends at the next struct (addr+0x18 == next layout).
             pass
+        if e["pointer_mode"] == "named":
+            area = area_names.get(e["name"], to_camel(e["name"]))
+            expected_resources = {
+                e["expected_border"]: f"data/layouts/{area}/border.bin",
+                e["expected_map"]: f"data/layouts/{area}/map.bin",
+            }
+            for label, expected_path in expected_resources.items():
+                actual_path = resources.get(label)
+                if actual_path != expected_path:
+                    problems.append(
+                        f"{e['name']}: {label} owns {actual_path!r}, "
+                        f"expected {expected_path!r}"
+                    )
+                    continue
+                path = ROOT / actual_path
+                expected_data = (
+                    rom[e["border_off"] : e["border_off"] + 8]
+                    if label == e["expected_border"]
+                    else rom[e["map_off"] : e["map_off"] + e["w"] * e["h"] * 2]
+                )
+                if not path.is_file():
+                    problems.append(f"{e['name']}: missing {actual_path}")
+                elif path.read_bytes() != expected_data:
+                    problems.append(f"{e['name']}: {actual_path} differs from baserom")
     if problems:
         print("PROBLEMS:")
         for p in problems[:20]:
@@ -136,7 +212,11 @@ def main():
 
     new_lines = list(lines)
     extracted = 0
+    verified = 0
     for e in entries:
+        if e["pointer_mode"] == "named":
+            verified += 1
+            continue
         area = area_names.get(e["name"], to_camel(e["name"]))
         out_dir = OUT_BASE / area
         border_data = rom[e["border_off"] : e["border_off"] + 8]
@@ -211,8 +291,16 @@ def main():
     if not args.check:
         out = "\r\n".join(new_lines) if crlf else "\n".join(new_lines)
         S_PATH.write_bytes(out.encode("utf-8"))
-    print(f"{'Check' if args.check else 'Extracted'}: {extracted} layouts "
-          f"-> {OUT_BASE}")
+    if args.check:
+        print(
+            f"Check: {verified} named resource layouts, {extracted} raw-pointer layouts, "
+            f"{len(raw_layouts)} raw layout structs"
+        )
+    else:
+        print(
+            f"Extracted: {extracted} raw-pointer layouts; "
+            f"verified {verified} named resource layouts -> {OUT_BASE}"
+        )
 
 
 if __name__ == "__main__":
