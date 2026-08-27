@@ -65,7 +65,7 @@
 	.byte 0xD1
 	copyvar 0xFF3C, 0x7
 	callstd_if 0x0, 0x27
-	special UnionRoomSpecial
+	special RunUnionRoom
 	waitstate 
 	end 
 	specialvar 0x800D, CountPartyNonEggMons

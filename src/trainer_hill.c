@@ -2256,7 +2256,7 @@ __attribute__((naked)) u8 GetCurrentTrainerHillMapId()
         "	b _081D5A94\n\t"
         "	.align 2, 0\n\t"
         "_081D5A48: .4byte gMapHeader\n\t"
-        "_081D5A4C: .4byte SPECIAL_UnionRoomSpecial\n\t"
+        "_081D5A4C: .4byte SPECIAL_RunUnionRoom\n\t"
         "_081D5A50:\n\t"
         "	movs r0, #0xd0\n\t"
         "	lsls r0, r0, #1\n\t"

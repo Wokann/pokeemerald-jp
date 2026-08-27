@@ -1,101 +1,106 @@
-@ UnionRoom scripts (JP map g25 m60 @ 0x0821E966)
-
 UnionRoom_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, UnionRoom_EventScript_0021E971
-	map_script MAP_SCRIPT_ON_TRANSITION, UnionRoom_EventScript_0021E9A5
+	map_script MAP_SCRIPT_ON_RESUME, UnionRoom_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, UnionRoom_OnTransition
 	.byte 0
 
-UnionRoom_EventScript_0021E971::
-	setflag 0x2BF
-	setflag 0x2C0
-	setflag 0x2C1
-	setflag 0x2C2
-	setflag 0x2C3
-	setflag 0x2C4
-	setflag 0x2C5
-	setflag 0x2C6
-	removeobject 0x9
-	removeobject 0x8
-	removeobject 0x7
-	removeobject 0x2
-	removeobject 0x6
-	removeobject 0x5
-	removeobject 0x4
-	removeobject 0x3
-	special UnionRoomSpecial
+UnionRoom_OnResume:
+	setflag FLAG_HIDE_UNION_ROOM_PLAYER_1
+	setflag FLAG_HIDE_UNION_ROOM_PLAYER_2
+	setflag FLAG_HIDE_UNION_ROOM_PLAYER_3
+	setflag FLAG_HIDE_UNION_ROOM_PLAYER_4
+	setflag FLAG_HIDE_UNION_ROOM_PLAYER_5
+	setflag FLAG_HIDE_UNION_ROOM_PLAYER_6
+	setflag FLAG_HIDE_UNION_ROOM_PLAYER_7
+	setflag FLAG_HIDE_UNION_ROOM_PLAYER_8
+	removeobject LOCALID_UNION_ROOM_PLAYER_1
+	removeobject LOCALID_UNION_ROOM_PLAYER_2
+	removeobject LOCALID_UNION_ROOM_PLAYER_3
+	removeobject LOCALID_UNION_ROOM_PLAYER_4
+	removeobject LOCALID_UNION_ROOM_PLAYER_5
+	removeobject LOCALID_UNION_ROOM_PLAYER_6
+	removeobject LOCALID_UNION_ROOM_PLAYER_7
+	removeobject LOCALID_UNION_ROOM_PLAYER_8
+	special RunUnionRoom
 	end
 
-UnionRoom_EventScript_0021E9A5::
+UnionRoom_OnTransition:
 	end
 
-UnionRoom_EventScript_0021E9A6::
+UnionRoom_EventScript_Player1::
 	lock
 	faceplayer
-	setvar 0x800D, 0x1
+	setvar VAR_RESULT, UR_INTERACT_PLAYER_1
 	waitstate
 	release
 	end
 
-UnionRoom_EventScript_0021E9B0::
+UnionRoom_EventScript_Player2::
 	lock
 	faceplayer
-	setvar 0x800D, 0x2
+	setvar VAR_RESULT, UR_INTERACT_PLAYER_2
 	waitstate
 	release
 	end
 
-UnionRoom_EventScript_0021E9BA::
+UnionRoom_EventScript_Player3::
 	lock
 	faceplayer
-	setvar 0x800D, 0x3
+	setvar VAR_RESULT, UR_INTERACT_PLAYER_3
 	waitstate
 	release
 	end
 
-UnionRoom_EventScript_0021E9C4::
+UnionRoom_EventScript_Player4::
 	lock
 	faceplayer
-	setvar 0x800D, 0x4
+	setvar VAR_RESULT, UR_INTERACT_PLAYER_4
 	waitstate
 	release
 	end
 
-UnionRoom_EventScript_0021E9CE::
+UnionRoom_EventScript_Player5::
 	lock
 	faceplayer
-	setvar 0x800D, 0x5
+	setvar VAR_RESULT, UR_INTERACT_PLAYER_5
 	waitstate
 	release
 	end
 
-UnionRoom_EventScript_0021E9D8::
+UnionRoom_EventScript_Player6::
 	lock
 	faceplayer
-	setvar 0x800D, 0x6
+	setvar VAR_RESULT, UR_INTERACT_PLAYER_6
 	waitstate
 	release
 	end
 
-UnionRoom_EventScript_0021E9E2::
+UnionRoom_EventScript_Player7::
 	lock
 	faceplayer
-	setvar 0x800D, 0x7
+	setvar VAR_RESULT, UR_INTERACT_PLAYER_7
 	waitstate
 	release
 	end
 
-UnionRoom_EventScript_0021E9EC::
+UnionRoom_EventScript_Player8::
 	lock
 	faceplayer
-	setvar 0x800D, 0x8
+	setvar VAR_RESULT, UR_INTERACT_PLAYER_8
 	waitstate
 	release
 	end
 
-UnionRoom_EventScript_0021E9F6::
+UnionRoom_EventScript_Attendant::
 	lock
 	faceplayer
-	setvar 0x800D, 0x9
+	setvar VAR_RESULT, UR_INTERACT_ATTENDANT
 	waitstate
 	release
+	end
+
+UnionRoom_EventScript_Unused::
+	lockall
+	setvar VAR_RESULT, UR_INTERACT_UNUSED
+	waitstate
+	releaseall
 	end

@@ -1323,7 +1323,6 @@ EraseFieldMessageBox = sub_081978F0;
 mevent_message_print_and_prompt_yes_no = DoMysteryGiftYesNo;
 HandleMysteryGiftListMenu = HandleGiftSelectMenu;
 EraseYesNoWindow = sub_08198D88;
-UnionRoomSpecial = RunUnionRoom;
 var_800D_set_xB = SetUsingUnionRoomStartMenu;
 ListMenuLoadStdPalAt = sub_08199F54;
 sub_080195B4 = InitUnionRoomPlayerObjects;

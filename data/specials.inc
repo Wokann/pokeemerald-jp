@@ -445,7 +445,7 @@ gSpecials::
 	def_special IsWirelessAdapterConnected
 	def_special BerryBlenderLinkBecomeLeader
 	def_special BerryBlenderLinkJoinGroup
-	def_special UnionRoomSpecial
+	def_special RunUnionRoom
 	def_special sub_08019EE4
 	def_special InitUnionRoom
 	def_special BufferUnionRoomPlayerName
