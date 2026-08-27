@@ -1816,37 +1816,8 @@ SafariZone_EventScript_OutOfBalls: @ 0x82623F9
 
 	.globl EventScript_PokeBlockFeeder
 EventScript_PokeBlockFeeder: @ 0x826240A
-	.include "data/scripts/gUnknown_826240A.inc"
-	@ These Safari Zone texts remain in the later shared raw owner. Export the
-	@ reviewed US-style names for the earlier Route 121 map references.
-	.globl Route121_SafariZoneEntrance_Text_WelcomeToSafariZone
-	.set Route121_SafariZoneEntrance_Text_WelcomeToSafariZone, 0x082624E7
-	.globl Route121_SafariZoneEntrance_Text_WelcomeFirstTime
-	.set Route121_SafariZoneEntrance_Text_WelcomeFirstTime, 0x0826257A
-	.globl Route121_SafariZoneEntrance_Text_ComeInAndEnjoy
-	.set Route121_SafariZoneEntrance_Text_ComeInAndEnjoy, 0x0826259C
-	.globl Route121_SafariZoneEntrance_Text_FirstTimeInfo
-	.set Route121_SafariZoneEntrance_Text_FirstTimeInfo, 0x082625B1
-	.globl Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay
-	.set Route121_SafariZoneEntrance_Text_WouldYouLikeToPlay, 0x08262621
-	.globl Route121_SafariZoneEntrance_Text_PlayAnotherTime
-	.set Route121_SafariZoneEntrance_Text_PlayAnotherTime, 0x08262659
-	.globl Route121_SafariZoneEntrance_Text_NotEnoughMoney
-	.set Route121_SafariZoneEntrance_Text_NotEnoughMoney, 0x08262672
-	.globl Route121_SafariZoneEntrance_Text_ThatWillBe500Please
-	.set Route121_SafariZoneEntrance_Text_ThatWillBe500Please, 0x0826267F
-	.globl Route121_SafariZoneEntrance_Text_HereAreYourSafariBalls
-	.set Route121_SafariZoneEntrance_Text_HereAreYourSafariBalls, 0x08262691
-	.globl Route121_SafariZoneEntrance_Text_Received30SafariBalls
-	.set Route121_SafariZoneEntrance_Text_Received30SafariBalls, 0x082626A2
-	.globl Route121_SafariZoneEntrance_Text_PleaseEnjoyYourself
-	.set Route121_SafariZoneEntrance_Text_PleaseEnjoyYourself, 0x082626BA
-	.globl Route121_SafariZoneEntrance_Text_PCIsFull
-	.set Route121_SafariZoneEntrance_Text_PCIsFull, 0x082626F6
-	.globl Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase
-	.set Route121_SafariZoneEntrance_Text_YouNeedPokeblockCase, 0x0826270E
-	.globl Route121_SafariZoneEntrance_Text_TrainerTip
-	.set Route121_SafariZoneEntrance_Text_TrainerTip, 0x082629C5
+	.include "data/scripts/safari_zone.inc"
+	.incbin "baserom_jp.gba", 0x262C92, 0x61
 
 	.globl gUnknown_8262CF3
 gUnknown_8262CF3: @ 0x8262CF3
