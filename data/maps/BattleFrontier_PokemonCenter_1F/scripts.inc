@@ -1,44 +1,57 @@
-@ BattleFrontier_PokemonCenter_1F scripts (JP map g26 m53 @ 0x0823B134)
-
 BattleFrontier_PokemonCenter_1F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_PokemonCenter_1F_EventScript_0023B13F
-	map_script MAP_SCRIPT_ON_RESUME, 0x0824790F
+	map_script MAP_SCRIPT_ON_TRANSITION, BattleFrontier_PokemonCenter_1F_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, CableClub_OnResume
 	.byte 0
 
-BattleFrontier_PokemonCenter_1F_EventScript_0023B13F::
-	setrespawn 0x16
+BattleFrontier_PokemonCenter_1F_OnTransition:
+	setrespawn HEAL_LOCATION_BATTLE_FRONTIER_OUTSIDE_EAST
 	end
 
-BattleFrontier_PokemonCenter_1F_EventScript_0023B143::
-	setvar 0x800B, 0x1
-	call 0x082429B8
+BattleFrontier_PokemonCenter_1F_EventScript_Nurse::
+	setvar VAR_0x800B, LOCALID_FRONTIER_NURSE
+	call Common_EventScript_PkmnCenterNurse
 	waitmessage
 	waitbuttonpress
 	release
 	end
 
-BattleFrontier_PokemonCenter_1F_EventScript_0023B151::
-	loadword 0x0, 0x0823B17F
-	callstd 0x2
+BattleFrontier_PokemonCenter_1F_EventScript_SchoolKid::
+	msgbox BattleFrontier_PokemonCenter_1F_Text_NeverSeenPokemon, MSGBOX_NPC
 	end
 
-BattleFrontier_PokemonCenter_1F_EventScript_0023B15A::
-	loadword 0x0, 0x0823B1C4
-	callstd 0x2
+BattleFrontier_PokemonCenter_1F_EventScript_Man::
+	msgbox BattleFrontier_PokemonCenter_1F_Text_NextStopBattleArena, MSGBOX_NPC
 	end
 
-BattleFrontier_PokemonCenter_1F_EventScript_0023B163::
-	loadword 0x0, 0x0823B1F8
-	callstd 0x2
+BattleFrontier_PokemonCenter_1F_EventScript_Picnicker::
+	msgbox BattleFrontier_PokemonCenter_1F_Text_GoingThroughEveryChallenge, MSGBOX_NPC
 	end
 
-BattleFrontier_PokemonCenter_1F_EventScript_0023B16C::
+BattleFrontier_PokemonCenter_1F_EventScript_Skitty::
 	lock
 	faceplayer
 	waitse
-	playmoncry 0x13B, 0x0
-	loadword 0x0, 0x0823B216
-	callstd 0x4
-	waitdooranim
+	playmoncry SPECIES_SKITTY, CRY_MODE_NORMAL
+	msgbox BattleFrontier_PokemonCenter_1F_Text_Skitty, MSGBOX_DEFAULT
+	waitmoncry_jp
 	release
 	end
+
+BattleFrontier_PokemonCenter_1F_Text_NeverSeenPokemon:
+	.string "みたこともない　ポケモンを\n"
+	.string "つかってる　ひとが　いた！\p"
+	.string "トレーナーズスクールでも\n"
+	.string "ならわなかった　けど\l"
+	.string "あんなの　どこに　いるのかなあ！$"
+
+BattleFrontier_PokemonCenter_1F_Text_NextStopBattleArena:
+	.string "よしっ！　おつぎは　バトルアリーナだ！\n"
+	.string "あのポケモンと　あのポケモンを\l"
+	.string "パソコンから　つれて　いくぜ！$"
+
+BattleFrontier_PokemonCenter_1F_Text_GoingThroughEveryChallenge:
+	.string "うふ　わたしは　ぜーんぶ\n"
+	.string "このコと　がんばるんだ　もんね！$"
+
+BattleFrontier_PokemonCenter_1F_Text_Skitty:
+	.string "エネコ“みゃ　みゃーっ！$"
