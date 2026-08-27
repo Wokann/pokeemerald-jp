@@ -73,8 +73,6 @@
 	@ or duplicating any ROM bytes.
 	@ Verdanturf Battle Tent Lobby shares these retained JP text/script blocks.
 	@ The local map source therefore keeps the pokeemerald semantic labels.
-	.globl Common_EventScript_SaveGame
-	.set Common_EventScript_SaveGame, 0x082423E9
 	@ The Elite Four room scripts remain in their retained JP owner block.
 	@ Export their reviewed pokeemerald names for map-local source references.
 	.globl PokemonLeague_EliteFour_SetAdvanceToNextRoomMetatiles
@@ -903,18 +901,7 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route119_WeatherInstitute_2F/scripts.inc"
 	.include "data/maps/Route119_House/scripts.inc"
 	.include "data/maps/Route124_DivingTreasureHuntersHouse/scripts.inc"
-Std_MsgboxNPC: @ 0x82423AF
-	.include "data/scripts/gUnknown_82423AF.inc"
-Std_MsgboxSign: @ 0x82423BA
-	.include "data/scripts/gUnknown_82423BA.inc"
-Std_MsgboxDefault: @ 0x82423C4
-	.include "data/scripts/gUnknown_82423C4.inc"
-Std_MsgboxYesNo: @ 0x82423CC
-	.include "data/scripts/gUnknown_82423CC.inc"
-Std_MsgboxGetPoints: @ 0x82423D6
-	.include "data/scripts/gUnknown_82423D6.inc"
-Std_MsgboxPokenav: @ 0x82423E1
-	.include "data/scripts/gUnknown_82423E1.inc"
+	.include "data/scripts/std_msgbox.inc"
 
 	.globl EventScript_StartTrainerApproach
 	.globl EventScript_TryDoNormalTrainerBattle
