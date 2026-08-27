@@ -806,7 +806,7 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/TerraCave_Entrance/scripts.inc"
 	.include "data/maps/TerraCave_End/scripts.inc"
 	.include "data/maps/AlteringCave/scripts.inc"
-	.incbin "baserom_jp.gba", 0x21d1a6, 0x1cc
+	.include "data/maps/MeteorFalls_StevensCave/scripts.inc"
 	.include "data/maps/SecretBase_RedCave1/scripts.inc"
 	.include "data/maps/BattleColosseum_2P/scripts.inc"
 	.include "data/maps/TradeCenter/scripts.inc"
