@@ -692,7 +692,6 @@ RecordedBattle_SetFrontierPassFlagFromHword = sub_08185CE8;
 ShowPartyMenuToShowcaseMultiBattleParty = ShowPartyMenuToShowcaseMultiBattleParty;
 TrySetLinkBattleTowerEnemyPartyLevel = sub_08165F94;
 SetMultiPartnerMenuParty = sub_08037770;
-gText_LinkStandby3 = gUnknown_8226D53;
 gText_RecordBattleToPass = gUnknown_85AC0DD;
 gText_BattleYesNoChoice = gUnknown_85ABBC9;
 gText_BattleRecordedOnPass = gUnknown_85AC0FB;
