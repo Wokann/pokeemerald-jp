@@ -1,7 +1,7 @@
-	lockall 
-	playse 0x49
-	message 0x8262491
-	waitmessage 
-	waitbuttonpress 
-	releaseall 
-	goto 0x82623BB
+	lockall
+	playse SE_DING_DONG
+	message SafariZone_Text_OutOfBalls
+	waitmessage
+	waitbuttonpress
+	releaseall
+	goto SafariZone_EventScript_Exit

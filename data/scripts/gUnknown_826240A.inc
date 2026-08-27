@@ -1,50 +1,51 @@
 	lockall
 	special GetPokeblockFeederInFront
-	compare_var_to_value 0x800D, 0xFFFF
-	goto_if 0x5, 0x8262449
-	loadword 0x0, 0x82624B7
-	callstd 0x5
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, 0x826242E
+	goto_if_ne VAR_RESULT, 0xFFFF, SafariZone_EventScript_PokeblockPresent
+	msgbox SafariZone_Text_PlacePokeblockOnFeeder, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, SafariZone_EventScript_ChoosePokeblock
 	releaseall
 	end
-	fadescreen 0x1
+
+SafariZone_EventScript_ChoosePokeblock::
+	fadescreen FADE_TO_BLACK
 	special OpenPokeblockCaseOnFeeder
-	compare_var_to_value 0x800D, 0xFFFF
-	goto_if 0x5, 0x8262440
+	goto_if_ne VAR_RESULT, 0xFFFF, SafariZone_EventScript_PokeblockPlaced
 	end
-	message 0x82624DC
+
+SafariZone_EventScript_PokeblockPlaced::
+	message SafariZone_Text_PokeblockWasPlaced
 	waitmessage
 	waitbuttonpress
 	releaseall
 	end
-	message 0x82624CD
+
+SafariZone_EventScript_PokeblockPresent::
+	message SafariZone_Text_PokeblockStillHere
 	waitmessage
 	waitbuttonpress
 	releaseall
 	end
-	.globl gJPText_00262452
-gJPText_00262452: @ 0x08262452
+
+SafariZone_Text_WouldYouLikeToExit: @ 0x08262452
 	.string "サファリゾーンを\n"
 	.string "このまま　しゅうりょう　しますか？$"
 
-	.globl gJPText_0026246D
-gJPText_0026246D: @ 0x0826246D
+SafariZone_Text_TimesUp: @ 0x0826246D
 	.string "ピンポーン！　じかん　でーす！\n"
 	.string "サファリゲームを　しゅうりょう　します$"
 
-	.globl gJPText_00262491
-gJPText_00262491: @ 0x08262491
+SafariZone_Text_OutOfBalls: @ 0x08262491
 	.string "サファリボールを　つかいきったので\n"
 	.string "サファリゲームを　しゅうりょう　します$"
 
-	.globl gJPText_002624B7
-gJPText_002624B7: @ 0x082624B7
+SafariZone_Text_PlacePokeblockOnFeeder: @ 0x082624B7
 	.string "ポロックおきばに　ポロックを　おきますか？$"
 
-	compare_addr_to_value 0x2FD0041, 0x37
-	nop
-	copyvar 0x500A, 0x213
-	compare_addr_to_value 0x2FDFF0D, 0x2D
-	.byte 0xFE
-	.incbin "baserom_jp.gba", 0x2624E0, 0x813
+SafariZone_Text_PokeblockStillHere: @ 0x082624CD
+	.string "まだ　{STR_VAR_1}が　のこっています$"
+
+SafariZone_Text_PokeblockWasPlaced: @ 0x082624DC
+	.string "{STR_VAR_1}を\n"
+	.string "おきました！$"
+
+	.incbin "baserom_jp.gba", 0x2624E7, 0x80C

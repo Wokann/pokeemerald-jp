@@ -1798,8 +1798,8 @@ gUnknown_825941F: @ 0x825941F
 EventScript_RepelWoreOff: @ 0x8262393
 	.include "data/scripts/gUnknown_8262393.inc"
 
-	.globl SafariZone_EventScript_Exit
-SafariZone_EventScript_Exit: @ 0x82623AA
+	.globl SafariZone_EventScript_OutOfBallsMidBattle
+SafariZone_EventScript_OutOfBallsMidBattle: @ 0x82623AA
 	.include "data/scripts/SafariZone_EventScript_Exit.inc"
 
 	.globl SafariZone_EventScript_RetirePrompt

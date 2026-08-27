@@ -1,9 +1,12 @@
-	setvar 0x40A4, 0x1
+	setvar VAR_SAFARI_ZONE_STATE, 1
 	special ExitSafariMode
-	setwarp 0x1700, 0xFF, 0x2, 0x5
-	end 
-	setvar 0x40A4, 0x1
+	setwarp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 2, 5
+	end
+
+	.globl SafariZone_EventScript_Exit
+SafariZone_EventScript_Exit::
+	setvar VAR_SAFARI_ZONE_STATE, 1
 	special ExitSafariMode
-	warp 0x1700, 0xFF, 0x2, 0x5
-	waitstate 
-	end 
+	warp MAP_ROUTE121_SAFARI_ZONE_ENTRANCE, 2, 5
+	waitstate
+	end
