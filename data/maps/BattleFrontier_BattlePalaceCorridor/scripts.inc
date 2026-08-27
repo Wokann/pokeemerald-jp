@@ -1,117 +1,143 @@
-@ BattleFrontier_BattlePalaceCorridor scripts (JP map g26 m23 @ 0x0822AF25)
-
 BattleFrontier_BattlePalaceCorridor_MapScripts::
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePalaceCorridor_MapScriptTable_0022AF2B
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, BattleFrontier_BattlePalaceCorridor_OnFrame
 	.byte 0
 
-BattleFrontier_BattlePalaceCorridor_MapScriptTable_0022AF2B::
-	map_script_2 0x4000, 0x0, BattleFrontier_BattlePalaceCorridor_EventScript_0022AF35
+BattleFrontier_BattlePalaceCorridor_OnFrame:
+	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattlePalaceCorridor_EventScript_WalkThroughCorridor
 	.2byte 0
 
-BattleFrontier_BattlePalaceCorridor_EventScript_0022AF35::
-	delay 0x10
-	applymovement 0x1, 0x0822B03A
-	applymovement 0xFF, 0x0822B03A
-	waitmovement 0x0
+BattleFrontier_BattlePalaceCorridor_EventScript_WalkThroughCorridor::
+	delay 16
+	applymovement LOCALID_PALACE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePalaceCorridor_Movement_EnterCorridor
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_EnterCorridor
+	waitmovement 0
 	lockall
-	setvar 0x8004, 0x3
-	special CallBattlePalaceFunction
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x1, BattleFrontier_BattlePalaceCorridor_EventScript_0022B00D
-	compare_var_to_value 0x800D, 0x1
-	call_if 0x1, BattleFrontier_BattlePalaceCorridor_EventScript_0022B016
-	compare_var_to_value 0x800D, 0x2
-	call_if 0x1, BattleFrontier_BattlePalaceCorridor_EventScript_0022B01F
-	compare_var_to_value 0x800D, 0x3
-	call_if 0x1, BattleFrontier_BattlePalaceCorridor_EventScript_0022B028
-	compare_var_to_value 0x800D, 0x4
-	call_if 0x1, BattleFrontier_BattlePalaceCorridor_EventScript_0022B031
+	palace_getcomment
+	call_if_eq VAR_RESULT, 0, BattleFrontier_BattlePalaceCorridor_EventScript_RandomComment1
+	call_if_eq VAR_RESULT, 1, BattleFrontier_BattlePalaceCorridor_EventScript_RandomComment2
+	call_if_eq VAR_RESULT, 2, BattleFrontier_BattlePalaceCorridor_EventScript_RandomComment3
+	call_if_eq VAR_RESULT, 3, BattleFrontier_BattlePalaceCorridor_EventScript_StreakComment
+	call_if_eq VAR_RESULT, 4, BattleFrontier_BattlePalaceCorridor_EventScript_LongStreakComment
 	closemessage
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x1
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattlePalaceCorridor_EventScript_0022AFD5
-	applymovement 0x1, 0x0822B03F
-	applymovement 0xFF, 0x0822B046
-	waitmovement 0x0
-	opendoor 0x6, 0x3
-	waitmoncry
-	applymovement 0x1, 0x0822B05C
-	applymovement 0xFF, 0x0822B05B
-	waitmovement 0x0
-	closedoor 0x6, 0x3
-	waitmoncry
-	goto BattleFrontier_BattlePalaceCorridor_EventScript_0022B003
+	frontier_get FRONTIER_DATA_LVL_MODE
+	goto_if_eq VAR_RESULT, FRONTIER_LVL_OPEN, BattleFrontier_BattlePalaceCorridor_EventScript_WalkToOpenBattleRoom
+	applymovement LOCALID_PALACE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePalaceCorridor_Movement_AttendantWalkTo50BattleRoom
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_PlayerWalkTo50BattleRoom
+	waitmovement 0
+	opendoor 6, 3
+	waitdooranim_jp
+	applymovement LOCALID_PALACE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePalaceCorridor_Movement_AttendantEnterBattleRoom
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_PlayerEnterBattleRoom
+	waitmovement 0
+	closedoor 6, 3
+	waitdooranim_jp
+	goto BattleFrontier_BattlePalaceCorridor_EventScript_WarpToBattleRoom
 
-BattleFrontier_BattlePalaceCorridor_EventScript_0022AFD5::
-	applymovement 0x1, 0x0822B04D
-	applymovement 0xFF, 0x0822B054
-	waitmovement 0x0
-	opendoor 0xA, 0x3
-	waitmoncry
-	applymovement 0x1, 0x0822B05C
-	applymovement 0xFF, 0x0822B05B
-	waitmovement 0x0
-	closedoor 0xA, 0x3
-	waitmoncry
-
-BattleFrontier_BattlePalaceCorridor_EventScript_0022B003::
-	warp 0x1A18, 0xFF, 0x7, 0x4
+BattleFrontier_BattlePalaceCorridor_EventScript_WalkToOpenBattleRoom::
+	applymovement LOCALID_PALACE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePalaceCorridor_Movement_AttendantWalkToOpenBattleRoom
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_PlayerWalkToOpenBattleRoom
+	waitmovement 0
+	opendoor 10, 3
+	waitdooranim_jp
+	applymovement LOCALID_PALACE_CORRIDOR_ATTENDANT, BattleFrontier_BattlePalaceCorridor_Movement_AttendantEnterBattleRoom
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePalaceCorridor_Movement_PlayerEnterBattleRoom
+	waitmovement 0
+	closedoor 10, 3
+	waitdooranim_jp
+BattleFrontier_BattlePalaceCorridor_EventScript_WarpToBattleRoom::
+	warp MAP_BATTLE_FRONTIER_BATTLE_PALACE_BATTLE_ROOM, 7, 4
 	waitstate
 	end
 
-BattleFrontier_BattlePalaceCorridor_EventScript_0022B00D::
-	loadword 0x0, gJPText_0022B05F
-	callstd 0x4
+BattleFrontier_BattlePalaceCorridor_EventScript_RandomComment1::
+	msgbox BattleFrontier_BattlePalaceCorridor_Text_PeopleAndMonAreSame, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattlePalaceCorridor_EventScript_0022B016::
-	loadword 0x0, gJPText_0022B096
-	callstd 0x4
+BattleFrontier_BattlePalaceCorridor_EventScript_RandomComment2::
+	msgbox BattleFrontier_BattlePalaceCorridor_Text_LetMonDoWhatItLikes, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattlePalaceCorridor_EventScript_0022B01F::
-	loadword 0x0, gJPText_0022B0CE
-	callstd 0x4
+BattleFrontier_BattlePalaceCorridor_EventScript_RandomComment3::
+	msgbox BattleFrontier_BattlePalaceCorridor_Text_MonDifferentWhenCornered, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattlePalaceCorridor_EventScript_0022B028::
-	loadword 0x0, gJPText_0022B104
-	callstd 0x4
+BattleFrontier_BattlePalaceCorridor_EventScript_StreakComment::
+	msgbox BattleFrontier_BattlePalaceCorridor_Text_BeginningToUnderstandNature, MSGBOX_DEFAULT
 	return
 
-BattleFrontier_BattlePalaceCorridor_EventScript_0022B031::
-	loadword 0x0, gJPText_0022B12C
-	callstd 0x4
+BattleFrontier_BattlePalaceCorridor_EventScript_LongStreakComment::
+	msgbox BattleFrontier_BattlePalaceCorridor_Text_HeartfeltBondBetweenYouAndMons, MSGBOX_DEFAULT
 	return
 
-	.incbin "baserom_jp.gba", 0x22b03a, 0x25
-	.globl gJPText_0022B05F
-gJPText_0022B05F: @ 0x0822B05F
+BattleFrontier_BattlePalaceCorridor_Movement_EnterCorridor:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+BattleFrontier_BattlePalaceCorridor_Movement_AttendantWalkTo50BattleRoom:
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_up
+	walk_up
+	step_end
+
+BattleFrontier_BattlePalaceCorridor_Movement_PlayerWalkTo50BattleRoom:
+	walk_up
+	walk_up
+	walk_up
+	walk_left
+	walk_left
+	walk_up
+	step_end
+
+BattleFrontier_BattlePalaceCorridor_Movement_AttendantWalkToOpenBattleRoom:
+	walk_up
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+BattleFrontier_BattlePalaceCorridor_Movement_PlayerWalkToOpenBattleRoom:
+	walk_up
+	walk_up
+	walk_right
+	walk_right
+	walk_up
+	walk_up
+	step_end
+
+BattleFrontier_BattlePalaceCorridor_Movement_PlayerEnterBattleRoom:
+	walk_up
+BattleFrontier_BattlePalaceCorridor_Movement_AttendantEnterBattleRoom:
+	walk_up
+	set_invisible
+	step_end
+
+BattleFrontier_BattlePalaceCorridor_Text_PeopleAndMonAreSame:
 	.string "ひとも　ポケモンも　みな　おなじ⋯⋯\p"
 	.string "それぞれの　せいかくに　よって\n"
 	.string "とくいなこと　にがてなことが　ある⋯⋯$"
 
-	.globl gJPText_0022B096
-gJPText_0022B096: @ 0x0822B096
+BattleFrontier_BattlePalaceCorridor_Text_LetMonDoWhatItLikes:
 	.string "にがてなこと　よりも　とくいな　こと⋯⋯\p"
 	.string "ポケモンの　きもちに　なって\n"
 	.string "おぼえさせる　わざを　かんがえて　みろ$"
 
-	.globl gJPText_0022B0CE
-gJPText_0022B0CE: @ 0x0822B0CE
+BattleFrontier_BattlePalaceCorridor_Text_MonDifferentWhenCornered:
 	.string "せいかくとは　ふしぎな　ものだ⋯⋯\p"
 	.string "おいつめられる　ことで　ガラッと\n"
 	.string "こうどうが　かわる　ものも　おる⋯⋯$"
 
-	.globl gJPText_0022B104
-gJPText_0022B104: @ 0x0822B104
+BattleFrontier_BattlePalaceCorridor_Text_BeginningToUnderstandNature:
 	.string "⋯⋯　そろそろ　ポケモンの　せいかくを\n"
 	.string "みきわめられる　ように　なってきたか？$"
 
-	.globl gJPText_0022B12C
-gJPText_0022B12C: @ 0x0822B12C
+BattleFrontier_BattlePalaceCorridor_Text_HeartfeltBondBetweenYouAndMons:
 	.string "おお⋯⋯　おぬしと　ポケモンの　あいだに\n"
 	.string "つよい　こころの　きずなが　みえる⋯⋯$"
-
