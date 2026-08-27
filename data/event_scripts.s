@@ -1257,17 +1257,12 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x0824506B
 	.include "data/scripts/secret_base.inc"
 
-	@ Unstructured Route 111 Secret Power text and scripts (0x08246378-0x08246512).
-	.incbin "baserom_jp.gba", 0x246378, 0x19a
+	@ 0x08246378
+	.include "data/scripts/secret_power_tm.inc"
 
-Route111_EventScript_SecretPowerMan:: @ 0x08246512
-	.incbin "baserom_jp.gba", 0x246512, 0xa3
-
-SecretBase_EventScript_DollInteract:: @ 0x82465B5
-	.include "data/scripts/gUnknown_82465B5.inc"
-
-SecretBase_EventScript_CushionInteract:: @ 0x82465B9
-	.include "data/scripts/gUnknown_82465B9.inc"
+	compare_local_to_local 0x20, 0x12
+	@ 0x082465C0-0x08247044 remains unstructured script data.
+	.incbin "baserom_jp.gba", 0x2465C0, 0xA84
 
 	.globl EventScript_CableBoxResults
 EventScript_CableBoxResults: @ 0x8247044

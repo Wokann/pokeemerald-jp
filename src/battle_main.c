@@ -4272,7 +4272,7 @@ __attribute__((naked)) void HandleEndTurn_BattleWon(void)
         "	bl PlayBGM\n\t"
         "	b _0803D6E4\n\t"
         "	.align 2, 0\n\t"
-        "_0803D6BC: .4byte SPECIAL_sub_080EBE30\n\t"
+        "_0803D6BC: .4byte SPECIAL_CheckInteractedWithFriendsDollDecor\n\t"
         "_0803D6C0:\n\t"
         "	movs r0, #0xd4\n\t"
         "	lsls r0, r0, #1\n\t"

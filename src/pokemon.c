@@ -7526,7 +7526,7 @@ __attribute__((naked)) u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, .
         "	bne _0806A604\n\t"
         "	b _0806A754\n\t"
         "	.align 2, 0\n\t"
-        "_0806A630: .4byte SPECIAL_sub_080EBE30\n\t"
+        "_0806A630: .4byte SPECIAL_CheckInteractedWithFriendsDollDecor\n\t"
         "_0806A634: .4byte gBitTable\n\t"
         "_0806A638:\n\t"
         "	movs r4, #0\n\t"

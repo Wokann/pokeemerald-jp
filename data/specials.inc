@@ -377,8 +377,8 @@ gSpecials::
 	def_special DrewSecretBaseBattle
 	def_special WonSecretBaseBattle
 	def_special LostSecretBaseBattle
-	def_special sub_080EBE30
-	def_special sub_080EBE68
+	def_special CheckInteractedWithFriendsDollDecor
+	def_special CheckInteractedWithFriendsCushionDecor
 	def_special SetSecretBaseSecretsTvFlags_MiscFurnature
 	def_special SetSecretBaseSecretsTvFlags_LargeDecorationSpot
 	def_special SetSecretBaseSecretsTvFlags_SmallDecorationSpot

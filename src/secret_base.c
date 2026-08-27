@@ -5378,7 +5378,7 @@ __attribute__((naked)) void sub_080EBDB8(void)
     );
 }
 
-__attribute__((naked)) void sub_080EBE30(void)
+__attribute__((naked)) void CheckInteractedWithFriendsDollDecor(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5411,7 +5411,7 @@ __attribute__((naked)) void sub_080EBE30(void)
     );
 }
 
-__attribute__((naked)) void sub_080EBE68(void)
+__attribute__((naked)) void CheckInteractedWithFriendsCushionDecor(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
