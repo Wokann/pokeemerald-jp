@@ -141,6 +141,7 @@ BattleFrontier_BattleDomeBattleRoom_EventScript_00228A19::
 	setvar 0x8004, 0xC
 	setvar 0x8005, 0x2
 	special sub_0818E608
+BattleFrontier_BattleDomeBattleRoom_EventScript_WarpToLobbyLost::
 	setvar 0x8004, 0x2
 	setvar 0x8005, 0x0
 	setvar 0x8006, 0x4
