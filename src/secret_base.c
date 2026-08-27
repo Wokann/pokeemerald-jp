@@ -3338,7 +3338,7 @@ __attribute__((naked)) void PrepSecretBaseBattleFlags(void)
     );
 }
 
-__attribute__((naked)) void sub_080EAF54(void)
+__attribute__((naked)) void SetBattledOwnerFromResult(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -3377,7 +3377,7 @@ __attribute__((naked)) void sub_080EAF54(void)
     );
 }
 
-__attribute__((naked)) void GetSecretBaseOwnerInteractionState(void)
+__attribute__((naked)) void GetSecretBaseOwnerAndState(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5444,7 +5444,7 @@ __attribute__((naked)) void sub_080EBE68(void)
     );
 }
 
-__attribute__((naked)) void sub_080EBEA0(void)
+__attribute__((naked)) void DeclinedSecretBaseBattle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5493,7 +5493,7 @@ __attribute__((naked)) void sub_080EBEA0(void)
     );
 }
 
-__attribute__((naked)) void sub_080EBF08(void)
+__attribute__((naked)) void WonSecretBaseBattle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5542,7 +5542,7 @@ __attribute__((naked)) void sub_080EBF08(void)
     );
 }
 
-__attribute__((naked)) void CopyCurSecretBaseOwnerName_StrVar1()
+__attribute__((naked)) void LostSecretBaseBattle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5591,7 +5591,7 @@ __attribute__((naked)) void CopyCurSecretBaseOwnerName_StrVar1()
     );
 }
 
-__attribute__((naked)) void GetSecretBaseName(void)
+__attribute__((naked)) void DrewSecretBaseBattle(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

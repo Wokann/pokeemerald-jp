@@ -6293,7 +6293,7 @@ __attribute__((naked)) void sub_081296D4(void)
     );
 }
 
-__attribute__((naked)) void sub_081296F0(void)
+__attribute__((naked)) void PutAwayDecorationIteration(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6612,7 +6612,7 @@ __attribute__((naked)) void sub_081298DC(void)
         "	b _08129984\n\t"
         "	.align 2, 0\n\t"
         "_0812993C: .4byte gPaletteFade\n\t"
-        "_08129940: .4byte gUnknown_8245DDD\n\t"
+        "_08129940: .4byte SecretBase_EventScript_PutAwayDecoration\n\t"
         "_08129944:\n\t"
         "	bl LockPlayerFieldControls\n\t"
         "	adds r0, r5, #0\n\t"

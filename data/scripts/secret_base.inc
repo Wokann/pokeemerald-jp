@@ -260,3 +260,399 @@ SecretBase_EventScript_SetDecoration::
 SecretBase_EventScript_SetDecoration2::
 	special SetDecoration
 	end
+
+SecretBase_EventScript_PutAwayDecoration::
+	setvar VAR_0x8004, 0
+	goto SecretBase_EventScript_PutAwayDecorationLoop
+	end
+
+SecretBase_EventScript_PutAwayDecorationLoop::
+	special PutAwayDecorationIteration
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_PutAwayDecorationEnd
+	addvar VAR_0x8004, 1
+	goto_if_eq VAR_0x8005, 0, SecretBase_EventScript_PutAwayDecorationLoop
+	removeobject VAR_0x8006
+	setflag VAR_0x8005
+	goto SecretBase_EventScript_PutAwayDecorationLoop
+	end
+
+SecretBase_EventScript_PutAwayDecorationEnd::
+	end
+
+SecretBase_EventScript_RecordMixTrainer::
+	special GetSecretBaseOwnerAndState
+	goto_if_eq VAR_0x8004, 0, SecretBase_EventScript_Trainer0
+	goto_if_eq VAR_0x8004, 1, SecretBase_EventScript_Trainer1
+	goto_if_eq VAR_0x8004, 2, SecretBase_EventScript_Trainer2
+	goto_if_eq VAR_0x8004, 3, SecretBase_EventScript_Trainer3
+	goto_if_eq VAR_0x8004, 4, SecretBase_EventScript_Trainer4
+	goto_if_eq VAR_0x8004, 5, SecretBase_EventScript_Trainer5
+	goto_if_eq VAR_0x8004, 6, SecretBase_EventScript_Trainer6
+	goto_if_eq VAR_0x8004, 7, SecretBase_EventScript_Trainer7
+	goto_if_eq VAR_0x8004, 8, SecretBase_EventScript_Trainer8
+	goto_if_eq VAR_0x8004, 9, SecretBase_EventScript_Trainer9
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer0::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer0PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer0PostBattle
+	msgbox SecretBase_Text_Trainer0Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer0DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer0DeclineBattle
+	msgbox SecretBase_Text_Trainer0AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer0PreChampion::
+	msgbox SecretBase_Text_Trainer0PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer0DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer0DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer0PostBattle::
+	msgbox SecretBase_Text_Trainer0PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer1::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer1PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer1PostBattle
+	msgbox SecretBase_Text_Trainer1Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer1DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer1DeclineBattle
+	msgbox SecretBase_Text_Trainer1AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer1PreChampion::
+	msgbox SecretBase_Text_Trainer1PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer1DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer1DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer1PostBattle::
+	msgbox SecretBase_Text_Trainer1PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer2::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer2PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer2PostBattle
+	msgbox SecretBase_Text_Trainer2Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer2DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer2DeclineBattle
+	msgbox SecretBase_Text_Trainer2AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer2PreChampion::
+	msgbox SecretBase_Text_Trainer2PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer2DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer2DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer2PostBattle::
+	msgbox SecretBase_Text_Trainer2PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer3::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer3PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer3PostBattle
+	msgbox SecretBase_Text_Trainer3Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer3DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer3DeclineBattle
+	msgbox SecretBase_Text_Trainer3AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer3PreChampion::
+	msgbox SecretBase_Text_Trainer3PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer3DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer3DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer3PostBattle::
+	msgbox SecretBase_Text_Trainer3PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer4::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer4PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer4PostBattle
+	msgbox SecretBase_Text_Trainer4Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer4DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer4DeclineBattle
+	msgbox SecretBase_Text_Trainer4AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer4PreChampion::
+	msgbox SecretBase_Text_Trainer4PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer4DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer4DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer4PostBattle::
+	msgbox SecretBase_Text_Trainer4PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer5::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer5PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer5PostBattle
+	msgbox SecretBase_Text_Trainer5Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer5DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer5DeclineBattle
+	msgbox SecretBase_Text_Trainer5AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer5PreChampion::
+	msgbox SecretBase_Text_Trainer5PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer5DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer5DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer5PostBattle::
+	msgbox SecretBase_Text_Trainer5PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer6::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer6PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer6PostBattle
+	msgbox SecretBase_Text_Trainer6Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer6DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer6DeclineBattle
+	msgbox SecretBase_Text_Trainer6AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer6PreChampion::
+	msgbox SecretBase_Text_Trainer6PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer6DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer6DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer6PostBattle::
+	msgbox SecretBase_Text_Trainer6PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer7::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer7PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer7PostBattle
+	msgbox SecretBase_Text_Trainer7Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer7DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer7DeclineBattle
+	msgbox SecretBase_Text_Trainer7AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer7PreChampion::
+	msgbox SecretBase_Text_Trainer7PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer7DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer7DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer7PostBattle::
+	msgbox SecretBase_Text_Trainer7PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer8::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer8PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer8PostBattle
+	msgbox SecretBase_Text_Trainer8Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer8DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer8DeclineBattle
+	msgbox SecretBase_Text_Trainer8AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer8PreChampion::
+	msgbox SecretBase_Text_Trainer8PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer8DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer8DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer8PostBattle::
+	msgbox SecretBase_Text_Trainer8PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+@ VAR_RESULT is initially set by GetSecretBaseOwnerAndState.
+SecretBase_EventScript_Trainer9::
+	lock
+	faceplayer
+	goto_if_unset FLAG_SYS_GAME_CLEAR, SecretBase_EventScript_Trainer9PreChampion
+	goto_if_eq VAR_RESULT, TRUE, SecretBase_EventScript_Trainer9PostBattle
+	msgbox SecretBase_Text_Trainer9Intro, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SecretBase_EventScript_Trainer9DeclineBattle
+	setvar VAR_RESULT, TRUE
+	special SetBattledOwnerFromResult
+	call Common_EventScript_SaveGame
+	goto_if_eq VAR_RESULT, FALSE, SecretBase_EventScript_Trainer9DeclineBattle
+	msgbox SecretBase_Text_Trainer9AcceptBattle, MSGBOX_DEFAULT
+	goto SecretBase_EventScript_BattleTrainer
+	end
+
+SecretBase_EventScript_Trainer9PreChampion::
+	msgbox SecretBase_Text_Trainer9PreChampion, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer9DeclineBattle::
+	special DeclinedSecretBaseBattle
+	setvar VAR_RESULT, FALSE
+	special SetBattledOwnerFromResult
+	msgbox SecretBase_Text_Trainer9DeclineBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_Trainer9PostBattle::
+	msgbox SecretBase_Text_Trainer9PostBattle, MSGBOX_DEFAULT
+	release
+	end
+
+SecretBase_EventScript_BattleTrainer::
+	special PrepSecretBaseBattleFlags
+	setvar VAR_0x8004, SPECIAL_BATTLE_SECRET_BASE
+	setvar VAR_0x8005, 0
+	special DoSpecialTrainerBattle
+	call_if_eq VAR_RESULT, B_OUTCOME_DREW, SecretBase_EventScript_DrewSecretBaseBattle
+	call_if_eq VAR_RESULT, B_OUTCOME_WON, SecretBase_EventScript_WonSecretBaseBattle
+	call_if_eq VAR_RESULT, B_OUTCOME_LOST, SecretBase_EventScript_LostSecretBaseBattle
+	special HealPlayerParty
+	release
+	end
+
+SecretBase_EventScript_DrewSecretBaseBattle::
+	special DrewSecretBaseBattle
+	return
+
+SecretBase_EventScript_WonSecretBaseBattle::
+	special WonSecretBaseBattle
+	return
+
+SecretBase_EventScript_LostSecretBaseBattle::
+	special LostSecretBaseBattle
+	return

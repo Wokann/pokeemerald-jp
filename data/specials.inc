@@ -33,15 +33,15 @@ gSpecials::
 	def_special ShowSecretBaseDecorationMenu
 	def_special ShowSecretBaseRegistryMenu
 	def_special PrepSecretBaseBattleFlags
-	def_special GetSecretBaseOwnerInteractionState
+	def_special GetSecretBaseOwnerAndState
 	def_special InitSecretBaseDecorationSprites
 	def_special SetDecoration
 	def_special sub_08129798
 	def_special GetSecretBaseTypeInFrontOfPlayer
 	def_special SetSecretBaseOwnerGfxId
-	def_special sub_081296F0
+	def_special PutAwayDecorationIteration
 	def_special EnterNewlyCreatedSecretBase, waitstate=1
-	def_special sub_080EAF54
+	def_special SetBattledOwnerFromResult
 	def_special DoSecretBasePCTurnOffEffect
 	def_special RecordMixingPlayerSpotTriggered, waitstate=1
 	def_special TryBattleLinkup
@@ -373,10 +373,10 @@ gSpecials::
 	def_special IncrementDailyPickedBerries
 	def_special sub_080EBD4C
 	def_special SetSecretBaseSecretsTvFlags_SandOrnament
-	def_special sub_080EBEA0
-	def_special GetSecretBaseName
-	def_special sub_080EBF08
-	def_special CopyCurSecretBaseOwnerName_StrVar1
+	def_special DeclinedSecretBaseBattle
+	def_special DrewSecretBaseBattle
+	def_special WonSecretBaseBattle
+	def_special LostSecretBaseBattle
 	def_special sub_080EBE30
 	def_special sub_080EBE68
 	def_special SetSecretBaseSecretsTvFlags_MiscFurnature
