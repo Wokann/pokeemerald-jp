@@ -1,57 +1,56 @@
-@ InsideOfTruck scripts (JP map g25 m40 @ 0x0821DD83)
-
 InsideOfTruck_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, InsideOfTruck_EventScript_0021DD8E
-	map_script MAP_SCRIPT_ON_RESUME, InsideOfTruck_EventScript_0021DDAA
+	map_script MAP_SCRIPT_ON_LOAD, InsideOfTruck_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, InsideOfTruck_OnResume
 	.byte 0
 
-InsideOfTruck_EventScript_0021DD8E::
-	setmetatile 0x4, 0x1, 0x208, 0x0
-	setmetatile 0x4, 0x2, 0x210, 0x0
-	setmetatile 0x4, 0x3, 0x218, 0x0
+InsideOfTruck_OnLoad:
+	setmetatile 4, 1, METATILE_InsideOfTruck_ExitLight_Top, FALSE
+	setmetatile 4, 2, METATILE_InsideOfTruck_ExitLight_Mid, FALSE
+	setmetatile 4, 3, METATILE_InsideOfTruck_ExitLight_Bottom, FALSE
 	end
 
-InsideOfTruck_EventScript_0021DDAA::
-	setstepcallback 0x5
+InsideOfTruck_OnResume:
+	setstepcallback STEP_CB_TRUCK
 	end
 
-InsideOfTruck_EventScript_0021DDAD::
+InsideOfTruck_EventScript_SetIntroFlags::
 	lockall
-	setflag 0x4000
+	setflag FLAG_HIDE_MAP_NAME_POPUP
 	checkplayergender
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x1, InsideOfTruck_EventScript_0021DDC9
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, InsideOfTruck_EventScript_0021DDEF
+	goto_if_eq VAR_RESULT, MALE, InsideOfTruck_EventScript_SetIntroFlagsMale
+	goto_if_eq VAR_RESULT, FEMALE, InsideOfTruck_EventScript_SetIntroFlagsFemale
 	end
 
-InsideOfTruck_EventScript_0021DDC9::
-	setrespawn 0x1
-	setvar 0x4092, 0x1
-	setflag 0x2F7
-	setflag 0x2FA
-	setflag 0x310
-	setflag 0x2DF
-	setflag 0x331
-	setvar 0x408C, 0x1
-	setdynamicwarp 0x9, 0xFF, 0x3, 0xA
+InsideOfTruck_EventScript_SetIntroFlagsMale::
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
+	setvar VAR_LITTLEROOT_INTRO_STATE, 1
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_TRUCK
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_SIBLING
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
+	setvar VAR_LITTLEROOT_HOUSES_STATE_BRENDAN, 1
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 3, 10
 	releaseall
 	end
 
-InsideOfTruck_EventScript_0021DDEF::
-	setrespawn 0x2
-	setvar 0x4092, 0x2
-	setflag 0x2F6
-	setflag 0x2F9
-	setflag 0x311
-	setflag 0x2E0
-	setflag 0x332
-	setvar 0x4082, 0x1
-	setdynamicwarp 0x9, 0xFF, 0xC, 0xA
+InsideOfTruck_EventScript_SetIntroFlagsFemale::
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F
+	setvar VAR_LITTLEROOT_INTRO_STATE, 2
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_TRUCK
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_MOM
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_SIBLING
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_POKE_BALL
+	setvar VAR_LITTLEROOT_HOUSES_STATE_MAY, 1
+	setdynamicwarp MAP_LITTLEROOT_TOWN, 12, 10
 	releaseall
 	end
 
-InsideOfTruck_EventScript_0021DE15::
-	loadword 0x0, 0x0821DE1E
-	callstd 0x3
+InsideOfTruck_EventScript_MovingBox::
+	msgbox InsideOfTruck_Text_BoxPrintedWithMonLogo, MSGBOX_SIGN
 	end
+
+InsideOfTruck_Text_BoxPrintedWithMonLogo:
+	.string "はこには　ポケモンの　えが　かいてある\p"
+	.string "ポケモンマークの　ひっこしやさん　だ！$"
