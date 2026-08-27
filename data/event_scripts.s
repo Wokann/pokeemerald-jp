@@ -1121,7 +1121,11 @@ Common_EventScript_FerryDepartIsland::
 	return
 
 	.include "data/scripts/cave_of_origin.inc"
-	.include "data/scripts/gUnknown_824335E.inc"
+	.include "data/scripts/kecleon.inc"
+
+	@ Unstructured shared movement scripts at 0x08243460-0x0824361B.
+	.incbin "baserom_jp.gba", 0x243460, 0x1BB
+	.include "data/scripts/gUnknown_824361B.inc"
 
 	.globl EventScript_PictureBookShelf
 EventScript_PictureBookShelf: @ 0x8243651
