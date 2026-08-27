@@ -10,7 +10,7 @@ extern const u8 gText_UsedRepeatedlyWithoutBoringJudge[];
 extern const u8 gText_AvoidStartledByOthersOnce[];
 extern const u8 gText_AvoidStartledByOthers[];
 extern const u8 gText_AvoidStartledByOthersLittle[];
-extern const u8 gText_UserLessEasilyStartled[];
+extern const u8 gText_UserLessLikelyStartled[];
 extern const u8 gText_SlightlyStartleFrontMon[];
 extern const u8 gText_SlightlyStartleAppealed[];
 extern const u8 gText_StartleAppealedBeforeUser[];
@@ -90,7 +90,7 @@ CONTEST_TEXT_TABLES const u8 *const gContestEffectDescriptionPointers[] = {
     [CONTEST_EFFECT_AVOID_STARTLE_ONCE]                    = gText_AvoidStartledByOthersOnce,
     [CONTEST_EFFECT_AVOID_STARTLE]                         = gText_AvoidStartledByOthers,
     [CONTEST_EFFECT_AVOID_STARTLE_SLIGHTLY]                = gText_AvoidStartledByOthersLittle,
-    [CONTEST_EFFECT_USER_LESS_EASILY_STARTLED]             = gText_UserLessEasilyStartled,
+    [CONTEST_EFFECT_USER_LESS_EASILY_STARTLED]             = gText_UserLessLikelyStartled,
     [CONTEST_EFFECT_STARTLE_FRONT_MON]                     = gText_SlightlyStartleFrontMon,
     [CONTEST_EFFECT_SLIGHTLY_STARTLE_PREV_MONS]            = gText_SlightlyStartleAppealed,
     [CONTEST_EFFECT_STARTLE_PREV_MON]                      = gText_StartleAppealedBeforeUser,
@@ -183,9 +183,9 @@ CONTEST_TEXT_TABLES static const u8 *const sUnusedAppealResultTexts[] = {
 // tables. Their target strings remain in the event-script byte stream until
 // each control-code sequence is audited and can be safely named.
 #define CONTEST_PRE_UI_TABLES __attribute__((section(".rodata.contest_mid57b_pre_ui")))
-#define CONTEST_TEXT_AT(address) (gUnknown_824B317 + ((address) - 0x0824B317))
+#define CONTEST_TEXT_AT(address) (gText_AppealNumWhichMoveWillBePlayed + ((address) - 0x0824B317))
 
-extern const u8 gUnknown_824B317[];
+extern const u8 gText_AppealNumWhichMoveWillBePlayed[];
 
 CONTEST_PRE_UI_TABLES const u8 *const sRoundResultTexts[] = {
     CONTEST_TEXT_AT(0x0824B470),

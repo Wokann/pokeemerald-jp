@@ -1255,181 +1255,21 @@ Common_EventScript_LegendaryFlewAway::
 @ 0x08248AF4
 	.include "data/scripts/contest_hall.inc"
 
-gText_HighlyAppealingMove:: @ 0x0824ACC9
-	.incbin "baserom_jp.gba", 0x24acc9, 0x64e
-	.globl gText_UserMoreEasilyStartled
-	.set gText_UserMoreEasilyStartled, gText_AwaitingLinkup + 0x2FFD
-	.globl gText_GreatAppealButNoMoreToEnd
-	.set gText_GreatAppealButNoMoreToEnd, gText_AwaitingLinkup + 0x301A
-	.globl gText_UsedRepeatedlyWithoutBoringJudge
-	.set gText_UsedRepeatedlyWithoutBoringJudge, gText_AwaitingLinkup + 0x303D
-	.globl gText_AvoidStartledByOthersOnce
-	.set gText_AvoidStartledByOthersOnce, gText_AwaitingLinkup + 0x305E
-	.globl gText_AvoidStartledByOthers
-	.set gText_AvoidStartledByOthers, gText_AwaitingLinkup + 0x307F
-	.globl gText_AvoidStartledByOthersLittle
-	.set gText_AvoidStartledByOthersLittle, gText_AwaitingLinkup + 0x3098
-	.globl gText_UserLessEasilyStartled
-	.set gText_UserLessEasilyStartled, gText_AwaitingLinkup + 0x30BB
-	.globl gText_SlightlyStartleFrontMon
-	.set gText_SlightlyStartleFrontMon, gText_AwaitingLinkup + 0x30D9
-	.globl gText_SlightlyStartleAppealed
-	.set gText_SlightlyStartleAppealed, gText_AwaitingLinkup + 0x30FA
-	.globl gText_StartleAppealedBeforeUser
-	.set gText_StartleAppealedBeforeUser, gText_AwaitingLinkup + 0x311C
-	.globl gText_StartleAllAppealed
-	.set gText_StartleAllAppealed, gText_AwaitingLinkup + 0x3138
-	.globl gText_BadlyStartleFrontMon
-	.set gText_BadlyStartleFrontMon, gText_AwaitingLinkup + 0x3155
-	.globl gText_BadlyStartleAppealed
-	.set gText_BadlyStartleAppealed, gText_AwaitingLinkup + 0x3175
-	.globl gText_StartleAppealedBeforeUser2
-	.set gText_StartleAppealedBeforeUser2, gText_AwaitingLinkup + 0x3196
-	.globl gText_StartleAllAppealed2
-	.set gText_StartleAllAppealed2, gText_AwaitingLinkup + 0x31B2
-	.globl gText_ShiftJudgesAttentionFromOthers
-	.set gText_ShiftJudgesAttentionFromOthers, gText_AwaitingLinkup + 0x31CF
-	.globl gText_StartleMonHasJudgesAttention
-	.set gText_StartleMonHasJudgesAttention, gText_AwaitingLinkup + 0x31F3
-	.globl gText_JamOthersMissesTurn
-	.set gText_JamOthersMissesTurn, gText_AwaitingLinkup + 0x3216
-	.globl gText_StartleMonsMadeSameTypeAppeal
-	.set gText_StartleMonsMadeSameTypeAppeal, gText_AwaitingLinkup + 0x3238
-	.globl gText_BadlyStartleCoolAppeals
-	.set gText_BadlyStartleCoolAppeals, gText_AwaitingLinkup + 0x325A
-	.globl gText_BadlyStartleBeautyAppeals
-	.set gText_BadlyStartleBeautyAppeals, gText_AwaitingLinkup + 0x3279
-	.globl gText_BadlyStartleCuteAppeals
-	.set gText_BadlyStartleCuteAppeals, gText_AwaitingLinkup + 0x3298
-	.globl gText_BadlyStartleSmartAppeals
-	.set gText_BadlyStartleSmartAppeals, gText_AwaitingLinkup + 0x32B6
-	.globl gText_BadlyStartleToughAppeals
-	.set gText_BadlyStartleToughAppeals, gText_AwaitingLinkup + 0x32D4
-	.globl gText_MakeMonAfterUserNervous
-	.set gText_MakeMonAfterUserNervous, gText_AwaitingLinkup + 0x32F3
-	.globl gText_MakeAllMonsAfterUserNervous
-	.set gText_MakeAllMonsAfterUserNervous, gText_AwaitingLinkup + 0x3313
-	.globl gText_WorsenConditionOfThoseMadeAppeals
-	.set gText_WorsenConditionOfThoseMadeAppeals, gText_AwaitingLinkup + 0x3333
-	.globl gText_BadlyStartleMonsGoodCondition
-	.set gText_BadlyStartleMonsGoodCondition, gText_AwaitingLinkup + 0x334E
-	.globl gText_AppealGreatIfPerformedFirst
-	.set gText_AppealGreatIfPerformedFirst, gText_AwaitingLinkup + 0x336B
-	.globl gText_AppealGreatIfPerformedLast
-	.set gText_AppealGreatIfPerformedLast, gText_AwaitingLinkup + 0x338C
-	.globl gText_AppealAsGoodAsThoseBeforeIt
-	.set gText_AppealAsGoodAsThoseBeforeIt, gText_AwaitingLinkup + 0x33AD
-	.globl gText_AppealAsGoodAsOneBeforeIt
-	.set gText_AppealAsGoodAsOneBeforeIt, gText_AwaitingLinkup + 0x33D1
-	.globl gText_AppealBetterLaterItsPerformed
-	.set gText_AppealBetterLaterItsPerformed, gText_AwaitingLinkup + 0x33F2
-	.globl gText_AppealVariesDependingOnTiming
-	.set gText_AppealVariesDependingOnTiming, gText_AwaitingLinkup + 0x3414
-	.globl gText_WorksWellIfSameTypeAsBefore
-	.set gText_WorksWellIfSameTypeAsBefore, gText_AwaitingLinkup + 0x3435
-	.globl gText_WorksWellIfDifferentTypeAsBefore
-	.set gText_WorksWellIfDifferentTypeAsBefore, gText_AwaitingLinkup + 0x3459
-	.globl gText_AffectedByAppealInFront
-	.set gText_AffectedByAppealInFront, gText_AwaitingLinkup + 0x347D
-	.globl gText_UpsConditionHelpsPreventNervousness
-	.set gText_UpsConditionHelpsPreventNervousness, gText_AwaitingLinkup + 0x349E
-	.globl gText_AppealWorksWellIfConditionGood
-	.set gText_AppealWorksWellIfConditionGood, gText_AwaitingLinkup + 0x34BC
-	.globl gText_NextAppealMadeEarlier
-	.set gText_NextAppealMadeEarlier, gText_AwaitingLinkup + 0x34DC
-	.globl gText_NextAppealMadeLater
-	.set gText_NextAppealMadeLater, gText_AwaitingLinkup + 0x34FB
-	.globl gText_TurnOrderMoreEasilyScrambled
-	.set gText_TurnOrderMoreEasilyScrambled, gText_AwaitingLinkup + 0x351A
-	.globl gText_ScrambleOrderOfNextAppeals
-	.set gText_ScrambleOrderOfNextAppeals, gText_AwaitingLinkup + 0x3537
-	.globl gText_AppealExcitesAudienceInAnyContest
-	.set gText_AppealExcitesAudienceInAnyContest, gText_AwaitingLinkup + 0x3555
-	.globl gText_BadlyStartlesMonsGoodAppeals
-	.set gText_BadlyStartlesMonsGoodAppeals, gText_AwaitingLinkup + 0x3574
-	.globl gText_AppealBestMoreCrowdExcited
-	.set gText_AppealBestMoreCrowdExcited, gText_AwaitingLinkup + 0x3595
-	.globl gText_TemporarilyStopCrowdExcited
-	.set gText_TemporarilyStopCrowdExcited, gText_AwaitingLinkup + 0x35B5
-	.globl gText_RainDance
-	.set gText_RainDance, gText_AwaitingLinkup + 0x35D6
-	.globl gText_Rage
-	.set gText_Rage, gText_AwaitingLinkup + 0x35DB
-	.globl gText_FocusEnergy
-	.set gText_FocusEnergy, gText_AwaitingLinkup + 0x35DF
-	.globl gText_Hypnosis
-	.set gText_Hypnosis, gText_AwaitingLinkup + 0x35E5
-	.globl gText_Softboiled
-	.set gText_Softboiled, gText_AwaitingLinkup + 0x35ED
-	.globl gText_HornAttack
-	.set gText_HornAttack, gText_AwaitingLinkup + 0x35F3
-	.globl gText_SwordsDance
-	.set gText_SwordsDance, gText_AwaitingLinkup + 0x35F9
-	.globl gText_Conversion
-	.set gText_Conversion, gText_AwaitingLinkup + 0x3600
-	.globl gText_SunnyDay
-	.set gText_SunnyDay, gText_AwaitingLinkup + 0x3607
-	.globl gText_Rest2
-	.set gText_Rest2, gText_AwaitingLinkup + 0x360D
-	.globl gText_Vicegrip
-	.set gText_Vicegrip, gText_AwaitingLinkup + 0x3611
-	.globl gText_DefenseCurl
-	.set gText_DefenseCurl, gText_AwaitingLinkup + 0x3615
-	.globl gText_LockOn
-	.set gText_LockOn, gText_AwaitingLinkup + 0x361B
-	.globl gContestMoveTypeCoolText
-	.set gContestMoveTypeCoolText, gText_AwaitingLinkup + 0x3621
-	.globl gContestMoveTypeBeautyText
-	.set gContestMoveTypeBeautyText, gText_AwaitingLinkup + 0x3627
-	.globl gContestMoveTypeCuteText
-	.set gContestMoveTypeCuteText, gText_AwaitingLinkup + 0x362D
-	.globl gContestMoveTypeSmartText
-	.set gContestMoveTypeSmartText, gText_AwaitingLinkup + 0x3632
-	.globl gContestMoveTypeToughText
-	.set gContestMoveTypeToughText, gText_AwaitingLinkup + 0x3637
-	.globl gText_ButAppealWasJammed
-	.set gText_ButAppealWasJammed, gText_AwaitingLinkup + 0x36B1
-	.globl gText_FollowedAnotherMonsLead
-	.set gText_FollowedAnotherMonsLead, gText_AwaitingLinkup + 0x36BF
-	.globl gText_ButItMessedUp
-	.set gText_ButItMessedUp, gText_AwaitingLinkup + 0x36CF
-	.globl gText_WentBetterThanUsual
-	.set gText_WentBetterThanUsual, gText_AwaitingLinkup + 0x36E0
-	.globl gText_JudgeLookedAwayForSomeReason
-	.set gText_JudgeLookedAwayForSomeReason, gText_AwaitingLinkup + 0x36EF
-	.globl gText_WorkedHardToBuildOnPastMistakes
-	.set gText_WorkedHardToBuildOnPastMistakes, gText_AwaitingLinkup + 0x3703
-	.globl gText_CantMakeAnyMoreMoves
-	.set gText_CantMakeAnyMoreMoves, gText_AwaitingLinkup + 0x371D
-	.globl gText_WorkedFrighteninglyWell
-	.set gText_WorkedFrighteninglyWell, gText_AwaitingLinkup + 0x3731
-	.globl gText_WorkedHardAsStandoutMon
-	.set gText_WorkedHardAsStandoutMon, gText_AwaitingLinkup + 0x3741
-	.globl gText_JudgedLookedOnExpectantly
-	.set gText_JudgedLookedOnExpectantly, gText_AwaitingLinkup + 0x375C
-	.globl gText_WorkedRatherWell
-	.set gText_WorkedRatherWell, gText_AwaitingLinkup + 0x3775
-	.globl gText_WorkedLittleBetterThanUsual
-	.set gText_WorkedLittleBetterThanUsual, gText_AwaitingLinkup + 0x3782
+	.include "data/text/contest_strings.inc"
 
-	.globl gUnknown_824B317
-gUnknown_824B317: @ 0x824B317
+gText_AppealNumWhichMoveWillBePlayed:: @ 0x824B317
 	.include "data/scripts/gUnknown_824B317.inc"
 
-	.globl gUnknown_824B32D
-gUnknown_824B32D: @ 0x824B32D
+gText_AppealNumButItCantParticipate:: @ 0x824B32D
 	.include "data/scripts/gUnknown_824B32D.inc"
 
-	.globl gUnknown_824B346
-gUnknown_824B346: @ 0x824B346
+gText_MonAppealedWithMove:: @ 0x824B346
 	.string "{B_COPY_VAR_1}は\n{B_COPY_VAR_2}で　アピール！$"
 
-	.globl gUnknown_824B354
-gUnknown_824B354: @ 0x824B354
+gText_MonWasWatchingOthers:: @ 0x824B354
 	.include "data/scripts/gUnknown_824B354.inc"
 
-	.globl gUnknown_824B36F
-gUnknown_824B36F: @ 0x824B36F
+gText_AllOutOfAppealTime:: @ 0x824B36F
 	.include "data/scripts/gUnknown_824B36F.inc"
 
 	.globl gUnknown_824BCCF

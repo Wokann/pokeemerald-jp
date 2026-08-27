@@ -1,21 +1,45 @@
 	.string "アピールタイム　しゅうりょう！{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}{PAUSE 0x0F}$"
+
+gText_ButAppealWasJammed::
 	.string "しかし　じゃまを　された！$"
+
+gText_FollowedAnotherMonsLead::
 	.string "ほかの　ポケモンに　つられた！$"
+
+gText_ButItMessedUp::
 	.string "しかし　しっぱいして\n"
 	.string "しまった！$"
+
+gText_WentBetterThanUsual::
 	.string "いつもより　うまく　いった！$"
+
+gText_JudgeLookedAwayForSomeReason::
 	.string "しんさいんが　なぜか\n"
 	.string "めを　そらした！$"
+
+gText_WorkedHardToBuildOnPastMistakes::
 	.string "これまでの　しっぱいを\n"
 	.string "いかして　がんばってみた！$"
+
+gText_CantMakeAnyMoreMoves::
 	.string "これいじょう　わざを\n"
 	.string "だせなくなった！$"
+
+gText_WorkedFrighteninglyWell::
 	.string "こわいくらい　うまく　いった！$"
+
+gText_WorkedHardAsStandoutMon::
 	.string "めだっている　ポケモンと\n"
 	.string "おなじくらい　がんばった！$"
+
+gText_JudgedLookedOnExpectantly::
 	.string "しんさいんが　きたいを\n"
 	.string "こめた　めで　みつめた！$"
+
+gText_WorkedRatherWell::
 	.string "かなり　うまく　いった！$"
+
+gText_WorkedLittleBetterThanUsual::
 	.string "ふつうより　ちょっと\n"
 	.string "うまく　いった！$"
 	.string "{B_COPY_VAR_1}は\n"
