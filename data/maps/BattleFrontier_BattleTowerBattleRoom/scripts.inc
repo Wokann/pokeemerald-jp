@@ -51,136 +51,99 @@ BattleFrontier_BattleTower_EventScript_WarpToLobbyLost::
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_DefeatedOpponent::
 	call BattleFrontier_EventScript_IncrementWinStreak
-	setvar 0x8004, 0x4
-	special sub_08161E88
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x7
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon
+	tower_setbattlewon
+	copyvar VAR_0x8000, VAR_RESULT
+	goto_if_eq VAR_0x8000, 7, BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon
 	applymovement LOCALID_TOWER_BATTLE_OPPONENT, BattleFrontier_BattleTowerBattleRoom_Movement_OpponentExit
-	waitmovement 0x0
-	removeobject 0x1
-	setvar 0x8004, 0x9
-	special CallFrontierUtilFunc
-	compare_var_to_value 0x800D, 0x0
-	call_if 0x5, BattleFrontier_BattleTowerBattleRoom_EventScript_SecondAttendantEnter
+	waitmovement 0
+	removeobject LOCALID_TOWER_BATTLE_OPPONENT
+	frontier_getbrainstatus
+	call_if_ne VAR_RESULT, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattleTowerBattleRoom_EventScript_SecondAttendantEnter
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_1, BattleFrontier_BattleTowerBattleRoom_Movement_AttendantApproachPlayer
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerBattleRoom_Movement_PlayerFaceAttendant
-	waitmovement 0x0
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_RestoreMonsToFullHealth
-	callstd 0x4
-	playfanfare 0x170
+	waitmovement 0
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_RestoreMonsToFullHealth, MSGBOX_DEFAULT
+	playfanfare MUS_HEAL
 	waitfanfare
 	special HealPlayerParty
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent::
-	setvar 0x8004, 0x9
-	special CallFrontierUtilFunc
-	copyvar 0x400F, 0x800D
-	compare_var_to_value 0x800D, 0x0
-	goto_if 0x5, BattleFrontier_BattleTowerBattleRoom_EventScript_MaidenUpNext
-	setvar 0x8004, 0x1
-	setvar 0x8005, 0x2
-	special CallFrontierUtilFunc
+	frontier_getbrainstatus
+	copyvar VAR_TEMP_F, VAR_RESULT
+	goto_if_ne VAR_RESULT, FRONTIER_BRAIN_NOT_READY, BattleFrontier_BattleTowerBattleRoom_EventScript_MaidenUpNext
+	frontier_get FRONTIER_DATA_BATTLE_NUM
 	call BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyForOpponent
-	call 0x0821F921
-	compare_var_to_value 0x800D, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponentNoRecord
-	multichoice 0x13, 0x4, 0x67, 0x1
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_ContinueChallenge
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRecordBattle
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge
-	compare_var_to_value 0x8000, 0x3
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
+	call BattleFrontier_EventScript_GetCantRecordBattle
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponentNoRecord
+	multichoice 19, 4, MULTI_GO_ON_RECORD_REST_RETIRE, TRUE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleTowerBattleRoom_EventScript_ContinueChallenge
+	case 1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRecordBattle
+	case 2, BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge
+	case 3, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponentNoRecord::
-	multichoice 0x14, 0x6, 0x68, 0x1
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_ContinueChallenge
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge
-	compare_var_to_value 0x8000, 0x2
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
+	multichoice 20, 6, MULTI_GO_ON_REST_RETIRE, TRUE
+	switch VAR_RESULT
+	case 0, BattleFrontier_BattleTowerBattleRoom_EventScript_ContinueChallenge
+	case 1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge
+	case 2, BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_AskRecordBattle::
 	message BattleFrontier_BattleTowerBattleRoom_Text_RecordYourBattle
 	waitmessage
-	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_RecordBattle
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+	switch VAR_RESULT
+	case 1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
+	case 0, BattleFrontier_BattleTowerBattleRoom_EventScript_RecordBattle
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_RecordBattle::
-	call 0x0821F8F5
+	call BattleFrontier_EventScript_SaveBattle
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_AskPauseChallenge::
-	loadword 0x0, BattleFrontier_BattleTowerBattleRoom_Text_SaveAndQuitGame
-	callstd 0x5
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_PauseChallenge
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
+	msgbox BattleFrontier_BattleTowerBattleRoom_Text_SaveAndQuitGame, MSGBOX_YESNO
+	switch VAR_RESULT
+	case NO, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
+	case YES, BattleFrontier_BattleTowerBattleRoom_EventScript_PauseChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_AskRetireChallenge::
 	message BattleFrontier_BattleTowerBattleRoom_Text_CancelYourChallenge
 	waitmessage
-	multichoicedefault 0x14, 0x8, 0x5E, 0x1, 0x0
-	copyvar 0x8000, 0x800D
-	compare_var_to_value 0x8000, 0x1
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
-	compare_var_to_value 0x8000, 0x0
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_RetireChallenge
-	compare_var_to_value 0x8000, 0x7F
-	goto_if 0x1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
+	multichoicedefault 20, 8, MULTI_YESNO, 1, FALSE
+	switch VAR_RESULT
+	case 1, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
+	case 0, BattleFrontier_BattleTowerBattleRoom_EventScript_RetireChallenge
+	case MULTI_B_PRESSED, BattleFrontier_BattleTowerBattleRoom_EventScript_AskReadyForOpponent
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_ContinueChallenge::
 	closemessage
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerBattleRoom_Movement_PlayerFaceBattle
-	waitmovement 0x0
+	waitmovement 0
 	applymovement LOCALID_TOWER_BATTLE_ATTENDANT_1, BattleFrontier_BattleTowerBattleRoom_Movement_AttendantReturnToPos
-	waitmovement 0x0
+	waitmovement 0
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_OpponentEnter
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobbyWon::
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x0
-	setvar 0x8006, 0x3
-	special CallFrontierUtilFunc
-	setvar 0x8004, 0x2
-	setvar 0x8005, 0x3
-	special sub_08161E88
-	setvar 0x8004, 0x3
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_WON
+	tower_set TOWER_DATA_LVL_MODE
+	setvar VAR_0x8004, FANCOUNTER_USED_BATTLE_TOWER
 	special Script_TryGainNewFanFromCounter
 	goto BattleFrontier_BattleTowerBattleRoom_EventScript_WarpToLobby
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_PauseChallenge::
 	message BattleFrontier_BattleTowerBattleRoom_Text_SavingPleaseWait
 	waitmessage
-	setvar 0x8004, 0x6
-	setvar 0x8005, 0x2
-	special sub_08161E88
-	playse 0x37
+	tower_save CHALLENGE_STATUS_PAUSED
+	playse SE_SAVE
 	waitse
-	fadescreen 0x1
-	setvar 0x8004, 0x4
-	special CallFrontierUtilFunc
+	fadescreen FADE_TO_BLACK
+	frontier_reset
 	end
 
 BattleFrontier_BattleTowerBattleRoom_EventScript_ReadyForOpponent::

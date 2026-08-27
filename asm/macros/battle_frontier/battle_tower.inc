@@ -6,6 +6,12 @@
 	special sub_08161E88
 	.endm
 
+	@ Increment the battle number after a win and return the new value.
+	.macro tower_setbattlewon
+	setvar VAR_0x8004, BATTLE_TOWER_FUNC_SET_BATTLE_WON
+	special sub_08161E88
+	.endm
+
 	@ Get the value of a TOWER_DATA_* entry into VAR_RESULT.
 	.macro tower_get data:req
 	setvar VAR_0x8004, BATTLE_TOWER_FUNC_GET_DATA
