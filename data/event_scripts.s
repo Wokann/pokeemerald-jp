@@ -1249,10 +1249,8 @@ Common_EventScript_LegendaryFlewAway::
 	@ 0x082467CD
 	.include "data/scripts/cable_club.inc"
 
-	@ 0x08247869-0x08247B80 is structured in data/scripts/cable_club.inc.
-ScriptData_Raw_08247B80: @ 0x08247B80
-	@ 0x08247B80-0x08247C79 remains unstructured script_data.
-	.incbin "baserom_jp.gba", 0x247B80, 0xF9
+	@ 0x08247B80
+	.include "data/text/cable_club.inc"
 
 	.globl gUnknown_8247C79
 gUnknown_8247C79: @ 0x8247C79
@@ -1282,12 +1280,6 @@ gUnknown_8247CDA: @ 0x8247CDA
 	.globl gText_AwaitingLinkup
 	.set gText_AwaitingLinkup, gUnknown_8247CDA
 
-	.globl CableClub_Text_TradeUsingLinkCable
-	.set CableClub_Text_TradeUsingLinkCable, EventScript_WirelessBoxResults + 0x34A
-	.globl CableClub_Text_BattleUsingLinkCable
-	.set CableClub_Text_BattleUsingLinkCable, EventScript_WirelessBoxResults + 0x36C
-	.globl CableClub_Text_RecordCornerUsingLinkCable
-	.set CableClub_Text_RecordCornerUsingLinkCable, EventScript_WirelessBoxResults + 0x38E
 	.globl CableClub_Text_CancelSelectedItem
 	.set CableClub_Text_CancelSelectedItem, EventScript_WirelessBoxResults + 0x834
 	.globl CableClub_Text_YouMayTradeHere

@@ -244,14 +244,14 @@ CableClub_Movement_PlayerApproachCounter:
 	step_end
 
 CableClub_EventScript_WelcomeToCableClub::
-	message 0x08247B80 @ CableClub_Text_WelcomeWhichCableClubService
+	message CableClub_Text_WelcomeWhichCableClubService
 	waitmessage
 	delay 28
 	goto CableClub_EventScript_SelectCableClubRoom
 	end
 
 CableClub_EventScript_UnusedWelcomeToCableClub::
-	msgbox 0x08247BA4, MSGBOX_DEFAULT @ CableClub_Text_WhichService
+	msgbox CableClub_Text_WhichService, MSGBOX_DEFAULT
 	goto CableClub_EventScript_SelectCableClubRoom
 	end
 
@@ -312,7 +312,7 @@ CableClub_EventScript_DoubleBattleMode::
 	end
 
 CableClub_EventScript_NeedTwoMonsForDoubleBattle::
-	msgbox 0x08247C1E, MSGBOX_DEFAULT @ CableClub_Text_NeedTwoMonsForDoubleBattle
+	msgbox CableClub_Text_NeedTwoMonsForDoubleBattle, MSGBOX_DEFAULT
 	goto CableClub_EventScript_SelectBattleMode
 	end
 
@@ -470,12 +470,12 @@ CableClub_EventScript_CheckPartyTradeRequirements::
 	return
 
 CableClub_EventScript_NeedTwoMonsToTrade::
-	msgbox 0x08247C3E, MSGBOX_DEFAULT @ CableClub_Text_NeedTwoMonsToTrade
+	msgbox CableClub_Text_NeedTwoMonsToTrade, MSGBOX_DEFAULT
 	setvar VAR_RESULT, FALSE
 	return
 
 CableClub_EventScript_CantTradeEnigmaBerry::
-	msgbox 0x08247C5B, MSGBOX_DEFAULT @ CableClub_Text_CantTradeEnigmaBerry
+	msgbox CableClub_Text_CantTradeEnigmaBerry, MSGBOX_DEFAULT
 	setvar VAR_RESULT, FALSE
 	return
 
@@ -1022,7 +1022,7 @@ CableClub_EventScript_WirelessDoubleBattle::
 	end
 
 CableClub_EventScript_TwoMonsNeededForWirelessDoubleBattle::
-	msgbox 0x08247C1E, MSGBOX_DEFAULT @ CableClub_Text_NeedTwoMonsForDoubleBattle
+	msgbox CableClub_Text_NeedTwoMonsForDoubleBattle, MSGBOX_DEFAULT
 	goto CableClub_EventScript_WirelessBattleSelect
 	end
 
