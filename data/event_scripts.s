@@ -214,28 +214,8 @@
 	.set BattleFrontier_BattleFactoryLobby_Text_RulesAreListed, 0x08231A91
 	.globl BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading
 	.set BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading, 0x08231AA7
-	.globl BattleFrontier_BattlePalaceLobby_Text_FailedToSaveBeforeEndingChallenge
-	.set BattleFrontier_BattlePalaceLobby_Text_FailedToSaveBeforeEndingChallenge, 0x0822A7B5
 	.globl BattleFrontier_BattleDomeLobby_Text_ReceivedPrize
 	.set BattleFrontier_BattleDomeLobby_Text_ReceivedPrize, 0x08227865
-	.globl BattleFrontier_BattlePalaceLobby_Text_NoSpaceForPrize
-	.set BattleFrontier_BattlePalaceLobby_Text_NoSpaceForPrize, 0x0822A766
-	.globl BattleFrontier_BattlePalaceLobby_Text_WeHaveBeenWaiting
-	.set BattleFrontier_BattlePalaceLobby_Text_WeHaveBeenWaiting, 0x0822A790
-	.globl BattleFrontier_BattlePalaceLobby_Text_MustSaveBeforeChallenge
-	.set BattleFrontier_BattlePalaceLobby_Text_MustSaveBeforeChallenge, 0x0822A79A
-	.globl BattleFrontier_BattlePalaceLobby_Text_ReadWhichHeading
-	.set BattleFrontier_BattlePalaceLobby_Text_ReadWhichHeading, 0x0822AC54
-	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesBasics
-	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesBasics, 0x0822AC64
-	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesNature
-	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesNature, 0x0822ACC9
-	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesMoves
-	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesMoves, 0x0822AD4C
-	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesUnderpowered
-	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesUnderpowered, 0x0822AE0B
-	.globl BattleFrontier_BattlePalaceLobby_Text_ExplainRulesWhenInDanger
-	.set BattleFrontier_BattlePalaceLobby_Text_ExplainRulesWhenInDanger, 0x0822AEA7
 	.globl BattleTentLobby_Text_ExplainLevelRules
 	.set BattleTentLobby_Text_ExplainLevelRules, 0x08275BCD
 	.globl VerdanturfTown_BattleTentLobby_Text_AchievedThreeWinStreak
@@ -842,7 +822,6 @@ gStdScripts_End:: @ 0x81DB7E8
 	.include "data/maps/BattleFrontier_BattleDomePreBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePalaceLobby/scripts.inc"
-	.incbin "baserom_jp.gba", 0x22ac3f, 0x2e6
 	.include "data/maps/BattleFrontier_BattlePalaceCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePalaceBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattlePyramidLobby/scripts.inc"
