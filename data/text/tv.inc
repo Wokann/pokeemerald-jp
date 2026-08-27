@@ -110,3 +110,60 @@ gTVBravoTrainerText07::
 
 gTVBravoTrainerText08::
 	.string "{B_COPY_VAR_1}　の　しょうかいだー！$"
+
+BattleFrontier_BattleTowerLobby_Text_InterviewRequest::
+	.string "あ！　いま　たたかっていた\n"
+	.string "トレーナーの　かたですね！\p"
+	.string "わたし　いま　いろんな　トレーナーの\n"
+	.string "はなしを　きいて　まわってるんだけど\p"
+	.string "たたかいおわった　かんそうを\n"
+	.string "すこしだけ　きかせて　もらえませんか？$"
+
+BattleFrontier_BattleTowerLobby_Text_HowDidBattleTowerTurnOut::
+	.string "ほんと！？\n"
+	.string "ありがとう！\l"
+	.string "えっと　それじゃあねぇ⋯⋯\p"
+	.string "こんかいの　バトルタワーの\n"
+	.string "たいせんは　どうでしたか\p"
+	.string "まんぞく　でしたか！\n"
+	.string "それとも　ふまん　ですか！？$"
+
+BattleFrontier_BattleTowerLobby_Text_SorryWeDisturbedYou::
+	.string "あぁ！\n"
+	.string "ごめんなさい\p"
+	.string "じゃあ　またこんど　バトルタワーに　きたら\n"
+	.string "きかせて　くださいね$"
+
+BattleFrontier_BattleTowerLobby_Text_ObviousYouHadGreatBattle::
+	.string "さっすが！\p"
+	.string "その　まんぞくした　かおを　みれば\n"
+	.string "どんなに　いいしあいだったか\l"
+	.string "わかりますよ！$"
+
+BattleFrontier_BattleTowerLobby_Text_DifficultToMakeBattleTurnOutAsPlanned::
+	.string "うーん　そうですか⋯⋯\p"
+	.string "おもいどおりに　しょうぶを　するのって\n"
+	.string "なかなか　むずかしい　ですからね⋯⋯$"
+
+BattleFrontier_BattleTowerLobby_Text_DescribeYourBattle::
+	.string "あぁっ　あと\n"
+	.string "もう　ひとつだけ　いいですか？\p"
+	.string "この　たたかいの　かんそうを\n"
+	.string "ひとことで　ビシッと　きかせてください！$"
+
+BattleFrontier_BattleTowerLobby_Text_ThatsGreatLine::
+	.string "かっこいー！！\p"
+	.string "いい　きめゼリフ　ですね\n"
+	.string "つぎの　たたかいも　きたい　してますよ\p"
+	.string "それでは　また！$"
+
+BattleFrontier_BattleTowerLobby_Text_SilentType::
+	.string "そうですか⋯⋯\p"
+	.string "でも　なにも　いわないのも\n"
+	.string "また　かっこいいですね！\p"
+	.string "それじゃあ　またの　きかいに\n"
+	.string "かんそうを　きかせて　ください！$"
+
+BattleFrontier_BattleTowerLobby_Text_LookingForwardToNextBattle::
+	.string "つぎの　たたかいも\n"
+	.string "きたい　してますよ$"
