@@ -6489,7 +6489,7 @@ __attribute__((naked)) void sub_0813B298(void)
     );
 }
 
-__attribute__((naked)) void CreateUnusualWeatherEvent(void)
+__attribute__((naked)) void CreateAbnormalWeatherEvent(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6561,7 +6561,7 @@ __attribute__((naked)) void CreateUnusualWeatherEvent(void)
     );
 }
 
-__attribute__((naked)) void GetUnusualWeatherMapNameAndType(void)
+__attribute__((naked)) bool8 GetAbnormalWeatherMapNameAndType(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6596,7 +6596,7 @@ __attribute__((naked)) void GetUnusualWeatherMapNameAndType(void)
     );
 }
 
-__attribute__((naked)) void UnusualWeatherHasExpired(void)
+__attribute__((naked)) bool8 AbnormalWeatherHasExpired(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

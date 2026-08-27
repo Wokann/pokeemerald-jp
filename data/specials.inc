@@ -516,8 +516,8 @@ gSpecials::
 	def_special sub_0813B254
 	def_special SetMatchCallRegisteredFlag
 	def_special DoDomeConfetti
-	def_special CreateUnusualWeatherEvent
-	def_special GetUnusualWeatherMapNameAndType
+	def_special CreateAbnormalWeatherEvent
+	def_special GetAbnormalWeatherMapNameAndType
 	def_special sub_0813B4C8
 	def_special sub_080A0194
 	def_special Unused_SetWeatherSunny
