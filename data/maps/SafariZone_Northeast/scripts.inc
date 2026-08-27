@@ -1,4 +1,4 @@
-@ SafariZone_Northeast scripts (JP empty MapScripts @ 0x0822299F)
-
 SafariZone_Northeast_MapScripts::
 	.byte 0
+
+@ Event scripts for SafariZone_Northeast are in SafariZone_South/scripts.inc
