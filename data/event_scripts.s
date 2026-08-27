@@ -892,64 +892,6 @@ BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 	.include "data/maps/Route110_TrickHousePuzzle3/scripts.inc"
 	.include "data/maps/Route110_TrickHousePuzzle4/scripts.inc"
 	.include "data/maps/Route110_TrickHousePuzzle5/scripts.inc"
-	.incbin "baserom_jp.gba", 0x23f7fb, 0x28
-
-Route110_TrickHousePuzzle5_Movement_MechadollShake:
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_left
-	delay_2
-	face_right
-	delay_2
-	face_down
-	step_end
-
-Route110_TrickHousePuzzle5_Text_WroteSecretCodeLockOpened:
-	.string "{PLAYER}は　あいことばを\n"
-	.string "とびらに　かきつけた！\p"
-	.string "‘カラクリだいおう　さま　てんさい’\p"
-	.string "⋯⋯　⋯⋯　⋯⋯\p"
-	.string "かぎの　はずれる　おとがした！$"
-
-	.incbin "baserom_jp.gba", 0x23f894, 0x46c
 	.include "data/maps/Route110_TrickHousePuzzle6/scripts.inc"
 	.incbin "baserom_jp.gba", 0x23fd3a, 0x45
 
